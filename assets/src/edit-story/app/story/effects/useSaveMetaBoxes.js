@@ -23,7 +23,7 @@ import { useEffect, useState } from 'react';
  * Internal dependencies
  */
 import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
-import usePrevious from '../../../utils/usePrevious';
+import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useAPI } from '../../api';
 
 /**

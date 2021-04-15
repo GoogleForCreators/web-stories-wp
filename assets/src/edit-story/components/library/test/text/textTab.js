@@ -42,7 +42,7 @@ describe('TextTab', () => {
     }));
   });
 
-  it('should insert text with default text style on shortcut click', async () => {
+  it('should insert text with default text style on shortcut click', () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -57,13 +57,14 @@ describe('TextTab', () => {
         ensureMenuFontsLoaded: () => {},
       },
     };
-    await act(() => {
-      const { getByLabelText } = renderWithTheme(
-        <FontContext.Provider value={fontContextValues}>
-          <TextIcon />
-        </FontContext.Provider>
-      );
 
+    const { getByLabelText } = renderWithTheme(
+      <FontContext.Provider value={fontContextValues}>
+        <TextIcon isActive />
+      </FontContext.Provider>
+    );
+
+    act(() => {
       fireEvent.click(getByLabelText('Add new text element'));
     });
 

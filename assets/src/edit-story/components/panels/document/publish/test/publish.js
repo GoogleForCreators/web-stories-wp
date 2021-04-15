@@ -47,7 +47,16 @@ function setupPanel(
     actions: { updateStory },
   };
 
-  const config = { capabilities };
+  const config = {
+    capabilities,
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+  };
   const loadUsers = jest.fn();
 
   const inspectorContextValue = {

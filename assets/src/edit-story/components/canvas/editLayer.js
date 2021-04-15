@@ -35,7 +35,7 @@ import useFocusCanvas from './useFocusCanvas';
 
 const LayerWithGrayout = styled(Layer)`
   background-color: ${({ grayout, theme }) =>
-    grayout ? theme.DEPRECATED_THEME.colors.grayout : 'transparent'};
+    grayout ? theme.colors.opacity.overlayDark : 'transparent'};
 `;
 
 const EditPageArea = withOverlay(PageArea);
@@ -94,7 +94,12 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef} showOverflow>
+      <EditPageArea
+        ref={pageAreaRef}
+        isControlled
+        showOverflow
+        overflow="visible"
+      >
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

@@ -28,9 +28,14 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { UnitsProvider } from '../../../../../edit-story/units';
-import { Headline, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Headline,
+  LoadingSpinner,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 import {
   Layout,
+  LoadingContainer,
   StandardViewContentGutter,
   InfiniteScroller,
 } from '../../../../components';
@@ -46,7 +51,6 @@ import { SavedTemplateGridView, EmptyContentMessage } from '../../shared';
 
 function Content({
   allPagesFetched,
-  initialFocusId,
   isLoading,
   page,
   search,
@@ -107,6 +111,65 @@ function Content({
     enabledMenuItems,
   ]);
 
+  const pageContent = useMemo(() => {
+    if (isLoading) {
+      return (
+        <LoadingContainer>
+          <LoadingSpinner />
+        </LoadingContainer>
+      );
+    }
+
+    return templates.length > 0 ? (
+      <>
+        <SavedTemplateGridView
+          bottomActionLabel={__('Use template', 'web-stories')}
+          centerActionLabelByStatus={
+            TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+          }
+          actions={actions}
+          pageSize={view.pageSize}
+          templateMenu={templateMenu}
+          templates={templates}
+        />
+        <InfiniteScroller
+          allDataLoadedAriaMessage={__(
+            'All templates are loaded',
+            'web-stories'
+          )}
+          loadingAriaMessage={__('Loading more templates', 'web-stories')}
+          isLoading={isLoading}
+          canLoadMore={!allPagesFetched}
+          onLoadMore={page.requestNextPage}
+        />
+      </>
+    ) : (
+      <EmptyContentMessage>
+        <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
+          {search?.keyword
+            ? sprintf(
+                /* translators: %s: search term. */
+                __(
+                  'Sorry, we couldn\'t find any results matching "%s"',
+                  'web-stories'
+                ),
+                search.keyword
+              )
+            : __('Bookmark a story or template to get started!', 'web-stories')}
+        </Headline>
+      </EmptyContentMessage>
+    );
+  }, [
+    actions,
+    allPagesFetched,
+    isLoading,
+    page.requestNextPage,
+    search?.keyword,
+    templateMenu,
+    templates,
+    view.pageSize,
+  ]);
+
   return (
     <Layout.Scrollable>
       <FontProvider>
@@ -117,57 +180,7 @@ function Content({
               height: view.pageSize.height,
             }}
           >
-            <StandardViewContentGutter>
-              {templates.length > 0 ? (
-                <>
-                  <SavedTemplateGridView
-                    bottomActionLabel={__('Use template', 'web-stories')}
-                    centerActionLabelByStatus={
-                      TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                    }
-                    actions={actions}
-                    pageSize={view.pageSize}
-                    templateMenu={templateMenu}
-                    templates={templates}
-                    returnFocusId={initialFocusId}
-                  />
-                  <InfiniteScroller
-                    allDataLoadedAriaMessage={__(
-                      'All templates are loaded',
-                      'web-stories'
-                    )}
-                    loadingAriaMessage={__(
-                      'Loading more templates',
-                      'web-stories'
-                    )}
-                    isLoading={isLoading}
-                    canLoadMore={!allPagesFetched}
-                    onLoadMore={page.requestNextPage}
-                  />
-                </>
-              ) : (
-                <EmptyContentMessage>
-                  <Headline
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    as="h3"
-                  >
-                    {search?.keyword
-                      ? sprintf(
-                          /* translators: %s: search term. */
-                          __(
-                            'Sorry, we couldn\'t find any results matching "%s"',
-                            'web-stories'
-                          ),
-                          search.keyword
-                        )
-                      : __(
-                          'Bookmark a story or template to get started!',
-                          'web-stories'
-                        )}
-                  </Headline>
-                </EmptyContentMessage>
-              )}
-            </StandardViewContentGutter>
+            <StandardViewContentGutter>{pageContent}</StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
@@ -181,7 +194,6 @@ Content.propTypes = {
   view: ViewPropTypes.isRequired,
   page: PagePropTypes.isRequired,
   templates: TemplatesPropType,
-  initialFocusId: PropTypes.number,
   isLoading: PropTypes.bool,
   allPagesFetched: PropTypes.bool,
   actions: TemplateActionsPropType,

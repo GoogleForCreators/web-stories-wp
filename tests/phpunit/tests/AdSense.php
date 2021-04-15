@@ -40,11 +40,11 @@ class AdSense extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$adsense = new \Google\Web_Stories\AdSense();
-		$adsense->init();
+		$adsense->register();
 
 		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $adsense, 'print_adsense_tag' ] ) );
 	}

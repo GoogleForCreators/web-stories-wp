@@ -27,6 +27,7 @@ import {
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -39,8 +40,16 @@ import {
   addUniqueEntry,
   getInset,
 } from '../utils';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import { List, Group, GroupLabel, NoResult } from './styled';
 import DefaultRenderer from './defaultRenderer';
+
+const StyledLabel = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
 
 function OptionList({
   keyword = '',
@@ -140,7 +149,7 @@ function OptionList({
           (option) => option && observer.unobserve(option)
         );
       }
-      // clear exisiting option references before next update to filteredGroup
+      // clear existing option references before next update to filteredGroup
       optionsRef.current = [];
     };
   }, [observer, onObserve, filteredListGroups]);
@@ -160,7 +169,12 @@ function OptionList({
   ]);
 
   const handleKeyPress = useCallback(
-    ({ key }) => {
+    (evt) => {
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      const { key } = evt;
+
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
@@ -228,13 +242,13 @@ function OptionList({
         return (
           group.options.length > 0 && (
             <Group
-              key={group.label}
+              key={groupLabelId}
               role="group"
               aria-labelledby={groupLabelId}
             >
               {group.label && (
                 <GroupLabel id={groupLabelId} role="presentation">
-                  {group.label}
+                  <StyledLabel>{group.label}</StyledLabel>
                 </GroupLabel>
               )}
               {group.options.map((option, j) => {

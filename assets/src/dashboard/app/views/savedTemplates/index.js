@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,6 @@ import { Layout, ScrollToTop } from '../../../components';
 import { SAVED_TEMPLATES_STATUSES } from '../../../constants';
 import useStoryView from '../../../utils/useStoryView';
 import useApi from '../../api/useApi';
-import { DashboardSnackbar, PreviewStoryView } from '../';
 import Header from './header';
 import Content from './content';
 
@@ -53,7 +52,7 @@ function SavedTemplates() {
     })
   );
 
-  const { activePreview, filter, page, sort, search, view } = useStoryView({
+  const { filter, page, sort, search, view } = useStoryView({
     filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
@@ -67,29 +66,6 @@ function SavedTemplates() {
   useEffect(() => {
     fetchMyTemplates({ page: 1 });
   }, [fetchMyTemplates]);
-
-  const [lastActiveTemplateId, setLastActiveTemplateId] = useState(null);
-
-  const previewTemplate = useCallback(
-    (e, template) => {
-      activePreview.set(e, template);
-      setLastActiveTemplateId(template?.id);
-    },
-    [activePreview]
-  );
-
-  const handleClose = useCallback(
-    (e) => {
-      activePreview.set(e, undefined);
-    },
-    [activePreview]
-  );
-
-  if (activePreview.value) {
-    return (
-      <PreviewStoryView story={activePreview.value} handleClose={handleClose} />
-    );
-  }
 
   return (
     <Layout.Provider>
@@ -107,16 +83,13 @@ function SavedTemplates() {
         page={page}
         sort={sort}
         templates={orderedSavedTemplates}
-        initialFocusId={lastActiveTemplateId}
         search={search}
         actions={{
-          previewTemplate,
           createStoryFromTemplate,
         }}
       />
 
       <Layout.Fixed>
-        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>

@@ -26,17 +26,19 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Role;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Class Story_Post_Type.
@@ -47,10 +49,11 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type {
+class Story_Post_Type extends Service_Base implements Activateable, Deactivateable {
 	use Publisher;
 	use Types;
 	use Assets;
+	use Screen;
 
 	/**
 	 * The slug of the stories post type.
@@ -102,17 +105,27 @@ class Story_Post_Type {
 	private $meta_boxes;
 
 	/**
+	 * Locale instance.
+	 *
+	 * @var Locale Locale instance.
+	 */
+	private $locale;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
+	 * @param Decoder     $decoder Decoder instance.
+	 * @param Locale      $locale Locale instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
 		$this->experiments = $experiments;
 		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = new Decoder();
+		$this->decoder     = $decoder;
+		$this->locale      = $locale;
 	}
 
 	/**
@@ -126,7 +139,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -191,10 +204,6 @@ class Story_Post_Type {
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-		// Custom Meta Boxes Support.
-		$metabox = new Meta_Boxes();
-		$metabox->init();
-
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
@@ -215,6 +224,27 @@ class Story_Post_Type {
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Deactivate the service.
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function deactivate( $network_wide ) {
+		$this->remove_caps_from_roles();
+		unregister_post_type( self::POST_TYPE_SLUG );
 	}
 
 	/**
@@ -293,6 +323,12 @@ class Story_Post_Type {
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			} 
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 		foreach ( $roles as $role ) {
@@ -442,13 +478,7 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -461,8 +491,8 @@ class Story_Post_Type {
 		wp_enqueue_media();
 
 		wp_register_style(
-			'roboto',
-			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
 			[],
 			WEBSTORIES_VERSION
 		);
@@ -474,7 +504,7 @@ class Story_Post_Type {
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
@@ -490,6 +520,8 @@ class Story_Post_Type {
 	 * Get editor settings as an array.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @return array
 	 */
@@ -512,6 +544,10 @@ class Story_Post_Type {
 			}
 		}
 
+		if ( $story_id ) {
+			$this->setup_lock( $story_id );
+		}
+
 		// Media settings.
 		$max_upload_size = wp_max_upload_size();
 		if ( ! $max_upload_size ) {
@@ -520,17 +556,40 @@ class Story_Post_Type {
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+		$dashboard_url = add_query_arg(
+			[
+				'post_type' => self::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard',
+			],
+			admin_url( 'edit.php' )
+		);
+
+		/** This filter is documented in wp-admin/includes/ajax-actions.php */
+		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+		$user = wp_get_current_user();
+		/** This filter is documented in wp-admin/includes/post.php */
+		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
+
+		$nonce = wp_create_nonce( 'wp_rest' );
+
+		$mime_types       = $this->get_allowed_mime_types();
+		$mime_image_types = $this->get_allowed_image_mime_types();
+
+
 		$settings = [
 			'id'         => 'web-stories-editor',
 			'config'     => [
 				'autoSaveInterval'      => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                 => is_rtl(),
-				'locale'                => ( new Locale() )->get_locale_settings(),
+				'locale'                => $this->locale->get_locale_settings(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
-				'allowedImageMimeTypes' => $this->get_allowed_image_mime_types(),
-				'allowedMimeTypes'      => $this->get_allowed_mime_types(),
+				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
+				'allowedImageMimeTypes' => $mime_image_types,
+				'allowedMimeTypes'      => $mime_types,
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
+				'dashboardLink'         => $dashboard_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
@@ -541,18 +600,24 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'                   => [
-					'users'       => '/web-stories/v1/users/',
-					'currentUser' => '/web-stories/v1/users/me/',
-					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'       => '/web-stories/v1/media/',
-					'link'        => '/web-stories/v1/link/',
-					'statusCheck' => '/web-stories/v1/status-check/',
-					'metaBoxes'   => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'users'        => '/web-stories/v1/users/',
+					'currentUser'  => '/web-stories/v1/users/me/',
+					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'        => '/web-stories/v1/media/',
+					'link'         => '/web-stories/v1/link/',
+					'statusCheck'  => '/web-stories/v1/status-check/',
+					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
 				],
+				'postLock'              => [
+					'interval'         => $time_window,
+					'showLockedDialog' => $show_locked_dialog,
+				],
 				'version'               => WEBSTORIES_VERSION,
+				'nonce'                 => $nonce,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'metaBoxes'             => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
@@ -572,6 +637,43 @@ class Story_Post_Type {
 		 * @param array $settings Array of settings passed to web stories editor.
 		 */
 		return apply_filters( 'web_stories_editor_settings', $settings );
+	}
+
+	/**
+	 * Setup up post lock.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @param int $story_id Post id of story.
+	 *
+	 * @return void
+	 */
+	protected function setup_lock( $story_id ) {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object instanceof WP_Post_Type ) {
+			return;
+		}
+
+		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
+			return;
+		}
+
+
+		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+			return;
+		}
+		// Make sure these functions are loaded.
+		if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/post.php';
+		}
+
+		// Check current lock.
+		$lock_user_id = wp_check_post_lock( $story_id );
+		if ( ! $lock_user_id ) {
+			// If no lock set, create new lock.
+			wp_set_post_lock( $story_id );
+		}
 	}
 
 	/**

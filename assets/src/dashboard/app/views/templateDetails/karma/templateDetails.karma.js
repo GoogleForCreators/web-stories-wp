@@ -33,12 +33,9 @@ import useApi from '../../../api/useApi';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;
-  const enableTemplatePreviews = false;
 
   beforeEach(async () => {
     fixture = new Fixture();
-
-    fixture.setFlags({ enableTemplatePreviews });
 
     await fixture.render();
 

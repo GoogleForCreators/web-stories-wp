@@ -29,6 +29,13 @@ import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 
+jest.mock('../../../../../design-system/components/popup/index.js', () => ({
+  ...jest.requireActual(
+    '../../../../../design-system/components/popup/index.js'
+  ),
+  Popup: ({ children, isOpen }) => (isOpen ? children : null),
+}));
+
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
   jest.fn()
@@ -83,7 +90,16 @@ describe('<ColorInput />', () => {
         onChange={() => {}}
         value={{
           type: 'radial',
-          stops: [createSolid(255, 0, 0), createSolid(0, 255, 0)],
+          stops: [
+            {
+              ...createSolid(255, 0, 0),
+              position: 0,
+            },
+            {
+              ...createSolid(0, 255, 0),
+              position: 100,
+            },
+          ],
         }}
         label="Color"
       />

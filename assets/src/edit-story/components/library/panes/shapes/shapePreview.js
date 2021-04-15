@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { createRef, useCallback, useMemo } from 'react';
-import styled, { css } from 'styled-components';
+import { createRef, useCallback, useMemo, useRef } from 'react';
+import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -30,38 +30,37 @@ import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { useUnits } from '../../../../units';
+import { themeHelpers, ThemeGlobals } from '../../../../../design-system';
+import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 
 // By default, the element should be 33% of the page.
-const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
+export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-const createGrid = ({ columns, gap, minWidth }) => css`
-  min-width: ${minWidth}px;
-  width: calc(${100 / columns}% - ${(gap * (columns - 1)) / columns}px);
-  margin-top: 0px;
-  margin-left: ${gap}px;
-  &:nth-of-type(n + ${columns + 1}) {
-    margin-top: ${gap}px;
-  }
-  &:nth-of-type(${columns}n + 1) {
-    margin-left: 0;
-  }
-`;
-
-// Using button directly breaks the DOM nesting for tests.
-const Aspect = styled.div.attrs({ role: 'button' })`
+const Aspect = styled.button`
+  background: transparent;
+  outline: none;
+  border: 0;
+  padding: 0;
   position: relative;
-  flex-grow: 0;
-  flex-shrink: 0;
-  @media screen and (min-width: 1220px) {
-    ${createGrid({ columns: 4, gap: 12, minWidth: 50 })}
+
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
+
+  &:hover,
+  &:focus,
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
   }
-  @media screen and (min-width: 1100px) and (max-width: 1220px) {
-    ${createGrid({ columns: 3, gap: 12, minWidth: 50 })}
-  }
-  @media screen and (max-width: 1100px) {
-    ${createGrid({ columns: 2, gap: 12, minWidth: 50 })}
-  }
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 const AspectInner = styled.div`
@@ -75,12 +74,10 @@ const ShapePreviewContainer = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.gray24};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 
   svg {
     display: inline-block;
@@ -111,10 +108,10 @@ const ShapePreviewSizer = styled.div`
 `;
 
 const Path = styled.path`
-  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  fill: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-function ShapePreview({ mask, isPreview }) {
+function ShapePreview({ mask, isPreview, index }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -123,6 +120,7 @@ function ShapePreview({ mask, isPreview }) {
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
+  const ref = useRef();
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
   // component with large paddings, and only drags the svg part of it.
@@ -169,8 +167,10 @@ function ShapePreview({ mask, isPreview }) {
     );
   };
 
+  // We use rovingTabIndex for navigating so only the first item will have 0 as tabIndex.
+  // onClick on Aspect is for the keyboard only.
   return (
-    <Aspect>
+    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1}>
       <AspectInner>
         <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />
@@ -194,6 +194,7 @@ function ShapePreview({ mask, isPreview }) {
 ShapePreview.propTypes = {
   mask: PropTypes.object.isRequired,
   isPreview: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 export default ShapePreview;

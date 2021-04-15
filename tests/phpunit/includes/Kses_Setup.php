@@ -35,7 +35,7 @@ trait Kses_Setup {
 	 */
 	protected function kses_int() {
 		$this->kses = new \Google\Web_Stories\KSES();
-		$this->kses->init();
+		$this->kses->register();
 	}
 
 	/**

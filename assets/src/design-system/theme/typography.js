@@ -27,7 +27,7 @@ const themeFonts = {
 export const typography = {
   family: { ...themeFonts },
   weight: {
-    bold: 500,
+    bold: 700,
     regular: 400,
   },
   presets: {

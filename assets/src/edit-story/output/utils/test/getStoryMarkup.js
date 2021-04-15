@@ -42,7 +42,12 @@ describe('getStoryMarkup', () => {
       date: '2020-04-10T07:06:26',
       modified: '',
       excerpt: '',
-      featuredMedia: { id: 0 },
+      featuredMedia: {
+        id: 0,
+        url: 'https://example.com/poster.png',
+        width: 640,
+        height: 853,
+      },
       password: '',
     };
     const meta = {
@@ -56,8 +61,8 @@ describe('getStoryMarkup', () => {
         type: 'page',
         id: '2',
         animations: [
-          { targets: ['2'], type: 'bounce', duration: 1000 },
-          { targets: ['2'], type: 'spin', duration: 1000 },
+          { id: '1', targets: ['2'], type: 'bounce', duration: 1000 },
+          { id: '2', targets: ['2'], type: 'spin', duration: 1000 },
         ],
         elements: [
           {
@@ -95,7 +100,9 @@ describe('getStoryMarkup', () => {
     expect(markup).toContain(
       '</amp-story-grid-layer></amp-story-page></amp-story></body></html>'
     );
-    expect(markup).not.toContain('poster-portrait-src=');
+    expect(markup).toContain(
+      'poster-portrait-src="https://example.com/poster.png"'
+    );
 
     expect(markup).toContain('<amp-story-animation');
   });

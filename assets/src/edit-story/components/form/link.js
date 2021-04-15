@@ -26,7 +26,6 @@ import { __ } from '@web-stories-wp/i18n';
 import { isValidUrl, withProtocol } from '../../utils/url';
 import { Input } from '../../../design-system';
 import Row from './row';
-import HelperText from './helperText';
 
 const MIN_MAX = {
   URL: {
@@ -39,8 +38,7 @@ function LinkInput({
   onChange,
   onBlur,
   onFocus,
-  value,
-  description,
+  value = '',
   hint,
   hasError,
   ...rest
@@ -49,44 +47,40 @@ function LinkInput({
   const isValid = isValidUrl(withProtocol(trimmedValue));
   const isNotValid = trimmedValue.length > 0 && !isValid;
   return (
-    <>
-      {description && <HelperText>{description}</HelperText>}
-      <Row>
-        <Input
-          placeholder={__('Web address', 'web-stories')}
-          onChange={(evt) => onChange(evt.target.value)}
-          onBlur={() => {
-            if (trimmedValue?.length) {
-              const urlWithProtocol = withProtocol(trimmedValue);
-              if (urlWithProtocol !== trimmedValue) {
-                onChange(urlWithProtocol);
-              }
+    <Row>
+      <Input
+        placeholder={__('Web address', 'web-stories')}
+        onChange={(evt) => onChange(evt.target.value)}
+        onBlur={() => {
+          if (trimmedValue?.length) {
+            const urlWithProtocol = withProtocol(trimmedValue);
+            if (urlWithProtocol !== trimmedValue) {
+              onChange(urlWithProtocol);
             }
-            if (onBlur) {
-              onBlur();
-            }
-          }}
-          onFocus={onFocus}
-          value={value || ''}
-          minLength={MIN_MAX.URL.MIN}
-          maxLength={MIN_MAX.URL.MAX}
-          hasError={isNotValid || hasError}
-          hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
-          {...rest}
-        />
-      </Row>
-    </>
+          }
+          if (onBlur) {
+            onBlur();
+          }
+        }}
+        onFocus={onFocus}
+        value={value || ''}
+        minLength={MIN_MAX.URL.MIN}
+        maxLength={MIN_MAX.URL.MAX}
+        hasError={isNotValid || hasError}
+        hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
+        {...rest}
+      />
+    </Row>
   );
 }
 
 LinkInput.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
-  description: PropTypes.string,
   hint: PropTypes.string,
-  hasError: PropTypes.boolean,
+  hasError: PropTypes.bool,
 };
 
 export default LinkInput;

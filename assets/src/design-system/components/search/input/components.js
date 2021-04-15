@@ -34,7 +34,6 @@ export const InputContainer = styled.div(
   ({ theme }) => css`
     display: flex;
     position: relative;
-    box-sizing: border-box;
     height: 36px;
     width: 100%;
     max-width: 400px;
@@ -168,8 +167,8 @@ export const ChevronIcon = styled(Chevron)`
   height: auto;
   margin: auto;
 
-  ${({ isMenuOpen }) =>
-    isMenuOpen &&
+  ${({ $isMenuOpen }) =>
+    $isMenuOpen &&
     css`
       transform: rotate(180deg);
     `}

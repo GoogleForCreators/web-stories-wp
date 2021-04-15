@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
 class Story_Post_Type extends \WP_UnitTestCase {
-	use Private_Access;
+	use Private_Access, Capabilities_Setup;
 
 	/**
 	 * Admin user for test.
@@ -76,21 +76,28 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
+	public function setUp() {
+		parent::setUp();
+		$this->add_caps_to_roles();
+	}
+
 	public function tearDown() {
 		$this->set_permalink_structure( '' );
 		$_SERVER['REQUEST_URI'] = '';
+
+		delete_post_meta( self::$story_id, '_edit_lock' );
+
+		$this->remove_caps_from_roles();
 
 		parent::tearDown();
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
-		$story_post_type->init();
+	public function test_register() {
+		$story_post_type = $this->get_story_object();
+		$story_post_type->register();
 
 		$this->assertSame( 10, has_filter( 'admin_enqueue_scripts', [ $story_post_type, 'admin_enqueue_scripts' ] ) );
 		$this->assertSame( 10, has_filter( 'show_admin_bar', [ $story_post_type, 'show_admin_bar' ] ) );
@@ -115,8 +122,10 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
 
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
 		$results   = $post_type->get_editor_settings();
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
@@ -131,11 +140,43 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
-		$results   = $post_type->get_editor_settings();
+		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
+		$post_type  = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
+		$results    = $post_type->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
+
+
+	/**
+	 * @covers ::setup_lock
+	 */
+	public function test_setup_lock_admin() {
+		wp_set_current_user( self::$admin_id );
+		$story_post_type = $this->get_story_object();
+
+		$this->call_private_method( $story_post_type, 'setup_lock', [ self::$story_id ] );
+
+		$value = get_post_meta( self::$story_id, '_edit_lock', true );
+
+		$this->assertNotEmpty( $value );
+	}
+
+	/**
+	 * @covers ::setup_lock
+	 */
+	public function test_setup_lock_subscriber() {
+		wp_set_current_user( self::$subscriber_id );
+
+		$story_post_type = $this->get_story_object();
+
+		$this->call_private_method( $story_post_type, 'setup_lock', [ self::$story_id ] );
+
+		$value = get_post_meta( self::$story_id, '_edit_lock', true );
+
+		$this->assertEmpty( $value );
+	}
+
 
 	/**
 	 * @covers ::filter_rest_collection_params
@@ -149,9 +190,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		];
 
 		$post_type       = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$filtered_params = $story_post_type->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals(
 			$filtered_params,
@@ -177,9 +216,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$post_type       = new \stdClass();
 		$post_type->name = 'post';
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$filtered_params = $story_post_type->filter_rest_collection_params( $query_params, $post_type );
 		$this->assertEquals( $filtered_params, $query_params );
 	}
@@ -188,9 +225,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::get_post_type_icon
 	 */
 	public function test_get_post_type_icon() {
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$valid           = $this->call_private_method( $story_post_type, 'get_post_type_icon' );
 		$this->assertContains( 'data:image/svg+xml;base64', $valid );
 	}
@@ -203,8 +238,10 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
 
-		$args            = [ $experiments, $meta_boxes ];
+		$args            = [ $experiments, $meta_boxes, $decoder, $locale ];
 		$story_post_type = $this->getMockBuilder( \Google\Web_Stories\Story_Post_Type::class )
 								->setConstructorArgs( $args )
 								->setMethods( [ 'get_asset_metadata' ] )
@@ -234,9 +271,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::filter_use_block_editor_for_post_type
 	 */
 	public function test_filter_use_block_editor_for_post_type() {
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 
 		$use_block_editor = $story_post_type->filter_use_block_editor_for_post_type( true, $story_post_type::POST_TYPE_SLUG );
 		$this->assertFalse( $use_block_editor );
@@ -249,9 +284,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 
 		$template_include = $story_post_type->filter_template_include( 'current' );
 		$this->assertContains( WEBSTORIES_PLUGIN_DIR_PATH, $template_include );
@@ -263,9 +296,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_show_admin_bar() {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$show_admin_bar  = $story_post_type->show_admin_bar( 'current' );
 		$this->assertFalse( $show_admin_bar );
 		$this->assertTrue( is_singular( $story_post_type::POST_TYPE_SLUG ) );
@@ -278,9 +309,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$story_post_type->add_caps_to_roles();
 
 		$administrator = get_role( 'administrator' );
@@ -296,9 +325,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::redirect_post_type_archive_urls
 	 */
 	public function test_redirect_post_type_archive_urls_true() {
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$query           = new \WP_Query();
 		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
 		$this->assertTrue( $result );
@@ -308,9 +335,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::redirect_post_type_archive_urls
 	 */
 	public function test_redirect_post_type_archive_urls_no_permalink() {
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$query           = new \WP_Query();
 		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
 		$this->assertFalse( $result );
@@ -322,9 +347,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_permalinks() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$query           = new \WP_Query();
 		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
 		$this->assertFalse( $result );
@@ -336,9 +359,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_page() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'stories';
@@ -360,9 +381,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_pagename_set() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'stories';
@@ -381,9 +400,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_pagename_child_set() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'client/stories';
@@ -402,10 +419,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	public function test_redirect_post_type_archive_urls_pagename_feed() {
 		$this->set_permalink_structure( '/%postname%/' );
 
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
-		$story_post_type->init();
+		$story_post_type = $this->get_story_object();
+		$story_post_type->register();
 
 		$query                    = new \WP_Query();
 		$query->query['pagename'] = 'stories';
@@ -423,13 +438,17 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::remove_caps_from_roles
 	 */
 	public function test_remove_caps_from_roles() {
-		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type = $this->get_story_object();
 		$story_post_type->remove_caps_from_roles();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			}
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 
@@ -437,6 +456,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 			foreach ( $all_capabilities as $cap ) {
 				$this->assertFalse( $role->has_cap( $cap ) );
 			}
+			$this->assertTrue( $role->has_cap( 'read' ) );
 		}
 		// Add back roles after test.
 		$story_post_type->add_caps_to_roles();

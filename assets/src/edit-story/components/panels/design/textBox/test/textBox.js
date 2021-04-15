@@ -26,6 +26,7 @@ import { fireEvent } from '@testing-library/react';
 import TextBox from '../textBox';
 import ColorInput from '../../../../form/color/color';
 import {
+  BACKGROUND_TEXT_MODE,
   HIDDEN_PADDING,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
@@ -62,6 +63,7 @@ describe('Panels/TextBox', () => {
       width: 120,
       rotationAngle: 0,
       padding: { vertical: 0, horizontal: 0, locked: false },
+      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
     };
 
     textElement = {

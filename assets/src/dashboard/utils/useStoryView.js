@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -30,9 +29,11 @@ import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import { usePagePreviewSize } from './index';
 
-export default function useStoryView({ filters, totalPages }) {
-  const enableStoryPreviews = useFeature('enableStoryPreviews');
-
+export default function useStoryView({
+  filters,
+  isLoading = false,
+  totalPages,
+}) {
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -41,7 +42,7 @@ export default function useStoryView({ filters, totalPages }) {
   const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
-  const [activePreview, _setActivePreview] = useState();
+  const showStoriesWhileLoading = useRef(false);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -105,19 +106,10 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
-  const setActivePreview = useCallback(
-    (_, story) => {
-      if (enableStoryPreviews) {
-        _setActivePreview(story);
-      }
-    },
-    [enableStoryPreviews]
-  );
-
-  const requestNextPage = useCallback(() => setPageClamped(page + 1), [
-    page,
-    setPageClamped,
-  ]);
+  const requestNextPage = useCallback(() => {
+    showStoriesWhileLoading.current = true;
+    setPageClamped(page + 1);
+  }, [page, setPageClamped]);
 
   useEffect(() => {
     trackEvent('search', {
@@ -130,12 +122,15 @@ export default function useStoryView({ filters, totalPages }) {
     });
   }, [searchKeyword, filter, sortDirection, sort, viewStyle]);
 
+  useEffect(() => {
+    // reset ref state after request is finished
+    if (!isLoading) {
+      showStoriesWhileLoading.current = false;
+    }
+  }, [isLoading]);
+
   return useMemo(
     () => ({
-      activePreview: {
-        value: activePreview,
-        set: setActivePreview,
-      },
       view: {
         style: viewStyle,
         toggleStyle: toggleViewStyle,
@@ -160,10 +155,9 @@ export default function useStoryView({ filters, totalPages }) {
         keyword: searchKeyword,
         setKeyword: setSearchKeyword,
       },
+      showStoriesWhileLoading,
     }),
     [
-      activePreview,
-      setActivePreview,
       viewStyle,
       toggleViewStyle,
       pageSize,
@@ -208,4 +202,8 @@ export const PagePropTypes = PropTypes.shape({
 export const SearchPropTypes = PropTypes.shape({
   keyword: PropTypes.string,
   setKeyword: PropTypes.func,
+});
+
+export const ShowStoriesWhileLoadingPropType = PropTypes.shape({
+  current: PropTypes.bool,
 });

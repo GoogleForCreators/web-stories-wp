@@ -39,14 +39,8 @@ const Transparent = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  background-image: conic-gradient(
-    ${({ theme }) => theme.colors.fg.tertiary} 0.25turn,
-    transparent 0turn 0.5turn,
-    ${({ theme }) => theme.colors.fg.tertiary} 0turn 0.75turn,
-    transparent 0turn 1turn
-  );
-  background-size: 8px 8px;
   border-radius: 100%;
+  ${themeHelpers.transparentBg}
 `;
 
 const SwatchButton = styled.button.attrs({ type: 'button' })`
@@ -78,7 +72,6 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
     height: 100%;
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.colors.divider.primary};
-    box-sizing: border-box;
   }
 `;
 
@@ -100,7 +93,7 @@ const presetCSS = css`
 `;
 const SwatchItem = styled.div`
   ${presetCSS}
-  ${({ pattern }) => generatePatternStyles(pattern)}
+  ${({ $pattern }) => generatePatternStyles($pattern)}
   transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
 
   svg {
@@ -148,7 +141,7 @@ function Swatch({
     <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
-        pattern={pattern}
+        $pattern={pattern}
         disabled={isDisabled}
         displaySplit={displaySplit}
       >

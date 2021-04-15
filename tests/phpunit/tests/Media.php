@@ -26,11 +26,11 @@ use WP_REST_Request;
 class Media extends \WP_UnitTestCase {
 	use Private_Access;
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$media = new \Google\Web_Stories\Media();
-		$media->init();
+		$media->register();
 
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_LANDSCAPE_IMAGE_SIZE ) );

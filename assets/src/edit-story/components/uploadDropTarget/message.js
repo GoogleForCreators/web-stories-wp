@@ -26,8 +26,12 @@ import { memo } from 'react';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
+import {
+  Icons,
+  Text as DefaultText,
+  THEME_CONSTANTS,
+} from '../../../design-system';
 import UploadDropTargetOverlay from './overlay';
-import { ReactComponent as UploadIcon } from './icons/upload.svg';
 
 const Container = styled(UploadDropTargetOverlay)`
   display: flex;
@@ -46,19 +50,16 @@ const Box = styled.div`
   text-align: center;
 `;
 
-const Heading = styled.h4`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  margin: 0;
+const Text = styled(DefaultText)`
+  color: ${({ theme }) => theme.colors.standard.white};
+  margin-bottom: 14px;
+  margin-top: 0px;
 `;
 
-const Text = styled.p`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-`;
-
-const Icon = styled(UploadIcon)`
-  height: 54px;
-  width: 54px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+const Icon = styled(Icons.ArrowCloud)`
+  height: 52px;
+  width: 52px;
+  color: ${({ theme }) => theme.colors.standard.white};
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {
@@ -68,8 +69,10 @@ function UploadDropTargetMessage({ message, ...rest }) {
     <Container {...rest}>
       <Box>
         <Icon />
-        <Heading>{message}</Heading>
-        <Text>
+        <Text isBold size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+          {message}
+        </Text>
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {sprintf(
             /* translators: %s is a list of allowed file extensions. */
             __('You can upload %s.', 'web-stories'),

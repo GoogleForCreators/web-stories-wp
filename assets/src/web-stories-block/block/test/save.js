@@ -24,6 +24,14 @@ import { render } from '@testing-library/react';
  */
 import Save from '../save';
 
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+  };
+});
+
 const url =
   'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 const title = 'Stories in AMP';

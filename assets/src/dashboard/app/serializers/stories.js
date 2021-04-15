@@ -32,7 +32,11 @@ export default function reshapeStoryObject(editStoryURL) {
       link,
       preview_link: previewLink,
       story_data: storyData,
-      _embedded: { author = [] } = {},
+      _embedded: {
+        author = [{ name: '' }],
+        'wp:lock': lock = [{ locked: false }],
+        'wp:lockuser': lockUser = [{ id: 0, name: '', avatar_urls: {} }],
+      } = {},
     } = originalStoryData;
     if (
       !Array.isArray(storyData.pages) ||
@@ -56,7 +60,13 @@ export default function reshapeStoryObject(editStoryURL) {
       modified,
       modified_gmt: `${modified_gmt}Z`,
       pages: updatedStoryData.pages,
-      author: author[0]?.name || '',
+      author: author[0].name,
+      locked: lock[0]?.locked,
+      lockUser: {
+        id: lockUser[0].id,
+        name: lockUser[0].name,
+        avatar: lockUser[0].avatar_urls['24'] || null,
+      },
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       editStoryLink: `${editStoryURL}&post=${id}`,

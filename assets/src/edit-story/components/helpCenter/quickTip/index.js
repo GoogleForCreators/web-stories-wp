@@ -73,8 +73,14 @@ const DoneContainer = styled.div`
   ${themeHelpers.centerContent}
   height: 180px;
   margin-bottom: ${GUTTER_WIDTH}px;
+  color: #f4f2ef;
+
   svg {
     display: block;
+
+    path {
+      color: #4285f4;
+    }
   }
 `;
 
@@ -102,6 +108,7 @@ export function QuickTip({
               muted
               noControls
               preload="true"
+              crossOrigin="anonymous"
             >
               <source src={`${cdnURL}${figureSrc}.webm`} type="video/webm" />
               <source src={`${cdnURL}${figureSrc}.mp4`} type="video/mp4" />

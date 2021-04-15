@@ -63,7 +63,6 @@ const Suffix = styled(Text)`
 
 const InputContainer = styled.div(
   ({ focused, hasError, theme }) => css`
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -115,6 +114,10 @@ const StyledInput = styled.input(
       },
       theme,
     })};
+
+    ::placeholder {
+      color: ${theme.colors.fg.tertiary};
+    }
 
     :disabled {
       color: ${theme.colors.fg.disable};

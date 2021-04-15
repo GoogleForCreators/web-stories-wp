@@ -45,21 +45,21 @@ class Site_Kit extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
 		add_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] );
 
 		$site_kit = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-		$site_kit->init();
+		$site_kit->register();
 
 		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $site_kit, 'filter_site_kit_gtag_opt' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 * @covers ::is_analytics_module_active
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
@@ -73,7 +73,7 @@ class Site_Kit extends \WP_UnitTestCase {
 		add_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] );
 
 		$site_kit = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
-		$site_kit->init();
+		$site_kit->register();
 
 		$this->assertSame( 10, has_filter( 'googlesitekit_amp_gtag_opt', [ $site_kit, 'filter_site_kit_gtag_opt' ] ) );
 		$this->assertFalse( has_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] ) );

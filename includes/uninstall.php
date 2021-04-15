@@ -158,7 +158,7 @@ function delete_posts() {
  * @return void
  */
 function remove_caps() {
-	$story_post_type = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
+	$story_post_type = Services::get( 'story_post_type' );
 	$story_post_type->remove_caps_from_roles();
 }
 

@@ -17,9 +17,8 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Capabilities_Setup;
 use Google\Web_Stories\Tests\Kses_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -28,7 +27,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
 class Stories_Controller extends \WP_Test_REST_TestCase {
-	use Kses_Setup;
+	use Kses_Setup, Capabilities_Setup;
 
 	protected $server;
 
@@ -132,11 +131,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
-		$story_post_type->add_caps_to_roles();
+		$this->add_caps_to_roles();
 
 		$this->set_permalink_structure( '/%postname%/' );
 	}
@@ -146,11 +141,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-
-		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
-		$story_post_type->remove_caps_from_roles();
+		$this->remove_caps_from_roles();
 
 		$this->set_permalink_structure( '' );
 
@@ -242,6 +233,34 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$slug         = $story_object->post_name;
 		$this->assertContains( $slug, $data['preview_link'] );
 	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_lock() {
+		wp_set_current_user( self::$user_id );
+		$future_date = strtotime( '+1 day' );
+		$story       = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_author' => self::$user_id,
+			]
+		);
+		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$links    = $response->get_links();
+
+		$this->assertArrayHasKey( 'https://api.w.org/lockuser', $links );
+		$this->assertArrayHasKey( 'https://api.w.org/lock', $links );
+	}
+
+
 	/**
 	 * @covers ::get_items
 	 */

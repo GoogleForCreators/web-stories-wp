@@ -31,7 +31,7 @@ const Noop = () => null;
 
 function StickerDisplay({ element }) {
   const { sticker } = element;
-  const Sticker = stickers[sticker?.type] || Noop;
+  const Sticker = stickers[sticker?.type]?.svg || Noop;
   return <Sticker style={style} />;
 }
 

@@ -32,6 +32,7 @@ import {
   STYLE_PRESETS_PER_ROW,
 } from '../../../../constants';
 import { getHTMLInfo } from '../../../richText/htmlManipulation';
+import { PRESET_TYPES } from './constants';
 
 const TEXT_PRESET_STYLES = [
   'backgroundColor',
@@ -137,7 +138,7 @@ function getTextInlineStyles(content) {
 
 export function getTextPresets(elements, storyStyles, type) {
   const colors =
-    'style' === type
+    PRESET_TYPES.STYLE === type
       ? []
       : elements
           .map(({ content }) => getHTMLInfo(content).color)
@@ -147,7 +148,7 @@ export function getTextPresets(elements, storyStyles, type) {
           );
 
   const textStyles =
-    'color' === type
+    PRESET_TYPES.COLOR === type
       ? []
       : elements
           .map((text) => {

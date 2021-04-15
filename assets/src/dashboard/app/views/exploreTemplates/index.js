@@ -17,14 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
-import { DashboardSnackbar, PreviewStoryView } from '../';
 
 import useApi from '../../api/useApi';
 import Content from './content';
@@ -68,7 +67,7 @@ function ExploreTemplates() {
     })
   );
 
-  const { filter, page, activePreview, search, sort, view } = useTemplateView({
+  const { filter, page, search, sort, view } = useTemplateView({
     totalPages,
   });
 
@@ -82,25 +81,10 @@ function ExploreTemplates() {
     });
   }, [templatesOrderById, templates]);
 
-  const handlePreviewTemplate = useCallback(
-    (e, template) => {
-      activePreview.set(e, template);
-    },
-    [activePreview]
-  );
-
-  if (activePreview.value) {
-    return (
-      <PreviewStoryView
-        story={activePreview.value}
-        handleClose={handlePreviewTemplate}
-      />
-    );
-  }
-
   return (
     <Layout.Provider>
       <Header
+        isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
         templates={orderedTemplates}
@@ -116,10 +100,9 @@ function ExploreTemplates() {
         totalTemplates={totalTemplates}
         search={search}
         view={view}
-        templateActions={{ createStoryFromTemplate, handlePreviewTemplate }}
+        templateActions={{ createStoryFromTemplate }}
       />
       <Layout.Fixed>
-        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>

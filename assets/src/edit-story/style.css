@@ -39,6 +39,7 @@ body.js.edit-story #web-stories-editor {
   background-color: #131516; /* theme.colors.bg.primary */
   position: relative;
   height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
+  overflow: hidden;
 }
 
 body.js.edit-story #web-stories-editor .loading-message {

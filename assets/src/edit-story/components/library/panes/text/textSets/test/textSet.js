@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { fireEvent } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import LibraryContext from '../../../../context';
@@ -95,6 +90,8 @@ const SET = [
     previewOffsetY: 0,
     textSetWidth: 333,
     textSetHeight: 304,
+    normalizedOffsetX: 0,
+    normalizedOffsetY: 0,
   },
   {
     opacity: 100,
@@ -174,6 +171,8 @@ const SET = [
     previewOffsetY: 30,
     textSetWidth: 333,
     textSetHeight: 304,
+    normalizedOffsetX: 0,
+    normalizedOffsetY: 0,
   },
 ];
 
@@ -269,25 +268,6 @@ describe('TextSets', () => {
     const el2 = container.querySelector('[data-element-id="2"]');
     expect(el2).toHaveTextContent(
       'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.'
-    );
-  });
-
-  it('should allow inserting a text set', () => {
-    insertTextSet.mockImplementation((elements) => elements);
-    const { getByRole } = setup(SET);
-    // There has to be exactly one set, thus we're using getByRole.
-    const set = getByRole('listitem');
-    expect(set).toBeInTheDocument();
-    // Last child is always the moveable targetBox.
-    fireEvent.click(set.lastChild);
-
-    expect(insertTextSet).toHaveBeenCalledTimes(1);
-
-    const element1 = insertTextSet.mock.calls[0][0][0];
-    expect(element1.content).toContain('Good design is aesthetic');
-    const element2 = insertTextSet.mock.calls[0][0][1];
-    expect(element2.content).toContain(
-      'The possibilities for innovation are not'
     );
   });
 });

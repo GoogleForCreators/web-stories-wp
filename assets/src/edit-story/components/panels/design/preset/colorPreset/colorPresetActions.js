@@ -46,12 +46,12 @@ const ActionsWrapper = styled.div`
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.secondary};
+  color: ${({ theme }) => theme.colors.fg.secondary};
   cursor: pointer;
   padding: 0;
   line-height: 20px;
   svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    color: ${({ theme }) => theme.colors.fg.secondary};
     width: 32px;
     height: 32px;
   }
@@ -60,10 +60,10 @@ const AddColorPreset = styled.button`
 const CtaWrapper = styled.div`
   font-size: 14px;
   line-height: 32px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.tertiary};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
 
   svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+    color: ${({ theme }) => theme.colors.standard.white};
     width: 32px;
     height: 32px;
     vertical-align: bottom;
@@ -103,10 +103,17 @@ const ButtonWrapper = styled.div`
 
 const Strong = styled.span`
   font-size: 24px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.standard.white};
 `;
 
-function ColorPresetActions({ color, pushUpdate }) {
+/**
+ * @param {Object} properties Properties.
+ * @param {Object} properties.color Current color.
+ * @param {Function} properties.pushUpdate Update function.
+ * @param {Function} properties.onAction Function called when user initiates an action.
+ * @return {*} Element.
+ */
+function ColorPresetActions({ color, pushUpdate, onAction }) {
   const [showLocalColors, setShowLocalColors] = useState(true);
   const {
     selectedElements,
@@ -164,6 +171,7 @@ function ColorPresetActions({ color, pushUpdate }) {
         updateStory({
           properties: newProps,
         });
+        onAction?.();
       }
     },
     [
@@ -174,6 +182,7 @@ function ColorPresetActions({ color, pushUpdate }) {
       isText,
       globalColors,
       updateStory,
+      onAction,
     ]
   );
 
@@ -196,9 +205,10 @@ function ColorPresetActions({ color, pushUpdate }) {
           <StyledDropDown
             options={options}
             selectedValue={showLocalColors ? LOCAL : GLOBAL}
-            onMenuItemClick={(evt, value) =>
-              setShowLocalColors(value === LOCAL)
-            }
+            onMenuItemClick={(evt, value) => {
+              setShowLocalColors(value === LOCAL);
+              onAction?.();
+            }}
             isInline
             hasSearch={false}
             aria-label={__('Select color type', 'web-stories')}
@@ -244,6 +254,7 @@ function ColorPresetActions({ color, pushUpdate }) {
 ColorPresetActions.propTypes = {
   color: PatternPropType,
   pushUpdate: PropTypes.func,
+  onAction: PropTypes.func,
 };
 
 export default ColorPresetActions;

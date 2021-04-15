@@ -26,11 +26,13 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { ColorStopPropType } from '../../types';
 import {
+  Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '../../../design-system/components/button';
-import { Button, Icons, Tooltip } from '../../../design-system';
+  Icons,
+} from '../../../design-system';
+import Tooltip from '../tooltip';
 import GradientLine from './gradientLine';
 
 const Wrapper = styled.div`

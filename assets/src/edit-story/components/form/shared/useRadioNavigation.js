@@ -46,8 +46,9 @@ function useRadioNavigation(ref) {
         return;
       }
 
-      // Now focus this one
+      // Now select this one
       list[newIndex].focus();
+      list[newIndex].click();
     },
     [ref]
   );

@@ -25,7 +25,6 @@ import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
 
 export const ListGroup = styled.ul`
-  box-sizing: border-box;
   list-style-type: none;
   margin: 6px 0;
   display: block;
@@ -47,7 +46,7 @@ export const ListItem = styled.li(
     position: relative;
     display: grid;
     grid-template-columns: 32px 1fr;
-    padding: 6px 2px 6px 8px;
+    padding: 6px 8px;
     margin: 4px 8px;
     border-radius: ${theme.borders.radius.small};
     align-items: center;

@@ -56,12 +56,6 @@ describe('Grid view', () => {
     return stories;
   }
 
-  function getGridElementById(id) {
-    const gridElement = fixture.screen.getByTestId(`story-grid-item-${id}`);
-
-    return gridElement;
-  }
-
   it('should render', async () => {
     const { storiesOrderById } = await getStoriesState();
     const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
@@ -102,7 +96,7 @@ describe('Grid view', () => {
     const inputLength = input.value.length;
 
     for (let iter = 0; iter < inputLength; iter++) {
-      // disable eslint to prevet overlapping .act calls
+      // disable eslint to prevent overlapping .act calls
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('Backspace');
     }
@@ -438,68 +432,6 @@ describe('Grid view', () => {
       );
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
-    });
-  });
-
-  describe('Action: Creator can preview their story from grid view', () => {
-    beforeEach(async () => {
-      fixture.setFlags({ enableStoryPreviews: true });
-      await fixture.render();
-    });
-
-    it('should trigger story preview when user presses Enter while focused on a card preview button', async () => {
-      const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
-
-      await fixture.events.focus(gridContainer);
-
-      await fixture.events.keyboard.press('right');
-      // tab to the first button
-      await fixture.events.keyboard.press('tab');
-
-      await fixture.events.keyboard.press('Enter');
-
-      const viewPreviewStory = await fixture.screen.queryByTestId(
-        'preview-iframe'
-      );
-      expect(viewPreviewStory).toBeTruthy();
-    });
-
-    it('should trigger template preview when user clicks the center button (view or preview)', async () => {
-      const { storiesOrderById } = await getStoriesState();
-
-      const currentCard = await getGridElementById(storiesOrderById[1]);
-      const utils = within(currentCard);
-
-      const centerActionButton = utils.getByTestId('card-center-action');
-      expect(centerActionButton).toBeTruthy();
-
-      // We need to click slightly above the center of the card to avoid clicking 'View'
-      await fixture.events.click(centerActionButton);
-
-      const viewPreviewStory = await fixture.screen.queryByTestId(
-        'preview-iframe'
-      );
-
-      expect(viewPreviewStory).toBeTruthy();
-    });
-
-    it('should trigger template preview when user presses Enter while focused on the center button (view or preview)', async () => {
-      const { storiesOrderById } = await getStoriesState();
-
-      const currentCard = await getGridElementById(storiesOrderById[1]);
-      const utils = within(currentCard);
-
-      const centerActionButton = utils.getByTestId('card-center-action');
-      expect(centerActionButton).toBeTruthy();
-
-      await fixture.events.focus(centerActionButton);
-      await fixture.events.keyboard.press('Enter');
-
-      const viewPreviewStory = await fixture.screen.queryByTestId(
-        'preview-iframe'
-      );
-
-      expect(viewPreviewStory).toBeTruthy();
     });
   });
 });

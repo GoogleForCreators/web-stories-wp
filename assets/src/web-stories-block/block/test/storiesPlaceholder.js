@@ -24,6 +24,14 @@ import { render, screen } from '@testing-library/react';
  */
 import StoriesLoading from '../components/storiesLoading';
 
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+  };
+});
+
 describe('StoriesLoading', () => {
   it('should display spinner', () => {
     render(<StoriesLoading />);

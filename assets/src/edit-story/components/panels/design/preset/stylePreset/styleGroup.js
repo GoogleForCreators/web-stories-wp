@@ -26,6 +26,7 @@ import PropTypes from 'prop-types';
  */
 import useKeyboardNavigation from '../useKeyboardNavigation';
 import { SAVED_STYLE_HEIGHT } from '../../../../../constants';
+import { PRESET_TYPES } from '../constants';
 import StyleItem from './styleItem';
 
 const Group = styled.div`
@@ -49,7 +50,7 @@ function StyleGroup({ styles, isEditMode, handleClick }) {
     activeIndex,
     setActiveIndex,
     groupRef,
-    type: 'style',
+    type: PRESET_TYPES.STYLE,
   });
 
   return (

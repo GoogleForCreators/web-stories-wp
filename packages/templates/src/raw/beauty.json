@@ -1,4 +1,104 @@
 {
+  "current": "65359a38-f1fa-4048-9b99-9415147b74d3",
+  "selection": [],
+  "story": {
+    "globalStoryStyles": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 243,
+              "g": 21,
+              "b": 21
+            }
+          },
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 35,
+          "lineHeight": 1,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "fontWeight": 400,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
+      "colors": [
+        {
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          }
+        },
+        {
+          "color": {
+            "r": 22,
+            "g": 114,
+            "b": 175
+          }
+        },
+        {
+          "color": {
+            "r": 27,
+            "g": 219,
+            "b": 79
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 208,
+            "b": 215
+          }
+        },
+        {
+          "color": {
+            "r": 196,
+            "g": 196,
+            "b": 196
+          }
+        }
+      ]
+    }
+  },
   "version": 25,
   "pages": [
     {
@@ -345,197 +445,75 @@
     {
       "animations": [
         {
-          "id": "d16a0e37-4ccc-4508-ba94-d8be0cb6d6f0",
-          "targets": ["8e607e54-93ea-48ce-992b-5f62d3471dbf"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "8db0f029-baa3-46e4-9b97-0fa454ba5623",
-          "targets": ["24dc1046-9f0d-476b-aff9-08f01aff87fa"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "67ffcaa9-2eb3-4a6c-b128-c6e471366d17",
-          "targets": ["6aedbcf1-b0e9-42e3-9353-bda8777805f4"],
-          "type": "zoom",
-          "zoomFrom": 0,
-          "zoomTo": 1,
-          "duration": 350,
-          "delay": 100,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
-          "id": "776fe7c7-545c-4082-9090-4ee12e51707c",
-          "targets": ["82dee322-a9d6-4673-95ca-6de22733f1cc"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 50,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "b0f28aed-f2bf-41ce-bba7-1d830f3f9e66",
-          "targets": ["77ec7719-572b-43c1-8972-dd3151b5c2d4"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 50,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "9d8ea119-e853-496e-90bb-bd7777b873fb",
-          "targets": ["eef26041-9204-4414-aea3-14e6dcd46af3"],
-          "type": "zoom",
-          "zoomFrom": 0,
-          "zoomTo": 1,
-          "duration": 350,
-          "delay": 150,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
-          "id": "a114e65e-ccfe-4720-acdf-eeb025989def",
-          "targets": ["88fb9e75-eb49-4e79-9b04-fc5e0e74a9fa"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 100,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "598ae5c1-dc2a-48a3-a30f-4507e95facd3",
-          "targets": ["c401318a-0ae4-4e22-8636-8bd637c33738"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 100,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "a815d96f-672b-4c5a-8aa9-9e075db5ff00",
-          "targets": ["b2652611-2233-4f3d-bcee-125ae133c280"],
-          "type": "zoom",
-          "zoomFrom": 0,
-          "zoomTo": 1,
-          "duration": 350,
-          "delay": 200,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "04bc0465-5eee-4ba3-8275-f8fdcb039ac5",
-          "targets": ["a897895c-1b37-4070-a0eb-5a6ea4c32ace"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 150,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "7182c1b4-a99b-4507-8bb0-15d9a176db85",
-          "targets": ["f4d7b7b0-8e97-4d10-8440-9f1238238194"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 150,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "0e945f3b-f0b4-415d-9d78-d476a8e15bdc",
-          "targets": ["e59edebf-280c-4dcd-8c92-5571dd50edf0"],
-          "type": "zoom",
-          "zoomFrom": 0,
-          "zoomTo": 1,
-          "duration": 350,
-          "delay": 250,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
-          "id": "2e855a6f-1b77-4835-8e80-ef56d61ff766",
-          "targets": ["3851b1f7-4ec6-466d-8486-ba1149de9b5d"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 199,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "2f73449d-6dd1-404d-ac3b-647ce784f70e",
-          "targets": ["c12ef684-cb56-4408-ba74-5386a727f2e1"],
-          "type": "bounce",
-          "duration": 2100,
-          "delay": 199,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
-        },
-        {
-          "id": "ba815d22-dd54-4d72-8025-5aad93265186",
-          "targets": ["6f659573-b290-4fa3-9dac-97788e4da7f2"],
-          "type": "zoom",
-          "zoomFrom": 0,
-          "zoomTo": 1,
-          "duration": 350,
-          "delay": 300,
-          "direction": "normal",
-          "easingPreset": "outSine",
-          "fill": "both"
-        },
-        {
           "id": "fb1dee53-6aa2-4712-aab3-d6999a850212",
+          "type": "effect-pulse",
           "targets": ["53004538-6bca-4ac6-810e-18bd81e84276"],
-          "type": "bounce",
-          "duration": 3000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
+          "scale": 0.3,
+          "iterations": 1,
+          "duration": 1500,
+          "delay": 0
         },
         {
           "id": "808d6cd9-2a3b-4194-9c0c-d92f1e9c0198",
+          "type": "effect-pulse",
           "targets": ["51e3dfb3-fe95-4132-ade1-cd226982cf68"],
-          "type": "bounce",
-          "duration": 3000,
-          "delay": 0,
-          "direction": "normal",
-          "easingPreset": "linear",
-          "fill": "both"
+          "scale": 0.3,
+          "iterations": 1,
+          "duration": 1500,
+          "delay": 0
         },
         {
           "id": "b933a01b-f276-4da4-8c6a-47593c332fdb",
+          "type": "effect-fly-in",
           "targets": ["96e93ceb-accb-4c38-b603-7d616174e5d3"],
-          "type": "move",
-          "overflowHidden": true,
-          "offsetX": 0,
-          "offsetY": "100%",
-          "duration": 700,
-          "delay": 600,
-          "direction": "normal",
-          "easingPreset": "outExpo",
-          "fill": "both"
+          "flyInDir": "bottomToTop",
+          "duration": 900,
+          "delay": 1000
+        },
+        {
+          "id": "86bad41a-1ac5-4b21-b837-3b5fa6a082d7",
+          "type": "effect-pulse",
+          "targets": ["bd8f9376-7962-44a0-b2b7-175ab75b9d58"],
+          "scale": 0.3,
+          "iterations": 1,
+          "duration": 1000,
+          "delay": 200
+        },
+        {
+          "id": "b8d21e72-0ac0-468a-963e-70f3eb559e28",
+          "type": "effect-pulse",
+          "targets": ["254ac1ec-228e-424f-ab2f-392364e08947"],
+          "scale": 0.4,
+          "iterations": 1,
+          "duration": 1000,
+          "delay": 280
+        },
+        {
+          "id": "ea106de2-790d-4fd9-bf91-435246cb1653",
+          "type": "effect-pulse",
+          "targets": ["3797ec08-e931-4774-a4bd-9f91af2439f5"],
+          "scale": 0.4,
+          "iterations": 1,
+          "duration": 1000,
+          "delay": 330
+        },
+        {
+          "id": "0a5bfb31-4e6f-49d1-99a0-41b6639cf5e2",
+          "type": "effect-pulse",
+          "targets": ["98375f28-5877-481d-a08d-a0b525af943c"],
+          "scale": 0.35,
+          "iterations": 1,
+          "duration": 1000,
+          "delay": 550
+        },
+        {
+          "id": "3fa39775-04b1-4642-a17b-6550f2a1e643",
+          "type": "effect-pulse",
+          "targets": ["19df8224-87e4-4d81-a452-43b6d0a218f5"],
+          "scale": 0.45,
+          "iterations": 1,
+          "duration": 1000,
+          "delay": 500
         }
       ],
       "elements": [
@@ -565,6 +543,166 @@
           "type": "shape",
           "id": "ef056bde-fdc3-4f71-809a-e69c62ae914d",
           "isDefaultBackground": true
+        },
+        {
+          "x": 118.5,
+          "y": 554,
+          "width": 175,
+          "height": 36,
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Chivo",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "96e93ceb-accb-4c38-b603-7d616174e5d3",
+          "content": "<span style=\"font-weight: 900; color: #28292b\">Anonymous</span>",
+          "fontSize": 28,
+          "padding": {
+            "horizontal": 0,
+            "vertical": 0
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "x": 40,
+          "y": 3,
+          "width": 66,
+          "height": 57,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyHeart"
+          },
+          "id": "bd8f9376-7962-44a0-b2b7-175ab75b9d58"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 66,
+          "height": 57,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyHeart"
+          },
+          "basedOn": "bd8f9376-7962-44a0-b2b7-175ab75b9d58",
+          "id": "254ac1ec-228e-424f-ab2f-392364e08947",
+          "x": 316,
+          "y": 45
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 66,
+          "height": 57,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyHeart"
+          },
+          "basedOn": "254ac1ec-228e-424f-ab2f-392364e08947",
+          "id": "3797ec08-e931-4774-a4bd-9f91af2439f5",
+          "x": 30,
+          "y": 235
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 66,
+          "height": 57,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyHeart"
+          },
+          "basedOn": "3797ec08-e931-4774-a4bd-9f91af2439f5",
+          "id": "98375f28-5877-481d-a08d-a0b525af943c",
+          "x": 337,
+          "y": 540
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "type": "sticker",
+          "width": 66,
+          "height": 57,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "sticker": {
+            "type": "beautyHeart"
+          },
+          "basedOn": "98375f28-5877-481d-a08d-a0b525af943c",
+          "id": "19df8224-87e4-4d81-a452-43b6d0a218f5",
+          "x": 6,
+          "y": 590
         },
         {
           "x": 61,
@@ -650,491 +788,6 @@
             "horizontal": 0,
             "vertical": 0
           }
-        },
-        {
-          "x": 118.5,
-          "y": 554,
-          "width": 175,
-          "height": 36,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Chivo",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 700],
-              [0, 900],
-              [1, 300],
-              [1, 400],
-              [1, 700],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "96e93ceb-accb-4c38-b603-7d616174e5d3",
-          "content": "<span style=\"font-weight: 900; color: #28292b\">Anonymous</span>",
-          "fontSize": 28,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "x": 45,
-          "y": 8,
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "id": "6aedbcf1-b0e9-42e3-9353-bda8777805f4"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "6aedbcf1-b0e9-42e3-9353-bda8777805f4",
-          "id": "24dc1046-9f0d-476b-aff9-08f01aff87fa",
-          "x": 52,
-          "y": 3
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 243,
-              "g": 217,
-              "b": 225
-            }
-          },
-          "type": "shape",
-          "width": 48,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "24dc1046-9f0d-476b-aff9-08f01aff87fa",
-          "id": "8e607e54-93ea-48ce-992b-5f62d3471dbf",
-          "x": 53,
-          "y": 6
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "6aedbcf1-b0e9-42e3-9353-bda8777805f4",
-          "id": "eef26041-9204-4414-aea3-14e6dcd46af3",
-          "x": 322,
-          "y": 54
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "24dc1046-9f0d-476b-aff9-08f01aff87fa",
-          "id": "82dee322-a9d6-4673-95ca-6de22733f1cc",
-          "x": 328,
-          "y": 49
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 243,
-              "g": 217,
-              "b": 225
-            }
-          },
-          "type": "shape",
-          "width": 48,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "8e607e54-93ea-48ce-992b-5f62d3471dbf",
-          "id": "77ec7719-572b-43c1-8972-dd3151b5c2d4",
-          "x": 329,
-          "y": 52
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "eef26041-9204-4414-aea3-14e6dcd46af3",
-          "id": "b2652611-2233-4f3d-bcee-125ae133c280",
-          "x": 32,
-          "y": 246
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "82dee322-a9d6-4673-95ca-6de22733f1cc",
-          "id": "88fb9e75-eb49-4e79-9b04-fc5e0e74a9fa",
-          "x": 39,
-          "y": 241
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 243,
-              "g": 217,
-              "b": 225
-            }
-          },
-          "type": "shape",
-          "width": 48,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "77ec7719-572b-43c1-8972-dd3151b5c2d4",
-          "id": "c401318a-0ae4-4e22-8636-8bd637c33738",
-          "x": 40,
-          "y": 244
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "b2652611-2233-4f3d-bcee-125ae133c280",
-          "id": "e59edebf-280c-4dcd-8c92-5571dd50edf0",
-          "x": 341,
-          "y": 550
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "88fb9e75-eb49-4e79-9b04-fc5e0e74a9fa",
-          "id": "a897895c-1b37-4070-a0eb-5a6ea4c32ace",
-          "x": 348,
-          "y": 545
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 243,
-              "g": 217,
-              "b": 225
-            }
-          },
-          "type": "shape",
-          "width": 48,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "c401318a-0ae4-4e22-8636-8bd637c33738",
-          "id": "f4d7b7b0-8e97-4d10-8440-9f1238238194",
-          "x": 349,
-          "y": 548
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "e59edebf-280c-4dcd-8c92-5571dd50edf0",
-          "id": "6f659573-b290-4fa3-9dac-97788e4da7f2",
-          "x": 10,
-          "y": 598
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 40,
-              "g": 41,
-              "b": 43
-            }
-          },
-          "type": "shape",
-          "width": 51,
-          "height": 46,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "a897895c-1b37-4070-a0eb-5a6ea4c32ace",
-          "id": "c12ef684-cb56-4408-ba74-5386a727f2e1",
-          "x": 17,
-          "y": 593
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 243,
-              "g": 217,
-              "b": 225
-            }
-          },
-          "type": "shape",
-          "width": 48,
-          "height": 40,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "heart"
-          },
-          "basedOn": "f4d7b7b0-8e97-4d10-8440-9f1238238194",
-          "id": "3851b1f7-4ec6-466d-8486-ba1149de9b5d",
-          "x": 18,
-          "y": 596
         }
       ],
       "type": "page",

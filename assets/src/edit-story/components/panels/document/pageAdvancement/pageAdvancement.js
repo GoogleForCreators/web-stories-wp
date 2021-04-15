@@ -24,7 +24,7 @@ import { useDebouncedCallback } from 'use-debounce';
 /**
  * External dependencies
  */
-import { __, _x } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -32,18 +32,22 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import clamp from '../../../../utils/clamp';
 import { useStory } from '../../../../app/story';
-import { Switch, Numeric, Row, Label } from '../../../form';
-import RangeInput from '../../../rangeInput';
-import Note from '../../shared/note';
+import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';
+import {
+  NumericInput,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../../design-system';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;
 `;
 
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
+const MutedText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const DEFAULT_AUTO_ADVANCE = true;
@@ -76,7 +80,7 @@ function PageAdvancementPanel() {
   }, [defaultPageDuration]);
 
   const updateAutoAdvance = useCallback(
-    (value) => {
+    (_evt, value) => {
       updateStory({ properties: { autoAdvance: value } });
       trackEvent('change_page_advancement', {
         status: value ? 'auto' : 'manual',
@@ -106,9 +110,8 @@ function PageAdvancementPanel() {
     updateDefaultPageDuration(duration);
   }, [duration, updateDefaultPageDuration]);
 
-  const handleRangeChange = useCallback(
-    // Make sure to round to nearest .1
-    (value) => setDuration(Math.round(value * 10) / 10),
+  const handleChange = useCallback(
+    (_evt, newValue) => setDuration(newValue),
     []
   );
 
@@ -119,16 +122,17 @@ function PageAdvancementPanel() {
       collapsedByDefault={false}
     >
       <Row>
-        <Note>
+        <MutedText>
           {__(
             'Control whether a story auto-advances between pages, or whether the reader has to manually tap to advance.',
             'web-stories'
           )}
-        </Note>
+        </MutedText>
       </Row>
       <SwitchRow>
         <Switch
-          label={__('Page Advancement', 'web-stories')}
+          groupLabel={__('Page Advancement', 'web-stories')}
+          name="page-advancement-switch"
           value={autoAdvance}
           onLabel={__('Auto', 'web-stories')}
           offLabel={__('Manual', 'web-stories')}
@@ -136,30 +140,18 @@ function PageAdvancementPanel() {
         />
       </SwitchRow>
       {autoAdvance && (
-        <>
-          <Row>
-            <Label>{__('Default Page Duration', 'web-stories')}</Label>
-            <RangeInput
-              min={MIN_MAX.PAGE_DURATION.MIN}
-              max={MIN_MAX.PAGE_DURATION.MAX}
-              majorStep={1}
-              minorStep={0.1}
-              value={duration}
-              handleChange={handleRangeChange}
-              aria-label={__('Default Page Duration', 'web-stories')}
-            />
-          </Row>
-          <Row>
-            <BoxedNumeric
-              symbol={_x('s', 'Seconds', 'web-stories')}
-              value={duration}
-              onChange={setDuration}
-              aria-label={__('Default page duration in seconds', 'web-stories')}
-              min={MIN_MAX.PAGE_DURATION.MIN}
-              max={MIN_MAX.PAGE_DURATION.MAX}
-            />
-          </Row>
-        </>
+        <Row>
+          <NumericInput
+            unit={` ${__('seconds', 'web-stories')}`}
+            suffix={__('Duration', 'web-stories')}
+            value={duration}
+            onChange={handleChange}
+            aria-label={__('Default page duration in seconds', 'web-stories')}
+            min={MIN_MAX.PAGE_DURATION.MIN}
+            max={MIN_MAX.PAGE_DURATION.MAX}
+            isFloat
+          />
+        </Row>
       )}
     </SimplePanel>
   );

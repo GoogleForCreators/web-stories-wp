@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -42,7 +46,7 @@ describe('Link Panel', () => {
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
-      moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+      moveBy(0, safezoneHeight - frameHeight - 5, { steps: 10 }),
       up(),
     ]);
   };
@@ -53,7 +57,7 @@ describe('Link Panel', () => {
     );
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(link);
-    await input.dispatchEvent(new window.Event('blur'));
+    await fixture.events.keyboard.press('tab');
   };
 
   async function clickOnTarget(target, key = false) {
@@ -98,29 +102,34 @@ describe('Link Panel', () => {
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
-      await linkPanel.address.dispatchEvent(new window.Event('blur'));
-      expect(linkPanel.address.value).toBe('http://example.com');
+      await fixture.events.keyboard.press('tab');
+      expect(linkPanel.address.value).toBe('https://example.com');
     });
 
     it('should not add additional protocol if already present', async () => {
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('https://example.com');
 
-      await linkPanel.address.dispatchEvent(new window.Event('blur'));
+      await fixture.events.keyboard.press('tab');
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
     it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
+      // make sure address input exists
+      await waitFor(() => linkPanel.address);
+
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
       // Debounce time for populating meta-data.
       await fixture.events.keyboard.press('tab');
       await fixture.events.sleep(1200);
+      // make sure description input exists
+      await waitFor(() => linkPanel.description);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
-
+      await fixture.events.keyboard.press('tab');
       // Unselect element.
       const fullbleed = fixture.container.querySelector(
         '[data-testid="fullbleed"]'
@@ -139,6 +148,7 @@ describe('Link Panel', () => {
 
       // Select the element again.
       await fixture.events.click(frame);
+      await waitFor(() => fixture.editor.inspector.designPanel.link.address);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.link.address,
         { clickCount: 3 }
@@ -310,7 +320,7 @@ describe('Link Panel', () => {
 
       await fixture.events.keyboard.type('http://google.com');
 
-      await linkPanel.address.dispatchEvent(new window.Event('blur'));
+      await fixture.events.keyboard.press('tab');
 
       // Click the elements separately to verify having the new link set.
       await clickOnTarget(frame1);

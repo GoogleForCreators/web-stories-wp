@@ -36,7 +36,7 @@ import {
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
-import { SnackbarProvider } from '../../../../snackbar';
+import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '../';
 import StoriesView from '../storiesView';
 
@@ -76,7 +76,6 @@ const storyActions = {
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),
-  handlePreviewStory: action('handle preview story selected'),
 };
 
 const longerListOfStories = formattedStoriesArray
