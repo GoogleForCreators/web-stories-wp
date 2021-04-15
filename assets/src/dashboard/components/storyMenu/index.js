@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from 'react';
@@ -25,7 +26,6 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
