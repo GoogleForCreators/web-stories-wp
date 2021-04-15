@@ -119,7 +119,7 @@ jobs:
           declare -a WARNINGS=($OUTPUT)
           unset IFS
 
-          for WARNING in "${WARNINGS[@]}" do
+          for WARNING in "${WARNINGS[@]}"; do
             # Filter false positives.
             if [[ $WARNING == *"translator comment"* ]] && [[ $WARNING != *"%s"* ]]; then
               continue
