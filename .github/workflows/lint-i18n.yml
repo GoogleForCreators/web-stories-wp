@@ -103,9 +103,12 @@ jobs:
       # See https://github.com/wp-cli/i18n-command/issues/154
       - name: Generate POT file
         run: |
+          OUTPUT=$((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null)
+
+          HAS_ERROR=false
+
           EXPECTED_NUMBER_OF_STRINGS=1000
           NUMBER_OF_FOUND_STRINGS=$(grep -o msgstr web-stories.pot | wc -l | xargs)
-          HAS_ERROR=false
 
           if (( "$NUMBER_OF_FOUND_STRINGS" < "$EXPECTED_NUMBER_OF_STRINGS" )); then
           HAS_ERROR=true
@@ -113,7 +116,7 @@ jobs:
           fi
 
           IFS=$'\n'
-          declare -a WARNINGS=($((wp i18n make-pot build/web-stories web-stories.pot) 2>&1 >/dev/null))
+          declare -a WARNINGS=($OUTPUT)
           unset IFS
 
           for WARNING in "${WARNINGS[@]}" do
