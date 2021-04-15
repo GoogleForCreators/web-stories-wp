@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -67,7 +67,6 @@ const AppContent = () => {
     },
     actions: { push },
   } = useRouteHistory();
-
   const { currentTemplate, addInitialFetchListener } = useApi(
     ({
       actions: {
@@ -82,18 +81,21 @@ const AppContent = () => {
       addInitialFetchListener,
     })
   );
+  const isFirstLoadOnMyStories = useRef(currentPath === APP_ROUTES.MY_STORIES);
+  const [isRedirectComplete, setIsRedirectComplete] = useState(
+    !isFirstLoadOnMyStories.current
+  );
 
   // Direct user to templates on first load if they
   // have no stories created.
-  useEffect(
-    () =>
-      addInitialFetchListener?.((storyStatuses) => {
-        if (storyStatuses?.all <= 0) {
-          push(APP_ROUTES.TEMPLATES_GALLERY);
-        }
-      }),
-    [addInitialFetchListener, push]
-  );
+  useEffect(() => {
+    return addInitialFetchListener?.((storyStatuses) => {
+      if (storyStatuses?.all <= 0 && isFirstLoadOnMyStories.current) {
+        push(APP_ROUTES.TEMPLATES_GALLERY);
+      }
+      setIsRedirectComplete(true);
+    });
+  }, [addInitialFetchListener, push, currentPath]);
 
   const fullPath = useMemo(() => {
     return currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) &&
@@ -106,6 +108,10 @@ const AppContent = () => {
   }, [currentPath, currentTemplate]);
 
   useEffect(() => {
+    if (!isRedirectComplete) {
+      return;
+    }
+
     if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && !currentTemplate) {
       return;
     }
@@ -130,7 +136,7 @@ const AppContent = () => {
 
     // Disable reason: avoid sending duplicate tracking events.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fullPath]);
+  }, [fullPath, isRedirectComplete]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
