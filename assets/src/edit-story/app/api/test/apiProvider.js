@@ -31,8 +31,8 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../removeImagesFromPageLayouts');
-import removeImagesFromPageLayouts from '../removeImagesFromPageLayouts';
+jest.mock('../removeImagesFromPageTemplates');
+import removeImagesFromPageTemplates from '../removeImagesFromPageTemplates';
 
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
@@ -87,9 +87,9 @@ describe('APIProvider', () => {
     });
   });
 
-  it('getPageLayouts gets pageLayouts w/ cdnURL', async () => {
-    const pageLayouts = [{ id: 'templateid' }];
-    getAllTemplatesMock.mockReturnValue(pageLayouts);
+  it('getPageTemplates gets pageTemplates w/ cdnURL', async () => {
+    const pageTemplates = [{ id: 'templateid' }];
+    getAllTemplatesMock.mockReturnValue(pageTemplates);
 
     const cdnURL = 'https://test.url';
     const assetsURL = 'https://plugin.url/assets/';
@@ -102,26 +102,26 @@ describe('APIProvider', () => {
       },
     });
 
-    let pageLayoutsResult;
+    let pageTemplatesResult;
     await act(async () => {
-      pageLayoutsResult = await result.current.actions.getPageLayouts({
+      pageTemplatesResult = await result.current.actions.getPageTemplates({
         showImages: true,
       });
     });
 
-    expect(removeImagesFromPageLayouts).toHaveBeenCalledWith({
+    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith({
       assetsURL,
       showImages: true,
-      templates: pageLayouts,
+      templates: pageTemplates,
     });
-    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
+    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 
-  it('getPageLayouts gets pageLayouts w/ cdnURL and replaces images', async () => {
-    const pageLayouts = [{ id: 'templateid' }];
-    const formattedPageLayouts = [{ id: 'templateid', result: 'formatted' }];
-    getAllTemplatesMock.mockReturnValue(pageLayouts);
-    removeImagesFromPageLayouts.mockReturnValue(formattedPageLayouts);
+  it('getPageTemplates gets pageTemplates w/ cdnURL and replaces images', async () => {
+    const pageTemplates = [{ id: 'templateid' }];
+    const formattedPageTemplates = [{ id: 'templateid', result: 'formatted' }];
+    getAllTemplatesMock.mockReturnValue(pageTemplates);
+    removeImagesFromPageTemplates.mockReturnValue(formattedPageTemplates);
 
     const cdnURL = 'https://test.url';
     const assetsURL = 'https://plugin.url/assets/';
@@ -134,22 +134,22 @@ describe('APIProvider', () => {
       },
     });
 
-    let pageLayoutsResult;
+    let pageTemplatesResult;
     await act(async () => {
-      pageLayoutsResult = await result.current.actions.getPageLayouts();
+      pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(removeImagesFromPageLayouts).toHaveBeenCalledWith({
+    expect(removeImagesFromPageTemplates).toHaveBeenCalledWith({
       assetsURL,
       showImages: false,
-      templates: pageLayouts,
+      templates: pageTemplates,
     });
-    expect(pageLayoutsResult).toStrictEqual(formattedPageLayouts);
+    expect(pageTemplatesResult).toStrictEqual(formattedPageTemplates);
   });
 
-  it('getPageLayouts should memoize the templates if they have already been fetched', async () => {
-    const pageLayouts = [{ id: 'templateid' }];
-    getAllTemplatesMock.mockReturnValue(pageLayouts);
+  it('getPageTemplates should memoize the templates if they have already been fetched', async () => {
+    const pageTemplates = [{ id: 'templateid' }];
+    getAllTemplatesMock.mockReturnValue(pageTemplates);
 
     const cdnURL = 'https://test.url';
     const assetsURL = 'https://plugin.url/assets/';
@@ -162,23 +162,23 @@ describe('APIProvider', () => {
       },
     });
 
-    let pageLayoutsResult;
+    let pageTemplatesResult;
     await act(async () => {
-      pageLayoutsResult = await result.current.actions.getPageLayouts({
+      pageTemplatesResult = await result.current.actions.getPageTemplates({
         showImages: true,
       });
     });
 
     expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
-    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
+    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
 
     await act(async () => {
-      pageLayoutsResult = await result.current.actions.getPageLayouts({
+      pageTemplatesResult = await result.current.actions.getPageTemplates({
         showImages: true,
       });
     });
 
     expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
-    expect(pageLayoutsResult).toStrictEqual(pageLayouts);
+    expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 });

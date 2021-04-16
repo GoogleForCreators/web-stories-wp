@@ -50,6 +50,7 @@ function setup_new_site() {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
+	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
 	// TODO move this logic to Database_Upgrader class.
 	$database_upgrader = $injector->make( Database_Upgrader::class );
 	$database_upgrader->register();
@@ -129,6 +130,7 @@ function remove_site( $error, $site ) {
 	$story->remove_caps_from_roles();
 	restore_current_blog();
 }
+
 add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
 
 /**

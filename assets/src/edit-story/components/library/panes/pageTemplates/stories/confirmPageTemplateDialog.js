@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-export default function reshapeStoryPreview(storyProps = {}) {
-  const story = {
-    ...storyProps,
-  };
-  const pages = [...storyProps.pages];
-  const metadata = {
-    publisher: {
-      name: '',
-    },
-  };
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
 
-  return {
-    story,
-    pages,
-    metadata,
-  };
-}
+/**
+ * Internal dependencies
+ */
+import ConfirmPageTemplateDialog from '../confirmPageTemplateDialog';
+
+export default {
+  title: 'Stories Editor/Components/Dialog/Confirm Page Template',
+  component: ConfirmPageTemplateDialog,
+};
+
+export const _default = () => {
+  return (
+    <ConfirmPageTemplateDialog
+      onConfirm={action('confirmed')}
+      onClose={action('closed')}
+    />
+  );
+};

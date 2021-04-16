@@ -19,7 +19,6 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -35,8 +34,6 @@ export default function useStoryView({
   isLoading = false,
   totalPages,
 }) {
-  const enableStoryPreviews = useFeature('enableStoryPreviews');
-
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -45,7 +42,6 @@ export default function useStoryView({
   const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
-  const [activePreview, _setActivePreview] = useState();
   const showStoriesWhileLoading = useRef(false);
 
   const { pageSize } = usePagePreviewSize({
@@ -110,15 +106,6 @@ export default function useStoryView({
     [setPageClamped]
   );
 
-  const setActivePreview = useCallback(
-    (_, story) => {
-      if (enableStoryPreviews) {
-        _setActivePreview(story);
-      }
-    },
-    [enableStoryPreviews]
-  );
-
   const requestNextPage = useCallback(() => {
     showStoriesWhileLoading.current = true;
     setPageClamped(page + 1);
@@ -144,10 +131,6 @@ export default function useStoryView({
 
   return useMemo(
     () => ({
-      activePreview: {
-        value: activePreview,
-        set: setActivePreview,
-      },
       view: {
         style: viewStyle,
         toggleStyle: toggleViewStyle,
@@ -175,8 +158,6 @@ export default function useStoryView({
       showStoriesWhileLoading,
     }),
     [
-      activePreview,
-      setActivePreview,
       viewStyle,
       toggleViewStyle,
       pageSize,

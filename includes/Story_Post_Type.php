@@ -34,11 +34,11 @@ use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Role;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Class Story_Post_Type.
@@ -53,6 +53,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Publisher;
 	use Types;
 	use Assets;
+	use Screen;
 
 	/**
 	 * The slug of the stories post type.
@@ -159,11 +160,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'attributes'               => __( 'Story Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into story', 'web-stories' ),
 					'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
-					'featured_image'           => __( 'Featured Image', 'web-stories' ),
-					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
-					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),
-					'use_featured_image'       => __( 'Use as featured image', 'web-stories' ),
+					'featured_image'           => _x( 'Featured Image', 'story', 'web-stories' ),
+					'set_featured_image'       => _x( 'Set featured image', 'story', 'web-stories' ),
+					'remove_featured_image'    => _x( 'Remove featured image', 'story', 'web-stories' ),
+					'use_featured_image'       => _x( 'Use as featured image', 'story', 'web-stories' ),
 					'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
+					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
 					'items_list_navigation'    => __( 'Stories list navigation', 'web-stories' ),
 					'items_list'               => __( 'Stories list', 'web-stories' ),
 					'item_published'           => __( 'Story published.', 'web-stories' ),
@@ -173,6 +175,8 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'item_updated'             => __( 'Story updated.', 'web-stories' ),
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
+					'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
+					'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
 				],
 				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
@@ -322,6 +326,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			}
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 		foreach ( $roles as $role ) {
@@ -471,13 +481,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -489,12 +493,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style( 
-			'google-fonts', 
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap', 
-			[], 
-			WEBSTORIES_VERSION 
-		); 
+		wp_register_style(
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -503,7 +507,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] ); 
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,

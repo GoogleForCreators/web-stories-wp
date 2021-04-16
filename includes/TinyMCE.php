@@ -29,6 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**
@@ -39,6 +40,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
 class TinyMCE extends Service_Base {
 	use Stories_Script_Data;
 	use Assets;
+	use Screen;
 
 	/**
 	 * Web Stories tinymce script handle.
@@ -55,7 +57,7 @@ class TinyMCE extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( $this->is_block_editor() ) {
+		if ( $this->is_block_editor() || $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -66,6 +68,17 @@ class TinyMCE extends Service_Base {
 		add_filter( 'mce_external_plugins', [ $this, 'web_stories_mce_plugin' ] );
 		add_action( 'admin_footer', [ $this, 'web_stories_tinymce_root_element' ] );
 		add_action( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_enqueue_scripts';
 	}
 
 	/**
@@ -161,22 +174,5 @@ class TinyMCE extends Service_Base {
 		?>
 		<div id="web-stories-tinymce"></div>
 		<?php
-	}
-
-	/**
-	 * Check if current screen is block editor.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @return bool
-	 */
-	private function is_block_editor() {
-		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-
-		if ( ( $screen instanceof \WP_Screen ) ) {
-			return $screen->is_block_editor();
-		}
-
-		return false;
 	}
 }

@@ -29,7 +29,7 @@ import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
 
-const PageLayoutWrapper = styled.div`
+const PageTemplateWrapper = styled.div`
   position: absolute;
   top: 0;
   height: ${({ pageSize }) => pageSize.containerHeight}px;
@@ -42,7 +42,7 @@ const PageLayoutWrapper = styled.div`
 
   ${themeHelpers.focusableOutlineCSS};
 `;
-PageLayoutWrapper.propTypes = {
+PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
@@ -60,7 +60,7 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const PageLayoutTitle = styled.div`
+const PageTemplateTitle = styled.div`
   position: absolute;
   bottom: 0;
   background-color: ${({ theme }) => theme.colors.opacity.overlayDark};
@@ -76,11 +76,11 @@ const PageLayoutTitle = styled.div`
   align-self: flex-end;
 `;
 
-PageLayoutTitle.propTypes = {
+PageTemplateTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
-function PageLayout(
+function PageTemplate(
   { page, pageSize, translateY, translateX, isActive, ...rest },
   ref
 ) {
@@ -96,7 +96,7 @@ function PageLayout(
   }, []);
 
   return (
-    <PageLayoutWrapper
+    <PageTemplateWrapper
       pageSize={pageSize}
       role="listitem"
       ref={ref}
@@ -122,14 +122,16 @@ function PageLayout(
         </PreviewErrorBoundary>
       </PreviewPageWrapper>
 
-      <PageLayoutTitle isActive={isActivePage}>{page.title}</PageLayoutTitle>
-    </PageLayoutWrapper>
+      <PageTemplateTitle isActive={isActivePage}>
+        {page.title}
+      </PageTemplateTitle>
+    </PageTemplateWrapper>
   );
 }
 
-const PageLayoutWithRef = forwardRef(PageLayout);
+const PageTemplateWithRef = forwardRef(PageTemplate);
 
-PageLayout.propTypes = {
+PageTemplate.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
@@ -137,6 +139,6 @@ PageLayout.propTypes = {
   translateX: PropTypes.number.isRequired,
 };
 
-PageLayout.displayName = 'PageLayout';
+PageTemplate.displayName = 'PageTemplate';
 
-export default PageLayoutWithRef;
+export default PageTemplateWithRef;

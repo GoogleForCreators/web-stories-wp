@@ -298,28 +298,6 @@ class Experiments extends Service_Base {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: 3390
-			 * Creation date: 2020-07-08
-			 */
-			[
-				'name'        => 'enableTemplatePreviews',
-				'label'       => __( 'Template Previews', 'web-stories' ),
-				'description' => __( 'Enable template preview functionality', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 3391
-			 * Creation date: 2020-08-06
-			 */
-			[
-				'name'        => 'enableStoryPreviews',
-				'label'       => __( 'Story Previews', 'web-stories' ),
-				'description' => __( 'Enable story preview functionality', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
 			 * Author: @dmmulroy
 			 * Issue: #2098
 			 * Creation date: 2020-06-04
@@ -385,6 +363,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Video optimization', 'web-stories' ),
 				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -398,14 +377,14 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @barklund
-			 * Issue: #4022
-			 * Creation date: 2021-03-25
+			 * Author: @miina
+			 * Issue: #7055
+			 * Creation date: 2021-04-09
 			 */
 			[
-				'name'        => 'hasCanvasZoom',
-				'label'       => __( 'Canvas Zoom', 'web-stories' ),
-				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
+				'name'        => 'customPageTemplates',
+				'label'       => __( 'Custom Page Templates', 'web-stories' ),
+				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

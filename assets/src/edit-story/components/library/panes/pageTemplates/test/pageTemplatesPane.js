@@ -28,15 +28,15 @@ import APIContext from '../../../../../app/api/context';
 import StoryContext from '../../../../../app/story/context';
 import TransformContext from '../../../../transform/context';
 import { createPage } from '../../../../../elements';
-import PageLayoutsPane from '../pageLayoutsPane';
-import { PAGE_LAYOUT_TYPES } from '../constants';
+import PageTemplatesPane from '../pageTemplatesPane';
+import { PAGE_TEMPLATE_TYPES } from '../constants';
 
 const createTemplate = (title, id) => ({
   title,
   id,
   pages: [
-    createPage({ pageLayoutType: 'cover' }),
-    createPage({ pageLayoutType: 'section' }),
+    createPage({ pageTemplateType: 'cover' }),
+    createPage({ pageTemplateType: 'section' }),
   ],
 });
 
@@ -55,14 +55,14 @@ function flushPromiseQueue() {
   return new Promise((resolve) => resolve());
 }
 
-describe('PageLayoutsPane', () => {
-  const getPageLayouts = jest.fn();
+describe('PageTemplatesPane', () => {
+  const getPageTemplates = jest.fn();
   let templates;
 
   function renderWithTemplates() {
     const apiValue = {
       actions: {
-        getPageLayouts,
+        getPageTemplates,
       },
     };
     const storyContext = {
@@ -79,7 +79,7 @@ describe('PageLayoutsPane', () => {
         <ConfigContext.Provider value={configValue}>
           <APIContext.Provider value={apiValue}>
             <StoryContext.Provider value={storyContext}>
-              <PageLayoutsPane isActive />
+              <PageTemplatesPane isActive />
             </StoryContext.Provider>
           </APIContext.Provider>
         </ConfigContext.Provider>
@@ -91,10 +91,10 @@ describe('PageLayoutsPane', () => {
     templates = TEMPLATE_NAMES.map((name, index) =>
       createTemplate(name, index)
     );
-    getPageLayouts.mockResolvedValue(templates);
+    getPageTemplates.mockResolvedValue(templates);
   });
 
-  it('should render <PageLayoutsPane /> with dummy layouts', async () => {
+  it('should render <PageTemplatesPane /> with dummy layouts', async () => {
     const { queryByText, queryByLabelText } = renderWithTemplates();
 
     await act(async () => {
@@ -102,7 +102,7 @@ describe('PageLayoutsPane', () => {
       await flushPromiseQueue();
     });
 
-    Object.values(PAGE_LAYOUT_TYPES)
+    Object.values(PAGE_TEMPLATE_TYPES)
       .map(({ name }) => name)
       .forEach((name) => {
         expect(queryByText(name)).toBeInTheDocument();

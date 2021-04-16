@@ -15,20 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+
+/**
  * Internal dependencies
  */
-import { Container } from '../container';
+import { Icons } from '../../../../../design-system';
 
-export default class PageLayouts extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get pageLayouts() {
-    return this.getAllByRole('listitem');
-  }
-
-  pageLayout(name) {
-    return this.getByRole('listitem', { name });
-  }
+function PageTemplatesIcon() {
+  return (
+    <Icons.Box4Alternate
+      aria-label={__('Page templates library', 'web-stories')}
+    />
+  );
 }
+
+export default PageTemplatesIcon;

@@ -28,7 +28,7 @@ const Image = styled.img`
 `;
 
 function VisibleImage({ ...attrs }) {
-  return <Image {...attrs} />;
+  return <Image {...attrs} crossOrigin="anonymous" />;
 }
 
 export default VisibleImage;

@@ -66,7 +66,7 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
   };
 };
 
-export default function removeImagesFromPageLayouts({
+export default function removeImagesFromPageTemplates({
   templates = [],
   assetsURL,
 }) {
