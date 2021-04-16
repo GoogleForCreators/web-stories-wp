@@ -16,13 +16,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import { noop } from '../../utils';
+import { PLACEMENT } from '../popup';
 import { SnackbarMessage } from './snackbarMessage';
 import { Placement, SnackbarNotification } from './constants';
 
@@ -93,11 +96,13 @@ const ChildContainer = styled.div`
 
 export const SnackbarContainer = ({
   component: Component = SnackbarMessage,
-  notifications,
-  onRemove,
-  placement,
+  notifications = [],
+  onRemove = noop,
+  placement = PLACEMENT.BOTTOM,
   max = 10,
 }) => {
+  const ids = useMemo(() => notifications.map(() => uuidv4()), [notifications]);
+
   const orderedNotifications =
     placement.indexOf('top') === 0
       ? [...notifications].reverse()
@@ -122,30 +127,44 @@ export const SnackbarContainer = ({
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
-        {orderedNotifications.map((notification) => (
-          <CSSTransition
-            in
-            key={notification.key}
-            timeout={300}
-            unmountOnExit
-            classNames="react-snackbar-alert__snackbar-container"
-          >
-            <ChildContainer placement={placement}>
-              <Component
-                aria-label={notification.message}
-                placement={placement}
-                onDismiss={handleDismiss(notification)}
-                onAction={notification.onAction}
-                actionLabel={notification.actionLabel}
-                message={notification.message}
-                showCloseButton={Boolean(notification.dismissable)}
-                removeMessageTimeInterval={notification.timeout}
-                isPreventAutoDismiss={notification.preventAutoDismiss}
-                isPreventActionDismiss={notification.preventActionDismiss}
-              />
-            </ChildContainer>
-          </CSSTransition>
-        ))}
+        {orderedNotifications.map((notification, index) => {
+          const {
+            actionLabel,
+            dismissable,
+            message,
+            onAction,
+            preventActionDismiss,
+            preventAutoDismiss,
+            timeout,
+            ...notificationProps
+          } = notification;
+
+          return (
+            <CSSTransition
+              in
+              key={notification.key || ids[index]}
+              timeout={300}
+              unmountOnExit
+              classNames="react-snackbar-alert__snackbar-container"
+            >
+              <ChildContainer placement={placement}>
+                <Component
+                  {...notificationProps}
+                  aria-label={message}
+                  placement={placement}
+                  onDismiss={handleDismiss(notification)}
+                  onAction={onAction}
+                  actionLabel={actionLabel}
+                  message={message}
+                  showCloseButton={dismissable}
+                  removeMessageTimeInterval={timeout}
+                  isPreventAutoDismiss={preventAutoDismiss}
+                  isPreventActionDismiss={preventActionDismiss}
+                />
+              </ChildContainer>
+            </CSSTransition>
+          );
+        })}
       </TransitionGroup>
     </StyledContainer>
   );
@@ -154,7 +173,7 @@ export const SnackbarContainer = ({
 SnackbarContainer.propTypes = {
   component: PropTypes.elementType,
   notifications: PropTypes.arrayOf(SnackbarNotification),
-  onRemove: PropTypes.func.isRequired,
-  placement: Placement.isRequired,
+  onRemove: PropTypes.func,
+  placement: Placement,
   max: PropTypes.number,
 };

@@ -26,19 +26,19 @@ import { __ } from '@web-stories-wp/i18n';
 import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import Dialog from '../../../dialog';
 
-function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
+function ConfirmPageTemplateDialog({ onClose, onConfirm }) {
   return (
     <Dialog
       isOpen
       onClose={onClose}
-      title={__('Confirm Page Layout', 'web-stories')}
+      title={__('Confirm Page Template', 'web-stories')}
       secondaryText={__('Cancel', 'web-stories')}
       onPrimary={onConfirm}
-      primaryText={__('Apply Page Layout', 'web-stories')}
+      primaryText={__('Apply Page Template', 'web-stories')}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__(
-          'Applying page layout will clear all existing design elements and background colors on this page. Want to keep going?',
+          'Applying page template will clear all existing design elements and background colors on this page. Want to keep going?',
           'web-stories'
         )}
       </Text>
@@ -46,9 +46,9 @@ function ConfirmPageLayoutDialog({ onClose, onConfirm }) {
   );
 }
 
-ConfirmPageLayoutDialog.propTypes = {
+ConfirmPageTemplateDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
 };
 
-export default ConfirmPageLayoutDialog;
+export default ConfirmPageTemplateDialog;

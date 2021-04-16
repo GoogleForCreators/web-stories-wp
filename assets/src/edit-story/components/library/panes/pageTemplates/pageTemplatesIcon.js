@@ -17,23 +17,19 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import ConfirmPageLayoutDialog from '../confirmPageLayoutDialog';
+import { Icons } from '../../../../../design-system';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Confirm Page Layout',
-  component: ConfirmPageLayoutDialog,
-};
-
-export const _default = () => {
+function PageTemplatesIcon() {
   return (
-    <ConfirmPageLayoutDialog
-      onConfirm={action('confirmed')}
-      onClose={action('closed')}
+    <Icons.Box4Alternate
+      aria-label={__('Page templates library', 'web-stories')}
     />
   );
-};
+}
+
+export default PageTemplatesIcon;

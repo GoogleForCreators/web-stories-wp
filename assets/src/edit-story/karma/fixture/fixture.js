@@ -819,7 +819,7 @@ class APIProviderFixture {
         []
       );
 
-      const getPageLayouts = useCallback(
+      const getPageTemplates = useCallback(
         () => asyncResponse(formattedTemplatesArray),
         []
       );
@@ -837,7 +837,7 @@ class APIProviderFixture {
           uploadMedia,
           updateMedia,
           getStatusCheck,
-          getPageLayouts,
+          getPageTemplates,
           getCurrentUser,
           updateCurrentUser,
         },

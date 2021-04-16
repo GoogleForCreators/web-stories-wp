@@ -23,7 +23,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import useLiveRegion from '../../utils/useLiveRegion';
+import { useLiveRegion } from '../../../design-system';
 
 /* translators: %d: new position. */
 const REORDER_MESSAGE = __(

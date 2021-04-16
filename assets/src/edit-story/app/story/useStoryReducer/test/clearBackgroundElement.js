@@ -51,6 +51,7 @@ describe('clearBackgroundElement', () => {
       { id: '456' },
       { id: '789' },
     ]);
+    expect(result.selection).toStrictEqual(['123']);
   });
 
   it('should do nothing if background is default', () => {

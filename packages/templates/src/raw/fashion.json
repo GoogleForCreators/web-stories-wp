@@ -282,7 +282,7 @@
           "b": 227
         }
       },
-      "pageLayoutType": "cover"
+      "pageTemplateType": "cover"
     },
     {
       "animations": [
@@ -665,7 +665,7 @@
           "b": 227
         }
       },
-      "pageLayoutType": "quote"
+      "pageTemplateType": "quote"
     },
     {
       "animations": [
@@ -1019,7 +1019,7 @@
           "b": 33
         }
       },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -1842,7 +1842,7 @@
           "b": 227
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -2342,7 +2342,7 @@
           "b": 33
         }
       },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -3569,7 +3569,7 @@
           "b": 227
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -4186,7 +4186,7 @@
           "b": 227
         }
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -4841,7 +4841,7 @@
           "a": 1
         }
       },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -5574,7 +5574,7 @@
           "b": 227
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     }
   ]
 }
