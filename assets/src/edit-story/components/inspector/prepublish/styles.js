@@ -72,17 +72,11 @@ PanelTitle.propTypes = {
 };
 
 export const Row = styled.div`
-  margin: 0 16px;
-  padding: 4px 0;
+  margin: 0 0 0 24px;
+  padding: 0 0 22px 0;
 `;
 
-export const PageGroup = styled.div`
-  margin: 0 16px;
-
-  ${Row} {
-    margin-right: 0;
-  }
-`;
+export const PageGroup = styled.div``;
 
 export const GoToIssue = styled.span`
   height: 32px;
@@ -104,14 +98,18 @@ export const IssueTitle = styled(Headline).attrs({
   cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${themeHelpers.focusableOutlineCSS};
+
+  &::before {
+    content: '•';
+    padding-right: 8px;
+  }
 `;
 
 export const IssueDescription = styled.div`
-  padding: 4px 0;
-
+  padding: 2px 0;
+  margin-left: 12px;
   ul {
-    list-style-type: '•';
-    list-style-position: inside;
+    list-style-type: none;
     margin: 0;
   }
   li {
@@ -128,10 +126,6 @@ export const IssueDescription = styled.div`
     &:last-of-type {
       padding-bottom: 0;
     }
-    &:before {
-      content: '';
-      padding-right: 4px;
-    }
   }
 `;
 
@@ -141,7 +135,7 @@ export const PageIndicator = styled(Text).attrs({
   isBold: true,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  padding: 20px 0 8px;
+  padding: 8px 0;
   display: inline-block;
 `;
 
