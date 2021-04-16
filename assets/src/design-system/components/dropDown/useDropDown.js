@@ -65,7 +65,7 @@ export default function useDropDown({ options = [], selectedValue }) {
       });
   }, [selectedValue, normalizedOptions]);
 
-  /* Announce changes to the length of the list */
+  /* Announce length on open and changes to the length of the list */
   useEffect(() => {
     if (isOpen.value) {
       const message = options.length
