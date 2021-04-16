@@ -11,14 +11,14 @@
 To add a new template to the editor:
 
 1. [Engineer] Commit all SVGs used in the template to the codebase as stickers (in the `main` branch, see [details](#adding-svgs-to-the-codebase-as-stickers)).
-2. [Designer] Create a new story in your local WP environment and replicate the template design.
+2. [Designer] Create a new story in your shared WP environment and replicate the template design.
     - SVGs should already be available in the Stickers panel from step (1) &mdash; click on a sticker to insert it into the story. If you can't find the Stickers Panel, make sure the `enableStickers` experiment is turned on.
     - Upload (drag & drop) images and videos into the story to add them.
 3. [Engineer] Commit all images & videos used in the template to the codebase (in the `static-site` branch).
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
     - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
     - Make sure videos are 720p.
-4. [Engineer] Get the story JSON, modify its image & video URLs, and integrate it into the codebase (in the `main` branch, see [details](#get-the-story-json)).
+4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (in the `main` branch, see [details](#get-the-story-json)).
 5. [Both] Verify that new template shows up in the template library and looks as expected.
 
 ## Pitfalls
@@ -105,7 +105,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
     - In the JSON, first change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`. See an [example](https://github.com/google/web-stories-wp/blob/da23d65cbca76c604350464f0538115d280a7a06/packages/templates/src/raw/diy.json#L151).
 2. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function. 
 3. In [`packages/template/src/index.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/index.js), add a new JS object corresponding to the new template with properties `id`, `title`, `tags`, `colors`, etc.
-4. Verify in your local environment that the new template is visible in the editor's "Explore Templates" section.
+4. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
 5. Create a single pull request with all of the changes in steps 1-3.
 
 ## Appendix
