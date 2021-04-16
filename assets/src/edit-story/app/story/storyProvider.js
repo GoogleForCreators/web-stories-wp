@@ -34,6 +34,7 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
+import { StoryTriggersProvider } from './storyTriggers';
 
 function StoryProvider({ storyId, children }) {
   const { isDemo } = useConfig();
@@ -176,7 +177,11 @@ function StoryProvider({ storyId, children }) {
     internal: { reducerState, restore },
   };
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={state}>
+      <StoryTriggersProvider story={pages}>{children}</StoryTriggersProvider>
+    </Context.Provider>
+  );
 }
 
 StoryProvider.propTypes = {
