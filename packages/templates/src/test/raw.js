@@ -20,7 +20,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, basename } from 'path';
 
-describe('Raw template files', () => {
+describe('raw template files', () => {
   const templates = readdirSync(
     resolve(process.cwd(), 'packages/templates/src/raw')
   );
@@ -64,7 +64,7 @@ describe('Raw template files', () => {
 
   // @see https://github.com/google/web-stories-wp/pull/5889
   it.each(templates)(
-    '%s template should contain pageLayoutType',
+    '%s template should contain pageTemplateType',
     (template) => {
       const templateContent = readFileSync(
         resolve(process.cwd(), `packages/templates/src/raw/${template}`),
@@ -75,7 +75,7 @@ describe('Raw template files', () => {
       for (const page of templateData.pages) {
         expect(page).toStrictEqual(
           expect.objectContaining({
-            pageLayoutType: expect.any(String),
+            pageTemplateType: expect.any(String),
           })
         );
       }

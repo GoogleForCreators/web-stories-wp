@@ -37,11 +37,11 @@ namespace Google\Web_Stories\Tests\Admin;
 class PluginRowMeta extends \WP_UnitTestCase {
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$instance = new \Google\Web_Stories\Admin\PluginRowMeta();
-		$instance->init();
+		$instance->register();
 
 		$this->assertSame( 10, has_filter( 'plugin_row_meta', [ $instance, 'get_plugin_row_meta' ] ) );
 	}

@@ -156,7 +156,6 @@ export const MediaInput = forwardRef(function Media(
   {
     className,
     onBlur,
-    onChange,
     alt = __('Preview image', 'web-stories'),
     value,
     ariaLabel = __('Choose an image', 'web-stories'),
@@ -185,7 +184,7 @@ export const MediaInput = forwardRef(function Media(
     <StyledMedia ref={ref} className={className} {...rest}>
       <ImageWrapper variant={variant}>
         {value ? (
-          <Img src={value} alt={alt} />
+          <Img src={value} alt={alt} crossOrigin="anonymous" />
         ) : (
           <DefaultImageWrapper>
             <DefaultImage />
@@ -236,7 +235,6 @@ export const MediaInput = forwardRef(function Media(
 MediaInput.propTypes = {
   className: PropTypes.string,
   value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func,
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,

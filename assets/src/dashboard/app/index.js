@@ -54,7 +54,6 @@ import {
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
-  StoryAnimTool,
   TemplateDetailsView,
 } from './views';
 import useApi from './api/useApi';
@@ -169,10 +168,6 @@ const AppContent = () => {
             path={APP_ROUTES.EDITOR_SETTINGS}
             component={<EditorSettingsView />}
           />
-          <Route
-            path={APP_ROUTES.STORY_ANIM_TOOL}
-            component={<StoryAnimTool />}
-          />
         </PageContent>
       </AppFrame>
       <Snackbar.Container
@@ -196,7 +191,7 @@ function App({ config }) {
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         <ConfigProvider config={config}>
           <ApiProvider>
             <NavProvider>

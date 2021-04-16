@@ -40,7 +40,7 @@ describe('Image resource loading integration', () => {
     const image = fixture.screen.getAllByLabelText(
       'image with transparent background'
     );
-    await fixture.events.mouse.clickOn(image[0], 10, 10);
+    await fixture.events.mouse.clickOn(image[0], 20, 20);
 
     // We don't check for immediately cached value here because we would have to set a timeout of about 100ms in image/display in order to catch it here
     // expect(resourceList.get(2).type).toEqual('cached');

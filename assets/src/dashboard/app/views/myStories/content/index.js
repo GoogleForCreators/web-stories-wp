@@ -61,7 +61,6 @@ function Content({
   stories,
   storyActions,
   view,
-  initialFocusStoryId,
   showStoriesWhileLoading,
 }) {
   return (
@@ -84,7 +83,6 @@ function Content({
                     storyActions={storyActions}
                     stories={stories}
                     view={view}
-                    initialFocusStoryId={initialFocusStoryId}
                     loading={{
                       isLoading,
                       showStoriesWhileLoading,
@@ -143,7 +141,6 @@ Content.propTypes = {
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
   view: ViewPropTypes,
-  initialFocusStoryId: PropTypes.number,
   showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
 };
 

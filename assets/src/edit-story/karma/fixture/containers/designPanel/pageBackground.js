@@ -34,4 +34,8 @@ export class PageBackground extends AbstractPanel {
   get flipHorizontal() {
     return this.getByRole('button', { name: /Flip horizontally/i });
   }
+
+  get detachBg() {
+    return this.getByRole('button', { name: /Detach background/i });
+  }
 }

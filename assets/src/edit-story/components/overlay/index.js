@@ -42,7 +42,10 @@ const Wrapper = styled.div`
   z-index: ${({ zIndex }) => `${zIndex}`};
 `;
 
-function InOverlayWithRef({ zIndex, pointerEvents, render, children }, ref) {
+function InOverlayWithRef(
+  { zIndex, pointerEvents, render, children = null },
+  ref
+) {
   const { container, overlay } = useContext(Context);
   if (!container || !overlay) {
     return null;

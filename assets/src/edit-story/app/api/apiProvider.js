@@ -18,8 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
+import getAllTemplates from '@web-stories-wp/templates';
 
 /**
  * WordPress dependencies
@@ -33,7 +34,7 @@ import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import getAllPageLayouts from './getAllPageLayouts';
+import removeImagesFromPageTemplates from './removeImagesFromPageTemplates';
 
 function APIProvider({ children }) {
   const {
@@ -51,6 +52,11 @@ function APIProvider({ children }) {
     cdnURL,
     assetsURL,
   } = useConfig();
+
+  const pageTemplates = useRef({
+    base: [],
+    withoutImages: [],
+  });
 
   const getStoryById = useCallback(
     (storyId) => {
@@ -364,9 +370,22 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
-  const getPageLayouts = useCallback(() => {
-    return getAllPageLayouts({ cdnURL, assetsURL });
-  }, [cdnURL, assetsURL]);
+  const getPageTemplates = useCallback(
+    async ({ showImages = false } = {}) => {
+      // check if pageTemplates have been loaded yet
+      if (pageTemplates.current.base.length === 0) {
+        pageTemplates.current.base = await getAllTemplates({ cdnURL });
+        pageTemplates.current.withoutImages = removeImagesFromPageTemplates({
+          templates: pageTemplates.current.base,
+          assetsURL,
+          showImages,
+        });
+      }
+
+      return pageTemplates.current[showImages ? 'base' : 'withoutImages'];
+    },
+    [cdnURL, assetsURL]
+  );
 
   const state = {
     actions: {
@@ -385,7 +404,7 @@ function APIProvider({ children }) {
       deleteMedia,
       saveMetaBoxes,
       getStatusCheck,
-      getPageLayouts,
+      getPageTemplates,
       getCurrentUser,
       updateCurrentUser,
     },

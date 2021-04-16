@@ -28,6 +28,7 @@ import { Popup, PLACEMENT } from '../popup';
 import { prettifyShortcut } from '../keyboard';
 import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
+import { RTL_PLACEMENT } from '../popup/constants';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
@@ -59,6 +60,24 @@ const TooltipText = styled(Text)`
 
 const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
 
+/**
+ *
+ * @param {Object} props The props
+ * @param {import('react').Node} props.children The children to be rendered
+ * @param {import('react').RefObject<HTMLElement>} props.forceAnchorRef The ref of the anchor where the tooltip will be shown [optional]
+ * @param {boolean} props.hasTail Should the tooltip show a tail
+ * @param {boolean} props.isMirrored Should the tail placement be mirrored over the y-axis (for Right-to-Left)
+ * @param {Function} props.onBlur Blur event callback function
+ * @param {Function} props.onFocus Focus event callback function
+ * @param {Function} props.onPointerEnter Pointer enter event callback function
+ * @param {Function} props.onPointerLeave Pointer leave event callback function
+ * @param {string} props.placement Where to place the tooltip {@link: PLACEMENT}
+ * @param {string} props.shortcut Shortcut text to display in tooltip
+ * @param {string} props.title Text to display in tooltip
+ * @param {Object} props.tooltipProps Props for <Tooltip /> component
+ * @param {string} props.className Classname.
+ * @return {import('react').Component} Tooltip element
+ */
 function Tooltip({
   title,
   shortcut,
@@ -71,6 +90,7 @@ function Tooltip({
   onBlur = () => {},
   forceAnchorRef = null,
   tooltipProps = null,
+  className = null,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -138,15 +158,13 @@ function Tooltip({
         onPositionUpdate={positionArrow}
       >
         <TooltipContainer
+          className={className}
           ref={tooltipRef}
           placement={placement}
           shown={shown}
           {...tooltipProps}
         >
-          <TooltipText
-            forwardedAs="span"
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          >
+          <TooltipText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
             {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           </TooltipText>
           {hasTail && (
@@ -168,7 +186,7 @@ function Tooltip({
   );
 }
 
-Tooltip.propTypes = {
+const TooltipPropTypes = {
   children: PropTypes.node.isRequired,
   hasTail: PropTypes.bool,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
@@ -180,6 +198,13 @@ Tooltip.propTypes = {
   title: PropTypes.string,
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
+  className: PropTypes.string,
 };
+Tooltip.propTypes = TooltipPropTypes;
 
-export { Tooltip, PLACEMENT as TOOLTIP_PLACEMENT };
+export {
+  Tooltip,
+  PLACEMENT as TOOLTIP_PLACEMENT,
+  RTL_PLACEMENT as TOOLTIP_RTL_PLACEMENT,
+  TooltipPropTypes,
+};

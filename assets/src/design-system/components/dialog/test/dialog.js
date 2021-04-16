@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -27,11 +28,13 @@ import { Dialog } from '../';
 
 describe('DesignSystem/Components/Dialog', () => {
   it('should not render a dialog by default', () => {
-    const { queryByRole } = renderWithProviders(
+    const { queryByRole, container } = renderWithProviders(
       <Dialog onClose={jest.fn}>
         <p>{'dialog child'}</p>
       </Dialog>
     );
+
+    Modal.setAppElement(container);
 
     expect(queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
   });
@@ -42,7 +45,7 @@ describe('DesignSystem/Components/Dialog', () => {
       <button onClick={mockButtonClick}>{'dialog button'}</button>
     );
 
-    const { getByRole, getByText } = renderWithProviders(
+    const { getByRole, getByText, container } = renderWithProviders(
       <Dialog
         onClose={jest.fn}
         isOpen
@@ -52,6 +55,8 @@ describe('DesignSystem/Components/Dialog', () => {
         <p>{'dialog child'}</p>
       </Dialog>
     );
+
+    Modal.setAppElement(container);
 
     expect(getByRole('dialog')).toBeInTheDocument();
     const dialogButton = getByText('dialog button');

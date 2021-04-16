@@ -17,11 +17,15 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
+import {
+  themeHelpers,
+  THEME_CONSTANTS,
+  Text,
+} from '../../../../../design-system';
 import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
 
 export const List = styled.div`
@@ -43,11 +47,6 @@ export const Group = styled.ul`
 
 export const GroupLabel = styled.li`
   background: transparent;
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.family};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.weight};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
-  line-height: 14px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
   padding: 8px;
   margin: 0;
 `;
@@ -60,15 +59,12 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   position: relative;
   padding: 8px 16px;
   margin: 6px 0 0 0;
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.body2.size};
-  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.fonts.label.weight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.label.letterSpacing};
+  ${themeHelpers.expandTextPreset(({ label }, { SMALL }) => label[SMALL])}
   white-space: nowrap;
   line-height: 1;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
   cursor: pointer;
   background-clip: padding-box;
+  color: ${({ theme }) => theme.colors.fg.primary};
 
   :first-of-type {
     margin-top: 0;
@@ -77,12 +73,11 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   :hover,
   :focus {
     background-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bg.white, 0.1)};
+      theme.colors.interactiveBg.tertiaryHover};
+    border-radius: ${({ theme }) => theme.borders.radius.small};
   }
 
   :focus {
-    border: 2px solid
-      ${({ theme }) => theme.DEPRECATED_THEME.colors.accent.secondary};
     outline: none;
   }
 `;
@@ -92,14 +87,15 @@ export const Selected = styled(Checkmark)`
   width: 8px;
   height: auto;
   margin-right: 8px;
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-export const NoResult = styled.div`
+export const NoResult = styled(Text).attrs(() => ({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+}))`
   width: 100%;
   padding: 13px 11px;
   margin: 0;
   text-align: center;
-  color: ${({ theme }) => rgba(theme.DEPRECATED_THEME.colors.fg.white, 0.75)};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.tab.size};
-  line-height: 14px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;

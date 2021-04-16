@@ -42,7 +42,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
   it('should render a visually hidden label for Google Ad Manager input', function () {
     const { getByLabelText } = renderWithProviders(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
@@ -54,7 +54,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
   it('should call mockUpdate when enter is keyed on input', function () {
     const { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
@@ -69,7 +69,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     // rerender to get updated adManagerSlotId prop
     rerender(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
@@ -82,7 +82,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     // rerender to get updated adManagerSlotId prop
     rerender(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
@@ -99,7 +99,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
   it('should call mockUpdate when the save button is clicked', function () {
     const { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
@@ -116,7 +116,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     // rerender to get updated adManagerSlotId prop
     rerender(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
@@ -130,7 +130,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     // rerender to get updated adManagerSlotId prop
     rerender(
       <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
+        slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );

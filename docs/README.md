@@ -15,6 +15,7 @@
 
 ## Development
 
+* [Accessibility Guidelines](./accessibility-guidelines.md)
 * [Architecture](./architecture.md)
 * [Browser and device support](./browser-support.md)
 * [Code Style](./code-style.md)
@@ -24,7 +25,7 @@
 * [Feature Flags](./feature-flags.md)
 * [Design Docs](./design-docs.md)
 * [External Template Creation](./external-template-creation.md)
-* [Page Layouts](./page-layouts.md)
+* [Page Templates](./page-templates.md)
 
 ## Testing
 
@@ -32,10 +33,14 @@
 * [Unit Tests](./unit-tests.md)
 * [Integration Tests (Karma)](./integration-tests.md)
 * [End-to-End Tests](./e2e-tests.md)
-* [Accessibility Testing](./accessibility-testiing.md)
+* [Accessibility Testing](./accessibility-testing.md)
 * [Testing Environments](./testing-environments.md)
 
 ## Tooling & Infrastructure
 
 * [Local Environment](./local-environment.md)
 * [Workflows](./workflows.md)
+
+## WordPress Developers
+
+* [Embeds](./web-stories-embeds.md)

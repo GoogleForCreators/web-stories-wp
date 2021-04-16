@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent, waitFor } from '@testing-library/react';
+import Modal from 'react-modal';
 
 /**
  * Internal dependencies
@@ -47,7 +48,7 @@ function setup() {
 
   localStore.setItemByKey(storageKey, false);
 
-  const { queryByText, getByRole } = renderWithTheme(
+  const result = renderWithTheme(
     <CurrentUserContext.Provider value={userValue}>
       <MediaContext.Provider value={mediaValue}>
         <VideoOptimizationDialog />
@@ -55,7 +56,10 @@ function setup() {
     </CurrentUserContext.Provider>
   );
 
-  return { queryByText, getByRole };
+  const { container } = result;
+  Modal.setAppElement(container);
+
+  return result;
 }
 
 describe('videoOptimizationDialog', () => {
@@ -66,6 +70,7 @@ describe('videoOptimizationDialog', () => {
     expect(getByRole('button', { name: /Disable/i })).toBeInTheDocument();
     expect(getByRole('button', { name: /Sounds/i })).toBeInTheDocument();
   });
+
   it('should trigger API request to update user when disabling', async () => {
     const { getByRole } = setup();
 

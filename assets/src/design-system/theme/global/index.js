@@ -20,3 +20,4 @@ export {
   FOCUS_VISIBLE_DATA_ATTRIBUTE,
 } from './overrideFocusOutline';
 export { OverrideScrollbarCSS } from './overrideScrollbarCSS';
+export { Styles } from './styles';

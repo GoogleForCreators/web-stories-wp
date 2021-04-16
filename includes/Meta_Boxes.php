@@ -26,12 +26,13 @@
 
 namespace Google\Web_Stories;
 
-use WP_Screen;
+use Google\Web_Stories\Traits\Screen;
 
 /**
  * Class Meta_Boxes.
  */
-class Meta_Boxes {
+class Meta_Boxes extends Service_Base {
+	use Screen;
 	/**
 	 * Supported meta box locations.
 	 *
@@ -53,7 +54,7 @@ class Meta_Boxes {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ], PHP_INT_MAX );
 	}
 
@@ -74,9 +75,8 @@ class Meta_Boxes {
 	public function remove_meta_boxes() {
 		global $wp_meta_boxes;
 
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
+		$screen = $this->get_current_screen();
+		if ( ! $screen ) {
 			return;
 		}
 
@@ -145,9 +145,8 @@ class Meta_Boxes {
 	public function get_meta_boxes_per_location() {
 		global $wp_meta_boxes;
 
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
+		$screen = $this->get_current_screen();
+		if ( ! $screen ) {
 			return [];
 		}
 

@@ -17,7 +17,6 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { rgba } from 'polished';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
@@ -31,6 +30,7 @@ import LibraryMoveable from '../../shared/libraryMoveable';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 
 const styledTiles = css`
   width: 100%;
@@ -51,19 +51,21 @@ const Video = styled.video`
   ${({ showWithoutDelay }) => (showWithoutDelay ? 'opacity: 1;' : '')}
 `;
 
-const Duration = styled.div`
+const DurationWrapper = styled.div`
   position: absolute;
   bottom: 8px;
   left: 8px;
-  background: ${({ theme }) => rgba(theme.colors.bg.primary, 0.6)};
-  font-family: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.family};
-  font-size: ${({ theme }) => theme.DEPRECATED_THEME.fonts.duration.size};
-  line-height: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.duration.lineHeight};
-  letter-spacing: ${({ theme }) =>
-    theme.DEPRECATED_THEME.fonts.duration.letterSpacing};
+  background: ${({ theme }) => theme.colors.opacity.black64};
+  border-radius: 100px;
+  height: 18px;
   padding: 0 6px;
-  border-radius: 10px;
+`;
+const Duration = styled(Text).attrs({
+  forwardedAs: 'span',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.primary};
+  display: block;
 `;
 
 const HiddenPosterImage = styled.img`
@@ -134,20 +136,29 @@ function InnerElement({
     width: width,
     height: height,
     alt: alt,
-    'aria-label': alt,
+    crossOrigin: 'anonymous',
   };
-  const cloneProps = {
+
+  const commonImageProps = {
     ...commonProps,
+    onLoad: makeMediaVisible,
     loading: 'lazy',
     draggable: false,
   };
+
+  const cloneProps = {
+    ...commonImageProps,
+    onLoad: undefined,
+  };
+
   const imageProps = {
-    ...cloneProps,
+    ...commonImageProps,
     src: thumbnailURL,
-    onLoad: makeMediaVisible,
+    'aria-label': alt,
   };
   const videoProps = {
     ...commonProps,
+    'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'none',
@@ -190,10 +201,14 @@ function InnerElement({
           <HiddenPosterImage
             ref={hiddenPoster}
             src={posterSrc}
-            onLoad={makeMediaVisible}
+            {...commonImageProps}
           />
         )}
-        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
+        {type === ContentType.VIDEO && showVideoDetail && (
+          <DurationWrapper>
+            <Duration>{lengthFormatted}</Duration>
+          </DurationWrapper>
+        )}
       </>
     );
     cloneProps.src = posterSrc;
@@ -207,7 +222,7 @@ function InnerElement({
       [ContentType.VIDEO, ContentType.GIF].includes(type) &&
       !mediaElement.current?.paused
     ) {
-      mediaElement.current.pause();
+      mediaElement.current?.pause();
     }
     if (!draggingResource) {
       // Drop-targets handling.

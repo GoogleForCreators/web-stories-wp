@@ -26,17 +26,19 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Role;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Class Story_Post_Type.
@@ -47,10 +49,11 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type {
+class Story_Post_Type extends Service_Base implements Activateable, Deactivateable {
 	use Publisher;
 	use Types;
 	use Assets;
+	use Screen;
 
 	/**
 	 * The slug of the stories post type.
@@ -102,17 +105,27 @@ class Story_Post_Type {
 	private $meta_boxes;
 
 	/**
+	 * Locale instance.
+	 *
+	 * @var Locale Locale instance.
+	 */
+	private $locale;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
+	 * @param Decoder     $decoder Decoder instance.
+	 * @param Locale      $locale Locale instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
 		$this->experiments = $experiments;
 		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = new Decoder();
+		$this->decoder     = $decoder;
+		$this->locale      = $locale;
 	}
 
 	/**
@@ -126,7 +139,7 @@ class Story_Post_Type {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -147,11 +160,12 @@ class Story_Post_Type {
 					'attributes'               => __( 'Story Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into story', 'web-stories' ),
 					'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
-					'featured_image'           => __( 'Featured Image', 'web-stories' ),
-					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
-					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),
-					'use_featured_image'       => __( 'Use as featured image', 'web-stories' ),
+					'featured_image'           => _x( 'Featured Image', 'story', 'web-stories' ),
+					'set_featured_image'       => _x( 'Set featured image', 'story', 'web-stories' ),
+					'remove_featured_image'    => _x( 'Remove featured image', 'story', 'web-stories' ),
+					'use_featured_image'       => _x( 'Use as featured image', 'story', 'web-stories' ),
 					'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
+					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
 					'items_list_navigation'    => __( 'Stories list navigation', 'web-stories' ),
 					'items_list'               => __( 'Stories list', 'web-stories' ),
 					'item_published'           => __( 'Story published.', 'web-stories' ),
@@ -161,6 +175,8 @@ class Story_Post_Type {
 					'item_updated'             => __( 'Story updated.', 'web-stories' ),
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
+					'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
+					'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
 				],
 				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
@@ -191,10 +207,6 @@ class Story_Post_Type {
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
-		// Custom Meta Boxes Support.
-		$metabox = new Meta_Boxes();
-		$metabox->init();
-
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
@@ -217,6 +229,27 @@ class Story_Post_Type {
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Deactivate the service.
+	 *
+	 * @param bool $network_wide Whether the deactivation was done network-wide.
+	 * @return void
+	 */
+	public function deactivate( $network_wide ) {
+		$this->remove_caps_from_roles();
+		unregister_post_type( self::POST_TYPE_SLUG );
 	}
 
 	/**
@@ -295,6 +328,12 @@ class Story_Post_Type {
 		}
 
 		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_capabilities = array_filter(
+			$all_capabilities,
+			function ( $value ) {
+				return 'read' !== $value;
+			}
+		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
 		foreach ( $roles as $role ) {
@@ -444,13 +483,7 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
-			return;
-		}
-
-		if ( self::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -463,8 +496,8 @@ class Story_Post_Type {
 		wp_enqueue_media();
 
 		wp_register_style(
-			'roboto',
-			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+			'google-fonts',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
 			[],
 			WEBSTORIES_VERSION
 		);
@@ -476,7 +509,7 @@ class Story_Post_Type {
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
@@ -554,7 +587,7 @@ class Story_Post_Type {
 			'config'     => [
 				'autoSaveInterval'      => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'                 => is_rtl(),
-				'locale'                => ( new Locale() )->get_locale_settings(),
+				'locale'                => $this->locale->get_locale_settings(),
 				'allowedFileTypes'      => $this->get_allowed_file_types(),
 				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
 				'allowedImageMimeTypes' => $mime_image_types,

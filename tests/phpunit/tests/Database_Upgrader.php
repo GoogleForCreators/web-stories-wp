@@ -35,24 +35,24 @@ class Database_Upgrader extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init_sets_missing_options() {
+	public function test_register_sets_missing_options() {
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$object->register();
 		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
 		$this->assertSame( '0.0.0', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init_does_not_override_previous_version_if_there_was_no_update() {
+	public function test_register_does_not_override_previous_version_if_there_was_no_update() {
 		add_option( \Google\Web_Stories\Database_Upgrader::OPTION, WEBSTORIES_DB_VERSION );
 		add_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.2.3' );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$object->register();
 		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( $object::OPTION ) );
 		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
 	}
@@ -370,7 +370,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 	/**
 	 * @group ms-required
 	 */
-	public function test_init_sets_missing_options_multisite() {
+	public function test_register_sets_missing_options_multisite() {
 		$blog_id = (int) self::factory()->blog->create();
 
 		switch_to_blog( $blog_id );

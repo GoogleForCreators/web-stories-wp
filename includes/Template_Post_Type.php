@@ -31,7 +31,7 @@ use Google\Web_Stories\REST_API\Stories_Base_Controller;
 /**
  * Class Template_Post_Type.
  */
-class Template_Post_Type {
+class Template_Post_Type extends Service_Base {
 	/**
 	 * The slug of the template post type.
 	 *
@@ -46,7 +46,7 @@ class Template_Post_Type {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -67,10 +67,11 @@ class Template_Post_Type {
 					'attributes'               => __( 'Template Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into template', 'web-stories' ),
 					'uploaded_to_this_item'    => __( 'Uploaded to this template', 'web-stories' ),
-					'featured_image'           => __( 'Featured Image', 'web-stories' ),
-					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
-					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),
-					'use_featured_image'       => __( 'Use as featured image', 'web-stories' ),
+					'featured_image'           => _x( 'Featured Image', 'story template', 'web-stories' ),
+					'set_featured_image'       => _x( 'Set featured image', 'story template', 'web-stories' ),
+					'remove_featured_image'    => _x( 'Remove featured image', 'story template', 'web-stories' ),
+					'use_featured_image'       => _x( 'Use as featured image', 'story template', 'web-stories' ),
+					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
 					'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
 					'items_list_navigation'    => __( 'Templates list navigation', 'web-stories' ),
 					'items_list'               => __( 'Templates list', 'web-stories' ),
@@ -81,6 +82,8 @@ class Template_Post_Type {
 					'item_updated'             => __( 'Template updated.', 'web-stories' ),
 					'menu_name'                => _x( 'Templates', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Template', 'add new on admin bar', 'web-stories' ),
+					'item_link'                => _x( 'Template Link', 'navigation link block title', 'web-stories' ),
+					'item_link_description'    => _x( 'A link to a template.', 'navigation link block description', 'web-stories' ),
 				],
 				'supports'              => [
 					'title',

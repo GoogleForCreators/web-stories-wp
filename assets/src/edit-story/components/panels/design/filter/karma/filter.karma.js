@@ -37,11 +37,11 @@ describe('Filter Panel', () => {
 
     // Drag first media element straight to canvas edge to set as background
     const media = fixture.editor.library.media.item(0);
-    const canvas = fixture.editor.canvas.fullbleed.container;
+    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(media, 5, 5),
+      moveRel(media, 20, 20),
       down(),
-      moveRel(canvas, 10, 10),
+      moveRel(canvas, 5, 5),
       up(),
     ]);
 

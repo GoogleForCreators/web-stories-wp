@@ -24,6 +24,18 @@ import { render, screen, fireEvent } from '@testing-library/react';
  */
 import EmbedPlaceholder from '../embedPlaceholder';
 
+jest.mock('@wordpress/element', () => {
+  const originalModule = jest.requireActual('react');
+  return {
+    ...originalModule,
+    concatChildren: jest.fn(),
+    createInterpolateElement: jest.fn(() => null),
+    Platform: {
+      OS: 'web',
+    },
+  };
+});
+
 describe('EmbedPlaceholder', () => {
   it('should display the embed placeholder', () => {
     const onSubmit = jest.fn();

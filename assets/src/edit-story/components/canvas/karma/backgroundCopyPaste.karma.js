@@ -251,10 +251,10 @@ describe('Background Copy Paste integration', () => {
   async function addBackgroundImage(index) {
     // Drag image to canvas corner to set as background
     const image = fixture.editor.library.media.item(index);
-    const canvas = fixture.editor.canvas.fullbleed.container;
+    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
 
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 5, 5),
+      moveRel(image, 20, 20),
       down(),
       moveRel(canvas, 10, 10),
       up(),
@@ -350,8 +350,6 @@ describe('Background Copy Paste integration', () => {
   }
 
   function getPageArea() {
-    return fixture.querySelector(
-      '[data-testid="fullbleed"] [class^="layout__PageAreaWithOverflow"]'
-    );
+    return fixture.querySelector('[data-testid="fullbleed"]');
   }
 });

@@ -74,7 +74,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		$this->register_script( self::SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
 		$this->register_style( self::SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE, Embed_Base::SCRIPT_HANDLE ] );
 
@@ -342,5 +342,4 @@ class Web_Stories_Block extends Embed_Base {
 
 		return $query_args;
 	}
-
 }

@@ -36,6 +36,7 @@ const getTailPosition = ({ placement, translateX }) => {
     case PLACEMENT.TOP_END:
       return css`
         bottom: -${TAIL_HEIGHT - 1}px;
+        /*! @noflip */
         transform: translateX(${translateX}px) rotate(180deg);
       `;
     case PLACEMENT.BOTTOM:
@@ -43,6 +44,7 @@ const getTailPosition = ({ placement, translateX }) => {
     case PLACEMENT.BOTTOM_END:
       return css`
         top: -${TAIL_HEIGHT - 1}px;
+        /*! @noflip */
         transform: translateX(${translateX}px);
       `;
     case PLACEMENT.LEFT:

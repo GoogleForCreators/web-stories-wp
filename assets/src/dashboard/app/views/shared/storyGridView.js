@@ -60,21 +60,18 @@ const StoryGrid = styled(CardGrid)`
 
 const StoryGridView = ({
   stories,
-  centerActionLabelByStatus,
   bottomActionLabel,
   isSavedTemplate,
   pageSize,
   storyMenu,
   renameStory,
-  previewStory,
   returnStoryFocusId,
-  initialFocusStoryId = null,
 }) => {
   const { isRTL } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-  const [activeGridItemId, setActiveGridItemId] = useState(initialFocusStoryId);
+  const [activeGridItemId, setActiveGridItemId] = useState();
 
   useGridViewKeys({
     containerRef,
@@ -150,10 +147,6 @@ const StoryGridView = ({
                 tabIndex={tabIndex}
                 pageSize={pageSize}
                 story={story}
-                centerAction={{
-                  targetAction: (e) => previewStory(e, story),
-                  label: centerActionLabelByStatus[story.status],
-                }}
                 bottomAction={{
                   targetAction: story.bottomTargetAction,
                   label: bottomActionLabel,
@@ -210,11 +203,9 @@ StoryGridView.propTypes = {
   ]),
   bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
-  previewStory: PropTypes.func,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
   returnStoryFocusId: PropTypes.number,
-  initialFocusStoryId: PropTypes.number,
 };
 
 export default StoryGridView;

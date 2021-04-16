@@ -29,7 +29,7 @@ namespace Google\Web_Stories;
 /**
  * Class AdSense
  */
-class AdSense {
+class AdSense extends Service_Base {
 	/**
 	 * Initializes all hooks.
 	 *
@@ -37,7 +37,7 @@ class AdSense {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_adsense_tag' ] );
 	}
 

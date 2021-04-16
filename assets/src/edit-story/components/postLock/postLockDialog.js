@@ -23,9 +23,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+  Text,
+} from '../../../design-system';
 import Dialog from '../dialog';
-import { Plain } from '../button';
-import { Img, Paragraph } from './shared';
+import { Img } from './shared';
 
 /**
  * @param {Object} props Component props.
@@ -36,7 +42,7 @@ import { Img, Paragraph } from './shared';
  * @param {Function} props.onClose Function when dialog is closed.
  * @return {*} Render.
  */
-function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
+function PostLockDialog({ open, onClose, user, dashboardLink, previewLink }) {
   const dialogTile = __('Story is locked', 'web-stories');
   const dialogContent = sprintf(
     /* translators: %s: user's name */
@@ -50,25 +56,49 @@ function PostLockDialog({ open, user, dashboardLink, previewLink, onClose }) {
   return (
     <Dialog
       open={open}
-      title={dialogTile}
       onClose={onClose}
+      title={dialogTile}
       contentLabel={dialogTile}
       actions={
         <>
-          <Plain href={dashboardLink}>{__('My Stories', 'web-stories')}</Plain>
-          <Plain href={previewLink} target="_blank" rel="noreferrer">
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            href={dashboardLink}
+          >
+            {__('My Stories', 'web-stories')}
+          </Button>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            href={previewLink}
+            target="_blank"
+            rel="noreferrer"
+          >
             {__('Preview', 'web-stories')}
-          </Plain>
-          <Plain onClick={onClose}>{__('Take over', 'web-stories')}</Plain>
+          </Button>
+          <Button
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={onClose}
+          >
+            {__('Take over', 'web-stories')}
+          </Button>
         </>
       }
     >
-      <Paragraph>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {user.avatar && (
-          <Img src={user.avatar} alt={user.name} height={48} width={48} />
+          <Img
+            src={user.avatar}
+            alt={user.name}
+            height={48}
+            width={48}
+            crossOrigin="anonymous"
+          />
         )}
         {dialogContent}
-      </Paragraph>
+      </Text>
     </Dialog>
   );
 }
@@ -77,7 +107,7 @@ PostLockDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
-  previewLink: PropTypes.string.isRequired,
+  previewLink: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };
 

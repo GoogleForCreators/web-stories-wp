@@ -32,7 +32,7 @@ import { Media3pPane, Media3pIcon } from './panes/media/media3p';
 import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
-import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
+import { PageTemplatesPane, PageTemplatesIcon } from './panes/pageTemplates';
 import { getPaneId, Pane as SharedPane } from './panes/shared';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
@@ -40,13 +40,13 @@ const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
 const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
 const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
 const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
-const PAGE_LAYOUTS = {
-  icon: PageLayoutsIcon,
-  Pane: PageLayoutsPane,
-  id: 'pageLayouts',
+const PAGE_TEMPLATES = {
+  icon: PageTemplatesIcon,
+  Pane: PageTemplatesPane,
+  id: 'pageTemplates',
 };
 
-const LAZY_TABS = [MEDIA3P.id, TEXT.id, PAGE_LAYOUTS.id];
+const LAZY_TABS = [MEDIA3P.id, TEXT.id, PAGE_TEMPLATES.id];
 
 function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
@@ -66,7 +66,7 @@ function LibraryProvider({ children }) {
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
-      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_LAYOUTS]
+      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_TEMPLATES]
         .filter(Boolean)
         .map(({ icon, Pane, id }) => {
           const isLazyTab = LAZY_TABS.includes(id);

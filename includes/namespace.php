@@ -38,15 +38,22 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$story = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
-	$story->init();
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
+	$story->register();
+	// TODO Register cap to roles within class itself.
 	$story->add_caps_to_roles();
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
-	$database_upgrader = new Database_Upgrader();
-	$database_upgrader->init();
+	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
+	// TODO move this logic to Database_Upgrader class.
+	$database_upgrader = $injector->make( Database_Upgrader::class );
+	$database_upgrader->register();
 }
 
 /**
@@ -63,7 +70,7 @@ function setup_new_site() {
  * @return void
  */
 function activate( $network_wide = false ) {
-	setup_new_site();
+	get_plugin_instance()->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
 }
@@ -111,12 +118,19 @@ function remove_site( $error, $site ) {
 	if ( ! $site ) {
 		return;
 	}
+
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
+
 	$site_id = (int) $site->blog_id;
-	$story   = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
 	switch_to_blog( $site_id );
 	$story->remove_caps_from_roles();
 	restore_current_blog();
 }
+
 add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
 
 /**
@@ -129,16 +143,39 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
+	get_plugin_instance()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );
 }
 
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
+
+
+/**
+ * Initializes functionality to improve compatibility with the AMP plugin.
+ *
+ * Loads a separate PHP file that allows defining functions in the global namespace.
+ *
+ * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
+ *
+ * @return void
+ */
+function load_amp_plugin_compat() {
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
+}
+add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
+
+
+/**
+ * Include necessary files.
+ *
+ * @return void
+ */
+function includes() {
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
+}
+add_action( 'init', __NAMESPACE__ . '\includes' );
 
 
 /**
@@ -217,10 +254,7 @@ function rest_preload_api_request( $memo, $path ) {
 	return $memo;
 }
 
-global $web_stories;
-
-$web_stories = new Plugin();
-$web_stories->register();
+get_plugin_instance()->register();
 
 /**
  * Web stories Plugin Instance
@@ -229,5 +263,10 @@ $web_stories->register();
  */
 function get_plugin_instance() {
 	global $web_stories;
+
+	if ( null === $web_stories ) {
+		$web_stories = new Plugin();
+	}
+
 	return $web_stories;
 }

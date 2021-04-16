@@ -30,14 +30,15 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Renderer\Image;
+use Google\Web_Stories\Traits\Screen;
 use WP_Post;
-use WP_Screen;
 
 
 /**
  * Admin class.
  */
-class Admin {
+class Admin extends Service_Base {
+	use Screen;
 	/**
 	 * Initialize admin-related functionality.
 	 *
@@ -45,10 +46,21 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_init';
 	}
 
 	/**
@@ -64,13 +76,12 @@ class Admin {
 	 * @return string $class List of Classes.
 	 */
 	public function admin_body_class( $class ) {
-		$screen = get_current_screen();
-
-		if ( ! $screen instanceof WP_Screen ) {
+		$screen = $this->get_current_screen();
+		if ( ! $screen ) {
 			return $class;
 		}
 
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
+		if ( ! $this->is_edit_screen( $screen ) ) {
 			return $class;
 		}
 

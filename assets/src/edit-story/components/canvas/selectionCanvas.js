@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -52,7 +52,7 @@ const Container = withOverlay(styled.div`
 const Lasso = styled.div`
   display: none;
   position: absolute;
-  border: 1px dotted ${({ theme }) => theme.DEPRECATED_THEME.colors.selection};
+  border: 1px dotted ${({ theme }) => theme.colors.border.selection};
   z-index: 1;
 `;
 
@@ -87,6 +87,12 @@ function SelectionCanvas({ children }) {
       };
     }
   );
+
+  const scrollContainer = useMemo(
+    () => fullbleedContainer?.closest('[data-scroll-container]'),
+    [fullbleedContainer]
+  );
+
   const { editorToDataX, editorToDataY } = useUnits((state) => ({
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
@@ -179,9 +185,11 @@ function SelectionCanvas({ children }) {
         offsetHeight,
         offsetWidth,
       } = fullbleedContainer;
+      const { offsetLeft: scrollLeft, offsetTop: scrollTop } = scrollContainer;
       // Offset from the fullbleed to the safe zone.
-      const dx = offsetLeft;
-      const dy = offsetTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
+      const dx = offsetLeft + scrollLeft;
+      const dy =
+        offsetTop + scrollTop + (offsetHeight - offsetWidth / PAGE_RATIO) / 2;
       const x = editorToDataX(lx - dx);
       const y = editorToDataY(ly - dy);
       const width = editorToDataX(lwidth);

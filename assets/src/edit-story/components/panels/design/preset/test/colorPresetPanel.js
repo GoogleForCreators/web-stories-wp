@@ -35,6 +35,7 @@ import {
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 import createSolid from '../../../../../utils/createSolid';
+import { PRESET_TYPES } from '../constants';
 
 jest.mock('../utils');
 
@@ -150,7 +151,7 @@ describe('Panels/Preset', () => {
 
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:stylepreset-color',
+      `web_stories_ui_panel_settings:stylepreset-${PRESET_TYPES.COLOR}`,
       JSON.stringify({ isCollapsed: false })
     );
   });

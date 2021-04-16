@@ -19,8 +19,20 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
+export const KEYS = {
+  ADD_BACKGROUND_MEDIA: 'addBackgroundMedia',
+  CROP_SELECTED_ELEMENTS: 'cropSelectedElements',
+  CROP_ELEMENTS_WITH_SHAPES: 'cropElementsWithShapes',
+  SAFE_ZONE: 'safeZone',
+  PREVIEW_STORY: 'previewStory',
+  ADD_LINKS: 'addLinks',
+  ENABLE_SWIPE: 'enableSwipe',
+  EMBED_WEB_STORIES: 'embedWebStories',
+  DONE: 'done',
+};
+
 export const TIPS = {
-  addBackgroundMedia: {
+  [KEYS.ADD_BACKGROUND_MEDIA]: {
     title: __('Add background media', 'web-stories'),
     figureSrc: 'images/help-center/add_bg_module_1',
     description: [
@@ -30,7 +42,7 @@ export const TIPS = {
       ),
     ],
   },
-  cropSelectedElements: {
+  [KEYS.CROP_SELECTED_ELEMENTS]: {
     title: __('Crop selected element', 'web-stories'),
     figureSrc: 'images/help-center/media_edit_mode_module_2',
     description: [
@@ -40,7 +52,7 @@ export const TIPS = {
       ),
     ],
   },
-  cropElementsWithShapes: {
+  [KEYS.CROP_ELEMENTS_WITH_SHAPES]: {
     title: __('Crop elements using shapes', 'web-stories'),
     figureSrc: 'images/help-center/media_bg_shape_module_3',
     description: [
@@ -50,7 +62,7 @@ export const TIPS = {
       ),
     ],
   },
-  safeZone: {
+  [KEYS.SAFE_ZONE]: {
     title: __('Stay within the safe zone', 'web-stories'),
     figureSrc: 'images/help-center/safe_zone_module_4',
     description: [
@@ -60,7 +72,7 @@ export const TIPS = {
       ),
     ],
   },
-  previewStory: {
+  [KEYS.PREVIEW_STORY]: {
     title: __('Preview your Web Story', 'web-stories'),
     figureSrc: 'images/help-center/preview_module_5',
     description: [
@@ -74,7 +86,7 @@ export const TIPS = {
       ),
     ],
   },
-  addLinks: {
+  [KEYS.ADD_LINKS]: {
     title: __('Add links to Story elements', 'web-stories'),
     figureSrc: 'images/help-center/add_link_module_6',
     description: [
@@ -84,7 +96,7 @@ export const TIPS = {
       ),
     ],
   },
-  enableSwipe: {
+  [KEYS.ENABLE_SWIPE]: {
     title: __('Enable swipe-up option', 'web-stories'),
     figureSrc: 'images/help-center/page_attachment_module_7',
     description: [
@@ -94,10 +106,25 @@ export const TIPS = {
       ),
     ],
   },
+  [KEYS.EMBED_WEB_STORIES]: {
+    title: __('Embed Web Stories', 'web-stories'),
+    /* TODO #7212 `figureSrcImg` and `figureAlt` are temporary until
+    we get an animation. Once we have the animation then these
+    attributes should be removed. */
+    figureSrcImg: 'images/help-center/story_embed_module_1',
+    figureAlt: __('Embed web story graphic', 'web-stories'),
+    description: [
+      __(
+        'When you create a new post in WordPress, you can embed any of your Stories. <a>Learn more</a>',
+        'web-stories'
+      ),
+    ],
+    href: __('https://wp.stories.google/docs/', 'web-stories'),
+  },
 };
 
 export const DONE_TIP_ENTRY = [
-  'done',
+  KEYS.DONE,
   {
     title: __('Done!', 'web-stories'),
     description: [

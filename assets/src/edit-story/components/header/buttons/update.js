@@ -30,10 +30,9 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
-  Tooltip,
-  TOOLTIP_PLACEMENT,
   Icons,
 } from '../../../../design-system';
+import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function Update() {
@@ -85,7 +84,7 @@ function Update() {
     default:
       text = __('Save draft', 'web-stories');
       return (
-        <Tooltip title={text} placement={TOOLTIP_PLACEMENT.BOTTOM} hasTail>
+        <Tooltip title={text} hasTail>
           <Button
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.QUATERNARY}

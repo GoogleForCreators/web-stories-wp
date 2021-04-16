@@ -24,11 +24,11 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Jetpack extends \WP_UnitTestCase {
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$jetpack = new \Google\Web_Stories\Integrations\Jetpack();
-		$jetpack->init();
+		$jetpack->register();
 
 		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -38,15 +38,15 @@ class Jetpack extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_init_is_wpcom() {
+	public function test_register_is_wpcom() {
 		define( 'IS_WPCOM', true );
 
 		$jetpack = new \Google\Web_Stories\Integrations\Jetpack();
-		$jetpack->init();
+		$jetpack->register();
 
 		$this->assertSame( 10, has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
 		$this->assertFalse( has_filter( 'jetpack_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );

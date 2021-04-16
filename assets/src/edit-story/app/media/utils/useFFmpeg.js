@@ -52,11 +52,11 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  *
  * @return {{
  * isFeatureEnabled: boolean,
- * isFileTooLarge: (function(File): boolean),
+ * isFileTooLarge: (file: File) => boolean,
  * isTranscodingEnabled: boolean,
- * canTranscodeFile: (function(File): boolean),
- * transcodeVideo: (function(File): Promise<File>)
- * getFirstFrameOfVideo: (function(File): Promise<File>)
+ * canTranscodeFile: (file: File) => boolean,
+ * transcodeVideo: (file: File) => Promise<File>,
+ * getFirstFrameOfVideo: (file: File) => Promise<File>
  * }} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
@@ -64,14 +64,16 @@ function useFFmpeg() {
   const {
     state: { currentUser },
   } = useCurrentUser();
+
+  const isFeatureSupported = Boolean(window?.crossOriginIsolated);
   /**
    * Whether the video optimization feature is enabled.
    *
-   * @todo Check for window.crossOriginIsolated
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
-  const isFeatureEnabled = useFeature('videoOptimization');
+  const isFeatureEnabled =
+    useFeature('videoOptimization') && isFeatureSupported;
 
   async function getFFmpegInstance(file) {
     const { createFFmpeg, fetchFile } = await import(
@@ -120,8 +122,9 @@ function useFFmpeg() {
         '1',
         // Resize videos if larger than 1080x1920, preserving aspect ratio.
         // See https://trac.ffmpeg.org/wiki/Scaling
+        // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
         '-vf',
-        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
+        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'",
         // Simpler color profile
         '-pix_fmt',
         'yuv420p',
@@ -173,8 +176,9 @@ function useFFmpeg() {
         'libx264',
         // Resize videos if larger than 1080x1920, preserving aspect ratio.
         // See https://trac.ffmpeg.org/wiki/Scaling
+        // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
         '-vf',
-        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease'",
+        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'",
         // move some information to the beginning of your file.
         '-movflags',
         '+faststart',

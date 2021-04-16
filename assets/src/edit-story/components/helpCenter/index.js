@@ -26,18 +26,15 @@ import styled from 'styled-components';
 import { ThemeGlobals } from '../../../design-system';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
+import { useHelpCenter } from '../../app/helpCenter';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
 import { POPUP_ID } from './constants';
 import { Toggle } from './toggle';
-import { useHelpCenter } from './useHelpCenter';
 import { Popup } from './popup';
 import { forceFocusCompanion } from './utils';
 
 const Wrapper = styled.div`
-  position: absolute;
-  bottom: 16px;
-  left: 8px;
   /**
    * sibling inherits parent z-index of Z_INDEX.EDIT
    * so this needs to be placed above that while still
@@ -62,7 +59,7 @@ export const HelpCenter = () => {
   return enableQuickTips ? (
     <DirectionAware>
       <>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         <Wrapper ref={ref}>
           <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
             <Navigator

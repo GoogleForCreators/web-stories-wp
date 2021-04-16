@@ -28,7 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { Color, Row } from '../../../form';
 import { useCommonColorValue, getCommonValue } from '../../shared';
-import { PillGroup } from '../../../../../design-system/components/pill';
+import { PillGroup } from '../../../../../design-system';
 import { applyHiddenPadding, removeHiddenPadding } from './utils';
 
 const FillRow = styled(Row)`
