@@ -16,14 +16,22 @@
 /**
  * External dependencies
  */
+<<<<<<< HEAD
 import { useReducer, useEffect, useMemo, useCallback } from 'react';
+=======
+import { useReducer, useEffect, useMemo, useCallback, useState } from 'react';
+>>>>>>> 9a90c03ea (working initial implementation)
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { createContext } from '../../../../design-system';
+<<<<<<< HEAD
 import { STORY_EVENTS, StoryEventRegisters } from './storyEvents';
+=======
+import { STORY_EVENTS, OnDirtyRegister } from './storyEvents';
+>>>>>>> 9a90c03ea (working initial implementation)
 
 export const Context = createContext({ state: {}, actions: {} });
 
@@ -37,15 +45,32 @@ function createSubscriptionMap() {
   );
 }
 
+<<<<<<< HEAD
+=======
+const initialStoryEventQueue = Object.values(STORY_EVENTS).reduce(
+  (accum, evenType) => ({
+    ...accum,
+    [evenType]: false,
+  }),
+  {}
+);
+
+>>>>>>> 9a90c03ea (working initial implementation)
 function reducer([currentStory], updatedStory) {
   return [updatedStory, currentStory];
 }
 
 export function StoryTriggersProvider({ children, story }) {
+<<<<<<< HEAD
   // store prev & next versions of story to help compute internally fired events.
   // Not sure if this is necesarilly needed but was used a lot in FTUE. Lets keep
   // an eye on this as we create more internal event registers, and we can always
   // remove if we end up not using it.
+=======
+  const [eventQueue, setEventQueue] = useState(initialStoryEventQueue);
+
+  // store prev & next versions of store
+>>>>>>> 9a90c03ea (working initial implementation)
   const [[currentStory, previousStory], updateStory] = useReducer(reducer, [
     story,
     null,
@@ -55,6 +80,21 @@ export function StoryTriggersProvider({ children, story }) {
   // Update story to derive events
   useEffect(() => updateStory(story), [story]);
 
+<<<<<<< HEAD
+=======
+  // Fire off and flush queued events
+  useEffect(() => {
+    Object.entries(eventQueue)
+      .filter(([, isFiring]) => isFiring)
+      .map(([e]) => e)
+      .forEach((e) => {
+        subscriptionMap[e.type].forEach((listener) => listener(currentStory));
+      });
+
+    setEventQueue(initialStoryEventQueue);
+  }, [subscriptionMap, eventQueue, currentStory]);
+
+>>>>>>> 9a90c03ea (working initial implementation)
   // Method provided to listen to story events
   // return self cleanup method
   const addEventListener = useCallback(
@@ -67,12 +107,21 @@ export function StoryTriggersProvider({ children, story }) {
   );
 
   // Method to push events into the queue
+<<<<<<< HEAD
   const dispatchStoryEvent = useCallback(
     (eventType) => {
       subscriptionMap[eventType]?.forEach((listener) => listener(currentStory));
     },
     [subscriptionMap, currentStory]
   );
+=======
+  const dispatchStoryEvent = useCallback((eventType) => {
+    setEventQueue((eventMap) => ({
+      ...eventMap,
+      [eventType]: true,
+    }));
+  }, []);
+>>>>>>> 9a90c03ea (working initial implementation)
 
   // Memoizing provider values
   const value = useMemo(() => [addEventListener, dispatchStoryEvent], [
@@ -83,6 +132,7 @@ export function StoryTriggersProvider({ children, story }) {
   return (
     <Context.Provider value={value}>
       <>
+<<<<<<< HEAD
         {
           // Story event registers used to manage and fire
           // story events internally. These should only dispatch
@@ -101,6 +151,16 @@ export function StoryTriggersProvider({ children, story }) {
             />
           ))
         }
+=======
+        {/* just pass dispatcher and previous and current story into
+        a component that returns null, but can use some internal
+        hooks to manage and dispatch events */}
+        <OnDirtyRegister
+          currentStory={currentStory}
+          previousStory={previousStory}
+          dispatchStoryEvent={dispatchStoryEvent}
+        />
+>>>>>>> 9a90c03ea (working initial implementation)
         {children}
       </>
     </Context.Provider>
