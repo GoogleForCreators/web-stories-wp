@@ -211,7 +211,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
-		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
 
 		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
@@ -229,6 +228,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+
+		// oEmbed.
+		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
+		add_filter( 'embed_html', [ $this, 'filter_embed_html' ], 10, 4 );
+		// So it runs after get_oembed_response_data_rich().
+		add_filter( 'oembed_response_data', [ $this, 'filter_oembed_response_data' ], 20, 4 );
 	}
 
 	/**
@@ -701,7 +706,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	/**
 	 * Filters the path of the queried template by type.
 	 *
-	 * @since 1.6.0
+	 * @since 1.7.0
 	 *
 	 * @param string $template  Path to the template. See locate_template().
 	 *
@@ -713,6 +718,85 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Filters the embed code for a specific post.
+	 *
+	 * For stories, changes the aspect ratio from 16/9 to 3/5.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string  $output Embed code.
+	 * @param WP_Post $post Post object.
+	 * @param int     $width  The width for the response.
+	 * @param int     $height The height for the response.
+	 *
+	 * @return string Filtered embed code.
+	 */
+	public function filter_embed_html( $output, $post, $width, $height ) {
+		if ( self::POST_TYPE_SLUG !== $post->post_type ) {
+			return $output;
+		}
+
+		/** This filter is documented in wp-includes/embed.php */
+		$min_max_width = apply_filters(
+			'oembed_min_max_width',
+			[
+				'min' => 200,
+				'max' => 360,
+			]
+		);
+
+		$new_width  = min( max( $min_max_width['min'], $width ), $min_max_width['max'] );
+		$new_height = max( ceil( $new_width / 3 * 5 ), 330 );
+
+		$output = str_replace(
+			[ "width=\"$width\"", "height=\"$height\"" ],
+			[
+				"width=\"$new_width\"",
+				"height=\"$new_height\"",
+			],
+			$output
+		);
+
+		return $output;
+	}
+
+	/**
+	 * Filters the oEmbed response data for a specific post.
+	 *
+	 * For stories, changes the aspect ratio from 16/9 to 3/5.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param array   $data   The response data.
+	 * @param WP_Post $post   The post object.
+	 * @param int     $width  The requested width.
+	 * @param int     $height The calculated height.
+	 * @return array The modified response data.
+	 */
+	public function filter_oembed_response_data( $data, $post, $width, $height ) {
+		if ( self::POST_TYPE_SLUG !== $post->post_type ) {
+			return $data;
+		}
+
+		/** This filter is documented in wp-includes/embed.php */
+		$min_max_width = apply_filters(
+			'oembed_min_max_width',
+			[
+				'min' => 200,
+				'max' => 360,
+			]
+		);
+
+		$new_width  = min( max( $min_max_width['min'], $width ), $min_max_width['max'] );
+		$new_height = max( ceil( $new_width / 3 * 5 ), 330 );
+
+		$data['width']  = $new_width;
+		$data['height'] = $new_height;
+
+		return $data;
 	}
 
 	/**
