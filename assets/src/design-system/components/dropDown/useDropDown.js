@@ -67,7 +67,6 @@ export default function useDropDown({ options = [], selectedValue }) {
 
   /* Announce changes to the length of the list */
   useEffect(() => {
-    //announce %d results found, use up and down arrow keys to navigate / ... / No results found
     if (isOpen.value) {
       const message = options.length
         ? sprintf(
