@@ -10,15 +10,15 @@
 
 To add a new template to the editor:
 
-1. [Engineer] Commit all SVGs used in the template to the codebase as stickers (in the `main` branch, see [details](#adding-svgs-to-the-codebase-as-stickers)).
+1. [Engineer] Commit all SVGs used in the template to the codebase as stickers ([details](#adding-svgs-to-the-codebase-as-stickers)).
 2. [Designer] Create a new story in your shared WP environment and replicate the template design.
     - SVGs should already be available in the Stickers panel from step (1) &mdash; click on a sticker to insert it into the story. If you can't find the Stickers Panel, make sure the `enableStickers` experiment is turned on.
     - Upload (drag & drop) images and videos into the story to add them.
-3. [Engineer] Commit all images & videos used in the template to the codebase (in the `static-site` branch).
+3. [Engineer] Commit all images & videos used in the template to the codebase.
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
     - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
     - Make sure videos are 720p.
-4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (in the `main` branch, see [details](#get-the-story-json)).
+4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (see [details](#get-the-story-json)).
 5. [Both] Verify that new template shows up in the template library and looks as expected.
 
 ## Pitfalls
