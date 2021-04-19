@@ -99,7 +99,7 @@ describe('Element transform', () => {
       it('it should allow rotating in text edit mode', async () => {
         // Test that rotation handle exists in edit mode.
         const rotationHandle = fixture.container.querySelector(
-          '.moveable-rotation-line .moveable-control'
+          '.moveable-rotation-control'
         );
         expect(rotationHandle).toBeDefined();
 

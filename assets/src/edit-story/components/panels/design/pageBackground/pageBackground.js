@@ -82,7 +82,7 @@ const Text = styled(DefaultText)`
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   const {
     state: { currentPage },
-    actions: { updateCurrentPageProperties },
+    actions: { clearBackgroundElement, updateCurrentPageProperties },
   } = useStory();
 
   const updateBackgroundColor = useCallback(
@@ -91,10 +91,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     },
     [updateCurrentPageProperties]
   );
-
-  const { clearBackgroundElement } = useStory((state) => ({
-    clearBackgroundElement: state.actions.clearBackgroundElement,
-  }));
 
   const removeAsBackground = useCallback(() => {
     pushUpdate(
