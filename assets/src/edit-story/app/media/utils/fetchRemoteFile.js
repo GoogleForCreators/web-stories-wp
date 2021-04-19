@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import getUrlExtension from './getUrlExtension';
+import getFileExtensionFromURL from './getFileExtensionFromURL';
 
 /**
  * Helper to get remote file using fetch.
@@ -32,7 +32,7 @@ import getUrlExtension from './getUrlExtension';
  * @return {Promise<File>} File object.
  */
 async function fetchRemoteFile(url, mimeType) {
-  const name = uuidv4() + '.' + getUrlExtension(url);
+  const name = uuidv4() + '.' + getFileExtensionFromURL(url);
   const response = await fetch(url);
   const data = await response.blob();
   return new File([data], name, {

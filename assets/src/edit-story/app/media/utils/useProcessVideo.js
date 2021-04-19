@@ -28,7 +28,7 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
 
-  const updateElement = useCallback(
+  const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
       const { id: oldId, alt, title } = oldResource;
       updateElementsByResourceId({
@@ -59,11 +59,11 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
     [updateMedia]
   );
 
-  const regenerateVideo = useCallback(
+  const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
       const onUploadSuccess = ({ resource }) => {
-        updateElement({ oldResource, resource });
+        copyResourceData({ oldResource, resource });
         updateOldVideo(oldResource.id, resource.id);
 
         if (resource.type === 'video' && !resource.local) {
@@ -84,11 +84,11 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
       };
       process();
     },
-    [updateElement, uploadMedia, uploadVideoPoster, updateOldVideo]
+    [copyResourceData, uploadMedia, uploadVideoPoster, updateOldVideo]
   );
 
   return {
-    regenerateVideo,
+    optimizeVideo,
   };
 }
 

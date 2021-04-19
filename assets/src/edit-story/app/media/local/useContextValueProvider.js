@@ -158,7 +158,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
-  const { regenerateVideo } = useProcessVideo({
+  const { optimizeVideo } = useProcessVideo({
     uploadVideoPoster,
     uploadMedia,
     updateMedia,
@@ -200,7 +200,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadVideoPoster,
       deleteMediaElement,
       updateMediaElement,
-      regenerateVideo,
+      optimizeVideo,
     },
   };
 }

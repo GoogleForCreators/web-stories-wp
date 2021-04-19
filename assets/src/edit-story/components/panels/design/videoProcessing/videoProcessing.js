@@ -56,15 +56,15 @@ function VideoProcessingPanel({ selectedElements }) {
     'resource',
     DEFAULT_RESOURCE
   );
-  const isFeatureEnabled = useFeature('videoOptimizationPublished');
+  const isFeatureEnabled = useFeature('enablPrePublishVideoOptimization');
 
-  const { regenerateVideo } = useLocalMedia((state) => ({
-    regenerateVideo: state.actions.regenerateVideo,
+  const { optimizeVideo } = useLocalMedia((state) => ({
+    optimizeVideo: state.actions.optimizeVideo,
   }));
 
   const handleUpdateVideo = useCallback(() => {
-    regenerateVideo({ resource });
-  }, [resource, regenerateVideo]);
+    optimizeVideo({ resource });
+  }, [resource, optimizeVideo]);
 
   if (!isFeatureEnabled) {
     return null;

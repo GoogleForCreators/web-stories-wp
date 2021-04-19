@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * Helper to get file extension from URL.
+ *
+ * @param {string} url URL.
+ * @return {string} extension or empty string.
  */
-import getUrlExtension from '../getUrlExtension';
+function getFileExtensionFromURL(url) {
+  return url.split('/').pop().split(/[#?]/)[0].split('.').pop().trim();
+}
 
-describe('getUrlExtension', () => {
-  it('should return ext', () => {
-    expect(getUrlExtension('http://www.example.com/test.jpg')).toBe('jpg');
-  });
-
-  it('should return ext from relative path', () => {
-    expect(getUrlExtension('/test.jpg')).toBe('jpg');
-  });
-
-  it('should return nothng', () => {
-    expect(getUrlExtension('http://www.example.com/')).toBe('');
-  });
-});
+export default getFileExtensionFromURL;

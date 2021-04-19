@@ -66,9 +66,9 @@ function setup() {
     { wrapper }
   );
 
-  const { regenerateVideo } = result.current;
+  const { optimizeVideo } = result.current;
   return {
-    regenerateVideo,
+    optimizeVideo,
     uploadVideoPoster,
     updateMedia,
   };
@@ -76,9 +76,9 @@ function setup() {
 
 describe('useProcessVideo', () => {
   it('should process file', async () => {
-    const { regenerateVideo, uploadVideoPoster, updateMedia } = setup();
+    const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
     act(() => {
-      regenerateVideo({
+      optimizeVideo({
         resource: {
           src: 'http://www.google.com/test.jpg',
           id: 123,
@@ -102,9 +102,9 @@ describe('useProcessVideo', () => {
   });
 
   it('should fail gracefully', async () => {
-    const { regenerateVideo, uploadVideoPoster, updateMedia } = setup();
+    const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
     act(() => {
-      regenerateVideo({
+      optimizeVideo({
         resource: {
           src: 'http://www.google.com/invalid.jpg',
           id: 123,
