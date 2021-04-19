@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use \Google\Web_Stories\Traits\Rewrite_Flush as Rewrite_Flush_Trait;
+use function Google\Web_Stories\rewrite_flush;
 
 /**
  * Class Rewrite_Flush
@@ -34,7 +34,6 @@ use \Google\Web_Stories\Traits\Rewrite_Flush as Rewrite_Flush_Trait;
  * @package Google\Web_Stories\Migrations
  */
 class Rewrite_Flush extends Migrate_Base {
-	use Rewrite_Flush_Trait;
 
 	/**
 	 * Flush rewrite rules.
@@ -44,6 +43,6 @@ class Rewrite_Flush extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		$this->rewrite_flush();
+		rewrite_flush();
 	}
 }

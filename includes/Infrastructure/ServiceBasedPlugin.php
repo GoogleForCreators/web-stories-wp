@@ -19,7 +19,8 @@ namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
-use Google\Web_Stories\Traits\Rewrite_Flush;
+use function Google\Web_Stories\rewrite_flush;
+
 
 /**
  * This abstract base plugin provides all the boilerplate code for working with
@@ -28,7 +29,6 @@ use Google\Web_Stories\Traits\Rewrite_Flush;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 abstract class ServiceBasedPlugin implements Plugin {
-	use Rewrite_Flush;
 
 	// Main filters to control the flow of the plugin from outside code.
 	const SERVICES_FILTER         = 'services';
@@ -134,7 +134,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		$this->rewrite_flush();
+		rewrite_flush();
 	}
 
 	/**
@@ -154,7 +154,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		$this->rewrite_flush();
+		rewrite_flush();
 	}
 
 	/**
