@@ -23,9 +23,11 @@ use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
+ * Class Lock_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Lock_Controller
- * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
- * @coversDefaultClass \Google\Web_Stories\REST_API\Template_Lock_Controller
  */
 class Lock_Controller extends \WP_Test_REST_TestCase {
 	use Private_Access, Capabilities_Setup;
