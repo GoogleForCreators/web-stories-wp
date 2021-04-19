@@ -25,6 +25,7 @@ import * as noDaysOffStickers from './no-days-off';
 import * as experienceThailandStickers from './experience-thailand';
 import * as wellbeingSleepStickers from './sleep';
 import * as cookingStickersV2 from './cooking-02';
+import * as wellnessStickers from './wellness';
 
 export default {
   ...beautyStickers,
@@ -36,4 +37,5 @@ export default {
   ...experienceThailandStickers,
   ...wellbeingSleepStickers,
   ...cookingStickersV2,
+  ...wellnessStickers,
 };
