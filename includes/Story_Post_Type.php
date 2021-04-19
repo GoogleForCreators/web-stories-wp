@@ -233,7 +233,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
 		add_filter( 'embed_html', [ $this, 'filter_embed_html' ], 10, 4 );
 		// So it runs after get_oembed_response_data_rich().
-		add_filter( 'oembed_response_data', [ $this, 'filter_oembed_response_data' ], 20, 4 );
+		add_filter( 'oembed_response_data', [ $this, 'filter_oembed_response_data' ], 20, 3 );
 	}
 
 	/**
@@ -739,17 +739,14 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			return $output;
 		}
 
-		/** This filter is documented in wp-includes/embed.php */
-		$min_max_width = apply_filters(
-			'oembed_min_max_width',
-			[
-				'min' => 200,
-				'max' => 360,
-			]
-		);
+		if ( ! has_post_thumbnail( $post ) ) {
+			return $output;
+		}
 
-		$new_width  = min( max( $min_max_width['min'], $width ), $min_max_width['max'] );
-		$new_height = max( ceil( $new_width / 3 * 5 ), 330 );
+		$new_data = $this->get_embed_height_width( $width );
+
+		$new_width  = $new_data['width'];
+		$new_height = $new_data['height'];
 
 		$output = str_replace(
 			[ "width=\"$width\"", "height=\"$height\"" ],
@@ -773,14 +770,32 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @param array   $data   The response data.
 	 * @param WP_Post $post   The post object.
 	 * @param int     $width  The requested width.
-	 * @param int     $height The calculated height.
 	 * @return array The modified response data.
 	 */
-	public function filter_oembed_response_data( $data, $post, $width, $height ) {
+	public function filter_oembed_response_data( $data, $post, $width ) {
 		if ( self::POST_TYPE_SLUG !== $post->post_type ) {
 			return $data;
 		}
 
+		if ( ! has_post_thumbnail( $post ) ) {
+			return $data;
+		}
+
+		$new_data = $this->get_embed_height_width( $width );
+
+		return array_merge( $data, $new_data );
+	}
+
+	/**
+	 * Generate new height and width for embed.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string $old_width Old width, used to generate new height and width.
+	 *
+	 * @return array
+	 */
+	protected function get_embed_height_width( $old_width ) {
 		/** This filter is documented in wp-includes/embed.php */
 		$min_max_width = apply_filters(
 			'oembed_min_max_width',
@@ -790,13 +805,10 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			]
 		);
 
-		$new_width  = min( max( $min_max_width['min'], $width ), $min_max_width['max'] );
-		$new_height = max( ceil( $new_width / 3 * 5 ), 330 );
+		$width  = (int) min( max( $min_max_width['min'], $old_width ), $min_max_width['max'] );
+		$height = (int) max( ceil( $width / 3 * 5 ), 330 );
 
-		$data['width']  = $new_width;
-		$data['height'] = $new_height;
-
-		return $data;
+		return compact( 'width', 'height' );
 	}
 
 	/**
