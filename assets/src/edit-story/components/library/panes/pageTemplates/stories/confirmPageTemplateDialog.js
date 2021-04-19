@@ -15,20 +15,25 @@
  */
 
 /**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+
+/**
  * Internal dependencies
  */
-import { Container } from '../container';
+import ConfirmPageTemplateDialog from '../confirmPageTemplateDialog';
 
-export default class PageLayouts extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
+export default {
+  title: 'Stories Editor/Components/Dialog/Confirm Page Template',
+  component: ConfirmPageTemplateDialog,
+};
 
-  get pageLayouts() {
-    return this.getAllByRole('listitem');
-  }
-
-  pageLayout(name) {
-    return this.getByRole('listitem', { name });
-  }
-}
+export const _default = () => {
+  return (
+    <ConfirmPageTemplateDialog
+      onConfirm={action('confirmed')}
+      onClose={action('closed')}
+    />
+  );
+};

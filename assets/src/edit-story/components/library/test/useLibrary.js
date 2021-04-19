@@ -30,14 +30,14 @@ describe('useLibrary()', () => {
     const { result } = renderHook(() => useLibrary((state) => state), {
       wrapper: LibraryProvider,
     });
-    const [media3p, text, pageLayouts] = [1, 2, 4];
+    const [media3p, text, pageTemplates] = [1, 2, 4];
 
     const { Pane: ShouldBeEmptyMedia3pPane } = result.current.data.tabs[
       media3p
     ];
     const { Pane: ShouldBeEmptyTextPane } = result.current.data.tabs[text];
-    const { Pane: ShouldBeEmptyPageLayoutsPane } = result.current.data.tabs[
-      pageLayouts
+    const { Pane: ShouldBeEmptyPageTemplatesPane } = result.current.data.tabs[
+      pageTemplates
     ];
 
     expect(<ShouldBeEmptyMedia3pPane />).toMatchInlineSnapshot('<EmptyPane />');
@@ -48,11 +48,11 @@ describe('useLibrary()', () => {
     const emptyTextPane = render(<ShouldBeEmptyTextPane />);
     expect(emptyTextPane.container.firstChild).toBeEmptyDOMElement();
 
-    expect(<ShouldBeEmptyPageLayoutsPane />).toMatchInlineSnapshot(
+    expect(<ShouldBeEmptyPageTemplatesPane />).toMatchInlineSnapshot(
       '<EmptyPane />'
     );
-    const emptyPageLayoutsPane = render(<ShouldBeEmptyPageLayoutsPane />);
-    expect(emptyPageLayoutsPane.container.firstChild).toBeEmptyDOMElement();
+    const emptyPageTemplatesPane = render(<ShouldBeEmptyPageTemplatesPane />);
+    expect(emptyPageTemplatesPane.container.firstChild).toBeEmptyDOMElement();
 
     // shallow render the lazy media panes
     await act(async () => {
@@ -73,14 +73,14 @@ describe('useLibrary()', () => {
 
     await act(async () => {
       await result.current.actions.setTab(
-        result.current.data.tabs[pageLayouts].id
+        result.current.data.tabs[pageTemplates].id
       );
     });
-    const { Pane: ShouldBeRenderedPageLayoutsPane } = result.current.data.tabs[
-      pageLayouts
-    ];
-    expect(<ShouldBeRenderedPageLayoutsPane />).toMatchInlineSnapshot(
-      `<PageLayoutsPane />`
+    const {
+      Pane: ShouldBeRenderedPageTemplatesPane,
+    } = result.current.data.tabs[pageTemplates];
+    expect(<ShouldBeRenderedPageTemplatesPane />).toMatchInlineSnapshot(
+      `<PageTemplatesPane />`
     );
   });
 });

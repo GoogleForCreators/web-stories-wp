@@ -48,10 +48,10 @@ import {
   THEME_CONSTANTS,
   Toggle,
 } from '../../../../../design-system';
-import PageLayout from './pageLayout';
-import ConfirmPageLayoutDialog from './confirmPageLayoutDialog';
+import PageTemplate from './pageTemplate';
+import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
 
-const PAGE_LAYOUT_PANE_WIDTH = 158;
+const PAGE_TEMPLATE_PANE_WIDTH = 158;
 
 const ActionRow = styled.div`
   display: flex;
@@ -59,7 +59,7 @@ const ActionRow = styled.div`
   margin: 8px 16px 22px 16px;
 `;
 
-const LayoutsToggle = styled.div`
+const TemplatesToggle = styled.div`
   display: flex;
 
   label {
@@ -69,7 +69,12 @@ const LayoutsToggle = styled.div`
   }
 `;
 
-function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
+function PageTemplates({
+  onToggleClick,
+  pages,
+  parentRef,
+  showTemplateImages,
+}) {
   const { replaceCurrentPage, currentPage } = useStory(
     ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
       replaceCurrentPage,
@@ -79,7 +84,7 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
 
   const containerRef = useRef();
   const pageRefs = useRef({});
-  const toggleId = useMemo(() => `toggle_page_layouts_${uuidv4()}`, []);
+  const toggleId = useMemo(() => `toggle_page_templates_${uuidv4()}`, []);
 
   const [selectedPage, setSelectedPage] = useState();
   const [isConfirming, setIsConfirming] = useState();
@@ -92,17 +97,17 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
   );
 
   const pageSize = useMemo(() => {
-    const width = PAGE_LAYOUT_PANE_WIDTH;
+    const width = PAGE_TEMPLATE_PANE_WIDTH;
     const height = Math.round(width / PAGE_RATIO);
     const containerHeight = Math.round(width / FULLBLEED_RATIO);
     return { width, height, containerHeight };
   }, []);
 
-  const handleApplyPageLayout = useCallback(
+  const handleApplyPageTemplate = useCallback(
     (page) => {
       const duplicatedPage = duplicatePage(page);
       replaceCurrentPage({ page: duplicatedPage });
-      trackEvent('insert_page_layout', {
+      trackEvent('insert_page_template', {
         name: page.title,
       });
 
@@ -117,11 +122,11 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
         setIsConfirming(true);
         setSelectedPage(page);
       } else {
-        handleApplyPageLayout(page);
+        handleApplyPageTemplate(page);
         setSelectedPage(null);
       }
     },
-    [requiresConfirmation, handleApplyPageLayout]
+    [requiresConfirmation, handleApplyPageTemplate]
   );
 
   const handleCloseDialog = useCallback(() => {
@@ -130,9 +135,9 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
   }, [setIsConfirming]);
 
   const handleConfirmDialog = useCallback(() => {
-    handleApplyPageLayout(selectedPage);
+    handleApplyPageTemplate(selectedPage);
     setIsConfirming(false);
-  }, [selectedPage, handleApplyPageLayout]);
+  }, [selectedPage, handleApplyPageTemplate]);
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((pages || []).length / 2),
@@ -189,9 +194,9 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
           as="h3"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
         >
-          {__('Layouts', 'web-stories')}
+          {__('Templates', 'web-stories')}
         </Headline>
-        <LayoutsToggle>
+        <TemplatesToggle>
           <Text
             as="label"
             htmlFor={toggleId}
@@ -202,10 +207,10 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
           <Toggle
             id={toggleId}
             name={toggleId}
-            checked={showLayoutImages}
+            checked={showTemplateImages}
             onChange={onToggleClick}
           />
-        </LayoutsToggle>
+        </TemplatesToggle>
       </ActionRow>
       <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
@@ -216,7 +221,7 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
           paneLeft={PANE_PADDING}
           onFocus={handleGridFocus}
           role="list"
-          aria-label={__('Page Layout Options', 'web-stories')}
+          aria-label={__('Page Template Options', 'web-stories')}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>
             columnVirtualizer.virtualItems.map((virtualColumn) => {
@@ -233,9 +238,9 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
               const isActive = activeGridItemId === page.id && isGridFocused;
 
               return (
-                <PageLayout
+                <PageTemplate
                   key={pageIndex}
-                  data-testid={`page_layout_${page.id}`}
+                  data-testid={`page_template_${page.id}`}
                   ref={(el) => (pageRefs.current[page.id] = el)}
                   translateY={virtualRow.start}
                   translateX={virtualColumn.start}
@@ -251,7 +256,7 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
           )}
         </VirtualizedContainer>
         {isConfirming && (
-          <ConfirmPageLayoutDialog
+          <ConfirmPageTemplateDialog
             onConfirm={handleConfirmDialog}
             onClose={handleCloseDialog}
           />
@@ -261,7 +266,7 @@ function PageLayouts({ onToggleClick, pages, parentRef, showLayoutImages }) {
   );
 }
 
-PageLayouts.propTypes = {
+PageTemplates.propTypes = {
   onToggleClick: PropTypes.func.isRequired,
   parentRef: PropTypes.object.isRequired,
   pages: PropTypes.arrayOf(
@@ -269,7 +274,7 @@ PageLayouts.propTypes = {
       id: PropTypes.string.isRequired,
     })
   ),
-  showLayoutImages: PropTypes.bool,
+  showTemplateImages: PropTypes.bool,
 };
 
-export default PageLayouts;
+export default PageTemplates;

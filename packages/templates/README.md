@@ -1,6 +1,6 @@
 # Templates
 
-This package contains the templates used by the dashboard and the editor (as part of page layouts).
+This package contains the templates used by the dashboard and the editor (as part of page templates).
 
 ## Template Creation
 
