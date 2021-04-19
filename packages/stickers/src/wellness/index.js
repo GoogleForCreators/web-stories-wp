@@ -23,6 +23,9 @@ import { default as curvedArrow } from './curvedArrow';
 import { default as capsuleBox } from './capsuleBox';
 import { default as capsuleOpen } from './capsuleOpen';
 import { default as capsules } from './capsules';
+import { default as hotDish } from './hotDish';
+import { default as oven } from './oven';
+import { default as potatoes } from './potatoes';
 
 export default {
   scribbledUnderline,
@@ -32,4 +35,7 @@ export default {
   capsuleBox,
   capsuleOpen,
   capsules,
+  hotDish,
+  oven,
+  potatoes,
 };
