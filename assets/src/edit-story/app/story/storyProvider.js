@@ -150,8 +150,8 @@ function StoryProvider({ storyId, children }) {
     isAutoSaving,
   });
 
-  const state = {
-    state: {
+  const fullStory = useMemo(
+    () => ({
       pages,
       currentPageId,
       currentPageIndex,
@@ -168,7 +168,29 @@ function StoryProvider({ storyId, children }) {
         isSaving: isSaving || isAutoSaving || isSavingMetaBoxes,
         isFreshlyPublished,
       },
-    },
+    }),
+    [
+      pages,
+      currentPageId,
+      currentPageIndex,
+      currentPageNumber,
+      currentPage,
+      selectedElementIds,
+      selectedElements,
+      selectedElementAnimations,
+      hasSelection,
+      story,
+      animationState,
+      capabilities,
+      isSaving,
+      isAutoSaving,
+      isSavingMetaBoxes,
+      isFreshlyPublished,
+    ]
+  );
+
+  const state = {
+    state: fullStory,
     actions: {
       ...api,
       autoSave,
@@ -179,7 +201,9 @@ function StoryProvider({ storyId, children }) {
 
   return (
     <Context.Provider value={state}>
-      <StoryTriggersProvider story={pages}>{children}</StoryTriggersProvider>
+      <StoryTriggersProvider story={fullStory}>
+        {children}
+      </StoryTriggersProvider>
     </Context.Provider>
   );
 }
