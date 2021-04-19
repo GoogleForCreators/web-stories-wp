@@ -475,8 +475,8 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %d: maximum number of story characters. */
               _n(
-                'Keep text to max %d character per page',
-                'Keep text to max %d characters per page',
+                'Include no more than %d character',
+                'Include no more than %d characters',
                 MAX_STORY_CHARACTERS,
                 'web-stories'
               ),
@@ -510,8 +510,8 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %d: minimum number of story characters. */
               _n(
-                'Make your story text %d character or more',
-                'Make your story text %d characters or more',
+                'Include at least %d character',
+                'Include at least %d characters',
                 MIN_STORY_CHARACTERS,
                 'web-stories'
               ),
@@ -576,8 +576,8 @@ export const MESSAGES = {
       MAIN_TEXT: sprintf(
         /* translators: %d: maximum video length in minutes. */
         _n(
-          'Split longer videos into segments of %d minute or less',
-          'Split longer videos into segments of %d minutes or less',
+          'Split videos into segments of %d minute or less',
+          'Split videos into segments of %d minutes or less',
           MAX_VIDEO_LENGTH_MINUTES,
           'web-stories'
         ),
@@ -586,16 +586,7 @@ export const MESSAGES = {
       HELPER_TEXT: (
         <ul>
           <li>
-            {sprintf(
-              /* translators: %d: maximum video length in minutes. */
-              _n(
-                'Split longer videos into segments of %d minute or less',
-                'Split longer videos into segments of %d minutes or less',
-                MAX_VIDEO_LENGTH_MINUTES,
-                'web-stories'
-              ),
-              MAX_VIDEO_LENGTH_MINUTES
-            )}
+            {__('Shorter videos help readers navigate stories', 'web-stories')}
           </li>
         </ul>
       ),
