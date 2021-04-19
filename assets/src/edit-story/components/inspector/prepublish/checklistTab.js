@@ -141,7 +141,7 @@ const ChecklistTab = (props) => {
               </GoToIssue>
             )}
           </IssueTitle>
-          <IssueDescription>{help}</IssueDescription>
+          {help && <IssueDescription>{help}</IssueDescription>}
         </Row>
       );
     },
