@@ -93,11 +93,6 @@ function getDesignPanelsForSelection(elements) {
         type: PanelTypes.PAGE_BACKGROUND,
         Panel: PageBackgroundPanel,
       });
-      // Always display Presets as the first panel for background.
-      panels.unshift({
-        type: PanelTypes.STYLE_PRESETS,
-        Panel: ColorPresetPanel,
-      });
     }
 
     panels.push({
