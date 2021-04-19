@@ -24,19 +24,22 @@ import { useState, useEffect } from 'react';
 import { registerPropTypes } from './propTypes';
 import { STORY_EVENTS } from './types';
 
-function isClean(pages) {
-  return pages?.length <= 1 && pages[0]?.elements?.length <= 1;
+function isClean(story) {
+  return (
+    story?.pages?.length === 0 ||
+    (story?.pages?.length === 1 && story?.pages[0]?.elements?.length <= 1)
+  );
 }
 
-function OnDirtyRegister({ currentStory, previousStory, dispatchStoryEvent }) {
+function OnDirtyRegister({ currentStory, dispatchStoryEvent }) {
   const [hasFiredOnce, setHasFiredOnce] = useState(false);
 
   useEffect(() => {
-    if (!hasFiredOnce && isClean(previousStory) && !isClean(currentStory)) {
+    if (!hasFiredOnce && !isClean(currentStory)) {
       dispatchStoryEvent(STORY_EVENTS.onDirty);
       setHasFiredOnce(true);
     }
-  }, [dispatchStoryEvent, previousStory, currentStory, hasFiredOnce]);
+  }, [dispatchStoryEvent, currentStory, hasFiredOnce]);
 
   return null;
 }
