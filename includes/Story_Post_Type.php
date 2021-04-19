@@ -791,7 +791,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param string $old_width Old width, used to generate new height and width.
+	 * @param int $old_width Old width, used to generate new height and width.
 	 *
 	 * @return array
 	 */
