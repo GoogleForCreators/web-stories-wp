@@ -59,7 +59,7 @@ class Database_Upgrader extends Service_Base implements Activateable {
 	const ROUTINES = [
 		'1.0.0' => Migrations\Update_1::class,
 		'2.0.0' => Migrations\Replace_Conic_Style_Presets::class,
-		'2.0.1' => Migrations\V2_Add_Term::class,
+		'2.0.1' => Migrations\Add_Media_Source_Editor::class,
 		'2.0.2' => Migrations\Remove_Broken_Text_Styles::class,
 		'2.0.3' => Migrations\Unify_Color_Presets::class,
 		'2.0.4' => Migrations\Update_Publisher_Logos::class,
@@ -69,7 +69,7 @@ class Database_Upgrader extends Service_Base implements Activateable {
 		'3.0.3' => Migrations\Yoast_Reindex_Stories::class,
 		'3.0.4' => Migrations\Add_Poster_Generation_Media_Source::class,
 		'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
-		'3.0.6' => Migrations\V3_Add_Term::class,
+		'3.0.6' => Migrations\Add_Media_Source_Video_Optimization::class,
 	];
 
 	/**

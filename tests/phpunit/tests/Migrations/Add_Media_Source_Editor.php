@@ -18,16 +18,16 @@
 namespace phpunit\tests\Migrations;
 
 /**
- * Class V2_Add_Term
- * @coversDefaultClass \Google\Web_Stories\Migrations\V2_Add_Term
+ * Class Add_Media_Source_Editor
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Editor
  * @package phpunit\tests\Migrations
  */
-class V2_Add_Term extends \WP_UnitTestCase {
+class Add_Media_Source_Editor extends \WP_UnitTestCase {
 	/**
 	 * @covers ::migrate
 	 */
 	public function test_migrate() {
-		$object = new \Google\Web_Stories\Migrations\V2_Add_Term();
+		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Editor();
 		$object->migrate();
 
 		$terms = get_terms(

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class V2_Add_Term
+ * Class Add_Media_Source_Editor
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -30,11 +30,11 @@ namespace Google\Web_Stories\Migrations;
 use Google\Web_Stories\Media;
 
 /**
- * Class V2_Add_Term
+ * Class Add_Media_Source_Editor
  *
  * @package Google\Web_Stories\Migrations
  */
-class V2_Add_Term extends Migrate_Base {
+class Add_Media_Source_Editor extends Migrate_Base {
 	/**
 	 * Add the editor term, to make sure it exists.
 	 *

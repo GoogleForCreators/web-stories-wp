@@ -1,6 +1,6 @@
 <?php
 /**
- * Class V3_Add_Term
+ * Class Add_Media_Source_Video_Optimization
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -30,11 +30,11 @@ namespace Google\Web_Stories\Migrations;
 use Google\Web_Stories\Media;
 
 /**
- * Class V3_Add_Term
+ * Class Add_Media_Source_Video_Optimization
  *
  * @package Google\Web_Stories\Migrations
  */
-class V3_Add_Term extends Migrate_Base {
+class Add_Media_Source_Video_Optimization extends Migrate_Base {
 
 	/**
 	 * Add the video optimization term, to make sure it exists.

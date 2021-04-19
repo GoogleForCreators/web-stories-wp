@@ -17,17 +17,17 @@
 
 namespace phpunit\tests\Migrations;
 
-/**
- * Class V3_Add_Term
- * @coversDefaultClass \Google\Web_Stories\Migrations\V3_Add_Term
+/**s
+ * Class Add_Media_Source_Video_Optimization
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization
  * @package phpunit\tests\Migrations
  */
-class V3_Add_Term extends \WP_UnitTestCase {
+class Add_Media_Source_Video_Optimization extends \WP_UnitTestCase {
 	/**
 	 * @covers ::migrate
 	 */
 	public function test_migrate() {
-		$object = new \Google\Web_Stories\Migrations\V3_Add_Term();
+		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization();
 		$object->migrate();
 
 		$terms = get_terms(
