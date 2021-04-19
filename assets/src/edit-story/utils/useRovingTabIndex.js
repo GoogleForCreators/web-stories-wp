@@ -67,11 +67,11 @@ function getDistanceSq(p1, p2) {
  * @param {string} key The key pressed.
  * @return {string} Either `previousSibling` or `nextSibling`.
  */
-function getSiblingDirection(isRTL, key) {
-  return !isRTL &&
-    (key === 'ArrowLeft' || key === 'ArrowUp' || key === 'PageUp')
-    ? ['previousSibling']
-    : 'nextSibling';
+export function getSiblingDirection(isRTL, key) {
+  const isPreviousDirection = isRTL
+    ? key === 'ArrowRight' || key === 'ArrowUp' || key === 'PageUp'
+    : key === 'ArrowLeft' || key === 'ArrowUp' || key === 'PageUp';
+  return isPreviousDirection ? 'previousSibling' : 'nextSibling';
 }
 
 /**

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,19 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { queryAllByAttribute, buildQueries } from '@testing-library/react';
 
-/**
- * Internal dependencies
- */
-import { Icons } from '../../../../../design-system';
+const queryAllById = (...args) => queryAllByAttribute('id', ...args);
 
-function PageLayoutsIcon() {
-  return (
-    <Icons.Box4Alternate
-      aria-label={__('Page layouts library', 'web-stories')}
-    />
-  );
-}
+const getMultipleError = (c, value) =>
+  `Found multiple elements with the id attribute of: ${value}`;
+const getMissingError = (c, value) =>
+  `Unable to find an element with the id attribute of: ${value}`;
 
-export default PageLayoutsIcon;
+const [queryById, getAllById, getById, findAllById, findById] = buildQueries(
+  queryAllById,
+  getMultipleError,
+  getMissingError
+);
+
+export { queryById, queryAllById, getById, getAllById, findAllById, findById };

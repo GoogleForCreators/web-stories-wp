@@ -17,5 +17,5 @@
 /**
  * Internal dependencies
  */
-export { default as PageLayoutsPane } from './pageLayoutsPane';
-export { default as PageLayoutsIcon } from './pageLayoutsIcon';
+export { default as PageTemplatesPane } from './pageTemplatesPane';
+export { default as PageTemplatesIcon } from './pageTemplatesIcon';

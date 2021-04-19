@@ -29,8 +29,8 @@ import { useAPI } from '../../../../app/api';
 import { Pane, ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import paneId from './paneId';
-import PageLayouts from './pageLayouts';
-import { PAGE_LAYOUT_TYPES } from './constants';
+import PageTemplates from './pageTemplates';
+import { PAGE_TEMPLATE_TYPES } from './constants';
 
 export const StyledPane = styled(Pane)`
   height: 100%;
@@ -44,38 +44,42 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
-export const PageLayoutsParentContainer = styled.div`
+export const PageTemplatesParentContainer = styled.div`
   ${virtualPaneContainer};
   margin-top: 18px;
   overflow-x: hidden;
   overflow-y: scroll;
 `;
 
-function PageLayoutsPane(props) {
+function PageTemplatesPane(props) {
   const {
-    actions: { getPageLayouts },
+    actions: { getPageTemplates },
   } = useAPI();
-  const [pageLayouts, setPageLayouts] = useState([]);
-  const [selectedPageLayoutType, setSelectedPageLayoutType] = useState(null);
-  const [showLayoutImages, setShowLayoutImages] = useState(false);
+  const [pageTemplates, setPageTemplates] = useState([]);
+  const [selectedPageTemplateType, setSelectedPageTemplateType] = useState(
+    null
+  );
+  const [showTemplateImages, setShowTemplateImages] = useState(false);
 
-  const pageLayoutsParentRef = useRef();
+  const pageTemplatesParentRef = useRef();
 
-  // load and process pageLayouts
+  // load and process pageTemplates
   useEffect(() => {
-    async function loadPageLayouts() {
-      const trackTiming = getTimeTracker('load_page_layouts');
-      setPageLayouts(await getPageLayouts({ showImages: showLayoutImages }));
+    async function loadPageTemplates() {
+      const trackTiming = getTimeTracker('load_page_templates');
+      setPageTemplates(
+        await getPageTemplates({ showImages: showTemplateImages })
+      );
       trackTiming();
     }
 
-    loadPageLayouts();
-  }, [getPageLayouts, showLayoutImages, setPageLayouts]);
+    loadPageTemplates();
+  }, [getPageTemplates, showTemplateImages, setPageTemplates]);
 
   const pills = useMemo(
     () => [
       { id: null, label: __('All', 'web-stories') },
-      ...Object.entries(PAGE_LAYOUT_TYPES).map(([key, { name }]) => ({
+      ...Object.entries(PAGE_TEMPLATE_TYPES).map(([key, { name }]) => ({
         id: key,
         label: name,
       })),
@@ -85,27 +89,28 @@ function PageLayoutsPane(props) {
 
   const filteredPages = useMemo(
     () =>
-      pageLayouts.reduce((pages, template) => {
+      pageTemplates.reduce((pages, template) => {
         const templatePages = template.pages.reduce((acc, page) => {
-          // skip unselected page layout types if not matching
+          // skip unselected page template types if not matching
           if (
-            !page.pageLayoutType ||
-            (selectedPageLayoutType &&
-              page.pageLayoutType !== selectedPageLayoutType)
+            !page.pageTemplateType ||
+            (selectedPageTemplateType &&
+              page.pageTemplateType !== selectedPageTemplateType)
           ) {
             return acc;
           }
 
-          const pageLayoutName = PAGE_LAYOUT_TYPES[page.pageLayoutType].name;
+          const pageTemplateName =
+            PAGE_TEMPLATE_TYPES[page.pageTemplateType].name;
           return [
             ...acc,
             {
               ...page,
               title: sprintf(
-                /* translators: 1: template name. 2: page layout name. */
-                _x('%1$s %2$s', 'page layout title', 'web-stories'),
+                /* translators: 1: template name. 2: page template name. */
+                _x('%1$s %2$s', 'page template title', 'web-stories'),
                 template.title,
-                pageLayoutName
+                pageTemplateName
               ),
             },
           ];
@@ -113,20 +118,20 @@ function PageLayoutsPane(props) {
 
         return [...pages, ...templatePages];
       }, []),
-    [pageLayouts, selectedPageLayoutType]
+    [pageTemplates, selectedPageTemplateType]
   );
 
-  const handleSelectPageLayoutType = useCallback((key) => {
-    setSelectedPageLayoutType(key);
+  const handleSelectPageTemplateType = useCallback((key) => {
+    setSelectedPageTemplateType(key);
     trackEvent('search', {
-      search_type: 'page_layouts',
+      search_type: 'page_templates',
       search_term: '',
       search_category: key,
     });
   }, []);
 
   const handleToggleClick = useCallback(() => {
-    setShowLayoutImages((currentValue) => !currentValue);
+    setShowTemplateImages((currentValue) => !currentValue);
   }, []);
 
   return (
@@ -134,23 +139,23 @@ function PageLayoutsPane(props) {
       <PaneInner>
         <ChipGroup
           items={pills}
-          selectedItemId={selectedPageLayoutType}
-          selectItem={handleSelectPageLayoutType}
-          deselectItem={() => handleSelectPageLayoutType(null)}
+          selectedItemId={selectedPageTemplateType}
+          selectItem={handleSelectPageTemplateType}
+          deselectItem={() => handleSelectPageTemplateType(null)}
         />
-        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
-          {pageLayoutsParentRef.current && (
-            <PageLayouts
+        <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
+          {pageTemplatesParentRef.current && (
+            <PageTemplates
               onToggleClick={handleToggleClick}
-              parentRef={pageLayoutsParentRef}
+              parentRef={pageTemplatesParentRef}
               pages={filteredPages}
-              showImages={showLayoutImages}
+              showImages={showTemplateImages}
             />
           )}
-        </PageLayoutsParentContainer>
+        </PageTemplatesParentContainer>
       </PaneInner>
     </StyledPane>
   );
 }
 
-export default PageLayoutsPane;
+export default PageTemplatesPane;

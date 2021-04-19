@@ -173,7 +173,7 @@
         "id": "5e0a9de6-0c71-42fb-8d26-7beb33ce55c0",
         "isDefaultBackground": true
       },
-      "pageLayoutType": "cover"
+      "pageTemplateType": "cover"
     },
     {
       "animations": [
@@ -368,7 +368,7 @@
       "type": "page",
       "id": "708fbc22-f0ca-40ec-9a57-21d9eb0be6b7",
       "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } },
-      "pageLayoutType": "quote"
+      "pageTemplateType": "quote"
     },
     {
       "animations": [
@@ -620,7 +620,7 @@
         "id": "c324efb7-dd3a-4cce-b780-f3fde3cc94f2"
       },
       "backgroundColor": { "color": { "r": 16, "g": 16, "b": 16, "a": 1 } },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -901,7 +901,7 @@
         "id": "aef43d55-bf5e-4175-8975-1637ce53d9ca",
         "isDefaultBackground": true
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -1230,7 +1230,7 @@
         "id": "ff86e4bb-4a5c-446d-81c5-0bcd77bd8086"
       },
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
-      "pageLayoutType": "steps"
+      "pageTemplateType": "steps"
     },
     {
       "animations": [
@@ -1532,7 +1532,7 @@
         "id": "506b7e72-d072-474a-9fd7-289c1ba8b707"
       },
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -1827,7 +1827,7 @@
         "id": "6b7a12c9-81f2-4cf8-8868-6f5d741646e1",
         "isDefaultBackground": true
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -2245,7 +2245,7 @@
       "type": "page",
       "id": "d65c11a1-5f71-48ff-8579-85d53f18d461",
       "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     }
   ],
   "autoAdvance": true,
