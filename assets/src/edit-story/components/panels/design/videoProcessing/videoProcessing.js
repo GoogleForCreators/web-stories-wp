@@ -21,11 +21,12 @@ import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { useFeature } from 'flagged';
+
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import {
@@ -35,6 +36,7 @@ import {
 } from '../../../../../design-system';
 import { useCommonObjectValue } from '../../shared';
 import { useLocalMedia } from '../../../../app/media';
+import { useConfig } from '../../../../app/config';
 
 const DEFAULT_RESOURCE = {
   id: null,
@@ -62,14 +64,19 @@ function VideoProcessingPanel({ selectedElements }) {
     optimizeVideo: state.actions.optimizeVideo,
   }));
 
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+
   const handleUpdateVideo = useCallback(() => {
     optimizeVideo({ resource });
   }, [resource, optimizeVideo]);
 
-  if (!isFeatureEnabled) {
-    return null;
-  }
-  if (selectedElements.length > 1) {
+  if (
+    !isFeatureEnabled ||
+    !hasUploadMediaAction ||
+    selectedElements.length > 1
+  ) {
     return null;
   }
 
