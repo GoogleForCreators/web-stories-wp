@@ -23,7 +23,12 @@ import { useCallback } from 'react';
 import { useStory } from '../../';
 import fetchRemoteFile from './fetchRemoteFile';
 
-function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
+function useProcessVideo({
+  uploadMedia,
+  uploadVideoPoster,
+  updateMedia,
+  deleteMediaElement,
+}) {
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -51,6 +56,7 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
   const updateOldVideo = useCallback(
     (oldId, newId) => {
       updateMedia(oldId, {
+        media_source: 'source-video',
         meta: {
           web_stories_optimized_id: newId,
         },
@@ -65,6 +71,7 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldVideo(oldResource.id, resource.id);
+        deleteMediaElement({ id: oldResource.id });
 
         if (resource.type === 'video' && !resource.local) {
           uploadVideoPoster(resource.id, resource.src);
@@ -84,7 +91,13 @@ function useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }) {
       };
       process();
     },
-    [copyResourceData, uploadMedia, uploadVideoPoster, updateOldVideo]
+    [
+      copyResourceData,
+      uploadMedia,
+      uploadVideoPoster,
+      updateOldVideo,
+      deleteMediaElement,
+    ]
   );
 
   return {

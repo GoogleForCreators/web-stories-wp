@@ -162,6 +162,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     uploadVideoPoster,
     uploadMedia,
     updateMedia,
+    deleteMediaElement,
   });
 
   const generateMissingPosters = useCallback(

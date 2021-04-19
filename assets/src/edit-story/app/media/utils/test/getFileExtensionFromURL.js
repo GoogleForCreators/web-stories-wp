@@ -21,7 +21,9 @@ import getFileExtensionFromURL from '../getFileExtensionFromURL';
 
 describe('getFileExtensionFromURL', () => {
   it('should return ext', () => {
-    expect(getFileExtensionFromURL('http://www.example.com/test.jpg')).toBe('jpg');
+    expect(getFileExtensionFromURL('http://www.example.com/test.jpg')).toBe(
+      'jpg'
+    );
   });
 
   it('should return ext from relative path', () => {

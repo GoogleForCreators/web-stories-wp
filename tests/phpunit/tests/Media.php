@@ -42,8 +42,17 @@ class Media extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $media, 'wp_prepare_attachment_for_js' ] ) );
 		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
 		$this->assertSame( 10, has_filter( 'ajax_query_attachments_args', [ $media, 'filter_ajax_query_attachments_args' ] ) );
-		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_poster_attachments' ] ) );
-		$this->assertSame( 10, has_filter( 'rest_attachment_query', [ $media, 'filter_rest_poster_attachments' ] ) );
+		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_generated_media_attachments' ] ) );
+		$this->assertSame(
+			10,
+			has_filter(
+				'rest_attachment_query',
+				[
+					$media,
+					'filter_rest_generated_media_attachments',
+				] 
+			) 
+		);
 	}
 	/**
 	 * @covers ::rest_api_init
@@ -304,7 +313,7 @@ class Media extends \WP_UnitTestCase {
 				[
 					'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation' ],
+					'terms'    => [ 'poster-generation', 'source-video' ],
 					'operator' => 'NOT IN',
 				],
 			],
@@ -326,7 +335,7 @@ class Media extends \WP_UnitTestCase {
 				[
 					'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation' ],
+					'terms'    => [ 'poster-generation', 'source-video' ],
 					'operator' => 'NOT IN',
 				],
 				[
@@ -358,30 +367,30 @@ class Media extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::filter_poster_attachments
+	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_poster_attachments_no_screen() {
+	public function test_filter_generated_media_attachments_no_screen() {
 		$query    = new WP_Query();
 		$expected = $query->get( 'tax_query' );
 
 		$media = new \Google\Web_Stories\Media();
-		$media->filter_poster_attachments( $query );
+		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		$this->assertSame( $expected, $actual );
 	}
 
 	/**
-	 * @covers ::filter_poster_attachments
+	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_poster_attachments_not_main_query() {
+	public function test_filter_generated_media_attachments_not_main_query() {
 		$GLOBALS['current_screen'] = convert_to_screen( 'upload' );
 
 		$query    = new WP_Query();
 		$expected = $query->get( 'tax_query' );
 
 		$media = new \Google\Web_Stories\Media();
-		$media->filter_poster_attachments( $query );
+		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		unset( $GLOBALS['current_screen'] );
@@ -390,9 +399,9 @@ class Media extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::filter_poster_attachments
+	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_poster_attachments_not_upload_screen() {
+	public function test_filter_generated_media_attachments_not_upload_screen() {
 		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
 
 		$query                   = new WP_Query();
@@ -400,7 +409,7 @@ class Media extends \WP_UnitTestCase {
 		$expected                = $query->get( 'tax_query' );
 
 		$media = new \Google\Web_Stories\Media();
-		$media->filter_poster_attachments( $query );
+		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		unset( $GLOBALS['current_screen'], $GLOBALS['wp_the_query'] );
@@ -409,14 +418,14 @@ class Media extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::filter_poster_attachments
+	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_poster_attachments() {
+	public function test_filter_generated_media_attachmentss() {
 		$expected = [
 			[
 				'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation' ],
+				'terms'    => [ 'poster-generation', 'source-video' ],
 				'operator' => 'NOT IN',
 			],
 			[
@@ -446,7 +455,7 @@ class Media extends \WP_UnitTestCase {
 		);
 
 		$media = new \Google\Web_Stories\Media();
-		$media->filter_poster_attachments( $query );
+		$media->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
 		unset( $GLOBALS['current_screen'], $GLOBALS['wp_the_query'] );
@@ -455,34 +464,34 @@ class Media extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::filter_rest_poster_attachments
+	 * @covers ::filter_rest_generated_media_attachments
 	 */
-	public function test_filter_rest_poster_attachments_wrong_route() {
+	public function test_filter_rest_generated_media_attachments_wrong_route() {
 		$expected = [];
 
 		$media  = new \Google\Web_Stories\Media();
-		$actual = $media->filter_rest_poster_attachments( [], new WP_REST_Request() );
+		$actual = $media->filter_rest_generated_media_attachments( [], new WP_REST_Request() );
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
 
 	/**
-	 * @covers ::filter_rest_poster_attachments
+	 * @covers ::filter_rest_generated_media_attachments
 	 */
-	public function test_filter_rest_poster_attachments() {
+	public function test_filter_rest_generated_media_attachments() {
 		$expected = [
 			'tax_query' => [
 				[
 					'taxonomy' => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation' ],
+					'terms'    => [ 'poster-generation', 'source-video' ],
 					'operator' => 'NOT IN',
 				],
 			],
 		];
 
 		$media  = new \Google\Web_Stories\Media();
-		$actual = $media->filter_rest_poster_attachments(
+		$actual = $media->filter_rest_generated_media_attachments(
 			[],
 			new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' )
 		);

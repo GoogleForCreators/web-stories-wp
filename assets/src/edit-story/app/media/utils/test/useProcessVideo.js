@@ -60,9 +60,10 @@ function setup() {
 
   const uploadVideoPoster = jest.fn();
   const updateMedia = jest.fn();
+  const deleteMediaElement = jest.fn();
 
   const { result } = renderHook(
-    () => useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia }),
+    () => useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia, deleteMediaElement }),
     { wrapper }
   );
 
@@ -71,6 +72,7 @@ function setup() {
     optimizeVideo,
     uploadVideoPoster,
     updateMedia,
+    deleteMediaElement,
   };
 }
 
@@ -94,6 +96,7 @@ describe('useProcessVideo', () => {
         'http://www.google.com/test.jpg'
       );
       expect(updateMedia).toHaveBeenCalledWith(123, {
+        media_source: 'source-video',
         meta: {
           web_stories_optimized_id: 2,
         },
@@ -102,7 +105,12 @@ describe('useProcessVideo', () => {
   });
 
   it('should fail gracefully', async () => {
-    const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
+    const {
+      optimizeVideo,
+      uploadVideoPoster,
+      updateMedia,
+      deleteMediaElement,
+    } = setup();
     act(() => {
       optimizeVideo({
         resource: {
@@ -117,6 +125,7 @@ describe('useProcessVideo', () => {
     await waitFor(() => {
       expect(uploadVideoPoster).not.toHaveBeenCalled();
       expect(updateMedia).not.toHaveBeenCalled();
+      expect(deleteMediaElement).not.toHaveBeenCalled();
     });
   });
 });
