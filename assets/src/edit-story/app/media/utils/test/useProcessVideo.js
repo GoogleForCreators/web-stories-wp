@@ -63,7 +63,13 @@ function setup() {
   const deleteMediaElement = jest.fn();
 
   const { result } = renderHook(
-    () => useProcessVideo({ uploadMedia, uploadVideoPoster, updateMedia, deleteMediaElement }),
+    () =>
+      useProcessVideo({
+        uploadMedia,
+        uploadVideoPoster,
+        updateMedia,
+        deleteMediaElement,
+      }),
     { wrapper }
   );
 

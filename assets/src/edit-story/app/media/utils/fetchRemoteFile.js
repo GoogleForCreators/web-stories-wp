@@ -14,15 +14,19 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { v4 as uuidv4 } from 'uuid';
+function generateFileName(url) {
+  const currentFileName = url.split('/').pop();
+  const currentFileExt = currentFileName
+    .split(/[#?]/)[0]
+    .split('.')
+    .pop()
+    .trim();
 
-/**
- * Internal dependencies
- */
-import getFileExtensionFromURL from './getFileExtensionFromURL';
+  return currentFileName.replace(
+    `.${currentFileExt}`,
+    `-optimized.${currentFileExt}`
+  );
+}
 
 /**
  * Helper to get remote file using fetch.
@@ -32,7 +36,7 @@ import getFileExtensionFromURL from './getFileExtensionFromURL';
  * @return {Promise<File>} File object.
  */
 async function fetchRemoteFile(url, mimeType) {
-  const name = uuidv4() + '.' + getFileExtensionFromURL(url);
+  const name = generateFileName(url);
   const response = await fetch(url);
   const data = await response.blob();
   return new File([data], name, {
