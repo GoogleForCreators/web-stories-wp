@@ -35,9 +35,9 @@ function useProcessVideo({
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
-      const { id: oldId, alt, title } = oldResource;
+      const { id, alt, title } = oldResource;
       updateElementsByResourceId({
-        id: oldId,
+        id,
         properties: () => {
           return {
             type: resource.type,
@@ -45,6 +45,23 @@ function useProcessVideo({
               ...resource,
               alt,
               title,
+            },
+          };
+        },
+      });
+    },
+    [updateElementsByResourceId]
+  );
+
+  const updateExistingElements = useCallback(
+    ({ oldResource }) => {
+      const { id } = oldResource;
+      updateElementsByResourceId({
+        id,
+        properties: () => {
+          return {
+            resource: {
+              ...oldResource,
             },
           };
         },
@@ -68,6 +85,19 @@ function useProcessVideo({
   const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
+
+      const onUploadStart = () => {
+        updateExistingElements({
+          oldResource: { ...oldResource, isOptimized: true },
+        });
+      };
+
+      const onUploadError = () => {
+        updateExistingElements({
+          oldResource: { ...oldResource, isOptimized: false },
+        });
+      };
+
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldVideo(oldResource.id, resource.id);
@@ -79,15 +109,19 @@ function useProcessVideo({
       };
 
       const process = async () => {
+        let file = false;
         try {
-          const file = await fetchRemoteFile(url, mimeType);
-          await uploadMedia([file], {
-            onUploadSuccess,
-            additionalData: { alt: oldResource.alt, title: oldResource.title },
-          });
+          file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
           // Ignore for now.
+          return;
         }
+        await uploadMedia([file], {
+          onUploadSuccess,
+          onUploadStart,
+          onUploadError,
+          additionalData: { alt: oldResource.alt, title: oldResource.title },
+        });
       };
       process();
     },
@@ -97,6 +131,7 @@ function useProcessVideo({
       uploadVideoPoster,
       updateOldVideo,
       deleteMediaElement,
+      updateExistingElements,
     ]
   );
 

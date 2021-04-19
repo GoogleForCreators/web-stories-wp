@@ -37,15 +37,19 @@ const fetchRemoteFileMock = (url, mimeType) => {
 jest.mock('../fetchRemoteFile', () => fetchRemoteFileMock);
 
 const updateElementsByResourceId = jest.fn();
-const uploadMedia = (files, { onUploadSuccess }) => {
-  onUploadSuccess({
-    resource: {
-      src: 'http://www.google.com/test.jpg',
-      id: 2,
-      local: false,
-      type: 'video',
-    },
-  });
+const uploadMedia = (
+  files,
+  { onUploadSuccess, onUploadStart, onUploadError }
+) => {
+  const resource = {
+    src: 'http://www.google.com/test.jpg',
+    id: 2,
+    local: false,
+    type: 'video',
+  };
+  onUploadSuccess({ resource });
+  onUploadStart({ resource });
+  onUploadError({ resource });
 };
 
 function setup() {

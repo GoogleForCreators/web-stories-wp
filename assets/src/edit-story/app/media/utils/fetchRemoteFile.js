@@ -36,9 +36,12 @@ function generateFileName(url) {
  * @return {Promise<File>} File object.
  */
 async function fetchRemoteFile(url, mimeType) {
-  const name = generateFileName(url);
   const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`An error has occured: ${response.status}`);
+  }
   const data = await response.blob();
+  const name = generateFileName(url);
   return new File([data], name, {
     type: mimeType,
   });
