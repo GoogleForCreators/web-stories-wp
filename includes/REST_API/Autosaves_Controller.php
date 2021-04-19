@@ -46,7 +46,6 @@ use WP_REST_Server;
  * Override the WP_REST_Autosaves_Controller class.
  */
 abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller implements Service, Delayed, Registerable {
-	use Register_Routes;
 
 	/**
 	 * Parent post controller.
@@ -94,6 +93,39 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_namespace    = 'web-stories/v1';
+	}
+
+	/**
+	 * Register the service.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return void
+	 */
+	public function register() {
+		$this->register_routes();
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'rest_api_init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 100;
 	}
 
 	/**
