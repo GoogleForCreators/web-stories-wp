@@ -26,5 +26,5 @@ export default {
     metadataErrors.storyPosterAspectRatio,
     metadataErrors.publisherLogoSize,
   ],
-  page: [metadataErrors.linkInPageAttachmentRegion],
+  page: [],
 };

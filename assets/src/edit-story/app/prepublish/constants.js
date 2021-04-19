@@ -181,22 +181,6 @@ export const MESSAGES = {
         </ul>
       ),
     },
-    LINK_ATTACHMENT_CONFLICT: {
-      MAIN_TEXT: __(
-        'Turn off Page Attachment or remove conflicting links',
-        'web-stories'
-      ),
-      HELPER_TEXT: (
-        <ul>
-          <li>
-            {__(
-              'Remove the Page Attachment or any links at the bottom of the page, which conflict with the Page Attachment section',
-              'web-stories'
-            )}
-          </li>
-        </ul>
-      ),
-    },
     MISSING_VIDEO_POSTER: {
       MAIN_TEXT: __('Add a poster image for every video', 'web-stories'),
       HELPER_TEXT: (
