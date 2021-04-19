@@ -34,7 +34,6 @@ use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Traits\Rewrite_Flush;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
@@ -55,7 +54,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Types;
 	use Assets;
 	use Screen;
-	use Rewrite_Flush;
 
 	/**
 	 * The slug of the stories post type.
