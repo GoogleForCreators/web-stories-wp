@@ -65,12 +65,6 @@ const TextSetsToggle = styled.div`
   }
 `;
 
-const StyledToggle = styled(Toggle)`
-  > div {
-    background-color: ${({ theme }) => theme.colors.bg.secondary};
-  }
-`;
-
 const TextSetsWrapper = styled.div`
   ${virtualPaneContainer};
 `;
@@ -171,7 +165,7 @@ function TextSetsPane({ paneRef }) {
           >
             {PANE_TEXT.SWITCH_LABEL}
           </Text>
-          <StyledToggle
+          <Toggle
             id={toggleId}
             aria-label={PANE_TEXT.SWITCH_LABEL}
             name={toggleId}

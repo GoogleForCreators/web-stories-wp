@@ -100,7 +100,7 @@ const ToggleContainer = styled.div(
     position: relative;
     height: ${TOGGLE_TRACK_HEIGHT}px;
     width: ${TOGGLE_WIDTH}px;
-    background-color: ${theme.colors.bg.primary};
+    background-color: transparent;
     border-radius: ${theme.borders.radius.x_large};
 
     input[type='checkbox'] {

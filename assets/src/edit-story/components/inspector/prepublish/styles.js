@@ -94,10 +94,6 @@ export const ToggleGroup = styled.div`
 
 export const StyledToggle = styled(Toggle)`
   margin-top: 4px;
-
-  > div {
-    background-color: ${({ theme }) => theme.colors.bg.secondary};
-  }
 `;
 
 export const PageGroup = styled.div``;

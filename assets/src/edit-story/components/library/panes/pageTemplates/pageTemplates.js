@@ -66,12 +66,6 @@ const TemplatesToggle = styled.div`
   }
 `;
 
-const StyledToggle = styled(Toggle)`
-  > div {
-    background-color: ${({ theme }) => theme.colors.bg.secondary};
-  }
-`;
-
 function PageTemplates({
   onToggleClick,
   pages,
@@ -201,7 +195,7 @@ function PageTemplates({
           >
             {__('Show Images', 'web-stories')}
           </Text>
-          <StyledToggle
+          <Toggle
             id={toggleId}
             name={toggleId}
             checked={showTemplateImages}
