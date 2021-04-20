@@ -1,0 +1,3 @@
+# Stickers
+
+SVG stickers.
