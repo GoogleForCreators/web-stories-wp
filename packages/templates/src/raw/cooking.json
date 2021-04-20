@@ -192,7 +192,7 @@
           "b": 110
         }
       },
-      "pageLayoutType": "cover"
+      "pageTemplateType": "cover"
     },
     {
       "animations": [
@@ -375,7 +375,7 @@
           "b": 110
         }
       },
-      "pageLayoutType": "quote"
+      "pageTemplateType": "quote"
     },
     {
       "animations": [
@@ -674,7 +674,7 @@
           "b": 239
         }
       },
-      "pageLayoutType": "editorial"
+      "pageTemplateType": "editorial"
     },
     {
       "animations": [
@@ -1211,7 +1211,7 @@
           "b": 238
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -1406,7 +1406,7 @@
           "a": 1
         }
       },
-      "pageLayoutType": "section"
+      "pageTemplateType": "section"
     },
     {
       "animations": [
@@ -2398,7 +2398,7 @@
           "b": 238
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     },
     {
       "animations": [
@@ -3122,7 +3122,7 @@
           "b": 238
         }
       },
-      "pageLayoutType": "table"
+      "pageTemplateType": "table"
     },
     {
       "animations": [
@@ -3478,7 +3478,7 @@
           "b": 238
         }
       },
-      "pageLayoutType": "steps"
+      "pageTemplateType": "steps"
     },
     {
       "animations": [
@@ -4084,7 +4084,7 @@
           "b": 238
         }
       },
-      "pageLayoutType": "list"
+      "pageTemplateType": "list"
     }
   ]
 }
