@@ -397,7 +397,9 @@ function APIProvider({ children }) {
       per_page: perPage,
       page: 1,
     });
-    return apiFetch({ path: apiPath });
+    return apiFetch({ path: apiPath }).then((response) =>
+      response.map((template) => template['story_data'])
+    );
   }, [customPageTemplates]);
 
   const addPageTemplate = useCallback(
