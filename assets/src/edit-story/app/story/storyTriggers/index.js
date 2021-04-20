@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-<<<<<<< HEAD
 export { useStoryTriggers, useStoryTriggerListener } from './useStoryTriggers';
 export { StoryTriggersProvider } from './storyTriggersProvider';
 export { STORY_EVENTS } from './storyEvents';
-=======
-export { useStoryTriggers } from './useStoryTriggers';
-export { StoryTriggersProvider } from './storyTriggersProvider';
->>>>>>> 9a90c03ea (working initial implementation)
