@@ -122,9 +122,11 @@ function PageTemplate(
         </PreviewErrorBoundary>
       </PreviewPageWrapper>
 
-      <PageTemplateTitle isActive={isActivePage}>
-        {page.title}
-      </PageTemplateTitle>
+      {page.title && (
+        <PageTemplateTitle isActive={isActivePage}>
+          {page.title}
+        </PageTemplateTitle>
+      )}
     </PageTemplateWrapper>
   );
 }

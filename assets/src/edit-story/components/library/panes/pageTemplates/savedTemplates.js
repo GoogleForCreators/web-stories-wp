@@ -26,10 +26,20 @@ import { useEffect, useState, useCallback } from 'react';
  */
 import { useAPI } from '../../../../app/api';
 import TemplateSave from './templateSave';
+import PageTemplate from './pageTemplate';
 
 const Wrapper = styled.div`
-  position: relative;
   margin-left: 1em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 8px;
+  overflow-y: scroll;
+`;
+
+const TemplateWrapper = styled.div`
+  position: relative;
+  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  width: ${({ pageSize }) => pageSize.width}px;
 `;
 
 function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
@@ -48,14 +58,28 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
-  console.log(pageTemplates);
   return (
     <Wrapper>
-      <TemplateSave
-        pageSize={pageSize}
-        setShowDefaultTemplates={setShowDefaultTemplates}
-        loadTemplates={loadTemplates}
-      />
+      <TemplateWrapper pageSize={pageSize}>
+        <TemplateSave
+          pageSize={pageSize}
+          setShowDefaultTemplates={setShowDefaultTemplates}
+          loadTemplates={loadTemplates}
+        />
+      </TemplateWrapper>
+      {pageTemplates &&
+        pageTemplates.map((page) => {
+          return (
+            <TemplateWrapper key={page.id} pageSize={pageSize}>
+              <PageTemplate
+                page={page}
+                translateY={0}
+                translateX={0}
+                pageSize={pageSize}
+              />
+            </TemplateWrapper>
+          );
+        })}
     </Wrapper>
   );
 }
