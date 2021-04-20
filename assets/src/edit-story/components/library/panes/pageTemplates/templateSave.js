@@ -34,6 +34,7 @@ import {
   THEME_CONSTANTS,
   Text,
   themeHelpers,
+  useSnackbar,
 } from '../../../../../design-system';
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
@@ -84,6 +85,7 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
   const {
     actions: { addPageTemplate },
   } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
   const { currentPage } = useStory(({ state: { currentPage } }) => ({
     currentPage,
@@ -91,9 +93,22 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
 
   const { customPageTemplates } = useFeatures();
   const handleSaveTemplate = useCallback(() => {
-    addPageTemplate(currentPage).then(() => loadTemplates?.());
+    // @todo Don't add empty page.
+    addPageTemplate(currentPage).then(() => {
+      showSnackbar({
+        message: __('Page template saved.', 'web-stories'),
+        dismissable: true,
+      });
+      loadTemplates?.();
+    });
     setShowDefaultTemplates(false);
-  }, [addPageTemplate, currentPage, loadTemplates, setShowDefaultTemplates]);
+  }, [
+    addPageTemplate,
+    currentPage,
+    loadTemplates,
+    setShowDefaultTemplates,
+    showSnackbar,
+  ]);
 
   if (!customPageTemplates) {
     return null;
