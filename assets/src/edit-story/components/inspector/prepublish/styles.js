@@ -28,6 +28,7 @@ import {
   Text,
   themeHelpers,
   THEME_CONSTANTS,
+  Toggle,
 } from '../../../../design-system';
 import { MAX_NUMBER_FOR_BADGE } from './constants';
 
@@ -76,7 +77,37 @@ export const Row = styled.div`
   padding: 0 0 22px 0;
 `;
 
+export const VideoOptimizationGroup = styled.div`
+  margin-bottom: 16px;
+`;
+
+export const ToggleGroup = styled.div`
+  display: flex;
+  column-gap: 16px;
+
+  label {
+    line-height: 20px;
+    max-width: 172px;
+    cursor: pointer;
+  }
+`;
+
+export const StyledToggle = styled(Toggle)`
+  margin-top: 4px;
+
+  > div {
+    background-color: ${({ theme }) => theme.colors.bg.secondary};
+  }
+`;
+
 export const PageGroup = styled.div``;
+
+export const DescriptionText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 16px;
+`;
 
 export const GoToIssue = styled.span`
   height: 32px;

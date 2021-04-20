@@ -18,12 +18,13 @@
  */
 import { useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
+import { Icons, Link, THEME_CONSTANTS } from '../../../../design-system';
 import { useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
@@ -31,19 +32,23 @@ import { SimplePanel } from '../../panels/panel';
 import { TEXT } from './constants';
 import EmptyChecklist from './emptyChecklist';
 import {
+  DescriptionText,
   GoToIssue,
   IssueDescription,
   IssueTitle,
   NumberBadge,
-  PageIndicator,
   PageGroup,
+  PageIndicator,
   PanelTitle,
   Row,
+  StyledToggle,
+  ToggleGroup,
+  VideoOptimizationGroup,
 } from './styles';
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
-  const { isRTL } = useConfig();
+  const { dashboardSettingsLink, isRTL } = useConfig();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -213,6 +218,44 @@ const ChecklistTab = (props) => {
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
         >
+          <VideoOptimizationGroup>
+            <PageIndicator>{__('General', 'web-stories')}</PageIndicator>
+            <DescriptionText>
+              {__(
+                'Optimize all videos in the Story to ensure smooth playback.',
+                'web-stories'
+              )}
+            </DescriptionText>
+            <ToggleGroup>
+              <StyledToggle
+                id="automatic-video-optimization-toggle"
+                onChange={() => {}}
+              />
+              <DescriptionText
+                forwardedAs="label"
+                htmlFor="automatic-video-optimization-toggle"
+              >
+                <TranslateWithMarkup
+                  mapping={{
+                    a: (
+                      <Link
+                        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                        onClick={(evt) =>
+                          trackClick(evt, 'click_video_optimization_settings')
+                        }
+                        href={dashboardSettingsLink}
+                      />
+                    ),
+                  }}
+                >
+                  {__(
+                    'Enable automatic optimization. Change this any time in <a>Settings</a>.',
+                    'web-stories'
+                  )}
+                </TranslateWithMarkup>
+              </DescriptionText>
+            </ToggleGroup>
+          </VideoOptimizationGroup>
           {recommended.map(renderRow)}
           {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
         </SimplePanel>
