@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -24,7 +24,7 @@ import { useState, useEffect } from 'react';
 import { registerPropTypes } from './propTypes';
 import { STORY_EVENTS } from './types';
 
-function isClean(story) {
+export function isNewStory(story) {
   return (
     story?.pages?.length === 0 ||
     (story?.pages?.length === 1 && story?.pages[0]?.elements?.length <= 1)
@@ -32,14 +32,16 @@ function isClean(story) {
 }
 
 function OnDirtyRegister({ currentStory, dispatchStoryEvent }) {
-  const [hasFiredOnce, setHasFiredOnce] = useState(false);
+  const hasFiredOnceRef = useRef(false);
 
+  // Dispatch `onDirty` stoty event once, the first time
+  // we notice a story has any content.
   useEffect(() => {
-    if (!hasFiredOnce && !isClean(currentStory)) {
+    if (!hasFiredOnceRef.current && !isNewStory(currentStory)) {
       dispatchStoryEvent(STORY_EVENTS.onDirty);
-      setHasFiredOnce(true);
+      hasFiredOnceRef.current = true;
     }
-  }, [dispatchStoryEvent, currentStory, hasFiredOnce]);
+  }, [dispatchStoryEvent, currentStory]);
 
   return null;
 }

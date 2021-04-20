@@ -13,5 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { OnDirtyRegister } from './onDirtyRegister';
 export { STORY_EVENTS } from './types';
-export { OnDirtyRegister } from './onDirtyRegister';
+
+// Add all story event registers here. All registers
+// should take registerPropTypes from `/storyEvents/propTypes`.
+export const StoryEventRegisters = [OnDirtyRegister];
