@@ -68,7 +68,7 @@ function PrepublishChecklistProvider({ children }) {
 
   const [checkpointState, dispatch] = useReducer(
     checkpointReducer,
-    PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED
+    PPC_CHECKPOINT_STATE.UNAVAILABLE
   );
 
   // Check for different qualifications to be met to update current PPC checkpoint
