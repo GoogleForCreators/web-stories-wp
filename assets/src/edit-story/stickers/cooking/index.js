@@ -16,14 +16,18 @@
 /**
  * Internal dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as wellbeingStickers from './wellbeing';
+import { default as cookingArrow } from './arrow';
+import { default as cookingArtichoke } from './artichoke';
+import { default as cookingCarrot } from './carrot';
+import { default as cookingPersimmon } from './persimmon';
+import { default as cookingRadish } from './radish';
+import { default as cookingRadishLarge } from './radishLarge';
 
-export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...wellbeingStickers,
+export {
+  cookingArrow,
+  cookingArtichoke,
+  cookingCarrot,
+  cookingPersimmon,
+  cookingRadish,
+  cookingRadishLarge,
 };
