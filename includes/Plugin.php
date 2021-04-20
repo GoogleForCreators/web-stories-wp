@@ -80,6 +80,7 @@ class Plugin extends ServiceBasedPlugin {
 		'embed_base'                   => Embed_Base::class,
 		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
 		'experiments'                  => Experiments::class,
+		'file_types'                   => File_Type::class,
 		'integrations.amp'             => Integrations\AMP::class,
 		'integrations.jetpack'         => Integrations\Jetpack::class,
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
@@ -99,7 +100,9 @@ class Plugin extends ServiceBasedPlugin {
 		'tracking'                     => Tracking::class,
 		'tinymce'                      => TinyMCE::class,
 		'register.widget'              => Register_Widget::class,
+		'renderer'                     => Renderer\Renderer::class,
 		'rest_api_factory'             => REST_API_Factory::class,
+		'user.capabilities'            => User\Capabilities::class,
 		'user_preferences'             => User_Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];

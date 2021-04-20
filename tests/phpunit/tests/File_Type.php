@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,16 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\User\Capabilities;
-
-trait Capabilities_Setup {
-	protected function get_capability_object() {
-		return new Capabilities();
-	}
-
-	public function add_caps_to_roles() {
-		$capability = $this->get_capability_object();
-		$capability->add_caps_to_roles();
-	}
-
-	public function remove_caps_from_roles() {
-		$capability = $this->get_capability_object();
-		$capability->remove_caps_from_roles();
+/**
+ * @coversDefaultClass \Google\Web_Stories\File_Type
+ */
+class File_Type extends \WP_UnitTestCase {
+	/**
+	 * @covers ::filter_list_of_allowed_filetypes
+	 * @group ms-required
+	 */
+	public function test_filter_list_of_allowed_filetypes() {
+		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
+		$this->assertContains( 'vtt', $site_exts );
 	}
 }

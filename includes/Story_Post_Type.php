@@ -26,34 +26,16 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Deactivateable;
-use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
-use Google\Web_Stories\Story_Renderer\Embed;
-use Google\Web_Stories\Story_Renderer\Image;
-use Google\Web_Stories\Traits\Assets;
-use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Types;
-use WP_Post;
-use WP_Role;
 use WP_Post_Type;
+use WP_Rewrite;
+use WP_Query;
 
 /**
  * Class Story_Post_Type.
- *
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
- * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- * @SuppressWarnings(PHPMD.ExcessiveClassLength)
- * @SuppressWarnings(PHPMD.TooManyFields)
- * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Story_Post_Type extends Service_Base implements Activateable, Deactivateable {
-	use Publisher;
-	use Types;
-	use Assets;
-	use Screen;
+class Story_Post_Type extends Service_Base implements Deactivateable {
 
 	/**
 	 * The slug of the stories post type.
@@ -61,13 +43,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story';
-
-	/**
-	 * Web Stories editor script handle.
-	 *
-	 * @var string
-	 */
-	const WEB_STORIES_SCRIPT_HANDLE = 'edit-story';
 
 	/**
 	 * The rewrite slug for this post type.
@@ -82,51 +57,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @var string
 	 */
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
-
-	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
-	 * Decoder instance.
-	 *
-	 * @var Decoder Decoder instance.
-	 */
-	private $decoder;
-
-	/**
-	 * Meta boxes instance.
-	 *
-	 * @var Meta_Boxes
-	 */
-	private $meta_boxes;
-
-	/**
-	 * Locale instance.
-	 *
-	 * @var Locale Locale instance.
-	 */
-	private $locale;
-
-	/**
-	 * Dashboard constructor.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
-	 * @param Decoder     $decoder Decoder instance.
-	 * @param Locale      $locale Locale instance.
-	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
-		$this->experiments = $experiments;
-		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = $decoder;
-		$this->locale      = $locale;
-	}
 
 	/**
 	 * Registers the post type for stories.
@@ -202,41 +132,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			]
 		);
 
-		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
-		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
-		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
-		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
-
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
-		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
-
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
-
-		// Filter RSS content fields.
-		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
-		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
-
-		// Filter content and excerpt for search and post type archive.
-		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
-		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
-
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
-
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
-		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
-	}
-
-	/**
-	 * Activate the service.
-	 *
-	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
-	 */
-	public function activate( $network_wide ) {
-		$this->add_caps_to_roles();
 	}
 
 	/**
@@ -246,113 +147,9 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	public function deactivate( $network_wide ) {
-		$this->remove_caps_from_roles();
 		unregister_post_type( self::POST_TYPE_SLUG );
 	}
 
-	/**
-	 * Adds story capabilities to default user roles.
-	 *
-	 * This gives WordPress site owners more granular control over story management,
-	 * as they can customize this to their liking.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function add_caps_to_roles() {
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object ) {
-			return;
-		}
-
-		$all_capabilities = array_values( (array) $post_type_object->cap );
-
-		$administrator = get_role( 'administrator' );
-		$editor        = get_role( 'editor' );
-		$author        = get_role( 'author' );
-		$contributor   = get_role( 'contributor' );
-
-		if ( $administrator instanceof WP_Role ) {
-			foreach ( $all_capabilities as $cap ) {
-				$administrator->add_cap( $cap );
-			}
-		}
-
-		if ( $editor instanceof WP_Role ) {
-			foreach ( $all_capabilities as $cap ) {
-				$editor->add_cap( $cap );
-			}
-		}
-
-		if ( $author instanceof WP_Role ) {
-			$author->add_cap( 'edit_web-stories' );
-			$author->add_cap( 'edit_published_web-stories' );
-			$author->add_cap( 'delete_web-stories' );
-			$author->add_cap( 'delete_published_web-stories' );
-			$author->add_cap( 'publish_web-stories' );
-		}
-
-		if ( $contributor instanceof WP_Role ) {
-			$contributor->add_cap( 'edit_web-stories' );
-			$contributor->add_cap( 'delete_web-stories' );
-		}
-
-		/**
-		 * Fires when adding the custom capabilities to existing roles.
-		 *
-		 * Can be used to add the capabilities to other, custom roles.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param array $all_capabilities List of all post type capabilities, for reference.
-		 */
-		do_action( 'web_stories_add_capabilities', $all_capabilities );
-	}
-
-	/**
-	 * Removes story capabilities from all user roles.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function remove_caps_from_roles() {
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object ) {
-			return;
-		}
-
-		$all_capabilities = array_values( (array) $post_type_object->cap );
-		$all_capabilities = array_filter(
-			$all_capabilities,
-			function ( $value ) {
-				return 'read' !== $value;
-			}
-		);
-		$all_roles        = wp_roles();
-		$roles            = array_values( (array) $all_roles->role_objects );
-		foreach ( $roles as $role ) {
-			if ( $role instanceof WP_Role ) {
-				foreach ( $all_capabilities as $cap ) {
-					$role->remove_cap( $cap );
-				}
-			}
-		}
-
-		/**
-		 * Fires when removing the custom capabilities from existing roles.
-		 *
-		 * Can be used to remove the capabilities from other, custom roles.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param array $all_capabilities List of all post type capabilities, for reference.
-		 */
-		do_action( 'web_stories_remove_capabilities', $all_capabilities );
-	}
 
 	/**
 	 * Base64 encoded svg icon.
@@ -404,297 +201,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		return $fields;
 	}
 
-	/**
-	 * Filter if show admin bar on single post type.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param boolean $show Current value of filter.
-	 *
-	 * @return bool
-	 */
-	public function show_admin_bar( $show ) {
-		if ( is_singular( self::POST_TYPE_SLUG ) ) {
-			$show = false;
-		}
 
-		return $show;
-	}
-
-	/**
-	 * Replace default post editor with our own implementation.
-	 *
-	 * @codeCoverageIgnore
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post    Current post object.
-	 *
-	 * @return bool Whether the editor has been replaced.
-	 */
-	public function replace_editor( $replace, $post ) {
-		if ( self::POST_TYPE_SLUG === get_post_type( $post ) ) {
-
-			// Since the 'replace_editor' filter can be run multiple times, only load the
-			// custom editor after the 'current_screen' action and when we can be certain the
-			// $post_type, $post_type_object, $post globals are all set by WordPress.
-			if ( isset( $GLOBALS['post'] ) && $post === $GLOBALS['post'] && did_action( 'current_screen' ) ) {
-				require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/edit-story.php';
-			}
-
-			return true;
-		}
-
-		return $replace;
-	}
-
-	/**
-	 * Filters whether post type supports the block editor.
-	 *
-	 * Disables the block editor and associated logic (like enqueueing assets)
-	 * for the story post type.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
-	 * @param string $post_type         The post type being checked.
-	 *
-	 * @return bool Whether to use the block editor.
-	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
-		if ( self::POST_TYPE_SLUG === $post_type ) {
-			return false;
-		}
-
-		return $use_block_editor;
-	}
-
-	/**
-	 *
-	 * Enqueue scripts for the element editor.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $hook The current admin page.
-	 *
-	 * @return void
-	 */
-	public function admin_enqueue_scripts( $hook ) {
-		if ( ! $this->is_edit_screen() ) {
-			return;
-		}
-
-		// Only output scripts and styles where in edit screens.
-		if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
-			return;
-		}
-
-		// Force media model to load.
-		wp_enqueue_media();
-
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
-
-		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
-
-		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
-			$script_dependencies[] = 'postbox';
-		}
-
-		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
-
-		wp_localize_script(
-			self::WEB_STORIES_SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$this->get_editor_settings()
-		);
-
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		$this->remove_admin_style( [ 'forms' ] );
-	}
-
-	/**
-	 * Get editor settings as an array.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @return array
-	 */
-	public function get_editor_settings() {
-		$post                     = get_post();
-		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = self::POST_TYPE_SLUG;
-		$has_publish_action       = false;
-		$has_assign_author_action = false;
-		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
-				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
-			}
-			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
-				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
-			}
-		}
-
-		if ( $story_id ) {
-			$this->setup_lock( $story_id );
-		}
-
-		// Media settings.
-		$max_upload_size = wp_max_upload_size();
-		if ( ! $max_upload_size ) {
-			$max_upload_size = 0;
-		}
-
-		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-		$dashboard_url = add_query_arg(
-			[
-				'post_type' => self::POST_TYPE_SLUG,
-				'page'      => 'stories-dashboard',
-			],
-			admin_url( 'edit.php' )
-		);
-
-		/** This filter is documented in wp-admin/includes/ajax-actions.php */
-		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
-
-		$user = wp_get_current_user();
-		/** This filter is documented in wp-admin/includes/post.php */
-		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
-
-		$nonce = wp_create_nonce( 'wp_rest' );
-
-		$mime_types       = $this->get_allowed_mime_types();
-		$mime_image_types = $this->get_allowed_image_mime_types();
-
-
-		$settings = [
-			'id'         => 'web-stories-editor',
-			'config'     => [
-				'autoSaveInterval'      => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-				'isRTL'                 => is_rtl(),
-				'locale'                => $this->locale->get_locale_settings(),
-				'allowedFileTypes'      => $this->get_allowed_file_types(),
-				'allowedImageFileTypes' => $this->get_file_type_exts( $mime_image_types ),
-				'allowedImageMimeTypes' => $mime_image_types,
-				'allowedMimeTypes'      => $mime_types,
-				'postType'              => self::POST_TYPE_SLUG,
-				'storyId'               => $story_id,
-				'dashboardLink'         => $dashboard_url,
-				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-				'maxUpload'             => $max_upload_size,
-				'isDemo'                => $is_demo,
-				'capabilities'          => [
-					'hasPublishAction'      => $has_publish_action,
-					'hasAssignAuthorAction' => $has_assign_author_action,
-					'hasUploadMediaAction'  => $has_upload_media_action,
-				],
-				'api'                   => [
-					'users'        => '/web-stories/v1/users/',
-					'currentUser'  => '/web-stories/v1/users/me/',
-					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'        => '/web-stories/v1/media/',
-					'link'         => '/web-stories/v1/link/',
-					'statusCheck'  => '/web-stories/v1/status-check/',
-					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
-				],
-				'metadata'              => [
-					'publisher' => $this->get_publisher_data(),
-				],
-				'postLock'              => [
-					'interval'         => $time_window,
-					'showLockedDialog' => $show_locked_dialog,
-				],
-				'version'               => WEBSTORIES_VERSION,
-				'nonce'                 => $nonce,
-				'encodeMarkup'          => $this->decoder->supports_decoding(),
-				'metaBoxes'             => $this->meta_boxes->get_meta_boxes_per_location(),
-				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
-			],
-			'flags'      => array_merge(
-				$this->experiments->get_experiment_statuses( 'general' ),
-				$this->experiments->get_experiment_statuses( 'editor' )
-			),
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
-		];
-
-		/**
-		 * Filters settings passed to the web stories editor.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param array $settings Array of settings passed to web stories editor.
-		 */
-		return apply_filters( 'web_stories_editor_settings', $settings );
-	}
-
-	/**
-	 * Setup up post lock.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param int $story_id Post id of story.
-	 *
-	 * @return void
-	 */
-	protected function setup_lock( $story_id ) {
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object instanceof WP_Post_Type ) {
-			return;
-		}
-
-		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
-			return;
-		}
-
-
-		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
-			return;
-		}
-		// Make sure these functions are loaded.
-		if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/post.php';
-		}
-
-		// Check current lock.
-		$lock_user_id = wp_check_post_lock( $story_id );
-		if ( ! $lock_user_id ) {
-			// If no lock set, create new lock.
-			wp_set_post_lock( $story_id );
-		}
-	}
-
-	/**
-	 * Set template for web-story post type.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $template Template.
-	 *
-	 * @return string Template.
-	 */
-	public function filter_template_include( $template ) {
-		if ( is_singular( self::POST_TYPE_SLUG ) && ! is_embed() ) {
-			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
-		}
-
-		return $template;
-	}
 
 	/**
 	 * Handles redirects to the post type archive.
@@ -704,8 +211,8 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
-	 * @param \WP_Query $query The WP_Query object.
+	 * @param bool     $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param WP_Query $query The WP_Query object.
 	 * @return bool Whether to pass-through or not.
 	 */
 	public function redirect_post_type_archive_urls( $bypass, $query ) {
@@ -716,7 +223,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			return $bypass;
 		}
 
-		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
+		if ( ! $wp_rewrite instanceof WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
 			return $bypass;
 		}
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
@@ -774,61 +281,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	}
 
 	/**
-	 * Filter feed content for stories to render as an image.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $content Feed content.
-	 *
-	 * @return string
-	 */
-	public function embed_image( $content ) {
-		$post = get_post();
-
-		if ( $post instanceof WP_Post && self::POST_TYPE_SLUG === $post->post_type ) {
-			$story = new Story();
-			$story->load_from_post( $post );
-
-			$image   = new Image( $story );
-			$content = $image->render();
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Change the content to an embedded player
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $content Current content of filter.
-	 *
-	 * @return string
-	 */
-	public function embed_player( $content ) {
-		$post = get_post();
-
-		if ( is_feed() ) {
-			return $content;
-		}
-
-		if ( ! is_search() && ! is_post_type_archive( self::POST_TYPE_SLUG ) ) {
-			return $content;
-		}
-
-		if ( $post instanceof WP_Post && self::POST_TYPE_SLUG === $post->post_type ) {
-			$story = new Story();
-			$story->load_from_post( $post );
-
-			$embed   = new Embed( $story );
-			$content = $embed->render();
-		}
-
-		return $content;
-	}
-
-
-	/**
 	 * Reset default title to empty string for auto-drafts.
 	 *
 	 * @since 1.0.0
@@ -842,21 +294,5 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			$data['post_title'] = '';
 		}
 		return $data;
-	}
-
-	/**
-	 * Add VTT file type to allow file in multisite.
-	 *
-	 * @param string $value List of allowed file types.
-	 * @return string List of allowed file types.
-	 */
-	public function filter_list_of_allowed_filetypes( $value ) {
-		$filetypes = explode( ' ', $value );
-		if ( ! in_array( 'vtt', $filetypes, true ) ) {
-			$filetypes[] = 'vtt';
-			$value       = implode( ' ', $filetypes );
-		}
-
-		return $value;
 	}
 }

@@ -301,8 +301,8 @@ class Database_Upgrader extends Service_Base implements Activateable {
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;
 		}
-		$story_post_type = $injector->make( Story_Post_Type::class );
-		$story_post_type->add_caps_to_roles();
+		$capabilities = $injector->make( User\Capabilities::class );
+		$capabilities->add_caps_to_roles();
 	}
 
 	/**
