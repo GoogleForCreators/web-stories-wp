@@ -35,6 +35,8 @@ import {
   Text,
   themeHelpers,
 } from '../../../../../design-system';
+import { useAPI } from '../../../../app/api';
+import { useStory } from '../../../../app/story';
 import { ReactComponent as Icon } from './illustration.svg';
 
 const Wrapper = styled.div`
@@ -78,9 +80,21 @@ const StyledButton = styled(Button)`
   height: 32px;
 `;
 
-function TemplateSave({ pageSize }) {
+function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
+  const {
+    actions: { addPageTemplate },
+  } = useAPI();
+
+  const { currentPage } = useStory(({ state: { currentPage } }) => ({
+    currentPage,
+  }));
+
   const { customPageTemplates } = useFeatures();
-  const handleSaveTemplate = useCallback(() => {}, []);
+  const handleSaveTemplate = useCallback(() => {
+    addPageTemplate(currentPage).then(() => loadTemplates?.());
+    setShowDefaultTemplates(false);
+  }, [addPageTemplate, currentPage, loadTemplates, setShowDefaultTemplates]);
+
   if (!customPageTemplates) {
     return null;
   }
@@ -107,6 +121,8 @@ function TemplateSave({ pageSize }) {
 
 TemplateSave.propTypes = {
   pageSize: PropTypes.object.isRequired,
+  setShowDefaultTemplates: PropTypes.func.isRequired,
+  loadTemplates: PropTypes.func,
 };
 
 export default TemplateSave;

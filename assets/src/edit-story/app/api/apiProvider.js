@@ -400,6 +400,20 @@ function APIProvider({ children }) {
     return apiFetch({ path: apiPath });
   }, [customPageTemplates]);
 
+  const addPageTemplate = useCallback(
+    (page) => {
+      return apiFetch({
+        path: `${customPageTemplates}/`,
+        data: {
+          story_data: page,
+          status: 'publish',
+        },
+        method: 'POST',
+      });
+    },
+    [customPageTemplates]
+  );
+
   const state = {
     actions: {
       autoSaveById,
@@ -417,6 +431,7 @@ function APIProvider({ children }) {
       deleteMedia,
       saveMetaBoxes,
       getStatusCheck,
+      addPageTemplate,
       getCustomPageTemplates,
       getPageTemplates,
       getCurrentUser,

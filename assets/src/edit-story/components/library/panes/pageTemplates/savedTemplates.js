@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -32,30 +32,37 @@ const Wrapper = styled.div`
   margin-left: 1em;
 `;
 
-function SavedTemplates({ pageSize }) {
+function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
   const [pageTemplates, setPageTemplates] = useState(null);
 
+  const loadTemplates = useCallback(() => {
+    getCustomPageTemplates().then(setPageTemplates);
+  }, [getCustomPageTemplates]);
+
   useEffect(() => {
     if (!pageTemplates) {
-      getCustomPageTemplates().then((data) => {
-        console.log(data);
-        setPageTemplates(data);
-      });
+      loadTemplates();
     }
-  }, [pageTemplates, getCustomPageTemplates]);
+  }, [loadTemplates, pageTemplates]);
 
+  console.log(pageTemplates);
   return (
     <Wrapper>
-      <TemplateSave pageSize={pageSize} />
+      <TemplateSave
+        pageSize={pageSize}
+        setShowDefaultTemplates={setShowDefaultTemplates}
+        loadTemplates={loadTemplates}
+      />
     </Wrapper>
   );
 }
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
+  setShowDefaultTemplates: PropTypes.func.isRequired,
 };
 
 export default SavedTemplates;

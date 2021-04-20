@@ -106,7 +106,10 @@ function PageTemplatesPane(props) {
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (
-          <SavedTemplates pageSize={pageSize} />
+          <SavedTemplates
+            setShowDefaultTemplates={setShowDefaultTemplates}
+            pageSize={pageSize}
+          />
         )}
       </PaneInner>
     </StyledPane>
