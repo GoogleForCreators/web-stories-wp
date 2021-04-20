@@ -47,6 +47,7 @@ function APIProvider({ children }) {
       metaBoxes,
       currentUser,
       storyLocking,
+      pageTemplates: customPageTemplates,
     },
     encodeMarkup,
     cdnURL,
@@ -387,6 +388,18 @@ function APIProvider({ children }) {
     [cdnURL, assetsURL]
   );
 
+  // @todo Add paging.
+  const getCustomPageTemplates = useCallback(() => {
+    let apiPath = customPageTemplates;
+    const perPage = 100;
+    apiPath = addQueryArgs(apiPath, {
+      context: 'edit',
+      per_page: perPage,
+      page: 1,
+    });
+    return apiFetch({ path: apiPath });
+  }, [customPageTemplates]);
+
   const state = {
     actions: {
       autoSaveById,
@@ -404,6 +417,7 @@ function APIProvider({ children }) {
       deleteMedia,
       saveMetaBoxes,
       getStatusCheck,
+      getCustomPageTemplates,
       getPageTemplates,
       getCurrentUser,
       updateCurrentUser,

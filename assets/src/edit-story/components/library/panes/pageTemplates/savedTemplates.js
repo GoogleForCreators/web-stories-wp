@@ -19,10 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useAPI } from '../../../../app/api';
 import TemplateSave from './templateSave';
 
 const Wrapper = styled.div`
@@ -31,6 +33,20 @@ const Wrapper = styled.div`
 `;
 
 function SavedTemplates({ pageSize }) {
+  const {
+    actions: { getCustomPageTemplates },
+  } = useAPI();
+  const [pageTemplates, setPageTemplates] = useState(null);
+
+  useEffect(() => {
+    if (!pageTemplates) {
+      getCustomPageTemplates().then((data) => {
+        console.log(data);
+        setPageTemplates(data);
+      });
+    }
+  }, [pageTemplates, getCustomPageTemplates]);
+
   return (
     <Wrapper>
       <TemplateSave pageSize={pageSize} />
