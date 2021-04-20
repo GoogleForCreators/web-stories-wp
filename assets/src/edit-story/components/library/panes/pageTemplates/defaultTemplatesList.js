@@ -17,22 +17,17 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { trackEvent } from '@web-stories-wp/tracking';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app';
-import { duplicatePage } from '../../../../elements';
-
 import { UnitsProvider } from '../../../../units';
-import isDefaultPage from '../../../../utils/isDefaultPage';
 import { PANE_PADDING } from '../shared';
 import {
   getVirtualizedItemIndex,
@@ -49,6 +44,7 @@ import {
 } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
+import useTemplateActions from './useTemplateActions';
 
 const ActionRow = styled.div`
   display: flex;
@@ -66,69 +62,25 @@ const TemplatesToggle = styled.div`
   }
 `;
 
-function PageTemplates({
+function DefaultTemplatesList({
   onToggleClick,
   pages,
   parentRef,
   showTemplateImages,
   pageSize,
 }) {
-  const { replaceCurrentPage, currentPage } = useStory(
-    ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
-      replaceCurrentPage,
-      currentPage,
-    })
-  );
-
   const containerRef = useRef();
   const pageRefs = useRef({});
   const toggleId = useMemo(() => `toggle_page_templates_${uuidv4()}`, []);
 
-  const [selectedPage, setSelectedPage] = useState();
-  const [isConfirming, setIsConfirming] = useState();
-
   const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
 
-  const requiresConfirmation = useMemo(
-    () => currentPage && !isDefaultPage(currentPage),
-    [currentPage]
-  );
-
-  const handleApplyPageTemplate = useCallback(
-    (page) => {
-      const duplicatedPage = duplicatePage(page);
-      replaceCurrentPage({ page: duplicatedPage });
-      trackEvent('insert_page_template', {
-        name: page.title,
-      });
-
-      setSelectedPage(null);
-    },
-    [replaceCurrentPage]
-  );
-
-  const handlePageClick = useCallback(
-    (page) => {
-      if (requiresConfirmation) {
-        setIsConfirming(true);
-        setSelectedPage(page);
-      } else {
-        handleApplyPageTemplate(page);
-        setSelectedPage(null);
-      }
-    },
-    [requiresConfirmation, handleApplyPageTemplate]
-  );
-
-  const handleCloseDialog = useCallback(() => {
-    setSelectedPage(null);
-    setIsConfirming(false);
-  }, [setIsConfirming]);
-
-  const handleConfirmDialog = useCallback(() => {
-    handleApplyPageTemplate(selectedPage);
-    setIsConfirming(false);
-  }, [selectedPage, handleApplyPageTemplate]);
+  const {
+    isConfirming,
+    handleCloseDialog,
+    handleConfirmDialog,
+    handlePageClick,
+  } = useTemplateActions();
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((pages || []).length / 2),
@@ -257,7 +209,7 @@ function PageTemplates({
   );
 }
 
-PageTemplates.propTypes = {
+DefaultTemplatesList.propTypes = {
   onToggleClick: PropTypes.func.isRequired,
   parentRef: PropTypes.object.isRequired,
   pages: PropTypes.arrayOf(
@@ -269,4 +221,4 @@ PageTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
 };
 
-export default PageTemplates;
+export default DefaultTemplatesList;

@@ -22,6 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useFeatures } from 'flagged';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -94,7 +95,7 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
   const { customPageTemplates } = useFeatures();
   const handleSaveTemplate = useCallback(() => {
     // @todo Don't add empty page.
-    addPageTemplate(currentPage).then(() => {
+    addPageTemplate({ ...currentPage, id: uuidv4() }).then(() => {
       showSnackbar({
         message: __('Page template saved.', 'web-stories'),
         dismissable: true,

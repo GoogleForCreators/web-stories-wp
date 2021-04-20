@@ -25,8 +25,10 @@ import { useEffect, useState, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import TemplateSave from './templateSave';
 import PageTemplate from './pageTemplate';
+import TemplateSave from './templateSave';
+import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
+import useTemplateActions from './useTemplateActions';
 
 const Wrapper = styled.div`
   margin-left: 1em;
@@ -58,29 +60,47 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
+  const {
+    isConfirming,
+    handleCloseDialog,
+    handleConfirmDialog,
+    handleKeyboardPageClick,
+    handlePageClick,
+  } = useTemplateActions();
+
   return (
-    <Wrapper>
-      <TemplateWrapper pageSize={pageSize}>
-        <TemplateSave
-          pageSize={pageSize}
-          setShowDefaultTemplates={setShowDefaultTemplates}
-          loadTemplates={loadTemplates}
+    <>
+      <Wrapper>
+        <TemplateWrapper pageSize={pageSize}>
+          <TemplateSave
+            pageSize={pageSize}
+            setShowDefaultTemplates={setShowDefaultTemplates}
+            loadTemplates={loadTemplates}
+          />
+        </TemplateWrapper>
+        {pageTemplates &&
+          pageTemplates.map((page) => {
+            return (
+              <TemplateWrapper key={`${page.id}`} pageSize={pageSize}>
+                <PageTemplate
+                  page={page}
+                  translateY={0}
+                  translateX={0}
+                  pageSize={pageSize}
+                  onClick={() => handlePageClick(page)}
+                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+                />
+              </TemplateWrapper>
+            );
+          })}
+      </Wrapper>
+      {isConfirming && (
+        <ConfirmPageTemplateDialog
+          onConfirm={handleConfirmDialog}
+          onClose={handleCloseDialog}
         />
-      </TemplateWrapper>
-      {pageTemplates &&
-        pageTemplates.map((page) => {
-          return (
-            <TemplateWrapper key={page.id} pageSize={pageSize}>
-              <PageTemplate
-                page={page}
-                translateY={0}
-                translateX={0}
-                pageSize={pageSize}
-              />
-            </TemplateWrapper>
-          );
-        })}
-    </Wrapper>
+      )}
+    </>
   );
 }
 

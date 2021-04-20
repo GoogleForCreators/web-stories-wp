@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
 import { useAPI } from '../../../../app/api';
 import { ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
-import PageTemplates from './pageTemplates';
+import TemplatesList from './defaultTemplatesList';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplatesParentContainer = styled.div`
@@ -132,7 +132,7 @@ function DefaultTemplates({ pageSize }) {
       />
       <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
         {pageTemplatesParentRef.current && (
-          <PageTemplates
+          <TemplatesList
             pageSize={pageSize}
             onToggleClick={handleToggleClick}
             parentRef={pageTemplatesParentRef}
