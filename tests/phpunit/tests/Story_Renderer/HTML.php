@@ -122,6 +122,7 @@ class HTML extends WP_UnitTestCase {
 	 *
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_name
 	 */
 	public function test_add_publisher_logo() {
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
@@ -139,6 +140,7 @@ class HTML extends WP_UnitTestCase {
 		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 		$logo        = $renderer->get_publisher_logo();
+		$name        = $renderer->get_publisher_name();
 
 		wp_update_post(
 			[
@@ -150,6 +152,7 @@ class HTML extends WP_UnitTestCase {
 		$rendered = $renderer->render();
 
 		$this->assertContains( 'publisher-logo-src="http', $rendered );
+		$this->assertContains( $name, $rendered );
 		$this->assertContains( $logo, $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
 

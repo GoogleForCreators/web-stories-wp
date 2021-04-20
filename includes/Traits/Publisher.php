@@ -55,7 +55,7 @@ trait Publisher {
 	 * @return array Publisher name and logo.
 	 */
 	public function get_publisher_data() {
-		$publisher      = get_bloginfo( 'name' );
+		$publisher      = $this->get_publisher_name();
 		$publisher_logo = $this->get_publisher_logo();
 
 		return [
@@ -101,5 +101,26 @@ trait Publisher {
 		 * @param string      $placeholder    Deprecated.
 		 */
 		return apply_filters( 'web_stories_publisher_logo', $logo_image_url, $placeholder );
+	}
+
+	/**
+	 * Get the publisher logo.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return string Publisher Name.
+	 */
+	public function get_publisher_name() {
+		$name = get_bloginfo( 'name' );
+		/**
+		 * Filters the publisher's name
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $name Publisher Name.
+		 */
+		$name = apply_filters( 'web_stories_publisher_name', $name );
+
+		return esc_attr( $name );
 	}
 }
