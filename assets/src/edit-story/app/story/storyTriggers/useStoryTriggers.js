@@ -40,11 +40,7 @@ function getDispatch(v) {
  * Example usage:
  * ```js
  *  useStoryTriggerListener(
-<<<<<<< HEAD
       STORY_EVENTS.onInitialElementAdded, 
-=======
-      STORY_EVENTS.onDirty, 
->>>>>>> 9a90c03ea (working initial implementation)
       useCallback((story) => {
         // do something with new story data
         // on this event
@@ -70,11 +66,7 @@ export function useStoryTriggerListener(eventType, listener) {
  * ```js
  *  const dispatchStoryEvent = useStoryTriggersDispatch();
  *   // later in some effect or action
-<<<<<<< HEAD
  *  dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
-=======
- *  dispatchStoryEvent(STORY_EVENTS.onDirty);
->>>>>>> 9a90c03ea (working initial implementation)
  * ```
  *
  * @return {Function} takes and dispatches a `STORY_EVENT`
