@@ -31,14 +31,14 @@ export function isNewStory(story) {
   );
 }
 
-function OnDirtyRegister({ currentStory, dispatchStoryEvent }) {
+function OnInitialElementAddedRegister({ currentStory, dispatchStoryEvent }) {
   const hasFiredOnceRef = useRef(false);
 
-  // Dispatch `onDirty` stoty event once, the first time
+  // Dispatch `onInitialElementAdded` story event once, the first time
   // we notice a story has any content.
   useEffect(() => {
     if (!hasFiredOnceRef.current && !isNewStory(currentStory)) {
-      dispatchStoryEvent(STORY_EVENTS.onDirty);
+      dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
       hasFiredOnceRef.current = true;
     }
   }, [dispatchStoryEvent, currentStory]);
@@ -46,6 +46,6 @@ function OnDirtyRegister({ currentStory, dispatchStoryEvent }) {
   return null;
 }
 
-OnDirtyRegister.propType = registerPropTypes;
+OnInitialElementAddedRegister.propType = registerPropTypes;
 
-export { OnDirtyRegister };
+export { OnInitialElementAddedRegister };

@@ -20,31 +20,36 @@ import { render } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { OnDirtyRegister, isNewStory } from '../onDirtyRegister';
+import {
+  OnInitialElementAddedRegister,
+  isNewStory,
+} from '../onInitialElementAddedRegister';
 import { STORY_EVENTS } from '../types';
 
-describe('OnDirtyRegister', () => {
-  it('fires onDirty once when story is starts not empty', () => {
+describe('OnInitialElementAddedRegister', () => {
+  it('fires onInitialElementAdded once when story is starts not empty', () => {
     const dispatchMock = jest.fn();
     const currentStoryMock = {
       pages: [{ elements: [{}, {}] }],
     };
 
     const { rerender } = render(
-      <OnDirtyRegister
+      <OnInitialElementAddedRegister
         currentStory={currentStoryMock}
         dispatchStoryEvent={dispatchMock}
       />
     );
 
-    // Should fire onDirty event once when story starts empty
+    // Should fire onInitialElementAdded event once when story starts empty
     expect(dispatchMock).toHaveBeenCalledTimes(1);
-    expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onDirty);
+    expect(dispatchMock).toHaveBeenCalledWith(
+      STORY_EVENTS.onInitialElementAdded
+    );
 
-    // Should not fire onDirty again when updated current story
-    // is also not empty, but onDirty has already fired once.
+    // Should not fire onInitialElementAdded again when updated current story
+    // is also not empty, but onInitialElementAdded has already fired once.
     rerender(
-      <OnDirtyRegister
+      <onInitialElementAdded
         currentStory={{ ...currentStoryMock }}
         dispatchStoryEvent={dispatchMock}
       />
@@ -52,7 +57,7 @@ describe('OnDirtyRegister', () => {
     expect(dispatchMock).toHaveBeenCalledTimes(1);
   });
 
-  it('fires onDirty once when story first becomes non-empty', () => {
+  it('fires onInitialElementAdded once when story first becomes non-empty', () => {
     const dispatchMock = jest.fn();
     const emptyStoryMock = {
       pages: [{ elements: [{ isBackground: true }] }],
@@ -62,25 +67,27 @@ describe('OnDirtyRegister', () => {
     };
 
     const { rerender } = render(
-      <OnDirtyRegister
+      <onInitialElementAdded
         currentStory={emptyStoryMock}
         dispatchStoryEvent={dispatchMock}
       />
     );
 
-    // Should fire onDirty event once when story starts empty
+    // Should fire onInitialElementAdded event once when story starts empty
     expect(dispatchMock).toHaveBeenCalledTimes(0);
 
-    // Should not fire onDirty again when updated current story
-    // is also not empty, but onDirty has already fired once.
+    // Should not fire onInitialElementAdded again when updated current story
+    // is also not empty, but onInitialElementAdded has already fired once.
     rerender(
-      <OnDirtyRegister
+      <onInitialElementAdded
         currentStory={nonEmptyStoryMock}
         dispatchStoryEvent={dispatchMock}
       />
     );
     expect(dispatchMock).toHaveBeenCalledTimes(1);
-    expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onDirty);
+    expect(dispatchMock).toHaveBeenCalledWith(
+      STORY_EVENTS.onInitialElementAdded
+    );
   });
 });
 

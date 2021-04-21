@@ -16,9 +16,9 @@
 /**
  * Internal dependencies
  */
-import { OnDirtyRegister } from './onDirtyRegister';
+import { OnInitialElementAddedRegister } from './onInitialElementAddedRegister';
 export { STORY_EVENTS } from './types';
 
 // Add all story event registers here. All registers
 // should take registerPropTypes from `/storyEvents/propTypes`.
-export const StoryEventRegisters = [OnDirtyRegister];
+export const StoryEventRegisters = [OnInitialElementAddedRegister];

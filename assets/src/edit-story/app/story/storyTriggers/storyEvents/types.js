@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 export const STORY_EVENTS = {
-  onDirty: 'onDirty',
+  onInitialElementAdded: 'onInitialElementAdded',
 };

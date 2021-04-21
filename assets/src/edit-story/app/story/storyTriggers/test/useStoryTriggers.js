@@ -49,14 +49,17 @@ describe('useStoryTriggers', () => {
     // Should return cleanup method
     let cleanup;
     act(() => {
-      cleanup = addEventListener(STORY_EVENTS.onDirty, listenerMock);
+      cleanup = addEventListener(
+        STORY_EVENTS.onInitialElementAdded,
+        listenerMock
+      );
     });
     expect(typeof cleanup).toBe('function');
 
     // dispatching subscribed event calls all listeners
     // with current story passed to the provider
     let [, dispatchStoryEvent] = result.current;
-    dispatchStoryEvent(STORY_EVENTS.onDirty);
+    dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
     expect(listenerMock).toHaveBeenCalledTimes(1);
     expect(listenerMock).toHaveBeenCalledWith(story);
 
@@ -71,7 +74,7 @@ describe('useStoryTriggers', () => {
       cleanup();
     });
     dispatchStoryEvent = result.current[1];
-    dispatchStoryEvent(STORY_EVENTS.onDirty);
+    dispatchStoryEvent(STORY_EVENTS.onInitialElementAdded);
     expect(listenerMock).toHaveBeenCalledTimes(1);
   });
 });
