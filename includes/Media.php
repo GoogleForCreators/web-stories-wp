@@ -121,6 +121,13 @@ class Media extends Service_Base {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * The optimized video id post meta key.
+	 *
+	 * @var string
+	 */
+	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
+
+	/**
 	 * Key for media post type.
 	 *
 	 * @var string
@@ -154,6 +161,20 @@ class Media extends Service_Base {
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::OPTIMIZED_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Attachment id of optimized video id.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
@@ -212,24 +233,24 @@ class Media extends Service_Base {
 		// Hide video posters from Media grid view.
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
 		// Hide video posters from Media list view.
-		add_filter( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
+		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
-		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_poster_attachments' ], 10, 2 );
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
 	}
 
 	/**
-	 * Returns the tax query needed to exclude generated video poster images.
+	 * Returns the tax query needed to exclude generated video poster images and source videos.
 	 *
 	 * @param array $args Existing WP_Query args.
 	 *
 	 * @return array  Tax query arg.
 	 */
-	private function get_poster_tax_query( array $args ) {
+	private function get_exclude_tax_query( array $args ) {
 		$tax_query = [
 			[
 				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation' ],
+				'terms'    => [ 'poster-generation', 'source-video' ],
 				'operator' => 'NOT IN',
 			],
 		];
@@ -264,13 +285,13 @@ class Media extends Service_Base {
 	 * @return array Filtered query args.
 	 */
 	public function filter_ajax_query_attachments_args( array $args ) {
-		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
 	}
 
 	/**
-	 * Filters the current query to hide generated video poster images.
+	 * Filters the current query to hide generated video poster images and source video.
 	 *
 	 * Reduces unnecessary noise in the Media list view.
 	 *
@@ -280,7 +301,7 @@ class Media extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function filter_poster_attachments( &$query ) {
+	public function filter_generated_media_attachments( &$query ) {
 		$current_screen = $this->get_current_screen();
 
 		if ( ! $current_screen ) {
@@ -290,7 +311,7 @@ class Media extends Service_Base {
 		if ( is_admin() && $query->is_main_query() && 'upload' === $current_screen->id ) {
 			$tax_query = $query->get( 'tax_query' );
 
-			$query->set( 'tax_query', $this->get_poster_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			$query->set( 'tax_query', $this->get_exclude_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		}
 	}
 
@@ -306,12 +327,12 @@ class Media extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_rest_poster_attachments( array $args, WP_REST_Request $request ) {
+	public function filter_rest_generated_media_attachments( array $args, WP_REST_Request $request ) {
 		if ( '/web-stories/v1/media' !== $request->get_route() ) {
 			return $args;
 		}
 
-		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
 	}
@@ -346,7 +367,12 @@ class Media extends Service_Base {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor', 'poster-generation', 'video-optimization' ],
+					'enum'        => [
+						'editor',
+						'poster-generation',
+						'video-optimization',
+						'source-video',
+					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -462,6 +488,8 @@ class Media extends Service_Base {
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
+
+		$response['media_source'] = $this->get_callback_media_source( $response );
 
 		return $response;
 	}
