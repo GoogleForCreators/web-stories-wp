@@ -25,6 +25,7 @@ import { useEffect, useState, useCallback } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
+import { UnitsProvider } from '../../../../units';
 import PageTemplate from './pageTemplate';
 import TemplateSave from './templateSave';
 import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
@@ -69,7 +70,12 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   } = useTemplateActions();
 
   return (
-    <>
+    <UnitsProvider
+      pageSize={{
+        width: pageSize.width,
+        height: pageSize.height,
+      }}
+    >
       <Wrapper>
         <TemplateWrapper pageSize={pageSize}>
           <TemplateSave
@@ -100,7 +106,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
           onClose={handleCloseDialog}
         />
       )}
-    </>
+    </UnitsProvider>
   );
 }
 
