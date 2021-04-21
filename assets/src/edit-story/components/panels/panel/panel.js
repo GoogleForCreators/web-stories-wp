@@ -50,6 +50,7 @@ function Panel({
   ariaLabel = null,
   ariaHidden = false,
   isPersistable = true,
+  isDisabledToggle,
   ...rest
 }) {
   const { selectedElementIds } = useStory(
@@ -68,6 +69,10 @@ function Panel({
     [name, isPersistable]
   );
   const [isCollapsed, setIsCollapsed] = useState(() => {
+    // If toggle is disabled, always default to collapsed
+    if (isDisabledToggle) {
+      return true;
+    }
     // If not persisted, always default to expanded.
     if (!isPersistable) {
       return false;
@@ -224,6 +229,7 @@ Panel.propTypes = {
   name: PropTypes.string.isRequired,
   children: PropTypes.node,
   initialHeight: PropTypes.number,
+  isDisabledToggle: PropTypes.bool,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
   collapsedByDefault: PropTypes.bool,

@@ -26,12 +26,21 @@ import Panel from './panel';
 import PanelTitle from './shared/title';
 import PanelContent from './shared/content';
 
-function SimplePanel({ children, name, ariaLabel, hasBadge, title, ...rest }) {
+function SimplePanel({
+  children,
+  name,
+  ariaLabel,
+  hasBadge,
+  title,
+  isDisabledToggle,
+  ...rest
+}) {
   return (
-    <Panel name={name} {...rest}>
+    <Panel name={name} isDisabledToggle={isDisabledToggle} {...rest}>
       <PanelTitle
         hasBadge={hasBadge}
         ariaLabel={ariaLabel ?? (typeof title === 'string' ? title : '')}
+        isDisabledToggle={isDisabledToggle}
       >
         {title}
       </PanelTitle>
@@ -44,6 +53,7 @@ SimplePanel.propTypes = {
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
   hasBadge: PropTypes.bool,
+  isDisabledToggle: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   ariaLabel: PropTypes.string,
 };

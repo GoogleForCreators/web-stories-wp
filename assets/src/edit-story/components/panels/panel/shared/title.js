@@ -102,7 +102,7 @@ const Collapse = styled.button`
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
 
@@ -150,6 +150,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  isDisabledToggle,
   ...props
 }) {
   const {
@@ -223,7 +224,8 @@ function Title({
       )}
       <Toggle
         toggle={toggle}
-        disabled={!canCollapse}
+        disabled={!canCollapse || isDisabledToggle}
+        isDisabledToggle={isDisabledToggle}
         tabIndex={ariaHidden ? -1 : 0}
         aria-label={ariaLabel}
         aria-expanded={!isCollapsed}
@@ -231,7 +233,9 @@ function Title({
         isCollapsed={isCollapsed}
         hasBadge={hasBadge}
       >
-        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
+        <IconWrapper>
+          {!isDisabledToggle && canCollapse && toggleIcon}
+        </IconWrapper>
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
@@ -249,6 +253,7 @@ Title.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node,
   hasBadge: PropTypes.bool,
+  isDisabledToggle: PropTypes.bool,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
