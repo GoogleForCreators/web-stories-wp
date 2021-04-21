@@ -365,17 +365,6 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 				'default'     => true,
 			],
-						/**
-			 * Author: @spacedmonkey
-			 * Issue: #6943
-			 * Creation date: 2021-04-07
-			 */
-			[
-				'name'        => 'enablePrePublishVideoOptimization',
-				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
-				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
-				'group'       => 'editor',
-			],
 			/**
 			 * Author: @spacedmonkey
 			 * Issue: #6943
