@@ -223,7 +223,6 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
       )}
       {showRecommendedItems && (
         <SimplePanel
-          collapsedByDefault={isRecommendedDisabled}
           isDisabledToggle={isRecommendedDisabled}
           name="checklist"
           hasBadge
