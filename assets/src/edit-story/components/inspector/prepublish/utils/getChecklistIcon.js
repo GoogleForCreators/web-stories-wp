@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-export { default } from './prepublishInspector';
-export { default as ChecklistTab } from './checklistTab';
-export { default as PrepublishChecklistProvider } from './prepublishChecklistProvider';
-export { default as usePrepublishChecklist } from './usePrepublishChecklist';
-export { ChecklistIcon } from './utils';
-export { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
+/**
+ * Internal dependencies
+ */
+import { Icons } from '../../../../../design-system';
+import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
+
+const ChecklistIcon = ({ checkpoint, ...rest }) => {
+  switch (checkpoint) {
+    case PPC_CHECKPOINT_STATE.ALL:
+      return <Icons.ExclamationOutline className="alert" {...rest} />;
+
+    default:
+      return undefined;
+  }
+};
+
+export default ChecklistIcon;

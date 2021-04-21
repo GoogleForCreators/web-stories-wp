@@ -18,24 +18,26 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Icons, useResizeEffect } from '../../../design-system';
+import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
-import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
+import PrepublishInspector, {
+  usePrepublishChecklist,
+  ChecklistIcon,
+} from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
-import { PPC_CHECKPOINT_STATE } from './prepublish/prepublishCheckpointState';
 
 function InspectorProvider({ children }) {
   const {
@@ -59,16 +61,6 @@ function InspectorProvider({ children }) {
       setTab(highlightedTab);
     }
   }, [highlightedTab]);
-
-  const prepublishAlert = useMemo(() => {
-    switch (currentCheckpoint) {
-      case PPC_CHECKPOINT_STATE.ALL:
-        return <Icons.ExclamationOutline className="alert" />;
-
-      default:
-        return undefined;
-    }
-  }, [currentCheckpoint]);
 
   const inspectorRef = useRef(null);
 
@@ -157,7 +149,13 @@ function InspectorProvider({ children }) {
         },
 
         {
-          icon: prepublishAlert,
+          icon: (
+            <ChecklistIcon
+              checkpoint={currentCheckpoint}
+              height={24}
+              width={24}
+            />
+          ),
           id: PREPUBLISH,
           title: __('Checklist', 'web-stories'),
           Pane: PrepublishInspector,
