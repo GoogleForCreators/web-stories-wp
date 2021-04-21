@@ -25,19 +25,14 @@ import { useEffect, useState, useCallback, useRef } from 'react';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { UnitsProvider } from '../../../../units';
-import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
-import PageTemplate from './pageTemplate';
 import TemplateSave from './templateSave';
-import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
-import useTemplateActions from './useTemplateActions';
+import TemplateList from './templateList';
 
 const Wrapper = styled.div`
-  padding-left: 1em;
   padding-top: 5px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 8px;
+`;
+
+const TemporaryWrapper = styled.div`
   overflow-y: scroll;
 `;
 
@@ -59,53 +54,24 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
-  const {
-    isConfirming,
-    handleCloseDialog,
-    handleConfirmDialog,
-    handleKeyboardPageClick,
-    handlePageClick,
-  } = useTemplateActions();
-
-  useRovingTabIndex({ ref });
-
+  // @todo Saving template should belong to the virtual list, it's currently misplaced.
   return (
-    <UnitsProvider
-      pageSize={{
-        width: pageSize.width,
-        height: pageSize.height,
-      }}
-    >
+    <TemporaryWrapper>
+      <TemplateSave
+        pageSize={pageSize}
+        setShowDefaultTemplates={setShowDefaultTemplates}
+        loadTemplates={loadTemplates}
+      />
       <Wrapper ref={ref}>
-        <TemplateSave
-          pageSize={pageSize}
-          setShowDefaultTemplates={setShowDefaultTemplates}
-          loadTemplates={loadTemplates}
-        />
-        {pageTemplates &&
-          pageTemplates.map((page) => {
-            return (
-              <PageTemplate
-                key={`${page.id}`}
-                page={page}
-                translateY={0}
-                translateX={0}
-                pageSize={pageSize}
-                onClick={() => handlePageClick(page)}
-                onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-                tabIndex="-1"
-                style={{ position: 'relative' }}
-              />
-            );
-          })}
+        {pageTemplates && (
+          <TemplateList
+            parentRef={ref}
+            pageSize={pageSize}
+            pages={pageTemplates}
+          />
+        )}
       </Wrapper>
-      {isConfirming && (
-        <ConfirmPageTemplateDialog
-          onConfirm={handleConfirmDialog}
-          onClose={handleCloseDialog}
-        />
-      )}
-    </UnitsProvider>
+    </TemporaryWrapper>
   );
 }
 
