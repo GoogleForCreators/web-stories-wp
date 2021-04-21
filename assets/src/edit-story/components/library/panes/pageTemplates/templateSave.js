@@ -39,6 +39,7 @@ import {
 } from '../../../../../design-system';
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
+import isDefaultPage from '../../../../utils/isDefaultPage';
 import { ReactComponent as Icon } from './illustration.svg';
 
 const Wrapper = styled.div`
@@ -94,15 +95,27 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
 
   const { customPageTemplates } = useFeatures();
   const handleSaveTemplate = useCallback(() => {
-    // @todo Don't add empty page.
-    addPageTemplate({ ...currentPage, id: uuidv4() }).then(() => {
+    // Don't add empty page.
+    if (isDefaultPage(currentPage)) {
       showSnackbar({
-        message: __('Page template saved.', 'web-stories'),
+        message: __(
+          'An empty page can’t be saved as a template. Add elements and try again.',
+          'web-stories'
+        ),
         dismissable: true,
       });
-      loadTemplates?.();
-    });
-    setShowDefaultTemplates(false);
+    } else {
+      addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(
+        () => {
+          showSnackbar({
+            message: __('Page template saved.', 'web-stories'),
+            dismissable: true,
+          });
+          loadTemplates?.();
+        }
+      );
+      setShowDefaultTemplates(false);
+    }
   }, [
     addPageTemplate,
     currentPage,
