@@ -185,11 +185,18 @@ function useUploadMedia({
      * @param {Function} args.onUploadProgress Callback for when upload progresses.
      * @param {Function} args.onUploadError Callback for when upload fails.
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
+     * @param {Object} args.additionalData Object of additionalData.
      * @return {void}
      */
     async (
       files,
-      { onUploadStart, onUploadProgress, onUploadError, onUploadSuccess } = {}
+      {
+        onUploadStart,
+        onUploadProgress,
+        onUploadError,
+        onUploadSuccess,
+        additionalData,
+      } = {}
     ) => {
       // If there are no files passed, don't try to upload.
       if (!files?.length) {
@@ -231,6 +238,7 @@ function useUploadMedia({
             onUploadProgress,
             onUploadError,
             onUploadSuccess,
+            additionalData,
           });
         })
       );
