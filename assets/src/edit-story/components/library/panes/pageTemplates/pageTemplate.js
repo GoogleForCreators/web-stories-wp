@@ -88,15 +88,15 @@ function PageTemplate(
   { page, pageSize, translateY, translateX, isActive, ...rest },
   ref
 ) {
-  const [hasFocus, setHasFocus] = useState(false);
-  const isActivePage = hasFocus || isActive;
+  const [isHover, setIsHover] = useState(false);
+  const isActivePage = isHover || isActive;
 
-  useFocusOut(ref, () => setHasFocus(false), []);
+  useFocusOut(ref, () => setIsHover(false), []);
 
-  const handleSetFocusActive = useCallback(() => setHasFocus(true), []);
+  const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
-  const handleSetFocusFalse = useCallback(() => {
-    setHasFocus(false);
+  const handleSetHoverFalse = useCallback(() => {
+    setIsHover(false);
   }, []);
 
   return (
@@ -105,13 +105,11 @@ function PageTemplate(
       role="listitem"
       ref={ref}
       tabIndex={0}
-      onMouseEnter={handleSetFocusActive}
-      onMouseLeave={handleSetFocusFalse}
+      onMouseEnter={handleSetHoverActive}
+      onMouseLeave={handleSetHoverFalse}
       aria-label={page.title}
       translateY={translateY}
       translateX={translateX}
-      onFocus={handleSetFocusActive}
-      onBlur={handleSetFocusFalse}
       {...rest}
     >
       <PreviewPageWrapper pageSize={pageSize}>
