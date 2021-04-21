@@ -49,7 +49,7 @@ describe('OnInitialElementAddedRegister', () => {
     // Should not fire onInitialElementAdded again when updated current story
     // is also not empty, but onInitialElementAdded has already fired once.
     rerender(
-      <onInitialElementAdded
+      <OnInitialElementAddedRegister
         currentStory={{ ...currentStoryMock }}
         dispatchStoryEvent={dispatchMock}
       />
@@ -67,7 +67,7 @@ describe('OnInitialElementAddedRegister', () => {
     };
 
     const { rerender } = render(
-      <onInitialElementAdded
+      <OnInitialElementAddedRegister
         currentStory={emptyStoryMock}
         dispatchStoryEvent={dispatchMock}
       />
@@ -79,7 +79,7 @@ describe('OnInitialElementAddedRegister', () => {
     // Should not fire onInitialElementAdded again when updated current story
     // is also not empty, but onInitialElementAdded has already fired once.
     rerender(
-      <onInitialElementAdded
+      <OnInitialElementAddedRegister
         currentStory={nonEmptyStoryMock}
         dispatchStoryEvent={dispatchMock}
       />
