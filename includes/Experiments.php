@@ -371,7 +371,7 @@ class Experiments extends Service_Base {
 			 * Creation date: 2021-04-07
 			 */
 			[
-				'name'        => 'enablPrePublishVideoOptimization',
+				'name'        => 'enablePrePublishVideoOptimization',
 				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
 				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
 				'group'       => 'editor',
