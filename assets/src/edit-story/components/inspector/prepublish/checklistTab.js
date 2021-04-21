@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
@@ -57,6 +57,7 @@ const ChecklistTab = ({
   const isVideoOptimizationEnabled = useFeature(
     'enablePrePublishVideoOptimization'
   );
+  const areVideosInitiallyOptimized = useRef(areVideosAutoOptimized);
 
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
@@ -227,7 +228,7 @@ const ChecklistTab = ({
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
         >
-          {isVideoOptimizationEnabled && (
+          {isVideoOptimizationEnabled && !areVideosInitiallyOptimized.current && (
             <VideoOptimizationGroup>
               <PageIndicator>{__('General', 'web-stories')}</PageIndicator>
               <DescriptionText>
@@ -239,6 +240,10 @@ const ChecklistTab = ({
               <ToggleGroup>
                 <StyledToggle
                   id="automatic-video-optimization-toggle"
+                  aria-label={__(
+                    'Enable automatic video optimization',
+                    'web-stories'
+                  )}
                   checked={areVideosAutoOptimized}
                   onChange={onAutoVideoOptimizationClick}
                 />
