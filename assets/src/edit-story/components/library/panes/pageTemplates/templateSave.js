@@ -28,22 +28,30 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
   useSnackbar,
+  themeHelpers,
 } from '../../../../../design-system';
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import { ReactComponent as Icon } from './illustration.svg';
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
+const StyledButton = styled.div`
+  height: 32px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  padding: 6px 8px;
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
+`;
+
+const SaveButton = styled.button`
+  border: 0;
+  padding: 0;
+  background: none;
   height: ${({ pageSize }) => pageSize.containerHeight - 2}px;
   width: ${({ pageSize }) => pageSize.width - 2}px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
@@ -55,11 +63,17 @@ const Wrapper = styled.div`
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
-    button {
+    ${StyledButton} {
       background-color: ${({ theme }) =>
         theme.colors.interactiveBg.secondaryHover};
     }
   }
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 const IconWrapper = styled.div`
@@ -83,10 +97,6 @@ const StyledText = styled(Text)`
   text-align: center;
   margin-top: 24px;
   margin-bottom: 8px;
-`;
-
-const StyledButton = styled(Button)`
-  height: 32px;
 `;
 
 function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
@@ -134,22 +144,23 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
     return null;
   }
   return (
-    <Wrapper pageSize={pageSize} onClick={handleSaveTemplate}>
+    <SaveButton
+      pageSize={pageSize}
+      onClick={handleSaveTemplate}
+      aria-label={__('Save new template', 'web-stories')}
+    >
       <IconWrapper>
         <Icon />
       </IconWrapper>
       <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {__('Save current page as template', 'web-stories')}
       </StyledText>
-      <StyledButton
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        aria-label={__('Save new template', 'web-stories')}
-      >
-        {__('Save', 'web-stories')}
+      <StyledButton>
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {__('Save', 'web-stories')}
+        </Text>
       </StyledButton>
-    </Wrapper>
+    </SaveButton>
   );
 }
 

@@ -41,12 +41,6 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `;
 
-const TemplateWrapper = styled.div`
-  position: relative;
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
-  width: ${({ pageSize }) => pageSize.width}px;
-`;
-
 function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   const {
     actions: { getCustomPageTemplates },
@@ -83,15 +77,13 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
       }}
     >
       <Wrapper ref={ref}>
-        <TemplateWrapper pageSize={pageSize}>
-          <TemplateSave
-            pageSize={pageSize}
-            setShowDefaultTemplates={setShowDefaultTemplates}
-            loadTemplates={loadTemplates}
-          />
-        </TemplateWrapper>
+        <TemplateSave
+          pageSize={pageSize}
+          setShowDefaultTemplates={setShowDefaultTemplates}
+          loadTemplates={loadTemplates}
+        />
         {pageTemplates &&
-          pageTemplates.map((page, i) => {
+          pageTemplates.map((page) => {
             return (
               <PageTemplate
                 key={`${page.id}`}
@@ -101,7 +93,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
                 pageSize={pageSize}
                 onClick={() => handlePageClick(page)}
                 onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-                tabIndex={i === 0 ? 0 : -1}
+                tabIndex="-1"
                 style={{ position: 'relative' }}
               />
             );
