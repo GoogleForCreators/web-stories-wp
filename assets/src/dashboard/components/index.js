@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as Button } from './button';
+
 export { default as CardGallery } from './cardGallery';
 export { default as CardGrid } from './cardGrid';
 export {
@@ -24,14 +24,12 @@ export {
   default as CardGridItem,
 } from './cardGridItem';
 export { default as ColorList } from './colorList';
-export { default as Dialog } from './dialog';
 export { StandardViewContentGutter } from './contentGutter';
+export { default as Dialog } from './dialog';
 export { default as FileUpload } from './fileUpload';
 export { default as InfiniteScroller } from './infiniteScroller';
 export { default as InlineInputForm } from './inlineInputForm';
 export { default as Layout, useLayoutContext } from './layout';
-export { default as MultiPartPill } from './multiPartPill';
-export { default as NavProvider, useNavContext } from './navProvider';
 export {
   AppFrame,
   LeftRail,
@@ -39,7 +37,7 @@ export {
   PageContent,
   NavMenuButton,
 } from './pageStructure';
-export { default as PopoverMenu } from './popoverMenu';
+export { default as NavProvider, useNavContext } from './navProvider';
 export { default as ScrollToTop } from './scrollToTop';
 export { default as StoryMenu, MoreVerticalButton } from './storyMenu';
 export {
@@ -61,13 +59,5 @@ export {
   TableStatusHeaderCell,
   TableStatusCell,
 } from './table';
-export {
-  DefaultParagraph1,
-  Heading1,
-  Heading2,
-  Paragraph1,
-  Paragraph2,
-  TypographyPresets,
-} from './typography';
-export { default as ViewStyleBar } from './viewStyleBar';
 export { Tooltip } from './tooltip';
+export { default as ViewStyleBar } from './viewStyleBar';
