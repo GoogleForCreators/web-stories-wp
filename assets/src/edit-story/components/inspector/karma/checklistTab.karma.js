@@ -26,9 +26,39 @@ import { Fixture } from '../../../karma';
 
 describe('Checklist Tab integration', () => {
   let fixture;
+  let mockGetCurrentUser;
+  let mockUpdateCurrentUser;
 
   beforeEach(async () => {
-    fixture = new Fixture();
+    mockGetCurrentUser = jasmine.createSpy('getCurrentUser').and.returnValue(
+      Promise.resolve({
+        id: 1,
+        meta: {
+          web_stories_tracking_optin: false,
+          web_stories_onboarding: {},
+          web_stories_media_optimization: false,
+        },
+      })
+    );
+    mockUpdateCurrentUser = jasmine
+      .createSpy('updateCurrentUser')
+      .and.returnValue(
+        Promise.resolve({
+          id: 1,
+          meta: {
+            web_stories_tracking_optin: false,
+            web_stories_onboarding: {},
+            web_stories_media_optimization: true,
+          },
+        })
+      );
+
+    fixture = new Fixture({
+      mocks: {
+        getCurrentUser: mockGetCurrentUser,
+        updateCurrentUser: mockUpdateCurrentUser,
+      },
+    });
     fixture.setFlags({ enablePrePublishVideoOptimization: true });
     await fixture.render();
   });
@@ -38,7 +68,7 @@ describe('Checklist Tab integration', () => {
   });
 
   describe('Auto video optimization', () => {
-    it("clicking on the toggle should set the user's settings", async () => {
+    it("clicking on the toggle should update the user's video optimization settings", async () => {
       const { checklistTab } = fixture.editor.inspector;
 
       // Click checklist tab
@@ -49,12 +79,68 @@ describe('Checklist Tab integration', () => {
       await fixture.events.click(
         fixture.editor.inspector.checklistPanel.recommended
       );
-      await waitFor(
-        () =>
-          fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle
-      );
+      const toggle =
+        fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle;
+      await waitFor(() => toggle);
+
+      expect(toggle.checked).toBeFalse();
 
       // Click toggle
+      await fixture.events.click(toggle);
+
+      expect(mockUpdateCurrentUser).toHaveBeenCalledTimes(1);
+      expect(toggle.checked).toBeTrue();
+
+      await fixture.snapshot('auto video optimization toggle checked');
+    });
+  });
+});
+
+describe('Checklist Tab integration - user video optimization setting enabled prior', () => {
+  let fixture;
+  let mockGetCurrentUser;
+
+  beforeEach(async () => {
+    mockGetCurrentUser = jasmine.createSpy('getCurrentUser').and.returnValue(
+      Promise.resolve({
+        id: 1,
+        meta: {
+          web_stories_tracking_optin: false,
+          web_stories_onboarding: {},
+          web_stories_media_optimization: true,
+        },
+      })
+    );
+
+    fixture = new Fixture({
+      mocks: {
+        getCurrentUser: mockGetCurrentUser,
+      },
+    });
+    fixture.setFlags({ enablePrePublishVideoOptimization: true });
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  describe('Auto video optimization', () => {
+    it('should render no toggle', async () => {
+      const { checklistTab } = fixture.editor.inspector;
+
+      // Click checklist tab
+      await fixture.events.click(checklistTab);
+      await waitFor(() => fixture.editor.inspector.checklistPanel);
+
+      // Open the recommended dropdown
+      await fixture.events.click(
+        fixture.editor.inspector.checklistPanel.recommended
+      );
+
+      expect(
+        fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle
+      ).toBeNull();
     });
   });
 });

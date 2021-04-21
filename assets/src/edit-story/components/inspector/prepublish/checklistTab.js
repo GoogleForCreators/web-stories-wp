@@ -17,24 +17,23 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { __, sprintf, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { Icons, Link, THEME_CONSTANTS } from '../../../../design-system';
+import { Icons } from '../../../../design-system';
 import { useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
+import AutoVideoOptimization from './autoVideoOptimization';
 import { TEXT } from './constants';
 import EmptyChecklist from './emptyChecklist';
 import {
-  DescriptionText,
   GoToIssue,
   IssueDescription,
   IssueTitle,
@@ -43,9 +42,6 @@ import {
   PageIndicator,
   PanelTitle,
   Row,
-  StyledToggle,
-  ToggleGroup,
-  VideoOptimizationGroup,
 } from './styles';
 
 const ChecklistTab = ({
@@ -53,11 +49,10 @@ const ChecklistTab = ({
   checklist,
   onAutoVideoOptimizationClick,
 }) => {
-  const { dashboardSettingsLink, isRTL } = useConfig();
+  const { isRTL } = useConfig();
   const isVideoOptimizationEnabled = useFeature(
     'enablePrePublishVideoOptimization'
   );
-  const areVideosInitiallyOptimized = useRef(areVideosAutoOptimized);
 
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
@@ -228,50 +223,11 @@ const ChecklistTab = ({
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
         >
-          {isVideoOptimizationEnabled && !areVideosInitiallyOptimized.current && (
-            <VideoOptimizationGroup>
-              <PageIndicator>{__('General', 'web-stories')}</PageIndicator>
-              <DescriptionText>
-                {__(
-                  'Optimize all videos in the Story to ensure smooth playback.',
-                  'web-stories'
-                )}
-              </DescriptionText>
-              <ToggleGroup>
-                <StyledToggle
-                  id="automatic-video-optimization-toggle"
-                  aria-label={__(
-                    'Enable automatic video optimization',
-                    'web-stories'
-                  )}
-                  checked={areVideosAutoOptimized}
-                  onChange={onAutoVideoOptimizationClick}
-                />
-                <DescriptionText
-                  forwardedAs="label"
-                  htmlFor="automatic-video-optimization-toggle"
-                >
-                  <TranslateWithMarkup
-                    mapping={{
-                      a: (
-                        <Link
-                          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                          onClick={(evt) =>
-                            trackClick(evt, 'click_video_optimization_settings')
-                          }
-                          href={dashboardSettingsLink}
-                        />
-                      ),
-                    }}
-                  >
-                    {__(
-                      'Enable automatic optimization. Change this any time in <a>Settings</a>.',
-                      'web-stories'
-                    )}
-                  </TranslateWithMarkup>
-                </DescriptionText>
-              </ToggleGroup>
-            </VideoOptimizationGroup>
+          {isVideoOptimizationEnabled && (
+            <AutoVideoOptimization
+              areVideosAutoOptimized={areVideosAutoOptimized}
+              onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
+            />
           )}
           {recommended.map(renderRow)}
           {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}

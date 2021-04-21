@@ -32,7 +32,7 @@ export class ChecklistPanel extends Container {
   }
 
   get autoVideoOptimizationToggle() {
-    return this.getByRole('checkbox', {
+    return this.queryByRole('checkbox', {
       name: /Enable automatic video optimization/,
     });
   }

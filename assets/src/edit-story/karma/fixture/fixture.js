@@ -110,9 +110,18 @@ const DEFAULT_CONFIG = {
  * - Call the `await fixture.events` methods to drive the events similarly
  * to the `@testing-library/react`'s `fireEvent`, except that these events will
  * be executed natively in the browser.
+ *
+ * Network calls are mocked out in the {@link:APIProviderFixture} but can be
+ * overridden by passing `mocks` when initializing the fixture
+ * Ex: `new Fixture({ mocks: { getCurrentUser: noop, updateCurrentUser: noop } })
  */
 export class Fixture {
-  constructor() {
+  /**
+   *
+   * @param {Object} config The configuration object
+   * @param {Object} config.mocks An object containing functions to be used as stubs for the api.
+   */
+  constructor({ mocks } = {}) {
     this._config = { ...DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
@@ -136,7 +145,7 @@ export class Fixture {
       return origCreateElement(type, props, ...children);
     });
 
-    this.apiProviderFixture_ = new APIProviderFixture();
+    this.apiProviderFixture_ = new APIProviderFixture({ mocks });
     this.stubComponent(APIProvider).callFake(
       this.apiProviderFixture_.Component
     );
@@ -659,7 +668,11 @@ class FileProviderFixture {
 
 /* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
-  constructor() {
+  /**
+   * @param {Object} config The configuration object
+   * @param {Object} config.mocks function that will be used as a stub. Property name must match the action name exactly.
+   */
+  constructor({ mocks = {} } = {}) {
     this._pages = [];
 
     // eslint-disable-next-line react/prop-types
@@ -840,6 +853,7 @@ class APIProviderFixture {
           getPageTemplates,
           getCurrentUser,
           updateCurrentUser,
+          ...mocks,
         },
       };
       return (
