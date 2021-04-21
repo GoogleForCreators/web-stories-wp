@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,28 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-const Shadow = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 8px;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-  pointer-events: none;
-`;
+const WellbeingArrow = ({ style }) => (
+  <svg
+    style={style}
+    viewBox="0 0 205 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M.333008 6.49949L204 6.49947M199.193.875L204 6.7086l-4.807 5.8336"
+      stroke="#fff"
+      strokeWidth="1.09867"
+    />
+  </svg>
+);
 
-export default Shadow;
+WellbeingArrow.propTypes = {
+  style: PropTypes.object,
+};
+
+export default {
+  aspectRatio: 205 / 13,
+  svg: WellbeingArrow,
+};
