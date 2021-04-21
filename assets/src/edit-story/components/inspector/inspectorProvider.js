@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -29,13 +29,13 @@ import { Icons, useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
+import { PPC_CHECKPOINT_STATE } from './prepublish/prepublishCheckpointState';
 
 function InspectorProvider({ children }) {
   const {
@@ -46,7 +46,7 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
+  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
     500
@@ -60,15 +60,15 @@ function InspectorProvider({ children }) {
     }
   }, [highlightedTab]);
 
-  const prepublishAlert = useCallback(
-    () =>
-      checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
-        <Icons.ExclamationOutline className="alert error" />
-      ) : (
-        <Icons.ExclamationOutline className="alert warning" />
-      ),
-    [checklist]
-  );
+  const prepublishAlert = useMemo(() => {
+    switch (currentCheckpoint) {
+      case PPC_CHECKPOINT_STATE.ALL:
+        return <Icons.ExclamationOutline className="alert" />;
+
+      default:
+        return undefined;
+    }
+  }, [currentCheckpoint]);
 
   const inspectorRef = useRef(null);
 
@@ -157,7 +157,7 @@ function InspectorProvider({ children }) {
         },
 
         {
-          icon: checklist.length > 0 ? prepublishAlert : undefined,
+          icon: prepublishAlert,
           id: PREPUBLISH,
           title: __('Checklist', 'web-stories'),
           Pane: PrepublishInspector,
