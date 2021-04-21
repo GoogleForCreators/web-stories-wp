@@ -111,7 +111,6 @@ describe('APIProvider', () => {
 
     expect(removeImagesFromPageTemplates).toHaveBeenCalledWith({
       assetsURL,
-      showImages: true,
       templates: pageTemplates,
     });
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
@@ -141,7 +140,6 @@ describe('APIProvider', () => {
 
     expect(removeImagesFromPageTemplates).toHaveBeenCalledWith({
       assetsURL,
-      showImages: false,
       templates: pageTemplates,
     });
     expect(pageTemplatesResult).toStrictEqual(formattedPageTemplates);
