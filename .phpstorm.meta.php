@@ -40,7 +40,7 @@ namespace PHPSTORM_META {
 			'tinymce'                      => \Google\Web_Stories\TinyMCE::class,
 			'register.widget'              => \Google\Web_Stories\Register_Widget::class,
 			'rest_api_factory'             => \Google\Web_Stories\REST_API_Factory::class,
-			'user_preferences'             => \Google\Web_Stories\User_Preferences::class,
+			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )

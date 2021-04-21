@@ -100,7 +100,7 @@ class Plugin extends ServiceBasedPlugin {
 		'tinymce'                      => TinyMCE::class,
 		'register.widget'              => Register_Widget::class,
 		'rest_api_factory'             => REST_API_Factory::class,
-		'user_preferences'             => User_Preferences::class,
+		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];
 
