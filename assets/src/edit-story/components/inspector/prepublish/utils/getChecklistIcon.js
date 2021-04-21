@@ -24,13 +24,10 @@ import { Icons } from '../../../../../design-system';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
 const ChecklistIcon = ({ checkpoint, ...rest }) => {
-  switch (checkpoint) {
-    case PPC_CHECKPOINT_STATE.ALL:
-      return <Icons.ExclamationOutline className="alert" {...rest} />;
-
-    default:
-      return null;
+  if (checkpoint === PPC_CHECKPOINT_STATE.ALL) {
+    return <Icons.ExclamationOutline className="alert" {...rest} />;
   }
+  return null;
 };
 ChecklistIcon.propTypes = {
   checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),

@@ -62,7 +62,6 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
-      isBold
       onPointerEnter={refreshChecklist}
       {...buttonProps}
     >
