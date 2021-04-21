@@ -102,6 +102,12 @@ function InspectorProvider({ children }) {
     }
   }, [currentPage]);
 
+  const ChecklistTabIcon = useCallback(() => {
+    return (
+      <ChecklistIcon checkpoint={currentCheckpoint} height={28} width={28} />
+    );
+  }, [currentCheckpoint]);
+
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
       setIsUsersLoading(true);
@@ -149,13 +155,7 @@ function InspectorProvider({ children }) {
         },
 
         {
-          icon: (
-            <ChecklistIcon
-              checkpoint={currentCheckpoint}
-              height={24}
-              width={24}
-            />
-          ),
+          icon: ChecklistTabIcon,
           id: PREPUBLISH,
           title: __('Checklist', 'web-stories'),
           Pane: PrepublishInspector,

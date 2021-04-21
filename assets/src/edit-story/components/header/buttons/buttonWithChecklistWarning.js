@@ -46,10 +46,11 @@ import {
 import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`
-  padding: 4px 8px;
+  padding: 4px 6px;
+  height: 32px;
   svg {
-    margin-right: -2px;
-    margin-left: 2px;
+    width: 24px;
+    height: auto;
   }
 `;
 
@@ -61,11 +62,12 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
+      isBold
       onPointerEnter={refreshChecklist}
       {...buttonProps}
     >
       {text}
-      <ChecklistIcon checkpoint={currentCheckpoint} height={24} width={24} />
+      <ChecklistIcon checkpoint={currentCheckpoint} />
     </Button>
   );
 
