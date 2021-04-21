@@ -196,7 +196,7 @@ export const Toggle = ({ className, ...inputProps }) => (
 );
 
 Toggle.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
 };
