@@ -56,8 +56,6 @@ const Wrapper = styled.div`
         theme.colors.interactiveBg.secondaryHover};
     }
   }
-
-  ${themeHelpers.focusableOutlineCSS};
 `;
 
 const IconWrapper = styled.div`
