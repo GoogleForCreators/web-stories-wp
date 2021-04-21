@@ -33,7 +33,6 @@ import {
   BUTTON_VARIANTS,
   THEME_CONSTANTS,
   Text,
-  themeHelpers,
 } from '../../../../../design-system';
 import { ReactComponent as Icon } from './illustration.svg';
 
