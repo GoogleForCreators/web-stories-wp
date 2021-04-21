@@ -70,6 +70,7 @@ class Database_Upgrader extends Service_Base implements Activateable {
 		'3.0.4' => Migrations\Add_Poster_Generation_Media_Source::class,
 		'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
 		'3.0.6' => Migrations\Add_Media_Source_Video_Optimization::class,
+		'3.0.7' => Migrations\Add_Media_Source_Source_Video::class,
 	];
 
 	/**
