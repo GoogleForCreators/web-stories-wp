@@ -27,7 +27,7 @@ import {
 import { STORY_EVENTS } from '../types';
 
 describe('OnInitialElementAddedRegister', () => {
-  it('fires onInitialElementAdded once when story is starts not empty', () => {
+  it('fires onInitialElementAdded once when story is not empty', () => {
     const dispatchMock = jest.fn();
     const currentStoryMock = {
       pages: [{ elements: [{}, {}] }],
@@ -92,15 +92,15 @@ describe('OnInitialElementAddedRegister', () => {
 });
 
 describe('isNewStory', () => {
-  it('retrurns true if there are no pages in story', () => {
+  it('returns true if there are no pages in story', () => {
     expect(isNewStory({ pages: [] })).toBeTrue();
   });
-  it('retrurns true if there is only one page in the story that only has a background element', () => {
+  it('returns true if there is only one page in the story that only has a background element', () => {
     expect(
       isNewStory({ pages: [{ elements: [{ isBackground: true }] }] })
     ).toBeTrue();
   });
-  it('retrurns false if there is more than page', () => {
+  it('returns false if there is more than page', () => {
     expect(
       isNewStory({
         pages: [
@@ -110,7 +110,7 @@ describe('isNewStory', () => {
       })
     ).toBeFalse();
   });
-  it('retrurns false if there is only one page and it has more than just the bg element', () => {
+  it('returns false if there is only one page and it has more than just the bg element', () => {
     expect(
       isNewStory({
         pages: [{ elements: [{ isBackground: true }, { id: 'otherElement' }] }],
