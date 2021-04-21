@@ -29,7 +29,10 @@ import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
 
-const PageTemplateWrapper = styled.div`
+const PageTemplateWrapper = styled.button`
+  border: 0;
+  background: none;
+  padding: 0;
   position: absolute;
   top: 0;
   height: ${({ pageSize }) => pageSize.containerHeight}px;
@@ -37,6 +40,7 @@ const PageTemplateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
@@ -84,15 +88,15 @@ function PageTemplate(
   { page, pageSize, translateY, translateX, isActive, ...rest },
   ref
 ) {
-  const [isHover, setIsHover] = useState(false);
-  const isActivePage = isHover || isActive;
+  const [hasFocus, setHasFocus] = useState(false);
+  const isActivePage = hasFocus || isActive;
 
-  useFocusOut(ref, () => setIsHover(false), []);
+  useFocusOut(ref, () => setHasFocus(false), []);
 
-  const handleSetHoverActive = useCallback(() => setIsHover(true), []);
+  const handleSetFocusActive = useCallback(() => setHasFocus(true), []);
 
-  const handleSetHoverFalse = useCallback(() => {
-    setIsHover(false);
+  const handleSetFocusFalse = useCallback(() => {
+    setHasFocus(false);
   }, []);
 
   return (
@@ -101,11 +105,13 @@ function PageTemplate(
       role="listitem"
       ref={ref}
       tabIndex={0}
-      onMouseEnter={handleSetHoverActive}
-      onMouseLeave={handleSetHoverFalse}
+      onMouseEnter={handleSetFocusActive}
+      onMouseLeave={handleSetFocusFalse}
       aria-label={page.title}
       translateY={translateY}
       translateX={translateX}
+      onFocus={handleSetFocusActive}
+      onBlur={handleSetFocusFalse}
       {...rest}
     >
       <PreviewPageWrapper pageSize={pageSize}>

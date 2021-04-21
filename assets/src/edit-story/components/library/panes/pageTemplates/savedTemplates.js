@@ -19,20 +19,22 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
 import { UnitsProvider } from '../../../../units';
+import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import PageTemplate from './pageTemplate';
 import TemplateSave from './templateSave';
 import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
 import useTemplateActions from './useTemplateActions';
 
 const Wrapper = styled.div`
-  margin-left: 1em;
+  padding-left: 1em;
+  padding-top: 5px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 8px;
@@ -49,7 +51,9 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
+
   const [pageTemplates, setPageTemplates] = useState(null);
+  const ref = useRef();
 
   const loadTemplates = useCallback(() => {
     getCustomPageTemplates().then(setPageTemplates);
@@ -69,6 +73,8 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     handlePageClick,
   } = useTemplateActions();
 
+  useRovingTabIndex({ ref });
+
   return (
     <UnitsProvider
       pageSize={{
@@ -76,7 +82,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
         height: pageSize.height,
       }}
     >
-      <Wrapper>
+      <Wrapper ref={ref}>
         <TemplateWrapper pageSize={pageSize}>
           <TemplateSave
             pageSize={pageSize}
@@ -85,18 +91,19 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
           />
         </TemplateWrapper>
         {pageTemplates &&
-          pageTemplates.map((page) => {
+          pageTemplates.map((page, i) => {
             return (
-              <TemplateWrapper key={`${page.id}`} pageSize={pageSize}>
-                <PageTemplate
-                  page={page}
-                  translateY={0}
-                  translateX={0}
-                  pageSize={pageSize}
-                  onClick={() => handlePageClick(page)}
-                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-                />
-              </TemplateWrapper>
+              <PageTemplate
+                key={`${page.id}`}
+                page={page}
+                translateY={0}
+                translateX={0}
+                pageSize={pageSize}
+                onClick={() => handlePageClick(page)}
+                onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+                tabIndex={i === 0 ? 0 : -1}
+                style={{ position: 'relative' }}
+              />
             );
           })}
       </Wrapper>
