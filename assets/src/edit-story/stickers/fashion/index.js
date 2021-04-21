@@ -16,16 +16,16 @@
 /**
  * Internal dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as fashionStickers from './fashion';
-import * as wellbeingStickers from './wellbeing';
+import { default as fashionArrowDark } from './arrowDark';
+import { default as fashionArrowLight } from './arrowLight';
+import { default as fashionStarburst } from './starburst';
+import { default as fashionStarburstSolid } from './starburstSolid';
+import { default as fashionStarburstWithArrow } from './starburstWithArrow';
 
-export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...fashionStickers,
-  ...wellbeingStickers,
+export {
+  fashionArrowDark,
+  fashionArrowLight,
+  fashionStarburst,
+  fashionStarburstSolid,
+  fashionStarburstWithArrow,
 };

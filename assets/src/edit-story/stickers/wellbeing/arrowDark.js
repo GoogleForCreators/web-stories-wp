@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,24 +17,27 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
-import Popover from './popover';
-import Shadow from './shadow';
 
-const PopoverStandard = ({ className, children, isOpen }) => {
-  return (
-    <Popover isOpen={isOpen} className={className} data-testid="popover-menu">
-      <Shadow />
-      {children}
-    </Popover>
-  );
-};
-PopoverStandard.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  isOpen: PropTypes.bool.isRequired,
+const WellbeingArrowDark = ({ style }) => (
+  <svg
+    style={style}
+    viewBox="0 0 205 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M.603516 6.49949L204.27 6.49947M199.464.875l4.806 5.8336-4.806 5.8336"
+      stroke="#1F2A2E"
+      strokeWidth="1.09867"
+    />
+  </svg>
+);
+
+WellbeingArrowDark.propTypes = {
+  style: PropTypes.object,
 };
 
-export default PopoverStandard;
+export default {
+  aspectRatio: 205 / 13,
+  svg: WellbeingArrowDark,
+};

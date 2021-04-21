@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,20 @@
  * limitations under the License.
  */
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
+import { default as cookingArrow } from './arrow';
+import { default as cookingArtichoke } from './artichoke';
+import { default as cookingCarrot } from './carrot';
+import { default as cookingPersimmon } from './persimmon';
+import { default as cookingRadish } from './radish';
+import { default as cookingRadishLarge } from './radishLarge';
 
-export const ColorDot = styled.div`
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin: 0 4px;
-  box-shadow: inset 0 0 0 1px hsla(0, 0%, 0%, 0.25);
-  border-radius: 13px;
-  background-color: ${({ color }) => color};
-`;
+export {
+  cookingArrow,
+  cookingArtichoke,
+  cookingCarrot,
+  cookingPersimmon,
+  cookingRadish,
+  cookingRadishLarge,
+};
