@@ -18,7 +18,14 @@
  */
 import { default as sample } from './sampleSticker';
 import { default as beautyHeart } from './beautyHeart';
+import * as cookingStickers from './cooking';
+import * as fashionStickers from './fashion';
+import * as wellbeingStickers from './wellbeing';
+
 export default {
   sample,
   beautyHeart,
+  ...cookingStickers,
+  ...fashionStickers,
+  ...wellbeingStickers,
 };
