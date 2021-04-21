@@ -47,6 +47,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.border.defaultHover};
+    button {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryHover};
+    }
+  }
 
   ${themeHelpers.focusableOutlineCSS};
 `;
@@ -85,7 +94,7 @@ function TemplateSave({ pageSize }) {
     return null;
   }
   return (
-    <Wrapper pageSize={pageSize}>
+    <Wrapper pageSize={pageSize} onClick={handleSaveTemplate}>
       <IconWrapper>
         <Icon />
       </IconWrapper>
@@ -93,7 +102,6 @@ function TemplateSave({ pageSize }) {
         {__('Save current page as template', 'web-stories')}
       </StyledText>
       <StyledButton
-        onClick={handleSaveTemplate}
         variant={BUTTON_VARIANTS.RECTANGLE}
         type={BUTTON_TYPES.SECONDARY}
         size={BUTTON_SIZES.SMALL}
