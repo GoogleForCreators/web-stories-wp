@@ -8,7 +8,6 @@
     "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "prettier/react",
     "plugin:jsx-a11y/recommended",
     "plugin:jsdoc/recommended"
   ],
