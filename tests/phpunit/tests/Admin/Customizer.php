@@ -16,7 +16,7 @@
  */
 
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 use Google\Web_Stories\Customizer as TheCustomizer;
 use Google\Web_Stories\Traits\Theme_Support;
@@ -24,7 +24,7 @@ use WP_Customize_Manager;
 use WP_Error;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Customizer
+ * @coversDefaultClass \Google\Web_Stories\Admin\Customizer
  */
 class Customizer extends \WP_UnitTestCase {
 	use Theme_Support;

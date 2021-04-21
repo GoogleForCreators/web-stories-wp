@@ -24,8 +24,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 use Google\Web_Stories\Traits\Assets;

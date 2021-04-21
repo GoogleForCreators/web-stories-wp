@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\TinyMCE
+ * @coversDefaultClass \Google\Web_Stories\Admin\TinyMCE
  */
 class TinyMCE extends \WP_UnitTestCase {
 	use Private_Access;

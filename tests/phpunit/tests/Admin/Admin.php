@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Admin
+ * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
 class Admin extends \WP_UnitTestCase {
 

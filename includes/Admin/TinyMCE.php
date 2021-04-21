@@ -26,8 +26,9 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Stories_Script_Data;

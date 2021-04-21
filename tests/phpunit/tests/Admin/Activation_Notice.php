@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Activation_Notice
+ * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Notice
  */
 class Activation_Notice extends \WP_UnitTestCase {
 	use Private_Access;

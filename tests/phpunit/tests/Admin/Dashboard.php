@@ -16,10 +16,10 @@
  */
 
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Dashboard
+ * @coversDefaultClass \Google\Web_Stories\Admin\Dashboard
  */
 class Dashboard extends \WP_UnitTestCase {
 	protected static $user_id;

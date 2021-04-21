@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Activation_Flag
+ * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Flag
  */
 class Activation_Flag extends \WP_UnitTestCase {
 	/**

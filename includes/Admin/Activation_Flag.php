@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service as ServiceInterface;

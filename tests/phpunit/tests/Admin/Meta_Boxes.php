@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 use Google\Web_Stories\Story_Post_Type;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Meta_Boxes
+ * @coversDefaultClass \Google\Web_Stories\Admin\Meta_Boxes
  */
 class Meta_Boxes extends \WP_UnitTestCase {
 	/**

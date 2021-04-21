@@ -29,6 +29,7 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Admin\Meta_Boxes;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
