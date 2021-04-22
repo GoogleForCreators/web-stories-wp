@@ -14,20 +14,29 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as fashionStickers from './fashion';
-import * as travelStickers from './travel';
-import * as wellbeingStickers from './wellbeing';
+import PropTypes from 'prop-types';
+
+const FacebookIcon = ({ style }) => (
+  <svg
+    style={style}
+    viewBox="0 0 14 26"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.68442 25.349V13.7867h3.74108l.5612-4.506H8.68442V6.40194c0-1.30378.35013-2.19452 2.15348-2.19452h2.2999V.176657C12.7397.121918 11.3751 0 9.78517 0 6.46854 0 4.19991 2.09998 4.19991 5.95657V9.2807H.449219v4.506H4.19991V25.349h4.48451z"
+      fill="#094228"
+    />
+  </svg>
+);
+
+FacebookIcon.propTypes = {
+  style: PropTypes.object,
+};
 
 export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...fashionStickers,
-  ...travelStickers,
-  ...wellbeingStickers,
+  aspectRatio: 14 / 26,
+  svg: FacebookIcon,
 };

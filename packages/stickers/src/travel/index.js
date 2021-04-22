@@ -16,18 +16,16 @@
 /**
  * Internal dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as fashionStickers from './fashion';
-import * as travelStickers from './travel';
-import * as wellbeingStickers from './wellbeing';
+import { default as travelFacebookIcon } from './facebookIcon';
+import { default as travelInstagramIcon } from './instagramIcon';
+import { default as travelMap } from './mapFill';
+import { default as travelTwitterIcon } from './twitterIcon';
+import { default as travelYouTubeIcon } from './youTubeIcon';
 
-export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...fashionStickers,
-  ...travelStickers,
-  ...wellbeingStickers,
+export {
+  travelFacebookIcon,
+  travelInstagramIcon,
+  travelMap,
+  travelTwitterIcon,
+  travelYouTubeIcon,
 };
