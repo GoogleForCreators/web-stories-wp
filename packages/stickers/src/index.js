@@ -20,6 +20,7 @@ import { default as sample } from './sampleSticker';
 import * as beautyStickers from './beauty';
 import * as cookingStickers from './cooking';
 import * as diyStickers from './diy';
+import * as entertainmentStickers from './entertainment';
 import * as fashionStickers from './fashion';
 import * as fitnessStickers from './fitness';
 import * as travelStickers from './travel';
@@ -30,6 +31,7 @@ export default {
   ...beautyStickers,
   ...cookingStickers,
   ...diyStickers,
+  ...entertainmentStickers,
   ...fashionStickers,
   ...fitnessStickers,
   ...travelStickers,
