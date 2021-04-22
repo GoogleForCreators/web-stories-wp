@@ -32,15 +32,15 @@ function SimplePanel({
   ariaLabel,
   hasBadge,
   title,
-  isDisabledToggle,
+  isToggleDisabled,
   ...rest
 }) {
   return (
-    <Panel name={name} isDisabledToggle={isDisabledToggle} {...rest}>
+    <Panel name={name} isToggleDisabled={isToggleDisabled} {...rest}>
       <PanelTitle
         hasBadge={hasBadge}
         ariaLabel={ariaLabel ?? (typeof title === 'string' ? title : '')}
-        isDisabledToggle={isDisabledToggle}
+        isToggleDisabled={isToggleDisabled}
       >
         {title}
       </PanelTitle>
@@ -53,7 +53,7 @@ SimplePanel.propTypes = {
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
   hasBadge: PropTypes.bool,
-  isDisabledToggle: PropTypes.bool,
+  isToggleDisabled: PropTypes.bool,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   ariaLabel: PropTypes.string,
 };

@@ -102,11 +102,10 @@ function InspectorProvider({ children }) {
     }
   }, [currentPage]);
 
-  const ChecklistTabIcon = useCallback(() => {
-    return (
-      <ChecklistIcon checkpoint={currentCheckpoint} height={28} width={28} />
-    );
-  }, [currentCheckpoint]);
+  const ChecklistTabIcon = useCallback(
+    () => <ChecklistIcon checkpoint={currentCheckpoint} className="alert" />,
+    [currentCheckpoint]
+  );
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {

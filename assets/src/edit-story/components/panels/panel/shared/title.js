@@ -150,7 +150,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
-  isDisabledToggle,
+  isToggleDisabled,
   ...props
 }) {
   const {
@@ -224,8 +224,8 @@ function Title({
       )}
       <Toggle
         toggle={toggle}
-        disabled={!canCollapse || isDisabledToggle}
-        isDisabledToggle={isDisabledToggle}
+        disabled={!canCollapse || isToggleDisabled}
+        isToggleDisabled={isToggleDisabled}
         tabIndex={ariaHidden ? -1 : 0}
         aria-label={ariaLabel}
         aria-expanded={!isCollapsed}
@@ -234,7 +234,7 @@ function Title({
         hasBadge={hasBadge}
       >
         <IconWrapper>
-          {!isDisabledToggle && canCollapse && toggleIcon}
+          {!isToggleDisabled && canCollapse && toggleIcon}
         </IconWrapper>
         <Heading
           isCollapsed={isCollapsed}
@@ -253,7 +253,7 @@ Title.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node,
   hasBadge: PropTypes.bool,
-  isDisabledToggle: PropTypes.bool,
+  isToggleDisabled: PropTypes.bool,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,

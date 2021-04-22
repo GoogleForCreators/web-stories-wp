@@ -202,7 +202,7 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
       {showHighPriorityItems && (
         <SimplePanel
           collapsedByDefault={isHighPriorityDisabled}
-          isDisabledToggle={isHighPriorityDisabled}
+          isToggleDisabled={isHighPriorityDisabled}
           name="checklist"
           hasBadge
           title={
@@ -223,7 +223,7 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
       )}
       {showRecommendedItems && (
         <SimplePanel
-          isDisabledToggle={isRecommendedDisabled}
+          isToggleDisabled={isRecommendedDisabled}
           name="checklist"
           hasBadge
           title={

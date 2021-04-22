@@ -93,7 +93,7 @@ function setup({ pageCount = 1 }) {
 
 describe('prepublishChecklistProvider', () => {
   // TODO this should be set to UNAVAILABLE once blank story trigger is ready
-  it(`should begin a story at ${PPC_CHECKPOINT_STATE.ALL}`, async () => {
+  it(`should begin a story at '${PPC_CHECKPOINT_STATE.ALL}'`, async () => {
     const { result } = setup({ pageCount: 1 });
 
     await act(async () => {

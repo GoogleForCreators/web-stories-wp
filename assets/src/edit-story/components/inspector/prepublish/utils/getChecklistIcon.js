@@ -25,7 +25,7 @@ import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
 const ChecklistIcon = ({ checkpoint, ...rest }) => {
   if (checkpoint === PPC_CHECKPOINT_STATE.ALL) {
-    return <Icons.ExclamationOutline className="alert" {...rest} />;
+    return <Icons.ExclamationOutline {...rest} />;
   }
   return null;
 };
