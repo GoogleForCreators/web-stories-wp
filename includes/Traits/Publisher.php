@@ -104,7 +104,7 @@ trait Publisher {
 	}
 
 	/**
-	 * Get the publisher logo.
+	 * Get the publisher name.
 	 *
 	 * @since 1.7.0
 	 *
