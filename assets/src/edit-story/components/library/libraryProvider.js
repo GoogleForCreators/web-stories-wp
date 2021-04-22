@@ -26,6 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { TOOLTIP_PLACEMENT } from '../../../design-system';
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { MediaPane, MediaIcon } from './panes/media/local';
@@ -39,6 +40,7 @@ import { getPaneId, Pane as SharedPane } from './panes/shared';
 const MEDIA = {
   icon: MediaIcon,
   tooltip: __('WordPress media', 'web-stories'),
+  placement: TOOLTIP_PLACEMENT.BOTTOM_START,
   Pane: MediaPane,
   id: 'media',
 };

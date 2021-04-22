@@ -150,11 +150,11 @@ const TabText = styled(Headline).attrs({
 
 const noop = () => {};
 
-function Tab({ children, tooltip = null, ...rest }) {
+function Tab({ children, tooltip = null, placement, ...rest }) {
   const tab = <TabElement {...rest}>{children}</TabElement>;
   if (tooltip !== null) {
     return (
-      <Tooltip title={tooltip} isDelayed>
+      <Tooltip title={tooltip} placement={placement} isDelayed>
         {tab}
       </Tooltip>
     );
@@ -232,7 +232,7 @@ function TabView({
 
   return (
     <Tabs aria-label={label} ref={ref} {...rest}>
-      {tabs.map(({ id, title, tooltip, icon: Icon }) => (
+      {tabs.map(({ id, title, icon: Icon, ...tabRest }) => (
         <Tab
           key={id}
           ref={(tabRef) => (tabRefs.current[id] = tabRef)}
@@ -241,7 +241,7 @@ function TabView({
           aria-controls={getAriaControlsId ? getAriaControlsId(id) : null}
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
-          tooltip={tooltip}
+          {...tabRest}
         >
           {Boolean(title) && <TabText>{title}</TabText>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}
