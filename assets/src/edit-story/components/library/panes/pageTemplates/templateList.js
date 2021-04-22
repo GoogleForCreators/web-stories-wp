@@ -38,7 +38,7 @@ import PageTemplate from './pageTemplate';
 import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
 import useTemplateActions from './useTemplateActions';
 
-function TemplateList({ pages, parentRef, pageSize }) {
+function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
   const containerRef = useRef();
   const pageRefs = useRef({});
 
@@ -139,6 +139,7 @@ function TemplateList({ pages, parentRef, pageSize }) {
                   onFocus={() => handleGridItemFocus(page.id)}
                   onClick={() => handlePageClick(page)}
                   onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+                  handleDelete={handleDelete}
                 />
               );
             })
@@ -163,6 +164,7 @@ TemplateList.propTypes = {
     })
   ),
   pageSize: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func,
 };
 
 export default TemplateList;

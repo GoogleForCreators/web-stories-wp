@@ -387,7 +387,7 @@ function APIProvider({ children }) {
     [cdnURL, assetsURL]
   );
 
-  // @todo Add paging.
+  // @todo Add pagination.
   const getCustomPageTemplates = useCallback(() => {
     let apiPath = customPageTemplates;
     const perPage = 100;
@@ -397,7 +397,9 @@ function APIProvider({ children }) {
       page: 1,
     });
     return apiFetch({ path: apiPath }).then((response) =>
-      response.map((template) => template['story_data'])
+      response.map((template) => {
+        return { ...template['story_data'], postId: template.id };
+      })
     );
   }, [customPageTemplates]);
 
@@ -409,6 +411,19 @@ function APIProvider({ children }) {
           story_data: page,
           status: 'publish',
         },
+        method: 'POST',
+      });
+    },
+    [customPageTemplates]
+  );
+
+  const deletePageTemplate = useCallback(
+    (id) => {
+      return apiFetch({
+        path: addQueryArgs(`${customPageTemplates}${id}/`, {
+          _method: 'DELETE',
+        }),
+        data: { force: true },
         method: 'POST',
       });
     },
@@ -434,6 +449,7 @@ function APIProvider({ children }) {
       getStatusCheck,
       addPageTemplate,
       getCustomPageTemplates,
+      deletePageTemplate,
       getPageTemplates,
       getCurrentUser,
       updateCurrentUser,

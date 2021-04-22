@@ -38,7 +38,7 @@ const TemporaryWrapper = styled.div`
 
 function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   const {
-    actions: { getCustomPageTemplates },
+    actions: { getCustomPageTemplates, deletePageTemplate },
   } = useAPI();
 
   const [pageTemplates, setPageTemplates] = useState(null);
@@ -54,7 +54,18 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
-  // @todo Saving template should belong to the virtual list, it's currently misplaced.
+  const handleDelete = useCallback(
+    ({ postId }, e) => {
+      e.stopPropagation();
+      if (postId) {
+        // @todo Add confirmation.
+        deletePageTemplate(postId).then(() => loadTemplates());
+      }
+    },
+    [deletePageTemplate, loadTemplates]
+  );
+
+  // @todo Saving template is currently misplaced.
   return (
     <TemporaryWrapper>
       <TemplateSave
@@ -68,6 +79,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
             parentRef={ref}
             pageSize={pageSize}
             pages={pageTemplates}
+            handleDelete={handleDelete}
           />
         )}
       </Wrapper>
