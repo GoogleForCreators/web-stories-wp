@@ -67,36 +67,33 @@ describe('Checklist Tab integration', () => {
     fixture.restore();
   });
 
-  describe('Auto video optimization', () => {
-    it("clicking on the toggle should update the user's video optimization settings", async () => {
-      const { checklistTab } = fixture.editor.inspector;
+  it("clicking on the toggle should update the user's video optimization settings", async () => {
+    const { checklistTab } = fixture.editor.inspector;
 
-      // Click checklist tab
-      await fixture.events.click(checklistTab);
-      await waitFor(() => fixture.editor.inspector.checklistPanel);
+    // Click checklist tab
+    await fixture.events.click(checklistTab);
 
-      // Open the recommended dropdown
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.recommended
-      );
-      const toggle =
-        fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle;
-      await waitFor(() => toggle);
+    // Open the recommended dropdown
+    await fixture.events.click(
+      fixture.editor.inspector.checklistPanel.recommended
+    );
+    const toggle =
+      fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle;
+    await waitFor(() => toggle);
 
-      expect(toggle.checked).toBeFalse();
+    expect(toggle.checked).toBeFalse();
 
-      // Click toggle
-      await fixture.events.click(toggle);
+    // Click toggle
+    await fixture.events.click(toggle);
 
-      expect(mockUpdateCurrentUser).toHaveBeenCalledTimes(1);
-      expect(toggle.checked).toBeTrue();
+    expect(mockUpdateCurrentUser).toHaveBeenCalledTimes(1);
+    expect(toggle.checked).toBeTrue();
 
-      await fixture.snapshot('auto video optimization toggle checked');
-    });
+    await fixture.snapshot('auto video optimization toggle checked');
   });
 });
 
-describe('Checklist Tab integration - user video optimization setting enabled prior', () => {
+describe('Checklist Tab integration - user video optimization setting enabled prior to viewing', () => {
   let fixture;
   let mockGetCurrentUser;
 
@@ -125,22 +122,19 @@ describe('Checklist Tab integration - user video optimization setting enabled pr
     fixture.restore();
   });
 
-  describe('Auto video optimization', () => {
-    it('should render no toggle', async () => {
-      const { checklistTab } = fixture.editor.inspector;
+  it('should render no toggle', async () => {
+    const { checklistTab } = fixture.editor.inspector;
 
-      // Click checklist tab
-      await fixture.events.click(checklistTab);
-      await waitFor(() => fixture.editor.inspector.checklistPanel);
+    // Click checklist tab
+    await fixture.events.click(checklistTab);
 
-      // Open the recommended dropdown
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.recommended
-      );
+    // Open the recommended dropdown
+    await fixture.events.click(
+      fixture.editor.inspector.checklistPanel.recommended
+    );
 
-      expect(
-        fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle
-      ).toBeNull();
-    });
+    expect(
+      fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle
+    ).toBeNull();
   });
 });
