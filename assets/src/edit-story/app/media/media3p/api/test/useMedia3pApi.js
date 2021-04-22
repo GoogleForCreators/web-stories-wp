@@ -136,7 +136,7 @@ describe('useMedia3pApi', () => {
     expect(listMediaResult).toStrictEqual({
       media: [
         {
-          alt: null,
+          alt: 'media/unsplash:1234',
           attribution: {
             author: {
               displayName: 'Maria',
