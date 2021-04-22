@@ -14,22 +14,36 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as diyStickers from './diy';
-import * as fashionStickers from './fashion';
-import * as travelStickers from './travel';
-import * as wellbeingStickers from './wellbeing';
+import PropTypes from 'prop-types';
+
+function OrangeDot({ style }) {
+  return (
+    <svg
+      style={style}
+      viewBox="0 0 64 64"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect opacity="0.2" width="64" height="64" rx="32" fill="#F96302" />
+      <rect
+        x="18.2861"
+        y="18.2858"
+        width="27.4286"
+        height="27.4286"
+        rx="13.7143"
+        fill="#F96302"
+      />
+    </svg>
+  );
+}
+
+OrangeDot.propTypes = {
+  style: PropTypes.object,
+};
 
 export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...diyStickers,
-  ...fashionStickers,
-  ...travelStickers,
-  ...wellbeingStickers,
+  aspectRatio: 64 / 64,
+  svg: OrangeDot,
 };
