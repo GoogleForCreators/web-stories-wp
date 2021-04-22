@@ -29,10 +29,7 @@ import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
 
-const PageTemplateWrapper = styled.button`
-  border: 0;
-  background: none;
-  padding: 0;
+const PageTemplateWrapper = styled.div`
   position: absolute;
   top: 0;
   height: ${({ pageSize }) => pageSize.containerHeight}px;
