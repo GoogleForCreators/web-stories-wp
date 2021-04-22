@@ -44,14 +44,9 @@ async function getPrepublishErrors(
   if (!story) {
     return [];
   }
-  const checklistResult = [error, warning, guidance]
-    .filter((type) => {
-      // console.log('CHECKLIST', {
-      //   types,
-      //   name: type.name,
-      // });
-      types.includes(type.name);
-    })
+  const checklistResult = Object.entries({ error, warning, guidance })
+    .filter(([key]) => types.includes(key))
+    .map(([, val]) => val)
     .map((byType) => {
       const {
         // arrays of functions
