@@ -22,14 +22,15 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../design-system';
+import { themeHelpers, THEME_CONSTANTS } from '../../../design-system';
 import { STORY_PREVIEW_WIDTH, VIEWPORT_BREAKPOINT } from '../../constants';
-import { TypographyPresets } from '../typography';
 
 const CELL_PADDING = 16;
 
 export const Table = styled.table`
-  ${TypographyPresets.Small};
+  ${themeHelpers.expandTextPreset(
+    ({ paragraph }, { SMALL }) => paragraph[SMALL]
+  )}
   border-collapse: collapse;
   width: inherit;
 `;

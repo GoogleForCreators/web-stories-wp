@@ -66,4 +66,5 @@ export const panels = [
   PanelTypes.VIDEO_OPTIONS,
   PanelTypes.VIDEO_ACCESSIBILITY,
   PanelTypes.CAPTIONS,
+  PanelTypes.VIDEO_PROCESSING,
 ];

@@ -33,6 +33,7 @@ const TEXT_BOX = 'textBox';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
+const VIDEO_PROCESSING = 'videoProcessing';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
 
 const PanelTypes = {
@@ -56,6 +57,7 @@ const PanelTypes = {
   CAPTIONS,
   ANIMATION,
   VIDEO_ACCESSIBILITY,
+  VIDEO_PROCESSING,
 };
 
 export default PanelTypes;

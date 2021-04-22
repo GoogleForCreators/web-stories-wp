@@ -73,6 +73,7 @@ class Database_Upgrader extends Service_Base implements Activateable {
 			'3.0.4' => 'add_poster_generation_media_source',
 			'3.0.5' => 'remove_unneeded_attachment_meta',
 			'3.0.6' => 'v_3_add_term',
+			'3.0.7' => 'v_4_add_term',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -425,6 +426,17 @@ class Database_Upgrader extends Service_Base implements Activateable {
 	 */
 	protected function v_3_add_term() {
 		wp_insert_term( 'video-optimization', Media::STORY_MEDIA_TAXONOMY );
+	}
+
+	/**
+	 * Add the source video term, to make sure it exists.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return void
+	 */
+	protected function v_4_add_term() {
+		wp_insert_term( 'source-video', Media::STORY_MEDIA_TAXONOMY );
 	}
 
 	/**
