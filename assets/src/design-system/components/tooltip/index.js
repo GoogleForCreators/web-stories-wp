@@ -33,9 +33,9 @@ import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
 // For how many milliseconds is a delayed tooltip waiting to appear?
-const DELAY_MS = 3000;
+const DELAY_MS = 1000;
 // For how many milliseconds will triggering another delayed tooltip show instantly?
-const REPEAT_DELAYED_MS = 2000;
+const REPEAT_DELAYED_MS = 500;
 
 const Wrapper = styled.div`
   position: relative;
@@ -161,10 +161,12 @@ function Tooltip({
       onPointerLeave(evt);
       if (isDelayed) {
         clearTimeout(delay.current);
-        lastVisibleDelayedTooltip = performance.now();
+        if (shown) {
+          lastVisibleDelayedTooltip = performance.now();
+        }
       }
     },
-    [isDelayed, onPointerLeave]
+    [isDelayed, shown, onPointerLeave]
   );
 
   return (
