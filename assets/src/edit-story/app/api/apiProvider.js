@@ -379,7 +379,6 @@ function APIProvider({ children }) {
         pageTemplates.current.withoutImages = removeImagesFromPageTemplates({
           templates: pageTemplates.current.base,
           assetsURL,
-          showImages,
         });
       }
 
