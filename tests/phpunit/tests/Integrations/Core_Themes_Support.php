@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integrations;
 
-use Google\Web_Stories\Customizer;
+use Google\Web_Stories\Admin\Customizer;
 use Google\Web_Stories\Tests\Private_Access;
 
 /**

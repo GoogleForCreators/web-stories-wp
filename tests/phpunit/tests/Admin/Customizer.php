@@ -18,7 +18,7 @@
 
 namespace Google\Web_Stories\Admin\Tests;
 
-use Google\Web_Stories\Customizer as TheCustomizer;
+use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Traits\Theme_Support;
 use WP_Customize_Manager;
 use WP_Error;
@@ -46,7 +46,7 @@ class Customizer extends \WP_UnitTestCase {
 	/**
 	 * Testee instance.
 	 *
-	 * @var \Google\Web_Stories\Customizer
+	 * @var \Google\Web_Stories\Admin\Customizer
 	 */
 	private $customizer;
 
@@ -63,7 +63,7 @@ class Customizer extends \WP_UnitTestCase {
 
 		global $wp_customize;
 
-		$this->customizer      = new \Google\Web_Stories\Customizer();
+		$this->customizer      = new \Google\Web_Stories\Admin\Customizer();
 		$this->wp_customize    = new \WP_Customize_Manager();
 		$wp_customize          = $this->wp_customize;
 		$this->customizer_mock = $this->createMock( WP_Customize_Manager::class );

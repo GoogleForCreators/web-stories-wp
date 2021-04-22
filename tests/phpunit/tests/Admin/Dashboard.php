@@ -40,7 +40,7 @@ class Dashboard extends \WP_UnitTestCase {
 	 * @covers ::get_hook_suffix
 	 */
 	public function test_get_not_set_hook_suffix() {
-		$dashboard = new \Google\Web_Stories\Dashboard(
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
@@ -55,7 +55,7 @@ class Dashboard extends \WP_UnitTestCase {
 	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page_no_user() {
-		$dashboard = new \Google\Web_Stories\Dashboard(
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
@@ -74,7 +74,7 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_add_menu_page_user_without_permission() {
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Dashboard(
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
@@ -94,7 +94,7 @@ class Dashboard extends \WP_UnitTestCase {
 		wp_set_current_user( self::$user_id );
 		wp_get_current_user()->add_cap( 'edit_web-stories' );
 
-		$dashboard = new \Google\Web_Stories\Dashboard(
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
@@ -115,7 +115,7 @@ class Dashboard extends \WP_UnitTestCase {
 	public function test_enqueue_assets_wrong_page() {
 		wp_set_current_user( self::$user_id );
 
-		$dashboard = new \Google\Web_Stories\Dashboard(
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
 			$this->createMock( \Google\Web_Stories\Experiments::class ),
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
@@ -143,7 +143,7 @@ class Dashboard extends \WP_UnitTestCase {
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
 		];
-		$dashboard = $this->getMockBuilder( \Google\Web_Stories\Dashboard::class )
+		$dashboard = $this->getMockBuilder( \Google\Web_Stories\Admin\Dashboard::class )
 						->setConstructorArgs( $args )
 						->setMethods( [ 'get_asset_metadata' ] )
 						->getMock();

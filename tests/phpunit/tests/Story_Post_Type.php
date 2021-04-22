@@ -121,7 +121,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
 
@@ -139,7 +139,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
 		$post_type  = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
@@ -237,7 +237,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
 
