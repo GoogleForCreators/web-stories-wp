@@ -139,10 +139,14 @@ function delete_stories_user_meta() {
 function delete_posts() {
 	$cpt_posts = get_posts(
 		[
-			'fields'           => 'ids',
+			'fields' => 'ids',
 			'suppress_filters' => false,
-			'post_type'        => [ Story_Post_Type::POST_TYPE_SLUG, Template_Post_Type::POST_TYPE_SLUG ],
-			'posts_per_page'   => - 1,
+			'post_type' => [
+				Story_Post_Type::POST_TYPE_SLUG,
+				Template_Post_Type::POST_TYPE_SLUG,
+				Page_Template_Post_Type::POST_TYPE_SLUG
+			],
+			'posts_per_page' => - 1,
 		]
 	);
 
