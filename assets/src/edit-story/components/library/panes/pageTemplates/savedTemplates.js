@@ -20,11 +20,14 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useEffect, useState, useCallback, useRef } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import Dialog from '../../../dialog';
 import TemplateSave from './templateSave';
 import TemplateList from './templateList';
 
@@ -42,6 +45,8 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   } = useAPI();
 
   const [pageTemplates, setPageTemplates] = useState(null);
+  const [showDialog, setShowDialog] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();
 
   const loadTemplates = useCallback(() => {
@@ -54,15 +59,20 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
+  const onClickDelete = useCallback(({ postId }, e) => {
+    e.stopPropagation();
+    if (postId) {
+      setShowDialog(true);
+      setTemplateToDelete(postId);
+    }
+  }, []);
   const handleDelete = useCallback(
-    ({ postId }, e) => {
-      e.stopPropagation();
-      if (postId) {
-        // @todo Add confirmation.
-        deletePageTemplate(postId).then(() => loadTemplates());
-      }
-    },
-    [deletePageTemplate, loadTemplates]
+    () =>
+      deletePageTemplate(templateToDelete).then(() => {
+        loadTemplates();
+        setShowDialog(false);
+      }),
+    [deletePageTemplate, loadTemplates, templateToDelete]
   );
 
   // @todo Saving template is currently misplaced.
@@ -79,8 +89,25 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
             parentRef={ref}
             pageSize={pageSize}
             pages={pageTemplates}
-            handleDelete={handleDelete}
+            handleDelete={onClickDelete}
           />
+        )}
+        {showDialog && (
+          <Dialog
+            isOpen
+            onClose={() => setShowDialog(false)}
+            title={__('Delete Page Template', 'web-stories')}
+            secondaryText={__('Cancel', 'web-stories')}
+            onPrimary={handleDelete}
+            primaryText={__('Delete', 'web-stories')}
+          >
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {__(
+                'Are you sure you want to delete this template? This action cannot be undone.',
+                'web-stories'
+              )}
+            </Text>
+          </Dialog>
         )}
       </Wrapper>
     </TemporaryWrapper>

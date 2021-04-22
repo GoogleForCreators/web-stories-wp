@@ -51,7 +51,7 @@ export const VirtualizedContainer = styled.div`
     repeat(auto-fill, ${columnWidth}px)`};
   grid-template-rows: ${({ rowHeight }) => `minmax(${rowHeight}px, auto)`};
   gap: ${({ rowGap }) => rowGap}px;
-  width: 100%;
+  width: calc(100% - ${({ paneLeft }) => paneLeft});
   height: 100%;
   margin-top: 4px;
 `;
