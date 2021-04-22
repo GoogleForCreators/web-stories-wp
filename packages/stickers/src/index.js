@@ -31,9 +31,9 @@ export default {
   ...beautyStickers,
   ...cookingStickers,
   ...diyStickers,
+  ...entertainmentStickers,
   ...fashionStickers,
   ...fitnessStickers,
   ...travelStickers,
-  ...entertainmentStickers,
   ...wellbeingStickers,
 };
