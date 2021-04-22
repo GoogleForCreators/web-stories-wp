@@ -32,9 +32,9 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   PLACEMENT,
+  Modal,
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
-import Modal from '../modal';
 import Tooltip from '../tooltip';
 import GridView from './gridview';
 import ZoomSelector from './zoomSelector';
@@ -146,7 +146,7 @@ function PrimaryMenu() {
         </MenuItems>
       </Wrapper>
       <Modal
-        open={isGridViewOpen}
+        isOpen={isGridViewOpen}
         onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
         overlayStyles={{

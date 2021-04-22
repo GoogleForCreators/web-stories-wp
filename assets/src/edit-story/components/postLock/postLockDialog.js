@@ -40,9 +40,10 @@ import { Img } from './shared';
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
+ * @param props.isOpen
  * @return {*} Render.
  */
-function PostLockDialog({ open, onClose, user, dashboardLink, previewLink }) {
+function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
   const dialogTile = __('Story is locked', 'web-stories');
   const dialogContent = sprintf(
     /* translators: %s: user's name */
@@ -55,7 +56,7 @@ function PostLockDialog({ open, onClose, user, dashboardLink, previewLink }) {
 
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
       title={dialogTile}
       contentLabel={dialogTile}
@@ -104,7 +105,7 @@ function PostLockDialog({ open, onClose, user, dashboardLink, previewLink }) {
 }
 
 PostLockDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
   previewLink: PropTypes.string,
