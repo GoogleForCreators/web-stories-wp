@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useFeatures } from 'flagged';
 import { v4 as uuidv4 } from 'uuid';
@@ -140,6 +140,7 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
     showSnackbar,
   ]);
 
+  const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
   if (!customPageTemplates) {
     return null;
   }
@@ -147,12 +148,15 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
     <SaveButton
       pageSize={pageSize}
       onClick={handleSaveTemplate}
-      aria-label={__('Save new template', 'web-stories')}
+      aria-labelledby={textId}
     >
       <IconWrapper>
         <Icon />
       </IconWrapper>
-      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <StyledText
+        id={textId}
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      >
         {__('Save current page as template', 'web-stories')}
       </StyledText>
       <StyledButton>
