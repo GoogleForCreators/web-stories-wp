@@ -49,11 +49,10 @@ import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   margin-top: 16px;
   margin-bottom: 16px;
-  padding: 0 24px;
+  padding: 0 1em;
 `;
 
 const MediaSubheading = styled(Headline).attrs(() => ({
