@@ -203,6 +203,13 @@ function Title({
   ) : (
     <Icons.ChevronDownSmall />
   );
+
+  // There are 2 props that could affect the panel being able to toggle.
+  // canCollapse enforces a toggle panel that is always expanded.
+  // isToggleDisabled leaves the panel in whatever state it currently is.
+  const preserveToggleCollapseState = !canCollapse || isToggleDisabled;
+  const showToggleIcon = canCollapse && !isToggleDisabled;
+
   return (
     <Header
       isPrimary={isPrimary}
@@ -224,7 +231,7 @@ function Title({
       )}
       <Toggle
         toggle={toggle}
-        disabled={!canCollapse || isToggleDisabled}
+        disabled={preserveToggleCollapseState}
         isToggleDisabled={isToggleDisabled}
         tabIndex={ariaHidden ? -1 : 0}
         aria-label={ariaLabel}
@@ -233,9 +240,7 @@ function Title({
         isCollapsed={isCollapsed}
         hasBadge={hasBadge}
       >
-        <IconWrapper>
-          {!isToggleDisabled && canCollapse && toggleIcon}
-        </IconWrapper>
+        <IconWrapper>{showToggleIcon && toggleIcon}</IconWrapper>
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
