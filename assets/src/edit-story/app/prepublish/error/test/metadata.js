@@ -60,48 +60,6 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testEmptyString.storyId).toStrictEqual(testEmptyStringStory.id);
   });
 
-  it('should return an error-type guidance message if there is a link in the page attachment region', () => {
-    const elementInRegion = {
-      x: 35,
-      y: 400,
-      width: 188,
-      height: 141,
-      rotationAngle: 0,
-      link: undefined,
-    };
-    const testPageAttachment = {
-      url: 'http://bomb.com',
-    };
-    const testNoLink = metadataGuidelines.linkInPageAttachmentRegion({
-      pageAttachment: testPageAttachment,
-      elements: [elementInRegion],
-    });
-    const testNoAttachment = metadataGuidelines.linkInPageAttachmentRegion({
-      pageAttachment: undefined,
-      elements: [{ ...elementInRegion, link: { url: 'bomb.com' } }],
-    });
-    const testLinkInPageAttachmentStory = {
-      id: 890,
-      pageAttachment: testPageAttachment,
-      elements: [{ ...elementInRegion, link: { url: 'bomb.com ' } }],
-    };
-    const testLinkInPageAttachment = metadataGuidelines.linkInPageAttachmentRegion(
-      testLinkInPageAttachmentStory
-    );
-    expect(testNoLink).toBeUndefined();
-    expect(testNoAttachment).toBeUndefined();
-    expect(testLinkInPageAttachment).not.toBeUndefined();
-    expect(testLinkInPageAttachment.message).toMatchInlineSnapshot(
-      `"Turn off Page Attachment or remove conflicting links"`
-    );
-    expect(testLinkInPageAttachment.pageId).toStrictEqual(
-      testLinkInPageAttachmentStory.id
-    );
-    expect(testLinkInPageAttachment.elements).toStrictEqual(
-      testLinkInPageAttachmentStory.elements
-    );
-  });
-
   // todo: The story's poster and publisher url are not yet returned by the api. See #5105.
   it("should return an error-type guidance message if the story's publisher logo is too small", () => {
     const testHeightStory = {
