@@ -38,7 +38,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       tooLowResolutionVideoElement
     );
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Increase video resolution"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Increase video resolution to at least 480p"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLowResolutionVideoElement.id);
   });
@@ -117,7 +119,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.mediaElementResolution(tooHighVideoResolution);
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Reduce video resolution"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Reduce video resolution to less than 4000p"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooHighVideoResolution.id);
   });
@@ -139,7 +143,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.videoElementLength(tooLongVideo);
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Break video into segments"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Split videos into segments of 1 minute or less"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLongVideo.id);
   });
