@@ -59,7 +59,7 @@ function ShapesPane(props) {
   const ref = useRef();
   useRovingTabIndex({ ref });
   return (
-    <Pane id={paneId} {...props}>
+    <Pane id={paneId} {...props} isOverflowScrollable={enableStickers}>
       {showTextAndShapesSearchInput && (
         <SearchInput
           initialValue={''}
