@@ -118,6 +118,7 @@ function PrepublishChecklistProvider({ children }) {
     [currentList]
   );
 
+  // this will prevent the review dialog from getting triggered again, do we want that?
   useEffect(() => {
     if (checkpointState === PPC_CHECKPOINT_STATE.ALL && !highPriorityLength) {
       setIsHighPriorityEmpty(true);
@@ -125,6 +126,7 @@ function PrepublishChecklistProvider({ children }) {
   }, [checkpointState, highPriorityLength]);
 
   const focusChecklistTab = useCallback(() => {
+    dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
     setFirstPublishAttempt(true);
   }, [setFirstPublishAttempt]);
 
