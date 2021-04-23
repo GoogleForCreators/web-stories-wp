@@ -21,7 +21,6 @@ import {
   activatePlugin,
   deactivatePlugin,
   getEditedPostContent,
-  openPreviewPage,
 } from '@wordpress/e2e-test-utils';
 
 /**
@@ -30,6 +29,7 @@ import {
 import {
   createNewStory,
   addRequestInterception,
+  publishPost,
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
@@ -105,17 +105,17 @@ describe('Publishing Flow', () => {
 
     expect(await getEditedPostContent()).toMatchSnapshot();
 
-    const editorPage = page;
-    const previewPage = await openPreviewPage(editorPage);
+    const postPermalink = await publishPost();
 
-    await previewPage.bringToFront();
-    await previewPage.waitForSelector('amp-story-player');
-    await expect(previewPage).toMatchElement('amp-story-player');
-    await expect(previewPage).toMatch('Publishing Flow Test');
+    expect(postPermalink).not.toBeNull();
+    expect(postPermalink).toStrictEqual(expect.any(String));
 
-    // Clean up
-    await editorPage.bringToFront();
-    await previewPage.close();
+    await page.goto(postPermalink);
+    await page.waitForNavigation();
+
+    await page.waitForSelector('amp-story-player');
+    await expect(page).toMatchElement('amp-story-player');
+    await expect(page).toMatch('Publishing Flow Test');
   });
 
   describe('Classic Editor', () => {
@@ -164,7 +164,8 @@ describe('Publishing Flow', () => {
       expect(postPermalink).not.toBeNull();
       expect(postPermalink).toStrictEqual(expect.any(String));
 
-      await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+      await page.goto(postPermalink);
+      await page.waitForNavigation();
 
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');

@@ -132,10 +132,8 @@ describe('Web Stories Block', () => {
         ? `${postPermalink}&amp`
         : `${postPermalink}?amp`;
 
-      await Promise.all([
-        page.goto(ampPostPermaLink),
-        page.waitForNavigation(),
-      ]);
+      await page.goto(ampPostPermaLink);
+      await page.waitForNavigation();
 
       await expect(page).toBeValidAMP();
 
