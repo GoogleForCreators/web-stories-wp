@@ -46,6 +46,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     const { checklistTab } = fixture.editor.inspector;
     await fixture.events.click(checklistTab);
     await waitFor(() => fixture.editor.inspector.checklistPanel);
+    // just add a small wait for the checklist to compute it's items
+    await fixture.events.sleep(500);
   }
 
   async function openRecommendedPanel() {
@@ -259,10 +261,10 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
 
+      await openPrepublishPanel();
       const noPosterImage = fixture.screen.getByText(
         MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
       );
-      await openPrepublishPanel();
       await fixture.events.click(noPosterImage);
       await waitFor(() => {
         expect(
