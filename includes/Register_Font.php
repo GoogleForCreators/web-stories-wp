@@ -58,15 +58,13 @@ class Register_Font {
 	 * @return void
 	 */
 	public function register() {
-		if ( $this->register ) {
-			return;
+		if ( ! $this->register ) {
+			$this->register = wp_register_style(
+				$this->get_handle(),
+				'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
+				[],
+				WEBSTORIES_VERSION
+			);
 		}
-
-		$this->register = wp_register_style(
-			$this->get_handle(),
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
 	}
 }
