@@ -503,7 +503,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		$this->register_font->register( self::WEB_STORIES_SCRIPT_HANDLE );
+		$this->register_font->register();
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -513,7 +513,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
 
-		$font_handle = $this->register_font->get_handle( self::WEB_STORIES_SCRIPT_HANDLE );
+		$font_handle = $this->register_font->get_handle();
 		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(

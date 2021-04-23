@@ -280,11 +280,11 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		$this->register_font->register( self::SCRIPT_HANDLE );
+		$this->register_font->register();
 
 		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
-		$font_handle = $this->register_font->get_handle( self::SCRIPT_HANDLE );
+		$font_handle = $this->register_font->get_handle();
 		$this->enqueue_style( self::SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(

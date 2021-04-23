@@ -33,34 +33,37 @@ namespace Google\Web_Stories;
  */
 class Register_Font {
 	/**
-	 * Font Style handle.
+	 * Registered.
 	 *
-	 * @var string
+	 * @var bool
 	 */
-	const STYLE_HANDLE = 'google-fonts';
+	private $register = false;
 
 	/**
-	 * Prefix handle.
+	 * Script handle
 	 *
-	 * @param string $handle Style handle used to prefix.
+	 * @since 1.7.0
 	 *
 	 * @return string
 	 */
-	public function get_handle( $handle ) {
-		return $handle . '-' . self::STYLE_HANDLE;
+	public function get_handle() {
+		return 'web-stories-fonts';
 	}
 
 	/**
 	 * Register style with prefix.
 	 *
-	 * @param string $handle Style handle used to prefix.
+	 * @since 1.7.0
 	 *
 	 * @return void
 	 */
-	public function register( $handle ) {
-		$style_handle = $this->get_handle( $handle );
-		wp_register_style(
-			$style_handle,
+	public function register() {
+		if ( $this->register ) {
+			return;
+		}
+
+		$this->register = wp_register_style(
+			$this->get_handle(),
 			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
 			[],
 			WEBSTORIES_VERSION
