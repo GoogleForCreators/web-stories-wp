@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,28 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import Popover from './popover';
-import Shadow from './shadow';
+import TemplateSave from './templateSave';
 
-const PopoverStandard = ({ className, children, isOpen }) => {
+const Wrapper = styled.div`
+  position: relative;
+  margin-left: 1em;
+`;
+
+function SavedTemplates({ pageSize }) {
   return (
-    <Popover isOpen={isOpen} className={className} data-testid="popover-menu">
-      <Shadow />
-      {children}
-    </Popover>
+    <Wrapper>
+      <TemplateSave pageSize={pageSize} />
+    </Wrapper>
   );
-};
-PopoverStandard.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  isOpen: PropTypes.bool.isRequired,
+}
+
+SavedTemplates.propTypes = {
+  pageSize: PropTypes.object.isRequired,
 };
 
-export default PopoverStandard;
+export default SavedTemplates;

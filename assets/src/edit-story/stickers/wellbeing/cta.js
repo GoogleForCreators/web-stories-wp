@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,30 +17,39 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
-import Menu, { MenuProps } from './menu';
-import PopoverCard from './popoverCard';
-import PopoverStandard from './popoverStandard';
 
-const PopoverMenu = ({ className, ...props }) => (
-  <PopoverStandard isOpen={props.isOpen} className={className}>
-    <Menu {...props} />
-  </PopoverStandard>
+const Cta = ({ style }) => (
+  <svg
+    style={style}
+    viewBox="0 0 61 61"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      opacity=".2"
+      x=".496094"
+      y=".235352"
+      width="60"
+      height="59.9336"
+      rx="29.9668"
+      fill="#fff"
+    />
+    <rect
+      x="18.4971"
+      y="18.2168"
+      width="24"
+      height="23.9734"
+      rx="11.9867"
+      fill="#FDF5DC"
+    />
+  </svg>
 );
 
-PopoverMenu.propTypes = {
-  className: PropTypes.string,
-  ...MenuProps,
+Cta.propTypes = {
+  style: PropTypes.object,
 };
 
-export const PopoverMenuCard = (props) => (
-  <PopoverCard isOpen={props.isOpen}>
-    <Menu {...props} />
-  </PopoverCard>
-);
-
-PopoverMenuCard.propTypes = MenuProps;
-
-export default PopoverMenu;
+export default {
+  aspectRatio: 61 / 61,
+  svg: Cta,
+};

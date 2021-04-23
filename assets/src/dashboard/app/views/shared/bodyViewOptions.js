@@ -37,7 +37,7 @@ import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import TelemetryBanner from './telemetryBanner';
 
 const DisplayFormatContainer = styled.div`
-  height: ${({ theme }) => theme.DEPRECATED_THEME.formatContainer.height}px;
+  height: 76px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,35 +17,27 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { Z_INDEX } from '../../constants';
 
-const Popover = styled.div(
-  ({ isOpen }) => `
-    position: absolute;
-    display: none;
-    margin: 5px 0 0;
-    opacity: 0; 
-    background-color: transparent;
-    pointer-events: none;
-    ${
-      isOpen &&
-      `
-        display: block;
-        z-index: ${Z_INDEX.POPOVER_MENU};
-        opacity: 1;
-        pointer-events: auto;
-      `
-    }
-  `
+const WellbeingArrowDark = ({ style }) => (
+  <svg
+    style={style}
+    viewBox="0 0 205 13"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M.603516 6.49949L204.27 6.49947M199.464.875l4.806 5.8336-4.806 5.8336"
+      stroke="#1F2A2E"
+      strokeWidth="1.09867"
+    />
+  </svg>
 );
 
-Popover.propTypes = {
-  className: PropTypes.string,
-  isOpen: PropTypes.bool.isRequired,
+WellbeingArrowDark.propTypes = {
+  style: PropTypes.object,
 };
 
-export default Popover;
+export default {
+  aspectRatio: 205 / 13,
+  svg: WellbeingArrowDark,
+};
