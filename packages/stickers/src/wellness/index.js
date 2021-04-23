@@ -26,9 +26,8 @@ import { default as capsules } from './capsules';
 import { default as hotDish } from './hotDish';
 import { default as oven } from './oven';
 import { default as potatoes } from './potatoes';
-import { default as contour } from './contour';
 
-export default {
+export {
   scribbledUnderline,
   scribbledUnderline2,
   scribbledArrow,
@@ -39,5 +38,4 @@ export default {
   hotDish,
   oven,
   potatoes,
-  contour,
 };
