@@ -23,11 +23,23 @@ import { useContext } from 'react';
 import Context from './context';
 
 function usePrepublishChecklist() {
-  const { checklist, refreshChecklist, currentCheckpoint } = useContext(
-    Context
-  );
+  const {
+    checklist,
+    refreshChecklist,
+    currentCheckpoint,
+    focusChecklistTab,
+    isHighPriorityEmpty,
+    isFirstPublishAttempt,
+  } = useContext(Context);
 
-  return { checklist, refreshChecklist, currentCheckpoint };
+  return {
+    checklist,
+    focusChecklistTab,
+    refreshChecklist,
+    currentCheckpoint,
+    isHighPriorityEmpty,
+    isFirstPublishAttempt,
+  };
 }
 
 export default usePrepublishChecklist;

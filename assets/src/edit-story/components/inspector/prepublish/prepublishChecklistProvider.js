@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect, useReducer } from 'react';
+import { useCallback, useState, useEffect, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -48,6 +48,8 @@ function PrepublishChecklistProvider({ children }) {
   });
 
   const [currentList, setCurrentList] = useState([]);
+  const [isFirstPublishAttempt, setFirstPublishAttempt] = useState(false);
+  const [isHighPriorityEmpty, setIsHighPriorityEmpty] = useState(false);
 
   const handleRefreshList = useCallback(async () => {
     const pagesWithSize = story.pages.map((page) => ({
@@ -108,12 +110,33 @@ function PrepublishChecklistProvider({ children }) {
     }, [])
   );
 
+  const highPriorityLength = useMemo(
+    () =>
+      currentList.filter(
+        (current) => current.type === PRE_PUBLISH_MESSAGE_TYPES.ERROR
+      ).length,
+    [currentList]
+  );
+
+  useEffect(() => {
+    if (checkpointState === PPC_CHECKPOINT_STATE.ALL && !highPriorityLength) {
+      setIsHighPriorityEmpty(true);
+    }
+  }, [checkpointState, highPriorityLength]);
+
+  const focusChecklistTab = useCallback(() => {
+    setFirstPublishAttempt(true);
+  }, [setFirstPublishAttempt]);
+
   return (
     <Context.Provider
       value={{
         checklist: currentList,
         refreshChecklist: handleRefreshList,
         currentCheckpoint: checkpointState,
+        isFirstPublishAttempt,
+        focusChecklistTab,
+        isHighPriorityEmpty,
       }}
     >
       {children}

@@ -48,7 +48,12 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
+  const {
+    currentCheckpoint,
+    isFirstPublishAttempt,
+    refreshChecklist,
+  } = usePrepublishChecklist();
+
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
     500
@@ -70,6 +75,16 @@ function InspectorProvider({ children }) {
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
+  const firstPublishAttemptRef = useRef(false);
+
+  useEffect(() => {
+    if (isFirstPublishAttempt && !firstPublishAttemptRef.current) {
+      setTab(PREPUBLISH);
+      // Focus prepublish which is the last item in the panel title list
+      inspectorRef.current?.firstChild?.lastChild?.focus();
+      firstPublishAttemptRef.current = isFirstPublishAttempt;
+    }
+  }, [isFirstPublishAttempt]);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
