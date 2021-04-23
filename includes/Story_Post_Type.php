@@ -579,7 +579,8 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		$mime_types       = $this->get_allowed_mime_types();
 		$mime_image_types = $this->get_allowed_image_mime_types();
 
-		$page_template_obj = get_post_type_object( Page_Template_Post_Type::POST_TYPE_SLUG );
+		$page_template_obj       = get_post_type_object( Page_Template_Post_Type::POST_TYPE_SLUG );
+		$page_template_rest_base = Page_Template_Post_Type::POST_TYPE_SLUG;
 		if ( $page_template_obj instanceof WP_Post_Type ) {
 			$page_template_rest_base = ! empty( $page_template_obj->rest_base ) ? $page_template_obj->rest_base : $page_template_obj->name;
 		}
