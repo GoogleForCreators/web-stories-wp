@@ -84,14 +84,16 @@ function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
   });
 
   const handleKeyboardPageClick = useCallback(
-    ({ key }, page) => {
-      if (key === 'Enter') {
-        if (isGridFocused) {
+    ({ key, code }, page) => {
+      if (isGridFocused) {
+        if (key === 'Enter') {
           handlePageClick(page);
+        } else if (code === 'Space') {
+          handleDelete?.(page);
         }
       }
     },
-    [isGridFocused, handlePageClick]
+    [isGridFocused, handlePageClick, handleDelete]
   );
 
   return (

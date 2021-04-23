@@ -67,7 +67,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   }, [loadTemplates, pageTemplates]);
 
   const onClickDelete = useCallback(({ postId }, e) => {
-    e.stopPropagation();
+    e?.stopPropagation();
     if (postId) {
       setShowDialog(true);
       setTemplateToDelete(postId);
