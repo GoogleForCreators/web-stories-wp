@@ -24,12 +24,6 @@ import styled, { css } from 'styled-components';
  */
 import { DropDown } from '../../../../design-system';
 
-const menuStylesOverride = css`
-  top: -14px;
-  right: unset;
-  width: auto;
-`;
-
 const Container = styled.div`
   position: relative;
   width: 100%;
@@ -39,15 +33,23 @@ const StyledDropDown = styled(DropDown)`
   background-color: transparent;
   border: 0;
   width: auto;
-  button {
-    border: none;
-    width: auto;
-    margin-right: auto;
-    padding-left: 0;
-    > span:first-child {
-      margin-right: -12px;
-    }
-  }
+`;
+
+const menuStylesOverride = css`
+  top: -14px;
+  right: unset;
+  width: auto;
+`;
+
+const selectButtonStylesOverride = css`
+  border: none;
+  width: auto;
+  margin-right: auto;
+  padding-left: 0;
+`;
+
+const selectValueStylesOverride = css`
+  margin-right: -12px;
 `;
 
 function Select(props) {
@@ -57,6 +59,8 @@ function Select(props) {
         isInline
         hasSearch={false}
         menuStylesOverride={menuStylesOverride}
+        selectButtonStylesOverride={selectButtonStylesOverride}
+        selectValueStylesOverride={selectValueStylesOverride}
         {...props}
       />
     </Container>
