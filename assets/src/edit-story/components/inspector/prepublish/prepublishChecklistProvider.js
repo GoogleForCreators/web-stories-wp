@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useStory, useStoryTriggerListener, STORY_EVENTS } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
 import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
@@ -75,15 +75,18 @@ function PrepublishChecklistProvider({ children }) {
   // 1. Story is no longer empty (ON_DIRTY_STORY)
   // 2. Publish button is hit on a draft (ON_PUBLISH_CLICKED)
   // 3. Story has more than 4 pages
-  // 4. Story has more than 2 pages
   useEffect(() => {
-    if (story.pages.length > 1) {
-      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_2_PAGES);
-    }
     if (story.pages.length > 4) {
       dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES);
     }
   }, [story?.pages]);
+
+  useStoryTriggerListener(
+    STORY_EVENTS.onSecondPageAdded,
+    useCallback(() => {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_2_PAGES);
+    }, [])
+  );
 
   return (
     <Context.Provider
