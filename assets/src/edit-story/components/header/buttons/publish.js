@@ -27,8 +27,8 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
+import { usePrepublishChecklist } from '../../inspector/prepublish';
 import TitleMissingDialog from '../titleMissingDialog';
-import useHeader from '../use';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 const TRANSITION_DURATION = 300;
@@ -46,7 +46,9 @@ function Publish() {
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
-  const { titleInput } = useHeader();
+
+  const { isHighPriorityEmpty, focusChecklistTab } = usePrepublishChecklist();
+
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
 
@@ -75,21 +77,21 @@ function Publish() {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
-    if (!title) {
+    if (!isHighPriorityEmpty) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [title, publish]);
+  }, [isHighPriorityEmpty, publish]);
 
   const fixTitle = useCallback(() => {
     setShowDialog(false);
-    // Focus title input when dialog is closed
+    // Focus Checklist Tab
     // Disable reason: If component unmounts, nothing bad can happen
     // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => titleInput?.focus(), TRANSITION_DURATION);
-  }, [titleInput]);
+    setTimeout(() => focusChecklistTab(), TRANSITION_DURATION);
+  }, [focusChecklistTab]);
 
   const handleClose = useCallback(() => setShowDialog(false), []);
 
