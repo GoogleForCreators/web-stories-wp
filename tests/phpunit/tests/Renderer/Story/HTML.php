@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Story_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Story;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
@@ -25,7 +25,7 @@ use WP_Post;
 use WP_UnitTestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Story\HTML
  */
 class HTML extends WP_UnitTestCase {
 	use Private_Access;
@@ -124,7 +124,7 @@ class HTML extends WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 */
 	public function test_add_publisher_logo() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../../data/attachment.jpg', 0 );
 		add_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
 		$post = self::factory()->post->create_and_get(
@@ -136,7 +136,7 @@ class HTML extends WP_UnitTestCase {
 
 		$story = new Story();
 		$story->load_from_post( $post );
-		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer    = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 		$logo        = $renderer->get_publisher_logo();
 
@@ -166,7 +166,7 @@ class HTML extends WP_UnitTestCase {
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../../data/attachment.jpg', 0 );
 
 		$post = self::factory()->post->create_and_get(
 			[
@@ -189,7 +189,7 @@ class HTML extends WP_UnitTestCase {
 	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images_overrides_existing_poster() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../../data/attachment.jpg', 0 );
 
 		$post = self::factory()->post->create_and_get(
 			[
@@ -272,7 +272,7 @@ class HTML extends WP_UnitTestCase {
 		$link_https = set_url_scheme( $link, 'https' );
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link_https );
@@ -289,7 +289,7 @@ class HTML extends WP_UnitTestCase {
 		$link             = 'https://www.google.com';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
@@ -311,7 +311,7 @@ class HTML extends WP_UnitTestCase {
 		);
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
@@ -328,7 +328,7 @@ class HTML extends WP_UnitTestCase {
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
@@ -344,7 +344,7 @@ class HTML extends WP_UnitTestCase {
 		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-social-share layout="nodisplay"><script type="application/json">{"shareProviders":[{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-social-share></amp-story></body></html>';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
@@ -361,7 +361,7 @@ class HTML extends WP_UnitTestCase {
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
@@ -381,7 +381,7 @@ class HTML extends WP_UnitTestCase {
 	protected function setup_renderer( $post ) {
 		$story = new Story();
 		$story->load_from_post( $post );
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
 		return $renderer->render();
 	}
 }

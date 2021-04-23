@@ -40,7 +40,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
-	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
+	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block() {
 		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
@@ -63,7 +63,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
-	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
+	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block_missing_url() {
 		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
@@ -86,7 +86,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
-	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
+	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block_missing_title() {
 		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
@@ -109,7 +109,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
-	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
+	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_block_feed_no_poster() {
 		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
@@ -132,7 +132,7 @@ class Web_Stories_Block extends \WP_UnitTestCase {
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
-	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
+	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_block_with_poster() {
 		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();

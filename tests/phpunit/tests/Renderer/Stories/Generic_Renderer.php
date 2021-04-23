@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Stories_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Generic_Renderer
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Generic_Renderer
  */
 class Generic_Renderer extends \WP_UnitTestCase_Base {
 
@@ -88,7 +88,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
 		$this->assertTrue( wp_style_is( \Google\Web_Stories\Embed_Base::STORY_PLAYER_HANDLE ) );
@@ -116,7 +116,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
 		$output = $renderer->render();

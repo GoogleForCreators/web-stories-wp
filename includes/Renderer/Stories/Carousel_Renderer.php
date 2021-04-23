@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Stories_Renderer;
+namespace Google\Web_Stories\Renderer\Stories;
 
 /**
  * Carousel_Renderer class.

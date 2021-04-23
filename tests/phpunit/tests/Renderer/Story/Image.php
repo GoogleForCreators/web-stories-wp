@@ -1,11 +1,11 @@
 <?php
 
-namespace Google\Web_Stories\Tests\Story_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Story;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Renderer\Embed
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Image
  */
-class Embed extends \WP_UnitTestCase {
+class Image extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render
@@ -22,13 +22,13 @@ class Embed extends \WP_UnitTestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$embed  = new \Google\Web_Stories\Story_Renderer\Embed( $story );
+		$image  = new \Google\Web_Stories\Renderer\Story\Image( $story );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,
 			'width'  => 360,
 		];
-		$render = $embed->render( $args );
+		$render = $image->render( $args );
 		$this->assertContains( 'test title', $render );
 	}
 }

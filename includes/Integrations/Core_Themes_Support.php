@@ -28,7 +28,7 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Customizer;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Stories_Renderer\Renderer;
+use Google\Web_Stories\Renderer\Stories\Renderer;
 use Google\Web_Stories\Traits\Assets;
 use function Google\Web_Stories\render_theme_stories;
 

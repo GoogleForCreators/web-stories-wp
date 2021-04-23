@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Story_Renderer
+ * Class Story
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Story_Renderer;
+namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
@@ -35,7 +35,7 @@ use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
 
 /**
- * Class Story_Renderer
+ * Class Story
  */
 class HTML {
 	use Publisher;

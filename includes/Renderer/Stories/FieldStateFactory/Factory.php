@@ -24,19 +24,19 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Stories_Renderer\FieldStateFactory;
+namespace Google\Web_Stories\Renderer\Stories\FieldStateFactory;
 
 use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Interfaces\FieldStateFactory;
-use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
-use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
-use Google\Web_Stories\Stories_Renderer\FieldState\GridView;
-use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
+use Google\Web_Stories\Renderer\Stories\FieldState\CarouselView;
+use Google\Web_Stories\Renderer\Stories\FieldState\CircleView;
+use Google\Web_Stories\Renderer\Stories\FieldState\GridView;
+use Google\Web_Stories\Renderer\Stories\FieldState\ListView;
 
 /**
  * Class Factory
  *
- * @package Google\Web_Stories\Stories_Renderer\FieldStateFactory
+ * @package Google\Web_Stories\Stories\FieldStateFactory
  */
 class Factory implements FieldStateFactory {
 	/**

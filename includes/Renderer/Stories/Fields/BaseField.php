@@ -21,14 +21,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Stories_Renderer\Fields;
+namespace Google\Web_Stories\Renderer\Stories\Fields;
 
 use Google\Web_Stories\Interfaces\Field;
 
 /**
  * Class BaseField.
  *
- * @package Google\Web_Stories\Stories_Renderer\Fields
+ * @package Google\Web_Stories\Stories\Fields
  */
 class BaseField implements Field {
 	/**
