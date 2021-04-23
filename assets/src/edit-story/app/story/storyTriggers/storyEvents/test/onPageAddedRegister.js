@@ -104,6 +104,7 @@ describe('OnPageAddedRegister', () => {
       expect(dispatchMock).toHaveBeenCalledTimes(1);
       expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onSecondPageAdded);
 
+      // going from 1 to 2 pages again will not re-trigger the event
       rerender(
         <OnPageAddedRegister
           currentStory={onePageStoryMock}
@@ -117,6 +118,132 @@ describe('OnPageAddedRegister', () => {
         />
       );
       expect(dispatchMock).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe(`Story event: ${STORY_EVENTS.onFifthPageAdded}`, () => {
+    it('fires onFifthPageAdded if the story starts with more than 1 page', () => {
+      const dispatchMock = jest.fn();
+      const currentStoryMock = {
+        pages: [
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+        ],
+      };
+
+      render(
+        <OnPageAddedRegister
+          currentStory={currentStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+
+      // Should fire onFifthPageAdded event if story has more than 4 pages
+      expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onFifthPageAdded);
+    });
+
+    it('fires onFifthPageAdded once a story goes from 4 to 5 pages', () => {
+      const dispatchMock = jest.fn();
+      const fourPageStoryMock = {
+        pages: [
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+        ],
+      };
+      const fivePageStoryMock = {
+        pages: [
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+        ],
+      };
+
+      const { rerender } = render(
+        <OnPageAddedRegister
+          currentStory={fourPageStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+
+      // Should not fire when story is first created with less than 5 pages.
+      expect(dispatchMock).not.toHaveBeenCalledWith(
+        STORY_EVENTS.onFifthPageAdded
+      );
+
+      // Should fire onFifthPageAdded when story goes from 4 to 5 pages
+      rerender(
+        <OnPageAddedRegister
+          currentStory={fivePageStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+      expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onFifthPageAdded);
+    });
+
+    it('should not fire onFifthPageAdded more than once', () => {
+      const dispatchMock = jest.fn();
+      const fourPageStoryMock = {
+        pages: [
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+        ],
+      };
+      const fivePageStoryMock = {
+        pages: [
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+          { elements: [] },
+        ],
+      };
+
+      const { rerender } = render(
+        <OnPageAddedRegister
+          currentStory={fourPageStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+
+      // Should not fire when story is first created with less than 5 pages.
+      expect(dispatchMock).not.toHaveBeenCalledWith(
+        STORY_EVENTS.onFifthPageAdded
+      );
+
+      // Should fire onFifthPageAdded when story goes from 4 to 5 pages
+      rerender(
+        <OnPageAddedRegister
+          currentStory={fivePageStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+      expect(dispatchMock).toHaveBeenCalledWith(STORY_EVENTS.onFifthPageAdded);
+
+      dispatchMock.mockClear();
+
+      // going from 4 to 5 pages again will not re-trigger the event
+      rerender(
+        <OnPageAddedRegister
+          currentStory={fourPageStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+      rerender(
+        <OnPageAddedRegister
+          currentStory={fivePageStoryMock}
+          dispatchStoryEvent={dispatchMock}
+        />
+      );
+      expect(dispatchMock).not.toHaveBeenCalled();
     });
   });
 });

@@ -71,20 +71,17 @@ function PrepublishChecklistProvider({ children }) {
     PPC_CHECKPOINT_STATE.ALL
   );
 
-  // Check for different qualifications to be met to update current PPC checkpoint
-  // 1. Story is no longer empty (ON_DIRTY_STORY)
-  // 2. Publish button is hit on a draft (ON_PUBLISH_CLICKED)
-  // 3. Story has more than 4 pages
-  useEffect(() => {
-    if (story.pages.length > 4) {
-      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES);
-    }
-  }, [story?.pages]);
-
   useStoryTriggerListener(
     STORY_EVENTS.onSecondPageAdded,
     useCallback(() => {
       dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_2_PAGES);
+    }, [])
+  );
+
+  useStoryTriggerListener(
+    STORY_EVENTS.onFifthPageAdded,
+    useCallback(() => {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES);
     }, [])
   );
 

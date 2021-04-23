@@ -25,14 +25,32 @@ import { registerPropTypes } from './propTypes';
 import { STORY_EVENTS } from './types';
 
 function OnPageAddedRegister({ currentStory, dispatchStoryEvent }) {
-  const hasFiredOnceRef = useRef(false);
+  const hasFiredOnceRef = useRef({
+    [STORY_EVENTS.onSecondPageAdded]: false,
+    [STORY_EVENTS.onFifthPageAdded]: false,
+  });
 
   // Dispatch `onSecondPageAdded` story event once, the first time
   // the story grows to 2 or more pages.
   useEffect(() => {
-    if (!hasFiredOnceRef.current && currentStory?.pages?.length > 1) {
+    if (
+      !hasFiredOnceRef.current[STORY_EVENTS.onSecondPageAdded] &&
+      currentStory?.pages?.length >= 2
+    ) {
       dispatchStoryEvent(STORY_EVENTS.onSecondPageAdded);
-      hasFiredOnceRef.current = true;
+      hasFiredOnceRef.current[STORY_EVENTS.onSecondPageAdded] = true;
+    }
+  }, [dispatchStoryEvent, currentStory?.pages]);
+
+  // Dispatch `onFifthPageAdded` story event once, the first time
+  // the story grows to 5 or more pages.
+  useEffect(() => {
+    if (
+      !hasFiredOnceRef.current[STORY_EVENTS.onFifthPageAdded] &&
+      currentStory?.pages?.length >= 5
+    ) {
+      dispatchStoryEvent(STORY_EVENTS.onFifthPageAdded);
+      hasFiredOnceRef.current[STORY_EVENTS.onFifthPageAdded] = true;
     }
   }, [dispatchStoryEvent, currentStory?.pages]);
 

@@ -23,7 +23,8 @@ export const PPC_CHECKPOINT_STATE = {
 export const PPC_CHECKPOINT_ACTION = {
   ON_DIRTY_STORY: 'story is no longer empty',
   ON_PUBLISH_CLICKED: 'publish button is pressed',
-  ON_STORY_HAS_5_PAGES: 'story has minimal suggested amount of pages',
+  ON_STORY_HAS_2_PAGES: "story 'recommended' section enabled",
+  ON_STORY_HAS_5_PAGES: "story 'high priority' section enabled",
 };
 
 const machine = {
