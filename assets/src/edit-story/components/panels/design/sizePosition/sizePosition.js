@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useMemo } from 'react';
 import { __, _x } from '@web-stories-wp/i18n';
+import stickers from '@web-stories-wp/stickers';
 
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import { LockToggle, NumericInput, Icons } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
-import stickers from '../../../../stickers';
 import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';

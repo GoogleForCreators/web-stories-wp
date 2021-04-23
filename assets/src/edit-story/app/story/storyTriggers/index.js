@@ -13,19 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as fashionStickers from './fashion';
-import * as wellbeingStickers from './wellbeing';
-
-export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...fashionStickers,
-  ...wellbeingStickers,
-};
+export { useStoryTriggers, useStoryTriggerListener } from './useStoryTriggers';
+export { StoryTriggersProvider } from './storyTriggersProvider';
+export { STORY_EVENTS } from './storyEvents';
