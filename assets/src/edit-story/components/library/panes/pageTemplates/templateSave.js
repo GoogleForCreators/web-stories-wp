@@ -99,7 +99,7 @@ const StyledText = styled(Text)`
   margin-bottom: 8px;
 `;
 
-function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
+function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
   const {
     actions: { addPageTemplate },
   } = useAPI();
@@ -122,20 +122,23 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
       });
       return;
     }
-    addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(() => {
-      showSnackbar({
-        message: __('Page template saved.', 'web-stories'),
-        dismissable: true,
-      });
-      loadTemplates?.();
-    });
+    addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(
+      (addedTemplate) => {
+        updateList?.(addedTemplate);
+        // @todo Add error handling.
+        showSnackbar({
+          message: __('Page template saved.', 'web-stories'),
+          dismissable: true,
+        });
+      }
+    );
     setShowDefaultTemplates(false);
   }, [
     addPageTemplate,
     currentPage,
-    loadTemplates,
     setShowDefaultTemplates,
     showSnackbar,
+    updateList,
   ]);
 
   const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
@@ -169,7 +172,7 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
 TemplateSave.propTypes = {
   pageSize: PropTypes.object.isRequired,
   setShowDefaultTemplates: PropTypes.func.isRequired,
-  loadTemplates: PropTypes.func,
+  updateList: PropTypes.func,
 };
 
 export default TemplateSave;
