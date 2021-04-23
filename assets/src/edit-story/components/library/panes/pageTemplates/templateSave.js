@@ -120,18 +120,16 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, loadTemplates }) {
         ),
         dismissable: true,
       });
-    } else {
-      addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(
-        () => {
-          showSnackbar({
-            message: __('Page template saved.', 'web-stories'),
-            dismissable: true,
-          });
-          loadTemplates?.();
-        }
-      );
-      setShowDefaultTemplates(false);
+      return;
     }
+    addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(() => {
+      showSnackbar({
+        message: __('Page template saved.', 'web-stories'),
+        dismissable: true,
+      });
+      loadTemplates?.();
+    });
+    setShowDefaultTemplates(false);
   }, [
     addPageTemplate,
     currentPage,
