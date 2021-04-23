@@ -221,7 +221,7 @@ class Discovery extends Service_Base {
 		$metadata = $this->get_open_graph_metadata();
 
 		foreach ( $metadata as $name => $value ) {
-			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
+			printf( '<meta property="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) ); // phpcs:ignore WordPressVIPMinimum.Security.ProperEscapingFunction.notAttrEscAttr
 		}
 	}
 
@@ -295,7 +295,7 @@ class Discovery extends Service_Base {
 		$metadata = $this->get_twitter_metadata();
 
 		foreach ( $metadata as $name => $value ) {
-			printf( '<meta name="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) );
+			printf( '<meta name="%s" content="%s" />', esc_attr( $name ), esc_attr( $value ) ); // phpcs:ignore WordPressVIPMinimum.Security.ProperEscapingFunction.notAttrEscAttr
 		}
 	}
 
@@ -374,7 +374,7 @@ class Discovery extends Service_Base {
 		$title = sprintf( $post_type_title, get_bloginfo( 'name' ), $separator, $name );
 
 		printf(
-			'<link rel="alternate" type="%s" title="%s" href="%s">',
+			'<link rel="alternate" type="%s" title="%s" href="%s">', // phpcs:ignore WordPressVIPMinimum.Security.ProperEscapingFunction.notAttrEscAttr
 			esc_attr( feed_content_type() ),
 			esc_attr( $title ),
 			esc_url( $feed_url )
