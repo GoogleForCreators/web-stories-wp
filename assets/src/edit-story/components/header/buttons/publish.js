@@ -27,8 +27,10 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { usePrepublishChecklist } from '../../inspector/prepublish';
-import TitleMissingDialog from '../titleMissingDialog';
+import {
+  usePrepublishChecklist,
+  ReviewChecklistDialog,
+} from '../../inspector/prepublish';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 const TRANSITION_DURATION = 300;
@@ -85,7 +87,7 @@ function Publish() {
     publish();
   }, [isHighPriorityEmpty, publish]);
 
-  const fixTitle = useCallback(() => {
+  const handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
     // Focus Checklist Tab
     // Disable reason: If component unmounts, nothing bad can happen
@@ -106,10 +108,10 @@ function Publish() {
         disabled={!capabilities?.hasPublishAction || isSaving || isUploading}
         text={text}
       />
-      <TitleMissingDialog
+      <ReviewChecklistDialog
         open={Boolean(showDialog)}
         onIgnore={publish}
-        onFix={fixTitle}
+        onReview={handleReviewChecklist}
         onClose={handleClose}
       />
     </>
