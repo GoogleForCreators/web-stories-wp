@@ -17,9 +17,9 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -189,11 +189,19 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
   const recommendedLength =
     recommended.length + (pages.lengths?.recommended || 0);
 
-  const showHighPriorityItems = Boolean(highPriorityLength);
+  const showHighPriorityItems =
+    Boolean(highPriorityLength) ||
+    currentCheckpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE;
   const showRecommendedItems =
-    Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
+    Boolean(recommended.length) ||
+    Boolean(pages.lengths?.recommended) ||
+    currentCheckpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE;
 
-  if (!showHighPriorityItems && !showRecommendedItems) {
+  if (
+    !showHighPriorityItems &&
+    !showRecommendedItems &&
+    currentCheckpoint !== PPC_CHECKPOINT_STATE.UNAVAILABLE
+  ) {
     return <EmptyChecklist />;
   }
 
