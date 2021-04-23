@@ -412,7 +412,7 @@ function APIProvider({ children }) {
           status: 'publish',
         },
         method: 'POST',
-      });
+      }).then((response) => response['story_data']);
     },
     [customPageTemplates]
   );

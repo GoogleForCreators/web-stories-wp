@@ -53,6 +53,13 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     getCustomPageTemplates().then(setPageTemplates);
   }, [getCustomPageTemplates]);
 
+  const updateTemplatesList = useCallback(
+    (page) => {
+      setPageTemplates([page, ...pageTemplates]);
+    },
+    [setPageTemplates, pageTemplates]
+  );
+
   useEffect(() => {
     if (!pageTemplates) {
       loadTemplates();
@@ -81,7 +88,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
       <TemplateSave
         pageSize={pageSize}
         setShowDefaultTemplates={setShowDefaultTemplates}
-        loadTemplates={loadTemplates}
+        updateList={updateTemplatesList}
       />
       <Wrapper ref={ref}>
         {pageTemplates && (
