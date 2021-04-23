@@ -17,15 +17,14 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Tests\Capabilities_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
+use Google\Web_Stories\Tests\Test_REST_TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\REST_API\Status_Check_Controller
  */
-class Status_Check_Controller extends \WP_Test_REST_TestCase {
-	use Capabilities_Setup;
+class Status_Check_Controller extends Test_REST_TestCase {
 	/**
 	 * @var \WP_REST_Server
 	 */

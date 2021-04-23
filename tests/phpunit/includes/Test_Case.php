@@ -1,5 +1,14 @@
 <?php
 /**
+ * Test_Class class.
+ *
+ * @package   Google\Web_Stories
+ * @copyright 2020 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
+ */
+
+/**
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,33 +26,13 @@
 
 namespace Google\Web_Stories\Tests;
 
-/**
- * @coversDefaultClass \Google\Web_Stories\Locale
- */
-class Locale extends Test_Case {
-	/**
-	 * @covers ::get_locale_settings
-	 */
-	public function test_get_locale_settings() {
-		$actual = ( new \Google\Web_Stories\Locale() )->get_locale_settings();
+use Yoast\WPTestUtils\WPIntegration\TestCase;
 
-		$this->assertCount( 11, $actual );
-		$this->assertEqualSets(
-			[
-				'locale',
-				'dateFormat',
-				'timeFormat',
-				'gmtOffset',
-				'timezone',
-				'months',
-				'monthsShort',
-				'weekdays',
-				'weekdaysShort',
-				'weekdaysInitials',
-				'weekStartsOn',
-			],
-			array_keys( $actual )
-		);
-		$this->assertInternalType( 'int', $actual['weekStartsOn'] );
-	}
+/**
+ * Class Test_Case
+ *
+ * @package Google\Web_Stories\Tests
+ */
+abstract class Test_Case extends TestCase {
+	use Private_Access;
 }

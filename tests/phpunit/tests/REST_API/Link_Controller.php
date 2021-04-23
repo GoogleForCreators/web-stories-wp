@@ -2,14 +2,13 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Tests\Capabilities_Setup;
 use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
+use Google\Web_Stories\Tests\Test_REST_TestCase;
 
-class Link_Controller extends \WP_Test_REST_TestCase {
-	use Capabilities_Setup;
+class Link_Controller extends Test_REST_TestCase {
 	/**
 	 * @var WP_REST_Server
 	 */

@@ -21,13 +21,13 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 use WP_Post;
-use WP_UnitTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
-class HTML extends WP_UnitTestCase {
+class HTML extends Test_Case {
 	use Private_Access;
 
 	public function setUp() {

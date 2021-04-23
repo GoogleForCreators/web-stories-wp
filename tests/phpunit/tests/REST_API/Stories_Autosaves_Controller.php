@@ -17,14 +17,11 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Kses_Setup;
+use Google\Web_Stories\Tests\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
 
-class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
-	use Kses_Setup, Capabilities_Setup;
-
+class Stories_Autosaves_Controller extends Test_REST_TestCase {
 	protected $server;
 
 	protected static $author_id;

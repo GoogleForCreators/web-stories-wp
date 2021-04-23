@@ -34,7 +34,8 @@
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "wp-coding-standards/wpcs": "^2.2"
+    "wp-coding-standards/wpcs": "^2.2",
+    "yoast/wp-test-utils": "^0.2.1"
   },
   "config": {
     "discard-changes": true,

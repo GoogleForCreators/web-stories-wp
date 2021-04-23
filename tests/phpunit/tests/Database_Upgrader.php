@@ -24,7 +24,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
  *
  */
-class Database_Upgrader extends \WP_UnitTestCase {
+class Database_Upgrader extends Test_Case {
 
 	use Private_Access;
 

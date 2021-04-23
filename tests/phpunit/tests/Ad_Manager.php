@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Ad_Manager
  */
-class Ad_Manager extends \WP_UnitTestCase {
+class Ad_Manager extends Test_Case {
 	use Private_Access;
 
 	public function setUp() {
