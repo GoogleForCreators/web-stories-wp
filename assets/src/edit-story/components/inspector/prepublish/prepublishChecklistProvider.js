@@ -48,7 +48,7 @@ function PrepublishChecklistProvider({ children }) {
   });
 
   const [currentList, setCurrentList] = useState([]);
-  const [isFirstPublishAttempt, setFirstPublishAttempt] = useState(false);
+  const [isFirstPublishAttempt, setIsFirstPublishAttempt] = useState(false);
   const [isHighPriorityEmpty, setIsHighPriorityEmpty] = useState(false);
 
   const handleRefreshList = useCallback(async () => {
@@ -127,8 +127,8 @@ function PrepublishChecklistProvider({ children }) {
 
   const focusChecklistTab = useCallback(() => {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
-    setFirstPublishAttempt(true);
-  }, [setFirstPublishAttempt]);
+    setIsFirstPublishAttempt(true);
+  }, [setIsFirstPublishAttempt]);
 
   return (
     <Context.Provider
