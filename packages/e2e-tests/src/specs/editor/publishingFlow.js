@@ -111,7 +111,6 @@ describe('Publishing Flow', () => {
     expect(postPermalink).toStrictEqual(expect.any(String));
 
     await page.goto(postPermalink);
-    await page.waitForNavigation();
 
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
@@ -165,7 +164,6 @@ describe('Publishing Flow', () => {
       expect(postPermalink).toStrictEqual(expect.any(String));
 
       await page.goto(postPermalink);
-      await page.waitForNavigation();
 
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');

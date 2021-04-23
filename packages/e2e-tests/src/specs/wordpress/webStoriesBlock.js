@@ -133,7 +133,6 @@ describe('Web Stories Block', () => {
         : `${postPermalink}?amp`;
 
       await page.goto(ampPostPermaLink);
-      await page.waitForNavigation();
 
       await expect(page).toBeValidAMP();
 
