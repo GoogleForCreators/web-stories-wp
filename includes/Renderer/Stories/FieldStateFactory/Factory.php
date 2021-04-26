@@ -36,7 +36,7 @@ use Google\Web_Stories\Renderer\Stories\FieldState\ListView;
 /**
  * Class Factory
  *
- * @package Google\Web_Stories\Stories\FieldStateFactory
+ * @package Google\Web_Stories\Renderer\Stories\FieldStateFactory
  */
 class Factory implements FieldStateFactory {
 	/**

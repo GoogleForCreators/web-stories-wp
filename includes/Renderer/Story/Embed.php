@@ -2,7 +2,7 @@
 /**
  * Class Embed
  *
- * @package   Google\Web_Stories\Story
+ * @package   Google\Web_Stories\Renderer\Story
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
@@ -34,7 +34,7 @@ use Google\Web_Stories\Traits\Amp;
 /**
  * Class Embed
  *
- * @package Google\Web_Stories\Story
+ * @package Google\Web_Stories\Renderer\Story
  */
 class Embed {
 

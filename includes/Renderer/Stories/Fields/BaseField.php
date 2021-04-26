@@ -28,7 +28,7 @@ use Google\Web_Stories\Interfaces\Field;
 /**
  * Class BaseField.
  *
- * @package Google\Web_Stories\Stories\Fields
+ * @package Google\Web_Stories\Renderer\Stories\Fields
  */
 class BaseField implements Field {
 	/**
