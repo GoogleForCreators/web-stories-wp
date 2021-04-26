@@ -53,11 +53,11 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
     setHighlights,
   }));
 
-  const { isHighPriorityDisabled, isRecommendedDisabled } = useMemo(
+  const { isHighPriorityDisabledState, isRecommendedDisabledState } = useMemo(
     () => ({
-      isRecommendedDisabled:
+      isRecommendedDisabledState:
         DISABLED_RECOMMENDED_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
-      isHighPriorityDisabled:
+      isHighPriorityDisabledState:
         DISABLED_HIGH_PRIORITY_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
     }),
     [currentCheckpoint]
@@ -188,68 +188,62 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
     highPriority.length + (pages.lengths?.highPriority || 0);
   const recommendedLength =
     recommended.length + (pages.lengths?.recommended || 0);
+  const hasHighPriorityItems = Boolean(highPriorityLength);
+  const hasRecommendedItems =
+    Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
+  const isEmptyShown =
+    !hasHighPriorityItems &&
+    !hasRecommendedItems &&
+    !isHighPriorityDisabledState;
 
-  const showHighPriorityItems =
-    Boolean(highPriorityLength) ||
-    currentCheckpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE;
-  const showRecommendedItems =
-    Boolean(recommended.length) ||
-    Boolean(pages.lengths?.recommended) ||
-    currentCheckpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE;
+  const isRecommendedDisabled =
+    isRecommendedDisabledState || !hasRecommendedItems;
+  const isHighPriorityDisabled =
+    isHighPriorityDisabledState || !hasHighPriorityItems;
 
-  if (
-    !showHighPriorityItems &&
-    !showRecommendedItems &&
-    currentCheckpoint !== PPC_CHECKPOINT_STATE.UNAVAILABLE
-  ) {
-    return <EmptyChecklist />;
-  }
-
-  return (
+  return isEmptyShown ? (
+    <EmptyChecklist />
+  ) : (
     <>
-      {showHighPriorityItems && (
-        <SimplePanel
-          collapsedByDefault={isHighPriorityDisabled}
-          isToggleDisabled={isHighPriorityDisabled}
-          name="checklist"
-          hasBadge
-          title={
-            <>
-              <PanelTitle isDisabled={isHighPriorityDisabled}>
-                {TEXT.HIGH_PRIORITY_TITLE}
-              </PanelTitle>
-              {!isHighPriorityDisabled && (
-                <NumberBadge number={highPriorityLength} />
-              )}
-            </>
-          }
-          ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
-        >
-          {highPriority.map(renderRow)}
-          {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
-        </SimplePanel>
-      )}
-      {showRecommendedItems && (
-        <SimplePanel
-          isToggleDisabled={isRecommendedDisabled}
-          name="checklist"
-          hasBadge
-          title={
-            <>
-              <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
-                {TEXT.RECOMMENDED_TITLE}
-              </PanelTitle>
-              {!isRecommendedDisabled && (
-                <NumberBadge isRecommended number={recommendedLength} />
-              )}
-            </>
-          }
-          ariaLabel={TEXT.RECOMMENDED_TITLE}
-        >
-          {recommended.map(renderRow)}
-          {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
-        </SimplePanel>
-      )}
+      <SimplePanel
+        collapsedByDefault={isHighPriorityDisabled}
+        isToggleDisabled={isHighPriorityDisabled}
+        name="checklist"
+        hasBadge
+        title={
+          <>
+            <PanelTitle isDisabled={isHighPriorityDisabled}>
+              {TEXT.HIGH_PRIORITY_TITLE}
+            </PanelTitle>
+            {!isHighPriorityDisabled && (
+              <NumberBadge number={highPriorityLength} />
+            )}
+          </>
+        }
+        ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
+      >
+        {highPriority.map(renderRow)}
+        {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
+      </SimplePanel>
+      <SimplePanel
+        isToggleDisabled={isRecommendedDisabled}
+        name="checklist"
+        hasBadge
+        title={
+          <>
+            <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
+              {TEXT.RECOMMENDED_TITLE}
+            </PanelTitle>
+            {!isRecommendedDisabled && (
+              <NumberBadge isRecommended number={recommendedLength} />
+            )}
+          </>
+        }
+        ariaLabel={TEXT.RECOMMENDED_TITLE}
+      >
+        {recommended.map(renderRow)}
+        {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
+      </SimplePanel>
     </>
   );
 };
