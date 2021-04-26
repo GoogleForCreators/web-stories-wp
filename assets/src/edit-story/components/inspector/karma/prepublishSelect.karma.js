@@ -52,16 +52,22 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     await waitFor(() => fixture.editor.inspector.checklistPanel);
   }
 
-  async function openRecommendedPanel() {
-    await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.recommended
-    );
-    await fixture.events.sleep(500);
-  }
-
   async function clickOnCanvas() {
     const canvas = fixture.querySelector('[data-testid="fullbleed"]');
     await fixture.events.click(canvas);
+  }
+
+  async function enableRecommendedPanel() {
+    await fixture.events.click(addNewPageButton);
+    await fixture.events.sleep(500);
+  }
+
+  async function enableHighPriorityPanel() {
+    await fixture.events.click(addNewPageButton);
+    await fixture.events.click(addNewPageButton);
+    await fixture.events.click(addNewPageButton);
+    await fixture.events.click(addNewPageButton);
+    await fixture.events.sleep(500);
   }
 
   describe('Prepublish checklist tab', () => {
@@ -88,7 +94,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(recommendedPanel.disabled).toBeTrue();
       expect(highPriorityPanel.disabled).toBeTrue();
 
-      await fixture.events.click(addNewPageButton);
+      await enableRecommendedPanel();
 
       const recommendedIssue = fixture.screen.getByText(
         MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
@@ -111,12 +117,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(recommendedPanel.disabled).toBeTrue();
       expect(highPriorityPanel.disabled).toBeTrue();
 
-      // add 4 new pages
-      await fixture.events.click(addNewPageButton);
-      await fixture.events.click(addNewPageButton);
-      await fixture.events.click(addNewPageButton);
-      await fixture.events.click(addNewPageButton);
-
+      await enableHighPriorityPanel();
       const recommendedIssue = fixture.screen.getByText(
         MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
       );
@@ -132,6 +133,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should select the offending text elements', async () => {
+      await enableRecommendedPanel();
+
       // four paragraphs will cause the "too much text on page" error
       const doInsert = () =>
         insertElement('text', {
@@ -150,10 +153,11 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const element4 = await fixture.act(doInsert);
 
       await openPrepublishPanel();
-      await openRecommendedPanel();
+      await fixture.events.sleep(500);
 
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
+
       const tooMuchTextOnPage = fixture.screen.getByText(
         MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT
       );
@@ -167,6 +171,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should select the element when the font size is too small', async () => {
+      await enableRecommendedPanel();
+
       const insertSmallFont = () =>
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -191,7 +197,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const normalFontElement = await fixture.act(insertNormalFont);
 
       await openPrepublishPanel();
-      await openRecommendedPanel();
+      await fixture.events.sleep(500);
+
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -221,8 +228,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           height: 40,
         })
       );
+
       await openPrepublishPanel();
-      await openRecommendedPanel();
+      await enableRecommendedPanel();
       await clickOnCanvas();
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
@@ -241,6 +249,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should select the element with the keyboard', async () => {
+      await enableRecommendedPanel();
+
       const tooSmallLinkElement = await fixture.act(() =>
         insertElement('text', {
           id: 'elementid',
@@ -303,7 +313,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         });
       });
       await openPrepublishPanel();
-      await openRecommendedPanel();
+      await enableRecommendedPanel();
+
       const imageMissingAltTextRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
       );
@@ -320,6 +331,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should open the document inspector panel', async () => {
+      await enableHighPriorityPanel();
+
       await fixture.events.click(fixture.editor.library.media.item(0));
 
       let storyContext = await fixture.renderHook(() => useStory());
@@ -329,10 +342,11 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
 
+      await openPrepublishPanel();
+
       const noPosterImage = fixture.screen.getByText(
         MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
       );
-      await openPrepublishPanel();
       await fixture.events.click(noPosterImage);
       await waitFor(() => {
         expect(
