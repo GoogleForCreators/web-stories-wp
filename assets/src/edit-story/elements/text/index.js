@@ -20,7 +20,7 @@
 import PanelTypes from '../../components/panels/design/types';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import createSolid from '../../utils/createSolid';
 export { default as Display } from './display';
 export { default as Edit } from './edit';

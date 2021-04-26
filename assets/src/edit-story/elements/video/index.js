@@ -18,12 +18,12 @@
  * Internal dependencies
  */
 import PanelTypes from '../../components/panels/design/types';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import {
   MEDIA_DEFAULT_ATTRIBUTES,
   MEDIA_PANELS,
   resizeRules as mediaResizeRules,
-} from '../media';
+} from '../media/constants';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';

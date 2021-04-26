@@ -18,8 +18,8 @@
  * Internal dependencies
  */
 import PanelTypes from '../../components/panels/design/types';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media/constants';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
 export { default as Output } from './output';
@@ -33,8 +33,9 @@ export {
   isMedia,
   hasEditMode,
   editModeGrayout,
-  resizeRules,
 } from '../media';
+
+export { resizeRules } from '../media/constants';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,

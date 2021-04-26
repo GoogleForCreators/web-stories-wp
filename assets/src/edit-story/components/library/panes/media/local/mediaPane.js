@@ -52,7 +52,7 @@ import {
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
-import { Placement } from '../../../../popup';
+import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';

@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { parseToRgb } from 'polished';
-import { Input, useKeyDownEffect } from '../';
-import { InputPropTypes } from '../input';
+import { useKeyDownEffect } from '../keyboard';
+import { InputPropTypes, Input } from '../input';
 import getHexFromValue from './getHexFromValue';
 import getPreviewText from './getPreviewText';
 

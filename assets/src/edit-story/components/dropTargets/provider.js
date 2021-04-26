@@ -23,7 +23,7 @@ import { useState, useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useStory } from '../../app/story';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
 import { getDefinitionForType } from '../../elements';

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,33 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useHistory } from '../../history';
-
-function useHistoryReplay({ restore }) {
-  const {
-    state: { requestedState },
-  } = useHistory();
-  useEffect(() => {
-    if (!requestedState) {
-      return;
-    }
-    const { current, pages, selection, story } = requestedState;
-    restore({
-      pages,
-      current,
-      story,
-      selection,
-    });
-  }, [restore, requestedState]);
-}
-
-export default useHistoryReplay;
+export const SHARED_DEFAULT_ATTRIBUTES = {
+  opacity: 100,
+  flip: {
+    vertical: false,
+    horizontal: false,
+  },
+  rotationAngle: 0,
+  lockAspectRatio: true,
+};

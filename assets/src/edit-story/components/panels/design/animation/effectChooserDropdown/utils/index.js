@@ -14,32 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useHistory } from '../../history';
-
-function useHistoryReplay({ restore }) {
-  const {
-    state: { requestedState },
-  } = useHistory();
-  useEffect(() => {
-    if (!requestedState) {
-      return;
-    }
-    const { current, pages, selection, story } = requestedState;
-    restore({
-      pages,
-      current,
-      story,
-      selection,
-    });
-  }, [restore, requestedState]);
-}
-
-export default useHistoryReplay;
+export { default as generateDynamicProps } from './generateDynamicProps';
+export { default as getDisabledBackgroundEffects } from './getDisabledBackgroundEffects';
+export { default as hasDynamicProperty } from './hasDynamicProperty';
+export { default as updateDynamicProps } from './updateDynamicProps';

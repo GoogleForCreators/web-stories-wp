@@ -22,7 +22,7 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useHistory } from '../../';
+import { useHistory } from '../../history';
 
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection }) {

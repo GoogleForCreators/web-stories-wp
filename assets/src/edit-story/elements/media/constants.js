@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
 import PanelTypes from '../../components/panels/design/types';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
-import createSolidFromString from '../../utils/createSolidFromString';
-export { default as Display } from './display';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
 
-export const defaultAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: createSolidFromString('#ffffff'),
+export const MEDIA_DEFAULT_ATTRIBUTES = {
+  ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
+  resource: {
+    alt: '',
+  },
 };
 
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const canFlip = true;
-
-export const isMaskable = true;
+export const MEDIA_MASK_OPACITY = 0.4;
 
 export const resizeRules = {
   vertical: true,
@@ -46,14 +36,12 @@ export const resizeRules = {
   minHeight: 20,
 };
 
-export const panels = [
-  PanelTypes.COLOR_PRESETS,
-  PanelTypes.ELEMENT_ALIGNMENT,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.BORDER,
+export const MEDIA_PANELS = [
+  PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
-  PanelTypes.LINK,
-  PanelTypes.SHAPE_STYLE,
+  PanelTypes.SIZE_POSITION,
   PanelTypes.BORDER_RADIUS,
+  PanelTypes.BORDER,
   PanelTypes.ANIMATION,
+  PanelTypes.LINK,
 ];

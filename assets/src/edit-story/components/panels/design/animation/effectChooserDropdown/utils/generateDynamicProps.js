@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,31 +15,18 @@
  */
 
 /**
- * External dependencies
- */
-import { useEffect } from 'react';
-
-/**
  * Internal dependencies
  */
-import { useHistory } from '../../history';
+import hasDynamicProperty from './hasDynamicProperty';
+import updateDynamicProps from './updateDynamicProps';
 
-function useHistoryReplay({ restore }) {
-  const {
-    state: { requestedState },
-  } = useHistory();
-  useEffect(() => {
-    if (!requestedState) {
-      return;
-    }
-    const { current, pages, selection, story } = requestedState;
-    restore({
-      pages,
-      current,
-      story,
-      selection,
-    });
-  }, [restore, requestedState]);
-}
+const generateDynamicProps = ({ animation, disabledTypeOptionsMap }) => {
+  return hasDynamicProperty(animation)
+    ? updateDynamicProps({
+        animation,
+        disabledOptions: disabledTypeOptionsMap[animation.value]?.options,
+      })
+    : animation;
+};
 
-export default useHistoryReplay;
+export default generateDynamicProps;

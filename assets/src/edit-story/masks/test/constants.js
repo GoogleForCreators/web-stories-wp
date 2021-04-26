@@ -15,31 +15,14 @@
  */
 
 /**
- * External dependencies
- */
-import { useEffect } from 'react';
-
-/**
  * Internal dependencies
  */
-import { useHistory } from '../../history';
+import { MASKS } from '../constants';
 
-function useHistoryReplay({ restore }) {
-  const {
-    state: { requestedState },
-  } = useHistory();
-  useEffect(() => {
-    if (!requestedState) {
-      return;
-    }
-    const { current, pages, selection, story } = requestedState;
-    restore({
-      pages,
-      current,
-      story,
-      selection,
-    });
-  }, [restore, requestedState]);
-}
-
-export default useHistoryReplay;
+describe('Masks', () => {
+  it('every path should end with a closepath function', () => {
+    Object.values(MASKS).map((mask) =>
+      expect(mask.path.toUpperCase().endsWith('Z')).toStrictEqual(true)
+    );
+  });
+});

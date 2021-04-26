@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import PanelTypes from '../../components/panels/design/types';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 
 export { default as LayerContent } from './layer';
 export { default as Output } from './output';
