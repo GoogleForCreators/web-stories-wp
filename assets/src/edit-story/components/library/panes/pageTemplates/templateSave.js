@@ -122,16 +122,14 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
       });
       return;
     }
-    addPageTemplate({ ...currentPage, id: uuidv4() }).then(
-      (addedTemplate) => {
-        updateList?.(addedTemplate);
-        // @todo Add error handling.
-        showSnackbar({
-          message: __('Page template saved.', 'web-stories'),
-          dismissable: true,
-        });
-      }
-    );
+    addPageTemplate({ ...currentPage, id: uuidv4() }).then((addedTemplate) => {
+      updateList?.(addedTemplate);
+      // @todo Add error handling.
+      showSnackbar({
+        message: __('Page template saved.', 'web-stories'),
+        dismissable: true,
+      });
+    });
     setShowDefaultTemplates(false);
   }, [
     addPageTemplate,
