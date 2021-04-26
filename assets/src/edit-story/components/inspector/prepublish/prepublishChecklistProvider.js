@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -26,6 +26,11 @@ import { getPrepublishErrors } from '../../../app/prepublish';
 import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
 import Context from './context';
+import {
+  checkpointReducer,
+  PPC_CHECKPOINT_STATE,
+  PPC_CHECKPOINT_ACTION,
+} from './prepublishCheckpointState';
 
 function PrepublishChecklistProvider({ children }) {
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
@@ -61,9 +66,28 @@ function PrepublishChecklistProvider({ children }) {
     }
   }, [handleRefreshList, refreshOnInitialLoad, refreshOnPageSizeChange]);
 
+  const [checkpointState, dispatch] = useReducer(
+    checkpointReducer,
+    PPC_CHECKPOINT_STATE.ALL
+  );
+
+  // Check for different qualifications to be met to update current PPC checkpoint
+  // 1. Story is no longer empty (ON_DIRTY_STORY)
+  // 2. Publish button is hit on a draft (ON_PUBLISH_CLICKED)
+  // 3. Story has more than 4 pages
+  useEffect(() => {
+    if (story.pages.length > 4) {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES);
+    }
+  }, [story?.pages]);
+
   return (
     <Context.Provider
-      value={{ checklist: currentList, refreshChecklist: handleRefreshList }}
+      value={{
+        checklist: currentList,
+        refreshChecklist: handleRefreshList,
+        currentCheckpoint: checkpointState,
+      }}
     >
       {children}
     </Context.Provider>
