@@ -23,6 +23,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
+import { StoryTriggersProvider } from '../../../../../app/story/storyTriggers';
 import { renderWithTheme } from '../../../../../testUtils';
 import SlugPanel, { MIN_MAX } from '../slug';
 
@@ -43,9 +44,11 @@ function setupPanel() {
     actions: { updateStory },
   };
   const { getByRole } = renderWithTheme(
-    <StoryContext.Provider value={storyContextValue}>
-      <SlugPanel />
-    </StoryContext.Provider>
+    <StoryTriggersProvider>
+      <StoryContext.Provider value={storyContextValue}>
+        <SlugPanel />
+      </StoryContext.Provider>
+    </StoryTriggersProvider>
   );
   return {
     getByRole,

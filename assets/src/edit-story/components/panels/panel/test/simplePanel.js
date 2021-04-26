@@ -19,13 +19,16 @@
  */
 import SimplePanel from '../simplePanel';
 import { renderWithTheme } from '../../../../testUtils';
+import { StoryTriggersProvider } from '../../../../app/story/storyTriggers';
 
 describe('Panels/Panel/SimplePanel', () => {
   it('should render <SimplePanel />', () => {
     const { getByText } = renderWithTheme(
-      <SimplePanel name="simple-panel" title="Simple Panel">
-        <div>{'Simple Panel Content'}</div>
-      </SimplePanel>
+      <StoryTriggersProvider>
+        <SimplePanel name="simple-panel" title="Simple Panel">
+          <div>{'Simple Panel Content'}</div>
+        </SimplePanel>
+      </StoryTriggersProvider>
     );
 
     const titleElement = getByText('Simple Panel');
@@ -42,9 +45,11 @@ describe('Panels/Panel/SimplePanel', () => {
     let titleElement;
     beforeEach(() => {
       panelElement = renderWithTheme(
-        <SimplePanel name="simple-panel" title={titleName}>
-          <div>{contentText}</div>
-        </SimplePanel>
+        <StoryTriggersProvider>
+          <SimplePanel name="simple-panel" title={titleName}>
+            <div>{contentText}</div>
+          </SimplePanel>
+        </StoryTriggersProvider>
       );
       titleElement = panelElement.getByRole('button', { name: titleName });
     });

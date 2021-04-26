@@ -29,6 +29,7 @@ import StoryContext from '../../../../app/story/context';
 import { PAGE_RATIO, PAGE_WIDTH } from '../../../../constants';
 import { createPage } from '../../../../elements';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
+import { StoryTriggersProvider } from '../../../../app/story/storyTriggers';
 
 // Static context that providers need above PPC
 const layoutContext = {
@@ -81,11 +82,13 @@ function setup({ pageCount = 1 }) {
   };
 
   const wrapper = ({ children }) => (
-    <StoryContext.Provider value={storyContext}>
-      <LayoutProvider value={layoutContext}>
-        <PrepublishChecklistProvider>{children}</PrepublishChecklistProvider>
-      </LayoutProvider>
-    </StoryContext.Provider>
+    <StoryTriggersProvider>
+      <StoryContext.Provider value={storyContext}>
+        <LayoutProvider value={layoutContext}>
+          <PrepublishChecklistProvider>{children}</PrepublishChecklistProvider>
+        </LayoutProvider>
+      </StoryContext.Provider>
+    </StoryTriggersProvider>
   );
 
   return renderHook(() => usePrepublishChecklist(), { wrapper });
@@ -93,13 +96,15 @@ function setup({ pageCount = 1 }) {
 
 describe('prepublishChecklistProvider', () => {
   // TODO this should be set to UNAVAILABLE once blank story trigger is ready
-  it(`should begin a story at '${PPC_CHECKPOINT_STATE.ALL}'`, async () => {
+  it(`should begin a story at '${PPC_CHECKPOINT_STATE.UNAVAILABLE}'`, async () => {
     const { result } = setup({ pageCount: 1 });
 
     await act(async () => {
       await result.current.refreshChecklist();
     });
 
-    expect(result.current.currentCheckpoint).toBe(PPC_CHECKPOINT_STATE.ALL);
+    expect(result.current.currentCheckpoint).toBe(
+      PPC_CHECKPOINT_STATE.UNAVAILABLE
+    );
   });
 });

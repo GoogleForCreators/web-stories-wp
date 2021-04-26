@@ -24,6 +24,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
  */
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
+import { StoryTriggersProvider } from '../../../../../app/story/storyTriggers';
 import { renderWithTheme } from '../../../../../testUtils';
 import InspectorContext from '../../../../inspector/context';
 import PublishPanel from '../publish';
@@ -73,13 +74,15 @@ function setupPanel(
     getByLabelText,
     queryByLabelText,
   } = renderWithTheme(
-    <ConfigContext.Provider value={config}>
-      <StoryContext.Provider value={storyContextValue}>
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <PublishPanel />
-        </InspectorContext.Provider>
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
+    <StoryTriggersProvider>
+      <ConfigContext.Provider value={config}>
+        <StoryContext.Provider value={storyContextValue}>
+          <InspectorContext.Provider value={inspectorContextValue}>
+            <PublishPanel />
+          </InspectorContext.Provider>
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
+    </StoryTriggersProvider>
   );
   return {
     getByText,

@@ -26,6 +26,7 @@ import StoryContext from '../../../../../app/story/context';
 import ConfigContext from '../../../../../app/config/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import StatusPanel from '../status';
+import { StoryTriggersProvider } from '../../../../../app/story/storyTriggers';
 
 function setupPanel(
   capabilities = {
@@ -42,11 +43,13 @@ function setupPanel(
     actions: { updateStory },
   };
   const result = renderWithTheme(
-    <ConfigContext.Provider value={config}>
-      <StoryContext.Provider value={storyContextValue}>
-        <StatusPanel />
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
+    <StoryTriggersProvider>
+      <ConfigContext.Provider value={config}>
+        <StoryContext.Provider value={storyContextValue}>
+          <StatusPanel />
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
+    </StoryTriggersProvider>
   );
   return {
     ...result,
