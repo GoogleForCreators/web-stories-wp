@@ -78,11 +78,23 @@ function InspectorProvider({ children }) {
   const firstPublishAttemptRef = useRef(false);
 
   useEffect(() => {
+    // If a user wants to review their checklist before publishing
+    // a story that has high priority checklist items in it
+    // we need to go to the checklist tab and focus it.
+    // Because of how context is wrapped around the header
+    // we need to do this by watching the isChecklistReviewTriggered value
+    // from the prepublishChecklistProvider.
     if (isChecklistReviewTriggered && !firstPublishAttemptRef.current) {
       setTab(PREPUBLISH);
       // Focus prepublish which is the last item in the panel title list
       inspectorRef.current?.firstChild?.lastChild?.focus();
       firstPublishAttemptRef.current = isChecklistReviewTriggered;
+    }
+    // If a published story that gets reverted to a draft and
+    // it has high priority checklist items in it we should update
+    // this ref so that the checklist panel focuses again.
+    else if (!isChecklistReviewTriggered && firstPublishAttemptRef.current) {
+      firstPublishAttemptRef.current = false;
     }
   }, [isChecklistReviewTriggered]);
 
