@@ -45,7 +45,7 @@ trait Post_Type {
 	 *
 	 * @return string Rest base.
 	 */
-	public function get_post_type_rest_base( $slug ) {
+	protected function get_post_type_rest_base( $slug ) {
 		$post_type_obj = get_post_type_object( $slug );
 		$rest_base     = $slug;
 		if ( $post_type_obj instanceof WP_Post_Type ) {
@@ -65,19 +65,39 @@ trait Post_Type {
 	 *
 	 * @return bool
 	 */
-	public function get_post_type_cap( $slug, $cap ) {
-		$post_type_obj = get_post_type_object( $slug );
-		$capability    = false;
-
-		if ( ! $post_type_obj instanceof WP_Post_Type ) {
-			return $capability;
-		}
-
-		if ( property_exists( $post_type_obj->cap, $cap ) ) {
-			$capability = current_user_can( $post_type_obj->cap->$cap );
+	protected function get_post_type_cap( $slug, $cap ) {
+		$capability_name = $this->get_post_type_cap_name( $slug, $cap );
+		$capability      = false;
+		if ( $capability_name ) {
+			$capability = current_user_can( $capability_name );
 		}
 
 		return $capability;
+	}
+
+	/**
+	 * Get post type capability name on the post type slug and name.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string $slug The post type slug.
+	 * @param string $cap Capability name.
+	 *
+	 * @return string|false
+	 */
+	protected function get_post_type_cap_name( $slug, $cap ) {
+		$post_type_obj = get_post_type_object( $slug );
+		$capability_name    = false;
+
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return $capability_name;
+		}
+
+		if ( property_exists( $post_type_obj->cap, $cap ) ) {
+			$capability_name = $post_type_obj->cap->$cap;
+		}
+
+		return $capability_name;
 	}
 
 	/**
@@ -90,7 +110,7 @@ trait Post_Type {
 	 *
 	 * @return string
 	 */
-	public function get_post_type_label( $slug, $label ) {
+	protected function get_post_type_label( $slug, $label ) {
 		$post_type_obj = get_post_type_object( $slug );
 		$name          = '';
 
@@ -114,7 +134,7 @@ trait Post_Type {
 	 *
 	 * @return WP_REST_Posts_Controller|WP_REST_Controller
 	 */
-	public function get_post_type_parent_controller( $slug ) {
+	protected function get_post_type_parent_controller( $slug ) {
 		$post_type_obj     = get_post_type_object( $slug );
 		$parent_controller = null;
 

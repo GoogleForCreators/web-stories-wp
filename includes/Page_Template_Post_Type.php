@@ -50,8 +50,8 @@ class Page_Template_Post_Type extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$edit_posts   = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' );
-		$delete_posts = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'delete_posts' );
+		$edit_posts   = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' );
+		$delete_posts = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'delete_posts' );
 		$capabilities = [
 			'edit_post'              => $edit_posts,
 			'read_post'              => $edit_posts,
