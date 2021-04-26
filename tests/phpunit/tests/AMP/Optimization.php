@@ -98,7 +98,6 @@ class Optimization extends Test_Case {
 
 		$transformers = [
 			AmpBoilerplate::class,
-			AmpBoilerplateErrorHandler::class,
 			ReorderHead::class,
 		];
 
