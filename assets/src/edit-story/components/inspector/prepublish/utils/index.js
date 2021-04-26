@@ -14,9 +14,4 @@
  * limitations under the License.
  */
 
-export { default } from './prepublishInspector';
-export { default as ChecklistTab } from './checklistTab';
-export { default as PrepublishChecklistProvider } from './prepublishChecklistProvider';
-export { default as usePrepublishChecklist } from './usePrepublishChecklist';
-export { ChecklistIcon } from './utils';
-export { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
+export { default as ChecklistIcon } from './getChecklistIcon';

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { Icons } from '../../../../../design-system';
+import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
-export { default } from './prepublishInspector';
-export { default as ChecklistTab } from './checklistTab';
-export { default as PrepublishChecklistProvider } from './prepublishChecklistProvider';
-export { default as usePrepublishChecklist } from './usePrepublishChecklist';
-export { ChecklistIcon } from './utils';
-export { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
+const ChecklistIcon = ({ checkpoint, ...rest }) => {
+  if (checkpoint === PPC_CHECKPOINT_STATE.ALL) {
+    return <Icons.ExclamationOutline {...rest} />;
+  }
+  return null;
+};
+ChecklistIcon.propTypes = {
+  checkpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
+};
+
+export default ChecklistIcon;

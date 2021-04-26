@@ -33,6 +33,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
@@ -54,6 +55,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Types;
 	use Assets;
 	use Screen;
+	use Post_Type;
 
 	/**
 	 * The slug of the stories post type.
@@ -520,22 +522,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	}
 
 	/**
-	 * Get rest base based on the post type slug.
-	 *
-	 * @param string $slug The post type slug.
-	 *
-	 * @return string Rest base.
-	 */
-	public function get_post_type_rest_base( $slug ) {
-		$post_type_obj = get_post_type_object( $slug );
-		$rest_base     = $slug;
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_obj->rest_base ) ? $post_type_obj->rest_base : $post_type_obj->name;
-		}
-		return $rest_base;
-	}
-
-	/**
 	 * Get editor settings as an array.
 	 *
 	 * @since 1.0.0
@@ -548,19 +534,9 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = $this->get_post_type_rest_base( self::POST_TYPE_SLUG );
-		$has_publish_action       = false;
-		$has_assign_author_action = false;
+		$has_publish_action       = $this->get_post_type_cap( self::POST_TYPE_SLUG, 'publish_posts' );
+		$has_assign_author_action = $this->get_post_type_cap( self::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
-				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
-			}
-			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
-				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
-			}
-		}
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -669,18 +645,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	protected function setup_lock( $story_id ) {
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object instanceof WP_Post_Type ) {
-			return;
-		}
-
-		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
-			return;
-		}
-
-
-		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+		if ( ! $this->get_post_type_cap( self::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
 		// Make sure these functions are loaded.

@@ -111,13 +111,7 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   svg.alert {
     width: ${ALERT_ICON_SIZE}px;
     margin-left: 4px;
-
-    &.warning {
-      color: ${({ theme }) => theme.colors.fg.linkNormal};
-    }
-    &.error {
-      color: ${({ theme }) => theme.colors.fg.negative};
-    }
+    color: ${({ theme }) => theme.colors.fg.primary};
   }
 
   span,

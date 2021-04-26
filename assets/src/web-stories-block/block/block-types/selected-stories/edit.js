@@ -29,7 +29,6 @@ import { useState, useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import theme from '../../../../dashboard/theme';
 import {
   theme as externalDesignSystemTheme,
   lightMode,
@@ -61,7 +60,6 @@ const SelectedStoriesEdit = ({
     : __('View All Stories', 'web-stories');
 
   const activeTheme = {
-    DEPRECATED_THEME: theme,
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
