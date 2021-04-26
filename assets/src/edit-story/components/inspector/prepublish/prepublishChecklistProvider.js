@@ -48,7 +48,9 @@ function PrepublishChecklistProvider({ children }) {
   });
 
   const [currentList, setCurrentList] = useState([]);
-  const [isFirstPublishAttempt, setIsFirstPublishAttempt] = useState(false);
+  const [isChecklistReviewTriggered, setIsChecklistReviewTriggered] = useState(
+    false
+  );
   const [isHighPriorityEmpty, setIsHighPriorityEmpty] = useState(false);
 
   const handleRefreshList = useCallback(async () => {
@@ -118,7 +120,7 @@ function PrepublishChecklistProvider({ children }) {
     [currentList]
   );
 
-  // this will prevent the review dialog from getting triggered again, do we want that?
+  // this will prevent the review dialog from getting triggered again
   useEffect(() => {
     if (
       checkpointState === PPC_CHECKPOINT_STATE.ALL &&
@@ -130,8 +132,19 @@ function PrepublishChecklistProvider({ children }) {
 
   const focusChecklistTab = useCallback(() => {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
-    setIsFirstPublishAttempt(true);
-  }, [setIsFirstPublishAttempt]);
+    setIsChecklistReviewTriggered(true);
+  }, [setIsChecklistReviewTriggered]);
+
+  // Use this when a published story gets turned back to a draft.
+  const resetReviewDialogTrigger = useCallback(() => {
+    setIsChecklistReviewTriggered(false);
+  }, []);
+
+  // Review dialog should be seen when there are high priority items and first publish still hasn't happened.
+  const shouldReviewDialogBeSeen = useMemo(
+    () => !isHighPriorityEmpty && !isChecklistReviewTriggered,
+    [isChecklistReviewTriggered, isHighPriorityEmpty]
+  );
 
   return (
     <Context.Provider
@@ -139,9 +152,11 @@ function PrepublishChecklistProvider({ children }) {
         checklist: currentList,
         refreshChecklist: handleRefreshList,
         currentCheckpoint: checkpointState,
-        isFirstPublishAttempt,
+        isChecklistReviewTriggered,
         focusChecklistTab,
+        resetReviewDialogTrigger,
         isHighPriorityEmpty,
+        shouldReviewDialogBeSeen,
       }}
     >
       {children}

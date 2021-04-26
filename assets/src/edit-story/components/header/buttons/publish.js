@@ -49,7 +49,10 @@ function Publish() {
     isUploading: state.state.isUploading,
   }));
 
-  const { isHighPriorityEmpty, focusChecklistTab } = usePrepublishChecklist();
+  const {
+    shouldReviewDialogBeSeen,
+    focusChecklistTab,
+  } = usePrepublishChecklist();
 
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
@@ -79,13 +82,13 @@ function Publish() {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
-    if (!isHighPriorityEmpty) {
+    if (shouldReviewDialogBeSeen) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [isHighPriorityEmpty, publish]);
+  }, [shouldReviewDialogBeSeen, publish]);
 
   const handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
