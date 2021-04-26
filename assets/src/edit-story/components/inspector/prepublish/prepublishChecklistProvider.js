@@ -120,7 +120,10 @@ function PrepublishChecklistProvider({ children }) {
 
   // this will prevent the review dialog from getting triggered again, do we want that?
   useEffect(() => {
-    if (checkpointState === PPC_CHECKPOINT_STATE.ALL && !highPriorityLength) {
+    if (
+      checkpointState === PPC_CHECKPOINT_STATE.ALL &&
+      highPriorityLength === 0
+    ) {
       setIsHighPriorityEmpty(true);
     }
   }, [checkpointState, highPriorityLength]);
