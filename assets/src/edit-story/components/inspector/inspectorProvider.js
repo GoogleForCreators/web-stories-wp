@@ -50,7 +50,7 @@ function InspectorProvider({ children }) {
 
   const {
     currentCheckpoint,
-    isChecklistReviewTriggered,
+    isChecklistReviewRequested,
     refreshChecklist,
   } = usePrepublishChecklist();
 
@@ -82,21 +82,21 @@ function InspectorProvider({ children }) {
     // a story that has high priority checklist items in it
     // we need to go to the checklist tab and focus it.
     // Because of how context is wrapped around the header
-    // we need to do this by watching the isChecklistReviewTriggered value
+    // we need to do this by watching the isChecklistReviewRequested value
     // from the prepublishChecklistProvider.
-    if (isChecklistReviewTriggered && !firstPublishAttemptRef.current) {
+    if (isChecklistReviewRequested && !firstPublishAttemptRef.current) {
       setTab(PREPUBLISH);
       // Focus prepublish which is the last item in the panel title list
       inspectorRef.current?.firstChild?.lastChild?.focus();
-      firstPublishAttemptRef.current = isChecklistReviewTriggered;
+      firstPublishAttemptRef.current = isChecklistReviewRequested;
     }
     // If a published story that gets reverted to a draft and
     // it has high priority checklist items in it we should update
     // this ref so that the checklist panel focuses again.
-    else if (!isChecklistReviewTriggered && firstPublishAttemptRef.current) {
+    else if (!isChecklistReviewRequested && firstPublishAttemptRef.current) {
       firstPublishAttemptRef.current = false;
     }
-  }, [isChecklistReviewTriggered]);
+  }, [isChecklistReviewRequested]);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 

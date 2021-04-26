@@ -48,7 +48,7 @@ function PrepublishChecklistProvider({ children }) {
   });
 
   const [currentList, setCurrentList] = useState([]);
-  const [isChecklistReviewTriggered, setIsChecklistReviewTriggered] = useState(
+  const [isChecklistReviewRequested, setIsChecklistReviewRequested] = useState(
     false
   );
   const [isHighPriorityEmpty, setIsHighPriorityEmpty] = useState(false);
@@ -132,18 +132,18 @@ function PrepublishChecklistProvider({ children }) {
 
   const focusChecklistTab = useCallback(() => {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
-    setIsChecklistReviewTriggered(true);
-  }, [setIsChecklistReviewTriggered]);
+    setIsChecklistReviewRequested(true);
+  }, [setIsChecklistReviewRequested]);
 
   // Use this when a published story gets turned back to a draft.
   const resetReviewDialogTrigger = useCallback(() => {
-    setIsChecklistReviewTriggered(false);
+    setIsChecklistReviewRequested(false);
   }, []);
 
   // Review dialog should be seen when there are high priority items and first publish still hasn't happened.
   const shouldReviewDialogBeSeen = useMemo(
-    () => !isHighPriorityEmpty && !isChecklistReviewTriggered,
-    [isChecklistReviewTriggered, isHighPriorityEmpty]
+    () => !isHighPriorityEmpty && !isChecklistReviewRequested,
+    [isChecklistReviewRequested, isHighPriorityEmpty]
   );
 
   return (
@@ -152,7 +152,7 @@ function PrepublishChecklistProvider({ children }) {
         checklist: currentList,
         refreshChecklist: handleRefreshList,
         currentCheckpoint: checkpointState,
-        isChecklistReviewTriggered,
+        isChecklistReviewRequested,
         focusChecklistTab,
         resetReviewDialogTrigger,
         isHighPriorityEmpty,
