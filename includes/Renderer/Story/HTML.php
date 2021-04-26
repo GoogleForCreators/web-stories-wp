@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Story
+ * Class HTML
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -35,7 +35,7 @@ use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
 
 /**
- * Class Story
+ * Class HTML
  */
 class HTML {
 	use Publisher;
