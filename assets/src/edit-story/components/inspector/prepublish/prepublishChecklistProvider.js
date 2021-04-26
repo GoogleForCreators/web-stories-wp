@@ -68,7 +68,7 @@ function PrepublishChecklistProvider({ children }) {
 
   const [checkpointState, dispatch] = useReducer(
     checkpointReducer,
-    PPC_CHECKPOINT_STATE.ALL
+    PPC_CHECKPOINT_STATE.UNAVAILABLE
   );
 
   useStoryTriggerListener(
