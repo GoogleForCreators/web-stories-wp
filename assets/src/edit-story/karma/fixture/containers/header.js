@@ -20,27 +20,22 @@
 import { Container } from './container';
 
 /**
- * The prepublish checklist panel. Includes: checklist items and collapsible critical/recommended panels
+ * The titleBar or app header. Includes title input, save, draft and publish buttons
  */
-export class ChecklistPanel extends Container {
+export class Header extends Container {
   constructor(node, path) {
     super(node, path);
   }
-  get highPriority() {
-    return this.getByRole('button', { name: /High Priority/ });
+
+  get publish() {
+    return this.getByRole('button', { name: /^Publish$/ });
   }
 
-  get highPriority() {
-    return this.getByRole('button', { name: /High Priority/ });
+  get saveDraft() {
+    return this.getByRole('button', { name: /^Save draft$/ });
   }
 
-  get recommended() {
-    return this.getByRole('button', { name: /Recommended/ });
-  }
-
-  get autoVideoOptimizationToggle() {
-    return this.queryByRole('checkbox', {
-      name: /Enable automatic video optimization/,
-    });
+  get switchToDraft() {
+    return this.getByRole('button', { name: /^Switch to draft$/ });
   }
 }

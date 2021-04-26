@@ -23,7 +23,7 @@ import { GridView } from './gridView';
 import { Carousel } from './carousel';
 import { Library } from './library';
 import { Inspector } from './inspector';
-
+import { Header } from './header';
 /**
  * The complete editor container, including library, canvas, inspector, etc.
  */
@@ -41,8 +41,11 @@ export class Editor extends Container {
   }
 
   get titleBar() {
-    // @todo: title bar container.
-    return null;
+    return this._get(
+      this.getByRole('group', { name: /^Story canvas header$/ }),
+      'titleBar',
+      Header
+    );
   }
 
   get library() {
