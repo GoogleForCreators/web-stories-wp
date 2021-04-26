@@ -520,6 +520,22 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	}
 
 	/**
+	 * Get rest base based on the post type slug.
+	 *
+	 * @param string $slug The post type slug.
+	 *
+	 * @return string Rest base.
+	 */
+	public function get_post_type_rest_base( $slug ) {
+		$post_type_obj = get_post_type_object( $slug );
+		$rest_base     = $slug;
+		if ( $post_type_obj instanceof WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_obj->rest_base ) ? $post_type_obj->rest_base : $post_type_obj->name;
+		}
+		return $rest_base;
+	}
+
+	/**
 	 * Get editor settings as an array.
 	 *
 	 * @since 1.0.0
@@ -531,14 +547,13 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = self::POST_TYPE_SLUG;
+		$rest_base                = $this->get_post_type_rest_base( self::POST_TYPE_SLUG );
 		$has_publish_action       = false;
 		$has_assign_author_action = false;
 		$has_upload_media_action  = current_user_can( 'upload_files' );
 		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
 
 		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
 				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
 			}
@@ -579,11 +594,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		$mime_types       = $this->get_allowed_mime_types();
 		$mime_image_types = $this->get_allowed_image_mime_types();
 
-		$page_template_obj       = get_post_type_object( Page_Template_Post_Type::POST_TYPE_SLUG );
-		$page_template_rest_base = Page_Template_Post_Type::POST_TYPE_SLUG;
-		if ( $page_template_obj instanceof WP_Post_Type ) {
-			$page_template_rest_base = ! empty( $page_template_obj->rest_base ) ? $page_template_obj->rest_base : $page_template_obj->name;
-		}
+		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
 			'id'         => 'web-stories-editor',
@@ -611,7 +622,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'users'         => '/web-stories/v1/users/',
 					'currentUser'   => '/web-stories/v1/users/me/',
 					'stories'       => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_template_rest_base ),
+					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
 					'media'         => '/web-stories/v1/media/',
 					'link'          => '/web-stories/v1/link/',
 					'statusCheck'   => '/web-stories/v1/status-check/',
