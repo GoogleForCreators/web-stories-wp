@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Icons } from '../../../../design-system';
-import { useConfig } from '../../../app';
+import { STORY_EVENTS, useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
@@ -204,6 +204,7 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
           collapsedByDefault={isHighPriorityDisabled}
           isToggleDisabled={isHighPriorityDisabled}
           name="checklist"
+          expandOnTrigger={STORY_EVENTS.onFifthPageAdded}
           hasBadge
           title={
             <>
@@ -225,6 +226,7 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
         <SimplePanel
           isToggleDisabled={isRecommendedDisabled}
           name="checklist"
+          expandOnTrigger={STORY_EVENTS.onSecondPageAdded}
           hasBadge
           title={
             <>

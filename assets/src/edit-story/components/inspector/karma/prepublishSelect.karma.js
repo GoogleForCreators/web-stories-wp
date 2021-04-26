@@ -31,11 +31,15 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 describe('Pre-publish checklist select offending elements onClick', () => {
   let fixture;
   let insertElement;
+  let addNewPageButton;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
     insertElement = await fixture.renderHook(() => useInsertElement());
+    addNewPageButton = fixture.screen.getByRole('button', {
+      name: /Add New Page/,
+    });
   });
 
   afterEach(() => {
@@ -61,6 +65,72 @@ describe('Pre-publish checklist select offending elements onClick', () => {
   }
 
   describe('Prepublish checklist tab', () => {
+    it('should begin collapsed and disabled on a new story', async () => {
+      await openPrepublishPanel();
+
+      const recommendedPanel =
+        fixture.editor.inspector.checklistPanel.recommended;
+      const highPriorityPanel =
+        fixture.editor.inspector.checklistPanel.highPriority;
+
+      expect(recommendedPanel.disabled).toBeTrue();
+      expect(highPriorityPanel.disabled).toBeTrue();
+    });
+
+    it('should open the recommended panel once the story reaches two pages', async () => {
+      await openPrepublishPanel();
+
+      const recommendedPanel =
+        fixture.editor.inspector.checklistPanel.recommended;
+      const highPriorityPanel =
+        fixture.editor.inspector.checklistPanel.highPriority;
+
+      expect(recommendedPanel.disabled).toBeTrue();
+      expect(highPriorityPanel.disabled).toBeTrue();
+
+      await fixture.events.click(addNewPageButton);
+
+      const recommendedIssue = fixture.screen.getByText(
+        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
+      );
+
+      expect(recommendedIssue).not.toBeNull();
+
+      expect(recommendedPanel.disabled).toBeFalse();
+      expect(highPriorityPanel.disabled).toBeTrue();
+    });
+
+    it('should open the recommended panel once the story reaches five pages', async () => {
+      await openPrepublishPanel();
+
+      const recommendedPanel =
+        fixture.editor.inspector.checklistPanel.recommended;
+      const highPriorityPanel =
+        fixture.editor.inspector.checklistPanel.highPriority;
+
+      expect(recommendedPanel.disabled).toBeTrue();
+      expect(highPriorityPanel.disabled).toBeTrue();
+
+      // add 4 new pages
+      await fixture.events.click(addNewPageButton);
+      await fixture.events.click(addNewPageButton);
+      await fixture.events.click(addNewPageButton);
+      await fixture.events.click(addNewPageButton);
+
+      const recommendedIssue = fixture.screen.getByText(
+        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
+      );
+      const highPriorityIssue = fixture.screen.getByText(
+        MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
+      );
+
+      expect(recommendedIssue).not.toBeNull();
+      expect(highPriorityIssue).not.toBeNull();
+
+      expect(recommendedPanel.disabled).toBeFalse();
+      expect(highPriorityPanel.disabled).toBeFalse();
+    });
+
     it('should select the offending text elements', async () => {
       // four paragraphs will cause the "too much text on page" error
       const doInsert = () =>
