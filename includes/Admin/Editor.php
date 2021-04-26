@@ -32,13 +32,14 @@ use Google\Web_Stories\Locale;
 use Google\Web_Stories\Meta_Boxes;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
-use WP_Post_Type;
 
 /**
  * Class Editor
@@ -50,6 +51,7 @@ class Editor extends Service_Base {
 	use Types;
 	use Assets;
 	use Screen;
+	use Post_Type;
 
 	/**
 	 * Web Stories editor script handle.
@@ -219,28 +221,15 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
 	 * @return array
 	 */
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = Story_Post_Type::POST_TYPE_SLUG;
-		$has_publish_action       = false;
-		$has_assign_author_action = false;
+		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+		$has_publish_action       = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'publish_posts' );
+		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$post_type_object         = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
-				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
-			}
-			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
-				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
-			}
-		}
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -274,6 +263,7 @@ class Editor extends Service_Base {
 		$mime_types       = $this->get_allowed_mime_types();
 		$mime_image_types = $this->get_allowed_image_mime_types();
 
+		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
 			'id'         => 'web-stories-editor',
@@ -298,14 +288,15 @@ class Editor extends Service_Base {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'                   => [
-					'users'        => '/web-stories/v1/users/',
-					'currentUser'  => '/web-stories/v1/users/me/',
-					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'        => '/web-stories/v1/media/',
-					'link'         => '/web-stories/v1/link/',
-					'statusCheck'  => '/web-stories/v1/status-check/',
-					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
+					'users'         => '/web-stories/v1/users/',
+					'currentUser'   => '/web-stories/v1/users/me/',
+					'stories'       => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
+					'media'         => '/web-stories/v1/media/',
+					'link'          => '/web-stories/v1/link/',
+					'statusCheck'   => '/web-stories/v1/status-check/',
+					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
@@ -347,18 +338,7 @@ class Editor extends Service_Base {
 	 * @return void
 	 */
 	protected function setup_lock( $story_id ) {
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object instanceof WP_Post_Type ) {
-			return;
-		}
-
-		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
-			return;
-		}
-
-
-		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
 		// Make sure these functions are loaded.
@@ -373,5 +353,4 @@ class Editor extends Service_Base {
 			wp_set_post_lock( $story_id );
 		}
 	}
-
 }
