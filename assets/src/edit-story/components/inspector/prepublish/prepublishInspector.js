@@ -21,7 +21,7 @@ import { useCurrentUser } from '../../../app';
 import { usePrepublishChecklist, ChecklistTab } from '.';
 
 function PrepublishInspector() {
-  const { checklist } = usePrepublishChecklist();
+  const { checklist, currentCheckpoint } = usePrepublishChecklist();
 
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
     ({ state, actions }) => ({
@@ -36,6 +36,7 @@ function PrepublishInspector() {
       areVideosAutoOptimized={currentUser?.meta?.web_stories_media_optimization}
       onAutoVideoOptimizationClick={toggleWebStoriesMediaOptimization}
       checklist={checklist}
+      currentCheckpoint={currentCheckpoint}
     />
   );
 }

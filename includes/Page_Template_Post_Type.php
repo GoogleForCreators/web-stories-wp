@@ -27,11 +27,13 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Base_Controller;
+use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * Class Page_Template_Post_Type.
  */
 class Page_Template_Post_Type extends Service_Base {
+	use Post_Type;
 	/**
 	 * The slug of the page template post type.
 	 * Limited to web-story-page as web-story-page-template goes over character limit.
@@ -48,26 +50,25 @@ class Page_Template_Post_Type extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$capabilities     = [];
-		if ( $post_type_object ) {
-			$capabilities = [
-				'edit_post'              => $post_type_object->cap->edit_posts,
-				'read_post'              => $post_type_object->cap->edit_posts,
-				'delete_post'            => $post_type_object->cap->delete_posts,
-				'edit_posts'             => $post_type_object->cap->edit_posts,
-				'edit_others_posts'      => $post_type_object->cap->edit_posts,
-				'delete_posts'           => $post_type_object->cap->delete_posts,
-				'publish_posts'          => $post_type_object->cap->edit_posts,
-				'read_private_posts'     => $post_type_object->cap->edit_posts,
-				'delete_private_posts'   => $post_type_object->cap->delete_posts,
-				'delete_published_posts' => $post_type_object->cap->delete_posts,
-				'delete_others_posts'    => $post_type_object->cap->delete_posts,
-				'edit_private_posts'     => $post_type_object->cap->edit_posts,
-				'edit_published_posts'   => $post_type_object->cap->edit_posts,
-				'create_posts'           => $post_type_object->cap->edit_posts,
-			];
-		}
+		$edit_posts   = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' );
+		$delete_posts = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'delete_posts' );
+		$capabilities = [
+			'edit_post'              => $edit_posts,
+			'read_post'              => $edit_posts,
+			'delete_post'            => $delete_posts,
+			'edit_posts'             => $edit_posts,
+			'edit_others_posts'      => $edit_posts,
+			'delete_posts'           => $delete_posts,
+			'publish_posts'          => $edit_posts,
+			'read_private_posts'     => $edit_posts,
+			'delete_private_posts'   => $delete_posts,
+			'delete_published_posts' => $delete_posts,
+			'delete_others_posts'    => $delete_posts,
+			'edit_private_posts'     => $edit_posts,
+			'edit_published_posts'   => $edit_posts,
+			'create_posts'           => $edit_posts,
+		];
+
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[

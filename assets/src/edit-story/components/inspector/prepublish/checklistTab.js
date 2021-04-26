@@ -31,7 +31,11 @@ import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
 import AutoVideoOptimization from './autoVideoOptimization';
-import { TEXT } from './constants';
+import {
+  DISABLED_HIGH_PRIORITY_CHECKPOINTS,
+  DISABLED_RECOMMENDED_CHECKPOINTS,
+  TEXT,
+} from './constants';
 import EmptyChecklist from './emptyChecklist';
 import {
   GoToIssue,
@@ -43,10 +47,12 @@ import {
   PanelTitle,
   Row,
 } from './styles';
+import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
 
 const ChecklistTab = ({
   areVideosAutoOptimized,
   checklist,
+  currentCheckpoint,
   onAutoVideoOptimizationClick,
 }) => {
   const { isRTL } = useConfig();
@@ -57,6 +63,16 @@ const ChecklistTab = ({
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+
+  const { isHighPriorityDisabled, isRecommendedDisabled } = useMemo(
+    () => ({
+      isRecommendedDisabled:
+        DISABLED_RECOMMENDED_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
+      isHighPriorityDisabled:
+        DISABLED_HIGH_PRIORITY_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
+    }),
+    [currentCheckpoint]
+  );
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
@@ -196,13 +212,18 @@ const ChecklistTab = ({
     <>
       {showHighPriorityItems && (
         <SimplePanel
-          collapsedByDefault={false}
+          collapsedByDefault={isHighPriorityDisabled}
+          isToggleDisabled={isHighPriorityDisabled}
           name="checklist"
           hasBadge
           title={
             <>
-              <PanelTitle>{TEXT.HIGH_PRIORITY_TITLE}</PanelTitle>
-              <NumberBadge number={highPriorityLength} />
+              <PanelTitle isDisabled={isHighPriorityDisabled}>
+                {TEXT.HIGH_PRIORITY_TITLE}
+              </PanelTitle>
+              {!isHighPriorityDisabled && (
+                <NumberBadge number={highPriorityLength} />
+              )}
             </>
           }
           ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
@@ -213,12 +234,17 @@ const ChecklistTab = ({
       )}
       {showRecommendedItems && (
         <SimplePanel
+          isToggleDisabled={isRecommendedDisabled}
           name="checklist"
           hasBadge
           title={
             <>
-              <PanelTitle isRecommended>{TEXT.RECOMMENDED_TITLE}</PanelTitle>
-              <NumberBadge isRecommended number={recommendedLength} />
+              <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
+                {TEXT.RECOMMENDED_TITLE}
+              </PanelTitle>
+              {!isRecommendedDisabled && (
+                <NumberBadge isRecommended number={recommendedLength} />
+              )}
             </>
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
@@ -240,6 +266,7 @@ const ChecklistTab = ({
 ChecklistTab.propTypes = {
   areVideosAutoOptimized: PropTypes.bool,
   checklist: types.GuidanceChecklist,
+  currentCheckpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
   onAutoVideoOptimizationClick: PropTypes.func,
 };
 

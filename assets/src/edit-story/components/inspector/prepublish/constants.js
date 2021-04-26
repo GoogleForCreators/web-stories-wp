@@ -18,6 +18,11 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
+
 export const MAX_NUMBER_FOR_BADGE = 99;
 
 export const TEXT = {
@@ -28,3 +33,12 @@ export const TEXT = {
   EMPTY_TITLE: __('Awesome work!', 'web-stories'),
   EMPTY_BODY: __('No Issues Found', 'web-stories'),
 };
+
+export const DISABLED_HIGH_PRIORITY_CHECKPOINTS = [
+  PPC_CHECKPOINT_STATE.UNAVAILABLE,
+  PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
+];
+
+export const DISABLED_RECOMMENDED_CHECKPOINTS = [
+  PPC_CHECKPOINT_STATE.UNAVAILABLE,
+];
