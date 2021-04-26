@@ -26,8 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use WP_Post_Type;
-use WP_REST_Posts_Controller;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_REST_Controller;
 use WP_REST_Response;
 use WP_REST_Request;
@@ -40,6 +39,8 @@ use WP_Error;
  * @package Google\Web_Stories\REST_API
  */
 class Stories_Lock_Controller extends WP_REST_Controller {
+	use Post_Type;
+
 	/**
 	 * Parent post controller.
 	 *
@@ -61,18 +62,8 @@ class Stories_Lock_Controller extends WP_REST_Controller {
 	 */
 	public function __construct( $post_type ) {
 		$this->post_type   = $post_type;
-		$rest_base         = $post_type;
-		$post_type_object  = get_post_type_object( $post_type );
-		$parent_controller = null;
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$parent_controller = $post_type_object->get_rest_controller();
-			$rest_base         = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		}
-
-		if ( ! $parent_controller ) {
-			$parent_controller = new WP_REST_Posts_Controller( $post_type );
-		}
+		$rest_base         = $this->get_post_type_rest_base( $post_type );
+		$parent_controller = $this->get_post_type_parent_controller( $post_type );
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_base         = (string) $rest_base;

@@ -29,6 +29,7 @@ namespace Google\Web_Stories\REST_API;
 use DOMNodeList;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
 use WP_Post;
@@ -44,6 +45,7 @@ use WP_REST_Server;
  */
 class Embed_Controller extends WP_REST_Controller {
 	use Document_Parser;
+	use Post_Type;
 	/**
 	 * Constructor.
 	 */
@@ -333,7 +335,7 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_proxy_item_permissions_check() {
-		if ( ! current_user_can( 'edit_web-stories' ) ) {
+		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
