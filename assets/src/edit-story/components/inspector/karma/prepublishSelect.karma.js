@@ -46,7 +46,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     const { checklistTab } = fixture.editor.inspector;
     await fixture.events.click(checklistTab);
     await waitFor(() => fixture.editor.inspector.checklistPanel);
-    // just add a small wait for the checklist to compute it's items
+    // just add a small wait for the checklist to compute its items
     await fixture.events.sleep(500);
   }
 
