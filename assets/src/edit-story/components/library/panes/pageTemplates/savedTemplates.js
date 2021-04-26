@@ -76,10 +76,12 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   const handleDelete = useCallback(
     () =>
       deletePageTemplate(templateToDelete).then(() => {
-        loadTemplates();
+        setPageTemplates(
+          pageTemplates.filter(({ postId }) => postId !== templateToDelete)
+        );
         setShowDialog(false);
       }),
-    [deletePageTemplate, loadTemplates, templateToDelete]
+    [pageTemplates, deletePageTemplate, templateToDelete]
   );
 
   // @todo Saving template is currently misplaced.
