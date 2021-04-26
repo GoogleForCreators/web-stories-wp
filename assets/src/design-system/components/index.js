@@ -27,7 +27,7 @@ export { MediaInput } from './mediaInput';
 export { Modal } from './modal';
 export { NumericInput } from './input/numericInput';
 export * from './menu';
-export { Pill } from './pill';
+export * from './pill';
 export { Popup, PLACEMENT } from './popup';
 export * from './radio';
 export * from './search';

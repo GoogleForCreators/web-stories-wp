@@ -42,14 +42,18 @@ import { getAnimationEffectDefaults } from '../../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Note } from '../../shared';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
-import EffectChooserDropdown from './effectChooserDropdown';
+import { EffectChooserDropdown } from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
 
 const StyledRow = styled(Row)`
   margin-bottom: -1px;
+`;
+
+const Note = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
 const GroupWrapper = styled.div`
@@ -145,19 +149,19 @@ function AnimationPanel({
   // the all the focus updates go through prevents the reset from
   // overriding this play call.
   const activeElement = document.activeElement;
-  const [dedbouncedUpdateAnimationState] = useDebouncedCallback(() => {
+  const [debouncedUpdateAnimationState] = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
       });
       playUpdatedAnimation.current = false;
     }
-  }, 100);
-  useEffect(dedbouncedUpdateAnimationState, [
+  }, 300);
+  useEffect(debouncedUpdateAnimationState, [
     selectedElementAnimations,
     updateAnimationState,
     activeElement,
-    dedbouncedUpdateAnimationState,
+    debouncedUpdateAnimationState,
   ]);
 
   const handleRemoveEffect = useCallback(() => {
@@ -218,7 +222,12 @@ function AnimationPanel({
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
-        <Note>{__('Group animation support coming soon.', 'web-stories')}</Note>
+        <Note
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+        >
+          {__('Group animation support coming soon.', 'web-stories')}
+        </Note>
       </Row>
     </SimplePanel>
   ) : (
@@ -227,7 +236,6 @@ function AnimationPanel({
         <StyledRow>
           <EffectChooserDropdown
             onAnimationSelected={handleAddOrUpdateElementEffect}
-            selectedEffectTitle={selectedEffectTitle}
             onNoEffectSelected={handleRemoveEffect}
             isBackgroundEffects={isBackground}
             disabledTypeOptionsMap={disabledTypeOptionsMap}

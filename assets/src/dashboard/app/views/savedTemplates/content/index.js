@@ -51,7 +51,6 @@ import { SavedTemplateGridView, EmptyContentMessage } from '../../shared';
 
 function Content({
   allPagesFetched,
-  initialFocusId,
   isLoading,
   page,
   search,
@@ -132,7 +131,6 @@ function Content({
           pageSize={view.pageSize}
           templateMenu={templateMenu}
           templates={templates}
-          returnFocusId={initialFocusId}
         />
         <InfiniteScroller
           allDataLoadedAriaMessage={__(
@@ -164,7 +162,6 @@ function Content({
   }, [
     actions,
     allPagesFetched,
-    initialFocusId,
     isLoading,
     page.requestNextPage,
     search?.keyword,
@@ -197,7 +194,6 @@ Content.propTypes = {
   view: ViewPropTypes.isRequired,
   page: PagePropTypes.isRequired,
   templates: TemplatesPropType,
-  initialFocusId: PropTypes.number,
   isLoading: PropTypes.bool,
   allPagesFetched: PropTypes.bool,
   actions: TemplateActionsPropType,

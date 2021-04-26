@@ -41,7 +41,7 @@ const Color = styled.div`
     height: ${size}px;
     border-radius: 50%;
     background-color: ${color};
-    ${borderLookup(theme.DEPRECATED_THEME.colors.gray50)[color] || ''};
+    ${borderLookup(theme.colors.border.defaultNormal)[color] || ''};
 
     & + & {
       margin-left: ${spacing || 10}px;

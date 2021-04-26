@@ -31,9 +31,7 @@ import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/moveable/cropStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
-import dashboardTheme, {
-  GlobalStyle as DashboardGlobalStyle,
-} from '../assets/src/dashboard/theme';
+import { GlobalStyle as DashboardGlobalStyle } from '../assets/src/dashboard/theme';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
 import { ConfigProvider as DashboardConfigProvider } from '../assets/src/dashboard/app/config';
 import { ConfigProvider as EditorConfigProvider } from '../assets/src/edit-story/app/config';
@@ -98,7 +96,6 @@ addDecorator((story, context) => {
     return (
       <ThemeProvider
         theme={{
-          DEPRECATED_THEME: dashboardTheme,
           ...designSystemTheme,
           colors: lightMode,
         }}
@@ -125,7 +122,7 @@ addDecorator((story, context) => {
     const dsTheme = { ...designSystemTheme, colors: lightMode };
     return (
       <ThemeProvider theme={dsTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         {story()}
       </ThemeProvider>
     );

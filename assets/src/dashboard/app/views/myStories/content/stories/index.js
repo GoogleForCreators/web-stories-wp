@@ -76,7 +76,6 @@ const storyActions = {
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),
-  handlePreviewStory: action('handle preview story selected'),
 };
 
 const longerListOfStories = formattedStoriesArray

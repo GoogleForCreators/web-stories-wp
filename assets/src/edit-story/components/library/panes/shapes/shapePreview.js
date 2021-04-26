@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { createRef, useCallback, useMemo, useRef } from 'react';
+import { createRef, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -170,7 +170,7 @@ function ShapePreview({ mask, isPreview, index }) {
   // We use rovingTabIndex for navigating so only the first item will have 0 as tabIndex.
   // onClick on Aspect is for the keyboard only.
   return (
-    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1} onClick={onClick}>
+    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1}>
       <AspectInner>
         <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />

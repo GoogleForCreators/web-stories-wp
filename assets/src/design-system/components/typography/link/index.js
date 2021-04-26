@@ -41,9 +41,9 @@ export const Link = styled.a`
     :hover {
       color: ${theme.colors.fg.linkHover};
     }
-
     :focus {
-      color: ${theme.colors.fg.linkNormal};
+      /* Override WordPress's common css */
+      color: ${theme.colors.fg.linkNormal} !important;
     }
 
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}

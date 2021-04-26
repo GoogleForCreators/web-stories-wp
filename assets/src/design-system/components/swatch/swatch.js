@@ -72,7 +72,6 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
     height: 100%;
     border-radius: 50%;
     border: 1px solid ${({ theme }) => theme.colors.divider.primary};
-    box-sizing: border-box;
   }
 `;
 
@@ -94,7 +93,7 @@ const presetCSS = css`
 `;
 const SwatchItem = styled.div`
   ${presetCSS}
-  ${({ pattern }) => generatePatternStyles(pattern)}
+  ${({ $pattern }) => generatePatternStyles($pattern)}
   transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
 
   svg {
@@ -142,7 +141,7 @@ function Swatch({
     <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
-        pattern={pattern}
+        $pattern={pattern}
         disabled={isDisabled}
         displaySplit={displaySplit}
       >

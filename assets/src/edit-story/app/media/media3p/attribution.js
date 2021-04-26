@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import React from 'react';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
@@ -27,25 +26,32 @@ import { rgba } from 'polished';
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
 import { ReactComponent as CoverrLogoFull } from '../../../icons/coverr_logo.svg';
 import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo_white.svg';
+import {
+  Text as DefaultText,
+  THEME_CONSTANTS,
+} from '../../../../design-system';
 
 const AttributionPill = styled.div`
   position: absolute;
   left: 24px;
   bottom: 10px;
   border-radius: 100px;
-  padding: 5px 8px;
-  line-height: 16px;
+  padding: 2px 8px;
+  height: 24px;
   display: flex;
   flex-wrap: nowrap;
-  font-size: 12px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
-  background-color: ${({ theme }) =>
-    rgba(theme.DEPRECATED_THEME.colors.bg.black, 0.7)};
+  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.7)};
   cursor: pointer;
+  align-items: center;
+`;
+
+const Text = styled(DefaultText)`
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const logo = css`
-  fill: ${({ theme }) => theme.DEPRECATED_THEME.colors.fg.white};
+  color: ${({ theme }) => theme.colors.standard.white};
+  fill: ${({ theme }) => theme.colors.standard.white};
   margin-left: 6px;
   line-height: 14px;
 `;
@@ -78,7 +84,12 @@ export function UnsplashAttribution() {
   return (
     <a href={unsplashUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
-        {__('Powered by', 'web-stories')}
+        <Text
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+        >
+          {__('Powered by', 'web-stories')}
+        </Text>
         <UnsplashLogo />
       </AttributionPill>
     </a>
@@ -89,7 +100,12 @@ export function CoverrAttribution() {
   return (
     <a href={coverrUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
-        {__('Powered by', 'web-stories')}
+        <Text
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+        >
+          {__('Powered by', 'web-stories')}
+        </Text>
         <CoverrLogo />
       </AttributionPill>
     </a>

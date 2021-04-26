@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
+use Google\Web_Stories\Media;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
@@ -63,6 +64,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$schema  = $this->get_item_schema();
 
 		if ( wp_validate_boolean( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
 			$demo         = new Demo_Content();
@@ -84,6 +86,11 @@ class Stories_Controller extends Stories_Base_Controller {
 		if ( in_array( 'style_presets', $fields, true ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
+		}
+
+		if ( in_array( 'featured_media_url', $fields, true ) ) {
+			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
 		if ( in_array( 'preview_link', $fields, true ) ) {
@@ -203,6 +210,15 @@ class Stories_Controller extends Stories_Base_Controller {
 			'default'     => '',
 		];
 
+		$schema['properties']['featured_media_url'] = [
+			'description' => __( 'URL for the story\'s poster image (portrait)', 'web-stories' ),
+			'type'        => 'string',
+			'format'      => 'uri',
+			'context'     => [ 'view', 'edit', 'embed' ],
+			'readonly'    => true,
+			'default'     => '',
+		];
+
 		$schema['properties']['status']['enum'][] = 'auto-draft';
 
 		$this->schema = $schema;
@@ -223,7 +239,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function filter_posts_clauses( $clauses, $query ) {
 		global $wpdb;
 
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $query->get( 'post_type' ) ) {
+		if ( $this->post_type !== $query->get( 'post_type' ) ) {
 			return $clauses;
 		}
 		if ( 'story_author' !== $query->get( 'orderby' ) ) {
@@ -402,6 +418,44 @@ class Stories_Controller extends Stories_Base_Controller {
 			$response = rest_get_server()->envelope_response( $response, isset( $request['_embed'] ) ? $request['_embed'] : false );
 		}
 		return $response;
+	}
+
+	/**
+	 * Prepares links for the request.
+	 *
+	 * @param WP_Post $post Post object.
+	 *
+	 * @return array Links for the given post.
+	 */
+	protected function prepare_links( $post ) {
+		$links = parent::prepare_links( $post );
+
+		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
+		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
+
+		$links['https://api.w.org/lock'] = [
+			'href'       => $lock_url,
+			'embeddable' => true,
+		];
+
+		$lock = get_post_meta( $post->ID, '_edit_lock', true );
+
+		if ( $lock ) {
+			$lock                 = explode( ':', $lock );
+			list ( $time, $user ) = $lock;
+
+			/** This filter is documented in wp-admin/includes/ajax-actions.php */
+			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
+
+			if ( $time && $time > time() - $time_window ) {
+				$links['https://api.w.org/lockuser'] = [
+					'href'       => rest_url( sprintf( '%s/%s', $this->namespace, 'users/' ) . $user ),
+					'embeddable' => true,
+				];
+			}
+		}
+
+		return $links;
 	}
 
 	/**

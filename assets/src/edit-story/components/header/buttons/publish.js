@@ -25,12 +25,13 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import TitleMissingDialog from '../titleMissingDialog';
 import useHeader from '../use';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
+
+const TRANSITION_DURATION = 300;
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(

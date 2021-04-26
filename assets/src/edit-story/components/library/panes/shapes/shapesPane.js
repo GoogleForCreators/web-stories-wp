@@ -20,13 +20,13 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useRef } from 'react';
+import STICKERS from '@web-stories-wp/stickers';
 
 /**
  * Internal dependencies
  */
 import { useFeatures } from 'flagged';
 import { MASKS } from '../../../../masks';
-import STICKERS from '../../../../stickers';
 import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
@@ -59,7 +59,7 @@ function ShapesPane(props) {
   const ref = useRef();
   useRovingTabIndex({ ref });
   return (
-    <Pane id={paneId} {...props}>
+    <Pane id={paneId} {...props} isOverflowScrollable={enableStickers}>
       {showTextAndShapesSearchInput && (
         <SearchInput
           initialValue={''}

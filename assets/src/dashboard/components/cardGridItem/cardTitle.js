@@ -83,7 +83,7 @@ const DateHelperText = styled(Text).attrs(() => ({
 `;
 // TODO: Fix dirty workaround.
 const ListIcon = styled(LockSVG)`
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  color: ${({ theme }) => theme.colors.fg.primary};
   display: inline-block;
   height: 36px;
   width: 36px;

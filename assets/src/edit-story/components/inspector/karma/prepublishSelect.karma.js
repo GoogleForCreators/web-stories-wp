@@ -61,30 +61,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
   }
 
   describe('Prepublish checklist tab', () => {
-    it('should select the offending image elements', async () => {
-      await fixture.events.click(fixture.editor.library.media.item(0));
-
-      let storyContext = await fixture.renderHook(() => useStory());
-      const [elementId] = storyContext.state.selectedElementIds;
-
-      await clickOnCanvas();
-      storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
-      await openPrepublishPanel();
-      await openRecommendedPanel();
-
-      const tooSmallOnPage = fixture.screen.getByText(
-        MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.MAIN_TEXT
-      );
-
-      await openPrepublishPanel();
-      await fixture.events.click(tooSmallOnPage);
-      await fixture.events.sleep(500);
-      storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElementIds.length).toEqual(1);
-      expect(storyContext.state.selectedElementIds[0]).toEqual(elementId);
-    });
-
     it('should select the offending text elements', async () => {
       // four paragraphs will cause the "too much text on page" error
       const doInsert = () =>
@@ -228,9 +204,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
 
-      const linkTooSmallRow = fixture.screen
-        .getByText(MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT)
-        .closest('button');
+      const linkTooSmallRow = fixture.screen.getByText(
+        MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
+      );
 
       expect(document.activeElement).toEqual(linkTooSmallRow);
       await fixture.events.keyboard.press('Enter');

@@ -20,14 +20,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
 import { Input } from '../../../design-system';
-
-const Label = styled.label(visuallyHiddenStyles);
 
 const StyledInput = styled(Input)`
   div {
@@ -64,7 +62,7 @@ const InlineInputForm = ({
 
   useEffect(() => {
     if (!noAutoFocus && inputContainerRef.current) {
-      inputContainerRef.current.firstChild?.focus();
+      inputContainerRef.current.querySelector('input')?.focus();
     }
   }, [noAutoFocus]);
 
@@ -87,8 +85,8 @@ const InlineInputForm = ({
   );
   return (
     <div ref={inputContainerRef}>
-      <Label htmlFor={`${id}`}>{label}</Label>
       <StyledInput
+        aria-label={label}
         id={`${id}`}
         data-testid="inline-input-form"
         value={newValue}

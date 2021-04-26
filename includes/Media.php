@@ -26,15 +26,16 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Screen;
 use WP_Post;
 use WP_Query;
 use WP_REST_Request;
-use WP_Screen;
 
 /**
  * Class Media
  */
-class Media {
+class Media extends Service_Base {
+	use Screen;
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -120,6 +121,13 @@ class Media {
 	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
+	 * The optimized video id post meta key.
+	 *
+	 * @var string
+	 */
+	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
+
+	/**
 	 * Key for media post type.
 	 *
 	 * @var string
@@ -133,7 +141,7 @@ class Media {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		register_taxonomy(
 			self::STORY_MEDIA_TAXONOMY,
 			'attachment',
@@ -153,6 +161,20 @@ class Media {
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::OPTIMIZED_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Attachment id of optimized video id.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
@@ -211,24 +233,24 @@ class Media {
 		// Hide video posters from Media grid view.
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
 		// Hide video posters from Media list view.
-		add_filter( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
+		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
-		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_poster_attachments' ], 10, 2 );
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
 	}
 
 	/**
-	 * Returns the tax query needed to exclude generated video poster images.
+	 * Returns the tax query needed to exclude generated video poster images and source videos.
 	 *
 	 * @param array $args Existing WP_Query args.
 	 *
 	 * @return array  Tax query arg.
 	 */
-	private function get_poster_tax_query( array $args ) {
+	private function get_exclude_tax_query( array $args ) {
 		$tax_query = [
 			[
 				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation' ],
+				'terms'    => [ 'poster-generation', 'source-video' ],
 				'operator' => 'NOT IN',
 			],
 		];
@@ -263,13 +285,13 @@ class Media {
 	 * @return array Filtered query args.
 	 */
 	public function filter_ajax_query_attachments_args( array $args ) {
-		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
 	}
 
 	/**
-	 * Filters the current query to hide generated video poster images.
+	 * Filters the current query to hide generated video poster images and source video.
 	 *
 	 * Reduces unnecessary noise in the Media list view.
 	 *
@@ -279,17 +301,17 @@ class Media {
 	 *
 	 * @return void
 	 */
-	public function filter_poster_attachments( &$query ) {
-		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+	public function filter_generated_media_attachments( &$query ) {
+		$current_screen = $this->get_current_screen();
 
-		if ( ! $current_screen instanceof WP_Screen ) {
+		if ( ! $current_screen ) {
 			return;
 		}
 
 		if ( is_admin() && $query->is_main_query() && 'upload' === $current_screen->id ) {
 			$tax_query = $query->get( 'tax_query' );
 
-			$query->set( 'tax_query', $this->get_poster_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+			$query->set( 'tax_query', $this->get_exclude_tax_query( [ 'tax_query' => $tax_query ] ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		}
 	}
 
@@ -305,12 +327,12 @@ class Media {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_rest_poster_attachments( array $args, WP_REST_Request $request ) {
+	public function filter_rest_generated_media_attachments( array $args, WP_REST_Request $request ) {
 		if ( '/web-stories/v1/media' !== $request->get_route() ) {
 			return $args;
 		}
 
-		$args['tax_query'] = $this->get_poster_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
 	}
@@ -345,7 +367,12 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor', 'poster-generation', 'video-optimization' ],
+					'enum'        => [
+						'editor',
+						'poster-generation',
+						'video-optimization',
+						'source-video',
+					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -461,6 +488,8 @@ class Media {
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 		}
+
+		$response['media_source'] = $this->get_callback_media_source( $response );
 
 		return $response;
 	}

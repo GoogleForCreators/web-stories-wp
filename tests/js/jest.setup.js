@@ -23,6 +23,11 @@
 import 'jest-extended';
 import '@testing-library/jest-dom';
 import 'jest-axe/extend-expect';
+
+// Improve snapshot testing for styled components.
+// Also provides a `toHaveStyleRule()` matcher.
+import 'jest-styled-components';
+
 import {
   toBeValidAMP,
   toBeValidAMPStoryElement,

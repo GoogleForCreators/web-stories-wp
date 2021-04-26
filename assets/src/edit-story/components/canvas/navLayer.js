@@ -24,7 +24,6 @@ import { memo } from 'react';
  */
 import Header from '../header';
 import Carousel from '../carousel';
-import { HelpCenter } from '../helpCenter';
 import { Layer, HeadArea, CarouselArea, Z_INDEX } from './layout';
 
 function NavLayer() {
@@ -38,7 +37,6 @@ function NavLayer() {
         <Header />
       </HeadArea>
       <CarouselArea pointerEvents="initial">
-        <HelpCenter />
         <Carousel />
       </CarouselArea>
     </Layer>

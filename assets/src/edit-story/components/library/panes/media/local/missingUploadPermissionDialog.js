@@ -23,22 +23,23 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Plain } from '../../../../button';
+import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import Dialog from '../../../../dialog';
-
 function MissingUploadPermissionDialog({ open, onClose }) {
   return (
     <Dialog
       open={open}
       onClose={onClose}
       title={__('Access Restrictions', 'web-stories')}
-      actions={<Plain onClick={onClose}>{__('Got it', 'web-stories')}</Plain>}
-      maxWidth={285}
+      primaryText={__('Got it', 'web-stories')}
+      onPrimary={onClose}
     >
-      {__(
-        `You don't have access to upload images or publish a story. Please check with your administrator to request upload and publish access.`,
-        'web-stories'
-      )}
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {__(
+          `You don't have access to upload images or publish a story. Please check with your administrator to request upload and publish access.`,
+          'web-stories'
+        )}
+      </Text>
     </Dialog>
   );
 }

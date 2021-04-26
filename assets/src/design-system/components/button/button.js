@@ -37,7 +37,6 @@ const Base = styled.button(
     display: flex;
     align-items: center;
     justify-content: space-around;
-    box-sizing: border-box;
     padding: 0;
     margin: 0;
     background: transparent;
@@ -81,34 +80,27 @@ const Base = styled.button(
   `
 );
 
-const primaryColors = ({ as, theme }) => css`
+const primaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.brandNormal};
   color: ${theme.colors.interactiveFg.brandNormal};
   &:active {
     background-color: ${theme.colors.interactiveBg.active};
     color: ${theme.colors.interactiveFg.active};
   }
-  /* additional specifications for anchors are necessary for wordpress to override common css */
-  ${as === 'a' &&
-  css`
-    &:hover,
-    &:focus {
-      color: ${theme.colors.interactiveFg.brandHover};
-    }
-  `}
 
-  &:hover:enabled,
-  &:focus:enabled {
+  &:hover,
+  &:focus {
     background-color: ${theme.colors.interactiveBg.brandHover};
-    color: ${theme.colors.interactiveFg.brandHover};
+    /* important is necessary for wordpress to override common css for anchors*/
+    color: ${theme.colors.interactiveFg.brandHover} !important;
   }
 `;
 
 const secondaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.secondaryNormal};
 
-  &:hover:enabled,
-  &:focus:enabled {
+  &:hover,
+  &:focus {
     background-color: ${theme.colors.interactiveBg.secondaryHover};
   }
 `;
@@ -116,13 +108,17 @@ const secondaryColors = ({ theme }) => css`
 const tertiaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.tertiaryNormal};
 
-  &:disabled {
-    background-color: ${theme.colors.interactiveBg.tertiaryNormal};
+  &:hover,
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.tertiaryHover};
   }
 
-  &:hover:enabled,
-  &:focus:enabled {
-    background-color: ${theme.colors.interactiveBg.tertiaryHover};
+  &:disabled {
+    background-color: ${theme.colors.interactiveBg.tertiaryNormal};
+    &:hover,
+    &:focus {
+      background-color: ${theme.colors.interactiveBg.tertiaryNormal};
+    }
   }
 `;
 
@@ -202,11 +198,32 @@ const ButtonIcon = styled(Base)`
   }
 `;
 
+const ButtonLink = styled(Base)`
+  ${({ theme, size }) => css`
+    ${themeHelpers.expandPresetStyles({
+      preset: theme.typography.presets.link[size],
+      theme,
+    })};
+
+    color: ${theme.colors.fg.linkNormal};
+    border-radius: 0;
+
+    :hover {
+      color: ${theme.colors.fg.linkHover};
+    }
+    &:active,
+    &:disabled {
+      background-color: ${theme.colors.opacity.footprint};
+    }
+  `}
+`;
+
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
   [BUTTON_VARIANTS.SQUARE]: ButtonSquare,
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
+  [BUTTON_VARIANTS.LINK]: ButtonLink,
 };
 
 const Button = forwardRef(function Button(

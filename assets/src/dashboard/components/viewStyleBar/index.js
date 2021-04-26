@@ -19,17 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { Icons, Tooltip, TOOLTIP_PLACEMENT } from '../../../design-system';
-import {
-  KEYBOARD_USER_SELECTOR,
-  VIEW_STYLE,
-  VIEW_STYLE_LABELS,
-} from '../../constants';
+import { Icons, themeHelpers, TOOLTIP_PLACEMENT } from '../../../design-system';
+import { VIEW_STYLE, VIEW_STYLE_LABELS } from '../../constants';
+import { Tooltip } from '../tooltip';
 
 const Container = styled.div`
   display: flex;
@@ -39,22 +35,17 @@ const Container = styled.div`
 
 const ToggleButton = styled.button`
   border: none;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${themeHelpers.focusableOutlineCSS}
   padding: 0;
   background: transparent;
   cursor: pointer;
 
   &:hover svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray700};
+    color: ${({ theme }) => theme.colors.interactiveFg.hover};
   }
   &:active svg {
-    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray800};
-  }
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) =>
-      `2px solid ${rgba(
-        theme.DEPRECATED_THEME.colors.bluePrimary,
-        0.85
-      )} !important`};
+    color: ${({ theme }) => theme.colors.interactiveFg.active};
   }
 `;
 

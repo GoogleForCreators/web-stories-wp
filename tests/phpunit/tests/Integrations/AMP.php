@@ -25,11 +25,11 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class AMP extends \WP_UnitTestCase {
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$amp = new \Google\Web_Stories\Integrations\AMP();
-		$amp->init();
+		$amp->register();
 
 		$this->assertSame( 10, has_filter( 'option_amp-options', [ $amp, 'filter_amp_options' ] ) );
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $amp, 'filter_supportable_post_types' ] ) );

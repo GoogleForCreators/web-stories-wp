@@ -20,10 +20,10 @@ export { isWebUri as isValidUrl } from 'valid-url';
  * Prepends a protocol (default http) to a URL that doesn't have one
  *
  * @param {string} url URL.
- * @param {string} [protocol=http] default protocol to prepend
+ * @param {string} [protocol=https] default protocol to prepend
  * @return {string} the url with the protocol prepended to it
  */
-export function withProtocol(url, protocol = 'http') {
+export function withProtocol(url, protocol = 'https') {
   return /^(?:f|ht)tps?:\/\//.test(url) ? url : `${protocol}://${url}`;
 }
 

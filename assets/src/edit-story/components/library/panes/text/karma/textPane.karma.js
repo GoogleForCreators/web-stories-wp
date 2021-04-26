@@ -28,13 +28,15 @@ import { dataFontEm, dataPixels } from '../../../../../units';
 import stripHTML from '../../../../../utils/stripHTML';
 import { PRESETS } from '../textPresets';
 
+const TIMEOUT_INTERVAL = 300000;
+
 describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => {
   let fixture;
   let originalTimeout;
 
   beforeEach(async () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = TIMEOUT_INTERVAL;
     fixture = new Fixture();
     await fixture.render();
   });
@@ -47,12 +49,13 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   it('should add text presets below each other if added consecutively', async () => {
     await fixture.editor.library.textTab.click();
 
-    await waitFor(() =>
-      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    await waitFor(
+      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      { timeout: TIMEOUT_INTERVAL / 3 }
     );
 
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
 
     await fixture.snapshot('consecutively added different text presets');
@@ -98,27 +101,30 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     await fixture.editor.library.textTab.click();
 
-    await waitFor(() =>
-      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    await waitFor(
+      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      {
+        timeout: TIMEOUT_INTERVAL / 3,
+      }
     );
 
     // Stagger all different text presets.
 
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
-    await verifyDefaultPosition('Heading 1', 'Heading 1');
+    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await verifyDefaultPosition('Title 1', 'Title 1');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 2'));
-    await verifyStaggeredPosition('Heading 2');
+    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+    await verifyStaggeredPosition('Title 2');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    // Heading 3 should be positioned in the default position again.
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
-    await verifyStaggeredPosition('Heading 3');
+    // Title 3 should be positioned in the default position again.
+    await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
+    await verifyStaggeredPosition('Title 3');
 
     await fixture.events.click(fixture.editor.library.text.preset('Caption'));
     await verifyStaggeredPosition('Caption');

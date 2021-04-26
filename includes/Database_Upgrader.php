@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
+
 /**
  * Class Database_Upgrader
  *
@@ -33,7 +35,7 @@ namespace Google\Web_Stories;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader {
+class Database_Upgrader extends Service_Base implements Activateable {
 
 	/**
 	 * The slug of database option.
@@ -56,7 +58,7 @@ class Database_Upgrader {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		$routines = [
 			'1.0.0' => 'upgrade_1',
 			'2.0.0' => 'v_2_replace_conic_style_presets',
@@ -71,6 +73,7 @@ class Database_Upgrader {
 			'3.0.4' => 'add_poster_generation_media_source',
 			'3.0.5' => 'remove_unneeded_attachment_meta',
 			'3.0.6' => 'v_3_add_term',
+			'3.0.7' => 'v_4_add_term',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -81,6 +84,38 @@ class Database_Upgrader {
 
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
 		$this->finish_up( $version );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->register();
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action() {
+		return 'admin_init';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority() {
+		return 5;
 	}
 
 	/**
@@ -263,7 +298,11 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function add_stories_caps() {
-		$story_post_type = new Story_Post_Type( new Experiments(), new Meta_Boxes() );
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return;
+		}
+		$story_post_type = $injector->make( Story_Post_Type::class );
 		$story_post_type->add_caps_to_roles();
 	}
 
@@ -387,6 +426,17 @@ class Database_Upgrader {
 	 */
 	protected function v_3_add_term() {
 		wp_insert_term( 'video-optimization', Media::STORY_MEDIA_TAXONOMY );
+	}
+
+	/**
+	 * Add the source video term, to make sure it exists.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return void
+	 */
+	protected function v_4_add_term() {
+		wp_insert_term( 'source-video', Media::STORY_MEDIA_TAXONOMY );
 	}
 
 	/**

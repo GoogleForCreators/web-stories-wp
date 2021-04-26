@@ -69,6 +69,11 @@ function TransformProvider({ children }) {
     }
   }, []);
 
+  const clearTransforms = useCallback(() => {
+    lastTransformsRef.current = {};
+    setIsAnythingTransforming(false);
+  }, [setIsAnythingTransforming]);
+
   const state = {
     state: {
       isAnythingTransforming,
@@ -76,6 +81,7 @@ function TransformProvider({ children }) {
     actions: {
       registerTransformHandler,
       pushTransform,
+      clearTransforms,
     },
   };
 

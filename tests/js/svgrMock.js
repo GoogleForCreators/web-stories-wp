@@ -15,4 +15,4 @@
  */
 
 export default 'SvgrURL';
-export const ReactComponent = 'div';
+export const ReactComponent = 'span';

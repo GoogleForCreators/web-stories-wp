@@ -69,11 +69,11 @@ class Admin extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::init
+	 * @covers ::register
 	 */
-	public function test_init() {
+	public function test_register() {
 		$admin = new \Google\Web_Stories\Admin();
-		$admin->init();
+		$admin->register();
 
 		$this->assertSame( 99, has_filter( 'admin_body_class', [ $admin, 'admin_body_class' ] ) );
 		$this->assertSame( 10, has_filter( 'default_content', [ $admin, 'prefill_post_content' ] ) );

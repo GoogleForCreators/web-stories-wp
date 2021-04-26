@@ -35,7 +35,7 @@ import {
   SnackbarProvider,
   Snackbar,
 } from '../../design-system';
-import theme, { GlobalStyle } from '../theme';
+import { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
   APP_ROUTES,
@@ -54,7 +54,6 @@ import {
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
-  StoryAnimTool,
   TemplateDetailsView,
 } from './views';
 import useApi from './api/useApi';
@@ -169,10 +168,6 @@ const AppContent = () => {
             path={APP_ROUTES.EDITOR_SETTINGS}
             component={<EditorSettingsView />}
           />
-          <Route
-            path={APP_ROUTES.STORY_ANIM_TOOL}
-            component={<StoryAnimTool />}
-          />
         </PageContent>
       </AppFrame>
       <Snackbar.Container
@@ -187,16 +182,14 @@ const AppContent = () => {
 
 function App({ config }) {
   const { isRTL } = config;
-  // TODO strip local dashboard theme out and rely on theme from design-system
   const activeTheme = {
-    DEPRECATED_THEME: theme,
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
-        <ThemeGlobals.OverrideFocusOutline />
+        <ThemeGlobals.Styles />
         <ConfigProvider config={config}>
           <ApiProvider>
             <NavProvider>

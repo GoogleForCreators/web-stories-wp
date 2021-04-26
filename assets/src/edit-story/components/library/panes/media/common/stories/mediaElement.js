@@ -78,6 +78,7 @@ export const _Image = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}
@@ -116,6 +117,7 @@ export const _Image_With_Attribution = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}
@@ -150,6 +152,7 @@ export const _Video = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}
@@ -190,6 +193,7 @@ export const _Video_With_Attribution = () => {
         <ApiContext.Provider value={apiValue}>
           <Column>
             <MediaElement
+              index={0}
               resource={resource}
               width={150}
               onInsert={action('insert into canvas')}

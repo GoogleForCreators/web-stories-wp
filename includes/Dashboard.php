@@ -30,16 +30,17 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
 use WP_Post_Type;
-use WP_Screen;
 
 /**
  * Dashboard class.
  */
-class Dashboard {
+class Dashboard extends Service_Base {
 	use Assets;
 	use Types;
+	use Screen;
 
 	/**
 	 * Script handle.
@@ -77,17 +78,27 @@ class Dashboard {
 	private $decoder;
 
 	/**
+	 * Locale instance.
+	 *
+	 * @var Locale Locale instance.
+	 */
+	private $locale;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Site_Kit    $site_kit    Site_Kit instance.
+	 * @param Decoder     $decoder Decoder instance.
+	 * @param Locale      $locale Locale instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder, Locale $locale ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder();
+		$this->decoder     = $decoder;
 		$this->site_kit    = $site_kit;
+		$this->locale      = $locale;
 	}
 
 	/**
@@ -97,7 +108,7 @@ class Dashboard {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function register() {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_init', [ $this, 'redirect_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
@@ -337,7 +348,7 @@ class Dashboard {
 			'config'     => [
 				'isRTL'                 => is_rtl(),
 				'userId'                => get_current_user_id(),
-				'locale'                => ( new Locale() )->get_locale_settings(),
+				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
 				'editStoryURL'          => $edit_story_url,
 				'wpListURL'             => $classic_wp_list_url,
@@ -388,17 +399,16 @@ class Dashboard {
 	 * @return void
 	 */
 	public function display_link_to_dashboard() {
-		$screen = get_current_screen();
+		$screen = $this->get_current_screen();
+		if ( ! $screen ) {
+			return;
+		}
 
-		if ( ! $screen instanceof WP_Screen ) {
+		if ( ! $this->is_edit_screen( $screen ) ) {
 			return;
 		}
 
 		if ( 'edit' !== $screen->base ) {
-			return;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $screen->post_type ) {
 			return;
 		}
 

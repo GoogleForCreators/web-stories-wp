@@ -19,11 +19,11 @@
  */
 import { FlagsProvider } from 'flagged';
 import Modal from 'react-modal';
+import { screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
-import React from 'react';
-import { screen } from '@testing-library/react';
 import { renderWithTheme } from '../../../testUtils';
 import ConfigContext from '../../../app/config/context';
 import StoryContext from '../../../app/story/context';
@@ -102,11 +102,16 @@ describe('PostLock', () => {
     document.documentElement.removeChild(modalWrapper);
     jest.runAllTimers();
   });
+
   it('should display take over dialog', async () => {
     const storyContextValue = {
       state: {
         story: {
-          lockUser: { id: 123, name: 'John Doe' },
+          previewLink: 'http://www.example.com/preview',
+          lockUser: {
+            id: 123,
+            name: 'John Doe',
+          },
         },
       },
     };

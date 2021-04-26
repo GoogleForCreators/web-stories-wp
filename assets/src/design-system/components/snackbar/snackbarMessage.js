@@ -39,7 +39,6 @@ import {
 } from './constants';
 
 const MessageContainer = styled.div`
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;

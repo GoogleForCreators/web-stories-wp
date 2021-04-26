@@ -3,7 +3,7 @@
 exports[`prepublish checklist should return guidance for the story 1`] = `
 Array [
   Object {
-    "help": <constants__DashedList>
+    "help": <ul>
       <li>
         Use as a representation of the story
       </li>
@@ -16,54 +16,54 @@ Array [
       <li>
         Maintain a 3:4 aspect ratio
       </li>
-    </constants__DashedList>,
+    </ul>,
     "highlight": "POSTER",
-    "message": "Add cover image",
+    "message": "Add poster image",
     "storyId": 120,
     "type": "error",
   },
   Object {
-    "help": <constants__DashedList>
+    "help": <ul>
       <li>
         Keep under 10 words
       </li>
       <li>
         Don't exceed 40 characters
       </li>
-    </constants__DashedList>,
+    </ul>,
     "highlight": "STORY_TITLE",
-    "message": "Add story title",
+    "message": "Add Web Story title",
     "storyId": 120,
     "type": "error",
   },
   Object {
-    "help": <constants__DashedList>
+    "help": <ul>
       <li>
         Incorporate a brief description for better user experience
       </li>
-    </constants__DashedList>,
+    </ul>,
     "highlight": "EXCERPT",
-    "message": "Add story description",
+    "message": "Add Web Story description",
     "storyId": 120,
     "type": "warning",
   },
   Object {
-    "help": <constants__DashedList>
+    "help": <ul>
       <li>
         It is recommended to have between 4 and 30 pages in your story
       </li>
-    </constants__DashedList>,
-    "message": "Make story longer",
+    </ul>,
+    "message": "Make Web Story at least 4 pages",
     "storyId": 120,
     "type": "guidance",
   },
   Object {
-    "help": <constants__DashedList>
+    "help": <ul>
       <li>
-        Make your story text 100 characters or more
+        Include at least 100 characters
       </li>
-    </constants__DashedList>,
-    "message": "Increase amount of total text",
+    </ul>,
+    "message": "Add more text to page",
     "storyId": 120,
     "type": "guidance",
   },

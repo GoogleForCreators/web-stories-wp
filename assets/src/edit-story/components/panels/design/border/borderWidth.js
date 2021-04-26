@@ -105,21 +105,18 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
   const lockBorder = border.lockedWidth === true;
 
   const handleChange = useCallback(
-    (name) => (evt) => {
-      const value = Number(evt?.target?.value);
-      if (value) {
-        const newBorder = !lockBorder
-          ? {
-              [name]: value,
-            }
-          : {
-              left: value,
-              top: value,
-              right: value,
-              bottom: value,
-            };
-        pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
-      }
+    (name) => (evt, value) => {
+      const newBorder = !lockBorder
+        ? {
+            [name]: value,
+          }
+        : {
+            left: value,
+            top: value,
+            right: value,
+            bottom: value,
+          };
+      pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
     },
     [pushUpdateForObject, lockBorder]
   );

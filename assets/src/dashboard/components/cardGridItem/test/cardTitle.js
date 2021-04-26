@@ -25,6 +25,7 @@ describe('CardTitle', () => {
   it('should render Card Title with static text when edit mode is false', () => {
     const { getByText, queryByTestId } = renderWithProviders(
       <CardTitle
+        id={123}
         title="Sample Story"
         displayDate="01/20/2020"
         onEditCancel={jest.fn}
@@ -60,6 +61,7 @@ describe('CardTitle', () => {
   it(`should prepend "Draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
     const { getByText } = renderWithProviders(
       <CardTitle
+        id={123}
         title="Sample Story"
         displayDate="04/23/2020"
         status={STORY_STATUS.DRAFT}
@@ -76,6 +78,7 @@ describe('CardTitle', () => {
   it(`should display "Scheduled" before created date when ${STORY_STATUS.FUTURE}`, () => {
     const { getByText } = renderWithProviders(
       <CardTitle
+        id={123}
         title="Sample Story"
         displayDate="04/23/2020"
         status={STORY_STATUS.FUTURE}
@@ -92,6 +95,7 @@ describe('CardTitle', () => {
   it(`should display "Published" before created date when ${STORY_STATUS.PUBLISH}`, () => {
     const { getByText } = renderWithProviders(
       <CardTitle
+        id={123}
         title="Sample Story"
         displayDate="04/23/2020"
         status={STORY_STATUS.PUBLISH}
@@ -108,6 +112,7 @@ describe('CardTitle', () => {
   it('should render Card Title with an author', () => {
     const { getByText } = renderWithProviders(
       <CardTitle
+        id={123}
         title="Sample Story"
         secondaryTitle="Harry Potter"
         displayDate="01/20/2020"

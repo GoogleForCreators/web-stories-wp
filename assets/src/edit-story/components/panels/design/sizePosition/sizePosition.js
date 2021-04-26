@@ -21,25 +21,20 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useMemo } from 'react';
 import { __, _x } from '@web-stories-wp/i18n';
+import stickers from '@web-stories-wp/stickers';
 
 /**
  * Internal dependencies
  */
-import {
-  LockToggle,
-  NumericInput,
-  Tooltip,
-  PLACEMENT,
-  Icons,
-} from '../../../../../design-system';
+import { LockToggle, NumericInput, Icons } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
-import stickers from '../../../../stickers';
 import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
+import Tooltip from '../../../tooltip';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
@@ -171,10 +166,7 @@ function SizePositionPanel({
             value={x}
             min={minMaxXY.minX}
             max={minMaxXY.maxX}
-            onChange={(evt) => {
-              const value = Number(evt.target.value);
-              pushUpdate({ x: value }, true);
-            }}
+            onChange={(evt, value) => pushUpdate({ x: value }, true)}
             aria-label={__('X position', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(x)}
@@ -186,10 +178,7 @@ function SizePositionPanel({
             value={y}
             min={minMaxXY.minY}
             max={minMaxXY.maxY}
-            onChange={(evt) => {
-              const value = Number(evt.target.value);
-              pushUpdate({ y: value }, true);
-            }}
+            onChange={(evt, value) => pushUpdate({ y: value }, true)}
             aria-label={__('Y position', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(y)}
@@ -202,8 +191,8 @@ function SizePositionPanel({
             value={width}
             min={MIN_MAX.WIDTH.MIN}
             max={MIN_MAX.WIDTH.MAX}
-            onChange={(evt) => {
-              const newWidth = Number(evt.target.value);
+            onChange={(evt, value) => {
+              const newWidth = value;
               let newHeight = height;
               if (lockAspectRatio) {
                 if (newWidth === '') {
@@ -239,8 +228,8 @@ function SizePositionPanel({
             disabled={disableHeight}
             min={MIN_MAX.HEIGHT.MIN}
             max={MIN_MAX.HEIGHT.MAX}
-            onChange={(evt) => {
-              const newHeight = Number(evt.target.value);
+            onChange={(evt, value) => {
+              const newHeight = value;
               let newWidth = width;
               if (lockAspectRatio) {
                 if (newHeight === '') {
@@ -268,10 +257,7 @@ function SizePositionPanel({
           />
         </Area>
         <Area area="l">
-          <Tooltip
-            placement={PLACEMENT.BOTTOM}
-            title={__('Lock aspect ratio', 'web-stories')}
-          >
+          <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
             <LockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
               title={__('Lock aspect ratio', 'web-stories')}
@@ -291,10 +277,9 @@ function SizePositionPanel({
             value={rotationAngle}
             min={MIN_MAX.ROTATION.MIN}
             max={MIN_MAX.ROTATION.MAX}
-            onChange={(evt) => {
-              const value = Number(evt.target.value);
-              pushUpdate({ rotationAngle: value }, true);
-            }}
+            onChange={(evt, value) =>
+              pushUpdate({ rotationAngle: value }, true)
+            }
             aria-label={__('Rotation', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(rotationAngle)}

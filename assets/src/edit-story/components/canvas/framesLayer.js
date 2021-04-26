@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef } from 'react';
+import { memo, useRef, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -26,7 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
-import { useStory, useCanvas } from '../../app';
+import { useStory, useCanvas, useLayout, useTransform } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
@@ -34,10 +34,9 @@ import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
 
-const FramesPageArea = styled(PageArea).attrs({
-  showOverflow: true,
-})``;
-
+const FramesPageArea = styled(PageArea)`
+  pointer-events: initial;
+`;
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 const DesignSpaceGuideline = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.negativePress};
@@ -48,7 +47,7 @@ const DesignSpaceGuideline = styled.div`
   position: absolute;
   pointer-events: none;
   z-index: 1;
-  visibility: hidden;
+  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
 function FramesLayer() {
@@ -65,14 +64,30 @@ function FramesLayer() {
     })
   );
 
+  const { isAnythingTransforming } = useTransform((state) => ({
+    isAnythingTransforming: state.state.isAnythingTransforming,
+  }));
+
   const ref = useRef(null);
   useCanvasKeys(ref);
+
+  const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
+    setScrollOffset,
+  }));
+  const onScroll = useCallback(
+    (evt) =>
+      setScrollOffset({
+        left: evt.target.scrollLeft,
+        top: evt.target.scrollTop,
+      }),
+    [setScrollOffset]
+  );
 
   return (
     <Layer
       ref={ref}
       data-testid="FramesLayer"
-      pointerEvents="none"
+      pointerEvents="initial"
       // Use `-1` to ensure that there's a default target to focus if
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
@@ -80,12 +95,15 @@ function FramesLayer() {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
-        <FramesPageArea>
+        <FramesPageArea onScroll={onScroll}>
           {currentPage &&
             currentPage.elements.map(({ id, ...rest }) => {
               return <FrameElement key={id} element={{ id, ...rest }} />;
             })}
-          <DesignSpaceGuideline ref={setDesignSpaceGuideline} />
+          <DesignSpaceGuideline
+            ref={setDesignSpaceGuideline}
+            isVisible={isAnythingTransforming}
+          />
         </FramesPageArea>
       )}
       <MenuArea
