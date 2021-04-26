@@ -412,7 +412,9 @@ function APIProvider({ children }) {
           status: 'publish',
         },
         method: 'POST',
-      }).then((response) => response['story_data']);
+      }).then((response) => {
+        return { ...response['story_data'], postId: response.id };
+      });
     },
     [customPageTemplates]
   );
