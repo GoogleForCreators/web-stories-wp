@@ -86,8 +86,8 @@ trait Post_Type {
 	 * @return string|false
 	 */
 	protected function get_post_type_cap_name( $slug, $cap ) {
-		$post_type_obj = get_post_type_object( $slug );
-		$capability_name    = false;
+		$post_type_obj   = get_post_type_object( $slug );
+		$capability_name = false;
 
 		if ( ! $post_type_obj instanceof WP_Post_Type ) {
 			return $capability_name;
