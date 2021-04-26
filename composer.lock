@@ -664,31 +664,31 @@
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
-            "version": "2.2.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "4d0612461232b313d06321f1501c3989bd6aecf9"
+                "reference": "90173cec6f4df2af9a31627f4880874d788459ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/4d0612461232b313d06321f1501c3989bd6aecf9",
-                "reference": "4d0612461232b313d06321f1501c3989bd6aecf9",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/90173cec6f4df2af9a31627f4880874d788459ab",
+                "reference": "90173cec6f4df2af9a31627f4880874d788459ab",
                 "shasum": ""
             },
             "require": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
                 "php": ">=5.4",
                 "sirbrillig/phpcs-variable-analysis": "^2.8.3",
                 "squizlabs/php_codesniffer": "^3.5.5",
                 "wp-coding-standards/wpcs": "^2.3"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "php-parallel-lint/php-console-highlighter": "^0.5",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
                 "phpcompatibility/php-compatibility": "^9",
+                "phpcsstandards/phpcsdevtools": "^1.0",
                 "phpunit/phpunit": "^4 || ^5 || ^6 || ^7"
-            },
-            "suggest": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7 || This Composer plugin will manage the PHPCS 'installed_paths' automatically."
             },
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -712,7 +712,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2020-09-07T10:45:45+00:00"
+            "time": "2021-04-23T14:52:17+00:00"
         },
         {
             "name": "composer/xdebug-handler",
