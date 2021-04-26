@@ -50,7 +50,7 @@ function InspectorProvider({ children }) {
 
   const {
     currentCheckpoint,
-    isFirstPublishAttempt,
+    isChecklistReviewTriggered,
     refreshChecklist,
   } = usePrepublishChecklist();
 
@@ -78,13 +78,13 @@ function InspectorProvider({ children }) {
   const firstPublishAttemptRef = useRef(false);
 
   useEffect(() => {
-    if (isFirstPublishAttempt && !firstPublishAttemptRef.current) {
+    if (isChecklistReviewTriggered && !firstPublishAttemptRef.current) {
       setTab(PREPUBLISH);
       // Focus prepublish which is the last item in the panel title list
       inspectorRef.current?.firstChild?.lastChild?.focus();
-      firstPublishAttemptRef.current = isFirstPublishAttempt;
+      firstPublishAttemptRef.current = isChecklistReviewTriggered;
     }
-  }, [isFirstPublishAttempt]);
+  }, [isChecklistReviewTriggered]);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 

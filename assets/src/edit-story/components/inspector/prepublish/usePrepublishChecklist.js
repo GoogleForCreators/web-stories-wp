@@ -29,7 +29,9 @@ function usePrepublishChecklist() {
     currentCheckpoint,
     focusChecklistTab,
     isHighPriorityEmpty,
-    isFirstPublishAttempt,
+    isChecklistReviewTriggered,
+    resetReviewDialogTrigger,
+    shouldReviewDialogBeSeen,
   } = useContext(Context);
 
   return {
@@ -38,7 +40,9 @@ function usePrepublishChecklist() {
     refreshChecklist,
     currentCheckpoint,
     isHighPriorityEmpty,
-    isFirstPublishAttempt,
+    isChecklistReviewTriggered,
+    shouldReviewDialogBeSeen,
+    resetReviewDialogTrigger,
   };
 }
 

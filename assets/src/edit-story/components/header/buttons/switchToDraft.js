@@ -32,6 +32,7 @@ import {
   Icons,
 } from '../../../../design-system';
 import Tooltip from '../../tooltip';
+import { usePrepublishChecklist } from '../../inspector/prepublish';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -46,9 +47,12 @@ function SwitchToDraft() {
     isUploading: state.state.isUploading,
   }));
 
-  const handleUnPublish = useCallback(() => saveStory({ status: 'draft' }), [
-    saveStory,
-  ]);
+  const { resetReviewDialogTrigger } = usePrepublishChecklist();
+
+  const handleUnPublish = useCallback(() => {
+    saveStory({ status: 'draft' });
+    resetReviewDialogTrigger();
+  }, [resetReviewDialogTrigger, saveStory]);
 
   const label = __('Switch to Draft', 'web-stories');
   return (
