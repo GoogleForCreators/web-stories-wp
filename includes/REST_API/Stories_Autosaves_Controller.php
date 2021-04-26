@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Media;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
@@ -42,6 +43,7 @@ use WP_REST_Server;
  * Override the WP_REST_Autosaves_Controller class.
  */
 class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
+	use Post_Type;
 	/**
 	 * Parent post controller.
 	 *
@@ -73,18 +75,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	public function __construct( $parent_post_type ) {
 		parent::__construct( $parent_post_type );
 
-		$post_type_object  = get_post_type_object( $parent_post_type );
 		$this->parent_base = $parent_post_type;
-		$parent_controller = null;
-
-		if ( $post_type_object instanceof \WP_Post_Type ) {
-			$parent_controller = $post_type_object->get_rest_controller();
-			$this->parent_base = ! empty( $post_type_object->rest_base ) ? (string) $post_type_object->rest_base : $post_type_object->name;
-		}
-
-		if ( ! $parent_controller ) {
-			$parent_controller = new WP_REST_Posts_Controller( $parent_post_type );
-		}
+		$parent_controller = $this->get_post_type_parent_controller( $parent_post_type );
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_namespace    = 'web-stories/v1';
