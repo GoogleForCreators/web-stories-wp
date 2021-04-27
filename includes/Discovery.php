@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 
 use WP_Post;
@@ -37,6 +38,7 @@ use WP_Post;
  */
 class Discovery extends Service_Base {
 	use Publisher;
+	use Post_Type;
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -345,13 +347,13 @@ class Discovery extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public static function print_feed_link() {
+	public function print_feed_link() {
 		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {
 			return;
 		}
 
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		if ( ! ( $post_type_object instanceof \WP_Post_Type ) ) {
+		$name = $this->get_post_type_label( Story_Post_Type::POST_TYPE_SLUG, 'name' );
+		if ( ! $name ) {
 			return;
 		}
 
@@ -360,11 +362,6 @@ class Discovery extends Service_Base {
 			Story_Post_Type::POST_TYPE_SLUG,
 			get_feed_link()
 		);
-
-		$name = '';
-		if ( property_exists( $post_type_object->labels, 'name' ) ) {
-			$name = $post_type_object->labels->name;
-		}
 
 		/* translators: Separator between blog name and feed type in feed links. */
 		$separator = _x( '&raquo;', 'feed link', 'web-stories' );
