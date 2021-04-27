@@ -30,9 +30,9 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
-use WP_Post_Type;
 
 /**
  * Dashboard class.
@@ -41,6 +41,7 @@ class Dashboard extends Service_Base {
 	use Assets;
 	use Types;
 	use Screen;
+	use Post_Type;
 
 	/**
 	 * Script handle.
@@ -299,7 +300,7 @@ class Dashboard extends Service_Base {
 	 * @return array
 	 */
 	public function get_dashboard_settings() {
-		$rest_base     = Story_Post_Type::POST_TYPE_SLUG;
+		$rest_base     = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$new_story_url = admin_url(
 			add_query_arg(
 				[
@@ -333,15 +334,8 @@ class Dashboard extends Service_Base {
 			$max_upload_size = 0;
 		}
 
-		$can_read_private_posts = false;
-
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		if (
-			$post_type_object instanceof WP_Post_Type &&
-			property_exists( $post_type_object->cap, 'read_private_posts' )
-		) {
-			$can_read_private_posts = current_user_can( $post_type_object->cap->read_private_posts );
-		}
+		$can_read_private_posts = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'read_private_posts' );
+		$templates_rest_base    = $this->get_post_type_rest_base( Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
 			'id'         => 'web-stories-dashboard',
@@ -362,7 +356,7 @@ class Dashboard extends Service_Base {
 					'media'       => '/web-stories/v1/media/',
 					'currentUser' => '/web-stories/v1/users/me/',
 					'users'       => '/web-stories/v1/users/',
-					'templates'   => '/web-stories/v1/web-story-template/',
+					'templates'   => sprintf( '/web-stories/v1/%s/', $templates_rest_base ),
 					'settings'    => '/web-stories/v1/settings/',
 				],
 				'maxUpload'             => $max_upload_size,
