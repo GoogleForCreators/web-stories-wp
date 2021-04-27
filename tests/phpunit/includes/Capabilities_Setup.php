@@ -21,12 +21,13 @@ use Google\Web_Stories\Story_Post_Type;
 
 trait Capabilities_Setup {
 	protected function get_story_object() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale      = $this->createMock( \Google\Web_Stories\Locale::class );
+		$experiments   = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
 
-		return new Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
+		return new Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale, $register_font );
 	}
 
 	public function add_caps_to_roles() {
