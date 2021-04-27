@@ -237,7 +237,6 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
   ) : (
     <>
       <SimplePanel
-        collapsedByDefault={false}
         isToggleDisabled={isHighPriorityDisabled}
         name="checklist"
         hasBadge
@@ -263,7 +262,6 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
       </SimplePanel>
       <SimplePanel
         isToggleDisabled={isRecommendedDisabled}
-        collapsedByDefault={false}
         name="checklist"
         hasBadge
         title={
