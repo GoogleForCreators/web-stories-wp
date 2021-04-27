@@ -35,7 +35,7 @@ import { Img } from './shared';
 
 /**
  * @param {Object} props Component props.
- * @param {boolean} props.open If open or not.
+ * @param {boolean} props.isOpen If open or not.
  * @param {Object} props.user Lock owner's user data as a object.
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {string} props.previewLink Preview link.

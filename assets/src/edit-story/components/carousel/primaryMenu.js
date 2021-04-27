@@ -151,6 +151,7 @@ function PrimaryMenu() {
         contentLabel={__('Grid View', 'web-stories')}
         overlayStyles={{
           alignItems: 'stretch',
+          backgroundColor: '#131516', // theme.colors.brand.gray[90]
         }}
         contentStyles={{
           pointerEvents: 'none',
