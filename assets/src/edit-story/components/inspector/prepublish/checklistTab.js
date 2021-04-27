@@ -75,8 +75,8 @@ const Entries = ({
 Entries.propTypes = {
   items: PropTypes.array,
   pageItems: PropTypes.object,
-  renderRow: PropTypes.function,
-  renderPageGroupedRow: PropTypes.function,
+  renderRow: PropTypes.func,
+  renderPageGroupedRow: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
