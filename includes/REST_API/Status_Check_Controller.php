@@ -31,7 +31,6 @@ use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
 use WP_REST_Server;
-use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;

@@ -33,7 +33,6 @@ use Google\Web_Stories\Traits\Document_Parser;
 use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
-use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
