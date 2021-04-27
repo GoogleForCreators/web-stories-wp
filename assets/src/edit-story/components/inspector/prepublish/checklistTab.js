@@ -233,15 +233,20 @@ const ChecklistTab = ({
   const hasHighPriorityItems = Boolean(highPriorityLength);
   const hasRecommendedItems =
     Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
-  const isEmptyShown =
-    !hasHighPriorityItems &&
-    !hasRecommendedItems &&
-    !isHighPriorityDisabledState;
 
   const isRecommendedDisabled =
     isRecommendedDisabledState || !hasRecommendedItems;
   const isHighPriorityDisabled =
     isHighPriorityDisabledState || !hasHighPriorityItems;
+
+  const isEmptyShown = useMemo(() => {
+    return (
+      currentCheckpoint === PPC_CHECKPOINT_STATE.ALL &&
+      pages.length &&
+      !hasHighPriorityItems &&
+      !hasRecommendedItems
+    );
+  }, [currentCheckpoint, pages, hasHighPriorityItems, hasRecommendedItems]);
 
   return isEmptyShown ? (
     <EmptyChecklist />
