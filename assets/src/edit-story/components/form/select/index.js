@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { default as sample } from './sampleSticker';
-import { default as beautyHeart } from './beautyHeart';
-import * as cookingStickers from './cooking';
-import * as fashionStickers from './fashion';
-import * as wellbeingStickers from './wellbeing';
 
-export default {
-  sample,
-  beautyHeart,
-  ...cookingStickers,
-  ...fashionStickers,
-  ...wellbeingStickers,
-};
+export { default } from './select';

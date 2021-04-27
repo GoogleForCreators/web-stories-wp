@@ -143,7 +143,11 @@ function delete_posts() {
 		[
 			'fields'           => 'ids',
 			'suppress_filters' => false,
-			'post_type'        => [ Story_Post_Type::POST_TYPE_SLUG, Template_Post_Type::POST_TYPE_SLUG ],
+			'post_type'        => [
+				Story_Post_Type::POST_TYPE_SLUG,
+				Template_Post_Type::POST_TYPE_SLUG,
+				Page_Template_Post_Type::POST_TYPE_SLUG,
+			],
 			'posts_per_page'   => - 1,
 		]
 	);

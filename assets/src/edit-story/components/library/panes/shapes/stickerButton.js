@@ -17,6 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import STICKERS from '@web-stories-wp/stickers';
 
 /**
  * Internal dependencies
@@ -26,7 +27,6 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
 } from '../../../../../design-system';
-import STICKERS from '../../../../stickers';
 import useLibrary from '../../useLibrary';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 

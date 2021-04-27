@@ -18,7 +18,7 @@ Array [
       </li>
     </ul>,
     "highlight": "POSTER",
-    "message": "Add cover image",
+    "message": "Add poster image",
     "storyId": 120,
     "type": "error",
   },
@@ -32,7 +32,7 @@ Array [
       </li>
     </ul>,
     "highlight": "STORY_TITLE",
-    "message": "Add story title",
+    "message": "Add Web Story title",
     "storyId": 120,
     "type": "error",
   },
@@ -43,7 +43,7 @@ Array [
       </li>
     </ul>,
     "highlight": "EXCERPT",
-    "message": "Add story description",
+    "message": "Add Web Story description",
     "storyId": 120,
     "type": "warning",
   },
@@ -53,17 +53,17 @@ Array [
         It is recommended to have between 4 and 30 pages in your story
       </li>
     </ul>,
-    "message": "Make story longer",
+    "message": "Make Web Story at least 4 pages",
     "storyId": 120,
     "type": "guidance",
   },
   Object {
     "help": <ul>
       <li>
-        Make your story text 100 characters or more
+        Include at least 100 characters
       </li>
     </ul>,
-    "message": "Increase amount of total text",
+    "message": "Add more text to page",
     "storyId": 120,
     "type": "guidance",
   },
