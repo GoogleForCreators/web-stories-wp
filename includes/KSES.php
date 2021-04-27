@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use WP_Post_Type;
+use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * KSES class.
@@ -34,6 +34,7 @@ use WP_Post_Type;
  * Provides KSES utility methods to override the ones from core.
  */
 class KSES extends Service_Base {
+	use Post_Type;
 	/**
 	 * Initializes KSES filters for all post types if user can edit stories.
 	 *
@@ -42,18 +43,7 @@ class KSES extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-
-		$edit_posts       = false;
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		if (
-			$post_type_object instanceof WP_Post_Type &&
-			property_exists( $post_type_object->cap, 'edit_posts' )
-		) {
-
-			$edit_posts = current_user_can( $post_type_object->cap->edit_posts );
-		}
-
-		if ( ! $edit_posts ) {
+		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
 

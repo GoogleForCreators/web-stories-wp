@@ -47,6 +47,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     } = '',
     fileLength: lengthFormatted,
     sizes: mediaPickerSizes,
+    media_source: mediaSource,
   } = mediaPickerEl;
   const sizes = Object.fromEntries(
     Object.entries(mediaPickerSizes || {}).map(([k, size]) => [
@@ -77,6 +78,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     title,
     sizes,
     local: false,
+    isOptimized: 'video-optimization' === mediaSource,
   });
 };
 

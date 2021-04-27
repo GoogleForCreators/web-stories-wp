@@ -20,9 +20,11 @@
 import { usePrepublishChecklist, ChecklistTab } from '.';
 
 function PrepublishInspector() {
-  const { checklist } = usePrepublishChecklist();
+  const { checklist, currentCheckpoint } = usePrepublishChecklist();
 
-  return <ChecklistTab checklist={checklist} />;
+  return (
+    <ChecklistTab checklist={checklist} currentCheckpoint={currentCheckpoint} />
+  );
 }
 
 export default PrepublishInspector;

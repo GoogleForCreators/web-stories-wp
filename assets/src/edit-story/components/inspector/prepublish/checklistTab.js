@@ -19,6 +19,7 @@
 import { useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -28,7 +29,11 @@ import { useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
-import { TEXT } from './constants';
+import {
+  DISABLED_HIGH_PRIORITY_CHECKPOINTS,
+  DISABLED_RECOMMENDED_CHECKPOINTS,
+  TEXT,
+} from './constants';
 import EmptyChecklist from './emptyChecklist';
 import {
   GoToIssue,
@@ -40,13 +45,23 @@ import {
   PanelTitle,
   Row,
 } from './styles';
+import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
 
-const ChecklistTab = (props) => {
-  const { checklist } = props;
+const ChecklistTab = ({ checklist, currentCheckpoint }) => {
   const { isRTL } = useConfig();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+
+  const { isHighPriorityDisabled, isRecommendedDisabled } = useMemo(
+    () => ({
+      isRecommendedDisabled:
+        DISABLED_RECOMMENDED_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
+      isHighPriorityDisabled:
+        DISABLED_HIGH_PRIORITY_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
+    }),
+    [currentCheckpoint]
+  );
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
@@ -186,13 +201,18 @@ const ChecklistTab = (props) => {
     <>
       {showHighPriorityItems && (
         <SimplePanel
-          collapsedByDefault={false}
+          collapsedByDefault={isHighPriorityDisabled}
+          isToggleDisabled={isHighPriorityDisabled}
           name="checklist"
           hasBadge
           title={
             <>
-              <PanelTitle>{TEXT.HIGH_PRIORITY_TITLE}</PanelTitle>
-              <NumberBadge number={highPriorityLength} />
+              <PanelTitle isDisabled={isHighPriorityDisabled}>
+                {TEXT.HIGH_PRIORITY_TITLE}
+              </PanelTitle>
+              {!isHighPriorityDisabled && (
+                <NumberBadge number={highPriorityLength} />
+              )}
             </>
           }
           ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
@@ -203,12 +223,17 @@ const ChecklistTab = (props) => {
       )}
       {showRecommendedItems && (
         <SimplePanel
+          isToggleDisabled={isRecommendedDisabled}
           name="checklist"
           hasBadge
           title={
             <>
-              <PanelTitle isRecommended>{TEXT.RECOMMENDED_TITLE}</PanelTitle>
-              <NumberBadge isRecommended number={recommendedLength} />
+              <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
+                {TEXT.RECOMMENDED_TITLE}
+              </PanelTitle>
+              {!isRecommendedDisabled && (
+                <NumberBadge isRecommended number={recommendedLength} />
+              )}
             </>
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
@@ -223,6 +248,7 @@ const ChecklistTab = (props) => {
 
 ChecklistTab.propTypes = {
   checklist: types.GuidanceChecklist,
+  currentCheckpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
 };
 
 export default ChecklistTab;

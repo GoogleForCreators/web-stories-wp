@@ -52,6 +52,8 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
+    isPlaceholder: undefined,
+    isOptimized: false,
     sizes: {
       medium: {
         file: 'IMAGE-146x300.jpg',
