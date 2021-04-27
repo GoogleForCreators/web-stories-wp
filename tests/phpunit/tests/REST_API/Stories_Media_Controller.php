@@ -22,6 +22,10 @@ use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
+ * Class Stories_Media_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */
 class Stories_Media_Controller extends \WP_Test_REST_TestCase {

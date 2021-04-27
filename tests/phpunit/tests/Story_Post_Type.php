@@ -121,11 +121,12 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
 
-		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
+		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale, $register_font );
 		$results   = $post_type->get_editor_settings();
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
@@ -139,11 +140,13 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
-		$post_type  = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
-		$results    = $post_type->get_editor_settings();
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
+
+		$post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$results   = $post_type->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -237,11 +240,12 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
 
-		$args            = [ $experiments, $meta_boxes, $decoder, $locale ];
+		$args            = [ $experiments, $meta_boxes, $decoder, $locale, $register_font ];
 		$story_post_type = $this->getMockBuilder( \Google\Web_Stories\Story_Post_Type::class )
 								->setConstructorArgs( $args )
 								->setMethods( [ 'get_asset_metadata' ] )
