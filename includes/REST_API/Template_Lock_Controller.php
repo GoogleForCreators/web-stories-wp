@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Stories_Autosaves_Controller
+ * Class Template_Lock_Controller
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -26,18 +26,19 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Template_Post_Type;
+use WP_REST_Controller;
 
 /**
- * Stories_Autosaves_Controller class.
+ * Class Template_Lock_Controller
  *
- * Override the WP_REST_Autosaves_Controller class.
+ * @package Google\Web_Stories\REST_API
  */
-class Stories_Autosaves_Controller extends Autosaves_Controller {
+class Template_Lock_Controller extends Lock_Controller {
 	/**
-	 * Stories_Autosaves_Controller constructor.
+	 * Constructor.
 	 */
 	public function __construct() {
-		parent::__construct( Story_Post_Type::POST_TYPE_SLUG );
+		parent::__construct( Template_Post_Type::POST_TYPE_SLUG );
 	}
 }
