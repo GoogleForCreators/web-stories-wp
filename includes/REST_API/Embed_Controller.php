@@ -33,7 +33,6 @@ use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
 use WP_Post;
-use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -43,7 +42,7 @@ use WP_REST_Server;
  *
  * Class Embed_Controller
  */
-class Embed_Controller extends WP_REST_Controller {
+class Embed_Controller extends REST_Controller {
 	use Document_Parser;
 	use Post_Type;
 	/**

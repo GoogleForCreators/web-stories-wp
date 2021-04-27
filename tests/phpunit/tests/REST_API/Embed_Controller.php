@@ -17,11 +17,19 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Tests\Test_REST_TestCase;
+use Google\Web_Stories\Tests\Capabilities_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
 
-class Embed_Controller extends Test_REST_TestCase {
+/**
+ * Class Embed_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
+ * @coversDefaultClass  Google\Web_Stories\REST_API\Embed_Controller
+ */
+class Embed_Controller extends \WP_Test_REST_TestCase {
+	use Capabilities_Setup;
 	/**
 	 * @var \WP_REST_Server
 	 */

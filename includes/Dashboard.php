@@ -86,20 +86,29 @@ class Dashboard extends Service_Base {
 	private $locale;
 
 	/**
+	 * Register_Font instance.
+	 *
+	 * @var Register_Font Register_Font instance.
+	 */
+	private $register_font;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments $experiments Experiments instance.
-	 * @param Site_Kit    $site_kit    Site_Kit instance.
-	 * @param Decoder     $decoder Decoder instance.
-	 * @param Locale      $locale Locale instance.
+	 * @param Experiments   $experiments   Experiments instance.
+	 * @param Site_Kit      $site_kit      Site_Kit instance.
+	 * @param Decoder       $decoder       Decoder instance.
+	 * @param Locale        $locale        Locale instance.
+	 * @param Register_Font $register_font Register_Font instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder, Locale $locale ) {
-		$this->experiments = $experiments;
-		$this->decoder     = $decoder;
-		$this->site_kit    = $site_kit;
-		$this->locale      = $locale;
+	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder, Locale $locale, Register_Font $register_font ) {
+		$this->experiments   = $experiments;
+		$this->decoder       = $decoder;
+		$this->site_kit      = $site_kit;
+		$this->locale        = $locale;
+		$this->register_font = $register_font;
 	}
 
 	/**
@@ -272,15 +281,12 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_font->register();
 
 		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
-		$this->enqueue_style( self::SCRIPT_HANDLE, [ 'google-fonts' ] );
+
+		$font_handle = $this->register_font->get_handle();
+		$this->enqueue_style( self::SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

@@ -22,6 +22,10 @@ use WP_REST_Request;
 use Google\Web_Stories\Tests\Test_REST_TestCase;
 
 /**
+ * Class Status_Check_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Status_Check_Controller
  */
 class Status_Check_Controller extends Test_REST_TestCase {

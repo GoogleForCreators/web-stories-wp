@@ -114,20 +114,30 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	private $locale;
 
 	/**
+	 * Register_Font instance.
+	 *
+	 * @var Register_Font Register_Font instance.
+	 */
+	private $register_font;
+
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments $experiments Experiments instance.
-	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
-	 * @param Decoder     $decoder Decoder instance.
-	 * @param Locale      $locale Locale instance.
+	 * @param Experiments   $experiments   Experiments instance.
+	 * @param Meta_Boxes    $meta_boxes    Meta_Boxes instance.
+	 * @param Decoder       $decoder       Decoder instance.
+	 * @param Locale        $locale        Locale instance.
+	 * @param Register_Font $register_font Register_Font instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
-		$this->experiments = $experiments;
-		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = $decoder;
-		$this->locale      = $locale;
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Register_Font $register_font ) {
+		$this->experiments   = $experiments;
+		$this->meta_boxes    = $meta_boxes;
+		$this->decoder       = $decoder;
+		$this->locale        = $locale;
+		$this->register_font = $register_font;
 	}
 
 	/**
@@ -495,12 +505,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_font->register();
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -509,7 +514,9 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
+
+		$font_handle = $this->register_font->get_handle();
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
