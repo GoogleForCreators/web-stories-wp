@@ -121,14 +121,17 @@ function PrepublishChecklistProvider({ children }) {
   );
 
   // this will prevent the review dialog from getting triggered again
+  // because the list is empty until it reaches checkpoint state of recommended
+  // also make sure that this flag isn't getting toggled early.
   useEffect(() => {
     if (
       checkpointState === PPC_CHECKPOINT_STATE.ALL &&
-      highPriorityLength === 0
+      highPriorityLength === 0 &&
+      refreshOnInitialLoad
     ) {
       setIsHighPriorityEmpty(true);
     }
-  }, [checkpointState, highPriorityLength]);
+  }, [checkpointState, highPriorityLength, refreshOnInitialLoad]);
 
   const focusChecklistTab = useCallback(() => {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
