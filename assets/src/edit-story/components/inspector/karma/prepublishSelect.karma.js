@@ -57,31 +57,33 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     await fixture.events.click(canvas);
   }
 
-  async function duplicatePage() {
-    const duplicatePageButton = fixture.screen.getByRole('button', {
-      name: /Duplicate Page/,
+  async function addNewPage() {
+    const addNewPageButton = fixture.screen.getByRole('button', {
+      name: /Add New Page/,
     });
-    await fixture.events.click(duplicatePageButton, { clickCount: 1 });
+    await fixture.events.click(addNewPageButton, { clickCount: 1 });
   }
 
   async function enableRecommendedMessagesWith2Pages() {
-    await duplicatePage();
+    await addNewPage();
     await openPrepublishPanel();
     await waitFor(
       () => !fixture.editor.inspector.checklistPanel.recommended.disabled
     );
+    await fixture.events.sleep(500);
   }
 
   async function enableHighPriorityMessagesWith5Pages() {
-    await duplicatePage();
-    await duplicatePage();
-    await duplicatePage();
-    await duplicatePage();
-    await duplicatePage();
+    await addNewPage();
+    await addNewPage();
+    await addNewPage();
+    await addNewPage();
+    await addNewPage();
     await openPrepublishPanel();
     await waitFor(
       () => !fixture.editor.inspector.checklistPanel.highPriority.disabled
     );
+    await fixture.events.sleep(500);
   }
 
   describe('Prepublish checklist tab', () => {
@@ -120,7 +122,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(highPriorityPanel.disabled).toBeTrue();
     });
 
-    it('should open the recommended panel once the story reaches five pages', async () => {
+    it('should open the high priority panel once the story reaches five pages', async () => {
       await openPrepublishPanel();
 
       const recommendedPanel =
@@ -141,9 +143,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
       expect(recommendedIssue).not.toBeNull();
       expect(highPriorityIssue).not.toBeNull();
-
-      expect(recommendedPanel.disabled).toBeFalse();
-      expect(highPriorityPanel.disabled).toBeFalse();
     });
 
     it('should select the offending text elements', async () => {
@@ -243,7 +242,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         })
       );
 
-      await openPrepublishPanel();
       await enableRecommendedMessagesWith2Pages();
       await clickOnCanvas();
       let storyContext = await fixture.renderHook(() => useStory());
@@ -323,8 +321,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           },
         });
       });
-      await openPrepublishPanel();
+
       await enableRecommendedMessagesWith2Pages();
+      await fixture.events.sleep(500);
 
       const imageMissingAltTextRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
