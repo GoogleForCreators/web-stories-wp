@@ -24,6 +24,14 @@ import {
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import PanelTypes from '../../components/panels/design/types';
 
+export {
+  canFlip,
+  isMaskable,
+  isMedia,
+  hasEditMode,
+  editModeGrayout,
+} from '../media/constants';
+
 export const resizeRules = {
   ...mediaResizeRules,
 };

@@ -20,6 +20,14 @@ import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media/constants';
 import PanelTypes from '../../components/panels/design/types';
 
+export {
+  canFlip,
+  isMaskable,
+  isMedia,
+  hasEditMode,
+  editModeGrayout,
+} from '../media/constants';
+
 export { resizeRules } from '../media/constants';
 
 export const defaultAttributes = {

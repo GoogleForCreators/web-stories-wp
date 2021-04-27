@@ -24,13 +24,5 @@ export { default as LayerIcon } from './icon';
 export { default as LayerContent } from './layer';
 export { default as Display } from '../media/imageDisplay';
 export { default as TextContent } from '../media/textContent';
-export {
-  canFlip,
-  isMaskable,
-  isMedia,
-  hasEditMode,
-  editModeGrayout,
-  resizeRules,
-} from '../media/constants';
 
 export * from './constants';
