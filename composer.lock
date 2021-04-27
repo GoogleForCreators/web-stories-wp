@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-toolbox-php.git",
-                "reference": "907038ed6fc7f0140d8b8647ca8ec4727d4ae458"
+                "reference": "8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/907038ed6fc7f0140d8b8647ca8ec4727d4ae458",
-                "reference": "907038ed6fc7f0140d8b8647ca8ec4727d4ae458",
+                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e",
+                "reference": "8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
                 "issues": "https://github.com/ampproject/amp-toolbox-php/issues",
                 "source": "https://github.com/ampproject/amp-toolbox-php/tree/main"
             },
-            "time": "2021-04-23T01:27:00+00:00"
+            "time": "2021-04-25T07:16:15+00:00"
         },
         {
             "name": "ampproject/amp-wp",
@@ -80,12 +80,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "ae70adceb3a85423acd11887798e8a3f3a49894c"
+                "reference": "1bac57aba4e3b58351381b4967ab6ee9b9b00aa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/ae70adceb3a85423acd11887798e8a3f3a49894c",
-                "reference": "ae70adceb3a85423acd11887798e8a3f3a49894c",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/1bac57aba4e3b58351381b4967ab6ee9b9b00aa6",
+                "reference": "1bac57aba4e3b58351381b4967ab6ee9b9b00aa6",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +183,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-04-23T00:23:14+00:00"
+            "time": "2021-04-27T06:34:26+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -490,7 +490,7 @@
                 "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/master"
             },
-            "time": "2021-04-23T05:58:34+00:00"
+            "time": "2021-04-26T15:40:51+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -664,16 +664,16 @@
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "a2eef7f48e31a8c35305ed4bf576ef7a484d9f3c"
+                "reference": "90173cec6f4df2af9a31627f4880874d788459ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/a2eef7f48e31a8c35305ed4bf576ef7a484d9f3c",
-                "reference": "a2eef7f48e31a8c35305ed4bf576ef7a484d9f3c",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/90173cec6f4df2af9a31627f4880874d788459ab",
+                "reference": "90173cec6f4df2af9a31627f4880874d788459ab",
                 "shasum": ""
             },
             "require": {
@@ -712,7 +712,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2021-04-19T16:40:16+00:00"
+            "time": "2021-04-23T14:52:17+00:00"
         },
         {
             "name": "composer/xdebug-handler",
@@ -1440,22 +1440,22 @@
         },
         {
             "name": "phpmd/phpmd",
-            "version": "2.9.1",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "ce10831d4ddc2686c1348a98069771dd314534a8"
+                "reference": "58ef9e746a1ab50ad3360d5d301e1229ed2612cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/ce10831d4ddc2686c1348a98069771dd314534a8",
-                "reference": "ce10831d4ddc2686c1348a98069771dd314534a8",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/58ef9e746a1ab50ad3360d5d301e1229ed2612cb",
+                "reference": "58ef9e746a1ab50ad3360d5d301e1229ed2612cb",
                 "shasum": ""
             },
             "require": {
                 "composer/xdebug-handler": "^1.0",
                 "ext-xml": "*",
-                "pdepend/pdepend": "^2.7.1",
+                "pdepend/pdepend": "^2.9.1",
                 "php": ">=5.3.9"
             },
             "require-dev": {
@@ -1463,7 +1463,7 @@
                 "ext-json": "*",
                 "ext-simplexml": "*",
                 "gregwar/rst": "^1.0",
-                "mikey179/vfsstream": "^1.6.4",
+                "mikey179/vfsstream": "^1.6.8",
                 "phpunit/phpunit": "^4.8.36 || ^5.7.27",
                 "squizlabs/php_codesniffer": "^2.0"
             },
@@ -1511,7 +1511,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/phpmd",
                 "issues": "https://github.com/phpmd/phpmd/issues",
-                "source": "https://github.com/phpmd/phpmd/tree/2.9.1"
+                "source": "https://github.com/phpmd/phpmd/tree/2.10.0"
             },
             "funding": [
                 {
@@ -1519,7 +1519,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-23T22:06:32+00:00"
+            "time": "2021-04-26T18:44:44+00:00"
         },
         {
             "name": "phpspec/prophecy",
