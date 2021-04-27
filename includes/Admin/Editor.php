@@ -32,6 +32,7 @@ use Google\Web_Stories\Locale;
 use Google\Web_Stories\Meta_Boxes;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Register_Font;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Assets;
@@ -198,9 +199,7 @@ class Editor extends Service_Base {
 
 		// Force media model to load.
 		wp_enqueue_media();
-
 		$this->register_font->register();
-
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
 		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
@@ -208,7 +207,6 @@ class Editor extends Service_Base {
 		}
 
 		$this->enqueue_script( self::SCRIPT_HANDLE, $script_dependencies );
-
 		$font_handle = $this->register_font->get_handle();
 		$this->enqueue_style( self::SCRIPT_HANDLE, [ $font_handle ] );
 
@@ -259,16 +257,12 @@ class Editor extends Service_Base {
 
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
-
-		$user = wp_get_current_user();
+		$user        = wp_get_current_user();
 		/** This filter is documented in wp-admin/includes/post.php */
-		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
-
-		$nonce = wp_create_nonce( 'wp_rest' );
-
-		$mime_types       = $this->get_allowed_mime_types();
-		$mime_image_types = $this->get_allowed_image_mime_types();
-
+		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
+		$nonce                    = wp_create_nonce( 'wp_rest' );
+		$mime_types               = $this->get_allowed_mime_types();
+		$mime_image_types         = $this->get_allowed_image_mime_types();
 		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
