@@ -134,3 +134,29 @@ export function videoElementLength(element) {
   }
   return undefined;
 }
+
+/**
+ * Check a if a video element's been optimized.
+ * If is not optimized, return guidance. Otherwise return undefined.
+ *
+ * @param {Element} element The element being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
+export function videoElementOptimized(element) {
+  const videoArea =
+    (element.resource.sizes.full?.height || 0) *
+    (element.resource.sizes.full?.width || 0);
+  const isLargeVideo = videoArea >= 1080 * 1920;
+  if (isLargeVideo && !element.resource?.isOptimized) {
+    return {
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      elementId: element.id,
+      message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.HELPER_TEXT({
+        src: element.resource.poster,
+        alt: element.alt || element.resource.alt,
+      }),
+    };
+  }
+  return undefined;
+}
