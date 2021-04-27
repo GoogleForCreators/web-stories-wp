@@ -37,12 +37,7 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Stories_Lock_Controller extends Lock_Controller {
 	/**
-	 * Prepares a single lock output for response.
-	 *
-	 * @param array|false     $lock Lock value, default to false is not set.
-	 * @param WP_REST_Request $request Request object.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object.
+	 * Stories_Lock_Controller constructor.
 	 */
 	public function __construct() {
 		parent::__construct( Story_Post_Type::POST_TYPE_SLUG );

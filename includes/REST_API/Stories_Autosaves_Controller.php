@@ -35,56 +35,7 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Stories_Autosaves_Controller extends Autosaves_Controller {
 	/**
-	 * Registers the routes for autosaves.
-	 *
-	 * Used to override the create_item() callback.
-	 *
-	 * @see register_rest_route()
-	 *
-	 * @return void
-	 */
-	public function register_routes() {
-		parent::register_routes();
-
-		register_rest_route(
-			$this->rest_namespace,
-			'/' . $this->parent_base . '/(?P<id>[\d]+)/autosaves',
-			[
-				'args'   => [
-					'parent' => [
-						'description' => __( 'The ID for the parent of the object.', 'web-stories' ),
-						'type'        => 'integer',
-					],
-				],
-				[
-					'methods'             => WP_REST_Server::READABLE,
-					'callback'            => [ $this, 'get_items' ],
-					'permission_callback' => [ $this, 'get_items_permissions_check' ],
-					'args'                => $this->get_collection_params(),
-				],
-				[
-					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => [ $this, 'create_item' ],
-					'permission_callback' => [ $this, 'create_item_permissions_check' ],
-					'args'                => $this->parent_controller->get_endpoint_args_for_item_schema( WP_REST_Server::EDITABLE ),
-				],
-				'schema' => [ $this, 'get_public_item_schema' ],
-			],
-			true // required so that the existing route is overridden.
-		);
-	}
-
-	/**
-	 * Prepares a single template output for response.
-	 *
-	 * Adds post_content_filtered field to output.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param WP_Post         $post Post object.
-	 * @param WP_REST_Request $request Request object.
-	 *
-	 * @return WP_REST_Response Response object.
+	 * Stories_Autosaves_Controller constructor.
 	 */
 	public function __construct() {
 		parent::__construct( Story_Post_Type::POST_TYPE_SLUG );
