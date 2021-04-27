@@ -23,7 +23,8 @@ export const PPC_CHECKPOINT_STATE = {
 export const PPC_CHECKPOINT_ACTION = {
   ON_INITIAL_ELEMENT_ADDED: 'story is no longer empty',
   ON_PUBLISH_CLICKED: 'publish button is pressed',
-  ON_STORY_HAS_5_PAGES: 'story has minimal suggested amount of pages',
+  ON_STORY_HAS_2_PAGES: "story 'recommended' section enabled",
+  ON_STORY_HAS_5_PAGES: "story 'high priority' section enabled",
 };
 
 const machine = {
@@ -31,6 +32,8 @@ const machine = {
     [PPC_CHECKPOINT_ACTION.ON_INITIAL_ELEMENT_ADDED]:
       PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
     [PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED]: PPC_CHECKPOINT_STATE.ALL,
+    [PPC_CHECKPOINT_ACTION.ON_STORY_HAS_2_PAGES]:
+      PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
   },
   [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: {
     [PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES]: PPC_CHECKPOINT_STATE.ALL,

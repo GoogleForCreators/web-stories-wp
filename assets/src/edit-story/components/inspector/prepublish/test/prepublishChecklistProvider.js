@@ -26,7 +26,7 @@ import PrepublishChecklistProvider from '../prepublishChecklistProvider';
 import usePrepublishChecklist from '../usePrepublishChecklist';
 import { LayoutProvider } from '../../../../app/layout';
 import StoryContext from '../../../../app/story/context';
-import { StoryTriggersProvider } from '../../../../app/story/storyTriggers/storyTriggersProvider';
+import { StoryTriggersProvider } from '../../../../app/story/storyTriggers';
 import { PAGE_RATIO, PAGE_WIDTH } from '../../../../constants';
 import { createPage } from '../../../../elements';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
