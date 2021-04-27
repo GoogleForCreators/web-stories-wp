@@ -73,10 +73,13 @@ describe('Checklist Tab integration', () => {
     // Click checklist tab
     await fixture.events.click(checklistTab);
 
-    // Open the recommended dropdown
-    await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.recommended
-    );
+    // Open the recommended checklist
+    const addNewPageButton = fixture.screen.getByRole('button', {
+      name: /Add New Page/,
+    });
+    await fixture.events.click(addNewPageButton, { clickCount: 1 });
+    await fixture.events.sleep(500);
+
     const toggle =
       fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle;
     await waitFor(() => toggle);
@@ -128,10 +131,12 @@ describe('Checklist Tab integration - user video optimization setting enabled pr
     // Click checklist tab
     await fixture.events.click(checklistTab);
 
-    // Open the recommended dropdown
-    await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.recommended
-    );
+    // Open the recommended checklist
+    const addNewPageButton = fixture.screen.getByRole('button', {
+      name: /Add New Page/,
+    });
+    await fixture.events.click(addNewPageButton, { clickCount: 1 });
+    await fixture.events.sleep(500);
 
     expect(
       fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle

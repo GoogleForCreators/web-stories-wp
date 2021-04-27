@@ -35,7 +35,7 @@ import {
 } from './styles';
 
 const AutoVideoOptimization = ({
-  areVideosAutoOptimized = false,
+  areVideosAutoOptimized,
   onAutoOptimizeVideoClick,
 }) => {
   const { dashboardSettingsLink } = useConfig();
@@ -71,7 +71,7 @@ const AutoVideoOptimization = ({
         <StyledToggle
           id="automatic-video-optimization-toggle"
           aria-label={__('Enable automatic video optimization', 'web-stories')}
-          checked={areVideosAutoOptimized}
+          checked={areVideosAutoOptimized || false}
           onChange={onAutoOptimizeVideoClick}
         />
         <DescriptionText
