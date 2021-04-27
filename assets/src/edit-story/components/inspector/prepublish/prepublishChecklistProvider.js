@@ -16,7 +16,14 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect, useMemo, useReducer } from 'react';
+import {
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -91,6 +98,12 @@ function PrepublishChecklistProvider({ children }) {
     }
   }, [handleRefreshList, refreshOnInitialLoad, refreshOnPageSizeChange]);
 
+  useEffect(() => {
+    if (story.status === 'publish') {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED);
+    }
+  }, [story]);
+
   useStoryTriggerListener(
     STORY_EVENTS.onSecondPageAdded,
     useCallback(() => {
@@ -123,15 +136,20 @@ function PrepublishChecklistProvider({ children }) {
   // this will prevent the review dialog from getting triggered again
   // because the list is empty until it reaches checkpoint state of recommended
   // also make sure that this flag isn't getting toggled early.
+  const isPastInitialLoad = useRef(false);
   useEffect(() => {
-    if (
+    if (refreshOnInitialLoad) {
+      isPastInitialLoad.current = true;
+    }
+  });
+  useEffect(() => {
+    const highPriorityIsEmpty =
       checkpointState === PPC_CHECKPOINT_STATE.ALL &&
       highPriorityLength === 0 &&
-      refreshOnInitialLoad
-    ) {
-      setIsHighPriorityEmpty(true);
-    }
-  }, [checkpointState, highPriorityLength, refreshOnInitialLoad]);
+      isPastInitialLoad.current;
+
+    setIsHighPriorityEmpty(highPriorityIsEmpty);
+  }, [checkpointState, highPriorityLength, isPastInitialLoad]);
 
   const focusChecklistTab = useCallback(() => {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
