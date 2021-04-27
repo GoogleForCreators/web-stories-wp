@@ -26,12 +26,11 @@ export class ChecklistPanel extends Container {
   constructor(node, path) {
     super(node, path);
   }
+  get highPriority() {
+    return this.getByRole('button', { name: /High Priority/ });
+  }
 
   get recommended() {
     return this.getByRole('button', { name: /Recommended/ });
-  }
-
-  get highPriority() {
-    return this.getByRole('button', { name: /High Priority/ });
   }
 }

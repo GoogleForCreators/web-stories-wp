@@ -21,6 +21,13 @@ use Google\Web_Stories\Tests\Capabilities_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
 
+/**
+ * Class Embed_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
+ * @coversDefaultClass  Google\Web_Stories\REST_API\Embed_Controller
+ */
 class Embed_Controller extends \WP_Test_REST_TestCase {
 	use Capabilities_Setup;
 	/**
