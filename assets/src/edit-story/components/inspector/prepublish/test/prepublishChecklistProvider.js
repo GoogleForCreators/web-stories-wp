@@ -92,15 +92,14 @@ function setup({ pageCount = 1 }) {
 }
 
 describe('prepublishChecklistProvider', () => {
-  it(`should begin a story at ${PPC_CHECKPOINT_STATE.UNAVAILABLE}`, async () => {
+  // TODO this should be set to UNAVAILABLE once blank story trigger is ready
+  it(`should begin a story at '${PPC_CHECKPOINT_STATE.ALL}'`, async () => {
     const { result } = setup({ pageCount: 1 });
 
     await act(async () => {
       await result.current.refreshChecklist();
     });
 
-    expect(result.current.currentCheckpoint).toBe(
-      PPC_CHECKPOINT_STATE.UNAVAILABLE
-    );
+    expect(result.current.currentCheckpoint).toBe(PPC_CHECKPOINT_STATE.ALL);
   });
 });

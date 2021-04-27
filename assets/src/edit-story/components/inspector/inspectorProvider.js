@@ -25,14 +25,16 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons, useResizeEffect } from '../../../design-system';
+import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
-import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
+import PrepublishInspector, {
+  usePrepublishChecklist,
+  ChecklistIcon,
+} from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
@@ -46,7 +48,7 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
+  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
     500
@@ -59,16 +61,6 @@ function InspectorProvider({ children }) {
       setTab(highlightedTab);
     }
   }, [highlightedTab]);
-
-  const prepublishAlert = useCallback(
-    () =>
-      checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
-        <Icons.ExclamationOutline className="alert error" />
-      ) : (
-        <Icons.ExclamationOutline className="alert warning" />
-      ),
-    [checklist]
-  );
 
   const inspectorRef = useRef(null);
 
@@ -109,6 +101,11 @@ function InspectorProvider({ children }) {
       setTab(DESIGN);
     }
   }, [currentPage]);
+
+  const ChecklistTabIcon = useCallback(
+    () => <ChecklistIcon checkpoint={currentCheckpoint} className="alert" />,
+    [currentCheckpoint]
+  );
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
@@ -157,7 +154,7 @@ function InspectorProvider({ children }) {
         },
 
         {
-          icon: checklist.length > 0 ? prepublishAlert : undefined,
+          icon: ChecklistTabIcon,
           id: PREPUBLISH,
           title: __('Checklist', 'web-stories'),
           Pane: PrepublishInspector,
