@@ -17,8 +17,4 @@ export const STORY_EVENTS = {
   onInitialElementAdded: 'onInitialElementAdded',
   onSecondPageAdded: 'onSecondPageAdded',
   onFifthPageAdded: 'onFifthPageAdded',
-
-  // use this event when using `useStoryTriggerListener` but
-  // there are cases where the callback should not be triggered.
-  NULL: 'ignore-this-event',
 };

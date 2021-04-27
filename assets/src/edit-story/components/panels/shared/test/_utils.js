@@ -29,7 +29,6 @@ import theme from '../../../../theme';
 import useHandlers from '../../../../utils/useHandlers';
 import FormContext from '../../../form/context';
 import updateProperties from '../../../inspector/design/updateProperties';
-import { StoryTriggersProvider } from '../../../../app/story/storyTriggers';
 
 function TestPanel({
   panelType,
@@ -111,16 +110,14 @@ export function renderPanel(panelType, selectedElements, wrapperComp) {
 
   const result = render(
     <ThemeProvider theme={theme}>
-      <StoryTriggersProvider>
-        <TestPanel
-          panelType={panelType}
-          wrapperComp={wrapperComp}
-          selectedElements={selectedElements}
-          pushUpdate={pushUpdate}
-          pushUpdateForObject={pushUpdateForObject}
-          setPresubmitHandlers={setPresubmitHandlers}
-        />
-      </StoryTriggersProvider>
+      <TestPanel
+        panelType={panelType}
+        wrapperComp={wrapperComp}
+        selectedElements={selectedElements}
+        pushUpdate={pushUpdate}
+        pushUpdateForObject={pushUpdateForObject}
+        setPresubmitHandlers={setPresubmitHandlers}
+      />
     </ThemeProvider>
   );
   return {

@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import { StoryTriggersProvider } from '../../../../../app/story/storyTriggers';
 import { renderWithTheme } from '../../../../../testUtils';
 import ExcerptPanel, { EXCERPT_MAX_LENGTH } from '../excerpt';
 
@@ -35,11 +34,9 @@ function setupPanel() {
   };
 
   const { getByRole } = renderWithTheme(
-    <StoryTriggersProvider>
-      <StoryContext.Provider value={storyContextValue}>
-        <ExcerptPanel />
-      </StoryContext.Provider>
-    </StoryTriggersProvider>
+    <StoryContext.Provider value={storyContextValue}>
+      <ExcerptPanel />
+    </StoryContext.Provider>
   );
 
   return {

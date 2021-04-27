@@ -22,7 +22,6 @@ import { fireEvent, waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import { StoryTriggersProvider } from '../../../../../app/story/storyTriggers';
 import { renderWithTheme } from '../../../../../testUtils';
 import PageAdvancementPanel from '../pageAdvancement';
 
@@ -40,11 +39,9 @@ function setupPanel(configs = {}) {
     actions: { updateStory },
   };
   const { getByRole } = renderWithTheme(
-    <StoryTriggersProvider>
-      <StoryContext.Provider value={storyContextValue}>
-        <PageAdvancementPanel />
-      </StoryContext.Provider>
-    </StoryTriggersProvider>
+    <StoryContext.Provider value={storyContextValue}>
+      <PageAdvancementPanel />
+    </StoryContext.Provider>
   );
   return {
     getByRole,

@@ -27,11 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
-import {
-  STORY_EVENTS,
-  useStory,
-  useStoryTriggerListener,
-} from '../../../app/story';
+import { useStory } from '../../../app/story';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -55,7 +51,6 @@ function Panel({
   ariaHidden = false,
   isPersistable = true,
   isToggleDisabled,
-  expandOnTrigger = STORY_EVENTS.NULL,
   ...rest
 }) {
   const { selectedElementIds } = useStory(
@@ -193,15 +188,6 @@ function Panel({
   const panelTitleId = `panel-title-${name}-${uuidv4()}`;
   const panelTitleReadable = `panel-title-${name}`;
 
-  useStoryTriggerListener(
-    expandOnTrigger,
-    useCallback(() => {
-      if (isCollapsed) {
-        expand(true);
-      }
-    }, [isCollapsed, expand])
-  );
-
   const contextValue = {
     state: {
       height,
@@ -250,7 +236,6 @@ Panel.propTypes = {
   ariaLabel: PropTypes.string,
   ariaHidden: PropTypes.bool,
   isPersistable: PropTypes.bool,
-  expandOnTrigger: PropTypes.oneOf(Object.values(STORY_EVENTS)),
 };
 
 export default Panel;

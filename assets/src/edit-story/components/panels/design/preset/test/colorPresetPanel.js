@@ -36,7 +36,6 @@ import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 import createSolid from '../../../../../utils/createSolid';
 import { PRESET_TYPES } from '../constants';
-import { StoryTriggersProvider } from '../../../../../app/story/storyTriggers';
 
 jest.mock('../utils');
 
@@ -87,11 +86,9 @@ function setupPanel(extraStylePresets, extraStateProps, extraStoryPresets) {
     queryByText,
     queryAllByLabelText,
   } = renderWithTheme(
-    <StoryTriggersProvider>
-      <StoryContext.Provider value={storyContextValue}>
-        <ColorPresetPanel pushUpdate={pushUpdate} />
-      </StoryContext.Provider>
-    </StoryTriggersProvider>
+    <StoryContext.Provider value={storyContextValue}>
+      <ColorPresetPanel pushUpdate={pushUpdate} />
+    </StoryContext.Provider>
   );
   return {
     getAllByRole,
