@@ -31,30 +31,32 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { usePrepublishChecklist } from '../../inspector/prepublish';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
 import {
-  Icons,
   Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../../../design-system';
+import {
+  ChecklistIcon,
+  usePrepublishChecklist,
+  PPC_CHECKPOINT_STATE,
+} from '../../inspector/prepublish';
+
 import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`
-  padding: 4px 8px;
+  padding: 4px 6px;
+  height: 32px;
   svg {
-    margin-right: -2px;
-    margin-left: 2px;
+    width: 24px;
+    height: auto;
   }
 `;
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
-  const hasErrors = checklist.some(
-    ({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type
-  );
+  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
+
   const button = (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
@@ -64,19 +66,26 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       {...buttonProps}
     >
       {text}
-      {hasErrors && <Icons.ExclamationOutline height={24} width={24} />}
+      <ChecklistIcon checkpoint={currentCheckpoint} />
     </Button>
   );
 
-  return hasErrors ? (
-    <Tooltip
-      title={__('There are items in the checklist to resolve', 'web-stories')}
-      hasTail
-    >
+  const TOOLTIP_TEXT = {
+    [PPC_CHECKPOINT_STATE.ALL]: __(
+      'Make updates before publishing to improve discoverability and performance on search engines',
+      'web-stories'
+    ),
+    [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: __(
+      'Review checklist to improve performance before publishing',
+      'web-stories'
+    ),
+    [PPC_CHECKPOINT_STATE.UNAVAILABLE]: null,
+  };
+
+  return (
+    <Tooltip title={TOOLTIP_TEXT[currentCheckpoint]} hasTail>
       {button}
     </Tooltip>
-  ) : (
-    button
   );
 }
 

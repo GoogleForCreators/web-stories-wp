@@ -22,6 +22,10 @@ use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
+ * Class Status_Check_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Status_Check_Controller
  */
 class Status_Check_Controller extends \WP_Test_REST_TestCase {

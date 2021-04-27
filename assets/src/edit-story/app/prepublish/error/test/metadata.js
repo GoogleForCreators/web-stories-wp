@@ -29,7 +29,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     const testMissingPoster = metadataGuidelines.storyPosterAttached(testStory);
     expect(testMissingPoster).not.toBeUndefined();
     expect(testMissingPoster.message).toMatchInlineSnapshot(
-      `"Add cover image"`
+      `"Add poster image"`
     );
     expect(testMissingPoster.storyId).toStrictEqual(testStory.id);
   });
@@ -54,52 +54,14 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testHappy).toBeUndefined();
     expect(testEmptyString).not.toBeUndefined();
     expect(testUndefined).not.toBeUndefined();
-    expect(testUndefined.message).toMatchInlineSnapshot(`"Add story title"`);
-    expect(testEmptyString.message).toMatchInlineSnapshot(`"Add story title"`);
+    expect(testUndefined.message).toMatchInlineSnapshot(
+      `"Add Web Story title"`
+    );
+    expect(testEmptyString.message).toMatchInlineSnapshot(
+      `"Add Web Story title"`
+    );
     expect(testUndefined.storyId).toStrictEqual(testUndefinedTitleStory.id);
     expect(testEmptyString.storyId).toStrictEqual(testEmptyStringStory.id);
-  });
-
-  it('should return an error-type guidance message if there is a link in the page attachment region', () => {
-    const elementInRegion = {
-      x: 35,
-      y: 400,
-      width: 188,
-      height: 141,
-      rotationAngle: 0,
-      link: undefined,
-    };
-    const testPageAttachment = {
-      url: 'http://bomb.com',
-    };
-    const testNoLink = metadataGuidelines.linkInPageAttachmentRegion({
-      pageAttachment: testPageAttachment,
-      elements: [elementInRegion],
-    });
-    const testNoAttachment = metadataGuidelines.linkInPageAttachmentRegion({
-      pageAttachment: undefined,
-      elements: [{ ...elementInRegion, link: { url: 'bomb.com' } }],
-    });
-    const testLinkInPageAttachmentStory = {
-      id: 890,
-      pageAttachment: testPageAttachment,
-      elements: [{ ...elementInRegion, link: { url: 'bomb.com ' } }],
-    };
-    const testLinkInPageAttachment = metadataGuidelines.linkInPageAttachmentRegion(
-      testLinkInPageAttachmentStory
-    );
-    expect(testNoLink).toBeUndefined();
-    expect(testNoAttachment).toBeUndefined();
-    expect(testLinkInPageAttachment).not.toBeUndefined();
-    expect(testLinkInPageAttachment.message).toMatchInlineSnapshot(
-      `"Turn off Page Attachment or remove conflicting links"`
-    );
-    expect(testLinkInPageAttachment.pageId).toStrictEqual(
-      testLinkInPageAttachmentStory.id
-    );
-    expect(testLinkInPageAttachment.elements).toStrictEqual(
-      testLinkInPageAttachmentStory.elements
-    );
   });
 
   // todo: The story's poster and publisher url are not yet returned by the api. See #5105.
@@ -138,7 +100,9 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth).not.toBeUndefined();
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
-    expect(test.message).toMatchInlineSnapshot(`"Upload a bigger logo"`);
+    expect(test.message).toMatchInlineSnapshot(
+      `"Increase size of publisher logo to at least 96x96px"`
+    );
     expect(test.storyId).toStrictEqual(testStory.id);
   });
 
@@ -185,7 +149,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(
-      `"Choose a bigger image for your poster image"`
+      `"Increase poster image size to at least 640x853px"`
     );
     expect(test.storyId).toStrictEqual(testStory.id);
   });
@@ -207,7 +171,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testHappy).toBeUndefined();
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(
-      `"Choose a poster image with the correct aspect ratio"`
+      `"Correct poster image aspect ratio to 640x853px"`
     );
     expect(test.storyId).toStrictEqual(testStory.id);
   });

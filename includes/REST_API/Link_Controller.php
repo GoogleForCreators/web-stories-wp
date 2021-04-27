@@ -28,10 +28,11 @@ namespace Google\Web_Stories\REST_API;
 
 use DOMElement;
 use DOMNodeList;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Document_Parser;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
-use WP_REST_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -41,8 +42,9 @@ use WP_REST_Server;
  *
  * Class Link_Controller
  */
-class Link_Controller extends WP_REST_Controller {
+class Link_Controller extends REST_Controller {
 	use Document_Parser;
+	use Post_Type;
 	/**
 	 * Constructor.
 	 */
@@ -236,7 +238,7 @@ class Link_Controller extends WP_REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_link_permissions_check() {
-		if ( ! current_user_can( 'edit_web-stories' ) ) {
+		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 

@@ -26,7 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Pane } from '../shared';
-import { DropDown } from '../../../../../design-system';
+import { Select } from '../../../form';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
@@ -45,19 +45,9 @@ export const PaneInner = styled.div`
 `;
 
 const DropDownWrapper = styled.div`
-  width: 170px;
   text-align: left;
   height: 36px;
-  margin: 28px 0 17px 1em;
-`;
-
-// @todo Replace this when SimpleDropdown gets ready.
-const StyledDropDown = styled(DropDown)`
-  background-color: transparent;
-  border: 0;
-  button {
-    border: none;
-  }
+  margin: 28px 16px 17px;
 `;
 
 const DEFAULT = 'default';
@@ -91,14 +81,12 @@ function PageTemplatesPane(props) {
       <PaneInner>
         {customPageTemplates && (
           <DropDownWrapper>
-            <StyledDropDown
+            <Select
               options={options}
               selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
               onMenuItemClick={(evt, value) =>
                 setShowDefaultTemplates(value === DEFAULT)
               }
-              isInline
-              hasSearch={false}
               aria-label={__('Select templates type', 'web-stories')}
             />
           </DropDownWrapper>

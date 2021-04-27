@@ -102,7 +102,7 @@ const Collapse = styled.button`
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
 
@@ -150,6 +150,7 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
+  isToggleDisabled,
   ...props
 }) {
   const {
@@ -202,6 +203,13 @@ function Title({
   ) : (
     <Icons.ChevronDownSmall />
   );
+
+  // There are 2 props that could affect the panel being able to toggle.
+  // canCollapse enforces a toggle panel that is always expanded.
+  // isToggleDisabled leaves the panel in whatever state it currently is.
+  const preserveToggleCollapseState = !canCollapse || isToggleDisabled;
+  const showToggleIcon = canCollapse && !isToggleDisabled;
+
   return (
     <Header
       isPrimary={isPrimary}
@@ -223,7 +231,8 @@ function Title({
       )}
       <Toggle
         toggle={toggle}
-        disabled={!canCollapse}
+        disabled={preserveToggleCollapseState}
+        isToggleDisabled={isToggleDisabled}
         tabIndex={ariaHidden ? -1 : 0}
         aria-label={ariaLabel}
         aria-expanded={!isCollapsed}
@@ -231,7 +240,7 @@ function Title({
         isCollapsed={isCollapsed}
         hasBadge={hasBadge}
       >
-        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
+        <IconWrapper>{showToggleIcon && toggleIcon}</IconWrapper>
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
@@ -249,6 +258,7 @@ Title.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node,
   hasBadge: PropTypes.bool,
+  isToggleDisabled: PropTypes.bool,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,
