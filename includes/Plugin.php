@@ -99,7 +99,16 @@ class Plugin extends ServiceBasedPlugin {
 		'tracking'                     => Tracking::class,
 		'tinymce'                      => TinyMCE::class,
 		'register.widget'              => Register_Widget::class,
-		'rest_api_factory'             => REST_API_Factory::class,
+		'rest.embed_controller'        => REST_API\Embed_Controller::class,
+		'rest.link_controller'         => REST_API\Link_Controller::class,
+		'rest.status_check_controller' => REST_API\Status_Check_Controller::class,
+		'rest.stories_autosave'        => REST_API\Stories_Autosaves_Controller::class,
+		'rest.stories_lock'            => REST_API\Stories_Lock_Controller::class,
+		'rest.media'                   => REST_API\Stories_Media_Controller::class,
+		'rest.settings'                => REST_API\Stories_Settings_Controller::class,
+		'rest.users'                   => REST_API\Stories_Users_Controller::class,
+		'rest.template_autosave'       => REST_API\Template_Autosaves_Controller::class,
+		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
 		'user_preferences'             => User_Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];
@@ -162,6 +171,7 @@ class Plugin extends ServiceBasedPlugin {
 			Integrations\Site_Kit::class,
 			Analytics::class,
 			Decoder::class,
+			Register_Font::class,
 		];
 	}
 

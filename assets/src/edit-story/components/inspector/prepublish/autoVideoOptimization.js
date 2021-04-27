@@ -35,7 +35,7 @@ import {
 } from './styles';
 
 const AutoVideoOptimization = ({
-  areVideosAutoOptimized,
+  areVideosAutoOptimized = false,
   onAutoOptimizeVideoClick,
 }) => {
   const { dashboardSettingsLink } = useConfig();
