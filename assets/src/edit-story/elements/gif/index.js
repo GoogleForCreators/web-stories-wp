@@ -24,13 +24,12 @@ export { default as Output } from './output';
 export { default as LayerIcon } from './icon';
 export { default as TextContent } from '../media/textContent';
 export { default as Display } from '../media/imageDisplay';
-
 export {
   canFlip,
   isMaskable,
   isMedia,
   hasEditMode,
   editModeGrayout,
-} from '../media';
+} from '../media/constants';
 
 export * from './constants';

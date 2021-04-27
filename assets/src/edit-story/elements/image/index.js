@@ -31,6 +31,6 @@ export {
   hasEditMode,
   editModeGrayout,
   resizeRules,
-} from '../media';
+} from '../media/constants';
 
 export * from './constants';

@@ -25,5 +25,12 @@ export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 export { default as onDropHandler } from './onDropHandler';
+export {
+  canFlip,
+  isMaskable,
+  isMedia,
+  hasEditMode,
+  editModeGrayout,
+} from '../media/constants';
 
 export * from './constants';
