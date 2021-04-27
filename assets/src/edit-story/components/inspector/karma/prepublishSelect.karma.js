@@ -47,7 +47,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     await fixture.events.click(checklistTab);
     await waitFor(() => fixture.editor.inspector.checklistPanel);
     // just add a small wait for the checklist to compute its items
-    await fixture.events.sleep(500);
+    await waitFor(
+      () => !fixture.editor.inspector.checklistPanel.recommended.disabled
+    );
   }
 
   async function openRecommendedPanel() {
@@ -60,6 +62,25 @@ describe('Pre-publish checklist select offending elements onClick', () => {
   async function clickOnCanvas() {
     const canvas = fixture.querySelector('[data-testid="fullbleed"]');
     await fixture.events.click(canvas);
+  }
+
+  async function duplicatePage() {
+    const duplicatePageButton = fixture.screen.getByRole('button', {
+      name: /Duplicate Page/,
+    });
+    await fixture.events.click(duplicatePageButton, { clickCount: 1 });
+  }
+
+  async function enableHighPriorityMessagesWith5Pages() {
+    await duplicatePage();
+    await duplicatePage();
+    await duplicatePage();
+    await duplicatePage();
+    await duplicatePage();
+    await openPrepublishPanel();
+    await waitFor(
+      () => !fixture.editor.inspector.checklistPanel.highPriority.disabled
+    );
   }
 
   describe('Prepublish checklist tab', () => {
@@ -173,6 +194,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should select the element with the keyboard', async () => {
+      await enableHighPriorityMessagesWith5Pages();
       const tooSmallLinkElement = await fixture.act(() =>
         insertElement('text', {
           id: 'elementid',
@@ -187,24 +209,22 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
 
       await clickOnCanvas();
-      await fixture.events.sleep(500);
       await openPrepublishPanel();
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(
         tooSmallLinkElement.id
       );
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('Enter');
-      await fixture.events.sleep(500);
 
+      await fixture.events.sleep(500);
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.sleep(500);
 
       const linkTooSmallRow = fixture.screen.getByText(
         MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
@@ -252,6 +272,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should open the document inspector panel', async () => {
+      await enableHighPriorityMessagesWith5Pages();
       await fixture.events.click(fixture.editor.library.media.item(0));
 
       let storyContext = await fixture.renderHook(() => useStory());

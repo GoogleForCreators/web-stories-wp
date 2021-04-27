@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -24,11 +24,11 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
+import { Icons, useContextSelector } from '../../../../design-system';
 import { useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
-import { SimplePanel } from '../../panels/panel';
+import { SimplePanel, panelContext } from '../../panels/panel';
 import {
   DISABLED_HIGH_PRIORITY_CHECKPOINTS,
   DISABLED_RECOMMENDED_CHECKPOINTS,
@@ -46,6 +46,37 @@ import {
   Row,
 } from './styles';
 import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
+
+const Entries = ({
+  items,
+  pageItems,
+  renderRow,
+  renderPageGroupedRow,
+  disabled,
+}) => {
+  const expandPanel = useContextSelector(
+    panelContext,
+    ({ actions }) => actions.expand
+  );
+  useEffect(() => {
+    if (!disabled) {
+      expandPanel();
+    }
+  }, [disabled, expandPanel]);
+  return (
+    <>
+      {items.map(renderRow)}
+      {Object.entries(pageItems || {}).map(renderPageGroupedRow)}
+    </>
+  );
+};
+Entries.propTypes = {
+  items: PropTypes.array,
+  pageItems: PropTypes.object,
+  renderRow: PropTypes.function,
+  renderPageGroupedRow: PropTypes.function,
+  disabled: PropTypes.bool,
+};
 
 const ChecklistTab = ({ checklist, currentCheckpoint }) => {
   const { isRTL } = useConfig();
@@ -206,7 +237,7 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
   ) : (
     <>
       <SimplePanel
-        collapsedByDefault={isHighPriorityDisabled}
+        collapsedByDefault={false}
         isToggleDisabled={isHighPriorityDisabled}
         name="checklist"
         hasBadge
@@ -222,11 +253,17 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
         }
         ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
       >
-        {highPriority.map(renderRow)}
-        {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
+        <Entries
+          items={highPriority}
+          pageItems={pages.highPriority}
+          renderRow={renderRow}
+          renderPageGroupedRow={renderPageGroupedRow}
+          disabled={isHighPriorityDisabled}
+        />
       </SimplePanel>
       <SimplePanel
         isToggleDisabled={isRecommendedDisabled}
+        collapsedByDefault={false}
         name="checklist"
         hasBadge
         title={
@@ -241,8 +278,13 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
         }
         ariaLabel={TEXT.RECOMMENDED_TITLE}
       >
-        {recommended.map(renderRow)}
-        {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
+        <Entries
+          items={recommended}
+          pageItems={pages.recommended}
+          renderRow={renderRow}
+          renderPageGroupedRow={renderPageGroupedRow}
+          disabled={isRecommendedDisabled}
+        />
       </SimplePanel>
     </>
   );
