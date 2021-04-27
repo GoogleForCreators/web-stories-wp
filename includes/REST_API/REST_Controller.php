@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Stories_Users_Controller
+ * Class REST_Controller
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -24,29 +24,20 @@
  * limitations under the License.
  */
 
+
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use WP_REST_Users_Controller;
+use WP_REST_Controller;
 
 /**
- * Stories_Users_Controller class.
+ * Class REST_Controller
+ *
+ * @package Google\Web_Stories\REST_API
  */
-class Stories_Users_Controller extends WP_REST_Users_Controller implements Service, Delayed, Registerable {
-	/**
-	 * Constructor.
-	 *
-	 * Override the namespace.
-	 *
-	 * @since 1.2.0
-	 */
-	public function __construct() {
-		parent::__construct();
-		$this->namespace = 'web-stories/v1';
-	}
-
+abstract class REST_Controller extends WP_REST_Controller implements Service, Delayed, Registerable {
 	/**
 	 * Register the service.
 	 *
