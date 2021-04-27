@@ -16,42 +16,20 @@
 /**
  * Internal dependencies
  */
-import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media/constants';
 import PanelTypes from '../../components/panels/design/types';
 
-export const MEDIA_DEFAULT_ATTRIBUTES = {
-  ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
-  resource: {
-    alt: '',
-  },
+export { resizeRules } from '../media/constants';
+
+export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
+  ...MEDIA_DEFAULT_ATTRIBUTES,
 };
 
-export const MEDIA_MASK_OPACITY = 0.4;
-
-export const hasEditMode = true;
-
-export const isMedia = true;
-
-export const canFlip = true;
-
-export const isMaskable = true;
-
-export const editModeGrayout = true;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-  minWidth: 20,
-  minHeight: 20,
-};
-
-export const MEDIA_PANELS = [
-  PanelTypes.BACKGROUND_SIZE_POSITION,
-  PanelTypes.LAYER_STYLE,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.BORDER_RADIUS,
-  PanelTypes.BORDER,
-  PanelTypes.ANIMATION,
+export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
+  ...MEDIA_PANELS,
   PanelTypes.LINK,
+  PanelTypes.IMAGE_ACCESSIBILITY,
 ];

@@ -16,42 +16,38 @@
 /**
  * Internal dependencies
  */
-import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
+import {
+  MEDIA_DEFAULT_ATTRIBUTES,
+  MEDIA_PANELS,
+  resizeRules as mediaResizeRules,
+} from '../media/constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import PanelTypes from '../../components/panels/design/types';
 
-export const MEDIA_DEFAULT_ATTRIBUTES = {
-  ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
+export const resizeRules = {
+  ...mediaResizeRules,
+};
+
+export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
+  ...MEDIA_DEFAULT_ATTRIBUTES,
+  controls: false,
+  loop: false,
+  autoPlay: true,
+  tracks: [],
   resource: {
+    posterId: null,
+    poster: null,
+    id: 0,
     alt: '',
   },
 };
 
-export const MEDIA_MASK_OPACITY = 0.4;
-
-export const hasEditMode = true;
-
-export const isMedia = true;
-
-export const canFlip = true;
-
-export const isMaskable = true;
-
-export const editModeGrayout = true;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-  minWidth: 20,
-  minHeight: 20,
-};
-
-export const MEDIA_PANELS = [
-  PanelTypes.BACKGROUND_SIZE_POSITION,
-  PanelTypes.LAYER_STYLE,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.BORDER_RADIUS,
-  PanelTypes.BORDER,
-  PanelTypes.ANIMATION,
-  PanelTypes.LINK,
+export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
+  ...MEDIA_PANELS,
+  PanelTypes.VIDEO_OPTIONS,
+  PanelTypes.VIDEO_ACCESSIBILITY,
+  PanelTypes.CAPTIONS,
+  PanelTypes.VIDEO_PROCESSING,
 ];

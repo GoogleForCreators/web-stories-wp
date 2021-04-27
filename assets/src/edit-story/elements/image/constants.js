@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
-export { default as LayerContent } from './layer';
-export { default as Output } from './output';
-export { default as LayerIcon } from './icon';
-export { default as TextContent } from '../media/textContent';
-export { default as Display } from '../media/imageDisplay';
+import PanelTypes from '../../components/panels/design/types';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media/constants';
 
-export {
-  canFlip,
-  isMaskable,
-  isMedia,
-  hasEditMode,
-  editModeGrayout,
-} from '../media';
+export const defaultAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
+  ...MEDIA_DEFAULT_ATTRIBUTES,
+};
 
-export * from './constants';
+export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
+  ...MEDIA_PANELS,
+  PanelTypes.IMAGE_ACCESSIBILITY,
+];
