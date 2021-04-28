@@ -559,7 +559,7 @@ class Customizer extends Service_Base {
 		];
 
 		$query_arguments = [
-			'posts_per_page' => isset( $options['number_of_stories'] ) ? (int) $options['number_of_stories'] : $theme_support['number_of_stories']['default'],
+			'posts_per_page' => isset( $options['number_of_stories'] ) ? (int) $options['number_of_stories'] : $theme_support['number_of_stories']['default'], // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			'orderby'        => isset( $options['orderby'] ) ? (string) $options['orderby'] : $theme_support['orderby']['default'],
 			'order'          => isset( $options['order'] ) ? (string) $options['order'] : $theme_support['order']['default'],
 		];
