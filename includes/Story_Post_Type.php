@@ -529,22 +529,6 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	}
 
 	/**
-	 * Get rest base based on the post type slug.
-	 *
-	 * @param string $slug The post type slug.
-	 *
-	 * @return string Rest base.
-	 */
-	public function get_post_type_rest_base( $slug ) {
-		$post_type_obj = get_post_type_object( $slug );
-		$rest_base     = $slug;
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_obj->rest_base ) ? $post_type_obj->rest_base : $post_type_obj->name;
-		}
-		return $rest_base;
-	}
-
-	/**
 	 * Get editor settings as an array.
 	 *
 	 * @since 1.0.0
