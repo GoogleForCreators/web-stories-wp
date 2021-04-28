@@ -21,7 +21,6 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\AdSense
  */
 class AdSense extends Test_Case {
-	use Private_Access;
 
 	public function setUp() {
 		parent::setUp();

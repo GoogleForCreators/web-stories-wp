@@ -26,8 +26,6 @@ namespace Google\Web_Stories\Tests;
  */
 class Database_Upgrader extends Test_Case {
 
-	use Private_Access;
-
 	public function setUp() {
 		parent::setUp();
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );

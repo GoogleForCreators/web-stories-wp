@@ -17,6 +17,8 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Add_Poster_Generation_Media_Source
  *
@@ -24,7 +26,7 @@ namespace phpunit\tests\Migrations;
  *
  * @package phpunit\tests\Migrations
  */
-class Add_Poster_Generation_Media_Source extends \WP_UnitTestCase {
+class Add_Poster_Generation_Media_Source extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */

@@ -25,8 +25,9 @@ import STICKERS from '@web-stories-wp/stickers';
  */
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
-import { useLocalMedia, useStory } from '../../app';
-import { DEFAULT_MASK } from '../../masks';
+import { useLocalMedia } from '../../app/media';
+import { useStory } from '../../app/story';
+import { DEFAULT_MASK } from '../../masks/constants';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
 import useFocusCanvas from './useFocusCanvas';
