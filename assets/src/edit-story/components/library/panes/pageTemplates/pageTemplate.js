@@ -37,6 +37,7 @@ const PageTemplateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   cursor: pointer;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
@@ -122,9 +123,11 @@ function PageTemplate(
         </PreviewErrorBoundary>
       </PreviewPageWrapper>
 
-      <PageTemplateTitle isActive={isActivePage}>
-        {page.title}
-      </PageTemplateTitle>
+      {page.title && (
+        <PageTemplateTitle isActive={isActivePage}>
+          {page.title}
+        </PageTemplateTitle>
+      )}
     </PageTemplateWrapper>
   );
 }
