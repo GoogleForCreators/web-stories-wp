@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -144,6 +145,7 @@ function PageTemplate(
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               onClick={(e) => handleDelete(page, e)}
+              aria-label={__('Delete page template', 'web-stories')}
             >
               <Icons.Trash />
             </Button>

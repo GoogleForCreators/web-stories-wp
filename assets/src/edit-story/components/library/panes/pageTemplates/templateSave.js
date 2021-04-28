@@ -120,7 +120,7 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
       });
       return;
     }
-    addPageTemplate({ ...currentPage, id: uuidv4() })
+    addPageTemplate({ ...currentPage, id: uuidv4(), title: null })
       .then((addedTemplate) => {
         updateList?.(addedTemplate);
         showSnackbar({

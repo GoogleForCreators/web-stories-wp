@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { useRef, useEffect, useCallback } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -167,7 +168,10 @@ const SnackbarMessage = ({
             <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
           )}
           {showCloseButton && (
-            <CloseButton onClick={onDismiss}>
+            <CloseButton
+              onClick={onDismiss}
+              aria-label={__('Close message', 'web-stories')}
+            >
               <Cross aria-hidden />
             </CloseButton>
           )}
