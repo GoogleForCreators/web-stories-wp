@@ -27,12 +27,26 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('publisher logo', () => {
+  afterEach(async () => {
+    // Deletes all publisher logos using the browser context
+    await page.evaluateHandle(async () => {
+      await wp.apiFetch({
+        path: '/web-stories/v1/settings/',
+        method: 'POST',
+        data: {
+          web_stories_publisher_logos: [],
+          web_stories_active_publisher_logo: -1,
+        },
+      });
+    });
+  });
+
   it('should be able to upload multiple logos', async () => {
     await visitSettings();
 
     // Upload publisher logo
-    const logoOneName = await uploadPublisherLogo('yay-fox.gif', false);
-    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif', false);
+    const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
 
     await page.waitForTimeout(1000);
 
@@ -43,11 +57,29 @@ describe('publisher logo', () => {
     await expect(page).toMatchElement(
       `button[aria-label^="Publisher logo menu for ${logoTwoName}-"`
     );
-
-    // TODO: Clear all logos so that we start at zero each time
-    // Should be able to use the data adapter or something to
-    // Remove the all the logos
   });
 
-  it.todo('should be able to delete all except one logo');
+  it('should be able to delete all except one logo', async () => {
+    await visitSettings();
+
+    // Upload publisher logo
+    const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+
+    await page.waitForTimeout(1000);
+
+    // Delete one logo
+    await expect(page).toClick(
+      `button[aria-label^="Publisher logo menu for ${logoTwoName}-"`
+    );
+    await expect(page).toClick(
+      'ul[aria-expanded="true"] button[aria-label="Delete"]'
+    );
+    await expect(page).toClick('button', { text: 'Delete Logo' });
+
+    // should not find a button if its the last context menu
+    await expect(page).not.toMatchElement(
+      `button[aria-label^="Publisher logo menu for ${logoOneName}-"`
+    );
+  });
 });
