@@ -86,6 +86,10 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
             pageTemplates.filter(({ postId }) => postId !== templateToDelete)
           );
           setShowDialog(false);
+          showSnackbar({
+            message: __('Page template deleted.', 'web-stories'),
+            dismissable: true,
+          });
         })
         .catch(() => {
           showSnackbar({

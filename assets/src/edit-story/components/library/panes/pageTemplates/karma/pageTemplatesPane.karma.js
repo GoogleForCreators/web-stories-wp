@@ -254,7 +254,6 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     });
 
     it('should allow deleting a saved template', async () => {
-      // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
@@ -277,8 +276,55 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       );
 
       await fixture.events.sleep(200);
+      const list = fixture.editor.getByRole('list', {
+        name: 'Page Template Options',
+      });
+      expect(list.children.length).toBe(0);
+    });
+
+    // Skip reason: correct user flow is not implemented yet.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow applying a template', async () => {
+      // Add an element and verify the template is added now.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.saveTemplateBtn
+      );
+      expect(
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
+      ).toBe(1);
+
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
+      );
+    });
+
+    it('should allow manipulating custom templates using keyboard', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
+
+      await fixture.events.sleep(200);
       const message = await fixture.screen.getByRole('alert');
       expect(message.textContent).toBe('Page template saved.');
+
+      expect(
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
+      ).toBe(1);
+
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Space');
+
+      await waitFor(() => {
+        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      });
+
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
+
       const list = fixture.editor.getByRole('list', {
         name: 'Page Template Options',
       });
