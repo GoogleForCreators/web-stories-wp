@@ -63,7 +63,9 @@ describe('Publishing Flow', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
 
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+    await expect(page).toMatchElement('button', {
+      text: 'Continue to publish',
+    });
 
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
@@ -134,7 +136,9 @@ describe('Publishing Flow', () => {
       // Publish story.
       await expect(page).toClick('button', { text: 'Publish' });
 
-      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await expect(page).toMatchElement('button', {
+        text: 'Continue to publish',
+      });
 
       // Create new post and embed story.
       await expect(page).toClick('a', { text: 'Add to new post' });
