@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Register_Font
  */
 class Register_Font extends Test_Case {
-	use Private_Access;
+
 	/**
 	 * @covers ::get_handle
 	 */

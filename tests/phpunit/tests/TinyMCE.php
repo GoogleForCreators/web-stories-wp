@@ -21,7 +21,6 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\TinyMCE
  */
 class TinyMCE extends Test_Case {
-	use Private_Access;
 
 	/**
 	 * @covers ::register

@@ -22,7 +22,6 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Discovery
  */
 class Discovery extends Test_Case {
-	use Private_Access;
 
 	/**
 	 * User ID.

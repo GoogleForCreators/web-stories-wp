@@ -24,7 +24,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\Media
  */
 class Media extends Test_Case {
-	use Private_Access;
+
 	/**
 	 * @covers ::register
 	 */

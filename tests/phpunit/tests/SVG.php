@@ -21,7 +21,6 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\SVG
  */
 class SVG extends Test_Case {
-	use Private_Access;
 
 	/**
 	 * @covers ::register
