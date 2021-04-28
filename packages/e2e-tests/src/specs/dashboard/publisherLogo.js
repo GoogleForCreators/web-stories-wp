@@ -28,6 +28,8 @@ import {
 
 describe('publisher logo', () => {
   it('should be able to upload multiple logos', async () => {
+    page.setDefaultTimeout(3000);
+
     await visitSettings();
 
     // Upload publisher logo
