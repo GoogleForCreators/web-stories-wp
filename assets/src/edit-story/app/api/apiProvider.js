@@ -398,7 +398,7 @@ function APIProvider({ children }) {
     });
     return apiFetch({ path: apiPath }).then((response) =>
       response.map((template) => {
-        return { ...template['story_data'], postId: template.id };
+        return { ...template['story_data'], templateId: template.id };
       })
     );
   }, [customPageTemplates]);
@@ -413,7 +413,7 @@ function APIProvider({ children }) {
         },
         method: 'POST',
       }).then((response) => {
-        return { ...response['story_data'], postId: response.id };
+        return { ...response['story_data'], templateId: response.id };
       });
     },
     [customPageTemplates]
@@ -421,6 +421,8 @@ function APIProvider({ children }) {
 
   const deletePageTemplate = useCallback(
     (id) => {
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
         path: addQueryArgs(`${customPageTemplates}${id}/`, {
           _method: 'DELETE',

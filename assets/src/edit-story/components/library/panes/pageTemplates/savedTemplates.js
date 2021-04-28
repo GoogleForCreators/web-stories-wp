@@ -71,11 +71,11 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
-  const onClickDelete = useCallback(({ postId }, e) => {
+  const onClickDelete = useCallback(({ templateId }, e) => {
     e?.stopPropagation();
-    if (postId) {
+    if (templateId) {
       setShowDialog(true);
-      setTemplateToDelete(postId);
+      setTemplateToDelete(templateId);
     }
   }, []);
   const handleDelete = useCallback(
@@ -83,7 +83,9 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
       deletePageTemplate(templateToDelete)
         .then(() => {
           setPageTemplates(
-            pageTemplates.filter(({ postId }) => postId !== templateToDelete)
+            pageTemplates.filter(
+              ({ templateId }) => templateId !== templateToDelete
+            )
           );
           setShowDialog(false);
         })

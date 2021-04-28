@@ -25,11 +25,11 @@ import { v4 as uuidv4 } from 'uuid';
 import createNewElement from './createNewElement';
 
 const duplicatePage = (oldPage) => {
-  // Remove title and postId for inserting the page.
+  // Remove title and templateId for inserting the page.
   const {
     elements: oldElements,
     animations: oldAnimations,
-    postId,
+    templateId,
     title,
     ...rest
   } = oldPage;
