@@ -28,7 +28,6 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import {
-  BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
   useSnackbar,
@@ -39,34 +38,21 @@ import { useStory } from '../../../../app/story';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import { ReactComponent as Icon } from './illustration.svg';
 
-const StyledButton = styled.div`
-  height: 32px;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.secondaryNormal};
-  padding: 6px 8px;
-  transition: background-color ${BUTTON_TRANSITION_TIMING};
-`;
-
 const SaveButton = styled.button`
   border: 0;
-  padding: 0;
   background: none;
-  height: ${({ pageSize }) => pageSize.containerHeight - 2}px;
-  width: ${({ pageSize }) => pageSize.width - 2}px;
+  height: 50px;
+  width: 100%;
+  padding: 5px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
-    ${StyledButton} {
-      background-color: ${({ theme }) =>
-        theme.colors.interactiveBg.secondaryHover};
-    }
   }
 
   ${({ theme }) =>
@@ -77,9 +63,9 @@ const SaveButton = styled.button`
 `;
 
 const IconWrapper = styled.div`
-  width: 80px;
-  height: 106px;
-  margin-top: 34px;
+  width: 34px;
+  height: 46px;
+  margin-right: 15px;
   svg {
     color: ${({ theme }) => theme.colors.fg.tertiary};
 
@@ -94,12 +80,10 @@ const IconWrapper = styled.div`
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  text-align: center;
-  margin-top: 24px;
   margin-bottom: 8px;
 `;
 
-function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
+function TemplateSave({ setShowDefaultTemplates, updateList }) {
   const {
     actions: { addPageTemplate },
   } = useAPI();
@@ -146,11 +130,7 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
     return null;
   }
   return (
-    <SaveButton
-      pageSize={pageSize}
-      onClick={handleSaveTemplate}
-      aria-labelledby={textId}
-    >
+    <SaveButton onClick={handleSaveTemplate} aria-labelledby={textId}>
       <IconWrapper>
         <Icon />
       </IconWrapper>
@@ -160,17 +140,11 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
       >
         {__('Save current page as template', 'web-stories')}
       </StyledText>
-      <StyledButton>
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Save', 'web-stories')}
-        </Text>
-      </StyledButton>
     </SaveButton>
   );
 }
 
 TemplateSave.propTypes = {
-  pageSize: PropTypes.object.isRequired,
   setShowDefaultTemplates: PropTypes.func.isRequired,
   updateList: PropTypes.func,
 };

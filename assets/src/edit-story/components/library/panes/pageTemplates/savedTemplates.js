@@ -30,10 +30,12 @@ import TemplateList from './templateList';
 
 const Wrapper = styled.div`
   padding-top: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
-const TemporaryWrapper = styled.div`
-  overflow-y: scroll;
+const ButtonWrapper = styled.div`
+  padding: 0 1em;
 `;
 
 function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
@@ -61,14 +63,14 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     }
   }, [loadTemplates, pageTemplates]);
 
-  // @todo Saving template should belong to the virtual list, it's currently misplaced.
   return (
-    <TemporaryWrapper>
-      <TemplateSave
-        pageSize={pageSize}
-        setShowDefaultTemplates={setShowDefaultTemplates}
-        updateList={updateTemplatesList}
-      />
+    <>
+      <ButtonWrapper>
+        <TemplateSave
+          setShowDefaultTemplates={setShowDefaultTemplates}
+          updateList={updateTemplatesList}
+        />
+      </ButtonWrapper>
       <Wrapper ref={ref}>
         {pageTemplates && (
           <TemplateList
@@ -78,7 +80,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
           />
         )}
       </Wrapper>
-    </TemporaryWrapper>
+    </>
   );
 }
 
