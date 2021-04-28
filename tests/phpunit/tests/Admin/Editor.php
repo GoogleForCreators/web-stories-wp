@@ -4,13 +4,13 @@
 namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
  */
-class Editor extends \WP_UnitTestCase {
-	use Private_Access, Capabilities_Setup;
+class Editor extends Test_Case {
+	use Capabilities_Setup;
 
 	/**
 	 * Admin user for test.

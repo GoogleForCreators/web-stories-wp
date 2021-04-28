@@ -15,12 +15,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\User;
+
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Capabilities
  */
-class Capabilities extends \WP_UnitTestCase {
+class Capabilities extends Test_Case {
 	use Capabilities_Setup;
 
 	public function setUp() {

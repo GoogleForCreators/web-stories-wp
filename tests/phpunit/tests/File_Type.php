@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\File_Type
  */
-class File_Type extends \WP_UnitTestCase {
+class File_Type extends Test_Case {
 	/**
 	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required
