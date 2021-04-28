@@ -296,7 +296,7 @@ const AnimatedContextMenu = ({ items, ...props }) => (
   <>
     {props.isOpen && <Mask onDismiss={props.onDismiss} />}
     <AnimationContainer isOpen={props.isOpen}>
-      <Menu items={items} {...props} />
+      <Menu aria-expanded={props.isOpen} items={items} {...props} />
     </AnimationContainer>
   </>
 );
