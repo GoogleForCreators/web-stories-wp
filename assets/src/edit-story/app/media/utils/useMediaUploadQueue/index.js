@@ -30,6 +30,8 @@ import {
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
 import { createBlob } from '../../../../utils/blobs';
+import getFileName from '../../utils/getFileName';
+import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
@@ -53,6 +55,7 @@ function useMediaUploadQueue() {
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
+  const { processPosterData } = useUploadVideoFrame({});
   const {
     startUploading,
     finishUploading,
@@ -109,12 +112,13 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const videoFrame = await getFirstFrameOfVideo(file);
-            const poster = createBlob(videoFrame);
+            const posterFile = await getFirstFrameOfVideo(file);
+            const poster = createBlob(posterFile);
             const { width, height } = await getImageDimensions(poster);
             const newResource = {
               ...resource,
               poster,
+              posterFile,
               width,
               height,
             };
@@ -146,6 +150,9 @@ function useMediaUploadQueue() {
             return;
           }
 
+          const { posterFile } = resource;
+          const fileName = getFileName(file) + '-poster.jpeg';
+
           if (
             !isFeatureEnabled ||
             !isTranscodingEnabled ||
@@ -166,9 +173,26 @@ function useMediaUploadQueue() {
 
             try {
               const attachment = await uploadFile(file, additionalData);
+              const { poster, posterId } = await processPosterData(
+                attachment.id,
+                fileName,
+                posterFile
+              );
+
+              // The newly uploaded file won't have a poster yet.
+              // However, we'll likely still have one on file.
+              // Add it back so we're never without one.
+              // The final poster will be uploaded later by uploadVideoPoster().
+              const newResource = getResourceFromAttachment(attachment);
+              const newResourceWithPoster = {
+                ...newResource,
+                poster: poster || newResource.poster || resource.poster,
+                posterId,
+              };
+
               finishUploading({
                 id,
-                resource: getResourceFromAttachment(attachment),
+                resource: newResourceWithPoster,
               });
             } catch (error) {
               // Cancel uploading if there were any errors.
@@ -196,7 +220,11 @@ function useMediaUploadQueue() {
               media_source: 'video-optimization',
               ...additionalData,
             });
-
+            const { poster, posterId } = await processPosterData(
+              attachment.id,
+              fileName,
+              posterFile
+            );
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.
             // Add it back so we're never without one.
@@ -204,7 +232,8 @@ function useMediaUploadQueue() {
             const newResource = getResourceFromAttachment(attachment);
             const newResourceWithPoster = {
               ...newResource,
-              poster: newResource.poster || resource.poster,
+              poster: poster || newResource.poster || resource.poster,
+              posterId,
             };
 
             finishUploading({
@@ -234,6 +263,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
+    processPosterData,
   ]);
 
   return useMemo(

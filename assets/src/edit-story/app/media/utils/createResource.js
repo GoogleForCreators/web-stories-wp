@@ -88,6 +88,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {number} width The natural resource width.
  * @property {number} height The natural resource height.
  * @property {string|null} poster The poster URL for the "video" type.
+ * @property {File|null} posterFile The poster file object for the "video" type.
  * @property {number|null} posterId The system poster ID.
  * @property {number|null} id The system ID.
  * @property {number|null} length The length for the "video" type.
@@ -118,6 +119,7 @@ function createResource({
   width,
   height,
   poster,
+  posterFile,
   posterId,
   id,
   length,
@@ -139,6 +141,7 @@ function createResource({
     width,
     height,
     poster,
+    posterFile,
     posterId,
     id,
     length,

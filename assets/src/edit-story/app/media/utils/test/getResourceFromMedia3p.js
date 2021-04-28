@@ -75,6 +75,7 @@ describe('getResourceFromMedia3p', () => {
       height: 1920,
       poster:
         'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
+      posterFile: undefined,
       posterId: 'media/coverr:g9re0sRUYA',
       id: 'media/coverr:g9re0sRUYA',
       length: 121,
@@ -161,6 +162,7 @@ describe('getResourceFromMedia3p', () => {
       height: 1920,
       poster:
         'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
+      posterFile: undefined,
       posterId: 'media/coverr:g9re0sRUYA',
       id: 'media/coverr:g9re0sRUYA',
       length: 121,
@@ -373,6 +375,7 @@ describe('getResourceFromMedia3p', () => {
       isPlaceholder: false,
       isOptimized: false,
       poster: undefined,
+      posterFile: undefined,
       posterId: undefined,
       sizes: {
         full: {

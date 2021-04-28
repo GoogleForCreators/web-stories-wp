@@ -91,7 +91,7 @@ function useUploadWithPreview() {
     ({ id, resource }) => {
       updateElement({ id, resource });
 
-      if (resource.type === 'video' && !resource.local) {
+      if (resource.type === 'video' && !resource.local && !resource.posterId) {
         uploadVideoPoster(resource.id, resource.src);
       }
     },

@@ -155,6 +155,7 @@ describe('useMedia3pApi', () => {
           mimeType: 'image/jpeg',
           output: undefined,
           poster: undefined,
+          posterFile: undefined,
           posterId: undefined,
           sizes: {
             web_stories_thumbnail: {

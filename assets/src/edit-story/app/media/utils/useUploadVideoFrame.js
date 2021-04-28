@@ -46,29 +46,45 @@ function useUploadVideoFrame({ updateMediaElement }) {
     [updateElementsByResourceId]
   );
 
+  async function processPoster(id, fileName, posterFile) {
+    if (!posterFile) {
+      return {};
+    }
+    posterFile.name = fileName;
+    const {
+      id: posterId,
+      source_url: poster,
+      media_details: { width: posterWidth, height: posterHeight },
+    } = await uploadFile(posterFile, {
+      post: id,
+      media_source: 'poster-generation',
+    });
+
+    await updateMedia(id, {
+      featured_media: posterId,
+      meta: {
+        web_stories_poster_id: posterId,
+      },
+      post: storyId,
+    });
+
+    // Preload the full image in the browser to stop jumping around.
+    await preloadImage(poster);
+
+    return { posterId, poster, posterWidth, posterHeight };
+  }
+
   const processData = async (id, src) => {
     const trackTiming = getTimeTracker('load_video_poster');
     try {
+      const fileName = getFileName(src) + '-poster.jpeg';
       const obj = await getFirstFrameOfVideo(src);
-      obj.name = getFileName(src) + '-poster.jpeg';
       const {
-        id: posterId,
-        source_url: poster,
-        media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(obj, {
-        post: id,
-        media_source: 'poster-generation',
-      });
-      await updateMedia(id, {
-        featured_media: posterId,
-        meta: {
-          web_stories_poster_id: posterId,
-        },
-        post: storyId,
-      });
-
-      // Preload the full image in the browser to stop jumping around.
-      await preloadImage(poster);
+        posterId,
+        poster,
+        posterWidth,
+        posterHeight,
+      } = await processPosterData(id, fileName, obj);
 
       // Overwrite the original video dimensions. The poster reupload has more
       // accurate dimensions of the video that includes orientation changes.
@@ -114,19 +130,28 @@ function useUploadVideoFrame({ updateMediaElement }) {
     url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
 
   /**
+   * Make api requests to upload poster image and update attachment data.
+   *
+   */
+  const processPosterData = useCallback(processPoster, [
+    uploadFile,
+    updateMedia,
+    storyId,
+  ]);
+
+  /**
    * Uploads the video's first frame as an attachment.
    *
    */
   const uploadVideoFrame = useCallback(processData, [
-    storyId,
-    updateMediaElement,
-    uploadFile,
-    updateMedia,
+    processPosterData,
     setProperties,
+    updateMediaElement,
   ]);
 
   return {
     uploadVideoFrame,
+    processPosterData,
   };
 }
 
