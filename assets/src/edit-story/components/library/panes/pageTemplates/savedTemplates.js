@@ -32,6 +32,7 @@ import {
   useSnackbar,
 } from '../../../../../design-system';
 import Dialog from '../../../dialog';
+import useLibrary from '../../useLibrary';
 import TemplateSave from './templateSave';
 import TemplateList from './templateList';
 
@@ -48,28 +49,31 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     actions: { getCustomPageTemplates, deletePageTemplate },
   } = useAPI();
   const { showSnackbar } = useSnackbar();
+  const { savedTemplates, setSavedTemplates } = useLibrary((state) => ({
+    savedTemplates: state.state.savedTemplates,
+    setSavedTemplates: state.actions.setSavedTemplates,
+  }));
 
-  const [pageTemplates, setPageTemplates] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
   const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();
 
   const loadTemplates = useCallback(() => {
-    getCustomPageTemplates().then(setPageTemplates);
-  }, [getCustomPageTemplates]);
+    getCustomPageTemplates().then(setSavedTemplates);
+  }, [getCustomPageTemplates, setSavedTemplates]);
 
   const updateTemplatesList = useCallback(
     (page) => {
-      setPageTemplates([page, ...pageTemplates]);
+      setSavedTemplates([page, ...savedTemplates]);
     },
-    [setPageTemplates, pageTemplates]
+    [setSavedTemplates, savedTemplates]
   );
 
   useEffect(() => {
-    if (!pageTemplates) {
+    if (!savedTemplates) {
       loadTemplates();
     }
-  }, [loadTemplates, pageTemplates]);
+  }, [loadTemplates, savedTemplates]);
 
   const onClickDelete = useCallback(({ templateId }, e) => {
     e?.stopPropagation();
@@ -82,8 +86,8 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
     () =>
       deletePageTemplate(templateToDelete)
         .then(() => {
-          setPageTemplates(
-            pageTemplates.filter(
+          setSavedTemplates(
+            savedTemplates.filter(
               ({ templateId }) => templateId !== templateToDelete
             )
           );
@@ -98,7 +102,13 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
             dismissable: true,
           });
         }),
-    [deletePageTemplate, templateToDelete, pageTemplates, showSnackbar]
+    [
+      deletePageTemplate,
+      templateToDelete,
+      savedTemplates,
+      showSnackbar,
+      setSavedTemplates,
+    ]
   );
 
   // @todo Saving template is currently misplaced.
@@ -110,11 +120,11 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
         updateList={updateTemplatesList}
       />
       <Wrapper ref={ref}>
-        {pageTemplates && (
+        {savedTemplates && (
           <TemplateList
             parentRef={ref}
             pageSize={pageSize}
-            pages={pageTemplates}
+            pages={savedTemplates}
             handleDelete={onClickDelete}
           />
         )}
