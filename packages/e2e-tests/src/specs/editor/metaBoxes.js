@@ -88,7 +88,9 @@ describe('Custom Meta Boxes', () => {
       // Publish story.
       await expect(page).toClick('button', { text: 'Publish' });
 
-      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await expect(page).toMatchElement('button', {
+        text: 'Continue to publish',
+      });
 
       // Refresh page to verify that the text has been persisted.
       await page.reload();
