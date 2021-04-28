@@ -34,6 +34,8 @@ describe('publisher logo', () => {
     const logoOneName = await uploadPublisherLogo('yay-fox.gif', false);
     const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif', false);
 
+    await page.waitForTimeout(1000);
+
     // verify that the publisher logos exist
     await expect(page).toMatchElement(
       `button[aria-label^="Publisher logo menu for ${logoOneName}-"`
