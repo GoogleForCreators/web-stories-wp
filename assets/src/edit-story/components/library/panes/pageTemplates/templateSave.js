@@ -49,7 +49,6 @@ const StyledButton = styled.div`
 `;
 
 const SaveButton = styled.button`
-  border: 0;
   padding: 0;
   background: none;
   height: ${({ pageSize }) => pageSize.containerHeight - 2}px;
