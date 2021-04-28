@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { useStoryTriggers, useStoryTriggerListener } from './useStoryTriggers';
+export {
+  useStoryTriggers,
+  useStoryTriggerListener,
+  useStoryTriggersDispatch,
+} from './useStoryTriggers';
 export { StoryTriggersProvider } from './storyTriggersProvider';
 export { STORY_EVENTS } from './storyEvents';
