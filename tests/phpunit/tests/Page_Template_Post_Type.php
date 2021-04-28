@@ -20,12 +20,13 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Page_Template_Post_Type
  */
-class Page_Template_Post_Type extends \WP_UnitTestCase {
+class Page_Template_Post_Type extends Test_Case {
+	use Capabilities_Setup;
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$story = new \Google\Web_Stories\Story_Post_Type();
+		$story = $this->get_story_object();
 		$story->register();
 
 		$ptpt = new \Google\Web_Stories\Page_Template_Post_Type();

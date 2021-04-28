@@ -22,7 +22,7 @@ use Google\Web_Stories\Settings;
 /**
  * @coversDefaultClass \Google\Web_Stories\Analytics
  */
-class Analytics extends \WP_UnitTestCase {
+class Analytics extends Test_Case {
 	use Private_Access;
 
 	/**

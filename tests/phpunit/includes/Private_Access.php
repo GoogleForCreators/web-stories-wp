@@ -38,7 +38,7 @@ trait Private_Access {
 	 * @return mixed Return value of the method call.
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 */
-	private function call_private_method( $object, $method_name, $args = [] ) {
+	protected function call_private_method( $object, $method_name, $args = [] ) {
 		$method = ( new ReflectionClass( $object ) )->getMethod( $method_name );
 		$method->setAccessible( true );
 		return $method->invokeArgs( $object, $args );
@@ -53,7 +53,7 @@ trait Private_Access {
 	 * @return mixed Return value of the method call.
 	 * @throws ReflectionException If the class could not be reflected upon.
 	 */
-	private function call_private_static_method( $class, $method_name, $args = [] ) {
+	protected function call_private_static_method( $class, $method_name, $args = [] ) {
 		$method = ( new ReflectionClass( $class ) )->getMethod( $method_name );
 		$method->setAccessible( true );
 		return $method->invokeArgs( null, $args );
@@ -67,7 +67,7 @@ trait Private_Access {
 	 * @param mixed         $value         Value to set the property to.
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 */
-	private function set_private_property( $object, $property_name, $value ) {
+	protected function set_private_property( $object, $property_name, $value ) {
 		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
 		$property->setAccessible( true );
 		$property->setValue( $object, $value );
@@ -81,7 +81,7 @@ trait Private_Access {
 	 * @return mixed Return value of the property.
 	 * @throws ReflectionException If the object could not be reflected upon.
 	 */
-	private function get_private_property( $object, $property_name ) {
+	protected function get_private_property( $object, $property_name ) {
 		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
 		$property->setAccessible( true );
 		return $property->getValue( $object );
@@ -95,7 +95,7 @@ trait Private_Access {
 	 * @return mixed Return value of the property.
 	 * @throws ReflectionException If the class could not be reflected upon.
 	 */
-	private function get_static_private_property( $class, $property_name ) {
+	protected function get_static_private_property( $class, $property_name ) {
 		$properties = ( new ReflectionClass( $class ) )->getStaticProperties();
 		return array_key_exists( $property_name, $properties ) ? $properties[ $property_name ] : null;
 	}

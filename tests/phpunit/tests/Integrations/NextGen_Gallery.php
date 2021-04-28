@@ -18,11 +18,12 @@
 namespace Google\Web_Stories\Tests\Integrations;
 
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\NextGen_Gallery
  */
-class NextGen_Gallery extends \WP_UnitTestCase {
+class NextGen_Gallery extends Test_Case {
 	/**
 	 * @covers ::register
 	 */
