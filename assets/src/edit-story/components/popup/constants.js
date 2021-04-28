@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-export { default as Display } from './display';
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
-export { default as Controls } from './controls';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
-export { default as onDropHandler } from './onDropHandler';
-
-export * from './constants';
+export const Placement = {
+  // TOP
+  TOP: 'top',
+  TOP_START: 'top-start',
+  TOP_END: 'top-end',
+  // BOTTOM
+  BOTTOM: 'bottom',
+  BOTTOM_START: 'bottom-start',
+  BOTTOM_END: 'bottom-end',
+  // RIGHT
+  RIGHT: 'right',
+  RIGHT_START: 'right-start',
+  RIGHT_END: 'right-end',
+  // LEFT
+  LEFT: 'left',
+  LEFT_START: 'left-start',
+  LEFT_END: 'left-end',
+};

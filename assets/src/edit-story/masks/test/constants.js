@@ -17,13 +17,12 @@
 /**
  * Internal dependencies
  */
-export { default as Display } from './display';
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
-export { default as Controls } from './controls';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
-export { default as onDropHandler } from './onDropHandler';
+import { MASKS } from '../constants';
 
-export * from './constants';
+describe('Masks', () => {
+  it('every path should end with a closepath function', () => {
+    Object.values(MASKS).map((mask) =>
+      expect(mask.path.toUpperCase().endsWith('Z')).toStrictEqual(true)
+    );
+  });
+});

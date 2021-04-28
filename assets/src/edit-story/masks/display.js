@@ -25,7 +25,8 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
 import { shouldDisplayBorder } from '../utils/elementBorder';
-import { getElementMask, MaskTypes } from './';
+import { MaskTypes } from './constants';
+import { getElementMask } from './';
 
 const FILL_STYLE = {
   position: 'absolute',

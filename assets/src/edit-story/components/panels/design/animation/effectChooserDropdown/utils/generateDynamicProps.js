@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,16 @@
 /**
  * Internal dependencies
  */
-export { default as Display } from './display';
-export { default as Edit } from './edit';
-export { default as Frame } from './frame';
-export { default as Controls } from './controls';
-export { default as Output } from './output';
-export { default as LayerContent } from './layer';
-export { default as LayerIcon } from './icon';
-export { default as onDropHandler } from './onDropHandler';
+import hasDynamicProperty from './hasDynamicProperty';
+import updateDynamicProps from './updateDynamicProps';
 
-export * from './constants';
+const generateDynamicProps = ({ animation, disabledTypeOptionsMap }) => {
+  return hasDynamicProperty(animation)
+    ? updateDynamicProps({
+        animation,
+        disabledOptions: disabledTypeOptionsMap[animation.value]?.options,
+      })
+    : animation;
+};
+
+export default generateDynamicProps;

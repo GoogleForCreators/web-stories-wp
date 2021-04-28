@@ -14,23 +14,33 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-/**
  * Internal dependencies
  */
-import { getMaskByType } from '../../masks';
-import StoryPropTypes from '../../types';
-import { LayerText } from '../shared/layerText';
+import PanelTypes from '../../components/panels/design/types';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 
-function ShapeLayerContent({ element }) {
-  const maskDef = getMaskByType(element.mask.type);
+export const hasEditMode = false;
 
-  return <LayerText>{maskDef.name || __('Shape', 'web-stories')}</LayerText>;
-}
-ShapeLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
+export const isMedia = false;
+
+export const canFlip = true;
+
+export const isMaskable = false;
+
+export const isAspectAlwaysLocked = true;
+
+export const resizeRules = {
+  diagonal: true,
+  minWidth: 20,
+  minHeight: 20,
 };
 
-export default ShapeLayerContent;
+export const defaultAttributes = SHARED_DEFAULT_ATTRIBUTES;
+
+export const panels = [
+  PanelTypes.ELEMENT_ALIGNMENT,
+  PanelTypes.LAYER_STYLE,
+  PanelTypes.SIZE_POSITION,
+  PanelTypes.ANIMATION,
+  PanelTypes.LINK,
+];

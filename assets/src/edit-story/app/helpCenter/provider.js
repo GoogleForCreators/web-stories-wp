@@ -25,7 +25,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { clamp } from '../../../animation';
-import { useCurrentUser } from '..';
+import { useCurrentUser } from '../currentUser';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import {
   BASE_NAVIGATION_FLOW,

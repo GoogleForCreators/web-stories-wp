@@ -24,10 +24,12 @@ import { renderHook, act } from '@testing-library/react-hooks';
  */
 import useInsertElement from '../useInsertElement';
 import useMedia3pApi from '../../../app/media/media3p/api/useMedia3pApi';
-import { useLocalMedia, useStory } from '../../../app';
+import { useStory } from '../../../app/story';
+import { useLocalMedia } from '../../../app/media';
 
 jest.mock('../../../app/media/media3p/api/useMedia3pApi');
-jest.mock('../../../app');
+jest.mock('../../../app/story');
+jest.mock('../../../app/media');
 
 const IMAGE_TYPE = 'image';
 
