@@ -387,17 +387,6 @@ class Experiments extends Service_Base {
 				'description' => __( 'Enable post locking', 'web-stories' ),
 				'group'       => 'general',
 			],
-			/**
-			 * Author: @miina
-			 * Issue: #7055
-			 * Creation date: 2021-04-09
-			 */
-			[
-				'name'        => 'customPageTemplates',
-				'label'       => __( 'Custom Page Templates', 'web-stories' ),
-				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
-				'group'       => 'editor',
-			],
 		];
 	}
 

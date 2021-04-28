@@ -21,7 +21,6 @@ import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useFeatures } from 'flagged';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -109,7 +108,6 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
     currentPage,
   }));
 
-  const { customPageTemplates } = useFeatures();
   const handleSaveTemplate = useCallback(() => {
     // Don't add empty page.
     if (isDefaultPage(currentPage)) {
@@ -149,9 +147,6 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
   ]);
 
   const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
-  if (!customPageTemplates) {
-    return null;
-  }
   return (
     <SaveButton
       pageSize={pageSize}

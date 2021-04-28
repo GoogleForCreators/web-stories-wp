@@ -19,7 +19,6 @@
  */
 import { useState, useMemo } from 'react';
 import styled from 'styled-components';
-import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -55,7 +54,6 @@ const SAVED = 'saved';
 const PAGE_TEMPLATE_PANE_WIDTH = 158;
 
 function PageTemplatesPane(props) {
-  const { customPageTemplates } = useFeatures();
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
 
   const options = [
@@ -79,18 +77,16 @@ function PageTemplatesPane(props) {
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
-        {customPageTemplates && (
-          <DropDownWrapper>
-            <Select
-              options={options}
-              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-              onMenuItemClick={(evt, value) =>
-                setShowDefaultTemplates(value === DEFAULT)
-              }
-              aria-label={__('Select templates type', 'web-stories')}
-            />
-          </DropDownWrapper>
-        )}
+        <DropDownWrapper>
+          <Select
+            options={options}
+            selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+            onMenuItemClick={(evt, value) =>
+              setShowDefaultTemplates(value === DEFAULT)
+            }
+            aria-label={__('Select templates type', 'web-stories')}
+          />
+        </DropDownWrapper>
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (
