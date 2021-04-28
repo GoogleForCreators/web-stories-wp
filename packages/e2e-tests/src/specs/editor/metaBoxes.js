@@ -89,7 +89,7 @@ describe('Custom Meta Boxes', () => {
       await expect(page).toClick('button', { text: 'Publish' });
 
       await expect(page).toMatchElement('button', {
-        text: 'Continue to publish',
+        text: 'Dismiss',
       });
 
       // Refresh page to verify that the text has been persisted.
