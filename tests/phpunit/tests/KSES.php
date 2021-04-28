@@ -21,7 +21,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
 class KSES extends Test_Case {
-	use Private_Access;
+
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *

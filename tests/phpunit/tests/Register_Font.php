@@ -20,8 +20,8 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Register_Font
  */
-class Register_Font extends \WP_UnitTestCase {
-	use Private_Access;
+class Register_Font extends Test_Case {
+
 	/**
 	 * @covers ::get_handle
 	 */

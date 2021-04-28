@@ -21,7 +21,6 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Activation_Notice
  */
 class Activation_Notice extends Test_Case {
-	use Private_Access;
 
 	protected $activation_flag;
 
