@@ -22,7 +22,7 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useMedia3pApi } from '../index';
+import { useMedia3pApi } from '..';
 import Media3pApiProvider from '../media3pApiProvider';
 
 jest.mock('../apiFetcher');

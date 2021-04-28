@@ -26,7 +26,7 @@ import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 import { formattedTemplatesArray } from '../../../../../../dashboard/storybookUtils';
 import objectWithout from '../../../../../utils/objectWithout';
-import useInsertElement from '../../../../../components/canvas/useInsertElement';
+import useInsertElement from '../../../../canvas/useInsertElement';
 
 const expectPageTemplateEqual = (currentPage, template) => {
   expect(currentPage.id).not.toEqual(template.id);

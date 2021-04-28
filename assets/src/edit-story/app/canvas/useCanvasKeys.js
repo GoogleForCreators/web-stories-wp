@@ -25,13 +25,13 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { useGlobalKeyDownEffect } from '../../../design-system';
 import { useStory } from '../story';
-import { useCanvas } from '../canvas';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import { getDefinitionForType } from '../../elements';
 import { useTransform } from '../../components/transform';
 import useAddPastedElements from './useAddPastedElements';
+import { useCanvas } from '.';
 
 /**
  * @param {{current: Node}} ref Reference.

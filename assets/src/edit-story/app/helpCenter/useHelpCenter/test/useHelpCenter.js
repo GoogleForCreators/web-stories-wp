@@ -20,10 +20,10 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import APIContext from '../../../../app/api/context';
-import { CurrentUserProvider } from '../../../../app/currentUser';
+import APIContext from '../../../api/context';
+import { CurrentUserProvider } from '../../../currentUser';
 import { DONE_TIP_ENTRY } from '../../../../components/helpCenter/constants';
-import { useHelpCenter } from '../';
+import { useHelpCenter } from '..';
 import HelpCenterProvider from '../../provider';
 
 function setup() {

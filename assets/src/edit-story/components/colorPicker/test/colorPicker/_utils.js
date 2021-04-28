@@ -24,7 +24,7 @@ import { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import theme from '../../../../theme';
-import ColorPicker from '../../';
+import ColorPicker from '../..';
 import { renderWithTheme } from '../../../../testUtils';
 
 function getResolvingPromise(mock) {

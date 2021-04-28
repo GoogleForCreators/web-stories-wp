@@ -22,7 +22,7 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import Header from '../';
+import Header from '..';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,

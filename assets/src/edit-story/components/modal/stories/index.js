@@ -29,7 +29,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../../../design-system';
-import Modal from '../';
+import Modal from '..';
 
 export default {
   title: 'Stories Editor/Components/Modal',
