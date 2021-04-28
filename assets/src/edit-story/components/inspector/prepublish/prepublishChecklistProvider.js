@@ -16,14 +16,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useState,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-} from 'react';
+import { useCallback, useState, useEffect, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -40,6 +33,12 @@ import {
   PPC_CHECKPOINT_ACTION,
 } from './prepublishCheckpointState';
 
+const types = [
+  PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+  PRE_PUBLISH_MESSAGE_TYPES.ERROR,
+  PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+];
+
 function PrepublishChecklistProvider({ children }) {
   const [checkpointState, dispatch] = useReducer(
     checkpointReducer,
@@ -54,11 +53,13 @@ function PrepublishChecklistProvider({ children }) {
     return { ...story, pages };
   });
 
+  const isStoryLoaded = story?.pages.length > 0;
+  const isChecklistEmpty = checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES;
+
   const [currentList, setCurrentList] = useState([]);
   const [isChecklistReviewRequested, setIsChecklistReviewRequested] = useState(
     false
   );
-  const [isHighPriorityEmpty, setIsHighPriorityEmpty] = useState(false);
 
   const handleRefreshList = useCallback(async () => {
     const pagesWithSize = story.pages.map((page) => ({
@@ -66,31 +67,41 @@ function PrepublishChecklistProvider({ children }) {
       pageSize,
     }));
 
-    // discern PPC types of messages based on checkpointState
-    let types;
-    switch (checkpointState) {
-      case PPC_CHECKPOINT_STATE.UNAVAILABLE:
-        types = [];
-        break;
-      default:
-        types = [
-          PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-          PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-          PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-        ];
-        break;
-    }
-
     setCurrentList(
       await getPrepublishErrors({ ...story, pages: pagesWithSize }, { types })
     );
-  }, [story, pageSize, checkpointState]);
+  }, [story, pageSize]);
 
   const prevPages = usePrevious(story.pages);
   const prevPageSize = usePrevious(pageSize);
 
   const refreshOnInitialLoad = prevPages?.length === 0 && story.pages?.length;
   const refreshOnPageSizeChange = prevPageSize?.width !== pageSize?.width;
+
+  const highPriorityLength = useMemo(
+    () =>
+      isStoryLoaded &&
+      currentList.filter(
+        (current) => current.type === PRE_PUBLISH_MESSAGE_TYPES.ERROR
+      ).length,
+    [currentList, isStoryLoaded]
+  );
+
+  const recommendedLength = useMemo(
+    () =>
+      isStoryLoaded &&
+      currentList.filter((current) =>
+        current.type.indexOf([
+          PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+          PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+        ])
+      ).length,
+    [currentList, isStoryLoaded]
+  );
+
+  // Review dialog should be seen when there are high priority items and first publish still hasn't happened.
+  const shouldReviewDialogBeSeen =
+    highPriorityLength > 0 && !isChecklistReviewRequested;
 
   useEffect(() => {
     if (refreshOnInitialLoad || refreshOnPageSizeChange) {
@@ -103,6 +114,25 @@ function PrepublishChecklistProvider({ children }) {
       dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED);
     }
   }, [story]);
+
+  useEffect(() => {
+    if (
+      checkpointState === PPC_CHECKPOINT_STATE.ALL &&
+      highPriorityLength === 0 &&
+      recommendedLength === 0 &&
+      isStoryLoaded
+    ) {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_ALL_ISSUES_CLEARED);
+    }
+  }, [checkpointState, isStoryLoaded, highPriorityLength, recommendedLength]);
+
+  useEffect(() => {
+    if (checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES) {
+      if (highPriorityLength > 0 || recommendedLength > 0) {
+        dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_ISSUES);
+      }
+    }
+  }, [checkpointState, highPriorityLength, recommendedLength]);
 
   useStoryTriggerListener(
     STORY_EVENTS.onSecondPageAdded,
@@ -125,32 +155,6 @@ function PrepublishChecklistProvider({ children }) {
     }, [])
   );
 
-  const highPriorityLength = useMemo(
-    () =>
-      currentList.filter(
-        (current) => current.type === PRE_PUBLISH_MESSAGE_TYPES.ERROR
-      ).length,
-    [currentList]
-  );
-
-  // this will prevent the review dialog from getting triggered again
-  // because the list is empty until it reaches checkpoint state of recommended
-  // also make sure that this flag isn't getting toggled early.
-  const isPastInitialLoad = useRef(false);
-  useEffect(() => {
-    if (refreshOnInitialLoad) {
-      isPastInitialLoad.current = true;
-    }
-  });
-  useEffect(() => {
-    const highPriorityIsEmpty =
-      checkpointState === PPC_CHECKPOINT_STATE.ALL &&
-      highPriorityLength === 0 &&
-      isPastInitialLoad.current;
-
-    setIsHighPriorityEmpty(highPriorityIsEmpty);
-  }, [checkpointState, highPriorityLength, isPastInitialLoad]);
-
   const focusChecklistTab = useCallback(() => {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
     setIsChecklistReviewRequested(true);
@@ -161,12 +165,6 @@ function PrepublishChecklistProvider({ children }) {
     setIsChecklistReviewRequested(false);
   }, []);
 
-  // Review dialog should be seen when there are high priority items and first publish still hasn't happened.
-  const shouldReviewDialogBeSeen = useMemo(
-    () => !isHighPriorityEmpty && !isChecklistReviewRequested,
-    [isChecklistReviewRequested, isHighPriorityEmpty]
-  );
-
   return (
     <Context.Provider
       value={{
@@ -176,8 +174,8 @@ function PrepublishChecklistProvider({ children }) {
         isChecklistReviewRequested,
         focusChecklistTab,
         resetReviewDialogTrigger,
-        isHighPriorityEmpty,
         shouldReviewDialogBeSeen,
+        isChecklistEmpty,
       }}
     >
       {children}
