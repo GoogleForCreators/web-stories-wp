@@ -22,7 +22,14 @@ use Google\Web_Stories\Tests\Kses_Setup;
 use Spy_REST_Server;
 use WP_REST_Request;
 
-class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
+/**
+ * Class Stories_Autosaves_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
+ * @coversDefaultClass  Google\Web_Stories\REST_API\Autosaves_Controller
+ */
+class Autosaves_Controller extends \WP_Test_REST_TestCase {
 	use Kses_Setup, Capabilities_Setup;
 
 	protected $server;

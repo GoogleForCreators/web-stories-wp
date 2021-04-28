@@ -46,14 +46,26 @@ function setup_new_site() {
 	$story->register();
 	// TODO Register cap to roles within class itself.
 	$story->add_caps_to_roles();
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
+	rewrite_flush();
 
 	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
 	// TODO move this logic to Database_Upgrader class.
 	$database_upgrader = $injector->make( Database_Upgrader::class );
 	$database_upgrader->register();
+}
+
+
+/**
+ * Flush rewrites.
+ *
+ * @since 1.7.0
+ *
+ * @return void
+ */
+function rewrite_flush() {
+	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+	}
 }
 
 /**
