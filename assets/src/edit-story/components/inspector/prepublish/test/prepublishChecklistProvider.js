@@ -26,6 +26,7 @@ import PrepublishChecklistProvider from '../prepublishChecklistProvider';
 import usePrepublishChecklist from '../usePrepublishChecklist';
 import { LayoutProvider } from '../../../../app/layout';
 import StoryContext from '../../../../app/story/context';
+import { StoryTriggersProvider } from '../../../../app/story/storyTriggers';
 import { PAGE_RATIO, PAGE_WIDTH } from '../../../../constants';
 import { createPage } from '../../../../elements';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
@@ -62,29 +63,32 @@ const generateStoryPages = (pageCount) => {
 };
 
 function setup({ pageCount = 1 }) {
+  const fullStory = {
+    currentPage: {},
+    pages: [],
+    story: {
+      featuredMedia: {
+        url: 'https://greatimageaggregate.com/1234',
+      },
+      title: 'How to get rich',
+      excerpt: "There's a secret no one wants you to know about",
+      author: { id: 1, name: 'admin' },
+      status: 'draft',
+      pages: generateStoryPages(pageCount),
+    },
+  };
   const storyContext = {
     actions: {},
-    state: {
-      currentPage: {},
-      pages: [],
-      story: {
-        featuredMedia: {
-          url: 'https://greatimageaggregate.com/1234',
-        },
-        title: 'How to get rich',
-        excerpt: "There's a secret no one wants you to know about",
-        author: { id: 1, name: 'admin' },
-        status: 'draft',
-        pages: generateStoryPages(pageCount),
-      },
-    },
+    state: fullStory,
   };
 
   const wrapper = ({ children }) => (
     <StoryContext.Provider value={storyContext}>
-      <LayoutProvider value={layoutContext}>
-        <PrepublishChecklistProvider>{children}</PrepublishChecklistProvider>
-      </LayoutProvider>
+      <StoryTriggersProvider story={fullStory}>
+        <LayoutProvider value={layoutContext}>
+          <PrepublishChecklistProvider>{children}</PrepublishChecklistProvider>
+        </LayoutProvider>
+      </StoryTriggersProvider>
     </StoryContext.Provider>
   );
 
@@ -92,14 +96,15 @@ function setup({ pageCount = 1 }) {
 }
 
 describe('prepublishChecklistProvider', () => {
-  // TODO this should be set to UNAVAILABLE once blank story trigger is ready
-  it(`should begin a story at '${PPC_CHECKPOINT_STATE.ALL}'`, async () => {
+  it(`should begin a story at '${PPC_CHECKPOINT_STATE.UNAVAILABLE}'`, async () => {
     const { result } = setup({ pageCount: 1 });
 
     await act(async () => {
       await result.current.refreshChecklist();
     });
 
-    expect(result.current.currentCheckpoint).toBe(PPC_CHECKPOINT_STATE.ALL);
+    expect(result.current.currentCheckpoint).toBe(
+      PPC_CHECKPOINT_STATE.UNAVAILABLE
+    );
   });
 });
