@@ -47,5 +47,5 @@ export default {
     '@wordpress/jest-console',
     'expect-puppeteer',
   ],
-  // reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
+  reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };
