@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Experiments
  */
-class Experiments extends \WP_UnitTestCase {
+class Experiments extends Test_Case {
 	use Private_Access;
 
 	/**

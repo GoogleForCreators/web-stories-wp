@@ -18,14 +18,12 @@
 namespace Google\Web_Stories\Tests\Integrations;
 
 use Google\Web_Stories\Customizer;
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Core_Themes_Support
  */
-class Core_Themes_Support extends \WP_UnitTestCase {
-	use Private_Access;
-
+class Core_Themes_Support extends Test_Case {
 	/**
 	 * Stub for the conditional tests.
 	 *

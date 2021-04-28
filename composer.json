@@ -11,8 +11,8 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-toolbox": "dev-main",
-    "ampproject/amp-wp": "dev-develop",
+    "ampproject/amp-toolbox": "dev-main#8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e",
+    "ampproject/amp-wp": "dev-develop#1bac57aba4e3b58351381b4967ab6ee9b9b00aa6",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.14.0",
@@ -34,7 +34,8 @@
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "wp-coding-standards/wpcs": "^2.3"
+    "wp-coding-standards/wpcs": "^2.3",
+    "yoast/wp-test-utils": "^0.2.1"
   },
   "config": {
     "discard-changes": true,

@@ -22,11 +22,12 @@ use AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Tests\MarkupComparison;
 use Google\Web_Stories\Tests\ScriptHash;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer
  */
-class Meta_Sanitizer extends \WP_UnitTestCase {
+class Meta_Sanitizer extends Test_Case {
 	use MarkupComparison;
 	use ScriptHash;
 

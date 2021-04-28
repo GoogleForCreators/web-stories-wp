@@ -18,11 +18,12 @@
 namespace Google\Web_Stories\Tests\AMP;
 
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
  */
-class Canonical_Sanitizer extends \WP_UnitTestCase {
+class Canonical_Sanitizer extends Test_Case {
 	/**
 	 * @covers ::sanitize
 	 */

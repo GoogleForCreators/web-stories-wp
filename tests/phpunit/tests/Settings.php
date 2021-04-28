@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Settings
  */
-class Settings extends \WP_UnitTestCase {
+class Settings extends Test_Case {
 	/**
 	 * @covers ::register
 	 */
