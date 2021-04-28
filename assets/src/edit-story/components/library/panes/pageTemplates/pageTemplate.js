@@ -144,6 +144,7 @@ function PageTemplate(
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               onClick={(e) => handleDelete(page, e)}
+              aria-label={__('Delete page template', 'web-stories')}
             >
               <Icons.Trash />
             </Button>
