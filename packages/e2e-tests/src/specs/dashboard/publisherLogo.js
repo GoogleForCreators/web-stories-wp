@@ -52,10 +52,10 @@ describe('publisher logo', () => {
 
     // verify that the publisher logos exist
     await expect(page).toMatchElement(
-      `button[aria-label^="Publisher logo menu for ${logoOneName}-"`
+      `button[aria-label^="Publisher logo menu for ${logoOneName}"`
     );
     await expect(page).toMatchElement(
-      `button[aria-label^="Publisher logo menu for ${logoTwoName}-"`
+      `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
     );
   });
 
@@ -70,7 +70,7 @@ describe('publisher logo', () => {
 
     // Delete one logo
     await expect(page).toClick(
-      `button[aria-label^="Publisher logo menu for ${logoTwoName}-"`
+      `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
     );
     await expect(page).toClick(
       'ul[aria-expanded="true"] button[aria-label="Delete"]'
@@ -79,7 +79,7 @@ describe('publisher logo', () => {
 
     // should not find a button if its the last context menu
     await expect(page).not.toMatchElement(
-      `button[aria-label^="Publisher logo menu for ${logoOneName}-"`
+      `button[aria-label^="Publisher logo menu for ${logoOneName}"`
     );
   });
 });
