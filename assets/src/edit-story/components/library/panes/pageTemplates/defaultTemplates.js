@@ -22,6 +22,7 @@ import { _x, sprintf, __ } from '@web-stories-wp/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -29,8 +30,28 @@ import PropTypes from 'prop-types';
 import { useAPI } from '../../../../app/api';
 import { ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
-import PageTemplates from './pageTemplates';
+import { Headline } from '../../../../../design-system/components/typography/headline';
+import { THEME_CONSTANTS } from '../../../../../design-system/theme/constants';
+import { Text } from '../../../../../design-system/components/typography/text';
+import { Toggle } from '../../../../../design-system/components/toggle';
 import { PAGE_TEMPLATE_TYPES } from './constants';
+import TemplateList from './templateList';
+
+const ActionRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 16px 22px 16px;
+`;
+
+const TemplatesToggle = styled.div`
+  display: flex;
+
+  label {
+    cursor: pointer;
+    margin: auto 12px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+`;
 
 const PageTemplatesParentContainer = styled.div`
   ${virtualPaneContainer};
@@ -45,6 +66,8 @@ function DefaultTemplates({ pageSize }) {
   } = useAPI();
   const [pageTemplates, setPageTemplates] = useState([]);
   const [showTemplateImages, setShowTemplateImages] = useState(false);
+
+  const toggleId = useMemo(() => `toggle_page_templates_${uuidv4()}`, []);
 
   // load and process pageTemplates
   useEffect(() => {
@@ -131,13 +154,34 @@ function DefaultTemplates({ pageSize }) {
         deselectItem={() => handleSelectPageTemplateType(null)}
       />
       <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
+        <ActionRow>
+          <Headline
+            as="h3"
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
+          >
+            {__('Templates', 'web-stories')}
+          </Headline>
+          <TemplatesToggle>
+            <Text
+              as="label"
+              htmlFor={toggleId}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {__('Show Images', 'web-stories')}
+            </Text>
+            <Toggle
+              id={toggleId}
+              name={toggleId}
+              checked={showTemplateImages}
+              onChange={handleToggleClick}
+            />
+          </TemplatesToggle>
+        </ActionRow>
         {pageTemplatesParentRef.current && (
-          <PageTemplates
+          <TemplateList
             pageSize={pageSize}
-            onToggleClick={handleToggleClick}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}
-            showImages={showTemplateImages}
           />
         )}
       </PageTemplatesParentContainer>

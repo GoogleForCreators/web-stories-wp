@@ -19,26 +19,39 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useFeatures } from 'flagged';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
+  useSnackbar,
+  themeHelpers,
 } from '../../../../../design-system';
+import { useAPI } from '../../../../app/api';
+import { useStory } from '../../../../app/story';
+import isDefaultPage from '../../../../utils/isDefaultPage';
 import { ReactComponent as Icon } from './illustration.svg';
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
+const StyledButton = styled.div`
+  height: 32px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  padding: 6px 8px;
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
+`;
+
+const SaveButton = styled.button`
+  border: 0;
+  padding: 0;
+  background: none;
   height: ${({ pageSize }) => pageSize.containerHeight - 2}px;
   width: ${({ pageSize }) => pageSize.width - 2}px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
@@ -50,11 +63,17 @@ const Wrapper = styled.div`
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
-    button {
+    ${StyledButton} {
       background-color: ${({ theme }) =>
         theme.colors.interactiveBg.secondaryHover};
     }
   }
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 const IconWrapper = styled.div`
@@ -80,38 +99,80 @@ const StyledText = styled(Text)`
   margin-bottom: 8px;
 `;
 
-const StyledButton = styled(Button)`
-  height: 32px;
-`;
+function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
+  const {
+    actions: { addPageTemplate },
+  } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
-function TemplateSave({ pageSize }) {
+  const { currentPage } = useStory(({ state: { currentPage } }) => ({
+    currentPage,
+  }));
+
   const { customPageTemplates } = useFeatures();
-  const handleSaveTemplate = useCallback(() => {}, []);
+  const handleSaveTemplate = useCallback(() => {
+    // Don't add empty page.
+    if (isDefaultPage(currentPage)) {
+      showSnackbar({
+        message: __(
+          'An empty page can’t be saved as a template. Add elements and try again.',
+          'web-stories'
+        ),
+        dismissable: true,
+      });
+      return;
+    }
+    addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(
+      (addedTemplate) => {
+        updateList?.(addedTemplate);
+        // @todo Add error handling.
+        showSnackbar({
+          message: __('Page template saved.', 'web-stories'),
+          dismissable: true,
+        });
+      }
+    );
+    setShowDefaultTemplates(false);
+  }, [
+    addPageTemplate,
+    currentPage,
+    setShowDefaultTemplates,
+    showSnackbar,
+    updateList,
+  ]);
+
+  const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
   if (!customPageTemplates) {
     return null;
   }
   return (
-    <Wrapper pageSize={pageSize} onClick={handleSaveTemplate}>
+    <SaveButton
+      pageSize={pageSize}
+      onClick={handleSaveTemplate}
+      aria-labelledby={textId}
+    >
       <IconWrapper>
         <Icon />
       </IconWrapper>
-      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <StyledText
+        id={textId}
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      >
         {__('Save current page as template', 'web-stories')}
       </StyledText>
-      <StyledButton
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        aria-label={__('Save new template', 'web-stories')}
-      >
-        {__('Save', 'web-stories')}
+      <StyledButton>
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {__('Save', 'web-stories')}
+        </Text>
       </StyledButton>
-    </Wrapper>
+    </SaveButton>
   );
 }
 
 TemplateSave.propTypes = {
   pageSize: PropTypes.object.isRequired,
+  setShowDefaultTemplates: PropTypes.func.isRequired,
+  updateList: PropTypes.func,
 };
 
 export default TemplateSave;
