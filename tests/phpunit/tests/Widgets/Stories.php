@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Widgets;
 
 use Google\Web_Stories\Widgets\Stories as Testee;
 use WP_Widget;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Stories
@@ -27,8 +28,7 @@ use WP_Widget;
  *
  * @package Google\Web_Stories\Tests
  */
-class Stories extends \WP_UnitTestCase {
-	use Private_Access;
+class Stories extends Test_Case {
 	/**
 	 * Object in test.
 	 *

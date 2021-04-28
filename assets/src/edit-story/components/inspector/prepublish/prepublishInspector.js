@@ -18,7 +18,8 @@
  * Internal dependencies
  */
 import { useCurrentUser } from '../../../app';
-import { usePrepublishChecklist, ChecklistTab } from '.';
+import usePrepublishChecklist from './usePrepublishChecklist';
+import ChecklistTab from './checklistTab';
 
 function PrepublishInspector() {
   const { checklist, currentCheckpoint } = usePrepublishChecklist();

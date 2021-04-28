@@ -17,12 +17,14 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**s
  * Class Add_Media_Source_Video_Optimization
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization
  * @package phpunit\tests\Migrations
  */
-class Add_Media_Source_Video_Optimization extends \WP_UnitTestCase {
+class Add_Media_Source_Video_Optimization extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */

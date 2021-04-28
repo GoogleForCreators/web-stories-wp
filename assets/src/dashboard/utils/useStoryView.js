@@ -27,7 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '../../animation';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
-import { usePagePreviewSize } from './index';
+import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({
   filters,

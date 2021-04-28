@@ -23,7 +23,7 @@ use WP_REST_Request;
 /**
  * @coversDefaultClass \Google\Web_Stories\Tracking
  */
-class Tracking extends \WP_UnitTestCase {
+class Tracking extends Test_Case {
 	protected static $user_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {

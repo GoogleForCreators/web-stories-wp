@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Page_Template_Post_Type
  */
-class Page_Template_Post_Type extends \WP_UnitTestCase {
+class Page_Template_Post_Type extends Test_Case {
 	use Capabilities_Setup;
 	/**
 	 * @covers ::register

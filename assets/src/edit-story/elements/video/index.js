@@ -17,13 +17,6 @@
 /**
  * Internal dependencies
  */
-import PanelTypes from '../../components/panels/design/types';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import {
-  MEDIA_DEFAULT_ATTRIBUTES,
-  MEDIA_PANELS,
-  resizeRules as mediaResizeRules,
-} from '../media';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -33,38 +26,4 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 export { default as onDropHandler } from './onDropHandler';
 
-export {
-  canFlip,
-  isMaskable,
-  isMedia,
-  hasEditMode,
-  editModeGrayout,
-} from '../media';
-
-export const resizeRules = {
-  ...mediaResizeRules,
-};
-
-export const defaultAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
-  ...MEDIA_DEFAULT_ATTRIBUTES,
-  controls: false,
-  loop: false,
-  autoPlay: true,
-  tracks: [],
-  resource: {
-    posterId: null,
-    poster: null,
-    id: 0,
-    alt: '',
-  },
-};
-
-export const panels = [
-  PanelTypes.ELEMENT_ALIGNMENT,
-  ...MEDIA_PANELS,
-  PanelTypes.VIDEO_OPTIONS,
-  PanelTypes.VIDEO_ACCESSIBILITY,
-  PanelTypes.CAPTIONS,
-  PanelTypes.VIDEO_PROCESSING,
-];
+export * from './constants';

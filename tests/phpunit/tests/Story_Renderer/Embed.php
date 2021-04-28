@@ -2,10 +2,12 @@
 
 namespace Google\Web_Stories\Tests\Story_Renderer;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\Embed
  */
-class Embed extends \WP_UnitTestCase {
+class Embed extends Test_Case {
 
 	/**
 	 * @covers ::render

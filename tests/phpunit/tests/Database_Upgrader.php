@@ -24,9 +24,7 @@ namespace Google\Web_Stories\Tests;
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
  *
  */
-class Database_Upgrader extends \WP_UnitTestCase {
-
-	use Private_Access;
+class Database_Upgrader extends Test_Case {
 
 	public function setUp() {
 		parent::setUp();
