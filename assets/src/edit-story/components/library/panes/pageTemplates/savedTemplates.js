@@ -26,7 +26,11 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '../../../../../design-system';
 import Dialog from '../../../dialog';
 import TemplateSave from './templateSave';
 import TemplateList from './templateList';
@@ -43,6 +47,7 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   const {
     actions: { getCustomPageTemplates, deletePageTemplate },
   } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
   const [pageTemplates, setPageTemplates] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
@@ -75,13 +80,23 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   }, []);
   const handleDelete = useCallback(
     () =>
-      deletePageTemplate(templateToDelete).then(() => {
-        setPageTemplates(
-          pageTemplates.filter(({ postId }) => postId !== templateToDelete)
-        );
-        setShowDialog(false);
-      }),
-    [pageTemplates, deletePageTemplate, templateToDelete]
+      deletePageTemplate(templateToDelete)
+        .then(() => {
+          setPageTemplates(
+            pageTemplates.filter(({ postId }) => postId !== templateToDelete)
+          );
+          setShowDialog(false);
+        })
+        .catch(() => {
+          showSnackbar({
+            message: __(
+              'Unable to delete the template. Please try again.',
+              'web-stories'
+            ),
+            dismissable: true,
+          });
+        }),
+    [deletePageTemplate, templateToDelete, pageTemplates, showSnackbar]
   );
 
   // @todo Saving template is currently misplaced.
