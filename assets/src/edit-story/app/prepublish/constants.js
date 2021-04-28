@@ -19,7 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
-import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -59,24 +59,6 @@ const VIDEO_DOCUMENTATION_URL = __(
   'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#visual-treat',
   'web-stories'
 );
-
-const SomeComponent = ({ src, alt }) => (
-  <ul>
-    <button onClick={() => {}}>{`test button`}</button>
-    <li>{__('farts', 'web-stories')}</li>
-    <img
-      src={src}
-      alt={alt}
-      crossOrigin="anonymous"
-      height="100px"
-      width="100px"
-    />
-  </ul>
-);
-SomeComponent.propTypes = {
-  src: PropTypes.string,
-  alt: PropTypes.string,
-};
 
 export const MESSAGES = {
   CRITICAL_METADATA: {
@@ -657,7 +639,6 @@ export const MESSAGES = {
     },
     VIDEO_NOT_OPTIMIZED: {
       MAIN_TEXT: __('Video not optimized', 'web-stories'),
-      HELPER_TEXT: SomeComponent,
     },
   },
 };

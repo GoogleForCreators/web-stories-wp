@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { VideoOptimization } from '../components/videoOptimization';
 
 const MAX_VIDEO_WIDTH = 3840;
 const MAX_VIDEO_HEIGHT = 2160;
@@ -152,10 +153,7 @@ export function videoElementOptimized(element) {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
-      help: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.HELPER_TEXT({
-        src: element.resource.poster,
-        alt: element.alt || element.resource.alt,
-      }),
+      help: <VideoOptimization element={element} />,
     };
   }
   return undefined;
