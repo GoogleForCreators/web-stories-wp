@@ -17,22 +17,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
-import styled from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
-import { trackEvent } from '@web-stories-wp/tracking';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app';
-import { duplicatePage } from '../../../../elements';
-
 import { UnitsProvider } from '../../../../units';
-import isDefaultPage from '../../../../utils/isDefaultPage';
 import { PANE_PADDING } from '../shared';
 import {
   getVirtualizedItemIndex,
@@ -41,94 +34,22 @@ import {
   PANEL_GRID_ROW_GAP,
   VirtualizedWrapper,
 } from '../shared/virtualizedPanelGrid';
-import {
-  Headline,
-  Text,
-  THEME_CONSTANTS,
-  Toggle,
-} from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
+import useTemplateActions from './useTemplateActions';
 
-const ActionRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 16px 22px 16px;
-`;
-
-const TemplatesToggle = styled.div`
-  display: flex;
-
-  label {
-    cursor: pointer;
-    margin: auto 12px;
-    color: ${({ theme }) => theme.colors.fg.secondary};
-  }
-`;
-
-function PageTemplates({
-  onToggleClick,
-  pages,
-  parentRef,
-  showTemplateImages,
-  pageSize,
-}) {
-  const { replaceCurrentPage, currentPage } = useStory(
-    ({ actions: { replaceCurrentPage }, state: { currentPage } }) => ({
-      replaceCurrentPage,
-      currentPage,
-    })
-  );
-
+function TemplateList({ pages, parentRef, pageSize }) {
   const containerRef = useRef();
   const pageRefs = useRef({});
-  const toggleId = useMemo(() => `toggle_page_templates_${uuidv4()}`, []);
-
-  const [selectedPage, setSelectedPage] = useState();
-  const [isConfirming, setIsConfirming] = useState();
 
   const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
 
-  const requiresConfirmation = useMemo(
-    () => currentPage && !isDefaultPage(currentPage),
-    [currentPage]
-  );
-
-  const handleApplyPageTemplate = useCallback(
-    (page) => {
-      const duplicatedPage = duplicatePage(page);
-      replaceCurrentPage({ page: duplicatedPage });
-      trackEvent('insert_page_template', {
-        name: page.title,
-      });
-
-      setSelectedPage(null);
-    },
-    [replaceCurrentPage]
-  );
-
-  const handlePageClick = useCallback(
-    (page) => {
-      if (requiresConfirmation) {
-        setIsConfirming(true);
-        setSelectedPage(page);
-      } else {
-        handleApplyPageTemplate(page);
-        setSelectedPage(null);
-      }
-    },
-    [requiresConfirmation, handleApplyPageTemplate]
-  );
-
-  const handleCloseDialog = useCallback(() => {
-    setSelectedPage(null);
-    setIsConfirming(false);
-  }, [setIsConfirming]);
-
-  const handleConfirmDialog = useCallback(() => {
-    handleApplyPageTemplate(selectedPage);
-    setIsConfirming(false);
-  }, [selectedPage, handleApplyPageTemplate]);
+  const {
+    isConfirming,
+    handleCloseDialog,
+    handleConfirmDialog,
+    handlePageClick,
+  } = useTemplateActions();
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((pages || []).length / 2),
@@ -180,29 +101,6 @@ function PageTemplates({
         height: pageSize.height,
       }}
     >
-      <ActionRow>
-        <Headline
-          as="h3"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-        >
-          {__('Templates', 'web-stories')}
-        </Headline>
-        <TemplatesToggle>
-          <Text
-            as="label"
-            htmlFor={toggleId}
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-          >
-            {__('Show Images', 'web-stories')}
-          </Text>
-          <Toggle
-            id={toggleId}
-            name={toggleId}
-            checked={showTemplateImages}
-            onChange={onToggleClick}
-          />
-        </TemplatesToggle>
-      </ActionRow>
       <VirtualizedWrapper height={rowVirtualizer.totalSize}>
         <VirtualizedContainer
           height={rowVirtualizer.totalSize}
@@ -257,16 +155,14 @@ function PageTemplates({
   );
 }
 
-PageTemplates.propTypes = {
-  onToggleClick: PropTypes.func.isRequired,
+TemplateList.propTypes = {
   parentRef: PropTypes.object.isRequired,
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
     })
   ),
-  showTemplateImages: PropTypes.bool,
   pageSize: PropTypes.object.isRequired,
 };
 
-export default PageTemplates;
+export default TemplateList;

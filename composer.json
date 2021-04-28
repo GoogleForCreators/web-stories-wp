@@ -25,7 +25,7 @@
     "ampproject/optimizer": "dev-develop"
   },
   "require-dev": {
-    "automattic/vipwpcs": "^2.1",
+    "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "dg/bypass-finals": "1.1.3",
     "php-stubs/wordpress-stubs": "^5.7",
@@ -34,7 +34,7 @@
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "wp-coding-standards/wpcs": "^2.2"
+    "wp-coding-standards/wpcs": "^2.3"
   },
   "config": {
     "discard-changes": true,

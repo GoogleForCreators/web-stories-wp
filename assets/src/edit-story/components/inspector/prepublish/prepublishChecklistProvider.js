@@ -21,10 +21,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useStory, useStoryTriggerListener, STORY_EVENTS } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
 import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish/constants';
 import Context from './context';
 import {
   checkpointReducer,
@@ -33,6 +34,10 @@ import {
 } from './prepublishCheckpointState';
 
 function PrepublishChecklistProvider({ children }) {
+  const [checkpointState, dispatch] = useReducer(
+    checkpointReducer,
+    PPC_CHECKPOINT_STATE.UNAVAILABLE
+  );
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
@@ -49,10 +54,26 @@ function PrepublishChecklistProvider({ children }) {
       ...page,
       pageSize,
     }));
+
+    // discern PPC types of messages based on checkpointState
+    let types;
+    switch (checkpointState) {
+      case PPC_CHECKPOINT_STATE.UNAVAILABLE:
+        types = [];
+        break;
+      default:
+        types = [
+          PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+          PRE_PUBLISH_MESSAGE_TYPES.ERROR,
+          PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+        ];
+        break;
+    }
+
     setCurrentList(
-      await getPrepublishErrors({ ...story, pages: pagesWithSize })
+      await getPrepublishErrors({ ...story, pages: pagesWithSize }, { types })
     );
-  }, [story, pageSize]);
+  }, [story, pageSize, checkpointState]);
 
   const prevPages = usePrevious(story.pages);
   const prevPageSize = usePrevious(pageSize);
@@ -66,20 +87,26 @@ function PrepublishChecklistProvider({ children }) {
     }
   }, [handleRefreshList, refreshOnInitialLoad, refreshOnPageSizeChange]);
 
-  const [checkpointState, dispatch] = useReducer(
-    checkpointReducer,
-    PPC_CHECKPOINT_STATE.ALL
+  useStoryTriggerListener(
+    STORY_EVENTS.onSecondPageAdded,
+    useCallback(() => {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_2_PAGES);
+    }, [])
   );
 
-  // Check for different qualifications to be met to update current PPC checkpoint
-  // 1. Story is no longer empty (ON_DIRTY_STORY)
-  // 2. Publish button is hit on a draft (ON_PUBLISH_CLICKED)
-  // 3. Story has more than 4 pages
-  useEffect(() => {
-    if (story.pages.length > 4) {
+  useStoryTriggerListener(
+    STORY_EVENTS.onFifthPageAdded,
+    useCallback(() => {
       dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES);
-    }
-  }, [story?.pages]);
+    }, [])
+  );
+
+  useStoryTriggerListener(
+    STORY_EVENTS.onInitialElementAdded,
+    useCallback(() => {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_INITIAL_ELEMENT_ADDED);
+    }, [])
+  );
 
   return (
     <Context.Provider

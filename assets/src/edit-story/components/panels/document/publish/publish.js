@@ -198,15 +198,15 @@ function PublishPanel() {
                 height={96}
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
-                title={__('Select as cover image', 'web-stories')}
-                buttonInsertText={__('Select as cover image', 'web-stories')}
+                title={__('Select as poster image', 'web-stories')}
+                buttonInsertText={__('Select as poster image', 'web-stories')}
                 type={allowedImageMimeTypes}
-                ariaLabel={__('Cover image', 'web-stories')}
+                ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
               />
             </MediaWrapper>
             <LabelWrapper>
-              <Label>{__('Cover image', 'web-stories')}</Label>
+              <Label>{__('Poster image', 'web-stories')}</Label>
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>

@@ -19,27 +19,72 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useAPI } from '../../../../app/api';
 import TemplateSave from './templateSave';
+import TemplateList from './templateList';
 
 const Wrapper = styled.div`
-  position: relative;
-  margin-left: 1em;
+  padding-top: 5px;
 `;
 
-function SavedTemplates({ pageSize }) {
+const TemporaryWrapper = styled.div`
+  overflow-y: scroll;
+`;
+
+function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
+  const {
+    actions: { getCustomPageTemplates },
+  } = useAPI();
+
+  const [pageTemplates, setPageTemplates] = useState(null);
+  const ref = useRef();
+
+  const loadTemplates = useCallback(() => {
+    getCustomPageTemplates().then(setPageTemplates);
+  }, [getCustomPageTemplates]);
+
+  const updateTemplatesList = useCallback(
+    (page) => {
+      setPageTemplates([page, ...pageTemplates]);
+    },
+    [setPageTemplates, pageTemplates]
+  );
+
+  useEffect(() => {
+    if (!pageTemplates) {
+      loadTemplates();
+    }
+  }, [loadTemplates, pageTemplates]);
+
+  // @todo Saving template should belong to the virtual list, it's currently misplaced.
   return (
-    <Wrapper>
-      <TemplateSave pageSize={pageSize} />
-    </Wrapper>
+    <TemporaryWrapper>
+      <TemplateSave
+        pageSize={pageSize}
+        setShowDefaultTemplates={setShowDefaultTemplates}
+        updateList={updateTemplatesList}
+      />
+      <Wrapper ref={ref}>
+        {pageTemplates && (
+          <TemplateList
+            parentRef={ref}
+            pageSize={pageSize}
+            pages={pageTemplates}
+          />
+        )}
+      </Wrapper>
+    </TemporaryWrapper>
   );
 }
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
+  setShowDefaultTemplates: PropTypes.func.isRequired,
 };
 
 export default SavedTemplates;
