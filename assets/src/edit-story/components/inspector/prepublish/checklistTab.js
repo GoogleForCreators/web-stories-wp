@@ -85,6 +85,7 @@ const ChecklistTab = ({
   checklist,
   currentCheckpoint,
   onAutoVideoOptimizationClick,
+  isChecklistEmpty,
 }) => {
   const { isRTL } = useConfig();
   const isVideoOptimizationEnabled = useFeature(
@@ -239,16 +240,7 @@ const ChecklistTab = ({
   const isHighPriorityDisabled =
     isHighPriorityDisabledState || !hasHighPriorityItems;
 
-  const isEmptyShown = useMemo(() => {
-    return (
-      currentCheckpoint === PPC_CHECKPOINT_STATE.ALL &&
-      pages.length &&
-      !hasHighPriorityItems &&
-      !hasRecommendedItems
-    );
-  }, [currentCheckpoint, pages, hasHighPriorityItems, hasRecommendedItems]);
-
-  return isEmptyShown ? (
+  return isChecklistEmpty ? (
     <EmptyChecklist />
   ) : (
     <>
@@ -268,13 +260,15 @@ const ChecklistTab = ({
         }
         ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
       >
-        <Entries
-          items={highPriority}
-          pageItems={pages.highPriority}
-          renderRow={renderRow}
-          renderPageGroupedRow={renderPageGroupedRow}
-          disabled={isHighPriorityDisabled}
-        />
+        {!isHighPriorityDisabled && (
+          <Entries
+            items={highPriority}
+            pageItems={pages.highPriority}
+            renderRow={renderRow}
+            renderPageGroupedRow={renderPageGroupedRow}
+            disabled={isHighPriorityDisabled}
+          />
+        )}
       </SimplePanel>
       <SimplePanel
         isToggleDisabled={isRecommendedDisabled}
@@ -298,13 +292,15 @@ const ChecklistTab = ({
             onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
           />
         )}
-        <Entries
-          items={recommended}
-          pageItems={pages.recommended}
-          renderRow={renderRow}
-          renderPageGroupedRow={renderPageGroupedRow}
-          disabled={isRecommendedDisabled}
-        />
+        {!isRecommendedDisabled && (
+          <Entries
+            items={recommended}
+            pageItems={pages.recommended}
+            renderRow={renderRow}
+            renderPageGroupedRow={renderPageGroupedRow}
+            disabled={isRecommendedDisabled}
+          />
+        )}
       </SimplePanel>
     </>
   );
@@ -315,6 +311,7 @@ ChecklistTab.propTypes = {
   checklist: types.GuidanceChecklist,
   currentCheckpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
   onAutoVideoOptimizationClick: PropTypes.func,
+  isChecklistEmpty: PropTypes.bool,
 };
 
 export default ChecklistTab;

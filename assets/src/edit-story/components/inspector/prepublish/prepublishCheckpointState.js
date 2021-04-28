@@ -18,6 +18,7 @@ export const PPC_CHECKPOINT_STATE = {
   UNAVAILABLE: 'unavailable',
   ONLY_RECOMMENDED: 'recommended',
   ALL: 'all',
+  NO_ISSUES: 'no_issues',
 };
 
 export const PPC_CHECKPOINT_ACTION = {
@@ -26,6 +27,8 @@ export const PPC_CHECKPOINT_ACTION = {
   ON_STORY_HAS_2_PAGES: "story 'recommended' section enabled",
   ON_STORY_HAS_5_PAGES: "story 'high priority' section enabled",
   ON_STORY_IS_PUBLISHED: 'story is published, regardless of recommendations',
+  ON_STORY_HAS_ISSUES: 'story has issues',
+  ON_ALL_ISSUES_CLEARED: 'all story issues have been resolved',
 };
 
 const machine = {
@@ -42,7 +45,13 @@ const machine = {
     [PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED]: PPC_CHECKPOINT_STATE.ALL,
     [PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED]: PPC_CHECKPOINT_STATE.ALL,
   },
-  [PPC_CHECKPOINT_STATE.ALL]: {},
+  [PPC_CHECKPOINT_STATE.ALL]: {
+    [PPC_CHECKPOINT_ACTION.ON_ALL_ISSUES_CLEARED]:
+      PPC_CHECKPOINT_STATE.NO_ISSUES,
+  },
+  [PPC_CHECKPOINT_STATE.NO_ISSUES]: {
+    [PPC_CHECKPOINT_ACTION.ON_STORY_HAS_ISSUES]: PPC_CHECKPOINT_STATE.ALL,
+  },
 };
 
 export const checkpointReducer = (state, action) => {
