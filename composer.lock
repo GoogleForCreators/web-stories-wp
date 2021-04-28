@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1013e288d601c489043459925784f365",
+    "content-hash": "5a5749a78989b336b4b4867ed4d26239",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-toolbox-php.git",
-                "reference": "3c52c66a3e0665d22111d4552e23d61d033ba1d0"
+                "reference": "8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/3c52c66a3e0665d22111d4552e23d61d033ba1d0",
-                "reference": "3c52c66a3e0665d22111d4552e23d61d033ba1d0",
+                "url": "https://api.github.com/repos/ampproject/amp-toolbox-php/zipball/8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e",
+                "reference": "8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e",
                 "shasum": ""
             },
             "require": {
@@ -80,12 +80,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "5e651345cebcb4fb1dcb5a3bf22b40ef97d3cabe"
+                "reference": "1bac57aba4e3b58351381b4967ab6ee9b9b00aa6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/5e651345cebcb4fb1dcb5a3bf22b40ef97d3cabe",
-                "reference": "5e651345cebcb4fb1dcb5a3bf22b40ef97d3cabe",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/1bac57aba4e3b58351381b4967ab6ee9b9b00aa6",
+                "reference": "1bac57aba4e3b58351381b4967ab6ee9b9b00aa6",
                 "shasum": ""
             },
             "require": {
@@ -150,9 +150,6 @@
                 },
                 "classmap": [
                     "includes/"
-                ],
-                "files": [
-                    "includes/bootstrap.php"
                 ]
             },
             "autoload-dev": {
