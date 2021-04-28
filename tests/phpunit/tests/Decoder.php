@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Decoder
  */
-class Decoder extends \WP_UnitTestCase {
+class Decoder extends Test_Case {
 
 	/**
 	 * @dataProvider get_encoded_data

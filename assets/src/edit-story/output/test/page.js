@@ -32,7 +32,7 @@ import { useFeature } from 'flagged';
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { MaskTypes } from '../../masks';
+import { MaskTypes } from '../../masks/constants';
 
 describe('Page output', () => {
   useFeature.mockImplementation((feature) => {

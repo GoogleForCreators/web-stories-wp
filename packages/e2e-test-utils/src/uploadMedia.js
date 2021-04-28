@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { uploadFile } from './';
+import uploadFile from './uploadFile';
 
 const MODAL = '.media-modal';
 

@@ -65,6 +65,7 @@
       " * limitations under the License.",
       " "
     ] ],
+    "import/no-cycle": "error",
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",

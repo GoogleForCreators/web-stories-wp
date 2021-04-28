@@ -20,8 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Activation_Notice
  */
-class Activation_Notice extends \WP_UnitTestCase {
-	use Private_Access;
+class Activation_Notice extends Test_Case {
 
 	protected $activation_flag;
 

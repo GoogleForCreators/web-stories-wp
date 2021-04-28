@@ -27,7 +27,8 @@ import { useRef, useEffect, useState } from 'react';
 import StoryPropTypes from '../types';
 import { useDropTargets } from '../app';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask, MaskTypes } from './';
+import { MaskTypes } from './constants';
+import { getElementMask } from './';
 
 const FILL_STYLE = {
   position: 'absolute',

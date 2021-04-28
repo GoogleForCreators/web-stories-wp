@@ -31,29 +31,7 @@ import {
  */
 import { useResizeEffect } from '../../../design-system';
 import { getTransforms, getOffset } from './utils';
-
-/**
- * Internal dependencies
- */
-
-export const Placement = {
-  // TOP
-  TOP: 'top',
-  TOP_START: 'top-start',
-  TOP_END: 'top-end',
-  // BOTTOM
-  BOTTOM: 'bottom',
-  BOTTOM_START: 'bottom-start',
-  BOTTOM_END: 'bottom-end',
-  // RIGHT
-  RIGHT: 'right',
-  RIGHT_START: 'right-start',
-  RIGHT_END: 'right-end',
-  // LEFT
-  LEFT: 'left',
-  LEFT_START: 'left-start',
-  LEFT_END: 'left-end',
-};
+import { Placement } from './constants';
 
 const Container = styled.div.attrs(
   ({ $offset: { x, y, width, height }, fillWidth, fillHeight, placement }) => ({

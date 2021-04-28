@@ -23,8 +23,8 @@ use WP_REST_Request;
 /**
  * @coversDefaultClass \Google\Web_Stories\Media
  */
-class Media extends \WP_UnitTestCase {
-	use Private_Access;
+class Media extends Test_Case {
+
 	/**
 	 * @covers ::register
 	 */
@@ -50,8 +50,8 @@ class Media extends \WP_UnitTestCase {
 				[
 					$media,
 					'filter_rest_generated_media_attachments',
-				] 
-			) 
+				]
+			)
 		);
 	}
 	/**

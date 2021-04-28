@@ -30,7 +30,7 @@ import {
   VIEW_STYLE,
 } from '../constants';
 import { PageSizePropType } from '../types';
-import { usePagePreviewSize } from './index';
+import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useTemplateView({ totalPages }) {
   const [searchKeyword, _setSearchKeyword] = useState('');
