@@ -28,8 +28,6 @@ import {
 
 describe('publisher logo', () => {
   it('should be able to upload multiple logos', async () => {
-    page.setDefaultTimeout(3000);
-
     await visitSettings();
 
     // Upload publisher logo
@@ -37,12 +35,11 @@ describe('publisher logo', () => {
     const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif', false);
 
     // verify that the publisher logos exist
-    await Promise.all(
-      [logoOneName, logoTwoName].map((name) =>
-        expect(page).toMatchElement(
-          `button[aria-label^="Publisher logo menu for ${name}-"`
-        )
-      )
+    await expect(page).toMatchElement(
+      `button[aria-label^="Publisher logo menu for ${logoOneName}-"`
+    );
+    await expect(page).toMatchElement(
+      `button[aria-label^="Publisher logo menu for ${logoTwoName}-"`
     );
 
     // TODO: Clear all logos so that we start at zero each time
