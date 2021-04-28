@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
