@@ -53,7 +53,7 @@ function PrepublishChecklistProvider({ children }) {
     return { ...story, pages };
   });
 
-  const isStoryLoaded = story?.pages.length > 0;
+  const isStoryLoaded = story?.pages?.length > 0;
   const isChecklistEmpty = checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES;
 
   const [currentList, setCurrentList] = useState([]);

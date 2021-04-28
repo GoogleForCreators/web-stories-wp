@@ -30,10 +30,6 @@ export class ChecklistPanel extends Container {
     return this.getByRole('button', { name: /High Priority/ });
   }
 
-  get highPriority() {
-    return this.getByRole('button', { name: /High Priority/ });
-  }
-
   get recommended() {
     return this.getByRole('button', { name: /Recommended/ });
   }
