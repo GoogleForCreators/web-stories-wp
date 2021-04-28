@@ -17,6 +17,8 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Remove_Unneeded_Attachment_Meta
  *
@@ -24,7 +26,7 @@ namespace phpunit\tests\Migrations;
  *
  * @package phpunit\tests\Migrations
  */
-class Remove_Unneeded_Attachment_Meta extends \WP_UnitTestCase {
+class Remove_Unneeded_Attachment_Meta extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */

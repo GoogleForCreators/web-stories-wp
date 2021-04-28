@@ -17,6 +17,8 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Replace_Conic_Style_Presets
  *
@@ -24,7 +26,7 @@ namespace phpunit\tests\Migrations;
  *
  * @package phpunit\tests\Migrations
  */
-class Replace_Conic_Style_Presets extends \WP_UnitTestCase {
+class Replace_Conic_Style_Presets extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */
