@@ -76,7 +76,7 @@ export function Dialog({
   ...rest
 }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} {...rest}>
+    <Modal isOpen={isOpen} onClose={onClose} title={title} {...rest}>
       <DialogBox>
         {Boolean(title) && (
           <Headline
