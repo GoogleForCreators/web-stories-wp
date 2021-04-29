@@ -25,6 +25,8 @@ import { createNewStory } from '@web-stories-wp/e2e-test-utils';
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
+const REVIEW_CHECKLIST = 'div#modal-review-checklist';
+
 describe('Custom Meta Boxes', () => {
   describe('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {
@@ -89,14 +91,11 @@ describe('Custom Meta Boxes', () => {
       await expect(page).toClick('button', { text: 'Publish' });
 
       // Bypass checklist
-      await page.waitForResponse(() =>
-        expect(page).toMatchElement('button', {
-          text: 'Continue to publish',
-        })
-      );
-
+      await page.waitForSelector(REVIEW_CHECKLIST, {
+        hidden: false,
+      });
       await expect(page).toClick('button', {
-        text: 'Continue to publish',
+        text: /Continue to publish/,
       });
 
       // Refresh page to verify that the text has been persisted.
