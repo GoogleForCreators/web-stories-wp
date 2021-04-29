@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../..';
+import useContextSelector from '../../../design-system/utils/useContextSelector';
+import { identity } from '../../../design-system/utils';
 import Context from './context';
 
 export function useSnackbar(selector) {

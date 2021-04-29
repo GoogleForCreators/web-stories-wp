@@ -23,11 +23,12 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useAPI, useConfig } from '../..';
+import { useAPI } from '../../api';
+import { useConfig } from '../../config';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessVideo from '../utils/useProcessVideo';
 import useUploadMedia from '../useUploadMedia';
-import { getResourceFromAttachment } from '../utils';
+import getResourceFromAttachment from '../utils/getResourceFromAttachment';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**

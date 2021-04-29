@@ -24,7 +24,7 @@ use Google\Web_Stories\Stories_Renderer\Carousel_Renderer;
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Query
  */
-class Story_Query extends \WP_UnitTestCase {
+class Story_Query extends Test_Case {
 
 	/**
 	 * Class in test.
