@@ -84,7 +84,7 @@ function PageTemplatesPane(props) {
   }, [getCustomPageTemplates, setSavedTemplates]);
 
   useEffect(() => {
-    if (!savedTemplates) {
+    if (!savedTemplates && customPageTemplates) {
       loadTemplates();
     }
   }, [savedTemplates, loadTemplates]);
