@@ -48,7 +48,7 @@ function setupButtons({
   const saveStory = jest.fn();
   const autoSave = jest.fn();
   const focusChecklistTab = jest.fn();
-  const resetReviewDialogTrigger = jest.fn();
+  const resetReviewDialog = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -83,7 +83,7 @@ function setupButtons({
     // value: {
     shouldReviewDialogBeSeen: false,
     focusChecklistTab,
-    resetReviewDialogTrigger,
+    resetReviewDialog,
     ...extraPrepublishChecklistProps,
     // },
   };

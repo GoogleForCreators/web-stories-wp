@@ -47,12 +47,12 @@ function SwitchToDraft() {
     isUploading: state.state.isUploading,
   }));
 
-  const { resetReviewDialogTrigger } = usePrepublishChecklist();
+  const { resetReviewDialog } = usePrepublishChecklist();
 
   const handleUnPublish = useCallback(() => {
     saveStory({ status: 'draft' });
-    resetReviewDialogTrigger();
-  }, [resetReviewDialogTrigger, saveStory]);
+    resetReviewDialog();
+  }, [resetReviewDialog, saveStory]);
 
   const label = __('Switch to Draft', 'web-stories');
   return (

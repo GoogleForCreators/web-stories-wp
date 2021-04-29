@@ -46,6 +46,7 @@ function ReviewChecklistDialog({ open, onIgnore, onReview, onClose }) {
       secondaryText={TEXT.SECONDARY_BUTTON}
       primaryText={TEXT.PRIMARY_BUTTON}
       onPrimary={onReview}
+      id="modal-review-checklist"
       contentStyles={{
         width: '434px',
       }}

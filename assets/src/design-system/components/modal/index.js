@@ -82,7 +82,6 @@ export function Modal({
   modalStyles = {},
   onClose,
   overlayStyles,
-  title,
   ...rest
 }) {
   const themeContext = useContext(ThemeContext);
@@ -91,7 +90,7 @@ export function Modal({
     <ReactModal
       className={CONTENT_CLASS}
       closeTimeoutMS={closeTimeoutMS}
-      contentLabel={contentLabel || title}
+      contentLabel={contentLabel}
       isOpen={isOpen}
       onRequestClose={onClose}
       overlayClassName={OVERLAY_CLASS}
@@ -117,5 +116,4 @@ Modal.propTypes = {
   isOpen: PropTypes.bool,
   modalStyles: PropTypes.object,
   overlayStyles: PropTypes.object,
-  title: PropTypes.string,
 };
