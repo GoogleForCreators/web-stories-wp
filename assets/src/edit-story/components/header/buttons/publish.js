@@ -112,7 +112,7 @@ function Publish() {
         text={text}
       />
       <ReviewChecklistDialog
-        open={Boolean(showDialog)}
+        open={showDialog}
         onIgnore={publish}
         onReview={handleReviewChecklist}
         onClose={handleClose}

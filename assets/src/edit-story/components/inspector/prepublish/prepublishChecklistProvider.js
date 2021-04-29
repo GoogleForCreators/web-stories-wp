@@ -107,7 +107,7 @@ function PrepublishChecklistProvider({ children }) {
     if (story.status === 'publish') {
       dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED);
     }
-  }, [story]);
+  }, [story.status]);
 
   useEffect(() => {
     if (
@@ -121,10 +121,11 @@ function PrepublishChecklistProvider({ children }) {
   }, [checkpointState, isStoryLoaded, highPriorityLength, recommendedLength]);
 
   useEffect(() => {
-    if (checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES) {
-      if (highPriorityLength > 0 || recommendedLength > 0) {
-        dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_ISSUES);
-      }
+    if (
+      checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES &&
+      (highPriorityLength > 0 || recommendedLength > 0)
+    ) {
+      dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_HAS_ISSUES);
     }
   }, [checkpointState, highPriorityLength, recommendedLength]);
 
@@ -155,7 +156,7 @@ function PrepublishChecklistProvider({ children }) {
   }, [setIsChecklistReviewRequested]);
 
   // Use this when a published story gets turned back to a draft.
-  const resetReviewDialogTrigger = useCallback(() => {
+  const resetReviewDialog = useCallback(() => {
     setIsChecklistReviewRequested(false);
   }, []);
 
@@ -167,7 +168,7 @@ function PrepublishChecklistProvider({ children }) {
         currentCheckpoint: checkpointState,
         isChecklistReviewRequested,
         focusChecklistTab,
-        resetReviewDialogTrigger,
+        resetReviewDialog,
         shouldReviewDialogBeSeen,
         isChecklistEmpty,
       }}

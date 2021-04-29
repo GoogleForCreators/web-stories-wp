@@ -73,10 +73,16 @@ export function Dialog({
   actions = [],
   isOpen = false,
   onClose,
+  contentLabel,
   ...rest
 }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} {...rest}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      contentLabel={contentLabel || title}
+      {...rest}
+    >
       <DialogBox>
         {Boolean(title) && (
           <Headline
