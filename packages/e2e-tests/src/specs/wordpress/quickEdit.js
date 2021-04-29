@@ -47,7 +47,7 @@ describe('Quick Edit', () => {
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
-
+    // Bypass checklist
     await expect(page).toClick('button', {
       text: 'Continue to publish',
     });
