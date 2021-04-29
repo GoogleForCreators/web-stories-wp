@@ -37,7 +37,6 @@ import { percySnapshot } from '@percy/puppeteer';
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 const storyTitle = 'Test post lock';
-const REVIEW_CHECKLIST = 'div#modal-review-checklist';
 
 describe('Post locking', () => {
   withExperimentalFeatures(['enablePostLocking']);
@@ -51,9 +50,7 @@ describe('Post locking', () => {
     await expect(page).toClick('button', { text: 'Publish' });
 
     // Bypass checklist
-    await page.waitForSelector(REVIEW_CHECKLIST, {
-      hidden: false,
-    });
+    await page.waitForSelector('.ReactModal__Content');
     // eslint-disable-next-line jest/no-standalone-expect
     await expect(page).toClick('button', {
       text: /Continue to publish/,

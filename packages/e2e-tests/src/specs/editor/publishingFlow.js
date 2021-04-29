@@ -33,8 +33,6 @@ import {
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
-const REVIEW_CHECKLIST = 'div#modal-review-checklist';
-
 describe('Publishing Flow', () => {
   let stopRequestInterception;
 
@@ -65,9 +63,7 @@ describe('Publishing Flow', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
-    await page.waitForSelector(REVIEW_CHECKLIST, {
-      hidden: false,
-    });
+    await page.waitForSelector('.ReactModal__Content');
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
@@ -142,9 +138,7 @@ describe('Publishing Flow', () => {
       await expect(page).toClick('button', { text: 'Publish' });
 
       // Bypass checklist
-      await page.waitForSelector(REVIEW_CHECKLIST, {
-        hidden: false,
-      });
+      await page.waitForSelector('.ReactModal__Content');
       await expect(page).toClick('button', {
         text: /Continue to publish/,
       });

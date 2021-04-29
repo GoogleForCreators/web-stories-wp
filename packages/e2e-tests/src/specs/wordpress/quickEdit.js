@@ -27,8 +27,6 @@ import {
  */
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
-const REVIEW_CHECKLIST = 'div#modal-review-checklist';
-
 describe('Quick Edit', () => {
   beforeAll(async () => {
     await loginUser('author', 'password');
@@ -50,9 +48,7 @@ describe('Quick Edit', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
-    await page.waitForSelector(REVIEW_CHECKLIST, {
-      hidden: false,
-    });
+    await page.waitForSelector('.ReactModal__Content');
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
