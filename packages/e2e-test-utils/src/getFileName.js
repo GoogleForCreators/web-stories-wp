@@ -14,28 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import visitDashboard from './visitDashboard';
+const getFileName = (name) => name.split('.').slice(0, -1).join('.');
 
-/**
- * Creates a new story.
- */
-async function visitSettings() {
-  await visitDashboard();
-
-  const dashboardNavigation = await expect(page).toMatchElement(
-    '[aria-label="Main dashboard navigation"]'
-  );
-
-  await expect(dashboardNavigation).toClick('a', {
-    text: 'Settings',
-  });
-
-  await page.waitForResponse((response) =>
-    response.url().includes('web-stories/v1/media')
-  );
-}
-
-export default visitSettings;
+export default getFileName;

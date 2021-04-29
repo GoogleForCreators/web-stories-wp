@@ -20,8 +20,10 @@
 import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
-
-const getFileName = (name) => name.split('.').slice(0, -1).join('.');
+/**
+ * Internal dependencies
+ */
+import getFileName from './getFileName';
 
 /**
  * Helper that upload a publisher logo in the dashboard settings.
