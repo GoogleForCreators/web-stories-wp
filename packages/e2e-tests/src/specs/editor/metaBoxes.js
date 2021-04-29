@@ -89,9 +89,12 @@ describe('Custom Meta Boxes', () => {
       await expect(page).toClick('button', { text: 'Publish' });
 
       await page.waitForSelector('.ReactModal__Content');
-      // await expect(page).toClick('button', {
-      //   text: /Continue to publish/,
-      // });
+      await expect(page).toClick('button', {
+        text: /Continue to publish/,
+      });
+
+      await expect(page).toMatch('Story published!');
+      await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
       // Refresh page to verify that the text has been persisted.
       await page.reload();
