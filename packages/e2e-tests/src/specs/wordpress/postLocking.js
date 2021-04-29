@@ -50,7 +50,7 @@ describe('Post locking', () => {
     await expect(page).toClick('button', { text: 'Publish' });
 
     // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toMatchElement('button', {
+    await expect(page).toClick('button', {
       text: 'Continue to publish',
     });
 
