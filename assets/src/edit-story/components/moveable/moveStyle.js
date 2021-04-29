@@ -104,15 +104,20 @@ export const GlobalStyle = createGlobalStyle`
   .default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
     background: ${({ theme }) => theme.colors.border.selection} !important;
     width: 1px;
-    top: -12px;
-    height: 12px;
+    height: 13px;
+    top: 2px;
   }
 
-  .default-moveable.moveable-control-box .moveable-control.moveable-rotation {
+  .default-moveable.moveable-control-box .moveable-rotation {
+    top: -15px;
+    bottom: initial;
+  }
+
+  .default-moveable.moveable-control-box .moveable-control.moveable-rotation-control {
     border-radius: 50px;
     width: 10px;
     height: 10px;
-    margin-left: -5.5px;
+    margin-left: -5px;
   }
 
   .default-moveable.hide-handles .moveable-line.moveable-rotation-line,

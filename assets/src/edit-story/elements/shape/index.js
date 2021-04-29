@@ -17,43 +17,9 @@
 /**
  * Internal dependencies
  */
-import PanelTypes from '../../components/panels/design/types';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import createSolidFromString from '../../utils/createSolidFromString';
 export { default as Display } from './display';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 
-export const defaultAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: createSolidFromString('#ffffff'),
-};
-
-export const hasEditMode = false;
-
-export const isMedia = false;
-
-export const canFlip = true;
-
-export const isMaskable = true;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-  minWidth: 20,
-  minHeight: 20,
-};
-
-export const panels = [
-  PanelTypes.COLOR_PRESETS,
-  PanelTypes.ELEMENT_ALIGNMENT,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.BORDER,
-  PanelTypes.LAYER_STYLE,
-  PanelTypes.LINK,
-  PanelTypes.SHAPE_STYLE,
-  PanelTypes.BORDER_RADIUS,
-  PanelTypes.ANIMATION,
-];
+export * from './constants';

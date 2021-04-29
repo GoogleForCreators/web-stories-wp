@@ -33,6 +33,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
@@ -54,6 +55,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Types;
 	use Assets;
 	use Screen;
+	use Post_Type;
 
 	/**
 	 * The slug of the stories post type.
@@ -112,20 +114,30 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	private $locale;
 
 	/**
+	 * Register_Font instance.
+	 *
+	 * @var Register_Font Register_Font instance.
+	 */
+	private $register_font;
+
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments $experiments Experiments instance.
-	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
-	 * @param Decoder     $decoder Decoder instance.
-	 * @param Locale      $locale Locale instance.
+	 * @param Experiments   $experiments   Experiments instance.
+	 * @param Meta_Boxes    $meta_boxes    Meta_Boxes instance.
+	 * @param Decoder       $decoder       Decoder instance.
+	 * @param Locale        $locale        Locale instance.
+	 * @param Register_Font $register_font Register_Font instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
-		$this->experiments = $experiments;
-		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = $decoder;
-		$this->locale      = $locale;
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Register_Font $register_font ) {
+		$this->experiments   = $experiments;
+		$this->meta_boxes    = $meta_boxes;
+		$this->decoder       = $decoder;
+		$this->locale        = $locale;
+		$this->register_font = $register_font;
 	}
 
 	/**
@@ -160,11 +172,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'attributes'               => __( 'Story Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into story', 'web-stories' ),
 					'uploaded_to_this_item'    => __( 'Uploaded to this story', 'web-stories' ),
-					'featured_image'           => __( 'Featured Image', 'web-stories' ),
-					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
-					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),
-					'use_featured_image'       => __( 'Use as featured image', 'web-stories' ),
+					'featured_image'           => _x( 'Featured Image', 'story', 'web-stories' ),
+					'set_featured_image'       => _x( 'Set featured image', 'story', 'web-stories' ),
+					'remove_featured_image'    => _x( 'Remove featured image', 'story', 'web-stories' ),
+					'use_featured_image'       => _x( 'Use as featured image', 'story', 'web-stories' ),
 					'filter_items_list'        => __( 'Filter stories list', 'web-stories' ),
+					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
 					'items_list_navigation'    => __( 'Stories list navigation', 'web-stories' ),
 					'items_list'               => __( 'Stories list', 'web-stories' ),
 					'item_published'           => __( 'Story published.', 'web-stories' ),
@@ -174,6 +187,8 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'item_updated'             => __( 'Story updated.', 'web-stories' ),
 					'menu_name'                => _x( 'Stories', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Story', 'add new on admin bar', 'web-stories' ),
+					'item_link'                => _x( 'Story Link', 'navigation link block title', 'web-stories' ),
+					'item_link_description'    => _x( 'A link to a story.', 'navigation link block description', 'web-stories' ),
 				],
 				'menu_icon'             => $this->get_post_type_icon(),
 				'supports'              => [
@@ -327,7 +342,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			$all_capabilities,
 			function ( $value ) {
 				return 'read' !== $value;
-			} 
+			}
 		);
 		$all_roles        = wp_roles();
 		$roles            = array_values( (array) $all_roles->role_objects );
@@ -490,12 +505,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_font->register();
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -504,7 +514,9 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
+
+		$font_handle = $this->register_font->get_handle();
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
@@ -528,21 +540,10 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = self::POST_TYPE_SLUG;
-		$has_publish_action       = false;
-		$has_assign_author_action = false;
+		$rest_base                = $this->get_post_type_rest_base( self::POST_TYPE_SLUG );
+		$has_publish_action       = $this->get_post_type_cap( self::POST_TYPE_SLUG, 'publish_posts' );
+		$has_assign_author_action = $this->get_post_type_cap( self::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
-				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
-			}
-			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
-				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
-			}
-		}
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -564,6 +565,14 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			admin_url( 'edit.php' )
 		);
 
+		$dashboard_settings_url = add_query_arg(
+			[
+				'post_type' => self::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard#/editor-settings',
+			],
+			admin_url( 'edit.php' )
+		);
+
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
@@ -576,6 +585,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		$mime_types       = $this->get_allowed_mime_types();
 		$mime_image_types = $this->get_allowed_image_mime_types();
 
+		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
 			'id'         => 'web-stories-editor',
@@ -590,6 +600,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
+				'dashboardSettingsLink' => $dashboard_settings_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
@@ -600,14 +611,15 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'                   => [
-					'users'        => '/web-stories/v1/users/',
-					'currentUser'  => '/web-stories/v1/users/me/',
-					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'        => '/web-stories/v1/media/',
-					'link'         => '/web-stories/v1/link/',
-					'statusCheck'  => '/web-stories/v1/status-check/',
-					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
+					'users'         => '/web-stories/v1/users/',
+					'currentUser'   => '/web-stories/v1/users/me/',
+					'stories'       => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
+					'media'         => '/web-stories/v1/media/',
+					'link'          => '/web-stories/v1/link/',
+					'statusCheck'   => '/web-stories/v1/status-check/',
+					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
@@ -649,18 +661,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	protected function setup_lock( $story_id ) {
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object instanceof WP_Post_Type ) {
-			return;
-		}
-
-		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
-			return;
-		}
-
-
-		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+		if ( ! $this->get_post_type_cap( self::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
 		// Make sure these functions are loaded.

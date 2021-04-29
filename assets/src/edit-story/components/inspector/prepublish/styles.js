@@ -28,6 +28,7 @@ import {
   Text,
   themeHelpers,
   THEME_CONSTANTS,
+  Toggle,
 } from '../../../../design-system';
 import { MAX_NUMBER_FOR_BADGE } from './constants';
 
@@ -60,28 +61,56 @@ NumberBadge.propTypes = {
   number: PropTypes.number,
 };
 
+const getPanelTitleColor = (isRecommended, isDisabled) => {
+  if (isDisabled) {
+    return 'disable';
+  } else if (isRecommended) {
+    return 'linkNormal';
+  }
+  return 'negative';
+};
 export const PanelTitle = styled(Headline).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
   as: 'span',
 })`
-  color: ${({ isRecommended, theme }) =>
-    isRecommended ? theme.colors.fg.linkNormal : theme.colors.fg.negative};
+  color: ${({ isRecommended, theme, isDisabled }) =>
+    theme.colors.fg[getPanelTitleColor(isRecommended, isDisabled)]};
 `;
 PanelTitle.propTypes = {
   isRecommended: PropTypes.bool,
 };
 
 export const Row = styled.div`
-  margin: 0 16px;
-  padding: 4px 0;
+  margin: 0 0 0 24px;
+  padding: 0 0 22px 0;
 `;
 
-export const PageGroup = styled.div`
-  margin: 0 16px;
+export const VideoOptimizationGroup = styled.div`
+  margin-bottom: 16px;
+`;
 
-  ${Row} {
-    margin-right: 0;
+export const ToggleGroup = styled.div`
+  display: flex;
+  column-gap: 16px;
+
+  label {
+    line-height: 20px;
+    max-width: 172px;
+    cursor: pointer;
   }
+`;
+
+export const StyledToggle = styled(Toggle)`
+  margin-top: 4px;
+`;
+
+export const PageGroup = styled.div``;
+
+export const DescriptionText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  margin-bottom: 16px;
 `;
 
 export const GoToIssue = styled.span`
@@ -104,14 +133,18 @@ export const IssueTitle = styled(Headline).attrs({
   cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   ${themeHelpers.focusableOutlineCSS};
+
+  &::before {
+    content: '•';
+    padding-right: 8px;
+  }
 `;
 
 export const IssueDescription = styled.div`
-  padding: 4px 0;
-
+  padding: 2px 0;
+  margin-left: 12px;
   ul {
-    list-style-type: '•';
-    list-style-position: inside;
+    list-style-type: none;
     margin: 0;
   }
   li {
@@ -128,10 +161,6 @@ export const IssueDescription = styled.div`
     &:last-of-type {
       padding-bottom: 0;
     }
-    &:before {
-      content: '';
-      padding-right: 4px;
-    }
   }
 `;
 
@@ -141,7 +170,7 @@ export const PageIndicator = styled(Text).attrs({
   isBold: true,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  padding: 20px 0 8px;
+  padding: 8px 0;
   display: inline-block;
 `;
 

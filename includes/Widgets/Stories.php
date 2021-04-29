@@ -115,7 +115,7 @@ class Stories extends WP_Widget {
 		];
 
 		$story_args = [
-			'posts_per_page' => min( absint( $instance['number_of_stories'] ), 20 ),
+			'posts_per_page' => min( absint( $instance['number_of_stories'] ), 20 ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			'orderby'        => $instance['orderby'],
 			'order'          => $instance['order'],
 		];

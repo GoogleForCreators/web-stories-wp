@@ -22,7 +22,7 @@ import { waitForElementToBeRemoved } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import useInsertElement from '../../../../../components/canvas/useInsertElement';
+import useInsertElement from '../../../../canvas/useInsertElement';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma/fixture';

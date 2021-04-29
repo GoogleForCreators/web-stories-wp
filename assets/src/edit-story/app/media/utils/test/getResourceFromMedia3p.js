@@ -83,6 +83,7 @@ describe('getResourceFromMedia3p', () => {
       alt: null,
       local: false,
       isPlaceholder: false,
+      isOptimized: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -168,6 +169,7 @@ describe('getResourceFromMedia3p', () => {
       alt: null,
       local: false,
       isPlaceholder: false,
+      isOptimized: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -369,6 +371,7 @@ describe('getResourceFromMedia3p', () => {
       alt: null,
       local: false,
       isPlaceholder: false,
+      isOptimized: false,
       poster: undefined,
       posterId: undefined,
       sizes: {

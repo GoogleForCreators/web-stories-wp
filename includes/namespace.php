@@ -38,20 +38,33 @@ use WP_Site;
  * @return void
  */
 function setup_new_site() {
-	$story = Services::get( 'story_post_type' );
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
 	// TODO Register cap to roles within class itself.
 	$story->add_caps_to_roles();
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
+	rewrite_flush();
 
 	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
 	// TODO move this logic to Database_Upgrader class.
-	$injector = Services::get_injector();
-	if ( method_exists( $injector, 'make' ) ) {
-		$database_upgrader = $injector->make( Database_Upgrader::class );
-		$database_upgrader->register();
+	$database_upgrader = $injector->make( Database_Upgrader::class );
+	$database_upgrader->register();
+}
+
+
+/**
+ * Flush rewrites.
+ *
+ * @since 1.7.0
+ *
+ * @return void
+ */
+function rewrite_flush() {
+	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 }
 
@@ -118,13 +131,18 @@ function remove_site( $error, $site ) {
 		return;
 	}
 
-	$story = Services::get( 'story_post_type' );
+	$injector = Services::get_injector();
+	if ( ! method_exists( $injector, 'make' ) ) {
+		return;
+	}
+	$story = $injector->make( Story_Post_Type::class );
 
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
 	$story->remove_caps_from_roles();
 	restore_current_blog();
 }
+
 add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
 
 /**

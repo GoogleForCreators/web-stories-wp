@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../constants';
-import { DEFAULT_BLINKS } from './index';
+import { DEFAULT_BLINKS } from '.';
 
 export default {
   blinkCount: {

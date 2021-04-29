@@ -248,9 +248,10 @@ const editorAndDashboard = {
     }),
   ],
   optimization: {
+    ...sharedConfig.optimization,
     splitChunks: {
+      ...sharedConfig.optimization.splitChunks,
       chunks: 'all',
-      automaticNameDelimiter: '-',
     },
   },
 };

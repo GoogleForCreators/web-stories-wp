@@ -34,7 +34,7 @@ import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import removeImagesFromPageLayouts from './removeImagesFromPageLayouts';
+import removeImagesFromPageTemplates from './removeImagesFromPageTemplates';
 
 function APIProvider({ children }) {
   const {
@@ -47,13 +47,14 @@ function APIProvider({ children }) {
       metaBoxes,
       currentUser,
       storyLocking,
+      pageTemplates: customPageTemplates,
     },
     encodeMarkup,
     cdnURL,
     assetsURL,
   } = useConfig();
 
-  const pageLayouts = useRef({
+  const pageTemplates = useRef({
     base: [],
     withoutImages: [],
   });
@@ -370,21 +371,48 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
-  const getPageLayouts = useCallback(
+  const getPageTemplates = useCallback(
     async ({ showImages = false } = {}) => {
-      // check if pageLayouts have been loaded yet
-      if (pageLayouts.current.base.length === 0) {
-        pageLayouts.current.base = await getAllTemplates({ cdnURL });
-        pageLayouts.current.withoutImages = removeImagesFromPageLayouts({
-          templates: pageLayouts.current.base,
+      // check if pageTemplates have been loaded yet
+      if (pageTemplates.current.base.length === 0) {
+        pageTemplates.current.base = await getAllTemplates({ cdnURL });
+        pageTemplates.current.withoutImages = removeImagesFromPageTemplates({
+          templates: pageTemplates.current.base,
           assetsURL,
-          showImages,
         });
       }
 
-      return pageLayouts.current[showImages ? 'base' : 'withoutImages'];
+      return pageTemplates.current[showImages ? 'base' : 'withoutImages'];
     },
     [cdnURL, assetsURL]
+  );
+
+  // @todo Add paging.
+  const getCustomPageTemplates = useCallback(() => {
+    let apiPath = customPageTemplates;
+    const perPage = 100;
+    apiPath = addQueryArgs(apiPath, {
+      context: 'edit',
+      per_page: perPage,
+      page: 1,
+    });
+    return apiFetch({ path: apiPath }).then((response) =>
+      response.map((template) => template['story_data'])
+    );
+  }, [customPageTemplates]);
+
+  const addPageTemplate = useCallback(
+    (page) => {
+      return apiFetch({
+        path: `${customPageTemplates}/`,
+        data: {
+          story_data: page,
+          status: 'publish',
+        },
+        method: 'POST',
+      }).then((response) => response['story_data']);
+    },
+    [customPageTemplates]
   );
 
   const state = {
@@ -404,7 +432,9 @@ function APIProvider({ children }) {
       deleteMedia,
       saveMetaBoxes,
       getStatusCheck,
-      getPageLayouts,
+      addPageTemplate,
+      getCustomPageTemplates,
+      getPageTemplates,
       getCurrentUser,
       updateCurrentUser,
     },
