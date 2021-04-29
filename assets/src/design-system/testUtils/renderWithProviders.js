@@ -37,14 +37,8 @@ ProviderWrapper.propTypes = {
   children: PropTypes.node,
 };
 
-export const renderWithProviders = (children) => {
-  const { rerender, ...result } = render(
-    <ProviderWrapper>{children}</ProviderWrapper>
-  );
-  return {
-    ...result,
-    // rerender needs to be wrapped in the providers too
-    rerender: (rerenderedChildren) =>
-      rerender(<ProviderWrapper>{rerenderedChildren}</ProviderWrapper>),
-  };
+export const renderWithProviders = (ui) => {
+  return render(ui, {
+    wrapper: ProviderWrapper,
+  });
 };
