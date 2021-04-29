@@ -110,7 +110,9 @@ describe('Publishing Flow', () => {
     expect(postPermalink).not.toBeNull();
     expect(postPermalink).toStrictEqual(expect.any(String));
 
-    await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+    await page.goto(postPermalink, {
+      waitUntil: 'networkidle0',
+    });
 
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
@@ -163,7 +165,9 @@ describe('Publishing Flow', () => {
       expect(postPermalink).not.toBeNull();
       expect(postPermalink).toStrictEqual(expect.any(String));
 
-      await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+      await page.goto(postPermalink, {
+        waitUntil: 'networkidle0',
+      });
 
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');
