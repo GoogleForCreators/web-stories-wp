@@ -50,7 +50,7 @@ export const MoreVerticalButton = styled.button`
   border: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
 
-  ${themeHelpers.focusableOutlineCSS}
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 MoreVerticalButton.propTypes = {
