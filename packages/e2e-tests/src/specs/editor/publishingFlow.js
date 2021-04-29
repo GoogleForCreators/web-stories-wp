@@ -55,7 +55,7 @@ describe('Publishing Flow', () => {
     stopRequestInterception();
   });
 
-  it('should guide me towards creating a new post to embed my story', async () => {
+  it('*****should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 
     await insertStoryTitle('Publishing Flow Test');
@@ -63,15 +63,13 @@ describe('Publishing Flow', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
-    await page.waitForResponse(() =>
-      expect(page).toMatchElement('button', {
-        text: 'Continue to publish',
-      })
-    );
-
+    // WIP
+    const MODAL = 'div#modal-review-checklist';
+    await page.waitForSelector(MODAL, { hidden: false, timeout: 500 });
     await expect(page).toClick('button', {
-      text: 'Continue to publish',
+      text: /Continue to publish/,
     });
+
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
