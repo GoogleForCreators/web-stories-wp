@@ -50,12 +50,12 @@ describe('Post locking', () => {
     await expect(page).toClick('button', { text: 'Publish' });
 
     // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
+    await page.waitForSelector('.ReactModal__Content', { timeout: 5000 });
     // eslint-disable-next-line jest/no-standalone-expect
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
-
+    await page.waitForSelector('.ReactModal__Content', { hidden: true });
     await activatePlugin('e2e-tests-post-lock-mock');
   });
 
@@ -81,7 +81,10 @@ describe('Post locking', () => {
       expect(page).toClick('a', { text: storyTitle }),
     ]);
 
-    await page.waitForSelector('.ReactModal__Content');
+    await page.waitForSelector('.ReactModal__Content', {
+      hidden: false,
+      timeout: 5000,
+    });
 
     await expect(page).toMatch('Story is locked');
 
