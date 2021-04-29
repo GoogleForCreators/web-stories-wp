@@ -19,13 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import TemplateSave from './templateSave';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
@@ -34,28 +33,16 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-const ButtonWrapper = styled.div`
-  padding: 0 1em;
-`;
-
-function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
+function SavedTemplates({ pageSize, pageTemplates, setPageTemplates }) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
 
-  const [pageTemplates, setPageTemplates] = useState(null);
   const ref = useRef();
 
   const loadTemplates = useCallback(() => {
     getCustomPageTemplates().then(setPageTemplates);
-  }, [getCustomPageTemplates]);
-
-  const updateTemplatesList = useCallback(
-    (page) => {
-      setPageTemplates([page, ...pageTemplates]);
-    },
-    [setPageTemplates, pageTemplates]
-  );
+  }, [getCustomPageTemplates, setPageTemplates]);
 
   useEffect(() => {
     if (!pageTemplates) {
@@ -64,29 +51,22 @@ function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
   }, [loadTemplates, pageTemplates]);
 
   return (
-    <>
-      <ButtonWrapper>
-        <TemplateSave
-          setShowDefaultTemplates={setShowDefaultTemplates}
-          updateList={updateTemplatesList}
+    <Wrapper ref={ref}>
+      {pageTemplates && (
+        <TemplateList
+          parentRef={ref}
+          pageSize={pageSize}
+          pages={pageTemplates}
         />
-      </ButtonWrapper>
-      <Wrapper ref={ref}>
-        {pageTemplates && (
-          <TemplateList
-            parentRef={ref}
-            pageSize={pageSize}
-            pages={pageTemplates}
-          />
-        )}
-      </Wrapper>
-    </>
+      )}
+    </Wrapper>
   );
 }
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
-  setShowDefaultTemplates: PropTypes.func.isRequired,
+  setPageTemplates: PropTypes.func.isRequired,
+  pageTemplates: PropTypes.oneOfType([null, PropTypes.array.isRequired]),
 };
 
 export default SavedTemplates;

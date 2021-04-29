@@ -28,6 +28,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import {
+  BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
   useSnackbar,
@@ -41,10 +42,12 @@ import { ReactComponent as Icon } from './illustration.svg';
 const SaveButton = styled.button`
   border: 0;
   background: none;
-  height: 50px;
+  height: 56px;
   width: 100%;
-  padding: 5px;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  padding: 7px;
+  background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
   flex-direction: row;
@@ -52,7 +55,8 @@ const SaveButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.border.defaultHover};
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
   }
 
   ${({ theme }) =>
@@ -63,9 +67,9 @@ const SaveButton = styled.button`
 `;
 
 const IconWrapper = styled.div`
-  width: 34px;
-  height: 46px;
-  margin-right: 15px;
+  width: 32px;
+  height: 42px;
+  margin-right: 29px;
   svg {
     color: ${({ theme }) => theme.colors.fg.tertiary};
 
@@ -80,7 +84,6 @@ const IconWrapper = styled.div`
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  margin-bottom: 8px;
 `;
 
 function TemplateSave({ setShowDefaultTemplates, updateList }) {
