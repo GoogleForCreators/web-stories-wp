@@ -55,7 +55,7 @@ describe('Post locking', () => {
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
-    await page.waitForSelector('.ReactModal__Content', { hidden: true });
+
     await activatePlugin('e2e-tests-post-lock-mock');
   });
 
@@ -82,8 +82,7 @@ describe('Post locking', () => {
     ]);
 
     await page.waitForSelector('.ReactModal__Content', {
-      hidden: false,
-      timeout: 5000,
+      timeout: 30000,
     });
 
     await expect(page).toMatch('Story is locked');
