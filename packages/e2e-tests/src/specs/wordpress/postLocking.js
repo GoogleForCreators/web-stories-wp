@@ -56,6 +56,9 @@ describe('Post locking', () => {
       text: /Continue to publish/,
     });
 
+    // eslint-disable-next-line jest/no-standalone-expect
+    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+
     await activatePlugin('e2e-tests-post-lock-mock');
   });
 
@@ -81,9 +84,7 @@ describe('Post locking', () => {
       expect(page).toClick('a', { text: storyTitle }),
     ]);
 
-    await page.waitForSelector('.ReactModal__Content', {
-      timeout: 30000,
-    });
+    await page.waitForSelector('.ReactModal__Content');
 
     await expect(page).toMatch('Story is locked');
 

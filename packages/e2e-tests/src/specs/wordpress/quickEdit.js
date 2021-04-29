@@ -52,6 +52,7 @@ describe('Quick Edit', () => {
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
+    await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
     await visitAdminPage('edit.php', 'post_type=web-story');
 
