@@ -87,7 +87,7 @@ function PageTemplatesPane(props) {
     if (!savedTemplates && customPageTemplates) {
       loadTemplates();
     }
-  }, [savedTemplates, loadTemplates]);
+  }, [savedTemplates, loadTemplates, customPageTemplates]);
 
   useEffect(() => {
     let timeout = null;

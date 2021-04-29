@@ -57,12 +57,14 @@ function flushPromiseQueue() {
 
 describe('PageTemplatesPane', () => {
   const getPageTemplates = jest.fn();
+  const getCustomPageTemplates = jest.fn();
   let templates;
 
   function renderWithTemplates() {
     const apiValue = {
       actions: {
         getPageTemplates,
+        getCustomPageTemplates,
       },
     };
     const storyContext = {
