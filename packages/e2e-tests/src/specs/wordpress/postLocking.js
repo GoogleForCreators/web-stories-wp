@@ -54,7 +54,6 @@ describe('Post locking', () => {
     await expect(page).toClick('button', {
       text: 'Continue to publish',
     });
-    await page.waitForTimeout(1000);
 
     await activatePlugin('e2e-tests-post-lock-mock');
   });

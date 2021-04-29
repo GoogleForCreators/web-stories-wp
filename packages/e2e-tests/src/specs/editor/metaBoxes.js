@@ -91,7 +91,6 @@ describe('Custom Meta Boxes', () => {
       await expect(page).toClick('button', {
         text: 'Continue to publish',
       });
-      await page.waitForTimeout(1000);
 
       // Refresh page to verify that the text has been persisted.
       await page.reload();

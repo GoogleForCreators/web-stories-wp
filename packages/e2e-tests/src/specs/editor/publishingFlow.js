@@ -66,7 +66,6 @@ describe('Publishing Flow', () => {
     await expect(page).toClick('button', {
       text: 'Continue to publish',
     });
-    await page.waitForTimeout(1000);
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
@@ -139,7 +138,6 @@ describe('Publishing Flow', () => {
       await expect(page).toClick('button', {
         text: 'Continue to publish',
       });
-      await page.waitForTimeout(1000);
 
       // Create new post and embed story.
       await expect(page).toMatchElement('a', { text: 'Add to new post' });
