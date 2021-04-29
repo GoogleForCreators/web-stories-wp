@@ -27,6 +27,8 @@ import {
  */
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
+const REVIEW_CHECKLIST = 'div#modal-review-checklist';
+
 describe('Quick Edit', () => {
   beforeAll(async () => {
     await loginUser('author', 'password');
@@ -48,14 +50,11 @@ describe('Quick Edit', () => {
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
-    await page.waitForResponse(() =>
-      expect(page).toMatchElement('button', {
-        text: 'Continue to publish',
-      })
-    );
-
+    await page.waitForSelector(REVIEW_CHECKLIST, {
+      hidden: false,
+    });
     await expect(page).toClick('button', {
-      text: 'Continue to publish',
+      text: /Continue to publish/,
     });
 
     await visitAdminPage('edit.php', 'post_type=web-story');
