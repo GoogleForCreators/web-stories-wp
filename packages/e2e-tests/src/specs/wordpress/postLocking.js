@@ -50,7 +50,7 @@ describe('Post locking', () => {
     await expect(page).toClick('button', { text: 'Publish' });
 
     // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content', { timeout: 5000 });
+    await page.waitForSelector('.ReactModal__Content');
     // eslint-disable-next-line jest/no-standalone-expect
     await expect(page).toClick('button', {
       text: /Continue to publish/,
