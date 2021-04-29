@@ -50,10 +50,12 @@ describe('Post locking', () => {
     await expect(page).toClick('button', { text: 'Publish' });
 
     // Bypass checklist
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toClick('button', {
-      text: 'Continue to publish',
-    });
+    await page.waitForResponse(() =>
+      // eslint-disable-next-line jest/no-standalone-expect
+      expect(page).toClick('button', {
+        text: 'Continue to publish',
+      })
+    );
 
     await activatePlugin('e2e-tests-post-lock-mock');
   });
