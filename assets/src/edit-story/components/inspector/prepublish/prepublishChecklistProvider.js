@@ -33,12 +33,6 @@ import {
   PPC_CHECKPOINT_ACTION,
 } from './prepublishCheckpointState';
 
-const types = [
-  PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-  PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-  PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-];
-
 function PrepublishChecklistProvider({ children }) {
   const [checkpointState, dispatch] = useReducer(
     checkpointReducer,
@@ -68,7 +62,7 @@ function PrepublishChecklistProvider({ children }) {
     }));
 
     setCurrentList(
-      await getPrepublishErrors({ ...story, pages: pagesWithSize }, { types })
+      await getPrepublishErrors({ ...story, pages: pagesWithSize })
     );
   }, [story, pageSize]);
 
