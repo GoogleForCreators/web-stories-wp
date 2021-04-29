@@ -109,6 +109,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
       });
       return;
     }
+    setShowDefaultTemplates(false);
     addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(
       (addedTemplate) => {
         updateList?.(addedTemplate);
@@ -119,7 +120,6 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
         });
       }
     );
-    setShowDefaultTemplates(false);
   }, [
     addPageTemplate,
     currentPage,

@@ -19,12 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useCallback, useRef } from 'react';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../../../app/api';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
@@ -33,40 +32,29 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-function SavedTemplates({ pageSize, pageTemplates, setPageTemplates }) {
-  const {
-    actions: { getCustomPageTemplates },
-  } = useAPI();
-
+function SavedTemplates({
+  pageSize,
+  savedTemplates,
+  setSavedTemplates,
+  ...rest
+}) {
   const ref = useRef();
-
-  const loadTemplates = useCallback(() => {
-    getCustomPageTemplates().then(setPageTemplates);
-  }, [getCustomPageTemplates, setPageTemplates]);
-
-  useEffect(() => {
-    if (!pageTemplates) {
-      loadTemplates();
-    }
-  }, [loadTemplates, pageTemplates]);
-
   return (
     <Wrapper ref={ref}>
-      {pageTemplates && (
-        <TemplateList
-          parentRef={ref}
-          pageSize={pageSize}
-          pages={pageTemplates}
-        />
-      )}
+      <TemplateList
+        parentRef={ref}
+        pageSize={pageSize}
+        pages={savedTemplates}
+        {...rest}
+      />
     </Wrapper>
   );
 }
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
-  setPageTemplates: PropTypes.func.isRequired,
-  pageTemplates: PropTypes.oneOfType([null, PropTypes.array.isRequired]),
+  setSavedTemplates: PropTypes.func.isRequired,
+  savedTemplates: PropTypes.array.isRequired,
 };
 
 export default SavedTemplates;

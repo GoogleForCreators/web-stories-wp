@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
@@ -28,6 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Pane } from '../shared';
 import { Select } from '../../../form';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
+import { useAPI } from '../../../../app/api';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
@@ -62,15 +63,41 @@ const ButtonWrapper = styled.div`
 
 function PageTemplatesPane(props) {
   const { customPageTemplates } = useFeatures();
+  const {
+    actions: { getCustomPageTemplates },
+  } = useAPI();
+
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
   const [savedTemplates, setSavedTemplates] = useState(null);
+  const [highlightedTemplate, setHighlightedTemplate] = useState(null);
 
   const updateTemplatesList = useCallback(
     (page) => {
       setSavedTemplates([page, ...savedTemplates]);
+      setHighlightedTemplate(page.id);
     },
     [setSavedTemplates, savedTemplates]
   );
+
+  const loadTemplates = useCallback(() => {
+    getCustomPageTemplates().then(setSavedTemplates);
+  }, [getCustomPageTemplates, setSavedTemplates]);
+
+  useEffect(() => {
+    if (!savedTemplates) {
+      loadTemplates();
+    }
+  }, [savedTemplates, loadTemplates]);
+
+  useEffect(() => {
+    let timeout = null;
+    if (highlightedTemplate) {
+      timeout = setTimeout(() => {
+        setHighlightedTemplate(null);
+      }, 4000);
+    }
+    return () => clearTimeout(timeout);
+  }, [highlightedTemplate]);
 
   const options = [
     {
@@ -95,12 +122,14 @@ function PageTemplatesPane(props) {
       <PaneInner>
         {customPageTemplates && (
           <>
-            <ButtonWrapper>
-              <TemplateSave
-                setShowDefaultTemplates={setShowDefaultTemplates}
-                updateList={updateTemplatesList}
-              />
-            </ButtonWrapper>
+            {savedTemplates && (
+              <ButtonWrapper>
+                <TemplateSave
+                  setShowDefaultTemplates={setShowDefaultTemplates}
+                  updateList={updateTemplatesList}
+                />
+              </ButtonWrapper>
+            )}
             <DropDownWrapper>
               <Select
                 options={options}
@@ -117,9 +146,10 @@ function PageTemplatesPane(props) {
           <DefaultTemplates pageSize={pageSize} />
         ) : (
           <SavedTemplates
-            pageTemplates={savedTemplates}
-            setPageTemplates={setSavedTemplates}
+            savedTemplates={savedTemplates}
+            setSavedTemplates={setSavedTemplates}
             pageSize={pageSize}
+            highlightedTemplate={highlightedTemplate}
           />
         )}
       </PaneInner>

@@ -41,6 +41,7 @@ const PageTemplateWrapper = styled.div`
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
+  ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${themeHelpers.focusableOutlineCSS};
 `;
 PageTemplateWrapper.propTypes = {
@@ -90,6 +91,8 @@ function PageTemplate(
 
   useFocusOut(ref, () => setIsHover(false), []);
 
+  const { highlightedTemplate } = rest;
+
   const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
   const handleSetHoverFalse = useCallback(() => {
@@ -107,6 +110,7 @@ function PageTemplate(
       aria-label={page.title}
       translateY={translateY}
       translateX={translateX}
+      isHighlighted={page.id === highlightedTemplate}
       {...rest}
     >
       <PreviewPageWrapper pageSize={pageSize}>
