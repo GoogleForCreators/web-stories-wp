@@ -88,7 +88,7 @@ describe('Custom Meta Boxes', () => {
       // Publish story.
       await expect(page).toClick('button', { text: 'Publish' });
 
-      await expect(page).toMatchElement('button', {
+      await expect(page).toClick('button', {
         text: /Continue to publish/,
       });
       // // Bypass checklist
