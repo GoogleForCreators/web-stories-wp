@@ -31,6 +31,7 @@ import {
 
 async function publishStory() {
   await expect(page).toClick('button', { text: 'Publish' });
+  // Bypass checklist
   await expect(page).toClick('button', { text: 'Continue to publish' });
   await page.waitForTimeout(1000);
   await expect(page).toMatch('Story published!');
