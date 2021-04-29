@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import TelemetrySettings from '../index';
+import TelemetrySettings from '..';
 
 describe('Editor Settings: <TelemetrySettings />', function () {
   it('should render the telemetry as checked when selected is true.', function () {

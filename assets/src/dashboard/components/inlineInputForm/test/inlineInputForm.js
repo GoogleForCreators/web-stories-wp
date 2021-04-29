@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
-import InlineInputForm from '../';
+import InlineInputForm from '..';
 
 describe('InlineInputForm', () => {
   it('should render a text input field', () => {

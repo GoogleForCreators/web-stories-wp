@@ -22,7 +22,7 @@ import { act } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import Library from '../../index';
+import Library from '../..';
 import { MediaProvider } from '../../../../app/media';
 import { ConfigProvider } from '../../../../app/config';
 import { FontProvider } from '../../../../app/font';

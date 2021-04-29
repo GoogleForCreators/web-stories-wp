@@ -22,7 +22,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import useMediaUploadQueue from '../';
+import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
 
 jest.mock('../../useFFmpeg', () => ({

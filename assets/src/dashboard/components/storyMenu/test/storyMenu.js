@@ -24,7 +24,7 @@ import {
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
-import StoryMenu from '../';
+import StoryMenu from '..';
 import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 
 const mockMenuItemSelected = jest.fn();
