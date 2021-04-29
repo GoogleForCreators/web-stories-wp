@@ -64,10 +64,14 @@ describe('Publishing Flow', () => {
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
     await page.waitForResponse(() =>
-      expect(page).toClick('button', {
+      expect(page).toMatchElement('button', {
         text: 'Continue to publish',
       })
     );
+
+    await expect(page).toClick('button', {
+      text: 'Continue to publish',
+    });
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
@@ -138,10 +142,14 @@ describe('Publishing Flow', () => {
       await expect(page).toClick('button', { text: 'Publish' });
       // Bypass checklist
       await page.waitForResponse(() =>
-        expect(page).toClick('button', {
+        expect(page).toMatchElement('button', {
           text: 'Continue to publish',
         })
       );
+
+      await expect(page).toClick('button', {
+        text: 'Continue to publish',
+      });
 
       // Create new post and embed story.
       await expect(page).toMatchElement('a', { text: 'Add to new post' });

@@ -49,10 +49,14 @@ describe('Quick Edit', () => {
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
     await page.waitForResponse(() =>
-      expect(page).toClick('button', {
+      expect(page).toMatchElement('button', {
         text: 'Continue to publish',
       })
     );
+
+    await expect(page).toClick('button', {
+      text: 'Continue to publish',
+    });
 
     await visitAdminPage('edit.php', 'post_type=web-story');
 
