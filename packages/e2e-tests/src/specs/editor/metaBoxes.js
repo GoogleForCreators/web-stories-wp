@@ -88,11 +88,11 @@ describe('Custom Meta Boxes', () => {
       // Publish story.
       await expect(page).toClick('button', { text: 'Publish' });
 
-      // Bypass checklist
-      await page.waitForSelector('.ReactModal__Content');
-      await expect(page).toClick('button', {
-        text: /Continue to publish/,
-      });
+      // // Bypass checklist
+      // await page.waitForSelector('.ReactModal__Content');
+      // await expect(page).toClick('button', {
+      //   text: /Continue to publish/,
+      // });
 
       // Refresh page to verify that the text has been persisted.
       await page.reload();
