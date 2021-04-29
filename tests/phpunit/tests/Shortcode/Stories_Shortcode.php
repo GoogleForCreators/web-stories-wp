@@ -28,15 +28,12 @@ namespace Google\Web_Stories\Tests\Shortcode;
 
 use Google\Web_Stories\Shortcode\Stories_Shortcode as Testee;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Stories_Shortcode
  */
-class Stories_Shortcode extends \WP_UnitTestCase {
-
-	use Private_Access;
-
+class Stories_Shortcode extends Test_Case {
 	/**
 	 * Story ID.
 	 *

@@ -37,7 +37,8 @@ import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
-import { CropBox, MEDIA_MASK_OPACITY } from './';
+import { MEDIA_MASK_OPACITY } from './constants';
+import { CropBox } from './';
 
 const Element = styled.div`
   ${elementFillContent}

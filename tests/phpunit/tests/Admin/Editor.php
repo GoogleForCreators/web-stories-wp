@@ -4,13 +4,13 @@
 namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
  */
-class Editor extends \WP_UnitTestCase {
-	use Private_Access, Capabilities_Setup;
+class Editor extends Test_Case {
+	use Capabilities_Setup;
 
 	/**
 	 * Admin user for test.
@@ -88,11 +88,12 @@ class Editor extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
 
-		$args   = [ $experiments, $meta_boxes, $decoder, $locale ];
+		$args   = [ $experiments, $meta_boxes, $decoder, $locale, $register_font ];
 		$editor = $this->getMockBuilder( \Google\Web_Stories\Admin\Editor::class )
 								->setConstructorArgs( $args )
 								->setMethods( [ 'get_asset_metadata' ] )
@@ -127,11 +128,12 @@ class Editor extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
 
-		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale );
+		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
 		$results = $editor->get_editor_settings();
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
@@ -145,11 +147,13 @@ class Editor extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
-		$editor     = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale );
-		$results    = $editor->get_editor_settings();
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
+
+		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$results = $editor->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
 
@@ -161,10 +165,12 @@ class Editor extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
-		$editor     = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
+
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
 
 		$this->call_private_method( $editor, 'setup_lock', [ self::$story_id ] );
 
@@ -182,10 +188,12 @@ class Editor extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
-		$editor     = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
+
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
 
 		$this->call_private_method( $editor, 'setup_lock', [ self::$story_id ] );
 
@@ -201,10 +209,12 @@ class Editor extends \WP_UnitTestCase {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder    = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale     = $this->createMock( \Google\Web_Stories\Locale::class );
-		$editor     = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
+		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
+
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
 
 		$use_block_editor = $editor->filter_use_block_editor_for_post_type( true, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$this->assertFalse( $use_block_editor );

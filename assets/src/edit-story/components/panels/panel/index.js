@@ -15,6 +15,7 @@
  */
 
 export { default as Panel } from './panel';
+export { default as panelContext } from './context';
 export { default as PanelTitle } from './shared/title';
 export { default as PanelContent } from './shared/content';
 export { default as SimplePanel } from './simplePanel';

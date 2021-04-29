@@ -18,16 +18,18 @@
 namespace Google\Web_Stories\Tests\REST_API;
 
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Kses_Setup;
+use Google\Web_Stories\Tests\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
+ * Class Stories_Controller
+ *
+ * @package Google\Web_Stories\Tests\REST_API
+ *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
-class Stories_Controller extends \WP_Test_REST_TestCase {
-	use Kses_Setup, Capabilities_Setup;
+class Stories_Controller extends Test_REST_TestCase {
 
 	protected $server;
 

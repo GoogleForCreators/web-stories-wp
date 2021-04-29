@@ -33,7 +33,6 @@ import {
   BUTTON_VARIANTS,
   Text,
   THEME_CONSTANTS,
-  DropDown,
   useSnackbar,
 } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
@@ -41,6 +40,7 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
+import { Select } from '../../../../form';
 import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
@@ -52,7 +52,7 @@ import {
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
-import { Placement } from '../../../../popup';
+import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
@@ -74,11 +74,6 @@ const SearchCount = styled(Text).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledDropDown = styled(DropDown)`
-  background-color: transparent;
-  width: 132px;
 `;
 
 const FILTER_NONE = LOCAL_MEDIA_TYPE_ALL;
@@ -268,12 +263,11 @@ function MediaPane(props) {
             />
           </SearchInputContainer>
           <FilterArea>
-            <StyledDropDown
+            <Select
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
               placement={Placement.BOTTOM_START}
-              fitContentWidth
             />
             {isSearching && media.length > 0 && (
               <SearchCount>

@@ -18,11 +18,12 @@
 namespace Google\Web_Stories\Tests\Block;
 
 use WP_Block_Type_Registry;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
-class Web_Stories_Block extends \WP_UnitTestCase {
+class Web_Stories_Block extends Test_Case {
 	public function tearDown() {
 		unregister_block_type( \Google\Web_Stories\Block\Web_Stories_Block::BLOCK_NAME );
 

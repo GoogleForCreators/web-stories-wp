@@ -19,11 +19,12 @@ namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Carousel_Renderer
  */
-class Carousel_Renderer extends \WP_UnitTestCase_Base {
+class Carousel_Renderer extends Test_Case {
 
 	/**
 	 * Stories mock object.

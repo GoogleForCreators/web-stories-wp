@@ -2,10 +2,12 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Story;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Image
  */
-class Image extends \WP_UnitTestCase {
+class Image extends Test_Case {
 
 	/**
 	 * @covers ::render

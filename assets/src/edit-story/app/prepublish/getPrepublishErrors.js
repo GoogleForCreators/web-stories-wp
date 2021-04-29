@@ -16,6 +16,7 @@
 /**
  * Internal dependencies
  */
+import { PRE_PUBLISH_MESSAGE_TYPES } from './constants';
 import error from './error';
 import warning from './warning';
 import guidance from './guidance';
@@ -26,17 +27,26 @@ import guidance from './guidance';
  * @typedef {import('../../types').Story} Story
  */
 
+const DEFAULT_OPTS = {
+  types: Object.values(PRE_PUBLISH_MESSAGE_TYPES),
+};
+
 /**
- *
- * @param {Story} initialStoryState The full story object being checked for guidance messages.
+ * @param {Story} story The full story object being checked for guidance messages.
+ * @param {Object} options Options to augment return message
+ * @param {Array<string>} options.types sub-array or ['error', 'warning', 'guidance'] to indicate type of messages
  * @return {Guidance[]} The array of checklist items to be rectified.
  */
-
-async function getPrepublishErrors(story) {
+async function getPrepublishErrors(
+  story,
+  { types = DEFAULT_OPTS.types } = DEFAULT_OPTS
+) {
   if (!story) {
     return [];
   }
-  const checklistResult = [error, warning, guidance]
+  const checklistResult = Object.entries({ error, warning, guidance })
+    .filter(([key]) => types.includes(key))
+    .map(([, val]) => val)
     .map((byType) => {
       const {
         // arrays of functions

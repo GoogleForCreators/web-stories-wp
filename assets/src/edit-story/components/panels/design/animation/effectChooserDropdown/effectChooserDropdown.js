@@ -32,13 +32,11 @@ import {
   NO_ANIMATION,
   foregroundEffectOptions,
   experimentalEffects,
+  getDirectionalEffect,
 } from './dropdownConstants';
 import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
-import {
-  getDirectionalEffect,
-  getDisabledBackgroundEffects,
-  generateDynamicProps,
-} from './utils';
+import getDisabledBackgroundEffects from './utils/getDisabledBackgroundEffects';
+import generateDynamicProps from './utils/generateDynamicProps';
 import {
   styleOverrideForSelectButton,
   styleOverrideForAnimationEffectMenu,

@@ -109,13 +109,13 @@ export default function useSettingsApi(
         if (publisherLogoIds) {
           query.web_stories_publisher_logos = [
             ...new Set([...state.publisherLogoIds, ...publisherLogoIds]),
-          ];
+          ].join(',');
         }
 
         if (publisherLogoIdToRemove) {
-          query.web_stories_publisher_logos = state.publisherLogoIds.filter(
-            (logoId) => logoId !== publisherLogoIdToRemove
-          );
+          query.web_stories_publisher_logos = state.publisherLogoIds
+            .filter((logoId) => logoId !== publisherLogoIdToRemove)
+            .join(',');
         }
 
         if (publisherLogoToMakeDefault) {

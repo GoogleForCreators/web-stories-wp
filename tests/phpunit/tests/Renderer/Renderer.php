@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\Renderer;
 
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Renderer
@@ -25,7 +26,7 @@ use Google\Web_Stories\Story_Post_Type;
  * @package Google\Web_Stories\Tests\Renderer
  * @coversDefaultClass \Google\Web_Stories\Renderer\Renderer
  */
-class Renderer extends \WP_UnitTestCase {
+class Renderer extends Test_Case {
 
 	/**
 	 * Admin user for test.
