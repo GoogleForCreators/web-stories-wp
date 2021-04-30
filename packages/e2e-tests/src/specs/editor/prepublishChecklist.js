@@ -24,10 +24,9 @@ describe('prepublish checklist', () => {
   it('should show the checklist', async () => {
     await createNewStory();
     await expect(page).toClick('li', { text: 'Checklist' });
-    await expect(page).not.toMatchElement(
-      '#inspector-tab-prepublish[hidden=""]'
-    );
-    await expect(page).toMatchElement('#inspector-tab-prepublish');
+    await expect(page).toMatchElement('#inspector-tab-prepublish', {
+      visible: true,
+    });
   });
   it('should show that there is no poster attached to the story', async () => {
     await createNewStory();
@@ -47,6 +46,9 @@ describe('prepublish checklist', () => {
       visible: false,
     });
     await expect(page).toClick('li', { text: 'Checklist' });
+    await expect(page).toMatchElement('#inspector-tab-prepublish', {
+      visible: true,
+    });
     await expect(page).toMatch('Add poster image');
     await percySnapshot(page, 'Prepublish checklist');
   });
