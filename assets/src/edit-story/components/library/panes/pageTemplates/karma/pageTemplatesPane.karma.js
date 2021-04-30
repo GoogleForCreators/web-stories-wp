@@ -40,7 +40,7 @@ const expectPageTemplateEqual = (currentPage, template) => {
   );
 };
 
-fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
+describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
   let fixture;
   let originalTimeout;
 
@@ -205,7 +205,7 @@ fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       expect(list.children.length).toBe(0);
     });
 
-    fit('should allow applying a template', async () => {
+    it('should allow applying a template', async () => {
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
