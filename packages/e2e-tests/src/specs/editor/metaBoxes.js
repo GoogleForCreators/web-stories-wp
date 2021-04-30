@@ -93,7 +93,6 @@ describe('Custom Meta Boxes', () => {
         text: /Continue to publish/,
       });
 
-      await expect(page).toMatch('Story published!');
       await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
       // Refresh page to verify that the text has been persisted.

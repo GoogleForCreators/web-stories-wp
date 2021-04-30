@@ -147,7 +147,6 @@ describe('Publishing Flow', () => {
       await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
       // Create new post and embed story.
-      await expect(page).toMatchElement('a', { text: 'Add to new post' });
       await expect(page).toClick('a', { text: 'Add to new post' });
       await page.waitForNavigation();
 
