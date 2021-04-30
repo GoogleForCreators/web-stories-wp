@@ -144,12 +144,13 @@ export function videoElementLength(element) {
  * @param {Element} element The element being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
-export function videoElementOptimized(element) {
-  const idOrigin = element?.resource?.id?.split(':')?.[0];
+export function videoElementOptimized(element = {}) {
+  const idResource = element.resource?.id;
+  const idOrigin = idResource.toString().split(':')?.[0];
   const isCoverrMedia = idOrigin === 'media/coverr';
   const videoArea =
-    (element.resource.sizes.full?.height || 0) *
-    (element.resource.sizes.full?.width || 0);
+    (element.resource?.sizes?.full?.height || 0) *
+    (element.resource?.sizes?.full?.width || 0);
   const isLargeVideo =
     videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
   if (!isCoverrMedia && isLargeVideo && !element.resource?.isOptimized) {
