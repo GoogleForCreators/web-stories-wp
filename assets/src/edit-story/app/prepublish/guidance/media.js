@@ -159,6 +159,7 @@ export function videoElementOptimized(element = {}) {
       elementId: element.id,
       message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
       help: <VideoOptimization element={element} />,
+      noHighlight: true,
     };
   }
   return undefined;

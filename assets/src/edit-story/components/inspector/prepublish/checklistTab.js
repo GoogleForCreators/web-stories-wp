@@ -177,8 +177,8 @@ const ChecklistTab = ({
 
   const getOnPrepublishSelect = useCallback(
     (args) => {
-      const { highlight } = args;
-      if (!highlight) {
+      const { elements, elementId, pageId, highlight, noHighlight } = args;
+      if (noHighlight || (!elements && !elementId && !pageId && !highlight)) {
         return {};
       }
 
