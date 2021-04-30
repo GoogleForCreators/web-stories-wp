@@ -20,6 +20,7 @@ import { useCallback, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -29,6 +30,7 @@ import { useConfig } from '../../../app';
 import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel, panelContext } from '../../panels/panel';
+import AutoVideoOptimization from './autoVideoOptimization';
 import {
   DISABLED_HIGH_PRIORITY_CHECKPOINTS,
   DISABLED_RECOMMENDED_CHECKPOINTS,
@@ -40,8 +42,8 @@ import {
   IssueDescription,
   IssueTitle,
   NumberBadge,
-  PageIndicator,
   PageGroup,
+  PageIndicator,
   PanelTitle,
   Row,
 } from './styles';
@@ -73,13 +75,22 @@ const Entries = ({
 Entries.propTypes = {
   items: PropTypes.array,
   pageItems: PropTypes.object,
-  renderRow: PropTypes.function,
-  renderPageGroupedRow: PropTypes.function,
+  renderRow: PropTypes.func,
+  renderPageGroupedRow: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-const ChecklistTab = ({ checklist, currentCheckpoint }) => {
+const ChecklistTab = ({
+  areVideosAutoOptimized,
+  checklist,
+  currentCheckpoint,
+  onAutoVideoOptimizationClick,
+}) => {
   const { isRTL } = useConfig();
+  const isVideoOptimizationEnabled = useFeature(
+    'enablePrePublishVideoOptimization'
+  );
+
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -276,6 +287,12 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
         }
         ariaLabel={TEXT.RECOMMENDED_TITLE}
       >
+        {isVideoOptimizationEnabled && (
+          <AutoVideoOptimization
+            areVideosAutoOptimized={areVideosAutoOptimized}
+            onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
+          />
+        )}
         <Entries
           items={recommended}
           pageItems={pages.recommended}
@@ -289,8 +306,10 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
 };
 
 ChecklistTab.propTypes = {
+  areVideosAutoOptimized: PropTypes.bool,
   checklist: types.GuidanceChecklist,
   currentCheckpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
+  onAutoVideoOptimizationClick: PropTypes.func,
 };
 
 export default ChecklistTab;

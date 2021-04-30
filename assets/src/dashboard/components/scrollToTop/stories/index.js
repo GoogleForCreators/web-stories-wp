@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import ScrollToTop from '../';
+import ScrollToTop from '..';
 
 export default {
   title: 'Dashboard/Components/ScrollToTop',

@@ -23,7 +23,8 @@ import { migrate } from '@web-stories-wp/migration';
 /**
  * Internal dependencies
  */
-import { useAPI, useHistory } from '../../';
+import { useAPI } from '../../api';
+import { useHistory } from '../../history';
 import { createPage } from '../../../elements';
 import getUniquePresets from '../../../utils/getUniquePresets';
 

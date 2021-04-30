@@ -17,6 +17,8 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Update_Publisher_Logos
  *
@@ -24,7 +26,7 @@ namespace phpunit\tests\Migrations;
  *
  * @package phpunit\tests\Migrations
  */
-class Update_Publisher_Logos extends \WP_UnitTestCase {
+class Update_Publisher_Logos extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */

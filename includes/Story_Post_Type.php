@@ -565,6 +565,14 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			admin_url( 'edit.php' )
 		);
 
+		$dashboard_settings_url = add_query_arg(
+			[
+				'post_type' => self::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard#/editor-settings',
+			],
+			admin_url( 'edit.php' )
+		);
+
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
@@ -592,6 +600,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
+				'dashboardSettingsLink' => $dashboard_settings_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,

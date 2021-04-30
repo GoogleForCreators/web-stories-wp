@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import RelatedGrid from '../';
+import RelatedGrid from '..';
 import { renderWithProviders } from '../../../../../../testUtils';
 import LayoutProvider from '../../../../../../components/layout/provider';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';

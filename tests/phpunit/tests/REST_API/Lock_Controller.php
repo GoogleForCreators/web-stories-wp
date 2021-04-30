@@ -17,8 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Tests\Capabilities_Setup;
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -29,9 +28,7 @@ use WP_REST_Request;
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Lock_Controller
  */
-class Lock_Controller extends \WP_Test_REST_TestCase {
-	use Private_Access, Capabilities_Setup;
-
+class Lock_Controller extends Test_REST_TestCase {
 	protected $server;
 
 	protected static $author_id;

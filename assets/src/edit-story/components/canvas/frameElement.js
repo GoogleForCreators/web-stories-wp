@@ -35,7 +35,8 @@ import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
-import { getElementMask, MaskTypes } from '../../masks';
+import { getElementMask } from '../../masks';
+import { MaskTypes } from '../../masks/constants';
 import useDoubleClick from '../../utils/useDoubleClick';
 
 // @todo: should the frame borders follow clip lines?

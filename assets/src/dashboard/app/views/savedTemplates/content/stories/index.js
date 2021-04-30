@@ -33,7 +33,7 @@ import {
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
-import Content from '../';
+import Content from '..';
 
 export default {
   title: 'Dashboard/Views/SavedTemplates/Content',

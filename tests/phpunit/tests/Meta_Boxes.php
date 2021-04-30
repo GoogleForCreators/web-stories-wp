@@ -22,7 +22,7 @@ use Google\Web_Stories\Story_Post_Type;
 /**
  * @coversDefaultClass \Google\Web_Stories\Meta_Boxes
  */
-class Meta_Boxes extends \WP_UnitTestCase {
+class Meta_Boxes extends Test_Case {
 	/**
 	 * Story ID.
 	 *

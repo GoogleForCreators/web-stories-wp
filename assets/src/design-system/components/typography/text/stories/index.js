@@ -22,9 +22,9 @@ import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { Text } from '../';
+import { Text } from '..';
 import { Headline } from '../..';
-import { THEME_CONSTANTS, theme } from '../../../../';
+import { THEME_CONSTANTS, theme } from '../../../..';
 
 export default {
   title: 'DesignSystem/Components/Typography/Text',

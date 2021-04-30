@@ -17,6 +17,8 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Unify_Color_Presets
  *
@@ -24,7 +26,7 @@ namespace phpunit\tests\Migrations;
  *
  * @package phpunit\tests\Migrations
  */
-class Unify_Color_Presets extends \WP_UnitTestCase {
+class Unify_Color_Presets extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */
