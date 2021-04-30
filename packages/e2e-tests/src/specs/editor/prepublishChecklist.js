@@ -41,7 +41,9 @@ describe('prepublish checklist', () => {
     });
     await expect(page).toMatch('Story published!');
     await expect(page).toClick('button', { text: 'Dismiss' });
-    await expect(page).toClick('button', { text: 'Update' });
+
+    await page.reload();
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
 
     await expect(page).toClick('li', { text: 'Checklist' });
     await expect(page).not.toMatchElement(
