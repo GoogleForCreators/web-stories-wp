@@ -22,22 +22,27 @@
  * External dependencies
  */
 import {
+  deleteMedia,
   uploadPublisherLogo,
   visitSettings,
+  withExperimentalFeatures,
 } from '@web-stories-wp/e2e-test-utils';
 
+const ERROR_TEXT =
+  'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.';
+
 describe('publisher logo', () => {
-  afterEach(async () => {
-    // Deletes all publisher logos using the browser context
-    await page.evaluateHandle(async () => {
-      await wp.apiFetch({
-        path: '/web-stories/v1/settings/',
-        method: 'POST',
-        data: {
-          web_stories_publisher_logos: [],
-          web_stories_active_publisher_logo: -1,
-        },
-      });
+  withExperimentalFeatures(['enableSVG']);
+
+  it('should not upload a logo that is an invalid type with svg enabled', async () => {
+    await visitSettings();
+
+    // Upload publisher logo
+    await uploadPublisherLogo('video-play.svg');
+
+    // verify error message
+    await expect(page).toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
     });
   });
 
@@ -46,9 +51,21 @@ describe('publisher logo', () => {
 
     // Upload publisher logo
     const logoOneName = await uploadPublisherLogo('yay-fox.gif');
-    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
 
-    await page.waitForTimeout(1000);
+    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
+
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
 
     // verify that the publisher logos exist
     await expect(page).toMatchElement(
@@ -57,6 +74,10 @@ describe('publisher logo', () => {
     await expect(page).toMatchElement(
       `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
     );
+
+    // cleanup
+    await deleteMedia(logoOneName);
+    await deleteMedia(logoTwoName);
   });
 
   it('should be able to delete all except one logo', async () => {
@@ -64,9 +85,16 @@ describe('publisher logo', () => {
 
     // Upload publisher logo
     const logoOneName = await uploadPublisherLogo('yay-fox.gif');
-    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
 
-    await page.waitForTimeout(1000);
+    const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+    // verify no error message
+    await expect(page).not.toMatchElement('[role="alert"]', {
+      text: ERROR_TEXT,
+    });
 
     // Delete one logo
     await expect(page).toClick(
@@ -81,5 +109,9 @@ describe('publisher logo', () => {
     await expect(page).not.toMatchElement(
       `button[aria-label^="Publisher logo menu for ${logoOneName}"`
     );
+
+    // cleanup
+    await deleteMedia(logoOneName);
+    await deleteMedia(logoTwoName);
   });
 });

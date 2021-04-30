@@ -33,6 +33,8 @@ import getFileName from './getFileName';
  * @return {Promise<string>} Return the filename.
  */
 async function uploadPublisherLogo(file) {
+  await page.setDefaultTimeout(10000);
+
   const testMediaPath = resolve(
     process.cwd(),
     `packages/e2e-tests/src/assets/${file}`
@@ -45,6 +47,8 @@ async function uploadPublisherLogo(file) {
   copyFileSync(testMediaPath, tmpFileName);
 
   await expect(page).toUploadFile('#settings_publisher_logos', tmpFileName);
+
+  await page.setDefaultTimeout(3000);
 
   return newBaseName;
 }
