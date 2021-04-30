@@ -77,7 +77,7 @@ export function VideoOptimization({ element }) {
         disabled={optimizingVideoRef?.current}
       >
         {optimizingVideoRef?.current
-          ? __('Optimization in progress', 'web-stories')
+          ? __('Optimizing video', 'web-stories')
           : __('Optimize video', 'web-stories')}
       </OptimizeButton>
     </Container>
