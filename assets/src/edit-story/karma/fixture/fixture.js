@@ -837,6 +837,8 @@ class APIProviderFixture {
         []
       );
 
+      const getCustomPageTemplates = useCallback(() => asyncResponse([]), []);
+
       const state = {
         actions: {
           autoSaveById,
@@ -850,6 +852,7 @@ class APIProviderFixture {
           uploadMedia,
           updateMedia,
           getStatusCheck,
+          getCustomPageTemplates,
           getPageTemplates,
           getCurrentUser,
           updateCurrentUser,
