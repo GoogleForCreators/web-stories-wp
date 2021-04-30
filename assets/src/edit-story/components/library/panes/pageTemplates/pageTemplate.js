@@ -20,11 +20,20 @@
 import PropTypes from 'prop-types';
 import { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { themeHelpers, useFocusOut } from '../../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  themeHelpers,
+  useFocusOut,
+  Icons,
+} from '../../../../../design-system';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
@@ -61,6 +70,14 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 8px;
+`;
+
 const PageTemplateTitle = styled.div`
   position: absolute;
   bottom: 0;
@@ -82,7 +99,7 @@ PageTemplateTitle.propTypes = {
 };
 
 function PageTemplate(
-  { page, pageSize, translateY, translateX, isActive, ...rest },
+  { page, pageSize, translateY, translateX, isActive, handleDelete, ...rest },
   ref
 ) {
   const [isHover, setIsHover] = useState(false);
@@ -121,6 +138,19 @@ function PageTemplate(
             }
           />
         </PreviewErrorBoundary>
+        {isActivePage && handleDelete && (
+          <ButtonWrapper>
+            <Button
+              variant={BUTTON_VARIANTS.CIRCLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={(e) => handleDelete(page, e)}
+              aria-label={__('Delete page template', 'web-stories')}
+            >
+              <Icons.Trash />
+            </Button>
+          </ButtonWrapper>
+        )}
       </PreviewPageWrapper>
 
       {page.title && (
@@ -140,6 +170,7 @@ PageTemplate.propTypes = {
   pageSize: PageSizePropType.isRequired,
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
+  handleDelete: PropTypes.func,
 };
 
 PageTemplate.displayName = 'PageTemplate';

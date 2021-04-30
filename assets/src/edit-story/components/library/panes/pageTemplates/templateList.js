@@ -40,7 +40,7 @@ import { useStory } from '../../../../app/story';
 import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 
-function TemplateList({ pages, parentRef, pageSize }) {
+function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -99,14 +99,16 @@ function TemplateList({ pages, parentRef, pageSize }) {
   });
 
   const handleKeyboardPageClick = useCallback(
-    ({ key }, page) => {
-      if (key === 'Enter') {
-        if (isGridFocused) {
+    ({ code }, page) => {
+      if (isGridFocused) {
+        if (code === 'Enter') {
           handlePageClick(page);
+        } else if (code === 'Space') {
+          handleDelete?.(page);
         }
       }
     },
-    [isGridFocused, handlePageClick]
+    [isGridFocused, handlePageClick, handleDelete]
   );
 
   return (
@@ -154,6 +156,7 @@ function TemplateList({ pages, parentRef, pageSize }) {
                   onFocus={() => handleGridItemFocus(page.id)}
                   onClick={() => handlePageClick(page)}
                   onKeyUp={(event) => handleKeyboardPageClick(event, page)}
+                  handleDelete={handleDelete}
                 />
               );
             })
@@ -172,6 +175,7 @@ TemplateList.propTypes = {
     })
   ),
   pageSize: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func,
 };
 
 export default TemplateList;
