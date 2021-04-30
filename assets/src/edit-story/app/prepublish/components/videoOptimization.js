@@ -16,12 +16,20 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { Button, BUTTON_TYPES, BUTTON_SIZES } from '../../../../design-system';
+import { useLocalMedia } from '../../media';
 
 const Container = styled.div`
   margin-top: 10px;
+  display: flex;
 `;
 
 const Thumbnail = styled.img`
@@ -32,14 +40,46 @@ const Thumbnail = styled.img`
   object-position: 50% 50%;
 `;
 
+const OptimizeButton = styled(Button)`
+  margin: auto 16px;
+  border: ${({ theme }) => `1px solid ${theme.colors.border.defaultNormal}`};
+`;
 export function VideoOptimization({ element }) {
+  const { resource = {} } = element;
+  const { optimizeVideo } = useLocalMedia((state) => ({
+    optimizeVideo: state.actions.optimizeVideo,
+  }));
+
+  const optimizingVideoRef = useRef();
+
+  const handleUpdateVideo = useCallback(async () => {
+    optimizingVideoRef.current = true;
+    // If optimization fails we want to update the text
+    // temporary solution until more robust error handling is ready
+
+    await optimizeVideo({ resource }).finally(() => {
+      // TODO add in an error state
+      optimizingVideoRef.current = false;
+    });
+  }, [resource, optimizeVideo]);
+
   return (
     <Container>
       <Thumbnail
-        src={element.resource?.poster}
-        alt={element.resource?.alt || __('video thumbnail', 'web-stories')}
+        src={resource?.poster}
+        alt={resource?.alt || __('video thumbnail', 'web-stories')}
         crossOrigin="anonymous"
       />
+      <OptimizeButton
+        type={BUTTON_TYPES.TERTIARY}
+        size={BUTTON_SIZES.SMALL}
+        onClick={handleUpdateVideo}
+        disabled={optimizingVideoRef?.current}
+      >
+        {optimizingVideoRef?.current
+          ? __('Optimization in progress', 'web-stories')
+          : __('Optimize video', 'web-stories')}
+      </OptimizeButton>
     </Container>
   );
 }
