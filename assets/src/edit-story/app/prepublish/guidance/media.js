@@ -146,7 +146,7 @@ export function videoElementLength(element) {
  */
 export function videoElementOptimized(element = {}) {
   const idResource = element.resource?.id;
-  const idOrigin = idResource.toString().split(':')?.[0];
+  const idOrigin = idResource?.toString().split(':')?.[0];
   const isCoverrMedia = idOrigin === 'media/coverr';
   const videoArea =
     (element.resource?.sizes?.full?.height || 0) *
