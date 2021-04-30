@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
@@ -50,13 +50,13 @@ export function VideoOptimization({ element }) {
     optimizeVideo: state.actions.optimizeVideo,
   }));
 
-  const optimizingVideoRef = useRef();
+  const [isOptimizing, setIsOptimizing] = useState(false);
 
   const handleUpdateVideo = useCallback(async () => {
-    optimizingVideoRef.current = true;
+    setIsOptimizing(true);
     await optimizeVideo({ resource }).finally(() => {
       // TODO add in an error state #7315
-      optimizingVideoRef.current = false;
+      setIsOptimizing(false);
     });
   }, [resource, optimizeVideo]);
 
@@ -71,9 +71,9 @@ export function VideoOptimization({ element }) {
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
         onClick={handleUpdateVideo}
-        disabled={optimizingVideoRef?.current}
+        disabled={isOptimizing}
       >
-        {optimizingVideoRef?.current
+        {isOptimizing
           ? __('Optimizing video', 'web-stories')
           : __('Optimize video', 'web-stories')}
       </OptimizeButton>
