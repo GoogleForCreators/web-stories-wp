@@ -22,7 +22,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { SavedTemplatesContent, SavedTemplatesHeader } from '../index';
+import { SavedTemplatesContent, SavedTemplatesHeader } from '..';
 import { renderWithProviders } from '../../../../testUtils';
 import formattedTemplatesArray from '../../../../dataUtils/formattedTemplatesArray';
 import {

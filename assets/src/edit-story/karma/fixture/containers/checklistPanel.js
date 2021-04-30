@@ -33,4 +33,10 @@ export class ChecklistPanel extends Container {
   get recommended() {
     return this.getByRole('button', { name: /Recommended/ });
   }
+
+  get autoVideoOptimizationToggle() {
+    return this.queryByRole('checkbox', {
+      name: /Enable automatic video optimization/,
+    });
+  }
 }

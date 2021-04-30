@@ -23,7 +23,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import InlineInputForm from '../';
+import InlineInputForm from '..';
 
 export default {
   title: 'Dashboard/Components/InlineInputForm',

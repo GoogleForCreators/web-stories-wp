@@ -65,6 +65,7 @@
       " * limitations under the License.",
       " "
     ] ],
+    "import/no-cycle": "error",
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",
@@ -78,6 +79,9 @@
     "import/dynamic-import-chunkname": [ "error", {
       "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
     } ],
+    "import/no-useless-path-segments": ["error", {
+      "noUselessIndex": true
+    }],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",

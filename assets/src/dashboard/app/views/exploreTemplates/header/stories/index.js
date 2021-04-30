@@ -29,7 +29,7 @@ import {
   VIEW_STYLE,
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../../constants';
-import Header from '../index';
+import Header from '..';
 import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
 
 const filter = {

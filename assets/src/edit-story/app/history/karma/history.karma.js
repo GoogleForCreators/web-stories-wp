@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { Fixture } from '../../../karma/fixture';
-import { useHistory } from '../';
+import { useHistory } from '..';
 
 describe('CUJ: Creator can View and Modify Document Settings: Navigating without changes', () => {
   let fixture;

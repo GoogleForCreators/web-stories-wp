@@ -35,7 +35,7 @@ import {
   getCurrentVersionNumber,
   updateVersionNumbers,
   updateCdnUrl,
-} from './utils/index.js';
+} from './utils';
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';

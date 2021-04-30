@@ -30,7 +30,7 @@ import {
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
 import FontProvider from '../../../../font/fontProvider';
-import Content from '../';
+import Content from '..';
 
 const StorybookLayoutContainer = styled.div`
   margin-top: 40px;
