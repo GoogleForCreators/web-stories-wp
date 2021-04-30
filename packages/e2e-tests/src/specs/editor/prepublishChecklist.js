@@ -35,17 +35,14 @@ describe('prepublish checklist', () => {
     await expect(page).toMatchElement('[data-testid="imageElement"]');
     await expect(page).toClick('button', { text: 'Publish' });
     // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content', {
-      visible: true,
-    });
+    await page.waitForSelector('.ReactModal__Content');
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
     await expect(page).toMatch('Story published!');
     await expect(page).toClick('button', { text: 'Dismiss' });
-    await page.waitForSelector('.ReactModal__Content', {
-      visible: false,
-    });
+    await expect(page).toClick('button', { text: 'Update' });
+
     await expect(page).toClick('li', { text: 'Checklist' });
     await expect(page).not.toMatchElement(
       '#inspector-tab-prepublish[hidden=""]'
