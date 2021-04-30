@@ -127,9 +127,9 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       );
       expectPageTemplateEqual(currentPage, coverPage);
 
-    await fixture.snapshot('applied page template');
+      await fixture.snapshot('applied page template');
+    });
   });
-});
 
   describe('Saved page templates', () => {
     beforeEach(async () => {

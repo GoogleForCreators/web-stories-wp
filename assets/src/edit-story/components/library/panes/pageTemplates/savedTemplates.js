@@ -51,8 +51,6 @@ function SavedTemplates({
   } = useAPI();
   const { showSnackbar } = useSnackbar();
 
-  const { showSnackbar } = useSnackbar();
-
   const [showDialog, setShowDialog] = useState(false);
   const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();

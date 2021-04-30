@@ -62,7 +62,6 @@ const ButtonWrapper = styled.div`
 `;
 
 function PageTemplatesPane(props) {
-  const { customPageTemplates } = useFeatures();
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
@@ -88,10 +87,10 @@ function PageTemplatesPane(props) {
   }, [getCustomPageTemplates, setSavedTemplates]);
 
   useEffect(() => {
-    if (!savedTemplates && customPageTemplates) {
+    if (!savedTemplates) {
       loadTemplates();
     }
-  }, [savedTemplates, loadTemplates, customPageTemplates]);
+  }, [savedTemplates, loadTemplates]);
 
   useEffect(() => {
     let timeout = null;
@@ -124,26 +123,26 @@ function PageTemplatesPane(props) {
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
-          <>
-            {savedTemplates && (
-              <ButtonWrapper>
-                <TemplateSave
-                  setShowDefaultTemplates={setShowDefaultTemplates}
-                  updateList={updateTemplatesList}
-                />
-              </ButtonWrapper>
-            )}
-            <DropDownWrapper>
-              <Select
-                options={options}
-                selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-                onMenuItemClick={(evt, value) =>
-                  setShowDefaultTemplates(value === DEFAULT)
-                }
-                aria-label={__('Select templates type', 'web-stories')}
+        <>
+          {savedTemplates && (
+            <ButtonWrapper>
+              <TemplateSave
+                setShowDefaultTemplates={setShowDefaultTemplates}
+                updateList={updateTemplatesList}
               />
-            </DropDownWrapper>
-          </>
+            </ButtonWrapper>
+          )}
+          <DropDownWrapper>
+            <Select
+              options={options}
+              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+              onMenuItemClick={(evt, value) =>
+                setShowDefaultTemplates(value === DEFAULT)
+              }
+              aria-label={__('Select templates type', 'web-stories')}
+            />
+          </DropDownWrapper>
+        </>
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (
