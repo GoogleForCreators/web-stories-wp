@@ -28,8 +28,8 @@ import getFileName from './getFileName';
 /**
  * Helper that upload a publisher logo in the dashboard settings.
  *
- * @param {string}file Filename
- * @param {boolean} checkUpload Check upload was successfully.
+ * @param {string} file Filename
+ * @param {boolean} checkUpload Check if upload was successful.
  *
  * @return {Promise<string>} Return the filename.
  */
