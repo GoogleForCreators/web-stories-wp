@@ -90,11 +90,17 @@ const ChecklistTab = ({
   currentCheckpoint,
   onAutoVideoOptimizationClick,
 }) => {
-  const { isRTL } = useConfig();
+  const {
+    isRTL,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
   const { enablePrePublishVideoOptimization } = useFeatures();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+
+  const canOptimizeVideo =
+    hasUploadMediaAction && enablePrePublishVideoOptimization;
 
   const { isHighPriorityDisabledState, isRecommendedDisabledState } = useMemo(
     () => ({
@@ -114,7 +120,7 @@ const ChecklistTab = ({
         // look at it.
         .filter((item) =>
           item.message === MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT
-            ? enablePrePublishVideoOptimization
+            ? canOptimizeVideo
             : true
         )
         .reduce(
@@ -166,7 +172,7 @@ const ChecklistTab = ({
             pages: {},
           }
         ),
-    [checklist, enablePrePublishVideoOptimization]
+    [checklist, canOptimizeVideo]
   );
 
   const getOnPrepublishSelect = useCallback(
@@ -297,7 +303,7 @@ const ChecklistTab = ({
         }
         ariaLabel={TEXT.RECOMMENDED_TITLE}
       >
-        {enablePrePublishVideoOptimization && (
+        {canOptimizeVideo && (
           <AutoVideoOptimization
             areVideosAutoOptimized={areVideosAutoOptimized}
             onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
