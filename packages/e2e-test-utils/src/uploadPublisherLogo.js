@@ -29,10 +29,11 @@ import getFileName from './getFileName';
  * Helper that upload a publisher logo in the dashboard settings.
  *
  * @param {string}file Filename
+ * @param {boolean} checkUpload Check upload was successfully.
  *
  * @return {Promise<string>} Return the filename.
  */
-async function uploadPublisherLogo(file) {
+async function uploadPublisherLogo(file, checkUpload = true) {
   await page.setDefaultTimeout(10000);
 
   const testMediaPath = resolve(
@@ -47,6 +48,12 @@ async function uploadPublisherLogo(file) {
   copyFileSync(testMediaPath, tmpFileName);
 
   await expect(page).toUploadFile('#settings_publisher_logos', tmpFileName);
+
+  if (checkUpload) {
+    await page.waitForSelector(
+      `button[aria-label^="Publisher Logo ${newBaseName}"`
+    );
+  }
 
   await page.setDefaultTimeout(3000);
 

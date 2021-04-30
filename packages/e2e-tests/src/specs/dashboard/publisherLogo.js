@@ -38,7 +38,7 @@ describe('publisher logo', () => {
     await visitSettings();
 
     // Upload publisher logo
-    await uploadPublisherLogo('video-play.svg');
+    await uploadPublisherLogo('video-play.svg', false);
 
     // verify error message
     await expect(page).toMatchElement('[role="alert"]', {
@@ -61,14 +61,6 @@ describe('publisher logo', () => {
     await expect(page).not.toMatchElement('[role="alert"]', {
       text: ERROR_TEXT,
     });
-
-    // verify that the publisher logos exist
-    await expect(page).toMatchElement(
-      `button[aria-label^="Publisher logo menu for ${logoOneName}"`
-    );
-    await expect(page).toMatchElement(
-      `button[aria-label^="Publisher logo menu for ${logoTwoName}"`
-    );
 
     // cleanup
     await deleteMedia(logoOneName);
