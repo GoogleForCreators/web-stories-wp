@@ -62,11 +62,6 @@ describe('publisher logo', () => {
       text: ERROR_TEXT,
     });
 
-    // verify no error message
-    await expect(page).not.toMatchElement('[role="alert"]', {
-      text: ERROR_TEXT,
-    });
-
     // verify that the publisher logos exist
     await expect(page).toMatchElement(
       `button[aria-label^="Publisher logo menu for ${logoOneName}"`
