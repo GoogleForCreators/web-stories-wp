@@ -172,7 +172,7 @@ fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       ).toBe(1);
     });
 
-    fit('should allow deleting a saved template', async () => {
+    it('should allow deleting a saved template', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
@@ -191,8 +191,7 @@ fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.deleteTemplateBtn
       );
-      await fixture.snapshot('Clicked delete');
-      /*await waitFor(() => {
+      await waitFor(() => {
         expect(fixture.screen.getByRole('dialog')).toBeTruthy();
       });
       await fixture.events.click(
@@ -203,17 +202,16 @@ fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       const list = fixture.editor.getByRole('list', {
         name: 'Page Template Options',
       });
-      expect(list.children.length).toBe(0);*/
+      expect(list.children.length).toBe(0);
     });
 
-    // Skip reason: correct user flow is not implemented yet.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow applying a template', async () => {
+    fit('should allow applying a template', async () => {
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
+      await fixture.events.sleep(200);
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
@@ -221,6 +219,19 @@ fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
+      await fixture.events.sleep(200);
+      const { pages, currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => {
+          return {
+            currentPage: state.currentPage,
+            pages: state.pages,
+          };
+        })
+      );
+
+      expect(pages.length).toEqual(2);
+      // The dummy template has text as the first element.
+      expect(currentPage.elements[1].type).toBe('text');
     });
 
     it('should allow manipulating custom templates using keyboard', async () => {
