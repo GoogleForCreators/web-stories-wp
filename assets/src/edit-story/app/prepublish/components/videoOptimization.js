@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -36,7 +37,7 @@ export function VideoOptimization({ element }) {
     <Container>
       <Thumbnail
         src={element.resource?.poster}
-        alt={element.resource?.alt}
+        alt={element.resource?.alt || __('video thumbnail', 'web-stories')}
         crossOrigin="anonymous"
       />
     </Container>
