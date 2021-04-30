@@ -99,7 +99,7 @@ function PageTemplatesPane(props) {
     if (highlightedTemplate) {
       timeout = setTimeout(() => {
         setHighlightedTemplate(null);
-      }, 4000);
+      }, 1000);
     }
     return () => clearTimeout(timeout);
   }, [highlightedTemplate]);

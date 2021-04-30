@@ -37,7 +37,7 @@ import {
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import isDefaultPage from '../../../../utils/isDefaultPage';
-import { ReactComponent as Icon } from './illustration.svg';
+import { ReactComponent as Icon } from './images/illustration.svg';
 
 const SaveButton = styled.button`
   border: 0;
@@ -70,16 +70,6 @@ const IconWrapper = styled.div`
   width: 32px;
   height: 42px;
   margin-right: 29px;
-  svg {
-    color: ${({ theme }) => theme.colors.fg.tertiary};
-
-    path:nth-child(2) {
-      fill: ${({ theme }) => theme.colors.fg.secondary};
-    }
-    path:nth-child(3) {
-      fill: ${({ theme }) => theme.colors.fg.primary};
-    }
-  }
 `;
 
 const StyledText = styled(Text)`
