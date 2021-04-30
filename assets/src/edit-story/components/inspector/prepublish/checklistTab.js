@@ -297,7 +297,7 @@ const ChecklistTab = ({
         }
         ariaLabel={TEXT.RECOMMENDED_TITLE}
       >
-        {isVideoOptimizationEnabled && (
+        {enablePrePublishVideoOptimization && (
           <AutoVideoOptimization
             areVideosAutoOptimized={areVideosAutoOptimized}
             onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
