@@ -40,7 +40,7 @@ const expectPageTemplateEqual = (currentPage, template) => {
   );
 };
 
-describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
+fdescribe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
   let fixture;
   let originalTimeout;
 
@@ -172,22 +172,27 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       ).toBe(1);
     });
 
-    it('should allow deleting a saved template', async () => {
+    fit('should allow deleting a saved template', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
+      await fixture.events.sleep(200);
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
-      // Tab into the first template to reveal the delete button.
-      await fixture.events.keyboard.press('Tab');
+      // Hover the added template to reveal the delete button.
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0],
+        40,
+        40
+      );
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.deleteTemplateBtn
       );
-
-      await waitFor(() => {
+      await fixture.snapshot('Clicked delete');
+      /*await waitFor(() => {
         expect(fixture.screen.getByRole('dialog')).toBeTruthy();
       });
       await fixture.events.click(
@@ -198,7 +203,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       const list = fixture.editor.getByRole('list', {
         name: 'Page Template Options',
       });
-      expect(list.children.length).toBe(0);
+      expect(list.children.length).toBe(0);*/
     });
 
     // Skip reason: correct user flow is not implemented yet.
@@ -222,7 +227,6 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       await fixture.events.keyboard.press('Tab');
-      await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');
 
       await fixture.events.sleep(200);
@@ -233,6 +237,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
+      await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Space');
 
