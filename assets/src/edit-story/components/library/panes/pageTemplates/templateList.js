@@ -21,6 +21,7 @@ import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -34,22 +35,36 @@ import {
   PANEL_GRID_ROW_GAP,
   VirtualizedWrapper,
 } from '../shared/virtualizedPanelGrid';
+import { duplicatePage } from '../../../../elements';
+import { useStory } from '../../../../app/story';
+import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
-import ConfirmPageTemplateDialog from './confirmPageTemplateDialog';
-import useTemplateActions from './useTemplateActions';
 
 function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
+  const { addPage } = useStory(({ actions }) => ({
+    addPage: actions.addPage,
+  }));
+  const { showSnackbar } = useSnackbar();
+
   const containerRef = useRef();
   const pageRefs = useRef({});
 
   const pageIds = useMemo(() => pages.map((page) => page.id), [pages]);
 
-  const {
-    isConfirming,
-    handleCloseDialog,
-    handleConfirmDialog,
-    handlePageClick,
-  } = useTemplateActions();
+  const handlePageClick = useCallback(
+    (page) => {
+      const duplicatedPage = duplicatePage(page);
+      addPage({ page: duplicatedPage });
+      trackEvent('insert_page_template', {
+        name: page.title,
+      });
+      showSnackbar({
+        message: __('Page template added.', 'web-stories'),
+        dismissable: true,
+      });
+    },
+    [addPage, showSnackbar]
+  );
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil((pages || []).length / 2),
@@ -147,12 +162,6 @@ function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
             })
           )}
         </VirtualizedContainer>
-        {isConfirming && (
-          <ConfirmPageTemplateDialog
-            onConfirm={handleConfirmDialog}
-            onClose={handleCloseDialog}
-          />
-        )}
       </VirtualizedWrapper>
     </UnitsProvider>
   );
