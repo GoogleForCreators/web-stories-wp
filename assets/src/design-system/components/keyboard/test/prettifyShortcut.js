@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { prettifyShortcut } from '../';
+import { prettifyShortcut } from '..';
 
 describe('prettifyShortcut', () => {
   describe('default platform', () => {

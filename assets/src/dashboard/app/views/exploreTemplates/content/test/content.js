@@ -20,7 +20,7 @@
 import { TEMPLATES_GALLERY_STATUS, VIEW_STYLE } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
-import Content from '../';
+import Content from '..';
 
 const fakeTemplates = [
   {

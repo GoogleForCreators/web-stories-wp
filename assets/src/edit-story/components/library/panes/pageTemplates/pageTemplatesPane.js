@@ -29,6 +29,7 @@ import { Pane } from '../shared';
 import { Select } from '../../../form';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import { useAPI } from '../../../../app/api';
+import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
@@ -67,8 +68,12 @@ function PageTemplatesPane(props) {
     actions: { getCustomPageTemplates },
   } = useAPI();
 
+  const { savedTemplates, setSavedTemplates } = useLibrary((state) => ({
+    savedTemplates: state.state.savedTemplates,
+    setSavedTemplates: state.actions.setSavedTemplates,
+  }));
+
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
-  const [savedTemplates, setSavedTemplates] = useState(null);
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
 
   const updateTemplatesList = useCallback(

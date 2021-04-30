@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import Tooltip from '../tooltip';
 import { TOOLTIP_PLACEMENT } from '../../../design-system/components/tooltip';
-import { getLinkFromElement } from './index';
+import { getLinkFromElement } from '.';
 
 const StyledTooltip = styled(Tooltip)`
   box-shadow: 0px 6px 10px

@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Menu } from '../';
+import { Menu } from '..';
 import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 import { getOptions } from '../utils';
 

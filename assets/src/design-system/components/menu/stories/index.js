@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Menu, DROP_DOWN_ITEM } from '../';
+import { Menu, DROP_DOWN_ITEM } from '..';
 import {
   basicDropDownOptions,
   effectChooserOptions,

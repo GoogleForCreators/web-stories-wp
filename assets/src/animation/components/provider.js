@@ -33,7 +33,7 @@ import 'web-animations-js/web-animations-next-lite.min.js';
  * Internal dependencies
  */
 import StoryPropTypes from '../../edit-story/types';
-import { clamp } from '../../animation/utils/range';
+import { clamp } from '../utils/range';
 import { createContext } from '../../design-system';
 import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';

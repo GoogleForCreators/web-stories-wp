@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
-import GridView from '../';
+import GridView from '..';
 import { queryByAriaLabel, renderWithTheme } from '../../../../testUtils';
 import { noop } from '../../../../utils/noop';
 

@@ -23,7 +23,7 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { theme, THEME_CONSTANTS } from '../../../theme';
-import { MediaInput as DefaultMediaInput } from '../index';
+import { MediaInput as DefaultMediaInput } from '..';
 import { shortDropDownOptions } from '../../../storybookUtils/sampleData';
 import { MEDIA_VARIANTS } from '../constants';
 import { Headline } from '../../typography/headline';

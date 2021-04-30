@@ -23,7 +23,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app/api';
+import { useAPI } from '../api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';

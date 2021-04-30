@@ -22,8 +22,8 @@ import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../';
-import { Text } from '../../';
+import { THEME_CONSTANTS } from '../../../..';
+import { Text } from '../..';
 import { Headline } from '..';
 
 export default {

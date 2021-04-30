@@ -33,11 +33,11 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { ReactComponent as icon } from '../../../images/icon.svg';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
-import { ReactComponent as icon } from './../../../images/icon.svg';
 import './edit.css';
 
 const MIN_SIZE = 20;
