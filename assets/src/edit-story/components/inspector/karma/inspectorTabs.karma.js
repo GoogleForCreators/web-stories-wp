@@ -144,6 +144,9 @@ describe('Inspector Tabs integration', () => {
         name: /^Review Checklist$/,
       });
       await fixture.events.click(reviewButton);
+      // This is the initial load of the checklist tab so we need to wait for it to load
+      // before we can see tabs.
+      await fixture.events.sleep(300);
 
       // expect the checklist tab to be selected and nothing to be disabled
       await waitFor(() => {
@@ -155,13 +158,13 @@ describe('Inspector Tabs integration', () => {
           fixture.editor.inspector.checklistPanel.recommended.getAttribute(
             'disabled'
           )
-        ).toBe(null);
+        ).not.toBe(true);
 
         expect(
           fixture.editor.inspector.checklistPanel.highPriority.getAttribute(
             'disabled'
           )
-        ).toBe(null);
+        ).not.toBe(true);
       });
     });
   });
