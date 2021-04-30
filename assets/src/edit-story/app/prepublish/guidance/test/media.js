@@ -166,7 +166,6 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     };
 
     const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
-    expect(result).not.toBeUndefined();
     expect(result.message).toBe('Video not optimized');
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(largeUnoptimizedVideo.id);
