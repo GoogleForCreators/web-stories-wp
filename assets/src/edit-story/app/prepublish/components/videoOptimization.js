@@ -54,11 +54,8 @@ export function VideoOptimization({ element }) {
 
   const handleUpdateVideo = useCallback(async () => {
     optimizingVideoRef.current = true;
-    // If optimization fails we want to update the text
-    // temporary solution until more robust error handling is ready
-
     await optimizeVideo({ resource }).finally(() => {
-      // TODO add in an error state
+      // TODO add in an error state #7315
       optimizingVideoRef.current = false;
     });
   }, [resource, optimizeVideo]);
