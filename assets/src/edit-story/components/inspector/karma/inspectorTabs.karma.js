@@ -144,7 +144,6 @@ describe('Inspector Tabs integration', () => {
         name: /^Review Checklist$/,
       });
       await fixture.events.click(reviewButton);
-      // await fixture.events.sleep(300);
 
       // expect the checklist tab to be selected and nothing to be disabled
       await waitFor(() => {
