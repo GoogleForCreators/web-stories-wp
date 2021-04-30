@@ -23,6 +23,9 @@ import ChecklistTab from '../checklistTab';
 
 jest.mock('flagged', () => ({
   useFeature: () => true,
+  useFeatures: () => ({
+    enablePrePublishVideoOptimization: true,
+  }),
 }));
 
 const GUIDANCE_ERROR = {

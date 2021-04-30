@@ -32,6 +32,11 @@ import {
 } from '../../../constants';
 import getFileName from './getFileName';
 
+export const VIDEO_SIZE_THRESHOLD = {
+  HEIGHT: 1080,
+  WIDTH: 1920,
+};
+
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 /**
@@ -124,7 +129,7 @@ function useFFmpeg() {
         // See https://trac.ffmpeg.org/wiki/Scaling
         // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
         '-vf',
-        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'",
+        `scale='min(${VIDEO_SIZE_THRESHOLD.HEIGHT},iw)':'min(${VIDEO_SIZE_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
         // Simpler color profile
         '-pix_fmt',
         'yuv420p',
@@ -178,7 +183,7 @@ function useFFmpeg() {
         // See https://trac.ffmpeg.org/wiki/Scaling
         // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
         '-vf',
-        "scale='min(1080,iw)':'min(1920,ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'",
+        `scale='min(${VIDEO_SIZE_THRESHOLD.HEIGHT},iw)':'min(${VIDEO_SIZE_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
         // move some information to the beginning of your file.
         '-movflags',
         '+faststart',
