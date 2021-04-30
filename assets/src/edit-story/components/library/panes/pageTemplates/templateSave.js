@@ -121,16 +121,23 @@ function TemplateSave({ pageSize, setShowDefaultTemplates, updateList }) {
       });
       return;
     }
-    addPageTemplate({ ...currentPage, id: uuidv4(), title: null }).then(
-      (addedTemplate) => {
+    addPageTemplate({ ...currentPage, id: uuidv4() })
+      .then((addedTemplate) => {
         updateList?.(addedTemplate);
-        // @todo Add error handling.
         showSnackbar({
           message: __('Page template saved.', 'web-stories'),
           dismissable: true,
         });
-      }
-    );
+      })
+      .catch(() => {
+        showSnackbar({
+          message: __(
+            'Unable to save the template. Please try again.',
+            'web-stories'
+          ),
+          dismissable: true,
+        });
+      });
     setShowDefaultTemplates(false);
   }, [
     addPageTemplate,
