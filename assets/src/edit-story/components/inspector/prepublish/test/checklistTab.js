@@ -18,11 +18,15 @@
  */
 import { noop } from '../../../../../design-system';
 import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
+import { ConfigProvider } from '../../../../app/config';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../../app/prepublish';
 import ChecklistTab from '../checklistTab';
 
 jest.mock('flagged', () => ({
   useFeature: () => true,
+  useFeatures: () => ({
+    enablePrePublishVideoOptimization: true,
+  }),
 }));
 
 const GUIDANCE_ERROR = {
@@ -34,15 +38,28 @@ const GUIDANCE_ERROR = {
   help: 'Test help',
 };
 
-describe('<ChecklistTab />', () => {
-  it("should render a toggle if the user's web_stories_media_optimization setting is initially false", () => {
-    const { getByRole } = renderWithProviders(
+const renderChecklistTab = ({
+  areVideosAutoOptimized = false,
+  hasUploadMediaAction = true,
+}) => {
+  return renderWithProviders(
+    <ConfigProvider
+      config={{
+        isRTL: false,
+        capabilities: { hasUploadMediaAction },
+      }}
+    >
       <ChecklistTab
-        areVideosAutoOptimized={false}
+        areVideosAutoOptimized={areVideosAutoOptimized}
         checklist={[GUIDANCE_ERROR]}
         onAutoVideoOptimizationClick={noop}
       />
-    );
+    </ConfigProvider>
+  );
+};
+describe('<ChecklistTab />', () => {
+  it("should render a toggle if the user's web_stories_media_optimization setting is initially false", () => {
+    const { getByRole } = renderChecklistTab({ areVideosAutoOptimized: false });
 
     const toggle = getByRole('checkbox', { hidden: true });
 
@@ -50,13 +67,19 @@ describe('<ChecklistTab />', () => {
   });
 
   it("should not render toggle if the user's web_stories_media_optimization setting is initially true", () => {
-    const { queryByRole } = renderWithProviders(
-      <ChecklistTab
-        areVideosAutoOptimized
-        checklist={[GUIDANCE_ERROR]}
-        onAutoVideoOptimizationClick={noop}
-      />
-    );
+    const { queryByRole } = renderChecklistTab({
+      areVideosAutoOptimized: true,
+    });
+
+    const toggle = queryByRole('checkbox', { hidden: true });
+
+    expect(toggle).not.toBeInTheDocument();
+  });
+
+  it("should not render toggle if the user doesn't have proper permissions", () => {
+    const { queryByRole } = renderChecklistTab({
+      areVideosAutoOptimized: true,
+    });
 
     const toggle = queryByRole('checkbox', { hidden: true });
 
