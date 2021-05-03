@@ -155,7 +155,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
         'An empty page can’t be saved as a template. Add elements and try again.'
       );
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: 'Close message' })
+        fixture.screen.getByRole('button', { name: 'Close' })
       );
 
       // Add an element and verify the template is added now.

@@ -170,7 +170,7 @@ const SnackbarMessage = ({
           {showCloseButton && (
             <CloseButton
               onClick={onDismiss}
-              aria-label={__('Close message', 'web-stories')}
+              aria-label={__('Close', 'web-stories')}
             >
               <Cross aria-hidden />
             </CloseButton>
