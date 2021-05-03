@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
@@ -80,6 +80,18 @@ const coverrUrl =
 const tenorUrl =
   'https://tenor.com?utm_source=web_stories_wordpress&utm_medium=referral';
 
+const ORG_NAME = {
+  coverr: 'Coverr',
+  tenor: 'Tenor',
+  unsplash: 'Unsplash',
+};
+const getAriaLabel = (org) =>
+  sprintf(
+    /* translators: %s: name of organization media is pulled in from. */
+    __('Powered by %s', 'web-stories'),
+    ORG_NAME[org]
+  );
+
 export function UnsplashAttribution() {
   return (
     <a href={unsplashUrl} target={'_blank'} rel={'noreferrer'}>
@@ -87,10 +99,11 @@ export function UnsplashAttribution() {
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          aria-label={getAriaLabel('unsplash')}
         >
           {__('Powered by', 'web-stories')}
         </Text>
-        <UnsplashLogo />
+        <UnsplashLogo aria-hidden />
       </AttributionPill>
     </a>
   );
@@ -103,10 +116,11 @@ export function CoverrAttribution() {
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          aria-label={getAriaLabel('coverr')}
         >
           {__('Powered by', 'web-stories')}
         </Text>
-        <CoverrLogo />
+        <CoverrLogo aria-hidden />
       </AttributionPill>
     </a>
   );
@@ -116,7 +130,10 @@ export function TenorAttribution() {
   return (
     <a href={tenorUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
-        <TenorLogo data-label={__('Powered by Tenor', 'web-stories')} />
+        <TenorLogo
+          aria-label={getAriaLabel('tenor')}
+          data-label={__('Powered by Tenor', 'web-stories')}
+        />
       </AttributionPill>
     </a>
   );
