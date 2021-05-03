@@ -181,7 +181,7 @@ function AnimationPanel({
   const disabledTypeOptionsMap = useMemo(() => {
     if (selectedElements[0]?.isBackground) {
       const hasOffset =
-        'media' === selectedElements[0].type &&
+        ['media', 'image', 'video', 'gif'].includes(selectedElements[0].type) &&
         hasOffsets({ element: selectedElements[0] });
       const normalizedScale = progress(selectedElements[0]?.scale || 0, [
         BG_MIN_SCALE,
