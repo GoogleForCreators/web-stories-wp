@@ -40,7 +40,7 @@ import { useStory } from '../../../../app/story';
 import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 
-function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
+function TemplateList({ pages, parentRef, pageSize, handleDelete, ...rest }) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -157,6 +157,7 @@ function TemplateList({ pages, parentRef, pageSize, handleDelete }) {
                   onClick={() => handlePageClick(page)}
                   onKeyUp={(event) => handleKeyboardPageClick(event, page)}
                   handleDelete={handleDelete}
+                  {...rest}
                 />
               );
             })
