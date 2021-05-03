@@ -37,12 +37,12 @@ import {
   LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
+  useFocusOut,
 } from '../../../design-system';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   MIN_DASHBOARD_WIDTH,
 } from '../../constants/pageStructure';
-import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
