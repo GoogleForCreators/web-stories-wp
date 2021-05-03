@@ -43,6 +43,6 @@ function StatusCheck() {
     });
   }, [getStatusCheck]);
 
-  return <StatusCheckFailed open={showDialog} onClose={closeDialog} />;
+  return <StatusCheckFailed isOpen={showDialog} onClose={closeDialog} />;
 }
 export default StatusCheck;

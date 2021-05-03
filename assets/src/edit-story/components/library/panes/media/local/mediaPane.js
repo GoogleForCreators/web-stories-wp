@@ -316,7 +316,7 @@ function MediaPane(props) {
         )}
 
         <MissingUploadPermissionDialog
-          open={isPermissionDialogOpen}
+          isOpen={isPermissionDialogOpen}
           onClose={() => setIsPermissionDialogOpen(false)}
         />
         <VideoOptimizationDialog />

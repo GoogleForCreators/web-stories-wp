@@ -142,7 +142,7 @@ function MediaEditDialog({ resource, onClose }) {
 
   return (
     <Dialog
-      open
+      isOpen
       onClose={onClose}
       title={isImage ? imageDialogTitle : videoDialogTitle}
       secondaryText={__('Cancel', 'web-stories')}
