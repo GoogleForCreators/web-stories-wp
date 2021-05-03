@@ -80,16 +80,16 @@ const coverrUrl =
 const tenorUrl =
   'https://tenor.com?utm_source=web_stories_wordpress&utm_medium=referral';
 
-const ORG_NAME = {
+const MEDIA_PROVIDER = {
   coverr: 'Coverr',
   tenor: 'Tenor',
   unsplash: 'Unsplash',
 };
-const getAriaLabel = (org) =>
+const getAriaLabel = (provider) =>
   sprintf(
     /* translators: %s: media provider name. */
     __('Powered by %s', 'web-stories'),
-    ORG_NAME[org]
+    MEDIA_PROVIDER[provider]
   );
 
 export function UnsplashAttribution() {
