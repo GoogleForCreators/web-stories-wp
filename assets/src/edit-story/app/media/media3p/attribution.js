@@ -87,7 +87,7 @@ const ORG_NAME = {
 };
 const getAriaLabel = (org) =>
   sprintf(
-    /* translators: %s: name of organization media is pulled in from. */
+    /* translators: %s: media provider name. */
     __('Powered by %s', 'web-stories'),
     ORG_NAME[org]
   );
