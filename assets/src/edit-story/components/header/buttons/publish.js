@@ -66,7 +66,7 @@ function Publish() {
 
   useEffect(() => {
     if (showDialog) {
-      trackEvent('missing_title_dialog');
+      trackEvent('review_prepublish_checklist');
     }
   }, [showDialog]);
 
@@ -112,7 +112,7 @@ function Publish() {
         text={text}
       />
       <ReviewChecklistDialog
-        open={showDialog}
+        isOpen={showDialog}
         onIgnore={publish}
         onReview={handleReviewChecklist}
         onClose={handleClose}
