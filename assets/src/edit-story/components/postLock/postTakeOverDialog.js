@@ -40,7 +40,6 @@ import { Img } from './shared';
  * @param {Object} props.user Lock owner's user data as a object.
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {Function} props.onClose Function when dialog is closed.
- * @param props.isOpen
  * @return {*} Render.
  */
 function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {

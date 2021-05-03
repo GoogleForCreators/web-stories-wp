@@ -31,7 +31,6 @@ import {
   AnimatedContextMenu,
   MenuItemProps,
   themeHelpers,
-  useFocusOut,
 } from '../../../design-system';
 
 export const MoreVerticalButton = styled.button`
