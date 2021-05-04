@@ -45,6 +45,7 @@ export default function cleanForSlug(string, isEditing = false) {
     .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
     .map((s) => s.normalize('NFD'))
     .map((s) => s.replace(/[\u0300-\u036f]/g, ''))
+    .map((s) => (isEditing ? s : s.replace(/[^a-zA-Z0-9-_ ]/g, '')))
     .map((s) => s.toLowerCase())
     .pop();
 }
