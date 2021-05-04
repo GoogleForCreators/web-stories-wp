@@ -22,7 +22,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { EmptyContentMessage } from '../';
+import { EmptyContentMessage } from '..';
 
 export default {
   title: 'Dashboard/Views/Shared/EmptyContentMessage',

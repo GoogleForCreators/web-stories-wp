@@ -20,8 +20,8 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\KSES
  */
-class KSES extends \WP_UnitTestCase {
-	use Private_Access;
+class KSES extends Test_Case {
+
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *
@@ -78,7 +78,7 @@ class KSES extends \WP_UnitTestCase {
 			[
 				$input_array1,
 				$input_array2,
-			] 
+			]
 		);
 		$this->assertEquals( $output['one']['one-one'], 'string' );
 	}

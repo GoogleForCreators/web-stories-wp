@@ -47,6 +47,7 @@ function APIProvider({ children }) {
       metaBoxes,
       currentUser,
       storyLocking,
+      pageTemplates: customPageTemplates,
     },
     encodeMarkup,
     cdnURL,
@@ -378,13 +379,59 @@ function APIProvider({ children }) {
         pageTemplates.current.withoutImages = removeImagesFromPageTemplates({
           templates: pageTemplates.current.base,
           assetsURL,
-          showImages,
         });
       }
 
       return pageTemplates.current[showImages ? 'base' : 'withoutImages'];
     },
     [cdnURL, assetsURL]
+  );
+
+  // @todo Add pagination.
+  const getCustomPageTemplates = useCallback(() => {
+    let apiPath = customPageTemplates;
+    const perPage = 100;
+    apiPath = addQueryArgs(apiPath, {
+      context: 'edit',
+      per_page: perPage,
+      page: 1,
+    });
+    return apiFetch({ path: apiPath }).then((response) =>
+      response.map((template) => {
+        return { ...template['story_data'], templateId: template.id };
+      })
+    );
+  }, [customPageTemplates]);
+
+  const addPageTemplate = useCallback(
+    (page) => {
+      return apiFetch({
+        path: `${customPageTemplates}/`,
+        data: {
+          story_data: page,
+          status: 'publish',
+        },
+        method: 'POST',
+      }).then((response) => {
+        return { ...response['story_data'], templateId: response.id };
+      });
+    },
+    [customPageTemplates]
+  );
+
+  const deletePageTemplate = useCallback(
+    (id) => {
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
+      return apiFetch({
+        path: addQueryArgs(`${customPageTemplates}${id}/`, {
+          _method: 'DELETE',
+        }),
+        data: { force: true },
+        method: 'POST',
+      });
+    },
+    [customPageTemplates]
   );
 
   const state = {
@@ -404,6 +451,9 @@ function APIProvider({ children }) {
       deleteMedia,
       saveMetaBoxes,
       getStatusCheck,
+      addPageTemplate,
+      getCustomPageTemplates,
+      deletePageTemplate,
       getPageTemplates,
       getCurrentUser,
       updateCurrentUser,

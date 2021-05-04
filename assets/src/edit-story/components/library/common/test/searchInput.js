@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { SearchInput } from '../';
+import { SearchInput } from '..';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.useFakeTimers();

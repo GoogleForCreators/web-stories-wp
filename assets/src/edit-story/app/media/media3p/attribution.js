@@ -50,6 +50,7 @@ const Text = styled(DefaultText)`
 `;
 
 const logo = css`
+  color: ${({ theme }) => theme.colors.standard.white};
   fill: ${({ theme }) => theme.colors.standard.white};
   margin-left: 6px;
   line-height: 14px;
@@ -99,7 +100,12 @@ export function CoverrAttribution() {
   return (
     <a href={coverrUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
-        {__('Powered by', 'web-stories')}
+        <Text
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+        >
+          {__('Powered by', 'web-stories')}
+        </Text>
         <CoverrLogo />
       </AttributionPill>
     </a>

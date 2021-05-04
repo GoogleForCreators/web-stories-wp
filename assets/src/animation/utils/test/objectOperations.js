@@ -31,7 +31,7 @@
 /**
  * Internal dependencies
  */
-import { orderByKeys, getExclusion } from '../';
+import { orderByKeys, getExclusion } from '..';
 
 describe('orderByKeys', () => {
   it('reorders properties by keys', () => {

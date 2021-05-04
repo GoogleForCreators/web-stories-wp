@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { getMediaOrigin } from '../';
+import { getMediaOrigin } from '..';
 
 describe('getMediaOrigin', () => {
   it.each([

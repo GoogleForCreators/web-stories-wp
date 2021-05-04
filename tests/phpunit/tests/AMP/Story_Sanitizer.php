@@ -20,11 +20,12 @@ namespace Google\Web_Stories\Tests\AMP;
 use AMP_DOM_Utils;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
  */
-class Story_Sanitizer extends \WP_UnitTestCase {
+class Story_Sanitizer extends Test_Case {
 	/**
 	 * Helper method for tests.
 	 * @param string $source

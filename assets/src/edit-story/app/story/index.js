@@ -16,3 +16,9 @@
 
 export { default as StoryProvider } from './storyProvider';
 export { default as useStory } from './useStory';
+export {
+  useStoryTriggers,
+  useStoryTriggerListener,
+  useStoryTriggersDispatch,
+  STORY_EVENTS,
+} from './storyTriggers';

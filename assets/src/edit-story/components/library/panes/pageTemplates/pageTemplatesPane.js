@@ -17,20 +17,23 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { _x, sprintf, __ } from '@web-stories-wp/i18n';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
+import { useFeatures } from 'flagged';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
+import { Pane } from '../shared';
+import { Select } from '../../../form';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import { useAPI } from '../../../../app/api';
-import { Pane, ChipGroup } from '../shared';
-import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
+import useLibrary from '../../useLibrary';
 import paneId from './paneId';
-import PageTemplates from './pageTemplates';
-import { PAGE_TEMPLATE_TYPES } from './constants';
+import DefaultTemplates from './defaultTemplates';
+import SavedTemplates from './savedTemplates';
+import TemplateSave from './templateSave';
 
 export const StyledPane = styled(Pane)`
   height: 100%;
@@ -44,115 +47,116 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
-export const PageTemplatesParentContainer = styled.div`
-  ${virtualPaneContainer};
-  margin-top: 18px;
-  overflow-x: hidden;
-  overflow-y: scroll;
+const DropDownWrapper = styled.div`
+  text-align: left;
+  height: 36px;
+  margin: 28px 16px 17px;
+`;
+
+const DEFAULT = 'default';
+const SAVED = 'saved';
+const PAGE_TEMPLATE_PANE_WIDTH = 158;
+
+const ButtonWrapper = styled.div`
+  padding: 0 1em;
+  margin-top: 24px;
 `;
 
 function PageTemplatesPane(props) {
+  const { customPageTemplates } = useFeatures();
   const {
-    actions: { getPageTemplates },
+    actions: { getCustomPageTemplates },
   } = useAPI();
-  const [pageTemplates, setPageTemplates] = useState([]);
-  const [selectedPageTemplateType, setSelectedPageTemplateType] = useState(
-    null
+
+  const { savedTemplates, setSavedTemplates } = useLibrary((state) => ({
+    savedTemplates: state.state.savedTemplates,
+    setSavedTemplates: state.actions.setSavedTemplates,
+  }));
+
+  const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
+  const [highlightedTemplate, setHighlightedTemplate] = useState(null);
+
+  const updateTemplatesList = useCallback(
+    (page) => {
+      setSavedTemplates([page, ...savedTemplates]);
+      setHighlightedTemplate(page.id);
+    },
+    [setSavedTemplates, savedTemplates]
   );
-  const [showTemplateImages, setShowTemplateImages] = useState(false);
 
-  const pageTemplatesParentRef = useRef();
+  const loadTemplates = useCallback(() => {
+    getCustomPageTemplates().then(setSavedTemplates);
+  }, [getCustomPageTemplates, setSavedTemplates]);
 
-  // load and process pageTemplates
   useEffect(() => {
-    async function loadPageTemplates() {
-      const trackTiming = getTimeTracker('load_page_templates');
-      setPageTemplates(
-        await getPageTemplates({ showImages: showTemplateImages })
-      );
-      trackTiming();
+    if (!savedTemplates && customPageTemplates) {
+      loadTemplates();
     }
+  }, [savedTemplates, loadTemplates, customPageTemplates]);
 
-    loadPageTemplates();
-  }, [getPageTemplates, showTemplateImages, setPageTemplates]);
+  useEffect(() => {
+    let timeout = null;
+    if (highlightedTemplate) {
+      timeout = setTimeout(() => {
+        setHighlightedTemplate(null);
+      }, 1000);
+    }
+    return () => clearTimeout(timeout);
+  }, [highlightedTemplate]);
 
-  const pills = useMemo(
-    () => [
-      { id: null, label: __('All', 'web-stories') },
-      ...Object.entries(PAGE_TEMPLATE_TYPES).map(([key, { name }]) => ({
-        id: key,
-        label: name,
-      })),
-    ],
-    []
-  );
+  const options = [
+    {
+      value: DEFAULT,
+      label: __('Default templates', 'web-stories'),
+    },
+    {
+      value: SAVED,
+      label: __('Saved templates', 'web-stories'),
+    },
+  ];
 
-  const filteredPages = useMemo(
-    () =>
-      pageTemplates.reduce((pages, template) => {
-        const templatePages = template.pages.reduce((acc, page) => {
-          // skip unselected page template types if not matching
-          if (
-            !page.pageTemplateType ||
-            (selectedPageTemplateType &&
-              page.pageTemplateType !== selectedPageTemplateType)
-          ) {
-            return acc;
-          }
-
-          const pageTemplateName =
-            PAGE_TEMPLATE_TYPES[page.pageTemplateType].name;
-          return [
-            ...acc,
-            {
-              ...page,
-              title: sprintf(
-                /* translators: 1: template name. 2: page template name. */
-                _x('%1$s %2$s', 'page template title', 'web-stories'),
-                template.title,
-                pageTemplateName
-              ),
-            },
-          ];
-        }, []);
-
-        return [...pages, ...templatePages];
-      }, []),
-    [pageTemplates, selectedPageTemplateType]
-  );
-
-  const handleSelectPageTemplateType = useCallback((key) => {
-    setSelectedPageTemplateType(key);
-    trackEvent('search', {
-      search_type: 'page_templates',
-      search_term: '',
-      search_category: key,
-    });
-  }, []);
-
-  const handleToggleClick = useCallback(() => {
-    setShowTemplateImages((currentValue) => !currentValue);
+  const pageSize = useMemo(() => {
+    const width = PAGE_TEMPLATE_PANE_WIDTH;
+    const height = Math.round(width / PAGE_RATIO);
+    const containerHeight = Math.round(width / FULLBLEED_RATIO);
+    return { width, height, containerHeight };
   }, []);
 
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
-        <ChipGroup
-          items={pills}
-          selectedItemId={selectedPageTemplateType}
-          selectItem={handleSelectPageTemplateType}
-          deselectItem={() => handleSelectPageTemplateType(null)}
-        />
-        <PageTemplatesParentContainer ref={pageTemplatesParentRef}>
-          {pageTemplatesParentRef.current && (
-            <PageTemplates
-              onToggleClick={handleToggleClick}
-              parentRef={pageTemplatesParentRef}
-              pages={filteredPages}
-              showImages={showTemplateImages}
-            />
-          )}
-        </PageTemplatesParentContainer>
+        {customPageTemplates && (
+          <>
+            {savedTemplates && (
+              <ButtonWrapper>
+                <TemplateSave
+                  setShowDefaultTemplates={setShowDefaultTemplates}
+                  updateList={updateTemplatesList}
+                />
+              </ButtonWrapper>
+            )}
+            <DropDownWrapper>
+              <Select
+                options={options}
+                selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+                onMenuItemClick={(evt, value) =>
+                  setShowDefaultTemplates(value === DEFAULT)
+                }
+                aria-label={__('Select templates type', 'web-stories')}
+              />
+            </DropDownWrapper>
+          </>
+        )}
+        {showDefaultTemplates ? (
+          <DefaultTemplates pageSize={pageSize} />
+        ) : (
+          <SavedTemplates
+            savedTemplates={savedTemplates}
+            setSavedTemplates={setSavedTemplates}
+            pageSize={pageSize}
+            highlightedTemplate={highlightedTemplate}
+          />
+        )}
       </PaneInner>
     </StyledPane>
   );

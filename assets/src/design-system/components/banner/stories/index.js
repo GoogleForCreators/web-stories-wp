@@ -25,7 +25,7 @@ import { boolean, text } from '@storybook/addon-knobs';
  */
 import { THEME_CONSTANTS } from '../../../theme';
 import { Text, Link } from '../../typography';
-import { Banner } from '../';
+import { Banner } from '..';
 
 const demoBgUrl = 'https://picsum.photos/id/240/1500/160';
 

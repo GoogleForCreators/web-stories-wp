@@ -38,7 +38,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       tooLowResolutionVideoElement
     );
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Increase video resolution"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Increase video resolution to at least 480p"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLowResolutionVideoElement.id);
   });
@@ -117,7 +119,9 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.mediaElementResolution(tooHighVideoResolution);
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Reduce video resolution"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Reduce video resolution to less than 4000p"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooHighVideoResolution.id);
   });
@@ -139,9 +143,87 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.videoElementLength(tooLongVideo);
     expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(`"Break video into segments"`);
+    expect(result.message).toMatchInlineSnapshot(
+      `"Split videos into segments of 1 minute or less"`
+    );
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(tooLongVideo.id);
+  });
+
+  it('should return a message if the video element is larger than 1080x1920 and not optimized', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        sizes: {
+          full: {
+            height: 2160,
+            width: 3840,
+          },
+        },
+      },
+    };
+
+    const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
+    expect(result.message).toBe('Video not optimized');
+    expect(result.type).toStrictEqual('guidance');
+    expect(result.elementId).toStrictEqual(largeUnoptimizedVideo.id);
+  });
+
+  it('should not return a message if the video element is larger than 1080x1920 and Optimized', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: true,
+        sizes: {
+          full: {
+            height: 2160,
+            width: 3840,
+          },
+        },
+      },
+    };
+
+    const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
+    expect(result).toBeUndefined();
+  });
+
+  it('should not return a message if the video element is smaller than 1080x1920', () => {
+    const smallUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        sizes: {
+          full: {
+            height: 300,
+            width: 400,
+          },
+        },
+      },
+    };
+    const smallOptimizedVideo = {
+      id: 203,
+      type: 'video',
+      resource: {
+        isOptimized: true,
+        sizes: {
+          full: {
+            height: 300,
+            width: 400,
+          },
+        },
+      },
+    };
+
+    expect(
+      mediaGuidance.videoElementOptimized(smallUnoptimizedVideo)
+    ).toBeUndefined();
+    expect(
+      mediaGuidance.videoElementOptimized(smallOptimizedVideo)
+    ).toBeUndefined();
   });
 
   it.todo('should return a message if the video element is less than 24fps');

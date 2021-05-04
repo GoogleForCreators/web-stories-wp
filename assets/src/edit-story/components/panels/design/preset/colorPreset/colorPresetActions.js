@@ -18,16 +18,17 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Icons, DropDown } from '../../../../../../design-system';
+import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { PatternPropType } from '../../../../../types';
+import { Select } from '../../../../form';
 import { findMatchingColor } from '../utils';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
 import ColorGroup from './colorGroup';
@@ -78,18 +79,9 @@ const ColorsWrapper = styled.div`
 `;
 
 const DropDownWrapper = styled.div`
-  width: 145px;
   text-align: left;
   position: relative;
-`;
-
-const StyledDropDown = styled(DropDown)`
-  background-color: transparent;
-  border: 0;
-`;
-
-const menuStylesOverride = css`
-  top: -12px;
+  flex: 1 1 100%;
 `;
 
 const HeaderRow = styled.div`
@@ -202,17 +194,14 @@ function ColorPresetActions({ color, pushUpdate, onAction }) {
     <ActionsWrapper>
       <HeaderRow>
         <DropDownWrapper>
-          <StyledDropDown
+          <Select
             options={options}
             selectedValue={showLocalColors ? LOCAL : GLOBAL}
             onMenuItemClick={(evt, value) => {
               setShowLocalColors(value === LOCAL);
               onAction?.();
             }}
-            isInline
-            hasSearch={false}
             aria-label={__('Select color type', 'web-stories')}
-            menuStylesOverride={menuStylesOverride}
           />
         </DropDownWrapper>
         <ButtonWrapper>

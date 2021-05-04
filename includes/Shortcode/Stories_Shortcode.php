@@ -132,7 +132,7 @@ class Stories_Shortcode extends Service_Base {
 	private function prepare_story_args( array $attributes ) {
 		return [
 			// Show 100 stories at most to avoid 500 errors.
-			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ),
+			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page
 			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
 			'orderby'        => $attributes['orderby'],
 		];

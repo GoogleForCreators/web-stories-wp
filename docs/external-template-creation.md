@@ -3,7 +3,7 @@
 ## Where things are stored
 
 - The **story JSON representation** for each template is stored in [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw) (in the `main` branch).
-- The **SVGs** used in each template are stored in [`assets/src/edit-story/stickers/`](https://github.com/google/web-stories-wp/tree/main/assets/src/edit-story/stickers) (in the `main` branch).
+- The **SVGs** used in each template are stored in [`packages/stickers/src/`](https://github.com/google/web-stories-wp/tree/main/packages/stickers/src) (in the `main` branch).
 - The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/google/web-stories-wp/tree/static-site/public/static/main/images/templates) (in the `static-site` branch, using [Git LFS](https://git-lfs.github.com/)).
 
 ## Overview
@@ -30,7 +30,7 @@ To add a new template to the editor:
 
 ### Adding SVGs to the codebase as stickers
 
-To add new stickers to the codebase, obtain the raw svg file, and view it in your code editor. Paste the contents of the raw svg file into a react component in `assets/src/edit-story/stickers/<sticker_name>.js`.
+To add new stickers to the codebase, obtain the raw svg file, and view it in your code editor. Paste the contents of the raw svg file into a react component in `packages/stickers/src/<sticker_name>.js`.
 
 Remove extraneous attributes on the base `svg` component and make sure your component takes a `style` property that it applies to the base svg element. Also make sure to remove any explicit `height` and `width` attributes and see that they only are applied to the viewbox. By the end, your component should look something like this:
 
@@ -59,7 +59,7 @@ export default {
 };
 ```
 
-The last step of this process is navigating to `assets/src/edit-story/stickers/index.js` and adding your new sticker to the default export object:
+The last step of this process is navigating to `packages/stickers/src/index.js` and adding your new sticker to the default export object:
 
 ```js
 //...

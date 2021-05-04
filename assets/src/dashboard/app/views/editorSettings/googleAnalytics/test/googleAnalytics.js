@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import GoogleAnalyticsSettings, { TEXT } from '../';
+import GoogleAnalyticsSettings, { TEXT } from '..';
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   let googleAnalyticsId;

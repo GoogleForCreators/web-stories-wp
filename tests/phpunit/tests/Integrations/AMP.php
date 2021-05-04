@@ -19,11 +19,12 @@ namespace Google\Web_Stories\Tests\Integrations;
 
 use DOMDocument;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\AMP
  */
-class AMP extends \WP_UnitTestCase {
+class AMP extends Test_Case {
 	/**
 	 * @covers ::register
 	 */

@@ -737,6 +737,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Roboto"],
       "id": "64a7810a-b11c-48ae-b8f9-4820af17bf84"
     },
     {
@@ -1516,6 +1517,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Source Serif Pro"],
       "id": "2f0bbc9f-65d8-4da8-bc87-6be32e970243"
     },
     {
@@ -2267,6 +2269,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Poppins", "IBM Plex Sans"],
       "id": "f90daf3c-f7ef-4b25-b31c-5edbdf61c517"
     },
     {
@@ -3061,6 +3064,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Source Serif Pro", "Lora", "Playfair Display"],
       "id": "c867f325-0f47-4d8b-8e3f-6eaa1c59030f"
     },
     {
@@ -3810,6 +3814,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Oswald", "Roboto Condensed"],
       "id": "46255a97-3e9e-444a-acb4-59be70044ac6"
     },
     {
@@ -4595,6 +4600,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Raleway", "Merriweather"],
       "id": "85dbd7cd-ba41-4248-9487-a6b7f5dc4da1"
     },
     {
@@ -5326,6 +5332,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Titillium Web", "Work Sans"],
       "id": "6f0273f6-31b1-48a9-b6a7-2ecba9098751"
     },
     {
@@ -6035,6 +6042,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Karla"],
       "id": "a2150663-53dc-4475-91b0-80ab58f2b2fb"
     },
     {
@@ -6692,6 +6700,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Playfair Display", "Lora", "Roboto"],
       "id": "aca0d2aa-cd54-455f-aee6-eba7ffa3b226"
     },
     {
@@ -7361,6 +7370,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Oswald", "Lato"],
       "id": "07f4168e-3c83-4319-aefe-9cfd8ab39624"
     }
   ],

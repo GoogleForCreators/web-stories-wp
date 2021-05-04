@@ -32,7 +32,7 @@ export default {
 export const _default = () => {
   return (
     <TitleMissingDialog
-      open
+      isOpen
       onClose={action('close')}
       onFix={action('fix')}
       onIgnore={action('ignore')}

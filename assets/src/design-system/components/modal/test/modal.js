@@ -23,7 +23,7 @@ import ReactModal from 'react-modal';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Modal } from '../';
+import { Modal } from '..';
 
 describe('DesignSystem/Components/Modal', () => {
   it('should not render a modal by default', () => {

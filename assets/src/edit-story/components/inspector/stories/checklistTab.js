@@ -17,10 +17,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
 import ChecklistTab from '../prepublish/checklistTab';
+import { PPC_CHECKPOINT_STATE } from '../prepublish/prepublishCheckpointState';
 
 const Container = styled.div`
   background: ${({ theme }) => theme.colors.bg.primary};
@@ -77,7 +79,16 @@ export const _default = () => {
         'The entire story should have a minimum of 100 characters of text in total.',
     },
   ];
-  return <ChecklistTab checklist={defaultChecklist} />;
+  return (
+    <ChecklistTab
+      checklist={defaultChecklist}
+      currentCheckpoint={select(
+        'currentCheckpoint',
+        Object.values(PPC_CHECKPOINT_STATE),
+        PPC_CHECKPOINT_STATE.UNAVAILABLE
+      )}
+    />
+  );
 };
 
 export const withPages = () => {
@@ -147,7 +158,16 @@ export const withPages = () => {
       pageId: 456,
     },
   ];
-  return <ChecklistTab checklist={checklist} />;
+  return (
+    <ChecklistTab
+      checklist={checklist}
+      currentCheckpoint={select(
+        'currentCheckpoint',
+        Object.values(PPC_CHECKPOINT_STATE),
+        PPC_CHECKPOINT_STATE.UNAVAILABLE
+      )}
+    />
+  );
 };
 
 export const recommendedOnly = () => {
@@ -173,9 +193,27 @@ export const recommendedOnly = () => {
       page: 2,
     },
   ];
-  return <ChecklistTab checklist={checklist} />;
+  return (
+    <ChecklistTab
+      checklist={checklist}
+      currentCheckpoint={select(
+        'currentCheckpoint',
+        Object.values(PPC_CHECKPOINT_STATE),
+        PPC_CHECKPOINT_STATE.UNAVAILABLE
+      )}
+    />
+  );
 };
 
 export const emptyChecklist = () => {
-  return <ChecklistTab checklist={[]} />;
+  return (
+    <ChecklistTab
+      checklist={[]}
+      currentCheckpoint={select(
+        'currentCheckpoint',
+        Object.values(PPC_CHECKPOINT_STATE),
+        PPC_CHECKPOINT_STATE.UNAVAILABLE
+      )}
+    />
+  );
 };

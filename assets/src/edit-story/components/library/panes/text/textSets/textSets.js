@@ -106,6 +106,7 @@ function TextSets({ paneRef, filteredTextSets }) {
                   ref={(el) => (textSetRefs.current[textSet.id] = el)}
                   translateY={virtualRow.start}
                   translateX={virtualColumn.start}
+                  aria-label={textSet.title}
                   isActive={isActive}
                   onFocus={() => handleGridItemFocus(textSet.id)}
                   elements={textSet.elements}
@@ -125,6 +126,7 @@ TextSets.propTypes = {
     PropTypes.shape({
       id: PropTypes.string,
       elements: PropTypes.array,
+      title: PropTypes.string,
     })
   ),
 };
