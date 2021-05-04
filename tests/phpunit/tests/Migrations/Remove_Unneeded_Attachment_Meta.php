@@ -50,13 +50,13 @@ class Remove_Unneeded_Attachment_Meta extends Test_Case {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
-		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
 		$object = new \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta();
 		$object->migrate();
 
-		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, true );
+		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, true );
 
 		$this->assertSame( '', $meta );
 	}

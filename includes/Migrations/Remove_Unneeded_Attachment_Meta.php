@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Media\Media;
 
 /**
  * Class Remove_Unneeded_Attachment_Meta

@@ -34,7 +34,7 @@ class Add_Media_Source_Editor extends Test_Case {
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'taxonomy'   => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 				'hide_empty' => false,
 			]
 		);

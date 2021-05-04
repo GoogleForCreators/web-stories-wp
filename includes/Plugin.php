@@ -87,7 +87,7 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'kses'                         => KSES::class,
-		'media'                        => Media::class,
+		'media'                        => Media\Media::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
@@ -95,7 +95,7 @@ class Plugin extends ServiceBasedPlugin {
 		'settings'                     => Settings::class,
 		'story_post_type'              => Story_Post_Type::class,
 		'story_shortcode'              => Shortcode\Stories_Shortcode::class,
-		'svg'                          => SVG::class,
+		'svg'                          => Media\SVG::class,
 		'template_post_type'           => Template_Post_Type::class,
 		'tracking'                     => Tracking::class,
 		'tinymce'                      => TinyMCE::class,
@@ -114,7 +114,7 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
-		'video_captions'               => Video_Captions::class,
+		'video_captions'               => Media\Video_Captions::class,
 	];
 
 	/**
