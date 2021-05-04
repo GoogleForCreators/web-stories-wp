@@ -18,7 +18,7 @@
  */
 import { THEME_CONSTANTS, Text } from '../../../../../design-system';
 import { TEXT } from '../constants';
-import { EmptyLayout, Checkmark, EmptyHeading } from '../styles';
+import { EmptyLayout, Checkmark, EmptyHeading } from './styles';
 
 const EmptyChecklist = () => {
   return (

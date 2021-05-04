@@ -25,21 +25,23 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
-import { useConfig } from '../../../app';
+import { Icons } from '../../../../../design-system';
+import { useConfig } from '../../../../app';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
   MESSAGES,
   types,
-} from '../../../app/prepublish';
-import { useHighlights } from '../../../app/highlights';
-import { SimplePanel } from '../../panels/panel';
-import { AutoVideoOptimization, EmptyChecklist } from './components';
+} from '../../../../app/prepublish';
+import { useHighlights } from '../../../../app/highlights';
+import { SimplePanel } from '../../../panels/panel';
 import {
   DISABLED_HIGH_PRIORITY_CHECKPOINTS,
   DISABLED_RECOMMENDED_CHECKPOINTS,
   TEXT,
-} from './constants';
+} from '../constants';
+import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
+import AutoVideoOptimization from './autoVideoOptimization';
+import EmptyChecklist from './emptyChecklist';
 import {
   GoToIssue,
   IssueDescription,
@@ -50,7 +52,6 @@ import {
   PanelTitle,
   Row,
 } from './styles';
-import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
 
 const ChecklistTab = ({
   areVideosAutoOptimized,

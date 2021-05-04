@@ -29,8 +29,8 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Toggle,
-} from '../../../../design-system';
-import { MAX_NUMBER_FOR_BADGE } from './constants';
+} from '../../../../../design-system';
+import { MAX_NUMBER_FOR_BADGE } from '../constants';
 
 function annotateNumber(number) {
   if (number <= MAX_NUMBER_FOR_BADGE) {

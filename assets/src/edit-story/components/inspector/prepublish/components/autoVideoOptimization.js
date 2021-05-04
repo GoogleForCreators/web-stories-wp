@@ -32,7 +32,7 @@ import {
   StyledToggle,
   ToggleGroup,
   VideoOptimizationGroup,
-} from '../styles';
+} from './styles';
 
 const AutoVideoOptimization = ({
   areVideosAutoOptimized,

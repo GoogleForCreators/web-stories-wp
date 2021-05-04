@@ -17,3 +17,5 @@
 export { default as AutoVideoOptimization } from './autoVideoOptimization';
 export { default as EmptyChecklist } from './emptyChecklist';
 export { default as ReviewChecklistDialog } from './reviewChecklistDialog';
+export { default as ChecklistIcon } from './checklistIcon';
+export { default as ChecklistTab } from './checklistTab';
