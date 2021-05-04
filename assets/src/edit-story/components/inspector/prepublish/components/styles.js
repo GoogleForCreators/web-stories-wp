@@ -29,6 +29,7 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Toggle,
+  DesertBw,
 } from '../../../../../design-system';
 import { MAX_NUMBER_FOR_BADGE } from '../constants';
 
@@ -174,20 +175,40 @@ export const EmptyLayout = styled.div`
   flex-direction: column;
 `;
 
-export const Checkmark = styled(Icons.Checkmark)`
-  margin-bottom: 16px;
-  height: 64px;
-  width: 64px;
-  padding: 8px 15px 5px 17px;
-  border-radius: 50%;
-  color: ${({ theme }) => theme.colors.fg.positive};
-  border: 1px solid ${({ theme }) => theme.colors.fg.positive};
-  overflow: visible;
-`;
-
 export const EmptyHeading = styled(Headline).attrs({
   as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   color: ${({ theme }) => theme.colors.standard.white};
+`;
+
+export const EmptyPanelContainer = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 14px;
+`;
+
+export const EmptyPanelText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  text-align: center;
+  max-width: 226px;
+`;
+
+export const UnavailableAsset = styled(DesertBw)`
+  max-width: 298px;
+  margin-top: 128px;
+`;
+
+export const EmptyAsset = styled(Icons.Checkmark)`
+  margin-top: 128px;
+  height: 64px;
+  width: 64px;
+  padding: 8px 15px 5px 17px;
+  border-radius: 50%;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  border: 1px solid ${({ theme }) => theme.colors.fg.secondary};
+  overflow: visible;
 `;

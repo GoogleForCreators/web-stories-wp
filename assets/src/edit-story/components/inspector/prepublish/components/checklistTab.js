@@ -212,24 +212,42 @@ const ChecklistTab = ({
     [renderRow]
   );
 
+  // Determine what to make visible based on checkpoint and present issues.
   const highPriorityLength =
     highPriority.length + (pages.lengths?.highPriority || 0);
+  const hasHighPriorityItems = Boolean(highPriorityLength);
+  const isHighPriorityVisible =
+    !isHighPriorityDisabledState && hasHighPriorityItems;
+
   const recommendedLength =
     recommended.length + (pages.lengths?.recommended || 0);
-  const hasHighPriorityItems = Boolean(highPriorityLength);
   const hasRecommendedItems =
-    Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
+    Boolean(recommended.length) ||
+    Boolean(pages.lengths?.recommended) ||
+    (canOptimizeVideo && !areVideosAutoOptimized);
+  const isRecommendedVisible =
+    !isRecommendedDisabledState && hasRecommendedItems;
 
-  const isRecommendedDisabled =
-    isRecommendedDisabledState || !hasRecommendedItems;
-  const isHighPriorityDisabled =
-    isHighPriorityDisabledState || !hasHighPriorityItems;
+  const isEmptyView = useMemo(() => {
+    return (
+      currentCheckpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE ||
+      isChecklistEmpty ||
+      (!isRecommendedVisible && !isHighPriorityVisible)
+    );
+  }, [
+    currentCheckpoint,
+    isRecommendedVisible,
+    isHighPriorityVisible,
+    isChecklistEmpty,
+  ]);
 
-  return isChecklistEmpty ? (
-    <EmptyChecklist />
-  ) : (
+  if (isEmptyView) {
+    return <EmptyChecklist body={TEXT.UNAVAILABLE_BODY} />;
+  }
+
+  return (
     <>
-      {!isHighPriorityDisabled && (
+      {isHighPriorityVisible && (
         <SimplePanel
           name="checklist"
           hasBadge
@@ -245,14 +263,16 @@ const ChecklistTab = ({
           {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
         </SimplePanel>
       )}
-      {!isRecommendedDisabled && (
+      {isRecommendedVisible && (
         <SimplePanel
           name="checklist"
           hasBadge
           title={
             <>
               <PanelTitle isRecommended>{TEXT.RECOMMENDED_TITLE}</PanelTitle>
-              <NumberBadge isRecommended number={recommendedLength} />
+              {recommendedLength > 0 && (
+                <NumberBadge isRecommended number={recommendedLength} />
+              )}
             </>
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}

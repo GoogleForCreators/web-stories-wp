@@ -32,6 +32,10 @@ export const TEXT = {
   RECOMMENDED_TITLE: __('Recommended', 'web-stories'),
   EMPTY_TITLE: __('Awesome work!', 'web-stories'),
   EMPTY_BODY: __('No Issues Found', 'web-stories'),
+  UNAVAILABLE_BODY: __(
+    'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.',
+    'web-stories'
+  ),
 };
 
 export const DISABLED_HIGH_PRIORITY_CHECKPOINTS = [
