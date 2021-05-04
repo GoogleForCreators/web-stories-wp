@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -144,8 +144,12 @@ const TabText = styled(Headline).attrs({
 
 const noop = () => {};
 
-function Tab({ children, tooltip = null, placement, ...rest }) {
-  const tab = <TabElement {...rest}>{children}</TabElement>;
+function UnreffedTab({ children, tooltip = null, placement, ...rest }, ref) {
+  const tab = (
+    <TabElement ref={ref} {...rest}>
+      {children}
+    </TabElement>
+  );
   if (tooltip !== null) {
     return (
       <Tooltip title={tooltip} placement={placement} isDelayed>
@@ -155,6 +159,14 @@ function Tab({ children, tooltip = null, placement, ...rest }) {
   }
   return tab;
 }
+
+const Tab = forwardRef(UnreffedTab);
+
+UnreffedTab.propTypes = {
+  children: PropTypes.node,
+  tooltip: PropTypes.string,
+  placement: PropTypes.string,
+};
 
 function TabView({
   getTabId = (id) => id,
