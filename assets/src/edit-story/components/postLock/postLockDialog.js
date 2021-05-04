@@ -40,7 +40,6 @@ import { Img } from './shared';
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
- * @param props.isOpen
  * @return {*} Render.
  */
 function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
