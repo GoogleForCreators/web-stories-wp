@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 import { activateRTL, deactivateRTL } from '@web-stories-wp/e2e-test-utils';
 /**
  * WordPress dependencies
