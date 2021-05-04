@@ -49,7 +49,7 @@ module.exports = function (api) {
       'babel-plugin-styled-components',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-private-methods', { loose: true }],
-      ['@babel/plugin-proposal-private-property-in-object', { "loose": true }],
+      ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
       'babel-plugin-inline-json-import',
       '@babel/plugin-syntax-top-level-await',
       '@babel/plugin-proposal-optional-chaining',
