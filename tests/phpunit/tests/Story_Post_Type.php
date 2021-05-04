@@ -259,6 +259,8 @@ class Story_Post_Type extends Test_Case {
 		$this->assertFalse( $result );
 	}
 
+
+
 	/**
 	 * @covers ::change_default_title
 	 */
