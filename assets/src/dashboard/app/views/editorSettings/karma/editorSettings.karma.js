@@ -351,9 +351,6 @@ describe('Settings View', () => {
 
     await fixture.events.keyboard.press('Enter');
 
-    // Tab into second menu
-    await fixture.events.keyboard.press('Tab');
-
     // we want to select the second list item
     await fixture.events.keyboard.press('ArrowDown');
 
@@ -450,8 +447,6 @@ describe('Settings View', () => {
     await fixture.events.keyboard.press('tab');
     // activate menu
     await fixture.events.keyboard.press('Enter');
-    //tab into menu
-    await fixture.events.keyboard.press('tab');
 
     // we want to select the first list item
     await fixture.events.keyboard.press('Enter');

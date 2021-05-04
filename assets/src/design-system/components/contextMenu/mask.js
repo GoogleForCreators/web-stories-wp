@@ -17,27 +17,34 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Popover, Shadow } from './styled';
-import Menu, { MenuPropTypes } from './menu';
-import Mask from './mask';
+import { noop } from '../../utils';
+import { POPOVER_Z_INDEX } from './styled';
 
-const ContextMenu = ({ items, ...props }) => {
+const ScreenMask = styled.div`
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  /* allow pointer events to pass through if there's no 'onDismiss' */
+  pointer-events: ${({ hasOnDismiss }) => (hasOnDismiss ? 'auto' : 'none')};
+  z-index: ${POPOVER_Z_INDEX - 1};
+`;
+
+export default function Mask({ onDismiss }) {
   return (
-    <>
-      {props.isOpen && <Mask onDismiss={props.onDismiss} />}
-      <Popover role="dialog" isOpen={props.isOpen}>
-        <Menu items={items} {...props} />
-        <Shadow />
-      </Popover>
-    </>
+    <ScreenMask
+      data-testid="context-menu-mask"
+      hasOnDismiss={Boolean(onDismiss)}
+      onClick={onDismiss || noop}
+    />
   );
-};
-ContextMenu.propTypes = {
-  ...MenuPropTypes,
-  isOpen: PropTypes.bool,
-};
+}
 
-export default ContextMenu;
+Mask.propTypes = {
+  onDismiss: PropTypes.func,
+};

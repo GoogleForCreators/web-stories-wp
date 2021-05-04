@@ -20,6 +20,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/blue-marble.jpg',
     },
+    source_url: 'http://localhost:9876/__static__/blue-marble.jpg',
     title: {
       raw: 'blue-marble',
     },
@@ -63,6 +64,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/curiosity.jpg',
     },
+    source_url: 'http://localhost:9876/__static__/curiosity.jpg',
     title: {
       raw: 'curiosity',
     },
@@ -106,6 +108,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/earth.jpg',
     },
+    source_url: 'http://localhost:9876/__static__/earth.jpg',
     title: {
       raw: 'earth',
     },
@@ -149,6 +152,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/saturn.jpg',
     },
+    source_url: 'http://localhost:9876/__static__/saturn.jpg',
     title: {
       raw: 'saturn',
     },
@@ -192,6 +196,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/mars.jpg',
     },
+    source_url: 'http://localhost:9876/__static__/mars.jpg',
     title: {
       raw: 'mars',
     },
@@ -235,6 +240,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/ranger9.ogg',
     },
+    source_url: 'http://localhost:9876/__static__/ranger9.ogg',
     title: {
       raw: 'ranger9',
     },
@@ -264,6 +270,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/asteroid.ogg',
     },
+    source_url: 'http://localhost:9876/__static__/asteroid.ogg',
     title: {
       raw: 'asteroid',
     },
@@ -293,6 +300,7 @@ export default [
     guid: {
       rendered: 'http://localhost:9876/__static__/transparent.png',
     },
+    source_url: 'http://localhost:9876/__static__/transparent.png',
     title: {
       raw: 'image with transparent background',
     },

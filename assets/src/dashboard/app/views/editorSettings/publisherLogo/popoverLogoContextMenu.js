@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
@@ -29,8 +29,6 @@ import { MenuContainer, LogoMenuButton } from '../components';
 import {
   AnimatedContextMenu,
   MenuItemProps,
-  noop,
-  useFocusOut,
 } from '../../../../../design-system';
 
 function PopoverLogoContextMenu({
@@ -41,8 +39,6 @@ function PopoverLogoContextMenu({
   onMenuItemToggle,
   items,
 }) {
-  const popoverMenuContainerRef = useRef(null);
-
   const isPopoverMenuOpen = contextMenuId.value === publisherLogo.id;
   const tabIndex = isActive ? 0 : -1;
 
@@ -51,20 +47,12 @@ function PopoverLogoContextMenu({
     [contextMenuId]
   );
 
-  const handleFocusOut = useCallback(() => {
-    if (contextMenuId.value === publisherLogo.id) {
-      onMoreButtonSelected(-1);
-    }
-  }, [publisherLogo.id, contextMenuId.value, onMoreButtonSelected]);
-
-  useFocusOut(
-    popoverMenuContainerRef,
-    contextMenuId.value === publisherLogo.id ? handleFocusOut : noop,
-    [contextMenuId, publisherLogo.id]
-  );
+  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
+    onMoreButtonSelected,
+  ]);
 
   return (
-    <MenuContainer ref={popoverMenuContainerRef}>
+    <MenuContainer>
       <LogoMenuButton
         tabIndex={tabIndex}
         isActive={isActive}
@@ -90,6 +78,7 @@ function PopoverLogoContextMenu({
         isOpen={isPopoverMenuOpen}
         data-testid={`publisher-logo-context-menu-${idx}`}
         items={items}
+        onDismiss={handleDismiss}
       />
     </MenuContainer>
   );

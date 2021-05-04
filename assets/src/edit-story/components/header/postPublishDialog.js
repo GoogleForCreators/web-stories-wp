@@ -29,7 +29,7 @@ import { trackClick } from '@web-stories-wp/tracking';
 import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
-function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
+function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
   const onAddToPostClick = useCallback((evt) => {
     trackClick(evt, 'add_story_to_new_post');
   }, []);
@@ -40,7 +40,7 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
 
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
       title={__('Story published!', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
@@ -76,7 +76,7 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
 }
 
 PostPublishDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   confirmURL: PropTypes.string.isRequired,
   storyURL: PropTypes.string,
