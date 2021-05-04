@@ -22,7 +22,7 @@ import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 /**
  * External dependencies
  */
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
@@ -34,19 +34,7 @@ describe('Site Kit integration with dashboard', () => {
   });
 
   it('should be able see Site Kit specific message', async () => {
-    await visitDashboard();
-
-    const dashboardNavigation = await expect(page).toMatchElement(
-      '[aria-label="Main dashboard navigation"]'
-    );
-
-    await expect(dashboardNavigation).toClick('a', {
-      text: 'Settings',
-    });
-
-    await page.waitForResponse((response) =>
-      response.url().includes('web-stories/v1/media')
-    );
+    await visitSettings();
 
     await expect(page).toMatch(
       'Site Kit by Google has already enabled Google Analytics for your Web Stories'
