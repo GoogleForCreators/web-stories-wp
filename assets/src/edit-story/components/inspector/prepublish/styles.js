@@ -61,20 +61,12 @@ NumberBadge.propTypes = {
   number: PropTypes.number,
 };
 
-const getPanelTitleColor = (isRecommended, isDisabled) => {
-  if (isDisabled) {
-    return 'disable';
-  } else if (isRecommended) {
-    return 'linkNormal';
-  }
-  return 'negative';
-};
 export const PanelTitle = styled(Headline).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
   as: 'span',
 })`
-  color: ${({ isRecommended, theme, isDisabled }) =>
-    theme.colors.fg[getPanelTitleColor(isRecommended, isDisabled)]};
+  color: ${({ isRecommended, theme }) =>
+    isRecommended ? theme.colors.fg.linkNormal : theme.colors.fg.negative};
 `;
 PanelTitle.propTypes = {
   isRecommended: PropTypes.bool,
