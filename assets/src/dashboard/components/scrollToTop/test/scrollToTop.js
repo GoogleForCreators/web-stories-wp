@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils';
 import ScrollToTop from '..';
 import Layout from '../../layout';
 

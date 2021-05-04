@@ -22,7 +22,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import useMediaUploadQueue from '../';
+import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
 
 jest.mock('../../useFFmpeg', () => ({
@@ -45,6 +45,7 @@ const mockAttachment = {
     width: 1080,
     height: 720,
   },
+  source_url: 'http://localhost:9876/__static__/asteroid.ogg',
   title: {
     raw: 'Title',
   },

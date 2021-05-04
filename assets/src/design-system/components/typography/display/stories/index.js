@@ -23,7 +23,7 @@ import { select } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../..';
-import { Text } from '../../';
+import { Text } from '../..';
 import { Display } from '..';
 
 export default {

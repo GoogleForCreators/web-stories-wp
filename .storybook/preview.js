@@ -29,7 +29,6 @@ import { useDirection } from 'storybook-rtl-addon';
  */
 import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/moveable/cropStyle';
-import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/components/modal';
 
 import { GlobalStyle as DashboardGlobalStyle } from '../assets/src/dashboard/theme';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
@@ -41,7 +40,8 @@ import {
   theme as designSystemTheme,
   lightMode,
   ThemeGlobals,
-} from '../assets/src/design-system/theme';
+  ModalGlobalStyle,
+} from '../assets/src/design-system';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -109,6 +109,7 @@ addDecorator((story, context) => {
         >
           <ApiProvider>
             <DashboardGlobalStyle />
+            <ModalGlobalStyle />
             <DashboardKeyboardOnlyOutline />
             {story()}
           </ApiProvider>
@@ -123,6 +124,7 @@ addDecorator((story, context) => {
     return (
       <ThemeProvider theme={dsTheme}>
         <ThemeGlobals.Styles />
+        <ModalGlobalStyle />
         {story()}
       </ThemeProvider>
     );

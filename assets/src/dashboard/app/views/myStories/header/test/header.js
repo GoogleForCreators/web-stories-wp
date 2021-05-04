@@ -30,7 +30,7 @@ import {
 } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import { renderWithProviders } from '../../../../../testUtils';
-import Header from '../';
+import Header from '..';
 
 const fakeStories = [
   {

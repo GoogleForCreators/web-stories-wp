@@ -26,7 +26,8 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
-import { preloadImage, getFirstFrameOfVideo } from './';
+import preloadImage from './preloadImage';
+import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
 function useUploadVideoFrame({ updateMediaElement }) {
   const {

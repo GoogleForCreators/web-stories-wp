@@ -20,6 +20,10 @@
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
+	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
@@ -85,6 +89,7 @@
 	<exclude-pattern>*/third-party/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 	<exclude-pattern>assets/js/*.asset.php</exclude-pattern>
+	<exclude-pattern>assets/js/*.chunks.php</exclude-pattern>
 	<exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
 	<exclude-pattern>tests/phpstan/*</exclude-pattern>
 	<exclude-pattern>tests/phpunit/includes/MarkupComparison.php</exclude-pattern>

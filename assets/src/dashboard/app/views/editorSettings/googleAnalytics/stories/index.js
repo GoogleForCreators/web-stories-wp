@@ -23,7 +23,7 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import GoogleAnalyticsSettings from '../';
+import GoogleAnalyticsSettings from '..';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/GoogleAnalytics',

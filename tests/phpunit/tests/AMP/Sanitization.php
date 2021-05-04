@@ -22,14 +22,12 @@ use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
  */
-class Sanitization extends \WP_UnitTestCase {
-	use Private_Access;
-
+class Sanitization extends Test_Case {
 	public function tearDown() {
 		remove_all_filters( 'web_stories_amp_sanitizers' );
 		remove_all_filters( 'web_stories_amp_dev_mode_enabled' );

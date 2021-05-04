@@ -17,8 +17,12 @@
  * Internal dependencies
  */
 import { OnInitialElementAddedRegister } from './onInitialElementAddedRegister';
+import { OnPageAddedRegister } from './onPageAddedRegister';
 export { STORY_EVENTS } from './types';
 
 // Add all story event registers here. All registers
 // should take registerPropTypes from `/storyEvents/propTypes`.
-export const StoryEventRegisters = [OnInitialElementAddedRegister];
+export const StoryEventRegisters = [
+  OnInitialElementAddedRegister,
+  OnPageAddedRegister,
+];

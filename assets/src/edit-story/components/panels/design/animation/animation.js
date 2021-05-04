@@ -180,7 +180,9 @@ function AnimationPanel({
   // for an animation type input
   const disabledTypeOptionsMap = useMemo(() => {
     if (selectedElements[0]?.isBackground) {
-      const hasOffset = hasOffsets({ element: selectedElements[0] });
+      const hasOffset =
+        'media' === selectedElements[0].type &&
+        hasOffsets({ element: selectedElements[0] });
       const normalizedScale = progress(selectedElements[0]?.scale || 0, [
         BG_MIN_SCALE,
         BG_MAX_SCALE,

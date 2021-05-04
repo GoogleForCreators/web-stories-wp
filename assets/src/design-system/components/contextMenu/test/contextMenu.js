@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { act, fireEvent } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { ContextMenu } from '..';
@@ -42,6 +46,34 @@ describe('ContextMenu', () => {
 
     expect(getByRole('button')).toBeInTheDocument();
     expect(getByRole('link')).toBeInTheDocument();
+  });
+
+  it('clicking away from context menu should call onDismiss', () => {
+    const onDismiss = jest.fn();
+    const { getByTestId } = renderWithProviders(
+      <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+    );
+
+    const mask = getByTestId('context-menu-mask');
+    act(() => {
+      fireEvent.click(mask);
+    });
+
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('should focus the first focusable element when the menu is opened', () => {
+    // need menu to start closed since focus gets changed
+    // when the menu goes from closed -> open
+    const { queryByRole, rerender } = renderWithProviders(
+      <ContextMenu isOpen={false} items={items} />
+    );
+
+    rerender(<ContextMenu isOpen items={items} />);
+
+    // opening the menu should focus the first focusable item
+    const firstButton = queryByRole('button', { name: items[0].label });
+    expect(firstButton).toHaveFocus();
   });
 });
 
@@ -74,6 +106,21 @@ describe('MenuItem', () => {
     expect(getByText('my label')).toBeInTheDocument();
     expect(queryByRole('button')).not.toBeInTheDocument();
     expect(queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('should call onClick and onDismiss when a clickable item is clicked', () => {
+    const onClick = jest.fn();
+    const onDismiss = jest.fn();
+    const { getByRole } = renderWithProviders(
+      <MenuItem label="my label" onClick={onClick} onDismiss={onDismiss} />
+    );
+
+    const button = getByRole('button');
+
+    fireEvent.click(button);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
 

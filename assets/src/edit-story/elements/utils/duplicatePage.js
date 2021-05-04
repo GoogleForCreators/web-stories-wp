@@ -22,10 +22,14 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import objectWithout from '../../utils/objectWithout';
 import createNewElement from './createNewElement';
 
 const duplicatePage = (oldPage) => {
   const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
+
+  // Remove title and templateId for inserting the page.
+  const cleanPage = objectWithout(rest, ['postId', 'title']);
 
   // Ensure all existing elements get new ids
   const elementIdTransferMap = {};
@@ -48,7 +52,7 @@ const duplicatePage = (oldPage) => {
   const newAttributes = {
     elements,
     animations,
-    ...rest,
+    ...cleanPage,
   };
 
   return createNewElement('page', newAttributes);

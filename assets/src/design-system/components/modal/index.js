@@ -30,7 +30,7 @@ import { THEME_CONSTANTS } from '../../theme';
 const CONTENT_CLASS = 'WebStories_ReactModal__Content';
 const OVERLAY_CLASS = 'WebStories_ReactModal__Overlay';
 
-export const GlobalStyle = createGlobalStyle`
+export const ModalGlobalStyle = createGlobalStyle`
   .${OVERLAY_CLASS} {
     opacity: 0;
     transition: opacity 0.1s ease-out;

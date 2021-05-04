@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import InfiniteScroller from '../index';
+import { renderWithProviders } from '../../../testUtils';
+import InfiniteScroller from '..';
 
 describe('InfiniteScroller', () => {
   const onGetDataMock = jest.fn();

@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import { createNewElement, createPage, duplicatePage } from '../';
+import { createNewElement, createPage, duplicatePage } from '..';
 
 describe('Element', () => {
   describe('createNewElement', () => {

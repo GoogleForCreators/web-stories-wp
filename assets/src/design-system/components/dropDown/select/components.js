@@ -119,6 +119,7 @@ export const Value = styled(Text)`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  ${({ selectValueStylesOverride }) => selectValueStylesOverride};
 `;
 
 export const LabelText = styled(Text)`

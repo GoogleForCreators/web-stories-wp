@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { dark, light } from '../theme/colors';
-import { Headline, Text, THEME_CONSTANTS } from '../';
+import { Headline, Text, THEME_CONSTANTS } from '..';
 import { Button, BUTTON_TYPES } from '../components';
 
 export default {
