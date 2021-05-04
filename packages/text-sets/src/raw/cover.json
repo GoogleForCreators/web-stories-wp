@@ -459,6 +459,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Roboto"],
       "id": "755f1d9e-aeb4-4c4d-ba7f-fac834434243"
     },
     {
@@ -840,6 +841,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Source Serif Pro", "Lato"],
       "id": "04a57b5d-b702-48a2-9c30-53ab7efe2691"
     },
     {
@@ -1125,6 +1127,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Poppins"],
       "id": "d96cfe7f-359f-4916-b7c1-933da0b8e0df"
     },
     {
@@ -1538,6 +1541,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Playfair Display", "Poppins"],
       "id": "870a951e-c4d3-454e-970f-c1acd564ebbf"
     },
     {
@@ -1945,6 +1949,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Oswald", "Roboto Condensed"],
       "id": "92858448-5995-4490-9c7d-ae1a4cd66739"
     },
     {
@@ -2332,6 +2337,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Raleway", "Merriweather"],
       "id": "970f0745-cd88-4500-a663-4331a97d1b4e"
     },
     {
@@ -2698,6 +2704,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Titillium Web", "Work Sans", "Montserrat"],
       "id": "f9edfdfb-84c5-48eb-8a55-8377d634102e"
     },
     {
@@ -3064,6 +3071,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Nunito", "Karla"],
       "id": "206d1872-6bb1-48e0-bf90-349595c84825"
     },
     {
@@ -3229,6 +3237,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Anton"],
       "id": "f99ae41b-b824-4b19-873e-ce5b9b5d68c8"
     },
     {
@@ -3655,6 +3664,7 @@
         }
       },
       "type": "page",
+      "fonts": ["Open Sans", "UnifrakturMaguntia", "Playfair Display"],
       "id": "56e39edb-0d25-4186-b950-76d5c1536651"
     }
   ]

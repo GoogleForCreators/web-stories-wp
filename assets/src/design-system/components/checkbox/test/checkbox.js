@@ -21,7 +21,7 @@
 /**
  * Internal dependencies
  */
-import { Checkbox } from '../';
+import { Checkbox } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 

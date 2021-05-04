@@ -24,7 +24,7 @@ import Modal from 'react-modal';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Dialog } from '../';
+import { Dialog } from '..';
 
 describe('DesignSystem/Components/Dialog', () => {
   it('should not render a dialog by default', () => {

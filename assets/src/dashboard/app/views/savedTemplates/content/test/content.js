@@ -22,7 +22,7 @@ import { formattedTemplatesArray } from '../../../../../storybookUtils';
 import { VIEW_STYLE, SAVED_TEMPLATES_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import { SnackbarProvider } from '../../../../../../design-system';
-import Content from '../';
+import Content from '..';
 
 jest.mock(
   '../../../../../../edit-story/components/previewPage/previewPage.js',

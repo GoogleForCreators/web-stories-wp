@@ -39,7 +39,7 @@ export const _default = () => {
   return (
     <PostTakeOverDialog
       user={user}
-      open
+      isOpen
       dashboardLink={dashboardLink}
       onClose={action('closed')}
     />

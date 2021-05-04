@@ -29,7 +29,7 @@ import {
   TableHeaderCell,
   TableRow,
   TableHeader,
-} from '../';
+} from '..';
 
 export default {
   title: 'Dashboard/Components/Table',

@@ -8,7 +8,6 @@
     "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "prettier/react",
     "plugin:jsx-a11y/recommended",
     "plugin:jsdoc/recommended"
   ],
@@ -79,6 +78,9 @@
     "import/dynamic-import-chunkname": [ "error", {
       "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
     } ],
+    "import/no-useless-path-segments": ["error", {
+      "noUselessIndex": true
+    }],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -362,6 +364,18 @@
       "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/commander/**/*.js",
+        "packages/fonts/src/cli.js",
+        "packages/migration/src/cli.js"
+      ],
+      "rules": {
+        "import/no-useless-path-segments": ["error", {
+          "noUselessIndex": false
+        }]
       }
     },
     {

@@ -26,8 +26,8 @@ import { subMinutes } from '@web-stories-wp/date';
  */
 import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
-import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
-import CardGrid from '../';
+import { CardGridItem, CardPreviewContainer, CardTitle } from '../..';
+import CardGrid from '..';
 
 export default {
   title: 'Dashboard/Components/CardGrid',

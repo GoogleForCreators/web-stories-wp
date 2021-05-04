@@ -34,6 +34,7 @@ import {
   useSnackbar,
   SnackbarProvider,
   Snackbar,
+  ModalGlobalStyle,
 } from '../../design-system';
 import { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
@@ -190,6 +191,7 @@ function App({ config }) {
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
         <ThemeGlobals.Styles />
+        <ModalGlobalStyle />
         <ConfigProvider config={config}>
           <ApiProvider>
             <NavProvider>

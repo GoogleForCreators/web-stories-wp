@@ -32,7 +32,7 @@ export default {
 export const _default = () => {
   return (
     <PreviewErrorDialog
-      open
+      isOpen
       onClose={action('closed')}
       onRetry={action('retried')}
     />

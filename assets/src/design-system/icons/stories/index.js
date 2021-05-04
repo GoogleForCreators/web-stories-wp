@@ -21,8 +21,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Text } from '../../';
-import * as Icons from '../';
+import { Text } from '../..';
+import * as Icons from '..';
 
 export default {
   title: 'DesignSystem/Icons',
