@@ -34,13 +34,12 @@ import {
 } from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
 import { SimplePanel } from '../../panels/panel';
-import AutoVideoOptimization from './autoVideoOptimization';
+import { AutoVideoOptimization, EmptyChecklist } from './components';
 import {
   DISABLED_HIGH_PRIORITY_CHECKPOINTS,
   DISABLED_RECOMMENDED_CHECKPOINTS,
   TEXT,
 } from './constants';
-import EmptyChecklist from './emptyChecklist';
 import {
   GoToIssue,
   IssueDescription,

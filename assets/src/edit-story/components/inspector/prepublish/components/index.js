@@ -13,23 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
-import { TEXT } from './constants';
-import { EmptyLayout, Checkmark, EmptyHeading } from './styles';
 
-const EmptyChecklist = () => {
-  return (
-    <EmptyLayout>
-      <Checkmark />
-      <EmptyHeading>{TEXT.EMPTY_TITLE}</EmptyHeading>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {TEXT.EMPTY_BODY}
-      </Text>
-    </EmptyLayout>
-  );
-};
-
-export default EmptyChecklist;
+export { default as AutoVideoOptimization } from './autoVideoOptimization';
+export { default as EmptyChecklist } from './emptyChecklist';
+export { default as ReviewChecklistDialog } from './reviewChecklistDialog';

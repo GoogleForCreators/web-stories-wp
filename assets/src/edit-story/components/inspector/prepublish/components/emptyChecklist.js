@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS, Text } from '../../../../../design-system';
+import { TEXT } from '../constants';
+import { EmptyLayout, Checkmark, EmptyHeading } from '../styles';
 
-export { default } from './prepublishInspector';
-export { default as ChecklistTab } from './checklistTab';
-export { default as PrepublishChecklistProvider } from './prepublishChecklistProvider';
-export { default as usePrepublishChecklist } from './usePrepublishChecklist';
-export { ChecklistIcon } from './utils';
-export { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
-export { ReviewChecklistDialog } from './components';
+const EmptyChecklist = () => {
+  return (
+    <EmptyLayout>
+      <Checkmark />
+      <EmptyHeading>{TEXT.EMPTY_TITLE}</EmptyHeading>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {TEXT.EMPTY_BODY}
+      </Text>
+    </EmptyLayout>
+  );
+};
+
+export default EmptyChecklist;
