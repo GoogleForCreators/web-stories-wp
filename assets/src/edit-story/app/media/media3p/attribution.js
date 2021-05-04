@@ -89,7 +89,7 @@ const getAriaLabel = (provider) =>
   sprintf(
     /* translators: %s: media provider name. */
     __('Powered by %s', 'web-stories'),
-    MEDIA_PROVIDER[provider]
+    provider
   );
 
 export function UnsplashAttribution() {
@@ -99,7 +99,7 @@ export function UnsplashAttribution() {
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          aria-label={getAriaLabel('unsplash')}
+          aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
         >
           {__('Powered by', 'web-stories')}
         </Text>
@@ -116,7 +116,7 @@ export function CoverrAttribution() {
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          aria-label={getAriaLabel('coverr')}
+          aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
         >
           {__('Powered by', 'web-stories')}
         </Text>
@@ -128,12 +128,14 @@ export function CoverrAttribution() {
 
 export function TenorAttribution() {
   return (
-    <a href={tenorUrl} target={'_blank'} rel={'noreferrer'}>
+    <a
+      href={tenorUrl}
+      target={'_blank'}
+      rel={'noreferrer'}
+      aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}
+    >
       <AttributionPill>
-        <TenorLogo
-          aria-label={getAriaLabel('tenor')}
-          data-label={__('Powered by Tenor', 'web-stories')}
-        />
+        <TenorLogo aria-hidden />
       </AttributionPill>
     </a>
   );
