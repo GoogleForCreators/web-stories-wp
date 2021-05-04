@@ -15,17 +15,19 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
+
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Activation_Flag
+ * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Flag
  */
 class Activation_Flag extends Test_Case {
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$activation_flag->register();
 
 		$this->assertSame( 10, has_action( 'web_stories_activation', [ $activation_flag, 'set_activation_flag' ] ) );
@@ -37,7 +39,7 @@ class Activation_Flag extends Test_Case {
 	 * @covers ::get_activation_flag
 	 */
 	public function test_set_activation_flag() {
-		$activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$activation_flag->set_activation_flag( true );
 		$this->assertTrue( $activation_flag->get_activation_flag( true ) );
 	}
@@ -47,7 +49,7 @@ class Activation_Flag extends Test_Case {
 	 * @covers ::get_activation_flag
 	 */
 	public function test_delete_activation_flag() {
-		$activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$activation_flag->delete_activation_flag( true );
 		$this->assertFalse( $activation_flag->get_activation_flag( true ) );
 	}

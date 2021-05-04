@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
+
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\TinyMCE
+ * @coversDefaultClass \Google\Web_Stories\Admin\TinyMCE
  */
 class TinyMCE extends Test_Case {
 
@@ -27,7 +29,7 @@ class TinyMCE extends Test_Case {
 	 */
 	public function test_register() {
 		$tinymce = $this->createPartialMock(
-			\Google\Web_Stories\TinyMCE::class,
+			\Google\Web_Stories\Admin\TinyMCE::class,
 			[ 'is_block_editor', 'is_edit_screen' ]
 		);
 
@@ -47,17 +49,17 @@ class TinyMCE extends Test_Case {
 	 * @covers ::register_assets
 	 */
 	public function test_register_assets() {
-		$tinymce = new \Google\Web_Stories\TinyMCE();
+		$tinymce = new \Google\Web_Stories\Admin\TinyMCE();
 		$tinymce->register_assets();
 
-		$this->assertTrue( wp_script_is( \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
 	}
 
 	/**
 	 * @covers ::tinymce_web_stories_button
 	 */
 	public function test_tinymce_web_stories_button() {
-		$tinymce = new \Google\Web_Stories\TinyMCE();
+		$tinymce = new \Google\Web_Stories\Admin\TinyMCE();
 		$result  = $tinymce->tinymce_web_stories_button( [] );
 
 		$this->assertContains( 'web_stories', $result );
@@ -67,7 +69,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::web_stories_mce_plugin
 	 */
 	public function test_web_stories_mce_plugin() {
-		$tinymce = new \Google\Web_Stories\TinyMCE();
+		$tinymce = new \Google\Web_Stories\Admin\TinyMCE();
 		$result  = $tinymce->web_stories_mce_plugin( [] );
 
 		$this->assertArrayHasKey( 'web_stories', $result );
@@ -77,7 +79,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::web_stories_tinymce_root_element
 	 */
 	public function test_web_stories_tinymce_root_element() {
-		$tinymce = new \Google\Web_Stories\TinyMCE();
+		$tinymce = new \Google\Web_Stories\Admin\TinyMCE();
 		$result  = get_echo( [ $tinymce, 'web_stories_tinymce_root_element' ] );
 		$result  = trim( $result );
 
@@ -88,8 +90,8 @@ class TinyMCE extends Test_Case {
 	 * @covers ::script_loader_tag
 	 */
 	public function test_script_loader_tag() {
-		$tinymce = new \Google\Web_Stories\TinyMCE();
-		$result  = $tinymce->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
+		$tinymce = new \Google\Web_Stories\Admin\TinyMCE();
+		$result  = $tinymce->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
 
 		$this->assertSame( '', $result );
 	}
@@ -99,7 +101,7 @@ class TinyMCE extends Test_Case {
 	 * @covers \Google\Web_Stories\Traits\Screen::is_block_editor
 	 */
 	public function test_is_block_editor() {
-		$tinymce = new \Google\Web_Stories\TinyMCE();
+		$tinymce = new \Google\Web_Stories\Admin\TinyMCE();
 		$result  = $this->call_private_method( $tinymce, 'is_block_editor' );
 
 		$this->assertFalse( $result );

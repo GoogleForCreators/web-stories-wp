@@ -24,8 +24,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Layout;
 use Google\Web_Stories\Traits\Theme_Support;
 use WP_Customize_Manager;

@@ -88,7 +88,7 @@ class Editor extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
@@ -128,7 +128,7 @@ class Editor extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
@@ -147,7 +147,7 @@ class Editor extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
@@ -165,7 +165,7 @@ class Editor extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
@@ -188,7 +188,7 @@ class Editor extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );
@@ -209,7 +209,7 @@ class Editor extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
-		$meta_boxes    = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Font::class );

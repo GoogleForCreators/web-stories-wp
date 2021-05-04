@@ -15,12 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 use Yoast\WPTestUtils\WPIntegration\TestCase;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Admin
+ * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
 class Admin extends TestCase {
 
@@ -74,7 +74,7 @@ class Admin extends TestCase {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		$admin->register();
 
 		$this->assertSame( 99, has_filter( 'admin_body_class', [ $admin, 'admin_body_class' ] ) );
@@ -87,7 +87,7 @@ class Admin extends TestCase {
 	 * @covers ::admin_body_class
 	 */
 	public function test_admin_body_class() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$result                    = $admin->admin_body_class( 'current' );
@@ -98,7 +98,7 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_content
 	 */
 	public function test_prefill_post_content() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
@@ -111,7 +111,7 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_content
 	 */
 	public function test_prefill_post_content_invalid_user() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( 0 );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
@@ -124,7 +124,7 @@ class Admin extends TestCase {
 	 */
 	public function test_prefill_post_content_shortcode() {
 		add_filter( 'use_block_editor_for_post', '__return_false' );
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
@@ -138,7 +138,7 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_content
 	 */
 	public function test_prefill_post_content_invalid_id() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = 999999999;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
@@ -149,7 +149,7 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_title
 	 */
 	public function test_prefill_post_title() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_title( 'current' );
@@ -160,7 +160,7 @@ class Admin extends TestCase {
 	 * @covers ::prefill_post_title
 	 */
 	public function test_prefill_post_title_no_texturize() {
-		$admin = new \Google\Web_Stories\Admin();
+		$admin = new \Google\Web_Stories\Admin\Admin();
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 

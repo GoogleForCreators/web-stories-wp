@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
 
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Meta_Boxes
+ * @coversDefaultClass \Google\Web_Stories\Admin\Meta_Boxes
  */
 class Meta_Boxes extends Test_Case {
 	/**
@@ -45,7 +46,7 @@ class Meta_Boxes extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$meta_boxes = new \Google\Web_Stories\Meta_Boxes();
+		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$meta_boxes->register();
 		$has_action = has_action(
 			'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG,
@@ -64,7 +65,7 @@ class Meta_Boxes extends Test_Case {
 	 * @covers ::get_meta_box_url
 	 */
 	public function test_get_meta_box_url() {
-		$meta_boxes = new \Google\Web_Stories\Meta_Boxes();
+		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$url        = $meta_boxes->get_meta_box_url( self::$story_id );
 
 		$this->assertContains( 'wp-admin/post.php', $url );
@@ -91,7 +92,7 @@ class Meta_Boxes extends Test_Case {
 
 		$registered_meta_boxes = [];
 
-		foreach ( \Google\Web_Stories\Meta_Boxes::LOCATIONS as $location ) {
+		foreach ( \Google\Web_Stories\Admin\Meta_Boxes::LOCATIONS as $location ) {
 			foreach ( [ 'high', 'core', 'default', 'low' ] as $priority ) {
 				if ( ! isset( $wp_meta_boxes[ $current_screen->id ][ $location ][ $priority ] ) ) {
 					continue;
@@ -133,7 +134,7 @@ class Meta_Boxes extends Test_Case {
 		// Registers default meta boxes.
 		register_and_do_post_meta_boxes( get_post( self::$story_id ) );
 
-		$meta_boxes = new \Google\Web_Stories\Meta_Boxes();
+		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$actual     = $meta_boxes->get_meta_boxes_per_location();
 
 		unset( $wp_meta_boxes, $current_screen );

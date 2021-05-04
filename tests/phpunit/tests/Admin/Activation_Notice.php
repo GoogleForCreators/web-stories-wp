@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Admin\Tests;
+
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Activation_Notice
+ * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Notice
  */
 class Activation_Notice extends Test_Case {
 
@@ -26,7 +28,7 @@ class Activation_Notice extends Test_Case {
 
 	public function setUp() {
 		parent::setUp();
-		$this->activation_flag = new \Google\Web_Stories\Activation_Flag();
+		$this->activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$this->activation_flag->set_activation_flag();
 	}
 
@@ -40,7 +42,7 @@ class Activation_Notice extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$activation_notice = new \Google\Web_Stories\Activation_Notice( $this->activation_flag );
+		$activation_notice = new \Google\Web_Stories\Admin\Activation_Notice( $this->activation_flag );
 		$activation_notice->register();
 
 		$this->assertSame( 10, has_action( 'admin_enqueue_scripts', [ $activation_notice, 'enqueue_assets' ] ) );
@@ -54,7 +56,7 @@ class Activation_Notice extends Test_Case {
 	public function test_render_notice() {
 		$GLOBALS['hook_suffix'] = 'plugins.php';
 
-		$activation_notice = new \Google\Web_Stories\Activation_Notice( $this->activation_flag );
+		$activation_notice = new \Google\Web_Stories\Admin\Activation_Notice( $this->activation_flag );
 		$flag_before       = $this->activation_flag->get_activation_flag();
 		$output            = get_echo( [ $activation_notice, 'render_notice' ] );
 		$flag_after        = $this->activation_flag->get_activation_flag();
@@ -67,7 +69,7 @@ class Activation_Notice extends Test_Case {
 	 * @covers ::is_plugins_page
 	 */
 	public function test_is_plugins_page() {
-		$activation_notice = new \Google\Web_Stories\Activation_Notice( $this->activation_flag );
+		$activation_notice = new \Google\Web_Stories\Admin\Activation_Notice( $this->activation_flag );
 		$result            = $this->call_private_method( $activation_notice, 'is_plugins_page', [ 'themes.php' ] );
 		$this->assertFalse( $result );
 	}

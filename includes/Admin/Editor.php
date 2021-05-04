@@ -29,7 +29,6 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
-use Google\Web_Stories\Meta_Boxes;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Register_Font;
@@ -267,7 +266,7 @@ class Editor extends Service_Base {
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 		$user        = wp_get_current_user();
-		
+
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce                    = wp_create_nonce( 'wp_rest' );
