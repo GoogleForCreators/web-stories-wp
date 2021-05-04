@@ -225,6 +225,8 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @return array
 	 */
 	public function get_editor_settings() {
@@ -246,6 +248,7 @@ class Editor extends Service_Base {
 		}
 
 		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
 		$dashboard_url = add_query_arg(
 			[
 				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
@@ -254,9 +257,18 @@ class Editor extends Service_Base {
 			admin_url( 'edit.php' )
 		);
 
+		$dashboard_settings_url = add_query_arg(
+			[
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard#/editor-settings',
+			],
+			admin_url( 'edit.php' )
+		);
+
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 		$user        = wp_get_current_user();
+		
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce                    = wp_create_nonce( 'wp_rest' );
@@ -277,6 +289,7 @@ class Editor extends Service_Base {
 				'postType'              => Story_Post_Type::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
+				'dashboardSettingsLink' => $dashboard_settings_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
