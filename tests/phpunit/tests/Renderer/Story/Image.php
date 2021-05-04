@@ -1,11 +1,11 @@
 <?php
 
-namespace Google\Web_Stories\Tests\Story_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Story;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Renderer\Image
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Image
  */
 class Image extends Test_Case {
 
@@ -24,7 +24,7 @@ class Image extends Test_Case {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$image  = new \Google\Web_Stories\Story_Renderer\Image( $story );
+		$image  = new \Google\Web_Stories\Renderer\Story\Image( $story );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,

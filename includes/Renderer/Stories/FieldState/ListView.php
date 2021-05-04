@@ -1,6 +1,6 @@
 <?php
 /**
- * Circle view based controls state.
+ * List view based controls state.
  *
  * @package Google\Web_Stories
  */
@@ -21,92 +21,24 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Stories_Renderer\FieldState;
+namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
+use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 
 /**
- * Class CircleView.
+ * Class ListView.
  */
-final class CircleView extends BaseFieldState {
+final class ListView extends BaseFieldState {
 
 	/**
-	 * Title field.
+	 * Excerpt field.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
-	public function title() {
-		$label = parent::title()->label();
-
-		return $this->prepare_field(
-			[
-				'label'  => $label,
-				'show'   => false,
-				'hidden' => false,
-			]
-		);
-	}
-
-	/**
-	 * Author field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function author() {
-		$label = parent::author()->label();
-
-		return $this->prepare_field(
-			[
-				'label'  => $label,
-				'show'   => false,
-				'hidden' => true,
-			]
-		);
-	}
-
-	/**
-	 * Date field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function date() {
-		$label = parent::date()->label();
-
-		return $this->prepare_field(
-			[
-				'label'  => $label,
-				'show'   => false,
-				'hidden' => true,
-			]
-		);
-	}
-
-	/**
-	 * Sharp corners field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function sharp_corners() {
-		$label = parent::sharp_corners()->label();
-
-		return $this->prepare_field(
-			[
-				'label'  => $label,
-				'show'   => false,
-				'hidden' => true,
-			]
-		);
-	}
-
-	/**
-	 * Circle size field.
-	 *
-	 * @return BaseField
-	 */
-	public function circle_size() {
-		$label = parent::circle_size()->label();
+	public function excerpt() {
+		$label = parent::excerpt()->label();
 
 		return $this->prepare_field(
 			[
@@ -117,4 +49,41 @@ final class CircleView extends BaseFieldState {
 		);
 	}
 
+	/**
+	 * Author field.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 */
+	public function date() {
+		$label = parent::date()->label();
+
+		return $this->prepare_field(
+			[
+				'label'  => $label,
+				'show'   => true,
+				'hidden' => false,
+			]
+		);
+	}
+
+	/**
+	 * Image alignment field.
+	 *
+	 * @since 1.5.0
+	 *
+	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 */
+	public function image_alignment() {
+		$label = parent::image_alignment()->label();
+
+		return $this->prepare_field(
+			[
+				'label'  => $label,
+				'show'   => true,
+				'hidden' => false,
+			]
+		);
+	}
 }

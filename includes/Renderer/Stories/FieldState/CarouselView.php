@@ -1,6 +1,6 @@
 <?php
 /**
- * List view based controls state.
+ * Carousel view based controls state.
  *
  * @package Google\Web_Stories
  */
@@ -21,28 +21,29 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Stories_Renderer\FieldState;
+namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
+use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 
 /**
- * Class GridView.
+ * Class CarouselView.
  */
-final class GridView extends BaseFieldState {
+final class CarouselView extends BaseFieldState {
+
 	/**
-	 * Number of columns field.
+	 * Author field.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
-	public function number_of_columns() {
-		$label = parent::number_of_columns()->label();
+	public function author() {
+		$label = parent::author()->label();
 
 		return $this->prepare_field(
 			[
 				'label'  => $label,
-				'show'   => true,
+				'show'   => false,
 				'hidden' => false,
 			]
 		);

@@ -69,4 +69,4 @@ parameters:
 
     # wp_die() is called with [ 'exit' => false ]
     - message: '#^Unreachable statement - code above always terminates.$#'
-      path: includes/Story_Renderer/HTML.php
+      path: includes/Renderer/Story/HTML.php

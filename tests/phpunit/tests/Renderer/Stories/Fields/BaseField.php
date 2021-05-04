@@ -5,17 +5,17 @@
  * @package Google\Web_Stories
  */
 
-namespace Google\Web_Stories\Tests\Stories_Renderer\Fields;
+namespace Google\Web_Stories\Tests\Renderer\Stories\Fields;
 
-use Google\Web_Stories\Stories_Renderer\Fields\BaseField as Testee;
+use Google\Web_Stories\Renderer\Stories\Fields\BaseField as Testee;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class BaseField.
  *
- * @package Google\Web_Stories\Tests\Stories_Renderer\Fields
+ * @package Google\Web_Stories\Tests\Stories\Fields
  *
- * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Fields\BaseField
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Fields\BaseField
  */
 class BaseField extends Test_Case {
 

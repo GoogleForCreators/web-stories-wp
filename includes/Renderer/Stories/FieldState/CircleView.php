@@ -1,6 +1,6 @@
 <?php
 /**
- * List view based controls state.
+ * Circle view based controls state.
  *
  * @package Google\Web_Stories
  */
@@ -21,29 +21,29 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Stories_Renderer\FieldState;
+namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
+use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 
 /**
- * Class ListView.
+ * Class CircleView.
  */
-final class ListView extends BaseFieldState {
+final class CircleView extends BaseFieldState {
 
 	/**
-	 * Excerpt field.
+	 * Title field.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
-	public function excerpt() {
-		$label = parent::excerpt()->label();
+	public function title() {
+		$label = parent::title()->label();
 
 		return $this->prepare_field(
 			[
 				'label'  => $label,
-				'show'   => true,
+				'show'   => false,
 				'hidden' => false,
 			]
 		);
@@ -52,7 +52,22 @@ final class ListView extends BaseFieldState {
 	/**
 	 * Author field.
 	 *
-	 * @since 1.5.0
+	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 */
+	public function author() {
+		$label = parent::author()->label();
+
+		return $this->prepare_field(
+			[
+				'label'  => $label,
+				'show'   => false,
+				'hidden' => true,
+			]
+		);
+	}
+
+	/**
+	 * Date field.
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
@@ -62,21 +77,36 @@ final class ListView extends BaseFieldState {
 		return $this->prepare_field(
 			[
 				'label'  => $label,
-				'show'   => true,
-				'hidden' => false,
+				'show'   => false,
+				'hidden' => true,
 			]
 		);
 	}
 
 	/**
-	 * Image alignment field.
-	 *
-	 * @since 1.5.0
+	 * Sharp corners field.
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
-	public function image_alignment() {
-		$label = parent::image_alignment()->label();
+	public function sharp_corners() {
+		$label = parent::sharp_corners()->label();
+
+		return $this->prepare_field(
+			[
+				'label'  => $label,
+				'show'   => false,
+				'hidden' => true,
+			]
+		);
+	}
+
+	/**
+	 * Circle size field.
+	 *
+	 * @return BaseField
+	 */
+	public function circle_size() {
+		$label = parent::circle_size()->label();
 
 		return $this->prepare_field(
 			[
@@ -86,4 +116,5 @@ final class ListView extends BaseFieldState {
 			]
 		);
 	}
+
 }

@@ -24,20 +24,21 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Stories_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Tests\Test_Case;
 use Google\Web_Stories\Tests\Test_Renderer;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Stories_Renderer\Renderer as AbstractRenderer;
+use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
 
 /**
  * Generic_Renderer class.
  *
- * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Renderer
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Renderer
  */
 class Renderer extends Test_Case {
+
 	/**
 	 * Story post ID.
 	 *
@@ -105,7 +106,7 @@ class Renderer extends Test_Case {
 
 		$renderer->assets();
 
-		$this->assertTrue( wp_style_is( \Google\Web_Stories\Stories_Renderer\Renderer::STYLE_HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( \Google\Web_Stories\Renderer\Stories\Renderer::STYLE_HANDLE, 'registered' ) );
 	}
 
 	/**
@@ -201,7 +202,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$expected = 'web-stories-list__story';
 
 		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
@@ -223,7 +224,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
@@ -246,7 +247,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
 
 		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();

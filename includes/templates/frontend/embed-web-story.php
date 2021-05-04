@@ -8,7 +8,7 @@
  * @link      https://github.com/google/web-stories-wp
  */
 
-use Google\Web_Stories\Story_Renderer\Image;
+use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Model\Story;
 
 /**

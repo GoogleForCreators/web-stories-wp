@@ -28,7 +28,7 @@
 
 namespace Google\Web_Stories\Traits;
 
-use Google\Web_Stories\Stories_Renderer\FieldStateFactory\Factory;
+use Google\Web_Stories\Renderer\Stories\FieldStateFactory\Factory;
 
 /**
  * Trait Stories_Script_Data.

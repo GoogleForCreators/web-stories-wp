@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Stories_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Carousel_Renderer
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Carousel_Renderer
  */
 class Carousel_Renderer extends Test_Case {
 
@@ -93,7 +93,7 @@ class Carousel_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query );
 		$renderer->init();
 
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
@@ -122,7 +122,7 @@ class Carousel_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Carousel_Renderer( $this->story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query );
 
 		$renderer->init();
 

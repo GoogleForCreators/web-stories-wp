@@ -247,8 +247,7 @@ class Editor extends Service_Base {
 			$max_upload_size = 0;
 		}
 
-		$is_demo = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
+		$is_demo       = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$dashboard_url = add_query_arg(
 			[
 				'post_type' => Story_Post_Type::POST_TYPE_SLUG,

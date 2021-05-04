@@ -29,8 +29,8 @@ namespace Google\Web_Stories\Renderer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Story_Renderer\Embed;
-use Google\Web_Stories\Story_Renderer\Image;
+use Google\Web_Stories\Renderer\Story\Embed;
+use Google\Web_Stories\Renderer\Story\Image;
 use WP_Post;
 
 /**

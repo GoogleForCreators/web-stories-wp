@@ -1,11 +1,11 @@
 <?php
 
-namespace Google\Web_Stories\Tests\Story_Renderer;
+namespace Google\Web_Stories\Tests\Renderer\Story;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Story_Renderer\Embed
+ * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Embed
  */
 class Embed extends Test_Case {
 
@@ -24,7 +24,7 @@ class Embed extends Test_Case {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$embed  = new \Google\Web_Stories\Story_Renderer\Embed( $story );
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,

@@ -176,7 +176,7 @@ class Renderer extends Test_Case {
 		$current_post = get_post( self::$story_id );
 		$story        = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $current_post );
-		$image_renderer = new \Google\Web_Stories\Story_Renderer\Image( $story );
+		$image_renderer = new \Google\Web_Stories\Renderer\Story\Image( $story );
 		$output         = $image_renderer->render(
 			[
 				'height' => 10000,
