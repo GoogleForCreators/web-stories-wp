@@ -92,7 +92,6 @@ function CustomStyles() {
               .mask {
                 position: absolute;
                 overflow: hidden;
-                will-change: transform;
               }
 
               .fill {
