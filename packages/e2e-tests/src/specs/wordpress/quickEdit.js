@@ -47,7 +47,11 @@ describe('Quick Edit', () => {
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
-
+    // Bypass checklist
+    await page.waitForSelector('.ReactModal__Content');
+    await expect(page).toClick('button', {
+      text: /Continue to publish/,
+    });
     await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
     await visitAdminPage('edit.php', 'post_type=web-story');

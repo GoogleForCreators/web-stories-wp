@@ -130,6 +130,7 @@ class HTML {
 	public function add_web_stories_amp_content_sanitizers( $sanitizers ) {
 		$sanitizers[ Story_Sanitizer::class ] = [
 			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher'                  => $this->get_publisher_name(),
 			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 			'poster_images'              => $this->get_poster_images(),
 		];
@@ -148,6 +149,7 @@ class HTML {
 	public function add_amp_content_sanitizers( $sanitizers ) {
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher'                  => $this->get_publisher_name(),
 			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 			'poster_images'              => $this->get_poster_images(),
 		];

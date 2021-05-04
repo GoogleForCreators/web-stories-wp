@@ -34,6 +34,8 @@ import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
 import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
+import PrepublishContext from '../../inspector/prepublish/context';
+import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
 
 function setupButtons({
   story: extraStoryProps,
@@ -41,9 +43,12 @@ function setupButtons({
   media: extraMediaProps,
   config: extraConfigProps,
   history: extraHistoryProps,
+  prepublish: extraPrepublishChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
+  const focusChecklistTab = jest.fn();
+  const resetReviewDialog = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -74,13 +79,26 @@ function setupButtons({
     state: { ...extraHistoryProps },
   };
 
+  const prepublishChecklistContextValue = {
+    // value: {
+    shouldReviewDialogBeSeen: false,
+    focusChecklistTab,
+    resetReviewDialog,
+    ...extraPrepublishChecklistProps,
+    // },
+  };
+
   const { getByRole } = renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
         <StoryContext.Provider value={storyContextValue}>
-          <MediaContext.Provider value={mediaContextValue}>
-            <Buttons />
-          </MediaContext.Provider>
+          <StoryTriggersProvider story={storyContextValue}>
+            <PrepublishContext.Provider value={prepublishChecklistContextValue}>
+              <MediaContext.Provider value={mediaContextValue}>
+                <Buttons />
+              </MediaContext.Provider>
+            </PrepublishContext.Provider>
+          </StoryTriggersProvider>
         </StoryContext.Provider>
       </ConfigContext.Provider>
     </HistoryContext.Provider>
@@ -89,6 +107,7 @@ function setupButtons({
     getByRole,
     autoSave,
     saveStory,
+    focusChecklistTab,
   };
 }
 
@@ -246,13 +265,16 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
+      prepublish: {
+        shouldReviewDialogBeSeen: true,
+      },
     });
     const publishButton = getByRole('button', { name: 'Publish' });
     expect(publishButton).toBeInTheDocument();
     fireEvent.click(publishButton);
 
-    const publishAnywayButton = screen.getByRole('button', {
-      name: 'Publish without title',
+    const publishAnywayButton = await screen.findByRole('button', {
+      name: 'Continue to publish',
     });
     expect(publishAnywayButton).toBeInTheDocument();
     fireEvent.click(publishAnywayButton);
@@ -260,7 +282,7 @@ describe('buttons', () => {
     expect(saveStory).toHaveBeenCalledTimes(1);
 
     await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Publish without title' })
+      screen.getByRole('button', { name: 'Continue to publish' })
     );
   });
 
@@ -270,19 +292,24 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
+      prepublish: {
+        shouldReviewDialogBeSeen: true,
+      },
     });
     const publishButton = getByRole('button', { name: 'Publish' });
     expect(publishButton).toBeInTheDocument();
     fireEvent.click(publishButton);
 
-    const addTitleButton = screen.getByRole('button', { name: 'Add a title' });
-    expect(addTitleButton).toBeInTheDocument();
-    fireEvent.click(addTitleButton);
+    const reviewChecklistButton = screen.getByRole('button', {
+      name: /^Review Checklist/,
+    });
+    expect(reviewChecklistButton).toBeInTheDocument();
+    fireEvent.click(reviewChecklistButton);
 
     expect(saveStory).not.toHaveBeenCalled();
 
     await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Add a title' })
+      screen.getByRole('button', { name: /^Review Checklist/ })
     );
   });
 
