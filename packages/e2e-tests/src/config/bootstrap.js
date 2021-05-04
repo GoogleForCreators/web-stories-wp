@@ -216,6 +216,8 @@ async function runAxeTestsForStoriesEditor() {
       'page-has-heading-one',
       'region',
       'scrollable-region-focusable',
+      'nested-interactive',
+      'aria-allowed-attr',
     ],
   });
 }
