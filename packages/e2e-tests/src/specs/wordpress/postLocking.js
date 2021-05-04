@@ -32,7 +32,7 @@ import {
   createNewStory,
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 

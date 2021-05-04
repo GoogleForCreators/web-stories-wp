@@ -1,14 +1,20 @@
-version: 1
+version: 2
 snapshot:
-  widths: [1600]
+  widths:
+    - 1600
   min-height: 1000
-  percy-css: |
-    .toplevel_page_amp-options, #footer-upgrade, #wpadminbar #wp-admin-bar-updates {
+  percy-css: >
+    .toplevel_page_amp-options, #footer-upgrade, #wpadminbar
+    #wp-admin-bar-updates {
       display: none;
     }
+
     span.update-plugins {
       display: none !important;
     }
+
     .story-media-display-element {
       background-color: transparent !important;
     }
+discovery:
+  disable-cache: true
