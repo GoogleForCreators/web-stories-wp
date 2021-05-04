@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { validateGoogleAnalyticsIdFormat } from '../';
+import { validateGoogleAnalyticsIdFormat } from '..';
 
 // GA4 measurement ID format is not yet supported in AMP.
 // See https://github.com/google/web-stories-wp/issues/6479

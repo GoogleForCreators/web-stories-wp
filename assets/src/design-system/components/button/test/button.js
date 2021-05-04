@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Button } from '../';
+import { Button } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Button', () => {

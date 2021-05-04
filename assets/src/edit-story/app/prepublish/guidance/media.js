@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
+import { VIDEO_SIZE_THRESHOLD } from '../../media/utils/useFFmpeg';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { VideoOptimization } from '../components/videoOptimization';
 
 const MAX_VIDEO_WIDTH = 3840;
 const MAX_VIDEO_HEIGHT = 2160;
@@ -130,6 +132,34 @@ export function videoElementLength(element) {
       elementId: element.id,
       message: MESSAGES.MEDIA.VIDEO_TOO_LONG.MAIN_TEXT,
       help: MESSAGES.MEDIA.VIDEO_TOO_LONG.HELPER_TEXT,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Check a if a video element's been optimized.
+ * If is not optimized, return guidance. Otherwise return undefined.
+ *
+ * @param {Element} element The element being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
+export function videoElementOptimized(element = {}) {
+  const idResource = element.resource?.id;
+  const idOrigin = idResource?.toString().split(':')?.[0];
+  const isCoverrMedia = idOrigin === 'media/coverr';
+  const videoArea =
+    (element.resource?.sizes?.full?.height || 0) *
+    (element.resource?.sizes?.full?.width || 0);
+  const isLargeVideo =
+    videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
+  if (!isCoverrMedia && isLargeVideo && !element.resource?.isOptimized) {
+    return {
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      elementId: element.id,
+      message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
+      help: <VideoOptimization element={element} />,
+      noHighlight: true,
     };
   }
   return undefined;

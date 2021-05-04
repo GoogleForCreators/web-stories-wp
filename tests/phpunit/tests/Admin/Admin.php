@@ -17,10 +17,12 @@
 
 namespace Google\Web_Stories\Admin\Tests;
 
+use Yoast\WPTestUtils\WPIntegration\TestCase;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
-class Admin extends \WP_UnitTestCase {
+class Admin extends TestCase {
 
 	/**
 	 * Admin user for test.
@@ -100,7 +102,7 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
-		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE );
+		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Media::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertContains( 'wp-block-web-stories-embed', $result );
 		$this->assertContains( $poster, $result );
 	}
@@ -126,7 +128,7 @@ class Admin extends \WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		$_GET['from-web-story'] = self::$story_id;
 		$result                 = $admin->prefill_post_content( 'current', get_post( self::$post_id ) );
-		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE );
+		$poster                 = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( self::$story_id ), \Google\Web_Stories\Media\Media::POSTER_PORTRAIT_IMAGE_SIZE );
 		$this->assertContains( '[web_stories_embed', $result );
 		$this->assertContains( $poster, $result );
 		remove_filter( 'use_block_editor_for_post', '__return_false' );

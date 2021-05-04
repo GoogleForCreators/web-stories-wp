@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { MaskTypes } from '../../../../masks';
+import { MaskTypes } from '../../../../masks/constants';
 import { setupReducer } from './_utils';
 
 describe('combineElements', () => {

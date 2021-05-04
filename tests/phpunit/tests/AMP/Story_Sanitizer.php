@@ -20,11 +20,12 @@ namespace Google\Web_Stories\Tests\AMP;
 use AMP_DOM_Utils;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
  */
-class Story_Sanitizer extends \WP_UnitTestCase {
+class Story_Sanitizer extends Test_Case {
 	/**
 	 * Helper method for tests.
 	 * @param string $source
@@ -72,6 +73,7 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	 */
 	public function test_sanitize_publisher_logo( $source, $expected ) {
 		$args = [
+			'publisher'                  => 'Web Stories',
 			'publisher_logo'             => 'https://example.com/publisher_logo.png',
 			'publisher_logo_placeholder' => 'https://example.com/placeholder_logo.png',
 			'poster_images'              => [],
@@ -110,10 +112,101 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	public function test_sanitize_poster_image( $source, $expected ) {
 		$args = [
 			'publisher_logo'             => '',
+			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
 		];
 
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertEquals( $expected, $actual );
+	}
+
+	public function get_publisher_data() {
+		return [
+			'publisher_exists'        => [
+				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="New publisher" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => 'New publisher',
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+			'no_publisher'            => [
+				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="New publisher"></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => 'New publisher',
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+			'empty_publisher'         => [
+				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => '',
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+			'double_quotes_publisher' => [
+				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher=\'"double quotes"\'></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => '"double quotes"',
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+			'single_quotes_publisher' => [
+				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="\'single quotes\'"></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => "'single quotes'",
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+			'not_english_publisher'   => [
+				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="PRÓXIMA"></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => 'PRÓXIMA',
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+			'html_publisher'          => [
+				'<amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png" publisher="this &gt; that &lt; that &lt;randomhtml /&gt;"></amp-story></body></html>',
+				[
+					'publisher_logo'             => '',
+					'publisher'                  => 'this > that < that <randomhtml />',
+					'publisher_logo_placeholder' => '',
+					'poster_images'              => [],
+				],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider get_publisher_data
+	 * @covers ::sanitize
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
+	 *
+	 * @param string $source   Source.
+	 * @param string $expected Expected.
+	 * @param array  $args   Args
+	 */
+	public function test_sanitize_publisher( $source, $expected, $args ) {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertEquals( $expected, $actual );
@@ -127,6 +220,7 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 
 		$args = [
 			'publisher_logo'             => '',
+			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
 		];
@@ -144,6 +238,7 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 
 		$args = [
 			'publisher_logo'             => '',
+			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
 		];

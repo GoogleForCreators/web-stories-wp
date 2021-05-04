@@ -30,7 +30,6 @@ function getResourceFromAttachment(attachment) {
   const {
     id,
     date_gmt,
-    guid: { rendered: src },
     media_details: {
       width,
       height,
@@ -49,6 +48,7 @@ function getResourceFromAttachment(attachment) {
       generated: posterGenerated,
     },
     alt_text: alt,
+    source_url: src,
     media_source: mediaSource,
   } = attachment;
   return createResource({

@@ -22,7 +22,7 @@ import { object, boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import ColorPicker from '../';
+import ColorPicker from '..';
 
 export default {
   title: 'Stories Editor/Components/Color Picker',

@@ -17,12 +17,14 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Add_Media_Source_Editor
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Editor
  * @package phpunit\tests\Migrations
  */
-class Add_Media_Source_Editor extends \WP_UnitTestCase {
+class Add_Media_Source_Editor extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */
@@ -32,7 +34,7 @@ class Add_Media_Source_Editor extends \WP_UnitTestCase {
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY,
+				'taxonomy'   => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 				'hide_empty' => false,
 			]
 		);

@@ -65,7 +65,7 @@ function addPage(state, { page, position }) {
       ...state.pages.slice(insertionPoint),
     ],
     current: id,
-    selection: [],
+    selection: [page.elements[0].id],
   };
 }
 

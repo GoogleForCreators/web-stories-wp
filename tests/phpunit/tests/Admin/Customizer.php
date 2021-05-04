@@ -26,7 +26,7 @@ use WP_Error;
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Customizer
  */
-class Customizer extends \WP_UnitTestCase {
+class Customizer extends Test_Case {
 	use Theme_Support;
 
 	/**

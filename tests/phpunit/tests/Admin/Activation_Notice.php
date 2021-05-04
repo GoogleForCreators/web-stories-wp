@@ -22,8 +22,7 @@ use Google\Web_Stories\Tests\Private_Access;
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Notice
  */
-class Activation_Notice extends \WP_UnitTestCase {
-	use Private_Access;
+class Activation_Notice extends Test_Case {
 
 	protected $activation_flag;
 

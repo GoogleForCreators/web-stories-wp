@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { validateAdSensePublisherIdFormat } from '../';
+import { validateAdSensePublisherIdFormat } from '..';
 
 const idsToValidate = [
   ['pub-1234567891234567', true],

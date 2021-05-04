@@ -105,7 +105,7 @@ function Publish() {
         text={text}
       />
       <TitleMissingDialog
-        open={Boolean(showDialog)}
+        isOpen={Boolean(showDialog)}
         onIgnore={publish}
         onFix={fixTitle}
         onClose={handleClose}

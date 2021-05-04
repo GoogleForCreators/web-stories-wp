@@ -23,7 +23,7 @@ import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import CardGallery from '../index';
+import CardGallery from '..';
 import formattedTemplatesArray from '../../../dataUtils/formattedTemplatesArray';
 import FontProvider from '../../../app/font/fontProvider';
 import { TransformProvider } from '../../../../edit-story/components/transform';

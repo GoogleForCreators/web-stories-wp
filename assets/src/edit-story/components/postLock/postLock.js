@@ -173,7 +173,7 @@ function PostLock() {
   if (isFirstTime) {
     return (
       <PostLockDialog
-        open={showDialog}
+        isOpen={showDialog}
         user={user}
         onClose={closeDialog}
         previewLink={previewLink}
@@ -185,7 +185,7 @@ function PostLock() {
   // Second time around, show message that story was taken over.
   return (
     <PostTakeOverDialog
-      open={showDialog}
+      isOpen={showDialog}
       user={user}
       dashboardLink={dashboardLink}
       onClose={closeDialog}

@@ -25,7 +25,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout } from '../../../components';
-import { usePagePreviewSize } from '../../../utils/';
+import { usePagePreviewSize } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';

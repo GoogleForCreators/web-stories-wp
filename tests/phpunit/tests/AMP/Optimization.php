@@ -24,15 +24,13 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerpl
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\PreloadHeroImage;
-use Google\Web_Stories\Tests\Private_Access;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Optimization
  */
-class Optimization extends \WP_UnitTestCase {
-	use Private_Access;
-
+class Optimization extends Test_Case {
 	/**
 	 * @covers ::optimize_document
 	 * @covers ::get_optimizer

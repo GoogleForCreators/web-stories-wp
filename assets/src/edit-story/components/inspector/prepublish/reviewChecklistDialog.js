@@ -36,10 +36,10 @@ const TEXT = {
   ),
 };
 
-function ReviewChecklistDialog({ open, onIgnore, onReview, onClose }) {
+function ReviewChecklistDialog({ isOpen, onIgnore, onReview, onClose }) {
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
       title={TEXT.TITLE}
       onSecondary={onIgnore}
@@ -58,7 +58,7 @@ function ReviewChecklistDialog({ open, onIgnore, onReview, onClose }) {
 }
 
 ReviewChecklistDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onIgnore: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onReview: PropTypes.func.isRequired,

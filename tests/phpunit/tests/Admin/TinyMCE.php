@@ -22,8 +22,7 @@ use Google\Web_Stories\Tests\Private_Access;
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\TinyMCE
  */
-class TinyMCE extends \WP_UnitTestCase {
-	use Private_Access;
+class TinyMCE extends Test_Case {
 
 	/**
 	 * @covers ::register

@@ -107,16 +107,6 @@ export const elementWithTextParagraphStyle = ({ element, dataToEditorY }) => {
   `;
 };
 
-export const SHARED_DEFAULT_ATTRIBUTES = {
-  opacity: 100,
-  flip: {
-    vertical: false,
-    horizontal: false,
-  },
-  rotationAngle: 0,
-  lockAspectRatio: true,
-};
-
 export const elementWithFlip = css`
   transform: ${({ transformFlip }) => transformFlip};
 `;

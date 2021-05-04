@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useCallback, forwardRef } from 'react';
 
@@ -109,7 +108,6 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
     <TextSetItem
       role="listitem"
       tabIndex={0}
-      aria-label={__('Insert Text Set', 'web-stories')}
       translateX={translateX}
       translateY={translateY}
       ref={ref}

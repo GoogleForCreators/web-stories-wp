@@ -17,6 +17,8 @@
 
 namespace phpunit\tests\Migrations;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class Add_Poster_Generation_Media_Source
  *
@@ -24,7 +26,7 @@ namespace phpunit\tests\Migrations;
  *
  * @package phpunit\tests\Migrations
  */
-class Add_Poster_Generation_Media_Source extends \WP_UnitTestCase {
+class Add_Poster_Generation_Media_Source extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 */
@@ -48,14 +50,14 @@ class Add_Poster_Generation_Media_Source extends \WP_UnitTestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
-		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
 		$object = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source();
 
 		$object->migrate();
 
-		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ 'poster-generation' ], $slugs );

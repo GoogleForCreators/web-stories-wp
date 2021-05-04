@@ -20,6 +20,10 @@
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
+	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">

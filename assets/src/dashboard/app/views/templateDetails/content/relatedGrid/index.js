@@ -30,7 +30,7 @@ import {
   TemplateActionsPropType,
 } from '../../../../../types';
 import { TemplateGridView } from '../../../shared';
-import { RowContainer } from './../../components';
+import { RowContainer } from '../../components';
 
 function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
   if (relatedTemplates.length === 0) {

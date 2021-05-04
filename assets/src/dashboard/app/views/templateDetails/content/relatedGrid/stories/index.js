@@ -28,7 +28,7 @@ import {
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../../storybookUtils';
 import FontProvider from '../../../../../font/fontProvider';
-import RelatedGrid from '../';
+import RelatedGrid from '..';
 
 export default {
   title: 'Dashboard/Views/TemplateDetails/Content/RelatedGrid',
