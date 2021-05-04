@@ -17,7 +17,6 @@
 export { default as createNewStory } from './createNewStory';
 export { default as previewStory } from './previewStory';
 export { default as visitDashboard } from './visitDashboard';
-export { default as visitSettings } from './visitSettings';
 export { default as addRequestInterception } from './addRequestInterception';
 export { default as withExperimentalFeatures } from './experimentalFeatures';
 export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
@@ -30,7 +29,6 @@ export { default as setAnalyticsCode } from './setAnalyticsCode';
 export { default as clickButton } from './clickButton';
 export { default as uploadFile } from './uploadFile';
 export { default as uploadMedia } from './uploadMedia';
-export { default as uploadPublisherLogo } from './uploadPublisherLogo';
 export { default as deleteMedia } from './deleteMedia';
 export { default as deleteWidgets } from './deleteWidgets';
 export { default as insertBlock } from './insertBlock';

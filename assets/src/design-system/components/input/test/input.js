@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Input } from '../';
+import { Input } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 

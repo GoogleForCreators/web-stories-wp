@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { TextArea } from '../';
+import { TextArea } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('TextArea', () => {

@@ -387,7 +387,7 @@ function APIProvider({ children }) {
     [cdnURL, assetsURL]
   );
 
-  // @todo Add paging.
+  // @todo Add pagination.
   const getCustomPageTemplates = useCallback(() => {
     let apiPath = customPageTemplates;
     const perPage = 100;
@@ -397,7 +397,9 @@ function APIProvider({ children }) {
       page: 1,
     });
     return apiFetch({ path: apiPath }).then((response) =>
-      response.map((template) => template['story_data'])
+      response.map((template) => {
+        return { ...template['story_data'], templateId: template.id };
+      })
     );
   }, [customPageTemplates]);
 
@@ -410,7 +412,24 @@ function APIProvider({ children }) {
           status: 'publish',
         },
         method: 'POST',
-      }).then((response) => response['story_data']);
+      }).then((response) => {
+        return { ...response['story_data'], templateId: response.id };
+      });
+    },
+    [customPageTemplates]
+  );
+
+  const deletePageTemplate = useCallback(
+    (id) => {
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
+      return apiFetch({
+        path: addQueryArgs(`${customPageTemplates}${id}/`, {
+          _method: 'DELETE',
+        }),
+        data: { force: true },
+        method: 'POST',
+      });
     },
     [customPageTemplates]
   );
@@ -434,6 +453,7 @@ function APIProvider({ children }) {
       getStatusCheck,
       addPageTemplate,
       getCustomPageTemplates,
+      deletePageTemplate,
       getPageTemplates,
       getCurrentUser,
       updateCurrentUser,

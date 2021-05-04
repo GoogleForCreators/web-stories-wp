@@ -145,6 +145,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Roboto"],
       "id": "8de5a540-9aa2-4532-b1de-87f071ccdd1a"
     },
     {
@@ -309,6 +310,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Source Serif Pro"],
       "id": "7ec0f8c7-5226-4fac-bef5-82755b0d72cc"
     },
     {
@@ -486,6 +488,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Poppins", "IBM Plex Sans"],
       "id": "2ce3fbcf-b0ec-4ae9-9e37-e46b94b4856e"
     },
     {
@@ -633,6 +636,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Playfair Display", "Lora"],
       "id": "64fde279-f5b3-4501-88c1-88e9ae28c698"
     },
     {
@@ -789,6 +793,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Oswald", "Roboto Condensed"],
       "id": "0249900f-0801-4cf2-904b-9eb505784148"
     },
     {
@@ -931,6 +936,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Merriweather"],
       "id": "7193ad78-832b-470b-90fd-c856334ee56a"
     },
     {
@@ -1147,6 +1153,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Titillium Web", "Work Sans"],
       "id": "f6204eaa-9008-45ca-9559-17a6e43efc33"
     },
     {
@@ -1292,6 +1299,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Nunito", "Karla"],
       "id": "ea7b0add-02a4-4746-8c5c-d9422f096533"
     },
     {
@@ -1573,6 +1581,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Poppins", "Parisienne"],
       "id": "b8a0da89-3304-4da6-a6f4-8208c39465f1"
     },
     {
@@ -1721,6 +1730,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Rock Salt", "Oswald"],
       "id": "bfddf7b1-ea3a-4283-943f-7aa5340a3758"
     },
     {
@@ -1932,6 +1942,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Poppins", "Monoton"],
       "id": "43ef8035-151e-4a80-81d9-8ed746a2d2be"
     },
     {
@@ -2131,6 +2142,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Playfair Display", "Nothing You Could Do", "Nunito"],
       "id": "6825bee0-5867-4aee-8230-f3b73a6979c2"
     },
     {
@@ -2444,6 +2456,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["BioRhyme", "Roboto Slab", "Bungee", "Bungee Shade"],
       "id": "52e8bbd5-0994-4fbc-a129-52e51fdbc831"
     },
     {
@@ -2636,6 +2649,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Bungee"],
       "id": "95970834-7a29-4066-9a8f-54f682868d64"
     }
   ],

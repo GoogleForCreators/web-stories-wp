@@ -22,7 +22,7 @@ import { boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import TelemetrySettings from '../';
+import TelemetrySettings from '..';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/Telemetry',
