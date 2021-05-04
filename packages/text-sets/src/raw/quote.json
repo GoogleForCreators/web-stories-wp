@@ -146,6 +146,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Roboto"],
       "id": "28518eb9-7c09-4e5a-9c80-87d61cba8622"
     },
     {
@@ -329,6 +330,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Source Serif Pro"],
       "id": "8d36c287-78bb-4825-beb3-1427f30523bd"
     },
     {
@@ -506,6 +508,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Poppins"],
       "id": "95e1a6a4-7e60-4d6d-84fc-921e76dee243"
     },
     {
@@ -654,6 +657,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Playfair Display"],
       "id": "21619959-7a77-42f2-a84d-71c958b254c6"
     },
     {
@@ -790,6 +794,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Oswald"],
       "id": "34cd2863-6711-48d0-a28a-d5ad7fa61700"
     },
     {
@@ -1019,6 +1024,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Raleway", "Merriweather", "Source Serif Pro"],
       "id": "35854c63-b7f5-4637-99dc-f26dec385321"
     },
     {
@@ -1261,6 +1267,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Titillium Web"],
       "id": "60dfcbbd-6bc2-4535-9f3d-1770db7e4147"
     },
     {
@@ -1581,6 +1588,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Nunito", "Karla"],
       "id": "7da9face-3152-4482-aba2-82fce4114901"
     }
   ],

@@ -26,7 +26,7 @@ import styled from 'styled-components';
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Text } from '../../..';
-import { Slider } from '../';
+import { Slider } from '..';
 
 const Container = styled.div`
   padding: 50px;

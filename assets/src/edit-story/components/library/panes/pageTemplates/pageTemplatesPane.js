@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
@@ -26,11 +26,14 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Pane } from '../shared';
-import { DropDown } from '../../../../../design-system';
+import { Select } from '../../../form';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
+import { useAPI } from '../../../../app/api';
+import useLibrary from '../../useLibrary';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
+import TemplateSave from './templateSave';
 
 export const StyledPane = styled(Pane)`
   height: 100%;
@@ -45,28 +48,61 @@ export const PaneInner = styled.div`
 `;
 
 const DropDownWrapper = styled.div`
-  width: 170px;
   text-align: left;
   height: 36px;
-  margin: 28px 0 17px 1em;
-`;
-
-// @todo Replace this when SimpleDropdown gets ready.
-const StyledDropDown = styled(DropDown)`
-  background-color: transparent;
-  border: 0;
-  button {
-    border: none;
-  }
+  margin: 28px 16px 17px;
 `;
 
 const DEFAULT = 'default';
 const SAVED = 'saved';
 const PAGE_TEMPLATE_PANE_WIDTH = 158;
 
+const ButtonWrapper = styled.div`
+  padding: 0 1em;
+  margin-top: 24px;
+`;
+
 function PageTemplatesPane(props) {
   const { customPageTemplates } = useFeatures();
+  const {
+    actions: { getCustomPageTemplates },
+  } = useAPI();
+
+  const { savedTemplates, setSavedTemplates } = useLibrary((state) => ({
+    savedTemplates: state.state.savedTemplates,
+    setSavedTemplates: state.actions.setSavedTemplates,
+  }));
+
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
+  const [highlightedTemplate, setHighlightedTemplate] = useState(null);
+
+  const updateTemplatesList = useCallback(
+    (page) => {
+      setSavedTemplates([page, ...savedTemplates]);
+      setHighlightedTemplate(page.id);
+    },
+    [setSavedTemplates, savedTemplates]
+  );
+
+  const loadTemplates = useCallback(() => {
+    getCustomPageTemplates().then(setSavedTemplates);
+  }, [getCustomPageTemplates, setSavedTemplates]);
+
+  useEffect(() => {
+    if (!savedTemplates && customPageTemplates) {
+      loadTemplates();
+    }
+  }, [savedTemplates, loadTemplates, customPageTemplates]);
+
+  useEffect(() => {
+    let timeout = null;
+    if (highlightedTemplate) {
+      timeout = setTimeout(() => {
+        setHighlightedTemplate(null);
+      }, 1000);
+    }
+    return () => clearTimeout(timeout);
+  }, [highlightedTemplate]);
 
   const options = [
     {
@@ -90,23 +126,36 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         {customPageTemplates && (
-          <DropDownWrapper>
-            <StyledDropDown
-              options={options}
-              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-              onMenuItemClick={(evt, value) =>
-                setShowDefaultTemplates(value === DEFAULT)
-              }
-              isInline
-              hasSearch={false}
-              aria-label={__('Select templates type', 'web-stories')}
-            />
-          </DropDownWrapper>
+          <>
+            {savedTemplates && (
+              <ButtonWrapper>
+                <TemplateSave
+                  setShowDefaultTemplates={setShowDefaultTemplates}
+                  updateList={updateTemplatesList}
+                />
+              </ButtonWrapper>
+            )}
+            <DropDownWrapper>
+              <Select
+                options={options}
+                selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+                onMenuItemClick={(evt, value) =>
+                  setShowDefaultTemplates(value === DEFAULT)
+                }
+                aria-label={__('Select templates type', 'web-stories')}
+              />
+            </DropDownWrapper>
+          </>
         )}
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (
-          <SavedTemplates pageSize={pageSize} />
+          <SavedTemplates
+            savedTemplates={savedTemplates}
+            setSavedTemplates={setSavedTemplates}
+            pageSize={pageSize}
+            highlightedTemplate={highlightedTemplate}
+          />
         )}
       </PaneInner>
     </StyledPane>

@@ -20,8 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\SVG
  */
-class SVG extends \WP_UnitTestCase {
-	use Private_Access;
+class SVG extends Test_Case {
 
 	/**
 	 * @covers ::register

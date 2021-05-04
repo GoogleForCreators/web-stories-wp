@@ -43,7 +43,7 @@ function reducer([currentStory], updatedStory) {
 
 export function StoryTriggersProvider({ children, story }) {
   // store prev & next versions of story to help compute internally fired events.
-  // Not sure if this is necesarilly needed but was used a lot in FTUE. Lets keep
+  // Not sure if this is necessarily needed but was used a lot in FTUE. Lets keep
   // an eye on this as we create more internal event registers, and we can always
   // remove if we end up not using it.
   const [[currentStory, previousStory], updateStory] = useReducer(reducer, [

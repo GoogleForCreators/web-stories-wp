@@ -23,7 +23,7 @@ use WP_REST_Request;
 /**
  * @coversDefaultClass \Google\Web_Stories\User_Preferences
  */
-class User_Preferences extends \WP_UnitTestCase {
+class User_Preferences extends Test_Case {
 	protected static $user_id;
 
 	protected static $author_id;

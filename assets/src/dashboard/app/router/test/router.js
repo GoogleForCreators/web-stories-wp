@@ -23,7 +23,7 @@ import { createBrowserHistory } from 'history';
 /**
  * Internal dependencies
  */
-import { RouterProvider, Route, useRouteHistory } from '../index';
+import { RouterProvider, Route, useRouteHistory } from '..';
 
 describe('RouterProvider', () => {
   it('should render the first route by default', () => {

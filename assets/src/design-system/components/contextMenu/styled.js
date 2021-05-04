@@ -18,6 +18,10 @@
  */
 import styled, { css } from 'styled-components';
 
+// z-index needs to be higher than the wordpress toolbar z-index: 9989.
+// Leaves room for mask to be higher than the wordpress toolbar z-index.
+export const POPOVER_Z_INDEX = 9991;
+
 export const Popover = styled.div(
   ({ isOpen }) => css`
     position: absolute;
@@ -26,7 +30,7 @@ export const Popover = styled.div(
     ${isOpen &&
     css`
       display: block;
-      z-index: 10;
+      z-index: ${POPOVER_Z_INDEX};
       opacity: 1;
       pointer-events: auto;
     `};

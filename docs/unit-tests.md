@@ -2,9 +2,10 @@
 
 ## PHP
 
-This project uses the [PHPUnit](https://phpunit.de/) testing framework to write unit and integration tests for the PHP part.
+This project uses the [PHPUnit](https://phpunit.de/) testing framework to write unit and integration tests for the PHP part.   
 
-Tests are run against a running WordPress instance through the [WordPress PHPUnit Test Suite](https://make.wordpress.org/core/handbook/testing/automated-testing/writing-phpunit-tests/https://make.wordpress.org/core/handbook/testing/automated-testing/writing-phpunit-tests/).
+Tests are run against a running WordPress instance through the [WordPress PHPUnit Test Suite](https://make.wordpress.org/core/handbook/testing/automated-testing/writing-phpunit-tests/https://make.wordpress.org/core/handbook/testing/automated-testing/writing-phpunit-tests/). 
+For improved cross version compatibility for PHPUnit, the [WP Test Utils](https://github.com/Yoast/wp-test-utils) is implemented.
 
 To run the full test suite, you can use the following command:
 

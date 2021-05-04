@@ -25,7 +25,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useGlobalIsKeyPressed, useIsKeyPressed } from '../index';
+import { useGlobalIsKeyPressed, useIsKeyPressed } from '..';
 
 const keys = {
   a: { key: 'a', which: 65 },

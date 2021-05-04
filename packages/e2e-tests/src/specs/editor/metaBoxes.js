@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 /**

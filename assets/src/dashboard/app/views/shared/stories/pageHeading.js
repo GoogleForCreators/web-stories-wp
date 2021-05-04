@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PageHeading } from '../';
+import { PageHeading } from '..';
 import { NavProvider, LeftRail } from '../../../../components';
 
 export default {

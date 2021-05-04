@@ -58,6 +58,7 @@ const DropDownSelect = (
     <Value
       forwardedAs="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      selectValueStylesOverride={rest.selectValueStylesOverride}
     >
       {activeItemLabel || placeholder}
     </Value>

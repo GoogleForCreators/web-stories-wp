@@ -22,8 +22,8 @@ import { fireEvent, createEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import FileUpload from '../';
+import { renderWithProviders } from '../../../testUtils';
+import FileUpload from '..';
 
 describe('FileUpload', () => {
   it('should render upload component by default', () => {

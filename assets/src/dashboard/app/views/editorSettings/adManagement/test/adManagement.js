@@ -18,7 +18,7 @@
  */
 import { renderWithProviders } from '../../../../../testUtils';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
-import AdManagement, { TEXT } from '../index';
+import AdManagement, { TEXT } from '..';
 
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;

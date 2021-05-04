@@ -33,6 +33,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
@@ -54,6 +55,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	use Types;
 	use Assets;
 	use Screen;
+	use Post_Type;
 
 	/**
 	 * The slug of the stories post type.
@@ -112,20 +114,30 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	private $locale;
 
 	/**
+	 * Register_Font instance.
+	 *
+	 * @var Register_Font Register_Font instance.
+	 */
+	private $register_font;
+
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments $experiments Experiments instance.
-	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
-	 * @param Decoder     $decoder Decoder instance.
-	 * @param Locale      $locale Locale instance.
+	 * @param Experiments   $experiments   Experiments instance.
+	 * @param Meta_Boxes    $meta_boxes    Meta_Boxes instance.
+	 * @param Decoder       $decoder       Decoder instance.
+	 * @param Locale        $locale        Locale instance.
+	 * @param Register_Font $register_font Register_Font instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale ) {
-		$this->experiments = $experiments;
-		$this->meta_boxes  = $meta_boxes;
-		$this->decoder     = $decoder;
-		$this->locale      = $locale;
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Register_Font $register_font ) {
+		$this->experiments   = $experiments;
+		$this->meta_boxes    = $meta_boxes;
+		$this->decoder       = $decoder;
+		$this->locale        = $locale;
+		$this->register_font = $register_font;
 	}
 
 	/**
@@ -211,6 +223,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
+
 		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
@@ -227,6 +240,12 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
+
+		// oEmbed.
+		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
+		add_filter( 'embed_html', [ $this, 'filter_embed_html' ], 10, 4 );
+		// So it runs after get_oembed_response_data_rich().
+		add_filter( 'oembed_response_data', [ $this, 'filter_oembed_response_data' ], 20, 3 );
 	}
 
 	/**
@@ -493,12 +512,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		// Force media model to load.
 		wp_enqueue_media();
 
-		wp_register_style(
-			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_font->register();
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
 
@@ -507,7 +521,9 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
-		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'google-fonts' ] );
+
+		$font_handle = $this->register_font->get_handle();
+		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
 			self::WEB_STORIES_SCRIPT_HANDLE,
@@ -531,21 +547,10 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = self::POST_TYPE_SLUG;
-		$has_publish_action       = false;
-		$has_assign_author_action = false;
+		$rest_base                = $this->get_post_type_rest_base( self::POST_TYPE_SLUG );
+		$has_publish_action       = $this->get_post_type_cap( self::POST_TYPE_SLUG, 'publish_posts' );
+		$has_assign_author_action = $this->get_post_type_cap( self::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$post_type_object         = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
-				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
-			}
-			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
-				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
-			}
-		}
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -567,6 +572,14 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 			admin_url( 'edit.php' )
 		);
 
+		$dashboard_settings_url = add_query_arg(
+			[
+				'post_type' => self::POST_TYPE_SLUG,
+				'page'      => 'stories-dashboard#/editor-settings',
+			],
+			admin_url( 'edit.php' )
+		);
+
 		/** This filter is documented in wp-admin/includes/ajax-actions.php */
 		$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
@@ -579,6 +592,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		$mime_types       = $this->get_allowed_mime_types();
 		$mime_image_types = $this->get_allowed_image_mime_types();
 
+		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
 			'id'         => 'web-stories-editor',
@@ -593,6 +607,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 				'postType'              => self::POST_TYPE_SLUG,
 				'storyId'               => $story_id,
 				'dashboardLink'         => $dashboard_url,
+				'dashboardSettingsLink' => $dashboard_settings_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'             => $max_upload_size,
@@ -603,14 +618,15 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'                   => [
-					'users'        => '/web-stories/v1/users/',
-					'currentUser'  => '/web-stories/v1/users/me/',
-					'stories'      => sprintf( '/web-stories/v1/%s/', $rest_base ),
-					'media'        => '/web-stories/v1/media/',
-					'link'         => '/web-stories/v1/link/',
-					'statusCheck'  => '/web-stories/v1/status-check/',
-					'metaBoxes'    => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking' => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
+					'users'         => '/web-stories/v1/users/',
+					'currentUser'   => '/web-stories/v1/users/me/',
+					'stories'       => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'pageTemplates' => sprintf( '/web-stories/v1/%s/', $page_templates_rest_base ),
+					'media'         => '/web-stories/v1/media/',
+					'link'          => '/web-stories/v1/link/',
+					'statusCheck'   => '/web-stories/v1/status-check/',
+					'metaBoxes'     => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+					'storyLocking'  => rest_url( sprintf( '/web-stories/v1/%s/%s/lock', $rest_base, $story_id ) ),
 				],
 				'metadata'              => [
 					'publisher' => $this->get_publisher_data(),
@@ -652,18 +668,7 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 	 * @return void
 	 */
 	protected function setup_lock( $story_id ) {
-		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
-
-		if ( ! $post_type_object instanceof WP_Post_Type ) {
-			return;
-		}
-
-		if ( ! property_exists( $post_type_object->cap, 'edit_posts' ) ) {
-			return;
-		}
-
-
-		if ( ! current_user_can( $post_type_object->cap->edit_posts ) ) {
+		if ( ! $this->get_post_type_cap( self::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
 		// Make sure these functions are loaded.
@@ -694,6 +699,114 @@ class Story_Post_Type extends Service_Base implements Activateable, Deactivateab
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Filters the path of the queried template by type.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string $template  Path to the template. See locate_template().
+	 *
+	 * @return string $template
+	 */
+	public function filter_embed_template( $template ) {
+		if ( get_post_type() === self::POST_TYPE_SLUG ) {
+			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/embed-web-story.php';
+		}
+
+		return $template;
+	}
+
+	/**
+	 * Filters the embed code for a specific post.
+	 *
+	 * For stories, changes the aspect ratio from 16/9 to 3/5.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string  $output Embed code.
+	 * @param WP_Post $post Post object.
+	 * @param int     $width  The width for the response.
+	 * @param int     $height The height for the response.
+	 *
+	 * @return string Filtered embed code.
+	 */
+	public function filter_embed_html( $output, $post, $width, $height ) {
+		if ( self::POST_TYPE_SLUG !== $post->post_type ) {
+			return $output;
+		}
+
+		if ( ! has_post_thumbnail( $post ) ) {
+			return $output;
+		}
+
+		$new_data = $this->get_embed_height_width( $width );
+
+		$new_width  = $new_data['width'];
+		$new_height = $new_data['height'];
+
+		$output = str_replace(
+			[ "width=\"$width\"", "height=\"$height\"" ],
+			[
+				"width=\"$new_width\"",
+				"height=\"$new_height\"",
+			],
+			$output
+		);
+
+		return $output;
+	}
+
+	/**
+	 * Filters the oEmbed response data for a specific post.
+	 *
+	 * For stories, changes the aspect ratio from 16/9 to 3/5.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param array   $data   The response data.
+	 * @param WP_Post $post   The post object.
+	 * @param int     $width  The requested width.
+	 * @return array The modified response data.
+	 */
+	public function filter_oembed_response_data( $data, $post, $width ) {
+		if ( self::POST_TYPE_SLUG !== $post->post_type ) {
+			return $data;
+		}
+
+		if ( ! has_post_thumbnail( $post ) ) {
+			return $data;
+		}
+
+		$new_data = $this->get_embed_height_width( $width );
+
+		return array_merge( $data, $new_data );
+	}
+
+	/**
+	 * Generate new height and width for embed.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param int $old_width Old width, used to generate new height and width.
+	 *
+	 * @return array
+	 */
+	protected function get_embed_height_width( $old_width ) {
+		/** This filter is documented in wp-includes/embed.php */
+		$min_max_width = apply_filters(
+			'oembed_min_max_width',
+			[
+				'min' => 200,
+				'max' => 360,
+			]
+		);
+
+		$width  = (int) min( max( $min_max_width['min'], $old_width ), $min_max_width['max'] );
+		$height = (int) max( ceil( $width / 3 * 5 ), 330 );
+
+		return compact( 'width', 'height' );
 	}
 
 	/**

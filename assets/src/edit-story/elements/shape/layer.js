@@ -21,10 +21,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { getMaskByType } from '../../masks';
-
-/**
- * Internal dependencies
- */
 import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 

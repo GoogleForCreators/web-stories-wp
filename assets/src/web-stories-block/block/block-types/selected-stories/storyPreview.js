@@ -43,8 +43,8 @@ const StoryPreviewCover = styled.div(
   z-index: -1;
   background-size: cover;
   background-position: center;
-  border-radius: ${theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
-  border: ${theme.DEPRECATED_THEME.borders.gray75};
+  border-radius: ${theme.borders.radius.small};
+  border: 1px solid ${theme.colors.border.defaultNormal};
 `
 );
 

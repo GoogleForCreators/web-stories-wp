@@ -17,13 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Cross_Origin_Isolation
  */
-class Cross_Origin_Isolation extends \WP_UnitTestCase {
-	use Private_Access;
+class Cross_Origin_Isolation extends Test_Case {
 	/**
 	 * Admin user for test.
 	 *

@@ -121,6 +121,39 @@ trait Sanitization_Utils {
 	}
 
 	/**
+	 * Replaces the placeholder of publisher logo in the content.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param Document|AMP_Document $document       Document instance.
+	 * @param string                $publisher Publisher logo.
+	 * @return void
+	 */
+	private function add_publisher( &$document, $publisher ) {
+		/**
+		 * The <amp-story> element.
+		 *
+		 * @var DOMElement $story_element The <amp-story> element.
+		 */
+		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
+
+		if ( ! $story_element instanceof DOMElement ) {
+			return;
+		}
+
+		if ( $publisher ) {
+			$story_element->setAttribute( 'publisher', $publisher );
+		}
+
+		// Without a publisher, a story becomes invalid AMP.
+		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
+		// preventing errors from showing up in GSC and other tools.
+		if ( ! $story_element->getAttribute( 'publisher' ) ) {
+			$document->html->removeAttribute( 'amp' );
+		}
+	}
+
+	/**
 	 * Adds square, and landscape poster images to the <amp-story>.
 	 *
 	 * @since 1.1.0

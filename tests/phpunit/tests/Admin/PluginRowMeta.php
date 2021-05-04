@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * Class PluginRowMeta
  *
@@ -34,7 +36,7 @@ namespace Google\Web_Stories\Tests\Admin;
  * @coversDefaultClass \Google\Web_Stories\Admin\PluginRowMeta
  *
  */
-class PluginRowMeta extends \WP_UnitTestCase {
+class PluginRowMeta extends Test_Case {
 
 	/**
 	 * @covers ::register

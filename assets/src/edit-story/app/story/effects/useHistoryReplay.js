@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useHistory } from '../../';
+import { useHistory } from '../../history';
 
 function useHistoryReplay({ restore }) {
   const {

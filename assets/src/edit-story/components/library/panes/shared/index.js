@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const PANE_PADDING = '1em';
 
@@ -27,6 +27,12 @@ const Pane = styled.section.attrs(({ isActive }) => ({
   hidden: !isActive,
 }))`
   padding: 1.5em ${PANE_PADDING};
+  ${({ isOverflowScrollable = false }) =>
+    isOverflowScrollable &&
+    css`
+      overflow-y: scroll;
+      height: 100%;
+    `}
 `;
 
 function getPaneId(tab) {

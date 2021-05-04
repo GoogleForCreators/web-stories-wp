@@ -7,8 +7,8 @@
 
 namespace Google\Web_Stories\Tests\Stories_Renderer\Fields;
 
-use PHPUnit\Framework\TestCase;
 use Google\Web_Stories\Stories_Renderer\Fields\BaseField as Testee;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class BaseField.
@@ -17,7 +17,7 @@ use Google\Web_Stories\Stories_Renderer\Fields\BaseField as Testee;
  *
  * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Fields\BaseField
  */
-class BaseField extends \WP_UnitTestCase_Base {
+class BaseField extends Test_Case {
 
 	/**
 	 * Object of class in test.

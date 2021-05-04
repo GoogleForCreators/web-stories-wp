@@ -112,7 +112,7 @@ function Buttons() {
         </List>
       </ButtonList>
       <PostPublishDialog
-        open={showDialog}
+        isOpen={showDialog}
         onClose={() => setShowDialog(false)}
         confirmURL={confirmURL}
         storyURL={link}
