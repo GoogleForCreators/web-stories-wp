@@ -30,12 +30,13 @@ import {
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
 import { createBlob } from '../../../../utils/blobs';
-import getFileName from '../../utils/getFileName';
-import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
+import getFileName from '../getFileName';
+import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import getImageDimensions from '../getImageDimensions';
+import getFirstFrameOfVideo from '../getFirstFrameOfVideo';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -51,7 +52,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
-    getFirstFrameOfVideo,
+    getFirstFrameOfVideo: getFirstFrameOfVideoFFMpeg,
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
@@ -80,8 +81,25 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const newResource = await getResourceFromLocalFile(file);
-            replacePlaceholderResource({ id, resource: newResource });
+            let newResource = await getResourceFromLocalFile(file);
+            let posterFile = null;
+            if (resource.type === 'video' && resource.src) {
+              posterFile = await getFirstFrameOfVideo(resource.src);
+
+              const poster = createBlob(posterFile);
+              const { width, height } = await getImageDimensions(poster);
+              newResource = {
+                ...resource,
+                poster,
+                width,
+                height,
+              };
+            }
+            replacePlaceholderResource({
+              id,
+              resource: newResource,
+              posterFile,
+            });
           } catch {
             // Not interested in errors here.
           }
@@ -112,17 +130,20 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const posterFile = await getFirstFrameOfVideo(file);
+            const posterFile = await getFirstFrameOfVideoFFMpeg(file);
             const poster = createBlob(posterFile);
             const { width, height } = await getImageDimensions(poster);
             const newResource = {
               ...resource,
               poster,
-              posterFile,
               width,
               height,
             };
-            replacePlaceholderResource({ id, resource: newResource });
+            replacePlaceholderResource({
+              id,
+              resource: newResource,
+              posterFile,
+            });
           } catch {
             // Not interested in errors here.
           }
@@ -136,7 +157,7 @@ function useMediaUploadQueue() {
     isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
-    getFirstFrameOfVideo,
+    getFirstFrameOfVideoFFMpeg,
     replacePlaceholderResource,
   ]);
 
@@ -145,12 +166,18 @@ function useMediaUploadQueue() {
     async function uploadItems() {
       await Promise.all(
         state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource, additionalData } = item;
+          const {
+            id,
+            file,
+            state: itemState,
+            resource,
+            additionalData,
+            posterFile,
+          } = item;
           if ('PENDING' !== itemState) {
             return;
           }
 
-          const { posterFile } = resource;
           const fileName = getFileName(file) + '-poster.jpeg';
 
           if (

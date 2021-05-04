@@ -27,9 +27,12 @@ import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
 import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
+import { createBlob } from '../../utils/blobs';
 import { useMediaUploadQueue } from './utils';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
 import useFFmpeg from './utils/useFFmpeg';
+import getFirstFrameOfVideo from './utils/getFirstFrameOfVideo';
+import getImageDimensions from './utils/getImageDimensions';
 
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
@@ -230,7 +233,20 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          const resource = await getResourceFromLocalFile(file);
+          let resource = await getResourceFromLocalFile(file);
+          let posterFile = null;
+          if (resource.type === 'video' && resource.src) {
+            posterFile = await getFirstFrameOfVideo(resource.src);
+
+            const poster = createBlob(posterFile);
+            const { width, height } = await getImageDimensions(poster);
+            resource = {
+              ...resource,
+              poster,
+              width,
+              height,
+            };
+          }
           addItem({
             file,
             resource,
@@ -239,6 +255,7 @@ function useUploadMedia({
             onUploadError,
             onUploadSuccess,
             additionalData,
+            posterFile,
           });
         })
       );

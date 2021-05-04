@@ -20,7 +20,6 @@
 import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import { createBlob } from '../../../utils/blobs';
 import getTypeFromMime from './getTypeFromMime';
-import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
 import getFileName from './getFileName';
 import getImageDimensions from './getImageDimensions';
@@ -93,19 +92,10 @@ const getVideoResource = async (file) => {
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
 
-  const posterFile = await getFirstFrameOfVideo(src);
-
-  const poster = createBlob(posterFile);
-  const { width, height } = await getImageDimensions(poster);
-
   return createLocalResource({
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
-    width,
-    height,
-    poster,
-    posterFile,
     alt: fileName,
     title: fileName,
   });
