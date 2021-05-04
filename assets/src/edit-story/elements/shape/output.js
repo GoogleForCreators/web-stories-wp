@@ -30,9 +30,7 @@ function ShapeOutput({ element: { backgroundColor, isDefaultBackground } }) {
   const style = isDefaultBackground
     ? null
     : generatePatternStyles(backgroundColor);
-  return (
-    <div className="fill" style={{ ...style, 'willChange': 'transform' }} />
-  );
+  return <div className="fill" style={{ ...style, willChange: 'transform' }} />;
 }
 
 ShapeOutput.propTypes = {
