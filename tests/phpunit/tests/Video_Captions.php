@@ -18,9 +18,9 @@
 namespace Google\Web_Stories\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\File_Type
+ * @coversDefaultClass \Google\Web_Stories\Video_Captions
  */
-class File_Type extends Test_Case {
+class Video_Captions extends Test_Case {
 	/**
 	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required

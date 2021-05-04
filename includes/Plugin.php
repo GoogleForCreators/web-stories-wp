@@ -81,7 +81,6 @@ class Plugin extends ServiceBasedPlugin {
 		'embed_base'                   => Embed_Base::class,
 		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
 		'experiments'                  => Experiments::class,
-		'file_types'                   => File_Type::class,
 		'integrations.amp'             => Integrations\AMP::class,
 		'integrations.jetpack'         => Integrations\Jetpack::class,
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
@@ -115,6 +114,7 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
+		'video_captions'               => Video_Captions::class,
 	];
 
 	/**

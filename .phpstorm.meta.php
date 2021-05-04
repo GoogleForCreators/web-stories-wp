@@ -22,7 +22,7 @@ namespace PHPSTORM_META {
 			'embed_base'                   => \Google\Web_Stories\Embed_Base::class,
 			'embed_shortcode'              => \Google\Web_Stories\Shortcode\Embed_Shortcode::class,
 			'experiments'                  => \Google\Web_Stories\Experiments::class,
-			'file_types'                   => \Google\Web_Stories\File_Type::class,
+			'video_captions'               => \Google\Web_Stories\Video_Captions::class,
 			'integrations.amp'             => \Google\Web_Stories\Integrations\AMP::class,
 			'integrations.jetpack'         => \Google\Web_Stories\Integrations\Jetpack::class,
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,

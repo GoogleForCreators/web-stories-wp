@@ -1,6 +1,6 @@
 <?php
 /**
- * Class FileTypes
+ * Class Video_Captions
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -27,11 +27,11 @@
 namespace Google\Web_Stories;
 
 /**
- * Class FileTypes
+ * Class Video_Captions
  *
  * @package Google\Web_Stories
  */
-class File_Type extends Service_Base {
+class Video_Captions extends Service_Base {
 	/**
 	 * Initializes the File_Type logic.
 	 *
