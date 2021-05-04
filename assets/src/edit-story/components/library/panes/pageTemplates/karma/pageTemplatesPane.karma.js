@@ -48,6 +48,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
+    fixture.setFlags({ customPageTemplates: true });
     await fixture.render();
   });
 
