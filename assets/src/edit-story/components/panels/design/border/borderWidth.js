@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Row } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
+import Tooltip from '../../../tooltip';
 import {
   LockToggle,
   NumericInput,
@@ -176,25 +177,27 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         </>
       )}
       <ToggleWrapper locked={lockBorder}>
-        <LockToggle
-          isLocked={lockBorder}
-          onClick={() => {
-            let args = {
-              lockedWidth: !lockBorder,
-            };
-            // If the border width wasn't locked before (and is now), unify all the values.
-            if (!lockBorder) {
-              args = {
-                ...args,
-                top: border.left,
-                right: border.left,
-                bottom: border.left,
+        <Tooltip title={__('Toggle identical borders', 'web-stories')}>
+          <LockToggle
+            isLocked={lockBorder}
+            onClick={() => {
+              let args = {
+                lockedWidth: !lockBorder,
               };
-            }
-            handleLockChange(args);
-          }}
-          aria-label={__('Toggle border ratio lock', 'web-stories')}
-        />
+              // If the border width wasn't locked before (and is now), unify all the values.
+              if (!lockBorder) {
+                args = {
+                  ...args,
+                  top: border.left,
+                  right: border.left,
+                  bottom: border.left,
+                };
+              }
+              handleLockChange(args);
+            }}
+            aria-label={__('Toggle identical borders', 'web-stories')}
+          />
+        </Tooltip>
       </ToggleWrapper>
     </BorderRow>
   );

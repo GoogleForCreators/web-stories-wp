@@ -28,6 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
+import Tooltip from '../../../tooltip';
 import { useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { LockToggle, NumericInput } from '../../../../../design-system';
@@ -223,11 +224,13 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         </InputContainer>
 
         <LockContainer>
-          <LockToggle
-            isLocked={borderRadius.locked}
-            onClick={() => handleLockChange(!borderRadius.locked)}
-            aria-label={__('Toggle corner radius lock', 'web-stories')}
-          />
+          <Tooltip title={__('Toggle identical radii', 'web-stories')}>
+            <LockToggle
+              isLocked={borderRadius.locked}
+              onClick={() => handleLockChange(!borderRadius.locked)}
+              aria-label={__('Toggle identical radii', 'web-stories')}
+            />
+          </Tooltip>
         </LockContainer>
       </FlexContainer>
     </SimplePanel>
