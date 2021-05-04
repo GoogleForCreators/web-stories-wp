@@ -28,7 +28,7 @@ import { useUploader } from '../uploader';
 import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { createBlob } from '../../utils/blobs';
-import { useMediaUploadQueue } from './utils';
+import useMediaUploadQueue from './utils/useMediaUploadQueue';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
 import useFFmpeg from './utils/useFFmpeg';
 import getFirstFrameOfVideo from './utils/getFirstFrameOfVideo';
