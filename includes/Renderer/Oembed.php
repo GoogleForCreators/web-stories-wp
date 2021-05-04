@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Renderer
+ * Class Oembed
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -24,135 +24,32 @@
  * limitations under the License.
  */
 
+
 namespace Google\Web_Stories\Renderer;
 
-use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Renderer\Story\Embed;
-use Google\Web_Stories\Renderer\Story\Image;
 use WP_Post;
 
 /**
- * Class Renderer
+ * Class Oembed
  *
- * @package Google\Web_Stories\Renderer
+ * @package Google\Web_Stories\Single
  */
-class Renderer extends Service_Base {
+class Oembed extends Service_Base {
+
 	/**
-	 * Initializes the Renderer logic.
+	 * Filter to render oembed.
 	 *
 	 * @since 1.7.0
 	 *
 	 * @return void
 	 */
 	public function register() {
-		// Filter RSS content fields.
-		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
-		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
-
-		// Filter content and excerpt for search and post type archive.
-		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
-		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
-
-		// Select the single-web-story.php template for Stories.
-		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
-
-		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
-
-		// oEmbed.
 		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
 		add_filter( 'embed_html', [ $this, 'filter_embed_html' ], 10, 4 );
 		// So it runs after get_oembed_response_data_rich().
 		add_filter( 'oembed_response_data', [ $this, 'filter_oembed_response_data' ], 20, 3 );
-	}
-
-	/**
-	 * Change the content to an embedded player
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $content Current content of filter.
-	 *
-	 * @return string
-	 */
-	public function embed_player( $content ) {
-		$post = get_post();
-
-		if ( is_feed() ) {
-			return $content;
-		}
-
-		if ( ! is_search() && ! is_post_type_archive( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			return $content;
-		}
-
-		if ( $post instanceof WP_Post && Story_Post_Type::POST_TYPE_SLUG === $post->post_type ) {
-			$story = new Story();
-			$story->load_from_post( $post );
-
-			$embed   = new Embed( $story );
-			$content = $embed->render();
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Filter feed content for stories to render as an image.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $content Feed content.
-	 *
-	 * @return string
-	 */
-	public function embed_image( $content ) {
-		$post = get_post();
-
-		if ( $post instanceof WP_Post && Story_Post_Type::POST_TYPE_SLUG === $post->post_type ) {
-			$story = new Story();
-			$story->load_from_post( $post );
-
-			$image   = new Image( $story );
-			$content = $image->render();
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Set template for web-story post type.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $template Template.
-	 *
-	 * @return string Template.
-	 */
-	public function filter_template_include( $template ) {
-		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) && ! is_embed() ) {
-			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
-		}
-
-		return $template;
-	}
-
-	/**
-	 * Filter if show admin bar on single post type.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param boolean $show Current value of filter.
-	 *
-	 * @return bool
-	 */
-	public function show_admin_bar( $show ) {
-		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			$show = false;
-		}
-
-		return $show;
 	}
 
 	/**
