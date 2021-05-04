@@ -103,12 +103,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     ({ url, title, icon }) =>
       pushUpdateForObject(
         'link',
-        (prev) =>
+        () =>
           url
             ? {
                 url,
-                desc: title ? title : prev.desc,
-                icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
+                desc: title ? title : '',
+                icon: icon ? toAbsoluteUrl(url, icon) : '',
               }
             : null,
         defaultLink,
