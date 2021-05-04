@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useFocusOut } from '../../utils/';
+import { useFocusOut } from '../../utils';
 import { Input } from '../../../design-system';
 
 const StyledInput = styled(Input)`

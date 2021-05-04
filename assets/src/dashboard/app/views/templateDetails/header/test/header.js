@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import Header from '../';
+import Header from '..';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 

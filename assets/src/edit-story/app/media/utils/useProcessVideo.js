@@ -123,7 +123,7 @@ function useProcessVideo({
           additionalData: { alt: oldResource.alt, title: oldResource.title },
         });
       };
-      process();
+      return process();
     },
     [
       copyResourceData,

@@ -23,7 +23,7 @@ import { resolve } from 'path';
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '../index';
+import { curatedFontNames } from '..';
 
 describe('Curated fonts', () => {
   const fonts = JSON.parse(

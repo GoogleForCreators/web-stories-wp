@@ -77,6 +77,7 @@ class Plugin extends ServiceBasedPlugin {
 		'dashboard'                    => Dashboard::class,
 		'database_upgrader'            => Database_Upgrader::class,
 		'discovery'                    => Discovery::class,
+		'editor'                       => Admin\Editor::class,
 		'embed_base'                   => Embed_Base::class,
 		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
 		'experiments'                  => Experiments::class,

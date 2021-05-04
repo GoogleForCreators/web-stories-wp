@@ -277,15 +277,6 @@ class Story_Post_Type extends Test_Case {
 		$this->assertSame( '', $post->post_title );
 	}
 
-	/**
-	 * @covers ::filter_list_of_allowed_filetypes
-	 * @group ms-required
-	 */
-	public function test_filter_list_of_allowed_filetypes() {
-		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
-		$this->assertContains( 'vtt', $site_exts );
-	}
-
 	protected function get_story_object() {
 		return new \Google\Web_Stories\Story_Post_Type();
 	}

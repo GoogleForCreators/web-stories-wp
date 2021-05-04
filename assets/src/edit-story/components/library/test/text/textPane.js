@@ -24,7 +24,7 @@ import { curatedFontNames } from '@web-stories-wp/fonts';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils/index';
+import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
 import useFont from '../../../../app/font/useFont';
 import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';

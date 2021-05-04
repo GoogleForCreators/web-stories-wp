@@ -22,7 +22,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useStoryTriggers, StoryTriggersProvider, STORY_EVENTS } from '../';
+import { useStoryTriggers, StoryTriggersProvider, STORY_EVENTS } from '..';
 
 function createProviderWithStory(story) {
   function ProviderWithStory({ children }) {

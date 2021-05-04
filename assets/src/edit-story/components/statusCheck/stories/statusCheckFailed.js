@@ -30,5 +30,5 @@ export default {
 };
 
 export const _default = () => {
-  return <StatusCheckFailed open onClose={action('closed')} />;
+  return <StatusCheckFailed isOpen onClose={action('closed')} />;
 };

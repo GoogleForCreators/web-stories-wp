@@ -36,7 +36,7 @@ const StyledText = styled(Text)`
   margin-top: -4px;
 `;
 
-export const EXCERPT_MAX_LENGTH = 100;
+export const EXCERPT_MAX_LENGTH = 200;
 
 function ExcerptPanel() {
   const { excerpt, updateStory } = useStory(

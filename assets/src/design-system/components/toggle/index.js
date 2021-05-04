@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -26,10 +26,12 @@ import { CheckmarkSmall } from '../../icons';
 import { FOCUS_VISIBLE_SELECTOR } from '../../theme/global';
 
 const BORDER_WIDTH = 1;
-const TOGGLE_HEIGHT = 20;
+const TOGGLE_TRACK_HEIGHT = 20;
 const TOGGLE_WIDTH = 44;
 const CIRCLE_DIAMETER = 28;
-const CIRCLE_INITIAL_POSITION = (TOGGLE_HEIGHT - CIRCLE_DIAMETER) / 2;
+const WRAPPER_PADDING = (CIRCLE_DIAMETER - TOGGLE_TRACK_HEIGHT) / 2;
+const CIRCLE_INITIAL_POSITION =
+  (TOGGLE_TRACK_HEIGHT - CIRCLE_DIAMETER) / 2 - BORDER_WIDTH;
 const CIRCLE_FINAL_POSITION =
   TOGGLE_WIDTH - CIRCLE_INITIAL_POSITION - CIRCLE_DIAMETER;
 
@@ -37,12 +39,17 @@ const ICON_CONTAINER_WIDTH = 32;
 const ICON_TOP_POSITION = -6;
 const ICON_LEFT_POSITION = 19;
 
+const Wrapper = styled.div`
+  /* Account for circle leaking out of ToggleContainer */
+  padding: ${WRAPPER_PADDING}px;
+`;
+
 const Background = styled.div(
   ({ theme }) => css`
     position: absolute;
     top: -${BORDER_WIDTH}px;
     left: -${BORDER_WIDTH}px;
-    height: ${TOGGLE_HEIGHT}px;
+    height: ${TOGGLE_TRACK_HEIGHT}px;
     width: ${TOGGLE_WIDTH}px;
     background-color: transparent;
     border-radius: ${theme.borders.radius.x_large};
@@ -91,17 +98,17 @@ const IconContainer = styled.div(
 const ToggleContainer = styled.div(
   ({ theme }) => css`
     position: relative;
-    height: ${TOGGLE_HEIGHT - BORDER_WIDTH * 2}px;
-    width: ${TOGGLE_WIDTH - BORDER_WIDTH * 2}px;
-    background-color: ${theme.colors.bg.primary};
+    height: ${TOGGLE_TRACK_HEIGHT}px;
+    width: ${TOGGLE_WIDTH}px;
+    background-color: transparent;
     border-radius: ${theme.borders.radius.x_large};
 
     input[type='checkbox'] {
       position: absolute;
       top: -${BORDER_WIDTH / 2}px;
       left: -${BORDER_WIDTH / 2}px;
-      height: ${TOGGLE_HEIGHT + BORDER_WIDTH}px;
-      width: ${TOGGLE_WIDTH + BORDER_WIDTH}px;
+      height: ${TOGGLE_TRACK_HEIGHT}px;
+      width: ${TOGGLE_WIDTH}px;
       margin: 0;
       opacity: 0;
       cursor: pointer;
@@ -175,18 +182,21 @@ const ToggleContainer = styled.div(
   `
 );
 
-export const Toggle = (props) => (
-  <ToggleContainer>
-    <input type="checkbox" {...props} />
-    <Background />
-    <IconContainer>
-      <CheckmarkSmall />
-    </IconContainer>
-    <Circle />
-  </ToggleContainer>
+export const Toggle = ({ className, ...inputProps }) => (
+  <Wrapper className={className}>
+    <ToggleContainer>
+      <input type="checkbox" {...inputProps} />
+      <Background />
+      <IconContainer>
+        <CheckmarkSmall />
+      </IconContainer>
+      <Circle />
+    </ToggleContainer>
+  </Wrapper>
 );
 
 Toggle.propTypes = {
-  checked: propTypes.bool,
-  disabled: propTypes.bool,
+  className: PropTypes.string,
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
 };

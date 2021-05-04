@@ -22,8 +22,8 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { Link } from '../';
-import { THEME_CONSTANTS } from '../../../../';
+import { Link } from '..';
+import { THEME_CONSTANTS } from '../../../..';
 
 export default {
   title: 'DesignSystem/Components/Typography/Link',

@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import MediaOptimizationSettings from '../index';
+import MediaOptimizationSettings from '..';
 
 describe('Editor Settings: <MediaOptimizationSettings />', function () {
   it('should render the media optimization as checked when selected is true.', function () {

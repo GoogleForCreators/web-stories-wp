@@ -22,7 +22,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import GoogleAdSense from '../';
+import GoogleAdSense from '..';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/GoogleAdSense',

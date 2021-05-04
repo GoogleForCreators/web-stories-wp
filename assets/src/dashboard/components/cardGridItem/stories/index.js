@@ -25,12 +25,7 @@ import { text } from '@storybook/addon-knobs';
  */
 import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
-import {
-  CardGrid,
-  CardGridItem,
-  CardPreviewContainer,
-  CardTitle,
-} from '../../';
+import { CardGrid, CardGridItem, CardPreviewContainer, CardTitle } from '../..';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',

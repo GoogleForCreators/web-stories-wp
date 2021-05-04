@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import CardGrid from '../';
+import { renderWithProviders } from '../../../testUtils';
+import CardGrid from '..';
 
 describe('CardGrid', () => {
   it('should render CardGrid', () => {

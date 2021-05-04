@@ -22,7 +22,7 @@ import { boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import MediaOptimizationSettings from '../';
+import MediaOptimizationSettings from '..';
 
 export default {
   title: 'Dashboard/Views/EditorSettings/MediaOptimization',

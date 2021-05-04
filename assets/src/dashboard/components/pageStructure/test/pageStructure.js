@@ -25,7 +25,7 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
-import { LeftRail } from '../index';
+import { LeftRail } from '..';
 import NavProvider, { NavContext } from '../../navProvider';
 import { PRIMARY_PATHS } from '../../../constants';
 

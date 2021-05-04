@@ -18,6 +18,7 @@ namespace PHPSTORM_META {
 			'dashboard'                    => \Google\Web_Stories\Dashboard::class,
 			'database_upgrader'            => \Google\Web_Stories\Database_Upgrader::class,
 			'discovery'                    => \Google\Web_Stories\Discovery::class,
+			'editor'                       => \Google\Web_Stories\Admin\Editor::class,
 			'embed_base'                   => \Google\Web_Stories\Embed_Base::class,
 			'embed_shortcode'              => \Google\Web_Stories\Shortcode\Embed_Shortcode::class,
 			'experiments'                  => \Google\Web_Stories\Experiments::class,

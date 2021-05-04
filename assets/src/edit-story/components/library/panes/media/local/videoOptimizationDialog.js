@@ -71,7 +71,7 @@ function VideoOptimizationDialog() {
 
   return (
     <Dialog
-      open={isTranscoding && !isDialogDismissed}
+      isOpen={isTranscoding && !isDialogDismissed}
       onClose={onClose}
       title={dialogTitle}
       onSecondary={onDisable}

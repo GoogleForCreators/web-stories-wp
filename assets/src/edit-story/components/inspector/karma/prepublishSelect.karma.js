@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { MESSAGES } from '../../../app/prepublish/constants';
 import { useStory } from '../../../app';
-import { useInsertElement } from '../../../components/canvas';
+import { useInsertElement } from '../../canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Pre-publish checklist select offending elements onClick', () => {

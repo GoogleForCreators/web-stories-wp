@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { lerp } from '../utils/range';
+import { lerp } from './range';
 
 /**
  * Given a media element, calculates where the origin is on the media

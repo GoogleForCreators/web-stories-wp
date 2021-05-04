@@ -25,10 +25,10 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import Dialog from '../../../../dialog';
-function MissingUploadPermissionDialog({ open, onClose }) {
+function MissingUploadPermissionDialog({ isOpen, onClose }) {
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
       title={__('Access Restrictions', 'web-stories')}
       primaryText={__('Got it', 'web-stories')}
@@ -45,7 +45,7 @@ function MissingUploadPermissionDialog({ open, onClose }) {
 }
 
 MissingUploadPermissionDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
