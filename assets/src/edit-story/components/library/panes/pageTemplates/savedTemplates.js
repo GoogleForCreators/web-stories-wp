@@ -19,72 +19,114 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import TemplateSave from './templateSave';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '../../../../../design-system';
+import Dialog from '../../../dialog';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
   padding-top: 5px;
-`;
-
-const TemporaryWrapper = styled.div`
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
-function SavedTemplates({ pageSize, setShowDefaultTemplates }) {
+function SavedTemplates({
+  pageSize,
+  savedTemplates,
+  setSavedTemplates,
+  ...rest
+}) {
   const {
-    actions: { getCustomPageTemplates },
+    actions: { deletePageTemplate },
   } = useAPI();
 
-  const [pageTemplates, setPageTemplates] = useState(null);
+  const { showSnackbar } = useSnackbar();
+
+  const [showDialog, setShowDialog] = useState(false);
+  const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();
 
-  const loadTemplates = useCallback(() => {
-    getCustomPageTemplates().then(setPageTemplates);
-  }, [getCustomPageTemplates]);
+  const onClickDelete = useCallback(({ templateId }, e) => {
+    e?.stopPropagation();
+    if (templateId) {
+      setShowDialog(true);
+      setTemplateToDelete(templateId);
+    }
+  }, []);
 
-  const updateTemplatesList = useCallback(
-    (page) => {
-      setPageTemplates([page, ...pageTemplates]);
-    },
-    [setPageTemplates, pageTemplates]
+  const handleDelete = useCallback(
+    () =>
+      deletePageTemplate(templateToDelete)
+        .then(() => {
+          setSavedTemplates(
+            savedTemplates.filter(
+              ({ templateId }) => templateId !== templateToDelete
+            )
+          );
+          setShowDialog(false);
+        })
+        .catch(() => {
+          showSnackbar({
+            message: __(
+              'Unable to delete the template. Please try again.',
+              'web-stories'
+            ),
+            dismissable: true,
+          });
+        }),
+    [
+      deletePageTemplate,
+      templateToDelete,
+      savedTemplates,
+      showSnackbar,
+      setSavedTemplates,
+    ]
   );
 
-  useEffect(() => {
-    if (!pageTemplates) {
-      loadTemplates();
-    }
-  }, [loadTemplates, pageTemplates]);
-
-  // @todo Saving template should belong to the virtual list, it's currently misplaced.
   return (
-    <TemporaryWrapper>
-      <TemplateSave
+    <Wrapper ref={ref}>
+      <TemplateList
+        parentRef={ref}
         pageSize={pageSize}
-        setShowDefaultTemplates={setShowDefaultTemplates}
-        updateList={updateTemplatesList}
+        pages={savedTemplates}
+        handleDelete={onClickDelete}
+        {...rest}
       />
-      <Wrapper ref={ref}>
-        {pageTemplates && (
-          <TemplateList
-            parentRef={ref}
-            pageSize={pageSize}
-            pages={pageTemplates}
-          />
-        )}
-      </Wrapper>
-    </TemporaryWrapper>
+      {showDialog && (
+        <Dialog
+          isOpen
+          onClose={() => setShowDialog(false)}
+          title={__('Delete Page Template', 'web-stories')}
+          secondaryText={__('Cancel', 'web-stories')}
+          onPrimary={handleDelete}
+          primaryText={__('Delete', 'web-stories')}
+        >
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__(
+              'Are you sure you want to delete this template? This action cannot be undone.',
+              'web-stories'
+            )}
+          </Text>
+        </Dialog>
+      )}
+    </Wrapper>
   );
 }
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
-  setShowDefaultTemplates: PropTypes.func.isRequired,
+  setSavedTemplates: PropTypes.func.isRequired,
+  savedTemplates: PropTypes.array.isRequired,
 };
 
 export default SavedTemplates;

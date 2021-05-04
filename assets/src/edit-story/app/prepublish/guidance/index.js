@@ -30,6 +30,7 @@ export default {
   video: [
     mediaGuidance.mediaElementResolution,
     mediaGuidance.videoElementLength,
+    mediaGuidance.videoElementOptimized,
   ],
   gif: [mediaGuidance.mediaElementResolution],
   image: [mediaGuidance.mediaElementResolution],

@@ -22,13 +22,17 @@ import PropTypes from 'prop-types';
  */
 import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
+import Mask from './mask';
 
 const ContextMenu = ({ items, ...props }) => {
   return (
-    <Popover role="dialog" isOpen={props.isOpen}>
-      <Menu items={items} {...props} />
-      <Shadow />
-    </Popover>
+    <>
+      {props.isOpen && <Mask onDismiss={props.onDismiss} />}
+      <Popover role="dialog" isOpen={props.isOpen}>
+        <Menu items={items} {...props} />
+        <Shadow />
+      </Popover>
+    </>
   );
 };
 ContextMenu.propTypes = {

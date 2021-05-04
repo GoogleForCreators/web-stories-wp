@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../../types';
 import { withProtocol } from '../../utils/url';
-import { getLinkFromElement } from './index';
+import { getLinkFromElement } from '.';
 
 function WithLink({ element, children, ...rest }) {
   const link = getLinkFromElement(element);

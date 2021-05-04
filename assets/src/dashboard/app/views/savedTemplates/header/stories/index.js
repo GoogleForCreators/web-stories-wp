@@ -29,7 +29,7 @@ import {
 } from '../../../../../constants';
 import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
 import { Layout } from '../../../../../components';
-import Header from '../';
+import Header from '..';
 
 export default {
   title: 'Dashboard/Views/SavedTemplates/Header',

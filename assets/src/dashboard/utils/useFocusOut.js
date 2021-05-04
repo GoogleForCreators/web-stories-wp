@@ -23,7 +23,7 @@ function useFocusOut(ref, callback, deps) {
   const isMouseDownInNode = useRef(false);
 
   useLayoutEffect(() => {
-    const node = ref.current;
+    const node = ref?.current;
     if (!node) {
       return undefined;
     }

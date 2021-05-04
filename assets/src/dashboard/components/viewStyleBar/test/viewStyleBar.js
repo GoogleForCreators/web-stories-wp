@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { VIEW_STYLE } from '../../../constants';
-import { renderWithProviders } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils';
 import ViewStyleBar from '..';
 
 describe('<ViewStyleBar />', function () {

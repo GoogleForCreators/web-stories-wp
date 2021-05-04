@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import Popup from '../index';
+import Popup from '..';
 import { renderWithTheme } from '../../../testUtils';
 
 describe('Popup', () => {

@@ -40,7 +40,7 @@ export const _default = () => {
   return (
     <PostLockDialog
       user={user}
-      open
+      isOpen
       dashboardLink={dashboardLink}
       previewLink={previewLink}
       onClose={action('closed')}

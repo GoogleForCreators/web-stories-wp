@@ -33,14 +33,14 @@ const RECOMMENDATION_URL = __(
   'web-stories'
 );
 
-function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
+function TitleMissingDialog({ isOpen, onIgnore, onFix, onClose }) {
   const onClick = useCallback(
     (evt) => trackClick(evt, 'click_stories_best_practices_docs'),
     []
   );
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
       title={__('Missing title', 'web-stories')}
       onSecondary={onFix}
@@ -73,7 +73,7 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
 }
 
 TitleMissingDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onIgnore: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   onFix: PropTypes.func.isRequired,

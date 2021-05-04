@@ -23,7 +23,7 @@ import { act } from '@testing-library/react';
  * Internal dependencies
  */
 import ShapePreview from '../../panes/shapes/shapePreview';
-import { renderWithTheme } from '../../../../testUtils/index';
+import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';

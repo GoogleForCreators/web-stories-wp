@@ -17,16 +17,16 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
-import useFocusOut from '../../utils/useFocusOut';
 import {
   AnimatedContextMenu,
   MenuItemProps,
@@ -50,7 +50,7 @@ export const MoreVerticalButton = styled.button`
   border: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
 
-  ${themeHelpers.focusableOutlineCSS}
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 MoreVerticalButton.propTypes = {
@@ -80,29 +80,28 @@ export default function StoryMenu({
   itemActive,
   tabIndex,
 }) {
-  const containerRef = useRef(null);
-
-  const handleFocusOut = useCallback(() => {
-    if (contextMenuId === story.id) {
-      onMoreButtonSelected(-1);
-    }
-  }, [contextMenuId, onMoreButtonSelected, story.id]);
-  useFocusOut(containerRef, handleFocusOut, [contextMenuId]);
-
   const isPopoverMenuOpen = contextMenuId === story.id;
 
+  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
+    onMoreButtonSelected,
+  ]);
+
   return (
-    <MenuContainer ref={containerRef} verticalAlign={verticalAlign}>
+    <MenuContainer verticalAlign={verticalAlign}>
       <MoreVerticalButton
         tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
-        aria-label="More Options"
+        aria-label={__('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
-      <AnimatedContextMenu isOpen={isPopoverMenuOpen} items={menuItems} />
+      <AnimatedContextMenu
+        isOpen={isPopoverMenuOpen}
+        items={menuItems}
+        onDismiss={handleDismiss}
+      />
     </MenuContainer>
   );
 }
