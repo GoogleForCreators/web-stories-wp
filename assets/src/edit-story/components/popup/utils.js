@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Placement } from '.';
+import { Placement } from './constants';
 
 export function getXTransforms(placement) {
   // left & right

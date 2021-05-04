@@ -17,13 +17,33 @@
 /**
  * Internal dependencies
  */
-import { usePrepublishChecklist, ChecklistTab } from '.';
+import { useCurrentUser } from '../../../app';
+import usePrepublishChecklist from './usePrepublishChecklist';
+import ChecklistTab from './checklistTab';
 
 function PrepublishInspector() {
-  const { checklist, currentCheckpoint } = usePrepublishChecklist();
+  const {
+    checklist,
+    currentCheckpoint,
+    isChecklistEmpty,
+  } = usePrepublishChecklist();
+
+  const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
+    ({ state, actions }) => ({
+      currentUser: state.currentUser,
+      toggleWebStoriesMediaOptimization:
+        actions.toggleWebStoriesMediaOptimization,
+    })
+  );
 
   return (
-    <ChecklistTab checklist={checklist} currentCheckpoint={currentCheckpoint} />
+    <ChecklistTab
+      areVideosAutoOptimized={currentUser?.meta?.web_stories_media_optimization}
+      onAutoVideoOptimizationClick={toggleWebStoriesMediaOptimization}
+      checklist={checklist}
+      currentCheckpoint={currentCheckpoint}
+      isChecklistEmpty={isChecklistEmpty}
+    />
   );
 }
 

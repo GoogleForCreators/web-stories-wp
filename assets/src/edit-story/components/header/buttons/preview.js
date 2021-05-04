@@ -160,7 +160,7 @@ function Preview() {
         </Button>
       </Tooltip>
       <PreviewErrorDialog
-        open={Boolean(previewLinkToOpenViaDialog)}
+        isOpen={Boolean(previewLinkToOpenViaDialog)}
         onClose={onDialogClose}
         onRetry={openPreviewLinkSync}
       />

@@ -22,7 +22,8 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useLocalMedia, useStory } from '../../app';
+import { useStory } from '../../app/story';
+import { useLocalMedia } from '../../app/media';
 import { DANGER_ZONE_HEIGHT, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 

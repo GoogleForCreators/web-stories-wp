@@ -19,99 +19,134 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useFeatures } from 'flagged';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
+  BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
+  useSnackbar,
+  themeHelpers,
 } from '../../../../../design-system';
-import { ReactComponent as Icon } from './illustration.svg';
+import { useAPI } from '../../../../app/api';
+import { useStory } from '../../../../app/story';
+import isDefaultPage from '../../../../utils/isDefaultPage';
+import { ReactComponent as Icon } from './images/illustration.svg';
 
-const Wrapper = styled.div`
-  position: absolute;
-  top: 0;
-  height: ${({ pageSize }) => pageSize.containerHeight - 2}px;
-  width: ${({ pageSize }) => pageSize.width - 2}px;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+const SaveButton = styled.button`
+  border: 0;
+  background: none;
+  height: 56px;
+  width: 100%;
+  padding: 7px;
+  background-color: ${({ theme }) =>
+    theme.colors.interactiveBg.secondaryNormal};
+  transition: background-color ${BUTTON_TRANSITION_TIMING};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   cursor: pointer;
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.border.defaultHover};
-    button {
-      background-color: ${({ theme }) =>
-        theme.colors.interactiveBg.secondaryHover};
-    }
+    background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
   }
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 const IconWrapper = styled.div`
-  width: 80px;
-  height: 106px;
-  margin-top: 34px;
-  svg {
-    color: ${({ theme }) => theme.colors.fg.tertiary};
-
-    path:nth-child(2) {
-      fill: ${({ theme }) => theme.colors.fg.secondary};
-    }
-    path:nth-child(3) {
-      fill: ${({ theme }) => theme.colors.fg.primary};
-    }
-  }
+  width: 32px;
+  height: 42px;
+  margin-right: 29px;
 `;
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  text-align: center;
-  margin-top: 24px;
-  margin-bottom: 8px;
 `;
 
-const StyledButton = styled(Button)`
-  height: 32px;
-`;
+function TemplateSave({ setShowDefaultTemplates, updateList }) {
+  const {
+    actions: { addPageTemplate },
+  } = useAPI();
+  const { showSnackbar } = useSnackbar();
 
-function TemplateSave({ pageSize }) {
+  const { currentPage } = useStory(({ state: { currentPage } }) => ({
+    currentPage,
+  }));
+
   const { customPageTemplates } = useFeatures();
-  const handleSaveTemplate = useCallback(() => {}, []);
+  const handleSaveTemplate = useCallback(() => {
+    // Don't add empty page.
+    if (isDefaultPage(currentPage)) {
+      showSnackbar({
+        message: __(
+          'An empty page can’t be saved as a template. Add elements and try again.',
+          'web-stories'
+        ),
+        dismissable: true,
+      });
+      return;
+    }
+    addPageTemplate({ ...currentPage, id: uuidv4() })
+      .then((addedTemplate) => {
+        updateList?.(addedTemplate);
+        showSnackbar({
+          message: __('Page template saved.', 'web-stories'),
+          dismissable: true,
+        });
+      })
+      .catch(() => {
+        showSnackbar({
+          message: __(
+            'Unable to save the template. Please try again.',
+            'web-stories'
+          ),
+          dismissable: true,
+        });
+      });
+    setShowDefaultTemplates(false);
+  }, [
+    addPageTemplate,
+    currentPage,
+    setShowDefaultTemplates,
+    showSnackbar,
+    updateList,
+  ]);
+
+  const textId = useMemo(() => `template_save_btn_${uuidv4()}`, []);
   if (!customPageTemplates) {
     return null;
   }
   return (
-    <Wrapper pageSize={pageSize} onClick={handleSaveTemplate}>
+    <SaveButton onClick={handleSaveTemplate} aria-labelledby={textId}>
       <IconWrapper>
         <Icon />
       </IconWrapper>
-      <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <StyledText
+        id={textId}
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      >
         {__('Save current page as template', 'web-stories')}
       </StyledText>
-      <StyledButton
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        aria-label={__('Save new template', 'web-stories')}
-      >
-        {__('Save', 'web-stories')}
-      </StyledButton>
-    </Wrapper>
+    </SaveButton>
   );
 }
 
 TemplateSave.propTypes = {
-  pageSize: PropTypes.object.isRequired,
+  setShowDefaultTemplates: PropTypes.func.isRequired,
+  updateList: PropTypes.func,
 };
 
 export default TemplateSave;

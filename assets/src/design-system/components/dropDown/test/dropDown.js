@@ -24,7 +24,7 @@ import { fireEvent } from '@testing-library/react';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
-import { DropDown } from '../';
+import { DropDown } from '..';
 
 describe('DropDown <DropDown />', () => {
   // Mock scrollTo

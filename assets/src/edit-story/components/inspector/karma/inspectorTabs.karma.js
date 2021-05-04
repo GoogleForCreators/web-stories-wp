@@ -115,18 +115,56 @@ describe('Inspector Tabs integration', () => {
   });
 
   describe('Checklist Panel', function () {
-    it('should show high priority items open in checklist by default', async () => {
+    it('should disable both high priority and recommended toggles in checklist by default', async () => {
       const { checklistTab } = fixture.editor.inspector;
 
       await fixture.events.click(checklistTab);
 
       await waitFor(() => {
         expect(
-          fixture.editor.inspector.checklistPanel.getByRole('button', {
-            name: /^High Priority$/,
-            expanded: true,
-          })
-        ).not.toBeNull();
+          fixture.editor.inspector.checklistPanel.recommended.getAttribute(
+            'disabled'
+          )
+        ).not.toBe(null);
+
+        expect(
+          fixture.editor.inspector.checklistPanel.highPriority.getAttribute(
+            'disabled'
+          )
+        ).not.toBe(null);
+      });
+    });
+
+    it('should navigate to checklist tab after following "review checklist" button in dialog on publishing story', async () => {
+      fixture.events.click(fixture.editor.titleBar.publish);
+      // Ensure the debounced callback has taken effect.
+      await fixture.events.sleep(800);
+
+      const reviewButton = await fixture.screen.getByRole('button', {
+        name: /^Review Checklist$/,
+      });
+      await fixture.events.click(reviewButton);
+      // This is the initial load of the checklist tab so we need to wait for it to load
+      // before we can see tabs.
+      await fixture.events.sleep(300);
+
+      // expect the checklist tab to be selected and nothing to be disabled
+      await waitFor(() => {
+        expect(
+          fixture.editor.inspector.checklistTab.getAttribute('aria-selected')
+        ).toBe('true');
+
+        expect(
+          fixture.editor.inspector.checklistPanel.recommended.getAttribute(
+            'disabled'
+          )
+        ).not.toBe(true);
+
+        expect(
+          fixture.editor.inspector.checklistPanel.highPriority.getAttribute(
+            'disabled'
+          )
+        ).not.toBe(true);
       });
     });
   });

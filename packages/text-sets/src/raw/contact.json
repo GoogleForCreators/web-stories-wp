@@ -272,6 +272,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Roboto"],
       "id": "4aa11112-fc48-41f6-a760-7b402af17bcd"
     },
     {
@@ -581,6 +582,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Source Serif Pro"],
       "id": "0c6be4c9-bcbc-415a-b0d8-d9ed9bb49aa1"
     },
     {
@@ -806,6 +808,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["IBM Plex Sans", "Poppins"],
       "id": "0801b50a-1fa2-426b-9763-c1e43615906e"
     },
     {
@@ -956,6 +959,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Playfair Display"],
       "id": "ae7116bf-67ac-4ceb-b7f4-16bee1f79b55"
     },
     {
@@ -1240,6 +1244,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Oswald", "Roboto Condensed"],
       "id": "f8c296f8-5ede-4048-befd-5b7b1b86a19f"
     },
     {
@@ -1449,6 +1454,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Raleway", "Merriweather"],
       "id": "9dad0a18-20ba-4a8f-9505-bdaa3d4b69bc"
     },
     {
@@ -1664,6 +1670,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Titillium Web", "Work Sans"],
       "id": "4bb3f3b4-8312-4faa-993c-4f538bcef9b0"
     },
     {
@@ -1907,6 +1914,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Karla"],
       "id": "b85c3d39-f7c5-4805-a353-022e9198f216"
     },
     {
@@ -2234,6 +2242,7 @@
       ],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
+      "fonts": ["Rubik", "Henny Penny"],
       "id": "098967a3-f72e-4236-92e9-ec239467696f"
     }
   ],

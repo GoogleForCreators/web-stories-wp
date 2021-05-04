@@ -58,7 +58,7 @@ function TermsDialog() {
 
   return (
     <Dialog
-      open={dialogOpen}
+      isOpen={dialogOpen}
       contentLabel={__('Third party stock content terms', 'web-stories')}
       onClose={acknowledgeTerms}
       ariaHideApp={false}

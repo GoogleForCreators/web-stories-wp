@@ -20,8 +20,8 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
-class Story_Post_Type extends \WP_UnitTestCase {
-	use Private_Access, Capabilities_Setup;
+class Story_Post_Type extends Test_Case {
+	use Capabilities_Setup;
 
 	/**
 	 * Admin user for test.
@@ -512,6 +512,59 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$excerpt = get_echo( 'the_excerpt' );
 		$this->assertContains( '<amp-story-player', $excerpt );
+	}
+
+	/**
+	 * @covers ::get_embed_height_width
+	 */
+	public function test_get_embed_height_width() {
+		$story_post_type = $this->get_story_object();
+		$actual          = $this->call_private_method( $story_post_type, 'get_embed_height_width', [ 600 ] );
+		$expected        = [
+			'width'  => 360,
+			'height' => 600,
+		];
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_oembed_response_data
+	 */
+	public function test_filter_oembed_response_data() {
+		$story_post_type = $this->get_story_object();
+		$old             = [
+			'existing' => 'data',
+		];
+		$actual          = $story_post_type->filter_oembed_response_data( $old, get_post( self::$story_id ), 600 );
+		$expected        = [
+			'existing' => 'data',
+			'width'    => 360,
+			'height'   => 600,
+		];
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_embed_html
+	 */
+	public function test_filter_embed_htmla() {
+		$story_post_type = $this->get_story_object();
+		$current_post    = get_post( self::$story_id );
+		$story           = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $current_post );
+		$renderer = new \Google\Web_Stories\Story_Renderer\Image( $story );
+		$output   = $renderer->render(
+			[
+				'height' => 10000,
+				'width'  => 2000,
+			]
+		);
+
+		$actual = $story_post_type->filter_embed_html( $output, $current_post, 2000, 10000 );
+		$this->assertContains( 'width="360"', $actual );
+		$this->assertContains( 'height="600"', $actual );
 	}
 
 	/**

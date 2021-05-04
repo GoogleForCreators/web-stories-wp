@@ -49,7 +49,13 @@ import {
   PanLeftAnimation,
   PanAndZoomAnimation,
 } from './effectChooserElements';
-import { getDirectionalEffect } from './utils';
+
+export const getDirectionalEffect = (effect, direction) => {
+  if (effectValueExceptions.includes(effect)) {
+    return effect;
+  }
+  return direction ? `${effect} ${direction}`.trim() : effect;
+};
 
 export const NO_ANIMATION = 'none';
 

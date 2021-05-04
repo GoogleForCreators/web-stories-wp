@@ -29,7 +29,8 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getElementMask, DEFAULT_MASK } from '.';
+import { DEFAULT_MASK } from './constants';
+import { getElementMask } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',

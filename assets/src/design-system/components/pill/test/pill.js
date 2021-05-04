@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Pill } from '../';
+import { Pill } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Pill', () => {

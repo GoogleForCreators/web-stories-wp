@@ -56,7 +56,7 @@ export class Inspector extends Container {
   }
 
   get checklistTab() {
-    return this.getByRole('tab', { name: /Checklist/ });
+    return this.getByRole('tab', { name: /^Checklist$/ });
   }
 
   get checklistPanel() {

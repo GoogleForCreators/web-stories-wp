@@ -22,8 +22,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
-import PanelTypes from '../../components/panels/design/types';
 import { elementWithBorderRadius } from '../shared';
 
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
@@ -50,39 +48,4 @@ export const CropBox = styled.div`
   }
 `;
 
-export const MEDIA_MASK_OPACITY = 0.4;
-
-export const MEDIA_DEFAULT_ATTRIBUTES = {
-  ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
-  resource: {
-    alt: '',
-  },
-};
-
-export const hasEditMode = true;
-
-export const isMedia = true;
-
-export const canFlip = true;
-
-export const isMaskable = true;
-
-export const editModeGrayout = true;
-
-export const resizeRules = {
-  vertical: true,
-  horizontal: true,
-  diagonal: true,
-  minWidth: 20,
-  minHeight: 20,
-};
-
-export const MEDIA_PANELS = [
-  PanelTypes.BACKGROUND_SIZE_POSITION,
-  PanelTypes.LAYER_STYLE,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.BORDER_RADIUS,
-  PanelTypes.BORDER,
-  PanelTypes.ANIMATION,
-  PanelTypes.LINK,
-];
+export * from './constants';

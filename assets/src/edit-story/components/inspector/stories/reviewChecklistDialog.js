@@ -43,7 +43,7 @@ export const _default = () => {
         {'Open Dialog'}
       </Button>
       <ReviewChecklistDialog
-        open={isOpen}
+        isOpen={isOpen}
         onClose={() => {
           toggleDialog();
           action('close dialog triggered')();

@@ -30,6 +30,7 @@ import TransformContext from '../../../../transform/context';
 import { createPage } from '../../../../../elements';
 import PageTemplatesPane from '../pageTemplatesPane';
 import { PAGE_TEMPLATE_TYPES } from '../constants';
+import LibraryContext from '../../../context';
 
 const createTemplate = (title, id) => ({
   title,
@@ -57,12 +58,14 @@ function flushPromiseQueue() {
 
 describe('PageTemplatesPane', () => {
   const getPageTemplates = jest.fn();
+  const getCustomPageTemplates = jest.fn();
   let templates;
 
   function renderWithTemplates() {
     const apiValue = {
       actions: {
         getPageTemplates,
+        getCustomPageTemplates,
       },
     };
     const storyContext = {
@@ -73,13 +76,23 @@ describe('PageTemplatesPane', () => {
         currentPage: createPage(),
       },
     };
+    const libraryContext = {
+      actions: {
+        setSavedTemplates: jest.fn(),
+      },
+      state: {
+        savedTemplates: jest.fn(),
+      },
+    };
 
     return renderWithTheme(
       <TransformContext.Provider value={transformValue}>
         <ConfigContext.Provider value={configValue}>
           <APIContext.Provider value={apiValue}>
             <StoryContext.Provider value={storyContext}>
-              <PageTemplatesPane isActive />
+              <LibraryContext.Provider value={libraryContext}>
+                <PageTemplatesPane isActive />
+              </LibraryContext.Provider>
             </StoryContext.Provider>
           </APIContext.Provider>
         </ConfigContext.Provider>

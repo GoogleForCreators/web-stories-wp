@@ -19,5 +19,5 @@
 import * as types from './types';
 
 export { default as getPrepublishErrors } from './getPrepublishErrors';
-export { PRE_PUBLISH_MESSAGE_TYPES } from './constants';
+export { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from './constants';
 export { types };

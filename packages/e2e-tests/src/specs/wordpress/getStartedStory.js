@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 
 /**
  * WordPress dependencies

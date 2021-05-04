@@ -106,6 +106,7 @@ const CloseButton = styled(Button)`
 `;
 
 const SnackbarMessage = ({
+  'aria-label': ariaLabel,
   actionLabel,
   onAction = noop,
   onDismiss = noop,
@@ -156,6 +157,7 @@ const SnackbarMessage = ({
       {...props}
     >
       <Message
+        aria-label={ariaLabel}
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         hasAction={hasAction}
       >

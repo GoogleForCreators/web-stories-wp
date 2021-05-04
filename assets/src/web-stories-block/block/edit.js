@@ -27,6 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { ReactComponent as icon } from '../images/icon.svg';
 import StoryEmbedEdit from './block-types/story-embed-block/edit';
 import { ConfigProvider } from './config';
 import StoriesBlockControls from './components/storiesBlockControls';
@@ -41,7 +42,6 @@ import {
   VIEW_TYPES,
 } from './constants';
 import { webStoriesBlockSettings } from './globals';
-import { icon } from './';
 
 const { config } = webStoriesBlockSettings;
 
