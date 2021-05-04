@@ -257,7 +257,7 @@ class Renderer extends Service_Base {
 			]
 		);
 
-		$width  = (int) min( max( $min_max_width['min'], $old_width ), $min_max_width['max'] );
+		$width  = (int) min( max( $min_max_width['min'], (int) $old_width ), $min_max_width['max'] );
 		$height = (int) max( ceil( $width / 3 * 5 ), 330 );
 
 		return compact( 'width', 'height' );
