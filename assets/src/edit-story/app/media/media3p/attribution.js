@@ -25,7 +25,7 @@ import { rgba } from 'polished';
  */
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
 import { ReactComponent as CoverrLogoFull } from '../../../icons/coverr_logo.svg';
-import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo.svg';
+import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo_white.svg';
 import {
   Text as DefaultText,
   THEME_CONSTANTS,
@@ -116,8 +116,7 @@ export function TenorAttribution() {
   return (
     <a href={tenorUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
-        {__('Powered by', 'web-stories')}
-        <TenorLogo />
+        <TenorLogo data-label={__('Powered by Tenor', 'web-stories')} />
       </AttributionPill>
     </a>
   );
