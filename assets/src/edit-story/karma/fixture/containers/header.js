@@ -13,23 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { useContext } from 'react';
+
 /**
  * Internal dependencies
  */
-import Context from './context';
+import { Container } from './container';
 
-function usePrepublishChecklist() {
-  const context = useContext(Context);
-  if (!context) {
-    throw new Error(
-      'usePrepublishChecklist() must be used within a <PrepublishChecklistProvider />'
-    );
+/**
+ * The titleBar or app header. Includes title input, save, draft and publish buttons
+ */
+export class Header extends Container {
+  constructor(node, path) {
+    super(node, path);
   }
-  return context;
-}
 
-export default usePrepublishChecklist;
+  get publish() {
+    return this.getByRole('button', { name: /^Publish$/ });
+  }
+
+  get saveDraft() {
+    return this.getByRole('button', { name: /^Save draft$/ });
+  }
+
+  get switchToDraft() {
+    return this.getByRole('button', { name: /^Switch to draft$/ });
+  }
+}
