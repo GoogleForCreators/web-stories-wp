@@ -72,7 +72,7 @@
                 "issues": "https://github.com/ampproject/amp-toolbox-php/issues",
                 "source": "https://github.com/ampproject/amp-toolbox-php/tree/main"
             },
-            "time": "2021-04-29T01:25:12+00:00"
+            "time": "2021-04-28T01:26:05+00:00"
         },
         {
             "name": "ampproject/amp-wp",
@@ -150,9 +150,6 @@
                 },
                 "classmap": [
                     "includes/"
-                ],
-                "files": [
-                    "includes/bootstrap.php"
                 ]
             },
             "autoload-dev": {
@@ -184,7 +181,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-04-29T06:02:51+00:00"
+            "time": "2021-04-27T23:08:36+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -2504,7 +2501,7 @@
                 "paragonie/random_compat": "<2",
                 "passbolt/passbolt_api": "<2.11",
                 "paypal/merchant-sdk-php": "<3.12",
-                "pear/archive_tar": "<1.4.12",
+                "pear/archive_tar": "<1.4.13",
                 "personnummer/personnummer": "<3.0.2",
                 "phpfastcache/phpfastcache": ">=5,<5.0.13",
                 "phpmailer/phpmailer": "<6.1.6",
@@ -2698,7 +2695,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-28T18:10:37+00:00"
+            "time": "2021-04-28T02:21:40+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
