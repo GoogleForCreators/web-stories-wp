@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation/constants';
+import { BEZIER } from '../../theme/constants';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
 import Mask from './mask';
 import Menu, { MenuPropTypes } from './menu';
