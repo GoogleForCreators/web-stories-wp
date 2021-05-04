@@ -529,20 +529,6 @@ class Story_Post_Type extends Test_Case {
 	}
 
 	/**
-	 * @covers ::get_embed_height_width
-	 */
-	public function test_get_embed_height_width_invalid() {
-		$story_post_type = $this->get_story_object();
-		$actual          = $this->call_private_method( $story_post_type, 'get_embed_height_width', [ 'invalid' ] );
-		$expected        = [
-			'width'  => 200,
-			'height' => 334,
-		];
-
-		$this->assertEqualSets( $expected, $actual );
-	}
-
-	/**
 	 * @covers ::filter_oembed_response_data
 	 */
 	public function test_filter_oembed_response_data() {
