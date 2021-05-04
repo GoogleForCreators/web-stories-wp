@@ -33,14 +33,14 @@ const SUPPORT_URL = __(
   'web-stories'
 );
 
-function StatusCheckFailed({ open, onClose }) {
+function StatusCheckFailed({ isOpen, onClose }) {
   const onSupportClick = useCallback((evt) => {
     trackClick(evt, 'click_support_page');
   }, []);
 
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
       title={__('Unable to save your story', 'web-stories')}
       contentLabel={__('Unable to save your story', 'web-stories')}
@@ -72,7 +72,7 @@ function StatusCheckFailed({ open, onClose }) {
 }
 
 StatusCheckFailed.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

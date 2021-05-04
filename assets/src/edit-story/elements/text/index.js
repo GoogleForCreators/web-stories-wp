@@ -17,11 +17,6 @@
 /**
  * Internal dependencies
  */
-import PanelTypes from '../../components/panels/design/types';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import createSolid from '../../utils/createSolid';
 export { default as Display } from './display';
 export { default as Edit } from './edit';
 export { default as Frame } from './frame';
@@ -31,49 +26,4 @@ export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 export { default as updateForResizeEvent } from './updateForResizeEvent';
 
-export const defaultAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-  font: TEXT_ELEMENT_DEFAULT_FONT,
-  fontSize: 36,
-  backgroundColor: createSolid(196, 196, 196),
-  lineHeight: 1.3,
-  textAlign: 'initial',
-  padding: {
-    vertical: 0,
-    horizontal: 0,
-    locked: true,
-  },
-};
-
-export const hasEditMode = true;
-
-export const hasEditModeMoveable = true;
-
-export const isMedia = false;
-
-export const canFlip = false;
-
-export const isMaskable = false;
-
-export const resizeRules = {
-  vertical: false,
-  horizontal: true,
-  diagonal: true,
-  minWidth: 20,
-  minHeight: 0, // Enforced by min font size
-};
-
-export const panels = [
-  PanelTypes.COLOR_PRESETS,
-  PanelTypes.STYLE_PRESETS,
-  PanelTypes.ELEMENT_ALIGNMENT,
-  PanelTypes.SIZE_POSITION,
-  PanelTypes.LAYER_STYLE,
-  PanelTypes.TEXT_STYLE,
-  PanelTypes.TEXT_BOX,
-  PanelTypes.BORDER_RADIUS,
-  PanelTypes.BORDER,
-  PanelTypes.LINK,
-  PanelTypes.ANIMATION,
-];
+export * from './constants';

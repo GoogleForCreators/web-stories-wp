@@ -20,8 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\TinyMCE
  */
-class TinyMCE extends \WP_UnitTestCase {
-	use Private_Access;
+class TinyMCE extends Test_Case {
 
 	/**
 	 * @covers ::register

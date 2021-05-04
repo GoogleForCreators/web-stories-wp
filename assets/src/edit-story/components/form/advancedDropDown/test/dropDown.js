@@ -25,7 +25,7 @@ import { curatedFontNames } from '@web-stories-wp/fonts';
  */
 import FontContext from '../../../../app/font/context';
 import { renderWithTheme } from '../../../../testUtils';
-import DropDown from '../';
+import DropDown from '..';
 import fontsListResponse from './fontsResponse';
 
 jest.mock('../../../popup/index.js', () => ({ children, isOpen }) =>

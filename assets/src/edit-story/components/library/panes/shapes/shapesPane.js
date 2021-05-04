@@ -26,7 +26,7 @@ import STICKERS from '@web-stories-wp/stickers';
  * Internal dependencies
  */
 import { useFeatures } from 'flagged';
-import { MASKS } from '../../../../masks';
+import { MASKS } from '../../../../masks/constants';
 import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';

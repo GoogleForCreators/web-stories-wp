@@ -16,19 +16,25 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import PropTypes from 'prop-types';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
+import { Icons, useContextSelector } from '../../../../design-system';
 import { useConfig } from '../../../app';
-import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
+import {
+  PRE_PUBLISH_MESSAGE_TYPES,
+  MESSAGES,
+  types,
+} from '../../../app/prepublish';
 import { useHighlights } from '../../../app/highlights';
-import { SimplePanel } from '../../panels/panel';
+import { SimplePanel, panelContext } from '../../panels/panel';
+import AutoVideoOptimization from './autoVideoOptimization';
 import {
   DISABLED_HIGH_PRIORITY_CHECKPOINTS,
   DISABLED_RECOMMENDED_CHECKPOINTS,
@@ -40,24 +46,67 @@ import {
   IssueDescription,
   IssueTitle,
   NumberBadge,
-  PageIndicator,
   PageGroup,
+  PageIndicator,
   PanelTitle,
   Row,
 } from './styles';
 import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
 
-const ChecklistTab = ({ checklist, currentCheckpoint }) => {
-  const { isRTL } = useConfig();
+const Entries = ({
+  items,
+  pageItems,
+  renderRow,
+  renderPageGroupedRow,
+  disabled,
+}) => {
+  const expandPanel = useContextSelector(
+    panelContext,
+    ({ actions }) => actions.expand
+  );
+  useEffect(() => {
+    if (!disabled) {
+      expandPanel();
+    }
+  }, [disabled, expandPanel]);
+  return (
+    <>
+      {items.map(renderRow)}
+      {Object.entries(pageItems || {}).map(renderPageGroupedRow)}
+    </>
+  );
+};
+Entries.propTypes = {
+  items: PropTypes.array,
+  pageItems: PropTypes.object,
+  renderRow: PropTypes.func,
+  renderPageGroupedRow: PropTypes.func,
+  disabled: PropTypes.bool,
+};
+
+const ChecklistTab = ({
+  areVideosAutoOptimized,
+  checklist,
+  currentCheckpoint,
+  onAutoVideoOptimizationClick,
+}) => {
+  const {
+    isRTL,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const { enablePrePublishVideoOptimization } = useFeatures();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
 
-  const { isHighPriorityDisabled, isRecommendedDisabled } = useMemo(
+  const canOptimizeVideo =
+    hasUploadMediaAction && enablePrePublishVideoOptimization;
+
+  const { isHighPriorityDisabledState, isRecommendedDisabledState } = useMemo(
     () => ({
-      isRecommendedDisabled:
+      isRecommendedDisabledState:
         DISABLED_RECOMMENDED_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
-      isHighPriorityDisabled:
+      isHighPriorityDisabledState:
         DISABLED_HIGH_PRIORITY_CHECKPOINTS.indexOf(currentCheckpoint) > -1,
     }),
     [currentCheckpoint]
@@ -65,62 +114,71 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
 
   const { highPriority, recommended, pages } = useMemo(
     () =>
-      checklist.reduce(
-        (prevMessages, current) => {
-          const id = uuidv4();
-          const currentMessage = { ...current, id };
-          const isHighPriority =
-            currentMessage.type === PRE_PUBLISH_MESSAGE_TYPES.ERROR;
+      checklist
+        // TODO remove filtering out video optimization check
+        // based on feature flag after design has a chance to
+        // look at it.
+        .filter((item) =>
+          item.message === MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT
+            ? canOptimizeVideo
+            : true
+        )
+        .reduce(
+          (prevMessages, current) => {
+            const id = uuidv4();
+            const currentMessage = { ...current, id };
+            const isHighPriority =
+              currentMessage.type === PRE_PUBLISH_MESSAGE_TYPES.ERROR;
 
-          const [typeKey, copyKey] = isHighPriority
-            ? ['highPriority', 'recommended']
-            : ['recommended', 'highPriority'];
+            const [typeKey, copyKey] = isHighPriority
+              ? ['highPriority', 'recommended']
+              : ['recommended', 'highPriority'];
 
-          if (currentMessage.page !== undefined) {
-            const prevTypeGroup = prevMessages.pages[typeKey] || {};
-            const prevPageGroup = prevTypeGroup[currentMessage.page] || [];
+            if (currentMessage.page !== undefined) {
+              const prevTypeGroup = prevMessages.pages[typeKey] || {};
+              const prevPageGroup = prevTypeGroup[currentMessage.page] || [];
 
-            let prevLengths = { highPriority: 0, recommended: 0 };
-            if (prevMessages.pages?.lengths) {
-              ({ lengths: prevLengths } = prevMessages.pages);
+              let prevLengths = { highPriority: 0, recommended: 0 };
+              if (prevMessages.pages?.lengths) {
+                ({ lengths: prevLengths } = prevMessages.pages);
+              }
+
+              return {
+                recommended: prevMessages.recommended,
+                highPriority: prevMessages.highPriority,
+                pages: {
+                  ...prevMessages.pages,
+                  [typeKey]: {
+                    ...prevTypeGroup,
+                    [currentMessage.page]: [...prevPageGroup, currentMessage],
+                  },
+                  lengths: {
+                    ...prevLengths,
+                    [typeKey]: prevLengths[typeKey] + 1,
+                  },
+                },
+              };
             }
 
-            return {
-              recommended: prevMessages.recommended,
-              highPriority: prevMessages.highPriority,
-              pages: {
-                ...prevMessages.pages,
-                [typeKey]: {
-                  ...prevTypeGroup,
-                  [currentMessage.page]: [...prevPageGroup, currentMessage],
-                },
-                lengths: {
-                  ...prevLengths,
-                  [typeKey]: prevLengths[typeKey] + 1,
-                },
-              },
+            const groupedMessages = {
+              [copyKey]: prevMessages[copyKey],
+              [typeKey]: [...prevMessages[typeKey], currentMessage],
             };
+            return { pages: prevMessages.pages, ...groupedMessages };
+          },
+          {
+            highPriority: [],
+            recommended: [],
+            pages: {},
           }
-
-          const groupedMessages = {
-            [copyKey]: prevMessages[copyKey],
-            [typeKey]: [...prevMessages[typeKey], currentMessage],
-          };
-          return { pages: prevMessages.pages, ...groupedMessages };
-        },
-        {
-          highPriority: [],
-          recommended: [],
-          pages: {},
-        }
-      ),
-    [checklist]
+        ),
+    [checklist, canOptimizeVideo]
   );
 
   const getOnPrepublishSelect = useCallback(
     (args) => {
-      const { elements, elementId, pageId, highlight } = args;
-      if (!elements && !elementId && !pageId && !highlight) {
+      const { elements, elementId, pageId, highlight, noHighlight } = args;
+      if (noHighlight || (!elements && !elementId && !pageId && !highlight)) {
         return {};
       }
 
@@ -188,67 +246,86 @@ const ChecklistTab = ({ checklist, currentCheckpoint }) => {
     highPriority.length + (pages.lengths?.highPriority || 0);
   const recommendedLength =
     recommended.length + (pages.lengths?.recommended || 0);
-
-  const showHighPriorityItems = Boolean(highPriorityLength);
-  const showRecommendedItems =
+  const hasHighPriorityItems = Boolean(highPriorityLength);
+  const hasRecommendedItems =
     Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
+  const isEmptyShown =
+    !hasHighPriorityItems &&
+    !hasRecommendedItems &&
+    !isHighPriorityDisabledState;
 
-  if (!showHighPriorityItems && !showRecommendedItems) {
-    return <EmptyChecklist />;
-  }
+  const isRecommendedDisabled =
+    isRecommendedDisabledState || !hasRecommendedItems;
+  const isHighPriorityDisabled =
+    isHighPriorityDisabledState || !hasHighPriorityItems;
 
-  return (
+  return isEmptyShown ? (
+    <EmptyChecklist />
+  ) : (
     <>
-      {showHighPriorityItems && (
-        <SimplePanel
-          collapsedByDefault={isHighPriorityDisabled}
-          isToggleDisabled={isHighPriorityDisabled}
-          name="checklist"
-          hasBadge
-          title={
-            <>
-              <PanelTitle isDisabled={isHighPriorityDisabled}>
-                {TEXT.HIGH_PRIORITY_TITLE}
-              </PanelTitle>
-              {!isHighPriorityDisabled && (
-                <NumberBadge number={highPriorityLength} />
-              )}
-            </>
-          }
-          ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
-        >
-          {highPriority.map(renderRow)}
-          {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
-        </SimplePanel>
-      )}
-      {showRecommendedItems && (
-        <SimplePanel
-          isToggleDisabled={isRecommendedDisabled}
-          name="checklist"
-          hasBadge
-          title={
-            <>
-              <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
-                {TEXT.RECOMMENDED_TITLE}
-              </PanelTitle>
-              {!isRecommendedDisabled && (
-                <NumberBadge isRecommended number={recommendedLength} />
-              )}
-            </>
-          }
-          ariaLabel={TEXT.RECOMMENDED_TITLE}
-        >
-          {recommended.map(renderRow)}
-          {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
-        </SimplePanel>
-      )}
+      <SimplePanel
+        isToggleDisabled={isHighPriorityDisabled}
+        name="checklist"
+        hasBadge
+        title={
+          <>
+            <PanelTitle isDisabled={isHighPriorityDisabled}>
+              {TEXT.HIGH_PRIORITY_TITLE}
+            </PanelTitle>
+            {!isHighPriorityDisabled && (
+              <NumberBadge number={highPriorityLength} />
+            )}
+          </>
+        }
+        ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
+      >
+        <Entries
+          items={highPriority}
+          pageItems={pages.highPriority}
+          renderRow={renderRow}
+          renderPageGroupedRow={renderPageGroupedRow}
+          disabled={isHighPriorityDisabled}
+        />
+      </SimplePanel>
+      <SimplePanel
+        isToggleDisabled={isRecommendedDisabled}
+        name="checklist"
+        hasBadge
+        title={
+          <>
+            <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
+              {TEXT.RECOMMENDED_TITLE}
+            </PanelTitle>
+            {!isRecommendedDisabled && (
+              <NumberBadge isRecommended number={recommendedLength} />
+            )}
+          </>
+        }
+        ariaLabel={TEXT.RECOMMENDED_TITLE}
+      >
+        {canOptimizeVideo && (
+          <AutoVideoOptimization
+            areVideosAutoOptimized={areVideosAutoOptimized}
+            onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
+          />
+        )}
+        <Entries
+          items={recommended}
+          pageItems={pages.recommended}
+          renderRow={renderRow}
+          renderPageGroupedRow={renderPageGroupedRow}
+          disabled={isRecommendedDisabled}
+        />
+      </SimplePanel>
     </>
   );
 };
 
 ChecklistTab.propTypes = {
+  areVideosAutoOptimized: PropTypes.bool,
   checklist: types.GuidanceChecklist,
   currentCheckpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
+  onAutoVideoOptimizationClick: PropTypes.func,
 };
 
 export default ChecklistTab;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
 /**
  * Internal dependencies
  */
-import ConfirmPageTemplateDialog from '../confirmPageTemplateDialog';
+import { DYNAMIC_PROPERTY_VALUE } from '../dropdownConstants';
 
-export default {
-  title: 'Stories Editor/Components/Dialog/Confirm Page Template',
-  component: ConfirmPageTemplateDialog,
+const hasDynamicProperty = (animation) => {
+  return Object.values(animation).includes(DYNAMIC_PROPERTY_VALUE);
 };
 
-export const _default = () => {
-  return (
-    <ConfirmPageTemplateDialog
-      onConfirm={action('confirmed')}
-      onClose={action('closed')}
-    />
-  );
-};
+export default hasDynamicProperty;

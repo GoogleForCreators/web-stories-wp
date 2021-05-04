@@ -19,6 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -635,6 +636,9 @@ export const MESSAGES = {
           </li>
         </ul>
       ),
+    },
+    VIDEO_NOT_OPTIMIZED: {
+      MAIN_TEXT: __('Video not optimized', 'web-stories'),
     },
   },
 };

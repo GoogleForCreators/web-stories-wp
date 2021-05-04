@@ -48,7 +48,7 @@ export const _default = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <MissingUploadPermissionDialog open onClose={action('closed')} />
+          <MissingUploadPermissionDialog isOpen onClose={action('closed')} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

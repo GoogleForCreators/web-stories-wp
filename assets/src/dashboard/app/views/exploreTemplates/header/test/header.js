@@ -29,7 +29,7 @@ import {
 } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
-import Header from '../';
+import Header from '..';
 
 describe('Explore Templates <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {

@@ -22,10 +22,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import {
-  getResourceFromLocalFile,
-  getResourceFromAttachment,
-} from '../../../app/media/utils';
+import { getResourceFromLocalFile, getResourceFromAttachment } from '../utils';
 import useUploadMedia from '../useUploadMedia';
 
 const mockValidateFileForUpload = jest.fn();

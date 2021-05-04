@@ -20,7 +20,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../';
+import { useStory } from '../../story';
 import fetchRemoteFile from './fetchRemoteFile';
 
 function useProcessVideo({
@@ -123,7 +123,7 @@ function useProcessVideo({
           additionalData: { alt: oldResource.alt, title: oldResource.title },
         });
       };
-      process();
+      return process();
     },
     [
       copyResourceData,

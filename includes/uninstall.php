@@ -164,8 +164,8 @@ function delete_posts() {
  * @return void
  */
 function remove_caps() {
-	$story_post_type = Services::get( 'story_post_type' );
-	$story_post_type->remove_caps_from_roles();
+	$capabilities = Services::get( 'user.capabilities' );
+	$capabilities->remove_caps_from_roles();
 }
 
 /**
