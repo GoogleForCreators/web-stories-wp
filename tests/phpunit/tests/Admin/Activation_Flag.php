@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Admin\Tests;
 
+use Google\Web_Stories\Tests\Test_Case;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Activation_Flag
  */

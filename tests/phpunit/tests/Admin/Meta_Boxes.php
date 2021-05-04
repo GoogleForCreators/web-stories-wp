@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Admin\Tests;
 
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Meta_Boxes

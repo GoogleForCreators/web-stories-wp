@@ -20,6 +20,7 @@ namespace Google\Web_Stories\Admin\Tests;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Traits\Theme_Support;
+use Google\Web_Stories\Tests\Test_Case;
 use WP_Customize_Manager;
 use WP_Error;
 
