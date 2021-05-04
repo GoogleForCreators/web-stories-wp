@@ -259,75 +259,6 @@ class Story_Post_Type extends Test_Case {
 		$this->assertFalse( $result );
 	}
 
-
-
-	/**
-	 * @covers ::get_embed_height_width
-	 */
-	public function test_get_embed_height_width() {
-		$story_post_type = $this->get_story_object();
-		$actual          = $this->call_private_method( $story_post_type, 'get_embed_height_width', [ 600 ] );
-		$expected        = [
-			'width'  => 360,
-			'height' => 600,
-		];
-
-		$this->assertEqualSets( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::get_embed_height_width
-	 */
-	public function test_get_embed_height_width_invalid() {
-		$story_post_type = $this->get_story_object();
-		$actual          = $this->call_private_method( $story_post_type, 'get_embed_height_width', [ 'invalid' ] );
-		$expected        = [
-			'width'  => 200,
-			'height' => 334,
-		];
-
-		$this->assertEqualSets( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::filter_oembed_response_data
-	 */
-	public function test_filter_oembed_response_data() {
-		$story_post_type = $this->get_story_object();
-		$old             = [
-			'existing' => 'data',
-		];
-		$actual          = $story_post_type->filter_oembed_response_data( $old, get_post( self::$story_id ), 600 );
-		$expected        = [
-			'existing' => 'data',
-			'width'    => 360,
-			'height'   => 600,
-		];
-
-		$this->assertEqualSets( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::filter_embed_html
-	 */
-	public function test_filter_embed_htmla() {
-		$story_post_type = $this->get_story_object();
-		$current_post    = get_post( self::$story_id );
-		$story           = new \Google\Web_Stories\Model\Story();
-		$story->load_from_post( $current_post );
-		$renderer = new \Google\Web_Stories\Story_Renderer\Image( $story );
-		$output   = $renderer->render(
-			[
-				'height' => 10000,
-				'width'  => 2000,
-			]
-		);
-
-		$actual = $story_post_type->filter_embed_html( $output, $current_post, 2000, 10000 );
-		$this->assertContains( 'width="360"', $actual );
-		$this->assertContains( 'height="600"', $actual );
-	}
-
 	/**
 	 * @covers ::change_default_title
 	 */
@@ -342,15 +273,6 @@ class Story_Post_Type extends Test_Case {
 		);
 
 		$this->assertSame( '', $post->post_title );
-	}
-
-	/**
-	 * @covers ::filter_list_of_allowed_filetypes
-	 * @group ms-required
-	 */
-	public function test_filter_list_of_allowed_filetypes() {
-		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
-		$this->assertContains( 'vtt', $site_exts );
 	}
 
 	protected function get_story_object() {

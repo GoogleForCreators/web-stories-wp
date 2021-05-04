@@ -123,6 +123,73 @@ class Renderer extends Test_Case {
 	}
 
 	/**
+	 * @covers ::get_embed_height_width
+	 */
+	public function test_get_embed_height_width() {
+		$renderer = new \Google\Web_Stories\Renderer\Renderer();
+		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 600 ] );
+		$expected = [
+			'width'  => 360,
+			'height' => 600,
+		];
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::get_embed_height_width
+	 */
+	public function test_get_embed_height_width_invalid() {
+		$renderer = new \Google\Web_Stories\Renderer\Renderer();
+		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 'invalid' ] );
+		$expected = [
+			'width'  => 200,
+			'height' => 334,
+		];
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_oembed_response_data
+	 */
+	public function test_filter_oembed_response_data() {
+		$renderer = new \Google\Web_Stories\Renderer\Renderer();
+		$old      = [
+			'existing' => 'data',
+		];
+		$actual   = $renderer->filter_oembed_response_data( $old, get_post( self::$story_id ), 600 );
+		$expected = [
+			'existing' => 'data',
+			'width'    => 360,
+			'height'   => 600,
+		];
+
+		$this->assertEqualSets( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_embed_html
+	 */
+	public function test_filter_embed_htmla() {
+		$renderer     = new \Google\Web_Stories\Renderer\Renderer();
+		$current_post = get_post( self::$story_id );
+		$story        = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $current_post );
+		$image_renderer = new \Google\Web_Stories\Story_Renderer\Image( $story );
+		$output         = $image_renderer->render(
+			[
+				'height' => 10000,
+				'width'  => 2000,
+			]
+		);
+
+		$actual = $renderer->filter_embed_html( $output, $current_post, 2000, 10000 );
+		$this->assertContains( 'width="360"', $actual );
+		$this->assertContains( 'height="600"', $actual );
+	}
+
+	/**
 	 * This is a bit of a hack used to buffer feed content.
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
