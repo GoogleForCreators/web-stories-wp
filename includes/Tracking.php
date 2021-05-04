@@ -29,6 +29,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\User\Preferences;
 
 /**
  * Tracking class.
@@ -173,6 +174,6 @@ class Tracking extends Service_Base {
 	 * @return bool True if tracking enabled, and False if not.
 	 */
 	public function is_active() {
-		return (bool) get_user_meta( get_current_user_id(), User_Preferences::OPTIN_META_KEY, true );
+		return (bool) get_user_meta( get_current_user_id(), Preferences::OPTIN_META_KEY, true );
 	}
 }

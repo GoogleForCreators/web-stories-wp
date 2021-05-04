@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\User\Preferences;
+
 /**
  * Deletes options and transients.
  *
@@ -125,8 +127,8 @@ function delete_stories_post_meta() {
  * @return void
  */
 function delete_stories_user_meta() {
-	delete_metadata( 'user', 0, User_Preferences::OPTIN_META_KEY, '', true );
-	delete_metadata( 'user', 0, User_Preferences::ONBOARDING_META_KEY, '', true );
+	delete_metadata( 'user', 0, Preferences::OPTIN_META_KEY, '', true );
+	delete_metadata( 'user', 0, Preferences::ONBOARDING_META_KEY, '', true );
 }
 
 /**

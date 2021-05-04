@@ -26,12 +26,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\User;
+
+use Google\Web_Stories\Service_Base;
 
 /**
  * User Preferences class.
  */
-class User_Preferences extends Service_Base {
+class Preferences extends Service_Base {
 	/**
 	 * Name of the user meta key used for opt-in.
 	 *

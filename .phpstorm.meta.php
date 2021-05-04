@@ -53,7 +53,7 @@ namespace PHPSTORM_META {
 			'rest.users'                   => \Google\Web_Stories\REST_API\Stories_Users_Controller::class,
 			'rest.template_autosave'       => \Google\Web_Stories\REST_API\Template_Autosaves_Controller::class,
 			'rest.template_lock'           => \Google\Web_Stories\REST_API\Template_Lock_Controller::class,
-			'user_preferences'             => \Google\Web_Stories\User_Preferences::class,
+			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )

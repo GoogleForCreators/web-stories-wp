@@ -113,7 +113,7 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.users'                   => REST_API\Stories_Users_Controller::class,
 		'rest.template_autosave'       => REST_API\Template_Autosaves_Controller::class,
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
-		'user_preferences'             => User_Preferences::class,
+		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 	];
 
