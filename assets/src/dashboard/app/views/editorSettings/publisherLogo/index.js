@@ -199,7 +199,7 @@ function PublisherLogoSettings({
             ))}
           </UploadedContainer>
         )}
-        {uploadError && <Error>{uploadError}</Error>}
+        {uploadError && <Error role="alert">{uploadError}</Error>}
         {canUploadFiles && (
           <>
             <FileUpload
