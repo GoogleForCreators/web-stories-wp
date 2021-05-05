@@ -29,6 +29,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
+  themeHelpers,
 } from '../../../design-system';
 
 const Preview = styled.button`
@@ -39,6 +40,23 @@ const Preview = styled.button`
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
   width: 100%;
+  padding: 7px 12px;
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
+const Wrapper = styled.div`
+  input {
+    ${({ theme }) =>
+      themeHelpers.focusableOutlineCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 function EditablePreview({ label, value, width, format, onChange }) {
@@ -92,7 +110,11 @@ function EditablePreview({ label, value, width, format, onChange }) {
 
   if (!isEditing) {
     return (
-      <Preview aria-label={label} onClick={enableEditing}>
+      <Preview
+        aria-label={label}
+        onClick={enableEditing}
+        onFocus={enableEditing}
+      >
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {format(value)}
         </Text>
@@ -101,7 +123,7 @@ function EditablePreview({ label, value, width, format, onChange }) {
   }
 
   return (
-    <div ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
+    <Wrapper ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
       <EditableInput
         value={value}
         ref={editableRef}
@@ -109,7 +131,7 @@ function EditablePreview({ label, value, width, format, onChange }) {
         onChangeComplete={disableEditing}
         style={inputStyles}
       />
-    </div>
+    </Wrapper>
   );
 }
 
