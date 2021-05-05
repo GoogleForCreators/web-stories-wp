@@ -132,10 +132,12 @@ describe('Web Stories Block', () => {
         ? `${postPermalink}&amp`
         : `${postPermalink}?amp`;
 
-      await Promise.all([
-        page.goto(ampPostPermaLink),
-        page.waitForNavigation(),
-      ]);
+      await page.goto(ampPostPermaLink, {
+        waitUntil: 'networkidle0',
+      });
+
+      await page.waitForSelector('amp-story-player');
+      await expect(page).toMatchElement('amp-story-player');
 
       await expect(page).toBeValidAMP();
 
