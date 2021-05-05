@@ -31,6 +31,7 @@ import { useStory } from '../../../app/story';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
+const MAX_HEIGHT_DEFAULT = 999999999;
 
 const Wrapper = styled.section`
   display: flex;
@@ -47,13 +48,15 @@ function Panel({
   canCollapse = true,
   collapsedByDefault = true,
   initialHeight = null,
-  maxHeight = 999999999,
+  maxHeight: _maxHeight = MAX_HEIGHT_DEFAULT,
   ariaLabel = null,
   ariaHidden = false,
   isPersistable = true,
   isToggleDisabled,
   ...rest
 }) {
+  // If max height is 0 - fallback to default
+  const maxHeight = _maxHeight === 0 ? MAX_HEIGHT_DEFAULT : _maxHeight;
   const { selectedElementIds } = useStory(
     ({ state: { selectedElementIds } }) => {
       return {
@@ -161,12 +164,11 @@ function Panel({
     if (manuallyChanged || persisted || !resizeable) {
       return;
     }
-    setHeight(Math.min(initialHeight, maxHeight));
-    setExpandToHeight(Math.min(initialHeight, maxHeight));
+    setHeight(initialHeight);
+    setExpandToHeight(initialHeight);
   }, [
     manuallyChanged,
     initialHeight,
-    maxHeight,
     resizeable,
     persisted,
     name,
