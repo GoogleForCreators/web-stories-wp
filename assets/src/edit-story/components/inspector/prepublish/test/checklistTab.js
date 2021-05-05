@@ -20,7 +20,7 @@ import { noop } from '../../../../../design-system';
 import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
 import { ConfigProvider } from '../../../../app/config';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../../app/prepublish';
-import ChecklistTab from '../checklistTab';
+import ChecklistTab from '../components/checklistTab';
 
 jest.mock('flagged', () => ({
   useFeature: () => true,

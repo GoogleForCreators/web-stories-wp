@@ -18,4 +18,8 @@ export { default } from './prepublishInspector';
 export { default as PrepublishChecklistProvider } from './prepublishChecklistProvider';
 export { default as usePrepublishChecklist } from './usePrepublishChecklist';
 export { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
-export { ChecklistIcon, ReviewChecklistDialog } from './components';
+export {
+  ChecklistIcon,
+  ReviewChecklistDialog,
+  ChecklistTab,
+} from './components';
