@@ -27,8 +27,10 @@ export class Color extends Container {
     super(node, path);
   }
 
+  label = 'Unset';
+
   get button() {
-    return this.getByRole('button', { name: 'Text color' });
+    return this.getByRole('button', { name: this.label });
   }
 
   get opacity() {
@@ -36,7 +38,7 @@ export class Color extends Container {
   }
 
   get hex() {
-    return this.getByRole('textbox', { name: 'Text color' });
+    return this.getByRole('textbox', { name: this.label });
   }
 
   get output() {
