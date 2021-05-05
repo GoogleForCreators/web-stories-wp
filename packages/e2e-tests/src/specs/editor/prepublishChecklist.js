@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 
 describe('prepublish checklist', () => {
   it('should show the checklist', async () => {
