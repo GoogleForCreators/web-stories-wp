@@ -48,7 +48,7 @@ const PointerElement = styled.div.attrs(({ currentColor = {}, withAlpha }) => {
   height: ${POINTER_SIZE}px;
   transform: translate(
     ${({ offsetX = 0, offsetY = 0, isRTL }) =>
-      `${(isRTL ? 1 : 1) * offsetX}px, ${offsetY}px`}
+      `${(isRTL ? -1 : 1) * offsetX}px, ${offsetY}px`}
   );
   background: transparent;
   border: ${BORDER_WIDTH}px solid ${({ theme }) => theme.colors.fg.primary};
