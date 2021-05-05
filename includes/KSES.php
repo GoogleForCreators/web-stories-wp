@@ -35,8 +35,9 @@ use Google\Web_Stories\Traits\Post_Type;
  */
 class KSES extends Service_Base {
 	use Post_Type;
+
 	/**
-	 * Initializes KSES filters for all post types if user can edit stories.
+	 * Initializes KSES filters for stories.
 	 *
 	 * @since 1.0.0
 	 *
@@ -47,13 +48,24 @@ class KSES extends Service_Base {
 			return;
 		}
 
-		if ( ! current_user_can( 'unfiltered_html' ) ) {
-			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-			add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-			remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			return;
 		}
+
+		// The third param of the below filter was only added in WP 5.4.1.
+		if ( version_compare( get_bloginfo( 'version' ), '5.4.1', '>=' ) ) {
+			add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );
+
+			return;
+		}
+
+		// Fallback for WP < 5.4.1. Affects all post types, not just the web-story one.
+		// TODO: Remove once support for WP 5.3 is dropped.
+		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
+		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
+		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
 	/**
@@ -65,6 +77,47 @@ class KSES extends Service_Base {
 	 */
 	public static function get_registration_action_priority() {
 		return 11;
+	}
+
+	/**
+	 * Filters slashed post data just before it is inserted into the database.
+	 *
+	 * Used to run story HTML markup through KSES on our own, but with some filters applied
+	 * that should only affect the web-story post type.
+	 *
+	 * This allows storing full AMP HTML documents in post_content for stories, which require
+	 * more allowed HTML tags and a patched version of {@see safecss_filter_attr}.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $data                An array of slashed, sanitized, and processed post data.
+	 * @param array $postarr             An array of sanitized (and slashed) but otherwise unmodified post data.
+	 * @param array $unsanitized_postarr An array of slashed yet *unsanitized* and unprocessed post data as
+	 *                                   originally passed to wp_insert_post().
+	 * @return array Filtered post data.
+	 */
+	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) {
+			return $data;
+		}
+
+		// Simple sanity check to ensure story data is valid JSON.
+		if ( isset( $unsanitized_postarr['post_content_filtered'] ) ) {
+			$story_data                    = json_decode( wp_unslash( $unsanitized_postarr['post_content_filtered'] ), true );
+			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( wp_json_encode( $story_data ) );
+		}
+
+		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+
+		$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
+		$data['post_content']                = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
+		$data['post_content']                = $this->filter_content_save_pre_after_kses( $data['post_content'] );
+
+		remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
+
+		return $data;
 	}
 
 	/**
@@ -397,7 +450,6 @@ class KSES extends Service_Base {
 
 		return $css;
 	}
-
 
 	/**
 	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
