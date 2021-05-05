@@ -25,8 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation/constants';
-import { themeHelpers } from '../../theme';
+import { themeHelpers, BEZIER } from '../../theme';
 
 export const LOADING_MESSAGE = __('Loading', 'web-stories');
 
