@@ -218,6 +218,7 @@ async function runAxeTestsForStoriesEditor() {
       'scrollable-region-focusable',
       'nested-interactive',
       'aria-allowed-attr',
+      'link-name',
     ],
   });
 }
