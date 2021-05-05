@@ -56,6 +56,7 @@ function Panel({
   ...rest
 }) {
   // If max height is 0 - fallback to default
+  // Allows us to save persisted heights if layers aren't loaded yet
   const maxHeight = _maxHeight === 0 ? MAX_HEIGHT_DEFAULT : _maxHeight;
   const { selectedElementIds } = useStory(
     ({ state: { selectedElementIds } }) => {
