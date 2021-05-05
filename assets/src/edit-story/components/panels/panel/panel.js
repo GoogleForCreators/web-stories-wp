@@ -82,9 +82,11 @@ function Panel({
     return persisted?.isCollapsed ?? collapsedByDefault;
   });
   const [expandToHeight, setExpandToHeight] = useState(
-    persisted?.expandToHeight || initialHeight
+    Math.min(persisted?.expandToHeight, maxHeight) || initialHeight
   );
-  const [height, setHeight] = useState(persisted?.height || initialHeight);
+  const [height, setHeight] = useState(
+    Math.min(persisted?.height, maxHeight) || initialHeight
+  );
   const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
