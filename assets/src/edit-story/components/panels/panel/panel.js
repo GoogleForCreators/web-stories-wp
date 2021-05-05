@@ -47,6 +47,7 @@ function Panel({
   canCollapse = true,
   collapsedByDefault = true,
   initialHeight = null,
+  maxHeight = 999999999,
   ariaLabel = null,
   ariaHidden = false,
   isPersistable = true,
@@ -169,12 +170,20 @@ function Panel({
         return;
       }
       setManuallyChanged(true);
-      setHeight(h);
+      setHeight(Math.min(h(height), maxHeight));
       if (isCollapsed && h(height) > PANEL_COLLAPSED_THRESHOLD) {
         expand(false);
       }
     },
-    [setManuallyChanged, setHeight, height, expand, resizeable, isCollapsed]
+    [
+      expand,
+      height,
+      isCollapsed,
+      maxHeight,
+      resizeable,
+      setHeight,
+      setManuallyChanged,
+    ]
   );
 
   const resetHeight = useCallback(() => {
@@ -229,6 +238,7 @@ Panel.propTypes = {
   name: PropTypes.string.isRequired,
   children: PropTypes.node,
   initialHeight: PropTypes.number,
+  maxHeight: PropTypes.number,
   isToggleDisabled: PropTypes.bool,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
