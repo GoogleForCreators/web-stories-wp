@@ -242,7 +242,15 @@ const ChecklistTab = ({
   ]);
 
   if (isEmptyView) {
-    return <EmptyChecklist body={TEXT.UNAVAILABLE_BODY} />;
+    return (
+      <EmptyChecklist
+        body={
+          currentCheckpoint === PPC_CHECKPOINT_STATE.NO_ISSUES
+            ? TEXT.EMPTY_BODY
+            : TEXT.UNAVAILABLE_BODY
+        }
+      />
+    );
   }
 
   return (

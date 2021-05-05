@@ -21,19 +21,15 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../../../design-system';
-import {
-  EmptyPanelContainer,
-  EmptyPanelText,
-  UnavailableAsset,
-} from './styles';
+import { EmptyPanelContainer, EmptyPanelText, Checkmark } from './styles';
 
 const EmptyChecklist = ({ body }) => {
   return (
     <EmptyPanelContainer>
+      <Checkmark />
       <EmptyPanelText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {body}
       </EmptyPanelText>
-      <UnavailableAsset />
     </EmptyPanelContainer>
   );
 };

@@ -29,7 +29,6 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Toggle,
-  DesertBw,
 } from '../../../../../design-system';
 import { MAX_NUMBER_FOR_BADGE } from '../constants';
 
@@ -188,27 +187,18 @@ export const EmptyPanelContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0 14px;
+  margin: -28px 14px 0; /* Need to line up percieved center with text rather than checkmark, using margin between elements as reference */
 `;
 
 export const EmptyPanelText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   text-align: center;
   max-width: 226px;
+  margin-top: 28px;
 `;
 
-export const UnavailableAsset = styled(DesertBw)`
-  max-width: 298px;
-  margin-top: 128px;
-`;
-
-export const EmptyAsset = styled(Icons.Checkmark)`
-  margin-top: 128px;
-  height: 64px;
-  width: 64px;
-  padding: 8px 15px 5px 17px;
-  border-radius: 50%;
+export const Checkmark = styled(Icons.CheckmarkCircle)`
+  height: 50px;
+  width: 50px;
   color: ${({ theme }) => theme.colors.fg.secondary};
-  border: 1px solid ${({ theme }) => theme.colors.fg.secondary};
-  overflow: visible;
 `;
