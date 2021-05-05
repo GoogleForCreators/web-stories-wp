@@ -26,7 +26,6 @@ import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
@@ -37,6 +36,7 @@ import {
   LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
+  BEZIER,
 } from '../../../design-system';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
