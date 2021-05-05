@@ -64,12 +64,7 @@
     },
     "enable-patching": true,
     "exclude-from-files": [
-      "ampproject/amp-wp/back-compat/back-compat.php",
-      "ampproject/amp-wp/includes/amp-helper-functions.php",
-      "ampproject/amp-wp/includes/admin/functions.php",
-      "ampproject/amp-wp/includes/bootstrap.php",
-      "ampproject/amp-wp/includes/deprecated.php",
-      "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
+      "ampproject/amp-wp/includes/bootstrap.php"
     ]
   },
   "autoload": {
