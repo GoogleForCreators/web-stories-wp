@@ -62,7 +62,7 @@ function LayerPanel() {
           numLayersVisible * LAYER_HEIGHT,
           window.innerHeight / 3
         )}
-        maxHeight={layers?.length * LAYER_HEIGHT}
+        maxHeight={layers?.length ? layers.length * LAYER_HEIGHT : undefined}
         resizeable
         ariaHidden
         collapsedByDefault={false}
