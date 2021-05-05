@@ -26,7 +26,7 @@ import {
 /**
  * External dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 
 describe('TinyMCE button', () => {
   beforeAll(async () => {

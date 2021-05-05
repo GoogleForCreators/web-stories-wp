@@ -32,7 +32,7 @@ import {
   createNewStory,
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
@@ -48,6 +48,13 @@ describe('Post locking', () => {
     // Publish story.
     // eslint-disable-next-line jest/no-standalone-expect
     await expect(page).toClick('button', { text: 'Publish' });
+
+    // Bypass checklist
+    await page.waitForSelector('.ReactModal__Content');
+    // eslint-disable-next-line jest/no-standalone-expect
+    await expect(page).toClick('button', {
+      text: /Continue to publish/,
+    });
 
     // eslint-disable-next-line jest/no-standalone-expect
     await expect(page).toMatchElement('button', { text: 'Dismiss' });

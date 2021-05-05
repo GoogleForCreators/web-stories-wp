@@ -15,23 +15,27 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { Container } from './container';
 
-describe('Story Editor with disabled JavaScript', () => {
-  it('should display error message', async () => {
-    // Disable javascript for test.
-    await page.setJavaScriptEnabled(false);
+/**
+ * The titleBar or app header. Includes title input, save, draft and publish buttons
+ */
+export class Header extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-    await createNewStory();
+  get publish() {
+    return this.getByRole('button', { name: /^Publish$/ });
+  }
 
-    await expect(page).toMatchElement('.web-stories-wp-no-js');
+  get saveDraft() {
+    return this.getByRole('button', { name: /^Save draft$/ });
+  }
 
-    // Re-enable javascript for snapshots.
-    await page.setJavaScriptEnabled(true);
-
-    await percySnapshot(page, 'Editor no js');
-  });
-});
+  get switchToDraft() {
+    return this.getByRole('button', { name: /^Switch to draft$/ });
+  }
+}
