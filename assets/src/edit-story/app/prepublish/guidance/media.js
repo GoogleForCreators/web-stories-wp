@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { VIDEO_SIZE_THRESHOLD } from '../../media/utils/useFFmpeg';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { VideoOptimization } from '../components/videoOptimization';
 
@@ -148,13 +147,8 @@ export function videoElementOptimized(element = {}) {
   const idResource = element.resource?.id;
   const idOrigin = idResource?.toString().split(':')?.[0];
   const isCoverrMedia = idOrigin === 'media/coverr';
-  const videoArea =
-    (element.resource?.sizes?.full?.height ?? element.resource?.height ?? 0) *
-    (element.resource?.sizes?.full?.width ?? element.resource?.width ?? 0);
-  const isLargeVideo =
-    videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
 
-  if (!isCoverrMedia && isLargeVideo && !element.resource?.isOptimized) {
+  if (!isCoverrMedia && !element.resource?.isOptimized) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
