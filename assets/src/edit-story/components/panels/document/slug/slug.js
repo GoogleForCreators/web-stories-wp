@@ -119,7 +119,7 @@ function SlugPanel() {
     >
       <PermalinkRow>
         <Input
-          value={slug}
+          value={String(slug)}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={__('Enter slug', 'web-stories')}
