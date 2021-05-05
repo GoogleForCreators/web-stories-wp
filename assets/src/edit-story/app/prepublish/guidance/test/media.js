@@ -150,7 +150,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLongVideo.id);
   });
 
-  it('should return a message if the video element is larger than 1080x1920 and not optimized', () => {
+  it('should return a message if the video element is not optimized', () => {
     const largeUnoptimizedVideo = {
       id: 202,
       type: 'video',
@@ -169,61 +169,6 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.message).toBe('Video not optimized');
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(largeUnoptimizedVideo.id);
-  });
-
-  it('should not return a message if the video element is larger than 1080x1920 and Optimized', () => {
-    const largeUnoptimizedVideo = {
-      id: 202,
-      type: 'video',
-      resource: {
-        isOptimized: true,
-        sizes: {
-          full: {
-            height: 2160,
-            width: 3840,
-          },
-        },
-      },
-    };
-
-    const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
-    expect(result).toBeUndefined();
-  });
-
-  it('should not return a message if the video element is smaller than 1080x1920', () => {
-    const smallUnoptimizedVideo = {
-      id: 202,
-      type: 'video',
-      resource: {
-        isOptimized: false,
-        sizes: {
-          full: {
-            height: 300,
-            width: 400,
-          },
-        },
-      },
-    };
-    const smallOptimizedVideo = {
-      id: 203,
-      type: 'video',
-      resource: {
-        isOptimized: true,
-        sizes: {
-          full: {
-            height: 300,
-            width: 400,
-          },
-        },
-      },
-    };
-
-    expect(
-      mediaGuidance.videoElementOptimized(smallUnoptimizedVideo)
-    ).toBeUndefined();
-    expect(
-      mediaGuidance.videoElementOptimized(smallOptimizedVideo)
-    ).toBeUndefined();
   });
 
   it.todo('should return a message if the video element is less than 24fps');
