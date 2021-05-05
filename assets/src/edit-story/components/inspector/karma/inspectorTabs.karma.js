@@ -115,23 +115,15 @@ describe('Inspector Tabs integration', () => {
   });
 
   describe('Checklist Panel', function () {
-    it('should disable both high priority and recommended toggles in checklist by default', async () => {
+    it('should hide both high priority and recommended panels in checklist by default', async () => {
       const { checklistTab } = fixture.editor.inspector;
 
       await fixture.events.click(checklistTab);
 
       await waitFor(() => {
-        expect(
-          fixture.editor.inspector.checklistPanel.recommended.getAttribute(
-            'disabled'
-          )
-        ).not.toBe(null);
+        expect(fixture.editor.inspector.checklistPanel.recommended).toBeNull();
 
-        expect(
-          fixture.editor.inspector.checklistPanel.highPriority.getAttribute(
-            'disabled'
-          )
-        ).not.toBe(null);
+        expect(fixture.editor.inspector.checklistPanel.highPriority).toBeNull();
       });
     });
 
