@@ -158,7 +158,7 @@ function LibraryMoveable({
     // Don't display the clone right away since otherwise it will be triggered for a click as well.
     if (
       cloneRef.current &&
-      inputEvent.timeStamp - eventTracker.current.timeStamp > 300
+      inputEvent.timeStamp - eventTracker.current.timeStamp > 50
     ) {
       toggleDesignSpace(true);
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
