@@ -21,7 +21,7 @@ import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import ChecklistTab from '../prepublish/checklistTab';
+import { ChecklistTab } from '../prepublish';
 import { PPC_CHECKPOINT_STATE } from '../prepublish/prepublishCheckpointState';
 
 const Container = styled.div`

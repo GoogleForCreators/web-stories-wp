@@ -29,8 +29,8 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Toggle,
-} from '../../../../design-system';
-import { MAX_NUMBER_FOR_BADGE } from './constants';
+} from '../../../../../design-system';
+import { MAX_NUMBER_FOR_BADGE } from '../constants';
 
 function annotateNumber(number) {
   if (number <= MAX_NUMBER_FOR_BADGE) {
@@ -61,20 +61,12 @@ NumberBadge.propTypes = {
   number: PropTypes.number,
 };
 
-const getPanelTitleColor = (isRecommended, isDisabled) => {
-  if (isDisabled) {
-    return 'disable';
-  } else if (isRecommended) {
-    return 'linkNormal';
-  }
-  return 'negative';
-};
 export const PanelTitle = styled(Headline).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
   as: 'span',
 })`
-  color: ${({ isRecommended, theme, isDisabled }) =>
-    theme.colors.fg[getPanelTitleColor(isRecommended, isDisabled)]};
+  color: ${({ isRecommended, theme }) =>
+    isRecommended ? theme.colors.fg.linkNormal : theme.colors.fg.negative};
 `;
 PanelTitle.propTypes = {
   isRecommended: PropTypes.bool,
@@ -182,20 +174,31 @@ export const EmptyLayout = styled.div`
   flex-direction: column;
 `;
 
-export const Checkmark = styled(Icons.Checkmark)`
-  margin-bottom: 16px;
-  height: 64px;
-  width: 64px;
-  padding: 8px 15px 5px 17px;
-  border-radius: 50%;
-  color: ${({ theme }) => theme.colors.fg.positive};
-  border: 1px solid ${({ theme }) => theme.colors.fg.positive};
-  overflow: visible;
-`;
-
 export const EmptyHeading = styled(Headline).attrs({
   as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   color: ${({ theme }) => theme.colors.standard.white};
+`;
+
+export const EmptyPanelContainer = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: -28px 14px 0; /* Need to line up percieved center with text rather than checkmark, using margin between elements as reference */
+`;
+
+export const EmptyPanelText = styled(Text)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  text-align: center;
+  max-width: 226px;
+  margin-top: 28px;
+`;
+
+export const Checkmark = styled(Icons.CheckmarkCircle)`
+  height: 50px;
+  width: 50px;
+  color: ${({ theme }) => theme.colors.fg.secondary};
 `;

@@ -79,7 +79,9 @@ describe('Checklist Tab integration', () => {
     });
     await fixture.events.click(addNewPageButton, { clickCount: 1 });
     await fixture.events.sleep(500);
-
+    await fixture.events.click(
+      fixture.editor.inspector.checklistPanel.recommended
+    );
     const toggle =
       fixture.editor.inspector.checklistPanel.autoVideoOptimizationToggle;
     await waitFor(() => toggle);
