@@ -79,11 +79,13 @@ function StoriesView({
     // then we use storiesById to find the proper index of the interacted with item and use that to decide where to move focus
     if (focusedStory.id && !returnStoryFocusId) {
       const storyArrayIndex = storiesById.indexOf(focusedStory.id);
-      const adjustedIndex = focusedStory.isDeleted ? -1 : 0;
+      const isDeletedAdjustmentDirection = storyArrayIndex > 0 ? -1 : +1;
+      const adjustedIndex = focusedStory.isDeleted
+        ? isDeletedAdjustmentDirection
+        : 0;
       const focusIndex = storyArrayIndex + adjustedIndex;
       const storyIdToFocus = storiesById[focusIndex];
-
-      setReturnStoryFocusId(storyIdToFocus);
+      storyIdToFocus && setReturnStoryFocusId(storyIdToFocus);
     }
   }, [focusedStory, returnStoryFocusId, storiesById]);
 
@@ -252,7 +254,10 @@ function StoriesView({
           renameStory={renameStory}
           storyMenu={storyMenu}
           stories={stories}
-          returnStoryFocusId={returnStoryFocusId}
+          returnStoryFocusId={{
+            value: returnStoryFocusId,
+            set: setReturnStoryFocusId,
+          }}
         />
       );
     }
