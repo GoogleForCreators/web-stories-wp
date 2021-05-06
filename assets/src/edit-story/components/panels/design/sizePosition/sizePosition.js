@@ -26,15 +26,25 @@ import stickers from '@web-stories-wp/stickers';
 /**
  * Internal dependencies
  */
-import { LockToggle, NumericInput, Icons } from '../../../../../design-system';
+import {
+  Button,
+  LockToggle,
+  NumericInput,
+  Icons,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+} from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
 import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
+import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import Tooltip from '../../../tooltip';
+import useStory from '../../../../app/story/useStory';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
@@ -46,6 +56,7 @@ function getStickerAspectRatio(element) {
 const Grid = styled.div`
   display: grid;
   grid-template-areas:
+    ${({ isSingleMedia }) => (isSingleMedia ? `'b b b b b . .'` : null)}
     'x . . . y . .'
     'w . d . h . l'
     'r . . . f . .';
@@ -65,6 +76,11 @@ const Dash = styled.div`
   height: 1px;
   width: 100%;
   background: ${({ theme }) => theme.colors.divider.primary};
+`;
+
+const StyledButton = styled(Button)`
+  padding: 10px 16px;
+  width: 100%;
 `;
 
 function SizePositionPanel({
@@ -94,7 +110,14 @@ function SizePositionPanel({
   const lockAspectRatio =
     rawLockAspectRatio === MULTIPLE_VALUE ? true : rawLockAspectRatio;
 
+  const { currentPage, combineElements } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+    combineElements: state.actions.combineElements,
+  }));
+  const currentBackgroundId = currentPage?.elements[0].id;
+
   const isSingleElement = selectedElements.length === 1;
+  const { isMedia } = getDefinitionForType(selectedElements[0].type);
 
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
@@ -144,6 +167,33 @@ function SizePositionPanel({
 
   usePresubmitHandlers(lockAspectRatio, height, width);
 
+  const handleSetBackground = useCallback(() => {
+    const setBackground = (baseColor) => {
+      if (!baseColor) {
+        combineElements({
+          firstElement: selectedElements[0],
+          secondId: currentBackgroundId,
+        });
+      } else {
+        combineElements({
+          firstElement: {
+            ...selectedElements[0],
+            resource: {
+              ...selectedElements[0].resource,
+              baseColor,
+            },
+          },
+          secondId: currentBackgroundId,
+        });
+      }
+    };
+    if (selectedElements[0].resource.baseColor) {
+      setBackground();
+    } else {
+      getMediaBaseColor(selectedElements[0].resource, setBackground);
+    }
+  }, [selectedElements, combineElements, currentBackgroundId]);
+
   const disableHeight = !lockAspectRatio && hasText;
   const enabledHeightPlaceholder =
     MULTIPLE_VALUE === height ? MULTIPLE_DISPLAY_VALUE : null;
@@ -159,7 +209,19 @@ function SizePositionPanel({
   }, []);
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
-      <Grid>
+      <Grid isSingleMedia={isMedia && isSingleElement}>
+        {isMedia && isSingleElement && (
+          <Area area="b">
+            <StyledButton
+              onClick={handleSetBackground}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              variant={BUTTON_VARIANTS.RECTANGLE}
+            >
+              {__('Set as background', 'web-stories')}
+            </StyledButton>
+          </Area>
+        )}
         <Area area="x">
           <NumericInput
             suffix={_x('X', 'Position on X axis', 'web-stories')}

@@ -133,6 +133,7 @@ class AMP extends Service_Base {
 		$story->load_from_post( $post );
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher'                  => $this->get_publisher_name(),
 			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 			'poster_images'              => [
 				'poster-portrait-src'  => $story->get_poster_portrait(),

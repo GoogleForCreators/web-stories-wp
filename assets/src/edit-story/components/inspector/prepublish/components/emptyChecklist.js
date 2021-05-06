@@ -14,22 +14,28 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
-import { TEXT } from './constants';
-import { EmptyLayout, Checkmark, EmptyHeading } from './styles';
+import { THEME_CONSTANTS } from '../../../../../design-system';
+import { EmptyPanelContainer, EmptyPanelText, Checkmark } from './styles';
 
-const EmptyChecklist = () => {
+const EmptyChecklist = ({ body }) => {
   return (
-    <EmptyLayout>
+    <EmptyPanelContainer>
       <Checkmark />
-      <EmptyHeading>{TEXT.EMPTY_TITLE}</EmptyHeading>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {TEXT.EMPTY_BODY}
-      </Text>
-    </EmptyLayout>
+      <EmptyPanelText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+        {body}
+      </EmptyPanelText>
+    </EmptyPanelContainer>
   );
 };
 
 export default EmptyChecklist;
+
+EmptyChecklist.propTypes = {
+  body: PropTypes.string.isRequired,
+};

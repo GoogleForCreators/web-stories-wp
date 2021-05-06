@@ -17,34 +17,25 @@
 /**
  * Internal dependencies
  */
-import { Container } from '../container';
+import { Container } from './container';
 
-export default class PageTemplates extends Container {
+/**
+ * The titleBar or app header. Includes title input, save, draft and publish buttons
+ */
+export class Header extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
-  get pageTemplates() {
-    return this.getAllByRole('listitem');
+  get publish() {
+    return this.getByRole('button', { name: /^Publish$/ });
   }
 
-  pageTemplate(name) {
-    return this.getByRole('listitem', { name });
+  get saveDraft() {
+    return this.getByRole('button', { name: /^Save draft$/ });
   }
 
-  get dropDown() {
-    return this.getByRole('button', { name: 'Select templates type' });
-  }
-
-  dropDownOption(name) {
-    return this.getByRole('option', { name });
-  }
-
-  get saveTemplateBtn() {
-    return this.getByRole('button', { name: 'Save current page as template' });
-  }
-
-  get deleteTemplateBtn() {
-    return this.getByRole('button', { name: 'Delete page template' });
+  get switchToDraft() {
+    return this.getByRole('button', { name: /^Switch to draft$/ });
   }
 }

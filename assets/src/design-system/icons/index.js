@@ -57,6 +57,7 @@ export { ReactComponent as Box6 } from './box6.svg';
 export { ReactComponent as Bucket } from './bucket.svg';
 export { ReactComponent as Captions } from './captions.svg';
 export { ReactComponent as Checkmark } from './checkmark.svg';
+export { ReactComponent as CheckmarkCircle } from './checkmark_circle.svg';
 export { ReactComponent as CheckmarkSmall } from './checkmark_small.svg';
 export { ReactComponent as ChevronDown } from './chevron_down.svg';
 export { ReactComponent as ChevronDownSmall } from './chevron_down_small.svg';
