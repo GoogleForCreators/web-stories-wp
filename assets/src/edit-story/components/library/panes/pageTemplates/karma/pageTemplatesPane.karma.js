@@ -48,6 +48,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
+    fixture.setFlags({ customPageTemplates: true });
     await fixture.render();
   });
 
@@ -56,77 +57,214 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     fixture.restore();
   });
 
-  it('should add a new page when applying a template', async () => {
-    await fixture.editor.library.pageTemplatesTab.click();
+  describe('Default page templates', () => {
+    it('should add a new page when applying a template', async () => {
+      await fixture.editor.library.pageTemplatesTab.click();
 
-    await waitFor(() =>
-      expect(
-        fixture.editor.library.pageTemplatesPane.pageTemplates.length
-      ).toBeTruthy()
-    );
-    await fixture.events.click(
-      fixture.editor.library.pageTemplatesPane.pageTemplate('Cooking Cover')
-    );
+      await waitFor(() =>
+        expect(
+          fixture.editor.library.pageTemplatesPane.pageTemplates.length
+        ).toBeTruthy()
+      );
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.pageTemplate('Cooking Cover')
+      );
 
-    // check that all elements have been applied
-    const { pages, currentPage } = await fixture.renderHook(() =>
-      useStory(({ state }) => {
-        return {
-          currentPage: state.currentPage,
-          pages: state.pages,
-        };
-      })
-    );
+      // check that all elements have been applied
+      const { pages, currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => {
+          return {
+            currentPage: state.currentPage,
+            pages: state.pages,
+          };
+        })
+      );
 
-    expect(pages.length).toEqual(2);
+      expect(pages.length).toEqual(2);
+      const cookingTemplate = formattedTemplatesArray.find(
+        (t) => t.title === 'Cooking'
+      );
+      const coverPage = cookingTemplate.pages.find(
+        (p) => p.pageTemplateType === 'cover'
+      );
+      expectPageTemplateEqual(currentPage, coverPage);
 
-    const cookingTemplate = formattedTemplatesArray.find(
-      (t) => t.title === 'Cooking'
-    );
-    const coverPage = cookingTemplate.pages.find(
-      (p) => p.pageTemplateType === 'cover'
-    );
-    expectPageTemplateEqual(currentPage, coverPage);
+      await fixture.snapshot('applied page template');
+    });
 
-    await fixture.snapshot('applied page template');
+    it('should apply page template to an empty page using keyboard', async () => {
+      await fixture.editor.library.pageTemplatesTab.click();
+
+      await waitFor(() =>
+        expect(
+          fixture.editor.library.pageTemplatesPane.pageTemplates.length
+        ).toBeTruthy()
+      );
+
+      const { pageTemplates } = fixture.editor.library.pageTemplatesPane;
+      await fixture.events.focus(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
+      );
+
+      await fixture.events.keyboard.press('right');
+
+      await fixture.events.keyboard.press('down');
+
+      const activeTextSetId = pageTemplates[3].getAttribute('data-testid');
+      const documentTestId = document.activeElement.getAttribute('data-testid');
+
+      expect(activeTextSetId).toBe(documentTestId);
+      await fixture.events.keyboard.press('Enter');
+
+      // check that all elements have been applied
+      const currentPage = await fixture.renderHook(() =>
+        useStory(({ state }) => state.currentPage)
+      );
+      const cookingTemplate = formattedTemplatesArray.find(
+        (t) => t.title === 'Cooking'
+      );
+      const coverPage = cookingTemplate.pages.find(
+        (p) => p.pageTemplateType === 'cover'
+      );
+      expectPageTemplateEqual(currentPage, coverPage);
+
+      await fixture.snapshot('applied page template');
+    });
   });
 
-  it('should apply page template to an empty page using keyboard', async () => {
-    await fixture.editor.library.pageTemplatesTab.click();
+  describe('Saved page templates', () => {
+    beforeEach(async () => {
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.dropDown
+      );
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.dropDownOption(
+          'Saved templates'
+        )
+      );
+    });
 
-    await waitFor(() =>
+    it('should allow saving a non-empty page as template', async () => {
+      // Verify a template is not added for an empty page.
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.saveTemplateBtn
+      );
+      await fixture.events.sleep(200);
+      let message = await fixture.screen.getByRole('alert');
+      expect(message.textContent).toBe(
+        'An empty page can’t be saved as a template. Add elements and try again.'
+      );
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: 'Close' })
+      );
+
+      // Add an element and verify the template is added now.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.saveTemplateBtn
+      );
+      await fixture.events.sleep(200);
+      message = await fixture.screen.getByRole('alert');
+      expect(message.textContent).toBe('Page template saved.');
+
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
-      ).toBeTruthy()
-    );
+      ).toBe(1);
+    });
 
-    const { pageTemplates } = fixture.editor.library.pageTemplatesPane;
-    await fixture.events.focus(
-      fixture.editor.library.pageTemplatesPane.pageTemplates[0]
-    );
+    it('should allow deleting a saved template', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.saveTemplateBtn
+      );
+      await fixture.events.sleep(200);
+      expect(
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
+      ).toBe(1);
 
-    await fixture.events.keyboard.press('right');
+      // Hover the added template to reveal the delete button.
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0],
+        40,
+        40
+      );
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.deleteTemplateBtn
+      );
+      await waitFor(() => {
+        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      });
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: 'Delete' })
+      );
 
-    await fixture.events.keyboard.press('down');
+      await fixture.events.sleep(200);
+      const list = fixture.editor.getByRole('list', {
+        name: 'Page Template Options',
+      });
+      expect(list.children.length).toBe(0);
+    });
 
-    const activeTextSetId = pageTemplates[3].getAttribute('data-testid');
-    const documentTestId = document.activeElement.getAttribute('data-testid');
+    it('should allow applying a template', async () => {
+      // Add an element and verify the template is added now.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.saveTemplateBtn
+      );
+      await fixture.events.sleep(200);
+      expect(
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
+      ).toBe(1);
 
-    expect(activeTextSetId).toBe(documentTestId);
-    await fixture.events.keyboard.press('Enter');
+      await fixture.events.click(
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
+      );
+      await fixture.events.sleep(200);
+      const { pages, currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => {
+          return {
+            currentPage: state.currentPage,
+            pages: state.pages,
+          };
+        })
+      );
 
-    // check that all elements have been applied
-    const currentPage = await fixture.renderHook(() =>
-      useStory(({ state }) => state.currentPage)
-    );
-    const cookingTemplate = formattedTemplatesArray.find(
-      (t) => t.title === 'Cooking'
-    );
-    const coverPage = cookingTemplate.pages.find(
-      (p) => p.pageTemplateType === 'cover'
-    );
-    expectPageTemplateEqual(currentPage, coverPage);
+      expect(pages.length).toEqual(2);
+      // The dummy template has text as the first element.
+      expect(currentPage.elements[1].type).toBe('text');
+    });
 
-    await fixture.snapshot('applied page template');
+    it('should allow manipulating custom templates using keyboard', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
+
+      await fixture.events.sleep(200);
+      const message = await fixture.screen.getByRole('alert');
+      expect(message.textContent).toBe('Page template saved.');
+
+      expect(
+        fixture.editor.library.pageTemplatesPane.pageTemplates.length
+      ).toBe(1);
+
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Space');
+
+      await waitFor(() => {
+        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      });
+
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
+
+      const list = fixture.editor.getByRole('list', {
+        name: 'Page Template Options',
+      });
+      expect(list.children.length).toBe(0);
+    });
   });
 });

@@ -75,6 +75,8 @@ const SwatchButton = styled.button.attrs({ type: 'button' })`
   }
 `;
 
+const SwatchPreview = styled(SwatchButton).attrs({ as: 'div', type: '' })``;
+
 const presetCSS = css`
   display: block;
   width: 100%;
@@ -125,6 +127,7 @@ function Swatch({
   isDisabled = false,
   isSmall = false,
   children,
+  isPreview,
   ...props
 }) {
   if (!pattern) {
@@ -137,8 +140,9 @@ function Swatch({
     : pattern;
   // Small swatches and gradient swatches are never split.
   const displaySplit = !isSmall && !swatchIsGradient && swatchHasTransparency;
+  const SwatchDisplay = isPreview ? SwatchPreview : SwatchButton;
   return (
-    <SwatchButton disabled={isDisabled} isSmall={isSmall} {...props}>
+    <SwatchDisplay disabled={isDisabled} isSmall={isSmall} {...props}>
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
         $pattern={pattern}
@@ -152,7 +156,7 @@ function Swatch({
         )}
         {children}
       </SwatchItem>
-    </SwatchButton>
+    </SwatchDisplay>
   );
 }
 
@@ -161,6 +165,7 @@ Swatch.propTypes = {
   pattern: PropTypes.object,
   isDisabled: PropTypes.bool,
   isSmall: PropTypes.bool,
+  isPreview: PropTypes.bool,
 };
 
 export { Swatch };
