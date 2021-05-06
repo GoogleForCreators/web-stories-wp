@@ -19,4 +19,7 @@
  */
 import { createContext } from '../../../design-system';
 
-export default createContext({ actions: {}, state: {} });
+export default createContext({
+  actions: { setZoomSetting: () => {} },
+  state: {},
+});
