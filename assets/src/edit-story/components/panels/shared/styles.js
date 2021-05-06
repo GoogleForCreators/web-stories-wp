@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as FlipControls } from './flipControls';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as getColorPickerActions } from './getColorPickerActions';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
-export * from './styles';
+
+/**
+ * External dependencies
+ */
+import { css } from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { themeHelpers } from '../../../../design-system/theme';
+
+export const inputContainerStyleOverride = css`
+  :focus-within {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
+`;

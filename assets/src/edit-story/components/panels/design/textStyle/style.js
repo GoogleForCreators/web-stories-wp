@@ -37,7 +37,7 @@ import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { getCommonValue } from '../../shared';
+import { getCommonValue, inputContainerStyleOverride } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {
@@ -127,6 +127,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === lineHeight ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
         <Space />
         <StyledNumericInput
@@ -142,6 +143,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === letterSpacing ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
       </Row>
       <Row>

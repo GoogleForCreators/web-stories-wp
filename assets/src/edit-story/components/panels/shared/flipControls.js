@@ -30,6 +30,7 @@ import {
   BUTTON_VARIANTS,
   ToggleButton,
   Icons,
+  themeHelpers,
 } from '../../../../design-system';
 import Tooltip from '../../tooltip';
 
@@ -41,6 +42,14 @@ const ControlsContainer = styled.div`
 
 const Space = styled.div`
   width: 8px;
+`;
+
+const StyledToggleButton = styled(ToggleButton)`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 /**
@@ -58,7 +67,7 @@ function FlipControls({ value, onChange }) {
   return (
     <ControlsContainer>
       <Tooltip title={__('Flip horizontally', 'web-stories')}>
-        <ToggleButton
+        <StyledToggleButton
           variant={BUTTON_VARIANTS.SQUARE}
           size={BUTTON_SIZES.SMALL}
           isToggled={value.horizontal === true}
@@ -71,11 +80,11 @@ function FlipControls({ value, onChange }) {
           aria-label={__('Flip horizontally', 'web-stories')}
         >
           <Icons.MirrorLeftright />
-        </ToggleButton>
+        </StyledToggleButton>
       </Tooltip>
       <Space />
       <Tooltip title={__('Flip vertically', 'web-stories')}>
-        <ToggleButton
+        <StyledToggleButton
           variant={BUTTON_VARIANTS.SQUARE}
           size={BUTTON_SIZES.SMALL}
           isToggled={value.vertical === true}
@@ -85,7 +94,7 @@ function FlipControls({ value, onChange }) {
           aria-label={__('Flip vertically', 'web-stories')}
         >
           <Icons.MirrorUpdown />
-        </ToggleButton>
+        </StyledToggleButton>
       </Tooltip>
     </ControlsContainer>
   );

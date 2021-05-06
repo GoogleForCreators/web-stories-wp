@@ -44,7 +44,11 @@ const Preview = styled.button`
       theme.colors.interactiveBg.secondaryHover};
   }
 
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`

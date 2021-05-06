@@ -28,7 +28,10 @@ import { __ } from '@web-stories-wp/i18n';
 import { TurningLine } from '../../../../icons';
 import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
-import { useCommonObjectValue } from '../../shared';
+import {
+  inputContainerStyleOverride,
+  useCommonObjectValue,
+} from '../../shared';
 import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 import {
   LockToggle as DefaultLockToggle,
@@ -171,6 +174,7 @@ function PaddingControls({
               : null
           }
           {...firstInputProperties}
+          containerStyleOverride={inputContainerStyleOverride}
         />
         {lockPadding && <Space />}
         <LockToggle
@@ -217,6 +221,7 @@ function PaddingControls({
               }));
             }}
             aria-label={__('Vertical padding', 'web-stories')}
+            containerStyleOverride={inputContainerStyleOverride}
           />
           <IconWrapper>
             <TurningLine />

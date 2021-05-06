@@ -38,6 +38,7 @@ import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
 import getDisabledBackgroundEffects from './utils/getDisabledBackgroundEffects';
 import generateDynamicProps from './utils/generateDynamicProps';
 import {
+  focusStyle,
   styleOverrideForSelectButton,
   styleOverrideForAnimationEffectMenu,
 } from './styles';
@@ -153,9 +154,9 @@ export default function EffectChooserDropdown({
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
       selectButtonStylesOverride={
-        selectedValue &&
-        selectedValue !== NO_ANIMATION &&
-        styleOverrideForSelectButton
+        selectedValue && selectedValue !== NO_ANIMATION
+          ? styleOverrideForSelectButton
+          : focusStyle
       }
     />
   );

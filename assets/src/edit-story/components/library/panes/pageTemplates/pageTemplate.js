@@ -51,7 +51,11 @@ const PageTemplateWrapper = styled.div`
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )}
 `;
 PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,

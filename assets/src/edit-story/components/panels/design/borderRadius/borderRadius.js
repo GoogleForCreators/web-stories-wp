@@ -28,9 +28,16 @@ import { __ } from '@web-stories-wp/i18n';
 import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
-import { useCommonObjectValue } from '../../shared';
+import {
+  useCommonObjectValue,
+  inputContainerStyleOverride,
+} from '../../shared';
 import { SimplePanel } from '../../panel';
-import { LockToggle, NumericInput } from '../../../../../design-system';
+import {
+  LockToggle,
+  NumericInput,
+  themeHelpers,
+} from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const TOGGLE_WIDTH = 32;
@@ -55,6 +62,14 @@ const LockContainer = styled.div`
   align-items: center;
   margin-left: 8px;
   margin-bottom: 16px;
+`;
+
+const StyledLockToggle = styled(LockToggle)`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 const BoxedNumericInput = styled(NumericInput)`
@@ -161,6 +176,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                   : ''
               }
               isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
+              containerStyleOverride={inputContainerStyleOverride}
             />
             {!lockRadius && (
               <>
@@ -181,6 +197,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                       : ''
                   }
                   isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
+                  containerStyleOverride={inputContainerStyleOverride}
                 />
               </>
             )}
@@ -201,6 +218,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                     : ''
                 }
                 isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
+                containerStyleOverride={inputContainerStyleOverride}
               />
               <Space space={32} />
               <BoxedNumericInput
@@ -217,13 +235,14 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                     : ''
                 }
                 isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
+                containerStyleOverride={inputContainerStyleOverride}
               />
             </Row>
           )}
         </InputContainer>
 
         <LockContainer>
-          <LockToggle
+          <StyledLockToggle
             isLocked={borderRadius.locked}
             onClick={() => handleLockChange(!borderRadius.locked)}
             aria-label={__('Toggle corner radius lock', 'web-stories')}

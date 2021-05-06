@@ -132,7 +132,11 @@ export const IssueTitle = styled(Headline).attrs({
   color: ${({ theme }) => theme.colors.standard.white};
   cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )}
 
   &::before {
     content: '•';

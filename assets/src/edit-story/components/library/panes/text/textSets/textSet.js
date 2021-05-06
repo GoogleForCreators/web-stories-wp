@@ -47,7 +47,11 @@ const TextSetItem = styled.div`
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )}
 
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};

@@ -106,7 +106,11 @@ export const AnimationListItem = styled.li`
       }
     `}
 
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 `;
 
 export const styleOverrideForAnimationEffectMenu = css`
@@ -122,6 +126,14 @@ export const styleOverrideForAnimationEffectMenu = css`
   }
 `;
 
+export const focusStyle = css`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
 export const styleOverrideForSelectButton = ({ theme }) => css`
   margin: -1px -1px 0 -1px;
   width: calc(100% + 2px);
@@ -133,8 +145,5 @@ export const styleOverrideForSelectButton = ({ theme }) => css`
       transparent;
   }
 
-  ${themeHelpers.focusableOutlineCSS(
-    theme.colors.border.focus,
-    theme.colors.bg.secondary
-  )}
+  ${focusStyle}
 `;
