@@ -23,8 +23,12 @@ import { useEffect, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../animation';
-import { BUTTON_SIZES, BUTTON_TYPES, Icons } from '../../../../design-system';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Icons,
+  BEZIER,
+} from '../../../../design-system';
 import { useConfig } from '../../../app/config';
 import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';

@@ -23,7 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
+import { BEZIER } from '../../../design-system';
 import { ScheduledTransition } from './scheduledTransition';
 
 const DURATION = 300;

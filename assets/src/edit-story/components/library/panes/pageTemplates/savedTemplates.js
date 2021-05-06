@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -49,12 +49,17 @@ function SavedTemplates({
   const {
     actions: { deletePageTemplate },
   } = useAPI();
-
   const { showSnackbar } = useSnackbar();
 
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDialog, setShowDialog] = useState(null);
   const [templateToDelete, setTemplateToDelete] = useState(null);
   const ref = useRef();
+
+  // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
+  // @todo Look into why does the ref not work as expected otherwise.
+  useLayoutEffect(() => {
+    setShowDialog(false);
+  }, []);
 
   const onClickDelete = useCallback(({ templateId }, e) => {
     e?.stopPropagation();
@@ -95,13 +100,15 @@ function SavedTemplates({
 
   return (
     <Wrapper ref={ref}>
-      <TemplateList
-        parentRef={ref}
-        pageSize={pageSize}
-        pages={savedTemplates}
-        handleDelete={onClickDelete}
-        {...rest}
-      />
+      {ref.current && (
+        <TemplateList
+          parentRef={ref}
+          pageSize={pageSize}
+          pages={savedTemplates}
+          handleDelete={onClickDelete}
+          {...rest}
+        />
+      )}
       {showDialog && (
         <Dialog
           isOpen
