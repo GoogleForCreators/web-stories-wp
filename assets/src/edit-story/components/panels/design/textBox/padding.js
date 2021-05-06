@@ -29,6 +29,7 @@ import { TurningLine } from '../../../../icons';
 import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
 import {
+  focusStyle,
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
@@ -66,6 +67,7 @@ const LockToggle = styled(DefaultLockToggle)`
     right: 0;
     top: calc(100% - 8px);
   `}
+  ${focusStyle};
 `;
 
 const Row = styled(DefaultRow)`

@@ -24,12 +24,16 @@ import { css } from 'styled-components';
  */
 import { themeHelpers } from '../../../../design-system/theme';
 
+export const focusStyle = css`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
 export const inputContainerStyleOverride = css`
   :focus-within {
-    ${({ theme }) =>
-      themeHelpers.focusCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
+    ${focusStyle};
   }
 `;

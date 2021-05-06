@@ -32,7 +32,7 @@ const Container = styled.div.attrs({
   flex: 1;
 `;
 
-function PillGroup({ options, value, onSelect }) {
+function PillGroup({ options, value, onSelect, ...rest }) {
   return (
     <Container>
       {options.map(({ id, label }) => (
@@ -41,6 +41,7 @@ function PillGroup({ options, value, onSelect }) {
           isActive={id === value}
           onClick={() => onSelect(id)}
           role="option"
+          {...rest}
         >
           {label}
         </Pill>

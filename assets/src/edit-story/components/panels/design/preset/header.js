@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -29,9 +30,18 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
+  themeHelpers,
 } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 import { PRESET_TYPES } from './constants';
+
+const StyledButton = styled(Button)`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
 
 function PresetsHeader({
   title,
@@ -60,20 +70,20 @@ function PresetsHeader({
     return (
       <>
         {hasPresets && isEditMode && (
-          <Button
+          <StyledButton
             {...buttonProps}
             aria-label={__('Exit edit mode', 'web-stories')}
           >
             {__('Done', 'web-stories')}
-          </Button>
+          </StyledButton>
         )}
         {hasPresets && !isEditMode && (
-          <Button {...buttonProps} aria-label={editLabel}>
+          <StyledButton {...buttonProps} aria-label={editLabel}>
             <Icons.Pencil />
-          </Button>
+          </StyledButton>
         )}
         {!isEditMode && !isColor && (
-          <Button
+          <StyledButton
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
             variant={BUTTON_VARIANTS.SQUARE}
@@ -81,7 +91,7 @@ function PresetsHeader({
             aria-label={__('Add style', 'web-stories')}
           >
             <Icons.Plus />
-          </Button>
+          </StyledButton>
         )}
       </>
     );

@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import { DropDown, PLACEMENT } from '../../../../../../design-system';
 
+import { focusStyle } from '../../../shared';
 import {
   backgroundEffectOptions,
   NO_ANIMATION,
@@ -38,7 +39,6 @@ import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
 import getDisabledBackgroundEffects from './utils/getDisabledBackgroundEffects';
 import generateDynamicProps from './utils/generateDynamicProps';
 import {
-  focusStyle,
   styleOverrideForSelectButton,
   styleOverrideForAnimationEffectMenu,
 } from './styles';

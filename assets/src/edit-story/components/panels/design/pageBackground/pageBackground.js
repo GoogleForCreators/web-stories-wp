@@ -28,7 +28,8 @@ import styled from 'styled-components';
 import { Color, Row as DefaultRow } from '../../../form';
 import { useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
-import { FlipControls, getColorPickerActions } from '../../shared';
+import { FlipControls } from '../../shared';
+import getColorPickerActions from '../../shared/getColorPickerActions';
 import {
   Button,
   BUTTON_SIZES,

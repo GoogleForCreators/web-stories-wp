@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
  */
 import { themeHelpers } from '../../../../../../design-system';
 import { INPUT_HEIGHT } from '../constants';
+import { focusStyle } from '../../../shared';
 import { BaseAnimationCell, GRID_ITEM_HEIGHT } from './effectChooserElements';
 import { GRID_SIZING } from './dropdownConstants';
 
@@ -124,14 +125,6 @@ export const styleOverrideForAnimationEffectMenu = css`
     grid-template-columns: repeat(4, 1fr);
     position: relative;
   }
-`;
-
-export const focusStyle = css`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
 `;
 
 export const styleOverrideForSelectButton = ({ theme }) => css`

@@ -31,6 +31,7 @@ import {
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
+  themeHelpers,
 } from '../../../../../design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
@@ -59,9 +60,17 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
+const StyledToggle = styled(ToggleButton)`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
 function Toggle(props) {
   return (
-    <ToggleButton
+    <StyledToggle
       size={BUTTON_SIZES.SMALL}
       variant={BUTTON_VARIANTS.SQUARE}
       {...props}
