@@ -140,7 +140,7 @@ class Customizer extends Service_Base {
 			self::STORY_OPTION . '[view_type]',
 			[
 				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'View Type', 'web-stories' ),
+				'label'           => _x( 'View Type', 'noun', 'web-stories' ),
 				'type'            => 'select',
 				'choices'         => $this->get_view_type_choices( $theme_support['view_type']['enabled'] ),
 				'active_callback' => $active_callback,

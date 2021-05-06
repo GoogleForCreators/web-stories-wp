@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _x } from '@web-stories-wp/i18n';
 
 export const BEZIER = {
   linear: 'linear',
@@ -58,51 +58,93 @@ export const ANIMATION_TYPES = {
 };
 
 export const ANIMATION_EFFECTS = {
-  DROP: { value: 'effect-drop', name: __('Drop', 'web-stories') },
-  FADE_IN: { value: 'effect-fade-in', name: __('Fade In', 'web-stories') },
-  FLY_IN: { value: 'effect-fly-in', name: __('Fly In', 'web-stories') },
-  PAN: { value: 'effect-pan', name: __('Pan', 'web-stories') },
-  PULSE: { value: 'effect-pulse', name: __('Pulse', 'web-stories') },
-  TWIRL_IN: { value: 'effect-twirl-in', name: __('Twirl In', 'web-stories') },
+  DROP: {
+    value: 'effect-drop',
+    name: _x('Drop', 'animation type', 'web-stories'),
+  },
+  FADE_IN: {
+    value: 'effect-fade-in',
+    name: _x('Fade In', 'animation type', 'web-stories'),
+  },
+  FLY_IN: {
+    value: 'effect-fly-in',
+    name: _x('Fly In', 'animation type', 'web-stories'),
+  },
+  PAN: {
+    value: 'effect-pan',
+    name: _x('Pan', 'animation type', 'web-stories'),
+  },
+  PULSE: {
+    value: 'effect-pulse',
+    name: _x('Pulse', 'animation type', 'web-stories'),
+  },
+  TWIRL_IN: {
+    value: 'effect-twirl-in',
+    name: _x('Twirl In', 'animation type', 'web-stories'),
+  },
   WHOOSH_IN: {
     value: 'effect-whoosh-in',
-    name: __('Whoosh In', 'web-stories'),
+    name: _x('Whoosh In', 'animation type', 'web-stories'),
   },
-  ZOOM: { value: 'effect-zoom', name: __('Scale', 'web-stories') },
+  ZOOM: {
+    value: 'effect-zoom',
+    name: _x('Scale', 'animation type', 'web-stories'),
+  },
   ROTATE_IN: {
     value: 'effect-rotate-in',
-    name: __('Rotate In', 'web-stories'),
+    name: _x('Rotate In', 'animation type', 'web-stories'),
   },
 };
 
 export const BACKGROUND_ANIMATION_EFFECTS = {
   ZOOM: {
     value: 'effect-background-zoom',
-    name: __('Zoom', 'web-stories'),
+    name: _x('Zoom', 'animation type', 'web-stories'),
   },
   PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
   PAN_AND_ZOOM: {
     value: 'effect-background-pan-and-zoom',
-    name: __('Pan and Zoom', 'web-stories'),
+    name: _x('Pan and Zoom', 'animation type', 'web-stories'),
   },
 };
 
 export const ANIMATION_PARTS = {
   BLINK_ON: {
     value: ANIMATION_TYPES.BLINK_ON,
-    name: __('Blink On', 'web-stories'),
+    name: _x('Blink On', 'animation type', 'web-stories'),
   },
-  BOUNCE: { value: ANIMATION_TYPES.BOUNCE, name: __('Bounce', 'web-stories') },
-  FADE: { value: ANIMATION_TYPES.FADE, name: __('Fade', 'web-stories') },
-  FLIP: { value: ANIMATION_TYPES.FLIP, name: __('Flip', 'web-stories') },
+  BOUNCE: {
+    value: ANIMATION_TYPES.BOUNCE,
+    name: _x('Bounce', 'animation type', 'web-stories'),
+  },
+  FADE: {
+    value: ANIMATION_TYPES.FADE,
+    name: _x('Fade', 'animation type', 'web-stories'),
+  },
+  FLIP: {
+    value: ANIMATION_TYPES.FLIP,
+    name: _x('Flip', 'animation type', 'web-stories'),
+  },
   FLOAT_ON: {
     value: ANIMATION_TYPES.FLOAT_ON,
-    name: __('Float On', 'web-stories'),
+    name: _x('Float On', 'animation type', 'web-stories'),
   },
-  MOVE: { value: ANIMATION_TYPES.MOVE, name: __('Move', 'web-stories') },
-  PULSE: { value: ANIMATION_TYPES.PULSE, name: __('Pulse', 'web-stories') },
-  SPIN: { value: ANIMATION_TYPES.SPIN, name: __('Spin', 'web-stories') },
-  ZOOM: { value: ANIMATION_TYPES.ZOOM, name: __('Zoom', 'web-stories') },
+  MOVE: {
+    value: ANIMATION_TYPES.MOVE,
+    name: _x('Move', 'animation type', 'web-stories'),
+  },
+  PULSE: {
+    value: ANIMATION_TYPES.PULSE,
+    name: _x('Pulse', 'animation type', 'web-stories'),
+  },
+  SPIN: {
+    value: ANIMATION_TYPES.SPIN,
+    name: _x('Spin', 'animation type', 'web-stories'),
+  },
+  ZOOM: {
+    value: ANIMATION_TYPES.ZOOM,
+    name: _x('Zoom', 'animation type', 'web-stories'),
+  },
 };
 
 export const DIRECTION = {

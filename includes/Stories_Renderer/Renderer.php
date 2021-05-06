@@ -282,6 +282,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			}
 
 			if ( isset( $this->attributes['show_date'] ) && true === $this->attributes['show_date'] ) {
+				/* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
 				$story_data['date'] = get_the_date( __( 'M j, Y', 'web-stories' ), $post->ID );
 			}
 		}
