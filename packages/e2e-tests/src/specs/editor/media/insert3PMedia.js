@@ -22,11 +22,6 @@ describe('Inserting 3P Media', () => {
   it('should dismiss message', async () => {
     await createNewStory();
 
-    const crossOriginIsolated = await page.evaluate(
-      () => window.crossOriginIsolated
-    );
-    expect(crossOriginIsolated).toBeTrue();
-
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     await expect(page).toClick('#library-tab-media3p');
     await expect(page).toClick('button', { text: 'Dismiss' });

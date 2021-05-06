@@ -42,4 +42,13 @@ describe('Story Editor', () => {
     await percySnapshot(page, 'Empty Editor on RTL');
     await deactivateRTL();
   });
+
+  it('should cross origin isolation be enabled in the browser', async () => {
+    await createNewStory();
+
+    const crossOriginIsolated = await page.evaluate(
+      () => window.crossOriginIsolated
+    );
+    expect(crossOriginIsolated).toBeTrue();
+  });
 });
