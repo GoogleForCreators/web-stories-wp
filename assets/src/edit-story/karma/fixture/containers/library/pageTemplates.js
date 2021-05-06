@@ -31,4 +31,20 @@ export default class PageTemplates extends Container {
   pageTemplate(name) {
     return this.getByRole('listitem', { name });
   }
+
+  get dropDown() {
+    return this.getByRole('button', { name: 'Select templates type' });
+  }
+
+  dropDownOption(name) {
+    return this.getByRole('option', { name });
+  }
+
+  get saveTemplateBtn() {
+    return this.getByRole('button', { name: 'Save current page as template' });
+  }
+
+  get deleteTemplateBtn() {
+    return this.getByRole('button', { name: 'Delete page template' });
+  }
 }
