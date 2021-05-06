@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,22 +17,25 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS, BEZIER } from './constants';
-import * as ThemeGlobals from './global';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
-import { borders } from './borders';
-import { breakpoint, raw } from './breakpoint';
+import visitDashboard from './visitDashboard';
 
-export const theme = {
-  borders,
-  typography,
-  colors: { ...darkMode },
-  breakpoint: {
-    ...breakpoint,
-    raw,
-  },
-};
+/**
+ * Creates a new story.
+ */
+async function visitSettings() {
+  await visitDashboard();
 
-export { lightMode, THEME_CONSTANTS, themeHelpers, ThemeGlobals, BEZIER };
+  const dashboardNavigation = await expect(page).toMatchElement(
+    '[aria-label="Main dashboard navigation"]'
+  );
+
+  await expect(dashboardNavigation).toClick('a', {
+    text: 'Settings',
+  });
+
+  await page.waitForResponse((response) =>
+    response.url().includes('web-stories/v1/media')
+  );
+}
+
+export default visitSettings;
