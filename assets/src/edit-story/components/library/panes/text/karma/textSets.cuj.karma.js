@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 
-fdescribe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
+describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
   let fixture;
   let originalTimeout;
 
