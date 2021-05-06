@@ -118,7 +118,6 @@ describe('Publishing Flow', () => {
       waitUntil: 'networkidle0',
     });
 
-    await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
   });
