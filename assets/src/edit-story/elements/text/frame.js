@@ -109,6 +109,7 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
 
     const handleMouseUp = (evt) => {
       if (
+        !clickCoordinates ||
         areEventsDragging(
           {
             timeStamp: clickTime,

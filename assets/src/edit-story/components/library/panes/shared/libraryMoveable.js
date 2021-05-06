@@ -155,10 +155,10 @@ function LibraryMoveable({
       return false;
     }
     frame.translate = beforeTranslate;
-    // Don't display the clone right away since otherwise it will be triggered for a click as well.
+    // Don't display the clone unless we're sure it's a drag gesture
     if (
       cloneRef.current &&
-      inputEvent.timeStamp - eventTracker.current.timeStamp > 50
+      areEventsDragging(eventTracker.current, inputEvent)
     ) {
       toggleDesignSpace(true);
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {

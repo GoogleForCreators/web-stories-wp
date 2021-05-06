@@ -24,10 +24,6 @@
  * @return {boolean} Returns true iff the events are considered part of dragging
  */
 function areEventsDragging(firstEvent, secondEvent) {
-  if (undefined === firstEvent?.clientX || undefined === secondEvent?.clientY) {
-    return false;
-  }
-
   const { clientX, clientY, timeStamp } = firstEvent;
   const timingDifference = secondEvent.timeStamp - timeStamp;
 
