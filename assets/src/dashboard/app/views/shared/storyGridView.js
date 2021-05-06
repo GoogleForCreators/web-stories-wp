@@ -253,7 +253,10 @@ StoryGridView.propTypes = {
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  returnStoryFocusId: PropTypes.number,
+  returnStoryFocusId: PropTypes.shape({
+    value: PropTypes.number,
+    set: PropTypes.func,
+  }),
 };
 
 export default StoryGridView;
