@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +26,14 @@ import { copyFileSync } from 'fs';
 import getFileName from './getFileName';
 
 /**
- * Uploads a file to the Media Library, and awaits its upload.
+ * Helper that upload a publisher logo in the dashboard settings.
  *
- * The file should reside in packages/e2e-tests/src/assets/.
+ * @param {string} file Filename
+ * @param {boolean} checkUpload Check if upload was successful.
  *
- * @param {string|null} file The file name to upload, for example 'foo.mp4'.
- * @param {boolean} checkUpload Check upload was successfully.
- * @return {string|null} The name of the file as it was uploaded.
+ * @return {Promise<string>} Return the filename.
  */
-async function uploadFile(file, checkUpload = true) {
+async function uploadPublisherLogo(file, checkUpload = true) {
   await page.setDefaultTimeout(10000);
 
   const testMediaPath = resolve(
@@ -48,18 +47,17 @@ async function uploadFile(file, checkUpload = true) {
   const tmpFileName = join(tmpdir(), newFileName);
   copyFileSync(testMediaPath, tmpFileName);
 
-  // Wait for media modal to appear and upload file.
-  await expect(page).toUploadFile('.media-modal input[type=file]', tmpFileName);
+  await expect(page).toUploadFile('#settings_publisher_logos', tmpFileName);
 
-  await expect(page).not.toMatchElement('.media-modal .upload-error');
-
-  // Upload successful!
   if (checkUpload) {
-    await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
+    await page.waitForSelector(
+      `button[aria-label^="Publisher Logo ${newBaseName}"`
+    );
   }
+
   await page.setDefaultTimeout(3000);
 
-  return newFileName;
+  return newBaseName;
 }
 
-export default uploadFile;
+export default uploadPublisherLogo;

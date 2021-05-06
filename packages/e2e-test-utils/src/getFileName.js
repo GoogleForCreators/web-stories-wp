@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { useContext } from 'react';
-/**
- * Internal dependencies
- */
-import Context from './context';
 
-function usePrepublishChecklist() {
-  const context = useContext(Context);
-  if (!context) {
-    throw new Error(
-      'usePrepublishChecklist() must be used within a <PrepublishChecklistProvider />'
-    );
-  }
-  return context;
-}
+const getFileName = (name) => name.split('.').slice(0, -1).join('.');
 
-export default usePrepublishChecklist;
+export default getFileName;

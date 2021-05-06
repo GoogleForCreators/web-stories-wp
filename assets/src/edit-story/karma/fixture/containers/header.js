@@ -17,22 +17,25 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS, BEZIER } from './constants';
-import * as ThemeGlobals from './global';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
-import { borders } from './borders';
-import { breakpoint, raw } from './breakpoint';
+import { Container } from './container';
 
-export const theme = {
-  borders,
-  typography,
-  colors: { ...darkMode },
-  breakpoint: {
-    ...breakpoint,
-    raw,
-  },
-};
+/**
+ * The titleBar or app header. Includes title input, save, draft and publish buttons
+ */
+export class Header extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-export { lightMode, THEME_CONSTANTS, themeHelpers, ThemeGlobals, BEZIER };
+  get publish() {
+    return this.getByRole('button', { name: /^Publish$/ });
+  }
+
+  get saveDraft() {
+    return this.getByRole('button', { name: /^Save draft$/ });
+  }
+
+  get switchToDraft() {
+    return this.getByRole('button', { name: /^Switch to draft$/ });
+  }
+}

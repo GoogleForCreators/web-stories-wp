@@ -22,7 +22,11 @@ import usePrepublishChecklist from './usePrepublishChecklist';
 import ChecklistTab from './checklistTab';
 
 function PrepublishInspector() {
-  const { checklist, currentCheckpoint } = usePrepublishChecklist();
+  const {
+    checklist,
+    currentCheckpoint,
+    isChecklistEmpty,
+  } = usePrepublishChecklist();
 
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
     ({ state, actions }) => ({
@@ -38,6 +42,7 @@ function PrepublishInspector() {
       onAutoVideoOptimizationClick={toggleWebStoriesMediaOptimization}
       checklist={checklist}
       currentCheckpoint={currentCheckpoint}
+      isChecklistEmpty={isChecklistEmpty}
     />
   );
 }

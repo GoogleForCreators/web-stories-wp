@@ -48,7 +48,12 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
+  const {
+    currentCheckpoint,
+    isChecklistReviewRequested,
+    refreshChecklist,
+  } = usePrepublishChecklist();
+
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
     500
@@ -70,6 +75,28 @@ function InspectorProvider({ children }) {
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
+  const firstPublishAttemptRef = useRef(false);
+
+  useEffect(() => {
+    // If a user wants to review their checklist before publishing
+    // a story that has high priority checklist items in it
+    // we need to go to the checklist tab and focus it.
+    // Because of how context is wrapped around the header
+    // we need to do this by watching the isChecklistReviewRequested value
+    // from the prepublishChecklistProvider.
+    if (isChecklistReviewRequested && !firstPublishAttemptRef.current) {
+      setTab(PREPUBLISH);
+      // Focus prepublish which is the last item in the panel title list
+      inspectorRef.current?.firstChild?.lastChild?.focus();
+      firstPublishAttemptRef.current = isChecklistReviewRequested;
+    }
+    // If a published story that gets reverted to a draft and
+    // it has high priority checklist items in it we should update
+    // this ref so that the checklist panel focuses again.
+    else if (!isChecklistReviewRequested && firstPublishAttemptRef.current) {
+      firstPublishAttemptRef.current = false;
+    }
+  }, [isChecklistReviewRequested]);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
