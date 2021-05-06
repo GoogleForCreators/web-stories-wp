@@ -60,7 +60,7 @@ export const PatternPropType = PropTypes.shape({
   }),
   size: PropTypes.shape({
     w: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    h: PropTypes.number.isRequired,
   }),
 });
 
@@ -96,7 +96,7 @@ StoryPropTypes.story = PropTypes.shape({
     height: PropTypes.number.isRequired,
   }),
   password: PropTypes.string.isRequired,
-  currentStoryStyles: PropTypes.array,
+  currentStoryStyles: PropTypes.object,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
 });
