@@ -23,6 +23,7 @@ import { useFeatures } from 'flagged';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
 import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
@@ -46,7 +47,7 @@ const MEDIA = {
 };
 const MEDIA3P = {
   icon: Media3pIcon,
-  tooltip: __('Thirdparty media', 'web-stories'),
+  tooltip: __('Third-party media', 'web-stories'),
   Pane: Media3pPane,
   id: 'media3p',
 };
