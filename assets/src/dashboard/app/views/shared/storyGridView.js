@@ -22,7 +22,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect, useState, useMemo } from 'react';
+import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
@@ -105,11 +105,20 @@ const StoryGridView = ({
 
   // when keyboard focus changes through FocusableGridItem immediately focus the edit preview layer on top of preview
   useEffect(() => {
-    if (activeGridItemId && activeGridItemId !== activeGridItemIdRef.current) {
+    if (activeGridItemId) {
       activeGridItemIdRef.current = activeGridItemId;
       itemRefs.current?.[activeGridItemId]?.children[2].focus();
     }
   }, [activeGridItemId]);
+
+  // if keyboard is used instead of mouse the useFocusOut doesn't get triggered
+  // that is where we are setting active grid item ID to null
+  // by doing this here as well we are ensuring consistent functionality
+  const manuallySetFocusOut = useCallback(() => {
+    activeGridItemIdRef.current = null;
+    setActiveGridItemId(null);
+    returnStoryFocusId.set(null);
+  }, [returnStoryFocusId]);
 
   useFocusOut(containerRef, () => setActiveGridItemId(null), []);
 
@@ -119,17 +128,24 @@ const StoryGridView = ({
       menuItemActions: {
         ...storyMenu.menuItemActions,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
-          // if keyboard is used instead of mouse the useFocusOut doesn't get triggered
-          // that is where we are setting active grid item ID to null
-          // by doing this here as well we are ensuring consistent functionality
-          activeGridItemIdRef.current = null;
-          setActiveGridItemId(null);
-          returnStoryFocusId.set(null);
+          manuallySetFocusOut();
           storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DELETE](story);
+        },
+        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: (story) => {
+          manuallySetFocusOut();
+          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DUPLICATE](
+            story
+          );
+        },
+        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: (story) => {
+          manuallySetFocusOut();
+          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK](
+            story
+          );
         },
       },
     };
-  }, [returnStoryFocusId, storyMenu]);
+  }, [manuallySetFocusOut, storyMenu]);
 
   return (
     <div ref={containerRef}>

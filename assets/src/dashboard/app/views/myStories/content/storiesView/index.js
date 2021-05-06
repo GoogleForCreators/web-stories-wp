@@ -135,6 +135,7 @@ function StoriesView({
       setContextMenuId(-1);
       trackEvent('duplicate_story');
       storyActions.duplicateStory(story);
+      setFocusedStory({ id: story.id });
     },
     [storyActions]
   );
@@ -172,6 +173,7 @@ function StoriesView({
               ),
         dismissable: true,
       });
+      setFocusedStory({ id: story.id });
     },
     [showSnackbar]
   );
