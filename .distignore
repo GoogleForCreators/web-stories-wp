@@ -35,6 +35,7 @@ web-stories-scraper
 .markdownlintignore
 .npmrc
 .nvmrc
+.phpstorm.meta.php
 .prettierignore
 .prettierrc
 .stylelintignore
