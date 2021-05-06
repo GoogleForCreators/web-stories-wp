@@ -39,7 +39,10 @@ import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { Media, Row, LinkInput } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
-import { useCommonObjectValue } from '../../shared';
+import {
+  inputContainerStyleOverride,
+  useCommonObjectValue,
+} from '../../shared';
 import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 
 const IconInfo = styled.div`
@@ -256,6 +259,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               value={link.desc || ''}
               aria-label={__('Link description', 'web-stories')}
               isIndeterminate={isMultipleDesc}
+              containerStyleOverride={inputContainerStyleOverride}
             />
           </Row>
           <Row spaceBetween={false}>

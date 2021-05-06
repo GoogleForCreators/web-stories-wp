@@ -41,6 +41,7 @@ import {
   Input,
   Text,
   THEME_CONSTANTS,
+  themeHelpers,
 } from '../../../../../design-system';
 import Tooltip from '../../../tooltip';
 
@@ -52,6 +53,10 @@ const InputRow = styled.div`
 
 const StyledFileInput = styled(Input)(
   ({ hasMixedValue, theme }) => css`
+    ${themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
     ${!hasMixedValue &&
     css`
       * > input:disabled {
@@ -61,7 +66,15 @@ const StyledFileInput = styled(Input)(
   `
 );
 
-const UploadButton = styled(Button)`
+const StyledButton = styled(Button)`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
+const UploadButton = styled(StyledButton)`
   padding: 12px 8px;
 `;
 
@@ -175,7 +188,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
               />
             </InputRow>
             <Tooltip hasTail title={clearFileText}>
-              <Button
+              <StyledButton
                 aria-label={clearFileText}
                 type={BUTTON_TYPES.TERTIARY}
                 size={BUTTON_SIZES.SMALL}
@@ -183,7 +196,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
                 onClick={() => handleRemoveTrack(id)}
               >
                 <Icons.Trash />
-              </Button>
+              </StyledButton>
             </Tooltip>
           </Row>
         ))}
