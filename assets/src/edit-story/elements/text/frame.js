@@ -33,7 +33,7 @@ import {
   elementWithTextParagraphStyle,
 } from '../shared';
 import StoryPropTypes from '../../types';
-import isMouseUpAClick from '../../utils/isMouseUpAClick';
+import areEventsDragging from '../../utils/areEventsDragging';
 import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
@@ -109,11 +109,15 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
 
     const handleMouseUp = (evt) => {
       if (
-        !isMouseUpAClick(evt, {
-          timeStamp: clickTime,
-          ...clickCoordinates,
-        })
+        areEventsDragging(
+          {
+            timeStamp: clickTime,
+            ...clickCoordinates,
+          },
+          evt
+        )
       ) {
+        // Abort early as this is part of a user dragging
         return;
       }
 
