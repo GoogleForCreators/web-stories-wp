@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-export { default as ChecklistIcon } from './getChecklistIcon';
+export { default as AutoVideoOptimization } from './autoVideoOptimization';
+export { default as EmptyChecklist } from './emptyChecklist';
+export { default as ReviewChecklistDialog } from './reviewChecklistDialog';
+export { default as ChecklistIcon } from './checklistIcon';
+export { default as ChecklistTab } from './checklistTab';

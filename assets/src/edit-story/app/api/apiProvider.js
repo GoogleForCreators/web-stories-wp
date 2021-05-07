@@ -387,10 +387,10 @@ function APIProvider({ children }) {
     [cdnURL, assetsURL]
   );
 
-  // @todo Add pagination.
+  // @todo Add pagination and remove loading all the templates.
   const getCustomPageTemplates = useCallback(() => {
     let apiPath = customPageTemplates;
-    const perPage = 100;
+    const perPage = -1;
     apiPath = addQueryArgs(apiPath, {
       context: 'edit',
       per_page: perPage,
