@@ -1,16 +1,23 @@
 name: Lint I18N
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 12 * * 1-5'
   push:
     paths:
+      - '**.js'
+      - '**/package.json'
+      - 'package-lock.json'
+      - 'web-stories.php'
+      - 'includes/**.php'
       - '.github/workflows/lint-i18n.yml'
     branches:
       - main
   pull_request:
     paths:
+      - '**.js'
+      - '**/package.json'
+      - 'package-lock.json'
+      - 'web-stories.php'
+      - 'includes/**.php'
       - '.github/workflows/lint-i18n.yml'
 
 jobs:
