@@ -43,7 +43,6 @@ const Label = styled.label`
   margin-left: 12px;
 `;
 
-// @todo This is not working really.
 const StyledCheckbox = styled(Checkbox)`
   ${({ theme }) => `
     input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
