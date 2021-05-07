@@ -57,6 +57,11 @@ describe('cleanForSlug', () => {
     expect(result).toStrictEqual('hello-world');
   });
 
+  it('should remove all illegal characters', () => {
+    const result = cleanForSlug('Hello-?,:;!"World');
+    expect(result).toStrictEqual('hello-world');
+  });
+
   // Disable reason: not implemented yet.
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should replace umlauts if locale is de-*', () => {
