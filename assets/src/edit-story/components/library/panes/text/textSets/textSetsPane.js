@@ -140,17 +140,17 @@ function TextSetsPane({ paneRef }) {
     [textSets]
   );
 
-  const speak = useLiveRegion('polite');
+  const speak = useLiveRegion();
 
   const handleSelectedCategory = useCallback(
     (selectedCategory) => {
       setSelectedCat(selectedCategory);
       speak(
         selectedCategory === null
-          ? __(`Deselected text set filter`, 'web-stories')
+          ? __('Show all text sets', 'web-stories')
           : sprintf(
               /* translators: %s: filter category name */
-              __(`Selected text set filter %s`, 'web-stories'),
+              __('Selected text set filter %s', 'web-stories'),
               CATEGORIES[selectedCategory]
             )
       );
