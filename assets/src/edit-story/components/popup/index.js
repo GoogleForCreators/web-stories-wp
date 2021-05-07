@@ -26,10 +26,11 @@ import {
   useState,
   useRef,
 } from 'react';
+
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app';
+import { useConfig } from '../../app/config';
 import { useResizeEffect } from '../../../design-system';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
