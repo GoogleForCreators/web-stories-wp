@@ -20,8 +20,8 @@
 import StoryPropTypes from '../../types';
 import MediaEdit from '../media/edit';
 
-function ImageEdit({ element, box }) {
-  return <MediaEdit element={element} box={box} />;
+function ImageEdit({ element, box, ...rest }) {
+  return <MediaEdit element={element} box={box} {...rest} />;
 }
 
 ImageEdit.propTypes = {

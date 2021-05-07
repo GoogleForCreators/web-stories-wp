@@ -22,8 +22,8 @@ import MediaEdit from '../media/edit';
 
 // Opacity is adjusted so that the double image opacity would equal
 // the opacity assigned to the video.
-function VideoEdit({ element, box }) {
-  return <MediaEdit element={element} box={box} />;
+function VideoEdit({ element, box, ...rest }) {
+  return <MediaEdit element={element} box={box} {...rest} />;
 }
 
 VideoEdit.propTypes = {
