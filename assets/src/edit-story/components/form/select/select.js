@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { DropDown } from '../../../../design-system';
+import { focusStyle } from '../../panels/shared';
 
 const Container = styled.div`
   position: relative;
@@ -46,6 +47,8 @@ const selectButtonStylesOverride = css`
   width: auto;
   margin-right: auto;
   padding-left: 0;
+
+  ${focusStyle};
 `;
 
 const selectValueStylesOverride = css`

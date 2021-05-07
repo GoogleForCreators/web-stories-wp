@@ -27,7 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import {
-  Button,
+  Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
@@ -55,11 +55,16 @@ import resourceList from '../../../../../utils/resourceList';
 import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
+import { focusStyle } from '../../../../panels/shared';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 
 export const ROOT_MARGIN = 300;
+
+const Button = styled(DefaultButton)`
+  ${focusStyle};
+`;
 
 const FilterArea = styled.div`
   display: flex;
