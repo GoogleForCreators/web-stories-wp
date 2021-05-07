@@ -33,7 +33,9 @@ import {
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Publishing Flow', () => {
+// Disable for https://github.com/google/web-stories-wp/issues/6238
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Publishing Flow', () => {
   let stopRequestInterception;
 
   beforeAll(async () => {
