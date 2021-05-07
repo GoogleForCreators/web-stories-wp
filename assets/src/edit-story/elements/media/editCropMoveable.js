@@ -133,6 +133,8 @@ function EditCropMoveable({
           y: editorToDataY(y + dy),
           width: editorToDataX(resizeWidth),
           height: editorToDataY(resizeHeight),
+          resizeWidth,
+          resizeHeight,
           scale: resizeScale,
           focalX: flip?.horizontal ? 100 - resizeFocalX : resizeFocalX,
           focalY: flip?.vertical ? 100 - resizeFocalY : resizeFocalY,
