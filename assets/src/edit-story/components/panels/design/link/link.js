@@ -106,12 +106,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     ({ url, title, icon }) =>
       pushUpdateForObject(
         'link',
-        (prev) =>
+        () =>
           url
             ? {
                 url,
-                desc: title ? title : prev.desc,
-                icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
+                desc: title ? title : '',
+                icon: icon ? toAbsoluteUrl(url, icon) : '',
               }
             : null,
         defaultLink,
@@ -259,6 +259,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               value={link.desc || ''}
               aria-label={__('Link description', 'web-stories')}
               isIndeterminate={isMultipleDesc}
+              disabled={fetchingMetadata}
               containerStyleOverride={inputContainerStyleOverride}
             />
           </Row>
@@ -272,6 +273,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               buttonInsertText={__('Select as link icon', 'web-stories')}
               type={allowedImageMimeTypes}
               isLoading={fetchingMetadata}
+              disabled={fetchingMetadata}
               variant={MEDIA_VARIANTS.CIRCLE}
               menuOptions={link.icon ? ['edit', 'remove'] : []}
             />
