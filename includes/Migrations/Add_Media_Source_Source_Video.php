@@ -27,7 +27,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Media\Media;
 
 /**
  * Class Add_Media_Source_Source_Video
