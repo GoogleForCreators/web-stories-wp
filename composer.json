@@ -5,14 +5,14 @@
   "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
   "require": {
-    "php": "^5.6 || ^7.0 || ^8.0",
+    "php": "^5.6.20 || ^7.0 || ^8.0",
     "ext-dom": "*",
     "ext-iconv": "*",
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-toolbox": "dev-main#8e1dfacf4f4df8835c6a9ed1d3be8b4a7bf7b92e",
-    "ampproject/amp-wp": "dev-develop#1bac57aba4e3b58351381b4967ab6ee9b9b00aa6",
+    "ampproject/amp-toolbox": "0.5.1",
+    "ampproject/amp-wp": "2.1.0",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.14.0",
@@ -40,7 +40,7 @@
   "config": {
     "discard-changes": true,
     "platform": {
-      "php": "5.6"
+      "php": "5.6.20"
     },
     "sort-packages": true
   },
@@ -63,13 +63,7 @@
       }
     },
     "enable-patching": true,
-    "exclude-from-files": [
-      "ampproject/amp-wp/back-compat/back-compat.php",
-      "ampproject/amp-wp/includes/amp-helper-functions.php",
-      "ampproject/amp-wp/includes/admin/functions.php",
-      "ampproject/amp-wp/includes/deprecated.php",
-      "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
-    ]
+    "exclude-from-files": ["ampproject/amp-wp/includes/bootstrap.php"]
   },
   "autoload": {
     "psr-4": {
@@ -77,9 +71,7 @@
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
       "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
     },
-    "files": [
-      "includes/polyfills/mbstring.php"
-    ]
+    "files": ["includes/polyfills/mbstring.php"]
   },
   "autoload-dev": {
     "psr-4": {
@@ -97,12 +89,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-install-cmd": [
-      "@prefix-dependencies"
-    ],
-    "post-update-cmd": [
-      "@prefix-dependencies"
-    ],
+    "post-install-cmd": ["@prefix-dependencies"],
+    "post-update-cmd": ["@prefix-dependencies"],
     "composer-normalize": "composer-normalize",
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",

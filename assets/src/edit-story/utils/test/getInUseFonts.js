@@ -74,14 +74,14 @@ describe('getInUseFontsForPages', function () {
       getTextSetsForFonts({
         fonts: ['Google Sans', 'Helvetica'],
         textSets: [
-          [{ type: 'text', font: { family: 'Google Sans' } }],
-          [{ type: 'text', font: { family: 'Helvetica' } }],
-          [{ type: 'text', font: { family: 'Times New Roman' } }],
+          { elements: [{ type: 'text', font: { family: 'Google Sans' } }] },
+          { elements: [{ type: 'text', font: { family: 'Helvetica' } }] },
+          { elements: [{ type: 'text', font: { family: 'Times New Roman' } }] },
         ],
       })
     ).toStrictEqual([
-      [{ type: 'text', font: { family: 'Google Sans' } }],
-      [{ type: 'text', font: { family: 'Helvetica' } }],
+      { elements: [{ font: { family: 'Google Sans' }, type: 'text' }] },
+      { elements: [{ font: { family: 'Helvetica' }, type: 'text' }] },
     ]);
   });
 
@@ -90,9 +90,9 @@ describe('getInUseFontsForPages', function () {
       getTextSetsForFonts({
         fonts: ['New York', 'San Francisco'],
         textSets: [
-          [{ type: 'text', font: { family: 'Google Sans' } }],
-          [{ type: 'text', font: { family: 'Helvetica' } }],
-          [{ type: 'text', font: { family: 'Times New Roman' } }],
+          { elements: [{ type: 'text', font: { family: 'Google Sans' } }] },
+          { elements: [{ type: 'text', font: { family: 'Helvetica' } }] },
+          { elements: [{ type: 'text', font: { family: 'Times New Roman' } }] },
         ],
       })
     ).toStrictEqual([]);

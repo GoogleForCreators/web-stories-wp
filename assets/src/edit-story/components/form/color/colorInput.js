@@ -179,6 +179,7 @@ function ColorInput({
             <ColorPreview>
               <Swatch
                 isSmall
+                isPreview
                 role="status"
                 tabIndex="-1"
                 pattern={previewPattern}

@@ -52,7 +52,6 @@ function Panel({
   ariaLabel = null,
   ariaHidden = false,
   isPersistable = true,
-  isToggleDisabled,
   ...rest
 }) {
   // If max height is 0 - fallback to default
@@ -74,10 +73,6 @@ function Panel({
     [name, isPersistable]
   );
   const [isCollapsed, setIsCollapsed] = useState(() => {
-    // If toggle is disabled, always default to collapsed
-    if (isToggleDisabled) {
-      return true;
-    }
     // If not persisted, always default to expanded.
     if (!isPersistable) {
       return false;
@@ -283,7 +278,6 @@ Panel.propTypes = {
   children: PropTypes.node,
   initialHeight: PropTypes.number,
   maxHeight: PropTypes.number,
-  isToggleDisabled: PropTypes.bool,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
   collapsedByDefault: PropTypes.bool,

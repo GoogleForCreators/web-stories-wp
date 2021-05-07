@@ -30,8 +30,14 @@ export const TEXT = {
   ACCESSIBLE_LINK_TITLE: __('Select offending element', 'web-stories'),
   HIGH_PRIORITY_TITLE: __('High Priority', 'web-stories'),
   RECOMMENDED_TITLE: __('Recommended', 'web-stories'),
-  EMPTY_TITLE: __('Awesome work!', 'web-stories'),
-  EMPTY_BODY: __('No Issues Found', 'web-stories'),
+  EMPTY_BODY: __(
+    'All recommendations completed. Return to this checklist as you continue to create to find more tips to improve performance.',
+    'web-stories'
+  ),
+  UNAVAILABLE_BODY: __(
+    'Once you start creating, return to this checklist for tips to improve performance on search engines and more.',
+    'web-stories'
+  ),
 };
 
 export const DISABLED_HIGH_PRIORITY_CHECKPOINTS = [

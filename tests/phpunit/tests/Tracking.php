@@ -125,7 +125,7 @@ class Tracking extends Test_Case {
 	 */
 	public function test_get_settings_with_optin() {
 		wp_set_current_user( self::$user_id );
-		add_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY, true );
+		add_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 
 		$site_kit = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
 		$site_kit->method( 'get_plugin_status' )->willReturn(
@@ -144,7 +144,7 @@ class Tracking extends Test_Case {
 		$settings         = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit ) )->get_settings();
 		$tracking_allowed = $settings['trackingAllowed'];
 
-		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User_Preferences::OPTIN_META_KEY );
+		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 
 		$this->assertTrue( $tracking_allowed );
 	}
