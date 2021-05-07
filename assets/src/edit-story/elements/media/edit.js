@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -90,8 +91,7 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
-//eslint-disable-next-line complexity
-function MediaEdit({ element, box }) {
+function MediaEdit({ element, box, setLocalProperties }) {
   const {
     id,
     resource,
@@ -109,21 +109,24 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
-  const [localProperties, setLocalProperties] = useState({});
+
   const isUpdatedLocally = useRef(false);
   const lastLocalProperties = useRef({ scale });
 
-  const updateLocalProperties = useCallback((properties) => {
-    const newProps = {
-      ...lastLocalProperties.current,
-      ...(typeof properties === 'function'
-        ? properties(lastLocalProperties.current)
-        : properties),
-    };
-    lastLocalProperties.current = newProps;
-    isUpdatedLocally.current = true;
-    setLocalProperties(lastLocalProperties.current);
-  }, []);
+  const updateLocalProperties = useCallback(
+    (properties) => {
+      const newProps = {
+        ...lastLocalProperties.current,
+        ...(typeof properties === 'function'
+          ? properties(lastLocalProperties.current)
+          : properties),
+      };
+      lastLocalProperties.current = newProps;
+      isUpdatedLocally.current = true;
+      setLocalProperties(lastLocalProperties.current);
+    },
+    [setLocalProperties]
+  );
 
   // Update the true global properties of the current element
   // This now only happens on unmount
@@ -144,17 +147,13 @@ function MediaEdit({ element, box }) {
   const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
 
-  const localScale = localProperties.scale ?? scale;
-  const localFocalX = localProperties.focalX ?? focalX;
-  const localFocalY = localProperties.focalY ?? focalY;
-
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
     height,
-    localScale,
-    flip?.horizontal ? 100 - localFocalX : localFocalX,
-    flip?.vertical ? 100 - localFocalY : localFocalY
+    scale,
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
@@ -287,7 +286,7 @@ function MediaEdit({ element, box }) {
         y={y}
         width={width}
         height={height}
-        scale={localScale || 100}
+        scale={scale || 100}
       />
     </Element>
   );
@@ -296,6 +295,7 @@ function MediaEdit({ element, box }) {
 MediaEdit.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   box: StoryPropTypes.box.isRequired,
+  setLocalProperties: PropTypes.func.isRequired,
 };
 
 export default MediaEdit;
