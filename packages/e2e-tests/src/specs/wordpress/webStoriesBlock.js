@@ -110,6 +110,7 @@ describe('Web Stories Block', () => {
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
   });
+  // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
     withDisabledToolbarOnFrontend();
