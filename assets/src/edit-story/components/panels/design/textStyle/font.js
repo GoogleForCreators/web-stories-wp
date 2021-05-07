@@ -102,6 +102,8 @@ function FontControls({ selectedElements, pushUpdate }) {
     [fontStyle, handleSelectFontWeight, maybeEnqueueFontStyle, selectedElements]
   );
 
+  // https://github.com/google/web-stories-wp/pull/7451
+  // Bug report introduced new state, return to previous value when entering negative numbers
   const previousFontSize = usePrevious(fontSize);
   useEffect(() => {
     if (fontSize < 0) {
