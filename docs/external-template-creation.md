@@ -148,7 +148,7 @@ In the path's `d` attribute, you'll see a mix of numbers and letters. the letter
 
 #### Normalizing your svg path
 
-All the svg paths in the shapes panel are declared in a 0->1 coordinate space. In theory you could scale down your svg in illustrator and it would update the path coordinates occordingly, but we found that Illustrator lacks the level of precision needed for large shapes with small details. This can lead to necessary parts of your path getting rounded off. To accomodate for this, we created a little node script you can run your svg path through and it will normalize the path with a much higher level of precision that won't round off details in your shape.
+All the svg paths in the shapes panel are declared in a 0->1 coordinate space. In theory you could scale down your svg in illustrator and it would update the path coordinates accordingly, but we found that Illustrator lacks the level of precision needed for large shapes with small details. This can lead to necessary parts of your path getting rounded off. To accommodate for this, we created a little node script you can run your svg path through and it will normalize the path with a much higher level of precision that won't round off details in your shape.
 
 This script is located in `bin/normalize-path.js`. You'll need to copy the path and viewbox from your scratchpad svg file and paste them into the resize command in that file like so:
 
