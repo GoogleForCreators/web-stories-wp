@@ -113,6 +113,7 @@ export const DIRECTION = {
 };
 
 export const SCALE_DIRECTION = {
+  DYNAMIC_PROPERTY_VALUE: 'dynamicPropertyValue',
   SCALE_IN: 'scaleIn',
   SCALE_OUT: 'scaleOut',
   SCALE_OUT_TOP_RIGHT: 'scaleOutTopRight',

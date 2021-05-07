@@ -36,10 +36,6 @@
           "delay": 0
         },
         {
-          "delete": true,
-          "targets": ["d3c1350e-1e2f-4f43-ae55-7fac7fd59932"]
-        },
-        {
           "id": "be70f1db-8545-408d-9fb8-c4a75f9f678c",
           "type": "effect-fly-in",
           "targets": ["d3c1350e-1e2f-4f43-ae55-7fac7fd59932"],
@@ -428,10 +424,6 @@
           "flyInDir": "bottomToTop",
           "duration": 1000,
           "delay": 0
-        },
-        {
-          "delete": true,
-          "targets": ["816de043-a84a-43af-af61-9a4d00a04e9b"]
         },
         {
           "id": "198fef51-d45a-408a-8152-44001820366a",
@@ -1112,10 +1104,6 @@
           "delay": 50
         },
         {
-          "delete": true,
-          "targets": ["e23cd5e4-d0c9-436d-a1b1-b91dcf909373"]
-        },
-        {
           "id": "aeb98b0a-9d15-4d38-9964-f0a9da66998a",
           "type": "effect-fly-in",
           "targets": ["e23cd5e4-d0c9-436d-a1b1-b91dcf909373"],
@@ -1492,10 +1480,6 @@
           "targets": ["fd434caf-7752-47d3-b41b-0a1048f116a8"],
           "duration": 3000,
           "delay": 0
-        },
-        {
-          "delete": true,
-          "targets": ["837db927-1ee6-4419-ace6-c59f83f0ca49"]
         },
         {
           "id": "df79f0fc-7e24-4b3a-8f7c-a8fc2c571343",
@@ -2102,10 +2086,6 @@
     },
     {
       "animations": [
-        {
-          "delete": true,
-          "targets": ["9bcf8de4-b888-486b-93cb-f27bc58c637d"]
-        },
         {
           "id": "5e637d83-95ba-450e-8a8b-06e120ced464",
           "type": "effect-fly-in",

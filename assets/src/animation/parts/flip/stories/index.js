@@ -29,6 +29,7 @@ const duration = 600;
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
     type: ANIMATION_TYPES.FLIP,
     duration,
@@ -36,6 +37,7 @@ const animations = [
     rotaton: ROTATION.CLOCKWISE,
   },
   {
+    id: '2',
     targets: ['e2'],
     type: ANIMATION_TYPES.FLIP,
     duration,
@@ -44,6 +46,7 @@ const animations = [
     rotaton: ROTATION.COUNTER_CLOCKWISE,
   },
   {
+    id: '3',
     targets: ['e3'],
     type: ANIMATION_TYPES.FLIP,
     duration,
@@ -52,6 +55,7 @@ const animations = [
     rotaton: ROTATION.CLOCKWISE,
   },
   {
+    id: '4',
     targets: ['e4'],
     type: ANIMATION_TYPES.FLIP,
     duration,

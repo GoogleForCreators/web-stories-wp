@@ -27,6 +27,7 @@ export default {
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
     type: ANIMATION_TYPES.ZOOM,
     duration: 10000,
@@ -34,6 +35,7 @@ const animations = [
     zoomTo: 2,
   },
   {
+    id: '2',
     targets: ['e2'],
     type: ANIMATION_TYPES.ZOOM,
     duration: 10000,
