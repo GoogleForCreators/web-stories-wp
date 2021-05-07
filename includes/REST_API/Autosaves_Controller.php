@@ -30,7 +30,7 @@ use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Media\Media;
 use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
