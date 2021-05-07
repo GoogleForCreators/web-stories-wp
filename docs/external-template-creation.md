@@ -119,7 +119,7 @@ Since we must have a single path, we can't utilize any other aspects of the svg 
 - Open svg file in illustrator
 - Select shape 
 - (If there's any stroke) Click on `Object -> Path -> Outline Stroke`
-- Make Sure your shape is selected and click `Object -> Compound Path -> Make`
+- Make sure your shape is selected and click `Object -> Compound Path -> Make`
 - Open your code editor to any scratch pad svg file (will just be using this file for copy and pasting. won't save it at all)
 - Select svg in illustrator and copy
 - Paste into your code editor
