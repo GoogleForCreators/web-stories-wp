@@ -26,7 +26,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -41,7 +40,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Input = styled.input(visuallyHiddenStyles);
+const Input = styled.input(themeHelpers.visuallyHidden);
 
 const UploadFormArea = styled.div`
   display: flex;
