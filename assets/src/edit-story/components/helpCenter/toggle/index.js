@@ -30,8 +30,8 @@ import {
   Icons,
   NotificationBubble,
   Button as dsButton,
+  BEZIER,
 } from '../../../../design-system';
-import { BEZIER } from '../../../../animation';
 
 const Button = styled(dsButton)`
   height: 36px;

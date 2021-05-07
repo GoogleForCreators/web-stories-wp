@@ -23,8 +23,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
-import Dialog from '../../dialog';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import Dialog from '../../../dialog';
 
 const TEXT = {
   TITLE: __('Review checklist before publishing.', 'web-stories'),
@@ -46,6 +46,7 @@ function ReviewChecklistDialog({ isOpen, onIgnore, onReview, onClose }) {
       secondaryText={TEXT.SECONDARY_BUTTON}
       primaryText={TEXT.PRIMARY_BUTTON}
       onPrimary={onReview}
+      id="modal-review-checklist"
       contentStyles={{
         width: '434px',
       }}

@@ -30,6 +30,8 @@ import stripHTML from '../../../utils/stripHTML';
 import { Text, themeHelpers } from '../../../../design-system';
 
 const Preview = styled.button`
+  display: flex;
+  align-items: center;
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   padding: 8px 16px;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,28 @@
  * limitations under the License.
  */
 
-export { default as ChecklistIcon } from './getChecklistIcon';
+/**
+ * Internal dependencies
+ */
+import visitDashboard from './visitDashboard';
+
+/**
+ * Creates a new story.
+ */
+async function visitSettings() {
+  await visitDashboard();
+
+  const dashboardNavigation = await expect(page).toMatchElement(
+    '[aria-label="Main dashboard navigation"]'
+  );
+
+  await expect(dashboardNavigation).toClick('a', {
+    text: 'Settings',
+  });
+
+  await page.waitForResponse((response) =>
+    response.url().includes('web-stories/v1/media')
+  );
+}
+
+export default visitSettings;

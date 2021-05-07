@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -25,21 +25,22 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Icons, useContextSelector } from '../../../../design-system';
-import { useConfig } from '../../../app';
+import { Icons } from '../../../../../design-system';
+import { useConfig } from '../../../../app';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
   MESSAGES,
   types,
-} from '../../../app/prepublish';
-import { useHighlights } from '../../../app/highlights';
-import { SimplePanel, panelContext } from '../../panels/panel';
-import AutoVideoOptimization from './autoVideoOptimization';
+} from '../../../../app/prepublish';
+import { useHighlights } from '../../../../app/highlights';
+import { SimplePanel } from '../../../panels/panel';
 import {
   DISABLED_HIGH_PRIORITY_CHECKPOINTS,
   DISABLED_RECOMMENDED_CHECKPOINTS,
   TEXT,
-} from './constants';
+} from '../constants';
+import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
+import AutoVideoOptimization from './autoVideoOptimization';
 import EmptyChecklist from './emptyChecklist';
 import {
   GoToIssue,
@@ -51,44 +52,13 @@ import {
   PanelTitle,
   Row,
 } from './styles';
-import { PPC_CHECKPOINT_STATE } from './prepublishCheckpointState';
-
-const Entries = ({
-  items,
-  pageItems,
-  renderRow,
-  renderPageGroupedRow,
-  disabled,
-}) => {
-  const expandPanel = useContextSelector(
-    panelContext,
-    ({ actions }) => actions.expand
-  );
-  useEffect(() => {
-    if (!disabled) {
-      expandPanel();
-    }
-  }, [disabled, expandPanel]);
-  return (
-    <>
-      {items.map(renderRow)}
-      {Object.entries(pageItems || {}).map(renderPageGroupedRow)}
-    </>
-  );
-};
-Entries.propTypes = {
-  items: PropTypes.array,
-  pageItems: PropTypes.object,
-  renderRow: PropTypes.func,
-  renderPageGroupedRow: PropTypes.func,
-  disabled: PropTypes.bool,
-};
 
 const ChecklistTab = ({
   areVideosAutoOptimized,
   checklist,
   currentCheckpoint,
   onAutoVideoOptimizationClick,
+  isChecklistEmpty,
 }) => {
   const {
     isRTL,
@@ -242,81 +212,89 @@ const ChecklistTab = ({
     [renderRow]
   );
 
+  // Determine what to make visible based on checkpoint and present issues.
   const highPriorityLength =
     highPriority.length + (pages.lengths?.highPriority || 0);
+  const hasHighPriorityItems = Boolean(highPriorityLength);
+  const isHighPriorityVisible =
+    !isHighPriorityDisabledState && hasHighPriorityItems;
+
   const recommendedLength =
     recommended.length + (pages.lengths?.recommended || 0);
-  const hasHighPriorityItems = Boolean(highPriorityLength);
   const hasRecommendedItems =
-    Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
-  const isEmptyShown =
-    !hasHighPriorityItems &&
-    !hasRecommendedItems &&
-    !isHighPriorityDisabledState;
+    Boolean(recommended.length) ||
+    Boolean(pages.lengths?.recommended) ||
+    (canOptimizeVideo && !areVideosAutoOptimized);
+  const isRecommendedVisible =
+    !isRecommendedDisabledState && hasRecommendedItems;
 
-  const isRecommendedDisabled =
-    isRecommendedDisabledState || !hasRecommendedItems;
-  const isHighPriorityDisabled =
-    isHighPriorityDisabledState || !hasHighPriorityItems;
+  const isEmptyView = useMemo(() => {
+    return (
+      currentCheckpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE ||
+      isChecklistEmpty ||
+      (!isRecommendedVisible && !isHighPriorityVisible)
+    );
+  }, [
+    currentCheckpoint,
+    isRecommendedVisible,
+    isHighPriorityVisible,
+    isChecklistEmpty,
+  ]);
 
-  return isEmptyShown ? (
-    <EmptyChecklist />
-  ) : (
+  if (isEmptyView) {
+    return (
+      <EmptyChecklist
+        body={
+          currentCheckpoint === PPC_CHECKPOINT_STATE.NO_ISSUES
+            ? TEXT.EMPTY_BODY
+            : TEXT.UNAVAILABLE_BODY
+        }
+      />
+    );
+  }
+
+  return (
     <>
-      <SimplePanel
-        isToggleDisabled={isHighPriorityDisabled}
-        name="checklist"
-        hasBadge
-        title={
-          <>
-            <PanelTitle isDisabled={isHighPriorityDisabled}>
-              {TEXT.HIGH_PRIORITY_TITLE}
-            </PanelTitle>
-            {!isHighPriorityDisabled && (
+      {isHighPriorityVisible && (
+        <SimplePanel
+          name="checklist"
+          hasBadge
+          title={
+            <>
+              <PanelTitle>{TEXT.HIGH_PRIORITY_TITLE}</PanelTitle>
               <NumberBadge number={highPriorityLength} />
-            )}
-          </>
-        }
-        ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
-      >
-        <Entries
-          items={highPriority}
-          pageItems={pages.highPriority}
-          renderRow={renderRow}
-          renderPageGroupedRow={renderPageGroupedRow}
-          disabled={isHighPriorityDisabled}
-        />
-      </SimplePanel>
-      <SimplePanel
-        isToggleDisabled={isRecommendedDisabled}
-        name="checklist"
-        hasBadge
-        title={
-          <>
-            <PanelTitle isRecommended isDisabled={isRecommendedDisabled}>
-              {TEXT.RECOMMENDED_TITLE}
-            </PanelTitle>
-            {!isRecommendedDisabled && (
-              <NumberBadge isRecommended number={recommendedLength} />
-            )}
-          </>
-        }
-        ariaLabel={TEXT.RECOMMENDED_TITLE}
-      >
-        {canOptimizeVideo && (
-          <AutoVideoOptimization
-            areVideosAutoOptimized={areVideosAutoOptimized}
-            onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
-          />
-        )}
-        <Entries
-          items={recommended}
-          pageItems={pages.recommended}
-          renderRow={renderRow}
-          renderPageGroupedRow={renderPageGroupedRow}
-          disabled={isRecommendedDisabled}
-        />
-      </SimplePanel>
+            </>
+          }
+          ariaLabel={TEXT.HIGH_PRIORITY_TITLE}
+        >
+          {highPriority.map(renderRow)}
+          {Object.entries(pages.highPriority || {}).map(renderPageGroupedRow)}
+        </SimplePanel>
+      )}
+      {isRecommendedVisible && (
+        <SimplePanel
+          name="checklist"
+          hasBadge
+          title={
+            <>
+              <PanelTitle isRecommended>{TEXT.RECOMMENDED_TITLE}</PanelTitle>
+              {recommendedLength > 0 && (
+                <NumberBadge isRecommended number={recommendedLength} />
+              )}
+            </>
+          }
+          ariaLabel={TEXT.RECOMMENDED_TITLE}
+        >
+          {canOptimizeVideo && (
+            <AutoVideoOptimization
+              areVideosAutoOptimized={areVideosAutoOptimized}
+              onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}
+            />
+          )}
+          {recommended.map(renderRow)}
+          {Object.entries(pages.recommended || {}).map(renderPageGroupedRow)}
+        </SimplePanel>
+      )}
     </>
   );
 };
@@ -326,6 +304,7 @@ ChecklistTab.propTypes = {
   checklist: types.GuidanceChecklist,
   currentCheckpoint: PropTypes.oneOf(Object.values(PPC_CHECKPOINT_STATE)),
   onAutoVideoOptimizationClick: PropTypes.func,
+  isChecklistEmpty: PropTypes.bool,
 };
 
 export default ChecklistTab;
