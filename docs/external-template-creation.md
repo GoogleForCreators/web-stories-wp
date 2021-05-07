@@ -114,7 +114,7 @@ First and foremost, shapes aren't complete svgs, just a single normalized path (
 
 #### Getting your svg to be a single path
 
-Okay so since we must have a single path, we can't utilize any other aspects of the svg spec. This means all shapes must be converted to a single path in your svg editing software of your choosing. For the purposes here, we will outline the steps in illustrator because it's what we've used thus far, but these svg operations should be applicable to other programs as well.
+Since we must have a single path, we can't utilize any other aspects of the svg spec. This means all shapes must be converted to a single path in the svg editing software of your choosing. For the purposes here, we will outline the steps in illustrator because it's what we've used thus far, but these svg operations should be applicable to other programs as well.
 
 - Open svg file in illustrator
 - Select shape 
