@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -32,6 +32,7 @@ import clamp from '../../../../utils/clamp';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
 import { getCommonValue } from '../../shared';
+import usePrevious from '../../../../../design-system/utils/usePrevious';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 import FontPicker from './fontPicker';
@@ -100,6 +101,13 @@ function FontControls({ selectedElements, pushUpdate }) {
     },
     [fontStyle, handleSelectFontWeight, maybeEnqueueFontStyle, selectedElements]
   );
+
+  const previousFontSize = usePrevious(fontSize);
+  useEffect(() => {
+    if (fontSize < 0) {
+      pushUpdate({ fontSize: previousFontSize }, true);
+    }
+  }, [fontSize, previousFontSize, pushUpdate]);
 
   usePresubmitHandler(
     ({ fontSize: newFontSize }) => ({
