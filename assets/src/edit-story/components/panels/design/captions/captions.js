@@ -30,7 +30,7 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
-import { getCommonValue } from '../../shared';
+import { focusStyle, getCommonValue } from '../../shared';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import {
   Button,
@@ -53,10 +53,7 @@ const InputRow = styled.div`
 
 const StyledFileInput = styled(Input)(
   ({ hasMixedValue, theme }) => css`
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+    ${focusStyle};
     ${!hasMixedValue &&
     css`
       * > input:disabled {

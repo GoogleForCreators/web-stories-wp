@@ -34,6 +34,10 @@ export const focusStyle = css`
 
 export const inputContainerStyleOverride = css`
   :focus-within {
-    ${focusStyle};
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
 `;

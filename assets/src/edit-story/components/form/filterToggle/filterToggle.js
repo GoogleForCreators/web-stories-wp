@@ -23,10 +23,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../../../design-system/theme';
+import { THEME_CONSTANTS } from '../../../../design-system/theme';
 import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PatternPropType } from '../../../types';
+import { focusStyle } from '../../panels/shared';
 
 const fillCss = css`
   width: 100%;
@@ -61,10 +62,7 @@ const Button = styled.button(
     background: transparent;
     border: none;
     cursor: pointer;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+    ${focusStyle};
 
     img {
       width: 100%;

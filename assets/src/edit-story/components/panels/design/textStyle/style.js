@@ -31,14 +31,17 @@ import {
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-  themeHelpers,
 } from '../../../../../design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { getCommonValue, inputContainerStyleOverride } from '../../shared';
+import {
+  focusStyle,
+  getCommonValue,
+  inputContainerStyleOverride,
+} from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {
@@ -61,11 +64,7 @@ const Space = styled.div`
 `;
 
 const StyledToggle = styled(ToggleButton)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 function Toggle(props) {

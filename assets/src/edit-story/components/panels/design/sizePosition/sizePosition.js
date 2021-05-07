@@ -34,7 +34,6 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-  themeHelpers,
 } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { dataPixels } from '../../../../units';
@@ -44,6 +43,7 @@ import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import {
+  focusStyle,
   getCommonValue,
   inputContainerStyleOverride,
   useCommonObjectValue,
@@ -55,11 +55,7 @@ import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
 
 const StyledLockToggle = styled(LockToggle)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 function getStickerAspectRatio(element) {
@@ -95,11 +91,7 @@ const StyledButton = styled(Button)`
   padding: 10px 16px;
   width: 100%;
 
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 function SizePositionPanel({

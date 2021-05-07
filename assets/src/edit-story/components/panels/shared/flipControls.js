@@ -30,9 +30,9 @@ import {
   BUTTON_VARIANTS,
   ToggleButton,
   Icons,
-  themeHelpers,
 } from '../../../../design-system';
 import Tooltip from '../../tooltip';
+import { focusStyle } from './styles';
 
 const ControlsContainer = styled.div`
   display: flex;
@@ -45,11 +45,7 @@ const Space = styled.div`
 `;
 
 const StyledToggleButton = styled(ToggleButton)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 /**

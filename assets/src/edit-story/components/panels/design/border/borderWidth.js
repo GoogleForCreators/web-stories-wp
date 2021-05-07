@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Row } from '../../../form';
 import {
+  focusStyle,
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
@@ -35,7 +36,6 @@ import {
   NumericInput,
   Text,
   THEME_CONSTANTS,
-  themeHelpers,
 } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
@@ -48,11 +48,7 @@ const BorderRow = styled(Row)`
 `;
 
 const StyledLockToggle = styled(LockToggle)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const Separator = styled.div`

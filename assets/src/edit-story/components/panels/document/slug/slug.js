@@ -33,9 +33,9 @@ import {
   Input,
   Link,
   ThemeGlobals,
-  themeHelpers,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
+import { focusStyle } from '../../shared';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -62,11 +62,7 @@ const LinkContainer = styled.div`
   margin-bottom: 16px;
 
   ${Link} {
-    ${({ theme }) =>
-      themeHelpers.focusableOutlineCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
+    ${focusStyle};
   }
 `;
 

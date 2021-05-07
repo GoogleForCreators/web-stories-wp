@@ -31,13 +31,10 @@ import { Row } from '../../../form';
 import {
   useCommonObjectValue,
   inputContainerStyleOverride,
+  focusStyle,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
-import {
-  LockToggle,
-  NumericInput,
-  themeHelpers,
-} from '../../../../../design-system';
+import { LockToggle, NumericInput } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const TOGGLE_WIDTH = 32;
@@ -65,11 +62,7 @@ const LockContainer = styled.div`
 `;
 
 const StyledLockToggle = styled(LockToggle)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const BoxedNumericInput = styled(NumericInput)`

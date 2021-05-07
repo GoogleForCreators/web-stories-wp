@@ -30,17 +30,13 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  themeHelpers,
 } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
 import { PRESET_TYPES } from './constants';
+import { focusStyle } from '../../shared';
 
 const StyledButton = styled(Button)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 function PresetsHeader({

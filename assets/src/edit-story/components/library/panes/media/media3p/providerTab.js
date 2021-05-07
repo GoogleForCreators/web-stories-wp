@@ -25,11 +25,11 @@ import styled, { css } from 'styled-components';
  */
 import {
   useKeyDownEffect,
-  themeHelpers,
   Text,
   THEME_CONSTANTS,
 } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
+import { focusStyle } from '../../../../panels/shared';
 
 const StyledText = styled(Text)`
   color: inherit;
@@ -48,11 +48,7 @@ const Tab = styled.button`
   }
 
   border-radius: ${({ theme }) => theme.borders.radius.x_large};
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 
   ${({ isActive, theme }) =>
     isActive &&

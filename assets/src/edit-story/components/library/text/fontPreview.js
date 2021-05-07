@@ -27,7 +27,8 @@ import { useEffect } from 'react';
 import { useFont } from '../../../app';
 import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
-import { Text, themeHelpers } from '../../../../design-system';
+import { Text } from '../../../../design-system';
+import { focusStyle } from '../../panels/shared';
 
 const Preview = styled.button`
   display: flex;
@@ -46,11 +47,7 @@ const Preview = styled.button`
       theme.colors.interactiveBg.secondaryHover};
   }
 
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
