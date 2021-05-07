@@ -28,33 +28,11 @@ import {
  */
 import {
   createNewStory,
-  addRequestInterception,
   publishPost,
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Publishing Flow', () => {
-  let stopRequestInterception;
-
-  beforeAll(async () => {
-    await page.setRequestInterception(true);
-    stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().startsWith('https://cdn.ampproject.org/')) {
-        request.respond({
-          status: 200,
-          body: '',
-        });
-      } else {
-        request.continue();
-      }
-    });
-  });
-
-  afterAll(async () => {
-    await page.setRequestInterception(false);
-    stopRequestInterception();
-  });
-
   it('should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 
