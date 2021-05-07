@@ -79,7 +79,7 @@ function EffectInput({
     [onChange]
   );
 
-  const valueForField = effectConfig[field] || effectProps[field].defaultValue;
+  const valueForField = effectConfig[field] ?? effectProps[field].defaultValue;
   const isFloat = effectProps[field].type === FIELD_TYPES.FLOAT;
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:

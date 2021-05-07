@@ -283,7 +283,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?)
-		$story_post_type = $this->get_story_object();
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );
@@ -313,7 +313,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
 		// instead of "http://example.org/web-stories/embed-controller-test-story/".
 		// @todo Investigate why this is  needed (leakage between tests?).
-		$story_post_type = $this->get_story_object();
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type();
 		$story_post_type->register();
 
 		flush_rewrite_rules( false );

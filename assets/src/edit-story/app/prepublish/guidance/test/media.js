@@ -156,12 +156,8 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       type: 'video',
       resource: {
         isOptimized: false,
-        sizes: {
-          full: {
-            height: 2160,
-            width: 3840,
-          },
-        },
+        height: 2160,
+        width: 3840,
       },
     };
 
@@ -177,12 +173,8 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       type: 'video',
       resource: {
         isOptimized: true,
-        sizes: {
-          full: {
-            height: 2160,
-            width: 3840,
-          },
-        },
+        height: 2160,
+        width: 3840,
       },
     };
 
@@ -196,12 +188,8 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       type: 'video',
       resource: {
         isOptimized: false,
-        sizes: {
-          full: {
-            height: 300,
-            width: 400,
-          },
-        },
+        height: 300,
+        width: 400,
       },
     };
     const smallOptimizedVideo = {
@@ -209,12 +197,8 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       type: 'video',
       resource: {
         isOptimized: true,
-        sizes: {
-          full: {
-            height: 300,
-            width: 400,
-          },
-        },
+        height: 300,
+        width: 400,
       },
     };
 

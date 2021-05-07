@@ -68,7 +68,7 @@ function render_theme_stories() {
 		return;
 	}
 
-	$customizer = $injector->make( Customizer::class );
+	$customizer = $injector->make( Admin\Customizer::class );
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $customizer->render_stories();
 }
