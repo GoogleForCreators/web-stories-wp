@@ -32,8 +32,8 @@ import {
   Icons,
 } from '../../../../../design-system';
 import { PanelTitle } from '../../panel';
-import { PRESET_TYPES } from './constants';
 import { focusStyle } from '../../shared';
+import { PRESET_TYPES } from './constants';
 
 const StyledButton = styled(Button)`
   ${focusStyle};

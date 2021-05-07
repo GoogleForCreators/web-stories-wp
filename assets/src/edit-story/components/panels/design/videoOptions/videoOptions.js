@@ -46,7 +46,7 @@ const Label = styled.label`
 // @todo This is not working really.
 const StyledCheckbox = styled(Checkbox)`
   ${({ theme }) => `
-    &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}:not(:active) ~ div {
+    input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
       box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
     }
   `}

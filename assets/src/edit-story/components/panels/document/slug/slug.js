@@ -35,7 +35,7 @@ import {
   ThemeGlobals,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
-import { focusStyle } from '../../shared';
+import { inputContainerStyleOverride } from '../../shared';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -60,10 +60,6 @@ const PermalinkRow = styled(Row)`
 
 const LinkContainer = styled.div`
   margin-bottom: 16px;
-
-  ${Link} {
-    ${focusStyle};
-  }
 `;
 
 function SlugPanel() {
@@ -122,6 +118,7 @@ function SlugPanel() {
           aria-label={__('URL slug', 'web-stories')}
           minLength={MIN_MAX.PERMALINK.MIN}
           maxLength={MIN_MAX.PERMALINK.MAX}
+          containerStyleOverride={inputContainerStyleOverride}
         />
       </PermalinkRow>
       <LinkContainer>
