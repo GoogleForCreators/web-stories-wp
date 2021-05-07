@@ -110,7 +110,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
 
 ### Adding SVGs to the codebase as shapes
 
-First and foremost, shapes aren't complete svgs, just a single normalized path (ccordinates should be defined in a 0->1 space). To accomodate for this, there are a few formatting steps that must be taken in an svg editing software (like illustrator), and a few steps within the codebase to get a propper working path in the editor.
+First and foremost, shapes aren't complete svgs, just a single normalized path (coordinates should be defined in a 0->1 space). To accommodate for this, there are a few formatting steps that must be taken in an svg editing software (like illustrator), and a few steps within the codebase to get a proper working path in the editor.
 
 #### Getting your svg to be a single path
 
