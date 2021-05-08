@@ -55,7 +55,7 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 100vh;
 `;
 
