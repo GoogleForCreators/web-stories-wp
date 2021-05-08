@@ -224,11 +224,11 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         </InputContainer>
 
         <LockContainer>
-          <Tooltip title={__('Toggle identical radii', 'web-stories')}>
+          <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
             <LockToggle
               isLocked={borderRadius.locked}
               onClick={() => handleLockChange(!borderRadius.locked)}
-              aria-label={__('Toggle identical radii', 'web-stories')}
+              aria-label={__('Toggle consistent corner radius', 'web-stories')}
             />
           </Tooltip>
         </LockContainer>

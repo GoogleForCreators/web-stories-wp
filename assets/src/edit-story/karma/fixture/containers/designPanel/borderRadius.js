@@ -34,6 +34,6 @@ export class BorderRadius extends AbstractPanel {
   }
 
   get lockBorderRadius() {
-    return this.getByRole('button', { name: /Toggle corner radius lock/ });
+    return this.getByRole('button', { name: /Toggle consistent corner radius/ });
   }
 }

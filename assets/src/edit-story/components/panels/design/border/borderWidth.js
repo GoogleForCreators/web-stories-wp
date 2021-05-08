@@ -177,7 +177,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         </>
       )}
       <ToggleWrapper locked={lockBorder}>
-        <Tooltip title={__('Toggle identical borders', 'web-stories')}>
+        <Tooltip title={__('Toggle consistent border', 'web-stories')}>
           <LockToggle
             isLocked={lockBorder}
             onClick={() => {
@@ -195,7 +195,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
               }
               handleLockChange(args);
             }}
-            aria-label={__('Toggle identical borders', 'web-stories')}
+            aria-label={__('Toggle consistent border', 'web-stories')}
           />
         </Tooltip>
       </ToggleWrapper>
