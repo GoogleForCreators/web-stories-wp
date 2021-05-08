@@ -278,10 +278,6 @@
           "delay": 0
         },
         {
-          "delete": true,
-          "targets": ["61d23551-31e3-4aad-ac15-b8fc5e4be2ec"]
-        },
-        {
           "id": "fbbcd2a3-7b99-406c-8297-f1ef1334e0eb",
           "type": "effect-fly-in",
           "targets": ["61d23551-31e3-4aad-ac15-b8fc5e4be2ec"],
@@ -477,10 +473,6 @@
           "easingPreset": "linear",
           "fill": "both",
           "iterations": 1
-        },
-        {
-          "delete": true,
-          "targets": ["792955f1-699b-499a-bf65-d88b60d613af"]
         },
         {
           "id": "3ebbefbe-89af-4773-80aa-480b4501af58",
@@ -1803,10 +1795,6 @@
     },
     {
       "animations": [
-        {
-          "delete": true,
-          "targets": ["735394cc-0da6-479c-951d-14579f0766ef"]
-        },
         {
           "id": "57a3b17c-3964-4fcc-81af-8d1d3f7d3d62",
           "type": "effect-fly-in",

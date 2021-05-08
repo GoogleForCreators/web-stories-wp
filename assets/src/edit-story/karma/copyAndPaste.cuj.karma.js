@@ -164,7 +164,7 @@ function sequencedForEach(htmlCollection, op) {
           );
           expect(pasted.elementAnimations.length).toEqual(1);
 
-          // Coppied and Pasted anims should share all attributes
+          // Copied and Pasted animations should share all attributes
           // Except `id` & `targets`
           const {
             id: cId,

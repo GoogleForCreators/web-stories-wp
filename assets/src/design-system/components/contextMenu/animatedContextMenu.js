@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation/constants';
+import { BEZIER } from '../../theme/constants';
 import { CORNER_DIRECTIONS, DIRECTIONS } from '../../utils/directions';
 import Mask from './mask';
 import Menu, { MenuPropTypes } from './menu';
@@ -296,7 +296,7 @@ const AnimatedContextMenu = ({ items, ...props }) => (
   <>
     {props.isOpen && <Mask onDismiss={props.onDismiss} />}
     <AnimationContainer isOpen={props.isOpen}>
-      <Menu items={items} {...props} />
+      <Menu aria-expanded={props.isOpen} items={items} {...props} />
     </AnimationContainer>
   </>
 );

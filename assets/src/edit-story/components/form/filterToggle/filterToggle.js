@@ -113,7 +113,7 @@ const StyledText = styled(Text).attrs({
   display: block;
 `;
 
-function FilterToggle({ isToggled, filter, children, label, ...rest }) {
+function FilterToggle({ isToggled, filter = null, children, label, ...rest }) {
   return (
     <Wrapper>
       <Button {...rest} isToggled={isToggled} aria-pressed={isToggled}>
@@ -128,7 +128,7 @@ function FilterToggle({ isToggled, filter, children, label, ...rest }) {
 
 FilterToggle.propTypes = {
   isToggled: PropTypes.bool.isRequired,
-  filter: PatternPropType.isRequired,
+  filter: PatternPropType,
   children: PropTypes.node.isRequired,
   label: PropTypes.string,
 };

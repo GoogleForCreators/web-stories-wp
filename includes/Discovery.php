@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Media\Media;
 
 use WP_Post;
 

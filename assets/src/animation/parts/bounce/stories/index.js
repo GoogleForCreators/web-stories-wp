@@ -26,10 +26,28 @@ export default {
 };
 
 const animations = [
-  { targets: ['e1'], type: ANIMATION_TYPES.BOUNCE, duration: 1000 },
-  { targets: ['e2'], type: ANIMATION_TYPES.BOUNCE, duration: 1000, delay: 100 },
-  { targets: ['e3'], type: ANIMATION_TYPES.BOUNCE, duration: 1000, delay: 300 },
-  { targets: ['e4'], type: ANIMATION_TYPES.BOUNCE, duration: 1000, delay: 500 },
+  { id: '1', targets: ['e1'], type: ANIMATION_TYPES.BOUNCE, duration: 1000 },
+  {
+    id: '2',
+    targets: ['e2'],
+    type: ANIMATION_TYPES.BOUNCE,
+    duration: 1000,
+    delay: 100,
+  },
+  {
+    id: '3',
+    targets: ['e3'],
+    type: ANIMATION_TYPES.BOUNCE,
+    duration: 1000,
+    delay: 300,
+  },
+  {
+    id: '4',
+    targets: ['e4'],
+    type: ANIMATION_TYPES.BOUNCE,
+    duration: 1000,
+    delay: 500,
+  },
 ];
 
 const elements = [
