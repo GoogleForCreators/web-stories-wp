@@ -29,12 +29,14 @@ const duration = 600;
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
     floatOnDir: DIRECTION.TOP_TO_BOTTOM,
   },
   {
+    id: '2',
     targets: ['e2'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
@@ -42,6 +44,7 @@ const animations = [
     floatOnDir: DIRECTION.BOTTOM_TO_TOP,
   },
   {
+    id: '3',
     targets: ['e3'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,
@@ -49,6 +52,7 @@ const animations = [
     floatOnDir: DIRECTION.LEFT_TO_RIGHT,
   },
   {
+    id: '4',
     targets: ['e4'],
     type: ANIMATION_TYPES.FLOAT_ON,
     duration,

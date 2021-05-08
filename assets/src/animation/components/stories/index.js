@@ -68,10 +68,15 @@ SquareWrapper.propTypes = {
 };
 
 const animations = [
-  { targets: ['some-id'], type: ANIMATION_TYPES.FADE },
-  { targets: ['some-id'], type: ANIMATION_TYPES.FLIP },
-  { targets: ['some-id'], type: ANIMATION_TYPES.SPIN },
-  { targets: ['some-id'], type: ANIMATION_TYPES.FLOAT_ON, duration: 1000 },
+  { id: '1', targets: ['some-id'], type: ANIMATION_TYPES.FADE },
+  { id: '2', targets: ['some-id'], type: ANIMATION_TYPES.FLIP },
+  { id: '3', targets: ['some-id'], type: ANIMATION_TYPES.SPIN },
+  {
+    id: '4',
+    targets: ['some-id'],
+    type: ANIMATION_TYPES.FLOAT_ON,
+    duration: 1000,
+  },
 ];
 
 export function _default() {

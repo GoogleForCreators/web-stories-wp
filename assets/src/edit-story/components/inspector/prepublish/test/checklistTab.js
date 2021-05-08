@@ -20,7 +20,9 @@ import { noop } from '../../../../../design-system';
 import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
 import { ConfigProvider } from '../../../../app/config';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../../app/prepublish';
-import ChecklistTab from '../checklistTab';
+import ChecklistTab from '../components/checklistTab';
+import { TEXT } from '../constants';
+import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
 jest.mock('flagged', () => ({
   useFeature: () => true,
@@ -41,6 +43,8 @@ const GUIDANCE_ERROR = {
 const renderChecklistTab = ({
   areVideosAutoOptimized = false,
   hasUploadMediaAction = true,
+  currentCheckpoint = PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
+  isChecklistEmpty,
 }) => {
   return renderWithProviders(
     <ConfigProvider
@@ -52,6 +56,8 @@ const renderChecklistTab = ({
       <ChecklistTab
         areVideosAutoOptimized={areVideosAutoOptimized}
         checklist={[GUIDANCE_ERROR]}
+        currentCheckpoint={currentCheckpoint}
+        isChecklistEmpty={isChecklistEmpty}
         onAutoVideoOptimizationClick={noop}
       />
     </ConfigProvider>
@@ -84,5 +90,26 @@ describe('<ChecklistTab />', () => {
     const toggle = queryByRole('checkbox', { hidden: true });
 
     expect(toggle).not.toBeInTheDocument();
+  });
+
+  it(`should display starting empty message when checkpoint is "${PPC_CHECKPOINT_STATE.UNAVAILABLE}"`, () => {
+    const { getByText } = renderChecklistTab({
+      currentCheckpoint: PPC_CHECKPOINT_STATE.UNAVAILABLE,
+    });
+
+    const message = getByText(TEXT.UNAVAILABLE_BODY);
+
+    expect(message).toBeInTheDocument();
+  });
+
+  it(`should display message about empty checklist when checkpoint is "${PPC_CHECKPOINT_STATE.NO_ISSUES}"`, () => {
+    const { getByText } = renderChecklistTab({
+      currentCheckpoint: PPC_CHECKPOINT_STATE.NO_ISSUES,
+      isChecklistEmpty: true,
+    });
+
+    const message = getByText(TEXT.EMPTY_BODY);
+
+    expect(message).toBeInTheDocument();
   });
 });

@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS } from '../../../constants';
+import { ANIMATION_TYPES } from '../../../constants';
 import { AMPStoryWrapper } from '../../../storybookUtils';
 
 export default {
@@ -26,10 +26,11 @@ export default {
 };
 
 const animations = [
-  { targets: ['e1'], type: ANIMATION_EFFECTS.FADE_IN, duration: 1000 },
+  { id: '1', targets: ['e1'], type: ANIMATION_TYPES.FADE_IN, duration: 1000 },
   {
+    id: '2',
     targets: ['e2'],
-    type: ANIMATION_EFFECTS.FADE_IN,
+    type: ANIMATION_TYPES.FADE_IN,
     duration: 2500,
   },
 ];

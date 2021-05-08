@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS } from '../../../constants';
+import { ANIMATION_TYPES } from '../../../constants';
 import { AMPStoryWrapper } from '../../../storybookUtils';
 
 export default {
@@ -27,27 +27,31 @@ export default {
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.PULSE,
+    type: ANIMATION_TYPES.PULSE,
     delay: 500,
   },
   {
+    id: '2',
     targets: ['e2'],
-    type: ANIMATION_EFFECTS.PULSE,
+    type: ANIMATION_TYPES.PULSE,
     iterations: 2,
     scale: 1,
     delay: 1000,
   },
   {
+    id: '3',
     targets: ['e3'],
-    type: ANIMATION_EFFECTS.PULSE,
+    type: ANIMATION_TYPES.PULSE,
     iterations: 3,
     scale: 1.5,
     delay: 2000,
   },
   {
+    id: '4',
     targets: ['e4'],
-    type: ANIMATION_EFFECTS.PULSE,
+    type: ANIMATION_TYPES.PULSE,
     iterations: 4,
     scale: 2,
     delay: 3500,

@@ -26,10 +26,10 @@ export default {
 };
 
 const animations = [
-  { targets: ['e1'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e2'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e3'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  { targets: ['e4'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
+  { id: '1', targets: ['e1'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
+  { id: '2', targets: ['e2'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
+  { id: '3', targets: ['e3'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
+  { id: '4', targets: ['e4'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
 ];
 
 const elements = [

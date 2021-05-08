@@ -26,7 +26,14 @@ import objectWithout from '../../utils/objectWithout';
 import createNewElement from './createNewElement';
 
 const duplicatePage = (oldPage) => {
-  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
+  // Remove title and postId for inserting the page.
+  const {
+    elements: oldElements,
+    animations: oldAnimations,
+    postId,
+    title,
+    ...rest
+  } = oldPage;
 
   // Remove title and templateId for inserting the page.
   const cleanPage = objectWithout(rest, ['postId', 'title']);

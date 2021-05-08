@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\User\Capabilities;
 
 /**
  * Class Add_Stories_Caps
@@ -35,21 +35,21 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class Add_Stories_Caps extends Migrate_Base {
 	/**
-	 * Story_Post_Type instance.
+	 * Capabilities instance.
 	 *
-	 * @var Story_Post_Type Experiments instance.
+	 * @var Capabilities Experiments instance.
 	 */
-	private $story_post_type;
+	private $capabilities;
 
 	/**
 	 * Add_Stories_Caps constructor.
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
+	 * @param Capabilities $capabilities Capabilities instance.
 	 */
-	public function __construct( Story_Post_Type $story_post_type ) {
-		$this->story_post_type = $story_post_type;
+	public function __construct( Capabilities $capabilities ) {
+		$this->capabilities = $capabilities;
 	}
 
 	/**
@@ -60,6 +60,6 @@ class Add_Stories_Caps extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		$this->story_post_type->add_caps_to_roles();
+		$this->capabilities->add_caps_to_roles();
 	}
 }
