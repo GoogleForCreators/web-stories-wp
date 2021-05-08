@@ -21,18 +21,13 @@
  * @return {string} CSS transform scale value.
  */
 function getTransformFlip(flip) {
-  let transformFlip = null;
   if (!flip) {
-    return transformFlip;
+    return null;
   }
-  if (flip.vertical && flip.horizontal) {
-    transformFlip = 'scale3d(-1, -1, 1)';
-  } else if (flip.horizontal) {
-    transformFlip = 'scale3d(-1, 1, 1)';
-  } else if (flip.vertical) {
-    transformFlip = 'scale3d(1, -1, 1)';
-  }
-  return transformFlip;
+
+  const xSign = flip.horizontal ? '-' : '';
+  const ySign = flip.vertical ? '-' : '';
+  return `scale3d(${xSign}1, ${ySign}1, 1)`;
 }
 
 export default getTransformFlip;

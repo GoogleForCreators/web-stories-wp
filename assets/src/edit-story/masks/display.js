@@ -39,7 +39,7 @@ const FILL_STYLE = {
 export default function WithMask({
   element,
   fill,
-  style,
+  style = {},
   children,
   box,
   applyFlip = true,
@@ -49,12 +49,15 @@ export default function WithMask({
   const mask = getElementMask(element);
   const { flip, isBackground } = element;
 
-  const transformFlip = getTransformFlip(flip);
-  if (transformFlip && applyFlip) {
-    style.transform = style.transform
-      ? `${style.transform} ${transformFlip}`
-      : transformFlip;
-  }
+  const flipTransform = (applyFlip && getTransformFlip(flip)) || '';
+
+  const actualTransform = `${style.transform || ''} ${flipTransform}`.trim();
+
+  const fullStyle = {
+    ...(fill ? FILL_STYLE : {}),
+    ...style,
+    transform: actualTransform,
+  };
 
   // Don't display mask if we have a border, not to cut it off while resizing.
   // Note that border can be applied to a rectangle only anyway.
@@ -64,13 +67,7 @@ export default function WithMask({
     shouldDisplayBorder(element)
   ) {
     return (
-      <div
-        style={{
-          ...(fill ? FILL_STYLE : {}),
-          ...style,
-        }}
-        {...rest}
-      >
+      <div style={fullStyle} {...rest}>
         {children}
       </div>
     );
@@ -85,10 +82,10 @@ export default function WithMask({
 
   return (
     <div
+      className="this-is-foo"
       style={{
         pointerEvents: 'initial',
-        ...(fill ? FILL_STYLE : {}),
-        ...style,
+        ...fullStyle,
         ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
       }}
       {...rest}
