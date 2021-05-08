@@ -27,7 +27,9 @@ import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia } from '../../app/media';
 import { useStory } from '../../app/story';
+import { useLayout } from '../../app/layout';
 import { DEFAULT_MASK } from '../../masks/constants';
+import { ZOOM_SETTING } from '../../constants';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
 import useFocusCanvas from './useFocusCanvas';
@@ -42,6 +44,10 @@ function useInsertElement() {
   const {
     actions: { registerUsage },
   } = useMedia3pApi();
+
+  const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
+    setZoomSetting,
+  }));
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -85,6 +91,7 @@ function useInsertElement() {
    */
   const insertElement = useCallback(
     (type, props) => {
+      setZoomSetting(ZOOM_SETTING.FIT);
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });
@@ -104,7 +111,13 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [addElement, backfillResource, focusCanvas, handleRegisterUsage]
+    [
+      addElement,
+      backfillResource,
+      focusCanvas,
+      handleRegisterUsage,
+      setZoomSetting,
+    ]
   );
 
   return insertElement;
