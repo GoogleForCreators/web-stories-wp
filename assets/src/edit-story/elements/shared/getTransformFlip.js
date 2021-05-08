@@ -21,7 +21,8 @@
  * @return {string} CSS transform scale value.
  */
 function getTransformFlip(flip) {
-  if (!flip) {
+  // If no flip
+  if (!flip || (!flip.horizontal && !flip.vertical)) {
     return null;
   }
 
