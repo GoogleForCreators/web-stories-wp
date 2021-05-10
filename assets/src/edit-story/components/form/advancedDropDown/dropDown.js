@@ -27,6 +27,7 @@ import PropTypes from 'prop-types';
  */
 import Popup from '../../popup';
 import DropDownSelect from '../../../../design-system/components/dropDown/select';
+import { focusStyle } from '../../panels/shared';
 import OptionsContainer from './container';
 import List from './list';
 
@@ -169,6 +170,7 @@ function DropDown({
         activeItemLabel={selectedOption?.name}
         dropDownLabel={dropDownLabel}
         onSelectClick={toggleDropDown}
+        selectButtonStylesOverride={focusStyle}
         {...rest}
       />
       {isOpen && !disabled && isInline && list}

@@ -29,8 +29,8 @@ import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
-  themeHelpers,
 } from '../../../design-system';
+import { focusStyle } from '../panels/shared';
 
 const Preview = styled.button`
   margin: 0;
@@ -42,20 +42,12 @@ const Preview = styled.button`
   width: 100%;
   padding: 7px;
 
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const Wrapper = styled.div`
   input {
-    ${({ theme }) =>
-      themeHelpers.focusableOutlineCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
+    ${focusStyle};
   }
 `;
 

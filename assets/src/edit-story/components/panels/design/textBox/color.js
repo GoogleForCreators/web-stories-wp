@@ -27,7 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { Color, Row } from '../../../form';
-import { useCommonColorValue, getCommonValue } from '../../shared';
+import { useCommonColorValue, getCommonValue, focusStyle } from '../../shared';
 import { PillGroup } from '../../../../../design-system';
 import { applyHiddenPadding, removeHiddenPadding } from './utils';
 
@@ -88,6 +88,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
           value={backgroundTextMode}
           onSelect={onSelect}
           options={FILL_OPTIONS}
+          pillStyleOverride={focusStyle}
         />
       </FillRow>
       {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (

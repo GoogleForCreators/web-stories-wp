@@ -57,7 +57,7 @@ const Hint = styled(Text)`
 `;
 
 const InputContainer = styled.div(
-  ({ focused, hasError, theme }) => css`
+  ({ focused, hasError, theme, styleOverride }) => css`
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -77,6 +77,8 @@ const InputContainer = styled.div(
     :focus-within {
       ${focusCSS(theme.colors.border.focus)};
     }
+
+    ${styleOverride};
   `
 );
 
@@ -138,6 +140,7 @@ export const TextArea = forwardRef(
       showCount = false,
       maxLength,
       isIndeterminate = false,
+      containerStyleOverride = '',
       ...props
     },
     ref
@@ -167,7 +170,11 @@ export const TextArea = forwardRef(
             {label}
           </Label>
         )}
-        <InputContainer focused={isFocused} hasError={hasError}>
+        <InputContainer
+          focused={isFocused}
+          hasError={hasError}
+          styleOverride={containerStyleOverride}
+        >
           <StyledTextArea
             id={textAreaId}
             disabled={disabled}
@@ -205,6 +212,10 @@ const TextAreaPropTypes = {
   showCount: PropTypes.bool,
   maxLength: PropTypes.number,
   isIndeterminate: PropTypes.bool,
+  containerStyleOverride: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
 };
 
 TextArea.propTypes = TextAreaPropTypes;

@@ -24,11 +24,17 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Radio, themeHelpers } from '../../../../design-system';
+import { Radio, ThemeGlobals, themeHelpers } from '../../../../design-system';
 import useRadioNavigation from '../shared/useRadioNavigation';
 
 const VisuallyHiddenLabel = styled.h3`
   ${themeHelpers.visuallyHidden};
+`;
+
+const StyledRadio = styled(Radio)`
+  input:focus + span, input&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} + span {
+    ${({ theme }) =>
+      `box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;`};
 `;
 
 function RadioGroup({
@@ -53,7 +59,7 @@ function RadioGroup({
     >
       <VisuallyHiddenLabel id={groupId}>{groupLabel}</VisuallyHiddenLabel>
       {options.map(({ helper = '', label, value }) => (
-        <Radio
+        <StyledRadio
           key={value}
           name={name}
           value={value}
