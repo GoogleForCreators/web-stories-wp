@@ -115,8 +115,11 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
         scale: replacement.scale,
         focalX: replacement.focalX,
         focalY: replacement.focalY,
-        // Okay, this is a bit weird, but... the flip property is taken from the drop-image if
-        // target is background, but from the original image if target is non-background
+        // Okay, this is a bit weird, but... the flip property is taken from the dragged image
+        // if the drop-target is the background element, but from the original drop-target image
+        // itself if the drop-target is a regular element.
+        //
+        // @see compare with similar logic in `combineElements`
         flip: isBackground ? replacement.flip : flip,
       }
     : null;
