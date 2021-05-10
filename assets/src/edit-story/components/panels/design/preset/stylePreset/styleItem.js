@@ -30,6 +30,7 @@ import stripHTML from '../../../../../utils/stripHTML';
 import { useStory } from '../../../../../app/story';
 import generatePatternStyles from '../../../../../utils/generatePatternStyles';
 import { Icons } from '../../../../../../design-system';
+import { focusStyle } from '../../../shared';
 
 const REMOVE_ICON_SIZE = 32;
 
@@ -56,6 +57,7 @@ const PresetButton = styled.button`
     color: ${({ theme }) => theme.colors.fg.primary};
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
   }
+  ${focusStyle}
 `;
 
 const HighLight = styled.span`

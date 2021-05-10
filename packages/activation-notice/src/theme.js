@@ -56,25 +56,25 @@ export const theme = {
   },
   fonts: {
     body: {
-      family: 'Roboto',
+      family: "'Google Sans', sans-serif",
       size: '16px',
       lineHeight: '24px',
       fontWeight: 400,
     },
     title: {
-      family: 'Roboto',
+      family: "'Google Sans', sans-serif",
       size: '32px',
       lineHeight: '40px',
       fontWeight: 400,
     },
     button: {
-      family: 'Roboto',
+      family: "'Google Sans', sans-serif",
       size: '16px',
       lineHeight: '32px',
       fontWeight: 400,
     },
     stepNumber: {
-      family: 'Roboto',
+      family: "'Google Sans', sans-serif",
       size: '80px',
       lineHeight: '80px',
       fontWeight: 900,

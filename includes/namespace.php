@@ -45,7 +45,8 @@ function setup_new_site() {
 	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
 	// TODO Register cap to roles within class itself.
-	$story->add_caps_to_roles();
+	$capabilities = $injector->make( User\Capabilities::class );
+	$capabilities->add_caps_to_roles();
 	rewrite_flush();
 
 	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.

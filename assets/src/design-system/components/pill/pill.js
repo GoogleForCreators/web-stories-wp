@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 
 const StyledPill = styled.button(
-  ({ isActive, theme }) => css`
+  ({ isActive, theme, styleOverride }) => css`
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -36,7 +36,10 @@ const StyledPill = styled.button(
     background-color: ${isActive
       ? theme.colors.interactiveBg.primaryNormal
       : theme.colors.opacity.footprint};
-    border: none;
+    border: 1px solid
+      ${isActive
+        ? theme.colors.interactiveBg.primaryNormal
+        : theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.x_large};
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
@@ -57,12 +60,23 @@ const StyledPill = styled.button(
 
     transition: color 0.3s ease 0s;
     transition: background-color 0.3s ease 0s;
+
+    ${styleOverride};
   `
 );
 
-function Pill({ children, isActive, onClick, ...rest }, ref) {
+function Pill(
+  { children, isActive, onClick, pillStyleOverride, ...rest },
+  ref
+) {
   return (
-    <StyledPill ref={ref} isActive={isActive} onClick={onClick} {...rest}>
+    <StyledPill
+      ref={ref}
+      isActive={isActive}
+      onClick={onClick}
+      styleOverride={pillStyleOverride}
+      {...rest}
+    >
       {children}
     </StyledPill>
   );
@@ -74,6 +88,7 @@ Pill.propTypes = {
   children: PropTypes.node.isRequired,
   isActive: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
+  pillStyleOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
 export default PillWithRef;

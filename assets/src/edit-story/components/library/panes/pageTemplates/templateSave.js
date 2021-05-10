@@ -31,11 +31,11 @@ import {
   THEME_CONSTANTS,
   Text,
   useSnackbar,
-  themeHelpers,
 } from '../../../../../design-system';
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import isDefaultPage from '../../../../utils/isDefaultPage';
+import { focusStyle } from '../../../panels/shared';
 import { ReactComponent as Icon } from './images/illustration.svg';
 
 const SaveButton = styled.button`
@@ -58,11 +58,7 @@ const SaveButton = styled.button`
       theme.colors.interactiveBg.secondaryHover};
   }
 
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const IconWrapper = styled.div`

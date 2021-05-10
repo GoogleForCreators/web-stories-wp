@@ -25,6 +25,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { editorToDataX, editorToDataY } from '../../../../units';
+import { ZOOM_SETTING } from '../../../../constants';
 import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
@@ -76,9 +77,14 @@ function LibraryMoveable({
   const overlayRef = useRef(null);
   const moveable = useRef(null);
 
+  // These useLayout's are specifically kept as separate entries
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
+  }));
+  // This is a stable function, so it will ever only run once
+  const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
+    setZoomSetting,
   }));
 
   const insertElement = useInsertElement();
@@ -200,6 +206,7 @@ function LibraryMoveable({
     set(frame.translate);
     setIsDragging(true);
     startEventTracking(inputEvent);
+    setZoomSetting(ZOOM_SETTING.FIT);
 
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
