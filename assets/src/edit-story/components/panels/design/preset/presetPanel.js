@@ -19,7 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -158,9 +158,13 @@ function PresetPanel({ presetType, title, pushUpdate }) {
           primaryText={__('Delete', 'web-stories')}
         >
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__(
-              `This is a global ${presetType}. Deleting this ${presetType} will remove it from the Saved ${presetType}s panel across all stories and the ${presetType} will no longer be available to any team members sharing this account.`,
-              'web-stories'
+            {sprintf(
+              /* translators: %s: preset type. */
+              __(
+                'This is a global %1$s. Deleting this %1$s will remove it from the Saved %1$ss panel across all stories and the %1$s will no longer be available to any team members sharing this account.',
+                'web-stories'
+              ),
+              presetType
             )}
           </Text>
         </Dialog>
