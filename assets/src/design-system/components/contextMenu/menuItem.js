@@ -52,6 +52,11 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const IconWrapper = styled.span`
+  width: 32px;
+  height: 32px;
+`;
+
 export const MenuItem = ({
   disabled,
   href,
@@ -61,9 +66,9 @@ export const MenuItem = ({
   onDismiss = noop,
   onFocus,
   shortcut,
+  Icon,
 }) => {
   const itemRef = useRef(null);
-
   /**
    * Close the menu after clicking.
    */
@@ -75,8 +80,15 @@ export const MenuItem = ({
     [onClick, onDismiss]
   );
 
-  const textContent = useMemo(
-    () => (
+  const textContent = useMemo(() => {
+    if (Icon) {
+      return (
+        <IconWrapper>
+          <Icon />
+        </IconWrapper>
+      );
+    }
+    return (
       <>
         <ItemText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -93,9 +105,8 @@ export const MenuItem = ({
           </Shortcut>
         )}
       </>
-    ),
-    [label, shortcut]
-  );
+    );
+  }, [Icon, label, shortcut]);
 
   if (href) {
     const newTabProps = newTab
@@ -187,6 +198,7 @@ export const MenuItemProps = {
   onDismiss: PropTypes.func,
   onFocus: PropTypes.func,
   shortcut: PropTypes.string,
+  Icon: PropTypes.func,
 };
 
 MenuItem.propTypes = MenuItemProps;

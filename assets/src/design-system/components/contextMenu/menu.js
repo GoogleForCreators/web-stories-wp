@@ -35,23 +35,49 @@ const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: 5px 0 0;
+    padding: 0;
     background-color: ${theme.colors.bg.primary};
     pointer-events: none;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: 200px;
+    width: ${({ isIconMenu }) => (isIconMenu ? '40px' : '200px')};
   `
 );
+MenuWrapper.propTypes = {
+  isIconMenu: PropTypes.bool,
+};
+
+const separatorCSS = css`
+  display: block;
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.bg.tertiary};
+  ${({ isIconMenu, theme }) =>
+    isIconMenu &&
+    css`
+      width: 40%;
+      margin: auto;
+      background-color: ${theme.colors.fg.primary};
+    `}
+`;
+separatorCSS.propTypes = {
+  isIconMenu: PropTypes.bool,
+};
 
 const MenuList = styled.ul(
-  ({ theme }) => css`
+  ({ theme, isIconMenu }) => css`
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     margin: 0;
     padding: 4px 0;
     pointer-events: auto;
     list-style: none;
+    ${isIconMenu &&
+    `
+      padding: 0;
+      margin: 4px;
+    `};
 
     a {
       background-color: transparent;
@@ -68,6 +94,12 @@ const MenuList = styled.ul(
         padding: 8px 16px;
         border: 0;
         transition: background-color ${BUTTON_TRANSITION_TIMING};
+
+        ${isIconMenu &&
+        css`
+          padding: 0;
+          margin: 4px 0;
+        `}
       }
 
       span {
@@ -83,7 +115,7 @@ const MenuList = styled.ul(
 
       button {
         width: 100%;
-        border-radius: 0;
+        border-radius: ${isIconMenu ? '4px' : 0};
         background-color: transparent;
 
         :disabled {
@@ -101,11 +133,15 @@ const MenuList = styled.ul(
       }
 
       &.separatorTop {
-        border-top: 1px solid ${theme.colors.bg.tertiary};
+        &:before {
+          ${separatorCSS};
+        }
       }
 
       &.separatorBottom {
-        border-bottom: 1px solid ${theme.colors.bg.tertiary};
+        &:after {
+          ${separatorCSS};
+        }
       }
 
       :hover a,
@@ -120,8 +156,11 @@ const MenuList = styled.ul(
     }
   `
 );
+MenuList.propTypes = {
+  isIconMenu: PropTypes.bool,
+};
 
-const Menu = ({ items, isOpen, onDismiss, ...props }) => {
+const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
   const menuWasAlreadyOpen = useRef(isOpen);
@@ -215,8 +254,8 @@ const Menu = ({ items, isOpen, onDismiss, ...props }) => {
   );
 
   return (
-    <MenuWrapper>
-      <MenuList ref={listRef} {...props}>
+    <MenuWrapper isIconMenu={isIconMenu}>
+      <MenuList ref={listRef} isIconMenu={isIconMenu} {...props}>
         {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
             key={ids[index]}
@@ -247,6 +286,7 @@ export const MenuPropTypes = {
       separator: PropTypes.oneOf(['bottom', 'top']),
     }).isRequired
   ),
+  isIconMenu: PropTypes.bool,
   isOpen: PropTypes.bool,
   onDismiss: PropTypes.func,
 };

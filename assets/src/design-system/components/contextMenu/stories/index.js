@@ -27,6 +27,7 @@ import styled from 'styled-components';
 import ContextMenu from '../contextMenu';
 import AnimatedContextMenu from '../animatedContextMenu';
 import { DarkThemeProvider } from '../../../storybookUtils';
+import { Bucket, LetterTLargeLetterTSmall, Media } from '../../../icons';
 
 const items = [
   { label: 'Copy', shortcut: '⌘ X' },
@@ -165,5 +166,28 @@ export const Animated = () => {
         />
       </AnimatedContainerWrapper>
     </ViewportContainer>
+  );
+};
+
+const quickActionMenuItems = [
+  { label: 'Change background color', Icon: Bucket },
+  { label: 'Insert media', Icon: Media, separator: 'top' },
+  { label: 'Insert text', Icon: LetterTLargeLetterTSmall },
+];
+
+export const QuickActionMenu = () => {
+  const itemsWithEventHandlers = quickActionMenuItems.map((item) => ({
+    ...item,
+    onClick: action(`Clicked on \`${item.label}\``),
+  }));
+
+  return (
+    <Container>
+      <ContextMenu
+        items={itemsWithEventHandlers}
+        isOpen={boolean('isOpen', true)}
+        isIconMenu
+      />
+    </Container>
   );
 };
