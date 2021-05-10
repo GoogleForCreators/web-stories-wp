@@ -22,7 +22,18 @@ import {
   createNewStory,
   deactivateRTL,
   activateRTL,
+  visitSettings,
 } from '@web-stories-wp/e2e-test-utils';
+
+async function toggleVideoOptimization() {
+  await visitSettings();
+  const selector = '[data-testid="media-optimization-settings-checkbox"]';
+  await page.waitForSelector(selector);
+  // Clicking will only act on the first element.
+  await expect(page).toClick(selector);
+  // Await REST API request.
+  await page.waitForTimeout(1000);
+}
 
 describe('Story Editor', () => {
   it('should be able to create a blank story', async () => {
@@ -50,5 +61,16 @@ describe('Story Editor', () => {
       () => window.crossOriginIsolated
     );
     expect(crossOriginIsolated).toBeTrue();
+  });
+
+  it('should have cross-origin isolation disabled', async () => {
+    await toggleVideoOptimization();
+    await createNewStory();
+
+    const crossOriginIsolated = await page.evaluate(
+      () => window.crossOriginIsolated
+    );
+    expect(crossOriginIsolated).toBeFalse();
+    await toggleVideoOptimization();
   });
 });
