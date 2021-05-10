@@ -32,7 +32,9 @@ async function toggleVideoOptimization() {
   // Clicking will only act on the first element.
   await expect(page).toClick(selector);
   // Await REST API request.
-  await page.waitForTimeout(1000);
+  await page.waitForResponse((response) =>
+    response.url().includes('web-stories/v1/users/me')
+  );
 }
 
 describe('Story Editor', () => {
