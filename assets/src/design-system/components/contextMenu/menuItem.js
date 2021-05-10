@@ -27,6 +27,7 @@ import { Link } from '../typography/link';
 import { Text } from '../typography/text';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
+import { Tooltip, TOOLTIP_PLACEMENT } from '../tooltip';
 
 const ItemText = styled(Text)`
   width: 200px;
@@ -83,9 +84,11 @@ export const MenuItem = ({
   const textContent = useMemo(() => {
     if (Icon) {
       return (
-        <IconWrapper>
-          <Icon />
-        </IconWrapper>
+        <Tooltip placement={TOOLTIP_PLACEMENT.RIGHT} title={label}>
+          <IconWrapper>
+            <Icon />
+          </IconWrapper>
+        </Tooltip>
       );
     }
     return (

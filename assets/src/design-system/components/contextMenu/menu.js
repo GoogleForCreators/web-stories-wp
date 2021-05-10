@@ -65,97 +65,99 @@ separatorCSS.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
-const MenuList = styled.ul(
-  ({ theme, isIconMenu }) => css`
-    background-color: ${theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.small};
-    margin: 0;
-    padding: 4px 0;
-    pointer-events: auto;
-    list-style: none;
-    ${isIconMenu &&
-    `
-      padding: 0;
-      margin: 4px;
-    `};
+const MenuList = styled.ul`
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  margin: 0;
+  padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '4px 0')};
+  pointer-events: auto;
+  list-style: none;
+
+  a {
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  li {
+    a,
+    button,
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border: 0;
+      transition: background-color ${BUTTON_TRANSITION_TIMING};
+    }
+    ${({ isIconMenu }) =>
+      isIconMenu &&
+      css`
+        margin: 0;
+        button {
+          padding: 0;
+          margin: 4px auto;
+        }
+        div,
+        a {
+          padding: 0;
+        }
+      `}
+
+    span {
+      transition: color ${BUTTON_TRANSITION_TIMING};
+    }
 
     a {
-      background-color: transparent;
-      text-decoration: none;
+      :active span,
+      :hover span {
+        color: ${({ theme }) => theme.colors.fg.primary};
+      }
     }
 
-    li {
-      a,
-      button,
-      div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 16px;
-        border: 0;
-        transition: background-color ${BUTTON_TRANSITION_TIMING};
+    button {
+      width: ${({ isIconMenu }) => (isIconMenu ? '32px' : '100%')};
+      border-radius: ${({ isIconMenu }) => (isIconMenu ? '4px' : 0)};
+      background-color: transparent;
 
-        ${isIconMenu &&
-        css`
-          padding: 0;
-          margin: 4px 0;
-        `}
-      }
-
-      span {
-        transition: color ${BUTTON_TRANSITION_TIMING};
-      }
-
-      a {
-        :active span,
-        :hover span {
-          color: ${theme.colors.fg.primary};
-        }
-      }
-
-      button {
-        width: 100%;
-        border-radius: ${isIconMenu ? '4px' : 0};
+      :disabled {
         background-color: transparent;
 
-        :disabled {
-          background-color: transparent;
-
-          span {
-            color: ${theme.colors.bg.tertiary};
-          }
-        }
-
-        :active span,
-        :hover span {
-          color: ${theme.colors.fg.primary};
+        span {
+          color: ${({ theme }) => theme.colors.bg.tertiary};
         }
       }
 
-      &.separatorTop {
-        &:before {
-          ${separatorCSS};
-        }
-      }
-
-      &.separatorBottom {
-        &:after {
-          ${separatorCSS};
-        }
-      }
-
-      :hover a,
-      button:hover:not(:disabled) {
-        background-color: ${theme.colors.interactiveBg.secondaryHover};
-      }
-
-      :active a,
-      button:active:not(:disabled) {
-        background-color: ${theme.colors.interactiveBg.secondaryPress};
+      :active span,
+      :hover span {
+        color: ${({ theme }) => theme.colors.fg.primary};
       }
     }
-  `
-);
+
+    &.separatorTop {
+      &:before {
+        ${separatorCSS};
+      }
+    }
+
+    &.separatorBottom {
+      &:after {
+        ${separatorCSS};
+      }
+    }
+
+    :hover a,
+    button:hover:not(:disabled) {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryHover};
+    }
+
+    :active a,
+    button:active:not(:disabled) {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryPress};
+    }
+  }
+`;
 MenuList.propTypes = {
   isIconMenu: PropTypes.bool,
 };
