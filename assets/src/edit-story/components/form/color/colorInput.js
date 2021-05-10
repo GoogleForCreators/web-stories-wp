@@ -41,6 +41,7 @@ import getPreviewText from '../../../../design-system/components/hex/getPreviewT
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
+import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 
 const Preview = styled.div`
   height: 36px;
@@ -113,6 +114,10 @@ const TextualPreview = styled.div`
   height: 32px;
 `;
 
+const StyledSwatch = styled(Swatch)`
+  ${focusStyle};
+`;
+
 function ColorInput({
   onChange,
   hasGradient,
@@ -165,10 +170,11 @@ function ColorInput({
             onChange={onChange}
             isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
+            containerStyleOverride={inputContainerStyleOverride}
           />
           <ColorPreview>
             <Tooltip title={tooltip} hasTail>
-              <Swatch isSmall pattern={previewPattern} {...buttonProps} />
+              <StyledSwatch isSmall pattern={previewPattern} {...buttonProps} />
             </Tooltip>
           </ColorPreview>
         </Preview>

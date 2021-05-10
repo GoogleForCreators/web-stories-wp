@@ -21,6 +21,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Button, themeHelpers } from '../../../../design-system';
+import { focusStyle } from '../../panels/shared';
 import { NAVIGATION_HEIGHT } from './constants';
 
 export const NavBar = styled.div`
@@ -35,11 +36,7 @@ export const NavBar = styled.div`
 
 export const NavButton = styled(Button)`
   ${themeHelpers.expandTextPreset(({ label }, { MEDIUM }) => label[MEDIUM])}
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )}
+  ${focusStyle};
 
   svg {
     width: 32px;

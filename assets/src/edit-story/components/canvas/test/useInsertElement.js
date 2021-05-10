@@ -23,13 +23,16 @@ import { renderHook, act } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import useInsertElement from '../useInsertElement';
+import { ZOOM_SETTING } from '../../../constants';
 import useMedia3pApi from '../../../app/media/media3p/api/useMedia3pApi';
 import { useStory } from '../../../app/story';
 import { useLocalMedia } from '../../../app/media';
+import { useLayout } from '../../../app/layout';
 
 jest.mock('../../../app/media/media3p/api/useMedia3pApi');
 jest.mock('../../../app/story');
 jest.mock('../../../app/media');
+jest.mock('../../../app/layout');
 
 const IMAGE_TYPE = 'image';
 
@@ -101,6 +104,7 @@ const REGISTER_USAGE_URL = 'https://registerUsageUrl.com/register';
 
 describe('useInsertElement', () => {
   const registerUsage = jest.fn();
+  const setZoomSetting = jest.fn();
 
   beforeAll(() => {
     useMedia3pApi.mockReturnValue({
@@ -114,6 +118,19 @@ describe('useInsertElement', () => {
     useLocalMedia.mockReturnValue({
       uploadVideoPoster: jest.fn(),
     });
+
+    useLayout.mockReturnValue({
+      setZoomSetting,
+    });
+  });
+
+  it('should always invoke setZoomSetting with FIT', () => {
+    const { result } = renderHook(() => useInsertElement());
+    act(() => {
+      result.current(IMAGE_TYPE, PROPS_LOCAL);
+    });
+
+    expect(setZoomSetting).toHaveBeenCalledWith(ZOOM_SETTING.FIT);
   });
 
   describe('register usage function', () => {

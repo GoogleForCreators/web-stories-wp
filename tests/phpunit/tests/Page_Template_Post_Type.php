@@ -26,7 +26,7 @@ class Page_Template_Post_Type extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$story = $this->get_story_object();
+		$story = new \Google\Web_Stories\Story_Post_Type();
 		$story->register();
 
 		$ptpt = new \Google\Web_Stories\Page_Template_Post_Type();

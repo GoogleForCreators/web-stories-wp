@@ -21,8 +21,8 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../../../design-system';
 import { INPUT_HEIGHT } from '../constants';
+import { focusStyle } from '../../../shared';
 import { BaseAnimationCell, GRID_ITEM_HEIGHT } from './effectChooserElements';
 import { GRID_SIZING } from './dropdownConstants';
 
@@ -106,7 +106,7 @@ export const AnimationListItem = styled.li`
       }
     `}
 
-  ${themeHelpers.focusableOutlineCSS};
+  ${focusStyle};
 `;
 
 export const styleOverrideForAnimationEffectMenu = css`
@@ -133,8 +133,5 @@ export const styleOverrideForSelectButton = ({ theme }) => css`
       transparent;
   }
 
-  ${themeHelpers.focusableOutlineCSS(
-    theme.colors.border.focus,
-    theme.colors.bg.secondary
-  )}
+  ${focusStyle}
 `;

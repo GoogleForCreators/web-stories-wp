@@ -405,10 +405,6 @@
           "delay": 0
         },
         {
-          "delete": true,
-          "targets": ["1788ced3-50fc-495e-9944-9f7a205b3107"]
-        },
-        {
           "id": "7b9857a3-6c57-4952-9c1b-141f8fefbd2f",
           "type": "effect-fly-in",
           "targets": ["1788ced3-50fc-495e-9944-9f7a205b3107"],
@@ -2365,10 +2361,6 @@
           "delay": 650
         },
         {
-          "delete": true,
-          "targets": ["d38b12e9-ba7a-4a62-9e65-b03305beae30"]
-        },
-        {
           "id": "7af6017c-f9c9-4d3d-9762-d8254586954d",
           "type": "effect-fade-in",
           "targets": ["d38b12e9-ba7a-4a62-9e65-b03305beae30"],
@@ -2682,10 +2674,6 @@
           "flyInDir": "topToBottom",
           "duration": 1000,
           "delay": 405
-        },
-        {
-          "delete": true,
-          "targets": ["f92aa000-0cfa-40ea-a9dd-dfee946477ab"]
         },
         {
           "id": "ac758432-e1e9-4ec1-93e1-7a128f06c463",

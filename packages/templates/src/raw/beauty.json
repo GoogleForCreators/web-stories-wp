@@ -231,10 +231,6 @@
           "flyInDir": "bottomToTop",
           "duration": 900,
           "delay": 1000
-        },
-        {
-          "delete": true,
-          "targets": ["19df8224-87e4-4d81-a452-43b6d0a218f5"]
         }
       ],
       "elements": [
@@ -1594,10 +1590,6 @@
     {
       "animations": [
         {
-          "delete": true,
-          "targets": ["ac0add24-bf97-46a4-abe0-1241f0e91a20"]
-        },
-        {
           "id": "dcd834e8-23ae-4725-bbdb-bf81276e0f9a",
           "type": "effect-fade-in",
           "targets": ["ca75cd7a-c9d1-48ac-8d4a-1268023e88d3"],
@@ -2203,10 +2195,6 @@
     },
     {
       "animations": [
-        {
-          "delete": true,
-          "targets": ["a2cd4b99-da90-49e7-8a8d-25c54400b4a1"]
-        },
         {
           "id": "37f59a5b-2a14-459d-977b-03c6c4fac785",
           "type": "effect-fade-in",

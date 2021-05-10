@@ -16,6 +16,6 @@
 export { default as FlipControls } from './flipControls';
 export { default as getCommonValue } from './getCommonValue';
 export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as getColorPickerActions } from './getColorPickerActions';
 export { default as useCommonColorValue } from './useCommonColorValue';
 export { default as useCommonObjectValue } from './useCommonObjectValue';
+export * from './styles';

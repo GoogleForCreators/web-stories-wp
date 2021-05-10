@@ -23,7 +23,6 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { StandardViewContentGutter } from '../../../components';
-import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import {
   Button,
   Headline,
@@ -204,13 +203,15 @@ export const InlineForm = styled.div`
   align-items: flex-start;
 `;
 
-export const VisuallyHiddenLabel = styled.label(visuallyHiddenStyles);
+export const VisuallyHiddenLabel = styled.label(themeHelpers.visuallyHidden);
 
 export const SettingsTextInput = styled(Input)`
   margin-right: 8px;
 `;
 
-export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
+export const VisuallyHiddenDescription = styled.span(
+  themeHelpers.visuallyHidden
+);
 
 export const MultilineForm = styled(SettingForm)`
   margin-bottom: 28px;

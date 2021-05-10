@@ -32,6 +32,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  themeHelpers,
 } from '../../../../../design-system';
 import { useConfig } from '../../../../app';
 import getBoundRect, {
@@ -82,6 +83,9 @@ const AlignmentButton = styled(Button).attrs({
   :focus {
     z-index: 1;
   }
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(theme.colors.border.focus, '#1d1f20')};
 `;
 
 const StyledPanel = styled(Panel)`
