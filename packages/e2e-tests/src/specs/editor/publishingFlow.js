@@ -33,7 +33,9 @@ import {
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Publishing Flow', () => {
+// Disable for https://github.com/google/web-stories-wp/issues/6238
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Publishing Flow', () => {
   let stopRequestInterception;
 
   beforeAll(async () => {
@@ -62,9 +64,13 @@ describe('Publishing Flow', () => {
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
+    // Bypass checklist
+    await page.waitForSelector('.ReactModal__Content');
+    await expect(page).toClick('button', {
+      text: /Continue to publish/,
+    });
 
     await expect(page).toMatchElement('button', { text: 'Dismiss' });
-
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
@@ -110,9 +116,10 @@ describe('Publishing Flow', () => {
     expect(postPermalink).not.toBeNull();
     expect(postPermalink).toStrictEqual(expect.any(String));
 
-    await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+    await page.goto(postPermalink, {
+      waitUntil: 'networkidle2',
+    });
 
-    await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Publishing Flow Test');
   });
@@ -133,6 +140,12 @@ describe('Publishing Flow', () => {
 
       // Publish story.
       await expect(page).toClick('button', { text: 'Publish' });
+
+      // Bypass checklist
+      await page.waitForSelector('.ReactModal__Content');
+      await expect(page).toClick('button', {
+        text: /Continue to publish/,
+      });
 
       await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
@@ -163,7 +176,9 @@ describe('Publishing Flow', () => {
       expect(postPermalink).not.toBeNull();
       expect(postPermalink).toStrictEqual(expect.any(String));
 
-      await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+      await page.goto(postPermalink, {
+        waitUntil: 'networkidle2',
+      });
 
       await page.waitForSelector('amp-story-player');
       await expect(page).toMatchElement('amp-story-player');

@@ -27,12 +27,14 @@ export default {
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
     type: ANIMATION_TYPES.PULSE,
     iterations: 2,
     delay: 500,
   },
   {
+    id: '2',
     targets: ['e2'],
     type: ANIMATION_TYPES.PULSE,
     iterations: 4,

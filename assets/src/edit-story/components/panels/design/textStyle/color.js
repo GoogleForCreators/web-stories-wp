@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Color, Row } from '../../../form';
-import { getColorPickerActions } from '../../shared';
+import getColorPickerActions from '../../shared/getColorPickerActions';
 import useRichTextFormatting from './useRichTextFormatting';
 
 function ColorControls({ selectedElements, pushUpdate }) {

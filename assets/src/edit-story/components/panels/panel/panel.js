@@ -31,6 +31,7 @@ import { useStory } from '../../../app/story';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
+const MAX_HEIGHT_DEFAULT = 999999999;
 
 const Wrapper = styled.section`
   display: flex;
@@ -47,12 +48,15 @@ function Panel({
   canCollapse = true,
   collapsedByDefault = true,
   initialHeight = null,
+  maxHeight: _maxHeight = MAX_HEIGHT_DEFAULT,
   ariaLabel = null,
   ariaHidden = false,
   isPersistable = true,
-  isToggleDisabled,
   ...rest
 }) {
+  // If max height is 0 - fallback to default
+  // Allows us to save persisted heights if layers aren't loaded yet
+  const maxHeight = _maxHeight === 0 ? MAX_HEIGHT_DEFAULT : _maxHeight;
   const { selectedElementIds } = useStory(
     ({ state: { selectedElementIds } }) => {
       return {
@@ -69,10 +73,6 @@ function Panel({
     [name, isPersistable]
   );
   const [isCollapsed, setIsCollapsed] = useState(() => {
-    // If toggle is disabled, always default to collapsed
-    if (isToggleDisabled) {
-      return true;
-    }
     // If not persisted, always default to expanded.
     if (!isPersistable) {
       return false;
@@ -80,12 +80,29 @@ function Panel({
     // If isCollapsed is not defined, return the default value.
     return persisted?.isCollapsed ?? collapsedByDefault;
   });
-  const [expandToHeight, setExpandToHeight] = useState(
-    persisted?.expandToHeight || initialHeight
+  const [expandToHeight, _setExpandToHeight] = useState(
+    Math.min(persisted?.expandToHeight, maxHeight) || initialHeight
   );
-  const [height, setHeight] = useState(persisted?.height || initialHeight);
+  const [height, _setHeight] = useState(
+    Math.min(persisted?.height, maxHeight) || initialHeight
+  );
   const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
+
+  // When setting height, compare to maxHeight
+  const setHeight = useCallback(
+    (newHeight) => {
+      _setHeight(Math.min(newHeight, maxHeight));
+    },
+    [maxHeight]
+  );
+  // When setting expand to height, compare to maxHeight
+  const setExpandToHeight = useCallback(
+    (newHeight) => {
+      _setExpandToHeight(Math.min(newHeight, maxHeight));
+    },
+    [maxHeight]
+  );
 
   const confirmTitle = useCallback(() => setHasTitle(true), []);
 
@@ -103,7 +120,7 @@ function Panel({
       name: name,
       status: 'collapsed',
     });
-  }, [resizeable, canCollapse, name]);
+  }, [resizeable, canCollapse, name, setHeight]);
 
   const expand = useCallback(
     (restoreHeight = true) => {
@@ -118,7 +135,7 @@ function Panel({
         status: 'expanded',
       });
     },
-    [resizeable, expandToHeight, name]
+    [resizeable, expandToHeight, name, setHeight]
   );
 
   // Expand panel on first mount/on selection change if it can't be persisted.
@@ -128,19 +145,42 @@ function Panel({
     }
   }, [expand, isPersistable, selectedElementIds]);
 
+  // Collapse panel if height is lower than threshold
   useEffect(() => {
     if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
       collapse();
     }
   }, [collapse, height, resizeable, isCollapsed]);
 
+  // Automatically set height of panel. Only happens when:
+  // 1. `manuallyChanged` is false
+  // 2. Nothing exists in local storage
+  // 3. `resizable` is true
   useEffect(() => {
     if (manuallyChanged || persisted || !resizeable) {
       return;
     }
     setHeight(initialHeight);
     setExpandToHeight(initialHeight);
-  }, [manuallyChanged, initialHeight, resizeable, persisted]);
+  }, [
+    manuallyChanged,
+    initialHeight,
+    resizeable,
+    persisted,
+    name,
+    setExpandToHeight,
+    setHeight,
+  ]);
+
+  // Make sure panel height is constrained by maxHeight
+  useEffect(() => {
+    if (maxHeight < height) {
+      setHeight(maxHeight);
+    }
+    if (maxHeight < expandToHeight) {
+      setExpandToHeight(maxHeight);
+    }
+  }, [expandToHeight, height, maxHeight, setHeight, setExpandToHeight]);
 
   // Persist when user collapses
   useEffect(() => {
@@ -169,12 +209,20 @@ function Panel({
         return;
       }
       setManuallyChanged(true);
-      setHeight(h);
+      setHeight(Math.min(h(height), maxHeight));
       if (isCollapsed && h(height) > PANEL_COLLAPSED_THRESHOLD) {
         expand(false);
       }
     },
-    [setManuallyChanged, setHeight, height, expand, resizeable, isCollapsed]
+    [
+      expand,
+      height,
+      isCollapsed,
+      maxHeight,
+      resizeable,
+      setHeight,
+      setManuallyChanged,
+    ]
   );
 
   const resetHeight = useCallback(() => {
@@ -229,7 +277,7 @@ Panel.propTypes = {
   name: PropTypes.string.isRequired,
   children: PropTypes.node,
   initialHeight: PropTypes.number,
-  isToggleDisabled: PropTypes.bool,
+  maxHeight: PropTypes.number,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
   collapsedByDefault: PropTypes.bool,

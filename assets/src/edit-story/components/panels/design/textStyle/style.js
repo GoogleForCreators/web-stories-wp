@@ -37,7 +37,11 @@ import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { getCommonValue } from '../../shared';
+import {
+  focusStyle,
+  getCommonValue,
+  inputContainerStyleOverride,
+} from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {
@@ -59,9 +63,13 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
+const StyledToggle = styled(ToggleButton)`
+  ${focusStyle};
+`;
+
 function Toggle(props) {
   return (
-    <ToggleButton
+    <StyledToggle
       size={BUTTON_SIZES.SMALL}
       variant={BUTTON_VARIANTS.SQUARE}
       {...props}
@@ -127,6 +135,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === lineHeight ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
         <Space />
         <StyledNumericInput
@@ -142,6 +151,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === letterSpacing ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
       </Row>
       <Row>

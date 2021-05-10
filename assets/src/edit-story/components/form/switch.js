@@ -19,6 +19,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useRef } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -28,6 +29,13 @@ import {
   SwitchPropTypes,
   useKeyDownEffect,
 } from '../../../design-system';
+
+const StyledSwitch = styled(BaseSwitch)`
+  label:focus-within ~ span {
+    ${({ theme }) =>
+      `box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;`};
+  }
+`;
 
 function Switch({
   offLabel = __('Off', 'web-stories'),
@@ -53,7 +61,7 @@ function Switch({
   );
 
   return (
-    <BaseSwitch
+    <StyledSwitch
       ref={switchRef}
       offLabel={offLabel}
       onChange={onChange}

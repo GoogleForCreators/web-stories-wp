@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Stories_Renderer\Renderer;
+use Google\Web_Stories\Renderer\Stories\Renderer;
 
 /**
  * Generic_Renderer class.

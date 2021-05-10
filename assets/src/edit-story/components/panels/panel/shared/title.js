@@ -36,6 +36,7 @@ import {
   themeHelpers,
   ThemeGlobals,
 } from '../../../../../design-system';
+import { focusStyle } from '../../shared';
 import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 8px less padding to apply that from the content.
@@ -102,7 +103,7 @@ const Collapse = styled.button`
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+  cursor: pointer;
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
 
@@ -110,11 +111,7 @@ const Collapse = styled.button`
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 
   svg {
     width: 32px;
@@ -150,7 +147,6 @@ function Title({
   secondaryAction,
   isResizable,
   canCollapse,
-  isToggleDisabled,
   ...props
 }) {
   const {
@@ -204,12 +200,6 @@ function Title({
     <Icons.ChevronDownSmall />
   );
 
-  // There are 2 props that could affect the panel being able to toggle.
-  // canCollapse enforces a toggle panel that is always expanded.
-  // isToggleDisabled leaves the panel in whatever state it currently is.
-  const preserveToggleCollapseState = !canCollapse || isToggleDisabled;
-  const showToggleIcon = canCollapse && !isToggleDisabled;
-
   return (
     <Header
       isPrimary={isPrimary}
@@ -231,8 +221,7 @@ function Title({
       )}
       <Toggle
         toggle={toggle}
-        disabled={preserveToggleCollapseState}
-        isToggleDisabled={isToggleDisabled}
+        disabled={!canCollapse}
         tabIndex={ariaHidden ? -1 : 0}
         aria-label={ariaLabel}
         aria-expanded={!isCollapsed}
@@ -240,7 +229,7 @@ function Title({
         isCollapsed={isCollapsed}
         hasBadge={hasBadge}
       >
-        <IconWrapper>{showToggleIcon && toggleIcon}</IconWrapper>
+        <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}
@@ -258,7 +247,6 @@ Title.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node,
   hasBadge: PropTypes.bool,
-  isToggleDisabled: PropTypes.bool,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,

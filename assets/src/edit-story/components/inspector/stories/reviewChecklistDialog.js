@@ -22,7 +22,7 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
-import ReviewChecklistDialog from '../prepublish/reviewChecklistDialog';
+import { ReviewChecklistDialog } from '../prepublish';
 import { Button, BUTTON_TYPES } from '../../../../design-system';
 
 export default {

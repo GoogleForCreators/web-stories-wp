@@ -30,7 +30,7 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\User_Preferences;
+use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Experiments;
 
@@ -292,7 +292,7 @@ class Cross_Origin_Isolation extends Service_Base {
 		}
 
 		// Backwards compatible, default values added in WP 5.5.
-		$check = get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 		if ( empty( $check ) ) {
 			return true;
 		}

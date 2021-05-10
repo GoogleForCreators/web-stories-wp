@@ -47,6 +47,7 @@ import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
+import singleSavedTemplate from './db/singleSavedTemplate';
 
 if ('true' === process.env.CI) {
   configure({
@@ -838,6 +839,11 @@ class APIProviderFixture {
       );
 
       const getCustomPageTemplates = useCallback(() => asyncResponse([]), []);
+      const addPageTemplate = useCallback(
+        () => asyncResponse({ ...singleSavedTemplate, templateId: 123 }),
+        []
+      );
+      const deletePageTemplate = useCallback(() => asyncResponse(), []);
 
       const state = {
         actions: {
@@ -852,7 +858,9 @@ class APIProviderFixture {
           uploadMedia,
           updateMedia,
           getStatusCheck,
+          addPageTemplate,
           getCustomPageTemplates,
+          deletePageTemplate,
           getPageTemplates,
           getCurrentUser,
           updateCurrentUser,

@@ -44,6 +44,7 @@ const SearchInput = (
     inputValue,
     isOpen,
     listId,
+    className = '',
     ...rest
   },
   ref
@@ -69,7 +70,7 @@ const SearchInput = (
   );
 
   return (
-    <InputContainer>
+    <InputContainer className={className}>
       <Input
         aria-disabled={disabled}
         autocomplete="off"
@@ -127,4 +128,5 @@ SearchInput.propTypes = {
   handleTabClear: PropTypes.func.isRequired,
   inputValue: PropTypes.string,
   isOpen: PropTypes.bool,
+  className: PropTypes.string,
 };

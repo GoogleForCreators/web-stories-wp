@@ -100,6 +100,9 @@ export function deriveUnreadTipsCount(previous, next) {
 }
 
 export function deriveAutoOpen(previous, next) {
+  if (process.env.DISABLE_QUICK_TIPS === 'true') {
+    return {};
+  }
   if (isInitialHydrate(previous, next)) {
     const hasNewTips = previous.unreadTipsCount < next.unreadTipsCount;
     return hasNewTips ? { isOpen: true } : {};
@@ -110,6 +113,9 @@ export function deriveAutoOpen(previous, next) {
 // If there are any unread tips, we respect users last open setting.
 // If all tips are read, we want the popup closed regardless of user setting.
 export function deriveInitialOpen(persisted) {
+  if (process.env.DISABLE_QUICK_TIPS === 'true') {
+    return {};
+  }
   const hasUnreadTips = Boolean(persisted?.unreadTipsCount);
   return hasUnreadTips && persisted?.isOpen !== undefined
     ? {

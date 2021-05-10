@@ -26,7 +26,11 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Row } from '../../../form';
-import { useCommonObjectValue } from '../../shared';
+import {
+  focusStyle,
+  inputContainerStyleOverride,
+  useCommonObjectValue,
+} from '../../shared';
 import {
   LockToggle,
   NumericInput,
@@ -41,6 +45,10 @@ const INPUT_WIDTH = 44;
 
 const BorderRow = styled(Row)`
   ${({ locked }) => locked && 'justify-content: normal'};
+`;
+
+const StyledLockToggle = styled(LockToggle)`
+  ${focusStyle};
 `;
 
 const Separator = styled.div`
@@ -83,7 +91,10 @@ function UnLockedInput({ labelText, ...rest }) {
     <>
       <Separator />
       <Label>
-        <NumericInput {...rest} />
+        <NumericInput
+          containerStyleOverride={inputContainerStyleOverride}
+          {...rest}
+        />
         <LabelText>{labelText}</LabelText>
       </Label>
     </>
@@ -147,6 +158,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           onChange={handleChange('left')}
           aria-label={firstInputLabel}
           {...getMixedValueProps(border.left)}
+          containerStyleOverride={inputContainerStyleOverride}
         />
         {!lockBorder && <LabelText>{__('Left', 'web-stories')}</LabelText>}
       </Label>
@@ -176,7 +188,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         </>
       )}
       <ToggleWrapper locked={lockBorder}>
-        <LockToggle
+        <StyledLockToggle
           isLocked={lockBorder}
           onClick={() => {
             let args = {

@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\User\Preferences;
+
 /**
  * Deletes options and transients.
  *
@@ -125,8 +127,8 @@ function delete_stories_post_meta() {
  * @return void
  */
 function delete_stories_user_meta() {
-	delete_metadata( 'user', 0, User_Preferences::OPTIN_META_KEY, '', true );
-	delete_metadata( 'user', 0, User_Preferences::ONBOARDING_META_KEY, '', true );
+	delete_metadata( 'user', 0, Preferences::OPTIN_META_KEY, '', true );
+	delete_metadata( 'user', 0, Preferences::ONBOARDING_META_KEY, '', true );
 }
 
 /**
@@ -162,8 +164,8 @@ function delete_posts() {
  * @return void
  */
 function remove_caps() {
-	$story_post_type = Services::get( 'story_post_type' );
-	$story_post_type->remove_caps_from_roles();
+	$capabilities = Services::get( 'user.capabilities' );
+	$capabilities->remove_caps_from_roles();
 }
 
 /**

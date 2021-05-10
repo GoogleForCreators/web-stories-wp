@@ -26,11 +26,11 @@ import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../animation';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
+  BEZIER,
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,

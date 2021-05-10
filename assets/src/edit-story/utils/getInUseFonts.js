@@ -51,7 +51,7 @@ export function getInUseFontsForPages(pages) {
 export function getTextSetsForFonts({ fonts, textSets }) {
   return textSets
     .map((currentTextSet) => {
-      const hasFontInUse = currentTextSet.reduce(
+      const hasFontInUse = currentTextSet.elements.reduce(
         (elementMemo, currentElement) => {
           if (
             currentElement.type === 'text' &&

@@ -33,6 +33,7 @@ import {
   useFocusOut,
 } from '../../../../../design-system';
 import DropDownSelect from '../../../../../design-system/components/dropDown/select';
+import { focusStyle } from '../../shared';
 
 function PublishTime() {
   const { date, updateStory } = useStory(
@@ -96,6 +97,7 @@ function PublishTime() {
           activeItemLabel={
             format(date, shortDateFormat) + ' ' + formatTime(date)
           }
+          selectButtonStylesOverride={focusStyle}
         />
       </Row>
       <Popup
