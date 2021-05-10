@@ -106,13 +106,9 @@ function PresetPanel({ presetType, title, pushUpdate }) {
       deleteLocalPreset(preset);
       return;
     }
-    if (isColor) {
-      // Ask confirmation for a global color.
-      setShowDialog(true);
-      setToDelete(preset);
-    } else {
-      deleteGlobalPreset(preset);
-    }
+    // Ask confirmation for a global preset.
+    setShowDialog(true);
+    setToDelete(preset);
   };
 
   const resizeable = hasPresets;
@@ -163,7 +159,7 @@ function PresetPanel({ presetType, title, pushUpdate }) {
         >
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {__(
-              'This is a global color. Deleting this color will remove it from the Saved colors panel across all stories and the color will no longer be available to any team members sharing this account.',
+              `This is a global ${presetType}. Deleting this ${presetType} will remove it from the Saved ${presetType}s panel across all stories and the ${presetType} will no longer be available to any team members sharing this account.`,
               'web-stories'
             )}
           </Text>

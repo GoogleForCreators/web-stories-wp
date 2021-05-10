@@ -151,8 +151,6 @@ describe('Panel: Color Presets', () => {
         fixture.screen.getByRole('button', { name: 'Delete' })
       );
 
-      await fixture.events.sleep(200);
-
       // Delete local preset.
       await fixture.events.click(
         fixture.editor.inspector.designPanel.colorPreset.local.delete
