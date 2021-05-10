@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Background Drop-Target integration', () => {
+describe('Drop-Target integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -397,7 +397,7 @@ describe('Background Drop-Target integration', () => {
           const transformBefore = getAllTransformsBetween(targetImg, target);
           expect(transformBefore).toBe('');
 
-          // Drag the image element to the background
+          // Drag the flipped image element to the non-flipped target
           await dragCanvasElementToDropTarget(
             fixture,
             flippedImageData.id,
