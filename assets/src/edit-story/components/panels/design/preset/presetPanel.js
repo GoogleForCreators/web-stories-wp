@@ -19,12 +19,15 @@
  */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
+import Dialog from '../../../dialog';
+import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Resize from './resize';
@@ -61,7 +64,9 @@ function PresetPanel({ presetType, title, pushUpdate }) {
   // If there are any global presets or local colors in case of color.
   const hasPresets = globalPresets.length > 0 || (isColor && hasLocalPresets);
 
+  const [showDialog, setShowDialog] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [toDelete, setToDelete] = useState(null);
 
   const handleApplyColor = useApplyColor({ pushUpdate });
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -91,14 +96,22 @@ function PresetPanel({ presetType, title, pushUpdate }) {
   }
 
   const handlePresetClick = (preset, isLocal = false) => {
-    if (isEditMode) {
-      if (isLocal) {
-        deleteLocalPreset(preset);
-      } else {
-        deleteGlobalPreset(preset);
-      }
-    } else {
+    // If not in edit mode, apply the color.
+    if (!isEditMode) {
       handleApplyPreset(preset);
+      return;
+    }
+    // If deleting a local color, delete without confirmation.
+    if (isLocal) {
+      deleteLocalPreset(preset);
+      return;
+    }
+    if (isColor) {
+      // Ask confirmation for a global color.
+      setShowDialog(true);
+      setToDelete(preset);
+    } else {
+      deleteGlobalPreset(preset);
     }
   };
 
@@ -136,6 +149,26 @@ function PresetPanel({ presetType, title, pushUpdate }) {
         )}
       </PanelContent>
       {resizeable && <Resize position="bottom" />}
+      {showDialog && (
+        <Dialog
+          isOpen
+          onClose={() => setShowDialog(false)}
+          secondaryText={__('Cancel', 'web-stories')}
+          onPrimary={() => {
+            deleteGlobalPreset(toDelete);
+            setToDelete(null);
+            setShowDialog(false);
+          }}
+          primaryText={__('Delete', 'web-stories')}
+        >
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            {__(
+              'This is a global color. Deleting this color will remove it from the Saved colors panel across all stories and the color will no longer be available to any team members sharing this account.',
+              'web-stories'
+            )}
+          </Text>
+        </Dialog>
+      )}
     </Panel>
   );
 }
