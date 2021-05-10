@@ -195,7 +195,7 @@
     "storybook-rtl-addon": "^0.3.2",
     "stylelint": "^13.12.0",
     "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-recommended": "^4.0.0",
+    "stylelint-config-recommended": "^5.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-prettier": "^1.2.0",
     "stylelint-processor-styled-components": "^1.10.0",
