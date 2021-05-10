@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
@@ -135,8 +140,20 @@ describe('Panel: Color Presets', () => {
 
       expect(deleteGlobalButton).toBeTruthy();
 
-      // Delete both local and global presets.
+      // Delete global preset.
       await fixture.events.click(deleteGlobalButton);
+
+      // Confirm in the dialog since it's a global color.
+      await waitFor(() => {
+        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      });
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: 'Delete' })
+      );
+
+      await fixture.events.sleep(200);
+
+      // Delete local preset.
       await fixture.events.click(
         fixture.editor.inspector.designPanel.colorPreset.local.delete
       );
