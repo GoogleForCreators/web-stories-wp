@@ -34,6 +34,7 @@ const keys = {
   EXCERPT: 'EXCERPT',
   CAPTIONS: 'CAPTIONS',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
+  PAGE_BACKGROUND: 'PAGE_BACKGROUND',
 };
 
 export const STATES = {
@@ -60,6 +61,11 @@ export const STATES = {
     focus: true,
     tab: DESIGN,
   },
+  [keys.PAGE_BACKGROUND]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  // need to add a way to use this in the library
 };
 
 export default keys;

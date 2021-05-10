@@ -25,6 +25,9 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useCanvas } from '../../app';
+import { AnimatedContextMenu, noop } from '../../../design-system';
+import { states, useHighlights } from '../../app/highlights';
+import { useQuickActions } from '../../app/highlights/quickActions';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -44,7 +47,17 @@ const Background = styled.section.attrs({
   user-select: none;
 `;
 
+const MenuContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+`;
+
 function CanvasLayout() {
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
+  }));
+  const quickActions = useQuickActions();
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
@@ -69,6 +82,9 @@ function CanvasLayout() {
   return (
     <StyleSheetManager stylisPlugins={[]}>
       <Background ref={setBackgroundRef} style={layoutParamsCss}>
+        <MenuContainer>
+          <AnimatedContextMenu items={quickActions} isOpen />
+        </MenuContainer>
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>

@@ -199,6 +199,8 @@ function StoryProvider({ storyId, children }) {
     internal: { reducerState, restore },
   };
 
+  console.log({ fullStory });
+
   return (
     <Context.Provider value={state}>
       <StoryTriggersProvider story={fullStory}>
