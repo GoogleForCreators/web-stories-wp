@@ -22,7 +22,7 @@ import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
-    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
+    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}`
   );
 
   const template = {
@@ -54,14 +54,14 @@ async function loadTemplate(title, imageBaseUrl) {
 
 async function getTemplates(imageBaseUrl) {
   const templateNames = [
-    'beauty',
-    'cooking',
-    'diy',
-    'entertainment',
-    'fashion',
-    'fitness',
-    'travel',
-    'wellbeing',
+    'beauty/fresh-and-bright',
+    // 'cooking',
+    // 'diy',
+    // 'entertainment',
+    // 'fashion',
+    // 'fitness',
+    // 'travel',
+    // 'wellbeing',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
