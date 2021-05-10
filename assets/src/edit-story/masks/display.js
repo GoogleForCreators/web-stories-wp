@@ -82,7 +82,6 @@ export default function WithMask({
 
   return (
     <div
-      className="this-is-foo"
       style={{
         pointerEvents: 'initial',
         ...fullStyle,
