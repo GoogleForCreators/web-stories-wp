@@ -35,6 +35,8 @@ async function toggleVideoOptimization() {
   await page.waitForResponse((response) =>
     response.url().includes('web-stories/v1/users/me')
   );
+  // Wait for a second to make sure request has saved.
+  await page.waitForTimeout(1000);
 }
 
 describe('Story Editor', () => {
