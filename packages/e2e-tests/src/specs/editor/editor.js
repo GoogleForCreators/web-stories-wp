@@ -43,7 +43,7 @@ describe('Story Editor', () => {
     await deactivateRTL();
   });
 
-  it('should cross origin isolation be enabled in the browser', async () => {
+  it('should have cross-origin isolation enabled', async () => {
     await createNewStory();
 
     const crossOriginIsolated = await page.evaluate(
