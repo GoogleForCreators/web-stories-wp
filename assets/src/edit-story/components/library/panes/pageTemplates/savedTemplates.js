@@ -47,19 +47,41 @@ function SavedTemplates({
   ...rest
 }) {
   const {
-    actions: { deletePageTemplate },
+    actions: { deletePageTemplate, getCustomPageTemplates },
   } = useAPI();
   const { showSnackbar } = useSnackbar();
 
   const [showDialog, setShowDialog] = useState(null);
   const [templateToDelete, setTemplateToDelete] = useState(null);
+  const [allPagesLoaded, setAllPagesLoaded] = useState(false);
   const ref = useRef();
+
+  const savedTemplatesPageTracker = useRef(1);
 
   // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
   // @todo Look into why does the ref not work as expected otherwise.
   useLayoutEffect(() => {
     setShowDialog(false);
   }, []);
+
+  const fetchTemplates = useCallback(() => {
+    if (allPagesLoaded) {
+      return;
+    }
+    getCustomPageTemplates(savedTemplatesPageTracker.current + 1)
+      .then((result) => {
+        setSavedTemplates([...savedTemplates, ...result]);
+        savedTemplatesPageTracker.current =
+          savedTemplatesPageTracker.current + 1;
+      })
+      // @todo We need to get the total pages instead.
+      .catch(() => setAllPagesLoaded(true));
+  }, [
+    allPagesLoaded,
+    getCustomPageTemplates,
+    savedTemplates,
+    setSavedTemplates,
+  ]);
 
   const onClickDelete = useCallback(({ templateId }, e) => {
     e?.stopPropagation();
@@ -106,6 +128,7 @@ function SavedTemplates({
           pageSize={pageSize}
           pages={savedTemplates}
           handleDelete={onClickDelete}
+          fetchTemplates={fetchTemplates}
           {...rest}
         />
       )}

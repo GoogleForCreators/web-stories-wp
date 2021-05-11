@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
@@ -40,7 +40,15 @@ import { useStory } from '../../../../app/story';
 import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 
-function TemplateList({ pages, parentRef, pageSize, handleDelete, ...rest }) {
+const THRESHOLD = 2;
+function TemplateList({
+  pages,
+  parentRef,
+  pageSize,
+  handleDelete,
+  fetchTemplates,
+  ...rest
+}) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -66,8 +74,10 @@ function TemplateList({ pages, parentRef, pageSize, handleDelete, ...rest }) {
     [addPage, showSnackbar]
   );
 
+  const rowsTotal = useMemo(() => Math.ceil((pages || []).length / 2), [pages]);
+
   const rowVirtualizer = useVirtual({
-    size: Math.ceil((pages || []).length / 2),
+    size: rowsTotal,
     parentRef,
     estimateSize: useCallback(
       () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
@@ -75,6 +85,18 @@ function TemplateList({ pages, parentRef, pageSize, handleDelete, ...rest }) {
     ),
     overscan: 4,
   });
+
+  useEffect(() => {
+    if (
+      rowVirtualizer.virtualItems.length &&
+      rowsTotal &&
+      rowsTotal - THRESHOLD <
+        rowVirtualizer.virtualItems[rowVirtualizer.virtualItems.length - 1]
+          .index
+    ) {
+      fetchTemplates?.();
+    }
+  }, [rowVirtualizer, rowsTotal, fetchTemplates]);
 
   const columnVirtualizer = useVirtual({
     horizontal: true,
@@ -177,6 +199,7 @@ TemplateList.propTypes = {
   ),
   pageSize: PropTypes.object.isRequired,
   handleDelete: PropTypes.func,
+  fetchTemplates: PropTypes.func,
 };
 
 export default TemplateList;
