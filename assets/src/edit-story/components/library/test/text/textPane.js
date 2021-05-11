@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 

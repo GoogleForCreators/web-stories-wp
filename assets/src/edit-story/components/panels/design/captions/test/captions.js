@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
@@ -35,9 +40,9 @@ describe('Panels/Captions', () => {
       },
     };
 
-    const wrapper = (params) => (
+    const wrapper = ({ children }) => (
       <ConfigContext.Provider value={configValue}>
-        {params.children}
+        {children}
       </ConfigContext.Provider>
     );
 
