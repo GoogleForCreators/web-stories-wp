@@ -241,6 +241,10 @@
       "PrimaryLink",
       "SecondaryLink",
       "ExternalLink"
+    ],
+    "testing-library/custom-renders": [
+      "renderWithTheme",
+      "renderWithProviders"
     ]
   },
   "overrides": [
@@ -258,7 +262,7 @@
       ],
       "extends": [
         "plugin:jest/all",
-        "plugin:testing-library/recommended",
+        "plugin:testing-library/react",
         "plugin:jest-dom/recommended"
       ],
       "plugins": [
