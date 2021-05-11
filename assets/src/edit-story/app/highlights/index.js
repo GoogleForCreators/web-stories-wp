@@ -22,6 +22,7 @@ export { default as useHighlights } from './useHighlights';
 export { default as useFocusHighlight } from './useFocusHighlight';
 export { default as HighlightsProvider } from './provider';
 export { default as states } from './states';
+export { useQuickActions } from './quickActions';
 
 export const styles = {
   OUTLINE,
