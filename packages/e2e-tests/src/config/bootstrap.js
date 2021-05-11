@@ -218,8 +218,6 @@ async function runAxeTestsForStoriesEditor() {
       'scrollable-region-focusable',
       'aria-allowed-attr',
       'nested-interactive',
-      // Remove after https://github.com/google/web-stories-wp/pull/7358
-      'link-name',
     ],
   });
 }
