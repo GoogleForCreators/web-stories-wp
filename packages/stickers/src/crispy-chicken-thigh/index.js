@@ -16,28 +16,9 @@
 /**
  * Internal dependencies
  */
-import { default as scribbledUnderline } from './scribbledUnderline';
-import { default as scribbledUnderlineWhite } from './scribbledUnderlineWhite';
-import { default as scribbledUnderline2 } from './scribbledUnderline2';
-import { default as scribbledArrow } from './scribbledArrow';
-import { default as curvedArrow } from './curvedArrow';
-import { default as capsuleBox } from './capsuleBox';
-import { default as capsuleOpen } from './capsuleOpen';
-import { default as capsules } from './capsules';
+import { default as castIron } from './castIron';
 import { default as hotDish } from './hotDish';
 import { default as oven } from './oven';
 import { default as potatoes } from './potatoes';
 
-export {
-  scribbledUnderline,
-  scribbledUnderlineWhite,
-  scribbledUnderline2,
-  scribbledArrow,
-  curvedArrow,
-  capsuleBox,
-  capsuleOpen,
-  capsules,
-  hotDish,
-  oven,
-  potatoes,
-};
+export { castIron, hotDish, oven, potatoes };
