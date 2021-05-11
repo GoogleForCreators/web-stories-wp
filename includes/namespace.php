@@ -83,6 +83,7 @@ function rewrite_flush() {
  * @return void
  */
 function activate( $network_wide = false ) {
+	setup_new_site();
 	get_plugin_instance()->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
