@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useState, useCallback, useEffect, forwardRef } from 'react';
+import { useRef, useCallback, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
