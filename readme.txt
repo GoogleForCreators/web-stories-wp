@@ -196,7 +196,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.7.0 =
 
-Custom page templates, improved pre-publish checklist,  bug fixes and performance improvements.
+Custom page templates, improved pre-publish checklist, bug fixes and performance improvements.
 
 = 1.6.0 =
 
