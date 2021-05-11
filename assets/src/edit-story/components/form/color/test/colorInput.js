@@ -42,13 +42,12 @@ jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
 );
 
 function arrange(children = null) {
-  const { getByRole, queryByLabelText } = renderWithTheme(children);
-  const button = getByRole('button', { name: 'Color' });
-  const input = queryByLabelText('Color', { selector: 'input' });
+  renderWithTheme(children);
+  const button = screen.getByRole('button', { name: 'Color' });
+  const input = screen.queryByLabelText('Color', { selector: 'input' });
   return {
     button,
     input,
-    queryByLabelText,
   };
 }
 
@@ -128,7 +127,7 @@ describe('<ColorInput />', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { color: { r: 0, g: 0, b: 0, a: 1 } };
-    const { button, queryByLabelText } = arrange(
+    const { button } = arrange(
       <ColorInput
         onChange={onChange}
         value={value}
@@ -141,14 +140,14 @@ describe('<ColorInput />', () => {
 
     fireEvent.click(button);
 
-    const previewButton = queryByLabelText(/solid pattern/i);
+    const previewButton = screen.queryByLabelText(/solid pattern/i);
     expect(previewButton).toBeInTheDocument();
   });
 
   it('should open the color picker when clicked if multiple', () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
-    const { button, queryByLabelText } = arrange(
+    const { button } = arrange(
       <ColorInput
         onChange={onChange}
         value={MULTIPLE_VALUE}
@@ -160,7 +159,7 @@ describe('<ColorInput />', () => {
 
     fireEvent.click(button);
 
-    const previewButton = queryByLabelText(/solid pattern/i);
+    const previewButton = screen.queryByLabelText(/solid pattern/i);
     expect(previewButton).toBeInTheDocument();
   });
 

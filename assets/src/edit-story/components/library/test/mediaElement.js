@@ -15,12 +15,14 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { Simulate } from 'react-dom/test-utils';
+import { screen } from '@testing-library/react';
+
+/**
+ * Internal dependencies
+ */
 import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';
@@ -78,16 +80,13 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    renderMediaElement(resource, 'local');
+    expect(screen.queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('image :)');
+    const element = screen.getByAriaLabel('image :)');
     Simulate.focus(element);
 
-    expect(getByAriaLabel('More')).toBeInTheDocument();
+    expect(screen.getByAriaLabel('More')).toBeInTheDocument();
   });
 
   it("should render dropdown menu's more icon for uploaded video", () => {
@@ -102,16 +101,13 @@ describe('MediaElement', () => {
       alt: 'video :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    renderMediaElement(resource, 'local');
+    expect(screen.queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('video :)');
+    const element = screen.getByAriaLabel('video :)');
     Simulate.focus(element);
 
-    expect(getByAriaLabel('More')).toBeInTheDocument();
+    expect(screen.getByAriaLabel('More')).toBeInTheDocument();
   });
 
   it("should not render dropdown menu's more icon for not uploaded image", () => {
@@ -126,16 +122,13 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    renderMediaElement(resource, 'local');
+    expect(screen.queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('image :)');
+    const element = screen.getByAriaLabel('image :)');
     Simulate.focus(element);
 
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    expect(screen.queryByAriaLabel('More')).not.toBeInTheDocument();
   });
 
   it("should not render dropdown menu's more icon for not uploaded video", () => {
@@ -150,15 +143,12 @@ describe('MediaElement', () => {
       alt: 'video :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    renderMediaElement(resource, 'local');
+    expect(screen.queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('video :)');
+    const element = screen.getByAriaLabel('video :)');
     Simulate.focus(element);
 
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    expect(screen.queryByAriaLabel('More')).not.toBeInTheDocument();
   });
 });

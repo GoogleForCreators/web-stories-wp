@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -30,35 +30,35 @@ describe('<ViewStyleBar />', function () {
   const mockPress = jest.fn();
 
   it(`should render the list icon when layoutStyle is ${VIEW_STYLE.GRID}`, function () {
-    const { getByTestId, queryByTestId } = renderWithProviders(
+    renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.GRID} onPress={mockPress} />
     );
 
-    const listIcon = getByTestId('list-icon');
+    const listIcon = screen.getByTestId('list-icon');
     expect(listIcon).toBeInTheDocument();
 
-    const gridIcon = queryByTestId('grid-icon');
+    const gridIcon = screen.queryByTestId('grid-icon');
     expect(gridIcon).not.toBeInTheDocument();
   });
 
   it(`should render the grid icon when layoutStyle is ${VIEW_STYLE.LIST}`, function () {
-    const { getByTestId, queryByTestId } = renderWithProviders(
+    renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );
 
-    const gridIcon = getByTestId('grid-icon');
+    const gridIcon = screen.getByTestId('grid-icon');
     expect(gridIcon).toBeInTheDocument();
 
-    const listIcon = queryByTestId('list-icon');
+    const listIcon = screen.queryByTestId('list-icon');
     expect(listIcon).not.toBeInTheDocument();
   });
 
   it('should have triggered mockPress once on onPress click', function () {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );
 
-    const gridIcon = getByTestId('grid-icon');
+    const gridIcon = screen.getByTestId('grid-icon');
 
     fireEvent.click(gridIcon);
     expect(mockPress).toHaveBeenCalledTimes(1);

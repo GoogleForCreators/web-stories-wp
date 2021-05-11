@@ -243,8 +243,11 @@
       "ExternalLink"
     ],
     "testing-library/custom-renders": [
+      "arrange",
       "renderWithTheme",
-      "renderWithProviders"
+      "renderWithProviders",
+      "renderPanel",
+      "setup"
     ]
   },
   "overrides": [

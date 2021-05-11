@@ -65,7 +65,7 @@ function setup() {
     },
   };
 
-  const { getByText, queryAllByRole } = renderWithTheme(
+  return renderWithTheme(
     <TransformContext.Provider value={transformValue}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
@@ -82,7 +82,6 @@ function setup() {
       </ConfigContext.Provider>
     </TransformContext.Provider>
   );
-  return { getByText, queryAllByRole };
 }
 
 // eslint-disable-next-line react/prop-types
@@ -93,8 +92,8 @@ function MockPane({ children }) {
 
 describe('TextSets Panel', () => {
   it('should render the Panel', () => {
-    const { getByText } = setup();
-    const h1 = getByText('Text Sets');
+    setup();
+    const h1 = screen.getByText('Text Sets');
     expect(h1).toBeInTheDocument();
   });
 });

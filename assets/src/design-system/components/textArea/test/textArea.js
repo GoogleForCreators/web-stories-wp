@@ -27,7 +27,7 @@ describe('TextArea', () => {
   };
 
   it('should render the textarea', () => {
-    const { getByPlaceholderText } = renderWithProviders(
+    renderWithProviders(
       <TextArea
         {...defaultProps}
         aria-label="test"
@@ -35,19 +35,19 @@ describe('TextArea', () => {
       />
     );
 
-    expect(getByPlaceholderText('my placeholder')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('my placeholder')).toBeInTheDocument();
   });
 
   it('should render a label', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <TextArea {...defaultProps} label="This is my input label" />
     );
 
-    expect(getByText('This is my input label')).toBeInTheDocument();
+    expect(screen.getByText('This is my input label')).toBeInTheDocument();
   });
 
   it('should render a hint', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <TextArea
         {...defaultProps}
         aria-label="test"
@@ -55,11 +55,11 @@ describe('TextArea', () => {
       />
     );
 
-    expect(getByText('This is my input hint')).toBeInTheDocument();
+    expect(screen.getByText('This is my input hint')).toBeInTheDocument();
   });
 
   it('should render the counter', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <TextArea
         {...defaultProps}
         aria-label="test"
@@ -69,6 +69,6 @@ describe('TextArea', () => {
       />
     );
 
-    expect(getByText('3/10')).toBeInTheDocument();
+    expect(screen.getByText('3/10')).toBeInTheDocument();
   });
 });

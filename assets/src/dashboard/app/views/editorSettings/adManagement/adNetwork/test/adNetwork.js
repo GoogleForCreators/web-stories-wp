@@ -36,11 +36,11 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
   });
 
   it('should render ad network settings dropdown button', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <AdNetworkSettings adNetwork={adNetwork} handleUpdate={mockUpdate} />
     );
 
-    const networkDropdown = getByRole('button');
+    const networkDropdown = screen.getByRole('button');
     expect(networkDropdown).toHaveTextContent('None');
   });
 });

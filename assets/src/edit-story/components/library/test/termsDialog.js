@@ -31,7 +31,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, act } from '@testing-library/react';
+import { waitFor, fireEvent, act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -51,16 +51,16 @@ import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 
 describe('TermsDialog', () => {
   it('should render', () => {
-    const { queryByText } = renderWithTheme(<TermsDialog />);
-    const link = queryByText(/^Learn more/);
+    renderWithTheme(<TermsDialog />);
+    const link = screen.queryByText(/^Learn more/);
     expect(link).toMatchSnapshot();
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
       LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );
   });
   it('should store the acknowledgement in the localStore when the window is dismissed', async () => {
-    const { queryByText } = renderWithTheme(<TermsDialog />);
-    const dismiss = queryByText(/^Dismiss/);
+    renderWithTheme(<TermsDialog />);
+    const dismiss = screen.queryByText(/^Dismiss/);
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
       LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );

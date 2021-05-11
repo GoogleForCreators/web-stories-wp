@@ -30,7 +30,7 @@ describe('DropDown <DropDownSelect />', () => {
   const onClickMock = jest.fn();
 
   it('should render a <DropDownSelect /> button by default', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <DropDownSelect
         activeItemLabel={'chosen option'}
         dropDownLabel={'my label'}
@@ -39,12 +39,12 @@ describe('DropDown <DropDownSelect />', () => {
       />
     );
 
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     expect(select).toBeInTheDocument();
   });
 
   it('should not trigger onSelectClick on click if select is disabled', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <DropDownSelect
         activeItemLabel={'chosen option'}
         disabled
@@ -54,7 +54,7 @@ describe('DropDown <DropDownSelect />', () => {
       />
     );
 
-    const select = getByText('my label');
+    const select = screen.getByText('my label');
     fireEvent.click(select);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);

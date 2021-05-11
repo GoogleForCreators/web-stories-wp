@@ -80,27 +80,35 @@ expect.extend({
 });
 
 describe('getPrefixStyleForCharacter', () => {
-  function setup(styleArray, prefix) {
-    return getPrefixStyleForCharacter({ toArray: () => styleArray }, prefix);
-  }
-
   it('should return a direct match', () => {
-    const match = setup(['ALPHA', 'BRAVO', 'CHARLIE'], 'BRAVO');
+    const match = getPrefixStyleForCharacter(
+      { toArray: () => ['ALPHA', 'BRAVO', 'CHARLIE'] },
+      'BRAVO'
+    );
     expect(match).toStrictEqual('BRAVO');
   });
 
   it('should return a prefix match', () => {
-    const match = setup(['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'], 'BRAVO');
+    const match = getPrefixStyleForCharacter(
+      { toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'] },
+      'BRAVO'
+    );
     expect(match).toStrictEqual('BRAVO-2');
   });
 
   it('should return first match if multiple', () => {
-    const match = setup(['ALPHA-1', 'BRAVO-2', 'BRAVO-3'], 'BRAVO');
+    const match = getPrefixStyleForCharacter(
+      { toArray: () => ['ALPHA-1', 'BRAVO-2', 'BRAVO-3'] },
+      'BRAVO'
+    );
     expect(match).toStrictEqual('BRAVO-2');
   });
 
   it('should return NONE if no match', () => {
-    const match = setup(['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'], 'DELTA');
+    const match = getPrefixStyleForCharacter(
+      { toArray: () => ['ALPHA-1', 'BRAVO-2', 'CHARLIE-3'] },
+      'DELTA'
+    );
     expect(match).toStrictEqual('NONE');
   });
 });

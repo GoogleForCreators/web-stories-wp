@@ -167,7 +167,7 @@ describe('APIProvider', () => {
       });
     });
 
-    expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
+    expect(screen.getAllTemplatesMock).toHaveBeenCalledTimes(1);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
 
     await act(async () => {
@@ -176,7 +176,7 @@ describe('APIProvider', () => {
       });
     });
 
-    expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
+    expect(screen.getAllTemplatesMock).toHaveBeenCalledTimes(1);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 });

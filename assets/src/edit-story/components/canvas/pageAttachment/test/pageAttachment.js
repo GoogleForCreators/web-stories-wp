@@ -43,50 +43,46 @@ function setup(props = {}) {
       },
     },
   };
-  const { getByText, getByRole } = renderWithTheme(
+  return renderWithTheme(
     <StoryContext.Provider value={storyContext}>
       <CanvasContext.Provider value={canvasContext}>
         <PageAttachment pageAttachment={pageAttachment} />
       </CanvasContext.Provider>
     </StoryContext.Provider>
   );
-  return {
-    getByText,
-    getByRole,
-  };
 }
 
 describe('PageAttachment', () => {
   it('should display only wrapper in case of empty Page Attachment', () => {
-    const { getByRole } = setup();
-    const pageAttachment = getByRole('presentation');
+    setup();
+    const pageAttachment = screen.getByRole('presentation');
     expect(pageAttachment).toBeInTheDocument();
     expect(pageAttachment).toBeEmptyDOMElement();
   });
 
   it('should display the configured Page Attachment', () => {
-    const { getByText } = setup({
+    setup({
       pageAttachment: { url: 'http://example.test', ctaText: 'Click me!' },
     });
-    const ctaText = getByText('Click me!');
+    const ctaText = screen.getByText('Click me!');
     expect(ctaText).toBeInTheDocument();
   });
 
   it('should display default CTA Text if none set', () => {
-    const { getByText } = setup({
+    setup({
       pageAttachment: { url: 'http://example.test' },
     });
-    const ctaText = getByText('Learn more');
+    const ctaText = screen.getByText('Learn more');
     expect(ctaText).toBeInTheDocument();
   });
 
   it('should display dotted line if link found in the area', () => {
-    const { getByRole } = setup({
+    setup({
       canvasProps: {
         displayLinkGuidelines: true,
       },
     });
-    const pageAttachment = getByRole('presentation');
+    const pageAttachment = screen.getByRole('presentation');
     // The guiding line is always displayed right before the page attachment, on the same level.
     const guideline = pageAttachment.previousSibling;
     expect(guideline).toBeDefined();

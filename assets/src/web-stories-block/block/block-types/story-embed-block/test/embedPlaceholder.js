@@ -77,7 +77,7 @@ describe('EmbedPlaceholder', () => {
   it('should trigger onSubmit callback when submitting the form', () => {
     const onSubmit = jest.fn();
     const onChange = jest.fn();
-    const { getByTestId } = render(
+    render(
       <EmbedPlaceholder
         icon={null}
         label="Embed Placeholder"
@@ -87,7 +87,7 @@ describe('EmbedPlaceholder', () => {
         cannotEmbed={false}
       />
     );
-    fireEvent.submit(getByTestId('embed-placeholder-form'));
+    fireEvent.submit(screen.getByTestId('embed-placeholder-form'));
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 

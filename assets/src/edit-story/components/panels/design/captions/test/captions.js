@@ -28,7 +28,7 @@ describe('Panels/Captions', () => {
     resource: { posterId: 0, title: '', poster: '', alt: '' },
     tracks: [],
   };
-  function renderCaptions(...args) {
+  function arrange(...args) {
     const configValue = {
       capabilities: {
         hasUploadMediaAction: true,
@@ -56,15 +56,15 @@ describe('Panels/Captions', () => {
   });
 
   it('should render <Captions /> panel', () => {
-    const { getByRole } = renderCaptions([defaultElement]);
-    const captionRegion = getByRole('region', {
+    arrange([defaultElement]);
+    const captionRegion = screen.getByRole('region', {
       name: /Caption and subtitles/i,
     });
     expect(captionRegion).toBeInTheDocument();
   });
 
   it('should display Mixed in case of mixed value multi-selection', () => {
-    const { getByRole } = renderCaptions([
+    arrange([
       defaultElement,
       {
         resource: {
@@ -76,7 +76,7 @@ describe('Panels/Captions', () => {
         tracks: ['Some track here'],
       },
     ]);
-    const input = getByRole('textbox', { name: 'Filename' });
+    const input = screen.getByRole('textbox', { name: 'Filename' });
     expect(input).toHaveValue(MULTIPLE_DISPLAY_VALUE);
   });
 });

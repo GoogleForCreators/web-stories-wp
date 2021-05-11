@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
 import { render } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -41,18 +43,25 @@ describe('useLibrary()', () => {
     ];
 
     expect(<ShouldBeEmptyMedia3pPane />).toMatchInlineSnapshot('<EmptyPane />');
-    const emptyMedia3pPane = render(<ShouldBeEmptyMedia3pPane />);
-    expect(emptyMedia3pPane.container.firstChild).toBeEmptyDOMElement();
+    const { container: emptyMedia3pPane } = render(
+      <ShouldBeEmptyMedia3pPane />
+    );
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(emptyMedia3pPane.firstChild).toBeEmptyDOMElement();
 
     expect(<ShouldBeEmptyTextPane />).toMatchInlineSnapshot('<EmptyPane />');
-    const emptyTextPane = render(<ShouldBeEmptyTextPane />);
-    expect(emptyTextPane.container.firstChild).toBeEmptyDOMElement();
+    const { container: emptyTextPane } = render(<ShouldBeEmptyTextPane />);
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(emptyTextPane.firstChild).toBeEmptyDOMElement();
 
     expect(<ShouldBeEmptyPageTemplatesPane />).toMatchInlineSnapshot(
       '<EmptyPane />'
     );
-    const emptyPageTemplatesPane = render(<ShouldBeEmptyPageTemplatesPane />);
-    expect(emptyPageTemplatesPane.container.firstChild).toBeEmptyDOMElement();
+    const { container: emptyPageTemplatesPane } = render(
+      <ShouldBeEmptyPageTemplatesPane />
+    );
+    // eslint-disable-next-line testing-library/no-node-access
+    expect(emptyPageTemplatesPane.firstChild).toBeEmptyDOMElement();
 
     // shallow render the lazy media panes
     await act(async () => {

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import PageAdvancementPanel from '../pageAdvancement';
 
-function setupPanel(configs = {}) {
+function arrange(configs = {}) {
   const updateStory = jest.fn();
 
   const storyContextValue = {
@@ -38,13 +38,14 @@ function setupPanel(configs = {}) {
     },
     actions: { updateStory },
   };
-  const { getByRole } = renderWithTheme(
+
+  renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <PageAdvancementPanel />
     </StoryContext.Provider>
   );
+
   return {
-    getByRole,
     updateStory,
   };
 }
@@ -61,10 +62,10 @@ describe('PageAdvancementPanel', () => {
     localStorage.clear();
   });
   it('should render Page Advancement Panel', () => {
-    const { getByRole, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Page Advancement' });
+    const { updateStory } = arrange();
+    const element = screen.getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeInTheDocument();
-    fireEvent.click(getByRole('radio', { name: 'Auto' }));
+    fireEvent.click(screen.getByRole('radio', { name: 'Auto' }));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
         autoAdvance: true,
@@ -73,13 +74,13 @@ describe('PageAdvancementPanel', () => {
   });
 
   it('should set Page Duration', async () => {
-    const { getByRole, updateStory } = setupPanel({
+    const { updateStory } = arrange({
       autoAdvance: true,
     });
-    const element = getByRole('button', { name: 'Page Advancement' });
+    const element = screen.getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeInTheDocument();
 
-    const input = getByRole('textbox', {
+    const input = screen.getByRole('textbox', {
       name: 'Default page duration in seconds',
     });
 
