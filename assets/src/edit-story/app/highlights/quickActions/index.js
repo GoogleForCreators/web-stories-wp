@@ -44,13 +44,14 @@ export const useQuickActions = () => {
     setHighlights,
   }));
 
-  const changeBackgroundMedia = useCallback(
-    (elementId) => () => {
-      setHighlights({ elementId, highlight: states.MEDIA });
+  const handleFocusPanel = useCallback(
+    ({ elementId, highlight }) => () => {
+      setHighlights({ elementId, highlight });
     },
     [setHighlights]
   );
 
+  // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
   }
@@ -68,8 +69,25 @@ export const useQuickActions = () => {
   ) {
     return [
       {
-        label: 'page background',
-        onClick: changeBackgroundMedia(backgroundElement.id),
+        label: 'Change background color',
+        onClick: handleFocusPanel({
+          elementId: backgroundElement.id,
+          highlight: states.MEDIA,
+        }),
+      },
+      {
+        label: 'Insert background media',
+        onClick: handleFocusPanel({
+          elementId: backgroundElement.id,
+          highlight: states.PAGE_BACKGROUND,
+        }),
+      },
+      {
+        label: 'Insert text',
+        onClick: handleFocusPanel({
+          elementId: backgroundElement.id,
+          highlight: states.TEXT,
+        }),
       },
     ];
   }

@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { DOCUMENT, DESIGN } from '../../components/inspector';
-import { MEDIA } from '../../components/library/constants';
+import { MEDIA, TEXT } from '../../components/library/constants';
 
 /**
  * Highlight state object
@@ -30,12 +30,18 @@ import { MEDIA } from '../../components/library/constants';
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
+
+  // INSPECTOR
+  ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
+  CAPTIONS: 'CAPTIONS',
+  EXCERPT: 'EXCERPT',
+  PAGE_BACKGROUND: 'PAGE_BACKGROUND',
   POSTER: 'POSTER',
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
-  EXCERPT: 'EXCERPT',
-  CAPTIONS: 'CAPTIONS',
-  ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
+
+  // LIBRARY
   MEDIA: 'MEDIA',
+  TEXT: 'TEXT',
 };
 
 export const STATES = {
@@ -64,11 +70,19 @@ export const STATES = {
     focus: true,
     tab: DESIGN,
   },
+  [keys.PAGE_BACKGROUND]: {
+    focus: true,
+    tab: DESIGN,
+  },
 
   // Library
   [keys.MEDIA]: {
     focus: true,
     tab: MEDIA.id,
+  },
+  [keys.TEXT]: {
+    focus: true,
+    tab: TEXT.id,
   },
 };
 
