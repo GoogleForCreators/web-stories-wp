@@ -49,6 +49,7 @@ describe('Inserting 3P Media', () => {
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
+  // Skipped for https://github.com/google/web-stories-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert an coverr video', async () => {
     await createNewStory();
