@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post_Type;
@@ -35,7 +36,7 @@ use WP_Query;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base implements Deactivateable {
+class Story_Post_Type extends Service_Base implements Activateable, Deactivateable {
 
 	/**
 	 * The slug of the stories post type.
@@ -138,6 +139,16 @@ class Story_Post_Type extends Service_Base implements Deactivateable {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+	}
+
+	/**
+	 * Activate the service.
+	 *
+	 * @param bool $network_wide Whether the activation was done network-wide.
+	 * @return void
+	 */
+	public function activate( $network_wide ) {
+		$this->register();
 	}
 
 	/**
