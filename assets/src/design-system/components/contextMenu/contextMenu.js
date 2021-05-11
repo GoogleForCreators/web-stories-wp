@@ -27,7 +27,7 @@ import Mask from './mask';
 const ContextMenu = ({ isAlwaysVisible, items, ...props }) => {
   return (
     <>
-      {props.isOpen && <Mask onDismiss={props.onDismiss} />}
+      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
       <Popover role="dialog" isOpen={isAlwaysVisible || props.isOpen}>
         <Menu items={items} {...props} />
         <Shadow />
