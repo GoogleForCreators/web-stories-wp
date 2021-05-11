@@ -27,7 +27,18 @@ import styled from 'styled-components';
 import ContextMenu from '../contextMenu';
 import AnimatedContextMenu from '../animatedContextMenu';
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Bucket, LetterTLargeLetterTSmall, Media } from '../../../icons';
+import {
+  Bucket,
+  Captions,
+  CircleSpeed,
+  Eraser,
+  LetterTLargeLetterTSmall,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+} from '../../../icons';
+import { Text } from '../../typography';
 
 const items = [
   { label: 'Copy', shortcut: '⌘ X' },
@@ -93,6 +104,17 @@ const AnimatedContainerWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  ${Container} {
+    width: 300px;
+    max-height: 300px;
+    margin: 0 auto;
+  }
 `;
 
 export const _default = () => {
@@ -169,25 +191,105 @@ export const Animated = () => {
   );
 };
 
-const quickActionMenuItems = [
+const blankPageItems = [
   { label: 'Change background color', Icon: Bucket },
   { label: 'Insert media', Icon: Media, separator: 'top' },
-  { label: 'Insert text', Icon: LetterTLargeLetterTSmall },
+  { label: 'Insert text', Icon: LetterTPlus },
+];
+
+const backgroundImageItems = [
+  { label: 'Replace background', Icon: PictureSwap },
+  { label: 'Add animation', Icon: CircleSpeed },
+  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
+];
+
+const foregroundImageItems = [
+  { label: 'Replace media', Icon: PictureSwap },
+  { label: 'Add animation', Icon: CircleSpeed },
+  { label: 'Add link', Icon: Link },
+  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
+];
+
+const videoItems = [
+  { label: 'Replace media', Icon: PictureSwap },
+  { label: 'Add animation', Icon: CircleSpeed },
+  { label: 'Add link', Icon: Link },
+  { label: 'Add captions', Icon: Captions },
+  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
+];
+
+const shapeItems = [
+  { label: 'Change color', Icon: Bucket },
+  { label: 'Add animation', Icon: CircleSpeed },
+  { label: 'Add link', Icon: Link },
+  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
+];
+
+const textItems = [
+  { label: 'Change color', Icon: Bucket },
+  { label: 'Edit text', Icon: LetterTLargeLetterTSmall },
+  { label: 'Add animation', Icon: CircleSpeed },
+  { label: 'Add link', Icon: Link },
+  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
 ];
 
 export const QuickActionMenu = () => {
-  const itemsWithEventHandlers = quickActionMenuItems.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
+  const generateMenuItemsWithEventHandler = (i) =>
+    i.map((item) => ({
+      ...item,
+      onClick: () => action(`Clicked on \`${item.label}\``),
+    }));
 
   return (
-    <Container>
-      <ContextMenu
-        items={itemsWithEventHandlers}
-        isOpen={boolean('isOpen', true)}
-        isIconMenu
-      />
-    </Container>
+    <Grid>
+      <Container>
+        <Text>{'Blank page; no item selected'}</Text>
+        <ContextMenu
+          items={generateMenuItemsWithEventHandler(blankPageItems)}
+          isOpen={boolean('isOpen', true)}
+          isIconMenu
+        />
+      </Container>
+      <Container>
+        <Text>{'Background Image selected'}</Text>
+        <ContextMenu
+          items={generateMenuItemsWithEventHandler(backgroundImageItems)}
+          isOpen={boolean('isOpen', true)}
+          isIconMenu
+        />
+      </Container>
+      <Container>
+        <Text>{'Foreground Image selected'}</Text>
+        <ContextMenu
+          items={generateMenuItemsWithEventHandler(foregroundImageItems)}
+          isOpen={boolean('isOpen', true)}
+          isIconMenu
+        />
+      </Container>
+      <Container>
+        <Text>{'Video selected'}</Text>
+        <ContextMenu
+          items={generateMenuItemsWithEventHandler(videoItems)}
+          isOpen={boolean('isOpen', true)}
+          isIconMenu
+        />
+      </Container>
+      <Container>
+        <Text>{'Shape selected'}</Text>
+        <ContextMenu
+          items={generateMenuItemsWithEventHandler(shapeItems)}
+          isOpen={boolean('isOpen', true)}
+          isIconMenu
+        />
+      </Container>
+      <Container>
+        <Text>{'Text selected'}</Text>
+        <ContextMenu
+          items={generateMenuItemsWithEventHandler(textItems)}
+          isOpen={boolean('isOpen', true)}
+          isIconMenu
+        />
+      </Container>
+    </Grid>
   );
 };
