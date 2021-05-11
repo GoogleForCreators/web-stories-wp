@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -29,7 +28,6 @@ import Context from './context';
 
 function MetaBoxesProvider({ children }) {
   const { metaBoxes = {} } = useConfig();
-  const isFeatureEnabled = useFeature('customMetaBoxes');
 
   const [metaBoxesVisible, setMetaBoxesVisible] = useState(false);
   const toggleMetaBoxesVisible = useCallback(
@@ -37,11 +35,9 @@ function MetaBoxesProvider({ children }) {
     [setMetaBoxesVisible]
   );
 
-  const hasMetaBoxes =
-    isFeatureEnabled &&
-    Object.keys(metaBoxes).some((location) =>
-      Boolean(metaBoxes[location]?.length)
-    );
+  const hasMetaBoxes = Object.keys(metaBoxes).some((location) =>
+    Boolean(metaBoxes[location]?.length)
+  );
 
   const locations = Object.keys(metaBoxes);
 
