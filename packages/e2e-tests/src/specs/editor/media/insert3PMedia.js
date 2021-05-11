@@ -46,6 +46,7 @@ describe('Inserting 3P Media', () => {
       '#library-pane-media3p [data-testid="mediaElement-image"]'
     );
 
+    await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
   it('should insert an coverr video', async () => {
@@ -65,6 +66,7 @@ describe('Inserting 3P Media', () => {
       '#library-pane-media3p [data-testid="mediaElement-video"]'
     );
 
+    await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
   it('should insert an tenor gif', async () => {
@@ -84,6 +86,7 @@ describe('Inserting 3P Media', () => {
       '#library-pane-media3p [data-testid="mediaElement-gif"]'
     );
 
-    await expect(page).toMatchElement('[data-testid="frameElement"]');
+    await page.waitForSelector('[data-testid="imageElement"]');
+    await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
 });
