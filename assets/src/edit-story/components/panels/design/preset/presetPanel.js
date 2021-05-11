@@ -19,15 +19,12 @@
  */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
-import Dialog from '../../../dialog';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Resize from './resize';
@@ -38,6 +35,7 @@ import StyleGroup from './stylePreset/styleGroup';
 import useApplyColor from './colorPreset/useApplyColor';
 import { PRESET_TYPES } from './constants';
 import useApplyStyle from './stylePreset/useApplyStyle';
+import ConfirmationDialog from './confirmationDialog';
 
 function PresetPanel({ presetType, title, pushUpdate }) {
   const isStyle = PRESET_TYPES.STYLE === presetType;
@@ -146,28 +144,15 @@ function PresetPanel({ presetType, title, pushUpdate }) {
       </PanelContent>
       {resizeable && <Resize position="bottom" />}
       {showDialog && (
-        <Dialog
-          isOpen
+        <ConfirmationDialog
+          presetType={presetType}
           onClose={() => setShowDialog(false)}
-          secondaryText={__('Cancel', 'web-stories')}
           onPrimary={() => {
             deleteGlobalPreset(toDelete);
             setToDelete(null);
             setShowDialog(false);
           }}
-          primaryText={__('Delete', 'web-stories')}
-        >
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {sprintf(
-              /* translators: %s: preset type. */
-              __(
-                'This is a global %1$s. Deleting this %1$s will remove it from the Saved %1$ss panel across all stories and the %1$s will no longer be available to any team members sharing this account.',
-                'web-stories'
-              ),
-              presetType
-            )}
-          </Text>
-        </Dialog>
+        />
       )}
     </Panel>
   );

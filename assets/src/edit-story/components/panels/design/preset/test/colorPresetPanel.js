@@ -426,11 +426,12 @@ describe('Panels/Preset', () => {
       const extraStoryPresets = {
         colors: [TEST_COLOR, TEST_COLOR_2],
       };
-      const { getByLabelText, queryAllByLabelText, updateStory } = setupPanel(
-        extraStylePresets,
-        null,
-        extraStoryPresets
-      );
+      const {
+        getByLabelText,
+        queryAllByLabelText,
+        updateStory,
+        getByRole,
+      } = setupPanel(extraStylePresets, null, extraStoryPresets);
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
 
@@ -438,6 +439,9 @@ describe('Panels/Preset', () => {
       expect(deletePresets[0]).toBeDefined();
 
       fireEvent.click(deletePresets[0]);
+      const confirmationButton = getByRole('button', { name: 'Delete' });
+      fireEvent.click(confirmationButton);
+
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
@@ -532,6 +536,10 @@ describe('Panels/Preset', () => {
       const deletePreset = getByRole('button', { name: 'Delete global color' });
 
       fireEvent.click(deletePreset);
+
+      const confirmationButton = getByRole('button', { name: 'Delete' });
+      fireEvent.click(confirmationButton);
+
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
