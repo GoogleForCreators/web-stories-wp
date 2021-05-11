@@ -354,18 +354,6 @@ class Experiments extends Service_Base {
 				'default'     => true,
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #5669
-			 * Creation date: 2021-01-21
-			 */
-			[
-				'name'        => 'videoOptimization',
-				'label'       => __( 'Video optimization', 'web-stories' ),
-				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #6943
 			 * Creation date: 2021-04-07
