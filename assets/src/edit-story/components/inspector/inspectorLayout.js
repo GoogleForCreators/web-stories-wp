@@ -75,7 +75,7 @@ function InspectorLayout() {
       <UnjustifiedTabView
         label={__('Inspector Selection', 'web-stories')}
         tabs={tabs}
-        initialTab={tab}
+        tab={tab}
         onTabChange={onTabChange}
         getAriaControlsId={getTabId}
         shortcut="mod+option+3"

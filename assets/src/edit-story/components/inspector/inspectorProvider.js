@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '@web-stories-wp/tracking';
 import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
@@ -39,6 +40,7 @@ import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
 
+const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN, PREPUBLISH]);
 function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
@@ -62,15 +64,17 @@ function InspectorProvider({ children }) {
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
   useEffect(() => {
-    if (highlightedTab) {
+    if (highlightedTab && INSPECTOR_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
+      trackEvent('quick_action_tab_change', {
+        name: highlightedTab,
+      });
     }
   }, [highlightedTab]);
 
   const inspectorRef = useRef(null);
 
-  const initialTab = DESIGN;
-  const [tab, setTab] = useState(initialTab);
+  const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
@@ -154,7 +158,6 @@ function InspectorProvider({ children }) {
   const state = {
     state: {
       tab,
-      initialTab,
       users,
       inspectorContentHeight,
       isUsersLoading,

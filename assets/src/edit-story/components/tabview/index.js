@@ -173,12 +173,11 @@ function TabView({
   getAriaControlsId,
   onTabChange = noop,
   tabs = [],
+  tab,
   label = '',
   shortcut = '',
-  initialTab,
   ...rest
 }) {
-  const [tab, setTab] = useState(initialTab || tabs[0]?.id);
   const { isRTL } = useConfig();
 
   const ref = useRef();
@@ -186,20 +185,19 @@ function TabView({
 
   const tabChanged = useCallback(
     (id) => {
-      setTab(id);
+      onTabChange(id);
       if (tabRefs.current[id]) {
         tabRefs.current[id].focus();
       }
-      onTabChange(id);
     },
-    [setTab, onTabChange]
+    [onTabChange]
   );
 
   useEffect(() => {
-    if (initialTab) {
-      setTab(initialTab);
+    if (tab) {
+      onTabChange(tab);
     }
-  }, [initialTab]);
+  }, [tab, onTabChange]);
 
   useGlobalKeyDownEffect(
     { key: shortcut, editable: true },
@@ -262,9 +260,9 @@ TabView.propTypes = {
   getAriaControlsId: PropTypes.func,
   onTabChange: PropTypes.func,
   tabs: PropTypes.array.isRequired,
-  initialTab: PropTypes.any,
   label: PropTypes.string,
   shortcut: PropTypes.string,
+  tab: PropTypes.string,
 };
 
 export default TabView;
