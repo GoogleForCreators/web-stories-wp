@@ -28,6 +28,8 @@ namespace Google\Web_Stories\User;
 
 use Google\Web_Stories\Infrastructure\Activateable;
 use Google\Web_Stories\Infrastructure\Deactivateable;
+use Google\Web_Stories\Infrastructure\Delete_Site;
+use Google\Web_Stories\Infrastructure\Initialize_Site;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Role;
 
@@ -36,7 +38,7 @@ use WP_Role;
  *
  * @package Google\Web_Stories\User
  */
-class Capabilities implements Activateable, Deactivateable {
+class Capabilities implements Activateable, Deactivateable, Initialize_Site, Delete_Site {
 	/**
 	 * Activate the service.
 	 *
@@ -54,6 +56,28 @@ class Capabilities implements Activateable, Deactivateable {
 	 * @return void
 	 */
 	public function deactivate( $network_wide ) {
+		$this->remove_caps_from_roles();
+	}
+
+	/**
+	 * Initialize the service on new site ( Multisite only )
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function initialize_site() {
+		$this->add_caps_to_roles();
+	}
+
+	/**
+	 * Delete the service on new site ( Multisite only )
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function delete_site() {
 		$this->remove_caps_from_roles();
 	}
 

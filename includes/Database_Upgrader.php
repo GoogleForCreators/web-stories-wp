@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Activateable;
+use Google\Web_Stories\Infrastructure\Initialize_Site;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Service;
 
@@ -35,7 +36,7 @@ use Google\Web_Stories\Infrastructure\Service;
  *
  * @package Google\Web_Stories
  */
-class Database_Upgrader extends Service_Base implements Activateable {
+class Database_Upgrader extends Service_Base implements Activateable, Initialize_Site {
 
 	/**
 	 * The slug of database option.
@@ -108,6 +109,17 @@ class Database_Upgrader extends Service_Base implements Activateable {
 	 * @return void
 	 */
 	public function activate( $network_wide ) {
+		$this->register();
+	}
+
+	/**
+	 * Initialize the service on new site ( Multisite only )
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function initialize_site() {
 		$this->register();
 	}
 

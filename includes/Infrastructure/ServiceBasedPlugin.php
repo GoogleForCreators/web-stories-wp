@@ -158,6 +158,40 @@ abstract class ServiceBasedPlugin implements Plugin {
 	}
 
 	/**
+	 * On new site creation ( Multisite only )
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function new_site() {
+		$this->register_services();
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof Initialize_Site ) {
+				$service->initialize_site();
+			}
+		}
+	}
+
+	/**
+	 * On site deletion ( Multisite only )
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function delete_site() {
+		$this->register_services();
+
+		foreach ( $this->service_container as $service ) {
+			if ( $service instanceof Delete_Site ) {
+				$service->delete_site();
+			}
+		}
+	}
+
+	/**
 	 * Register the plugin with the WordPress system.
 	 *
 	 * @since 1.6.0

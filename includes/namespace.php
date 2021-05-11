@@ -31,32 +31,6 @@ use WP_Error;
 use WP_Site;
 
 /**
- * Run logic to setup a new site with web stories.
- *
- * @since 1.2.0
- *
- * @return void
- */
-function setup_new_site() {
-	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
-	$story = $injector->make( Story_Post_Type::class );
-	$story->register();
-	// TODO Register cap to roles within class itself.
-	$capabilities = $injector->make( User\Capabilities::class );
-	$capabilities->add_caps_to_roles();
-	rewrite_flush();
-
-	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
-	// TODO move this logic to Database_Upgrader class.
-	$database_upgrader = $injector->make( Database_Upgrader::class );
-	$database_upgrader->register();
-}
-
-
-/**
  * Flush rewrites.
  *
  * @since 1.7.0
@@ -107,7 +81,7 @@ function new_site( $site ) {
 	}
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
-	setup_new_site();
+	get_plugin_instance()->new_site();
 	restore_current_blog();
 }
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
@@ -132,15 +106,9 @@ function remove_site( $error, $site ) {
 		return;
 	}
 
-	$injector = Services::get_injector();
-	if ( ! method_exists( $injector, 'make' ) ) {
-		return;
-	}
-	$story = $injector->make( Story_Post_Type::class );
-
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
-	$story->remove_caps_from_roles();
+	get_plugin_instance()->delete_site();
 	restore_current_blog();
 }
 

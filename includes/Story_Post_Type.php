@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Deactivateable;
+use Google\Web_Stories\Infrastructure\Initialize_Site;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post_Type;
 use WP_Rewrite;
@@ -35,7 +36,7 @@ use WP_Query;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base implements Deactivateable {
+class Story_Post_Type extends Service_Base implements Deactivateable, Initialize_Site {
 
 	/**
 	 * The slug of the stories post type.
@@ -138,6 +139,19 @@ class Story_Post_Type extends Service_Base implements Deactivateable {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+	}
+
+
+	/**
+	 * Initialize the service on new site ( Multisite only )
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function initialize_site() {
+		$this->register();
+		rewrite_flush();
 	}
 
 	/**
