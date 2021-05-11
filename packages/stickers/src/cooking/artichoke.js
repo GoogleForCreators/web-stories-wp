@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = __('Artichoke', 'web-stories');
 
 function Artichoke({ style }) {
   return (
@@ -26,6 +29,7 @@ function Artichoke({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M99.6984 42.801C99.6823 42.6506 99.6068 42.4629 99.6586 42.3468C100.628 40.3691 101.005 38.2546 101.121 36.0791C101.144 35.6281 101.112 35.1853 101.146 34.74C101.159 34.5471 101.279 34.3662 101.346 34.1794C101.407 34.3528 101.511 34.5265 101.527 34.7053C101.742 37.0842 101.319 39.3743 100.555 41.6199C100.404 42.056 100.127 42.4488 99.911 42.859C99.8373 42.8359 99.7693 42.8156 99.6984 42.801Z"
         fill="#676461"
@@ -425,4 +429,5 @@ Artichoke.propTypes = {
 export default {
   aspectRatio: 105 / 111,
   svg: Artichoke,
+  title,
 };

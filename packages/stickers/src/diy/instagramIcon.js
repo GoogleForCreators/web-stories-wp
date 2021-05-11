@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = __('Instagram', 'web-stories');
 
 function InstagramIcon({ style }) {
   return (
@@ -26,6 +29,7 @@ function InstagramIcon({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M17.1462 24.8165H7.0347C3.16584 24.8165 0 21.6541 0 17.7895V7.02693C0 3.16234 3.16584 0 7.0347 0H17.1462C21.0151 0 24.1809 3.16234 24.1809 7.02693V17.7895C24.1809 21.6541 21.0151 24.8165 17.1462 24.8165ZM17.1462 22.9608C18.5211 22.9608 19.8182 22.4208 20.7993 21.4408C21.7804 20.4608 22.321 19.1651 22.321 17.7918V7.02693C22.321 5.65354 21.7804 4.35794 20.7993 3.3779C19.8182 2.39787 18.5211 1.85785 17.1462 1.85785H7.0347C5.65979 1.85785 4.36276 2.39787 3.38164 3.3779C2.40052 4.35794 1.8599 5.65354 1.8599 7.02693V17.7895C1.8599 19.1629 2.40052 20.4585 3.38164 21.4386C4.36276 22.4186 5.65979 22.9586 7.0347 22.9586H17.1462V22.9608Z"
         fill="#FAF4EA"
@@ -49,4 +53,5 @@ InstagramIcon.propTypes = {
 export default {
   aspectRatio: 25 / 25,
   svg: InstagramIcon,
+  title,
 };

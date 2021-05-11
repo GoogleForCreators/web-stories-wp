@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = __('YouTube', 'web-stories');
 
 function YouTubeIcon({ style }) {
   return (
@@ -26,6 +29,7 @@ function YouTubeIcon({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M20.2878 0H7.17684C0 0 0 2.00053 0 6.92327V11.7335C0 16.4156 1.01677 18.6567 7.17684 18.6567H20.2898C25.8533 18.6567 27.4666 17.345 27.4666 11.7335V6.92327C27.4647 1.74246 27.1931 0 20.2878 0ZM10.9268 12.985V5.43306L18.3296 9.19739L10.9268 12.985Z"
         fill="#FAF4EA"
@@ -41,4 +45,5 @@ YouTubeIcon.propTypes = {
 export default {
   aspectRatio: 28 / 19,
   svg: YouTubeIcon,
+  title,
 };

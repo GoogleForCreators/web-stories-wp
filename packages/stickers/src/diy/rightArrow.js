@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = __('Arrow', 'web-stories');
 
 function RightArrow({ style }) {
   return (
@@ -26,6 +29,7 @@ function RightArrow({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M16.8371 7.04675L10.4371 0.24707L8.83708 1.75308L13.4942 6.70109H0.0371094V8.89842H16.0371C16.4754 8.89842 16.8718 8.63788 17.0457 8.23551C17.2195 7.83314 17.1376 7.36593 16.8371 7.04675Z"
         fill="#F9F3E9"
@@ -45,4 +49,5 @@ RightArrow.propTypes = {
 export default {
   aspectRatio: 18 / 17,
   svg: RightArrow,
+  title,
 };

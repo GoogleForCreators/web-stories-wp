@@ -12,7 +12,8 @@
   "type": "module",
   "dependencies": {
     "prop-types": "^15.7.2",
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "@web-stories-wp/i18n": "*"
   },
   "devDependencies": {
     "react-dom": "^17.0.2"
