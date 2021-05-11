@@ -227,7 +227,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'enableQuickActionMenus',
 				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
-				'description' => __( 'Adds a short cut menu based on selected element type to side of canvas in editor.', 'web-stories' ),
+				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
