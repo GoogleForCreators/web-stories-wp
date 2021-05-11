@@ -102,13 +102,12 @@ describe('getElementProperties', () => {
     expect(properties.y).toBe(25);
   });
 
-  it('should keep resource width/height unmodified', () => {
+  it('should keep resource unmodified', () => {
     const properties = getElementProperties('video', {
       ...COMMON_PROPERTIES,
       resource: VIDEO_RESOURCE,
     });
 
-    expect(properties.resource.width).toBe(720);
-    expect(properties.resource.height).toBe(1280);
+    expect(properties.resource).toStrictEqual(VIDEO_RESOURCE);
   });
 });
