@@ -237,7 +237,7 @@ export const QuickActionMenu = () => {
   const generateMenuItemsWithEventHandler = (i) =>
     i.map((item) => ({
       ...item,
-      onClick: () => action(`Clicked on \`${item.label}\``),
+      onClick: () => action(`Clicked on \`${item.label}\``)(),
     }));
 
   return (
@@ -246,48 +246,48 @@ export const QuickActionMenu = () => {
         <Text>{'Blank page; no item selected'}</Text>
         <ContextMenu
           items={generateMenuItemsWithEventHandler(blankPageItems)}
-          isOpen={boolean('isOpen', true)}
           isIconMenu
+          isAlwaysVisible
         />
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
         <ContextMenu
           items={generateMenuItemsWithEventHandler(backgroundImageItems)}
-          isOpen={boolean('isOpen', true)}
           isIconMenu
+          isAlwaysVisible
         />
       </Container>
       <Container>
         <Text>{'Foreground Image selected'}</Text>
         <ContextMenu
           items={generateMenuItemsWithEventHandler(foregroundImageItems)}
-          isOpen={boolean('isOpen', true)}
           isIconMenu
+          isAlwaysVisible
         />
       </Container>
       <Container>
         <Text>{'Video selected'}</Text>
         <ContextMenu
           items={generateMenuItemsWithEventHandler(videoItems)}
-          isOpen={boolean('isOpen', true)}
           isIconMenu
+          isAlwaysVisible
         />
       </Container>
       <Container>
         <Text>{'Shape selected'}</Text>
         <ContextMenu
           items={generateMenuItemsWithEventHandler(shapeItems)}
-          isOpen={boolean('isOpen', true)}
           isIconMenu
+          isAlwaysVisible
         />
       </Container>
       <Container>
         <Text>{'Text selected'}</Text>
         <ContextMenu
           items={generateMenuItemsWithEventHandler(textItems)}
-          isOpen={boolean('isOpen', true)}
           isIconMenu
+          isAlwaysVisible
         />
       </Container>
     </Grid>
