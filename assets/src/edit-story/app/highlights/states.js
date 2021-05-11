@@ -17,6 +17,7 @@
  * Internal dependencies
  */
 import { DOCUMENT, DESIGN } from '../../components/inspector';
+import { MEDIA } from '../../components/library/constants';
 
 /**
  * Highlight state object
@@ -34,13 +35,15 @@ const keys = {
   EXCERPT: 'EXCERPT',
   CAPTIONS: 'CAPTIONS',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
-  PAGE_BACKGROUND: 'PAGE_BACKGROUND',
+  MEDIA: 'MEDIA',
 };
 
 export const STATES = {
   [keys.STORY_TITLE]: {
     focus: true,
   },
+
+  // Inspector
   [keys.POSTER]: {
     focus: true,
     tab: DOCUMENT,
@@ -61,11 +64,12 @@ export const STATES = {
     focus: true,
     tab: DESIGN,
   },
-  [keys.PAGE_BACKGROUND]: {
+
+  // Library
+  [keys.MEDIA]: {
     focus: true,
-    tab: DESIGN,
+    tab: MEDIA.id,
   },
-  // need to add a way to use this in the library
 };
 
 export default keys;

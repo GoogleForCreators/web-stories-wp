@@ -44,9 +44,9 @@ export const useQuickActions = () => {
     setHighlights,
   }));
 
-  const changeBackgroundColor = useCallback(
+  const changeBackgroundMedia = useCallback(
     (elementId) => () => {
-      setHighlights({ elementId, highlight: states.PAGE_BACKGROUND });
+      setHighlights({ elementId, highlight: states.MEDIA });
     },
     [setHighlights]
   );
@@ -69,7 +69,7 @@ export const useQuickActions = () => {
     return [
       {
         label: 'page background',
-        onClick: changeBackgroundColor(backgroundElement.id),
+        onClick: changeBackgroundMedia(backgroundElement.id),
       },
     ];
   }
