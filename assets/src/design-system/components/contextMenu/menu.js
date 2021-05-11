@@ -35,7 +35,7 @@ const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: 0;
+    padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '5px 0 0')};
     background-color: ${theme.colors.bg.primary};
     pointer-events: none;
     border-radius: ${theme.borders.radius.small};
