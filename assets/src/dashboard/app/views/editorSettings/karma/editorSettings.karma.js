@@ -114,10 +114,10 @@ describe('Settings View', () => {
   it('should update the tracking id by clicking the save button', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
-    within(settingsView);
+    const { getByRole } = within(settingsView);
 
-    const input = screen.getByRole('textbox');
-    const button = screen.getByRole('button', { name: /Save/ });
+    const input = getByRole('textbox');
+    const button = getByRole('button', { name: /Save/ });
 
     await fixture.events.hover(input);
 
@@ -145,10 +145,10 @@ describe('Settings View', () => {
 
     expect(initialId).not.toEqual('');
 
-    within(settingsView);
+    const { getByRole } = within(settingsView);
 
-    const input = screen.getByRole('textbox');
-    const button = screen.getByRole('button', { name: /Save/ });
+    const input = getByRole('textbox');
+    const button = getByRole('button', { name: /Save/ });
 
     await fixture.events.hover(input);
 
@@ -175,10 +175,10 @@ describe('Settings View', () => {
 
     expect(initialId).not.toEqual('');
 
-    within(settingsView);
+    const { getByRole } = within(settingsView);
 
-    const input = screen.getByRole('textbox');
-    const button = screen.getByRole('button', { name: /Save/ });
+    const input = getByRole('textbox');
+    const button = getByRole('button', { name: /Save/ });
 
     await fixture.events.hover(input);
 

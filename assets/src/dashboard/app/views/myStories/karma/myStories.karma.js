@@ -82,9 +82,9 @@ describe('Grid view', () => {
 
     await fixture.events.hover(firstStory);
 
-    const { getByText } = within(firstStory);
+    const { getByRole, getByText } = within(firstStory);
 
-    const moreOptionsButton = screen.getByRole('button', {
+    const moreOptionsButton = getByRole('button', {
       name: /^More Options/,
     });
 
