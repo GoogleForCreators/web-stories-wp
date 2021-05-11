@@ -109,6 +109,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.7.0 =
+
+**Release Date:** May 11, 2021.
+
+* New feature: save individual pages as custom page templates.
+* Improvements to the pre-publish checklist.
+* UI improvements in the editor and dashboard.
+* Imprvements to the built-in templates.
+* Bug fixes and performance improvements.
+
 = 1.6.0 =
 
 **Release Date:** April 13, 2021.
@@ -184,6 +194,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.7.0 =
+
+Custom page templates, improved pre-publish checklist,  bug fixes and performance improvements.
 
 = 1.6.0 =
 
