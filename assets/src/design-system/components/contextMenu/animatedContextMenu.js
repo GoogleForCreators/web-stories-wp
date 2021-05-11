@@ -292,16 +292,17 @@ AnimationContainer.propTypes = {
   children: PropTypes.node,
 };
 
-const AnimatedContextMenu = ({ items, ...props }) => (
+const AnimatedContextMenu = ({ isAlwaysVisible, items, ...props }) => (
   <>
-    {props.isOpen && <Mask onDismiss={props.onDismiss} />}
-    <AnimationContainer isOpen={props.isOpen}>
+    {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
+    <AnimationContainer isOpen={isAlwaysVisible || props.isOpen}>
       <Menu aria-expanded={props.isOpen} items={items} {...props} />
     </AnimationContainer>
   </>
 );
 AnimatedContextMenu.propTypes = {
   ...MenuPropTypes,
+  isAlwaysVisible: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
 
