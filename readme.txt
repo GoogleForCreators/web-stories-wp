@@ -113,10 +113,9 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** May 11, 2021.
 
-* New feature: save individual pages as custom page templates.
-* Improvements to the pre-publish checklist.
-* UI improvements in the editor and dashboard.
-* Imprvements to the built-in templates.
+* New feature: save a single page as a template for reuse across all your stories.
+* Improvements to thresholds in the pre-publish checklist to reduce noise.
+* Improvements to the built-in templates and their animations.
 * Bug fixes and performance improvements.
 
 = 1.6.0 =
