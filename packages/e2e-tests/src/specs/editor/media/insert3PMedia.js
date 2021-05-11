@@ -49,7 +49,8 @@ describe('Inserting 3P Media', () => {
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
-  it('should insert an coverr video', async () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should insert an coverr video', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
