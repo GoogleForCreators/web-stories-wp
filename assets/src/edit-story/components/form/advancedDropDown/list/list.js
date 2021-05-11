@@ -32,7 +32,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import useFocusOut from '../../../../utils/useFocusOut';
 import {
   createOptionFilter,
   isKeywordFilterable,
@@ -40,7 +39,11 @@ import {
   addUniqueEntry,
   getInset,
 } from '../utils';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useFocusOut,
+} from '../../../../../design-system';
 import { List, Group, GroupLabel, NoResult } from './styled';
 import DefaultRenderer from './defaultRenderer';
 
