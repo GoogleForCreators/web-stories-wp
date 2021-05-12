@@ -19,7 +19,7 @@
  */
 import { useCurrentUser } from '../../../app';
 import usePrepublishChecklist from './usePrepublishChecklist';
-import ChecklistTab from './checklistTab';
+import { ChecklistTab } from './components';
 
 function PrepublishInspector() {
   const {

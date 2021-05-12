@@ -27,6 +27,7 @@ import { _x, __ } from '@web-stories-wp/i18n';
  */
 import { PatternPropType } from '../../../types';
 import { NumericInput } from '../../../../design-system';
+import { inputContainerStyleOverride } from '../../panels/shared';
 import getPreviewOpacity from './getPreviewOpacity';
 
 const Input = styled(NumericInput)`
@@ -68,6 +69,7 @@ function OpacityInput({ value, onChange }) {
       max={100}
       allowEmpty={false}
       isFloat={false}
+      containerStyleOverride={inputContainerStyleOverride}
     />
   );
 }

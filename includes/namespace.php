@@ -45,7 +45,8 @@ function setup_new_site() {
 	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
 	// TODO Register cap to roles within class itself.
-	$story->add_caps_to_roles();
+	$capabilities = $injector->make( User\Capabilities::class );
+	$capabilities->add_caps_to_roles();
 	rewrite_flush();
 
 	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
@@ -53,7 +54,6 @@ function setup_new_site() {
 	$database_upgrader = $injector->make( Database_Upgrader::class );
 	$database_upgrader->register();
 }
-
 
 /**
  * Flush rewrites.
@@ -82,6 +82,10 @@ function rewrite_flush() {
  * @return void
  */
 function activate( $network_wide = false ) {
+	// Ensures capabilities are properly set up as that class is not a service.
+	setup_new_site();
+
+	// Runs all activateable services.
 	get_plugin_instance()->activate( $network_wide );
 
 	do_action( 'web_stories_activation', $network_wide );
@@ -109,8 +113,8 @@ function new_site( $site ) {
 	setup_new_site();
 	restore_current_blog();
 }
-add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
 
+add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
 
 /**
  * Hook into delete site.
@@ -176,6 +180,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
 function load_amp_plugin_compat() {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
 }
+
 add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
 
 
@@ -187,8 +192,8 @@ add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
 function includes() {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 }
-add_action( 'init', __NAMESPACE__ . '\includes' );
 
+add_action( 'init', __NAMESPACE__ . '\includes' );
 
 /**
  * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
@@ -266,8 +271,6 @@ function rest_preload_api_request( $memo, $path ) {
 	return $memo;
 }
 
-get_plugin_instance()->register();
-
 /**
  * Web stories Plugin Instance
  *
@@ -282,3 +285,6 @@ function get_plugin_instance() {
 
 	return $web_stories;
 }
+
+// Initialize plugin by registering all services.
+get_plugin_instance()->register();

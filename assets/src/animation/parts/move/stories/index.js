@@ -29,6 +29,7 @@ const duration = 600;
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
     type: ANIMATION_TYPES.MOVE,
     duration,
@@ -36,6 +37,7 @@ const animations = [
     offsetY: 500,
   },
   {
+    id: '2',
     targets: ['e2'],
     type: ANIMATION_TYPES.MOVE,
     duration,

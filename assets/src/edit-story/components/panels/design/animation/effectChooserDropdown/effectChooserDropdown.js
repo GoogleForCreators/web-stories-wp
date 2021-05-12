@@ -27,6 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import { DropDown, PLACEMENT } from '../../../../../../design-system';
 
+import { focusStyle } from '../../../shared';
 import {
   backgroundEffectOptions,
   NO_ANIMATION,
@@ -153,9 +154,9 @@ export default function EffectChooserDropdown({
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
       selectButtonStylesOverride={
-        selectedValue &&
-        selectedValue !== NO_ANIMATION &&
-        styleOverrideForSelectButton
+        selectedValue && selectedValue !== NO_ANIMATION
+          ? styleOverrideForSelectButton
+          : focusStyle
       }
     />
   );

@@ -26,17 +26,25 @@ import {
   useState,
   useRef,
 } from 'react';
+
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../app/config';
 import { useResizeEffect } from '../../../design-system';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
 
 const Container = styled.div.attrs(
-  ({ $offset: { x, y, width, height }, fillWidth, fillHeight, placement }) => ({
+  ({
+    $offset: { x, y, width, height },
+    fillWidth,
+    fillHeight,
+    placement,
+    isRTL,
+  }) => ({
     style: {
-      transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
+      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
     },
@@ -47,7 +55,7 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 100vh;
 `;
 
@@ -66,6 +74,7 @@ function Popup({
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
   const popup = useRef(null);
+  const { isRTL } = useConfig();
 
   const positionPopup = useCallback(
     (evt) => {
@@ -79,11 +88,12 @@ function Popup({
       }
       setPopupState({
         offset:
-          anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
+          anchor?.current &&
+          getOffset(placement, spacing, anchor, dock, popup, isRTL),
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, mounted]
+    [anchor, dock, placement, spacing, mounted, isRTL]
   );
 
   useEffect(() => {
@@ -119,6 +129,7 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
+          isRTL={isRTL}
           $offset={popupState.offset}
         >
           {renderContents

@@ -27,11 +27,11 @@ export class ChecklistPanel extends Container {
     super(node, path);
   }
   get highPriority() {
-    return this.getByRole('button', { name: /High Priority/ });
+    return this.queryByRole('button', { name: /^High Priority$/ });
   }
 
   get recommended() {
-    return this.getByRole('button', { name: /Recommended/ });
+    return this.queryByRole('button', { name: /^Recommended$/ });
   }
 
   get autoVideoOptimizationToggle() {

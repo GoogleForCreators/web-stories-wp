@@ -31,23 +31,28 @@ const config = {
     video: ['video/mp4'],
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
+  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
   storyId: 1234,
   api: {
     stories: '',
     media: '',
     fonts: '',
+    storyLocking: '',
   },
   metadata: {
     publisher: {
       name: '',
       logo: '',
     },
-    poster: '',
   },
   capabilities: {
     hasUploadMediaAction: false,
     hasAssignAuthorAction: false,
     hasPublishAction: false,
+  },
+  postLock: {
+    interval: 0, // Disables post locking.
+    showLockedDialog: false,
   },
 };
 

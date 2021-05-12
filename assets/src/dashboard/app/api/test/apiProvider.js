@@ -450,4 +450,34 @@ describe('ApiProvider', () => {
 
     expect(result.current.state.stories.stories).toStrictEqual({});
   });
+
+  it('should call initialFetch listeners once when first storystatuses returned', async () => {
+    const listenerMock = jest.fn();
+    const { result } = renderHook(() => useApi(), {
+      // eslint-disable-next-line react/display-name
+      wrapper: (props) => (
+        <ConfigProvider config={{ api: { stories: 'stories' } }}>
+          <ApiProvider {...props} />
+        </ConfigProvider>
+      ),
+    });
+
+    act(() => {
+      result.current.actions.storyApi.addInitialFetchListener(listenerMock);
+    });
+
+    await act(async () => {
+      await result.current.actions.storyApi.fetchStories({});
+    });
+
+    expect(listenerMock).toHaveBeenCalledTimes(1);
+    expect(listenerMock).toHaveBeenCalledWith({ all: 1, draft: 0, publish: 1 });
+
+    // Run again just to make sure it doesn't call the listeners more than once
+    await act(async () => {
+      await result.current.actions.storyApi.fetchStories({});
+    });
+
+    expect(listenerMock).toHaveBeenCalledTimes(1);
+  });
 });

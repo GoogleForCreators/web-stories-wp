@@ -22,7 +22,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 
 /**
@@ -43,7 +43,11 @@ import {
   PageSizePropType,
   RenameStoryPropType,
 } from '../../../types';
-import { PAGE_WRAPPER, STORY_STATUS } from '../../../constants';
+import {
+  PAGE_WRAPPER,
+  STORY_CONTEXT_MENU_ACTIONS,
+  STORY_STATUS,
+} from '../../../constants';
 import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
@@ -72,6 +76,7 @@ const StoryGridView = ({
   const gridRef = useRef();
   const itemRefs = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState();
+  const activeGridItemIdRef = useRef();
 
   useGridViewKeys({
     containerRef,
@@ -82,20 +87,65 @@ const StoryGridView = ({
     items: stories,
   });
 
+  // We only want to force focus when returning to the grid from a dialog
+  // By checking to see if the active grid item no longer exists
+  // in tandem with the returnStoryFocusId being present from the parent
+  // AND that the activeGridItemIdRef.current is null we know that
+  // the user is coming from a dialog not just moving grid items
   useEffect(() => {
-    if (!activeGridItemId && returnStoryFocusId) {
-      itemRefs.current?.[returnStoryFocusId]?.children?.[0]?.focus();
+    if (
+      !activeGridItemId &&
+      returnStoryFocusId.value &&
+      !activeGridItemIdRef.current
+    ) {
+      const newFocusId = returnStoryFocusId?.value;
+      itemRefs.current?.[newFocusId]?.children?.[0]?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
   // when keyboard focus changes through FocusableGridItem immediately focus the edit preview layer on top of preview
   useEffect(() => {
     if (activeGridItemId) {
+      activeGridItemIdRef.current = activeGridItemId;
       itemRefs.current?.[activeGridItemId]?.children[2].focus();
     }
   }, [activeGridItemId]);
 
+  // if keyboard is used instead of mouse the useFocusOut doesn't get triggered
+  // that is where we are setting active grid item ID to null
+  // by doing this here as well we are ensuring consistent functionality
+  const manuallySetFocusOut = useCallback(() => {
+    activeGridItemIdRef.current = null;
+    setActiveGridItemId(null);
+    returnStoryFocusId.set(null);
+  }, [returnStoryFocusId]);
+
   useFocusOut(containerRef, () => setActiveGridItemId(null), []);
+
+  const modifiedStoryMenu = useMemo(() => {
+    return {
+      ...storyMenu,
+      menuItemActions: {
+        ...storyMenu.menuItemActions,
+        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
+          manuallySetFocusOut();
+          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DELETE](story);
+        },
+        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: (story) => {
+          manuallySetFocusOut();
+          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DUPLICATE](
+            story
+          );
+        },
+        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: (story) => {
+          manuallySetFocusOut();
+          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK](
+            story
+          );
+        },
+      },
+    };
+  }, [manuallySetFocusOut, storyMenu]);
 
   return (
     <div ref={containerRef}>
@@ -127,9 +177,7 @@ const StoryGridView = ({
               }}
             >
               <FocusableGridItem
-                onFocus={() => {
-                  setActiveGridItemId(story.id);
-                }}
+                onFocus={() => setActiveGridItemId(story.id)}
                 isSelected={isActive}
                 tabIndex={tabIndex}
                 title={sprintf(
@@ -175,12 +223,12 @@ const StoryGridView = ({
                 <StoryMenu
                   itemActive={isActive}
                   tabIndex={tabIndex}
-                  onMoreButtonSelected={storyMenu.handleMenuToggle}
-                  contextMenuId={storyMenu.contextMenuId}
+                  onMoreButtonSelected={modifiedStoryMenu.handleMenuToggle}
+                  contextMenuId={modifiedStoryMenu.contextMenuId}
                   story={story}
                   menuItems={generateStoryMenu({
-                    menuItemActions: storyMenu.menuItemActions,
-                    menuItems: storyMenu.menuItems,
+                    menuItemActions: modifiedStoryMenu.menuItemActions,
+                    menuItems: modifiedStoryMenu.menuItems,
                     story,
                   })}
                 />
@@ -205,7 +253,10 @@ StoryGridView.propTypes = {
   pageSize: PageSizePropType.isRequired,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  returnStoryFocusId: PropTypes.number,
+  returnStoryFocusId: PropTypes.shape({
+    value: PropTypes.number,
+    set: PropTypes.func,
+  }),
 };
 
 export default StoryGridView;

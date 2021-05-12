@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -70,15 +69,13 @@ function useFFmpeg() {
     state: { currentUser },
   } = useCurrentUser();
 
-  const isFeatureSupported = Boolean(window?.crossOriginIsolated);
   /**
    * Whether the video optimization feature is enabled.
    *
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
-  const isFeatureEnabled =
-    useFeature('videoOptimization') && isFeatureSupported;
+  const isFeatureEnabled = Boolean(window?.crossOriginIsolated);
 
   async function getFFmpegInstance(file) {
     const { createFFmpeg, fetchFile } = await import(

@@ -46,6 +46,10 @@ const StyledButton = styled(Button)(
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
     opacity: ${Number(isVisible)};
     transition: opacity 300ms ease-in-out;
+    &:focus {
+      opacity: 1;
+      pointer-events: 'auto';
+    }
   `
 );
 

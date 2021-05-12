@@ -86,6 +86,7 @@ trait Types {
 	public function get_allowed_mime_types() {
 		$default_allowed_mime_types = [
 			'image' => [
+				'image/webp',
 				'image/png',
 				'image/jpeg',
 				'image/jpg',
@@ -133,6 +134,7 @@ trait Types {
 		$mime_type         = $this->get_allowed_mime_types();
 		$allowed_mime_type = $mime_type['image'];
 		$image_mime_type   = [
+			'image/webp',
 			'image/png',
 			'image/jpeg',
 			'image/jpg',

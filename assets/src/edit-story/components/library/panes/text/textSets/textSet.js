@@ -28,13 +28,13 @@ import { useCallback, forwardRef } from 'react';
 import {
   BUTTON_TRANSITION_TIMING,
   ThemeGlobals,
-  themeHelpers,
 } from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units';
 import LibraryMoveable from '../../shared/libraryMoveable';
+import { focusStyle } from '../../../../panels/shared';
 import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.div`
@@ -47,7 +47,7 @@ const TextSetItem = styled.div`
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
-  ${themeHelpers.focusableOutlineCSS};
+  ${focusStyle};
 
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};

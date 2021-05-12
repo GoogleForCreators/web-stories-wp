@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Traits;
 
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Settings;
 
 /**

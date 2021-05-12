@@ -19,7 +19,7 @@
  */
 import { getBox } from '../../../../edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS, DIRECTION } from '../../../constants';
+import { ANIMATION_TYPES, DIRECTION } from '../../../constants';
 import {
   AMPStoryWrapper,
   AMP_STORY_ASPECT_RATIO,
@@ -37,28 +37,28 @@ const animations = [
   {
     id: '2',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.PAN,
+    type: ANIMATION_TYPES.PAN,
     panDir: DIRECTION.TOP_TO_BOTTOM,
     duration: 5000,
   },
   {
     id: '3',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.PAN,
+    type: ANIMATION_TYPES.PAN,
     panDir: DIRECTION.BOTTOM_TO_TOP,
     duration: 5000,
   },
   {
     id: '4',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.PAN,
+    type: ANIMATION_TYPES.PAN,
     panDir: DIRECTION.LEFT_TO_RIGHT,
     duration: 5000,
   },
   {
     id: '5',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.PAN,
+    type: ANIMATION_TYPES.PAN,
     panDir: DIRECTION.RIGHT_TO_LEFT,
     duration: 5000,
   },

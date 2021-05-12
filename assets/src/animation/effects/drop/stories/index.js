@@ -19,7 +19,7 @@
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../edit-story/constants';
 import { getBox } from '../../../../edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS } from '../../../constants';
+import { ANIMATION_TYPES } from '../../../constants';
 import {
   AMPStoryWrapper,
   AMP_STORY_ASPECT_RATIO,
@@ -40,7 +40,7 @@ const elements = [
   },
 ];
 
-const animations = [{ targets: ['e1'], type: ANIMATION_EFFECTS.DROP }];
+const animations = [{ id: '1', targets: ['e1'], type: ANIMATION_TYPES.DROP }];
 
 export const _default = () => {
   const elementBoxes = elements.map((element) => ({

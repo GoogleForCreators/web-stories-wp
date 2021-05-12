@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer, useRef } from 'react';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -43,6 +43,8 @@ import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
+  const isInitialFetch = useRef(true);
+  const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const flags = useFeatures();
 
@@ -98,6 +100,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           response.headers &&
           JSON.parse(response.headers['X-WP-TotalByStatus']);
 
+        // Hook into first fetch of story statuses.
+        if (isInitialFetch.current) {
+          initialFetchListeners.forEach((listener) => {
+            listener(totalStoriesByStatus);
+          });
+        }
+        isInitialFetch.current = false;
+
         // Hardening in case data returned by the server is malformed.
         // For example, story_data could be missing/empty.
         const cleanStories = response.body.filter((story) =>
@@ -147,7 +157,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL, initialFetchListeners]
   );
 
   const updateStory = useCallback(
@@ -341,6 +351,17 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
     [storyApi, dataAdapter, editStoryURL, encodeMarkup]
   );
 
+  const addInitialFetchListener = useCallback(
+    (listener) => {
+      const key = Symbol();
+      initialFetchListeners.set(key, listener);
+      return () => {
+        initialFetchListeners.delete(key);
+      };
+    },
+    [initialFetchListeners]
+  );
+
   const api = useMemo(
     () => ({
       duplicateStory,
@@ -348,6 +369,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
       createStoryFromTemplate,
       trashStory,
       updateStory,
+      addInitialFetchListener,
     }),
     [
       createStoryFromTemplate,
@@ -355,10 +377,11 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
       trashStory,
       updateStory,
       fetchStories,
+      addInitialFetchListener,
     ]
   );
 
-  return { stories: state, api };
+  return useMemo(() => ({ stories: state, api }), [state, api]);
 };
 
 export default useStoryApi;
