@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import CardTitle from '../cardTitle';
@@ -23,7 +28,7 @@ import { STORY_STATUS } from '../../../constants';
 
 describe('CardTitle', () => {
   it('should render Card Title with static text when edit mode is false', () => {
-    const { getByText, queryByTestId } = renderWithProviders(
+    renderWithProviders(
       <CardTitle
         id={123}
         title="Sample Story"
@@ -35,12 +40,12 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(queryByTestId('inline-input-form')).not.toBeInTheDocument();
-    expect(getByText('Sample Story')).toBeInTheDocument();
+    expect(screen.queryByTestId('inline-input-form')).not.toBeInTheDocument();
+    expect(screen.getByText('Sample Story')).toBeInTheDocument();
   });
 
   it('should render Card Title with an input field when edit mode is true', () => {
-    const { getByDisplayValue, getByLabelText } = renderWithProviders(
+    renderWithProviders(
       <CardTitle
         title="Sample Story"
         displayDate="01/20/2020"
@@ -51,15 +56,15 @@ describe('CardTitle', () => {
         tabIndex={0}
       />
     );
-    const titleInput = getByDisplayValue('Sample Story');
-    const inputLabel = getByLabelText('Rename story');
+    const titleInput = screen.getByDisplayValue('Sample Story');
+    const inputLabel = screen.getByLabelText('Rename story');
 
     expect(inputLabel).toBeInTheDocument();
     expect(titleInput).toBeInTheDocument();
   });
 
   it(`should prepend "Draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <CardTitle
         id={123}
         title="Sample Story"
@@ -72,11 +77,11 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText('Draft')).toBeInTheDocument();
+    expect(screen.getByText('Draft')).toBeInTheDocument();
   });
 
   it(`should display "Scheduled" before created date when ${STORY_STATUS.FUTURE}`, () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <CardTitle
         id={123}
         title="Sample Story"
@@ -89,11 +94,11 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText(/^Scheduled/)).toBeInTheDocument();
+    expect(screen.getByText(/^Scheduled/)).toBeInTheDocument();
   });
 
   it(`should display "Published" before created date when ${STORY_STATUS.PUBLISH}`, () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <CardTitle
         id={123}
         title="Sample Story"
@@ -106,11 +111,11 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText(/^Published/)).toBeInTheDocument();
+    expect(screen.getByText(/^Published/)).toBeInTheDocument();
   });
 
   it('should render Card Title with an author', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <CardTitle
         id={123}
         title="Sample Story"
@@ -122,6 +127,6 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText('Harry Potter')).toBeInTheDocument();
+    expect(screen.getByText('Harry Potter')).toBeInTheDocument();
   });
 });

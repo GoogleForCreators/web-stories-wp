@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import { renderWithTheme } from '../../../../../testUtils';
 import InspectorContext from '../../../../inspector/context';
 import PublishPanel from '../publish';
 
-function setupPanel(
+function arrange(
   capabilities = {
     hasAssignAuthorAction: true,
   }
@@ -66,13 +66,7 @@ function setupPanel(
     },
   };
 
-  const {
-    getByText,
-    getByRole,
-    queryByText,
-    getByLabelText,
-    queryByLabelText,
-  } = renderWithTheme(
+  const view = renderWithTheme(
     <ConfigContext.Provider value={config}>
       <StoryContext.Provider value={storyContextValue}>
         <InspectorContext.Provider value={inspectorContextValue}>
@@ -82,11 +76,7 @@ function setupPanel(
     </ConfigContext.Provider>
   );
   return {
-    getByText,
-    getByRole,
-    getByLabelText,
-    queryByText,
-    queryByLabelText,
+    ...view,
     updateStory,
   };
 }
@@ -104,43 +94,45 @@ describe('PublishPanel', () => {
   });
 
   it('should render PublishPanel', async () => {
-    const { getByText } = setupPanel();
-    const publishPanel = getByText('Publishing');
-    const publisherLogo = getByText('Publisher logo');
+    arrange();
+    const publishPanel = screen.getByText('Publishing');
+    const publisherLogo = screen.getByText('Publisher logo');
 
     await waitFor(() => expect(publishPanel).toBeDefined());
     await waitFor(() => expect(publisherLogo).toBeDefined());
   });
 
   it('should display Author field if authors available', async () => {
-    const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Author' });
+    arrange();
+    const element = screen.getByRole('button', { name: 'Author' });
     await waitFor(() => expect(element).toBeDefined());
   });
 
   it('should not display Author field without correct permissions', async () => {
-    const { queryByText } = setupPanel({
+    arrange({
       hasAssignAuthorAction: false,
     });
-    const element = queryByText('Author');
+    const element = screen.queryByText('Author');
     await waitFor(() => expect(element).toBeNull());
   });
 
   it('should open Date picker when clicking on date', async () => {
-    const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Story publish time' });
+    arrange();
+    const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
-    const calendar = getByRole('button', { name: 'January 2020' });
+    const calendar = screen.getByRole('button', { name: 'January 2020' });
     await waitFor(() => expect(calendar).toBeDefined());
   });
 
   it('should update the story when choosing a date from the calendar', async () => {
-    const { getByRole, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Story publish time' });
+    const { updateStory } = arrange();
+    const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
-    const firstOfJanuary = getByRole('button', { name: 'January 1, 2020' });
+    const firstOfJanuary = screen.getByRole('button', {
+      name: 'January 1, 2020',
+    });
     await waitFor(() => expect(firstOfJanuary).toBeDefined());
 
     fireEvent.click(firstOfJanuary);
@@ -153,13 +145,13 @@ describe('PublishPanel', () => {
   });
 
   it('should update the story when choosing time', async () => {
-    const { getByRole, getByLabelText, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Story publish time' });
+    const { updateStory } = arrange();
+    const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
-    const hours = getByLabelText('Hours');
-    const minutes = getByLabelText('Minutes');
-    const am = getByRole('button', { name: 'AM' });
+    const hours = screen.getByLabelText('Hours');
+    const minutes = screen.getByLabelText('Minutes');
+    const am = screen.getByRole('button', { name: 'AM' });
 
     await waitFor(() => expect(minutes).toBeDefined());
     expect(hours).toBeInTheDocument();
@@ -189,12 +181,12 @@ describe('PublishPanel', () => {
   });
 
   it('should not update the date with incorrect times', async () => {
-    const { getByRole, getByLabelText, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Story publish time' });
+    const { updateStory } = arrange();
+    const element = screen.getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
-    const hours = getByLabelText('Hours');
-    const minutes = getByLabelText('Minutes');
+    const hours = screen.getByLabelText('Hours');
+    const minutes = screen.getByLabelText('Minutes');
 
     fireEvent.change(hours, { target: { value: '30' } });
     fireEvent.blur(hours);
@@ -206,18 +198,18 @@ describe('PublishPanel', () => {
   });
 
   it('should open the calendar via keyboard events', async () => {
-    const { getByRole, queryByLabelText } = setupPanel();
+    arrange();
 
-    let dateInCalendar = queryByLabelText('January 1, 2020');
+    let dateInCalendar = screen.queryByLabelText('January 1, 2020');
     expect(dateInCalendar).not.toBeInTheDocument();
 
-    const element = getByRole('button', { name: 'Story publish time' });
+    const element = screen.getByRole('button', { name: 'Story publish time' });
     fireEvent.keyDown(element, {
       key: 'Enter',
       which: 13,
     });
 
-    dateInCalendar = getByRole('button', { name: 'January 1, 2020' });
+    dateInCalendar = screen.getByRole('button', { name: 'January 1, 2020' });
     await waitFor(() => expect(dateInCalendar).toBeDefined());
   });
 });

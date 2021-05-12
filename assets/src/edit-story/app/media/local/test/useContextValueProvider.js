@@ -162,12 +162,10 @@ const renderAllProviders = ({
   apiState,
 }) =>
   renderHook(() => useContextValueProvider(reducerState, reducerActions), {
-    // eslint-disable-next-line react/display-name
-    wrapper: (params) => (
+    // eslint-disable-next-line react/display-name, react/prop-types
+    wrapper: ({ children }) => (
       <ConfigProvider config={configState}>
-        <ApiContext.Provider value={apiState}>
-          {params.children}
-        </ApiContext.Provider>
+        <ApiContext.Provider value={apiState}>{children}</ApiContext.Provider>
       </ConfigProvider>
     ),
   });

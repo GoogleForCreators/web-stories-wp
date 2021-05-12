@@ -54,7 +54,7 @@ export async function arrange({ mediaResponse = [] }) {
     },
   };
 
-  const accessors = renderWithTheme(
+  const view = renderWithTheme(
     <ConfigProvider config={config}>
       <APIContext.Provider value={apiContextValue}>
         <FontProvider>
@@ -72,5 +72,5 @@ export async function arrange({ mediaResponse = [] }) {
 
   await act(() => Promise.all(allPromises));
 
-  return accessors;
+  return view;
 }

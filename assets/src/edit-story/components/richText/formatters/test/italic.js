@@ -43,27 +43,27 @@ describe('Italic formatter', () => {
   const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
-    function setup(element) {
+    function setupFormatter(element) {
       return elementToStyle(getDOMElement(element));
     }
 
     it('should ignore non-span elements', () => {
       const element = <div />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should ignore span elements without italic font style', () => {
       const element = <span style={{ backgroundColor: 'red' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should detect italic from span elements and return correct style', () => {
       const element = <span style={{ fontStyle: 'italic' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
       const expected = ITALIC;
 
       expect(style).toBe(expected);
@@ -96,26 +96,26 @@ describe('Italic formatter', () => {
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, ITALIC);
     });
 
-    function setup(styleArray) {
+    function setupFormatter(styleArray) {
       getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
       return getters.isItalic({});
     }
 
     it('should return false if both italic and non-italic', () => {
       const styles = [NONE, ITALIC];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toBe(false);
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toStrictEqual(false);
     });
 
     it('should return true if only italic', () => {
       const styles = [ITALIC];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toStrictEqual(true);
     });
   });

@@ -108,7 +108,7 @@ export function renderPanel(panelType, selectedElements, wrapperComp) {
     return commitUpdates;
   };
 
-  const result = render(
+  const view = render(
     <ThemeProvider theme={theme}>
       <TestPanel
         panelType={panelType}
@@ -121,7 +121,7 @@ export function renderPanel(panelType, selectedElements, wrapperComp) {
     </ThemeProvider>
   );
   return {
-    ...result,
+    ...view,
     pushUpdate,
     pushUpdateForObject,
     submit,

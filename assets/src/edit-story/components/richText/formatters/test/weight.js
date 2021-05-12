@@ -44,27 +44,27 @@ describe('Color formatter', () => {
   const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
-    function setup(element) {
+    function setupFormatter(element) {
       return elementToStyle(getDOMElement(element));
     }
 
     it('should ignore non-span elements', () => {
       const element = <div />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should ignore span elements without font weight style property', () => {
       const element = <span style={{ backgroundColor: 'red' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should extract font weight from span elements and return correct style', () => {
       const element = <span style={{ fontWeight: 600 }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
       const expected = `${WEIGHT}-600`;
 
       expect(style).toBe(expected);

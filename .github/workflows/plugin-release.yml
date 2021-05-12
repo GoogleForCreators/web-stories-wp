@@ -228,11 +228,12 @@ jobs:
         run: |
           TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
           if $IS_RC; then
-            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
+            # Get the most recent tag.
+            # Note: This will return v1.4.0-rc.1 as it is listed before v1.4.0
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
 
-            # This is the first RC for this version (e.g. v1.5.0-rc.1), so previous version is v1.4.0, without suffix.
-            if ! git describe --abbrev=0 --tags --match "$TAG_NAME_WITHOUT_SUFFIX" &>/dev/null; then
+            # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
+            if [[ $TAG_NAME == *".rc.1" ]]; then
               PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
             fi
           else

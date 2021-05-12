@@ -34,6 +34,8 @@ const REGISTER_USAGE_URL =
   Paths.REGISTER_USAGE +
   '?payload=02647749feef0d5536c92df1d9cfa38e';
 
+/* eslint-disable testing-library/no-node-access */
+
 describe('useMedia3pApi', () => {
   apiFetcherMock.listMedia.mockImplementation(() =>
     Promise.resolve({
@@ -136,7 +138,7 @@ describe('useMedia3pApi', () => {
     expect(listMediaResult).toStrictEqual({
       media: [
         {
-          alt: null,
+          alt: 'media/unsplash:1234',
           attribution: {
             author: {
               displayName: 'Maria',
@@ -363,3 +365,5 @@ describe('useMedia3pApi', () => {
     }).not.toThrow();
   });
 });
+
+/* eslint-enable testing-library/no-node-access */
