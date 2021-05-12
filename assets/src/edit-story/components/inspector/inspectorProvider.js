@@ -74,7 +74,8 @@ function InspectorProvider({ children }) {
 
   const inspectorRef = useRef(null);
 
-  const [tab, setTab] = useState(DESIGN);
+  const initialTab = DESIGN;
+  const [tab, setTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
@@ -158,6 +159,7 @@ function InspectorProvider({ children }) {
   const state = {
     state: {
       tab,
+      initialTab,
       users,
       inspectorContentHeight,
       isUsersLoading,

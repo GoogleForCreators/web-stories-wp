@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useCallback, useEffect, forwardRef } from 'react';
+import { useRef, useState, useCallback, useEffect, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -173,11 +173,12 @@ function TabView({
   getAriaControlsId,
   onTabChange = noop,
   tabs = [],
-  tab,
   label = '',
   shortcut = '',
+  initialTab,
   ...rest
 }) {
+  const [tab, setTab] = useState(initialTab || tabs[0]?.id);
   const { isRTL } = useConfig();
 
   const ref = useRef();
@@ -185,19 +186,20 @@ function TabView({
 
   const tabChanged = useCallback(
     (id) => {
-      onTabChange(id);
+      setTab(id);
       if (tabRefs.current[id]) {
         tabRefs.current[id].focus();
       }
+      onTabChange(id);
     },
-    [onTabChange]
+    [setTab, onTabChange]
   );
 
   useEffect(() => {
-    if (tab) {
-      onTabChange(tab);
+    if (initialTab) {
+      setTab(initialTab);
     }
-  }, [tab, onTabChange]);
+  }, [initialTab]);
 
   useGlobalKeyDownEffect(
     { key: shortcut, editable: true },
@@ -260,9 +262,9 @@ TabView.propTypes = {
   getAriaControlsId: PropTypes.func,
   onTabChange: PropTypes.func,
   tabs: PropTypes.array.isRequired,
+  initialTab: PropTypes.any,
   label: PropTypes.string,
   shortcut: PropTypes.string,
-  tab: PropTypes.string,
 };
 
 export default TabView;

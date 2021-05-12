@@ -41,13 +41,14 @@ import {
 } from './constants';
 
 const LIBRARY_TAB_IDS = new Set(
-  [ELEMS, LAZY_TABS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT].map(
-    (tab) => tab.id
-  )
+  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT]
+    .map((tab) => tab.id)
+    .concat(LAZY_TABS)
 );
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(MEDIA.id);
+  const initialTab = MEDIA.id;
+  const [tab, setTab] = useState(initialTab);
   const [textSets, setTextSets] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
   const renderedTabs = useRef({});
@@ -97,6 +98,7 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
+        initialTab,
         textSets,
         savedTemplates,
       },
@@ -113,6 +115,7 @@ function LibraryProvider({ children }) {
     }),
     [
       tab,
+      initialTab,
       textSets,
       savedTemplates,
       insertElement,
