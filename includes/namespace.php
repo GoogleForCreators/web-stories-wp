@@ -42,15 +42,19 @@ function setup_new_site() {
 	if ( ! method_exists( $injector, 'make' ) ) {
 		return;
 	}
+
+	// Register web-story post type to setup rewrite rules.
 	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
-	// TODO Register cap to roles within class itself.
-	$capabilities = $injector->make( User\Capabilities::class );
-	$capabilities->add_caps_to_roles();
+
+	// Flush rewrite rules after registering post type.
 	rewrite_flush();
 
+	// Setup user capabilities.
+	$capabilities = $injector->make( User\Capabilities::class );
+	$capabilities->add_caps_to_roles();
+
 	// Not using Services::get(...) because the class is only registered on 'admin_init', which we might not be in here.
-	// TODO move this logic to Database_Upgrader class.
 	$database_upgrader = $injector->make( Database_Upgrader::class );
 	$database_upgrader->register();
 }
@@ -136,14 +140,15 @@ function remove_site( $error, $site ) {
 	}
 
 	$injector = Services::get_injector();
+	// If something went wrong with the injector, exit early.
 	if ( ! method_exists( $injector, 'make' ) ) {
 		return;
 	}
-	$story = $injector->make( Story_Post_Type::class );
+	$capabilities = $injector->make( User\Capabilities::class );
 
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
-	$story->remove_caps_from_roles();
+	$capabilities->remove_caps_from_roles();
 	restore_current_blog();
 }
 
@@ -159,6 +164,9 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
+	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
+
+	// This will also flush rewrite rules.
 	get_plugin_instance()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );

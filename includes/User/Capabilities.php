@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories\User;
 
-use Google\Web_Stories\Infrastructure\Activateable;
-use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Role;
 
@@ -36,27 +34,7 @@ use WP_Role;
  *
  * @package Google\Web_Stories\User
  */
-class Capabilities implements Activateable, Deactivateable {
-	/**
-	 * Activate the service.
-	 *
-	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
-	 */
-	public function activate( $network_wide ) {
-		$this->add_caps_to_roles();
-	}
-
-	/**
-	 * Deactivate the service.
-	 *
-	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
-	 */
-	public function deactivate( $network_wide ) {
-		$this->remove_caps_from_roles();
-	}
-
+class Capabilities {
 	/**
 	 * Adds story capabilities to default user roles.
 	 *
