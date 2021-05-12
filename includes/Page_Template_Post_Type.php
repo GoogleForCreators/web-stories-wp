@@ -113,6 +113,7 @@ class Page_Template_Post_Type extends Service_Base {
 					'excerpt',
 				],
 				'capabilities'          => $capabilities,
+				'rewrite'               => false,
 				'public'                => false,
 				'show_ui'               => false,
 				'show_in_rest'          => true,
