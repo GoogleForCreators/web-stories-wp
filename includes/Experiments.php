@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @brittanyirl
+			 * Issue: 6148
+			 * Creation date: 2021-05-11
+			 */
+			[
+				'name'        => 'enableQuickActionMenus',
+				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
+				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 6708
 			 * Creation date: 2021-03-23

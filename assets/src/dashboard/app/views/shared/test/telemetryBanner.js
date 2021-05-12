@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useState } from 'react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 /**
@@ -57,23 +58,21 @@ function TelemetryBannerTestContainer(props) {
 
 describe('TelemetryBanner', () => {
   it('should render visible with the checkbox unchecked', () => {
-    const { getByRole } = renderWithProviders(<TelemetryBannerTestContainer />);
+    renderWithProviders(<TelemetryBannerTestContainer />);
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = screen.getByRole('checkbox');
 
     expect(checkbox).not.toBeChecked();
   });
 
   it('should change the checkbox to checked and update the header when clicked', () => {
-    const { getByRole, getByText } = renderWithProviders(
-      <TelemetryBannerTestContainer />
-    );
+    renderWithProviders(<TelemetryBannerTestContainer />);
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = screen.getByRole('checkbox');
 
     expect(checkbox).not.toBeChecked();
 
-    let bannerHeader = getByText(/Help improve the editor!/);
+    let bannerHeader = screen.getByText(/Help improve the editor!/);
 
     expect(bannerHeader).toBeInTheDocument();
 
@@ -81,14 +80,14 @@ describe('TelemetryBanner', () => {
 
     expect(checkbox).toBeChecked();
 
-    bannerHeader = getByText(/Your selection has been updated./);
+    bannerHeader = screen.getByText(/Your selection has been updated./);
     expect(bannerHeader).toBeInTheDocument();
   });
 
   it('should close and not be visible when the close icon is clicked', () => {
-    const { getByRole } = renderWithProviders(<TelemetryBannerTestContainer />);
+    renderWithProviders(<TelemetryBannerTestContainer />);
 
-    const closeButton = getByRole('button');
+    const closeButton = screen.getByRole('button');
 
     expect(closeButton).toBeInTheDocument();
 
@@ -98,11 +97,9 @@ describe('TelemetryBanner', () => {
   });
 
   it('should not be able to be checked when disabled', () => {
-    const { getByRole } = renderWithProviders(
-      <TelemetryBannerTestContainer disabled />
-    );
+    renderWithProviders(<TelemetryBannerTestContainer disabled />);
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = screen.getByRole('checkbox');
 
     expect(checkbox).not.toBeChecked();
 
@@ -112,9 +109,9 @@ describe('TelemetryBanner', () => {
   });
 
   it('should keep focus on the checkbox when checking/unchecking via', () => {
-    const { getByRole } = renderWithProviders(<TelemetryBannerTestContainer />);
+    renderWithProviders(<TelemetryBannerTestContainer />);
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = screen.getByRole('checkbox');
 
     // Tab to Dismiss button
     userEvent.tab();

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -126,6 +126,8 @@ const DEFAULT_USE_MEDIA_RESULT = {
 
 const MEDIA = Array(10).fill(createMediaResource('img', 'PROVIDER_1'));
 
+/* eslint-disable testing-library/no-node-access, testing-library/no-container */
+
 describe('Media3pPane', () => {
   const insertElement = jest.fn();
   let useMediaResult;
@@ -148,61 +150,73 @@ describe('Media3pPane', () => {
   });
 
   it('should display terms dialog', () => {
-    const { queryByText, getByRole } = renderWithTheme(
-      <Media3pPane isActive />
-    );
+    renderWithTheme(<Media3pPane isActive />);
 
     expect(
-      queryByText(/Your use of stock content is subject to third party terms/)
+      screen.queryByText(
+        /Your use of stock content is subject to third party terms/
+      )
     ).toBeInTheDocument();
 
-    fireEvent.click(getByRole('button', { name: 'Dismiss' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Dismiss' }));
 
     expect(
-      queryByText('Your use of stock content is subject to third party terms.')
+      screen.queryByText(
+        'Your use of stock content is subject to third party terms.'
+      )
     ).not.toBeInTheDocument();
   });
 
   it('should render <Media3pPane /> with no media', () => {
-    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
+    renderWithTheme(<Media3pPane isActive />);
 
-    expect(queryByText('No media found')).not.toBeInTheDocument();
-    expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
+    expect(screen.queryByText('No media found')).not.toBeInTheDocument();
+    expect(getComputedStyle(screen.queryByText('Trending')).display).toBe(
+      'none'
+    );
   });
 
   it('should render "No media found" text once loading is completed', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = false;
-    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
+    renderWithTheme(<Media3pPane isActive />);
 
-    expect(queryByText('No media found')).toBeInTheDocument();
-    expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
+    expect(screen.queryByText('No media found')).toBeInTheDocument();
+    expect(getComputedStyle(screen.queryByText('Trending')).display).toBe(
+      'none'
+    );
   });
 
   it('should render <Media3pPane /> with no "Trending" text while media is being loaded', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = false;
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = true;
     useMediaResult.media3p.PROVIDER_1.state.media = [];
-    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
+    renderWithTheme(<Media3pPane isActive />);
 
-    expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
+    expect(getComputedStyle(screen.queryByText('Trending')).display).toBe(
+      'none'
+    );
   });
 
   it('should render <Media3pPane /> with the "Trending" text while a new page is being loaded', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = false;
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
+    renderWithTheme(<Media3pPane isActive />);
 
-    expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
+    expect(getComputedStyle(screen.queryByText('Trending')).display).not.toBe(
+      'none'
+    );
   });
 
   it('should render <Media3pPane /> with the "Trending" text', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { queryByText } = renderWithTheme(<Media3pPane isActive />);
+    renderWithTheme(<Media3pPane isActive />);
 
-    expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
+    expect(getComputedStyle(screen.queryByText('Trending')).display).not.toBe(
+      'none'
+    );
   });
 
   it('should render <Media3pPane /> with enabled search when a category is not selected', () => {
@@ -227,11 +241,13 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with the category display name when selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
-    const { getByTestId } = renderWithTheme(<Media3pPane isActive />);
+    renderWithTheme(<Media3pPane isActive />);
 
-    const subHeading = getByTestId('media-subheading');
+    const subHeading = screen.getByTestId('media-subheading');
 
     expect(getComputedStyle(subHeading).display).not.toBe('none');
     expect(subHeading).toHaveTextContent('1 Dogs');
   });
 });
+
+/* eslint-enable testing-library/no-node-access, testing-library/no-container */

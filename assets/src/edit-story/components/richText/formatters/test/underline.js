@@ -43,27 +43,27 @@ describe('Underline formatter', () => {
   const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
-    function setup(element) {
+    function setupFormatter(element) {
       return elementToStyle(getDOMElement(element));
     }
 
     it('should ignore non-span elements', () => {
       const element = <div />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should ignore span elements without underline text decoration', () => {
       const element = <span style={{ backgroundColor: 'red' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should detect underline from span elements and return correct style', () => {
       const element = <span style={{ textDecoration: 'underline' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
       const expected = UNDERLINE;
 
       expect(style).toBe(expected);
@@ -96,26 +96,26 @@ describe('Underline formatter', () => {
       expect(getPrefixStylesInSelection).toHaveBeenCalledWith(state, UNDERLINE);
     });
 
-    function setup(styleArray) {
+    function setupFormatter(styleArray) {
       getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
       return getters.isUnderline({});
     }
 
     it('should return false if both underline and non-underline', () => {
       const styles = [NONE, UNDERLINE];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toBe(false);
     });
 
     it('should return false if no style matches', () => {
       const styles = [NONE];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toStrictEqual(false);
     });
 
     it('should return true if only underline', () => {
       const styles = [UNDERLINE];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toStrictEqual(true);
     });
   });

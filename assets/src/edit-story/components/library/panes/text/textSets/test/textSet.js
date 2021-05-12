@@ -220,7 +220,7 @@ function setup(elements) {
     },
   };
 
-  const { queryAllByRole, getByRole, container } = renderWithTheme(
+  return renderWithTheme(
     <TransformContext.Provider value={transformValue}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
@@ -247,8 +247,9 @@ function setup(elements) {
       </ConfigContext.Provider>
     </TransformContext.Provider>
   );
-  return { getByRole, queryAllByRole, container };
 }
+
+/* eslint-disable testing-library/no-container */
 
 describe('TextSets', () => {
   beforeEach(() => {
@@ -271,3 +272,5 @@ describe('TextSets', () => {
     );
   });
 });
+
+/* eslint-enable testing-library/no-container */

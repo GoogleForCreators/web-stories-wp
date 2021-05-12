@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Deactivateable;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post_Type;
 use WP_Rewrite;
@@ -35,7 +34,7 @@ use WP_Query;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Service_Base implements Deactivateable {
+class Story_Post_Type extends Service_Base {
 
 	/**
 	 * The slug of the stories post type.
@@ -139,17 +138,6 @@ class Story_Post_Type extends Service_Base implements Deactivateable {
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 	}
-
-	/**
-	 * Deactivate the service.
-	 *
-	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
-	 */
-	public function deactivate( $network_wide ) {
-		unregister_post_type( self::POST_TYPE_SLUG );
-	}
-
 
 	/**
 	 * Base64 encoded svg icon.

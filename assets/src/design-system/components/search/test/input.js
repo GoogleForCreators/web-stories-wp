@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -34,7 +33,7 @@ describe('Search <Input />', () => {
   beforeEach(jest.clearAllMocks);
 
   it('should render a <SearchInput /> searchbox by default', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <SearchInput
         ariaInputLabel="search label"
         ariaClearLabel="aria label for clearing value"
@@ -45,12 +44,12 @@ describe('Search <Input />', () => {
       />
     );
 
-    const input = getByRole('searchbox');
+    const input = screen.getByRole('searchbox');
     expect(input).toBeInTheDocument();
   });
 
   it('should render a <SearchInput /> combobox if it has a list id', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <SearchInput
         ariaInputLabel="search label"
         ariaClearLabel="aria label for clearing value"
@@ -62,12 +61,12 @@ describe('Search <Input />', () => {
       />
     );
 
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
   });
 
   it('should not trigger onClickMock on click if input is disabled', () => {
-    const { getByPlaceholderText } = renderWithProviders(
+    renderWithProviders(
       <SearchInput
         ariaInputLabel="search label"
         ariaClearLabel="aria label for clearing value"
@@ -80,14 +79,14 @@ describe('Search <Input />', () => {
       />
     );
 
-    const input = getByPlaceholderText('search placeholder');
+    const input = screen.getByPlaceholderText('search placeholder');
     fireEvent.click(input);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
   });
 
   it('should trigger handleClearInputMock on click of clear button if input has content', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <SearchInput
         ariaInputLabel="search label"
         ariaClearLabel="aria label for clearing value"
@@ -99,7 +98,7 @@ describe('Search <Input />', () => {
       />
     );
 
-    const clearButton = getByTestId('clear-search-icon');
+    const clearButton = screen.getByTestId('clear-search-icon');
     expect(clearButton).toBeInTheDocument();
 
     fireEvent.click(clearButton);
