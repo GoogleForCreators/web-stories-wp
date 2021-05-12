@@ -94,7 +94,7 @@ describe('panels/SizePosition', () => {
 
   it('should render <SizePosition /> panel', () => {
     const { getByRole } = renderSizePosition([defaultElement]);
-    const element = getByRole('button', { name: 'Size & position' });
+    const element = getByRole('button', { name: 'Size & Position' });
     expect(element).toBeInTheDocument();
   });
 

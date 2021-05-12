@@ -131,7 +131,7 @@ export class DesignPanel extends Container {
 
   get sizePosition() {
     return this._get(
-      this.getByRole('region', { name: /Size & position/i }),
+      this.getByRole('region', { name: /Size & Position/i }),
       'sizePosition',
       SizePosition
     );

@@ -148,10 +148,10 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
   }
 
   const firstInputLabel = lockRadius
-    ? __('Corner radius', 'web-stories')
+    ? __('Corner Radius', 'web-stories')
     : __('Top left corner radius', 'web-stories');
   return (
-    <SimplePanel name="borderRadius" title={__('Corner radius', 'web-stories')}>
+    <SimplePanel name="borderRadius" title={__('Corner Radius', 'web-stories')}>
       <FlexContainer>
         <InputContainer>
           <Row>

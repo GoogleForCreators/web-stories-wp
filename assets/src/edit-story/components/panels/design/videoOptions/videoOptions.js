@@ -58,7 +58,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel
       name="videoOptions"
-      title={__('Video settings', 'web-stories')}
+      title={__('Video Settings', 'web-stories')}
     >
       <Row spaceBetween={false}>
         <StyledCheckbox

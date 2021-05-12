@@ -36,7 +36,7 @@ describe('Panels/Panel/SimplePanel', () => {
   });
 
   describe('should render <PanelTitle>', () => {
-    const titleName = 'Size & position';
+    const titleName = 'Size & Position';
     const contentText = 'Panel Content';
     let panelElement;
     let titleElement;

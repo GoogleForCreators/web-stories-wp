@@ -63,7 +63,7 @@ describe('<SavedTemplates />', function () {
       { features: { enableInProgressStoryActions: false } }
     );
     fireEvent.click(getByLabelText('Choose sort option for display'));
-    fireEvent.click(getByText('Date created'));
+    fireEvent.click(getByText('Date Created'));
 
     await waitFor(() => {
       expect(setSortFn).toHaveBeenCalledWith('date');

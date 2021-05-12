@@ -327,7 +327,7 @@ describe('My Stories <Header />', function () {
       </LayoutProvider>
     );
     fireEvent.click(getByLabelText('Choose sort option for display'));
-    fireEvent.click(getByText('Last modified'));
+    fireEvent.click(getByText('Last Modified'));
 
     await waitFor(() => {
       expect(setSortFn).toHaveBeenCalledWith('modified');

@@ -35,6 +35,7 @@ import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
 import Image from './image';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 const Wrapper = styled.div`
   display: none;
@@ -77,13 +78,16 @@ function Step3() {
           }
         </Number>
         <Paragraph>
-          {
-            /* translators: First half of "Jump into the Editor" */
-            _x('Jump into the', 'plugin activation', 'web-stories')
-          }{' '}
-          <Link href={newStoryURL} onClick={onClick}>
-            {__('Editor', 'web-stories')}
-          </Link>
+          <TranslateWithMarkup
+            mapping={{
+              a: <Link href={newStoryURL} onClick={onClick} />,
+            }}
+          >
+            {__(
+              'Jump into the<br /><a>Editor</a>',
+              'web-stories'
+            )}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>
