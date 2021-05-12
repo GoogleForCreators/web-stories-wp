@@ -74,11 +74,11 @@ describe('Help Center integration', () => {
       expect(quickTips).toBeDefined();
 
       await fixture.events.click(toggleButton);
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
       expect(fixture.editor.helpCenter.quickTips).toBeNull();
 
       await fixture.events.click(toggleButton);
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
       expect(fixture.editor.helpCenter.quickTips).toBeDefined();
     });
 
@@ -88,7 +88,7 @@ describe('Help Center integration', () => {
       const closeButton = getByRole('button', { name: /Close/ });
       expect(closeButton).toBeTruthy();
       await fixture.events.click(closeButton);
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
       expect(fixture.editor.helpCenter.quickTips).toBeNull();
     });
 
@@ -170,11 +170,11 @@ describe('Help Center integration', () => {
 
       await fixture.events.focus(toggleButton);
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
       expect(fixture.editor.helpCenter.quickTips).toBeNull();
 
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
       expect(fixture.editor.helpCenter.quickTips).toBeDefined();
     });
 
@@ -185,7 +185,7 @@ describe('Help Center integration', () => {
       expect(closeButton).toBeTruthy();
       await fixture.events.focus(closeButton);
       await fixture.events.keyboard.press('Enter');
-      await fixture.events.sleep(300);
+      await fixture.events.sleep(500);
       expect(fixture.editor.helpCenter.quickTips).toBeNull();
     });
 
