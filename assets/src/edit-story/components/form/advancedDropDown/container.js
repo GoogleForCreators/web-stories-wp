@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import useFocusOut from '../../../utils/useFocusOut';
+import { useFocusOut } from '../../../../design-system';
 import SearchInput from './searchInput';
 import { isKeywordFilterable } from './utils';
 

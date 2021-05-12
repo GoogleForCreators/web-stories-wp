@@ -34,13 +34,12 @@ import { focusStyle } from '../panels/shared';
 
 const Preview = styled.button`
   margin: 0;
-  padding: 0;
+  padding: 7px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   border-radius: 2px;
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
   width: 100%;
-  padding: 7px;
 
   ${focusStyle};
 `;

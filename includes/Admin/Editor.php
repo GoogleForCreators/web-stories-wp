@@ -199,11 +199,10 @@ class Editor extends Service_Base {
 		// Force media model to load.
 		wp_enqueue_media();
 		$this->register_font->register();
-		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
-
-		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
-			$script_dependencies[] = 'postbox';
-		}
+		$script_dependencies = [
+			Tracking::SCRIPT_HANDLE,
+			'postbox',
+		];
 
 		$this->enqueue_script( self::SCRIPT_HANDLE, $script_dependencies );
 		$font_handle = $this->register_font->get_handle();

@@ -221,10 +221,6 @@ class Cross_Origin_Isolation extends Test_Case {
 	 * @return \Google\Web_Stories\Admin\Cross_Origin_Isolation
 	 */
 	protected function get_coi_object() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		return new \Google\Web_Stories\Admin\Cross_Origin_Isolation( $experiments );
+		return new \Google\Web_Stories\Admin\Cross_Origin_Isolation();
 	}
 }

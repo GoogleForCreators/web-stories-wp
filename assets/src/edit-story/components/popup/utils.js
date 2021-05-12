@@ -19,18 +19,18 @@
  */
 import { Placement } from './constants';
 
-export function getXTransforms(placement) {
+export function getXTransforms(placement, isRTL) {
   // left & right
   if (placement.startsWith('left')) {
-    return -1;
+    return isRTL ? 0 : -1;
   } else if (placement.startsWith('right')) {
-    return null;
+    return isRTL ? -1 : 0;
   }
   // top & bottom
   if (placement.endsWith('-start')) {
-    return null;
+    return isRTL ? -1 : 0;
   } else if (placement.endsWith('-end')) {
-    return -1;
+    return isRTL ? 0 : -1;
   }
   return -0.5;
 }
@@ -51,15 +51,15 @@ export function getYTransforms(placement) {
 
 // note that we cannot use percentage values for transforms, which
 // do not work correctly for rotated elements
-export function getTransforms(placement) {
-  const xTransforms = getXTransforms(placement);
+export function getTransforms(placement, isRTL) {
+  const xTransforms = getXTransforms(placement, isRTL);
   const yTransforms = getYTransforms(placement);
   if (!xTransforms && !yTransforms) {
     return '';
   }
-  return `translate(${(xTransforms || 0) * 100}%, ${
-    (yTransforms || 0) * 100
-  }%)`;
+  const translateX = (xTransforms || 0) * 100;
+  const translateY = (yTransforms || 0) * 100;
+  return `translate(${translateX}%, ${translateY}%)`;
 }
 
 export function getXOffset(
@@ -67,33 +67,34 @@ export function getXOffset(
   spacing = 0,
   anchorRect,
   dockRect,
-  bodyRect
+  bodyRect,
+  isRTL
 ) {
+  const leftAligned =
+    bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
+  const rightAligned =
+    bodyRect.left +
+    (dockRect?.left || anchorRect.left) +
+    anchorRect.width +
+    spacing;
+  const centerAligned =
+    bodyRect.left + (dockRect?.left || anchorRect.left) + anchorRect.width / 2;
   switch (placement) {
     case Placement.BOTTOM_START:
     case Placement.TOP_START:
     case Placement.LEFT:
     case Placement.LEFT_END:
     case Placement.LEFT_START:
-      return bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
+      return isRTL ? rightAligned : leftAligned;
     case Placement.BOTTOM_END:
     case Placement.TOP_END:
     case Placement.RIGHT:
     case Placement.RIGHT_END:
     case Placement.RIGHT_START:
-      return (
-        bodyRect.left +
-        (dockRect?.left || anchorRect.left) +
-        anchorRect.width +
-        spacing
-      );
+      return isRTL ? leftAligned : rightAligned;
     case Placement.BOTTOM:
     case Placement.TOP:
-      return (
-        bodyRect.left +
-        (dockRect?.left || anchorRect.left) +
-        anchorRect.width / 2
-      );
+      return centerAligned;
     default:
       return 0;
   }
@@ -121,7 +122,7 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
-export function getOffset(placement, spacing, anchor, dock, popup) {
+export function getOffset(placement, spacing, anchor, dock, popup, isRTL) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
   const popupRect = popup.current?.getBoundingClientRect();
@@ -142,7 +143,8 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
     spacingH,
     anchorRect,
     dockRect,
-    bodyRect
+    bodyRect,
+    isRTL
   );
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
 
