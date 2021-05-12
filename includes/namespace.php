@@ -173,9 +173,7 @@ function deactivate( $network_wide ) {
 
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 
-	// Flush rewrite rules after unregistering post type.
-	rewrite_flush();
-
+	// This will also flush rewrite rules.
 	get_plugin_instance()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );
