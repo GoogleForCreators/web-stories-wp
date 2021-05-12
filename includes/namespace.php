@@ -43,11 +43,11 @@ function setup_new_site() {
 		return;
 	}
 
-	// Register Story post types to setup rewrite rules.
+	// Register web-story post type to setup rewrite rules.
 	$story = $injector->make( Story_Post_Type::class );
 	$story->register();
 
-	// Flush rewrite rules after register post type.
+	// Flush rewrite rules after registering post type.
 	rewrite_flush();
 
 	// Setup user capabilities.
@@ -165,6 +165,10 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  */
 function deactivate( $network_wide ) {
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
+
+	// Flush rewrite rules after unregistering post type.
+	rewrite_flush();
+
 	get_plugin_instance()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );
