@@ -81,24 +81,29 @@ function useMediaUploadQueue() {
           }
 
           try {
-            let newResource = await getResourceFromLocalFile(file);
-            let posterFile = null;
+            const newResource = await getResourceFromLocalFile(file);
             if (resource.type === 'video' && resource.src) {
-              posterFile = await getFirstFrameOfVideo(resource.src);
+              const posterFile = await getFirstFrameOfVideo(resource.src);
 
               const poster = createBlob(posterFile);
               const { width, height } = await getImageDimensions(poster);
-              newResource = {
+              const newResourceWithDimensions = {
                 ...resource,
                 poster,
                 width,
                 height,
               };
+              replacePlaceholderResource({
+                id,
+                resource: newResourceWithDimensions,
+                posterFile,
+              });
+              return;
             }
             replacePlaceholderResource({
               id,
               resource: newResource,
-              posterFile,
+              posterFile: null,
             });
           } catch {
             // Not interested in errors here.

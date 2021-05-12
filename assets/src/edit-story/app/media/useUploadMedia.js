@@ -233,19 +233,31 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          let resource = await getResourceFromLocalFile(file);
-          let posterFile = null;
+          const resource = await getResourceFromLocalFile(file);
           if (resource.type === 'video' && resource.src) {
-            posterFile = await getFirstFrameOfVideo(resource.src);
+            const posterFile = await getFirstFrameOfVideo(resource.src);
 
             const poster = createBlob(posterFile);
             const { width, height } = await getImageDimensions(poster);
-            resource = {
+            const resourceWithDimensions = {
               ...resource,
               poster,
               width,
               height,
             };
+
+            addItem({
+              file,
+              resource: resourceWithDimensions,
+              onUploadStart,
+              onUploadProgress,
+              onUploadError,
+              onUploadSuccess,
+              additionalData,
+              posterFile,
+            });
+
+            return;
           }
           addItem({
             file,
@@ -255,7 +267,7 @@ function useUploadMedia({
             onUploadError,
             onUploadSuccess,
             additionalData,
-            posterFile,
+            posterFile: null,
           });
         })
       );
