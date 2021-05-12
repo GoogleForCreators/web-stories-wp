@@ -44,6 +44,7 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
+import { HELP_CENTER_TIP_COUNT } from '../../components/helpCenter/constants';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import getMediaResponse from './db/getMediaResponse';
@@ -210,7 +211,7 @@ export class Fixture {
     // Set help center to closed right away
     localStorage.setItem(
       LOCAL_STORAGE_PREFIX.HELP_CENTER,
-      JSON.stringify({ isOpen: false, unreadTipsCount: 8 })
+      JSON.stringify({ isOpen: false, unreadTipsCount: HELP_CENTER_TIP_COUNT })
     );
   }
 

@@ -175,3 +175,5 @@ export const TIP_KEYS_MAP = Object.keys(TIPS).reduce((keyMap, key) => {
   keyMap[key] = true;
   return keyMap;
 }, {});
+
+export const HELP_CENTER_TIP_COUNT = Object.keys(TIPS).length;
