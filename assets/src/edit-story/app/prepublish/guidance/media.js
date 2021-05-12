@@ -164,15 +164,15 @@ export function videoElementOptimized(element = {}) {
     (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
   const isLargeVideo =
     videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
-  if (!isLargeVideo) {
-    return undefined;
+  if (isLargeVideo) {
+    return {
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      elementId: element.id,
+      message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
+      help: <VideoOptimization element={element} />,
+      noHighlight: true,
+    };
   }
 
-  return {
-    type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-    elementId: element.id,
-    message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
-    help: <VideoOptimization element={element} />,
-    noHighlight: true,
-  };
+  return undefined;
 }
