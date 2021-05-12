@@ -22,7 +22,7 @@ import { useRef } from 'react';
 /**
  * Internal dependencies
  */
-import isMouseUpAClick from '../../../utils/isMouseUpAClick';
+import areEventsDragging from '../../../utils/areEventsDragging';
 import { useDropTargets } from '../../dropTargets';
 import { useCanvas } from '../../../app';
 
@@ -52,18 +52,19 @@ function useMultiSelectionDrag({
   // and it can be captured here and not in the frame element.
   // @todo Add integration test for this!
   const clickHandled = (inputEvent) => {
-    if (isMouseUpAClick(inputEvent, eventTracker.current)) {
-      const clickedElement = Object.keys(nodesById).find((id) =>
-        nodesById[id].contains(inputEvent.target)
-      );
-      if (clickedElement) {
-        handleSelectElement(clickedElement, inputEvent);
-      }
-      // Click was handled.
-      return true;
+    if (areEventsDragging(eventTracker.current, inputEvent)) {
+      // No click was found/handled.
+      return false;
     }
-    // No click was found/handled.
-    return false;
+
+    const clickedElement = Object.keys(nodesById).find((id) =>
+      nodesById[id].contains(inputEvent.target)
+    );
+    if (clickedElement) {
+      handleSelectElement(clickedElement, inputEvent);
+    }
+    // Click was handled.
+    return true;
   };
 
   const startEventTracking = (evt) => {

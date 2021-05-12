@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS } from '../../../constants';
+import { ANIMATION_TYPES } from '../../../constants';
 import { AMPStoryWrapper } from '../../../storybookUtils';
 
 export default {
@@ -26,8 +26,9 @@ export default {
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.TWIRL_IN,
+    type: ANIMATION_TYPES.TWIRL_IN,
   },
 ];
 

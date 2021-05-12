@@ -34,7 +34,7 @@ describe('getVirtualizedItemIndex', () => {
     ${49}    | ${1}        | ${99}
     ${101}   | ${0}        | ${202}
   `(
-    'Should return `$returnedGridIndex` when columnIndex is `$columnIndex` and rowIndex is `$rowIndex`',
+    'should return `$returnedGridIndex` when columnIndex is `$columnIndex` and rowIndex is `$rowIndex`',
     ({ rowIndex, columnIndex, returnedGridIndex }) => {
       expect(getVirtualizedItemIndex({ rowIndex, columnIndex })).toStrictEqual(
         returnedGridIndex

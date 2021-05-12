@@ -33,6 +33,7 @@ import {
   DropDown,
   ThemeGlobals,
 } from '../../../../../design-system';
+import { inputContainerStyleOverride } from '../../shared';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
 
@@ -79,7 +80,7 @@ function EffectInput({
     [onChange]
   );
 
-  const valueForField = effectConfig[field] || effectProps[field].defaultValue;
+  const valueForField = effectConfig[field] ?? effectProps[field].defaultValue;
   const isFloat = effectProps[field].type === FIELD_TYPES.FLOAT;
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
@@ -126,6 +127,7 @@ function EffectInput({
             )
           }
           isFloat={isFloat}
+          containerStyleOverride={inputContainerStyleOverride}
         />
       );
   }

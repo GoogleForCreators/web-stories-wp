@@ -149,8 +149,7 @@ export function videoElementOptimized(element = {}) {
   const idOrigin = idResource?.toString().split(':')?.[0];
   const isCoverrMedia = idOrigin === 'media/coverr';
   const videoArea =
-    (element.resource?.sizes?.full?.height ?? element.resource?.height ?? 0) *
-    (element.resource?.sizes?.full?.width ?? element.resource?.width ?? 0);
+    (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
   const isLargeVideo =
     videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
 

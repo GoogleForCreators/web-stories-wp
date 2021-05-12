@@ -116,6 +116,7 @@ jobs:
         env:
           # TODO: remove eventually
           DISABLE_PREVENT: true
+          DISABLE_QUICK_TIPS: true
 
       - name: Start Docker environment
         run: npm run env:start

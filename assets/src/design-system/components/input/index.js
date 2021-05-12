@@ -62,7 +62,7 @@ const Suffix = styled(Text)`
 `;
 
 const InputContainer = styled.div(
-  ({ focused, hasError, theme }) => css`
+  ({ focused, hasError, theme, styleOverride }) => css`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -89,6 +89,8 @@ const InputContainer = styled.div(
     :focus-within {
       ${focusCSS(theme.colors.border.focus)};
     }
+
+    ${styleOverride};
   `
 );
 
@@ -149,6 +151,7 @@ export const Input = forwardRef(
       unit = '',
       value,
       isIndeterminate = false,
+      containerStyleOverride = '',
       ...props
     },
     ref
@@ -180,7 +183,11 @@ export const Input = forwardRef(
             {label}
           </Label>
         )}
-        <InputContainer focused={isFocused} hasError={hasError}>
+        <InputContainer
+          focused={isFocused}
+          hasError={hasError}
+          styleOverride={containerStyleOverride}
+        >
           <StyledInput
             id={inputId}
             disabled={disabled}
@@ -223,6 +230,10 @@ export const InputPropTypes = {
   unit: PropTypes.string,
   value: PropTypes.string.isRequired,
   isIndeterminate: PropTypes.bool,
+  containerStyleOverride: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
 };
 
 Input.propTypes = InputPropTypes;

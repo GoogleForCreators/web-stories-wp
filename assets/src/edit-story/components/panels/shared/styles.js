@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,14 +17,27 @@
 /**
  * External dependencies
  */
-
 import { css } from 'styled-components';
 
-export const visuallyHiddenStyles = css`
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
+/**
+ * Internal dependencies
+ */
+import { themeHelpers } from '../../../../design-system/theme';
+
+export const focusStyle = css`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
+export const inputContainerStyleOverride = css`
+  :focus-within {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;

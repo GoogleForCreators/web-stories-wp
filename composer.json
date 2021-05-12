@@ -12,7 +12,7 @@
     "ext-libxml": "*",
     "ext-mbstring": "*",
     "ampproject/amp-toolbox": "0.5.1",
-    "ampproject/amp-wp": "2.1.0",
+    "ampproject/amp-wp": "2.1.1",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.14.0",

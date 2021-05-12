@@ -18,10 +18,6 @@
           "duration": 1000,
           "delay": 0,
           "targets": ["ca140433-52d1-4423-896f-2e5c856cb22f"]
-        },
-        {
-          "delete": true,
-          "targets": ["a6b25c2c-a676-404b-ab44-5bd5b49598f5"]
         }
       ],
       "elements": [
@@ -532,10 +528,6 @@
           "targets": ["6e549d8a-d851-45c5-b168-f3e681261bab"],
           "duration": 600,
           "delay": 600
-        },
-        {
-          "delete": true,
-          "targets": ["3cf17fb8-a5ae-4f32-8e5f-d3a0513215de"]
         },
         {
           "id": "a5e7c238-bf50-45b8-a4c4-eafc15e03fbc",
@@ -1665,10 +1657,6 @@
           "flyInDir": "leftToRight",
           "duration": 600,
           "delay": 600
-        },
-        {
-          "delete": true,
-          "targets": ["f60ae332-db13-481f-ace7-107885b1c202"]
         }
       ],
       "elements": [
@@ -2009,10 +1997,6 @@
           "whooshInDir": "leftToRight",
           "duration": 2000,
           "delay": 600
-        },
-        {
-          "delete": true,
-          "targets": ["300c43cc-b0b0-45de-97ba-1775028d50bb"]
         },
         {
           "id": "97bc4870-6bae-4498-aa1e-19a1820e8b47",

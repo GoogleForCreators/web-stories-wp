@@ -399,10 +399,6 @@
           "flyInDir": "bottomToTop",
           "duration": 800,
           "delay": 1100
-        },
-        {
-          "delete": true,
-          "targets": ["dd764483-9e29-4aab-bb58-445d1f043d1a"]
         }
       ],
       "elements": [
@@ -632,10 +628,6 @@
           "iterations": 3,
           "duration": 600,
           "delay": 0
-        },
-        {
-          "delete": true,
-          "targets": ["7470ab2a-4a73-49aa-aaf5-74cfafb51adb"]
         },
         {
           "id": "502c8040-a29f-40a8-9cf5-c44325fb8442",
@@ -1647,10 +1639,6 @@
           "flyInDir": "rightToLeft",
           "duration": 600,
           "delay": 450
-        },
-        {
-          "delete": true,
-          "targets": ["1613baad-b2a9-42e7-b0a6-d2f4c6941f65"]
         },
         {
           "id": "d12716ac-9cf2-45d5-99d9-3f4b00bcb739",

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,13 +39,11 @@ const render = ({ configValue, isEnabled, ...initialProps }) => {
       initialProps: { ...initialProps },
       // eslint-disable-next-line react/display-name, react/prop-types
       wrapper: ({ children }) => (
-        <FlagsProvider features={{ customMetaBoxes: isEnabled }}>
-          <ConfigContext.Provider value={configValue}>
-            <APIContext.Provider value={apiContextValue}>
-              <MetaBoxesProvider>{children}</MetaBoxesProvider>
-            </APIContext.Provider>
-          </ConfigContext.Provider>
-        </FlagsProvider>
+        <ConfigContext.Provider value={configValue}>
+          <APIContext.Provider value={apiContextValue}>
+            <MetaBoxesProvider>{children}</MetaBoxesProvider>
+          </APIContext.Provider>
+        </ConfigContext.Provider>
       ),
     }
   );

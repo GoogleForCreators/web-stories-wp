@@ -95,7 +95,13 @@ const ExpandButton = styled(Button).attrs({
   align-items: center;
 `;
 
-const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
+const ChipGroup = ({
+  items,
+  selectedItemId,
+  selectItem,
+  deselectItem,
+  ariaLabel,
+}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const sectionRef = useRef();
@@ -159,7 +165,9 @@ const ChipGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
             id={containerId}
             isExpanded={isExpanded}
             role="listbox"
-            aria-label={__('List of filtering options', 'web-stories')}
+            aria-label={
+              ariaLabel || __('List of filtering options', 'web-stories')
+            }
           >
             <InnerContainer
               role="presentation"
@@ -210,6 +218,7 @@ ChipGroup.propTypes = {
   selectedItemId: PropTypes.string,
   selectItem: PropTypes.func,
   deselectItem: PropTypes.func,
+  ariaLabel: PropTypes.string,
 };
 
 export default ChipGroup;

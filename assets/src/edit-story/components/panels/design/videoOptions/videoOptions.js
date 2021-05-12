@@ -28,7 +28,12 @@ import styled from 'styled-components';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import { Checkbox, Text, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Checkbox,
+  Text,
+  THEME_CONSTANTS,
+  ThemeGlobals,
+} from '../../../../../design-system';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -36,6 +41,14 @@ const Row = styled(DefaultRow)`
 
 const Label = styled.label`
   margin-left: 12px;
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  ${({ theme }) => `
+    input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
+      box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
+    }
+  `}
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
@@ -48,7 +61,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       title={__('Video settings', 'web-stories')}
     >
       <Row spaceBetween={false}>
-        <Checkbox
+        <StyledCheckbox
           id={checkboxId}
           checked={loop}
           onChange={(evt) => pushUpdate({ loop: evt.target.checked }, true)}
