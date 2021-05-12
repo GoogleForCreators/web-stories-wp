@@ -233,10 +233,12 @@ const NavNextArea = styled(NavArea).attrs({
   area: 'f',
 })``;
 
-const QuickActionsArea = styled(Area).attrs({
-  area: 'f',
-})`
-  padding-top: calc(0.5 * var(--page-padding-px));
+const QuickActionsArea = styled(PaddedPage)`
+  grid-area: p;
+  position: absolute;
+  right: calc(-24px + var(--page-padding-px));
+  padding-left: 0;
+  padding-right: 0;
 `;
 
 const CarouselArea = styled(Area).attrs({

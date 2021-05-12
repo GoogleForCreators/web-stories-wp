@@ -35,6 +35,12 @@ export const ELEMENT_TYPE = {
   VIDEO: 'video',
 };
 
+export const ACTION_TEXT = {
+  CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
+  INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
+  INSERT_TEXT: __('Insert text', 'web-stories'),
+};
+
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
@@ -95,18 +101,18 @@ const useQuickActions = () => {
     return [
       {
         Icon: Bucket,
-        label: __('Change background color', 'web-stories'),
+        label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
         onClick: handleFocusPageBackground(backgroundElement.id),
       },
       {
         Icon: Media,
-        label: __('Insert background media', 'web-stories'),
+        label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
         onClick: handleFocusMediaPanel(backgroundElement.id),
         separator: 'top',
       },
       {
         Icon: LetterTPlus,
-        label: __('Insert text', 'web-stories'),
+        label: ACTION_TEXT.INSERT_TEXT,
         onClick: handleFocusTextSetsPanel(backgroundElement.id),
       },
     ];
