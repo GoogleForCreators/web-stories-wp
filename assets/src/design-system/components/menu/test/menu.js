@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
@@ -43,7 +42,7 @@ describe('<Menu />', () => {
   });
 
   it('should render a <Menu /> list with 12 items', () => {
-    const { getByRole, queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <Menu
         listId="foo"
         parentId="bar"
@@ -56,15 +55,15 @@ describe('<Menu />', () => {
       />
     );
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
-    const options = queryAllByRole('option');
+    const options = screen.queryAllByRole('option');
     expect(options).toHaveLength(12);
   });
 
   it('should return an emptyText message when there are no items to display', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Menu
         listId="foo"
         parentId="bar"
@@ -77,12 +76,12 @@ describe('<Menu />', () => {
       />
     );
 
-    const emptyMessage = getByText('No options available');
+    const emptyMessage = screen.getByText('No options available');
     expect(emptyMessage).toBeTruthy();
   });
 
   it('should trigger onMenuItemClick when list item is clicked', () => {
-    const { queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <Menu
         listId="foo"
         parentId="bar"
@@ -95,7 +94,7 @@ describe('<Menu />', () => {
       />
     );
 
-    const option3 = queryAllByRole('option')[2];
+    const option3 = screen.queryAllByRole('option')[2];
     expect(option3).toHaveTextContent(basicDropDownOptions[2].label);
 
     fireEvent.click(option3);
@@ -116,7 +115,7 @@ describe('<Menu />', () => {
       isSelected: PropTypes.bool,
     };
 
-    const { queryAllByText, getByText } = renderWithProviders(
+    renderWithProviders(
       <Menu
         listId="foo"
         parentId="bar"
@@ -130,8 +129,8 @@ describe('<Menu />', () => {
       />
     );
 
-    const itemsNotSelected = queryAllByText('I AM EXTRA CONTENT');
-    const selectedItem = getByText('I AM SELECTED');
+    const itemsNotSelected = screen.queryAllByText('I AM EXTRA CONTENT');
+    const selectedItem = screen.getByText('I AM SELECTED');
 
     expect(itemsNotSelected).toHaveLength(11);
     expect(selectedItem).toBeInTheDocument();

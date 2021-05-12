@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
@@ -23,13 +28,13 @@ import Layout from '../../layout';
 
 describe('ScrollToTop', () => {
   it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <Layout.Provider>
         <ScrollToTop />
       </Layout.Provider>
     );
 
-    const Button = getByTestId('scroll-to-top-button');
+    const Button = screen.getByTestId('scroll-to-top-button');
 
     expect(Button).toBeInTheDocument();
   });

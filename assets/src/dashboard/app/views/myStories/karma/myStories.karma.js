@@ -84,7 +84,9 @@ describe('Grid view', () => {
 
     const { getByRole, getByText } = within(firstStory);
 
-    const moreOptionsButton = getByRole('button', { name: /^More Options/ });
+    const moreOptionsButton = getByRole('button', {
+      name: /^More Options/,
+    });
 
     await fixture.events.click(moreOptionsButton);
 
@@ -92,7 +94,7 @@ describe('Grid view', () => {
 
     await fixture.events.click(rename);
 
-    const input = getByRole('textbox');
+    const input = fixture.screen.getByRole('textbox');
     const inputLength = input.value.length;
 
     for (let iter = 0; iter < inputLength; iter++) {

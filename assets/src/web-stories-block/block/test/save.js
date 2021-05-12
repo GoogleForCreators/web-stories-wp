@@ -37,6 +37,8 @@ const url =
 const title = 'Stories in AMP';
 const poster = 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg';
 
+/* eslint-disable testing-library/no-node-access */
+
 describe('save', () => {
   it('should add alignnone class by default', () => {
     const { container } = render(<Save attributes={{ url, title, poster }} />);
@@ -81,3 +83,5 @@ describe('save', () => {
     expect(container.firstChild).toMatchInlineSnapshot(`null`);
   });
 });
+
+/* eslint-enable testing-library/no-node-access */

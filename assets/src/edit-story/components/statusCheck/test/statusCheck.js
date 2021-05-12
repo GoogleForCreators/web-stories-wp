@@ -37,14 +37,13 @@ function setup(response) {
   const getStatusCheck = () => response;
   const apiValue = { actions: { getStatusCheck } };
 
-  const { queryAllByRole, container } = renderWithTheme(
+  return renderWithTheme(
     <ConfigContext.Provider value={configValue}>
       <APIContext.Provider value={apiValue}>
         <StatusCheck />
       </APIContext.Provider>
     </ConfigContext.Provider>
   );
-  return { queryAllByRole, container };
 }
 
 describe('statusCheck', () => {

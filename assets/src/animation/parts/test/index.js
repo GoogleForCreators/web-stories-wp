@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -59,12 +59,12 @@ describe('AnimationPart', () => {
     (type) => {
       const args = {};
       const { WAAPIAnimation } = AnimationPart(type, args);
-      const { getByTestId } = render(
+      render(
         <WAAPIAnimation hoistAnimation={() => {}}>
           <div data-testid="child-rendered" />
         </WAAPIAnimation>
       );
-      expect(getByTestId('child-rendered')).toBeInTheDocument();
+      expect(screen.getByTestId('child-rendered')).toBeInTheDocument();
     }
   );
 
