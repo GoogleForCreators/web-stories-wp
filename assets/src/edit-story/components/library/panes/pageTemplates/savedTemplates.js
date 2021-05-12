@@ -32,6 +32,7 @@ import {
   useSnackbar,
 } from '../../../../../design-system';
 import Dialog from '../../../dialog';
+import useLibrary from '../../useLibrary';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
@@ -40,23 +41,28 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-function SavedTemplates({
-  pageSize,
-  savedTemplates,
-  setSavedTemplates,
-  ...rest
-}) {
+function SavedTemplates({ pageSize, ...rest }) {
   const {
     actions: { deletePageTemplate, getCustomPageTemplates },
   } = useAPI();
+
+  const {
+    savedTemplates,
+    setSavedTemplates,
+    nextTemplatesToFetch,
+    setNextTemplatesToFetch,
+  } = useLibrary((state) => ({
+    savedTemplates: state.state.savedTemplates,
+    nextTemplatesToFetch: state.state.nextTemplatesToFetch,
+    setSavedTemplates: state.actions.setSavedTemplates,
+    setNextTemplatesToFetch: state.actions.setNextTemplatesToFetch,
+  }));
+
   const { showSnackbar } = useSnackbar();
 
   const [showDialog, setShowDialog] = useState(null);
   const [templateToDelete, setTemplateToDelete] = useState(null);
-  const [allPagesLoaded, setAllPagesLoaded] = useState(false);
   const ref = useRef();
-
-  const savedTemplatesPageTracker = useRef(1);
 
   // This is a workaround to force re-rendering for the virtual list to work and the parentRef being assigned correctly.
   // @todo Look into why does the ref not work as expected otherwise.
@@ -65,19 +71,22 @@ function SavedTemplates({
   }, []);
 
   const fetchTemplates = useCallback(() => {
-    if (allPagesLoaded) {
+    if (!nextTemplatesToFetch) {
       return;
     }
-    getCustomPageTemplates(savedTemplatesPageTracker.current + 1)
-      .then((result) => {
-        setSavedTemplates([...savedTemplates, ...result]);
-        savedTemplatesPageTracker.current =
-          savedTemplatesPageTracker.current + 1;
+    getCustomPageTemplates(nextTemplatesToFetch)
+      .then(({ templates, hasMore }) => {
+        setSavedTemplates([...savedTemplates, ...templates]);
+        if (!hasMore) {
+          setNextTemplatesToFetch(false);
+        } else {
+          setNextTemplatesToFetch(nextTemplatesToFetch + 1);
+        }
       })
-      // @todo We need to get the total pages instead.
-      .catch(() => setAllPagesLoaded(true));
+      .catch(() => setNextTemplatesToFetch(false));
   }, [
-    allPagesLoaded,
+    nextTemplatesToFetch,
+    setNextTemplatesToFetch,
     getCustomPageTemplates,
     savedTemplates,
     setSavedTemplates,
@@ -155,8 +164,6 @@ function SavedTemplates({
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
-  setSavedTemplates: PropTypes.func.isRequired,
-  savedTemplates: PropTypes.array.isRequired,
 };
 
 export default SavedTemplates;

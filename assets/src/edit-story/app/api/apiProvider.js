@@ -395,12 +395,18 @@ function APIProvider({ children }) {
         context: 'edit',
         per_page: perPage,
         page,
+        _web_stories_envelope: true,
       });
-      return apiFetch({ path: apiPath }).then((response) =>
-        response.map((template) => {
+      return apiFetch({ path: apiPath }).then(({ headers, body }) => {
+        const totalPages = parseInt(headers['X-WP-TotalPages']);
+        const templates = body.map((template) => {
           return { ...template['story_data'], templateId: template.id };
-        })
-      );
+        });
+        return {
+          templates,
+          hasMore: totalPages > page,
+        };
+      });
     },
     [customPageTemplates]
   );

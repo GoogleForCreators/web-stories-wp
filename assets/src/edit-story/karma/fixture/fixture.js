@@ -838,7 +838,10 @@ class APIProviderFixture {
         []
       );
 
-      const getCustomPageTemplates = useCallback(() => asyncResponse([]), []);
+      const getCustomPageTemplates = useCallback(
+        () => asyncResponse({ templates: [], hasMore: false }),
+        []
+      );
       const addPageTemplate = useCallback(
         () => asyncResponse({ ...singleSavedTemplate, templateId: 123 }),
         []

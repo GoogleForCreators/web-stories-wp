@@ -40,7 +40,7 @@ import { useStory } from '../../../../app/story';
 import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 
-const THRESHOLD = 2;
+const THRESHOLD = 6;
 function TemplateList({
   pages,
   parentRef,

@@ -83,6 +83,9 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(initialTab);
   const [textSets, setTextSets] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
+  // The next page of templates to fetch is 2 since the 1st page gets fetch by default.
+  const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(2);
+
   const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
@@ -120,6 +123,7 @@ function LibraryProvider({ children }) {
         initialTab,
         textSets,
         savedTemplates,
+        nextTemplatesToFetch,
       },
       actions: {
         setTab,
@@ -127,6 +131,7 @@ function LibraryProvider({ children }) {
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
+        setNextTemplatesToFetch,
       },
       data: {
         tabs: tabs,
@@ -141,6 +146,8 @@ function LibraryProvider({ children }) {
       insertTextSet,
       insertTextSetByOffset,
       tabs,
+      nextTemplatesToFetch,
+      setNextTemplatesToFetch,
     ]
   );
   const getTextSets = useCallback(async () => {
