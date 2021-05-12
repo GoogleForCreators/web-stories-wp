@@ -79,7 +79,10 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(resource, 'local');
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+      resource,
+      'local'
+    );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('image :)');

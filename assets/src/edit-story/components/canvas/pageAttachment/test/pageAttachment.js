@@ -89,6 +89,7 @@ describe('PageAttachment', () => {
     });
     const pageAttachment = screen.getByRole('presentation');
     // The guiding line is always displayed right before the page attachment, on the same level.
+    // eslint-disable-next-line testing-library/no-node-access
     const guideline = pageAttachment.previousSibling;
     expect(guideline).toBeDefined();
     const style = window.getComputedStyle(guideline);
