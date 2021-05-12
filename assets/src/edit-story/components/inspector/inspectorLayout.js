@@ -53,7 +53,7 @@ const UnjustifiedTabView = styled(TabView)`
 
 function InspectorLayout() {
   const {
-    state: { intialTab },
+    state: { tab },
     actions: { setInspectorContentNode, setTab },
     refs: { inspector },
     data: { tabs },
@@ -75,7 +75,7 @@ function InspectorLayout() {
       <UnjustifiedTabView
         label={__('Inspector Selection', 'web-stories')}
         tabs={tabs}
-        intialTab={intialTab}
+        tab={tab}
         onTabChange={onTabChange}
         getAriaControlsId={getTabId}
         shortcut="mod+option+3"

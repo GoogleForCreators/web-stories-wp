@@ -82,14 +82,41 @@ const useQuickActions = () => {
     [handleFocusPanel]
   );
 
+  const backgroundElement =
+    currentPage?.elements.find((element) => element.isBackground) ||
+    selectedElements?.[0]?.isBackground;
+
+  const defaultActions = useMemo(
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
+        onClick: handleFocusPageBackground(backgroundElement?.id),
+      },
+      {
+        Icon: Media,
+        label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
+        onClick: handleFocusMediaPanel(),
+        separator: 'top',
+      },
+      {
+        Icon: LetterTPlus,
+        label: ACTION_TEXT.INSERT_TEXT,
+        onClick: handleFocusTextSetsPanel(),
+      },
+    ],
+    [
+      backgroundElement?.id,
+      handleFocusMediaPanel,
+      handleFocusPageBackground,
+      handleFocusTextSetsPanel,
+    ]
+  );
+
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
   }
-
-  const backgroundElement =
-    currentPage?.elements.find((element) => element.isBackground) ||
-    selectedElements?.[0]?.isBackground;
 
   // Return the base state if:
   //  1. no element is selected
@@ -98,24 +125,7 @@ const useQuickActions = () => {
     (selectedElements.length === 0 && backgroundElement) ||
     selectedElements[0]?.isBackground
   ) {
-    return [
-      {
-        Icon: Bucket,
-        label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
-        onClick: handleFocusPageBackground(backgroundElement.id),
-      },
-      {
-        Icon: Media,
-        label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
-        onClick: handleFocusMediaPanel(backgroundElement.id),
-        separator: 'top',
-      },
-      {
-        Icon: LetterTPlus,
-        label: ACTION_TEXT.INSERT_TEXT,
-        onClick: handleFocusTextSetsPanel(backgroundElement.id),
-      },
-    ];
+    return defaultActions;
   }
 
   switch (selectedElements?.[0]?.type) {

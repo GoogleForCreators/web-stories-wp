@@ -47,8 +47,7 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const initialTab = MEDIA.id;
-  const [tab, setTab] = useState(initialTab);
+  const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
   const renderedTabs = useRef({});
@@ -98,7 +97,6 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
-        initialTab,
         textSets,
         savedTemplates,
       },
@@ -115,7 +113,6 @@ function LibraryProvider({ children }) {
     }),
     [
       tab,
-      initialTab,
       textSets,
       savedTemplates,
       insertElement,

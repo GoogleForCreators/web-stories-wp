@@ -55,8 +55,8 @@ const LibraryPaneContainer = styled.div`
 `;
 
 function LibraryLayout() {
-  const { initialTab, setTab, tabs } = useLibrary((state) => ({
-    initialTab: state.state.initialTab,
+  const { setTab, tab, tabs } = useLibrary((state) => ({
+    tab: state.state.tab,
     setTab: state.actions.setTab,
     tabs: state.data.tabs,
   }));
@@ -77,7 +77,7 @@ function LibraryLayout() {
         <TabView
           label={__('Element Library Selection', 'web-stories')}
           tabs={tabs}
-          intialTab={initialTab}
+          tab={tab}
           onTabChange={onTabChange}
           getTabId={getTabId}
           getAriaControlsId={getPaneId}
