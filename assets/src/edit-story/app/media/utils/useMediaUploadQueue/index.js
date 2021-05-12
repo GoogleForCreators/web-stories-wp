@@ -50,6 +50,7 @@ function useMediaUploadQueue() {
     canTranscodeFile,
     transcodeVideo,
     getFirstFrameOfVideo,
+    getFileInfo,
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
@@ -187,6 +188,8 @@ function useMediaUploadQueue() {
           startTranscoding({ id });
 
           try {
+            const data = await getFileInfo(file);
+            console.log(data);
             const newFile = await transcodeVideo(file);
             finishTranscoding({ id, file: newFile });
 
@@ -234,6 +237,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
+    getFileInfo,
   ]);
 
   return useMemo(
