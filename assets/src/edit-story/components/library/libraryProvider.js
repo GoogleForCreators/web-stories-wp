@@ -83,7 +83,7 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(initialTab);
   const [textSets, setTextSets] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
-  // The next page of templates to fetch is 2 since the 1st page gets fetch by default.
+  // The next page of templates to fetch is 2 since the 1st page gets fetched by default.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(2);
 
   const renderedTabs = useRef({});
