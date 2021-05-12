@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -48,7 +48,7 @@ function setup() {
 
   localStore.setItemByKey(storageKey, false);
 
-  const result = renderWithTheme(
+  const view = renderWithTheme(
     <CurrentUserContext.Provider value={userValue}>
       <MediaContext.Provider value={mediaValue}>
         <VideoOptimizationDialog />
@@ -56,25 +56,29 @@ function setup() {
     </CurrentUserContext.Provider>
   );
 
-  const { container } = result;
+  const { container } = view;
   Modal.setAppElement(container);
 
-  return result;
+  return view;
 }
 
 describe('videoOptimizationDialog', () => {
   it('should render', () => {
-    const { queryByText, getByRole } = setup();
+    setup();
 
-    expect(queryByText('Video optimization in progress')).toBeInTheDocument();
-    expect(getByRole('button', { name: /Disable/i })).toBeInTheDocument();
-    expect(getByRole('button', { name: /Sounds/i })).toBeInTheDocument();
+    expect(
+      screen.queryByText('Video optimization in progress')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Disable/i })
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Sounds/i })).toBeInTheDocument();
   });
 
   it('should trigger API request to update user when disabling', async () => {
-    const { getByRole } = setup();
+    setup();
 
-    fireEvent.click(getByRole('button', { name: /Disable/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Disable/i }));
 
     await waitFor(() => expect(updateCurrentUser).toHaveBeenCalledTimes(1));
   });

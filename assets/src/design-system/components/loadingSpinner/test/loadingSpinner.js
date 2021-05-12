@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -21,9 +27,9 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('LoadingSpinner', () => {
   it('should render a loading message that is aria accessible', () => {
-    const { getByRole } = renderWithProviders(<LoadingSpinner />);
+    renderWithProviders(<LoadingSpinner />);
 
-    expect(getByRole('status')).toBeInTheDocument();
-    expect(getByRole('status')).toHaveTextContent(LOADING_MESSAGE);
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent(LOADING_MESSAGE);
   });
 });

@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -36,11 +42,11 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
   });
 
   it('should render ad network settings dropdown button', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <AdNetworkSettings adNetwork={adNetwork} handleUpdate={mockUpdate} />
     );
 
-    const networkDropdown = getByRole('button');
+    const networkDropdown = screen.getByRole('button');
     expect(networkDropdown).toHaveTextContent('None');
   });
 });

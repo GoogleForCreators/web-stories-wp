@@ -88,6 +88,7 @@ describe('DesignPanel', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
+      // eslint-disable-next-line testing-library/no-node-access
       form = container.firstElementChild;
     });
 
@@ -211,6 +212,8 @@ describe('DesignPanel', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
+
+      // eslint-disable-next-line testing-library/no-node-access
       form = container.firstElementChild;
     });
 

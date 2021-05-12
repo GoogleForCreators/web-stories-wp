@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -53,7 +53,8 @@ function setupActions() {
     },
     actions: { updateStory },
   };
-  const { getByRole } = renderWithTheme(
+
+  renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <ColorPresetActions
         color={{ color: { r: 1, g: 1, b: 1 } }}
@@ -61,8 +62,8 @@ function setupActions() {
       />
     </StoryContext.Provider>
   );
+
   return {
-    getByRole,
     updateStory,
   };
 }
@@ -71,14 +72,14 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
   const ADD_PRESET = 'Add color';
 
   it('should render color preset actions', () => {
-    const { getByRole } = setupActions();
-    const element = getByRole('button', { name: ADD_PRESET });
+    setupActions();
+    const element = screen.getByRole('button', { name: ADD_PRESET });
     expect(element).toBeInTheDocument();
   });
 
   it('should update color presets', () => {
-    const { getByRole, updateStory } = setupActions();
-    const element = getByRole('button', { name: ADD_PRESET });
+    const { updateStory } = setupActions();
+    const element = screen.getByRole('button', { name: ADD_PRESET });
     fireEvent.click(element);
     expect(updateStory).toHaveBeenCalledWith({
       properties: {

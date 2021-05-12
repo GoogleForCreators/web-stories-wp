@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import SimplePanel from '../simplePanel';
@@ -22,14 +27,14 @@ import { renderWithTheme } from '../../../../testUtils';
 
 describe('Panels/Panel/SimplePanel', () => {
   it('should render <SimplePanel />', () => {
-    const { getByText } = renderWithTheme(
+    renderWithTheme(
       <SimplePanel name="simple-panel" title="Simple Panel">
         <div>{'Simple Panel Content'}</div>
       </SimplePanel>
     );
 
-    const titleElement = getByText('Simple Panel');
-    const contentElement = getByText('Simple Panel Content');
+    const titleElement = screen.getByText('Simple Panel');
+    const contentElement = screen.getByText('Simple Panel Content');
 
     expect(titleElement).toBeInTheDocument();
     expect(contentElement).toBeInTheDocument();
@@ -38,23 +43,23 @@ describe('Panels/Panel/SimplePanel', () => {
   describe('should render <PanelTitle>', () => {
     const titleName = 'Size & Position';
     const contentText = 'Panel Content';
-    let panelElement;
-    let titleElement;
+
     beforeEach(() => {
-      panelElement = renderWithTheme(
+      renderWithTheme(
         <SimplePanel name="simple-panel" title={titleName}>
           <div>{contentText}</div>
         </SimplePanel>
       );
-      titleElement = panelElement.getByRole('button', { name: titleName });
     });
 
     it('should have a label that matches the title name', () => {
+      const titleElement = screen.getByRole('button', { name: titleName });
       const label = titleElement.getAttribute('aria-label');
       expect(label).toStrictEqual(titleName);
     });
 
     it('should have an expand status by default', () => {
+      const titleElement = screen.getByRole('button', { name: titleName });
       const isExpanded = titleElement.getAttribute('aria-expanded');
       expect(isExpanded).toBeTruthy();
     });

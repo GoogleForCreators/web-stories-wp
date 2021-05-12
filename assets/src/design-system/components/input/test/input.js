@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Input } from '..';
@@ -23,7 +28,7 @@ import { noop } from '../../../utils';
 
 describe('Input', () => {
   it('should render the input', () => {
-    const { getByPlaceholderText } = renderWithProviders(
+    renderWithProviders(
       <Input
         aria-label="test"
         placeholder="my placeholder"
@@ -32,19 +37,19 @@ describe('Input', () => {
       />
     );
 
-    expect(getByPlaceholderText('my placeholder')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('my placeholder')).toBeInTheDocument();
   });
 
   it('should render a label', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Input label="This is my input label" value="" onChange={noop} />
     );
 
-    expect(getByText('This is my input label')).toBeInTheDocument();
+    expect(screen.getByText('This is my input label')).toBeInTheDocument();
   });
 
   it('should render a hint', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Input
         aria-label="test"
         hint="This is my input hint"
@@ -53,15 +58,15 @@ describe('Input', () => {
       />
     );
 
-    expect(getByText('This is my input hint')).toBeInTheDocument();
+    expect(screen.getByText('This is my input hint')).toBeInTheDocument();
   });
 
   it('should render a suffix', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Input aria-label="test" suffix="suffix" value="" onChange={noop} />
     );
 
-    const suffixElement = getByText('suffix');
+    const suffixElement = screen.getByText('suffix');
 
     expect(suffixElement).toBeInTheDocument();
   });

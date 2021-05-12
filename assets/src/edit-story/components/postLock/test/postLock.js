@@ -72,7 +72,7 @@ function setup(response, _storyContextValue = {}) {
     },
   };
 
-  const { getByRole } = renderWithTheme(
+  return renderWithTheme(
     <FlagsProvider features={{ enablePostLocking: true }}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
@@ -85,8 +85,6 @@ function setup(response, _storyContextValue = {}) {
       </ConfigContext.Provider>
     </FlagsProvider>
   );
-
-  return { getByRole };
 }
 describe('PostLock', () => {
   let modalWrapper;

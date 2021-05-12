@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 
@@ -70,7 +70,7 @@ describe('TextPane', () => {
       },
     };
 
-    const { getByRole } = renderWithTheme(
+    renderWithTheme(
       <FlagsProvider
         features={{
           showTextSets: false,
@@ -84,7 +84,7 @@ describe('TextPane', () => {
     );
 
     act(() => {
-      fireEvent.click(getByRole('button', { name: 'Title 1' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Title 1' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
