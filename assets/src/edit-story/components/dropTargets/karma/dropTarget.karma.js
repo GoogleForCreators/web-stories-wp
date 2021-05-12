@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Background Drop-Target integration', () => {
+describe('Drop-Target integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -323,11 +323,7 @@ describe('Background Drop-Target integration', () => {
           );
         });
 
-        // Disable reason: There's actually a bug here - replacement image appears flipped in flipped bg
-        // but dropped image is unflipped once dropped.
-        // Filed in: https://github.com/google/web-stories-wp/issues/6643
-        // eslint-disable-next-line jasmine/no-disabled-tests
-        xit('should correctly handle image dropped on edge with flip', async () => {
+        it('should correctly handle image dropped on edge with flip', async () => {
           // Verify that background element has the correct transform (flip) before doing anything
           let bg1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
             .node;
@@ -352,7 +348,7 @@ describe('Background Drop-Target integration', () => {
           // Verify that replacement img has correct transform
           const replaceImg = rep.querySelector('img');
           const combinedRepTransform = getAllTransformsBetween(replaceImg, bg1);
-          expect(combinedRepTransform).toBe('');
+          expect(combinedRepTransform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
 
           // Now drop the element
           await fixture.events.mouse.up();
@@ -365,6 +361,121 @@ describe('Background Drop-Target integration', () => {
           const bgImg2 = bg2.querySelector('img');
           const combinedBgTransform2 = getAllTransformsBetween(bgImg2, bg2);
           expect(combinedBgTransform2).toBe('matrix(-1, 0, 0, 1, 0, 0)');
+        });
+      });
+
+      describe('when there is a third flipped image on the canvas', () => {
+        let flippedImageData;
+
+        beforeEach(async () => {
+          await fixture.events.click(fixture.editor.library.media.item(2));
+          flippedImageData = (await getElements(fixture))[2];
+
+          await fixture.events.click(
+            fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
+          );
+
+          const element = fixture.editor.canvas.displayLayer.display(
+            flippedImageData.id
+          ).node;
+
+          await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+            moveRel(element, '50%', '50%'),
+            down(),
+            moveRel(element, '50%', '200%'),
+            up(),
+          ]);
+        });
+
+        it('should correctly handle flipped image dropped into non-flipped image', async () => {
+          // Verify that non-flipped element has the correct transform (flip) before doing anything
+          let target = fixture.editor.canvas.displayLayer.display(imageData.id)
+            .node;
+          let rep = fixture.editor.canvas.displayLayer.display(imageData.id)
+            .replacement;
+          const targetImg = target.querySelector('img');
+          const transformBefore = getAllTransformsBetween(targetImg, target);
+          expect(transformBefore).toBe('');
+
+          // Drag the flipped image element to the non-flipped target
+          await dragCanvasElementToDropTarget(
+            fixture,
+            flippedImageData.id,
+            imageData.id
+          );
+
+          // Make sure rep is up to date with DOM mutations
+          target = fixture.editor.canvas.displayLayer.display(imageData.id)
+            .node;
+          rep = fixture.editor.canvas.displayLayer.display(imageData.id)
+            .replacement;
+
+          // Verify that replacement img has correct transform
+          const replaceImg = rep.querySelector('img');
+          const replTransform = getAllTransformsBetween(replaceImg, target);
+          expect(replTransform).toBe('');
+
+          // Now drop the element
+          await fixture.events.mouse.up();
+
+          // Verify that new combined element is still not flipped
+          const newElementId = (await getElements(fixture))[1].id;
+          const newTarget = fixture.editor.canvas.displayLayer.display(
+            newElementId
+          ).node;
+          const newTargetImg = newTarget.querySelector('img');
+          const transformAfter = getAllTransformsBetween(
+            newTargetImg,
+            newTarget
+          );
+          expect(transformAfter).toBe('');
+        });
+
+        it('should correctly handle non-flipped image dropped into flipped image', async () => {
+          // Verify that non-flipped element has the correct transform (flip) before doing anything
+          let target = fixture.editor.canvas.displayLayer.display(
+            flippedImageData.id
+          ).node;
+          let rep = fixture.editor.canvas.displayLayer.display(
+            flippedImageData.id
+          ).replacement;
+          const targetImg = target.querySelector('img');
+          const transformBefore = getAllTransformsBetween(targetImg, target);
+          expect(transformBefore).toBe('matrix(-1, 0, 0, 1, 0, 0)');
+
+          // Drag the image element to the background
+          await dragCanvasElementToDropTarget(
+            fixture,
+            imageData.id,
+            flippedImageData.id
+          );
+
+          // Make sure rep is up to date with DOM mutations
+          target = fixture.editor.canvas.displayLayer.display(
+            flippedImageData.id
+          ).node;
+          rep = fixture.editor.canvas.displayLayer.display(flippedImageData.id)
+            .replacement;
+
+          // Verify that replacement img has correct transform
+          const replaceImg = rep.querySelector('img');
+          const replTransform = getAllTransformsBetween(replaceImg, target);
+          expect(replTransform).toBe('matrix(-1, 0, 0, 1, 0, 0)');
+
+          // Now drop the element
+          await fixture.events.mouse.up();
+
+          // Verify that new combined element is still flipped
+          const newElementId = (await getElements(fixture))[1].id;
+          const newTarget = fixture.editor.canvas.displayLayer.display(
+            newElementId
+          ).node;
+          const newTargetImg = newTarget.querySelector('img');
+          const transformAfter = getAllTransformsBetween(
+            newTargetImg,
+            newTarget
+          );
+          expect(transformAfter).toBe('matrix(-1, 0, 0, 1, 0, 0)');
         });
       });
     });

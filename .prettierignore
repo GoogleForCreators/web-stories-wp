@@ -28,6 +28,7 @@ packages/fonts/src/fonts.json
 *.sh
 *.svg
 LICENSE
+composer.json
 composer.lock
 package.json
 package-lock.json
