@@ -65,5 +65,25 @@ describe('Quick Actions integration', () => {
 
       expect(fixture.editor.library.text).not.toBeNull();
     });
+
+    it('should allow clicking multiple actions', async () => {
+      expect(fixture.editor.library.media).not.toBeNull();
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      );
+
+      expect(
+        fixture.editor.inspector.designPanel.pageBackground
+      ).not.toBeNull();
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.insertTextButton
+      );
+
+      expect(fixture.editor.library.text).not.toBeNull();
+    });
   });
 });

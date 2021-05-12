@@ -146,13 +146,13 @@ describe('useQuickActions', () => {
 
       result.current[1].onClick();
       expect(highlight).toStrictEqual({
-        elementId: 'background-element-id',
+        elementId: undefined,
         highlight: states.MEDIA,
       });
 
       result.current[2].onClick();
       expect(highlight).toStrictEqual({
-        elementId: 'background-element-id',
+        elementId: undefined,
         highlight: states.TEXT,
       });
     });
@@ -185,13 +185,13 @@ describe('useQuickActions', () => {
 
       result.current[1].onClick();
       expect(highlight).toStrictEqual({
-        elementId: 'background-element-id',
+        elementId: undefined,
         highlight: states.MEDIA,
       });
 
       result.current[2].onClick();
       expect(highlight).toStrictEqual({
-        elementId: 'background-element-id',
+        elementId: undefined,
         highlight: states.TEXT,
       });
     });
