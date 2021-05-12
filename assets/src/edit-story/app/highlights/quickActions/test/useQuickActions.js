@@ -24,6 +24,7 @@ import { useQuickActions } from '..';
 import { states } from '../..';
 import useHighlights from '../../useHighlights';
 import { useStory } from '../../../story';
+import { Bucket, LetterTPlus, Media } from '../../../../../design-system/icons';
 
 jest.mock('../../../story', () => ({
   useStory: jest.fn(),
@@ -59,6 +60,24 @@ const VIDEO_ELEMENT = {
   id: 'image-element-id',
   type: 'image',
 };
+
+const defaultQuickActions = [
+  expect.objectContaining({
+    label: 'Change background color',
+    onClick: expect.any(Function),
+    Icon: Bucket,
+  }),
+  expect.objectContaining({
+    label: 'Insert background media',
+    onClick: expect.any(Function),
+    Icon: Media,
+  }),
+  expect.objectContaining({
+    label: 'Insert text',
+    onClick: expect.any(Function),
+    Icon: LetterTPlus,
+  }),
+];
 
 describe('useQuickActions', () => {
   let highlight;
@@ -113,11 +132,7 @@ describe('useQuickActions', () => {
     it('should return the quick actions', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current).toStrictEqual([
-        { label: 'Change background color', onClick: expect.any(Function) },
-        { label: 'Insert background media', onClick: expect.any(Function) },
-        { label: 'Insert text', onClick: expect.any(Function) },
-      ]);
+      expect(result.current).toStrictEqual(defaultQuickActions);
     });
 
     it('should set the correct highlight', () => {
@@ -156,11 +171,7 @@ describe('useQuickActions', () => {
     it('should return the quick actions', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current).toStrictEqual([
-        { label: 'Change background color', onClick: expect.any(Function) },
-        { label: 'Insert background media', onClick: expect.any(Function) },
-        { label: 'Insert text', onClick: expect.any(Function) },
-      ]);
+      expect(result.current).toStrictEqual(defaultQuickActions);
     });
 
     it('should set the correct highlight', () => {

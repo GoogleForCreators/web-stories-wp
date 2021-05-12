@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
@@ -26,8 +25,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useCanvas } from '../../app';
-import { AnimatedContextMenu } from '../../../design-system';
-import { useQuickActions } from '../../app/highlights';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -47,16 +44,7 @@ const Background = styled.section.attrs({
   user-select: none;
 `;
 
-const MenuContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-`;
-
 function CanvasLayout() {
-  const enableQuickActionMenus = useFeature('enableQuickActionMenus');
-
-  const quickActions = useQuickActions();
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
@@ -81,12 +69,6 @@ function CanvasLayout() {
   return (
     <StyleSheetManager stylisPlugins={[]}>
       <Background ref={setBackgroundRef} style={layoutParamsCss}>
-        {/* TODO: Replace with real quick actions menu */}
-        {enableQuickActionMenus && (
-          <MenuContainer>
-            <AnimatedContextMenu items={quickActions} isOpen />
-          </MenuContainer>
-        )}
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>

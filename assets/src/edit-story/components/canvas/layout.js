@@ -68,7 +68,7 @@ const Layer = styled.section`
     . = empty space
     h = header
     b = back navigation
-    f = forward navigation
+    f = forward navigation and quick actions
     p = canvas page
     m = page action menu
     c = thumbnail carousel
@@ -232,6 +232,12 @@ const NavPrevArea = styled(NavArea).attrs({
 const NavNextArea = styled(NavArea).attrs({
   area: 'f',
 })``;
+
+const QuickActionsArea = styled(Area).attrs({
+  area: 'f',
+})`
+  padding-top: calc(0.5 * var(--page-padding-px));
+`;
 
 const CarouselArea = styled(Area).attrs({
   area: 'c',
@@ -424,6 +430,7 @@ export {
   MenuArea,
   NavPrevArea,
   NavNextArea,
+  QuickActionsArea,
   CarouselArea,
   useLayoutParams,
   useLayoutParamsCssVars,

@@ -17,11 +17,13 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from 'react';
 /**
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
+import { Bucket, LetterTPlus, Media } from '../../../../design-system/icons';
 import { useStory } from '../../story';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
@@ -92,15 +94,19 @@ const useQuickActions = () => {
   ) {
     return [
       {
-        label: 'Change background color',
+        Icon: Bucket,
+        label: __('Change background color', 'web-stories'),
         onClick: handleFocusPageBackground(backgroundElement.id),
       },
       {
-        label: 'Insert background media',
+        Icon: Media,
+        label: __('Insert background media', 'web-stories'),
         onClick: handleFocusMediaPanel(backgroundElement.id),
+        separator: 'top',
       },
       {
-        label: 'Insert text',
+        Icon: LetterTPlus,
+        label: __('Insert text', 'web-stories'),
         onClick: handleFocusTextSetsPanel(backgroundElement.id),
       },
     ];

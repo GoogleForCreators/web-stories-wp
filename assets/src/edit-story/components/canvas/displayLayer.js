@@ -24,14 +24,17 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '../../../animation';
 import { useStory, useCanvas } from '../../app';
+import { ContextMenu } from '../../../design-system';
+import { useQuickActions } from '../../app/highlights';
 import DisplayElement from './displayElement';
-import { Layer, PageArea } from './layout';
+import { Layer, PageArea, QuickActionsArea } from './layout';
 import PageAttachment from './pageAttachment';
 
 const DisplayPageArea = styled(PageArea)`
@@ -101,6 +104,7 @@ function DisplayPage({
 }
 
 function DisplayLayer() {
+  const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const {
     currentPage,
     animationState,
@@ -114,6 +118,9 @@ function DisplayLayer() {
       updateAnimationState: actions.updateAnimationState,
     };
   });
+
+  const quickActions = useQuickActions();
+
   const {
     editingElement,
     setPageContainer,
@@ -171,6 +178,11 @@ function DisplayLayer() {
             resetAnimationState={resetAnimationState}
           />
         </DisplayPageArea>
+        {enableQuickActionMenu && quickActions.length && (
+          <QuickActionsArea>
+            <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
+          </QuickActionsArea>
+        )}
       </Layer>
     </StoryAnimation.Provider>
   );
