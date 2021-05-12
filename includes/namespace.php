@@ -164,6 +164,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
+	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 	get_plugin_instance()->deactivate( $network_wide );
 
 	do_action( 'web_stories_deactivation', $network_wide );
