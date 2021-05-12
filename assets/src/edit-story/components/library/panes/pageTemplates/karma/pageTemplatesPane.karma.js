@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -155,9 +155,9 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       expect(message.textContent).toBe(
         'An empty page can’t be saved as a template. Add elements and try again.'
       );
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: 'Close' })
-      );
+      const { getByRole } = within(message);
+
+      await fixture.events.click(getByRole('button', { name: 'Close' }));
 
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
