@@ -25,6 +25,7 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../../utils/localStore';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Resize from './resize';
@@ -104,6 +105,16 @@ function PresetPanel({ presetType, title, pushUpdate }) {
       deleteLocalPreset(preset);
       return;
     }
+
+    // If the user has dismissed the confirmation dialogue previously.
+    const isDialogDismissed = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX.DELETE_PRESET_DIALOG_DISMISSED
+    );
+    if (isDialogDismissed) {
+      deleteGlobalPreset(preset);
+      return;
+    }
+
     // Ask confirmation for a global preset.
     setShowDialog(true);
     setToDelete(preset);
