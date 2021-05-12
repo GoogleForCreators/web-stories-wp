@@ -70,6 +70,7 @@ class Database_Upgrader extends Service_Base {
 		'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
 		'3.0.6' => Migrations\Add_Media_Source_Video_Optimization::class,
 		'3.0.7' => Migrations\Add_Media_Source_Source_Video::class,
+		'3.0.8' => Migrations\Rewrite_Flush::class,
 	];
 
 	/**
