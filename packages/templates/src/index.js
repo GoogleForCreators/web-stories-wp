@@ -69,11 +69,11 @@ export default async function ({ cdnURL }) {
         _x('Cook', 'template keyword', 'web-stories'),
       ],
       colors: [
-        { label: _x('Cream', 'color', 'web-stories'), color: '#fff933' },
+        { label: _x('Yellow', 'color', 'web-stories'), color: '#fff933' },
         { label: _x('Orange', 'color', 'web-stories'), color: '#ff922e' },
         { label: _x('Grey', 'color', 'web-stories'), color: '#676461' },
-        { label: _x('Black', 'color', 'web-stories'), color: '#2a2928' },
-        { label: _x('White', 'color', 'web-stories'), color: '#fff' },
+        { label: _x('Blue', 'color', 'web-stories'), color: '#3a566e' },
+        { label: _x('Cream', 'color', 'web-stories'), color: '#fff9ee' },
       ],
       description: __(
         'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
@@ -93,8 +93,7 @@ export default async function ({ cdnURL }) {
       ],
       colors: [
         { label: _x('Black', 'color', 'web-stories'), color: '#211f1e' },
-        { label: _x('Grey', 'color', 'web-stories'), color: '#353332' },
-        { label: _x('Orange', 'color', 'web-stories'), color: '#ff7324' },
+        { label: _x('Orange', 'color', 'web-stories'), color: '#ff630b' },
         { label: _x('Cream', 'color', 'web-stories'), color: '#faf4ea' },
         { label: _x('Light Grey', 'color', 'web-stories'), color: '#858280' },
         { label: _x('White', 'color', 'web-stories'), color: '#fff' },
@@ -138,7 +137,7 @@ export default async function ({ cdnURL }) {
       ],
       colors: [
         { label: _x('Cream', 'color', 'web-stories'), color: '#ffece3' },
-        { label: _x('Orange', 'color', 'web-stories'), color: '#ff6c4a' },
+        { label: _x('Orange', 'color', 'web-stories'), color: '#ff3000' },
         { label: _x('Black', 'color', 'web-stories'), color: '#212121' },
         { label: _x('Grey', 'color', 'web-stories'), color: '#858280' },
         { label: _x('White', 'color', 'web-stories'), color: '#fff' },
@@ -208,7 +207,7 @@ export default async function ({ cdnURL }) {
       colors: [
         { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
         { label: _x('Green', 'color', 'web-stories'), color: '#4b5c54' },
-        { label: _x('Yellow', 'color', 'web-stories'), color: '#fbebba' },
+        { label: _x('Yellow', 'color', 'web-stories'), color: '#FDF5DC' },
         { label: _x('Grey', 'color', 'web-stories'), color: '#858280' },
         { label: _x('Light Grey', 'color', 'web-stories'), color: '#d8d8d8' },
         { label: _x('White', 'color', 'web-stories'), color: '#fff' },

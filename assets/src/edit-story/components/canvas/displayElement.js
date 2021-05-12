@@ -41,7 +41,6 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
-import getTransformFlip from '../../elements/shared/getTransformFlip';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -70,7 +69,6 @@ const ReplacementContainer = styled.div`
   transition: opacity 0.25s cubic-bezier(0, 0, 0.54, 1);
   pointer-events: none;
   opacity: ${({ hasReplacement }) => (hasReplacement ? 1 : 0)};
-  transform: ${({ flip }) => (flip ? getTransformFlip(flip) : null)};
   height: 100%;
 `;
 
@@ -99,18 +97,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
 
   const hasReplacement = Boolean(replacement);
 
-  const replacementElement = hasReplacement
-    ? {
-        ...element,
-        type: replacement.resource.type,
-        resource: replacement.resource,
-        scale: replacement.scale,
-        focalX: replacement.focalX,
-        focalY: replacement.focalY,
-        flip: replacement.flip,
-      }
-    : null;
-
   const {
     id,
     opacity,
@@ -120,6 +106,24 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     border = {},
     flip,
   } = element;
+
+  const replacementElement = hasReplacement
+    ? {
+        ...element,
+        type: replacement.resource.type,
+        resource: replacement.resource,
+        scale: replacement.scale,
+        focalX: replacement.focalX,
+        focalY: replacement.focalY,
+        // Okay, this is a bit weird, but... the flip property is taken from the dragged image
+        // if the drop-target is the background element, but from the original drop-target image
+        // itself if the drop-target is a regular element.
+        //
+        // @see compare with similar logic in `combineElements`
+        flip: isBackground ? replacement.flip : flip,
+      }
+    : null;
+
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
@@ -184,10 +188,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           <Display element={element} previewMode={previewMode} box={box} />
         </WithMask>
         {!previewMode && (
-          <ReplacementContainer
-            flip={flip}
-            hasReplacement={Boolean(replacementElement)}
-          >
+          <ReplacementContainer hasReplacement={hasReplacement}>
             {replacementElement && (
               <WithMask
                 element={replacementElement}

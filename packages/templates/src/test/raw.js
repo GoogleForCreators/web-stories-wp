@@ -52,11 +52,13 @@ describe('raw template files', () => {
 
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          if (element?.resource?.src) {
-            expect(element?.resource?.src).toStartWith(
-              `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${templateName}`
-            );
+          if (!element?.resource?.src) {
+            continue;
           }
+
+          expect(element?.resource?.src).toStartWith(
+            `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${templateName}`
+          );
         }
       }
     }

@@ -32,9 +32,11 @@ const VisuallyHiddenLabel = styled.h3`
 `;
 
 const StyledRadio = styled(Radio)`
-  input:focus + span, input&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} + span {
+  input:focus + span,
+  input&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} + span {
     ${({ theme }) =>
       `box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;`};
+  }
 `;
 
 function RadioGroup({

@@ -32,6 +32,7 @@ import {
   Text,
   Toggle,
   Headline,
+  useLiveRegion,
 } from '../../../../../../design-system';
 import { FullWidthWrapper } from '../../common/styles';
 import { ChipGroup } from '../../shared';
@@ -139,12 +140,26 @@ function TextSetsPane({ paneRef }) {
     [textSets]
   );
 
-  const handleSelectedCategory = useCallback((selectedCategory) => {
-    setSelectedCat(selectedCategory);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
-      selectedCategory,
-    });
-  }, []);
+  const speak = useLiveRegion();
+
+  const handleSelectedCategory = useCallback(
+    (selectedCategory) => {
+      setSelectedCat(selectedCategory);
+      speak(
+        selectedCategory === null
+          ? __('Show all text sets', 'web-stories')
+          : sprintf(
+              /* translators: %s: filter category name */
+              __('Selected text set filter %s', 'web-stories'),
+              CATEGORIES[selectedCategory]
+            )
+      );
+      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+        selectedCategory,
+      });
+    },
+    [speak]
+  );
 
   const onChangeShowInUse = useCallback(
     () => requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal)),
@@ -194,6 +209,7 @@ function TextSetsPane({ paneRef }) {
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
           deselectItem={() => handleSelectedCategory(null)}
+          ariaLabel={__('Select filter for text sets list', 'web-stories')}
         />
       </FullWidthWrapper>
       <TextSetsWrapper>

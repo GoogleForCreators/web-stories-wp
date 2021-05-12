@@ -27,8 +27,11 @@ import { __ } from '@web-stories-wp/i18n';
 import { DateTime, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
-import { PLACEMENT, useKeyDownEffect } from '../../../../../design-system';
-import useFocusOut from '../../../../utils/useFocusOut';
+import {
+  PLACEMENT,
+  useKeyDownEffect,
+  useFocusOut,
+} from '../../../../../design-system';
 import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 import { focusStyle } from '../../shared';
 

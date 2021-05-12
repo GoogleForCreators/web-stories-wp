@@ -70,11 +70,13 @@ export class TextStyle extends AbstractPanel {
   }
 
   get fontColor() {
-    return this._get(
+    const color = this._get(
       this.getByRole('region', { name: /Color input: Text/ }),
       'fontColor',
       Color
     );
+    color.label = 'Text color';
+    return color;
   }
 
   get fontSize() {

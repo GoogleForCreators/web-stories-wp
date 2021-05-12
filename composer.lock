@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c34ff155c2d166581f79c7bebd32a06",
+    "content-hash": "1edc514843b513dc5b801d52f0703952",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -75,16 +75,16 @@
         },
         {
             "name": "ampproject/amp-wp",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "d4b01c61e5ace3ced82205b55625a120660f98f4"
+                "reference": "b8b0cd975e6de002eefba7e1fc1da09ab4032836"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/d4b01c61e5ace3ced82205b55625a120660f98f4",
-                "reference": "d4b01c61e5ace3ced82205b55625a120660f98f4",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/b8b0cd975e6de002eefba7e1fc1da09ab4032836",
+                "reference": "b8b0cd975e6de002eefba7e1fc1da09ab4032836",
                 "shasum": ""
             },
             "require": {
@@ -182,7 +182,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-05-06T18:43:05+00:00"
+            "time": "2021-05-07T22:54:38+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -489,7 +489,7 @@
                 "issues": "https://github.com/sabberworm/PHP-CSS-Parser/issues",
                 "source": "https://github.com/sabberworm/PHP-CSS-Parser/tree/master"
             },
-            "time": "2021-05-05T08:19:36+00:00"
+            "time": "2021-05-07T16:37:23+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
