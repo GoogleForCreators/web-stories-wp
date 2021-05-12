@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
@@ -112,8 +111,6 @@ function EditorSettings() {
     toggleWebStoriesMediaOptimization,
     mediaOptimization,
   } = useMediaOptimization();
-
-  const videoOptimization = useFeature('videoOptimization');
 
   const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
@@ -370,7 +367,7 @@ function EditorSettings() {
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
               selected={optedIn}
             />
-            {videoOptimization && canUploadFiles && (
+            {canUploadFiles && (
               <MediaOptimizationSettings
                 disabled={disableMediaOptimization}
                 onCheckboxSelected={toggleWebStoriesMediaOptimization}
