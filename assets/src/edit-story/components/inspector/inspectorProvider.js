@@ -64,7 +64,7 @@ function InspectorProvider({ children }) {
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
   useEffect(() => {
-    if (highlightedTab && INSPECTOR_TAB_IDS.has(highlightedTab)) {
+    if (INSPECTOR_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
       trackEvent('quick_action_tab_change', {
         name: highlightedTab,

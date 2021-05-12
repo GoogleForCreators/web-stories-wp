@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
@@ -24,7 +25,6 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useFeature } from 'flagged';
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,

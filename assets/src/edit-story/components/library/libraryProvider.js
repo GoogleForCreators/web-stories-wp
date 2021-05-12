@@ -66,7 +66,7 @@ function LibraryProvider({ children }) {
   }));
 
   useEffect(() => {
-    if (highlightedTab && LIBRARY_TAB_IDS.has(highlightedTab)) {
+    if (LIBRARY_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
       trackEvent('quick_action_tab_change', {
         name: highlightedTab,
