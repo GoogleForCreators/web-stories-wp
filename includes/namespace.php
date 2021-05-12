@@ -164,13 +164,6 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	// Remove capabilities while the post type is still registered.
-	$injector = Services::get_injector();
-	if ( method_exists( $injector, 'make' ) ) {
-		$capabilities = $injector->make( User\Capabilities::class );
-		$capabilities->remove_caps_from_roles();
-	}
-
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 
 	// This will also flush rewrite rules.
