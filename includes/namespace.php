@@ -148,7 +148,7 @@ function remove_site( $error, $site ) {
 
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
-	$capabilities->add_caps_to_roles();
+	$capabilities->remove_caps_from_roles();
 	restore_current_blog();
 }
 
