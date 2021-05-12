@@ -30,6 +30,8 @@ import { Select } from '../../../form';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
+import { useStory } from '../../../../app/story';
+import isDefaultPage from '../../../../utils/isDefaultPage';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
@@ -67,6 +69,10 @@ function PageTemplatesPane(props) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
+
+  const { currentPage } = useStory(({ state: { currentPage } }) => ({
+    currentPage,
+  }));
 
   const { savedTemplates, setSavedTemplates } = useLibrary((state) => ({
     savedTemplates: state.state.savedTemplates,
@@ -127,7 +133,7 @@ function PageTemplatesPane(props) {
       <PaneInner>
         {customPageTemplates && (
           <>
-            {savedTemplates && (
+            {savedTemplates && !isDefaultPage(currentPage) && (
               <ButtonWrapper>
                 <TemplateSave
                   setShowDefaultTemplates={setShowDefaultTemplates}

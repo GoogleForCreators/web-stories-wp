@@ -34,7 +34,6 @@ import {
 } from '../../../../../design-system';
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
-import isDefaultPage from '../../../../utils/isDefaultPage';
 import { focusStyle } from '../../../panels/shared';
 import { ReactComponent as Icon } from './images/illustration.svg';
 
@@ -82,17 +81,6 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
   }));
 
   const handleSaveTemplate = useCallback(() => {
-    // Don't add empty page.
-    if (isDefaultPage(currentPage)) {
-      showSnackbar({
-        message: __(
-          'An empty page can’t be saved as a template. Add elements and try again.',
-          'web-stories'
-        ),
-        dismissable: true,
-      });
-      return;
-    }
     addPageTemplate({ ...currentPage, id: uuidv4(), title: null })
       .then((addedTemplate) => {
         updateList?.(addedTemplate);

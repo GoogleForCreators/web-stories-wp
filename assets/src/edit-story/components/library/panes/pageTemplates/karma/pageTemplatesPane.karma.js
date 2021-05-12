@@ -146,18 +146,10 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     });
 
     it('should allow saving a non-empty page as template', async () => {
-      // Verify a template is not added for an empty page.
-      await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.saveTemplateBtn
-      );
-      await fixture.events.sleep(200);
-      let message = await fixture.screen.getByRole('alert');
-      expect(message.textContent).toBe(
-        'An empty page can’t be saved as a template. Add elements and try again.'
-      );
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: 'Close' })
-      );
+      // Verify the save button is not visible for an empty page.
+      expect(
+        () => fixture.editor.library.pageTemplatesPane.saveTemplateBtn
+      ).toThrow();
 
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
@@ -165,7 +157,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
       await fixture.events.sleep(200);
-      message = await fixture.screen.getByRole('alert');
+      const message = await fixture.screen.getByRole('alert');
       expect(message.textContent).toBe('Page template saved.');
 
       expect(
@@ -253,6 +245,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Space');
 
+      await fixture.events.sleep(200);
       await waitFor(() => {
         expect(fixture.screen.getByRole('dialog')).toBeTruthy();
       });
