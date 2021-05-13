@@ -158,6 +158,8 @@ jobs:
             git push origin static-site
           fi
 
+          echo "Assets version for this release: $NEW_ASSETS_VERSION"
+
           mkdir -p assets_version
           echo $NEW_ASSETS_VERSION > assets_version/assets_version.txt
         working-directory: public/static
@@ -367,7 +369,7 @@ jobs:
         run: |
           git add web-stories.php
           git status
-          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
           git commit -m "Update assets version to $ASSETS_VERSION"
           git push -u origin HEAD
         if: ${{ env.ASSETS_VERSION }}
