@@ -41,21 +41,19 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-function SavedTemplates({ pageSize, ...rest }) {
+function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
   const {
-    actions: { deletePageTemplate, getCustomPageTemplates },
+    actions: { deletePageTemplate },
   } = useAPI();
 
   const {
     savedTemplates,
     setSavedTemplates,
     nextTemplatesToFetch,
-    setNextTemplatesToFetch,
   } = useLibrary((state) => ({
     savedTemplates: state.state.savedTemplates,
     nextTemplatesToFetch: state.state.nextTemplatesToFetch,
     setSavedTemplates: state.actions.setSavedTemplates,
-    setNextTemplatesToFetch: state.actions.setNextTemplatesToFetch,
   }));
 
   const { showSnackbar } = useSnackbar();
@@ -74,23 +72,8 @@ function SavedTemplates({ pageSize, ...rest }) {
     if (!nextTemplatesToFetch) {
       return;
     }
-    getCustomPageTemplates(nextTemplatesToFetch)
-      .then(({ templates, hasMore }) => {
-        setSavedTemplates([...savedTemplates, ...templates]);
-        if (!hasMore) {
-          setNextTemplatesToFetch(false);
-        } else {
-          setNextTemplatesToFetch(nextTemplatesToFetch + 1);
-        }
-      })
-      .catch(() => setNextTemplatesToFetch(false));
-  }, [
-    nextTemplatesToFetch,
-    setNextTemplatesToFetch,
-    getCustomPageTemplates,
-    savedTemplates,
-    setSavedTemplates,
-  ]);
+    loadTemplates?.();
+  }, [nextTemplatesToFetch, loadTemplates]);
 
   const onClickDelete = useCallback(({ templateId }, e) => {
     e?.stopPropagation();
@@ -164,6 +147,7 @@ function SavedTemplates({ pageSize, ...rest }) {
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
+  loadTemplates: PropTypes.func,
 };
 
 export default SavedTemplates;
