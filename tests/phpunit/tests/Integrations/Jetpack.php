@@ -24,6 +24,7 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
  */
 class Jetpack extends Test_Case {
+
 	/**
 	 * @covers ::register
 	 */
@@ -61,5 +62,56 @@ class Jetpack extends Test_Case {
 	public function test_add_to_jetpack_sitemap() {
 		$jetpack = new \Google\Web_Stories\Integrations\Jetpack();
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $jetpack->add_to_jetpack_sitemap( [] ) );
+	}
+
+	/**
+	 * @covers ::filter_api_response
+	 */
+	public function test_filter_api_response() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/videopress',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$jetpack  = new \Google\Web_Stories\Integrations\Jetpack();
+		$response = rest_ensure_response( [ 'test' => 'data' ] );
+		$results  = $jetpack->filter_api_response( $response, get_post( $video_attachment_id ) );
+		$data     = $results->get_data();
+		$this->assertArrayHasKey( 'mime_type', $data );
+		$this->assertSame( $data['mime_type'], 'video/mp4' );
+	}
+
+	/**
+	 * @covers ::filter_admin_ajax_response
+	 */
+	public function test_filter_admin_ajax_response() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/videopress',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$jetpack  = new \Google\Web_Stories\Integrations\Jetpack();
+		$response = [ 'test' => 'data' ];
+
+		$_POST = [ // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			'action' => 'query-attachments',
+			'query'  => [
+				'source' => 'web_stories_editor',
+			],
+		];
+		$data  = $jetpack->filter_admin_ajax_response( $response, get_post( $video_attachment_id ) );
+
+		$this->assertArrayHasKey( 'mime', $data );
+		$this->assertSame( $data['mime'], 'video/mp4' );
+
+		unset( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 }

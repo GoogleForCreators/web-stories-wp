@@ -98,6 +98,7 @@ export default function useMediaPicker({
         title,
         library: {
           type,
+          source: 'web_stories_editor',
         },
         button: {
           text: buttonInsertText,

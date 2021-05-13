@@ -28,11 +28,23 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
+use WP_Post;
+use WP_REST_Response;
 
 /**
  * Class Jetpack.
  */
 class Jetpack extends Service_Base {
+
+	/**
+	 * VideoPress Mime type.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @var string
+	 */
+	const MIME_TYPE = 'video/videopress';
+
 	/**
 	 * Initializes all hooks.
 	 *
@@ -49,6 +61,9 @@ class Jetpack extends Service_Base {
 		}
 
 		add_filter( 'jetpack_is_amp_request', [ $this, 'force_amp_request' ] );
+		add_filter( 'web_stories_allowed_mime_types', [ $this, 'add_videopress' ] );
+		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_api_response' ], 10, 2 );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 10, 2 );
 	}
 
 	/**
@@ -66,6 +81,73 @@ class Jetpack extends Service_Base {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
+	}
+
+	/**
+	 * Add VideoPress to allowed mime types.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
+	 *
+	 * @return array
+	 */
+	public function add_videopress( array $mime_types ) {
+		$mime_types['video'][] = self::MIME_TYPE;
+
+		return $mime_types;
+	}
+
+	/**
+	 * Filter admin ajax responses to change video/videopress back to mp4.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
+	 * @param WP_Post $attachment Attachment object.
+	 *
+	 * @return array
+	 */
+	public function filter_admin_ajax_response( array $response, WP_Post $attachment ) {
+		if ( self::MIME_TYPE !== $attachment->post_mime_type ) {
+			return $response;
+		}
+
+		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $post_data['action'] ) || 'query-attachments' !== $post_data['action'] ) {
+			return $response;
+		}
+
+		if ( ! isset( $post_data['query'] ) && ! isset( $post_data['query']['source'] ) || 'web_stories_editor' !== $post_data['query']['source'] ) {
+			return $response;
+		}
+
+		$response['mime'] = 'video/mp4';
+
+		return $response;
+	}
+
+	/**
+	 * Filter REST API responses to change video/videopress back to mp4.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WP_REST_Response $response The response object.
+	 * @param WP_Post          $post     The original attachment post.
+	 *
+	 * @return WP_REST_Response
+	 */
+	public function filter_api_response( WP_REST_Response $response, WP_Post $post ) {
+		if ( self::MIME_TYPE !== $post->post_mime_type ) {
+			return $response;
+		}
+
+		$data = $response->get_data();
+
+		$data['mime_type'] = 'video/mp4';
+		$response->set_data( $data );
+
+		return $response;
 	}
 
 	/**
