@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -40,6 +40,7 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { getDefinitionForType } from '../../../../elements';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -105,6 +106,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
 
+  const inputRef = useRef(null);
+  const highlight = useFocusHighlight(states.PAGE_BACKGROUND, inputRef);
+
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
     return null;
@@ -120,6 +124,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
       name="pageBackground"
       title={__('Page background', 'web-stories')}
       isPersistable={false}
@@ -127,6 +132,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       {isDefaultBackground && (
         <Row>
           <Color
+            ref={inputRef}
             hasGradient
             value={backgroundColor}
             onChange={updateBackgroundColor}
