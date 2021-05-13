@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { trackClick } from '@web-stories-wp/tracking';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
@@ -35,7 +36,6 @@ import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
 import Image from './image';
-import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 const Wrapper = styled.div`
   display: none;
@@ -83,10 +83,7 @@ function Step3() {
               a: <Link href={newStoryURL} onClick={onClick} />,
             }}
           >
-            {__(
-              'Jump into the<br /><a>Editor</a>',
-              'web-stories'
-            )}
+            {__('Jump into the<br /><a>Editor</a>', 'web-stories')}
           </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
