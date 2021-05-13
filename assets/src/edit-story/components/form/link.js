@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { isValidUrl, withProtocol } from '../../utils/url';
 import { Input } from '../../../design-system';
+import { inputContainerStyleOverride } from '../panels/shared';
 import Row from './row';
 
 const MIN_MAX = {
@@ -68,6 +69,7 @@ function LinkInput({
         maxLength={MIN_MAX.URL.MAX}
         hasError={isNotValid || hasError}
         hint={isNotValid ? __('Invalid web address.', 'web-stories') : hint}
+        containerStyleOverride={inputContainerStyleOverride}
         {...rest}
       />
     </Row>

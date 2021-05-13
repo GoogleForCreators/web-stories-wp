@@ -66,6 +66,7 @@ function setBackgroundElement(state, { elementId }) {
       ...page,
       elements: [defaultBackgroundElement, ...elementsWithoutBackground],
     };
+    newSelection = [defaultBackgroundElement.id];
   } else {
     // Does the element even exist or is it already background
     const elementPosition = page.elements.findIndex(

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -34,8 +34,9 @@ import {
   useSnackbar,
   SnackbarProvider,
   Snackbar,
+  ModalGlobalStyle,
 } from '../../design-system';
-import theme, { GlobalStyle } from '../theme';
+import { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
   APP_ROUTES,
@@ -65,18 +66,37 @@ const AppContent = () => {
       currentPath,
       queryParams: { id: templateId },
     },
+    actions: { push },
   } = useRouteHistory();
-
-  const { currentTemplate } = useApi(
+  const { currentTemplate, addInitialFetchListener } = useApi(
     ({
+      actions: {
+        storyApi: { addInitialFetchListener },
+      },
       state: {
         templates: { templates },
       },
     }) => ({
       currentTemplate:
         templateId !== undefined ? templates[templateId]?.title : undefined,
+      addInitialFetchListener,
     })
   );
+  const isFirstLoadOnMyStories = useRef(currentPath === APP_ROUTES.MY_STORIES);
+  const [isRedirectComplete, setIsRedirectComplete] = useState(
+    !isFirstLoadOnMyStories.current
+  );
+
+  // Direct user to templates on first load if they
+  // have no stories created.
+  useEffect(() => {
+    return addInitialFetchListener?.((storyStatuses) => {
+      if (storyStatuses?.all <= 0 && isFirstLoadOnMyStories.current) {
+        push(APP_ROUTES.TEMPLATES_GALLERY);
+      }
+      setIsRedirectComplete(true);
+    });
+  }, [addInitialFetchListener, push, currentPath]);
 
   const fullPath = useMemo(() => {
     return currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) &&
@@ -89,6 +109,10 @@ const AppContent = () => {
   }, [currentPath, currentTemplate]);
 
   useEffect(() => {
+    if (!isRedirectComplete) {
+      return;
+    }
+
     if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && !currentTemplate) {
       return;
     }
@@ -113,7 +137,7 @@ const AppContent = () => {
 
     // Disable reason: avoid sending duplicate tracking events.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fullPath]);
+  }, [fullPath, isRedirectComplete]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
@@ -182,9 +206,7 @@ const AppContent = () => {
 
 function App({ config }) {
   const { isRTL } = config;
-  // TODO strip local dashboard theme out and rely on theme from design-system
   const activeTheme = {
-    DEPRECATED_THEME: theme,
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
@@ -192,6 +214,7 @@ function App({ config }) {
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={activeTheme}>
         <ThemeGlobals.Styles />
+        <ModalGlobalStyle />
         <ConfigProvider config={config}>
           <ApiProvider>
             <NavProvider>

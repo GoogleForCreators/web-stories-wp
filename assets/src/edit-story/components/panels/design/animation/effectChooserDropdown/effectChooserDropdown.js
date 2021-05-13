@@ -27,18 +27,17 @@ import { __ } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import { DropDown, PLACEMENT } from '../../../../../../design-system';
 
+import { focusStyle } from '../../../shared';
 import {
   backgroundEffectOptions,
   NO_ANIMATION,
   foregroundEffectOptions,
   experimentalEffects,
+  getDirectionalEffect,
 } from './dropdownConstants';
 import { ANIMATION_DIRECTION_PROP_TYPE } from './types';
-import {
-  getDirectionalEffect,
-  getDisabledBackgroundEffects,
-  generateDynamicProps,
-} from './utils';
+import getDisabledBackgroundEffects from './utils/getDisabledBackgroundEffects';
+import generateDynamicProps from './utils/generateDynamicProps';
 import {
   styleOverrideForSelectButton,
   styleOverrideForAnimationEffectMenu,
@@ -155,9 +154,9 @@ export default function EffectChooserDropdown({
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
       selectButtonStylesOverride={
-        selectedValue &&
-        selectedValue !== NO_ANIMATION &&
-        styleOverrideForSelectButton
+        selectedValue && selectedValue !== NO_ANIMATION
+          ? styleOverrideForSelectButton
+          : focusStyle
       }
     />
   );

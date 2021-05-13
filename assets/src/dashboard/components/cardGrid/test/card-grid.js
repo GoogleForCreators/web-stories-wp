@@ -15,14 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import CardGrid from '../';
+import { renderWithProviders } from '../../../testUtils';
+import CardGrid from '..';
 
 describe('CardGrid', () => {
   it('should render CardGrid', () => {
-    const { getAllByTestId } = renderWithProviders(
+    renderWithProviders(
       <CardGrid pageSize={{ width: 210, height: 316, containerHeight: 316 }}>
         <div data-testid={'test-child'}>{'Item 1'}</div>
         <div data-testid={'test-child'}>{'Item 2'}</div>
@@ -32,6 +37,6 @@ describe('CardGrid', () => {
       </CardGrid>
     );
 
-    expect(getAllByTestId('test-child')).toHaveLength(5);
+    expect(screen.getAllByTestId('test-child')).toHaveLength(5);
   });
 });

@@ -39,6 +39,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
+import { inputContainerStyleOverride } from '../../shared';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;
@@ -150,6 +151,7 @@ function PageAdvancementPanel() {
             min={MIN_MAX.PAGE_DURATION.MIN}
             max={MIN_MAX.PAGE_DURATION.MAX}
             isFloat
+            containerStyleOverride={inputContainerStyleOverride}
           />
         </Row>
       )}

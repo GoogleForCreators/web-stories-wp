@@ -22,7 +22,7 @@ import { number } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import CircularProgress from '../';
+import CircularProgress from '..';
 
 export default {
   title: 'Stories Editor/Components/Circular Progress',

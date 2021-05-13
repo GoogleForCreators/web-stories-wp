@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import percySnapshot from '@percy/puppeteer';
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -87,6 +87,11 @@ describe('Custom Meta Boxes', () => {
 
       // Publish story.
       await expect(page).toClick('button', { text: 'Publish' });
+
+      await page.waitForSelector('.ReactModal__Content');
+      await expect(page).toClick('button', {
+        text: /Continue to publish/,
+      });
 
       await expect(page).toMatchElement('button', { text: 'Dismiss' });
 

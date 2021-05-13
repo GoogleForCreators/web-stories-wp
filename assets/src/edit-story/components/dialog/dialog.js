@@ -36,7 +36,7 @@ import {
 /**
  * Dialog is wrapped in a ThemeProvider so that colors can be inverted.
  *
- * @param {boolean} open When true, dialog will be visible
+ * @param {boolean} isOpen When true, dialog will be visible
  * @param {Function} onClose Action taken on 'x'/clicking outside of dialog. Default secondary action.
  * @param {Function} onSecondary Action taken on secondary button click when specified.
  * @param {Function} onPrimary Action taken on primary button click.
@@ -49,7 +49,6 @@ import {
  */
 
 const Dialog = ({
-  open,
   onClose,
   onSecondary,
   onPrimary,
@@ -94,7 +93,6 @@ const Dialog = ({
   return (
     <ThemeProvider theme={{ ...theme, colors: lightMode }}>
       <StyledDialog
-        isOpen={open}
         onClose={onClose}
         {...rest}
         actions={
@@ -113,7 +111,6 @@ const Dialog = ({
 };
 
 Dialog.propTypes = {
-  open: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onPrimary: PropTypes.func,
   onSecondary: PropTypes.func,

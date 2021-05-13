@@ -31,7 +31,7 @@ import LinkPanel from '../link';
 
 jest.mock('../../../../../elements');
 
-function renderLinkPanel(selectedElements) {
+function arrange(selectedElements) {
   const configValue = {
     capabilities: {
       hasUploadMediaAction: true,
@@ -61,11 +61,11 @@ function renderLinkPanel(selectedElements) {
     },
   };
 
-  const wrapper = (params) => (
+  const wrapper = ({ children }) => (
     <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
         <CanvasContext.Provider value={canvasContext}>
-          {params.children}
+          {children}
         </CanvasContext.Provider>
       </StoryContext.Provider>
     </ConfigContext.Provider>
@@ -100,7 +100,7 @@ describe('Panels/Link', () => {
   });
 
   it('should not display metadata fields if URL is missing', () => {
-    renderLinkPanel([DEFAULT_ELEMENT]);
+    arrange([DEFAULT_ELEMENT]);
     expect(
       screen.getByRole('textbox', {
         name: 'Element link',
@@ -119,7 +119,7 @@ describe('Panels/Link', () => {
   });
 
   it('should display an error message for invalid URLs', () => {
-    renderLinkPanel([
+    arrange([
       {
         ...DEFAULT_ELEMENT,
         link: {
@@ -131,7 +131,7 @@ describe('Panels/Link', () => {
   });
 
   it('should not display metadata fields if URL is invalid', () => {
-    renderLinkPanel([
+    arrange([
       {
         ...DEFAULT_ELEMENT,
         link: {
@@ -152,7 +152,7 @@ describe('Panels/Link', () => {
   });
 
   it('should display Mixed placeholder in case of mixed values multi-selection', () => {
-    renderLinkPanel([
+    arrange([
       {
         ...DEFAULT_ELEMENT,
         link: {

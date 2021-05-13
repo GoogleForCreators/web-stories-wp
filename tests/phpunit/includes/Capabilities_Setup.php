@@ -17,25 +17,20 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\User\Capabilities;
 
 trait Capabilities_Setup {
-	protected function get_story_object() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
-		$decoder     = $this->createMock( \Google\Web_Stories\Decoder::class );
-		$locale      = $this->createMock( \Google\Web_Stories\Locale::class );
-
-		return new Story_Post_Type( $experiments, $meta_boxes, $decoder, $locale );
+	protected function get_capability_object() {
+		return new Capabilities();
 	}
 
 	public function add_caps_to_roles() {
-		$story_post_type = $this->get_story_object();
-		$story_post_type->add_caps_to_roles();
+		$capability = $this->get_capability_object();
+		$capability->add_caps_to_roles();
 	}
 
 	public function remove_caps_from_roles() {
-		$story_post_type = $this->get_story_object();
-		$story_post_type->remove_caps_from_roles();
+		$capability = $this->get_capability_object();
+		$capability->remove_caps_from_roles();
 	}
 }

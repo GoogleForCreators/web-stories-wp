@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -29,11 +29,11 @@ import {
 } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
-import Header from '../';
+import Header from '..';
 
 describe('Explore Templates <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -52,12 +52,12 @@ describe('Explore Templates <Header />', function () {
       { features: { enableInProgressTemplateActions: false } }
     );
 
-    expect(getByText('Viewing all templates')).toBeInTheDocument();
+    expect(screen.getByText('Viewing all templates')).toBeInTheDocument();
   });
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getByLabelText, getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -74,14 +74,14 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: true } }
     );
-    fireEvent.click(getByLabelText('Choose sort option for display'));
-    fireEvent.click(getByText('Recent'));
+    fireEvent.click(screen.getByLabelText('Choose sort option for display'));
+    fireEvent.click(screen.getByText('Recent'));
 
     expect(setSortFn).toHaveBeenCalledWith('recent');
   });
 
   it('should not render with search when features:{enableInProgressTemplateActions is false}', function () {
-    const { queryByRole } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -98,6 +98,6 @@ describe('Explore Templates <Header />', function () {
       </LayoutProvider>,
       { features: { enableInProgressTemplateActions: false } }
     );
-    expect(queryByRole('textbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument();
   });
 });

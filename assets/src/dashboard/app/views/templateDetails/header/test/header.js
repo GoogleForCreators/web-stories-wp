@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import Header from '../';
+import Header from '..';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 
@@ -30,23 +30,23 @@ describe('Template Details <Header />', () => {
   const mockHandleCtaClick = jest.fn();
 
   it('should render nav bar for detail template view', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header onHandleCtaClick={mockHandleCtaClick} />
       </LayoutProvider>
     );
-    const nav = getByRole('navigation');
+    const nav = screen.getByRole('navigation');
 
     expect(nav).toBeInTheDocument();
   });
 
   it('should trigger mockHandleCtaClick when cta is clicked', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header onHandleCtaClick={mockHandleCtaClick} />
       </LayoutProvider>
     );
-    const cta = getByText('Use template');
+    const cta = screen.getByText('Use template');
 
     expect(cta).toBeInTheDocument();
 

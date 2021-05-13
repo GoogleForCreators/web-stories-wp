@@ -161,6 +161,7 @@ const sharedConfig = {
     new webpack.EnvironmentPlugin({
       DISABLE_PREVENT: false,
       DISABLE_ERROR_BOUNDARIES: false,
+      DISABLE_QUICK_TIPS: false,
     }),
   ].filter(Boolean),
   optimization: {
@@ -248,9 +249,10 @@ const editorAndDashboard = {
     }),
   ],
   optimization: {
+    ...sharedConfig.optimization,
     splitChunks: {
+      ...sharedConfig.optimization.splitChunks,
       chunks: 'all',
-      automaticNameDelimiter: '-',
     },
   },
 };

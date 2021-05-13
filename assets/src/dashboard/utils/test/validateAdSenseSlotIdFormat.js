@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { validateAdSenseSlotIdFormat } from '../';
+import { validateAdSenseSlotIdFormat } from '..';
 
 const idsToValidate = [
   ['1234567890', true],

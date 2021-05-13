@@ -27,6 +27,7 @@ const preloadImage = (src, srcset = undefined) => {
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.decoding = 'async';
+    image.crossOrigin = 'anonymous';
     if (srcset) {
       image.srcset = srcset;
     }

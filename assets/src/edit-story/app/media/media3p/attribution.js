@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 
@@ -50,6 +50,7 @@ const Text = styled(DefaultText)`
 `;
 
 const logo = css`
+  color: ${({ theme }) => theme.colors.standard.white};
   fill: ${({ theme }) => theme.colors.standard.white};
   margin-left: 6px;
   line-height: 14px;
@@ -79,6 +80,18 @@ const coverrUrl =
 const tenorUrl =
   'https://tenor.com?utm_source=web_stories_wordpress&utm_medium=referral';
 
+const MEDIA_PROVIDER = {
+  coverr: 'Coverr',
+  tenor: 'Tenor',
+  unsplash: 'Unsplash',
+};
+const getAriaLabel = (provider) =>
+  sprintf(
+    /* translators: %s: media provider name. */
+    __('Powered by %s', 'web-stories'),
+    provider
+  );
+
 export function UnsplashAttribution() {
   return (
     <a href={unsplashUrl} target={'_blank'} rel={'noreferrer'}>
@@ -86,10 +99,11 @@ export function UnsplashAttribution() {
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
         >
           {__('Powered by', 'web-stories')}
         </Text>
-        <UnsplashLogo />
+        <UnsplashLogo aria-hidden />
       </AttributionPill>
     </a>
   );
@@ -99,8 +113,14 @@ export function CoverrAttribution() {
   return (
     <a href={coverrUrl} target={'_blank'} rel={'noreferrer'}>
       <AttributionPill>
-        {__('Powered by', 'web-stories')}
-        <CoverrLogo />
+        <Text
+          forwardedAs="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+          aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
+        >
+          {__('Powered by', 'web-stories')}
+        </Text>
+        <CoverrLogo aria-hidden />
       </AttributionPill>
     </a>
   );
@@ -108,9 +128,14 @@ export function CoverrAttribution() {
 
 export function TenorAttribution() {
   return (
-    <a href={tenorUrl} target={'_blank'} rel={'noreferrer'}>
+    <a
+      href={tenorUrl}
+      target={'_blank'}
+      rel={'noreferrer'}
+      aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}
+    >
       <AttributionPill>
-        <TenorLogo data-label={__('Powered by Tenor', 'web-stories')} />
+        <TenorLogo aria-hidden />
       </AttributionPill>
     </a>
   );

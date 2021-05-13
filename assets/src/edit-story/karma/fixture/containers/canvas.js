@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { ACTION_TEXT } from '../../../app/highlights';
 import { Container } from './container';
 
 /**
@@ -52,14 +53,6 @@ export class Canvas extends Container {
     );
   }
 
-  get fullbleed() {
-    return this._get(
-      this.getAllByRole('region', { name: 'Fullbleed area' })[0],
-      'fullbleed',
-      Fullbleed
-    );
-  }
-
   get header() {
     return this._get(
       this.getAllByRole('group', { name: 'Story canvas header' })[0],
@@ -67,12 +60,37 @@ export class Canvas extends Container {
       Header
     );
   }
+
+  get quickActionMenu() {
+    return this._get(
+      this.getByRole('dialog'),
+      'quickActionMenu',
+      QuickActionMenu
+    );
+  }
+}
+
+/**
+ * Abstract layer.
+ */
+class AbstractLayer extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get scrollContainer() {
+    return this.node.querySelector('[data-scroll-container]');
+  }
+
+  get fullbleed() {
+    return this.getByRole('region', { name: 'Fullbleed area' });
+  }
 }
 
 /**
  * Contains element displays.
  */
-class DisplayLayer extends Container {
+class DisplayLayer extends AbstractLayer {
   constructor(node, path) {
     super(node, path);
   }
@@ -124,7 +142,7 @@ class Display extends Container {
 /**
  * Contains element frames.
  */
-class FramesLayer extends Container {
+class FramesLayer extends AbstractLayer {
   constructor(node, path) {
     super(node, path);
   }
@@ -171,22 +189,9 @@ class FramesLayer extends Container {
 }
 
 /**
- * Contains fullbleed.
- */
-class Fullbleed extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get container() {
-    return this.node;
-  }
-}
-
-/**
  * Contains elements in edit-mode.
  */
-class EditLayer extends Container {
+class EditLayer extends AbstractLayer {
   constructor(node, path) {
     super(node, path);
   }
@@ -268,5 +273,29 @@ class Header extends Container {
 
   get schedule() {
     return this.getByRole('button', { name: 'Schedule' });
+  }
+}
+
+class QuickActionMenu extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get changeBackgroundColorButton() {
+    return this.getByRole('button', {
+      name: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
+    });
+  }
+
+  get insertBackgroundMediaButton() {
+    return this.getByRole('button', {
+      name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
+    });
+  }
+
+  get insertTextButton() {
+    return this.getByRole('button', {
+      name: ACTION_TEXT.INSERT_TEXT,
+    });
   }
 }

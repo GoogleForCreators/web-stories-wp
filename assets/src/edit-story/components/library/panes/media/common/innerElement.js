@@ -136,20 +136,29 @@ function InnerElement({
     width: width,
     height: height,
     alt: alt,
-    'aria-label': alt,
+    crossOrigin: 'anonymous',
   };
-  const cloneProps = {
+
+  const commonImageProps = {
     ...commonProps,
+    onLoad: makeMediaVisible,
     loading: 'lazy',
     draggable: false,
   };
+
+  const cloneProps = {
+    ...commonImageProps,
+    onLoad: undefined,
+  };
+
   const imageProps = {
-    ...cloneProps,
+    ...commonImageProps,
     src: thumbnailURL,
-    onLoad: makeMediaVisible,
+    'aria-label': alt,
   };
   const videoProps = {
     ...commonProps,
+    'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'none',
@@ -193,10 +202,10 @@ function InnerElement({
           <HiddenPosterImage
             ref={hiddenPoster}
             src={posterSrc}
-            onLoad={makeMediaVisible}
+            {...commonImageProps}
           />
         )}
-        {showVideoDetail && (
+        {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
             <Duration>{lengthFormatted}</Duration>
           </DurationWrapper>

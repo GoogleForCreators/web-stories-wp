@@ -19,7 +19,7 @@
  */
 import { getBox } from '../../../../edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
-import { ANIMATION_EFFECTS, DIRECTION } from '../../../constants';
+import { ANIMATION_TYPES, DIRECTION } from '../../../constants';
 import {
   AMPStoryWrapper,
   AMP_STORY_ASPECT_RATIO,
@@ -31,13 +31,15 @@ export default {
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
-    type: ANIMATION_EFFECTS.WHOOSH_IN,
+    type: ANIMATION_TYPES.WHOOSH_IN,
     delay: 500,
   },
   {
+    id: '2',
     targets: ['e2'],
-    type: ANIMATION_EFFECTS.WHOOSH_IN,
+    type: ANIMATION_TYPES.WHOOSH_IN,
     delay: 1000,
     whooshInDir: DIRECTION.RIGHT_TO_LEFT,
   },

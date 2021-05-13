@@ -64,7 +64,7 @@ trait Types {
 	 */
 	public function get_file_type_exts( array $mime_types = [] ) {
 		$allowed_file_types = [];
-		$all_mime_types     = wp_get_mime_types();
+		$all_mime_types     = get_allowed_mime_types();
 
 		foreach ( $all_mime_types as $ext => $mime ) {
 			if ( in_array( $mime, $mime_types, true ) ) {
@@ -86,6 +86,7 @@ trait Types {
 	public function get_allowed_mime_types() {
 		$default_allowed_mime_types = [
 			'image' => [
+				'image/webp',
 				'image/png',
 				'image/jpeg',
 				'image/jpg',
@@ -116,7 +117,7 @@ trait Types {
 			}
 
 			// Only add currently supported mime types.
-			$allowed_mime_types[ $media_type ] = array_values( array_intersect( $allowed_mime_types[ $media_type ], wp_get_mime_types() ) );
+			$allowed_mime_types[ $media_type ] = array_values( array_intersect( $allowed_mime_types[ $media_type ], get_allowed_mime_types() ) );
 		}
 
 		return $allowed_mime_types;
@@ -133,6 +134,7 @@ trait Types {
 		$mime_type         = $this->get_allowed_mime_types();
 		$allowed_mime_type = $mime_type['image'];
 		$image_mime_type   = [
+			'image/webp',
 			'image/png',
 			'image/jpeg',
 			'image/jpg',

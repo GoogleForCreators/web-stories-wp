@@ -18,12 +18,53 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useRef } from 'react';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect, Pill } from '../../../../../../design-system';
+import {
+  useKeyDownEffect,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
+import { focusStyle } from '../../../../panels/shared';
+
+const StyledText = styled(Text)`
+  color: inherit;
+`;
+
+const Tab = styled.button`
+  padding: 6px 16px;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  position: relative;
+  cursor: pointer;
+
+  :hover {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
+
+  border-radius: ${({ theme }) => theme.borders.radius.x_large};
+  ${focusStyle};
+
+  ${({ isActive, theme }) =>
+    isActive &&
+    css`
+      ::after {
+        content: '';
+        position: absolute;
+        background-color: ${theme.colors.border.selection};
+        height: 2px;
+        border-radius: 1px;
+        bottom: -17px;
+        left: 16px;
+        right: 16px;
+      }
+    `}
+`;
 
 function ProviderTab({
   id,
@@ -67,7 +108,7 @@ function ProviderTab({
   );
 
   return (
-    <Pill
+    <Tab
       ref={ref}
       tabIndex={index == 0 ? 0 : -1}
       data-testid={'providerTab'}
@@ -76,8 +117,13 @@ function ProviderTab({
       isActive={active}
       id={id}
     >
-      {name}
-    </Pill>
+      <StyledText
+        forwardedAs="span"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+      >
+        {name}
+      </StyledText>
+    </Tab>
   );
 }
 

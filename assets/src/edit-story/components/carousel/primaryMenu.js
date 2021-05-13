@@ -21,7 +21,6 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -33,9 +32,9 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   PLACEMENT,
+  Modal,
 } from '../../../design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
-import Modal from '../modal';
 import Tooltip from '../tooltip';
 import GridView from './gridview';
 import ZoomSelector from './zoomSelector';
@@ -82,7 +81,6 @@ function PrimaryMenu() {
       return newIsOpen;
     });
   }, [setIsGridViewOpen]);
-  const { hasCanvasZoom } = useFeatures();
 
   const {
     metaBoxesVisible,
@@ -144,15 +142,16 @@ function PrimaryMenu() {
               </Button>
             </Tooltip>
           </Box>
-          {hasCanvasZoom && <ZoomSelector />}
+          <ZoomSelector />
         </MenuItems>
       </Wrapper>
       <Modal
-        open={isGridViewOpen}
+        isOpen={isGridViewOpen}
         onClose={toggleModal}
         contentLabel={__('Grid View', 'web-stories')}
         overlayStyles={{
           alignItems: 'stretch',
+          backgroundColor: '#131516', // theme.colors.brand.gray[90]
         }}
         contentStyles={{
           pointerEvents: 'none',

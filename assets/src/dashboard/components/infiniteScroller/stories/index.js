@@ -24,7 +24,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import InfiniteScroller from '../';
+import InfiniteScroller from '..';
 
 export default {
   title: 'Dashboard/Components/InfiniteScroller',

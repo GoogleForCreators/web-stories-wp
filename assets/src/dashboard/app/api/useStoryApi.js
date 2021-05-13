@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer, useRef } from 'react';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -39,10 +39,12 @@ import storyReducer, {
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
 import { addQueryArgs } from '../../../design-system';
-import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
+import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 
 const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
+  const isInitialFetch = useRef(true);
+  const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const flags = useFeatures();
 
@@ -98,6 +100,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           response.headers &&
           JSON.parse(response.headers['X-WP-TotalByStatus']);
 
+        // Hook into first fetch of story statuses.
+        if (isInitialFetch.current) {
+          initialFetchListeners.forEach((listener) => {
+            listener(totalStoriesByStatus);
+          });
+        }
+        isInitialFetch.current = false;
+
         // Hardening in case data returned by the server is malformed.
         // For example, story_data could be missing/empty.
         const cleanStories = response.body.filter((story) =>
@@ -147,7 +157,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL, initialFetchListeners]
   );
 
   const updateStory = useCallback(
@@ -214,95 +224,6 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
       }
     },
     [storyApi, dataAdapter]
-  );
-
-  const clearStoryPreview = useCallback(() => {
-    dispatch({
-      type: STORY_ACTION_TYPES.CLEAR_STORY_PREVIEW,
-    });
-  }, []);
-
-  const createStoryPreview = useCallback(
-    async (dashboardStory) => {
-      dispatch({
-        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW,
-        payload: true,
-      });
-
-      const trackTiming = getTimeTracker('load_create_story_preview');
-
-      try {
-        const {
-          author,
-          createdBy,
-          created,
-          modified,
-          pages,
-          password,
-          title,
-          excerpt,
-          status,
-        } = dashboardStory;
-
-        const getStoryPropsToSave = await import(
-          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
-        );
-        const storyProps = await getStoryPropsToSave.default({
-          story: {
-            status: status || 'auto-draft',
-            title: title,
-            author: { id: author || 1, name: '' },
-            slug: title,
-            date: created || Date.now().toString(),
-            modified: modified || Date.now().toString(),
-            featuredMedia: {
-              id: 0,
-              url: '',
-              width: 1,
-              height: 1,
-            },
-            password: password || '',
-            excerpt: excerpt || '',
-          },
-          pages,
-          metadata: {
-            publisher: {
-              name: createdBy || '',
-            },
-          },
-          flags,
-        });
-
-        const preppedStoryProps = reshapeStoryPreview(storyProps);
-
-        const getStoryMarkup = await import(
-          /* webpackChunkName: "chunk-getStoryMarkup" */ '../../../edit-story/output/utils/getStoryMarkup'
-        );
-
-        const markup = await getStoryMarkup.default(
-          preppedStoryProps.story,
-          preppedStoryProps.pages,
-          preppedStoryProps.metadata,
-          flags
-        );
-
-        dispatch({
-          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
-          payload: markup.toString(),
-        });
-      } catch (err) {
-        dispatch({
-          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
-          payload: {
-            message: ERRORS.RENDER_PREVIEW.MESSAGE,
-            code: err.code,
-          },
-        });
-      } finally {
-        trackTiming();
-      }
-    },
-    [flags]
   );
 
   const createStoryFromTemplate = useCallback(
@@ -430,28 +351,37 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
     [storyApi, dataAdapter, editStoryURL, encodeMarkup]
   );
 
+  const addInitialFetchListener = useCallback(
+    (listener) => {
+      const key = Symbol();
+      initialFetchListeners.set(key, listener);
+      return () => {
+        initialFetchListeners.delete(key);
+      };
+    },
+    [initialFetchListeners]
+  );
+
   const api = useMemo(
     () => ({
-      clearStoryPreview,
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
-      createStoryPreview,
       trashStory,
       updateStory,
+      addInitialFetchListener,
     }),
     [
-      clearStoryPreview,
       createStoryFromTemplate,
-      createStoryPreview,
       duplicateStory,
       trashStory,
       updateStory,
       fetchStories,
+      addInitialFetchListener,
     ]
   );
 
-  return { stories: state, api };
+  return useMemo(() => ({ stories: state, api }), [state, api]);
 };
 
 export default useStoryApi;

@@ -22,7 +22,7 @@ import { number } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import ColorList from '../';
+import ColorList from '..';
 
 export default {
   title: 'Dashboard/Components/ColorList',

@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { TextArea as StyledTextArea } from '../../../design-system';
+import { inputContainerStyleOverride } from '../panels/shared';
 
 const TextArea = forwardRef(
   (
@@ -70,6 +71,7 @@ const TextArea = forwardRef(
         placeholder={placeholder}
         value={currentValue}
         {...rest}
+        containerStyleOverride={inputContainerStyleOverride}
         onChange={(evt) => setCurrentValue(evt.target.value)}
         onBlur={handleBlur}
         ref={ref}

@@ -19,6 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -42,8 +43,11 @@ const MAX_STORY_CHARACTERS = 200;
 const MAX_CHARACTER_PERCENTAGE = 10;
 const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_FPS = 24;
+const MAX_VIDEO_RESOLUTION = 4000;
 const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
+const MIN_TAP_REGION_WIDTH = 48;
+const MAX_LINKS_PER_PAGE = 3;
 
 export const PRE_PUBLISH_MESSAGE_TYPES = {
   GUIDANCE: 'guidance',
@@ -59,7 +63,7 @@ const VIDEO_DOCUMENTATION_URL = __(
 export const MESSAGES = {
   CRITICAL_METADATA: {
     MISSING_TITLE: {
-      MAIN_TEXT: __('Add story title', 'web-stories'),
+      MAIN_TEXT: __('Add Web Story title', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -90,7 +94,7 @@ export const MESSAGES = {
       ),
     },
     MISSING_POSTER: {
-      MAIN_TEXT: __('Add cover image', 'web-stories'),
+      MAIN_TEXT: __('Add poster image', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>{__('Use as a representation of the story', 'web-stories')}</li>
@@ -113,9 +117,10 @@ export const MESSAGES = {
       ),
     },
     POSTER_TOO_SMALL: {
-      MAIN_TEXT: __(
-        'Choose a bigger image for your poster image',
-        'web-stories'
+      MAIN_TEXT: sprintf(
+        /* translators: %s: image dimensions.  */
+        __('Increase poster image size to at least %s', 'web-stories'),
+        `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
       ),
       HELPER_TEXT: (
         <ul>
@@ -137,9 +142,10 @@ export const MESSAGES = {
       ),
     },
     POSTER_WRONG_ASPECT_RATIO: {
-      MAIN_TEXT: __(
-        'Choose a poster image with the correct aspect ratio',
-        'web-stories'
+      MAIN_TEXT: sprintf(
+        /* translators: %s: image dimensions.  */
+        __('Correct poster image aspect ratio to %s', 'web-stories'),
+        `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
       ),
       HELPER_TEXT: (
         <ul>
@@ -161,7 +167,11 @@ export const MESSAGES = {
       ),
     },
     LOGO_TOO_SMALL: {
-      MAIN_TEXT: __('Upload a bigger logo', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %s: image dimensions. */
+        __('Increase size of publisher logo to at least %s', 'web-stories'),
+        `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -181,24 +191,8 @@ export const MESSAGES = {
         </ul>
       ),
     },
-    LINK_ATTACHMENT_CONFLICT: {
-      MAIN_TEXT: __(
-        'Turn off Page Attachment or remove conflicting links',
-        'web-stories'
-      ),
-      HELPER_TEXT: (
-        <ul>
-          <li>
-            {__(
-              'Remove the Page Attachment or any links at the bottom of the page, which conflict with the Page Attachment section',
-              'web-stories'
-            )}
-          </li>
-        </ul>
-      ),
-    },
     MISSING_VIDEO_POSTER: {
-      MAIN_TEXT: __('Add a poster image for every video', 'web-stories'),
+      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -214,7 +208,7 @@ export const MESSAGES = {
   ACCESSIBILITY: {
     LOW_CONTRAST: {
       MAIN_TEXT: __(
-        'Adjust contrast between font and background color',
+        'Increase contrast between text and background color',
         'web-stories'
       ),
       HELPER_TEXT: (
@@ -229,7 +223,11 @@ export const MESSAGES = {
       ),
     },
     FONT_TOO_SMALL: {
-      MAIN_TEXT: __('Increase font size', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %d: minimum font size. */
+        __('Increase font size to %s or above', 'web-stories'),
+        MIN_FONT_SIZE
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -246,7 +244,14 @@ export const MESSAGES = {
       ),
     },
     LOW_IMAGE_RESOLUTION: {
-      MAIN_TEXT: __('Select image with higher resolution', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %s: minimum image size width x minimum image size height. */
+        __(
+          'Upload a higher resolution poster image to at least %s',
+          'web-stories'
+        ),
+        `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -266,7 +271,7 @@ export const MESSAGES = {
       ),
     },
     MISSING_CAPTIONS: {
-      MAIN_TEXT: __('Add captions to video', 'web-stories'),
+      MAIN_TEXT: __('Add video captions', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -298,17 +303,29 @@ export const MESSAGES = {
       ),
     },
     TOO_MANY_LINKS: {
-      MAIN_TEXT: __('Reduce number of links', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %s: maximum number of links per page. */
+        __('Avoid including more than %s links per page', 'web-stories'),
+        MAX_LINKS_PER_PAGE
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
-            {__('Avoid having more than 3 links on one page', 'web-stories')}
+            {sprintf(
+              /* translators: %s: maximum number of links per page. */
+              __('Avoid having more than %s links on one page', 'web-stories'),
+              MAX_LINKS_PER_PAGE
+            )}
           </li>
         </ul>
       ),
     },
     LINK_REGION_TOO_SMALL: {
-      MAIN_TEXT: __('Increase tappable space for link', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %s: minimum tappable region size width x minimum tappable region size height. */
+        __('Increase tap area size to at least %s', 'web-stories'),
+        `${MIN_TAP_REGION_WIDTH}x${MIN_TAP_REGION_WIDTH}px`
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -321,7 +338,7 @@ export const MESSAGES = {
       ),
     },
     MISSING_IMAGE_ALT_TEXT: {
-      MAIN_TEXT: __('Add assistive text to image', 'web-stories'),
+      MAIN_TEXT: __('Add assistive text to images', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -336,7 +353,7 @@ export const MESSAGES = {
   },
   DISTRIBUTION: {
     MISSING_DESCRIPTION: {
-      MAIN_TEXT: __('Add story description', 'web-stories'),
+      MAIN_TEXT: __('Add Web Story description', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -351,7 +368,16 @@ export const MESSAGES = {
   },
   GENERAL_GUIDELINES: {
     STORY_TOO_SHORT: {
-      MAIN_TEXT: __('Make story longer', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %d: maximum number of pages. */
+        _n(
+          'Make Web Story at least %d page',
+          'Make Web Story at least %d pages',
+          MIN_STORY_PAGES,
+          'web-stories'
+        ),
+        MIN_STORY_PAGES
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -369,7 +395,16 @@ export const MESSAGES = {
       ),
     },
     STORY_TOO_LONG: {
-      MAIN_TEXT: __('Make story shorter', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %d: minimum number of pages. */
+        _n(
+          'Make Web Story fewer than %d page',
+          'Make Web Story fewer than %d pages',
+          MAX_STORY_PAGES,
+          'web-stories'
+        ),
+        MAX_STORY_PAGES
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -387,12 +422,21 @@ export const MESSAGES = {
       ),
     },
     STORY_TITLE_TOO_LONG: {
-      MAIN_TEXT: __('Make story title shorter', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %d: minimum number of story characters. */
+        _n(
+          'Shorten title to fewer than %d character',
+          'Shorten title to fewer than %d characters',
+          MAX_STORY_TITLE_LENGTH_CHARS,
+          'web-stories'
+        ),
+        MAX_STORY_TITLE_LENGTH_CHARS
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
             {sprintf(
-              /* translators: %d: minimum number of story characters. */
+              /* translators: %d: maximum number of story characters. */
               _n(
                 'Limit story title to %d character or less',
                 'Limit story title to %d characters or less',
@@ -408,7 +452,7 @@ export const MESSAGES = {
   },
   TEXT: {
     TOO_MUCH_PAGE_TEXT: {
-      MAIN_TEXT: __('Reduce text on page', 'web-stories'),
+      MAIN_TEXT: __('Reduce text amount on page', 'web-stories'),
       // eslint-disable eslint/no-useless-escape
       HELPER_TEXT: (
         <ul>
@@ -416,8 +460,8 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %d: maximum number of story characters. */
               _n(
-                'Keep text to max %d character per page',
-                'Keep text to max %d characters per page',
+                'Include no more than %d character',
+                'Include no more than %d characters',
                 MAX_STORY_CHARACTERS,
                 'web-stories'
               ),
@@ -444,15 +488,15 @@ export const MESSAGES = {
       ),
     },
     TOO_LITTLE_TEXT: {
-      MAIN_TEXT: __('Increase amount of total text', 'web-stories'),
+      MAIN_TEXT: __('Add more text to page', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
             {sprintf(
               /* translators: %d: minimum number of story characters. */
               _n(
-                'Make your story text %d character or more',
-                'Make your story text %d characters or more',
+                'Include at least %d character',
+                'Include at least %d characters',
                 MIN_STORY_CHARACTERS,
                 'web-stories'
               ),
@@ -514,26 +558,30 @@ export const MESSAGES = {
       ),
     },
     VIDEO_TOO_LONG: {
-      MAIN_TEXT: __('Break video into segments', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %d: maximum video length in minutes. */
+        _n(
+          'Split videos into segments of %d minute or less',
+          'Split videos into segments of %d minutes or less',
+          MAX_VIDEO_LENGTH_MINUTES,
+          'web-stories'
+        ),
+        MAX_VIDEO_LENGTH_MINUTES
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
-            {sprintf(
-              /* translators: %d: maximum video length in minutes. */
-              _n(
-                'Split longer videos into segments of %d minute or less',
-                'Split longer videos into segments of %d minutes or less',
-                MAX_VIDEO_LENGTH_MINUTES,
-                'web-stories'
-              ),
-              MAX_VIDEO_LENGTH_MINUTES
-            )}
+            {__('Shorter videos help readers navigate stories', 'web-stories')}
           </li>
         </ul>
       ),
     },
     VIDEO_FRAME_RATE_TOO_LOW: {
-      MAIN_TEXT: __('Increase video frame rate', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %d: minimum number of frames per second for video. */
+        __('Increase video frame rate to at least %d fps', 'web-stories'),
+        MIN_VIDEO_FPS
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -552,12 +600,16 @@ export const MESSAGES = {
       ),
     },
     VIDEO_RESOLUTION_TOO_LOW: {
-      MAIN_TEXT: __('Increase video resolution', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %s: minimum video resolution. */
+        __('Increase video resolution to at least %s', 'web-stories'),
+        `${MIN_VIDEO_RESOLUTION}p`
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
             {sprintf(
-              /* translators: 1: minimum video resolution. */
+              /* translators: %s: minimum video resolution. */
               __(
                 'Ensure your videos has a minimum resolution of %s',
                 'web-stories'
@@ -569,7 +621,11 @@ export const MESSAGES = {
       ),
     },
     VIDEO_RESOLUTION_TOO_HIGH: {
-      MAIN_TEXT: __('Reduce video resolution', 'web-stories'),
+      MAIN_TEXT: sprintf(
+        /* translators: %s: maximum video resolution. */
+        __('Reduce video resolution to less than %s', 'web-stories'),
+        `${MAX_VIDEO_RESOLUTION}p`
+      ),
       HELPER_TEXT: (
         <ul>
           <li>
@@ -580,6 +636,9 @@ export const MESSAGES = {
           </li>
         </ul>
       ),
+    },
+    VIDEO_NOT_OPTIMIZED: {
+      MAIN_TEXT: __('Video not optimized', 'web-stories'),
     },
   },
 };

@@ -17,18 +17,18 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Dialog } from '../';
+import { Dialog } from '..';
 
 describe('DesignSystem/Components/Dialog', () => {
   it('should not render a dialog by default', () => {
-    const { queryByRole, container } = renderWithProviders(
+    const { container } = renderWithProviders(
       <Dialog onClose={jest.fn}>
         <p>{'dialog child'}</p>
       </Dialog>
@@ -36,7 +36,9 @@ describe('DesignSystem/Components/Dialog', () => {
 
     Modal.setAppElement(container);
 
-    expect(queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('dialog', { hidden: true })
+    ).not.toBeInTheDocument();
   });
 
   it('should render a dialog when isOpen is true', () => {
@@ -45,7 +47,7 @@ describe('DesignSystem/Components/Dialog', () => {
       <button onClick={mockButtonClick}>{'dialog button'}</button>
     );
 
-    const { getByRole, getByText, container } = renderWithProviders(
+    const { container } = renderWithProviders(
       <Dialog
         onClose={jest.fn}
         isOpen
@@ -58,8 +60,8 @@ describe('DesignSystem/Components/Dialog', () => {
 
     Modal.setAppElement(container);
 
-    expect(getByRole('dialog')).toBeInTheDocument();
-    const dialogButton = getByText('dialog button');
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    const dialogButton = screen.getByText('dialog button');
 
     fireEvent.click(dialogButton);
     expect(mockButtonClick).toHaveBeenCalledTimes(1);

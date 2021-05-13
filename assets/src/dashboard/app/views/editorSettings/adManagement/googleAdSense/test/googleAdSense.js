@@ -16,13 +16,13 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../../testUtils';
-import GoogleAdSenseSettings, { TEXT } from '../';
+import GoogleAdSenseSettings, { TEXT } from '..';
 
 describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   let publisherId;
@@ -46,8 +46,8 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     slotId = '';
   });
 
-  it('should render google adsenses input and helper text by default', function () {
-    const { getByTestId, getByText } = renderWithProviders(
+  it('should render google AdSense input and helper text by default', function () {
+    renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -56,21 +56,21 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    const adSensePublisherIdInput = getByTestId('adSensePublisherId');
+    const adSensePublisherIdInput = screen.getByTestId('adSensePublisherId');
     expect(adSensePublisherIdInput).toBeInTheDocument();
 
-    const adSenseSlotIdInput = getByTestId('adSenseSlotId');
+    const adSenseSlotIdInput = screen.getByTestId('adSenseSlotId');
     expect(adSenseSlotIdInput).toBeInTheDocument();
 
-    const idLabel = getByText(TEXT.PUBLISHER_ID_LABEL);
+    const idLabel = screen.getByText(TEXT.PUBLISHER_ID_LABEL);
     expect(idLabel).toBeInTheDocument();
 
-    const slotIdLabel = getByText(TEXT.SLOT_ID_LABEL);
+    const slotIdLabel = screen.getByText(TEXT.SLOT_ID_LABEL);
     expect(slotIdLabel).toBeInTheDocument();
   });
 
   it('should render a visually hidden label for inputs', function () {
-    const { getByLabelText } = renderWithProviders(
+    renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -79,15 +79,15 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    const label1 = getByLabelText(TEXT.SLOT_ID_LABEL);
+    const label1 = screen.getByLabelText(TEXT.SLOT_ID_LABEL);
     expect(label1).toBeInTheDocument();
 
-    const label2 = getByLabelText(TEXT.PUBLISHER_ID_LABEL);
+    const label2 = screen.getByLabelText(TEXT.PUBLISHER_ID_LABEL);
     expect(label2).toBeInTheDocument();
   });
 
   it('should call mockUpdatePublisherId when enter is keyed on input', function () {
-    const { getByTestId, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -96,7 +96,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    const input = getByTestId('adSensePublisherId');
+    const input = screen.getByTestId('adSensePublisherId');
 
     fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -136,7 +136,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   });
 
   it('should call mockUpdatePublisherId when the save button is clicked', function () {
-    const { getByTestId, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -145,8 +145,8 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    const input = getByTestId('adSensePublisherId');
-    const button = getByTestId('adSensePublisherIdButton');
+    const input = screen.getByTestId('adSensePublisherId');
+    const button = screen.getByTestId('adSensePublisherIdButton');
 
     fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
 
@@ -188,7 +188,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   });
 
   it('should call mockUpdateSlotId when enter is keyed on input', function () {
-    const { getByTestId, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -197,7 +197,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    const input = getByTestId('adSenseSlotId');
+    const input = screen.getByTestId('adSenseSlotId');
 
     fireEvent.change(input, { target: { value: '0123456789' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -237,7 +237,7 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
   });
 
   it('should call mockUpdateSlotId when the save button is clicked', function () {
-    const { getByTestId, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAdSenseSettings
         publisherId={publisherId}
         slotId={slotId}
@@ -246,8 +246,8 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
       />
     );
 
-    const input = getByTestId('adSenseSlotId');
-    const button = getByTestId('adSenseSlotIdButton');
+    const input = screen.getByTestId('adSenseSlotId');
+    const button = screen.getByTestId('adSenseSlotIdButton');
 
     fireEvent.change(input, { target: { value: '0123456789' } });
 

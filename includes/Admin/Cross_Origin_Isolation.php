@@ -30,7 +30,7 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\User_Preferences;
+use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Experiments;
 
@@ -42,21 +42,7 @@ use Google\Web_Stories\Experiments;
  */
 class Cross_Origin_Isolation extends Service_Base {
 	use Screen;
-	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
 
-	/**
-	 * Cross_Origin_Isolation constructor.
-	 *
-	 * @param Experiments $experiments Experiments instance.
-	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
-	}
 	/**
 	 * Init
 	 *
@@ -282,17 +268,13 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @return bool
 	 */
 	protected function is_needed() {
-		if ( ! $this->experiments->is_experiment_enabled( 'videoOptimization' ) ) {
-			return false;
-		}
-
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
 			return false;
 		}
 
 		// Backwards compatible, default values added in WP 5.5.
-		$check = get_user_meta( $user_id, User_Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 		if ( empty( $check ) ) {
 			return true;
 		}

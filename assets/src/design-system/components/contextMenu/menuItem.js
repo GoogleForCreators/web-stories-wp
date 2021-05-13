@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -25,7 +25,9 @@ import styled, { css } from 'styled-components';
 import { Button } from '../button';
 import { Link } from '../typography/link';
 import { Text } from '../typography/text';
-import { THEME_CONSTANTS } from '../../theme';
+import { themeHelpers, THEME_CONSTANTS } from '../../theme';
+import { noop } from '../../utils';
+import { Tooltip, TOOLTIP_PLACEMENT } from '../tooltip';
 
 const ItemText = styled(Text)`
   width: 200px;
@@ -39,33 +41,57 @@ const Shortcut = styled(Text)(
   `
 );
 
+const StyledLink = styled(Link)`
+  :focus {
+    ${themeHelpers.focusCSS};
+  }
+`;
+
+const StyledButton = styled(Button)`
+  :focus {
+    ${themeHelpers.focusCSS};
+  }
+`;
+
+const IconWrapper = styled.span`
+  width: 32px;
+  height: 32px;
+`;
+
 export const MenuItem = ({
   disabled,
-  focusedIndex,
   href,
-  index,
   label,
   newTab,
   onClick,
-  setFocusedIndex,
+  onDismiss = noop,
+  onFocus,
   shortcut,
+  Icon,
 }) => {
   const itemRef = useRef(null);
+  /**
+   * Close the menu after clicking.
+   */
+  const handleClick = useCallback(
+    (ev) => {
+      onClick(ev);
+      onDismiss();
+    },
+    [onClick, onDismiss]
+  );
 
-  const handleFocus = () => {
-    if (focusedIndex !== index) {
-      setFocusedIndex(index);
+  const textContent = useMemo(() => {
+    if (Icon) {
+      return (
+        <Tooltip placement={TOOLTIP_PLACEMENT.RIGHT} title={label}>
+          <IconWrapper>
+            <Icon />
+          </IconWrapper>
+        </Tooltip>
+      );
     }
-  };
-
-  useEffect(() => {
-    if (focusedIndex === index) {
-      itemRef.current?.focus();
-    }
-  }, [focusedIndex, index]);
-
-  const textContent = useMemo(
-    () => (
+    return (
       <>
         <ItemText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -82,9 +108,8 @@ export const MenuItem = ({
           </Shortcut>
         )}
       </>
-    ),
-    [label, shortcut]
-  );
+    );
+  }, [Icon, label, shortcut]);
 
   if (href) {
     const newTabProps = newTab
@@ -95,30 +120,30 @@ export const MenuItem = ({
       : {};
 
     return (
-      <Link
+      <StyledLink
         ref={itemRef}
         aria-label={label}
         href={href}
-        onClick={onClick}
-        onFocus={handleFocus}
+        onClick={handleClick}
+        onFocus={onFocus}
         {...newTabProps}
       >
         {textContent}
-      </Link>
+      </StyledLink>
     );
   }
 
   if (onClick) {
     return (
-      <Button
+      <StyledButton
         ref={itemRef}
         aria-label={label}
         disabled={disabled}
-        onClick={onClick}
-        onFocus={handleFocus}
+        onClick={handleClick}
+        onFocus={onFocus}
       >
         {textContent}
-      </Button>
+      </StyledButton>
     );
   }
 
@@ -173,12 +198,10 @@ export const MenuItemProps = {
   label: PropTypes.string.isRequired,
   newTab: PropTypes.bool,
   onClick: PropTypes.func,
+  onDismiss: PropTypes.func,
+  onFocus: PropTypes.func,
   shortcut: PropTypes.string,
+  Icon: PropTypes.func,
 };
 
-MenuItem.propTypes = {
-  ...MenuItemProps,
-  index: PropTypes.number,
-  focusedIndex: PropTypes.number,
-  setFocusedIndex: PropTypes.func,
-};
+MenuItem.propTypes = MenuItemProps;

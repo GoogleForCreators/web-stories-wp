@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { useRef, useEffect, useCallback } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -106,6 +107,7 @@ const CloseButton = styled(Button)`
 `;
 
 const SnackbarMessage = ({
+  'aria-label': ariaLabel,
   actionLabel,
   onAction = noop,
   onDismiss = noop,
@@ -156,6 +158,7 @@ const SnackbarMessage = ({
       {...props}
     >
       <Message
+        aria-label={ariaLabel}
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         hasAction={hasAction}
       >
@@ -167,7 +170,10 @@ const SnackbarMessage = ({
             <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
           )}
           {showCloseButton && (
-            <CloseButton onClick={onDismiss}>
+            <CloseButton
+              onClick={onDismiss}
+              aria-label={__('Close', 'web-stories')}
+            >
               <Cross aria-hidden />
             </CloseButton>
           )}

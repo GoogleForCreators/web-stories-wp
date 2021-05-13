@@ -77,6 +77,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalY
   );
 
+  videoProps.crossOrigin = 'anonymous';
+
   return (
     <MediaDisplay
       element={element}

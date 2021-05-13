@@ -119,7 +119,7 @@ const Figure = styled.div`
 const SPACE_FROM_EDGE = 3;
 const Label = styled.label`
   position: absolute;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
 
   ${({ direction }) => {
     switch (direction) {
@@ -318,9 +318,10 @@ export const DirectionRadioInput = ({
               aria-label={translations[direction]}
               htmlFor={direction}
               direction={direction}
+              disabled={isDisabled}
             >
               <Tooltip
-                title={disabled ? tooltip : ''}
+                title={isDisabled ? tooltip : ''}
                 placement={
                   isInternalScaleDirection(direction)
                     ? getPostfixFromCamelCase(direction)

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { AppFrame, PageContent, LeftRail } from '../';
+import { AppFrame, PageContent, LeftRail } from '..';
 
 export default {
   title: 'Dashboard/Components/LeftRail',

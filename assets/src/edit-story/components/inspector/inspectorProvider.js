@@ -25,18 +25,22 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons, useResizeEffect } from '../../../design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
-import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
+import PrepublishInspector, {
+  usePrepublishChecklist,
+  ChecklistIcon,
+} from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
 
+const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN, PREPUBLISH]);
 function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
@@ -46,7 +50,12 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const { checklist, refreshChecklist } = usePrepublishChecklist();
+  const {
+    currentCheckpoint,
+    isChecklistReviewRequested,
+    refreshChecklist,
+  } = usePrepublishChecklist();
+
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
     500
@@ -55,29 +64,43 @@ function InspectorProvider({ children }) {
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
   useEffect(() => {
-    if (highlightedTab) {
+    if (INSPECTOR_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
+      trackEvent('quick_action_tab_change', {
+        name: highlightedTab,
+      });
     }
   }, [highlightedTab]);
 
-  const prepublishAlert = useCallback(
-    () =>
-      checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
-        <Icons.ExclamationOutline className="alert error" />
-      ) : (
-        <Icons.ExclamationOutline className="alert warning" />
-      ),
-    [checklist]
-  );
-
   const inspectorRef = useRef(null);
 
-  const initialTab = DESIGN;
-  const [tab, setTab] = useState(initialTab);
+  const [tab, setTab] = useState(DESIGN);
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
+  const firstPublishAttemptRef = useRef(false);
+
+  useEffect(() => {
+    // If a user wants to review their checklist before publishing
+    // a story that has high priority checklist items in it
+    // we need to go to the checklist tab and focus it.
+    // Because of how context is wrapped around the header
+    // we need to do this by watching the isChecklistReviewRequested value
+    // from the prepublishChecklistProvider.
+    if (isChecklistReviewRequested && !firstPublishAttemptRef.current) {
+      setTab(PREPUBLISH);
+      // Focus prepublish which is the last item in the panel title list
+      inspectorRef.current?.firstChild?.lastChild?.focus();
+      firstPublishAttemptRef.current = isChecklistReviewRequested;
+    }
+    // If a published story that gets reverted to a draft and
+    // it has high priority checklist items in it we should update
+    // this ref so that the checklist panel focuses again.
+    else if (!isChecklistReviewRequested && firstPublishAttemptRef.current) {
+      firstPublishAttemptRef.current = false;
+    }
+  }, [isChecklistReviewRequested]);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
@@ -110,6 +133,11 @@ function InspectorProvider({ children }) {
     }
   }, [currentPage]);
 
+  const ChecklistTabIcon = useCallback(
+    () => <ChecklistIcon checkpoint={currentCheckpoint} className="alert" />,
+    [currentCheckpoint]
+  );
+
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
       setIsUsersLoading(true);
@@ -130,7 +158,6 @@ function InspectorProvider({ children }) {
   const state = {
     state: {
       tab,
-      initialTab,
       users,
       inspectorContentHeight,
       isUsersLoading,
@@ -157,7 +184,7 @@ function InspectorProvider({ children }) {
         },
 
         {
-          icon: checklist.length > 0 ? prepublishAlert : undefined,
+          icon: ChecklistTabIcon,
           id: PREPUBLISH,
           title: __('Checklist', 'web-stories'),
           Pane: PrepublishInspector,

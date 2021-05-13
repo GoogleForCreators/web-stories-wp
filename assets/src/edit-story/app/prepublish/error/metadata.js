@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import isElementBelowLimit from '../../../utils/isElementBelowLimit';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
   MESSAGES,
@@ -167,35 +166,6 @@ export function publisherLogoSize(story) {
       message: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.HELPER_TEXT,
       highlight: states.PUBLISHER_LOGO,
-    };
-  }
-  return undefined;
-}
-
-/**
- * Check for link and page attachment conflicts.
- * If there is an element with a link in the page attachment region, return an error message.
- * Otherwise, return undefined.
- *
- * @param {Page} page The story being checked for critical metadata
- * @return {Guidance|undefined} Guidance object for consumption
- */
-export function linkInPageAttachmentRegion(page) {
-  const { elements } = page;
-  const hasPageAttachment = Boolean(page.pageAttachment?.url?.length);
-  const linksInPageAttachmentArea =
-    hasPageAttachment &&
-    elements
-      .filter(({ link }) => Boolean(link?.url?.length))
-      .filter(isElementBelowLimit);
-
-  if (linksInPageAttachmentArea?.length) {
-    return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      pageId: page.id,
-      elements: linksInPageAttachmentArea,
-      message: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.MAIN_TEXT,
-      help: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.HELPER_TEXT,
     };
   }
   return undefined;

@@ -25,7 +25,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout } from '../../../components';
-import { useTemplateView, usePagePreviewSize } from '../../../utils/';
+import { usePagePreviewSize } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
@@ -33,7 +33,6 @@ import { useSnackbar } from '../../../../design-system';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
-import { PreviewStoryView } from '..';
 import Header from './header';
 import Content from './content';
 
@@ -54,7 +53,6 @@ function TemplateDetails() {
     isLoading,
     templates,
     templatesOrderById,
-    totalPages,
     createStoryFromTemplate,
     fetchMyTemplateById,
     fetchExternalTemplates,
@@ -87,7 +85,6 @@ function TemplateDetails() {
     })
   );
   const { isRTL } = useConfig();
-  const { activePreview } = useTemplateView({ totalPages });
   const { pageSize } = usePagePreviewSize({ isGrid: true });
 
   useEffect(() => {
@@ -183,22 +180,6 @@ function TemplateDetails() {
     createStoryFromTemplate(template);
   }, [createStoryFromTemplate, template]);
 
-  const handlePreviewTemplate = useCallback(
-    (e, previewTemplate) => {
-      activePreview.set(e, previewTemplate);
-    },
-    [activePreview]
-  );
-
-  if (activePreview.value) {
-    return (
-      <PreviewStoryView
-        story={activePreview.value}
-        handleClose={handlePreviewTemplate}
-      />
-    );
-  }
-
   return (
     <FontProvider>
       <TransformProvider>
@@ -217,7 +198,6 @@ function TemplateDetails() {
             relatedTemplates={relatedTemplates}
             templateActions={{
               createStoryFromTemplate,
-              handlePreviewTemplate,
             }}
           />
         </Layout.Provider>

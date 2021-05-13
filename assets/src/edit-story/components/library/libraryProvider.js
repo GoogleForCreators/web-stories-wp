@@ -20,38 +20,36 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
 import { useFeatures } from 'flagged';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
+
 /**
  * Internal dependencies
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
+import { useHighlights } from '../../app/highlights';
 import Context from './context';
-import { MediaPane, MediaIcon } from './panes/media/local';
-import { Media3pPane, Media3pIcon } from './panes/media/media3p';
-import { ShapesPane, ShapesIcon } from './panes/shapes';
-import { TextPane, TextIcon } from './panes/text';
-import { ElementsPane, ElementsIcon } from './panes/elements';
-import { PageLayoutsPane, PageLayoutsIcon } from './panes/pageLayouts';
 import { getPaneId, Pane as SharedPane } from './panes/shared';
+import {
+  ELEMS,
+  LAZY_TABS,
+  MEDIA,
+  MEDIA3P,
+  PAGE_TEMPLATES,
+  SHAPES,
+  TEXT,
+} from './constants';
 
-const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
-const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
-const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
-const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
-const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
-const PAGE_LAYOUTS = {
-  icon: PageLayoutsIcon,
-  Pane: PageLayoutsPane,
-  id: 'pageLayouts',
-};
-
-const LAZY_TABS = [MEDIA3P.id, TEXT.id, PAGE_LAYOUTS.id];
+const LIBRARY_TAB_IDS = new Set(
+  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT]
+    .map((tab) => tab.id)
+    .concat(LAZY_TABS)
+);
 
 function LibraryProvider({ children }) {
-  const initialTab = MEDIA.id;
-  const [tab, setTab] = useState(initialTab);
+  const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
+  const [savedTemplates, setSavedTemplates] = useState(null);
   const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
@@ -63,20 +61,33 @@ function LibraryProvider({ children }) {
     return EmptyPane;
   }, []);
 
+  const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
+    highlightedTab,
+  }));
+
+  useEffect(() => {
+    if (LIBRARY_TAB_IDS.has(highlightedTab)) {
+      setTab(highlightedTab);
+      trackEvent('quick_action_tab_change', {
+        name: highlightedTab,
+      });
+    }
+  }, [highlightedTab]);
+
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
-      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_LAYOUTS]
+      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_TEMPLATES]
         .filter(Boolean)
-        .map(({ icon, Pane, id }) => {
+        .map(({ Pane, id, ...rest }) => {
           const isLazyTab = LAZY_TABS.includes(id);
           const isActiveTab = tab === id;
           const hasBeenRendered = renderedTabs.current[id];
           const shouldRenderPane = !isLazyTab || isActiveTab || hasBeenRendered;
           return {
             id,
-            icon,
             Pane: shouldRenderPane ? Pane : renderEmptyPane(id),
+            ...rest,
           };
         }),
     [tab, showElementsTab, renderEmptyPane]
@@ -86,14 +97,15 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
-        initialTab,
         textSets,
+        savedTemplates,
       },
       actions: {
         setTab,
         insertElement,
         insertTextSet,
         insertTextSetByOffset,
+        setSavedTemplates,
       },
       data: {
         tabs: tabs,
@@ -101,12 +113,12 @@ function LibraryProvider({ children }) {
     }),
     [
       tab,
+      textSets,
+      savedTemplates,
       insertElement,
       insertTextSet,
       insertTextSetByOffset,
-      initialTab,
       tabs,
-      textSets,
     ]
   );
   const getTextSets = useCallback(async () => {

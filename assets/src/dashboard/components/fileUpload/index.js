@@ -26,7 +26,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
@@ -41,7 +40,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Input = styled.input(visuallyHiddenStyles);
+const Input = styled.input(themeHelpers.visuallyHidden);
 
 const UploadFormArea = styled.div`
   display: flex;
@@ -53,11 +52,11 @@ const UploadFormArea = styled.div`
   min-height: 153px;
   padding: 40px 0;
   border-radius: 4px;
-  border: ${({ isDragging, theme }) =>
-    isDragging
-      ? theme.DEPRECATED_THEME.borders.bluePrimary
-      : theme.DEPRECATED_THEME.borders.gray100};
-  border-style: dashed;
+  border: 1px dashed
+    ${({ isDragging, theme }) =>
+      isDragging
+        ? theme.colors.border.focus
+        : theme.colors.border.defaultNormal};
 
   transition: border-color 300ms ease-in;
 `;
@@ -77,7 +76,7 @@ const LoadingIndicator = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  background-color: ${({ theme }) => theme.colors.standard.white};
   opacity: ${({ isLoading }) => (isLoading ? 0.6 : 0)};
   z-index: ${({ isLoading }) => (isLoading ? '100' : '0')};
   pointer-events: none;
@@ -188,7 +187,7 @@ const FileUpload = ({
           ref={fileInputRef}
           type="file"
           id={id}
-          data-testid={'upload-file-input'}
+          data-testid="upload-file-input"
           accept={acceptableFormats.join(',')}
           multiple={isMultiple}
           disabled={isLoading}

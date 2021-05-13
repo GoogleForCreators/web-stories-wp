@@ -54,6 +54,14 @@ describe('Element transform', () => {
     beforeEach(async () => {
       fixture = new Fixture();
       await fixture.render();
+
+      // Switch to 100% zoom to make sure all full pixels are valid coordinates
+      const { zoomSelector } = fixture.editor.carousel;
+      await fixture.events.click(zoomSelector.select);
+      await fixture.events.sleep(300);
+      await fixture.events.click(await zoomSelector.option('100%'));
+      await fixture.events.sleep(300);
+
       // Add a text element and enter edit mode.
       await addTextInEditMode();
     });
@@ -78,7 +86,12 @@ describe('Element transform', () => {
           up(),
         ]);
         const widthAfter = window.getComputedStyle(frame).width;
-        expect(parseInt(widthAfter) - parseInt(widthBefore)).toBe(20);
+        // It should just be within a pixel of correct
+        expect(parseInt(widthAfter) - parseInt(widthBefore)).toBeOneOf([
+          19,
+          20,
+          21,
+        ]);
       });
     });
 
@@ -86,7 +99,7 @@ describe('Element transform', () => {
       it('it should allow rotating in text edit mode', async () => {
         // Test that rotation handle exists in edit mode.
         const rotationHandle = fixture.container.querySelector(
-          '.moveable-rotation-line .moveable-control'
+          '.moveable-rotation-control'
         );
         expect(rotationHandle).toBeDefined();
 

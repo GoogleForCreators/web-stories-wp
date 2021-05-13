@@ -41,7 +41,6 @@ import {
 import { Dialog, LoadingContainer } from '../../../../../components';
 import {
   VIEW_STYLE,
-  STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
@@ -55,14 +54,12 @@ function StoriesView({
   storyActions,
   stories,
   view,
-  initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
-  const enableStoryPreviews = useFeature('enableStoryPreviews');
 
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
@@ -82,11 +79,13 @@ function StoriesView({
     // then we use storiesById to find the proper index of the interacted with item and use that to decide where to move focus
     if (focusedStory.id && !returnStoryFocusId) {
       const storyArrayIndex = storiesById.indexOf(focusedStory.id);
-      const adjustedIndex = focusedStory.isDeleted ? -1 : 0;
+      const isDeletedAdjustmentDirection = storyArrayIndex > 0 ? -1 : +1;
+      const adjustedIndex = focusedStory.isDeleted
+        ? isDeletedAdjustmentDirection
+        : 0;
       const focusIndex = storyArrayIndex + adjustedIndex;
       const storyIdToFocus = storiesById[focusIndex];
-
-      setReturnStoryFocusId(storyIdToFocus);
+      storyIdToFocus && setReturnStoryFocusId(storyIdToFocus);
     }
   }, [focusedStory, returnStoryFocusId, storiesById]);
 
@@ -136,6 +135,7 @@ function StoriesView({
       setContextMenuId(-1);
       trackEvent('duplicate_story');
       storyActions.duplicateStory(story);
+      setFocusedStory({ id: story.id });
     },
     [storyActions]
   );
@@ -173,6 +173,7 @@ function StoriesView({
               ),
         dismissable: true,
       });
+      setFocusedStory({ id: story.id });
     },
     [showSnackbar]
   );
@@ -250,17 +251,15 @@ function StoriesView({
       return (
         <StoryGridView
           bottomActionLabel={__('Open in editor', 'web-stories')}
-          centerActionLabelByStatus={
-            enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
-          }
           isLoading={loading?.isLoading}
           pageSize={view.pageSize}
           renameStory={renameStory}
-          previewStory={storyActions.handlePreviewStory}
           storyMenu={storyMenu}
           stories={stories}
-          returnStoryFocusId={returnStoryFocusId}
-          initialFocusStoryId={initialFocusStoryId}
+          returnStoryFocusId={{
+            value: returnStoryFocusId,
+            set: setReturnStoryFocusId,
+          }}
         />
       );
     }
@@ -268,15 +267,12 @@ function StoriesView({
     // Hide all stories when filter is triggered.
     return null;
   }, [
-    enableStoryPreviews,
     loading,
     filterValue,
-    initialFocusStoryId,
     renameStory,
     returnStoryFocusId,
     sort,
     stories,
-    storyActions?.handlePreviewStory,
     storyMenu,
     view,
   ]);
@@ -339,6 +335,5 @@ StoriesView.propTypes = {
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,
   view: ViewPropTypes,
-  initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;

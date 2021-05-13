@@ -26,7 +26,8 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Row, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { getCommonValue, getColorPickerActions } from '../../shared';
+import { getCommonValue } from '../../shared';
+import getColorPickerActions from '../../shared/getColorPickerActions';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');

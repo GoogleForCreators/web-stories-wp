@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import { fireEvent, createEvent } from '@testing-library/react';
+import { fireEvent, createEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import FileUpload from '../';
+import { renderWithProviders } from '../../../testUtils';
+import FileUpload from '..';
 
 describe('FileUpload', () => {
   it('should render upload component by default', () => {
-    const { queryByTestId } = renderWithProviders(
+    renderWithProviders(
       <FileUpload
         onSubmit={jest.fn}
         id={'898989'}
@@ -36,12 +36,12 @@ describe('FileUpload', () => {
       />
     );
     expect(
-      queryByTestId('file-upload-content-container')
+      screen.queryByTestId('file-upload-content-container')
     ).not.toBeInTheDocument();
   });
 
   it('should render upload component with loading overlay when isLoading is true', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <FileUpload
         onSubmit={jest.fn}
         id={'898989'}
@@ -50,13 +50,13 @@ describe('FileUpload', () => {
         isLoading
       />
     );
-    expect(getByText(/^Loading/)).toBeInTheDocument();
+    expect(screen.getByText(/^Loading/)).toBeInTheDocument();
   });
 
   it('should trigger onSubmit when file is added through input', () => {
     const onSubmitMock = jest.fn();
 
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <FileUpload
         onSubmit={onSubmitMock}
         id={'898989'}
@@ -65,7 +65,7 @@ describe('FileUpload', () => {
       />
     );
 
-    const UploadInput = getByTestId('upload-file-input');
+    const UploadInput = screen.getByTestId('upload-file-input');
     expect(UploadInput).toBeInTheDocument();
     fireEvent.click(UploadInput);
     fireEvent.change(UploadInput, { target: { files: {} } });
@@ -78,7 +78,7 @@ describe('FileUpload', () => {
     const mockFile = new File([''], 'mockfile.png', {
       type: 'image/png',
     });
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <FileUpload
         onSubmit={onSubmitMock}
         id={'898989'}
@@ -87,7 +87,7 @@ describe('FileUpload', () => {
       />
     );
 
-    const DropArea = getByTestId('file-upload-drop-area');
+    const DropArea = screen.getByTestId('file-upload-drop-area');
     expect(DropArea).toBeInTheDocument();
 
     const dropEvent = createEvent.drop(DropArea);

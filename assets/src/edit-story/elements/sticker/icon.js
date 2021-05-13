@@ -17,19 +17,28 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-
+import stickers from '@web-stories-wp/stickers';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
-import { Media } from '../../icons';
+import StoryPropTypes from '../../types';
+import { noop } from '../../../design-system';
 
-function StickerIcon() {
-  const alt = __('Sticker element', 'web-stories');
-  return <Media aria-label={alt} />;
+const style = {
+  display: 'block',
+  height: 20,
+  width: 'auto',
+};
+
+function StickerLayerContent({ element }) {
+  const { sticker } = element;
+  const Sticker = stickers[sticker.type]?.svg || noop;
+
+  return <Sticker style={style} />;
 }
 
-export default StickerIcon;
+StickerLayerContent.propTypes = {
+  element: StoryPropTypes.elements.sticker.isRequired,
+};
+
+export default StickerLayerContent;

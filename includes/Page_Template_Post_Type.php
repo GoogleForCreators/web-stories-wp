@@ -26,12 +26,14 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Base_Controller;
+use Google\Web_Stories\REST_API\Page_Template_Controller;
+use Google\Web_Stories\Traits\Post_Type;
 
 /**
  * Class Page_Template_Post_Type.
  */
 class Page_Template_Post_Type extends Service_Base {
+	use Post_Type;
 	/**
 	 * The slug of the page template post type.
 	 * Limited to web-story-page as web-story-page-template goes over character limit.
@@ -48,26 +50,25 @@ class Page_Template_Post_Type extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$capabilities     = [];
-		if ( $post_type_object ) {
-			$capabilities = [
-				'edit_post'              => $post_type_object->cap->edit_posts,
-				'read_post'              => $post_type_object->cap->edit_posts,
-				'delete_post'            => $post_type_object->cap->delete_posts,
-				'edit_posts'             => $post_type_object->cap->edit_posts,
-				'edit_others_posts'      => $post_type_object->cap->edit_posts,
-				'delete_posts'           => $post_type_object->cap->delete_posts,
-				'publish_posts'          => $post_type_object->cap->edit_posts,
-				'read_private_posts'     => $post_type_object->cap->edit_posts,
-				'delete_private_posts'   => $post_type_object->cap->delete_posts,
-				'delete_published_posts' => $post_type_object->cap->delete_posts,
-				'delete_others_posts'    => $post_type_object->cap->delete_posts,
-				'edit_private_posts'     => $post_type_object->cap->edit_posts,
-				'edit_published_posts'   => $post_type_object->cap->edit_posts,
-				'create_posts'           => $post_type_object->cap->edit_posts,
-			];
-		}
+		$edit_posts   = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' );
+		$delete_posts = $this->get_post_type_cap_name( Story_Post_Type::POST_TYPE_SLUG, 'delete_posts' );
+		$capabilities = [
+			'edit_post'              => $edit_posts,
+			'read_post'              => $edit_posts,
+			'delete_post'            => $delete_posts,
+			'edit_posts'             => $edit_posts,
+			'edit_others_posts'      => $edit_posts,
+			'delete_posts'           => $delete_posts,
+			'publish_posts'          => $edit_posts,
+			'read_private_posts'     => $edit_posts,
+			'delete_private_posts'   => $delete_posts,
+			'delete_published_posts' => $delete_posts,
+			'delete_others_posts'    => $delete_posts,
+			'edit_private_posts'     => $edit_posts,
+			'edit_published_posts'   => $edit_posts,
+			'create_posts'           => $edit_posts,
+		];
+
 		register_post_type(
 			self::POST_TYPE_SLUG,
 			[
@@ -88,10 +89,11 @@ class Page_Template_Post_Type extends Service_Base {
 					'attributes'               => __( 'Page Template Attributes', 'web-stories' ),
 					'insert_into_item'         => __( 'Insert into page template', 'web-stories' ),
 					'uploaded_to_this_item'    => __( 'Uploaded to this page template', 'web-stories' ),
-					'featured_image'           => __( 'Featured Image', 'web-stories' ),
-					'set_featured_image'       => __( 'Set featured image', 'web-stories' ),
-					'remove_featured_image'    => __( 'Remove featured image', 'web-stories' ),
-					'use_featured_image'       => __( 'Use as featured image', 'web-stories' ),
+					'featured_image'           => _x( 'Featured Image', 'page template', 'web-stories' ),
+					'set_featured_image'       => _x( 'Set featured image', 'page template', 'web-stories' ),
+					'remove_featured_image'    => _x( 'Remove featured image', 'page template', 'web-stories' ),
+					'use_featured_image'       => _x( 'Use as featured image', 'page template', 'web-stories' ),
+					'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
 					'filter_items_list'        => __( 'Filter page templates list', 'web-stories' ),
 					'items_list_navigation'    => __( 'Page Templates list navigation', 'web-stories' ),
 					'items_list'               => __( 'Page Templates list', 'web-stories' ),
@@ -102,6 +104,8 @@ class Page_Template_Post_Type extends Service_Base {
 					'item_updated'             => __( 'Page Template updated.', 'web-stories' ),
 					'menu_name'                => _x( 'Page Templates', 'admin menu', 'web-stories' ),
 					'name_admin_bar'           => _x( 'Page Template', 'add new on admin bar', 'web-stories' ),
+					'item_link'                => _x( 'Page Template Link', 'navigation link block title', 'web-stories' ),
+					'item_link_description'    => _x( 'A link to a page template.', 'navigation link block description', 'web-stories' ),
 				],
 				'supports'              => [
 					'title',
@@ -109,10 +113,11 @@ class Page_Template_Post_Type extends Service_Base {
 					'excerpt',
 				],
 				'capabilities'          => $capabilities,
+				'rewrite'               => false,
 				'public'                => false,
 				'show_ui'               => false,
 				'show_in_rest'          => true,
-				'rest_controller_class' => Stories_Base_Controller::class,
+				'rest_controller_class' => Page_Template_Controller::class,
 			]
 		);
 	}

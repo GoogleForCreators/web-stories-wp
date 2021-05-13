@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @brittanyirl
+			 * Issue: 6148
+			 * Creation date: 2021-05-11
+			 */
+			[
+				'name'        => 'enableQuickActionMenus',
+				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
+				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 6708
 			 * Creation date: 2021-03-23
@@ -298,28 +309,6 @@ class Experiments extends Service_Base {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: 3390
-			 * Creation date: 2020-07-08
-			 */
-			[
-				'name'        => 'enableTemplatePreviews',
-				'label'       => __( 'Template Previews', 'web-stories' ),
-				'description' => __( 'Enable template preview functionality', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 3391
-			 * Creation date: 2020-08-06
-			 */
-			[
-				'name'        => 'enableStoryPreviews',
-				'label'       => __( 'Story Previews', 'web-stories' ),
-				'description' => __( 'Enable story preview functionality', 'web-stories' ),
-				'group'       => 'dashboard',
-			],
-			/**
 			 * Author: @dmmulroy
 			 * Issue: #2098
 			 * Creation date: 2020-06-04
@@ -376,15 +365,15 @@ class Experiments extends Service_Base {
 				'default'     => true,
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #5669
-			 * Creation date: 2021-01-21
+			 * Author: @spacedmonkey
+			 * Issue: #6943
+			 * Creation date: 2021-04-07
 			 */
 			[
-				'name'        => 'videoOptimization',
-				'label'       => __( 'Video optimization', 'web-stories' ),
-				'description' => __( 'Transcode and optimize videos before upload', 'web-stories' ),
-				'group'       => 'general',
+				'name'        => 'enablePrePublishVideoOptimization',
+				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
+				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -398,17 +387,6 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @barklund
-			 * Issue: #4022
-			 * Creation date: 2021-03-25
-			 */
-			[
-				'name'        => 'hasCanvasZoom',
-				'label'       => __( 'Canvas Zoom', 'web-stories' ),
-				'description' => __( 'Enable variable zoom levels on the canvas', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @miina
 			 * Issue: #7055
 			 * Creation date: 2021-04-09
@@ -418,6 +396,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Custom Page Templates', 'web-stories' ),
 				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}

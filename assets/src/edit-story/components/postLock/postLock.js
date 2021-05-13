@@ -156,6 +156,9 @@ function PostLock() {
   // Register repeating callback to check lock every 150 seconds.
   useEffect(() => {
     const timeout = setInterval(() => {
+      if (!postLockInterval) {
+        return;
+      }
       if (currentUserLoaded) {
         cachedDoGetStoryLock.current();
         setIsFirstTime(false);
@@ -173,7 +176,7 @@ function PostLock() {
   if (isFirstTime) {
     return (
       <PostLockDialog
-        open={showDialog}
+        isOpen={showDialog}
         user={user}
         onClose={closeDialog}
         previewLink={previewLink}
@@ -185,7 +188,7 @@ function PostLock() {
   // Second time around, show message that story was taken over.
   return (
     <PostTakeOverDialog
-      open={showDialog}
+      isOpen={showDialog}
       user={user}
       dashboardLink={dashboardLink}
       onClose={closeDialog}

@@ -23,13 +23,13 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import useLocalMedia from '../useLocalMedia';
-import MediaContext from '../../../../app/media/context';
+import MediaContext from '../../context';
 
 describe('useLocalMedia', () => {
   function renderUseLocalMedia(mediaContextValue, selector) {
-    const wrapper = (params) => (
+    const wrapper = ({ children }) => (
       <MediaContext.Provider value={mediaContextValue}>
-        {params.children}
+        {children}
       </MediaContext.Provider>
     );
 

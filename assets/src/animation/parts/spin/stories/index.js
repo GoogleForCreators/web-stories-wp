@@ -31,6 +31,7 @@ export default {
 
 const animations = [
   {
+    id: '1',
     targets: ['e1'],
     type: ANIMATION_TYPES.SPIN,
     delay: 2000,
@@ -39,6 +40,7 @@ const animations = [
     rotation: 360,
   },
   {
+    id: '2',
     targets: ['e1'],
     type: ANIMATION_TYPES.SPIN,
     duration: 2000,
@@ -46,6 +48,7 @@ const animations = [
     rotation: 360,
   },
   {
+    id: '3',
     targets: ['e2'],
     type: ANIMATION_TYPES.SPIN,
     duration: 8000,
@@ -53,6 +56,7 @@ const animations = [
     rotation: 360,
   },
   {
+    id: '4',
     targets: ['e3'],
     type: ANIMATION_TYPES.SPIN,
     duration: 8000,
@@ -60,6 +64,7 @@ const animations = [
     rotation: -360,
   },
   {
+    id: '5',
     targets: ['e4'],
     type: ANIMATION_TYPES.SPIN,
     duration: 2000,

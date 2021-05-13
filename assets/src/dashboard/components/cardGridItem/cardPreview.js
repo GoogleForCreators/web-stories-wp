@@ -30,6 +30,7 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   ThemeGlobals,
+  useFocusOut,
 } from '../../../design-system';
 import {
   PreviewErrorBoundary,
@@ -39,7 +40,6 @@ import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import { DEFAULT_STORY_PAGE_ADVANCE_DURATION } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
-import { useFocusOut } from '../../utils';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`

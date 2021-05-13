@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import MediaOptimizationSettings from '../index';
+import MediaOptimizationSettings from '..';
 
 describe('Editor Settings: <MediaOptimizationSettings />', function () {
   it('should render the media optimization as checked when selected is true.', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <MediaOptimizationSettings
         disabled={false}
         onCheckboxSelected={jest.fn()}
@@ -35,11 +35,11 @@ describe('Editor Settings: <MediaOptimizationSettings />', function () {
       />
     );
 
-    expect(getByRole('checkbox')).toBeChecked();
+    expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
   it('should render the media optimization as not checked when selected is false.', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <MediaOptimizationSettings
         disabled={false}
         onCheckboxSelected={jest.fn()}
@@ -47,12 +47,12 @@ describe('Editor Settings: <MediaOptimizationSettings />', function () {
       />
     );
 
-    expect(getByRole('checkbox')).not.toBeChecked();
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
   });
 
   it('should call the change function when the checkbox is clicked.', function () {
     const changeFn = jest.fn();
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <MediaOptimizationSettings
         disabled={false}
         onCheckboxSelected={changeFn}
@@ -60,7 +60,7 @@ describe('Editor Settings: <MediaOptimizationSettings />', function () {
       />
     );
 
-    const checkbox = getByRole('checkbox');
+    const checkbox = screen.getByRole('checkbox');
     fireEvent.click(checkbox);
 
     expect(changeFn).toHaveBeenCalledTimes(1);

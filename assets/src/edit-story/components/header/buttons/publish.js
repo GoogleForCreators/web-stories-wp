@@ -27,8 +27,10 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import TitleMissingDialog from '../titleMissingDialog';
-import useHeader from '../use';
+import {
+  usePrepublishChecklist,
+  ReviewChecklistDialog,
+} from '../../inspector/prepublish';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 const TRANSITION_DURATION = 300;
@@ -46,7 +48,12 @@ function Publish() {
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
-  const { titleInput } = useHeader();
+
+  const {
+    shouldReviewDialogBeSeen,
+    focusChecklistTab,
+  } = usePrepublishChecklist();
+
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
 
@@ -59,7 +66,7 @@ function Publish() {
 
   useEffect(() => {
     if (showDialog) {
-      trackEvent('missing_title_dialog');
+      trackEvent('review_prepublish_checklist');
     }
   }, [showDialog]);
 
@@ -75,21 +82,21 @@ function Publish() {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
-    if (!title) {
+    if (shouldReviewDialogBeSeen) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [title, publish]);
+  }, [shouldReviewDialogBeSeen, publish]);
 
-  const fixTitle = useCallback(() => {
+  const handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
-    // Focus title input when dialog is closed
+    // Focus Checklist Tab
     // Disable reason: If component unmounts, nothing bad can happen
     // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => titleInput?.focus(), TRANSITION_DURATION);
-  }, [titleInput]);
+    setTimeout(() => focusChecklistTab(), TRANSITION_DURATION);
+  }, [focusChecklistTab]);
 
   const handleClose = useCallback(() => setShowDialog(false), []);
 
@@ -104,10 +111,10 @@ function Publish() {
         disabled={!capabilities?.hasPublishAction || isSaving || isUploading}
         text={text}
       />
-      <TitleMissingDialog
-        open={Boolean(showDialog)}
+      <ReviewChecklistDialog
+        isOpen={showDialog}
         onIgnore={publish}
-        onFix={fixTitle}
+        onReview={handleReviewChecklist}
         onClose={handleClose}
       />
     </>

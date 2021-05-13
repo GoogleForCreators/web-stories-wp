@@ -32,9 +32,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import MediaGallery from '../common/mediaGallery';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
+import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,
   MediaGalleryInnerContainer,

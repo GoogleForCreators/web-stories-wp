@@ -69,6 +69,7 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       </Provider>
     );
 
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div
         data-testid="story-element-wrapper"

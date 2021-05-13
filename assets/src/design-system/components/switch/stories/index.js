@@ -24,7 +24,7 @@ import { useState } from 'react';
  */
 import { action } from '@storybook/addon-actions';
 import { text } from '@storybook/addon-knobs';
-import { Switch } from '../';
+import { Switch } from '..';
 import { Headline, Text } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
 

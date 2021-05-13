@@ -43,11 +43,21 @@ function CurrentUserProvider({ children }) {
     [_updateCurrentUser]
   );
 
+  const toggleWebStoriesMediaOptimization = useCallback(() => {
+    return updateCurrentUser({
+      meta: {
+        web_stories_media_optimization: !currentUser.meta
+          .web_stories_media_optimization,
+      },
+    });
+  }, [currentUser, updateCurrentUser]);
+
   const state = {
     state: {
       currentUser,
     },
     actions: {
+      toggleWebStoriesMediaOptimization,
       updateCurrentUser,
     },
   };

@@ -36,6 +36,7 @@ import {
   themeHelpers,
   ThemeGlobals,
 } from '../../../../../design-system';
+import { focusStyle } from '../../shared';
 import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 8px less padding to apply that from the content.
@@ -110,11 +111,7 @@ const Collapse = styled.button`
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 
   svg {
     width: 32px;
@@ -202,6 +199,7 @@ function Title({
   ) : (
     <Icons.ChevronDownSmall />
   );
+
   return (
     <Header
       isPrimary={isPrimary}

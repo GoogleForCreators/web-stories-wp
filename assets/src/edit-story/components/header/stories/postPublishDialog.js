@@ -33,7 +33,7 @@ export default {
 export const _default = () => {
   return (
     <PostPublishDialog
-      open
+      isOpen
       onClose={action('closed')}
       storyURL={text('Story URL', 'https://example.com')}
       confirmURL={text('Confirm URL', 'https://example.com')}

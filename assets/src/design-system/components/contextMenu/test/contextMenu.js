@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { act, fireEvent, screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { ContextMenu } from '..';
@@ -29,51 +34,86 @@ const items = [
 
 describe('ContextMenu', () => {
   it('contextMenu should be invisible', () => {
-    const { queryByRole } = renderWithProviders(<ContextMenu items={items} />);
+    renderWithProviders(<ContextMenu items={items} />);
 
-    expect(queryByRole('button')).not.toBeInTheDocument();
-    expect(queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
   it('contextMenu should be visible', () => {
-    const { getByRole } = renderWithProviders(
-      <ContextMenu items={items} isOpen />
+    renderWithProviders(<ContextMenu items={items} isOpen />);
+
+    expect(screen.getByRole('button')).toBeInTheDocument();
+    expect(screen.getByRole('link')).toBeInTheDocument();
+  });
+
+  it('clicking away from context menu should call onDismiss', () => {
+    const onDismiss = jest.fn();
+    renderWithProviders(
+      <ContextMenu items={items} isOpen onDismiss={onDismiss} />
     );
 
-    expect(getByRole('button')).toBeInTheDocument();
-    expect(getByRole('link')).toBeInTheDocument();
+    const mask = screen.getByTestId('context-menu-mask');
+    act(() => {
+      fireEvent.click(mask);
+    });
+
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('should focus the first focusable element when the menu is opened', () => {
+    // need menu to start closed since focus gets changed
+    // when the menu goes from closed -> open
+    const { rerender } = renderWithProviders(
+      <ContextMenu isOpen={false} items={items} />
+    );
+
+    rerender(<ContextMenu isOpen items={items} />);
+
+    // opening the menu should focus the first focusable item
+    const firstButton = screen.queryByRole('button', { name: items[0].label });
+    expect(firstButton).toHaveFocus();
   });
 });
 
 describe('MenuItem', () => {
   it('should render a button if `onClick` is passed as a prop', () => {
-    const { queryByRole, getByText } = renderWithProviders(
-      <MenuItem label="my label" onClick={noop} />
-    );
+    renderWithProviders(<MenuItem label="my label" onClick={noop} />);
 
-    expect(getByText('my label')).toBeInTheDocument();
-    expect(queryByRole('button')).toBeInTheDocument();
-    expect(queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.getByText('my label')).toBeInTheDocument();
+    expect(screen.queryByRole('button')).toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
 
   it('should render a link if `href` is passed as a prop', () => {
-    const { queryByRole, getByText } = renderWithProviders(
-      <MenuItem label="my label" href="test" />
-    );
+    renderWithProviders(<MenuItem label="my label" href="test" />);
 
-    expect(getByText('my label')).toBeInTheDocument();
-    expect(queryByRole('button')).not.toBeInTheDocument();
-    expect(queryByRole('link')).toBeInTheDocument();
+    expect(screen.getByText('my label')).toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link')).toBeInTheDocument();
   });
 
   it('should render a div if neither `onClick` nor `href` are passed as props', () => {
-    const { queryByRole, getByText } = renderWithProviders(
-      <MenuItem label="my label" />
+    renderWithProviders(<MenuItem label="my label" />);
+
+    expect(screen.getByText('my label')).toBeInTheDocument();
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  });
+
+  it('should call onClick and onDismiss when a clickable item is clicked', () => {
+    const onClick = jest.fn();
+    const onDismiss = jest.fn();
+    renderWithProviders(
+      <MenuItem label="my label" onClick={onClick} onDismiss={onDismiss} />
     );
 
-    expect(getByText('my label')).toBeInTheDocument();
-    expect(queryByRole('button')).not.toBeInTheDocument();
-    expect(queryByRole('link')).not.toBeInTheDocument();
+    const button = screen.getByRole('button');
+
+    fireEvent.click(button);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -23,10 +23,12 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useAPI, useConfig } from '../..';
+import { useAPI } from '../../api';
+import { useConfig } from '../../config';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
+import useProcessVideo from '../utils/useProcessVideo';
 import useUploadMedia from '../useUploadMedia';
-import { getResourceFromAttachment } from '../utils';
+import getResourceFromAttachment from '../utils/getResourceFromAttachment';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -62,7 +64,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     deleteMediaElement,
   } = reducerActions;
   const {
-    actions: { getMedia },
+    actions: { getMedia, updateMedia },
   } = useAPI();
 
   const fetchMedia = useCallback(
@@ -157,6 +159,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
+  const { optimizeVideo } = useProcessVideo({
+    uploadVideoPoster,
+    uploadMedia,
+    updateMedia,
+    deleteMediaElement,
+  });
+
   const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local }) => {
       if (
@@ -193,6 +202,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadVideoPoster,
       deleteMediaElement,
       updateMediaElement,
+      optimizeVideo,
     },
   };
 }

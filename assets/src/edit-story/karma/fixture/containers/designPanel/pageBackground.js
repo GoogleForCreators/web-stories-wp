@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { Color } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -33,5 +34,19 @@ export class PageBackground extends AbstractPanel {
 
   get flipHorizontal() {
     return this.getByRole('button', { name: /Flip horizontally/i });
+  }
+
+  get detachBg() {
+    return this.getByRole('button', { name: /Detach background/i });
+  }
+
+  get backgroundColor() {
+    const color = this._get(
+      this.getByRole('region', { name: /Color input: Background color/ }),
+      'backgroundColor',
+      Color
+    );
+    color.label = 'Background color';
+    return color;
   }
 }

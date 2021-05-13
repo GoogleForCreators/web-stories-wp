@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { Pill } from '../';
+import { Pill } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Pill', () => {
@@ -31,23 +30,23 @@ describe('Pill', () => {
   const onClickMock = jest.fn();
 
   it('should render the default button as a pill', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <Pill onClick={onClickMock} isActive={false}>
         {pillText}
       </Pill>
     );
 
-    expect(getByRole('button')).toHaveTextContent(pillText);
+    expect(screen.getByRole('button')).toHaveTextContent(pillText);
   });
 
   it('should not trigger a click on <Pill /> when disabled', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Pill disabled onClick={onClickMock} isActive={false}>
         {pillText}
       </Pill>
     );
 
-    const pil = getByText(pillText);
+    const pil = screen.getByText(pillText);
 
     fireEvent.click(pil);
 
@@ -55,13 +54,13 @@ describe('Pill', () => {
   });
 
   it('should simulate a click on <Pill />', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Pill onClick={onClickMock} isActive={false}>
         {pillText}
       </Pill>
     );
 
-    const pil = getByText(pillText);
+    const pil = screen.getByText(pillText);
 
     fireEvent.click(pil);
 

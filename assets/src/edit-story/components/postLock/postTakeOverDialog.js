@@ -36,13 +36,13 @@ import { Img } from './shared';
 
 /**
  * @param {Object} props Component props.
- * @param {boolean} props.open If open or not.
+ * @param {boolean} props.isOpen If open or not.
  * @param {Object} props.user Lock owner's user data as a object.
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {Function} props.onClose Function when dialog is closed.
  * @return {*} Render.
  */
-function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
+function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
   const dialogTile = __(
     'Someone else has taken over this story.',
     'web-stories'
@@ -55,7 +55,7 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
 
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       title={dialogTile}
       contentLabel={dialogTile}
       onClose={onClose}
@@ -72,7 +72,13 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {user.avatar && (
-          <Img src={user.avatar} alt={user.name} height={48} width={48} />
+          <Img
+            src={user.avatar}
+            alt={user.name}
+            height={48}
+            width={48}
+            crossOrigin="anonymous"
+          />
         )}
         {dialogContent}
       </Text>
@@ -81,7 +87,7 @@ function PostTakeOverDialog({ open, user, dashboardLink, onClose }) {
 }
 
 PostTakeOverDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,

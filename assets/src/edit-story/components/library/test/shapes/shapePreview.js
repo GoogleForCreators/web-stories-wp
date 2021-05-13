@@ -17,19 +17,19 @@
 /**
  * External dependencies
  */
-import { act } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import ShapePreview from '../../panes/shapes/shapePreview';
-import { renderWithTheme } from '../../../../testUtils/index';
-
-jest.mock('../../useLibrary');
+import { renderWithTheme } from '../../../../testUtils';
 import useLibrary from '../../useLibrary';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../constants';
 import { UnitsProvider } from '../../../../units';
 import CanvasContext from '../../../../app/canvas/context';
+
+jest.mock('../../useLibrary');
 
 describe('ShapePreview', () => {
   const insertElement = jest.fn();
@@ -61,7 +61,7 @@ describe('ShapePreview', () => {
           designSpaceGuideline: {},
         },
       };
-      const { getByLabelText } = renderWithTheme(
+      renderWithTheme(
         <CanvasContext.Provider value={canvasValue}>
           <UnitsProvider
             pageSize={{
@@ -75,7 +75,7 @@ describe('ShapePreview', () => {
           </UnitsProvider>
         </CanvasContext.Provider>
       );
-      shapePreviewElement = getByLabelText(rectangleMask.name);
+      shapePreviewElement = screen.getByLabelText(rectangleMask.name);
     });
 
     expect(shapePreviewElement).toBeInTheDocument();

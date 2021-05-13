@@ -52,6 +52,8 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
+    isPlaceholder: undefined,
+    isOptimized: false,
     sizes: {
       medium: {
         file: 'IMAGE-146x300.jpg',
@@ -160,12 +162,10 @@ const renderAllProviders = ({
   apiState,
 }) =>
   renderHook(() => useContextValueProvider(reducerState, reducerActions), {
-    // eslint-disable-next-line react/display-name
-    wrapper: (params) => (
+    // eslint-disable-next-line react/display-name, react/prop-types
+    wrapper: ({ children }) => (
       <ConfigProvider config={configState}>
-        <ApiContext.Provider value={apiState}>
-          {params.children}
-        </ApiContext.Provider>
+        <ApiContext.Provider value={apiState}>{children}</ApiContext.Provider>
       </ConfigProvider>
     ),
   });

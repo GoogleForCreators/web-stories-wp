@@ -30,7 +30,7 @@ import {
   formattedTemplatesArray,
 } from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
-import Content from '../index';
+import Content from '..';
 
 const search = {
   keyword: '',

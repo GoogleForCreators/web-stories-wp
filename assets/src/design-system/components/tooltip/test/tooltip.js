@@ -15,19 +15,24 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Tooltip } from '../';
+import { Tooltip } from '..';
 
 describe('<Tooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
-    const { queryByText } = renderWithProviders(
+    renderWithProviders(
       <Tooltip title={'Some tooltip text'}>
         <button>{'hover to see tooltip'}</button>
       </Tooltip>
     );
 
-    expect(queryByText('Some tooltip text')).not.toBeInTheDocument();
+    expect(screen.queryByText('Some tooltip text')).not.toBeInTheDocument();
   });
 });
