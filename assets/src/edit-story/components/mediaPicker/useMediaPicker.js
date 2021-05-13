@@ -98,7 +98,7 @@ export default function useMediaPicker({
         title,
         library: {
           type,
-          source: 'web_stories_editor',
+          source: 'web_stories_editor', // Add a extra param to query, make easy to filter at Server level.
         },
         button: {
           text: buttonInsertText,

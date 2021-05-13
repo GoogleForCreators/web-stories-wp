@@ -84,7 +84,7 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
-	 * Add VideoPress to allowed mime types.
+	 * Add VideoPress to allowed mime types. If the site does not support videopress, this allow will be filtered out.
 	 *
 	 * @since 1.8.0
 	 *
@@ -113,6 +113,7 @@ class Jetpack extends Service_Base {
 			return $response;
 		}
 
+		// Get data from post, so we filter out requests from other locations.
 		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( ! isset( $post_data['action'] ) || 'query-attachments' !== $post_data['action'] ) {
 			return $response;
@@ -122,6 +123,7 @@ class Jetpack extends Service_Base {
 			return $response;
 		}
 
+		// Reset mime type back to mp4, as this is the correct value.
 		$response['mime'] = 'video/mp4';
 
 		return $response;
@@ -144,6 +146,7 @@ class Jetpack extends Service_Base {
 
 		$data = $response->get_data();
 
+		// Reset mime type back to mp4, as this is the correct value.
 		$data['mime_type'] = 'video/mp4';
 		$response->set_data( $data );
 

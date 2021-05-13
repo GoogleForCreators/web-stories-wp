@@ -215,6 +215,8 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		 *
 		 * Allows modification of the attachment right before it is returned.
 		 *
+		 * Note the filter is run after rest_prepare_attachment is run. This filter is designed to only target web stories rest api requests.
+		 *
 		 * @since 1.8.0
 		 *
 		 * @param WP_REST_Response $response The response object.
