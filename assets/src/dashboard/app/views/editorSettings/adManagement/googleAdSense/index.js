@@ -60,15 +60,14 @@ export const TEXT = {
   PUBLISHER_ID_PLACEHOLDER: __('Enter your Publisher ID', 'web-stories'),
   PUBLISHER_ID_LABEL: __('Google AdSense Publisher ID', 'web-stories'),
   SLOT_ID_CONTEXT: sprintf(
-    /* translators: %s: example value. */
-    __('Example: %s.', 'web-stories'),
+    __(
+      /* translators: %s: example value. */
+      'Example: %s. Copy the slot ID from <a>your ad unit’s code</a>. The same ad unit will be used for all of your Web Stories.',
+      'web-stories'
+    ),
     '1234567890'
   ),
-  SLOT_ID_HELP: __(
-    'Copy the slot ID from <a>your ad unit’s code</a>. The same ad unit will be used for all of your Web Stories.',
-    'web-stories'
-  ),
-  SLOT_ID_HELP_LINK: __(
+  SLOT_ID_CONTEXT_LINK: __(
     'https://support.google.com/adsense/answer/9274019',
     'web-stories'
   ),
@@ -239,12 +238,11 @@ function GoogleAdSenseSettings({
         </SaveButton>
       </InlineForm>
       <TextInputHelperText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {TEXT.SLOT_ID_CONTEXT}{' '}
         <TranslateWithMarkup
           mapping={{
             a: (
               <InlineLink
-                href={TEXT.SLOT_ID_HELP_LINK}
+                href={TEXT.SLOT_ID_CONTEXT_LINK}
                 rel="noreferrer"
                 target="_blank"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -252,7 +250,7 @@ function GoogleAdSenseSettings({
             ),
           }}
         >
-          {TEXT.SLOT_ID_HELP}
+          {TEXT.SLOT_ID_CONTEXT}
         </TranslateWithMarkup>
       </TextInputHelperText>
     </>
