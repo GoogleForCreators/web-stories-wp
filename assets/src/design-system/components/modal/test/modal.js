@@ -18,6 +18,7 @@
  * External dependencies
  */
 import ReactModal from 'react-modal';
+import { screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -27,24 +28,26 @@ import { Modal } from '..';
 
 describe('DesignSystem/Components/Modal', () => {
   it('should not render a modal by default', () => {
-    const { queryByRole, container } = renderWithProviders(
+    const { container } = renderWithProviders(
       <Modal onClose={jest.fn}>
         <p>{'modal child'}</p>
       </Modal>
     );
     ReactModal.setAppElement(container);
 
-    expect(queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('dialog', { hidden: true })
+    ).not.toBeInTheDocument();
   });
 
   it('should render a modal when isOpen is true', () => {
-    const { getByRole, container } = renderWithProviders(
+    const { container } = renderWithProviders(
       <Modal onClose={jest.fn} isOpen>
         <p>{'modal child'}</p>
       </Modal>
     );
     ReactModal.setAppElement(container);
 
-    expect(getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
 });

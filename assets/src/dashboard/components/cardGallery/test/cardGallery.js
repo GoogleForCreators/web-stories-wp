@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -44,13 +44,13 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'test-child' },
     ]);
 
-    const { getAllByTestId } = renderWithProviders(
+    renderWithProviders(
       <CardGallery story={template} galleryLabel="Test Gallery" />
     );
 
     // totalCards = childrenCount + activeCardCount (there is only 1 active card at a time)
     const totalCards = 5;
-    expect(getAllByTestId('test-child')).toHaveLength(totalCards);
+    expect(screen.getAllByTestId('test-child')).toHaveLength(totalCards);
   });
 
   it('should set first child as active child', () => {
@@ -61,12 +61,12 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'non-active-child' },
     ]);
 
-    const { getAllByTestId } = renderWithProviders(
+    renderWithProviders(
       <CardGallery story={template} galleryLabel="Test Gallery" />
     );
 
     // The active child should always appear twice
-    expect(getAllByTestId('active-child')).toHaveLength(2);
+    expect(screen.getAllByTestId('active-child')).toHaveLength(2);
   });
 
   it('should change active child to the child that is clicked on', () => {
@@ -77,17 +77,17 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'other-child' },
     ]);
 
-    const { getAllByTestId, getByTestId } = renderWithProviders(
+    renderWithProviders(
       <CardGallery story={template} galleryLabel="Test Gallery" />
     );
 
     // When the child is not active, it should only appear once
-    const firstItem = getByTestId('test-child');
+    const firstItem = screen.getByTestId('test-child');
 
     // Simulate clicking on Item 3
     fireEvent.click(firstItem);
 
     // When active, it should appear twice
-    expect(getAllByTestId('test-child')).toHaveLength(2);
+    expect(screen.getAllByTestId('test-child')).toHaveLength(2);
   });
 });

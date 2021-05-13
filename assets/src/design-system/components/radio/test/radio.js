@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -22,16 +28,16 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Radio', () => {
   it('should render a radio button', () => {
-    const { getByRole, getByText } = renderWithProviders(
+    renderWithProviders(
       <Radio name="foo" label="this is my label" onChange={noop} value="1" />
     );
 
-    expect(getByRole('radio')).toBeInTheDocument();
-    expect(getByText('this is my label')).toBeInTheDocument();
+    expect(screen.getByRole('radio')).toBeInTheDocument();
+    expect(screen.getByText('this is my label')).toBeInTheDocument();
   });
 
   it('should render a hint', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Radio
         name="foo"
         label="this is my label"
@@ -41,6 +47,6 @@ describe('Radio', () => {
       />
     );
 
-    expect(getByText('this is my hint')).toBeInTheDocument();
+    expect(screen.getByText('this is my hint')).toBeInTheDocument();
   });
 });

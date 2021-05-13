@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 /**
@@ -32,7 +32,7 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText, getByRole } = renderWithTheme(
+    renderWithTheme(
       <Switch
         groupLabel="Switch"
         name="test-switch"
@@ -43,10 +43,10 @@ describe('Switch', () => {
       />
     );
 
-    const onLabelEl = getByText(onLabel);
-    const onLabelRadio = getByRole('radio', { name: onLabel });
-    const offLabelEl = getByText(offLabel);
-    const offLabelRadio = getByRole('radio', { name: offLabel });
+    const onLabelEl = screen.getByText(onLabel);
+    const onLabelRadio = screen.getByRole('radio', { name: onLabel });
+    const offLabelEl = screen.getByText(offLabel);
+    const offLabelRadio = screen.getByRole('radio', { name: offLabel });
 
     expect(onLabelRadio.checked).toStrictEqual(true);
     expect(offLabelRadio.checked).toStrictEqual(false);
@@ -66,7 +66,7 @@ describe('Switch', () => {
     const offLabel = 'Off';
     const onChange = jest.fn();
 
-    const { getByText } = renderWithTheme(
+    renderWithTheme(
       <Switch
         groupLabel="Switch"
         name="test-switch"
@@ -77,8 +77,8 @@ describe('Switch', () => {
       />
     );
 
-    fireEvent.click(getByText(onLabel));
-    fireEvent.click(getByText(offLabel));
+    fireEvent.click(screen.getByText(onLabel));
+    fireEvent.click(screen.getByText(offLabel));
 
     expect(onChange).toHaveBeenCalledTimes(0);
   });

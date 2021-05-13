@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -26,7 +27,7 @@ import InlineInputForm from '..';
 
 describe('InlineInputForm', () => {
   it('should render a text input field', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <InlineInputForm
         onEditComplete={jest.fn}
         onEditCancel={jest.fn}
@@ -36,14 +37,14 @@ describe('InlineInputForm', () => {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
   });
 
   it('should call onEditCancel when focus is removed from input', () => {
     const mockCancel = jest.fn();
 
-    const wrapper = renderWithProviders(
+    renderWithProviders(
       <InlineInputForm
         onEditComplete={jest.fn}
         onEditCancel={mockCancel}
@@ -53,7 +54,7 @@ describe('InlineInputForm', () => {
       />
     );
 
-    const input = wrapper.getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
 
     fireEvent.keyDown(input, { key: 'escape', keyCode: 27 });
@@ -64,7 +65,7 @@ describe('InlineInputForm', () => {
   it('should call onEditComplete when enter is hit from the input', () => {
     const mockComplete = jest.fn();
 
-    const wrapper = renderWithProviders(
+    renderWithProviders(
       <InlineInputForm
         onEditComplete={mockComplete}
         onEditCancel={jest.fn}
@@ -74,7 +75,7 @@ describe('InlineInputForm', () => {
       />
     );
 
-    const input = wrapper.getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
 
     fireEvent.keyDown(input, { key: 'enter', keyCode: 13 });

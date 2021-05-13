@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -31,11 +31,9 @@ jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
-  const { queryByLabelText, getByRole } = renderWithTheme(
-    <Color label="Color" onChange={onChange} {...props} />
-  );
-  const colorPreview = getByRole('button', { name: 'Color' });
-  const opacityInput = queryByLabelText(/Opacity/);
+  renderWithTheme(<Color label="Color" onChange={onChange} {...props} />);
+  const colorPreview = screen.getByRole('button', { name: 'Color' });
+  const opacityInput = screen.queryByLabelText(/Opacity/);
   return {
     colorPreview,
     opacityInput,

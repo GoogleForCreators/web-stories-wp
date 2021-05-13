@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -40,26 +41,26 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
   });
 
   it('should render a visually hidden label for Google Ad Manager input', function () {
-    const { getByLabelText } = renderWithProviders(
+    renderWithProviders(
       <GoogleAdManagerSettings
         slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
 
-    const label = getByLabelText(TEXT.SLOT_ID_LABEL);
+    const label = screen.getByLabelText(TEXT.SLOT_ID_LABEL);
     expect(label).toBeInTheDocument();
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
-    const { getByRole, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
 
     fireEvent.change(input, {
       target: { value: '/123456789/a4a/amp_story_dfp_example' },
@@ -97,15 +98,15 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
   });
 
   it('should call mockUpdate when the save button is clicked', function () {
-    const { getByRole, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         slotId={adManagerSlotId}
         handleUpdate={mockUpdate}
       />
     );
 
-    const input = getByRole('textbox');
-    const button = getByRole('button');
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button');
 
     fireEvent.change(input, {
       target: { value: '/123456789/a4a/amp_story_dfp_example' },

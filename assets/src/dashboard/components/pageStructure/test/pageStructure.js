@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState } from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 
 /**
@@ -31,7 +31,7 @@ import { PRIMARY_PATHS } from '../../../constants';
 
 describe('<LeftRail />', () => {
   it('should be visible by default in a regular viewport.', () => {
-    const wrapper = renderWithProviders(
+    renderWithProviders(
       <FlagsProvider features={{ enableInProgressViews: false }}>
         <NavProvider>
           <LeftRail />
@@ -39,7 +39,7 @@ describe('<LeftRail />', () => {
       </FlagsProvider>
     );
 
-    const leftRail = wrapper.getByTestId('dashboard-left-rail');
+    const leftRail = screen.getByTestId('dashboard-left-rail');
     const visibility = window.getComputedStyle(leftRail).visibility;
 
     expect(visibility).toBe('visible');
@@ -62,7 +62,7 @@ describe('<LeftRail />', () => {
         </NavContext.Provider>
       );
     };
-    const wrapper = renderWithProviders(
+    renderWithProviders(
       <FlagsProvider features={{ enableInProgressViews: false }}>
         <MockedNavProvider toggleSideBar={toggleSideBarFn}>
           <LeftRail />
@@ -72,7 +72,7 @@ describe('<LeftRail />', () => {
 
     expect(toggleSideBarFn).not.toHaveBeenCalled();
 
-    const firstLink = wrapper.getByText(PRIMARY_PATHS[0].label);
+    const firstLink = screen.getByText(PRIMARY_PATHS[0].label);
     fireEvent.click(firstLink);
 
     expect(toggleSideBarFn).toHaveBeenCalledWith();

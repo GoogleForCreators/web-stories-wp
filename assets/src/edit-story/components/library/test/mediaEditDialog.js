@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -66,7 +66,7 @@ function setup() {
 
   const snackbarValue = { showSnackbar };
 
-  const { getByLabelText, getByRole, queryByText } = renderWithTheme(
+  return renderWithTheme(
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
@@ -75,7 +75,6 @@ function setup() {
       </MediaContext.Provider>
     </SnackbarContext.Provider>
   );
-  return { getByLabelText, getByRole, queryByText };
 }
 
 describe('MediaEditDialog', () => {
@@ -92,20 +91,20 @@ describe('MediaEditDialog', () => {
   });
 
   it('should render', () => {
-    const { getByLabelText, getByRole, queryByText } = setup();
+    setup();
 
-    expect(queryByText('Edit Image')).toBeInTheDocument();
-    expect(queryByText('My Image :)')).toBeInTheDocument();
-    expect(queryByText('910 x 675 pixels')).toBeInTheDocument();
-    expect(getByLabelText('Assistive text').value).toContain(
+    expect(screen.queryByText('Edit Image')).toBeInTheDocument();
+    expect(screen.queryByText('My Image :)')).toBeInTheDocument();
+    expect(screen.queryByText('910 x 675 pixels')).toBeInTheDocument();
+    expect(screen.getByLabelText('Assistive text').value).toContain(
       'my image alt text'
     );
-    expect(getByRole('button', { name: /save/i })).toBeInTheDocument();
-    expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
   });
 
   it('should update server and internal state with new alt text on save', async () => {
-    const { getByLabelText, getByRole } = setup();
+    setup();
 
     // Mock out `updateMedia`.
     let serverAltText = resource.alt;
@@ -119,9 +118,9 @@ describe('MediaEditDialog', () => {
       stateAltText = update.data.alt;
     });
 
-    const input = getByLabelText('Assistive text');
+    const input = screen.getByLabelText('Assistive text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
-    fireEvent.click(getByRole('button', { name: /save/i }));
+    fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
     expect(updateMediaElement).toHaveBeenCalledTimes(1);
@@ -131,7 +130,7 @@ describe('MediaEditDialog', () => {
   });
 
   it('should show snackbar if error on save to server', async () => {
-    const { getByLabelText, getByRole } = setup();
+    setup();
 
     // Mock out `updateMedia`.
     const serverAltText = resource.alt;
@@ -139,9 +138,9 @@ describe('MediaEditDialog', () => {
       throw Error;
     });
 
-    const input = getByLabelText('Assistive text');
+    const input = screen.getByLabelText('Assistive text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
-    fireEvent.click(getByRole('button', { name: /save/i }));
+    fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
     expect(updateMediaElement).toHaveBeenCalledTimes(0);
@@ -150,16 +149,16 @@ describe('MediaEditDialog', () => {
   });
 
   it('should show snackbar if error on save to state', async () => {
-    const { getByLabelText, getByRole } = setup();
+    setup();
 
     // Mock out `updateMediaElement`.
     updateMediaElement.mockImplementation(() => {
       throw Error;
     });
 
-    const input = getByLabelText('Assistive text');
+    const input = screen.getByLabelText('Assistive text');
     fireEvent.change(input, { target: { value: 'new alt text' } });
-    fireEvent.click(getByRole('button', { name: /save/i }));
+    fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => expect(updateMedia).toHaveBeenCalledTimes(1));
     expect(updateMediaElement).toHaveBeenCalledTimes(1);
