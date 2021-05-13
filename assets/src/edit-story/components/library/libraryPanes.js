@@ -17,8 +17,23 @@
 /**
  * Internal dependencies
  */
+import { states, styles, useFocusHighlight } from '../../app/highlights';
 import useLibrary from './useLibrary';
 import { getTabId } from './panes/shared';
+import {
+  MEDIA,
+  MEDIA3P,
+  SHAPES,
+  TEXT,
+  ELEMS,
+  PAGE_TEMPLATES,
+} from './constants';
+import { MediaPane } from './panes/media/local';
+import { Media3pPane } from './panes/media/media3p';
+import { ShapesPane } from './panes/shapes';
+import { TextPane } from './panes/text';
+import { ElementsPane } from './panes/elements';
+import { PageTemplatesPane } from './panes/pageTemplates';
 
 function LibraryPanes() {
   const { tab, tabs } = useLibrary((state) => ({
@@ -26,12 +41,43 @@ function LibraryPanes() {
     tabs: state.data.tabs,
   }));
 
-  return tabs.map(
-    ({ id, Pane }) =>
-      Pane && (
-        <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-      )
-  );
+  const mediaHighlight = useFocusHighlight(states.MEDIA);
+  const textHighlight = useFocusHighlight(states.TEXT);
+
+  return tabs.map(({ id }) => {
+    const paneProps = {
+      key: id,
+      isActive: id === tab,
+      'aria-labelledby': getTabId(id),
+    };
+
+    switch (id) {
+      case MEDIA.id:
+        return (
+          <MediaPane
+            {...paneProps}
+            css={mediaHighlight?.showEffect && styles.FLASH}
+          />
+        );
+      case MEDIA3P.id:
+        return <Media3pPane {...paneProps} />;
+      case SHAPES.id:
+        return <ShapesPane {...paneProps} />;
+      case TEXT.id:
+        return (
+          <TextPane
+            {...paneProps}
+            css={textHighlight?.showEffect && styles.FLASH}
+          />
+        );
+      case ELEMS.id:
+        return <ElementsPane {...paneProps} />;
+      case PAGE_TEMPLATES.id:
+        return <PageTemplatesPane {...paneProps} />;
+      default:
+        return null;
+    }
+  });
 }
 
 export default LibraryPanes;

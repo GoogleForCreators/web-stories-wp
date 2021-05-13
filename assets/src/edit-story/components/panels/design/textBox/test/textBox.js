@@ -32,7 +32,10 @@ import {
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../../form/color/color');
+jest.mock('../../../../form/color/color', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 const DEFAULT_PADDING = {
   horizontal: 0,
