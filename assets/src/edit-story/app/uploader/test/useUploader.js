@@ -116,6 +116,16 @@ describe('useUploader', () => {
       ).toThrow('Please choose only mp4 to upload.');
     });
 
+    it('formats the error message correctly if no file types are supported', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({ allowedFileTypes: [] });
+
+      await expect(() =>
+        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+      ).toThrow('No file types are currently supported.');
+    });
+
     it('throws an error if file is too large for transcoding', async () => {
       const {
         actions: { validateFileForUpload },

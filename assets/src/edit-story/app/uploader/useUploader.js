@@ -120,8 +120,16 @@ function useUploader() {
           __('Please choose only %s to upload.', 'web-stories'),
           options
         );
+        const noSupportMessage = __(
+          'No file types are currently supported.',
+          'web-stories'
+        );
 
-        throw createError('ValidError', file.name, message);
+        throw createError(
+          'ValidError',
+          file.name,
+          options ? message : noSupportMessage
+        );
       }
 
       // TODO: Move this check to useUploadMedia?
