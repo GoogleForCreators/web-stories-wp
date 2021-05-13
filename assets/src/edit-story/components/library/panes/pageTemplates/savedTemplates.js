@@ -72,7 +72,7 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
     if (!nextTemplatesToFetch) {
       return;
     }
-    loadTemplates?.();
+    loadTemplates();
   }, [nextTemplatesToFetch, loadTemplates]);
 
   const onClickDelete = useCallback(({ templateId }, e) => {
@@ -147,7 +147,7 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
-  loadTemplates: PropTypes.func,
+  loadTemplates: PropTypes.func.isRequired,
 };
 
 export default SavedTemplates;
