@@ -26,9 +26,11 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import TabView from '../tabview';
+import { states, styles, useFocusHighlight } from '../../app/highlights';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
 import { getTabId, getPaneId } from './panes/shared';
+import { MEDIA, TEXT } from './constants';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -55,11 +57,15 @@ const LibraryPaneContainer = styled.div`
 `;
 
 function LibraryLayout() {
-  const { setTab, tab, tabs } = useLibrary((state) => ({
+  const { setTab, tab, tabRefs, tabs } = useLibrary((state) => ({
     tab: state.state.tab,
+    tabRefs: state.state.tabRefs,
     setTab: state.actions.setTab,
     tabs: state.data.tabs,
   }));
+
+  const mediaHighlight = useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]);
+  const textHighlight = useFocusHighlight(states.TEXT, tabRefs[TEXT.id]);
 
   const onTabChange = useCallback(
     (id) => {
@@ -77,6 +83,7 @@ function LibraryLayout() {
         <TabView
           label={__('Element Library Selection', 'web-stories')}
           tabs={tabs}
+          tabRefs={tabRefs}
           tab={tab}
           onTabChange={onTabChange}
           getTabId={getTabId}
@@ -85,7 +92,10 @@ function LibraryLayout() {
         />
       </TabsArea>
       <LibraryPaneContainer>
-        <LibraryPanes />
+        <LibraryPanes
+          mediaPaneStyles={mediaHighlight?.showEffect && styles.FLASH}
+          textPaneStyles={textHighlight?.showEffect && styles.FLASH}
+        />
       </LibraryPaneContainer>
     </Layout>
   );

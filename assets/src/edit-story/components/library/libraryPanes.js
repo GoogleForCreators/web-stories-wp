@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { states, styles, useFocusHighlight } from '../../app/highlights';
 import useLibrary from './useLibrary';
 import { getTabId } from './panes/shared';
 import {
@@ -35,14 +33,11 @@ import { TextPane } from './panes/text';
 import { ElementsPane } from './panes/elements';
 import { PageTemplatesPane } from './panes/pageTemplates';
 
-function LibraryPanes() {
+function LibraryPanes({ mediaPaneStyles, textPaneStyles }) {
   const { tab, tabs } = useLibrary((state) => ({
     tab: state.state.tab,
     tabs: state.data.tabs,
   }));
-
-  const mediaHighlight = useFocusHighlight(states.MEDIA);
-  const textHighlight = useFocusHighlight(states.TEXT);
 
   return tabs.map(({ id }) => {
     const paneProps = {
@@ -53,23 +48,13 @@ function LibraryPanes() {
 
     switch (id) {
       case MEDIA.id:
-        return (
-          <MediaPane
-            {...paneProps}
-            css={mediaHighlight?.showEffect && styles.FLASH}
-          />
-        );
+        return <MediaPane css={mediaPaneStyles} {...paneProps} />;
       case MEDIA3P.id:
         return <Media3pPane {...paneProps} />;
       case SHAPES.id:
         return <ShapesPane {...paneProps} />;
       case TEXT.id:
-        return (
-          <TextPane
-            {...paneProps}
-            css={textHighlight?.showEffect && styles.FLASH}
-          />
-        );
+        return <TextPane css={textPaneStyles} {...paneProps} />;
       case ELEMS.id:
         return <ElementsPane {...paneProps} />;
       case PAGE_TEMPLATES.id:

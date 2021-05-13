@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import { forwardRef, useState, useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
@@ -51,14 +51,17 @@ const StyledSearchInput = styled(SearchInput)`
  * @return {SearchInput} The component.
  * @class
  */
-function WrappedSearchInput({
-  initialValue,
-  placeholder,
-  onSearch,
-  disabled = false,
-  incremental = false,
-  delayMs = 500,
-}) {
+const WrappedSearchInput = forwardRef(function WrappedSearchInput(
+  {
+    initialValue,
+    placeholder,
+    onSearch,
+    disabled = false,
+    incremental = false,
+    delayMs = 500,
+  },
+  ref
+) {
   // Local state so that we can debounce triggering searches.
   const [localValue, setLocalValue] = useState(initialValue);
 
@@ -107,6 +110,7 @@ function WrappedSearchInput({
   return (
     <form onSubmit={onSubmit}>
       <StyledSearchInput
+        ref={ref}
         inputValue={localValue}
         placeholder={placeholder}
         onChange={onChange}
@@ -118,7 +122,7 @@ function WrappedSearchInput({
       />
     </form>
   );
-}
+});
 
 WrappedSearchInput.propTypes = {
   initialValue: PropTypes.string.isRequired,
