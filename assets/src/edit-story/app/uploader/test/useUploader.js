@@ -103,7 +103,17 @@ describe('useUploader', () => {
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
-      ).toThrow('Please choose only png, jpeg, jpg, gif, mp4 to upload.');
+      ).toThrow('Please choose only png, jpeg, jpg, gif, or mp4 to upload.');
+    });
+
+    it('formats the error message correctly if there is only one file type supported', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({ allowedFileTypes: ['mp4'] });
+
+      await expect(() =>
+        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+      ).toThrow('Please choose only mp4 to upload.');
     });
 
     it('throws an error if file is too large for transcoding', async () => {
