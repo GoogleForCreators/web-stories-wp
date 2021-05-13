@@ -215,29 +215,6 @@ function useFFmpeg() {
   }
 
   /**
-   * @param file
-   */
-  async function getFileInfo(file) {
-    try {
-      const ffmpeg = await getFFmpegInstance(file);
-
-      const response = await ffmpeg.run(
-        // Input filename.
-        '-i',
-        file.name
-      );
-
-      console.log(response);
-
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-
-    return;
-  }
-
-  /**
    * Determines whether the given file can be transcoded.
    *
    * @param {File} file File object.
@@ -262,7 +239,6 @@ function useFFmpeg() {
     isFileTooLarge,
     transcodeVideo,
     getFirstFrameOfVideo,
-    getFileInfo,
   };
 }
 
