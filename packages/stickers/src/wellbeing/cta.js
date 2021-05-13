@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = __('Circled Dot', 'web-stories');
+const title = _x('Circled Dot', 'sticker name', 'web-stories');
 
 const Cta = ({ style }) => (
   <svg

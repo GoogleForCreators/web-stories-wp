@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = __('Burst with Arrow', 'web-stories');
+const title = _x('Burst with Arrow', 'sticker name', 'web-stories');
 
 const FashionStarburstWithArrow = ({ style }) => (
   <svg

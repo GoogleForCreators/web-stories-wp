@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = __('Instagram', 'web-stories');
+const title = _x('Instagram', 'sticker name', 'web-stories');
 
 const InstagramIcon = ({ style }) => (
   <svg
