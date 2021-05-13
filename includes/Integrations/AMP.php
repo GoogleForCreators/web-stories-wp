@@ -228,12 +228,13 @@ class AMP extends Service_Base {
 	 * @return bool Whether post should be skipped from AMP.
 	 */
 	public function filter_amp_skip_post( $skipped, $post ) {
+		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
 			'web-story' === get_post_type( $post )
 			&&
 			defined( '\AMP__VERSION' )
 			&&
-			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>=' )
+			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>' )
 		) {
 			return true;
 		}
