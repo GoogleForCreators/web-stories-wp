@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -65,50 +71,50 @@ const renderChecklistTab = ({
 };
 describe('<ChecklistTab />', () => {
   it("should render a toggle if the user's web_stories_media_optimization setting is initially false", () => {
-    const { getByRole } = renderChecklistTab({ areVideosAutoOptimized: false });
+    renderChecklistTab({ areVideosAutoOptimized: false });
 
-    const toggle = getByRole('checkbox', { hidden: true });
+    const toggle = screen.getByRole('checkbox', { hidden: true });
 
     expect(toggle).toBeInTheDocument();
   });
 
   it("should not render toggle if the user's web_stories_media_optimization setting is initially true", () => {
-    const { queryByRole } = renderChecklistTab({
+    renderChecklistTab({
       areVideosAutoOptimized: true,
     });
 
-    const toggle = queryByRole('checkbox', { hidden: true });
+    const toggle = screen.queryByRole('checkbox', { hidden: true });
 
     expect(toggle).not.toBeInTheDocument();
   });
 
   it("should not render toggle if the user doesn't have proper permissions", () => {
-    const { queryByRole } = renderChecklistTab({
+    renderChecklistTab({
       areVideosAutoOptimized: true,
     });
 
-    const toggle = queryByRole('checkbox', { hidden: true });
+    const toggle = screen.queryByRole('checkbox', { hidden: true });
 
     expect(toggle).not.toBeInTheDocument();
   });
 
   it(`should display starting empty message when checkpoint is "${PPC_CHECKPOINT_STATE.UNAVAILABLE}"`, () => {
-    const { getByText } = renderChecklistTab({
+    renderChecklistTab({
       currentCheckpoint: PPC_CHECKPOINT_STATE.UNAVAILABLE,
     });
 
-    const message = getByText(TEXT.UNAVAILABLE_BODY);
+    const message = screen.getByText(TEXT.UNAVAILABLE_BODY);
 
     expect(message).toBeInTheDocument();
   });
 
   it(`should display message about empty checklist when checkpoint is "${PPC_CHECKPOINT_STATE.NO_ISSUES}"`, () => {
-    const { getByText } = renderChecklistTab({
+    renderChecklistTab({
       currentCheckpoint: PPC_CHECKPOINT_STATE.NO_ISSUES,
       isChecklistEmpty: true,
     });
 
-    const message = getByText(TEXT.EMPTY_BODY);
+    const message = screen.getByText(TEXT.EMPTY_BODY);
 
     expect(message).toBeInTheDocument();
   });

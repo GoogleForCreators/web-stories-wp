@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Toggle } from '..';
@@ -22,10 +27,8 @@ import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Toggle', () => {
   it('should render the toggle', () => {
-    const { getByTestId } = renderWithProviders(
-      <Toggle data-testid="toggle" />
-    );
+    renderWithProviders(<Toggle data-testid="toggle" />);
 
-    expect(getByTestId('toggle')).toBeInTheDocument();
+    expect(screen.getByTestId('toggle')).toBeInTheDocument();
   });
 });

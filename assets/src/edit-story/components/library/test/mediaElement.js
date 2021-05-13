@@ -15,12 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { Simulate } from 'react-dom/test-utils';
+
+/**
+ * Internal dependencies
+ */
 import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';

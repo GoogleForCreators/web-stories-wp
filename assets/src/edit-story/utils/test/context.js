@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -73,17 +73,17 @@ describe('useContextSelector', () => {
       );
     };
 
-    const { getByTestId } = render(
+    render(
       <StateProvider>
         <Counter />
       </StateProvider>
     );
     expect(renderCount).toBe(1);
 
-    fireEvent.click(getByTestId('ignore++'));
+    fireEvent.click(screen.getByTestId('ignore++'));
     expect(renderCount).toBe(1);
 
-    fireEvent.click(getByTestId('count++'));
+    fireEvent.click(screen.getByTestId('count++'));
     expect(renderCount).toBe(2);
   });
 });

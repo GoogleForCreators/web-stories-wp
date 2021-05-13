@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -67,16 +67,16 @@ function setup() {
 
 describe('DeleteDialog', () => {
   it('should render', () => {
-    const { queryByText, getByRole, container } = setup();
+    const { container } = setup();
     Modal.setAppElement(container);
 
-    expect(queryByText('Delete Image?')).toBeInTheDocument();
-    expect(getByRole('button', { name: /cancel/i })).toBeInTheDocument();
-    expect(getByRole('button', { name: /delete/i })).toBeInTheDocument();
+    expect(screen.queryByText('Delete Image?')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument();
   });
 
   it('should update server and internal state on delete', async () => {
-    const { getByRole, container } = setup();
+    const { container } = setup();
     Modal.setAppElement(container);
 
     // Mock out `deleteMedia`.
@@ -91,7 +91,7 @@ describe('DeleteDialog', () => {
       stateDeleted = true;
     });
 
-    fireEvent.click(getByRole('button', { name: /delete/i }));
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }));
 
     await waitFor(() => expect(deleteMedia).toHaveBeenCalledTimes(1));
     expect(deleteMediaElement).toHaveBeenCalledTimes(1);
@@ -101,7 +101,7 @@ describe('DeleteDialog', () => {
   });
 
   it('should show snackbar if error on delete from server', async () => {
-    const { getByRole, container } = setup();
+    const { container } = setup();
     Modal.setAppElement(container);
 
     // Mock out `deleteMedia`.
@@ -109,7 +109,7 @@ describe('DeleteDialog', () => {
       throw Error;
     });
 
-    fireEvent.click(getByRole('button', { name: /delete/i }));
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }));
 
     await waitFor(() => expect(deleteMedia).toHaveBeenCalledTimes(1));
     expect(deleteMediaElement).toHaveBeenCalledTimes(0);
@@ -117,7 +117,7 @@ describe('DeleteDialog', () => {
   });
 
   it('should show snackbar if error on delete from state', async () => {
-    const { getByRole, container } = setup();
+    const { container } = setup();
     Modal.setAppElement(container);
 
     // Mock out `deleteMediaElement`.
@@ -125,7 +125,7 @@ describe('DeleteDialog', () => {
       throw Error;
     });
 
-    fireEvent.click(getByRole('button', { name: /delete/i }));
+    fireEvent.click(screen.getByRole('button', { name: /delete/i }));
 
     await waitFor(() => expect(deleteMedia).toHaveBeenCalledTimes(1));
     expect(deleteMediaElement).toHaveBeenCalledTimes(1);

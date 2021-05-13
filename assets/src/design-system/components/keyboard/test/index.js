@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import { cleanup, fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
@@ -78,15 +78,15 @@ describe('keyboard/index.js', () => {
     });
 
     it('should not register key presses on other elements', async () => {
-      const { findByText } = render(
+      render(
         <div>
           <div>{'ElemWithHook'}</div>
           <div>{'ElemWhereKeyPressIsFired'}</div>
         </div>
       );
 
-      const elemWithHook = await findByText('ElemWithHook');
-      const elemWhereKeyPressIsFired = await findByText(
+      const elemWithHook = await screen.findByText('ElemWithHook');
+      const elemWhereKeyPressIsFired = await screen.findByText(
         'ElemWhereKeyPressIsFired'
       );
       const { result } = renderHook(() => useIsKeyPressed(elemWithHook, 'a'));

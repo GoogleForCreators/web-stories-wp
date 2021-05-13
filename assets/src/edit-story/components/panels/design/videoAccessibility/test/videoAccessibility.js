@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ jest.mock('../../../../mediaPicker', () => ({
   },
 }));
 
-function renderVideoAccessibility(selectedElements) {
+function arrange(selectedElements) {
   const configValue = {
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
     allowedImageMimeTypes: [
@@ -45,9 +45,9 @@ function renderVideoAccessibility(selectedElements) {
     ],
   };
 
-  const wrapper = (params) => (
+  const wrapper = ({ children }) => (
     <ConfigContext.Provider value={configValue}>
-      {params.children}
+      {children}
     </ConfigContext.Provider>
   );
 
@@ -72,15 +72,15 @@ describe('Panels/VideoAccessibility', () => {
   });
 
   it('should trim video description to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText } = renderVideoAccessibility([defaultElement]);
-    const input = getByPlaceholderText(
+    arrange([defaultElement]);
+    const input = screen.getByPlaceholderText(
       'Add assistive text for visually impaired users'
     );
     expect(input.maxLength).toBe(MIN_MAX.ALT_TEXT.MAX);
   });
 
   it('should display Mixed as placeholder in case of mixed value multi-selection', () => {
-    const { getByRole } = renderVideoAccessibility([
+    arrange([
       defaultElement,
       {
         resource: {
@@ -90,18 +90,16 @@ describe('Panels/VideoAccessibility', () => {
         },
       },
     ]);
-    const description = getByRole('textbox', { name: 'Assistive text' });
+    const description = screen.getByRole('textbox', { name: 'Assistive text' });
     expect(description.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(description).toHaveValue('');
   });
 
   it('should simulate a click on <Poster />', () => {
-    const { getByRole, pushUpdate } = renderVideoAccessibility([
-      defaultElement,
-    ]);
-    const menuToggle = getByRole('button', { name: 'Video poster' });
+    const { pushUpdate } = arrange([defaultElement]);
+    const menuToggle = screen.getByRole('button', { name: 'Video poster' });
     fireEvent.click(menuToggle);
-    const editMenuItem = getByRole('menuitem', { name: 'Edit' });
+    const editMenuItem = screen.getByRole('menuitem', { name: 'Edit' });
     fireEvent.click(editMenuItem);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);

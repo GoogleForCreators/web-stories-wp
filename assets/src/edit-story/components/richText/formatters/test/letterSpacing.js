@@ -44,27 +44,27 @@ describe('Color formatter', () => {
   const { elementToStyle, stylesToCSS, getters, setters } = formatter;
 
   describe('elementToStyle', () => {
-    function setup(element) {
+    function setupFormatter(element) {
       return elementToStyle(getDOMElement(element));
     }
 
     it('should ignore non-span elements', () => {
       const element = <div />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should ignore span elements without letter spacing style property', () => {
       const element = <span style={{ backgroundColor: 'red' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
 
       expect(style).toBeNull();
     });
 
     it('should extract letter spacing from span elements and return correct style', () => {
       const element = <span style={{ letterSpacing: '1.5em' }} />;
-      const style = setup(element);
+      const style = setupFormatter(element);
       const expected = `${LETTERSPACING}-150`;
 
       expect(style).toBe(expected);
@@ -112,26 +112,26 @@ describe('Color formatter', () => {
       );
     });
 
-    function setup(styleArray) {
+    function setupFormatter(styleArray) {
       getPrefixStylesInSelection.mockImplementationOnce(() => styleArray);
       return getters.letterSpacing({});
     }
 
     it('should return multiple if more than one style matches', () => {
       const styles = [`${LETTERSPACING}-150`, `${LETTERSPACING}-N100`];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toBe(MULTIPLE_VALUE);
     });
 
     it('should return default 0 if no style matches', () => {
       const styles = [NONE];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toStrictEqual(0);
     });
 
     it('should return parsed letter spacing if exactly one style matches', () => {
       const styles = [`${LETTERSPACING}-34`];
-      const result = setup(styles);
+      const result = setupFormatter(styles);
       expect(result).toStrictEqual(34);
     });
   });

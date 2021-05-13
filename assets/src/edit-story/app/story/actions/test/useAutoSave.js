@@ -37,10 +37,10 @@ function setup(args) {
   const apiContextValue = {
     actions: { autoSaveById },
   };
-  const wrapper = (params) => (
+  const wrapper = ({ children }) => (
     <ConfigContext.Provider value={configValue}>
       <APIContext.Provider value={apiContextValue}>
-        {params.children}
+        {children}
       </APIContext.Provider>
     </ConfigContext.Provider>
   );

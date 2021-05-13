@@ -40,6 +40,8 @@ const poster = 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg';
 describe('StoryPlayer', () => {
   it('should render an <amp-story-player> element', () => {
     const { container } = render(<StoryPlayer url={url} title={title} />);
+
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toMatchInlineSnapshot(`
       <amp-story-player
         data-testid="amp-story-player"
@@ -57,6 +59,8 @@ describe('StoryPlayer', () => {
     const { container } = render(
       <StoryPlayer url={url} title={title} poster={poster} />
     );
+
+    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toMatchInlineSnapshot(`
       <amp-story-player
         data-testid="amp-story-player"
