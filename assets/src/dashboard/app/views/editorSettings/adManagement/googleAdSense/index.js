@@ -65,7 +65,7 @@ export const TEXT = {
     '1234567890'
   ),
   SLOT_ID_HELP: __(
-    'Copy the slot ID from <a>your ad unit’s code</a>. The same ad unit will be used for all of your Web Stories..',
+    'Copy the slot ID from <a>your ad unit’s code</a>. The same ad unit will be used for all of your Web Stories.',
     'web-stories'
   ),
   SLOT_ID_HELP_LINK: __(
