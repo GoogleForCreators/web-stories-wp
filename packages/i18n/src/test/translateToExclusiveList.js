@@ -24,8 +24,8 @@ describe('translateToExclusiveList', () => {
     options                                        | result
     ${[]}                                          | ${''}
     ${['one']}                                     | ${'one'}
-    ${['doctor', 'barnacle']}                      | ${'doctor and barnacle'}
-    ${['apple', 'banana', 'mango', 'dragonfruit']} | ${'apple, banana, mango, and dragonfruit'}
+    ${['doctor', 'barnacle']}                      | ${'doctor or barnacle'}
+    ${['apple', 'banana', 'mango', 'dragonfruit']} | ${'apple, banana, mango, or dragonfruit'}
   `('should translate as expected', ({ options, result }) => {
     expect(translateToExclusiveList(options)).toBe(result);
   });
