@@ -23,7 +23,16 @@ import { useCallback, useMemo } from 'react';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { Bucket, LetterTPlus, Media } from '../../../../design-system/icons';
+import { noop } from '../../../../design-system';
+import {
+  Bucket,
+  CircleSpeed,
+  Eraser,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+} from '../../../../design-system/icons';
 import { useStory } from '../../story';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
@@ -36,9 +45,16 @@ export const ELEMENT_TYPE = {
 };
 
 export const ACTION_TEXT = {
+  ADD_ANIMATION: __('Add animation', 'web-stories'),
+  ADD_LINK: __('Add Link', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
+  CLEAR_FILTERS_AND_ANIMATIONS: __(
+    'Clear filters and animations',
+    'web-stories'
+  ),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
+  REPLACE_MEDIA: __('Replace media', 'web-stories'),
 };
 
 /**
@@ -63,7 +79,8 @@ const useQuickActions = () => {
   }));
 
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId) => () => {
+    (highlight) => (elementId) => (ev) => {
+      ev.stopPropagation();
       setHighlights({ elementId, highlight });
     },
     [setHighlights]
@@ -113,6 +130,33 @@ const useQuickActions = () => {
     ]
   );
 
+  const foregroundImageActions = useMemo(
+    () => [
+      {
+        Icon: PictureSwap,
+        label: ACTION_TEXT.REPLACE_MEDIA,
+        onClick: noop,
+      },
+      {
+        Icon: CircleSpeed,
+        label: ACTION_TEXT.ADD_ANIMATION,
+        onClick: noop,
+      },
+      {
+        Icon: Link,
+        label: ACTION_TEXT.ADD_LINK,
+        onClick: noop,
+      },
+      {
+        Icon: Eraser,
+        label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
+        onClick: noop,
+        separator: 'top',
+      },
+    ],
+    []
+  );
+
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
@@ -130,6 +174,7 @@ const useQuickActions = () => {
 
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPE.IMAGE:
+      return foregroundImageActions;
     case ELEMENT_TYPE.SHAPE:
     case ELEMENT_TYPE.TEXT:
     case ELEMENT_TYPE.VIDEO:
