@@ -55,7 +55,7 @@ async function loadTemplate(title, imageBaseUrl) {
 async function getTemplates(imageBaseUrl) {
   const templateNames = [
     'fresh-and-bright',
-    // 'cooking',
+    'food-and-stuff',
     // 'diy',
     // 'entertainment',
     // 'fashion',
