@@ -21,6 +21,7 @@ import {
   SCALE_DIRECTION,
   DIRECTION,
   BACKGROUND_ANIMATION_EFFECTS,
+  BEZIER,
 } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
 import { EffectBackgroundPan } from '../backgroundPan';
@@ -38,7 +39,7 @@ export function EffectBackgroundPanAndZoom({
   panDir = DIRECTION.RIGHT_TO_LEFT,
   duration = 1000,
   delay,
-  easing,
+  easing = BEZIER.inOut,
 }) {
   const timings = {
     ...defaults,
