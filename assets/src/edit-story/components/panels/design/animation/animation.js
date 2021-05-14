@@ -224,11 +224,7 @@ function AnimationPanel({
 
   const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
   return selectedElements.length > 1 ? (
-    <SimplePanel
-      name="animation"
-      title={__('Animation', 'web-stories')}
-      css={highlight?.showEffect && styles.FLASH}
-    >
+    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
         <Note
           forwardedAs="span"
@@ -239,7 +235,11 @@ function AnimationPanel({
       </Row>
     </SimplePanel>
   ) : (
-    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
+    <SimplePanel
+      name="animation"
+      title={__('Animation', 'web-stories')}
+      css={highlight?.showEffect && styles.FLASH}
+    >
       <GroupWrapper hasAnimation={selectedEffectTitle}>
         <StyledRow>
           <EffectChooserDropdown

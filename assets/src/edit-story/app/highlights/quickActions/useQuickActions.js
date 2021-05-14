@@ -23,6 +23,7 @@ import { useCallback, useMemo } from 'react';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
+import { useSnackbar } from '../../../../design-system';
 import {
   Bucket,
   CircleSpeed,
@@ -73,15 +74,27 @@ const useQuickActions = () => {
     })
   );
 
+  const { showSnackbar } = useSnackbar();
+
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
 
+  const handleMouseDown = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
   const handleClearFiltersAndAnimations = useCallback(
     (elementId) => {
       setHighlights({ elementId });
+      showSnackbar({
+        actionLabel: __('Undo', 'web-stories'),
+        dismissable: false,
+        message: __('All styles were removed from the image', 'web-stories'),
+        onAction: () => console.log('UNDID'),
+      });
     },
-    [setHighlights]
+    [setHighlights, showSnackbar]
   );
 
   const handleFocusPanel = useCallback(
@@ -95,6 +108,7 @@ const useQuickActions = () => {
   const {
     handleFocusAnimationPanel,
     handleFocusMediaPanel,
+    handleFocusMedia3pPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
@@ -103,6 +117,7 @@ const useQuickActions = () => {
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusMediaPanel: handleFocusPanel(states.MEDIA),
+      handleFocusMedia3pPanel: handleFocusPanel(states.MEDIA3P),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
     }),
@@ -120,17 +135,20 @@ const useQuickActions = () => {
         Icon: Bucket,
         label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
         onClick: handleFocusPageBackground(backgroundElement?.id),
+        onMouseDown: handleMouseDown,
       },
       {
         Icon: Media,
         label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
         onClick: handleFocusMediaPanel(),
+        onMouseDown: handleMouseDown,
         separator: 'top',
       },
       {
         Icon: LetterTPlus,
         label: ACTION_TEXT.INSERT_TEXT,
         onClick: handleFocusTextSetsPanel(),
+        onMouseDown: handleMouseDown,
       },
     ],
     [
@@ -138,6 +156,7 @@ const useQuickActions = () => {
       handleFocusMediaPanel,
       handleFocusPageBackground,
       handleFocusTextSetsPanel,
+      handleMouseDown,
     ]
   );
 
@@ -146,30 +165,35 @@ const useQuickActions = () => {
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMediaPanel(selectedElement?.id),
+        onClick: handleFocusMedia3pPanel(selectedElement?.id),
+        onMouseDown: handleMouseDown,
       },
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
         onClick: handleFocusAnimationPanel(selectedElement?.id),
+        onMouseDown: handleMouseDown,
       },
       {
         Icon: Link,
         label: ACTION_TEXT.ADD_LINK,
         onClick: handleFocusLinkPanel(selectedElement?.id),
+        onMouseDown: handleMouseDown,
       },
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
         onClick: () => handleClearFiltersAndAnimations(selectedElement?.id),
+        onMouseDown: handleMouseDown,
         separator: 'top',
       },
     ],
     [
       handleClearFiltersAndAnimations,
       handleFocusAnimationPanel,
-      handleFocusMediaPanel,
+      handleFocusMedia3pPanel,
       handleFocusLinkPanel,
+      handleMouseDown,
       selectedElement?.id,
     ]
   );

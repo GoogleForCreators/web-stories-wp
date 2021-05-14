@@ -42,6 +42,7 @@ function LibraryPanes() {
   }));
 
   const mediaHighlight = useFocusHighlight(states.MEDIA);
+  const media3pHighlight = useFocusHighlight(states.MEDIA3P);
   const textHighlight = useFocusHighlight(states.TEXT);
 
   return tabs.map(({ id }) => {
@@ -60,7 +61,12 @@ function LibraryPanes() {
           />
         );
       case MEDIA3P.id:
-        return <Media3pPane {...paneProps} />;
+        return (
+          <Media3pPane
+            {...paneProps}
+            css={media3pHighlight?.showEffect && styles.FLASH}
+          />
+        );
       case SHAPES.id:
         return <ShapesPane {...paneProps} />;
       case TEXT.id:

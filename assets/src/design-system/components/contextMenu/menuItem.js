@@ -68,6 +68,7 @@ export const MenuItem = ({
   onFocus,
   shortcut,
   Icon,
+  ...menuItemProps
 }) => {
   const itemRef = useRef(null);
   /**
@@ -127,6 +128,7 @@ export const MenuItem = ({
         onClick={handleClick}
         onFocus={onFocus}
         {...newTabProps}
+        {...menuItemProps}
       >
         {textContent}
       </StyledLink>
@@ -141,13 +143,14 @@ export const MenuItem = ({
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
+        {...menuItemProps}
       >
         {textContent}
       </StyledButton>
     );
   }
 
-  return <div>{textContent}</div>;
+  return <div {...menuItemProps}>{textContent}</div>;
 };
 
 /**

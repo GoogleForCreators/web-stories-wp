@@ -44,6 +44,10 @@ jest.mock('../../useHighlights', () => ({
   default: jest.fn(),
 }));
 
+jest.mock('../../../../../design-system', () => ({
+  useSnackbar: () => ({ showSnackbar: jest.fn() }),
+}));
+
 const mockClickEvent = {
   preventDefault: jest.fn(),
 };
@@ -255,7 +259,7 @@ describe('useQuickActions', () => {
       result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: IMAGE_ELEMENT.id,
-        highlight: states.MEDIA,
+        highlight: states.MEDIA3P,
       });
 
       result.current[1].onClick(mockClickEvent);

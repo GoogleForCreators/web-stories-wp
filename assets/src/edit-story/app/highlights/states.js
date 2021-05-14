@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { DOCUMENT, DESIGN } from '../../components/inspector';
-import { MEDIA, TEXT } from '../../components/library/constants';
+import { MEDIA, MEDIA3P, TEXT } from '../../components/library/constants';
 
 /**
  * Highlight state object
@@ -43,6 +43,7 @@ const keys = {
 
   // LIBRARY
   MEDIA: 'MEDIA',
+  MEDIA3P: 'MEDIA3P',
   TEXT: 'TEXT',
 };
 
@@ -89,6 +90,10 @@ export const STATES = {
   [keys.MEDIA]: {
     focus: true,
     tab: MEDIA.id,
+  },
+  [keys.MEDIA3P]: {
+    focus: true,
+    tab: MEDIA3P.id,
   },
   [keys.TEXT]: {
     focus: true,
