@@ -257,7 +257,12 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
 
   return (
     <MenuWrapper isIconMenu={isIconMenu}>
-      <MenuList ref={listRef} isIconMenu={isIconMenu} {...props}>
+      <MenuList
+        data-testid="context-menu-list"
+        ref={listRef}
+        isIconMenu={isIconMenu}
+        {...props}
+      >
         {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
             key={ids[index]}
