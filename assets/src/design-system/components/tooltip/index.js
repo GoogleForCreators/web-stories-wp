@@ -48,7 +48,7 @@ const TooltipContainer = styled.div`
   align-items: center;
   text-align: center;
   flex-direction: row;
-  max-width: 13em;
+  max-width: 14em;
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};

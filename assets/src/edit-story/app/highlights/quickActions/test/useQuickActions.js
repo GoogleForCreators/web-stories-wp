@@ -24,7 +24,16 @@ import { useQuickActions } from '..';
 import { states } from '../..';
 import useHighlights from '../../useHighlights';
 import { useStory } from '../../../story';
-import { Bucket, LetterTPlus, Media } from '../../../../../design-system/icons';
+import {
+  Bucket,
+  CircleSpeed,
+  Eraser,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+} from '../../../../../design-system/icons';
+import { ACTION_TEXT } from '../useQuickActions';
 
 jest.mock('../../../story', () => ({
   useStory: jest.fn(),
@@ -34,6 +43,10 @@ jest.mock('../../useHighlights', () => ({
   __esModule: true,
   default: jest.fn(),
 }));
+
+const mockClickEvent = {
+  preventDefault: jest.fn(),
+};
 
 const BACKGROUND_ELEMENT = {
   id: 'background-element-id',
@@ -63,19 +76,42 @@ const VIDEO_ELEMENT = {
 
 const defaultQuickActions = [
   expect.objectContaining({
-    label: 'Change background color',
+    label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),
   expect.objectContaining({
-    label: 'Insert background media',
+    label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
     onClick: expect.any(Function),
     Icon: Media,
   }),
   expect.objectContaining({
-    label: 'Insert text',
+    label: ACTION_TEXT.INSERT_TEXT,
     onClick: expect.any(Function),
     Icon: LetterTPlus,
+  }),
+];
+
+const foregroundImageQuickActions = [
+  expect.objectContaining({
+    label: ACTION_TEXT.REPLACE_MEDIA,
+    onClick: expect.any(Function),
+    Icon: PictureSwap,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_ANIMATION,
+    onClick: expect.any(Function),
+    Icon: CircleSpeed,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_LINK,
+    onClick: expect.any(Function),
+    Icon: Link,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
+    onClick: expect.any(Function),
+    Icon: Eraser,
   }),
 ];
 
@@ -138,19 +174,19 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick();
+      result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: 'background-element-id',
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.PAGE_BACKGROUND,
       });
 
-      result.current[1].onClick();
+      result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
         highlight: states.MEDIA,
       });
 
-      result.current[2].onClick();
+      result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
         highlight: states.TEXT,
@@ -177,19 +213,19 @@ describe('useQuickActions', () => {
     it('should set the correct highlight', () => {
       const { result } = renderHook(() => useQuickActions());
 
-      result.current[0].onClick();
+      result.current[0].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: 'background-element-id',
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.PAGE_BACKGROUND,
       });
 
-      result.current[1].onClick();
+      result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
         highlight: states.MEDIA,
       });
 
-      result.current[2].onClick();
+      result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
         highlight: states.TEXT,
@@ -207,8 +243,38 @@ describe('useQuickActions', () => {
       });
     });
 
-    it.todo('should return the quick actions');
-    it.todo('should set the correct highlight');
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current).toStrictEqual(foregroundImageQuickActions);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: IMAGE_ELEMENT.id,
+        highlight: states.MEDIA,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: IMAGE_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[2].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: IMAGE_ELEMENT.id,
+        highlight: states.LINK,
+      });
+
+      result.current[3].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: IMAGE_ELEMENT.id,
+      });
+    });
   });
 
   describe('shape element selected', () => {

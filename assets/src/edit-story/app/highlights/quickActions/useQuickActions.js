@@ -23,7 +23,6 @@ import { useCallback, useMemo } from 'react';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { noop } from '../../../../design-system';
 import {
   Bucket,
   CircleSpeed,
@@ -77,6 +76,13 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
+
+  const handleClearFiltersAndAnimations = useCallback(
+    (elementId) => {
+      setHighlights({ elementId });
+    },
+    [setHighlights]
+  );
 
   const handleFocusPanel = useCallback(
     (highlight) => (elementId) => (ev) => {
@@ -155,11 +161,12 @@ const useQuickActions = () => {
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
-        onClick: noop,
+        onClick: () => handleClearFiltersAndAnimations(selectedElement?.id),
         separator: 'top',
       },
     ],
     [
+      handleClearFiltersAndAnimations,
       handleFocusAnimationPanel,
       handleFocusMediaPanel,
       handleFocusLinkPanel,
