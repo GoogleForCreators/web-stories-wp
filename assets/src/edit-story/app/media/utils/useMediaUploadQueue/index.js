@@ -30,6 +30,7 @@ import {
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
 import { createBlob } from '../../../../utils/blobs';
+import { noop } from '../../../../utils/noop';
 import getFileName from '../getFileName';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
@@ -56,7 +57,9 @@ function useMediaUploadQueue() {
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
-  const { processPosterData } = useUploadVideoFrame({});
+  const { uploadVideoPoster } = useUploadVideoFrame({
+    updateMediaElement: noop,
+  });
   const {
     startUploading,
     finishUploading,
@@ -205,7 +208,7 @@ function useMediaUploadQueue() {
 
             try {
               const attachment = await uploadFile(file, additionalData);
-              const { poster, posterId } = await processPosterData(
+              const { poster, posterId } = await uploadVideoPoster(
                 attachment.id,
                 fileName,
                 posterFile
@@ -252,7 +255,7 @@ function useMediaUploadQueue() {
               media_source: 'video-optimization',
               ...additionalData,
             });
-            const { poster, posterId } = await processPosterData(
+            const { poster, posterId } = await uploadVideoPoster(
               attachment.id,
               fileName,
               posterFile
@@ -295,7 +298,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
-    processPosterData,
+    uploadVideoPoster,
   ]);
 
   return useMemo(
