@@ -70,6 +70,10 @@ function useUploadVideoFrame({ updateMediaElement }) {
      * @return {Promise<{posterHeight: *, posterWidth: *, poster: *, posterId: *}>} Poster information.
      */
     async (id, fileName, posterFile) => {
+      // TODO: Make param mandatory; don't allow calling without.
+      if (!posterFile) {
+        return {};
+      }
       posterFile.name = fileName;
       const {
         id: posterId,
