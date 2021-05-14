@@ -125,6 +125,8 @@ class Jetpack extends Service_Base {
 
 		// Reset mime type back to mp4, as this is the correct value.
 		$response['mime'] = 'video/mp4';
+		// Make video as optimized.
+		$response['media_source'] = 'video-optimization';
 
 		return $response;
 	}
@@ -148,6 +150,8 @@ class Jetpack extends Service_Base {
 
 		// Reset mime type back to mp4, as this is the correct value.
 		$data['mime_type'] = 'video/mp4';
+		// Make video as optimized.
+		$data['media_source'] = 'video-optimization';
 		$response->set_data( $data );
 
 		return $response;

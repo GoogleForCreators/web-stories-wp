@@ -84,8 +84,12 @@ class Jetpack extends Test_Case {
 
 		$results = $jetpack->filter_api_response( $response, $attachment );
 		$data    = $results->get_data();
+
 		$this->assertArrayHasKey( 'mime_type', $data );
 		$this->assertSame( $data['mime_type'], 'video/mp4' );
+
+		$this->assertArrayHasKey( 'media_source', $data );
+		$this->assertSame( $data['media_source'], 'video-optimization' );
 	}
 
 	/**
@@ -109,6 +113,9 @@ class Jetpack extends Test_Case {
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( $data['mime'], Jetpack_Integration::VIDEOPRESS_MIME_TYPE );
 
+		$this->assertArrayHasKey( 'media_source', $data );
+		$this->assertEmpty( $data['media_source'] );
+
 		$_POST = [ // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			'action' => 'query-attachments',
 			'query'  => [
@@ -117,8 +124,12 @@ class Jetpack extends Test_Case {
 		];
 
 		$data = $jetpack->filter_admin_ajax_response( $response, $attachment );
+
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( $data['mime'], 'video/mp4' );
+
+		$this->assertArrayHasKey( 'media_source', $data );
+		$this->assertSame( $data['media_source'], 'video-optimization' );
 
 		unset( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
