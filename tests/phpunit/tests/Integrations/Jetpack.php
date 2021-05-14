@@ -19,6 +19,7 @@ namespace Google\Web_Stories\Tests\Integrations;
 
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
@@ -28,7 +29,7 @@ class Jetpack extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$jetpack = $this->get_jetpack_object();
+		$jetpack = new Jetpack_Integration();
 		$jetpack->register();
 
 		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -46,7 +47,7 @@ class Jetpack extends Test_Case {
 	public function test_register_is_wpcom() {
 		define( 'IS_WPCOM', true );
 
-		$jetpack = $this->get_jetpack_object();
+		$jetpack = new Jetpack_Integration();
 		$jetpack->register();
 
 		$this->assertSame( 10, has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -59,7 +60,7 @@ class Jetpack extends Test_Case {
 	 * @covers ::add_to_jetpack_sitemap
 	 */
 	public function test_add_to_jetpack_sitemap() {
-		$jetpack = $this->get_jetpack_object();
+		$jetpack = new Jetpack_Integration();
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $jetpack->add_to_jetpack_sitemap( [] ) );
 	}
 
@@ -71,13 +72,13 @@ class Jetpack extends Test_Case {
 			[
 				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
 				'post_parent'    => 0,
-				'post_mime_type' => \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_MIME_TYPE,
+				'post_mime_type' => Jetpack_Integration::VIDEOPRESS_MIME_TYPE,
 				'post_title'     => __METHOD__,
 			]
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$jetpack = $this->get_jetpack_object();
+		$jetpack = new Jetpack_Integration();
 		// wp_prepare_attachment_for_js doesn't exactly match the output of media REST API, but it good enough for these tests.
 		$response = rest_ensure_response( wp_prepare_attachment_for_js( $attachment ) );
 
@@ -95,18 +96,18 @@ class Jetpack extends Test_Case {
 			[
 				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
 				'post_parent'    => 0,
-				'post_mime_type' => \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_MIME_TYPE,
+				'post_mime_type' => Jetpack_Integration::VIDEOPRESS_MIME_TYPE,
 				'post_title'     => __METHOD__,
 			]
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$jetpack  = $this->get_jetpack_object();
+		$jetpack  = new Jetpack_Integration();
 		$response = wp_prepare_attachment_for_js( $attachment );
 
 		$data = $jetpack->filter_admin_ajax_response( $response, $attachment );
 		$this->assertArrayHasKey( 'mime', $data );
-		$this->assertSame( $data['mime'], \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_MIME_TYPE );
+		$this->assertSame( $data['mime'], Jetpack_Integration::VIDEOPRESS_MIME_TYPE );
 
 		$_POST = [ // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			'action' => 'query-attachments',
@@ -120,12 +121,5 @@ class Jetpack extends Test_Case {
 		$this->assertSame( $data['mime'], 'video/mp4' );
 
 		unset( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-	}
-
-	/**
-	 * @return \Google\Web_Stories\Integrations\Jetpack
-	 */
-	protected function get_jetpack_object() {
-		return new \Google\Web_Stories\Integrations\Jetpack();
 	}
 }
