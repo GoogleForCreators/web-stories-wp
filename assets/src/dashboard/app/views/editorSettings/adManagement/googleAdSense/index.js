@@ -60,8 +60,8 @@ export const TEXT = {
   PUBLISHER_ID_PLACEHOLDER: __('Enter your Publisher ID', 'web-stories'),
   PUBLISHER_ID_LABEL: __('Google AdSense Publisher ID', 'web-stories'),
   SLOT_ID_CONTEXT: sprintf(
+    /* translators: %s: example value. */
     __(
-      /* translators: %s: example value. */
       'Example: %s. Copy the slot ID from <a>your ad unit’s code</a>. The same ad unit will be used for all of your Web Stories.',
       'web-stories'
     ),
