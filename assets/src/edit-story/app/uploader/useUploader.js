@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -99,37 +99,21 @@ function useUploader() {
 
       // TODO: Move this check to useUploadMedia?
       if (!isValidType(file) && !canTranscodeFile) {
-        let options;
-        if (allowedFileTypes.length > 1) {
-          options = sprintf(
-            /* translators: %1$s: is a comma separated list of allowed file types, %2$s is an allowed file type. */
-            __('%1$s, or %2$s', 'web-stories'),
-            allowedFileTypes.slice(0, allowedFileTypes.length - 1).join(
-              /* translators: delimiter used in a list */
-              __(', ', 'web-stories')
-            ),
-            allowedFileTypes.slice(allowedFileTypes.length - 1)
-          );
-        } else if (allowedFileTypes.length === 1) {
-          options = allowedFileTypes[0];
-        }
-
-        /* translators: %s is a list of allowed file extensions. */
-        const message = sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only %s to upload.', 'web-stories'),
-          options
-        );
-        const noSupportMessage = __(
+        let message = __(
           'No file types are currently supported.',
           'web-stories'
         );
 
-        throw createError(
-          'ValidError',
-          file.name,
-          options ? message : noSupportMessage
-        );
+        if (allowedFileTypes.length) {
+          /* translators: %s is a list of allowed file extensions. */
+          message = sprintf(
+            /* translators: %s: list of allowed file types. */
+            __('Please choose only %s to upload.', 'web-stories'),
+            translateToExclusiveList(allowedFileTypes)
+          );
+        }
+
+        throw createError('ValidError', file.name, message);
       }
 
       // TODO: Move this check to useUploadMedia?
