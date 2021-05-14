@@ -44,6 +44,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const IconInfo = styled.div`
   display: flex;
@@ -80,6 +81,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
+
+  const highlight = useFocusHighlight(states.LINK);
 
   const { getElementsInAttachmentArea } = useElementsWithLinks();
   const hasElementsInAttachmentArea =
@@ -216,7 +219,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   return (
-    <SimplePanel name="link" title={__('Link', 'web-stories')}>
+    <SimplePanel
+      name="link"
+      title={__('Link', 'web-stories')}
+      css={highlight?.showEffect && styles.FLASH}
+    >
       <LinkInput
         onChange={(value) =>
           !displayLinkGuidelines &&

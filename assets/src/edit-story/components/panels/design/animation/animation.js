@@ -43,6 +43,7 @@ import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';
 
@@ -78,6 +79,7 @@ function AnimationPanel({
   updateAnimationState,
 }) {
   const playUpdatedAnimation = useRef(false);
+  const highlight = useFocusHighlight(states.ANIMATION);
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
@@ -222,7 +224,11 @@ function AnimationPanel({
 
   const selectedEffectTitle = getEffectName(updatedAnimations[0]?.type);
   return selectedElements.length > 1 ? (
-    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
+    <SimplePanel
+      name="animation"
+      title={__('Animation', 'web-stories')}
+      css={highlight?.showEffect && styles.FLASH}
+    >
       <Row>
         <Note
           forwardedAs="span"

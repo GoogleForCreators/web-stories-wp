@@ -32,9 +32,11 @@ const keys = {
   STORY_TITLE: 'STORY_TITLE',
 
   // INSPECTOR
+  ANIMATION: 'ANIMATION',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
   CAPTIONS: 'CAPTIONS',
   EXCERPT: 'EXCERPT',
+  LINK: 'LINK',
   PAGE_BACKGROUND: 'PAGE_BACKGROUND',
   POSTER: 'POSTER',
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
@@ -71,6 +73,14 @@ export const STATES = {
     tab: DESIGN,
   },
   [keys.PAGE_BACKGROUND]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.ANIMATION]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.LINK]: {
     focus: true,
     tab: DESIGN,
   },

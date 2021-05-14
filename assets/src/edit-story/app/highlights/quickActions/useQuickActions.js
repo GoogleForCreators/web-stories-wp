@@ -80,20 +80,24 @@ const useQuickActions = () => {
 
   const handleFocusPanel = useCallback(
     (highlight) => (elementId) => (ev) => {
-      ev.stopPropagation();
+      ev.preventDefault();
       setHighlights({ elementId, highlight });
     },
     [setHighlights]
   );
 
   const {
-    handleFocusPageBackground,
+    handleFocusAnimationPanel,
     handleFocusMediaPanel,
+    handleFocusLinkPanel,
+    handleFocusPageBackground,
     handleFocusTextSetsPanel,
   } = useMemo(
     () => ({
-      handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
+      handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
+      handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusMediaPanel: handleFocusPanel(states.MEDIA),
+      handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
     }),
     [handleFocusPanel]
@@ -102,6 +106,7 @@ const useQuickActions = () => {
   const backgroundElement =
     currentPage?.elements.find((element) => element.isBackground) ||
     selectedElements?.[0]?.isBackground;
+  const selectedElement = selectedElements?.[0];
 
   const defaultActions = useMemo(
     () => [
@@ -135,17 +140,17 @@ const useQuickActions = () => {
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: noop,
+        onClick: handleFocusMediaPanel(selectedElement?.id),
       },
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
-        onClick: noop,
+        onClick: handleFocusAnimationPanel(selectedElement?.id),
       },
       {
         Icon: Link,
         label: ACTION_TEXT.ADD_LINK,
-        onClick: noop,
+        onClick: handleFocusLinkPanel(selectedElement?.id),
       },
       {
         Icon: Eraser,
@@ -154,7 +159,12 @@ const useQuickActions = () => {
         separator: 'top',
       },
     ],
-    []
+    [
+      handleFocusAnimationPanel,
+      handleFocusMediaPanel,
+      handleFocusLinkPanel,
+      selectedElement?.id,
+    ]
   );
 
   // Hide menu if there are multiple elements selected
