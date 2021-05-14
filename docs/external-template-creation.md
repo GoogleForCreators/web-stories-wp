@@ -108,6 +108,117 @@ Once you have the story JSON, several code changes are needed to add it to the l
 4. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
 5. Create a single pull request with all of the changes in steps 1-3.
 
+### Adding SVGs to the codebase as shapes
+
+First and foremost, shapes aren't complete svgs, just a single normalized path (coordinates should be defined in a 0->1 space). To accommodate for this, there are a few formatting steps that must be taken in an svg editing software (like illustrator), and a few steps within the codebase to get a proper working path in the editor.
+
+#### Getting your svg to be a single path
+
+Since we must have a single path, we can't utilize any other aspects of the svg spec. This means all shapes must be converted to a single path in the svg editing software of your choosing. For the purposes here, we will outline the steps in illustrator because it's what we've used thus far, but these svg operations should be applicable to other programs as well.
+
+- Open svg file in illustrator
+- Select shape 
+- (If there's any stroke) Click on `Object -> Path -> Outline Stroke`
+- Make sure your shape is selected and click `Object -> Compound Path -> Make`
+- Open your code editor to any scratch pad svg file (will just be using this file for copy and pasting, won't save it at all)
+- Select svg in illustrator and copy
+- Paste into your code editor
+
+In your editor, you should see something like this:
+
+```svg
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="392px"
+	 height="392px" viewBox="0 0 392 392" style="enable-background:new 0 0 392 392;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<defs>
+</defs>
+<path class="st0" d="M392,196c0,108.25-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0S392,87.75,392,196z M196,30
+	c-44.34,0-86.03,17.27-117.38,48.62C47.27,109.97,30,151.66,30,196s17.27,86.03,48.62,117.38C109.97,344.73,151.66,362,196,362
+	s86.03-17.27,117.38-48.62C344.73,282.03,362,240.34,362,196s-17.27-86.03-48.62-117.38C282.03,47.27,240.34,30,196,30 M196,0
+	c108.25,0,196,87.75,196,196s-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0L196,0z"/>
+</svg>
+```
+
+If your svg markup consists of anything other than a single path, you must go back to your svg editing application and keep playing with it until you can copy the svg into your code editor and it only consists of a single path.
+
+In the path's `d` attribute you'll see a mix of numbers and letters. The letters are draw commands and the numbers after it specify coordinate arguments for the draw command. Those coordinates are drawn relative to the coordinate space depicted in the `viewBox` attribute. It's important that the path fits nicely in the viewbox. For Illustrator it creates the viewbox & path coordinates based on the bounding box of all selected elements you're copying onto your clipboard. If you need to alter the path to be drawn relative to a slightly larger viewbox, you can always place a square/rectangle (larger than original selected elements) within the selected elements before copying over to your editor to dictate the size of the viewbox and illustrator will update the path coordinates accordingly.
+
+#### Normalizing your svg path
+
+All the svg paths in the shapes panel are declared in a 0->1 coordinate space. In theory you could scale down your svg in illustrator and it would update the path coordinates accordingly, but we found that Illustrator lacks the level of precision needed for large shapes with small details. This can lead to necessary parts of your path getting rounded off. To accommodate for this, we created a little node script you can run your svg path through and it will normalize the path with a much higher level of precision that won't round off details in your shape.
+
+This script is located in `bin/normalize-path.js`. You'll need to copy the path and viewbox from your scratchpad svg file and paste them into the resize command in that file like so:
+
+```javascript
+console.log(
+  resize(
+    // viewBox width
+    392,
+    // viewBox height
+    392,
+    // path that you're normalizing
+    `M392,196c0,108.25-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0S392,87.75,392,196z M196,30
+	c-44.34,0-86.03,17.27-117.38,48.62C47.27,109.97,30,151.66,30,196s17.27,86.03,48.62,117.38C109.97,344.73,151.66,362,196,362
+	s86.03-17.27,117.38-48.62C344.73,282.03,362,240.34,362,196s-17.27-86.03-48.62-117.38C282.03,47.27,240.34,30,196,30 M196,0
+	c108.25,0,196,87.75,196,196s-87.75,196-196,196S0,304.25,0,196S87.75,0,196,0L196,0z`
+  )
+);
+```
+
+You can then save the file and run the command:
+
+```bash
+node bin/normalize-path
+```
+
+It should output a normalized path like this in the console:
+
+```javascript
+M 1.000000 , 0.500000 c 0.000000 , 0.276148 -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 S 1.000000 , 0.223852 , 1.000000 , 0.500000 z  M 0.500000 , 0.076531 c -0.113112 , 0.000000 -0.219464 , 0.044056 -0.299439 , 0.124031 C 0.120587 , 0.280536 , 0.076531 , 0.386888 , 0.076531 , 0.500000 s 0.044056 , 0.219464 , 0.124031 , 0.299439 C 0.280536 , 0.879413 , 0.386888 , 0.923469 , 0.500000 , 0.923469 s 0.219464 -0.044056 , 0.299439 -0.124031 C 0.879413 , 0.719464 , 0.923469 , 0.613112 , 0.923469 , 0.500000 s -0.044056 -0.219464 -0.124031 -0.299439 C 0.719464 , 0.120587 , 0.613112 , 0.076531 , 0.500000 , 0.076531 M 0.500000 , 0.000000 c 0.276148 , 0.000000 , 0.500000 , 0.223852 , 0.500000 , 0.500000 s -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 L 0.500000 , 0.000000 z
+```
+
+#### Creating a shape from your normalized path
+
+Copy the outputted path from your terminal and navigate to `assets/src/edit-story/masks/constants.js`. In that file create a new key describing your shape in `MaskTypes`. For the shape shown above an apt description would be something like:
+
+```javascript
+export const MaskTypes = {
+  ...
+  [RING]: 'ring',
+};
+```
+
+Then navigate down to `CLIP_PATHS` and add your normalized path like so:
+
+```javascript
+const CLIP_PATHS = {
+  ...,
+  [MaskTypes.RING]: `M 1.000000 , 0.500000 c 0.000000 , 0.276148 -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 S 1.000000 , 0.223852 , 1.000000 , 0.500000 z  M 0.500000 , 0.076531 c -0.113112 , 0.000000 -0.219464 , 0.044056 -0.299439 , 0.124031 C 0.120587 , 0.280536 , 0.076531 , 0.386888 , 0.076531 , 0.500000 s 0.044056 , 0.219464 , 0.124031 , 0.299439 C 0.280536 , 0.879413 , 0.386888 , 0.923469 , 0.500000 , 0.923469 s 0.219464 -0.044056 , 0.299439 -0.124031 C 0.879413 , 0.719464 , 0.923469 , 0.613112 , 0.923469 , 0.500000 s -0.044056 -0.219464 -0.124031 -0.299439 C 0.719464 , 0.120587 , 0.613112 , 0.076531 , 0.500000 , 0.076531 M 0.500000 , 0.000000 c 0.276148 , 0.000000 , 0.500000 , 0.223852 , 0.500000 , 0.500000 s -0.223852 , 0.500000 -0.500000 , 0.500000 S 0.000000 , 0.776148 , 0.000000 , 0.500000 S 0.223852 , 0.000000 , 0.500000 , 0.000000 L 0.500000 , 0.000000 z`,
+```
+
+Lastly go down to `MASKS` and add an entry for your newly updated mask:
+
+```javascript
+export const MASKS = [
+  ...,
+  {
+      {
+    type: MaskTypes.RING,
+    showInLibrary: true, // mark this as true if you would like the shape to be user facing
+    name: __('Ring', 'web-stories'),
+    path: CLIP_PATHS[MaskTypes.RING],
+    ratio: 392 / 392, // <Width of svg viewbox coppied from illustrator> / <Height>
+  },
+  }
+];
+```
+
+That's it! After you recompile your application you should now see your new shape show up in the shapes panel of the editor.
+
+
 ## Appendix
 
 ### Filenames for images and videos

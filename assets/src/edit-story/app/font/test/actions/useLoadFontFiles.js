@@ -34,6 +34,8 @@ const DEFAULT_FONT = {
   content: 'Fill in some text',
 };
 
+/* eslint-disable testing-library/no-node-access */
+
 describe('useLoadFontFiles', () => {
   beforeEach(() => {
     const el = document.getElementById('font-css');
@@ -81,3 +83,5 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('font-css')).toBeDefined();
   });
 });
+
+/* eslint-enable testing-library/no-node-access */

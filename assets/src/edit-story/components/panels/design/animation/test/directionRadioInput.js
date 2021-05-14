@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState } from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -49,30 +49,30 @@ DirectionRadioInputUncontrolled.propTypes = {
 
 describe('<DirectionRadioInput />', () => {
   it('should render', () => {
-    const { getByRole } = renderWithTheme(<DirectionRadioInput />);
-    const fieldset = getByRole('group');
+    renderWithTheme(<DirectionRadioInput />);
+    const fieldset = screen.getByRole('group');
     expect(fieldset).toBeInTheDocument();
   });
 
   it('should render directions supplied as buttons', () => {
-    const { getAllByRole } = renderWithTheme(
+    renderWithTheme(
       <DirectionRadioInput
         directions={[DIRECTION.TOP_TO_BOTTOM, DIRECTION.BOTTOM_TO_TOP]}
         onChange={() => {}}
       />
     );
-    const buttons = getAllByRole('button');
+    const buttons = screen.getAllByRole('button');
     expect(buttons).toHaveLength(2);
   });
 
   it('should call onChange when button clicked', () => {
     const onChange = jest.fn((value) => value);
     const directions = [DIRECTION.TOP_TO_BOTTOM, DIRECTION.BOTTOM_TO_TOP];
-    const { getAllByRole } = renderWithTheme(
+    renderWithTheme(
       <DirectionRadioInput onChange={onChange} directions={directions} />
     );
 
-    const buttons = getAllByRole('button');
+    const buttons = screen.getAllByRole('button');
     fireEvent.click(buttons[1]);
 
     expect(onChange).toHaveBeenCalledTimes(1);
@@ -81,14 +81,14 @@ describe('<DirectionRadioInput />', () => {
 
   it('should render the correct number of arrows for scale direction', () => {
     const onChange = jest.fn();
-    const { getAllByRole } = renderWithTheme(
+    renderWithTheme(
       <DirectionRadioInputUncontrolled
         onChange={onChange}
         directions={[SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT]}
       />
     );
 
-    const buttons = getAllByRole('button');
+    const buttons = screen.getAllByRole('button');
 
     expect(buttons).toHaveLength(4);
   });

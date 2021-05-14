@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { createBrowserHistory } from 'history';
 
 /**
@@ -27,15 +27,15 @@ import { RouterProvider, Route, useRouteHistory } from '..';
 
 describe('RouterProvider', () => {
   it('should render the first route by default', () => {
-    const { queryByText } = render(
+    render(
       <RouterProvider>
         <Route path="/" exact component={<div>{'Home'}</div>} />
         <Route path="/second-route" component={<div>{'Second Route'}</div>} />
       </RouterProvider>
     );
 
-    expect(queryByText('Home')).toBeInTheDocument();
-    expect(queryByText('Second Route')).not.toBeInTheDocument();
+    expect(screen.queryByText('Home')).toBeInTheDocument();
+    expect(screen.queryByText('Second Route')).not.toBeInTheDocument();
   });
 
   it('should render the second route when navigated to', async () => {
@@ -62,7 +62,7 @@ describe('RouterProvider', () => {
       );
     };
 
-    const { queryByText, findByText } = render(
+    render(
       <RouterProvider history={history}>
         <Button />
         <Route path="/" exact component={<div>{'Home'}</div>} />
@@ -70,10 +70,10 @@ describe('RouterProvider', () => {
       </RouterProvider>
     );
 
-    const link = await findByText('Visit Second Page');
+    const link = await screen.findByText('Visit Second Page');
     fireEvent.click(link);
-    expect(queryByText('Home')).not.toBeInTheDocument();
-    expect(queryByText('Second Route')).toBeInTheDocument();
+    expect(screen.queryByText('Home')).not.toBeInTheDocument();
+    expect(screen.queryByText('Second Route')).toBeInTheDocument();
   });
 
   it('should render the parent and sub-route when navigated to', async () => {
@@ -100,7 +100,7 @@ describe('RouterProvider', () => {
       );
     };
 
-    const { queryByText, findByText } = render(
+    render(
       <RouterProvider history={history}>
         <Button />
         <Route path="/" exact component={<div>{'Home'}</div>} />
@@ -119,10 +119,10 @@ describe('RouterProvider', () => {
       </RouterProvider>
     );
 
-    const link = await findByText('Visit Sub Entity on Second Page');
+    const link = await screen.findByText('Visit Sub Entity on Second Page');
     fireEvent.click(link);
-    expect(queryByText('Home')).not.toBeInTheDocument();
-    expect(queryByText('Second Route')).toBeInTheDocument();
-    expect(queryByText('Sub Entity Route')).toBeInTheDocument();
+    expect(screen.queryByText('Home')).not.toBeInTheDocument();
+    expect(screen.queryByText('Second Route')).toBeInTheDocument();
+    expect(screen.queryByText('Sub Entity Route')).toBeInTheDocument();
   });
 });

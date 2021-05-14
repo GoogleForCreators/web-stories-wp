@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import StoryContext from '../../../../../app/story/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import SlugPanel, { MIN_MAX } from '../slug';
 
-function setupPanel() {
+function arrange() {
   const updateStory = jest.fn();
 
   const storyContextValue = {
@@ -42,13 +42,12 @@ function setupPanel() {
     },
     actions: { updateStory },
   };
-  const { getByRole } = renderWithTheme(
+  renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
       <SlugPanel />
     </StoryContext.Provider>
   );
   return {
-    getByRole,
     updateStory,
   };
 }
@@ -66,20 +65,20 @@ describe('SlugPanel', () => {
   });
 
   it('should render Slug Panel', () => {
-    const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Permalink' });
+    arrange();
+    const element = screen.getByRole('button', { name: 'Permalink' });
     expect(element).toBeInTheDocument();
   });
 
   it('should display permalink', () => {
-    const { getByRole } = setupPanel();
-    const url = getByRole('link', { name: 'https://example.com/foo' });
+    arrange();
+    const url = screen.getByRole('link', { name: 'https://example.com/foo' });
     expect(url).toBeInTheDocument();
   });
 
   it('should not allow trailing spaces while typing and onblur', async () => {
-    const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'URL slug' });
+    const { updateStory } = arrange();
+    const input = screen.getByRole('textbox', { name: 'URL slug' });
 
     fireEvent.change(input, {
       target: { value: 'name with spaces ' },
@@ -101,8 +100,8 @@ describe('SlugPanel', () => {
   });
 
   it('should respect the link limit', async () => {
-    const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'URL slug' });
+    const { updateStory } = arrange();
+    const input = screen.getByRole('textbox', { name: 'URL slug' });
     expect(input).toBeInTheDocument();
 
     const bigSlug = ''.padStart(MIN_MAX.PERMALINK.MAX + 10, '1');

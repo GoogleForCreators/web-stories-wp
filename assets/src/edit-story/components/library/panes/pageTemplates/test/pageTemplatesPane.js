@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -108,7 +108,7 @@ describe('PageTemplatesPane', () => {
   });
 
   it('should render <PageTemplatesPane /> with dummy layouts', async () => {
-    const { queryByText, queryByLabelText } = renderWithTemplates();
+    renderWithTemplates();
 
     await act(async () => {
       // Needed to flush all promises to get templates to resolve
@@ -118,12 +118,12 @@ describe('PageTemplatesPane', () => {
     Object.values(PAGE_TEMPLATE_TYPES)
       .map(({ name }) => name)
       .forEach((name) => {
-        expect(queryByText(name)).toBeInTheDocument();
+        expect(screen.queryByText(name)).toBeInTheDocument();
       });
 
     TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByLabelText(`${name} Cover`)).toBeInTheDocument();
-      expect(queryByLabelText(`${name} Section`)).toBeInTheDocument();
+      expect(screen.queryByLabelText(`${name} Cover`)).toBeInTheDocument();
+      expect(screen.queryByLabelText(`${name} Section`)).toBeInTheDocument();
     });
   });
 });

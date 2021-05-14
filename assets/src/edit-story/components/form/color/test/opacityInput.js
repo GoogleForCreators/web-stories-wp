@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, act, fireEvent } from '@testing-library/react';
+import { waitFor, act, fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -40,10 +40,8 @@ function arrange(customProps = {}) {
     value: createSolid(0, 0, 0),
     ...customProps,
   };
-  const { queryByLabelText, rerender } = renderWithTheme(
-    <OpacityInput {...props} />
-  );
-  const element = queryByLabelText('Opacity');
+  const { rerender } = renderWithTheme(<OpacityInput {...props} />);
+  const element = screen.queryByLabelText('Opacity');
   const wrappedRerender = (extraProps) =>
     rerender(<OpacityInput {...props} {...extraProps} />);
   return { element, onChange, rerender: wrappedRerender };
