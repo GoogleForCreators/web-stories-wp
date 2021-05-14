@@ -187,6 +187,7 @@ function useMediaUploadQueue() {
           }
 
           const fileName = getFileName(file) + '-poster.jpeg';
+          let newResource;
 
           if (
             !isFeatureEnabled ||
@@ -208,27 +209,12 @@ function useMediaUploadQueue() {
 
             try {
               const attachment = await uploadFile(file, additionalData);
-              const { poster, posterId } = await uploadVideoPoster(
-                attachment.id,
-                fileName,
-                posterFile
-              );
 
               // The newly uploaded file won't have a poster yet.
               // However, we'll likely still have one on file.
               // Add it back so we're never without one.
               // The final poster will be uploaded later by uploadVideoPoster().
-              const newResource = getResourceFromAttachment(attachment);
-              const newResourceWithPoster = {
-                ...newResource,
-                poster: poster || newResource.poster || resource.poster,
-                posterId,
-              };
-
-              finishUploading({
-                id,
-                resource: newResourceWithPoster,
-              });
+              newResource = getResourceFromAttachment(attachment);
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -236,6 +222,31 @@ function useMediaUploadQueue() {
               trackError('upload_media', error?.message);
             } finally {
               trackTiming();
+            }
+
+            if (newResource.id) {
+              try {
+                const { poster, posterId } = await uploadVideoPoster(
+                  newResource.id,
+                  fileName,
+                  posterFile
+                );
+                const newResourceWithPoster = {
+                  ...newResource,
+                  poster: poster || newResource.poster || resource.poster,
+                  posterId,
+                };
+
+                finishUploading({
+                  id,
+                  resource: newResourceWithPoster,
+                });
+              } catch (error) {
+                finishUploading({
+                  id,
+                  resource: newResource,
+                });
+              }
             }
 
             return;
@@ -255,31 +266,42 @@ function useMediaUploadQueue() {
               media_source: 'video-optimization',
               ...additionalData,
             });
-            const { poster, posterId } = await uploadVideoPoster(
-              attachment.id,
-              fileName,
-              posterFile
-            );
+
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.
             // Add it back so we're never without one.
             // The final poster will be uploaded later by uploadVideoPoster().
-            const newResource = getResourceFromAttachment(attachment);
-            const newResourceWithPoster = {
-              ...newResource,
-              poster: poster || newResource.poster || resource.poster,
-              posterId,
-            };
-
-            finishUploading({
-              id,
-              resource: newResourceWithPoster,
-            });
+            newResource = getResourceFromAttachment(attachment);
           } catch (error) {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });
 
             trackError('upload_media', error?.message);
+          }
+
+          if (newResource.id) {
+            try {
+              const { poster, posterId } = await uploadVideoPoster(
+                newResource.id,
+                fileName,
+                posterFile
+              );
+              const newResourceWithPoster = {
+                ...newResource,
+                poster: poster || newResource.poster || resource.poster,
+                posterId,
+              };
+
+              finishUploading({
+                id,
+                resource: newResourceWithPoster,
+              });
+            } catch (error) {
+              finishUploading({
+                id,
+                resource: newResource,
+              });
+            }
           }
         })
       );
