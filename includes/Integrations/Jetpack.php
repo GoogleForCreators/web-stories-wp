@@ -119,7 +119,7 @@ class Jetpack extends Service_Base {
 			return $response;
 		}
 
-		if ( ! isset( $post_data['query'] ) && ! isset( $post_data['query']['source'] ) || 'web_stories_editor' !== $post_data['query']['source'] ) {
+		if ( ! isset( $post_data['query']['source'] ) || 'web_stories_editor' !== $post_data['query']['source'] ) {
 			return $response;
 		}
 
