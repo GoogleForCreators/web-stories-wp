@@ -127,7 +127,7 @@ function createResource({
   sizes,
   attribution,
   output,
-  local,
+  local = false,
   isPlaceholder,
   isOptimized = false,
 }) {

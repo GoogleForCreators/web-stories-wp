@@ -103,7 +103,7 @@ function useProcessVideo({
         updateOldVideo(oldResource.id, resource.id);
         deleteMediaElement({ id: oldResource.id });
 
-        if (resource.type === 'video' && !resource.local) {
+        if (['video', 'gif'].includes(resource.type) && !resource.local) {
           uploadVideoPoster(resource.id, resource.src);
         }
       };

@@ -175,20 +175,18 @@ function InnerElement({
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
             <>
-              <source
-                src={getSmallestUrlForWidth(width, {
-                  ...resource,
-                  sizes: resource.output.sizes.mp4,
-                })}
-                type="video/mp4"
-              />
-              <source
-                src={getSmallestUrlForWidth(width, {
-                  ...resource,
-                  sizes: resource.output.sizes.webm,
-                })}
-                type="video/webm"
-              />
+              {resource.output.src && (
+                <source src={resource.output.src} type="video/mp4" />
+              )}
+              {resource.output.sizes.webm && (
+                <source
+                  src={getSmallestUrlForWidth(width, {
+                    ...resource,
+                    sizes: resource.output.sizes.webm,
+                  })}
+                  type="video/webm"
+                />
+              )}
             </>
           ) : (
             <source

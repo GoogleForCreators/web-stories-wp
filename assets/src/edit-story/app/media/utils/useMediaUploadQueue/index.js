@@ -34,6 +34,7 @@ import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import getImageDimensions from '../getImageDimensions';
+import isAnimatedGif from '../isAnimatedGif';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -50,6 +51,7 @@ function useMediaUploadQueue() {
     canTranscodeFile,
     transcodeVideo,
     getFirstFrameOfVideo,
+    convertGifToVideo,
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
@@ -140,35 +142,100 @@ function useMediaUploadQueue() {
   useEffect(() => {
     async function uploadItems() {
       await Promise.all(
-        state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource, additionalData } = item;
-          if ('PENDING' !== itemState) {
-            return;
-          }
+        state.queue.map(
+          /**
+           * Uploads a single pending item.
+           *
+           * @param {Object} item Queue item.
+           * @param {File} item.file File object.
+           * @return {Promise<void>}
+           */
+          async (item) => {
+            const {
+              id,
+              file,
+              state: itemState,
+              resource,
+              additionalData = {},
+            } = item;
+            if ('PENDING' !== itemState) {
+              return;
+            }
 
-          if (
-            !isFeatureEnabled ||
-            !isTranscodingEnabled ||
-            !canTranscodeFile(file)
-          ) {
-            // TODO: If !isTranscodingEnabled && canTranscodeFile(), tell user to enable transcoding.
+            let newFile = file;
 
-            // If transcoding is not enabled, just upload the file normally without any transcoding.
+            // Convert animated GIFs to videos if possible.
+            if (
+              resource.mimeType === 'image/gif' &&
+              isAnimatedGif(await file.arrayBuffer()) &&
+              isFeatureEnabled &&
+              isTranscodingEnabled
+            ) {
+              startTranscoding({ id });
+
+              try {
+                newFile = await convertGifToVideo(file);
+                finishTranscoding({ id, file: newFile });
+                additionalData.media_source = 'gif-conversion';
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
+
+                trackError('upload_media', error?.message);
+
+                return;
+              }
+            }
+
+            // Transcode/Optimize videos before upload.
+            // TODO: Only transcode & optimize video if needed (criteria TBD).
+            // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
+            if (
+              isFeatureEnabled &&
+              isTranscodingEnabled &&
+              canTranscodeFile(file)
+            ) {
+              startTranscoding({ id });
+
+              try {
+                newFile = await transcodeVideo(file);
+                finishTranscoding({ id, file: newFile });
+                additionalData.media_source = 'video-optimization';
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
+
+                trackError('upload_media', error?.message);
+
+                return;
+              }
+            }
 
             startUploading({ id });
 
             trackEvent('upload_media', {
-              file_size: file.size,
-              file_type: file.type,
+              file_size: newFile.size,
+              file_type: newFile.type,
             });
 
             const trackTiming = getTimeTracker('load_upload_media');
 
             try {
-              const attachment = await uploadFile(file, additionalData);
+              const attachment = await uploadFile(newFile, additionalData);
+
+              // The newly uploaded file won't have a poster yet.
+              // However, we'll likely still have one on file.
+              // Add it back so we're never without one.
+              // The final poster will be uploaded later by uploadVideoPoster().
+              const newResource = getResourceFromAttachment(attachment);
+              const newResourceWithPoster = {
+                ...newResource,
+                poster: newResource.poster || resource.poster,
+              };
+
               finishUploading({
                 id,
-                resource: getResourceFromAttachment(attachment),
+                resource: newResourceWithPoster,
               });
             } catch (error) {
               // Cancel uploading if there were any errors.
@@ -178,46 +245,8 @@ function useMediaUploadQueue() {
             } finally {
               trackTiming();
             }
-
-            return;
           }
-
-          // TODO: Only transcode & optimize video if needed (criteria TBD).
-          // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-          startTranscoding({ id });
-
-          try {
-            const newFile = await transcodeVideo(file);
-            finishTranscoding({ id, file: newFile });
-
-            startUploading({ id });
-
-            const attachment = await uploadFile(newFile, {
-              media_source: 'video-optimization',
-              ...additionalData,
-            });
-
-            // The newly uploaded file won't have a poster yet.
-            // However, we'll likely still have one on file.
-            // Add it back so we're never without one.
-            // The final poster will be uploaded later by uploadVideoPoster().
-            const newResource = getResourceFromAttachment(attachment);
-            const newResourceWithPoster = {
-              ...newResource,
-              poster: newResource.poster || resource.poster,
-            };
-
-            finishUploading({
-              id,
-              resource: newResourceWithPoster,
-            });
-          } catch (error) {
-            // Cancel uploading if there were any errors.
-            cancelUploading({ id, error });
-
-            trackError('upload_media', error?.message);
-          }
-        })
+        )
       );
     }
 
@@ -234,6 +263,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
+    convertGifToVideo,
   ]);
 
   return useMemo(

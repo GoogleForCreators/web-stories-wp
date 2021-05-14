@@ -36,21 +36,6 @@ const createLocalResource = (properties) => {
 };
 
 /**
- * Creates the File Reader object.
- *
- * @param {File} file The File object from the DataTransfer API.
- * @return {Promise<FileReader>} The promise of the FileReader object.
- */
-const createFileReader = (file) => {
-  const reader = new window.FileReader();
-  return new Promise((resolve, reject) => {
-    reader.onload = () => resolve(reader);
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(file);
-  });
-};
-
-/**
  * Generates a image resource object from a local File object.
  *
  * @param {File} file File object.
@@ -60,9 +45,7 @@ const getImageResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
 
-  const reader = await createFileReader(file);
-
-  const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
+  const src = createBlob(new window.Blob([file], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
 
   return createLocalResource({
@@ -86,9 +69,7 @@ const getVideoResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
 
-  const reader = await createFileReader(file);
-
-  const src = createBlob(new Blob([reader.result], { type: mimeType }));
+  const src = createBlob(new Blob(file, { type: mimeType }));
 
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);

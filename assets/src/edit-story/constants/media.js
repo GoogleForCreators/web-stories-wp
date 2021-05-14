@@ -39,3 +39,8 @@ export const MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES = [
   'video/x-msvideo',
   'video/x-nut',
 ];
+
+export const MEDIA_VIDEO_DIMENSIONS_THRESHOLD = {
+  HEIGHT: 720,
+  WIDTH: 1280,
+};

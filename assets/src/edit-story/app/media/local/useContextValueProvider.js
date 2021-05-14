@@ -167,9 +167,9 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   });
 
   const generateMissingPosters = useCallback(
-    ({ mimeType, posterId, id, src, local }) => {
+    ({ mimeType, posterId, id, src, local, type }) => {
       if (
-        allowedVideoMimeTypes.includes(mimeType) &&
+        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
         !local &&
         !posterId &&
         id

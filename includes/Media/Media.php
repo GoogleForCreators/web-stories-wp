@@ -373,6 +373,7 @@ class Media extends Service_Base {
 						'poster-generation',
 						'video-optimization',
 						'source-video',
+						'gif-conversion',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],

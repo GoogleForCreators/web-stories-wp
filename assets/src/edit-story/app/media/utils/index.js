@@ -24,3 +24,4 @@ export { default as getTypeFromMime } from './getTypeFromMime';
 export { default as useMediaUploadQueue } from './useMediaUploadQueue';
 export { default as useUploadVideoFrame } from './useUploadVideoFrame';
 export { default as preloadImage } from './preloadImage';
+export { default as isAnimatedGif } from './isAnimatedGif';
