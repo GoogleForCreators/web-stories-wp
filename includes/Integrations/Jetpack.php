@@ -43,7 +43,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const MIME_TYPE = 'video/videopress';
+	const VIDEOPRESS_MIME_TYPE = 'video/videopress';
 
 	/**
 	 * Initializes all hooks.
@@ -93,7 +93,7 @@ class Jetpack extends Service_Base {
 	 * @return array
 	 */
 	public function add_videopress( array $mime_types ) {
-		$mime_types['video'][] = self::MIME_TYPE;
+		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
 	}
@@ -109,7 +109,7 @@ class Jetpack extends Service_Base {
 	 * @return array
 	 */
 	public function filter_admin_ajax_response( array $response, WP_Post $attachment ) {
-		if ( self::MIME_TYPE !== $attachment->post_mime_type ) {
+		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
 			return $response;
 		}
 
@@ -140,7 +140,7 @@ class Jetpack extends Service_Base {
 	 * @return WP_REST_Response
 	 */
 	public function filter_api_response( WP_REST_Response $response, WP_Post $post ) {
-		if ( self::MIME_TYPE !== $post->post_mime_type ) {
+		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
 			return $response;
 		}
 
