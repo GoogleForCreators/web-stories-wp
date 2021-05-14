@@ -436,6 +436,14 @@ describe('Grid view', () => {
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
   });
+
+  describe('Dashboard keyboard navigation and focus logic', () => {
+    it.todo(
+      'should navigate the dashboard grid and select context menu items via keyboard'
+    );
+    it.todo('should retain focus on menu close');
+    it.todo('should exit the grid and re-focus the first item');
+  });
 });
 
 describe('List view', () => {
