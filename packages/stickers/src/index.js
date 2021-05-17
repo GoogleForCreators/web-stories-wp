@@ -18,7 +18,7 @@
  */
 import * as beautyStickers from './fresh-and-bright';
 import * as cookingStickers from './food-and-stuff';
-import * as diyStickers from './diy';
+import * as doersGetMoreDoneStickers from './doers-get-more-done';
 import * as entertainmentStickers from './entertainment';
 import * as fashionStickers from './fashion';
 import * as fitnessStickers from './fitness';
@@ -28,7 +28,7 @@ import * as wellbeingStickers from './wellbeing';
 export default {
   ...beautyStickers,
   ...cookingStickers,
-  ...diyStickers,
+  ...doersGetMoreDoneStickers,
   ...entertainmentStickers,
   ...fashionStickers,
   ...fitnessStickers,

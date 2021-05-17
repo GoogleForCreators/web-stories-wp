@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { default as foodAndStuffTemplate } from './template.json';
+import { default as foodAndStuffTemplate } from './template';
 
 export default {
   title: _x('Cooking', 'template name', 'web-stories'),

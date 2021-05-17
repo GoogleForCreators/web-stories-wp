@@ -30,11 +30,11 @@ export default async function ({ cdnURL }) {
     modified: '2020-04-21',
   };
 
-  return Object.entries(templates).map((template, index) => {
+  return templates.map((template, index) => {
     return {
       id: index + 1,
       ...globalConfig,
-      ...template[1],
+      ...template,
     };
   });
 }

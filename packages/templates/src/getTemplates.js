@@ -56,7 +56,7 @@ async function getTemplates(imageBaseUrl) {
   const templateNames = [
     'fresh-and-bright',
     'food-and-stuff',
-    // 'diy',
+    'doers-get-more-done',
     // 'entertainment',
     // 'fashion',
     // 'fitness',
@@ -67,16 +67,14 @@ async function getTemplates(imageBaseUrl) {
   const trackTiming = getTimeTracker('load_templates');
 
   const templates = await Promise.all(
-    templateNames.map(async (title) => {
-      return [title, await loadTemplate(title, imageBaseUrl)];
+    templateNames.map((title) => {
+      return loadTemplate(title, imageBaseUrl);
     })
   );
 
-  const result = Object.fromEntries(templates);
-
   trackTiming();
 
-  return result;
+  return templates;
 }
 
 export default getTemplates;
