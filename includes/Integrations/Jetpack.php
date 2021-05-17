@@ -189,14 +189,8 @@ class Jetpack extends Service_Base {
 			$seconds = 0;
 			$minutes = 0;
 		}
-		$format = '%d:%02u';
-		$time   = sprintf( $format, $minutes, $seconds );
 
-		if ( $seconds >= 1 ) {
-			return rtrim( $time, '0' );
-		}
-
-		return $time;
+		return sprintf( '%d:%02u', $minutes, $seconds );
 	}
 
 	/**
