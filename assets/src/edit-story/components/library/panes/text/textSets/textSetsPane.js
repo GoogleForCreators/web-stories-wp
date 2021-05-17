@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { _n, sprintf, __ } from '@web-stories-wp/i18n';
+import { _n, sprintf, __, _x } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -131,7 +131,7 @@ function TextSetsPane({ paneRef }) {
 
   const categories = useMemo(
     () => [
-      { id: null, label: __('All', 'web-stories') },
+      { id: null, label: _x('All', 'text sets', 'web-stories') },
       ...Object.keys(textSets).map((category) => ({
         id: category,
         label: CATEGORIES[category] ?? category,
