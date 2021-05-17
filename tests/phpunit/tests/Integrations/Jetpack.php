@@ -80,7 +80,9 @@ class Jetpack extends Test_Case {
 
 		$jetpack = new Jetpack_Integration();
 		// wp_prepare_attachment_for_js doesn't exactly match the output of media REST API, but it good enough for these tests.
-		$response = rest_ensure_response( wp_prepare_attachment_for_js( $attachment ) );
+		$original_data = wp_prepare_attachment_for_js( $attachment );
+		$original_data['media_details']['videopress']['duration'] = 5000;
+		$response = rest_ensure_response( $original_data );
 
 		$results = $jetpack->filter_api_response( $response, $attachment );
 		$data    = $results->get_data();
@@ -90,6 +92,10 @@ class Jetpack extends Test_Case {
 
 		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertSame( $data['media_source'], 'video-optimization' );
+
+		$this->assertArrayHasKey( 'media_details', $data );
+		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
+		$this->assertSame( $data['media_details']['length_formatted'], '0:05' );
 	}
 
 	/**
@@ -132,5 +138,52 @@ class Jetpack extends Test_Case {
 		$this->assertSame( $data['media_source'], 'video-optimization' );
 
 		unset( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	}
+
+	/**
+	 * @dataProvider get_sample_data
+	 *
+	 * @param string $milliseconds
+	 * @param string $string
+	 * @covers ::format_milliseconds
+	 */
+	public function test_format_milliseconds( $milliseconds, $string ) {
+
+		$jetpack  = new Jetpack_Integration();
+		$result    = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
+		$this->assertSame( $result, $string );
+	}
+
+	public function get_sample_data() {
+		return [
+			'5000'  => [
+				5000,
+				'0:05'
+			],
+			'15123' => [
+				15123,
+				'0:15'
+			],
+			'0'     => [
+				0,
+				'0:00'
+			],
+			'-1'    => [
+				- 1,
+				'0:00'
+			],
+			'13123' => [
+				13123,
+				'0:13'
+			],
+			'3600000' => [
+				3600000,
+				'60:00'
+			],
+			'98765431' => [
+				98765431,
+				'1646:05'
+			]
+		];
 	}
 }

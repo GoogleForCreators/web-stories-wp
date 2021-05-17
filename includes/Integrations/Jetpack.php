@@ -152,9 +152,43 @@ class Jetpack extends Service_Base {
 		$data['mime_type'] = 'video/mp4';
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
+
+		if ( isset( $data['media_details']['videopress']['duration'] ) ) {
+			$data['media_details']['length_formatted'] = $this->format_milliseconds( $data['media_details']['videopress']['duration'] );
+		}
+
 		$response->set_data( $data );
 
 		return $response;
+	}
+
+	/**
+	 * Format milliseconds into seconds.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param int $milliseconds Milliseconds
+	 *
+	 * @return string
+	 */
+	protected function format_milliseconds( $milliseconds ) {
+		$seconds = floor( $milliseconds / 1000 );
+
+		if ( $seconds >= 1 ) {
+			$minutes = floor( $seconds / 60 );
+			$seconds = $seconds % 60;
+		} else {
+			$seconds = 0;
+			$minutes = 0;
+		}
+		$format = '%d:%02u';
+		$time   = sprintf( $format, $minutes, $seconds );
+
+		if ( $seconds >= 1 ) {
+			return rtrim( $time, '0' );
+		}
+
+		return $time;
 	}
 
 	/**
