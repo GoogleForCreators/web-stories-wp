@@ -32,6 +32,8 @@ use Google\Web_Stories\Traits\Post_Type;
  * KSES class.
  *
  * Provides KSES utility methods to override the ones from core.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class KSES extends Service_Base {
 	use Post_Type;
