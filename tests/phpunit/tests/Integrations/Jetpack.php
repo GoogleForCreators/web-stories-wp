@@ -25,6 +25,9 @@ use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
  */
 class Jetpack extends Test_Case {
+
+	const ATTACHMENT_URL = 'http://www.example.com/test.mp4';
+
 	/**
 	 * @covers ::register
 	 */
@@ -77,8 +80,6 @@ class Jetpack extends Test_Case {
 			]
 		);
 		$attachment          = get_post( $video_attachment_id );
-		$attachment_url      = 'http://www.example.com/test.mp4';
-
 
 		$jetpack = new Jetpack_Integration();
 		// wp_prepare_attachment_for_js doesn't exactly match the output of media REST API, but it good enough for these tests.
@@ -87,7 +88,7 @@ class Jetpack extends Test_Case {
 		$original_data['media_details']['videopress'] = [
 			'duration' => 5000,
 			'finished' => false,
-			'original' => $attachment_url,
+			'original' => self::ATTACHMENT_URL,
 		];
 
 		$response = rest_ensure_response( $original_data );
@@ -102,7 +103,7 @@ class Jetpack extends Test_Case {
 		$this->assertSame( $data['media_source'], 'video-optimization' );
 
 		$this->assertArrayHasKey( 'source_url', $data );
-		$this->assertSame( $data['source_url'], $attachment_url );
+		$this->assertSame( $data['source_url'], self::ATTACHMENT_URL );
 
 		$this->assertArrayHasKey( 'media_details', $data );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
@@ -123,7 +124,8 @@ class Jetpack extends Test_Case {
 		);
 		$attachment          = get_post( $video_attachment_id );
 
-		$jetpack  = new Jetpack_Integration();
+		$jetpack = new Jetpack_Integration();
+		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
 		$response = wp_prepare_attachment_for_js( $attachment );
 
 		$data = $jetpack->filter_admin_ajax_response( $response, $attachment );
@@ -145,9 +147,19 @@ class Jetpack extends Test_Case {
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( $data['mime'], 'video/mp4' );
 
+		$this->assertArrayHasKey( 'subtype', $data );
+		$this->assertSame( $data['subtype'], 'mp4' );
+
 		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertSame( $data['media_source'], 'video-optimization' );
 
+		$this->assertArrayHasKey( 'url', $data );
+		$this->assertSame( $data['url'], self::ATTACHMENT_URL );
+
+		$this->assertArrayHasKey( 'fileLength', $data );
+		$this->assertSame( $data['fileLength'], '0:05' );
+
+		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 		unset( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 	}
 
@@ -163,6 +175,31 @@ class Jetpack extends Test_Case {
 		$jetpack = new Jetpack_Integration();
 		$result  = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
 		$this->assertSame( $result, $string );
+	}
+
+	/**
+	 * @param $value
+	 * @param $object_id
+	 * @param $meta_key
+	 *
+	 * @return \array[][]
+	 */
+	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
+		if ( '_wp_attachment_metadata' !== $meta_key ) {
+			return $value;
+		}
+
+		$original_data = [
+			[
+				'videopress' => [
+					'duration' => 5000,
+					'finished' => false,
+					'original' => self::ATTACHMENT_URL,
+				],
+			],
+		];
+
+		return $original_data;
 	}
 
 	/**

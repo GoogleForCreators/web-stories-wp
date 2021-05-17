@@ -124,9 +124,24 @@ class Jetpack extends Service_Base {
 		}
 
 		// Reset mime type back to mp4, as this is the correct value.
-		$response['mime'] = 'video/mp4';
+		$response['mime']    = 'video/mp4';
+		$response['subtype'] = 'mp4';
 		// Make video as optimized.
 		$response['media_source'] = 'video-optimization';
+
+		$media_details = wp_get_attachment_metadata( $attachment->ID );
+		if ( is_array( $media_details ) && isset( $media_details['videopress'] ) ) {
+			$videopress = $media_details['videopress'];
+			// If videopress has finished processing, use the duration in millions to get formatted seconds and minutes.
+			if ( isset( $videopress['duration'] ) && $videopress['duration'] ) {
+				$response['fileLength'] = $this->format_milliseconds( $videopress['duration'] );
+
+			}
+			// If video has not finished processing, reset request to original url.
+			if ( isset( $videopress['finished'], $videopress['original'] ) && ! $videopress['finished'] ) {
+				$response['url'] = $videopress['original'];
+			}
+		}
 
 		return $response;
 	}
