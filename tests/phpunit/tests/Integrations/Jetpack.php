@@ -154,6 +154,9 @@ class Jetpack extends Test_Case {
 		$this->assertSame( $result, $string );
 	}
 
+	/**
+	 * @return array[]
+	 */
 	public function get_sample_data() {
 		return [
 			'5000'     => [
@@ -164,12 +167,20 @@ class Jetpack extends Test_Case {
 				15123,
 				'0:15',
 			],
+			'15999'    => [
+				15123,
+				'0:15',
+			],
 			'0'        => [
 				0,
 				'0:00',
 			],
 			'-1'       => [
 				- 1,
+				'0:00',
+			],
+			'-5000'       => [
+				- 5000,
 				'0:00',
 			],
 			'13123'    => [
@@ -183,6 +194,10 @@ class Jetpack extends Test_Case {
 			'98765431' => [
 				98765431,
 				'1646:05',
+			],
+			'5000.9876'     => [
+				5000.9876,
+				'0:05',
 			],
 		];
 	}
