@@ -19,7 +19,14 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef, createRef, useRef, useEffect } from 'react';
+import {
+  forwardRef,
+  createRef,
+  useRef,
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+} from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -377,6 +384,27 @@ const PageArea = forwardRef(function PageArea(
     }
   }, [isControlled, zoomSetting, fullbleedRef]);
 
+  const paddedRef = useRef(null);
+
+  const onWheel = useCallback(
+    (e) => {
+      const { ctrlKey } = e;
+      const node = paddedRef.current.childNodes[0];
+      if (ctrlKey && node.contains(e.target)) {
+        e.preventDefault();
+      }
+    },
+    [paddedRef]
+  );
+
+  useLayoutEffect(() => {
+    if (paddedRef.current) {
+      document.addEventListener('wheel', onWheel, { passive: false });
+    }
+    return () =>
+      document.removeEventListener('wheel', onWheel, { passive: false });
+  }, [onWheel, fullbleedRef]);
+
   return (
     <PageAreaContainer
       showOverflow={showOverflow}
@@ -391,7 +419,7 @@ const PageArea = forwardRef(function PageArea(
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
       >
-        <PaddedPage>
+        <PaddedPage ref={paddedRef}>
           <FullbleedContainer
             aria-label={__('Fullbleed area', 'web-stories')}
             role="region"
