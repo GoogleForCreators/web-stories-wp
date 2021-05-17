@@ -158,6 +158,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
         isOptimized: false,
         height: 2160,
         width: 3840,
+        local: false,
       },
     };
 
@@ -175,6 +176,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
         isOptimized: true,
         height: 2160,
         width: 3840,
+        local: false,
       },
     };
 
@@ -190,6 +192,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
         isOptimized: false,
         height: 300,
         width: 400,
+        local: false,
       },
     };
     const smallOptimizedVideo = {
@@ -199,6 +202,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
         isOptimized: true,
         height: 300,
         width: 400,
+        local: false,
       },
     };
 
