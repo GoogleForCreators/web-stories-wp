@@ -103,7 +103,7 @@
     "@axe-core/puppeteer": "^4.1.2-alpha.118",
     "@babel/core": "^7.14.0",
     "@babel/eslint-parser": "^7.13.14",
-    "@babel/eslint-plugin": "^7.13.10",
+    "@babel/eslint-plugin": "^7.13.16",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
     "@babel/plugin-syntax-top-level-await": "^7.12.13",
