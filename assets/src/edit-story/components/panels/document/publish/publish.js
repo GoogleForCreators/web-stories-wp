@@ -19,7 +19,7 @@
  */
 import { useCallback, useRef, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -151,25 +151,31 @@ function PublishPanel() {
   );
 
   const publisherLogoErrorMessage = useMemo(() => {
-    return sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s as publisher logo.', 'web-stories'),
-      allowedImageFileTypes.join(
-        /* translators: delimiter used in a list */
-        __(', ', 'web-stories')
-      )
-    );
+    let message = __('No file types are currently supported.', 'web-stories');
+
+    if (allowedImageFileTypes.length) {
+      message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s as publisher logo.', 'web-stories'),
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return message;
   }, [allowedImageFileTypes]);
 
   const posterErrorMessage = useMemo(() => {
-    return sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s as a poster.', 'web-stories'),
-      allowedImageFileTypes.join(
-        /* translators: delimiter used in a list */
-        __(', ', 'web-stories')
-      )
-    );
+    let message = __('No file types are currently supported.', 'web-stories');
+
+    if (allowedImageFileTypes.length) {
+      message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s as a poster.', 'web-stories'),
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return message;
   }, [allowedImageFileTypes]);
 
   return (
