@@ -103,8 +103,8 @@ class KSES extends Service_Base {
 
 		// Simple sanity check to ensure story data is valid JSON.
 		if ( isset( $unsanitized_postarr['post_content_filtered'] ) ) {
-			$story_data                    = json_decode( wp_unslash( $unsanitized_postarr['post_content_filtered'] ), true );
-			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( wp_json_encode( $story_data ) );
+			$story_data                    = json_decode( (string) wp_unslash( $unsanitized_postarr['post_content_filtered'] ), true );
+			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( (string) wp_json_encode( $story_data ) );
 		}
 
 		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
