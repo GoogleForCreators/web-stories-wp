@@ -9,3 +9,6 @@ This package uses [@wordpress/i18n](https://github.com/WordPress/gutenberg/tree/
 - `_n`
 - `_nx` 
 - `sprintf`
+- `TranslateWithMarkup`
+- `translateToExclusiveList`
+- `translateToInclusiveList`

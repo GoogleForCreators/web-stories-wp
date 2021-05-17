@@ -22,7 +22,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { _n, sprintf, __ } from '@web-stories-wp/i18n';
+import {
+  _n,
+  sprintf,
+  __,
+  translateToInclusiveList,
+} from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -105,10 +110,7 @@ function TextSetsPane({ paneRef }) {
               'web-stories'
             ),
             CATEGORIES[textSetCategory],
-            textSetFonts.join(
-              /* translators: delimiter used in a list */
-              __(', ', 'web-stories')
-            )
+            translateToInclusiveList(textSetFonts)
           ),
           elements,
         };
