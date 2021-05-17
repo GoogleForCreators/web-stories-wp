@@ -79,7 +79,7 @@
     "prop-types": "^15.7.2",
     "query-string": "^7.0.0",
     "react": "^17.0.2",
-    "react-calendar": "^3.3.0",
+    "react-calendar": "^3.4.0",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",
     "react-modal": "^3.13.1",
