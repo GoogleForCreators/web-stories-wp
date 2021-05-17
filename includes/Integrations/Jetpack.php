@@ -167,7 +167,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @param int $milliseconds Milliseconds
+	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
 	 *
 	 * @return string
 	 */
