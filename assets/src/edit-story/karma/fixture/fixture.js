@@ -44,9 +44,7 @@ import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { formattedTemplatesArray } from '../../../dashboard/storybookUtils';
-import { HELP_CENTER_TIP_COUNT } from '../../components/helpCenter/constants';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
-import { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import singleSavedTemplate from './db/singleSavedTemplate';
@@ -63,6 +61,7 @@ if ('true' === process.env.CI) {
 }
 
 export const MEDIA_PER_PAGE = 20;
+
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -207,12 +206,6 @@ export class Fixture {
   restore() {
     window.location.hash = '#';
     localStorage.clear();
-
-    // Set help center to closed right away
-    localStorage.setItem(
-      LOCAL_STORAGE_PREFIX.HELP_CENTER,
-      JSON.stringify({ isOpen: false, unreadTipsCount: HELP_CENTER_TIP_COUNT })
-    );
   }
 
   get container() {
@@ -359,6 +352,18 @@ export class Fixture {
         }
       });
     });
+
+    await waitFor(
+      async () => {
+        // Set help center to closed right away.
+        // Because there's logic to pop open the help center on initial load
+        // This wait + click to close the button is more in line with
+        // testing the actual behavior rather than overriding the local storage.
+        await this.editor.helpCenter.toggleButton;
+        await this.events.click(this.editor.helpCenter.toggleButton);
+      },
+      { timeout: 10000 }
+    );
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
