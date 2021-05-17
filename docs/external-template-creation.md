@@ -32,9 +32,10 @@ To add a new template to the editor:
 
 To add new stickers to the codebase, obtain the raw svg file, and view it in your code editor. Paste the contents of the raw svg file into a react component in `packages/stickers/src/<sticker_name>.js`.
 
-Remove extraneous attributes on the base `svg` component and make sure your component takes a `style` property that it applies to the base svg element. Also make sure to remove any explicit `height` and `width` attributes and see that they only are applied to the viewbox. By the end, your component should look something like this:
+Remove extraneous attributes on the base `svg` component and make sure your component takes a `style` property that it applies to the base svg element. Also make sure to remove any explicit `height` and `width` attributes and see that they only are applied to the viewbox. Lastly, be sure to add a title for accessibility. By the end, your component should look something like this:
 
 ```js
+const title = __('Some Descriptor', 'web-stories');
 /* eslint-disable-next-line react/prop-types */
 function MySticker({ style }) {
   return (
@@ -44,18 +45,20 @@ function MySticker({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       {/*Contents*/}
     </svg>
   );
 }
 ```
 
-At the bottom of the file, make sure there's one default export that exports the svg component and the aspect ratio based off the viewbox:
+At the bottom of the file, make sure there's one default export that exports the svg component and the aspect ratio based off the viewbox as well as the human readable title:
 
 ```js
 export default {
   aspectRatio: width / height,
   svg: MySticker,
+  title,
 };
 ```
 
