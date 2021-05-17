@@ -611,7 +611,7 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %s: minimum video resolution. */
               __(
-                'Ensure your videos has a minimum resolution of %s',
+                'Ensure your video has a minimum resolution of %s',
                 'web-stories'
               ),
               `${MIN_VIDEO_RESOLUTION}p`
