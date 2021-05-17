@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Dot', 'sticker name', 'web-stories');
 
 function OrangeDot({ style }) {
   return (
@@ -26,6 +29,7 @@ function OrangeDot({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <rect opacity="0.2" width="64" height="64" rx="32" fill="#F96302" />
       <rect
         x="18.2861"
@@ -46,4 +50,5 @@ OrangeDot.propTypes = {
 export default {
   aspectRatio: 64 / 64,
   svg: OrangeDot,
+  title,
 };
