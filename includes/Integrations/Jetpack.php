@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
+use WP_REST_Request;
 use WP_REST_Response;
 
 /**
@@ -44,6 +45,15 @@ class Jetpack extends Service_Base {
 	 * @var string
 	 */
 	const VIDEOPRESS_MIME_TYPE = 'video/videopress';
+
+	/**
+	 * VideoPress poster meta key.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @var string
+	 */
+	const VIDEOPRESS_POSTER_META_KEY = 'videopress_poster_image';
 
 	/**
 	 * Initializes all hooks.
@@ -64,6 +74,7 @@ class Jetpack extends Service_Base {
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'add_videopress' ] );
 		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_api_response' ], 10, 2 );
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 10, 2 );
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_attachment_query' ], 10, 2 );
 	}
 
 	/**
@@ -186,6 +197,39 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
+	 * Filters the current query to hide VideoPress poster images.
+	 *
+	 * Reduces unnecessary noise in media REST API requests.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param array           $args Query args.
+	 * @param WP_REST_Request $request The current REST request.
+	 *
+	 * @return array Filtered query args.
+	 */
+	public function filter_rest_attachment_query( array $args, WP_REST_Request $request ) {
+		if ( '/web-stories/v1/media' !== $request->get_route() ) {
+			return $args;
+		}
+
+		$meta_query = [
+			[
+				'key'     => self::VIDEOPRESS_POSTER_META_KEY,
+				'compare' => 'NOT EXISTS',
+			],
+		];
+
+		if ( ! empty( $args['meta_query'] ) ) {
+			$meta_query[] = $args['meta_query'];
+		}
+
+		$args['meta_query'] = $meta_query;  // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+
+		return $args;
+	}
+
+	/**
 	 * Format milliseconds into seconds.
 	 *
 	 * @since 1.7.2
@@ -198,8 +242,8 @@ class Jetpack extends Service_Base {
 		$seconds = floor( $milliseconds / 1000 );
 
 		if ( $seconds >= 1 ) {
-			$minutes = floor( $seconds / 60 );
-			$seconds = $seconds % 60;
+			$minutes  = floor( $seconds / 60 );
+			$seconds %= 60;
 		} else {
 			$seconds = 0;
 			$minutes = 0;
