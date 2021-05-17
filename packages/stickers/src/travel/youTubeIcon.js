@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('YouTube', 'sticker name', 'web-stories');
 
 const YouTubeIcon = ({ style }) => (
   <svg
@@ -25,6 +28,7 @@ const YouTubeIcon = ({ style }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{title}</title>
     <path
       d="M21.9665.0332031H8.20109C.666016.0332031.666016 2.13357.666016 7.30199v5.05021c0 4.9158 1.067524 7.2688 7.535074 7.2688H21.9686c5.8411 0 7.535-1.3771 7.535-7.2688V7.30199c-.002-5.43937-.2871-7.2687869-7.5371-7.2687869zM12.1382 13.6663V5.73741l7.7723 3.9522-7.7723 3.97669z"
       fill="#094228"
@@ -39,4 +43,5 @@ YouTubeIcon.propTypes = {
 export default {
   aspectRatio: 30 / 20,
   svg: YouTubeIcon,
+  title,
 };

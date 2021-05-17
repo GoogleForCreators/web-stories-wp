@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Cross', 'sticker name', 'web-stories');
 
 function OrangeCross({ style }) {
   return (
@@ -26,6 +29,7 @@ function OrangeCross({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M3.17925e-05 16.3241L15.5375 0.786638L17.0913 2.34039L1.55378 17.8779L3.17925e-05 16.3241Z"
         fill="#FF7324"
@@ -49,4 +53,5 @@ OrangeCross.propTypes = {
 export default {
   aspectRatio: 18 / 19,
   svg: OrangeCross,
+  title,
 };
