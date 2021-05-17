@@ -97,7 +97,14 @@ class KSES extends Service_Base {
 	 * @return array Filtered post data.
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) {
+		if (
+			( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) && !
+			(
+				'revision' === $data['post_type'] &&
+				! empty( $data['post_parent'] ) &&
+				Story_Post_Type::POST_TYPE_SLUG === get_post_type( $data['post_parent'] )
+			)
+		) {
 			return $data;
 		}
 
