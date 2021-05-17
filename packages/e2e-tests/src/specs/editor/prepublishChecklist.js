@@ -39,7 +39,7 @@ describe('Pre-Publish Checklist', () => {
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
-    await expect(page).toMatch('Story published. ');
+    await expect(page).toMatch('Story published.');
     await expect(page).toClick('button', { text: 'Dismiss' });
 
     await page.reload();
