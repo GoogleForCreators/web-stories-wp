@@ -77,11 +77,17 @@ class Jetpack extends Test_Case {
 			]
 		);
 		$attachment          = get_post( $video_attachment_id );
+		$attachment_url      = 'http://www.example.com/test.mp4';
+
 
 		$jetpack = new Jetpack_Integration();
 		// wp_prepare_attachment_for_js doesn't exactly match the output of media REST API, but it good enough for these tests.
 		$original_data = wp_prepare_attachment_for_js( $attachment );
-		$original_data['media_details']['videopress']['duration'] = 5000;
+		$original_data['media_details']['videopress'] = [
+			'duration' => 5000,
+			'finished' => false,
+			'original' => $attachment_url
+		];
 		$response = rest_ensure_response( $original_data );
 
 		$results = $jetpack->filter_api_response( $response, $attachment );
@@ -92,6 +98,9 @@ class Jetpack extends Test_Case {
 
 		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertSame( $data['media_source'], 'video-optimization' );
+
+		$this->assertArrayHasKey( 'source_url', $data );
+		$this->assertSame( $data['source_url'], $attachment_url );
 
 		$this->assertArrayHasKey( 'media_details', $data );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );

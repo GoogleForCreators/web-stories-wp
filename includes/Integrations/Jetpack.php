@@ -153,8 +153,16 @@ class Jetpack extends Service_Base {
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
 
-		if ( isset( $data['media_details']['videopress']['duration'] ) ) {
-			$data['media_details']['length_formatted'] = $this->format_milliseconds( $data['media_details']['videopress']['duration'] );
+		if ( isset( $data['media_details']['videopress'] ) ) {
+			$videopress = $data['media_details']['videopress'];
+			// If videopress has finished processing, use the duration in millions to get formatted seconds and minutes.
+			if ( isset( $videopress['duration'] ) && $videopress['duration'] ) {
+				$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress['duration'] );
+			}
+			// If video has not finished processing, reset request to original url.
+			if ( isset( $videopress['finished'], $videopress['original'] ) && ! $videopress['finished'] ) {
+				$data['source_url'] = $videopress['original'];
+			}
 		}
 
 		$response->set_data( $data );
