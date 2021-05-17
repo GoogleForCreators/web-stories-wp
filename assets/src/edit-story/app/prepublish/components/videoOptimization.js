@@ -62,6 +62,14 @@ export function VideoOptimization({ element }) {
 
   return (
     <Container>
+      <ul>
+        <li>
+          {__(
+            'Videos larger than 720p can result in slower loading for users and higher bandwidth costs.',
+            'web-stories'
+          )}
+        </li>
+      </ul>
       <Thumbnail
         src={resource?.poster}
         alt={resource?.alt || __('video thumbnail', 'web-stories')}
