@@ -100,7 +100,7 @@ export class DesignPanel extends Container {
 
   get colorPreset() {
     return this._get(
-      this.getByRole('region', { name: /Saved colors/ }),
+      this.getByRole('region', { name: /Saved Colors/i }),
       'colorPreset',
       ColorPreset
     );
@@ -108,7 +108,7 @@ export class DesignPanel extends Container {
 
   get borderRadius() {
     return this._get(
-      this.getByRole('region', { name: /Corner radius/ }),
+      this.getByRole('region', { name: /Corner Radius/i }),
       'borderRadius',
       BorderRadius
     );
