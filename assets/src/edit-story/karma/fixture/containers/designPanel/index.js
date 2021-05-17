@@ -92,7 +92,7 @@ export class DesignPanel extends Container {
 
   get textStylePreset() {
     return this._get(
-      this.getByRole('region', { name: /Saved styles/ }),
+      this.getByRole('region', { name: /Saved Styles/i }),
       'textStylePreset',
       TextStylePreset
     );

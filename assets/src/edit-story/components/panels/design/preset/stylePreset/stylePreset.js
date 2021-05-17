@@ -30,7 +30,7 @@ function StylePresetPanel({ pushUpdate }) {
   return (
     <PresetPanel
       presetType={PRESET_TYPES.STYLE}
-      title={__('Saved styles', 'web-stories')}
+      title={__('Saved Styles', 'web-stories')}
       pushUpdate={pushUpdate}
     />
   );
