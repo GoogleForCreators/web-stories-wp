@@ -57,7 +57,7 @@ describe('Duplicate Page', () => {
 
     // animation
     const animation = fixture.screen.getByRole('option', {
-      name: 'Pulse Effect',
+      name: '"Pulse" Effect',
     });
 
     // apply animation to element

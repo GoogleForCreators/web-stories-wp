@@ -52,7 +52,7 @@ export const ERRORS = {
     MESSAGE_PLURAL: __('Unable to add publisher logos', 'web-stories'),
   },
   LOAD_MEDIA: {
-    MESSAGE: __('Unable to load publisher logo(s)', 'web-stories'),
+    MESSAGE: __('Unable to load publisher logos', 'web-stories'),
   },
   LOAD_SETTINGS: {
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
