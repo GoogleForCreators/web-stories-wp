@@ -16,8 +16,8 @@
 /**
  * Internal dependencies
  */
-import * as beautyStickers from './beauty';
-import * as cookingStickers from './cooking';
+import * as beautyStickers from './fresh-and-bright';
+import * as cookingStickers from './food-and-stuff';
 import * as diyStickers from './diy';
 import * as entertainmentStickers from './entertainment';
 import * as fashionStickers from './fashion';
