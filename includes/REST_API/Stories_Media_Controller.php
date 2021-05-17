@@ -201,7 +201,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	/**
 	 * Prepares a single attachment output for response.
 	 *
-	 * @since 1.8.0
+	 * @since 1.7.2
 	 *
 	 * @param WP_Post         $post    Attachment object.
 	 * @param WP_REST_Request $request Request object.

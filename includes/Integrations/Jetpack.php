@@ -39,7 +39,7 @@ class Jetpack extends Service_Base {
 	/**
 	 * VideoPress Mime type.
 	 *
-	 * @since 1.8.0
+	 * @since 1.7.2
 	 *
 	 * @var string
 	 */
@@ -86,7 +86,7 @@ class Jetpack extends Service_Base {
 	/**
 	 * Add VideoPress to allowed mime types. If the site does not support videopress, this allow will be filtered out.
 	 *
-	 * @since 1.8.0
+	 * @since 1.7.2
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
 	 *
@@ -101,7 +101,7 @@ class Jetpack extends Service_Base {
 	/**
 	 * Filter admin ajax responses to change video/videopress back to mp4.
 	 *
-	 * @since 1.8.0
+	 * @since 1.7.2
 	 *
 	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post $attachment Attachment object.
@@ -134,7 +134,7 @@ class Jetpack extends Service_Base {
 	/**
 	 * Filter REST API responses to change video/videopress back to mp4.
 	 *
-	 * @since 1.8.0
+	 * @since 1.7.2
 	 *
 	 * @param WP_REST_Response $response The response object.
 	 * @param WP_Post          $post     The original attachment post.
