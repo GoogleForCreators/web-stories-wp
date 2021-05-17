@@ -63,8 +63,7 @@ const useQuickActions = () => {
   }));
 
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId) => (ev) => {
-      ev.stopPropagation();
+    (highlight) => (elementId) => () => {
       setHighlights({ elementId, highlight });
     },
     [setHighlights]
