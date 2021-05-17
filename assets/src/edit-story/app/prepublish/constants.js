@@ -638,7 +638,7 @@ export const MESSAGES = {
       ),
     },
     VIDEO_NOT_OPTIMIZED: {
-      MAIN_TEXT: __('Video not optimized', 'web-stories'),
+      MAIN_TEXT: __('Optimize video size', 'web-stories'),
     },
   },
 };

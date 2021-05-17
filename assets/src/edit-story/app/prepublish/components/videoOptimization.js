@@ -28,8 +28,13 @@ import { Button, BUTTON_TYPES, BUTTON_SIZES } from '../../../../design-system';
 import { useLocalMedia } from '../../media';
 
 const Container = styled.div`
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
+  flex-wrap: wrap;
+`;
+
+const Caption = styled.div`
+  margin-bottom: 12px;
 `;
 
 const Thumbnail = styled.img`
@@ -62,14 +67,16 @@ export function VideoOptimization({ element }) {
 
   return (
     <Container>
-      <ul>
-        <li>
-          {__(
-            'Videos larger than 720p can result in slower loading for users and higher bandwidth costs.',
-            'web-stories'
-          )}
-        </li>
-      </ul>
+      <Caption>
+        <ul>
+          <li>
+            {__(
+              'Videos larger than 720p can cause slower loading and higher bandwidth costs.',
+              'web-stories'
+            )}
+          </li>
+        </ul>
+      </Caption>
       <Thumbnail
         src={resource?.poster}
         alt={resource?.alt || __('video thumbnail', 'web-stories')}
