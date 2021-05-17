@@ -149,41 +149,41 @@ class Jetpack extends Test_Case {
 	 */
 	public function test_format_milliseconds( $milliseconds, $string ) {
 
-		$jetpack  = new Jetpack_Integration();
-		$result    = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
+		$jetpack = new Jetpack_Integration();
+		$result  = $this->call_private_method( $jetpack, 'format_milliseconds', [ $milliseconds ] );
 		$this->assertSame( $result, $string );
 	}
 
 	public function get_sample_data() {
 		return [
-			'5000'  => [
+			'5000'     => [
 				5000,
-				'0:05'
+				'0:05',
 			],
-			'15123' => [
+			'15123'    => [
 				15123,
-				'0:15'
+				'0:15',
 			],
-			'0'     => [
+			'0'        => [
 				0,
-				'0:00'
+				'0:00',
 			],
-			'-1'    => [
+			'-1'       => [
 				- 1,
-				'0:00'
+				'0:00',
 			],
-			'13123' => [
+			'13123'    => [
 				13123,
-				'0:13'
+				'0:13',
 			],
-			'3600000' => [
+			'3600000'  => [
 				3600000,
-				'60:00'
+				'60:00',
 			],
 			'98765431' => [
 				98765431,
-				'1646:05'
-			]
+				'1646:05',
+			],
 		];
 	}
 }
