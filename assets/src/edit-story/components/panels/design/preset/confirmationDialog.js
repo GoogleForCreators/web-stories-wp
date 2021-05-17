@@ -39,6 +39,8 @@ const Label = styled.label`
 const CheckboxWrapper = styled.div`
   display: flex;
   margin-top: 12px;
+  padding-top: 14px;
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
 function ConfirmationDialog({ onClose, onPrimary, presetType }) {

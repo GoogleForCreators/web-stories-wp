@@ -532,7 +532,7 @@ describe('Panels/Preset', () => {
 
       fireEvent.click(deletePreset);
 
-      const confirmationButton = getByRole('button', { name: 'Delete' });
+      const confirmationButton = screen.getByRole('button', { name: 'Delete' });
       fireEvent.click(confirmationButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
