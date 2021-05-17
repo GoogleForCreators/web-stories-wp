@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Circled Dot', 'sticker name', 'web-stories');
 
 const Cta = ({ style }) => (
   <svg
@@ -25,6 +28,7 @@ const Cta = ({ style }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{title}</title>
     <rect
       opacity=".2"
       x=".496094"
@@ -52,4 +56,5 @@ Cta.propTypes = {
 export default {
   aspectRatio: 61 / 61,
   svg: Cta,
+  title,
 };
