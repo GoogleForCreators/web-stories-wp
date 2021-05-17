@@ -154,9 +154,10 @@ const ChecklistTab = ({
 
       return {
         onClick: () => setHighlights(args),
-        onKeyUp: (event) => {
+        onKeyDown: (event) => {
           if (event.key === 'Enter') {
             event.preventDefault();
+            event.stopPropagation();
             setHighlights(args);
           }
         },
