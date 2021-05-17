@@ -108,7 +108,7 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: %s: poster dimensions aspect ratio.  */
+              /* translators: %s: aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
             )}
@@ -133,7 +133,7 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: %s: poster dimensions aspect ratio.  */
+              /* translators: %s: aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
             )}
@@ -158,7 +158,7 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: %s: poster dimensions aspect ratio.  */
+              /* translators: %s: aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
             )}
@@ -183,7 +183,7 @@ export const MESSAGES = {
           </li>
           <li>
             {sprintf(
-              /* translators: %s: image dimensions. */
+              /* translators: %s: aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
             )}
@@ -611,7 +611,7 @@ export const MESSAGES = {
             {sprintf(
               /* translators: %s: minimum video resolution. */
               __(
-                'Ensure your videos has a minimum resolution of %s',
+                'Ensure your video has a minimum resolution of %s',
                 'web-stories'
               ),
               `${MIN_VIDEO_RESOLUTION}p`

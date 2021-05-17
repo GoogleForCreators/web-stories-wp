@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -61,13 +61,15 @@ export const PROVIDERS = {
     supportsCategories: true,
     requiresAuthorAttribution: true,
     attributionComponent: UnsplashAttribution,
-    fetchMediaErrorMessage: __(
-      'Error loading media from Unsplash',
-      'web-stories'
+    fetchMediaErrorMessage: sprintf(
+      /* translators: %s: media provider name. */
+      __('Error loading media from %s', 'web-stories'),
+      'Unsplash'
     ),
-    fetchCategoriesErrorMessage: __(
-      'Error loading categories from Unsplash',
-      'web-stories'
+    fetchCategoriesErrorMessage: sprintf(
+      /* translators: %s: media provider name. */
+      __('Error loading categories from %s', 'web-stories'),
+      'Unsplash'
     ),
   },
   [ProviderType.COVERR]: {
@@ -75,9 +77,10 @@ export const PROVIDERS = {
     supportsCategories: false,
     requiresAuthorAttribution: false,
     attributionComponent: CoverrAttribution,
-    fetchMediaErrorMessage: __(
-      'Error loading media from Coverr',
-      'web-stories'
+    fetchMediaErrorMessage: sprintf(
+      /* translators: %s: media provider name. */
+      __('Error loading media from %s', 'web-stories'),
+      'Coverr'
     ),
     defaultPreviewWidth: 640,
   },
@@ -87,6 +90,10 @@ export const PROVIDERS = {
     supportsCategories: true,
     requiresAuthorAttribution: false,
     attributionComponent: TenorAttribution,
-    fetchMediaErrorMessage: __('Error loading media from Tenor', 'web-stories'),
+    fetchMediaErrorMessage: sprintf(
+      /* translators: %s: media provider name. */
+      __('Error loading media from %s', 'web-stories'),
+      'Tenor'
+    ),
   },
 };

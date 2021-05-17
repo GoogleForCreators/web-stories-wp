@@ -157,7 +157,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       name="caption"
-      title={__('Caption and subtitles', 'web-stories')}
+      title={__('Caption and Subtitles', 'web-stories')}
       isPersistable={!highlight}
     >
       {isMixedValue && (

@@ -5,6 +5,7 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
+      - '!.github/workflows/**'
       - '!.github/workflows/build-and-deploy.yml'
       - '.storybook/**'
       - '.wordpress-org/**'
@@ -19,6 +20,7 @@ on:
     # Don't run for irrelevant changes.
     paths-ignore:
       - 'docs/**'
+      - '!.github/workflows/**'
       - '!.github/workflows/build-and-deploy.yml'
       - '.storybook/**'
       - '.wordpress-org/**'

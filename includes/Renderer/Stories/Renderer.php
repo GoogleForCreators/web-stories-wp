@@ -282,6 +282,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			}
 
 			if ( isset( $this->attributes['show_date'] ) && true === $this->attributes['show_date'] ) {
+				/* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
 				$story_data['date'] = get_the_date( __( 'M j, Y', 'web-stories' ), $post->ID );
 			}
 		}
@@ -601,7 +602,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php if ( ! empty( $story->get_author() ) ) { ?>
 				<div class="story-content-overlay__author">
 					<?php
-						/* translators: %s: author name. */
+						/* translators: byline. %s: author name. */
 						echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story->get_author() ) );
 					?>
 				</div>

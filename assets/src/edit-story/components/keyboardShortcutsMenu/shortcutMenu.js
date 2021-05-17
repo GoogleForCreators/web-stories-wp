@@ -130,7 +130,7 @@ function ShortcutMenu({ toggleMenu }) {
   useKeyDownEffect(containerRef, 'esc', toggleMenu);
   useFocusTrapping({ ref: containerRef });
 
-  const closeLabel = __('Close menu', 'web-stories');
+  const closeLabel = __('Close Menu', 'web-stories');
 
   return (
     <Container

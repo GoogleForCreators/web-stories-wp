@@ -71,7 +71,7 @@ function StoryCard({
           {isShowingAuthor && (
             <div className="story-content-overlay__author">
               {sprintf(
-                /* translators: byline. %s: current author. */
+                /* translators: byline. %s: author name. */
                 __('by %s', 'web-stories'),
                 author
               )}

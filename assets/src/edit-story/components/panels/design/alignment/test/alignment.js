@@ -29,14 +29,14 @@ jest.mock('../../../../../elements');
 
 describe('Panels/Alignment', () => {
   let defaultElement, defaultText, defaultImage;
-  const horizontalDistributionButtonLabel = 'Horizontal Distribution';
-  const verticalDistributionButtonLabel = 'Vertical Distribution';
-  const justifyLeftButtonLabel = 'Justify Left';
-  const justifyCenterButtonLabel = 'Justify Center';
-  const justifyRightButtonLabel = 'Justify Right';
-  const justifyTopButtonLabel = 'Justify Top';
-  const justifyMiddleButtonLabel = 'Justify Middle';
-  const justifyBottomButtonLabel = 'Justify Bottom';
+  const horizontalDistributionButtonLabel = 'Distribute horizontally';
+  const verticalDistributionButtonLabel = 'Distribute vertically';
+  const justifyLeftButtonLabel = 'Align left';
+  const justifyCenterButtonLabel = 'Align center';
+  const justifyRightButtonLabel = 'Align right';
+  const justifyTopButtonLabel = 'Align top';
+  const justifyMiddleButtonLabel = 'Align vertical center';
+  const justifyBottomButtonLabel = 'Align bottom';
 
   beforeEach(() => {
     defaultElement = {
