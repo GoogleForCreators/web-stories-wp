@@ -22,7 +22,7 @@ use Google\Web_Stories\Tests\Test_Case;
 /**
  * Class Update_Publisher_Logos
  *
- * @covers Google\Web_Stories\Migrations\Update_Publisher_Logos;
+ * @covers \Google\Web_Stories\Migrations\Update_Publisher_Logos;
  *
  * @package phpunit\tests\Migrations
  */
