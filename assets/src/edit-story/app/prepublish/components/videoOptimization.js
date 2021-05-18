@@ -89,4 +89,5 @@ export function VideoOptimization({ element, caption }) {
 
 VideoOptimization.propTypes = {
   element: PropTypes.object,
+  caption: PropTypes.node,
 };
