@@ -19,7 +19,7 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -70,9 +70,13 @@ export function VideoOptimization({ element }) {
       <Caption>
         <ul>
           <li>
-            {__(
-              'Videos larger than 720p can cause slower loading and higher bandwidth costs.',
-              'web-stories'
+            {sprintf(
+              /* translators: %s: video resolution (720p) */
+              __(
+                'Videos larger than %s can cause slower loading and higher bandwidth costs.',
+                'web-stories'
+              ),
+              '720p'
             )}
           </li>
         </ul>

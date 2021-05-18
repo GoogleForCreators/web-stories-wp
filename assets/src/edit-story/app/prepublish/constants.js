@@ -620,23 +620,6 @@ export const MESSAGES = {
         </ul>
       ),
     },
-    VIDEO_RESOLUTION_TOO_HIGH: {
-      MAIN_TEXT: sprintf(
-        /* translators: %s: maximum video resolution. */
-        __('Reduce video resolution to less than %s', 'web-stories'),
-        `${MAX_VIDEO_RESOLUTION}p`
-      ),
-      HELPER_TEXT: (
-        <ul>
-          <li>
-            {__(
-              "Optimize reach and engagement by accounting for the large number of mobile devices don't support video resolutions larger than 4K",
-              'web-stories'
-            )}
-          </li>
-        </ul>
-      ),
-    },
     VIDEO_NOT_OPTIMIZED: {
       MAIN_TEXT: __('Optimize video size', 'web-stories'),
     },
