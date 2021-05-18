@@ -252,6 +252,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Space');
+      await fixture.events.sleep(500);
 
       await fixture.events.sleep(200);
 

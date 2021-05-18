@@ -361,6 +361,7 @@ export class Fixture {
         // testing the actual behavior rather than overriding the local storage.
         await this.editor.helpCenter.toggleButton;
         await this.events.click(this.editor.helpCenter.toggleButton);
+        await this.events.sleep(500);
       },
       { timeout: 10000 }
     );
