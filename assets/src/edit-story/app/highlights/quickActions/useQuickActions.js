@@ -56,6 +56,9 @@ export const ACTION_TEXT = {
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
   REPLACE_MEDIA: __('Replace media', 'web-stories'),
+  CHANGE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
+  ADD_ANIMATION: __('Add animation', 'web-stories'),
+  CLEAR_FILTERS_AND_ANIMATION: __('Clear filters and animation', 'web-stories'),
 };
 
 /**
@@ -303,19 +306,66 @@ const useQuickActions = () => {
     ]
   );
 
+  const backgroundElementMediaActions = useMemo(
+    () => [
+      {
+        Icon: PictureSwap,
+        label: ACTION_TEXT.CHANGE_BACKGROUND_MEDIA,
+        onClick: handleFocusMediaPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: CircleSpeed,
+        label: ACTION_TEXT.ADD_ANIMATION,
+        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: Eraser,
+        label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATION,
+        onClick: () => handleClearAnimations(selectedElement?.id),
+        separator: 'top',
+        ...actionMenuProps,
+      },
+    ],
+    [
+      handleFocusMediaPanel,
+      selectedElement?.id,
+      actionMenuProps,
+      handleFocusAnimationPanel,
+      handleClearAnimations,
+    ]
+  );
+
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
   }
 
+  const isBackgroundElementMedia = Boolean(
+    backgroundElement && backgroundElement?.resource
+  );
+
   // Return the base state if:
   //  1. no element is selected
-  //  2. the selected element is the background element
+  //  2. the selected element is the background element and it's not media
   if (
-    (selectedElements.length === 0 && backgroundElement) ||
-    selectedElements[0]?.isBackground
+    (selectedElements.length === 0 &&
+      backgroundElement &&
+      !isBackgroundElementMedia) ||
+    (selectedElements[0]?.isBackground && !isBackgroundElementMedia)
   ) {
     return defaultActions;
+  }
+
+  if (
+    isBackgroundElementMedia &&
+    [ELEMENT_TYPE.IMAGE, ELEMENT_TYPE.VIDEO].indexOf(
+      selectedElements?.[0]?.type
+    ) > -1
+  ) {
+    console.log('bg media found');
+    return backgroundElementMediaActions;
   }
 
   switch (selectedElements?.[0]?.type) {
