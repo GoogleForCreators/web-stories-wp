@@ -45,6 +45,7 @@ export const ELEMENT_TYPE = {
   SHAPE: 'shape',
   TEXT: 'text',
   VIDEO: 'video',
+  GIF: 'gif',
 };
 
 export const ACTION_TEXT = {
@@ -172,9 +173,24 @@ const useQuickActions = () => {
     [setHighlights]
   );
 
+  const handleFocusMediaPanel = useMemo(() => {
+    const idOrigin = selectedElements?.[0]?.resource?.id
+      ?.toString()
+      .split(':')?.[0];
+    const is3PGif =
+      !idOrigin &&
+      selectedElements?.[0]?.resource?.type?.toLowerCase() === 'gif';
+    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
+    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
+
+    const panelToFocus =
+      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
+
+    return handleFocusPanel(panelToFocus);
+  }, [handleFocusPanel, selectedElements]);
+
   const {
     handleFocusAnimationPanel,
-    handleFocusMediaPanel,
     handleFocusMedia3pPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
@@ -184,7 +200,6 @@ const useQuickActions = () => {
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
-      handleFocusMediaPanel: handleFocusPanel(states.MEDIA),
       handleFocusMedia3pPanel: handleFocusPanel(states.MEDIA3P),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
@@ -360,7 +375,7 @@ const useQuickActions = () => {
 
   if (
     isBackgroundElementMedia &&
-    [ELEMENT_TYPE.IMAGE, ELEMENT_TYPE.VIDEO].indexOf(
+    [ELEMENT_TYPE.IMAGE, ELEMENT_TYPE.VIDEO, ELEMENT_TYPE.GIF].indexOf(
       selectedElements?.[0]?.type
     ) > -1
   ) {
