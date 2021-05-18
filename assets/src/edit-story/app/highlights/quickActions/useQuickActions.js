@@ -33,6 +33,8 @@ import {
   Media,
   PictureSwap,
 } from '../../../../design-system/icons';
+import updateProperties from '../../../components/inspector/design/updateProperties';
+import { useHistory } from '../../history';
 import { useStory } from '../../story';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
@@ -67,34 +69,92 @@ export const ACTION_TEXT = {
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
 const useQuickActions = () => {
-  const { currentPage, selectedElements } = useStory(
-    ({ state: { currentPage, selectedElements } }) => ({
+  const {
+    currentPage,
+    selectedElementAnimations,
+    selectedElements,
+    updateElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementAnimations, selectedElements },
+      actions: { updateElementsById },
+    }) => ({
       currentPage,
+      selectedElementAnimations,
       selectedElements,
+      updateElementsById,
     })
   );
-
+  const { undo } = useHistory(({ actions: { undo } }) => ({
+    undo,
+  }));
   const { showSnackbar } = useSnackbar();
-
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
 
+  /**
+   * Prevent quick actions menu from removing focus from the canvas.
+   */
   const handleMouseDown = useCallback((ev) => {
     ev.stopPropagation();
   }, []);
 
-  const handleClearFiltersAndAnimations = useCallback(
-    (elementId) => {
-      setHighlights({ elementId });
+  /**
+   * Reset properties on an element. Shows a snackbar once the properties
+   * have been reset.
+   *
+   * @param {string} elementId the id of the element
+   * @param {Array.<string>} properties The properties of the element to update
+   * @return {void}
+   */
+  const handleResetProperties = useCallback(
+    (elementId, properties) => {
+      const newProperties = {};
+
+      // Choose properties to clear
+      if (properties.includes('backgroundOverlay')) {
+        newProperties.backgroundOverlay = null;
+      } else if (properties.includes('animation')) {
+        newProperties.animation = {
+          ...selectedElementAnimations?.[0],
+          delete: true,
+        };
+      }
+
+      updateElementsById({
+        elementIds: [elementId],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            newProperties,
+            /* commitValues */ true
+          ),
+      });
+    },
+    [selectedElementAnimations, updateElementsById]
+  );
+
+  /**
+   * Clear animations and show a snackbar. Clicking the action
+   * in the snackbar adds the animations back to the element.
+   *
+   * @param {string} elementId the id of the element
+   * @param {Array.<string>} properties The properties of the element to update
+   * @return {void}
+   */
+  const handleClearAnimations = useCallback(
+    (elementId, properties) => {
+      handleResetProperties(elementId, properties);
+
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('All styles were removed from the image', 'web-stories'),
-        onAction: () => console.log('UNDID'),
+        onAction: undo,
       });
     },
-    [setHighlights, showSnackbar]
+    [handleResetProperties, showSnackbar, undo]
   );
 
   const handleFocusPanel = useCallback(
@@ -183,13 +243,14 @@ const useQuickActions = () => {
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
-        onClick: () => handleClearFiltersAndAnimations(selectedElement?.id),
+        onClick: () =>
+          handleClearAnimations(selectedElement?.id, ['animation']),
         onMouseDown: handleMouseDown,
         separator: 'top',
       },
     ],
     [
-      handleClearFiltersAndAnimations,
+      handleClearAnimations,
       handleFocusAnimationPanel,
       handleFocusMedia3pPanel,
       handleFocusLinkPanel,

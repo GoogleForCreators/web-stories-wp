@@ -40,11 +40,13 @@ jest.mock('../../../story', () => ({
 }));
 
 jest.mock('../../useHighlights', () => ({
+  ...jest.requireActual('../../useHighlights'),
   __esModule: true,
   default: jest.fn(),
 }));
 
 jest.mock('../../../../../design-system', () => ({
+  ...jest.requireActual('../../../../../design-system'),
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
 }));
 
@@ -123,6 +125,7 @@ describe('useQuickActions', () => {
   let highlight;
   const mockUseHighlights = useHighlights;
   const mockUseStory = useStory;
+  const mockUpdateElementsById = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -138,7 +141,9 @@ describe('useQuickActions', () => {
       currentPage: {
         elements: [BACKGROUND_ELEMENT],
       },
+      selectedElementAnimations: [],
       selectedElements: [],
+      updateElementsById: mockUpdateElementsById,
     });
   });
 
@@ -148,7 +153,9 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT, VIDEO_ELEMENT],
         },
+        selectedElementAnimations: [],
         selectedElements: [IMAGE_ELEMENT, VIDEO_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
       });
     });
 
@@ -165,7 +172,9 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT],
         },
+        selectedElementAnimations: [],
         selectedElements: [],
+        updateElementsById: mockUpdateElementsById,
       });
     });
 
@@ -204,7 +213,9 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT],
         },
+        selectedElementAnimations: [],
         selectedElements: [BACKGROUND_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
       });
     });
 
@@ -243,7 +254,13 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT],
         },
+        selectedElementAnimations: [
+          {
+            target: [IMAGE_ELEMENT.id],
+          },
+        ],
         selectedElements: [IMAGE_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
       });
     });
 
@@ -273,10 +290,15 @@ describe('useQuickActions', () => {
         elementId: IMAGE_ELEMENT.id,
         highlight: states.LINK,
       });
+    });
+
+    it('clicking `clear animations` should call `updateElementsById`', () => {
+      const { result } = renderHook(() => useQuickActions());
 
       result.current[3].onClick(mockClickEvent);
-      expect(highlight).toStrictEqual({
-        elementId: IMAGE_ELEMENT.id,
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [IMAGE_ELEMENT.id],
+        properties: expect.any(Function),
       });
     });
   });
@@ -287,7 +309,9 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT, SHAPE_ELEMENT],
         },
+        selectedElementAnimations: [],
         selectedElements: [SHAPE_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
       });
     });
 
@@ -301,7 +325,9 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
         },
+        selectedElementAnimations: [],
         selectedElements: [VIDEO_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
       });
     });
     it.todo('should return the quick actions');
@@ -314,7 +340,9 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
         },
+        selectedElementAnimations: [],
         selectedElements: [TEXT_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
       });
     });
 
