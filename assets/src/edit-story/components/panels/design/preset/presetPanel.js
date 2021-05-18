@@ -107,8 +107,12 @@ function PresetPanel({ presetType, title, pushUpdate }) {
     }
 
     // If the user has dismissed the confirmation dialogue previously.
+    const storageKey =
+      PRESET_TYPES.COLOR === presetType
+        ? 'DELETE_COLOR_PRESET_DIALOG_DISMISSED'
+        : 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
     const isDialogDismissed = localStore.getItemByKey(
-      LOCAL_STORAGE_PREFIX.DELETE_PRESET_DIALOG_DISMISSED
+      LOCAL_STORAGE_PREFIX[storageKey]
     );
     if (isDialogDismissed) {
       deleteGlobalPreset(preset);

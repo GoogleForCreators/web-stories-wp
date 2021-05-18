@@ -45,8 +45,12 @@ const CheckboxWrapper = styled.footer`
 
 function ConfirmationDialog({ onClose, onPrimary, presetType }) {
   const isColor = PRESET_TYPES.COLOR === presetType;
+  const storageKey =
+    PRESET_TYPES.COLOR === presetType
+      ? 'DELETE_COLOR_PRESET_DIALOG_DISMISSED'
+      : 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
   const [isDialogDismissed, setIsDialogDismissed] = useState(
-    localStore.getItemByKey(LOCAL_STORAGE_PREFIX.DELETE_PRESET_DIALOG_DISMISSED)
+    localStore.getItemByKey(LOCAL_STORAGE_PREFIX[storageKey])
   );
   const dialogText = isColor
     ? __(
@@ -75,7 +79,7 @@ function ConfirmationDialog({ onClose, onPrimary, presetType }) {
           checked={isDialogDismissed}
           onChange={() => {
             localStore.setItemByKey(
-              LOCAL_STORAGE_PREFIX.DELETE_PRESET_DIALOG_DISMISSED,
+              LOCAL_STORAGE_PREFIX[storageKey],
               !isDialogDismissed
             );
             setIsDialogDismissed(!isDialogDismissed);
