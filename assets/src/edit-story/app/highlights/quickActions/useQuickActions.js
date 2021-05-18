@@ -50,10 +50,7 @@ export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add Link', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
-  CLEAR_FILTERS_AND_ANIMATIONS: __(
-    'Clear filters and animations',
-    'web-stories'
-  ),
+  CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
   REPLACE_MEDIA: __('Replace media', 'web-stories'),
@@ -150,7 +147,10 @@ const useQuickActions = () => {
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
-        message: __('All styles were removed from the image', 'web-stories'),
+        message: __(
+          'All animations were removed from the image',
+          'web-stories'
+        ),
         onAction: undo,
       });
     },
@@ -242,7 +242,7 @@ const useQuickActions = () => {
       },
       {
         Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
+        label: ACTION_TEXT.CLEAR_ANIMATIONS,
         onClick: () =>
           handleClearAnimations(selectedElement?.id, ['animation']),
         onMouseDown: handleMouseDown,
