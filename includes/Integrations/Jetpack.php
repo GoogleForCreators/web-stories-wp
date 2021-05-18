@@ -221,7 +221,7 @@ class Jetpack extends Service_Base {
 	}
 
 	/**
-	 * Hook into add term.
+	 * Hook into added_post_meta.
 	 *
 	 * @since 1.7.2
 	 *
