@@ -83,9 +83,9 @@ class Embed_Base extends Service_Base {
 		// without needing an external stylesheet.
 		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
 
-		$path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/css/' . self::SCRIPT_HANDLE . '.css';
+		$path = $this->assets->get_base_path( sprintf( "assets/css/%s.css", self::SCRIPT_HANDLE ) );
 		if ( is_rtl() ) {
-			$path = WEBSTORIES_PLUGIN_DIR_PATH . 'assets/css/' . self::SCRIPT_HANDLE . '-rtl.css';
+			$path = $this->assets->get_base_path( sprintf( "assets/css/%s-rtl.css", self::SCRIPT_HANDLE ) );
 		}
 
 		if ( is_readable( $path ) ) {
