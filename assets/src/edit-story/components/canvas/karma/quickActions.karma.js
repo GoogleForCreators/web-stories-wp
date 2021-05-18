@@ -19,9 +19,15 @@
  */
 import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
+import useInsertElement from '../useInsertElement';
 
 describe('Quick Actions integration', () => {
   let fixture;
+
+  async function clickOnTarget(target) {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+  }
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -85,5 +91,81 @@ describe('Quick Actions integration', () => {
 
       expect(fixture.editor.library.text).not.toBeNull();
     });
+  });
+
+  describe('foreground image selected', () => {
+    beforeEach(async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const foregroundImage = await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        })
+      );
+
+      await clickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(foregroundImage.id).node
+      );
+    });
+
+    it(`clicking the \`${ACTION_TEXT.REPLACE_MEDIA}\` button should select select the media 3p tab and focus the media 3p tab`, async () => {
+      // hide 3p modal before we click the quick action
+      await fixture.events.click(fixture.editor.library.media3pTab);
+      // tab to dismiss button and press enter
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('Enter');
+
+      // change tab to make sure tab isn't selected before quick action
+      await fixture.events.click(fixture.editor.library.mediaTab);
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.replaceMediaButton
+      );
+
+      expect(fixture.editor.library.media3p).not.toBeNull();
+
+      // TODO: once #7522 is merged, we can uncomment this line
+      // expect(document.activeElement).toEqual(fixture.editor.library.media3pTab);
+    });
+
+    it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addAnimationButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+      // TODO: once #7522 is merged, we can uncomment this line.
+      // Need to add the `animation.dropdown` fixture
+      // expect(document.activeElement).toEqual(fixture.editor.inspector.designPanel.animation.dropdown);
+    });
+
+    it(`clicking the \`${ACTION_TEXT.ADD_LINK}\` button should select the link panel and focus the input`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addLinkButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+      // TODO: once #7522 is merged, we can uncomment this line.
+      // expect(document.activeElement).toEqual(fixture.editor.inspector.designPanel.link.address);
+    });
+
+    // TODO: add these tests
+    // it(
+    //   `clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations`
+    // );
+    // it(
+    //   `clicking the \`undo\` button should re-apply the animation that was cleared`
+    // );
   });
 });

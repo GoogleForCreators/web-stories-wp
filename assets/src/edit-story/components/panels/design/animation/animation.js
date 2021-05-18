@@ -79,7 +79,8 @@ function AnimationPanel({
   updateAnimationState,
 }) {
   const playUpdatedAnimation = useRef(false);
-  const highlight = useFocusHighlight(states.ANIMATION);
+  const dropdownRef = useRef(null);
+  const highlight = useFocusHighlight(states.ANIMATION, dropdownRef);
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
@@ -243,6 +244,7 @@ function AnimationPanel({
       <GroupWrapper hasAnimation={selectedEffectTitle}>
         <StyledRow>
           <EffectChooserDropdown
+            ref={dropdownRef}
             onAnimationSelected={handleAddOrUpdateElementEffect}
             onNoEffectSelected={handleRemoveEffect}
             isBackgroundEffects={isBackground}
