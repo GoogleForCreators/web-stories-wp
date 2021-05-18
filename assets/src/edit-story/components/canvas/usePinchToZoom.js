@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
@@ -26,39 +26,28 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useLayout } from '../../app/layout';
 
 function usePinchToZoom({ containerRef }) {
-  const { zoomLevel, zoomSetting, setZoomLevel } = useLayout(
-    ({ state: { zoomLevel, zoomSetting }, actions: { setZoomLevel } }) => ({
+  const { zoomLevel, setZoomLevel } = useLayout(
+    ({ state: { zoomLevel }, actions: { setZoomLevel } }) => ({
       zoomLevel,
-      zoomSetting,
       setZoomLevel,
     })
   );
-  const zoomLevelTracker = useRef(zoomLevel);
-  /*const [handleZoom] = useDebouncedCallback(
-    () => setZoomLevel(zoomLevelTracker.current),
-    100,
-    [setZoomLevel]
-  );*/
+
   const [handleZoom] = useDebouncedCallback(
     (level) => setZoomLevel(level),
     100,
     [setZoomLevel]
   );
 
-  useEffect(() => {
-    if (zoomLevel !== zoomLevelTracker.current) {
-      zoomLevelTracker.current = zoomLevel;
-    }
-  }, [zoomLevel, zoomSetting]);
-
   const onWheel = useCallback(
     (e) => {
       const { ctrlKey, deltaY } = e;
       const node = containerRef.current.childNodes[0];
       if (ctrlKey && node.contains(e.target) && deltaY) {
-        //const newZoom = zoomLevelTracker.current - deltaY * 0.01;
+        // Zoom by 25% steps. This is due to performance reasons and could be followed up later.
+        // Ideally we'd use transform: scale locally and update only when the event finishes, however,
+        // there are too many other pieces that would need adjustment as well.
         const newZoom = zoomLevel - deltaY * 0.01;
-        //zoomLevelTracker.current = Math.min(3, Math.max(0.25, newZoom));
         if (Math.abs(newZoom - zoomLevel) >= 0.02) {
           const newStepZoom = deltaY > 0 ? zoomLevel - 0.25 : zoomLevel + 0.25;
           handleZoom(
@@ -84,14 +73,14 @@ function usePinchToZoom({ containerRef }) {
   const handleGestureChange = useCallback(
     (e) => {
       const node = containerRef.current.childNodes[0];
-      if (node.contains(e.target)) {
-        const { scale } = e;
-        // Slow down the scaling in Safari.
-        const slowedScale = (1 - scale) / 2 + scale;
-        const newZoom = zoomLevel * slowedScale;
-        zoomLevelTracker.current = Math.min(3, Math.max(0.25, newZoom));
-        if (Math.abs(newZoom - zoomLevel) >= 0.04) {
-          handleZoom();
+      const { scale } = e;
+      if (node.contains(e.target) && scale) {
+        const newZoom = zoomLevel * scale;
+        if (Math.abs(newZoom - zoomLevel) >= 0.02) {
+          const newStepZoom = scale < 1 ? zoomLevel - 0.25 : zoomLevel + 0.25;
+          handleZoom(
+            Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
+          );
         }
         e.preventDefault();
       }
