@@ -460,6 +460,7 @@ jobs:
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
           echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
 
+      # TODO: Replace with maintained action.
       - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
