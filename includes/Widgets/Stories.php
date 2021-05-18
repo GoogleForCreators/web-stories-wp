@@ -25,7 +25,7 @@ namespace Google\Web_Stories\Widgets;
 
 use WP_Widget;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**
@@ -35,7 +35,6 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  */
 class Stories extends WP_Widget {
 	use Stories_Script_Data;
-	use Assets;
 
 	const SCRIPT_HANDLE = 'web-stories-widget';
 
@@ -52,13 +51,23 @@ class Stories extends WP_Widget {
 	];
 
 	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	protected $assets;
+
+	/**
 	 * Stories constructor.
 	 *
 	 * @since 1.5.0
 	 *
+	 * @param Assets $assets Assets instance.
+	 *
 	 * @return void
 	 */
-	public function __construct() {
+	public function __construct( Assets $assets ) {
+		$this->assets   = $assets;
 		$id_base        = 'web_stories_widget';
 		$name           = __( 'Web Stories', 'web-stories' );
 		$widget_options = [
@@ -441,9 +450,9 @@ class Stories extends WP_Widget {
 			return;
 		}
 
-		$this->enqueue_style( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
 
-		$this->enqueue_script( self::SCRIPT_HANDLE, [ 'jquery' ] );
+		$this->assets->enqueue_script( self::SCRIPT_HANDLE, [ 'jquery' ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

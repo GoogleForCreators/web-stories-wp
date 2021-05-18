@@ -31,7 +31,7 @@ class Activation_Notice extends Test_Case {
 		parent::setUp();
 		$this->activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$this->activation_flag->set_activation_flag();
-		$this->register_font = new \Google\Web_Stories\Register_Font();
+		$this->register_font = new \Google\Web_Stories\Register_Global_Assets();
 	}
 
 	public function tearDown() {

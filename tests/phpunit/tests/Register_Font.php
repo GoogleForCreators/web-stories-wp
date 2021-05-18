@@ -18,15 +18,15 @@
 namespace Google\Web_Stories\Tests;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Register_Font
+ * @coversDefaultClass \Google\Web_Stories\Register_Global_Assets
  */
 class Register_Font extends Test_Case {
 
 	/**
-	 * @covers ::get_handle
+	 * @covers ::get_font_handle
 	 */
 	public function test_get_handle() {
-		$actual = ( new \Google\Web_Stories\Register_Font() )->get_handle();
+		$actual = ( new \Google\Web_Stories\Register_Global_Assets() )->get_font_handle();
 
 		$this->assertSame( 'web-stories-fonts', $actual );
 	}
@@ -35,12 +35,12 @@ class Register_Font extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$register_font   = new \Google\Web_Stories\Register_Font();
+		$register_font   = new \Google\Web_Stories\Register_Global_Assets();
 		$before_register = $this->get_private_property( $register_font, 'register' );
 		$register_font->register();
 		$after_register = $this->get_private_property( $register_font, 'register' );
 
-		$this->assertTrue( wp_style_is( $register_font->get_handle(), 'registered' ) );
+		$this->assertTrue( wp_style_is( $register_font->get_font_handle(), 'registered' ) );
 		$this->assertFalse( $before_register );
 		$this->assertTrue( $after_register );
 	}

@@ -27,8 +27,10 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Register_Global_Assets;
 use Google\Web_Stories\Traits\Amp;
 
 /**
@@ -48,14 +50,32 @@ class Embed {
 	protected $story;
 
 	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
+
+	/**
+	 * Register_Global_Assets instance.
+	 *
+	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 */
+	protected $register_global_assets;
+
+	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story $story   Story Object.
+	 * @param Story                  $story   Story Object.
+	 * @param Assets                 $assets Assets instance.
+	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
 	 */
-	public function __construct( Story $story ) {
-		$this->story = $story;
+	public function __construct( Story $story, Assets $assets, Register_Global_Assets $register_global_assets ) {
+		$this->assets                 = $assets;
+		$this->story                  = $story;
+		$this->register_global_assets = $register_global_assets;
 	}
 
 	/**
@@ -115,8 +135,9 @@ class Embed {
 			return (string) ob_get_clean();
 		}
 
-		wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
-		wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
+		$this->register_global_assets->register();
+		$this->assets->enqueue_style( $this->register_global_assets->get_player_handle() );
+		$this->assets->enqueue_script( $this->register_global_assets->get_player_handle() );
 
 		ob_start();
 		?>

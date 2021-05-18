@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Renderer;
 
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Embed;
@@ -70,11 +71,16 @@ class Archives extends Service_Base {
 			return $content;
 		}
 
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return $content;
+		}
+
 		if ( $post instanceof WP_Post && Story_Post_Type::POST_TYPE_SLUG === $post->post_type ) {
-			$story = new Story();
+			$story = $injector->make( Story::class );
 			$story->load_from_post( $post );
 
-			$embed   = new Embed( $story );
+			$embed   = $injector->make( Embed::class, [ $story ] );
 			$content = $embed->render();
 		}
 

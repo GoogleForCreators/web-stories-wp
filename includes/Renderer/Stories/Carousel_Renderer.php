@@ -66,8 +66,8 @@ class Carousel_Renderer extends Renderer {
 	public function assets() {
 		parent::assets();
 
-		$this->register_script( self::SCRIPT_HANDLE );
-		$this->register_style( self::SCRIPT_HANDLE );
+		$this->assets->register_script_asset( self::SCRIPT_HANDLE );
+		$this->assets->register_script_asset( self::SCRIPT_HANDLE );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

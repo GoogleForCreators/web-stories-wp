@@ -59,7 +59,7 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var Renderer
+	 * @var Renderer|false
 	 */
 	public $renderer;
 
@@ -123,21 +123,26 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return Renderer Renderer Instance.
+	 * @return false|Renderer Renderer Instance.
 	 */
 	public function get_renderer() {
 		$story_attributes = $this->get_story_attributes();
 		$view_type        = ( ! empty( $story_attributes['view_type'] ) ) ? $story_attributes['view_type'] : '';
 
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return false;
+		}
+
 		switch ( $view_type ) {
 			case 'carousel':
 			case 'circles':
-				$renderer = new Carousel_Renderer( $this );
+				$renderer = $injector->make( Carousel_Renderer::class, [ $this ] );
 				break;
 			case 'list':
 			case 'grid':
 			default:
-				$renderer = new Generic_Renderer( $this );
+				$renderer = $injector->make( Generic_Renderer::class, [ $this ] );
 		}
 
 		$renderer->init();
@@ -154,6 +159,9 @@ class Story_Query {
 	 */
 	public function render() {
 		$this->renderer = $this->get_renderer();
+		if ( ! $this->renderer ) {
+			return '';
+		}
 
 		return $this->renderer->render();
 	}

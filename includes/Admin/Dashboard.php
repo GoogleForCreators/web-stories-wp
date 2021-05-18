@@ -34,10 +34,10 @@ use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Template_Post_Type;
-use Google\Web_Stories\Register_Font;
+use Google\Web_Stories\Register_Global_Assets;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
@@ -46,7 +46,6 @@ use Google\Web_Stories\Traits\Types;
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Assets;
 	use Types;
 	use Screen;
 	use Post_Type;
@@ -94,29 +93,38 @@ class Dashboard extends Service_Base {
 	private $locale;
 
 	/**
-	 * Register_Font instance.
+	 * Register_Global_Assets instance.
 	 *
-	 * @var Register_Font Register_Font instance.
+	 * @var Register_Global_Assets Register_Global_Assets instance.
 	 */
-	private $register_font;
+	private $register_global_assets;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
 
 	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments   $experiments   Experiments instance.
-	 * @param Site_Kit      $site_kit      Site_Kit instance.
-	 * @param Decoder       $decoder       Decoder instance.
-	 * @param Locale        $locale        Locale instance.
-	 * @param Register_Font $register_font Register_Font instance.
+	 * @param Experiments            $experiments   Experiments instance.
+	 * @param Site_Kit               $site_kit      Site_Kit instance.
+	 * @param Decoder                $decoder       Decoder instance.
+	 * @param Locale                 $locale        Locale instance.
+	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
+	 * @param Assets                 $assets        Assets instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder, Locale $locale, Register_Font $register_font ) {
-		$this->experiments   = $experiments;
-		$this->decoder       = $decoder;
-		$this->site_kit      = $site_kit;
-		$this->locale        = $locale;
-		$this->register_font = $register_font;
+	public function __construct( Experiments $experiments, Site_Kit $site_kit, Decoder $decoder, Locale $locale, Register_Global_Assets $register_global_assets, Assets $assets ) {
+		$this->experiments            = $experiments;
+		$this->decoder                = $decoder;
+		$this->site_kit               = $site_kit;
+		$this->locale                 = $locale;
+		$this->register_global_assets = $register_global_assets;
+		$this->assets                 = $assets;
 	}
 
 	/**
@@ -289,12 +297,12 @@ class Dashboard extends Service_Base {
 			return;
 		}
 
-		$this->register_font->register();
+		$this->register_global_assets->register();
 
-		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
-		$font_handle = $this->register_font->get_handle();
-		$this->enqueue_style( self::SCRIPT_HANDLE, [ $font_handle ] );
+		$font_handle = $this->register_global_assets->get_font_handle();
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -303,7 +311,7 @@ class Dashboard extends Service_Base {
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		$this->remove_admin_style( [ 'forms' ] );
+		$this->assets->remove_admin_style( [ 'forms' ] );
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Register_Font.
+ * Class Register_Global_Assets.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -27,17 +27,29 @@
 namespace Google\Web_Stories;
 
 /**
- * Class Register_Font
+ * Class Register_Global_Assets
  *
  * @package Google\Web_Stories
  */
-class Register_Font {
+class Register_Global_Assets {
+
 	/**
-	 * Registered.
+	 * Assets instance.
 	 *
-	 * @var bool
+	 * @var Assets Assets instance.
 	 */
-	private $register = false;
+	private $assets;
+
+	/**
+	 * Tinymce constructor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Assets $assets Assets instance.
+	 */
+	public function __construct( Assets $assets ) {
+		$this->assets = $assets;
+	}
 
 	/**
 	 * Script handle
@@ -46,8 +58,19 @@ class Register_Font {
 	 *
 	 * @return string
 	 */
-	public function get_handle() {
+	public function get_font_handle() {
 		return 'web-stories-fonts';
+	}
+
+	/**
+	 * Script handle
+	 *
+	 * @since 1.7.0
+	 *
+	 * @return string
+	 */
+	public function get_player_handle() {
+		return 'standalone-amp-story-player';
 	}
 
 	/**
@@ -58,13 +81,26 @@ class Register_Font {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->register ) {
-			$this->register = wp_register_style(
-				$this->get_handle(),
-				'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-				[],
-				WEBSTORIES_VERSION
-			);
-		}
+		$this->assets->register_style(
+			$this->get_font_handle(),
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		$this->assets->register_script(
+			$this->get_player_handle(),
+			'https://cdn.ampproject.org/amp-story-player-v0.js',
+			[],
+			'v0',
+			false
+		);
+
+		$this->assets->register_style(
+			$this->get_player_handle(),
+			'https://cdn.ampproject.org/amp-story-player-v0.css',
+			[],
+			'v0'
+		);
 	}
 }

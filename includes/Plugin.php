@@ -171,6 +171,7 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_shared_instances() {
 		return [
+			Assets::class,
 			Experiments::class,
 			Admin\Meta_Boxes::class,
 			Locale::class,
@@ -178,7 +179,7 @@ class Plugin extends ServiceBasedPlugin {
 			Integrations\Site_Kit::class,
 			Analytics::class,
 			Decoder::class,
-			Register_Font::class,
+			Register_Global_Assets::class,
 		];
 	}
 

@@ -29,10 +29,11 @@ namespace Google\Web_Stories\Renderer\Stories;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Register_Global_Assets;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Amp;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Assets;
 use Iterator;
 use WP_Post;
 
@@ -44,8 +45,6 @@ use WP_Post;
  * @implements Iterator<int, \WP_Post>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
-
-	use Assets;
 	use Amp;
 
 	/**
@@ -87,6 +86,21 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @var Story_Query Story_Query instance.
 	 */
 	protected $query;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	protected $assets;
+
+	/**
+	 * Register_Global_Assets instance.
+	 *
+	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 */
+	protected $register_global_assets;
+
 
 	/**
 	 * Story attributes
@@ -142,12 +156,16 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param Story_Query $query Story_Query instance.
+	 * @param Story_Query            $query Story_Query instance.
+	 * @param Assets                 $assets        Assets instance.
+	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
 	 */
-	public function __construct( Story_Query $query ) {
-		$this->query           = $query;
-		$this->attributes      = $this->query->get_story_attributes();
-		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
+	public function __construct( Story_Query $query, Assets $assets, Register_Global_Assets $register_global_assets ) {
+		$this->assets                 = $assets;
+		$this->register_global_assets = $register_global_assets;
+		$this->query                  = $query;
+		$this->attributes             = $this->query->get_story_attributes();
+		$this->content_overlay        = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
 	}
 
 	/**
@@ -249,10 +267,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function assets() {
 		// Web Stories styles for AMP and non-AMP pages.
-		$this->register_style( self::STYLE_HANDLE );
+		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
+		$this->register_global_assets->register();
 		// Web Stories lightbox script.
-		$this->register_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
+		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ $this->register_global_assets->get_player_handle() ] );
 	}
 
 	/**
@@ -491,9 +510,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
-			wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
-			wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
-			wp_enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE );
+			$this->assets->enqueue_style( $this->register_global_assets->get_player_handle() );
+			$this->assets->enqueue_script( $this->register_global_assets->get_player_handle() );
+			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">
 				<?php $this->render_story_with_poster(); ?>

@@ -29,20 +29,11 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Renderer\Story\Embed;
-use Google\Web_Stories\Traits\Assets;
 
 /**
  * Embed block class.
  */
 class Embed_Base extends Service_Base {
-	use Assets;
-
-	/**
-	 * Player script handle.
-	 *
-	 * @var string
-	 */
-	const STORY_PLAYER_HANDLE = 'standalone-amp-story-player';
 
 	/**
 	 * Script handle for frontend assets.
@@ -52,6 +43,33 @@ class Embed_Base extends Service_Base {
 	const SCRIPT_HANDLE = 'web-stories-embed';
 
 	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	protected $assets;
+
+	/**
+	 * Register_Global_Assets instance.
+	 *
+	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 */
+	protected $register_global_assets;
+
+	/**
+	 * Embed Base constructor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Assets                 $assets Assets instance.
+	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
+	 */
+	public function __construct( Assets $assets, Register_Global_Assets $register_global_assets ) {
+		$this->assets                 = $assets;
+		$this->register_global_assets = $register_global_assets;
+	}
+
+	/**
 	 * Initializes the Web Stories embed block.
 	 *
 	 * @since 1.1.0
@@ -59,10 +77,8 @@ class Embed_Base extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		wp_register_script( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
-		wp_register_style( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
-
-		$this->register_style( self::SCRIPT_HANDLE );
+		$this->register_global_assets->register();
+		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 		// Set a style without a `src` allows us to just use the inline style below
 		// without needing an external stylesheet.
 		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
@@ -169,12 +185,17 @@ class Embed_Base extends Service_Base {
 			'poster_portrait' => $attributes['poster'],
 		];
 
-		$story = new Story( $data );
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return '';
+		}
+
+		$story = $injector->make( Story::class, [ $data ] );
 
 		if ( is_feed() ) {
-			$renderer = new Image( $story );
+			$renderer = $injector->make( Image::class, [ $story ] );
 		} else {
-			$renderer = new Embed( $story );
+			$renderer = $injector->make( Embed::class, [ $story ] );
 		}
 
 		return $renderer->render( $attributes );

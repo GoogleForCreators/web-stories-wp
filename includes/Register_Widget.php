@@ -40,7 +40,12 @@ class Register_Widget extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		register_widget( Stories::class );
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return;
+		}
+		$story = $injector->make( Stories::class );
+		register_widget( $story );
 	}
 
 	/**
