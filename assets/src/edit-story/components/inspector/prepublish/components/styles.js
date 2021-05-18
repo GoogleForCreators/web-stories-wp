@@ -31,6 +31,7 @@ import {
   Toggle,
 } from '../../../../../design-system';
 import { MAX_NUMBER_FOR_BADGE } from '../constants';
+import { focusStyle } from '../../../panels/shared';
 
 function annotateNumber(number) {
   if (number <= MAX_NUMBER_FOR_BADGE) {
@@ -124,7 +125,7 @@ export const IssueTitle = styled(Headline).attrs({
   color: ${({ theme }) => theme.colors.standard.white};
   cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  ${themeHelpers.focusableOutlineCSS};
+  ${focusStyle};
 
   &::before {
     content: '•';

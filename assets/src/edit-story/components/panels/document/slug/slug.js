@@ -33,9 +33,9 @@ import {
   Input,
   Link,
   ThemeGlobals,
-  themeHelpers,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
+import { inputContainerStyleOverride } from '../../shared';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -60,14 +60,6 @@ const PermalinkRow = styled(Row)`
 
 const LinkContainer = styled.div`
   margin-bottom: 16px;
-
-  ${Link} {
-    ${({ theme }) =>
-      themeHelpers.focusableOutlineCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
-  }
 `;
 
 function SlugPanel() {
@@ -126,6 +118,7 @@ function SlugPanel() {
           aria-label={__('URL slug', 'web-stories')}
           minLength={MIN_MAX.PERMALINK.MIN}
           maxLength={MIN_MAX.PERMALINK.MAX}
+          containerStyleOverride={inputContainerStyleOverride}
         />
       </PermalinkRow>
       <LinkContainer>

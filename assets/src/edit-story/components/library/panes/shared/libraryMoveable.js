@@ -25,12 +25,13 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { editorToDataX, editorToDataY } from '../../../../units';
+import { ZOOM_SETTING } from '../../../../constants';
 import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
 import { useInsertTextSet } from '../../../canvas';
-import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
+import areEventsDragging from '../../../../utils/areEventsDragging';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import { useKeyDownEffect } from '../../../../../design-system';
@@ -76,9 +77,14 @@ function LibraryMoveable({
   const overlayRef = useRef(null);
   const moveable = useRef(null);
 
+  // These useLayout's are specifically kept as separate entries
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
+  }));
+  // This is a stable function, so it will ever only run once
+  const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
+    setZoomSetting,
   }));
 
   const insertElement = useInsertElement();
@@ -155,10 +161,10 @@ function LibraryMoveable({
       return false;
     }
     frame.translate = beforeTranslate;
-    // Don't display the clone right away since otherwise it will be triggered for a click as well.
+    // Don't display the clone unless we're sure it's a drag gesture
     if (
       cloneRef.current &&
-      inputEvent.timeStamp - eventTracker.current.timeStamp > 300
+      areEventsDragging(eventTracker.current, inputEvent)
     ) {
       toggleDesignSpace(true);
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
@@ -200,6 +206,7 @@ function LibraryMoveable({
     set(frame.translate);
     setIsDragging(true);
     startEventTracking(inputEvent);
+    setZoomSetting(ZOOM_SETTING.FIT);
 
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
@@ -236,7 +243,7 @@ function LibraryMoveable({
     // Restore the original size of the target.
     targetBoxRef.current.style.width = `${targetBoxSize.current.width}px`;
     targetBoxRef.current.style.height = `${targetBoxSize.current.height}px`;
-    if (isMouseUpAClick(inputEvent, eventTracker.current)) {
+    if (!areEventsDragging(eventTracker.current, inputEvent)) {
       resetMoveable();
       onClick();
       return false;

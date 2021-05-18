@@ -21,11 +21,19 @@ import PropTypes from 'prop-types';
 import { useState, useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { SearchInput } from '../../../../design-system';
+import { focusStyle } from '../../panels/shared';
+
+const StyledSearchInput = styled(SearchInput)`
+  input {
+    ${focusStyle};
+  }
+`;
 
 /**
  * A Search Input component.
@@ -98,13 +106,13 @@ function WrappedSearchInput({
 
   return (
     <form onSubmit={onSubmit}>
-      <SearchInput
+      <StyledSearchInput
         inputValue={localValue}
         placeholder={placeholder}
         onChange={onChange}
         handleClearInput={onClear}
         disabled={disabled}
-        ariaClearLabel={__('Clear search input', 'web-stories')}
+        ariaClearLabel={__('Clear Search', 'web-stories')}
         isOpen={hasContent}
         aria-label={__('Search', 'web-stories')}
       />

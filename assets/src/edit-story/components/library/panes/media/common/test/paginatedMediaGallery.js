@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -68,7 +68,7 @@ describe('paginatedMediaGallery', () => {
   });
 
   it('should render attribution when media is present', () => {
-    const { queryByTestId, queryByText } = renderWithTheme(
+    renderWithTheme(
       <PaginatedMediaGallery
         providerType={providerType}
         resources={resources}
@@ -80,12 +80,12 @@ describe('paginatedMediaGallery', () => {
       />
     );
 
-    expect(queryByText(/Powered by/)).toBeInTheDocument();
-    expect(queryByTestId('loading-pill')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Powered by/)).toBeInTheDocument();
+    expect(screen.queryByTestId('loading-pill')).not.toBeInTheDocument();
   });
 
   it('should render the loading pill when media is loading', async () => {
-    const { queryByTestId, queryByText } = renderWithTheme(
+    renderWithTheme(
       <PaginatedMediaGallery
         providerType={providerType}
         resources={resources}
@@ -97,15 +97,15 @@ describe('paginatedMediaGallery', () => {
       />
     );
 
-    expect(queryByText(/Powered by/)).toBeInTheDocument();
-    expect(queryByTestId('loading-pill')).not.toBeInTheDocument();
+    expect(screen.queryByText(/Powered by/)).toBeInTheDocument();
+    expect(screen.queryByTestId('loading-pill')).not.toBeInTheDocument();
 
     // The loading indicator only appears (and thus the attribution disappears)
     // if loading takes too long.
     await waitFor(
       () => {
-        expect(queryByText(/Powered by/)).not.toBeInTheDocument();
-        expect(queryByText(/Powered by/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Powered by/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Powered by/)).not.toBeInTheDocument();
       },
       {
         timeout: 1000,

@@ -29,7 +29,11 @@ import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
 import Tooltip from '../../../tooltip';
-import { useCommonObjectValue } from '../../shared';
+import {
+  useCommonObjectValue,
+  inputContainerStyleOverride,
+  focusStyle,
+} from '../../shared';
 import { SimplePanel } from '../../panel';
 import { LockToggle, NumericInput } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
@@ -56,6 +60,10 @@ const LockContainer = styled.div`
   align-items: center;
   margin-left: 8px;
   margin-bottom: 16px;
+`;
+
+const StyledLockToggle = styled(LockToggle)`
+  ${focusStyle};
 `;
 
 const BoxedNumericInput = styled(NumericInput)`
@@ -141,10 +149,10 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
   }
 
   const firstInputLabel = lockRadius
-    ? __('Corner radius', 'web-stories')
+    ? __('Corner Radius', 'web-stories')
     : __('Top left corner radius', 'web-stories');
   return (
-    <SimplePanel name="borderRadius" title={__('Corner radius', 'web-stories')}>
+    <SimplePanel name="borderRadius" title={__('Corner Radius', 'web-stories')}>
       <FlexContainer>
         <InputContainer>
           <Row>
@@ -162,6 +170,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                   : ''
               }
               isIndeterminate={borderRadius.topLeft === MULTIPLE_VALUE}
+              containerStyleOverride={inputContainerStyleOverride}
             />
             {!lockRadius && (
               <>
@@ -182,6 +191,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                       : ''
                   }
                   isIndeterminate={borderRadius.topRight === MULTIPLE_VALUE}
+                  containerStyleOverride={inputContainerStyleOverride}
                 />
               </>
             )}
@@ -202,6 +212,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                     : ''
                 }
                 isIndeterminate={borderRadius.bottomLeft === MULTIPLE_VALUE}
+                containerStyleOverride={inputContainerStyleOverride}
               />
               <Space space={32} />
               <BoxedNumericInput
@@ -218,6 +229,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
                     : ''
                 }
                 isIndeterminate={borderRadius.bottomRight === MULTIPLE_VALUE}
+                containerStyleOverride={inputContainerStyleOverride}
               />
             </Row>
           )}
@@ -225,7 +237,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
 
         <LockContainer>
           <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
-            <LockToggle
+            <StyledLockToggle
               isLocked={borderRadius.locked}
               onClick={() => handleLockChange(!borderRadius.locked)}
               aria-label={__('Toggle consistent corner radius', 'web-stories')}

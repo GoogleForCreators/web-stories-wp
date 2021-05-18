@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Register_Font;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Infrastructure\Registerable;
@@ -53,14 +54,23 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	protected $activation_flag;
 
 	/**
+	 * Register_Font instance.
+	 *
+	 * @var Register_Font Register_Font instance.
+	 */
+	protected $register_font;
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Activation_Flag $activation_flag Activation flag instance.
+	 * @param Register_Font   $register_font Register_Font instance.
 	 */
-	public function __construct( Activation_Flag $activation_flag ) {
+	public function __construct( Activation_Flag $activation_flag, Register_Font $register_font ) {
 		$this->activation_flag = $activation_flag;
+		$this->register_font   = $register_font;
 	}
 
 	/**
@@ -97,12 +107,9 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		 */
 		unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.VIP.SuperGlobalInputUsage
 
-		wp_enqueue_style(
-			'web-stories-activation-notice-roboto',
-			'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->register_font->register();
+		$font_handle = $this->register_font->get_handle();
+		wp_enqueue_style( $font_handle );
 
 		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 

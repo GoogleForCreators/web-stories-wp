@@ -10,6 +10,7 @@ on:
       - '.wordpress-org/**'
       - '__mocks__/**'
       - '__static__/**'
+      - 'readme.txt'
     branches:
       - main
       - release/*
@@ -22,6 +23,7 @@ on:
       - '.wordpress-org/**'
       - '__mocks__/**'
       - '__static__/**'
+      - 'readme.txt'
     types:
       - opened
       - reopened
@@ -67,7 +69,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -91,7 +93,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -114,6 +116,7 @@ jobs:
         env:
           # TODO: remove eventually
           DISABLE_PREVENT: true
+          DISABLE_QUICK_TIPS: true
 
       - name: Start Docker environment
         run: npm run env:start

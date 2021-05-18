@@ -42,13 +42,13 @@ describe('<EffectInput />', () => {
     onChange: jest.fn(),
     field: testFieldKey,
   };
+
   it('should render', () => {
-    const { getByLabelText } = renderWithTheme(
-      <EffectInput {...defaultProps} />
-    );
-    const input = getByLabelText(testFieldKey);
+    renderWithTheme(<EffectInput {...defaultProps} />);
+    const input = screen.getByLabelText(testFieldKey);
     expect(input).toBeInTheDocument();
   });
+
   it('should render falsey defined values', () => {
     renderWithTheme(
       <EffectInput {...defaultProps} effectConfig={{ [testFieldKey]: 0 }} />

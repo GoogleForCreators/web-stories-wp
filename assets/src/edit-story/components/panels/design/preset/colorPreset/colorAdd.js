@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Icons, Text } from '../../../../../../design-system';
+import { focusStyle } from '../../../shared';
 
 const COLOR_SIZE = 32;
 const AddColorAction = styled.button`
@@ -45,6 +46,7 @@ const AddColorAction = styled.button`
   :hover {
     border-color: ${({ theme }) => theme.colors.border.defaultHover};
   }
+  ${focusStyle};
 `;
 
 const Note = styled(Text)`

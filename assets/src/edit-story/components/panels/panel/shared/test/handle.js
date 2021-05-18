@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -29,11 +29,10 @@ import { noop } from '../../../../../utils/noop';
 describe('DragHandle', () => {
   describe('should raise handleHeightChange when up or down key is pressed', () => {
     const handleHeightChange = jest.fn();
-    let slider;
 
     beforeEach(() => {
       handleHeightChange.mockReset();
-      slider = renderWithTheme(
+      renderWithTheme(
         <DragHandle
           handleHeightChange={handleHeightChange}
           handleExpandToHeightChange={noop}
@@ -42,16 +41,22 @@ describe('DragHandle', () => {
           maxHeight={200}
           minHeight={50}
         />
-      ).getByRole('slider');
+      );
     });
 
     it('when up key is pressed', () => {
-      fireEvent.keyDown(slider, { key: 'ArrowUp', which: 38 });
+      fireEvent.keyDown(screen.getByRole('slider'), {
+        key: 'ArrowUp',
+        which: 38,
+      });
       expect(handleHeightChange).toHaveBeenCalledWith(20);
     });
 
     it('when down key is pressed', () => {
-      fireEvent.keyDown(slider, { key: 'ArrowDown', which: 40 });
+      fireEvent.keyDown(screen.getByRole('slider'), {
+        key: 'ArrowDown',
+        which: 40,
+      });
       expect(handleHeightChange).toHaveBeenCalledWith(-20);
     });
   });

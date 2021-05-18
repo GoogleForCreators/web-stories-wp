@@ -37,6 +37,7 @@ import {
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';
+import { focusStyle } from '../../../panels/shared';
 
 const PageTemplateWrapper = styled.div`
   position: absolute;
@@ -51,7 +52,7 @@ const PageTemplateWrapper = styled.div`
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
-  ${themeHelpers.focusableOutlineCSS};
+  ${focusStyle};
 `;
 PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
@@ -149,7 +150,7 @@ function PageTemplate(
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               onClick={(e) => handleDelete(page, e)}
-              aria-label={__('Delete page template', 'web-stories')}
+              aria-label={__('Delete Page Template', 'web-stories')}
             >
               <Icons.Trash />
             </Button>

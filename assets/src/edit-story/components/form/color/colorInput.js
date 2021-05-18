@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useMemo } from 'react';
+import { forwardRef, useCallback, useState, useRef, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -41,6 +41,7 @@ import getPreviewText from '../../../../design-system/components/hex/getPreviewT
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
+import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 
 const Preview = styled.div`
   height: 36px;
@@ -113,15 +114,22 @@ const TextualPreview = styled.div`
   height: 32px;
 `;
 
-function ColorInput({
-  onChange,
-  hasGradient,
-  hasOpacity,
-  value,
-  label,
-  colorPickerActions,
-  changedStyle,
-}) {
+const StyledSwatch = styled(Swatch)`
+  ${focusStyle};
+`;
+
+const ColorInput = forwardRef(function ColorInput(
+  {
+    onChange,
+    hasGradient,
+    hasOpacity,
+    value,
+    label,
+    colorPickerActions,
+    changedStyle,
+  },
+  ref
+) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
@@ -160,15 +168,17 @@ function ColorInput({
         // And the text is an input field
         <Preview ref={previewRef}>
           <Input
+            ref={ref}
             aria-label={label}
             value={isMixed ? null : value}
             onChange={onChange}
             isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
+            containerStyleOverride={inputContainerStyleOverride}
           />
           <ColorPreview>
             <Tooltip title={tooltip} hasTail>
-              <Swatch isSmall pattern={previewPattern} {...buttonProps} />
+              <StyledSwatch isSmall pattern={previewPattern} {...buttonProps} />
             </Tooltip>
           </ColorPreview>
         </Preview>
@@ -215,7 +225,7 @@ function ColorInput({
       />
     </>
   );
-}
+});
 
 ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),

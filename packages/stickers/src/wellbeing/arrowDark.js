@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Arrow', 'sticker name', 'web-stories');
 
 const WellbeingArrowDark = ({ style }) => (
   <svg
@@ -25,6 +28,7 @@ const WellbeingArrowDark = ({ style }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{title}</title>
     <path
       d="M.603516 6.49949L204.27 6.49947M199.464.875l4.806 5.8336-4.806 5.8336"
       stroke="#1F2A2E"
@@ -40,4 +44,5 @@ WellbeingArrowDark.propTypes = {
 export default {
   aspectRatio: 205 / 13,
   svg: WellbeingArrowDark,
+  title,
 };

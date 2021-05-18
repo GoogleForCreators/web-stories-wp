@@ -199,11 +199,10 @@ class Editor extends Service_Base {
 		// Force media model to load.
 		wp_enqueue_media();
 		$this->register_font->register();
-		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
-
-		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
-			$script_dependencies[] = 'postbox';
-		}
+		$script_dependencies = [
+			Tracking::SCRIPT_HANDLE,
+			'postbox',
+		];
 
 		$this->enqueue_script( self::SCRIPT_HANDLE, $script_dependencies );
 		$font_handle = $this->register_font->get_handle();
@@ -319,7 +318,7 @@ class Editor extends Service_Base {
 				'nonce'                 => $nonce,
 				'encodeMarkup'          => $this->decoder->supports_decoding(),
 				'metaBoxes'             => $this->meta_boxes->get_meta_boxes_per_location(),
-				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.8.5/dist/ffmpeg-core.js',
+				'ffmpegCoreUrl'         => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.9.0/dist/ffmpeg-core.js',
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

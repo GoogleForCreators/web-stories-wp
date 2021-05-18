@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -40,9 +41,10 @@ function setup(args) {
     },
     ...args,
   };
-  const wrapper = (params) => (
+
+  const wrapper = ({ children }) => (
     <ConfigContext.Provider value={configValue}>
-      <SnackbarContext.Provider>{params.children}</SnackbarContext.Provider>
+      <SnackbarContext.Provider>{children}</SnackbarContext.Provider>
     </ConfigContext.Provider>
   );
   const onSelect = jest.fn();

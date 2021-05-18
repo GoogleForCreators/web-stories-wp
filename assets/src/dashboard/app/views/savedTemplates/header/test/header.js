@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ import Header from '..';
 
 describe('My Stories <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={SAVED_TEMPLATES_STATUSES[0]}
@@ -48,12 +48,12 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('Viewing all templates')).toBeInTheDocument();
+    expect(screen.getByText('Viewing all templates')).toBeInTheDocument();
   });
 
   it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
-    const { getByLabelText, getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={SAVED_TEMPLATES_STATUSES[0]}
@@ -67,8 +67,8 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getByLabelText('Choose sort option for display'));
-    fireEvent.click(getByText('Date created'));
+    fireEvent.click(screen.getByLabelText('Choose sort option for display'));
+    fireEvent.click(screen.getByText('Date Created'));
 
     await waitFor(() => {
       expect(setSortFn).toHaveBeenCalledWith('date');

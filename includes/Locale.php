@@ -42,10 +42,10 @@ class Locale {
 	public function get_locale_settings() {
 		global $wp_locale;
 
-		/* translators: Date format, see https://www.php.net/date */
+		/* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
 		$default_date_format = __( 'd/m/Y', 'web-stories' );
 
-		/* translators: Date format, see https://www.php.net/date */
+		/* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
 		$default_time_format = __( 'g:i a', 'web-stories' );
 
 		$date_format = get_option( 'date_format', $default_date_format );

@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Base_Controller;
+use Google\Web_Stories\REST_API\Page_Template_Controller;
 use Google\Web_Stories\Traits\Post_Type;
 
 /**
@@ -113,10 +113,11 @@ class Page_Template_Post_Type extends Service_Base {
 					'excerpt',
 				],
 				'capabilities'          => $capabilities,
+				'rewrite'               => false,
 				'public'                => false,
 				'show_ui'               => false,
 				'show_in_rest'          => true,
-				'rest_controller_class' => Stories_Base_Controller::class,
+				'rest_controller_class' => Page_Template_Controller::class,
 			]
 		);
 	}

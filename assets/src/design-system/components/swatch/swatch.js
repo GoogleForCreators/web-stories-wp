@@ -128,6 +128,7 @@ function Swatch({
   isSmall = false,
   children,
   isPreview,
+  className = '',
   ...props
 }) {
   if (!pattern) {
@@ -142,7 +143,12 @@ function Swatch({
   const displaySplit = !isSmall && !swatchIsGradient && swatchHasTransparency;
   const SwatchDisplay = isPreview ? SwatchPreview : SwatchButton;
   return (
-    <SwatchDisplay disabled={isDisabled} isSmall={isSmall} {...props}>
+    <SwatchDisplay
+      disabled={isDisabled}
+      isSmall={isSmall}
+      className={className}
+      {...props}
+    >
       {swatchHasTransparency && <Transparent />}
       <SwatchItem
         $pattern={pattern}
@@ -166,6 +172,7 @@ Swatch.propTypes = {
   isDisabled: PropTypes.bool,
   isSmall: PropTypes.bool,
   isPreview: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export { Swatch };

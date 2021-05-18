@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 /**
@@ -43,29 +43,29 @@ function arrange(customProps = {}) {
     onClose,
     ...customProps,
   };
-  const accessors = renderWithTheme(<ColorPicker {...props} />);
-  const {
-    getByRole,
-    queryByLabelText,
-    queryAllByLabelText,
-    rerender,
-  } = accessors;
-  const getDialog = () => getByRole('dialog');
-  const getSolidButton = () => queryByLabelText(/solid pattern/i);
-  const getLinearButton = () => queryByLabelText(/linear gradient pattern/i);
-  const getRadialButton = () => queryByLabelText(/radial gradient pattern/i);
-  const getCloseButton = () => queryByLabelText(/close/i);
-  const getEditableHexElement = () => queryByLabelText(/edit hex/i);
-  const getEditableAlphaElement = () => queryByLabelText(/edit opacity/i);
-  const getGradientLine = () => queryByLabelText(/gradient line/i);
-  const getGradientStops = () => queryAllByLabelText(/^gradient stop at/i);
+  const view = renderWithTheme(<ColorPicker {...props} />);
+  const { rerender } = view;
+  const getDialog = () => screen.getByRole('dialog');
+  const getSolidButton = () => screen.queryByLabelText(/solid pattern/i);
+  const getLinearButton = () =>
+    screen.queryByLabelText(/linear gradient pattern/i);
+  const getRadialButton = () =>
+    screen.queryByLabelText(/radial gradient pattern/i);
+  const getCloseButton = () => screen.queryByLabelText(/close/i);
+  const getEditableHexElement = () => screen.queryByLabelText(/edit hex/i);
+  const getEditableAlphaElement = () =>
+    screen.queryByLabelText(/edit opacity/i);
+  const getGradientLine = () => screen.queryByLabelText(/gradient line/i);
+  const getGradientStops = () =>
+    screen.queryAllByLabelText(/^gradient stop at/i);
   // The gradient line is reversed, so we deduct the value from 100.
   const getGradientStopAt = (pct) =>
-    queryByLabelText(new RegExp(`gradient stop at ${100 - pct}%`, 'i'));
+    screen.queryByLabelText(new RegExp(`gradient stop at ${100 - pct}%`, 'i'));
   const getTempGradientStop = () =>
-    queryByLabelText(/temporary gradient stop/i);
-  const getGradientReverse = () => queryByLabelText(/reverse gradient stops/i);
-  const getGradientRotate = () => queryByLabelText(/rotate gradient/i);
+    screen.queryByLabelText(/temporary gradient stop/i);
+  const getGradientReverse = () =>
+    screen.queryByLabelText(/reverse gradient stops/i);
+  const getGradientRotate = () => screen.queryByLabelText(/rotate gradient/i);
   const wrapperRerender = (moreCustomProps) =>
     rerender(
       <ThemeProvider theme={theme}>
@@ -73,7 +73,7 @@ function arrange(customProps = {}) {
       </ThemeProvider>
     );
   return {
-    ...accessors,
+    ...view,
     getDialog,
     getSolidButton,
     getLinearButton,

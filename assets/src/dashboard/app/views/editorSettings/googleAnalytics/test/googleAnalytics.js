@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -45,7 +45,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   });
 
   it('should render google analytics input and helper text by default', function () {
-    const { getByRole, getByText } = renderWithProviders(
+    renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -53,16 +53,16 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
     expect(input).toBeEnabled();
 
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
   });
 
   it('should render a visually hidden label for google analytics input', function () {
-    const { getByLabelText } = renderWithProviders(
+    renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -70,12 +70,12 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    const label = getByLabelText(TEXT.ARIA_LABEL);
+    const label = screen.getByLabelText(TEXT.ARIA_LABEL);
     expect(label).toBeInTheDocument();
   });
 
   it('should not allow the input to be active when analytics module is active', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -87,12 +87,12 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeDisabled();
   });
 
   it('should allow the input to be active when site kit is installed but analytics module is not active', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -104,12 +104,12 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeEnabled();
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
-    const { getByRole, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -117,7 +117,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
 
     fireEvent.change(input, { target: { value: 'UA-098754-33' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
@@ -155,7 +155,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   });
 
   it('should call mockUpdate when the save button is clicked', function () {
-    const { getByRole, rerender } = renderWithProviders(
+    const { rerender } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -163,8 +163,8 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       />
     );
 
-    const input = getByRole('textbox');
-    const button = getByRole('button');
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button');
 
     fireEvent.change(input, { target: { value: 'UA-098754-33' } });
 

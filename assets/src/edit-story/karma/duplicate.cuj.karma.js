@@ -20,7 +20,7 @@ import useInsertElement from '../components/canvas/useInsertElement';
 import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
-describe('Duplicate page', () => {
+describe('Duplicate Page', () => {
   let fixture;
   let duplicatePageButton;
 
@@ -57,7 +57,7 @@ describe('Duplicate page', () => {
 
     // animation
     const animation = fixture.screen.getByRole('option', {
-      name: 'Pulse Effect',
+      name: '"Pulse" Effect',
     });
 
     // apply animation to element

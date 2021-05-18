@@ -247,7 +247,7 @@ function SelectStories({
       {!orderedStories.length && search.keyword && (
         <p>
           {sprintf(
-            /* translators: %s: story title. */
+            /* translators: %s: search term. */
             __(
               `Sorry, we couldn't find any results matching "%s"`,
               'web-stories'

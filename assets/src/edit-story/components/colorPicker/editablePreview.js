@@ -29,33 +29,24 @@ import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
-  themeHelpers,
 } from '../../../design-system';
+import { focusStyle } from '../panels/shared';
 
 const Preview = styled.button`
   margin: 0;
-  padding: 0;
+  padding: 7px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   border-radius: 2px;
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
   width: 100%;
-  padding: 7px;
 
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const Wrapper = styled.div`
   input {
-    ${({ theme }) =>
-      themeHelpers.focusableOutlineCSS(
-        theme.colors.border.focus,
-        theme.colors.bg.secondary
-      )};
+    ${focusStyle};
   }
 `;
 

@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -26,7 +28,7 @@ import { noop } from '../../../utils';
 
 describe('Switch', () => {
   it('should render the switch', () => {
-    const { getAllByRole, getByText } = renderWithProviders(
+    renderWithProviders(
       <Switch
         name="radioOne"
         groupLabel="radio one"
@@ -37,9 +39,9 @@ describe('Switch', () => {
       />
     );
 
-    expect(getAllByRole('radio')).toHaveLength(2);
-    expect(getByText('ON')).toBeInTheDocument();
-    expect(getByText('OFF')).toBeInTheDocument();
+    expect(screen.getAllByRole('radio')).toHaveLength(2);
+    expect(screen.getByText('ON')).toBeInTheDocument();
+    expect(screen.getByText('OFF')).toBeInTheDocument();
   });
 
   it.each`
@@ -50,7 +52,7 @@ describe('Switch', () => {
     'should call onChange with the value of the unchecked radio button when the value is `$value`',
     ({ value }) => {
       const onChange = jest.fn();
-      const { getByRole } = renderWithProviders(
+      renderWithProviders(
         <Switch
           name="radioOne"
           groupLabel="radio one"
@@ -61,7 +63,7 @@ describe('Switch', () => {
         />
       );
 
-      const radioButton = getByRole('radio', { checked: false });
+      const radioButton = screen.getByRole('radio', { checked: false });
       fireEvent.click(radioButton);
 
       expect(onChange).toHaveBeenCalledWith(expect.any(Object), !value);

@@ -158,6 +158,8 @@ jobs:
             git push origin static-site
           fi
 
+          echo "Assets version for this release: $NEW_ASSETS_VERSION"
+
           mkdir -p assets_version
           echo $NEW_ASSETS_VERSION > assets_version/assets_version.txt
         working-directory: public/static
@@ -202,7 +204,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -228,11 +230,12 @@ jobs:
         run: |
           TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
           if $IS_RC; then
-            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
+            # Get the most recent tag.
+            # Note: This will return v1.4.0-rc.1 as it is listed before v1.4.0
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
 
-            # This is the first RC for this version (e.g. v1.5.0-rc.1), so previous version is v1.4.0, without suffix.
-            if ! git describe --abbrev=0 --tags --match "$TAG_NAME_WITHOUT_SUFFIX" &>/dev/null; then
+            # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
+            if [[ $TAG_NAME == *".rc.1" ]]; then
               PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
             fi
           else
@@ -302,7 +305,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm
@@ -326,7 +329,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -348,6 +351,11 @@ jobs:
           VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
 
+          # Patch releases should not create a new branch
+          if $IS_PATCH_RELEASE; then
+            BRANCH=${GITHUB_REF#refs/heads/}
+          fi
+
           if [[ -z $(git ls-remote origin $BRANCH) ]]; then
             git checkout -b $BRANCH
           else
@@ -366,7 +374,7 @@ jobs:
         run: |
           git add web-stories.php
           git status
-          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 0
           git commit -m "Update assets version to $ASSETS_VERSION"
           git push -u origin HEAD
         if: ${{ env.ASSETS_VERSION }}
@@ -602,7 +610,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: pat-s/always-upload-cache@v2.1.5
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.npm

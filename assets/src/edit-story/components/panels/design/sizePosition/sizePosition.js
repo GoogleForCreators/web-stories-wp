@@ -42,12 +42,21 @@ import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
-import { getCommonValue, useCommonObjectValue } from '../../shared';
+import {
+  focusStyle,
+  getCommonValue,
+  inputContainerStyleOverride,
+  useCommonObjectValue,
+} from '../../shared';
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
+
+const StyledLockToggle = styled(LockToggle)`
+  ${focusStyle};
+`;
 
 function getStickerAspectRatio(element) {
   return stickers?.[element?.sticker?.type].aspectRatio || 1;
@@ -81,6 +90,8 @@ const Dash = styled.div`
 const StyledButton = styled(Button)`
   padding: 10px 16px;
   width: 100%;
+
+  ${focusStyle};
 `;
 
 function SizePositionPanel({
@@ -208,7 +219,7 @@ function SizePositionPanel({
     };
   }, []);
   return (
-    <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
+    <SimplePanel name="size" title={__('Size & Position', 'web-stories')}>
       <Grid isSingleMedia={isMedia && isSingleElement}>
         {isMedia && isSingleElement && (
           <Area area="b">
@@ -232,6 +243,7 @@ function SizePositionPanel({
             aria-label={__('X position', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(x)}
+            containerStyleOverride={inputContainerStyleOverride}
           />
         </Area>
         <Area area="y">
@@ -244,6 +256,7 @@ function SizePositionPanel({
             aria-label={__('Y position', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(y)}
+            containerStyleOverride={inputContainerStyleOverride}
           />
         </Area>
         {/** Width/height & lock ratio */}
@@ -278,6 +291,7 @@ function SizePositionPanel({
             }}
             aria-label={__('Width', 'web-stories')}
             {...getMixedValueProps(width)}
+            containerStyleOverride={inputContainerStyleOverride}
           />
         </Area>
         <Area area="d">
@@ -316,11 +330,12 @@ function SizePositionPanel({
             aria-label={__('Height', 'web-stories')}
             isIndeterminate={MULTIPLE_VALUE === height}
             placeholder={heightPlaceholder}
+            containerStyleOverride={inputContainerStyleOverride}
           />
         </Area>
         <Area area="l">
           <Tooltip title={__('Lock aspect ratio', 'web-stories')}>
-            <LockToggle
+            <StyledLockToggle
               aria-label={__('Lock aspect ratio', 'web-stories')}
               title={__('Lock aspect ratio', 'web-stories')}
               isLocked={lockAspectRatio || isAspectAlwaysLocked}
@@ -345,6 +360,7 @@ function SizePositionPanel({
             aria-label={__('Rotation', 'web-stories')}
             canBeNegative
             {...getMixedValueProps(rotationAngle)}
+            containerStyleOverride={inputContainerStyleOverride}
           />
         </Area>
         {canFlip && (
