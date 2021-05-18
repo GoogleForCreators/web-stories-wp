@@ -39,6 +39,7 @@ const ZOOM_PADDING_NONE = 12;
 
 const INITIAL_STATE = {
   zoomSetting: ZOOM_SETTING.FIT,
+  zoomLevel: null,
   workspaceSize: {
     width: null,
     height: null,
@@ -58,6 +59,11 @@ const reducer = {
       top: 0,
     },
   }),
+  setZoomLevel: (state, { payload }) => ({
+    ...state,
+    zoomLevel: payload,
+    zoomSetting: ZOOM_SETTING.FIXED,
+  }),
   setScrollOffset: (state, { payload }) => ({
     ...state,
     scrollOffset: payload,
@@ -68,7 +74,7 @@ const reducer = {
   }),
 };
 
-function calculateViewportProperties(workspaceSize, zoomSetting) {
+function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
   // Calculate page size based on zoom setting
   let maxPageWidth;
   const workspaceRatio = workspaceSize.width / workspaceSize.height;
@@ -103,15 +109,12 @@ function calculateViewportProperties(workspaceSize, zoomSetting) {
       }
       break;
     }
-    case ZOOM_SETTING.SINGLE: {
-      maxPageWidth = PAGE_WIDTH;
-      break;
-    }
-    case ZOOM_SETTING.DOUBLE: {
-      maxPageWidth = 2 * PAGE_WIDTH;
-      break;
-    }
     default:
+      // If no predefined setting was found, check for the zoom level value.
+      if (isNaN(zoomLevel)) {
+        break;
+      }
+      maxPageWidth = zoomLevel * PAGE_WIDTH;
       break;
   }
   // Floor page width to nearest multiple of PAGE_WIDTH_FACTOR
@@ -154,17 +157,18 @@ function calculateViewportProperties(workspaceSize, zoomSetting) {
 
 function useZoomSetting() {
   const [state, actions] = useReduction(INITIAL_STATE, reducer);
-  const { zoomSetting, workspaceSize, scrollOffset } = state;
+  const { zoomSetting, zoomLevel, workspaceSize, scrollOffset } = state;
 
   const viewportProperties = useMemo(
-    () => calculateViewportProperties(workspaceSize, zoomSetting),
-    [workspaceSize, zoomSetting]
+    () => calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel),
+    [workspaceSize, zoomSetting, zoomLevel]
   );
 
   return {
     state: {
       ...viewportProperties,
       zoomSetting,
+      zoomLevel,
       workspaceWidth: workspaceSize.width,
       workspaceHeight: workspaceSize.height,
       scrollLeft: scrollOffset.left,

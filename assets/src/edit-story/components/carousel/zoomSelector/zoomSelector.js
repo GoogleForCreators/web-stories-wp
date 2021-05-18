@@ -43,32 +43,52 @@ const StyledDropDown = styled(DropDown)`
 const ZOOM_OPTIONS = [
   {
     label: _x('100%', 'zoom level', 'web-stories'),
-    value: ZOOM_SETTING.SINGLE,
+    value: 1,
   },
   {
     label: _x('200%', 'zoom level', 'web-stories'),
-    value: ZOOM_SETTING.DOUBLE,
+    value: 2,
   },
   { label: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
   { label: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
 ];
 
 function ZoomSelector() {
-  const { zoomSetting, setZoomSetting } = useLayout(
-    ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
+  const { zoomSetting, zoomLevel, setZoomSetting, setZoomLevel } = useLayout(
+    ({
+      state: { zoomSetting, zoomLevel },
+      actions: { setZoomSetting, setZoomLevel },
+    }) => ({
       zoomSetting,
+      zoomLevel,
       setZoomSetting,
+      setZoomLevel,
     })
   );
 
-  const placeholder = useMemo(
-    () => ZOOM_OPTIONS.find(({ value }) => value === zoomSetting).label,
-    [zoomSetting]
-  );
+  const placeholder = useMemo(() => {
+    const option = ZOOM_OPTIONS.find(({ value }) => {
+      if (zoomSetting === ZOOM_SETTING.FIXED) {
+        return value === zoomLevel;
+      }
+      return value === zoomSetting;
+    });
+    if (option) {
+      return option.label;
+    }
+    return `${zoomLevel * 100}%`;
+  }, [zoomSetting, zoomLevel]);
 
-  const handleSetZoom = useCallback((_event, value) => setZoomSetting(value), [
-    setZoomSetting,
-  ]);
+  const handleSetZoom = useCallback(
+    (_event, value) => {
+      if (Object.prototype.hasOwnProperty.call(ZOOM_SETTING, value)) {
+        setZoomSetting(value);
+      } else {
+        setZoomLevel(value);
+      }
+    },
+    [setZoomSetting, setZoomLevel]
+  );
 
   return (
     <StyledDropDown
