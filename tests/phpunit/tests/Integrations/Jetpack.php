@@ -20,8 +20,6 @@ namespace Google\Web_Stories\Tests\Integrations;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Test_Case;
 use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
-use WP_REST_Request;
-use WP_REST_Server;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
@@ -110,6 +108,29 @@ class Jetpack extends Test_Case {
 		$this->assertArrayHasKey( 'media_details', $data );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
 		$this->assertSame( $data['media_details']['length_formatted'], '0:05' );
+	}
+
+	/**
+	 * @covers ::add_term
+	 */
+	public function test_add_term() {
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		$jetpack              = new Jetpack_Integration();
+		$jetpack->register();
+
+		add_post_meta( $poster_attachment_id, Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY, 'hello world' );
+
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+		$slugs = wp_list_pluck( $terms, 'slug' );
+		$this->assertCount( 1, $terms );
+		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
 	}
 
 	/**
@@ -254,39 +275,5 @@ class Jetpack extends Test_Case {
 				'0:05',
 			],
 		];
-	}
-
-	/**
-	 * @covers ::filter_rest_attachment_query
-	 */
-	public function test_filter_rest_attachment_query_wrong_route() {
-		$expected = [];
-
-		$jetpack = new Jetpack_Integration();
-		$actual  = $jetpack->filter_rest_attachment_query( [], new WP_REST_Request() );
-
-		$this->assertEqualSetsWithIndex( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::filter_rest_attachment_query
-	 */
-	public function test_filter_rest_attachment_query() {
-		$expected = [
-			'meta_query' => [
-				[
-					'key'     => Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY,
-					'compare' => 'NOT EXISTS',
-				],
-			],
-		];
-
-		$jetpack = new Jetpack_Integration();
-		$actual  = $jetpack->filter_rest_attachment_query(
-			[],
-			new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/media' )
-		);
-
-		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
 }
