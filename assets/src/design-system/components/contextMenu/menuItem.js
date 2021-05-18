@@ -28,6 +28,7 @@ import { Text } from '../typography/text';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
 import { Tooltip, TOOLTIP_PLACEMENT } from '../tooltip';
+import { PLACEMENT } from '../popup';
 
 const ItemText = styled(Text)`
   width: 200px;
@@ -68,6 +69,7 @@ export const MenuItem = ({
   onFocus,
   shortcut,
   Icon,
+  tooltipPlacement = TOOLTIP_PLACEMENT.RIGHT,
 }) => {
   const itemRef = useRef(null);
   /**
@@ -84,7 +86,7 @@ export const MenuItem = ({
   const textContent = useMemo(() => {
     if (Icon) {
       return (
-        <Tooltip placement={TOOLTIP_PLACEMENT.RIGHT} title={label}>
+        <Tooltip placement={tooltipPlacement} title={label}>
           <IconWrapper>
             <Icon />
           </IconWrapper>
@@ -109,7 +111,7 @@ export const MenuItem = ({
         )}
       </>
     );
-  }, [Icon, label, shortcut]);
+  }, [Icon, label, shortcut, tooltipPlacement]);
 
   if (href) {
     const newTabProps = newTab
@@ -202,6 +204,7 @@ export const MenuItemProps = {
   onFocus: PropTypes.func,
   shortcut: PropTypes.string,
   Icon: PropTypes.func,
+  tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
 };
 
 MenuItem.propTypes = MenuItemProps;

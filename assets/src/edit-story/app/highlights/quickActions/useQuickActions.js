@@ -23,7 +23,9 @@ import { useCallback, useMemo } from 'react';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
+import { PLACEMENT } from '../../../../design-system';
 import { Bucket, LetterTPlus, Media } from '../../../../design-system/icons';
+import { useConfig } from '../../config';
 import { useStory } from '../../story';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
@@ -51,6 +53,7 @@ export const ACTION_TEXT = {
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
 const useQuickActions = () => {
+  const { isRTL } = useConfig();
   const { currentPage, selectedElements } = useStory(
     ({ state: { currentPage, selectedElements } }) => ({
       currentPage,
@@ -86,32 +89,38 @@ const useQuickActions = () => {
     currentPage?.elements.find((element) => element.isBackground) ||
     selectedElements?.[0]?.isBackground;
 
-  const defaultActions = useMemo(
-    () => [
+  const defaultActions = useMemo(() => {
+    const actionMenuProps = {
+      tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
+    };
+    return [
       {
         Icon: Bucket,
         label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
         onClick: handleFocusPageBackground(backgroundElement?.id),
+        ...actionMenuProps,
       },
       {
         Icon: Media,
         label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
         onClick: handleFocusMediaPanel(),
         separator: 'top',
+        ...actionMenuProps,
       },
       {
         Icon: LetterTPlus,
         label: ACTION_TEXT.INSERT_TEXT,
         onClick: handleFocusTextSetsPanel(),
+        ...actionMenuProps,
       },
-    ],
-    [
-      backgroundElement?.id,
-      handleFocusMediaPanel,
-      handleFocusPageBackground,
-      handleFocusTextSetsPanel,
-    ]
-  );
+    ];
+  }, [
+    backgroundElement?.id,
+    handleFocusMediaPanel,
+    handleFocusPageBackground,
+    handleFocusTextSetsPanel,
+    isRTL,
+  ]);
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
