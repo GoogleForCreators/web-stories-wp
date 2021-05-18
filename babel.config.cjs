@@ -50,6 +50,8 @@ module.exports = function (api) {
       'babel-plugin-styled-components',
       'babel-plugin-inline-json-import',
       '@babel/plugin-syntax-top-level-await',
+      // TODO: Fix this. This breaks Jest tests. Should stick with the default (false).
+      // See https://github.com/testing-library/dom-testing-library/issues/370#issuecomment-538354739
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: true }],
       ['@babel/plugin-proposal-optional-chaining', { loose: true }],
