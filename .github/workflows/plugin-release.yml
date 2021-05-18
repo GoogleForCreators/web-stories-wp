@@ -272,7 +272,7 @@ jobs:
     name: Build new version
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [assets-version, changelog]
+    needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
     steps:
