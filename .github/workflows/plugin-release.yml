@@ -409,9 +409,6 @@ jobs:
       - name: Build plugin
         run: npm run build:js
 
-      - name: Bundle composer version
-        run: npm run workflow:build-plugin -- --composer --zip web-stories-composer.zip
-
       - name: Bundle regular version
         run: npm run workflow:build-plugin -- --zip web-stories.zip
 
@@ -490,16 +487,6 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/web-stories-dev.zip
           asset_name: web-stories-dev.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
-
-      - name: Upload composer bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories-composer.zip
-          asset_name: web-stories-composer.zip
           asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
