@@ -115,7 +115,7 @@ const foregroundImageQuickActions = [
     Icon: Link,
   }),
   expect.objectContaining({
-    label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATIONS,
+    label: ACTION_TEXT.CLEAR_ANIMATIONS,
     onClick: expect.any(Function),
     Icon: Eraser,
   }),
