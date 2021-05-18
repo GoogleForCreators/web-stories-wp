@@ -23,8 +23,10 @@ class Embed extends Test_Case {
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
+		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story );
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets, $register_font );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,

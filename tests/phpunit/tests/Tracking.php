@@ -55,8 +55,8 @@ class Tracking extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
-
-		$tracking = new \Google\Web_Stories\Tracking( $experiments, $site_kit );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$tracking = new \Google\Web_Stories\Tracking( $experiments, $site_kit, $assets );
 		$tracking->register();
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Tracking::SCRIPT_HANDLE, 'registered' ) );
 		$this->assertFalse( wp_scripts()->registered[ \Google\Web_Stories\Tracking::SCRIPT_HANDLE ]->src );
@@ -83,8 +83,8 @@ class Tracking extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
-
-		$settings = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit ) )->get_settings();
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$settings = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit, $assets ) )->get_settings();
 
 		$this->assertArrayHasKey( 'trackingAllowed', $settings );
 		$this->assertArrayHasKey( 'trackingId', $settings );
@@ -140,8 +140,8 @@ class Tracking extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
-
-		$settings         = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit ) )->get_settings();
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$settings         = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit, $assets ) )->get_settings();
 		$tracking_allowed = $settings['trackingAllowed'];
 
 		delete_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );

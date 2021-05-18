@@ -17,16 +17,18 @@
 
 namespace Google\Web_Stories\Tests;
 
+use Google\Web_Stories\Assets;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Register_Global_Assets
  */
-class Register_Font extends Test_Case {
+class Register_Global_Assets extends Test_Case {
 
 	/**
 	 * @covers ::get_font_handle
 	 */
 	public function test_get_handle() {
-		$actual = ( new \Google\Web_Stories\Register_Global_Assets() )->get_font_handle();
+		$actual = ( new \Google\Web_Stories\Register_Global_Assets(new Assets()) )->get_font_handle();
 
 		$this->assertSame( 'web-stories-fonts', $actual );
 	}
@@ -35,7 +37,7 @@ class Register_Font extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$register_font   = new \Google\Web_Stories\Register_Global_Assets();
+		$register_font   = new \Google\Web_Stories\Register_Global_Assets(new Assets());
 		$before_register = $this->get_private_property( $register_font, 'register' );
 		$register_font->register();
 		$after_register = $this->get_private_property( $register_font, 'register' );

@@ -26,7 +26,9 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Stories;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Register_Global_Assets;
 use Google\Web_Stories\Tests\Test_Case;
 use Google\Web_Stories\Tests\Test_Renderer;
 use Google\Web_Stories\Story_Query;
@@ -83,6 +85,8 @@ class Renderer extends Test_Case {
 		parent::setUp();
 
 		$this->story_model = $this->createMock( Story::class );
+		$this->assets = $this->createMock( Assets::class );
+		$this->register_global_assets = $this->createMock( Register_Global_Assets::class );
 		$this->story_model->load_from_post( self::$story_id );
 
 		$this->story_query = $this->createMock( Story_Query::class );
@@ -102,7 +106,7 @@ class Renderer extends Test_Case {
 	 * @covers ::assets
 	 */
 	public function test_assets() {
-		$renderer = new Test_Renderer( $this->story_query );
+		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
 
 		$renderer->assets();
 
@@ -114,7 +118,7 @@ class Renderer extends Test_Case {
 	 */
 	public function test_is_view_type() {
 
-		$renderer = new Test_Renderer( $this->story_query );
+		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
 
 		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'grid' ] );
 
@@ -135,7 +139,7 @@ class Renderer extends Test_Case {
 				'view_type' => 'grid',
 			]
 		);
-		$renderer = new Test_Renderer( $this->story_query );
+		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
 
 		$output = $this->call_private_method( $renderer, 'get_view_type' );
 
@@ -156,7 +160,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query, $this->assets, $this->register_global_assets ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
@@ -171,7 +175,7 @@ class Renderer extends Test_Case {
 	 * @covers ::get_content_overlay
 	 */
 	public function test_get_content_overlay() {
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query, $this->assets, $this->register_global_assets ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 		$this->set_private_property( $renderer, 'content_overlay', false );
@@ -202,7 +206,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
 		$expected = 'web-stories-list__story';
 
 		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
@@ -224,7 +228,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query, $this->assets, $this->register_global_assets );
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
@@ -247,7 +251,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query, $this->assets, $this->register_global_assets );
 
 		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
@@ -274,7 +278,7 @@ class Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new Test_Renderer( $story_query );
+		$renderer = new Test_Renderer( $story_query , $this->assets, $this->register_global_assets);
 
 		$overlay = $this->get_private_property( $renderer, 'content_overlay' );
 

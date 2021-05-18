@@ -92,8 +92,9 @@ class Editor extends Test_Case {
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$args   = [ $experiments, $meta_boxes, $decoder, $locale, $register_font ];
+		$args   = [ $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets ];
 		$editor = $this->getMockBuilder( \Google\Web_Stories\Admin\Editor::class )
 								->setConstructorArgs( $args )
 								->setMethods( [ 'get_asset_metadata' ] )
@@ -132,8 +133,9 @@ class Editor extends Test_Case {
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 		$results = $editor->get_editor_settings();
 		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
@@ -151,8 +153,9 @@ class Editor extends Test_Case {
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 		$results = $editor->get_editor_settings();
 		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
 	}
@@ -169,8 +172,9 @@ class Editor extends Test_Case {
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 
 		$this->call_private_method( $editor, 'setup_lock', [ self::$story_id ] );
 
@@ -192,8 +196,9 @@ class Editor extends Test_Case {
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 
 		$this->call_private_method( $editor, 'setup_lock', [ self::$story_id ] );
 
@@ -213,8 +218,9 @@ class Editor extends Test_Case {
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
 		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
-		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font );
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 
 		$use_block_editor = $editor->filter_use_block_editor_for_post_type( true, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$this->assertFalse( $use_block_editor );
