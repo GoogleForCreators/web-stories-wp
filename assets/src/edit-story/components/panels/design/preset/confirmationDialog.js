@@ -36,10 +36,10 @@ const Label = styled.label`
   margin-left: 12px;
 `;
 
-const CheckboxWrapper = styled.div`
+const CheckboxWrapper = styled.footer`
   display: flex;
   margin-top: 12px;
-  padding-top: 14px;
+  padding: 14px 0 0 9px;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
