@@ -261,6 +261,7 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
         data-testid="context-menu-list"
         ref={listRef}
         isIconMenu={isIconMenu}
+        role="menu"
         {...props}
       >
         {items.map(({ separator, onFocus, ...itemProps }, index) => (

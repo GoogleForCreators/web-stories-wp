@@ -520,7 +520,7 @@ describe('Grid view', () => {
 
     it('should focus on context menu items via keyboard', async () => {
       const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
-      const selectedStory = storyCards[0];
+      const [selectedStory] = storyCards;
       await focusOnGridByKeyboard();
       await fixture.events.keyboard.press('right');
 
@@ -528,7 +528,10 @@ describe('Grid view', () => {
       expect(selectedStory).toEqual(document.activeElement);
 
       let limit = 0;
-      const [contextMenuKabab] = fixture.screen.getAllByLabelText(
+      const [activeStoryContainer] = fixture.screen.getAllByTestId(
+        /^story-grid-item/
+      );
+      const contextMenuKabab = within(activeStoryContainer).getByLabelText(
         'More Options'
       );
 
@@ -539,20 +542,18 @@ describe('Grid view', () => {
         limit++;
       }
 
-      expect(contextMenuKabab).toEqual(contextMenuKabab);
+      expect(contextMenuKabab).toEqual(document.activeElement);
 
       await fixture.events.keyboard.press('Enter');
 
       // now the focused item should be the first context menu item
-      const [contextMenuList] = fixture.screen.getAllByTestId(
+      const [contextMenuList] = within(activeStoryContainer).getAllByTestId(
         /context-menu-list/
       );
       // it is focused on the link within the list
       const [firstContextMenuItem, secondContextMenuItem] = within(
         contextMenuList
-      ).getAllByText((content, element) => {
-        return element.tagName.toLowerCase() === 'a';
-      });
+      ).getAllByRole('menuitem');
       expect(firstContextMenuItem).toEqual(document.activeElement);
 
       // tab to the next item
