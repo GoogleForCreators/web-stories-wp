@@ -103,29 +103,6 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
   });
 
-  it('should return a message if any video resolution is too high to display on most mobile devices (>4k)', () => {
-    const tooHighVideoResolution = {
-      id: 101,
-      type: 'video',
-      resource: {
-        sizes: {
-          full: {
-            height: 2160,
-            width: 3840,
-          },
-        },
-      },
-    };
-
-    const result = mediaGuidance.mediaElementResolution(tooHighVideoResolution);
-    expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(
-      `"Reduce video resolution to less than 4000p"`
-    );
-    expect(result.type).toStrictEqual('guidance');
-    expect(result.elementId).toStrictEqual(tooHighVideoResolution.id);
-  });
-
   it('should return a message if the video element is longer than 1 minute', () => {
     const tooLongVideo = {
       id: 202,
