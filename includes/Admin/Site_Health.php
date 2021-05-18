@@ -131,12 +131,13 @@ class Site_Health extends Service_Base implements Conditional {
 					],
 					'web_stories_dev_mode'       => [
 						'label'   => 'WEBSTORIES_DEV_MODE',
-						'value'   => WEBSTORIES_DEV_MODE,
 						'private' => false,
+						'value'   => $this->get_formatted_output( WEBSTORIES_DEV_MODE ),
+						'debug'   => WEBSTORIES_DEV_MODE,
 					],
 					'web_stories_theme_support'  => [
 						'label'   => 'Theme supports',
-						'value'   => (bool) get_theme_support( 'web-stories' ),
+						'value'   => $this->get_formatted_output( current_theme_supports( 'web-stories' ) ),
 						'private' => false,
 					],
 					'web_stories_libxml_version' => [
@@ -156,12 +157,25 @@ class Site_Health extends Service_Base implements Conditional {
 		foreach ( $this->experiments->get_experiments() as $experiment ) {
 			$extra_data['web_stories_experiments']['fields'][ $experiment['name'] ] = [
 				'label'   => $experiment['label'],
-				'value'   => $this->experiments->is_experiment_enabled( $experiment['name'] ),
+				'value'   => $this->get_formatted_output( $this->experiments->is_experiment_enabled( $experiment['name'] ) ),
 				'private' => false,
 			];
 		}
 
 		return array_merge( $debugging_information, $extra_data );
+	}
+
+	/**
+	 * Format the value as enabled or disabled.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param mixed $value Value to formatted.
+	 *
+	 * @return string
+	 */
+	protected function get_formatted_output( $value ) {
+		return $value ? __( 'Enabled', 'web-stories' ) : __( 'Disabled', 'web-stories' );
 	}
 
 	/**
