@@ -183,14 +183,7 @@ function getElementProperties(
 
   return {
     ...attrs,
-    ...(Boolean(resource) && {
-      resource: {
-        ...resource,
-        width,
-        height,
-        alt: resource.alt || '',
-      },
-    }),
+    resource,
     x,
     y,
     width,
