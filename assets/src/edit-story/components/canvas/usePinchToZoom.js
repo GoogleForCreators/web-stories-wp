@@ -51,9 +51,9 @@ function usePinchToZoom({ containerRef }) {
       const { ctrlKey, deltaY } = e;
       const node = containerRef.current.childNodes[0];
       if (ctrlKey && node.contains(e.target) && deltaY) {
-        const movedDiff = zoomLevelTracker.current - deltaY * 0.01;
-        zoomLevelTracker.current = Math.min(3, Math.max(0.25, movedDiff));
-        if (Math.abs(movedDiff - zoomLevel) >= 0.04) {
+        const newZoom = zoomLevelTracker.current - deltaY * 0.01;
+        zoomLevelTracker.current = Math.min(3, Math.max(0.25, newZoom));
+        if (Math.abs(newZoom - zoomLevel) >= 0.04) {
           handleZoom();
         }
         e.preventDefault();
@@ -62,13 +62,50 @@ function usePinchToZoom({ containerRef }) {
     [containerRef, zoomLevel, handleZoom]
   );
 
+  const preventDefault = useCallback(
+    (e) => {
+      const node = containerRef.current.childNodes[0];
+      if (node.contains(e.target)) {
+        e.preventDefault();
+      }
+    },
+    [containerRef]
+  );
+
+  const handleGestureChange = useCallback(
+    (e) => {
+      const node = containerRef.current.childNodes[0];
+      if (node.contains(e.target)) {
+        const { scale } = e;
+        // Slow down the scaling in Safari.
+        const slowedScale = (1 - scale) / 2 + scale;
+        const newZoom = zoomLevel * slowedScale;
+        zoomLevelTracker.current = Math.min(3, Math.max(0.25, newZoom));
+        if (Math.abs(newZoom - zoomLevel) >= 0.04) {
+          handleZoom();
+        }
+        e.preventDefault();
+      }
+    },
+    [containerRef, handleZoom, zoomLevel]
+  );
+
   useLayoutEffect(() => {
     if (containerRef.current) {
       document.addEventListener('wheel', onWheel, { passive: false });
+      // Safari.
+      document.addEventListener('gesturestart', preventDefault);
+      document.addEventListener('gestureend', preventDefault);
+      document.addEventListener('gesturechange', handleGestureChange);
     }
-    return () =>
+    return () => {
       document.removeEventListener('wheel', onWheel, { passive: false });
-  }, [onWheel, containerRef]);
+      // Safari
+      document.removeEventListener('gesturestart', preventDefault);
+      document.removeEventListener('gestureend', preventDefault);
+      document.removeEventListener('gesturechange', handleGestureChange);
+    };
+  }, [onWheel, containerRef, preventDefault, handleGestureChange]);
 }
 
 export default usePinchToZoom;
