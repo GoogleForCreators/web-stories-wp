@@ -19,14 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import {
-  forwardRef,
-  createRef,
-  useRef,
-  useEffect,
-  useLayoutEffect,
-  useCallback,
-} from 'react';
+import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -41,6 +34,7 @@ import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';
+import usePinchToZoom from './usePinchToZoom';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -385,25 +379,7 @@ const PageArea = forwardRef(function PageArea(
   }, [isControlled, zoomSetting, fullbleedRef]);
 
   const paddedRef = useRef(null);
-
-  const onWheel = useCallback(
-    (e) => {
-      const { ctrlKey } = e;
-      const node = paddedRef.current.childNodes[0];
-      if (ctrlKey && node.contains(e.target)) {
-        e.preventDefault();
-      }
-    },
-    [paddedRef]
-  );
-
-  useLayoutEffect(() => {
-    if (paddedRef.current) {
-      document.addEventListener('wheel', onWheel, { passive: false });
-    }
-    return () =>
-      document.removeEventListener('wheel', onWheel, { passive: false });
-  }, [onWheel, fullbleedRef]);
+  usePinchToZoom({ containerRef: paddedRef });
 
   return (
     <PageAreaContainer
