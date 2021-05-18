@@ -111,7 +111,7 @@ class Embed {
 		);
 
 		// This CSS is used for AMP and non-AMP.
-		wp_enqueue_style( Embed_Base::SCRIPT_HANDLE );
+		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
 
 		if ( $this->is_amp() ) {
 			ob_start();

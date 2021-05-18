@@ -103,12 +103,12 @@ class Renderer extends Test_Case {
 	}
 
 	/**
-	 * @covers ::assets
+	 * @covers ::load_assets
 	 */
 	public function test_assets() {
 		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
 
-		$renderer->assets();
+		$renderer->load_assets();
 
 		$this->assertTrue( wp_style_is( \Google\Web_Stories\Renderer\Stories\Renderer::STYLE_HANDLE, 'registered' ) );
 	}

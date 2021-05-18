@@ -265,7 +265,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function assets() {
+	public function load_assets() {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
@@ -497,7 +497,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// No need to load these styles on admin as editor styles are being loaded by the block.
 		if ( ! is_admin() ) {
 			// Web Stories Styles for AMP and non-AMP pages.
-			wp_enqueue_style( self::STYLE_HANDLE );
+			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
 
 		if ( $this->is_amp() ) {
