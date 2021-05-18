@@ -28,6 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
+import Tooltip from '../../../tooltip';
 import {
   useCommonObjectValue,
   inputContainerStyleOverride,
@@ -235,11 +236,13 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         </InputContainer>
 
         <LockContainer>
-          <StyledLockToggle
-            isLocked={borderRadius.locked}
-            onClick={() => handleLockChange(!borderRadius.locked)}
-            aria-label={__('Toggle corner radius lock', 'web-stories')}
-          />
+          <Tooltip title={__('Toggle consistent corner radius', 'web-stories')}>
+            <StyledLockToggle
+              isLocked={borderRadius.locked}
+              onClick={() => handleLockChange(!borderRadius.locked)}
+              aria-label={__('Toggle consistent corner radius', 'web-stories')}
+            />
+          </Tooltip>
         </LockContainer>
       </FlexContainer>
     </SimplePanel>
