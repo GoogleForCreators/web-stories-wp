@@ -24,7 +24,7 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import FileUpload from '../';
+import FileUpload from '..';
 
 const Container = styled.div`
   width: 600px;

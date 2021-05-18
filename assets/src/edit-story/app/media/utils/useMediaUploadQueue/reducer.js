@@ -36,6 +36,7 @@ import { revokeBlob } from '../../../../utils/blobs';
  * @param {Function} action.payload.onUploadProgress Callback for when upload progresses.
  * @param {Function} action.payload.onUploadError Callback for when upload errors.
  * @param {Function} action.payload.onUploadSuccess Callback for when upload succeeds.
+ * @param {Object}   action.payload.additionalData Additional Data object.
  * @return {Object} New state
  */
 export function addItem(
@@ -48,6 +49,7 @@ export function addItem(
       onUploadProgress,
       onUploadError,
       onUploadSuccess,
+      additionalData,
     },
   }
 ) {
@@ -64,6 +66,7 @@ export function addItem(
     onUploadProgress,
     onUploadError,
     onUploadSuccess,
+    additionalData,
   };
 
   return {

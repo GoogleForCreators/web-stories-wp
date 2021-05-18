@@ -37,7 +37,7 @@ import {
 } from '../../../../../../design-system';
 import { CardGallery, ColorList } from '../../../../../components';
 import { TemplatePropType } from '../../../../../types';
-import { Column, ColumnContainer, DetailContainer } from './../../components';
+import { Column, ColumnContainer, DetailContainer } from '../../components';
 
 const ByLineText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
@@ -130,7 +130,7 @@ function DetailsGallery({
 
   const byLine = template
     ? sprintf(
-        /* translators: %s: template author  */
+        /* translators: byline. %s: author name. */
         __('by %s', 'web-stories'),
         template.createdBy
       )

@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
@@ -92,7 +97,7 @@ function render(ui, providerValues = {}, renderOptions = {}) {
 
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
-    const { getAllByTestId } = render(
+    render(
       <SnackbarProvider>
         <StoriesView
           filterValue={STORY_STATUS.ALL}
@@ -119,12 +124,14 @@ describe('My Stories <StoriesView />', function () {
       {}
     );
 
-    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
+    expect(screen.getAllByTestId(/^story-grid-item/)).toHaveLength(
+      fakeStories.length
+    );
   });
 
   describe('Loading stories', () => {
     it('should be able to hide the grid while the stories are loading', () => {
-      const { queryByTestId } = render(
+      render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -155,11 +162,11 @@ describe('My Stories <StoriesView />', function () {
         {}
       );
 
-      expect(queryByTestId(/^story-grid-item/)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(/^story-grid-item/)).not.toBeInTheDocument();
     });
 
     it('should be able to show the grid while stories are loading', () => {
-      const { queryAllByTestId } = render(
+      render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -190,13 +197,13 @@ describe('My Stories <StoriesView />', function () {
         {}
       );
 
-      expect(queryAllByTestId(/^story-grid-item/)).toHaveLength(
+      expect(screen.queryAllByTestId(/^story-grid-item/)).toHaveLength(
         fakeStories.length
       );
     });
 
     it('should hide stories in the list view when stories are loading', () => {
-      const { queryByTestId } = render(
+      render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -227,11 +234,11 @@ describe('My Stories <StoriesView />', function () {
         {}
       );
 
-      expect(queryByTestId(/^story-list-item/)).not.toBeInTheDocument();
+      expect(screen.queryByTestId(/^story-list-item/)).not.toBeInTheDocument();
     });
 
     it('should be able to show the list while stories are loading', () => {
-      const { queryAllByTestId } = render(
+      render(
         <SnackbarProvider>
           <StoriesView
             filterValue={STORY_STATUS.ALL}
@@ -262,7 +269,7 @@ describe('My Stories <StoriesView />', function () {
         {}
       );
 
-      expect(queryAllByTestId(/^story-list-item/)).toHaveLength(
+      expect(screen.queryAllByTestId(/^story-list-item/)).toHaveLength(
         fakeStories.length
       );
     });

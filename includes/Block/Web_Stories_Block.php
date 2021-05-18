@@ -30,14 +30,15 @@ use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
-use WP_Post_Type;
 
 /**
  * Latest Stories block class.
  */
 class Web_Stories_Block extends Embed_Base {
 	use Stories_Script_Data;
+	use Post_Type;
 
 	/**
 	 * Script handle.
@@ -175,12 +176,7 @@ class Web_Stories_Block extends Embed_Base {
 	 * @return array Script settings.
 	 */
 	private function get_script_settings() {
-		$rest_base        = Story_Post_Type::POST_TYPE_SLUG;
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		}
+		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 
 		$edit_story_url = admin_url(
 			add_query_arg(

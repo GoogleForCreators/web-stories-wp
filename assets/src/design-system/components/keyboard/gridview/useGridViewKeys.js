@@ -22,7 +22,7 @@ import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../';
+import { useKeyDownEffect } from '..';
 import {
   focusOnPage,
   getArrowDir,

@@ -141,7 +141,7 @@ function useMediaUploadQueue() {
     async function uploadItems() {
       await Promise.all(
         state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource } = item;
+          const { id, file, state: itemState, resource, additionalData } = item;
           if ('PENDING' !== itemState) {
             return;
           }
@@ -165,7 +165,7 @@ function useMediaUploadQueue() {
             const trackTiming = getTimeTracker('load_upload_media');
 
             try {
-              const attachment = await uploadFile(file);
+              const attachment = await uploadFile(file, additionalData);
               finishUploading({
                 id,
                 resource: getResourceFromAttachment(attachment),
@@ -194,6 +194,7 @@ function useMediaUploadQueue() {
 
             const attachment = await uploadFile(newFile, {
               media_source: 'video-optimization',
+              ...additionalData,
             });
 
             // The newly uploaded file won't have a poster yet.

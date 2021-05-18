@@ -20,20 +20,24 @@
 import { useFeature } from 'flagged';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import {
+  __,
+  _n,
+  sprintf,
+  translateToExclusiveList,
+} from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import {
-  Button,
+  Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Text,
   THEME_CONSTANTS,
-  DropDown,
   useSnackbar,
 } from '../../../../../../design-system';
 import { useConfig } from '../../../../../app/config';
@@ -41,6 +45,7 @@ import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
+import { Select } from '../../../../form';
 import { getResourceFromMediaPicker } from '../../../../../app/media/utils';
 import {
   MediaGalleryMessage,
@@ -52,14 +57,19 @@ import {
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
-import { Placement } from '../../../../popup';
+import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
+import { focusStyle } from '../../../../panels/shared';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 
 export const ROOT_MARGIN = 300;
+
+const Button = styled(DefaultButton)`
+  ${focusStyle};
+`;
 
 const FilterArea = styled.div`
   display: flex;
@@ -74,11 +84,6 @@ const SearchCount = styled(Text).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const StyledDropDown = styled(DropDown)`
-  background-color: transparent;
-  width: 132px;
 `;
 
 const FILTER_NONE = LOCAL_MEDIA_TYPE_ALL;
@@ -190,14 +195,17 @@ function MediaPane(props) {
     }
   };
 
-  const onSelectErrorMessage = sprintf(
-    /* translators: %s: list of allowed file types. */
-    __('Please choose only %s to insert into page.', 'web-stories'),
-    allowedFileTypes.join(
-      /* translators: delimiter used in a list */
-      __(', ', 'web-stories')
-    )
+  let onSelectErrorMessage = __(
+    'No file types are currently supported.',
+    'web-stories'
   );
+  if (allowedFileTypes.length) {
+    onSelectErrorMessage = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s to insert into page.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
 
   const openMediaPicker = useMediaPicker({
     onSelect,
@@ -268,12 +276,11 @@ function MediaPane(props) {
             />
           </SearchInputContainer>
           <FilterArea>
-            <StyledDropDown
+            <Select
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
               placement={Placement.BOTTOM_START}
-              fitContentWidth
             />
             {isSearching && media.length > 0 && (
               <SearchCount>
@@ -322,7 +329,7 @@ function MediaPane(props) {
         )}
 
         <MissingUploadPermissionDialog
-          open={isPermissionDialogOpen}
+          isOpen={isPermissionDialogOpen}
           onClose={() => setIsPermissionDialogOpen(false)}
         />
         <VideoOptimizationDialog />

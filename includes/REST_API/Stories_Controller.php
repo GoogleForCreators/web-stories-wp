@@ -27,7 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
-use Google\Web_Stories\Media;
+use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
@@ -293,7 +293,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$parameter_mappings = [
 			'author'         => 'author__in',
 			'author_exclude' => 'author__not_in',
-			'exclude'        => 'post__not_in',
+			'exclude'        => 'post__not_in', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 			'include'        => 'post__in',
 			'menu_order'     => 'menu_order',
 			'offset'         => 'offset',

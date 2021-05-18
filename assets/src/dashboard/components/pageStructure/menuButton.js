@@ -27,10 +27,11 @@ import { __ } from '@web-stories-wp/i18n';
 import { MIN_DASHBOARD_WIDTH } from '../../constants';
 import { Menu as MenuSvg } from '../../icons';
 import { useNavContext } from '../navProvider';
+import { themeHelpers } from '../../../design-system';
 
 const MenuIcon = styled(MenuSvg).attrs({ width: 24, height: 24 })`
   display: block;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  color: ${({ theme }) => theme.colors.interactiveFg.brandNormal};
 `;
 
 const TransparentButton = styled.button`
@@ -41,12 +42,10 @@ const TransparentButton = styled.button`
   height: 24px;
   padding: 0;
   margin-right: 16px;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   background: transparent;
-
-  &:focus {
-    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.action};
-  }
+  border: 0;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${themeHelpers.focusableOutlineCSS}
 
   ${({ showOnlyOnSmallViewport }) =>
     showOnlyOnSmallViewport &&
@@ -64,7 +63,7 @@ export default function NavMenuButton({ showOnlyOnSmallViewport }) {
     <TransparentButton
       onClick={actions.toggleSideBar}
       showOnlyOnSmallViewport={showOnlyOnSmallViewport}
-      aria-label={__('toggle main navigation', 'web-stories')}
+      aria-label={__('Toggle main navigation', 'web-stories')}
     >
       <MenuIcon aria-hidden />
     </TransparentButton>

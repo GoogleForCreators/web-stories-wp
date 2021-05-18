@@ -33,6 +33,7 @@ module.exports = function (api) {
           targets,
           useBuiltIns: 'usage',
           corejs: 3,
+          loose: true,
         },
       ],
       [
@@ -47,12 +48,13 @@ module.exports = function (api) {
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
       'babel-plugin-styled-components',
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
-      ['@babel/plugin-proposal-private-methods', { loose: true }],
       'babel-plugin-inline-json-import',
       '@babel/plugin-syntax-top-level-await',
-      '@babel/plugin-proposal-optional-chaining',
-      '@babel/plugin-proposal-nullish-coalescing-operator',
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: true }],
+      ['@babel/plugin-proposal-optional-chaining', { loose: true }],
+      ['@babel/plugin-proposal-private-methods', { loose: true }],
+      ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
     ],
     sourceMaps: true,
     env: {

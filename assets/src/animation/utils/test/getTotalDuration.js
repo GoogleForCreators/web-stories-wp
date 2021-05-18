@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getTotalDuration } from '../';
+import { getTotalDuration } from '..';
 
 describe('getTotalDuration', () => {
   it('returns 0 if no animations supplied', () => {

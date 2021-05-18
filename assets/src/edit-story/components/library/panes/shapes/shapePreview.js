@@ -30,8 +30,9 @@ import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { useUnits } from '../../../../units';
-import { themeHelpers, ThemeGlobals } from '../../../../../design-system';
+import { ThemeGlobals } from '../../../../../design-system';
 import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
+import { focusStyle } from '../../../panels/shared';
 
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -56,11 +57,7 @@ const Aspect = styled.button`
       theme.colors.interactiveBg.secondaryHover};
   }
 
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
+  ${focusStyle};
 `;
 
 const AspectInner = styled.div`

@@ -26,17 +26,12 @@ export default {
     generalGuidance.storyTitleLength,
     textGuidance.storyTooLittleText,
   ],
-  page: [mediaGuidance.videoElementSizeOnPage, textGuidance.pageTooMuchText],
+  page: [textGuidance.pageTooMuchText],
   video: [
     mediaGuidance.mediaElementResolution,
     mediaGuidance.videoElementLength,
+    mediaGuidance.videoElementOptimized,
   ],
-  gif: [
-    mediaGuidance.mediaElementSizeOnPage,
-    mediaGuidance.mediaElementResolution,
-  ],
-  image: [
-    mediaGuidance.mediaElementSizeOnPage,
-    mediaGuidance.mediaElementResolution,
-  ],
+  gif: [mediaGuidance.mediaElementResolution],
+  image: [mediaGuidance.mediaElementResolution],
 };

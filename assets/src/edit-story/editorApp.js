@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { SnackbarProvider } from '../design-system';
+import { SnackbarProvider, ModalGlobalStyle } from '../design-system';
 import theme, { GlobalStyle } from './theme';
 import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';
@@ -47,7 +47,6 @@ import Layout from './components/layout';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
-import { GlobalStyle as ModalGlobalStyle } from './components/modal';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import { MetaBoxesProvider } from './integrations/wordpress/metaBoxes';

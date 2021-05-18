@@ -110,8 +110,9 @@ describe('Web Stories Block', () => {
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
   });
-
-  describe('AMP validation', () => {
+  // Disable for https://github.com/google/web-stories-wp/issues/6237
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('AMP validation', () => {
     withDisabledToolbarOnFrontend();
 
     it('should produce valid AMP when using the AMP plugin', async () => {
@@ -132,10 +133,12 @@ describe('Web Stories Block', () => {
         ? `${postPermalink}&amp`
         : `${postPermalink}?amp`;
 
-      await Promise.all([
-        page.goto(ampPostPermaLink),
-        page.waitForNavigation(),
-      ]);
+      await page.goto(ampPostPermaLink, {
+        waitUntil: 'networkidle0',
+      });
+
+      await page.waitForSelector('amp-story-player');
+      await expect(page).toMatchElement('amp-story-player');
 
       await expect(page).toBeValidAMP();
 

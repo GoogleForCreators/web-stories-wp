@@ -17,40 +17,40 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
-import { rgba } from 'polished';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
-import useFocusOut from '../../utils/useFocusOut';
-import { KEYBOARD_USER_SELECTOR } from '../../constants';
-import { AnimatedContextMenu, MenuItemProps } from '../../../design-system';
+import {
+  AnimatedContextMenu,
+  MenuItemProps,
+  themeHelpers,
+} from '../../../design-system';
 
 export const MoreVerticalButton = styled.button`
   display: flex;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   background: transparent;
   padding: 0 8px;
   opacity: ${({ menuOpen, isVisible }) => (menuOpen || isVisible ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  color: ${({ theme }) => theme.colors.interactiveFg.brandNormal};
 
   & > svg {
     width: 4px;
     max-height: 100%;
   }
 
-  ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) =>
-      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
-    border-width: 2px;
-  }
+  border: 0;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
+  ${themeHelpers.focusableOutlineCSS};
 `;
 
 MoreVerticalButton.propTypes = {
@@ -80,29 +80,28 @@ export default function StoryMenu({
   itemActive,
   tabIndex,
 }) {
-  const containerRef = useRef(null);
-
-  const handleFocusOut = useCallback(() => {
-    if (contextMenuId === story.id) {
-      onMoreButtonSelected(-1);
-    }
-  }, [contextMenuId, onMoreButtonSelected, story.id]);
-  useFocusOut(containerRef, handleFocusOut, [contextMenuId]);
-
   const isPopoverMenuOpen = contextMenuId === story.id;
 
+  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
+    onMoreButtonSelected,
+  ]);
+
   return (
-    <MenuContainer ref={containerRef} verticalAlign={verticalAlign}>
+    <MenuContainer verticalAlign={verticalAlign}>
       <MoreVerticalButton
         tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
-        aria-label="More Options"
+        aria-label={__('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
-      <AnimatedContextMenu isOpen={isPopoverMenuOpen} items={menuItems} />
+      <AnimatedContextMenu
+        isOpen={isPopoverMenuOpen}
+        items={menuItems}
+        onDismiss={handleDismiss}
+      />
     </MenuContainer>
   );
 }

@@ -8,7 +8,6 @@
     "plugin:eslint-comments/recommended",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "prettier/react",
     "plugin:jsx-a11y/recommended",
     "plugin:jsdoc/recommended"
   ],
@@ -65,6 +64,7 @@
       " * limitations under the License.",
       " "
     ] ],
+    "import/no-cycle": "error",
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",
@@ -78,6 +78,9 @@
     "import/dynamic-import-chunkname": [ "error", {
       "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
     } ],
+    "import/no-useless-path-segments": ["error", {
+      "noUselessIndex": true
+    }],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -218,6 +221,7 @@
     "__webpack_public_path__": true,
     "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
     "WEB_STORIES_DISABLE_PREVENT": "readonly",
+    "WEB_STORIES_DISABLE_QUICK_TIPS": "readonly",
     "WEB_STORIES_ENV": "readonly"
   },
   "settings": {
@@ -241,6 +245,13 @@
       "PrimaryLink",
       "SecondaryLink",
       "ExternalLink"
+    ],
+    "testing-library/custom-renders": [
+      "arrange",
+      "renderWithTheme",
+      "renderWithProviders",
+      "renderPanel",
+      "setup"
     ]
   },
   "overrides": [
@@ -258,7 +269,7 @@
       ],
       "extends": [
         "plugin:jest/all",
-        "plugin:testing-library/recommended",
+        "plugin:testing-library/react",
         "plugin:jest-dom/recommended"
       ],
       "plugins": [
@@ -364,6 +375,18 @@
       "files": ["packages/e2e-tests/src/specs/**/*.js"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": [
+        "packages/commander/**/*.js",
+        "packages/fonts/src/cli.js",
+        "packages/migration/src/cli.js"
+      ],
+      "rules": {
+        "import/no-useless-path-segments": ["error", {
+          "noUselessIndex": false
+        }]
       }
     },
     {

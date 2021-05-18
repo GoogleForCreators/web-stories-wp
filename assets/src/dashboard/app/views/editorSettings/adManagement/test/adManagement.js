@@ -13,12 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
-import AdManagement, { TEXT } from '../index';
+import AdManagement, { TEXT } from '..';
 
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;
@@ -34,7 +40,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
   });
 
   it('should render ad management settings area with ad network dropdown button and helper text by default', function () {
-    const { getByText, getByRole } = renderWithProviders(
+    renderWithProviders(
       <AdManagement
         adNetwork={adNetwork}
         updateSettings={mockUpdate}
@@ -44,20 +50,20 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       />
     );
 
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = getByText('Learn more', {
+    const helperLink = screen.getByText('Learn more', {
       selector: 'a',
     });
     expect(helperLink).toBeInTheDocument();
 
-    const networkDropdown = getByRole('button');
+    const networkDropdown = screen.getByRole('button');
     expect(networkDropdown).toHaveTextContent('None');
   });
 
   it('should render ad network settings and link adsense', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADSENSE}
         updateSettings={mockUpdate}
@@ -67,17 +73,17 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       />
     );
 
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = getByText('how to monetize your Web Stories', {
+    const helperLink = screen.getByText('how to monetize your Web Stories', {
       selector: 'a',
     });
     expect(helperLink).toBeInTheDocument();
   });
 
   it('should render ad network settings and link Ad Manager', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <AdManagement
         adNetwork={AD_NETWORK_TYPE.ADMANAGER}
         updateSettings={mockUpdate}
@@ -87,12 +93,15 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       />
     );
 
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = getByText('enable programmatic demand in Web Stories', {
-      selector: 'a',
-    });
+    const helperLink = screen.getByText(
+      'enable programmatic demand in Web Stories',
+      {
+        selector: 'a',
+      }
+    );
     expect(helperLink).toBeInTheDocument();
   });
 });

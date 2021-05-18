@@ -205,7 +205,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID1',
-        pageLayoutType: 'cover',
+        pageTemplateType: 'cover',
       },
       {
         elements: [
@@ -381,7 +381,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '4e5d3a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'section',
+        pageTemplateType: 'section',
       },
       {
         elements: [
@@ -557,7 +557,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID3',
-        pageLayoutType: 'quote',
+        pageTemplateType: 'quote',
       },
       {
         elements: [
@@ -733,7 +733,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID4',
-        pageLayoutType: 'editorial',
+        pageTemplateType: 'editorial',
       },
       {
         elements: [
@@ -909,7 +909,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID5',
-        pageLayoutType: 'list',
+        pageTemplateType: 'list',
       },
       {
         elements: [
@@ -1085,7 +1085,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID6',
-        pageLayoutType: 'table',
+        pageTemplateType: 'table',
       },
       {
         elements: [
@@ -1261,7 +1261,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: 'ID7',
-        pageLayoutType: 'steps',
+        pageTemplateType: 'steps',
       },
     ],
     status: 'template',
@@ -1459,7 +1459,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'cover',
+        pageTemplateType: 'cover',
       },
     ],
     status: 'template',
@@ -1657,7 +1657,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'section',
+        pageTemplateType: 'section',
       },
     ],
     status: 'template',
@@ -1855,7 +1855,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'editorial',
+        pageTemplateType: 'editorial',
       },
     ],
     status: 'template',
@@ -2053,7 +2053,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'steps',
+        pageTemplateType: 'steps',
       },
     ],
     status: 'template',
@@ -2251,7 +2251,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'cover',
+        pageTemplateType: 'cover',
       },
     ],
     status: 'template',
@@ -2449,7 +2449,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'section',
+        pageTemplateType: 'section',
       },
     ],
     status: 'template',
@@ -2647,7 +2647,7 @@ const formattedTemplatesArray = [
         backgroundOverlay: 'none',
         type: 'page',
         id: '65359a38-f1fa-4048-9b99-9415147b74d3',
-        pageLayoutType: 'editorial',
+        pageTemplateType: 'editorial',
       },
     ],
     status: 'template',

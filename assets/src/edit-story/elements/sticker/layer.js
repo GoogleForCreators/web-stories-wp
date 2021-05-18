@@ -17,14 +17,22 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import stickers from '@web-stories-wp/stickers';
 
 /**
  * Internal dependencies
  */
+import StoryPropTypes from '../../types';
 import { LayerText } from '../shared/layerText';
 
-function StickerLayerContent() {
-  return <LayerText>{__('Sticker', 'web-stories')}</LayerText>;
+function StickerLayerContent({ element }) {
+  const { sticker } = element;
+  const layerTitle =
+    stickers[sticker?.type]?.title || __('Sticker', 'web-stories');
+  return <LayerText>{layerTitle}</LayerText>;
 }
+StickerLayerContent.propTypes = {
+  element: StoryPropTypes.element.isRequired,
+};
 
 export default StickerLayerContent;

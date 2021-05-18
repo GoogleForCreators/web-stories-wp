@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app/api';
+import { useAPI } from '../api';
 import { useConfig } from '../config';
 import createError from '../../utils/createError';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../constants';
@@ -99,15 +99,19 @@ function useUploader() {
 
       // TODO: Move this check to useUploadMedia?
       if (!isValidType(file) && !canTranscodeFile) {
-        /* translators: %s is a list of allowed file extensions. */
-        const message = sprintf(
-          /* translators: %s: list of allowed file types. */
-          __('Please choose only %s to upload.', 'web-stories'),
-          allowedFileTypes.join(
-            /* translators: delimiter used in a list */
-            __(', ', 'web-stories')
-          )
+        let message = __(
+          'No file types are currently supported.',
+          'web-stories'
         );
+
+        if (allowedFileTypes.length) {
+          /* translators: %s is a list of allowed file extensions. */
+          message = sprintf(
+            /* translators: %s: list of allowed file types. */
+            __('Please choose only %s to upload.', 'web-stories'),
+            translateToExclusiveList(allowedFileTypes)
+          );
+        }
 
         throw createError('ValidError', file.name, message);
       }

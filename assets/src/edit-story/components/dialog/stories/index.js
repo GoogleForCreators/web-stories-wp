@@ -34,7 +34,7 @@ export default {
 export const _default = () => {
   return (
     <Dialog
-      open={boolean('open', true)}
+      isOpen={boolean('isOpen', true)}
       onClose={action('closed')}
       title={text('title', 'my dialog title')}
       onPrimary={action('confirmed')}
@@ -53,7 +53,7 @@ export const _default = () => {
 export const WithCustomAction = () => {
   return (
     <Dialog
-      open={boolean('open', true)}
+      isOpen={boolean('isOpen', true)}
       onClose={action('closed')}
       title={text('title', 'my dialog title')}
       onPrimary={action('primary clicked')}

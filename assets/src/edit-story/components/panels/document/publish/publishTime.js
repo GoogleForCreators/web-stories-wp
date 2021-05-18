@@ -27,9 +27,13 @@ import { __ } from '@web-stories-wp/i18n';
 import { DateTime, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useStory } from '../../../../app/story';
-import { PLACEMENT, useKeyDownEffect } from '../../../../../design-system';
-import useFocusOut from '../../../../utils/useFocusOut';
+import {
+  PLACEMENT,
+  useKeyDownEffect,
+  useFocusOut,
+} from '../../../../../design-system';
 import DropDownSelect from '../../../../../design-system/components/dropDown/select';
+import { focusStyle } from '../../shared';
 
 function PublishTime() {
   const { date, updateStory } = useStory(
@@ -45,7 +49,7 @@ function PublishTime() {
   );
   const use12HourFormat = is12Hour();
 
-  /* translators: Date format, see https://www.php.net/date */
+  /* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
   const shortDateFormat = __('d/m/Y', 'web-stories');
 
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -93,6 +97,7 @@ function PublishTime() {
           activeItemLabel={
             format(date, shortDateFormat) + ' ' + formatTime(date)
           }
+          selectButtonStylesOverride={focusStyle}
         />
       </Row>
       <Popup

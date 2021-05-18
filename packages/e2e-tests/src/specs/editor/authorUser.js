@@ -31,7 +31,12 @@ import {
 
 async function publishStory() {
   await expect(page).toClick('button', { text: 'Publish' });
-  await expect(page).toMatch('Story published!');
+  // Bypass checklist
+  await page.waitForSelector('.ReactModal__Content');
+  await expect(page).toClick('button', {
+    text: /Continue to publish/,
+  });
+  await expect(page).toMatch('Story published.');
   await expect(page).toClick('button', { text: 'Dismiss' });
   await expect(page).toMatchElement('button', {
     text: 'Switch to Draft',

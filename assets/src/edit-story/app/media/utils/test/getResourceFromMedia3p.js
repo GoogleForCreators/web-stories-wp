@@ -80,9 +80,10 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       title: 'NYC Postcard',
-      alt: null,
+      alt: 'media/coverr:g9re0sRUYA',
       local: false,
       isPlaceholder: false,
+      isOptimized: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -165,9 +166,10 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       title: 'NYC Postcard',
-      alt: null,
+      alt: 'media/coverr:g9re0sRUYA',
       local: false,
       isPlaceholder: false,
+      isOptimized: false,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -366,9 +368,10 @@ describe('getResourceFromMedia3p', () => {
       width: 498,
       height: 498,
       title: undefined,
-      alt: null,
+      alt: 'media/tenor:3468838096637910112',
       local: false,
       isPlaceholder: false,
+      isOptimized: false,
       poster: undefined,
       posterId: undefined,
       sizes: {

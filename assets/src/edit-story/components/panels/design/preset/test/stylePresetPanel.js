@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import { PRESET_TYPES } from '../constants';
 
 jest.mock('../utils');
 
-function setupPanel(extraStylePresets, extraStateProps) {
+function arrange(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
   const updateElementsById = jest.fn();
   const pushUpdate = jest.fn();
@@ -99,7 +99,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
 describe('Panels/Preset', () => {
   const EDIT_BUTTON_LABEL = 'Edit styles';
   const APPLY_PRESET = 'Apply style';
-  const PANEL_LABEL = 'Saved styles';
+  const PANEL_LABEL = 'Saved Styles';
   const TEST_COLOR = {
     color: {
       r: 1,
@@ -139,8 +139,8 @@ describe('Panels/Preset', () => {
   });
 
   it('should render <StylePresetPanel /> panel', () => {
-    const { getByText } = setupPanel();
-    const element = getByText(PANEL_LABEL);
+    arrange();
+    const element = screen.getByText(PANEL_LABEL);
     expect(element).toBeInTheDocument();
   });
 
@@ -157,17 +157,17 @@ describe('Panels/Preset', () => {
         },
       ],
     };
-    const { queryByText } = setupPanel(null, extraStateProps);
-    expect(queryByText(PANEL_LABEL)).not.toBeInTheDocument();
+    arrange(null, extraStateProps);
+    expect(screen.queryByText(PANEL_LABEL)).not.toBeInTheDocument();
   });
 
   describe('Panels/Preset/Header', () => {
     it('should display only Add button if no presets exist', () => {
-      const { queryByLabelText } = setupPanel();
-      const addButton = queryByLabelText('Add style');
+      arrange();
+      const addButton = screen.queryByLabelText('Add style');
       expect(addButton).toBeInTheDocument();
 
-      const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
+      const editButton = screen.queryByLabelText(EDIT_BUTTON_LABEL);
       expect(editButton).not.toBeInTheDocument();
     });
 
@@ -185,10 +185,7 @@ describe('Panels/Preset', () => {
           },
         ],
       };
-      const { updateStory, queryByLabelText } = setupPanel(
-        null,
-        extraStateProps
-      );
+      const { updateStory } = arrange(null, extraStateProps);
 
       getTextPresets.mockImplementation(() => {
         return {
@@ -197,7 +194,7 @@ describe('Panels/Preset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add style');
+      const addButton = screen.queryByLabelText('Add style');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
@@ -217,9 +214,9 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         textStyles: [TEST_STYLE],
       };
-      const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
+      const { pushUpdate } = arrange(extraStylePresets);
 
-      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      const applyPreset = screen.getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);

@@ -15,12 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { TEMPLATES_GALLERY_STATUS, VIEW_STYLE } from '../../../../../constants';
 import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
-import Content from '../';
+import Content from '..';
 
 const fakeTemplates = [
   {
@@ -72,7 +77,7 @@ describe('Explore Templates <Content />', function () {
   });
 
   it('should render the content grid with the correct template count.', function () {
-    const { getAllByTestId } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Content
           filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -90,13 +95,13 @@ describe('Explore Templates <Content />', function () {
       </LayoutProvider>
     );
 
-    const useButtons = getAllByTestId(/^template-grid-item/);
+    const useButtons = screen.getAllByTestId(/^template-grid-item/);
 
     expect(useButtons).toHaveLength(fakeTemplates.length);
   });
 
   it('should show "No templates currently available." if no templates are present.', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Content
           filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -113,11 +118,13 @@ describe('Explore Templates <Content />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('No templates currently available.')).toBeInTheDocument();
+    expect(
+      screen.getByText('No templates currently available.')
+    ).toBeInTheDocument();
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no templates are found for a search query are present.', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Content
           filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -136,7 +143,7 @@ describe('Explore Templates <Content />', function () {
     );
 
     expect(
-      getByText(
+      screen.getByText(
         'Sorry, we couldn\'t find any results matching "scooby dooby doo"'
       )
     ).toBeInTheDocument();

@@ -22,16 +22,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
+import {
+  _n,
+  sprintf,
+  __,
+  _x,
+  translateToInclusiveList,
+} from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import {
   THEME_CONSTANTS,
   Text,
   Toggle,
   Headline,
+  useLiveRegion,
 } from '../../../../../../design-system';
 import { FullWidthWrapper } from '../../common/styles';
 import { ChipGroup } from '../../shared';
@@ -92,9 +99,20 @@ function TextSetsPane({ paneRef }) {
 
   const addIdToTextSets = useCallback(
     (textSetsArray = []) =>
-      textSetsArray.map((elements) => {
+      textSetsArray.map(({ textSetFonts = [], textSetCategory, elements }) => {
         return {
           id: `text_set_${uuidv4()}`,
+          title: sprintf(
+            /* translators: 1: text set category. 2: list of fonts. */
+            _n(
+              'Text set %1$s with %2$s font',
+              'Text set %1$s with %2$s fonts',
+              textSetFonts.length,
+              'web-stories'
+            ),
+            CATEGORIES[textSetCategory],
+            translateToInclusiveList(textSetFonts)
+          ),
           elements,
         };
       }),
@@ -116,7 +134,7 @@ function TextSetsPane({ paneRef }) {
 
   const categories = useMemo(
     () => [
-      { id: null, label: __('All', 'web-stories') },
+      { id: null, label: _x('All', 'text sets', 'web-stories') },
       ...Object.keys(textSets).map((category) => ({
         id: category,
         label: CATEGORIES[category] ?? category,
@@ -125,12 +143,26 @@ function TextSetsPane({ paneRef }) {
     [textSets]
   );
 
-  const handleSelectedCategory = useCallback((selectedCategory) => {
-    setSelectedCat(selectedCategory);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
-      selectedCategory,
-    });
-  }, []);
+  const speak = useLiveRegion();
+
+  const handleSelectedCategory = useCallback(
+    (selectedCategory) => {
+      setSelectedCat(selectedCategory);
+      speak(
+        selectedCategory === null
+          ? __('Show all text sets', 'web-stories')
+          : sprintf(
+              /* translators: %s: filter category name */
+              __('Selected text set filter %s', 'web-stories'),
+              CATEGORIES[selectedCategory]
+            )
+      );
+      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+        selectedCategory,
+      });
+    },
+    [speak]
+  );
 
   const onChangeShowInUse = useCallback(
     () => requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal)),
@@ -180,6 +212,7 @@ function TextSetsPane({ paneRef }) {
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
           deselectItem={() => handleSelectedCategory(null)}
+          ariaLabel={__('Select filter for text sets list', 'web-stories')}
         />
       </FullWidthWrapper>
       <TextSetsWrapper>

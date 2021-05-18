@@ -29,34 +29,34 @@ export class Alignment extends AbstractPanel {
   }
 
   get distributeHorizontally() {
-    return this.getByRole('button', { name: /horizontal distribution/i });
+    return this.getByRole('button', { name: /Distribute horizontally/i });
   }
 
   get distributeVertically() {
-    return this.getByRole('button', { name: /vertical distribution/i });
+    return this.getByRole('button', { name: /Distribute vertically/i });
   }
 
   get left() {
-    return this.getByRole('button', { name: /justify left/i });
+    return this.getByRole('button', { name: /Align left/i });
   }
 
   get center() {
-    return this.getByRole('button', { name: /justify center/i });
+    return this.getByRole('button', { name: /Align center/i });
   }
 
   get right() {
-    return this.getByRole('button', { name: /justify right/i });
+    return this.getByRole('button', { name: /Align right/i });
   }
 
   get top() {
-    return this.getByRole('button', { name: /justify top/i });
+    return this.getByRole('button', { name: /Align top/i });
   }
 
   get middle() {
-    return this.getByRole('button', { name: /justify middle/i });
+    return this.getByRole('button', { name: /Align vertical center/i });
   }
 
   get bottom() {
-    return this.getByRole('button', { name: /justify bottom/i });
+    return this.getByRole('button', { name: /Align bottom/i });
   }
 }

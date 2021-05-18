@@ -38,6 +38,7 @@ import {
   VideoOptionsPanel,
   StylePresetPanel,
   ColorPresetPanel,
+  VideoProcessingPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
 
@@ -93,11 +94,6 @@ function getDesignPanelsForSelection(elements) {
         type: PanelTypes.PAGE_BACKGROUND,
         Panel: PageBackgroundPanel,
       });
-      // Always display Presets as the first panel for background.
-      panels.unshift({
-        type: PanelTypes.STYLE_PRESETS,
-        Panel: ColorPresetPanel,
-      });
     }
 
     panels.push({
@@ -146,6 +142,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
+        case PanelTypes.VIDEO_PROCESSING:
+          return { type, Panel: VideoProcessingPanel };
         case PanelTypes.CAPTIONS:
           return { type, Panel: CaptionsPanel };
         case PanelTypes.VIDEO_ACCESSIBILITY:

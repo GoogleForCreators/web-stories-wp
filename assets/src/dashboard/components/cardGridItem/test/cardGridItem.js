@@ -15,14 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import CardGridItem from '../';
+import { renderWithProviders } from '../../../testUtils';
+import CardGridItem from '..';
 
 describe('CardGridItem', () => {
   it('should render CardGridItem', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <CardGridItem>
         <div>
           <p>{'Grid Item Paragraph'}</p>
@@ -31,6 +36,6 @@ describe('CardGridItem', () => {
       </CardGridItem>
     );
 
-    expect(getByText('Grid Item Paragraph')).toBeInTheDocument();
+    expect(screen.getByText('Grid Item Paragraph')).toBeInTheDocument();
   });
 });

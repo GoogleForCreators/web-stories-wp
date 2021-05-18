@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -49,7 +49,13 @@ import {
   PanLeftAnimation,
   PanAndZoomAnimation,
 } from './effectChooserElements';
-import { getDirectionalEffect } from './utils';
+
+export const getDirectionalEffect = (effect, direction) => {
+  if (effectValueExceptions.includes(effect)) {
+    return effect;
+  }
+  return direction ? `${effect} ${direction}`.trim() : effect;
+};
 
 export const NO_ANIMATION = 'none';
 
@@ -95,7 +101,7 @@ export const effectValueExceptions = [
 export const backgroundEffectOptions = {
   NO_ANIMATION: {
     value: NO_ANIMATION,
-    label: __('None', 'web-stories'),
+    label: _x('None', 'animation effect', 'web-stories'),
   },
   [getDirectionalEffect(
     BACKGROUND_ANIMATION_EFFECTS.PAN.value,
@@ -105,9 +111,13 @@ export const backgroundEffectOptions = {
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       DIRECTION.LEFT_TO_RIGHT
     ),
-    label: __('Pan Left', 'web-stories'),
+    label: _x('Pan Left', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Pan Left Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Pan Left', 'animation effect', 'web-stories')
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       panDirection: DIRECTION.LEFT_TO_RIGHT,
       gridSpace: GRID_SIZING.QUARTER,
@@ -123,9 +133,13 @@ export const backgroundEffectOptions = {
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       DIRECTION.RIGHT_TO_LEFT
     ),
-    label: __('Pan Right', 'web-stories'),
+    label: _x('Pan Right', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Pan Right Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Pan Right', 'animation effect', 'web-stories')
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       panDirection: DIRECTION.RIGHT_TO_LEFT,
       gridSpace: GRID_SIZING.QUARTER,
@@ -141,9 +155,13 @@ export const backgroundEffectOptions = {
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       DIRECTION.BOTTOM_TO_TOP
     ),
-    label: __('Pan Up', 'web-stories'),
+    label: _x('Pan Up', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Pan Up Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Pan Up', 'animation effect', 'web-stories')
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       panDirection: DIRECTION.BOTTOM_TO_TOP,
       gridSpace: GRID_SIZING.QUARTER,
@@ -159,9 +177,13 @@ export const backgroundEffectOptions = {
       BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       DIRECTION.TOP_TO_BOTTOM
     ),
-    label: __('Pan Down', 'web-stories'),
+    label: _x('Pan Down', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Pan Down Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Pan Down', 'animation effect', 'web-stories')
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
       panDirection: DIRECTION.TOP_TO_BOTTOM,
       gridSpace: GRID_SIZING.QUARTER,
@@ -177,9 +199,13 @@ export const backgroundEffectOptions = {
       BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
       SCALE_DIRECTION.SCALE_IN
     ),
-    label: __('Zoom In', 'web-stories'),
+    label: _x('Zoom In', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Zoom In Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Zoom In', 'animation effect', 'web-stories')
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
       zoomDirection: SCALE_DIRECTION.SCALE_IN,
       gridSpace: GRID_SIZING.HALF,
@@ -195,9 +221,13 @@ export const backgroundEffectOptions = {
       BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
       SCALE_DIRECTION.SCALE_OUT
     ),
-    label: __('Zoom Out', 'web-stories'),
+    label: _x('Zoom Out', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Zoom Out Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Zoom Out', 'animation effect', 'web-stories')
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
       zoomDirection: SCALE_DIRECTION.SCALE_OUT,
       gridSpace: GRID_SIZING.HALF,
@@ -207,9 +237,13 @@ export const backgroundEffectOptions = {
   },
   [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]: {
     value: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
-    label: __('Pan and Zoom', 'web-stories'),
+    label: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.name,
     animation: {
-      ariaLabel: __('Pan and Zoom Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.name
+      ),
       value: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value,
       zoomDirection: DYNAMIC_PROPERTY_VALUE,
       Effect: PanAndZoomAnimation,
@@ -221,22 +255,30 @@ export const backgroundEffectOptions = {
 export const foregroundEffectOptions = {
   NO_ANIMATION: {
     value: NO_ANIMATION,
-    label: __('None', 'web-stories'),
+    label: _x('None', 'animation effect', 'web-stories'),
   },
   [ANIMATION_EFFECTS.DROP.value]: {
     value: ANIMATION_EFFECTS.DROP.value,
-    label: __('Drop', 'web-stories'),
+    label: ANIMATION_EFFECTS.DROP.name,
     animation: {
-      ariaLabel: __('Drop Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        ANIMATION_EFFECTS.DROP.name
+      ),
       value: ANIMATION_EFFECTS.DROP.value,
       Effect: DropAnimation,
     },
   },
   [ANIMATION_EFFECTS.FADE_IN.value]: {
     value: ANIMATION_EFFECTS.FADE_IN.value,
-    label: __('Fade In', 'web-stories'),
+    label: ANIMATION_EFFECTS.FADE_IN.name,
     animation: {
-      ariaLabel: __('Fade In Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        ANIMATION_EFFECTS.FADE_IN.name
+      ),
       value: ANIMATION_EFFECTS.FADE_IN.value,
       Effect: FadeInAnimation,
     },
@@ -249,9 +291,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.LEFT_TO_RIGHT
     ),
-    label: __('Fly In', 'web-stories'),
+    label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
-      ariaLabel: __('Fly In from Left Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Fly In from Left', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
       flyInDirection: DIRECTION.LEFT_TO_RIGHT,
       gridSpace: GRID_SIZING.QUARTER,
@@ -267,9 +313,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.TOP_TO_BOTTOM
     ),
-    label: __('Fly In', 'web-stories'),
+    label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
-      ariaLabel: __('Fly In from Top Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Fly In from Top', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
       flyInDirection: DIRECTION.TOP_TO_BOTTOM,
       gridSpace: GRID_SIZING.QUARTER,
@@ -285,9 +335,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.BOTTOM_TO_TOP
     ),
-    label: __('Fly In', 'web-stories'),
+    label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
-      ariaLabel: __('Fly In from Bottom Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Fly In from Bottom', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
       flyInDirection: DIRECTION.BOTTOM_TO_TOP,
       gridSpace: GRID_SIZING.QUARTER,
@@ -303,9 +357,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.FLY_IN.value,
       DIRECTION.RIGHT_TO_LEFT
     ),
-    label: __('Fly In', 'web-stories'),
+    label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
-      ariaLabel: __('Fly In from Right Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Fly In from Right', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.FLY_IN.value,
       flyInDirection: DIRECTION.RIGHT_TO_LEFT,
       gridSpace: GRID_SIZING.QUARTER,
@@ -315,9 +373,13 @@ export const foregroundEffectOptions = {
   },
   [ANIMATION_EFFECTS.PULSE.value]: {
     value: ANIMATION_EFFECTS.PULSE.value,
-    label: __('Pulse', 'web-stories'),
+    label: ANIMATION_EFFECTS.PULSE.name,
     animation: {
-      ariaLabel: __('Pulse Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        ANIMATION_EFFECTS.PULSE.name
+      ),
       value: ANIMATION_EFFECTS.PULSE.value,
       Effect: PulseAnimation,
     },
@@ -330,9 +392,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.ROTATE_IN.value,
       DIRECTION.LEFT_TO_RIGHT
     ),
-    label: __('Rotate', 'web-stories'),
+    label: _x('Rotate', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Rotate In From Left Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Rotate In from Left', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.ROTATE_IN.value,
       rotateInDirection: DIRECTION.LEFT_TO_RIGHT,
       gridSpace: GRID_SIZING.HALF,
@@ -348,9 +414,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.ROTATE_IN.value,
       DIRECTION.RIGHT_TO_LEFT
     ),
-    label: __('Rotate', 'web-stories'),
+    label: _x('Rotate', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Rotate In From Right Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Rotate In from Right', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.ROTATE_IN.value,
       rotateInDirection: DIRECTION.RIGHT_TO_LEFT,
       gridSpace: GRID_SIZING.HALF,
@@ -360,9 +430,13 @@ export const foregroundEffectOptions = {
   },
   [ANIMATION_EFFECTS.TWIRL_IN.value]: {
     value: ANIMATION_EFFECTS.TWIRL_IN.value,
-    label: __('Twirl In', 'web-stories'),
+    label: ANIMATION_EFFECTS.TWIRL_IN.name,
     animation: {
-      ariaLabel: __('Twirl In Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        ANIMATION_EFFECTS.TWIRL_IN.name
+      ),
       value: ANIMATION_EFFECTS.TWIRL_IN.value,
       Effect: TwirlInAnimation,
       size: 26,
@@ -376,9 +450,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.WHOOSH_IN.value,
       DIRECTION.LEFT_TO_RIGHT
     ),
-    label: __('Whoosh In', 'web-stories'),
+    label: ANIMATION_EFFECTS.WHOOSH_IN.name,
     animation: {
-      ariaLabel: __('Whoosh In From Left Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Whoosh In from Left', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.WHOOSH_IN.value,
       whooshInDirection: DIRECTION.LEFT_TO_RIGHT,
       gridSpace: GRID_SIZING.HALF,
@@ -394,9 +472,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.WHOOSH_IN.value,
       DIRECTION.RIGHT_TO_LEFT
     ),
-    label: __('Whoosh In', 'web-stories'),
+    label: ANIMATION_EFFECTS.WHOOSH_IN.name,
     animation: {
-      ariaLabel: __('Whoosh In From Right Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Whoosh In from Right', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.WHOOSH_IN.value,
       whooshInDirection: DIRECTION.RIGHT_TO_LEFT,
       gridSpace: GRID_SIZING.HALF,
@@ -412,9 +494,13 @@ export const foregroundEffectOptions = {
       ANIMATION_EFFECTS.ZOOM.value,
       SCALE_DIRECTION.SCALE_IN
     ),
-    label: __('Scale In', 'web-stories'),
+    label: _x('Scale In', 'animation effect', 'web-stories'),
     animation: {
-      ariaLabel: __('Scale In Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Scale In', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.ZOOM.value,
       scaleDirection: SCALE_DIRECTION.SCALE_IN,
       gridSpace: GRID_SIZING.HALF,
@@ -432,7 +518,11 @@ export const foregroundEffectOptions = {
     ),
     label: __('Scale Out', 'web-stories'),
     animation: {
-      ariaLabel: __('Scale Out Effect', 'web-stories'),
+      ariaLabel: sprintf(
+        /* translators: %s: animation effect. */
+        __('"%s" Effect', 'web-stories'),
+        _x('Scale Out', 'animation effect', 'web-stories')
+      ),
       value: ANIMATION_EFFECTS.ZOOM.value,
       scaleDirection: SCALE_DIRECTION.SCALE_OUT,
       gridSpace: GRID_SIZING.HALF,

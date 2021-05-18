@@ -30,7 +30,7 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
-import { getCommonValue } from '../../shared';
+import { focusStyle, getCommonValue } from '../../shared';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import {
   Button,
@@ -41,6 +41,7 @@ import {
   Input,
   Text,
   THEME_CONSTANTS,
+  themeHelpers,
 } from '../../../../../design-system';
 import Tooltip from '../../../tooltip';
 
@@ -52,6 +53,7 @@ const InputRow = styled.div`
 
 const StyledFileInput = styled(Input)(
   ({ hasMixedValue, theme }) => css`
+    ${focusStyle};
     ${!hasMixedValue &&
     css`
       * > input:disabled {
@@ -61,7 +63,15 @@ const StyledFileInput = styled(Input)(
   `
 );
 
-const UploadButton = styled(Button)`
+const StyledButton = styled(Button)`
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+`;
+
+const UploadButton = styled(StyledButton)`
   padding: 12px 8px;
 `;
 
@@ -147,7 +157,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       name="caption"
-      title={__('Caption and subtitles', 'web-stories')}
+      title={__('Caption and Subtitles', 'web-stories')}
       isPersistable={!highlight}
     >
       {isMixedValue && (
@@ -175,7 +185,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
               />
             </InputRow>
             <Tooltip hasTail title={clearFileText}>
-              <Button
+              <StyledButton
                 aria-label={clearFileText}
                 type={BUTTON_TYPES.TERTIARY}
                 size={BUTTON_SIZES.SMALL}
@@ -183,7 +193,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
                 onClick={() => handleRemoveTrack(id)}
               >
                 <Icons.Trash />
-              </Button>
+              </StyledButton>
             </Tooltip>
           </Row>
         ))}

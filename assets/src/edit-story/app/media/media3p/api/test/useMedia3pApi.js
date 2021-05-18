@@ -22,7 +22,7 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useMedia3pApi } from '../index';
+import { useMedia3pApi } from '..';
 import Media3pApiProvider from '../media3pApiProvider';
 
 jest.mock('../apiFetcher');
@@ -33,6 +33,8 @@ const REGISTER_USAGE_URL =
   API_DOMAIN +
   Paths.REGISTER_USAGE +
   '?payload=02647749feef0d5536c92df1d9cfa38e';
+
+/* eslint-disable testing-library/no-node-access */
 
 describe('useMedia3pApi', () => {
   apiFetcherMock.listMedia.mockImplementation(() =>
@@ -136,7 +138,7 @@ describe('useMedia3pApi', () => {
     expect(listMediaResult).toStrictEqual({
       media: [
         {
-          alt: null,
+          alt: 'media/unsplash:1234',
           attribution: {
             author: {
               displayName: 'Maria',
@@ -151,6 +153,7 @@ describe('useMedia3pApi', () => {
           lengthFormatted: undefined,
           local: false,
           isPlaceholder: false,
+          isOptimized: false,
           mimeType: 'image/jpeg',
           output: undefined,
           poster: undefined,
@@ -362,3 +365,5 @@ describe('useMedia3pApi', () => {
     }).not.toThrow();
   });
 });
+
+/* eslint-enable testing-library/no-node-access */

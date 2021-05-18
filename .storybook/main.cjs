@@ -37,7 +37,9 @@ module.exports = {
     builder: 'webpack5',
   },
   reactOptions: {
-    fastRefresh: true,
+    // Disabled due to compatibility issues with webpack 5.
+    // See https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/308
+    fastRefresh: false,
     strictMode: true,
   },
   //eslint-disable-next-line require-await

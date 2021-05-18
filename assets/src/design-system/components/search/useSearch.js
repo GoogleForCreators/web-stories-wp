@@ -16,18 +16,22 @@
 /**
  * External dependencies
  */
+import { sprintf, _n, __ } from '@web-stories-wp/i18n';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
 import { getOptions } from '../menu/utils';
+import { useLiveRegion } from '../../utils';
 
 export default function useSearch({
   handleSearchValueChange,
   selectedValue,
   options,
 }) {
+  const speak = useLiveRegion('assertive');
+
   /**
    *Control when associated menu of search should be visible.
    */
@@ -124,6 +128,26 @@ export default function useSearch({
     handleSearchValueChange,
     inputState,
   ]);
+
+  /* Announce changes to the length of the list */
+  useEffect(() => {
+    if (isOpen.value && inputState.value?.length) {
+      const message = options.length
+        ? sprintf(
+            /* translators: %d number of options in dropdown */
+            _n(
+              '%d result found.',
+              '%d results found.',
+              options.length,
+              'web-stories'
+            ),
+            options.length
+          )
+        : __('No results found.', 'web-stories');
+
+      speak(message);
+    }
+  }, [inputState.value, isOpen.value, options.length, speak]);
 
   return {
     activeOption,

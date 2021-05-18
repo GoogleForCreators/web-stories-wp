@@ -23,7 +23,7 @@ use WP_REST_Request;
 /**
  * @coversDefaultClass \Google\Web_Stories\Demo_Content
  */
-class Demo_Content extends \WP_UnitTestCase {
+class Demo_Content extends Test_Case {
 	public function test_json_file_contains_replaceable_urls() {
 		$file  = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';
 		$story = json_decode( file_get_contents( $file ), true ); // phpcs:ignore

@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { useCallback, useRef, useMemo } from 'react';
-import styled, { css } from 'styled-components';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -58,11 +58,6 @@ const MediaWrapper = styled.div`
 const StyledMedia = styled(Media)`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-  ${({ isHighlighted }) =>
-    isHighlighted &&
-    css`
-      ${styles.OUTLINE}
-    `}
 `;
 
 const HighlightRow = styled(Row)`
@@ -151,25 +146,31 @@ function PublishPanel() {
   );
 
   const publisherLogoErrorMessage = useMemo(() => {
-    return sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s as publisher logo.', 'web-stories'),
-      allowedImageFileTypes.join(
-        /* translators: delimiter used in a list */
-        __(', ', 'web-stories')
-      )
-    );
+    let message = __('No file types are currently supported.', 'web-stories');
+
+    if (allowedImageFileTypes.length) {
+      message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s as publisher logo.', 'web-stories'),
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return message;
   }, [allowedImageFileTypes]);
 
   const posterErrorMessage = useMemo(() => {
-    return sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s as a poster.', 'web-stories'),
-      allowedImageFileTypes.join(
-        /* translators: delimiter used in a list */
-        __(', ', 'web-stories')
-      )
-    );
+    let message = __('No file types are currently supported.', 'web-stories');
+
+    if (allowedImageFileTypes.length) {
+      message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s as a poster.', 'web-stories'),
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return message;
   }, [allowedImageFileTypes]);
 
   return (
@@ -192,28 +193,26 @@ function PublishPanel() {
           <MediaInputWrapper>
             <MediaWrapper>
               <StyledMedia
-                isHighlighted={highlightPoster?.showEffect}
                 ref={posterButtonRef}
                 width={54}
                 height={96}
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
-                title={__('Select as cover image', 'web-stories')}
-                buttonInsertText={__('Select as cover image', 'web-stories')}
+                title={__('Select as poster image', 'web-stories')}
+                buttonInsertText={__('Select as poster image', 'web-stories')}
                 type={allowedImageMimeTypes}
-                ariaLabel={__('Cover image', 'web-stories')}
+                ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
               />
             </MediaWrapper>
             <LabelWrapper>
-              <Label>{__('Cover image', 'web-stories')}</Label>
+              <Label>{__('Poster image', 'web-stories')}</Label>
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>
           <MediaInputWrapper>
             <MediaWrapper>
               <StyledMedia
-                isHighlighted={highlightLogo?.showEffect}
                 width={72}
                 height={72}
                 ref={publisherLogoRef}

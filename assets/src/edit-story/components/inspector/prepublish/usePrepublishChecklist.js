@@ -23,9 +23,13 @@ import { useContext } from 'react';
 import Context from './context';
 
 function usePrepublishChecklist() {
-  const { checklist, refreshChecklist } = useContext(Context);
-
-  return { checklist, refreshChecklist };
+  const context = useContext(Context);
+  if (!context) {
+    throw new Error(
+      'usePrepublishChecklist() must be used within a <PrepublishChecklistProvider />'
+    );
+  }
+  return context;
 }
 
 export default usePrepublishChecklist;

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -32,7 +32,10 @@ import {
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../../form/color/color');
+jest.mock('../../../../form/color/color', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 
 const DEFAULT_PADDING = {
   horizontal: 0,
@@ -88,8 +91,8 @@ describe('Panels/TextBox', () => {
   }
 
   it('should render <TextBox /> panel', () => {
-    const { getByRole } = renderTextBox([textElement]);
-    const element = getByRole('button', { name: 'Text box' });
+    renderTextBox([textElement]);
+    const element = screen.getByRole('button', { name: 'Text box' });
     expect(element).toBeInTheDocument();
   });
 
@@ -189,17 +192,17 @@ describe('Panels/TextBox', () => {
     });
 
     it('should render default padding controls', () => {
-      const { getByRole } = renderTextBox([textElement]);
-      const multi = getByRole('textbox', {
+      renderTextBox([textElement]);
+      const multi = screen.getByRole('textbox', {
         name: 'Padding',
       });
-      const lock = getByRole('button', { name: paddingRatioLockLabel });
+      const lock = screen.getByRole('button', { name: paddingRatioLockLabel });
       expect(multi).toHaveValue('0');
       expect(lock).toHaveAttribute('aria-pressed', 'true');
     });
 
     it('should render specified padding controls', () => {
-      const { getByRole } = renderTextBox([
+      renderTextBox([
         {
           ...textElement,
           padding: {
@@ -209,17 +212,15 @@ describe('Panels/TextBox', () => {
           },
         },
       ]);
-      const horiz = getByRole('textbox', { name: 'Horizontal padding' });
-      const vert = getByRole('textbox', { name: 'Vertical padding' });
+      const horiz = screen.getByRole('textbox', { name: 'Horizontal padding' });
+      const vert = screen.getByRole('textbox', { name: 'Vertical padding' });
       expect(horiz).toHaveValue('11');
       expect(vert).toHaveValue('12');
     });
 
     it('should update horizontal padding with lock', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
-        textElement,
-      ]);
-      const input = getByRole('textbox', {
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([textElement]);
+      const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '20' } });
@@ -234,7 +235,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -243,10 +244,10 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update horizontal padding without lock', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         unlockPaddingTextElement,
       ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
+      const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
@@ -259,7 +260,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -268,10 +269,10 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update vertical padding without lock', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         unlockPaddingTextElement,
       ]);
-      const input = getByRole('textbox', { name: 'Vertical padding' });
+      const input = screen.getByRole('textbox', { name: 'Vertical padding' });
       fireEvent.change(input, { target: { value: '12' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
@@ -284,7 +285,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -293,13 +294,13 @@ describe('Panels/TextBox', () => {
     });
 
     it('should not update padding if empty string is submitted', () => {
-      const { getByRole } = renderTextBox([
+      renderTextBox([
         {
           ...textSamePadding,
           padding: { ...DEFAULT_PADDING, horizontal: 10, vertical: 10 },
         },
       ]);
-      const input = getByRole('textbox', {
+      const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '' } });
@@ -310,11 +311,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update multi padding with lock and same padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         textElement,
         textSamePadding,
       ]);
-      const input = getByRole('textbox', {
+      const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '11' } });
@@ -329,7 +330,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -338,11 +339,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update multi padding with lock and different padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         textElement,
         textDifferentPadding,
       ]);
-      const input = getByRole('textbox', {
+      const input = screen.getByRole('textbox', {
         name: 'Padding',
       });
       fireEvent.change(input, { target: { value: '11' } });
@@ -358,7 +359,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -367,11 +368,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update multi padding without lock and same padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         unlockPaddingTextElement,
         unlockPaddingTextSamePadding,
       ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
+      const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
@@ -384,7 +385,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -393,11 +394,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update multi padding without lock and different padding', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         unlockPaddingTextElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
+      const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
@@ -410,7 +411,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -419,11 +420,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should correctly update only horizontal padding when multiple elements with different padding lock settings are selected', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         textElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      const input = getByRole('textbox', { name: 'Horizontal padding' });
+      const input = screen.getByRole('textbox', { name: 'Horizontal padding' });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
@@ -436,7 +437,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -445,11 +446,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should correctly update only vertical padding when multiple elements with different padding lock settings are selected', () => {
-      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextBox([
+      const { pushUpdateForObject, pushUpdate } = renderTextBox([
         textElement,
         unlockPaddingTextDifferentPadding,
       ]);
-      const input = getByRole('textbox', { name: 'Vertical padding' });
+      const input = screen.getByRole('textbox', { name: 'Vertical padding' });
       fireEvent.change(input, { target: { value: '11' } });
       fireEvent.keyDown(input, { key: 'Enter', which: 13 });
 
@@ -462,7 +463,7 @@ describe('Panels/TextBox', () => {
         true
       );
 
-      // See that updates are propper for element variations
+      // See that updates are proper for element variations
       testUpdaterOnElementVariations({
         pushUpdateForObject,
         pushUpdate,
@@ -471,10 +472,8 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update default element lockPadding to false when padding lock clicked', () => {
-      const { getByLabelText, pushUpdateForObject } = renderTextBox([
-        textElement,
-      ]);
-      fireEvent.click(getByLabelText(paddingRatioLockLabel));
+      const { pushUpdateForObject } = renderTextBox([textElement]);
+      fireEvent.click(screen.getByLabelText(paddingRatioLockLabel));
       const pufoUpdater = pushUpdateForObject.mock.calls[0][1];
       const el = { padding: {} };
       const updatedProperties = pufoUpdater(el);
@@ -490,10 +489,8 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update unlock padding element lockPadding to true when padding lock clicked', () => {
-      const { getByLabelText, pushUpdateForObject } = renderTextBox([
-        unlockPaddingTextElement,
-      ]);
-      fireEvent.click(getByLabelText(paddingRatioLockLabel));
+      const { pushUpdateForObject } = renderTextBox([unlockPaddingTextElement]);
+      fireEvent.click(screen.getByLabelText(paddingRatioLockLabel));
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         expect.any(Function),
@@ -513,11 +510,11 @@ describe('Panels/TextBox', () => {
     });
 
     it('should update multiple elements with default text element and unlock padding elements lockPadding to false when padding lock clicked', () => {
-      const { getByLabelText, pushUpdateForObject } = renderTextBox([
+      const { pushUpdateForObject } = renderTextBox([
         unlockPaddingTextElement,
         textElement,
       ]);
-      fireEvent.click(getByLabelText(paddingRatioLockLabel));
+      fireEvent.click(screen.getByLabelText(paddingRatioLockLabel));
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
         expect.any(Function),
@@ -548,14 +545,16 @@ describe('Panels/TextBox', () => {
         },
       };
 
-      const { getByRole } = renderTextBox([textElement1, textElement2]);
+      renderTextBox([textElement1, textElement2]);
 
-      const paddingH = getByRole('textbox', {
+      const paddingH = screen.getByRole('textbox', {
         name: 'Horizontal padding',
       });
       expect(paddingH.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
 
-      const paddingV = getByRole('textbox', { name: 'Vertical padding' });
+      const paddingV = screen.getByRole('textbox', {
+        name: 'Vertical padding',
+      });
       expect(paddingV.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     });
   });

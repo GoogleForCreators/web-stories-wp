@@ -19,6 +19,11 @@
  */
 import styled from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../app';
+
 const rgb = ({ r = 0, g = 0, b = 0 } = {}) => {
   return `rgb(${r},${g},${b})`;
 };
@@ -32,7 +37,7 @@ const POINTER_SIZE = 24;
 const BORDER_WIDTH = 2;
 
 // The attrs method is more performant for frequently changed styles.
-const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => {
+const PointerElement = styled.div.attrs(({ currentColor = {}, withAlpha }) => {
   return {
     style: {
       background: withAlpha ? rgba(currentColor) : rgb(currentColor),
@@ -42,7 +47,8 @@ const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => {
   width: ${POINTER_SIZE}px;
   height: ${POINTER_SIZE}px;
   transform: translate(
-    ${({ offsetX = 0, offsetY = 0 }) => `${offsetX}px, ${offsetY}px`}
+    ${({ offsetX = 0, offsetY = 0, isRTL }) =>
+      `${(isRTL ? -1 : 1) * offsetX}px, ${offsetY}px`}
   );
   background: transparent;
   border: ${BORDER_WIDTH}px solid ${({ theme }) => theme.colors.fg.primary};
@@ -60,10 +66,9 @@ const Pointer = styled.div.attrs(({ currentColor, withAlpha }) => {
   }
 `;
 
-Pointer.defaultProps = {
-  currentRGB: {},
-  currentRGBA: {},
-  currentColor: {},
-};
+function Pointer(props) {
+  const { isRTL } = useConfig();
+  return <PointerElement {...props} isRTL={isRTL} />;
+}
 
 export default Pointer;

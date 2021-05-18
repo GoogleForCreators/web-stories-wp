@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
@@ -22,7 +27,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import { SnackbarProvider } from '../../../../../../design-system';
-import Content from '../';
+import Content from '..';
 
 const fakeStories = [
   {
@@ -75,7 +80,7 @@ describe('My Stories <Content />', function () {
   });
 
   it('should render the content grid with the correct story count.', function () {
-    const { getAllByTestId } = renderWithProviders(
+    renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
           <Content
@@ -101,11 +106,13 @@ describe('My Stories <Content />', function () {
       { features: { enableInProgressStoryActions: false } }
     );
 
-    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
+    expect(screen.getAllByTestId(/^story-grid-item/)).toHaveLength(
+      fakeStories.length
+    );
   });
 
   it('should show "Start telling Stories." if no stories are present.', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
           <Content
@@ -131,11 +138,11 @@ describe('My Stories <Content />', function () {
       { features: { enableInProgressStoryActions: false } }
     );
 
-    expect(getByText('Start telling Stories.')).toBeInTheDocument();
+    expect(screen.getByText('Start telling Stories.')).toBeInTheDocument();
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <SnackbarProvider>
         <LayoutProvider>
           <Content
@@ -162,7 +169,7 @@ describe('My Stories <Content />', function () {
     );
 
     expect(
-      getByText(
+      screen.getByText(
         'Sorry, we couldn\'t find any results matching "scooby dooby doo"'
       )
     ).toBeInTheDocument();

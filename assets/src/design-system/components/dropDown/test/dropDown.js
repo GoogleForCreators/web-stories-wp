@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { basicDropDownOptions } from '../../../testUtils/sampleData';
-import { DropDown } from '../';
+import { DropDown } from '..';
 
 describe('DropDown <DropDown />', () => {
   // Mock scrollTo
@@ -37,28 +37,28 @@ describe('DropDown <DropDown />', () => {
   jest.useFakeTimers();
 
   it('should render a closed <DropDown /> menu with a select button on default', () => {
-    const { getByRole, queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <DropDown options={basicDropDownOptions} dropDownLabel={'label'} />
     );
 
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     expect(select).toBeInTheDocument();
 
-    const menu = queryAllByRole('listbox');
+    const menu = screen.queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
 
   it('should show placeholder value when no selected value is found', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <DropDown options={basicDropDownOptions} placeholder={'select a value'} />
     );
 
-    const placeholder = getByText('select a value');
+    const placeholder = screen.getByText('select a value');
     expect(placeholder).toBeInTheDocument();
   });
 
   it("should show selectedValue's associated label when selectedValue is present", () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         placeholder={'select a value'}
@@ -67,12 +67,12 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const select = getByText(basicDropDownOptions[2].label);
+    const select = screen.getByText(basicDropDownOptions[2].label);
     expect(select).toBeInTheDocument();
   });
 
   it("should show placeholder when selectedValue's associated label cannot be found", () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         placeholder={'select a value'}
@@ -81,12 +81,12 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const select = getByText('select a value');
+    const select = screen.getByText('select a value');
     expect(select).toBeInTheDocument();
   });
 
   it('should show label value when provided', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         placeholder={'select a value'}
@@ -94,12 +94,12 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const label = getByText('my label');
+    const label = screen.getByText('my label');
     expect(label).toBeInTheDocument();
   });
 
   it('should use dropDownLabel as aria-label when no ariaLabel is specified', () => {
-    const { getByRole, getByLabelText } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         placeholder={'select a value'}
@@ -107,15 +107,15 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const label = getByLabelText('my label');
+    const label = screen.getByLabelText('my label');
     fireEvent.click(label);
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
 
   it('should use ariaLabel as aria-label when present', () => {
-    const { getByRole, getByLabelText } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         placeholder={'select a value'}
@@ -124,15 +124,15 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const label = getByLabelText('my aria label override');
+    const label = screen.getByLabelText('my aria label override');
     fireEvent.click(label);
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
 
   it('should show <DropDown /> menu when a select button is clicked', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         emptyText={'No options available'}
         options={basicDropDownOptions}
@@ -140,16 +140,16 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     expect(select).toBeInTheDocument();
 
     fireEvent.click(select);
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
   it('should show an active icon on list item that is active', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         emptyText={'No options available'}
         dropDownLabel={'label'}
@@ -159,11 +159,11 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     expect(select).toBeInTheDocument();
     fireEvent.click(select);
 
-    const activeMenuItem = getByRole('option', {
+    const activeMenuItem = screen.getByRole('option', {
       name: `Selected ${basicDropDownOptions[2].label}`,
     });
     expect(activeMenuItem).toBeInTheDocument();
@@ -195,7 +195,7 @@ describe('DropDown <DropDown />', () => {
       },
       'should be ignored',
     ];
-    const { getByRole, getAllByRole, queryAllByText } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         emptyText={'No options available'}
         dropDownLabel={'label'}
@@ -204,22 +204,22 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     expect(select).toBeInTheDocument();
     fireEvent.click(select);
 
-    const menuItems = getAllByRole('option');
+    const menuItems = screen.getAllByRole('option');
     expect(menuItems).toHaveLength(5);
 
-    const menuLabels = getAllByRole('presentation');
+    const menuLabels = screen.getAllByRole('presentation');
     expect(menuLabels).toHaveLength(2);
 
-    expect(queryAllByText('should be ignored')).toStrictEqual([]);
+    expect(screen.queryAllByText('should be ignored')).toStrictEqual([]);
   });
 
   // Mouse events
   it('should not expand menu when disabled is true', () => {
-    const { getByRole, queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         dropDownLabel={'my label'}
@@ -227,19 +227,19 @@ describe('DropDown <DropDown />', () => {
       />
     );
 
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     expect(select).toBeInTheDocument();
 
     fireEvent.click(select);
 
-    const menu = queryAllByRole('listbox');
+    const menu = screen.queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
 
   it('should trigger onMenuItemClick when item is clicked', () => {
     const onClickMock = jest.fn();
 
-    const { getByRole, getAllByRole } = renderWithProviders(
+    renderWithProviders(
       <DropDown
         options={basicDropDownOptions}
         selectedValue={null}
@@ -249,13 +249,13 @@ describe('DropDown <DropDown />', () => {
     );
 
     // Fire click event
-    const select = getByRole('button');
+    const select = screen.getByRole('button');
     fireEvent.click(select);
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
-    const menuItems = getAllByRole('option');
+    const menuItems = screen.getAllByRole('option');
     expect(menuItems).toHaveLength(12);
 
     fireEvent.click(menuItems[2]);
@@ -270,17 +270,17 @@ describe('DropDown <DropDown />', () => {
   });
 
   it('should close active menu when select is clicked', () => {
-    const wrapper = renderWithProviders(
+    renderWithProviders(
       <DropDown
         dropDownLabel={'label'}
         options={basicDropDownOptions}
         selectedValue={basicDropDownOptions[1].value}
       />
     );
-    const select = wrapper.getByRole('button');
+    const select = screen.getByRole('button');
     fireEvent.click(select);
 
-    const menu = wrapper.getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
     // wait for debounced callback to allow a select click handler to process
@@ -288,7 +288,7 @@ describe('DropDown <DropDown />', () => {
 
     fireEvent.click(select);
 
-    expect(wrapper.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 });
 
@@ -299,7 +299,7 @@ describe('DropDown <DropDown />', () => {
 /* eslint-disable jest/no-commented-out-tests */
 // it('should trigger onMenuItemClick when using the down arrow plus enter key and keep menu open when isKeepMenuOpenOnSelection is true', async () => {
 //   const onClickMock = jest.fn();
-//   const { getByRole, getAllByRole } = await renderWithProviders(
+//   await renderWithProviders(
 //     <DropDown
 //       emptyText={'No options available'}
 //       dropDownLabel={'label'}
@@ -309,13 +309,13 @@ describe('DropDown <DropDown />', () => {
 //       selectedValue={null}
 //     />
 //   );
-//   const selectButton = getByRole('button');
+//   const selectButton = screen.getByRole('button');
 //   fireEvent.click(selectButton);
 
-//   const menu = getByRole('listbox');
+//   const menu = screen.getByRole('listbox');
 //   expect(menu).toBeInTheDocument();
 
-//   const menuItems = getAllByRole('option');
+//   const menuItems = screen.getAllByRole('option');
 //   expect(menuItems).toHaveLength(12);
 
 //   // wait for debounced callback to allow a select click handler to process
@@ -357,7 +357,7 @@ describe('DropDown <DropDown />', () => {
 // it('should trigger onMenuItemClick when using the down arrow plus enter key and close menu', async () => {
 //   const onClickMock = jest.fn();
 
-//   const { getByRole } = await renderWithProviders(
+//   await renderWithProviders(
 //     <DropDown
 //       emptyText={'No options available'}
 //       dropDownLabel={'label'}
@@ -366,10 +366,10 @@ describe('DropDown <DropDown />', () => {
 //       selectedValue={basicDropDownOptions[0].value}
 //     />
 //   );
-//   const selectButton = getByRole('button');
+//   const selectButton = screen.getByRole('button');
 //   fireEvent.click(selectButton);
 
-//   const menu = getByRole('listbox');
+//   const menu = screen.getByRole('listbox');
 //   expect(menu).toBeInTheDocument();
 
 //   // focus first element in menu

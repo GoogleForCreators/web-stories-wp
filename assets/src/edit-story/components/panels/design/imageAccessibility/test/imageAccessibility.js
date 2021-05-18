@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
@@ -33,7 +38,7 @@ describe('Panels/ImageAccessibility', () => {
     type: 'image',
     resource: { title: '', alt: '', src: '1' },
   };
-  function renderImageAccessibility(...args) {
+  function arrange(...args) {
     return renderPanel(ImageAccessibility, ...args);
   }
 
@@ -49,20 +54,20 @@ describe('Panels/ImageAccessibility', () => {
   });
 
   it('should render <ImageAccessibility /> panel', () => {
-    const { getByRole } = renderImageAccessibility([defaultElement]);
-    const input = getByRole('textbox', { name: 'Assistive text' });
+    arrange([defaultElement]);
+    const input = screen.getByRole('textbox', { name: 'Assistive text' });
     expect(input).toBeInTheDocument();
   });
 
   it('should display Mixed placeholder in case of mixed multi-selection', () => {
-    const { getByRole } = renderImageAccessibility([
+    arrange([
       defaultElement,
       {
         type: 'image',
         resource: { title: '', alt: 'Hello!', src: '2' },
       },
     ]);
-    const input = getByRole('textbox', { name: 'Assistive text' });
+    const input = screen.getByRole('textbox', { name: 'Assistive text' });
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');
   });

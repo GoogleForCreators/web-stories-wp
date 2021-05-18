@@ -20,7 +20,7 @@ namespace Google\Web_Stories\Tests;
 /**
  * @coversDefaultClass \Google\Web_Stories\Locale
  */
-class Locale extends \WP_UnitTestCase {
+class Locale extends Test_Case {
 	/**
 	 * @covers ::get_locale_settings
 	 */

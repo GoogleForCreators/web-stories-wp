@@ -20,13 +20,24 @@
 import PropTypes from 'prop-types';
 import { useCallback, forwardRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { useMediaPicker } from '../mediaPicker';
-import { MediaInput as Input } from '../../../design-system/components/mediaInput';
+import { MediaInput as Input, themeHelpers } from '../../../design-system';
 import { MULTIPLE_VALUE } from '../../constants';
+
+const StyledInput = styled(Input)`
+  button:focus {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )}
+  }
+`;
 
 function MediaInput(
   {
@@ -86,7 +97,7 @@ function MediaInput(
   );
 
   return (
-    <Input
+    <StyledInput
       onMenuOption={onOption}
       menuOptions={dropdownOptions}
       openMediaPicker={openMediaPicker}

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { useKeyDownEffect } from '../keyboard';
-import { KEYS } from '../../utils/constants';
+import { KEYS } from '../../utils';
 import { MenuItem, MenuItemProps } from './menuItem';
 
 const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
@@ -35,98 +35,145 @@ const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: 5px 0 0;
+    padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '5px 0 0')};
     background-color: ${theme.colors.bg.primary};
     pointer-events: none;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: 200px;
+    width: ${({ isIconMenu }) => (isIconMenu ? '40px' : '200px')};
   `
 );
+MenuWrapper.propTypes = {
+  isIconMenu: PropTypes.bool,
+};
 
-const MenuList = styled.ul(
-  ({ theme }) => css`
-    background-color: ${theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.small};
-    margin: 0;
-    padding: 4px 0;
-    pointer-events: auto;
-    list-style: none;
+const separatorCSS = css`
+  display: block;
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.bg.tertiary};
+  ${({ isIconMenu, theme }) =>
+    isIconMenu &&
+    css`
+      width: 40%;
+      margin: auto;
+      background-color: ${theme.colors.fg.primary};
+    `}
+`;
+separatorCSS.propTypes = {
+  isIconMenu: PropTypes.bool,
+};
+
+const MenuList = styled.ul`
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  margin: 0;
+  padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '4px 0')};
+  pointer-events: auto;
+  list-style: none;
+
+  a {
+    background-color: transparent;
+    text-decoration: none;
+  }
+
+  li {
+    a,
+    button,
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 16px;
+      border: 0;
+      transition: background-color ${BUTTON_TRANSITION_TIMING};
+    }
+    ${({ isIconMenu }) =>
+      isIconMenu &&
+      css`
+        margin: 0;
+        button {
+          padding: 0;
+          margin: 4px auto;
+        }
+        div,
+        a {
+          padding: 0;
+        }
+      `}
+
+    span {
+      transition: color ${BUTTON_TRANSITION_TIMING};
+    }
 
     a {
-      background-color: transparent;
-      text-decoration: none;
+      :active span,
+      :hover span {
+        color: ${({ theme }) => theme.colors.fg.primary};
+      }
     }
 
-    li {
-      a,
-      button,
-      div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 16px;
-        border: 0;
-        transition: background-color ${BUTTON_TRANSITION_TIMING};
-      }
+    button {
+      width: ${({ isIconMenu }) => (isIconMenu ? '32px' : '100%')};
+      border-radius: ${({ isIconMenu }) => (isIconMenu ? '4px' : 0)};
+      background-color: transparent;
 
-      span {
-        transition: color ${BUTTON_TRANSITION_TIMING};
-      }
-
-      a {
-        :active span,
-        :hover span {
-          color: ${theme.colors.fg.primary};
-        }
-      }
-
-      button {
-        width: 100%;
-        border-radius: 0;
+      :disabled {
         background-color: transparent;
 
-        :disabled {
-          background-color: transparent;
-
-          span {
-            color: ${theme.colors.bg.tertiary};
-          }
-        }
-
-        :active span,
-        :hover span {
-          color: ${theme.colors.fg.primary};
+        span {
+          color: ${({ theme }) => theme.colors.bg.tertiary};
         }
       }
 
-      &.separatorTop {
-        border-top: 1px solid ${theme.colors.bg.tertiary};
-      }
-
-      &.separatorBottom {
-        border-bottom: 1px solid ${theme.colors.bg.tertiary};
-      }
-
-      :hover a,
-      button:hover:not(:disabled) {
-        background-color: ${theme.colors.interactiveBg.secondaryHover};
-      }
-
-      :active a,
-      button:active:not(:disabled) {
-        background-color: ${theme.colors.interactiveBg.secondaryPress};
+      :active span,
+      :hover span {
+        color: ${({ theme }) => theme.colors.fg.primary};
       }
     }
-  `
-);
 
-const Menu = ({ items, ...props }) => {
+    &.separatorTop {
+      &:before {
+        ${separatorCSS};
+      }
+    }
+
+    &.separatorBottom {
+      &:after {
+        ${separatorCSS};
+      }
+    }
+
+    :hover a,
+    button:hover:not(:disabled) {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryHover};
+    }
+
+    :active a,
+    button:active:not(:disabled) {
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryPress};
+    }
+  }
+`;
+MenuList.propTypes = {
+  isIconMenu: PropTypes.bool,
+};
+
+const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
+  const menuWasAlreadyOpen = useRef(isOpen);
   const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
   const totalIndex = useMemo(() => items.length - 1, [items]);
+
+  const handleFocusItem = useCallback((ev, itemIndex, focusCallback) => {
+    setFocusedIndex(itemIndex);
+    focusCallback?.(ev);
+  }, []);
 
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
@@ -135,8 +182,9 @@ const Menu = ({ items, ...props }) => {
    * @return {void} void
    */
   const handleKeyboardNav = useCallback(
-    ({ key }) => {
-      const isAscending = key === KEYS.UP;
+    ({ key, shiftKey }) => {
+      const isAscending =
+        [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
       let index = focusedIndex + (isAscending ? -1 : 1);
       let terminate = isAscending ? index < 0 : index > totalIndex;
 
@@ -147,6 +195,7 @@ const Menu = ({ items, ...props }) => {
           FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
           !element?.disabled
         ) {
+          element?.focus();
           setFocusedIndex(index);
           return;
         }
@@ -154,18 +203,62 @@ const Menu = ({ items, ...props }) => {
         index = isAscending ? index - 1 : index + 1;
         terminate = isAscending ? index < 0 : index > totalIndex;
       }
+
+      // If we didn't find a focusable element or get to the start/end
+      // of the list then **tabbing should close the menu**
+      if (key === KEYS.TAB) {
+        onDismiss?.();
+      }
     },
-    [focusedIndex, totalIndex]
+    [focusedIndex, onDismiss, totalIndex]
   );
 
-  useKeyDownEffect(listRef, { key: ['down', 'up'] }, handleKeyboardNav, [
+  useEffect(() => {
+    // focus first 'focusable' element if menu is opened and no element is focused.
+    // close the menu if there's no focusable element
+    if (isOpen && !menuWasAlreadyOpen.current && listRef?.current) {
+      let index = 0;
+
+      while (index <= totalIndex) {
+        const element = listRef.current?.children?.[index]?.children?.[0];
+
+        if (
+          FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
+          !element?.disabled
+        ) {
+          element?.focus();
+          setFocusedIndex(index);
+          menuWasAlreadyOpen.current = true;
+          return;
+        }
+
+        index++;
+      }
+
+      menuWasAlreadyOpen.current = true;
+    }
+  }, [focusedIndex, isOpen, totalIndex]);
+
+  useEffect(() => {
+    // reset state when menu is closed. This component does not unmount so
+    // we need to reset the state manually
+    if (!isOpen) {
+      setFocusedIndex(-1);
+      menuWasAlreadyOpen.current = false;
+    }
+  }, [isOpen]);
+
+  useKeyDownEffect(
+    listRef,
+    { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
     handleKeyboardNav,
-  ]);
+    [handleKeyboardNav]
+  );
 
   return (
-    <MenuWrapper>
-      <MenuList ref={listRef} {...props}>
-        {items.map(({ separator, ...itemProps }, index) => (
+    <MenuWrapper isIconMenu={isIconMenu}>
+      <MenuList ref={listRef} isIconMenu={isIconMenu} {...props}>
+        {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
             key={ids[index]}
             className={
@@ -175,9 +268,10 @@ const Menu = ({ items, ...props }) => {
             }
           >
             <MenuItem
-              setFocusedIndex={setFocusedIndex}
               focusedIndex={focusedIndex}
               index={index}
+              onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
+              onDismiss={onDismiss}
               {...itemProps}
             />
           </li>
@@ -194,6 +288,9 @@ export const MenuPropTypes = {
       separator: PropTypes.oneOf(['bottom', 'top']),
     }).isRequired
   ),
+  isIconMenu: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  onDismiss: PropTypes.func,
 };
 
 Menu.propTypes = MenuPropTypes;

@@ -25,7 +25,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { HexInput } from '../';
+import { HexInput } from '..';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../..';
 

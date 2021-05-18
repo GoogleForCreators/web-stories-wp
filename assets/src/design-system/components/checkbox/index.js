@@ -90,8 +90,8 @@ const CheckboxContainer = styled.div(
   `
 );
 
-const BaseCheckbox = ({ checked, disabled, ...props }, ref) => (
-  <CheckboxContainer disabled={disabled}>
+const BaseCheckbox = ({ checked, disabled, className = '', ...props }, ref) => (
+  <CheckboxContainer disabled={disabled} className={className}>
     <input
       type="checkbox"
       ref={ref}
@@ -109,4 +109,5 @@ export const Checkbox = forwardRef(BaseCheckbox);
 BaseCheckbox.propTypes = {
   checked: propTypes.bool,
   disabled: propTypes.bool,
+  className: propTypes.string,
 };

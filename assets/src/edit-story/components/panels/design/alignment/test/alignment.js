@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -29,14 +29,14 @@ jest.mock('../../../../../elements');
 
 describe('Panels/Alignment', () => {
   let defaultElement, defaultText, defaultImage;
-  const horizontalDistributionButtonLabel = 'Horizontal Distribution';
-  const verticalDistributionButtonLabel = 'Vertical Distribution';
-  const justifyLeftButtonLabel = 'Justify Left';
-  const justifyCenterButtonLabel = 'Justify Center';
-  const justifyRightButtonLabel = 'Justify Right';
-  const justifyTopButtonLabel = 'Justify Top';
-  const justifyMiddleButtonLabel = 'Justify Middle';
-  const justifyBottomButtonLabel = 'Justify Bottom';
+  const horizontalDistributionButtonLabel = 'Distribute horizontally';
+  const verticalDistributionButtonLabel = 'Distribute vertically';
+  const justifyLeftButtonLabel = 'Align left';
+  const justifyCenterButtonLabel = 'Align center';
+  const justifyRightButtonLabel = 'Align right';
+  const justifyTopButtonLabel = 'Align top';
+  const justifyMiddleButtonLabel = 'Align vertical center';
+  const justifyBottomButtonLabel = 'Align bottom';
 
   beforeEach(() => {
     defaultElement = {
@@ -58,24 +58,23 @@ describe('Panels/Alignment', () => {
     };
   });
 
-  function renderAlignment(...args) {
-    const result = renderPanel(Alignment, ...args);
-    const { getByLabelText } = result;
-    const horizontalDistributionButton = getByLabelText(
+  function arrange(...args) {
+    const view = renderPanel(Alignment, ...args);
+    const horizontalDistributionButton = screen.getByLabelText(
       horizontalDistributionButtonLabel
     );
-    const verticalDistributionButton = getByLabelText(
+    const verticalDistributionButton = screen.getByLabelText(
       verticalDistributionButtonLabel
     );
-    const justifyLeftButton = getByLabelText(justifyLeftButtonLabel);
-    const justifyCenterButton = getByLabelText(justifyCenterButtonLabel);
-    const justifyRightButton = getByLabelText(justifyRightButtonLabel);
-    const justifyTopButton = getByLabelText(justifyTopButtonLabel);
-    const justifyMiddleButton = getByLabelText(justifyMiddleButtonLabel);
-    const justifyBottomButton = getByLabelText(justifyBottomButtonLabel);
+    const justifyLeftButton = screen.getByLabelText(justifyLeftButtonLabel);
+    const justifyCenterButton = screen.getByLabelText(justifyCenterButtonLabel);
+    const justifyRightButton = screen.getByLabelText(justifyRightButtonLabel);
+    const justifyTopButton = screen.getByLabelText(justifyTopButtonLabel);
+    const justifyMiddleButton = screen.getByLabelText(justifyMiddleButtonLabel);
+    const justifyBottomButton = screen.getByLabelText(justifyBottomButtonLabel);
 
     return {
-      ...result,
+      ...view,
       horizontalDistributionButton,
       verticalDistributionButton,
       justifyLeftButton,
@@ -93,7 +92,7 @@ describe('Panels/Alignment', () => {
         pushUpdate,
         horizontalDistributionButton,
         verticalDistributionButton,
-      } = renderAlignment([defaultElement]);
+      } = arrange([defaultElement]);
 
       expect(horizontalDistributionButton).toBeDisabled();
       expect(verticalDistributionButton).toBeDisabled();
@@ -113,7 +112,7 @@ describe('Panels/Alignment', () => {
         justifyTopButton,
         justifyMiddleButton,
         justifyBottomButton,
-      } = renderAlignment([defaultElement]);
+      } = arrange([defaultElement]);
 
       expect(justifyLeftButton).toBeEnabled();
       expect(justifyCenterButton).toBeEnabled();
@@ -124,54 +123,42 @@ describe('Panels/Alignment', () => {
     });
 
     it('should update element on alignleft button click', () => {
-      const { justifyLeftButton, pushUpdate } = renderAlignment([
-        defaultElement,
-      ]);
+      const { justifyLeftButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyLeftButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on alignright button click', () => {
-      const { justifyRightButton, pushUpdate } = renderAlignment([
-        defaultElement,
-      ]);
+      const { justifyRightButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyRightButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on aligncenter button click', () => {
-      const { justifyCenterButton, pushUpdate } = renderAlignment([
-        defaultElement,
-      ]);
+      const { justifyCenterButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyCenterButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on justifytop button click', () => {
-      const { justifyTopButton, pushUpdate } = renderAlignment([
-        defaultElement,
-      ]);
+      const { justifyTopButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyTopButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on justifybottom button click', () => {
-      const { justifyBottomButton, pushUpdate } = renderAlignment([
-        defaultElement,
-      ]);
+      const { justifyBottomButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyBottomButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
     });
 
     it('should update element on justifymiddle button click', () => {
-      const { justifyMiddleButton, pushUpdate } = renderAlignment([
-        defaultElement,
-      ]);
+      const { justifyMiddleButton, pushUpdate } = arrange([defaultElement]);
 
       fireEvent.click(justifyMiddleButton);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
@@ -189,7 +176,7 @@ describe('Panels/Alignment', () => {
         justifyTopButton,
         justifyMiddleButton,
         justifyBottomButton,
-      } = renderAlignment([defaultElement, defaultText]);
+      } = arrange([defaultElement, defaultText]);
 
       expect(horizontalDistributionButton).toBeDisabled();
       expect(verticalDistributionButton).toBeDisabled();
@@ -213,7 +200,7 @@ describe('Panels/Alignment', () => {
         justifyTopButton,
         justifyMiddleButton,
         justifyBottomButton,
-      } = renderAlignment([defaultElement, defaultText, defaultImage]);
+      } = arrange([defaultElement, defaultText, defaultImage]);
 
       expect(horizontalDistributionButton).toBeEnabled();
       expect(verticalDistributionButton).toBeEnabled();

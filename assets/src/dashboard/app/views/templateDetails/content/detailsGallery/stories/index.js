@@ -25,7 +25,7 @@ import { boolean } from '@storybook/addon-knobs';
 import { TransformProvider } from '../../../../../../../edit-story/components/transform';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
 import FontProvider from '../../../../../font/fontProvider';
-import DetailsGallery from '../';
+import DetailsGallery from '..';
 
 export default {
   title: 'Dashboard/Views/TemplateDetails/Content/DetailsGallery',

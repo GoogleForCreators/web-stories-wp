@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -28,7 +28,8 @@ import styled from 'styled-components';
 import { Color, Row as DefaultRow } from '../../../form';
 import { useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
-import { FlipControls, getColorPickerActions } from '../../shared';
+import { FlipControls } from '../../shared';
+import getColorPickerActions from '../../shared/getColorPickerActions';
 import {
   Button,
   BUTTON_SIZES,
@@ -39,6 +40,7 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { getDefinitionForType } from '../../../../elements';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -82,7 +84,7 @@ const Text = styled(DefaultText)`
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   const {
     state: { currentPage },
-    actions: { updateCurrentPageProperties },
+    actions: { clearBackgroundElement, updateCurrentPageProperties },
   } = useStory();
 
   const updateBackgroundColor = useCallback(
@@ -91,10 +93,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     },
     [updateCurrentPageProperties]
   );
-
-  const { clearBackgroundElement } = useStory((state) => ({
-    clearBackgroundElement: state.actions.clearBackgroundElement,
-  }));
 
   const removeAsBackground = useCallback(() => {
     pushUpdate(
@@ -107,6 +105,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     );
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
+
+  const inputRef = useRef(null);
+  const highlight = useFocusHighlight(states.PAGE_BACKGROUND, inputRef);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
@@ -123,6 +124,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
 
   return (
     <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
       name="pageBackground"
       title={__('Page background', 'web-stories')}
       isPersistable={false}
@@ -130,6 +132,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       {isDefaultBackground && (
         <Row>
           <Color
+            ref={inputRef}
             hasGradient
             value={backgroundColor}
             onChange={updateBackgroundColor}

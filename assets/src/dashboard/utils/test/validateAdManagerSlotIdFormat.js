@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { validateAdManagerSlotIdFormat } from '../';
+import { validateAdManagerSlotIdFormat } from '..';
 
 const idsToValidate = [
   ['/123456789/amp_story_dfp_example', true],

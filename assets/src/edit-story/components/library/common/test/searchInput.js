@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { SearchInput } from '../';
+import { SearchInput } from '..';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.useFakeTimers();
@@ -40,7 +40,7 @@ describe('SearchInput', () => {
   };
 
   it('should render <SearchInput /> form', () => {
-    const { getByRole } = renderWithTheme(
+    renderWithTheme(
       <SearchInput
         initialValue={'dog'}
         placeholder={'Hello'}
@@ -48,13 +48,13 @@ describe('SearchInput', () => {
       />
     );
 
-    expect(getByRole('searchbox')).toBeInTheDocument();
+    expect(screen.getByRole('searchbox')).toBeInTheDocument();
   });
 
   it('should not trigger onSearch when incremental is false and text changes', () => {
     const onSearchMock = jest.fn();
 
-    const { getByRole } = renderWithTheme(
+    renderWithTheme(
       <SearchInput
         initialValue={'dog'}
         placeholder={'Hello'}
@@ -63,7 +63,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByRole('searchbox');
+    const input = screen.getByRole('searchbox');
     setInputValue(input, 'cat');
     triggerOnChange(input);
 
@@ -73,7 +73,7 @@ describe('SearchInput', () => {
   it('should trigger onSearch when incremental is false and enter is pressed', () => {
     const onSearchMock = jest.fn();
 
-    const { getByRole } = renderWithTheme(
+    renderWithTheme(
       <SearchInput
         initialValue={'dog'}
         placeholder={'Hello'}
@@ -82,7 +82,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByRole('searchbox');
+    const input = screen.getByRole('searchbox');
     setInputValue(input, 'cat');
     triggerOnChange(input);
 
@@ -96,7 +96,7 @@ describe('SearchInput', () => {
   it('should trigger onSearch when incremental is false and text is emptied', () => {
     const onSearchMock = jest.fn();
 
-    const { getByRole } = renderWithTheme(
+    renderWithTheme(
       <SearchInput
         initialValue={'d'}
         placeholder={'Hello'}
@@ -105,7 +105,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByRole('searchbox');
+    const input = screen.getByRole('searchbox');
     setInputValue(input, '');
     triggerOnChange(input);
 
@@ -115,7 +115,7 @@ describe('SearchInput', () => {
   it('should trigger onSearch when incremental is true and text changes', () => {
     const onSearchMock = jest.fn();
 
-    const { getByDisplayValue } = renderWithTheme(
+    renderWithTheme(
       <SearchInput
         initialValue={'d'}
         placeholder={'Hello'}
@@ -125,7 +125,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByDisplayValue('d');
+    const input = screen.getByDisplayValue('d');
     setInputValue(input, 'cat');
     triggerOnChange(input);
 
@@ -135,7 +135,7 @@ describe('SearchInput', () => {
   it('should trigger onSearch when incremental is true and text changes, with some delay', () => {
     const onSearchMock = jest.fn();
 
-    const { getByDisplayValue } = renderWithTheme(
+    renderWithTheme(
       <SearchInput
         initialValue={'d'}
         placeholder={'Hello'}
@@ -145,7 +145,7 @@ describe('SearchInput', () => {
       />
     );
 
-    const input = getByDisplayValue('d');
+    const input = screen.getByDisplayValue('d');
     setInputValue(input, 'cat');
     triggerOnChange(input);
 

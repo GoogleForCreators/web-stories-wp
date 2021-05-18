@@ -18,12 +18,12 @@
  * External dependencies
  */
 
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { Button } from '../';
+import { Button } from '..';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 describe('Button', () => {
@@ -31,32 +31,28 @@ describe('Button', () => {
   const onClickMock = jest.fn();
 
   it('should render the default non cta button', () => {
-    const { getByText } = renderWithProviders(
-      <Button onClick={onClickMock}>{buttonText}</Button>
-    );
+    renderWithProviders(<Button onClick={onClickMock}>{buttonText}</Button>);
 
-    expect(getByText(buttonText)).toBeInTheDocument();
+    expect(screen.getByText(buttonText)).toBeInTheDocument();
   });
 
   it('should not allow onClick action when <Button /> is disabled', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Button disabled onClick={onClickMock}>
         {buttonText}
       </Button>
     );
 
-    const button = getByText(buttonText);
+    const button = screen.getByText(buttonText);
     fireEvent.click(button);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
   });
 
   it('should simulate a click on <Button />', () => {
-    const { getByText } = renderWithProviders(
-      <Button onClick={onClickMock}>{buttonText}</Button>
-    );
+    renderWithProviders(<Button onClick={onClickMock}>{buttonText}</Button>);
 
-    const button = getByText(buttonText);
+    const button = screen.getByText(buttonText);
 
     fireEvent.click(button);
 

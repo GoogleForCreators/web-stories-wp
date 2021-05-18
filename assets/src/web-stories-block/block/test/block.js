@@ -22,7 +22,7 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import { name, settings } from '../';
+import { name, settings } from '..';
 
 jest.mock('@wordpress/element', () => {
   const originalModule = jest.requireActual('react');

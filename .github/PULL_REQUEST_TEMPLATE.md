@@ -80,7 +80,7 @@ This PR can be tested by following these steps:
 
 - [ ] This PR addresses an existing issue and I have linked this PR to it in ZenHub
 - [ ] I have tested this code to the best of my abilities
-- [ ] I have verified accessibility to the best of my abilities ([docs](https://github.com/google/web-stories-wp/blob/main/docs/accessibility-testiing.md))
+- [ ] I have verified accessibility to the best of my abilities ([docs](https://github.com/google/web-stories-wp/blob/main/docs/accessibility-testing.md))
 - [ ] I have verified i18n and l10n (translation, right-to-left layout) to the best of my abilities
 - [ ] This PR contains automated tests (unit, integration, and/or e2e) to verify the code works as intended ([docs](https://github.com/google/web-stories-wp/tree/main/docs#testing))
 - [ ] I have added documentation where necessary

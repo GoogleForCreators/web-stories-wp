@@ -164,6 +164,7 @@ const sharedConfig = {
       WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
       WEB_STORIES_DISABLE_PREVENT: JSON.stringify(false),
       WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(false),
+      WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(false),
     }),
   ].filter(Boolean),
   optimization: {

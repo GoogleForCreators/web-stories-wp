@@ -51,17 +51,21 @@ async function loadTextSet(name) {
 
     return [
       ...sets,
-      textElements.map((e) => ({
-        ...e,
-        // Offset elements so the text set's
-        // default position is (0,0)
-        normalizedOffsetX: e.x - minMax.minX,
-        normalizedOffsetY: e.y - minMax.minY,
-        // The overall text set width & height
-        // is the delta between the max/mins
-        textSetWidth: minMax.maxX - minMax.minX,
-        textSetHeight: minMax.maxY - minMax.minY,
-      })),
+      {
+        textSetFonts: page.fonts,
+        textSetCategory: name,
+        elements: textElements.map((e) => ({
+          ...e,
+          // Offset elements so the text set's
+          // default position is (0,0)
+          normalizedOffsetX: e.x - minMax.minX,
+          normalizedOffsetY: e.y - minMax.minY,
+          // The overall text set width & height
+          // is the delta between the max/mins
+          textSetWidth: minMax.maxX - minMax.minX,
+          textSetHeight: minMax.maxY - minMax.minY,
+        })),
+      },
     ];
   }, []);
 }

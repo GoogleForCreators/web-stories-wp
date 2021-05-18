@@ -29,7 +29,7 @@ import { trackClick } from '@web-stories-wp/tracking';
 import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
-function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
+function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
   const onAddToPostClick = useCallback((evt) => {
     trackClick(evt, 'add_story_to_new_post');
   }, []);
@@ -40,9 +40,10 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
 
   return (
     <Dialog
-      open={open}
+      isOpen={isOpen}
       onClose={onClose}
-      title={__('Story published!', 'web-stories')}
+      // Same as item_published post type label.
+      title={__('Story published.', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
       primaryText={__('Add to new post', 'web-stories')}
       onPrimary={onAddToPostClick}
@@ -69,14 +70,17 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
         </TranslateWithMarkup>
       </Text>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__('Would you like to include it on a new post?', 'web-stories')}
+        {
+          /* translators: 'it' refers to a web story. */
+          __('Would you like to include it on a new post?', 'web-stories')
+        }
       </Text>
     </Dialog>
   );
 }
 
 PostPublishDialog.propTypes = {
-  open: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   confirmURL: PropTypes.string.isRequired,
   storyURL: PropTypes.string,

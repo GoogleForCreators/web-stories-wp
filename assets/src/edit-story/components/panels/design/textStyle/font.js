@@ -31,7 +31,11 @@ import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
-import { getCommonValue } from '../../shared';
+import {
+  focusStyle,
+  getCommonValue,
+  inputContainerStyleOverride,
+} from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 import FontPicker from './fontPicker';
@@ -127,6 +131,7 @@ function FontControls({ selectedElements, pushUpdate }) {
               options={fontWeights}
               selectedValue={MULTIPLE_VALUE === fontWeight ? '' : fontWeight}
               onMenuItemClick={handleFontWeightPickerChange}
+              selectButtonStylesOverride={focusStyle}
             />
             <Space />
           </>
@@ -142,6 +147,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === fontSize ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
       </Row>
     </>

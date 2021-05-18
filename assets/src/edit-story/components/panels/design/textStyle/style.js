@@ -37,7 +37,11 @@ import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { getCommonValue } from '../../shared';
+import {
+  focusStyle,
+  getCommonValue,
+  inputContainerStyleOverride,
+} from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {
@@ -59,9 +63,13 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
+const StyledToggle = styled(ToggleButton)`
+  ${focusStyle};
+`;
+
 function Toggle(props) {
   return (
-    <ToggleButton
+    <StyledToggle
       size={BUTTON_SIZES.SMALL}
       variant={BUTTON_VARIANTS.SQUARE}
       {...props}
@@ -127,6 +135,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === lineHeight ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
         <Space />
         <StyledNumericInput
@@ -142,41 +151,42 @@ function StylePanel({ selectedElements, pushUpdate }) {
           placeholder={
             MULTIPLE_VALUE === letterSpacing ? MULTIPLE_DISPLAY_VALUE : null
           }
+          containerStyleOverride={inputContainerStyleOverride}
         />
       </Row>
       <Row>
         <Toggle
           isToggled={textAlign === 'left'}
           onClick={handleTextAlign('left')}
-          aria-label={__('Align: left', 'web-stories')}
+          aria-label={__('Align text left', 'web-stories')}
         >
           <Icons.AlignTextLeft />
         </Toggle>
         <Toggle
           isToggled={textAlign === 'center'}
           onClick={handleTextAlign('center')}
-          aria-label={__('Align: center', 'web-stories')}
+          aria-label={__('Align text center', 'web-stories')}
         >
           <Icons.AlignTextCenter />
         </Toggle>
         <Toggle
           isToggled={textAlign === 'right'}
           onClick={handleTextAlign('right')}
-          aria-label={__('Align: right', 'web-stories')}
+          aria-label={__('Align text right', 'web-stories')}
         >
           <Icons.AlignTextRight />
         </Toggle>
         <Toggle
           isToggled={textAlign === 'justify'}
           onClick={handleTextAlign('justify')}
-          aria-label={__('Align: justify', 'web-stories')}
+          aria-label={__('Align text justified', 'web-stories')}
         >
           <Icons.AlignTextJustified />
         </Toggle>
         <Toggle
           isToggled={isTrulyBold}
           onClick={() => handleClickBold(!isTrulyBold)}
-          aria-label={__('Toggle: bold', 'web-stories')}
+          aria-label={__('Bold', 'web-stories')}
         >
           <Icons.LetterBBold />
         </Toggle>
@@ -195,14 +205,14 @@ function StylePanel({ selectedElements, pushUpdate }) {
             );
             handleClickItalic(!isTrulyItalic);
           }}
-          aria-label={__('Toggle: italic', 'web-stories')}
+          aria-label={__('Italic', 'web-stories')}
         >
           <Icons.LetterIItalic />
         </Toggle>
         <Toggle
           isToggled={isTrulyUnderline}
           onClick={() => handleClickUnderline(!isTrulyUnderline)}
-          aria-label={__('Toggle: underline', 'web-stories')}
+          aria-label={__('Underline', 'web-stories')}
         >
           <Icons.LetterUUnderline />
         </Toggle>

@@ -29,14 +29,12 @@ import {
   lightMode,
   SnackbarProvider,
 } from '../../design-system';
-import theme from '../theme';
 import { ConfigProvider } from '../app/config';
 import MockApiProvider from './mockApiProvider';
 
 const defaultProviderValues = {
   features: {},
   theme: {
-    DEPRECATED_THEME: theme,
     ...externalDesignSystemTheme,
     colors: lightMode,
   },

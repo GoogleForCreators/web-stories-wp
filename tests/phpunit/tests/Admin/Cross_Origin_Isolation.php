@@ -17,13 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Cross_Origin_Isolation
  */
-class Cross_Origin_Isolation extends \WP_UnitTestCase {
-	use Private_Access;
+class Cross_Origin_Isolation extends Test_Case {
 	/**
 	 * Admin user for test.
 	 *
@@ -44,7 +43,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		$user_perferences = new \Google\Web_Stories\User_Preferences();
+		$user_perferences = new \Google\Web_Stories\User\Preferences();
 		$user_perferences->register();
 	}
 
@@ -53,7 +52,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	 */
 	public function test_register() {
 		wp_set_current_user( self::$admin_id );
-		update_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		update_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
@@ -71,7 +70,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'get_avatar', [ $coi, 'get_avatar' ] ) );
 
 		unset( $GLOBALS['current_screen'] );
-		delete_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
 	}
 
 	/**
@@ -79,7 +78,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	 */
 	public function test_is_needed() {
 		wp_set_current_user( self::$admin_id );
-		update_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		update_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
 		$this->assertTrue( $result );
@@ -99,7 +98,7 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	 */
 	public function test_is_needed_opt_out() {
 		wp_set_current_user( self::$admin_id );
-		update_user_meta( self::$admin_id, \Google\Web_Stories\User_Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		update_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
 		$this->assertFalse( $result );
@@ -222,10 +221,6 @@ class Cross_Origin_Isolation extends \WP_UnitTestCase {
 	 * @return \Google\Web_Stories\Admin\Cross_Origin_Isolation
 	 */
 	protected function get_coi_object() {
-		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
-		$experiments->method( 'is_experiment_enabled' )
-					->willReturn( true );
-
-		return new \Google\Web_Stories\Admin\Cross_Origin_Isolation( $experiments );
+		return new \Google\Web_Stories\Admin\Cross_Origin_Isolation();
 	}
 }

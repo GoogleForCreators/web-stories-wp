@@ -22,7 +22,7 @@ import { act } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import Library from '../../index';
+import Library from '../..';
 import { MediaProvider } from '../../../../app/media';
 import { ConfigProvider } from '../../../../app/config';
 import { FontProvider } from '../../../../app/font';
@@ -54,7 +54,7 @@ export async function arrange({ mediaResponse = [] }) {
     },
   };
 
-  const accessors = renderWithTheme(
+  const view = renderWithTheme(
     <ConfigProvider config={config}>
       <APIContext.Provider value={apiContextValue}>
         <FontProvider>
@@ -72,5 +72,5 @@ export async function arrange({ mediaResponse = [] }) {
 
   await act(() => Promise.all(allPromises));
 
-  return accessors;
+  return view;
 }
