@@ -19,7 +19,7 @@
 import { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -49,7 +49,7 @@ const OptimizeButton = styled(Button)`
   margin: auto 16px;
   border: ${({ theme }) => `1px solid ${theme.colors.border.defaultNormal}`};
 `;
-export function VideoOptimization({ element }) {
+export function VideoOptimization({ element, caption }) {
   const { resource = {} } = element;
   const { optimizeVideo } = useLocalMedia((state) => ({
     optimizeVideo: state.actions.optimizeVideo,
@@ -67,20 +67,7 @@ export function VideoOptimization({ element }) {
 
   return (
     <Container>
-      <Caption>
-        <ul>
-          <li>
-            {sprintf(
-              /* translators: %s: video resolution (720p) */
-              __(
-                'Videos larger than %s can cause slower loading and higher bandwidth costs.',
-                'web-stories'
-              ),
-              '720p'
-            )}
-          </li>
-        </ul>
-      </Caption>
+      <Caption>{caption}</Caption>
       <Thumbnail
         src={resource?.poster}
         alt={resource?.alt || __('video thumbnail', 'web-stories')}

@@ -155,7 +155,12 @@ export function videoElementOptimized(element = {}) {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
-      help: <VideoOptimization element={element} />,
+      help: (
+        <VideoOptimization
+          element={element}
+          caption={MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.HELPER_TEXT}
+        />
+      ),
       noHighlight: true,
     };
   }

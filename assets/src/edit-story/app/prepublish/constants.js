@@ -621,6 +621,20 @@ export const MESSAGES = {
     },
     VIDEO_NOT_OPTIMIZED: {
       MAIN_TEXT: __('Optimize video size', 'web-stories'),
+      HELPER_TEXT: (
+        <ul>
+          <li>
+            {sprintf(
+              /* translators: %s: video resolution (720p) */
+              __(
+                'Videos larger than %s can cause slower loading and higher bandwidth costs.',
+                'web-stories'
+              ),
+              '720p'
+            )}
+          </li>
+        </ul>
+      ),
     },
   },
 };
