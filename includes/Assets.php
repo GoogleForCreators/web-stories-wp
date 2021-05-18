@@ -33,11 +33,15 @@ namespace Google\Web_Stories;
  */
 class Assets {
 	/**
+	 * An array of registered styles.
+	 *
 	 * @var array
 	 */
 	protected $register_styles = [];
 
 	/**
+	 * An array of registered scripts.
+	 *
 	 * @var array
 	 */
 	protected $register_scripts = [];
@@ -141,7 +145,7 @@ class Assets {
 	 * @return void
 	 */
 	public function register_style_asset( $style_handle, array $style_dependencies = [] ) {
-		if ( isset( $this->register_style[ $style_handle ] ) ) {
+		if ( isset( $this->register_styles[ $style_handle ] ) ) {
 			return;
 		}
 
@@ -204,11 +208,11 @@ class Assets {
 	 * @return bool Whether the style has been registered. True on success, false on failure.
 	 */
 	public function register_style( $style_handle, $src, $deps = [], $ver = false, $media = 'all' ) {
-		if ( ! isset( $this->register_style[ $style_handle ] ) ) {
-			$this->register_style[ $style_handle ] = wp_register_style( $style_handle, $src, $deps, $ver, $media );
+		if ( ! isset( $this->register_styles[ $style_handle ] ) ) {
+			$this->register_styles[ $style_handle ] = wp_register_style( $style_handle, $src, $deps, $ver, $media );
 		}
 
-		return $this->register_style[ $style_handle ];
+		return $this->register_styles[ $style_handle ];
 	}
 
 	/**
@@ -248,10 +252,11 @@ class Assets {
 	 * @param string           $media  Optional. The media for which this stylesheet has been defined.
 	 *                                 Default 'all'. Accepts media types like 'all', 'print' and 'screen', or media queries like
 	 *                                 '(orientation: portrait)' and '(max-width: 640px)'.
+	 * @return void
 	 */
 	public function enqueue_style( $style_handle, $src = '', $deps = [], $ver = false, $media = 'all' ) {
 		$this->register_style( $style_handle, $src, $deps, $ver, $media );
-		return wp_enqueue_style( $style_handle, $src, $deps, $ver, $media );
+		wp_enqueue_style( $style_handle, $src, $deps, $ver, $media );
 	}
 
 	/**
@@ -267,10 +272,11 @@ class Assets {
 	 *                                    If set to null, no version is added.
 	 * @param bool             $in_footer Optional. Whether to enqueue the script before </body> instead of in the <head>.
 	 *                                    Default 'false'.
+	 * @return void
 	 */
 	public function enqueue_script( $script_handle, $src = '', $deps = [], $ver = false, $in_footer = false ) {
 		$this->register_script( $script_handle, $src, $deps, $ver, $in_footer );
-		return wp_enqueue_script( $script_handle, $src, $deps, $ver, $in_footer );
+		wp_enqueue_script( $script_handle, $src, $deps, $ver, $in_footer );
 	}
 
 	/**

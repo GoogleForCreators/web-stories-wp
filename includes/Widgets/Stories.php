@@ -451,8 +451,7 @@ class Stories extends WP_Widget {
 		}
 
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
-
-		$this->assets->enqueue_script( self::SCRIPT_HANDLE, [ 'jquery' ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ 'jquery' ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
