@@ -76,7 +76,7 @@ function ZoomSelector() {
     if (option) {
       return option.label;
     }
-    return `${zoomLevel * 100}%`;
+    return `${Math.round(zoomLevel * 100)}%`;
   }, [zoomSetting, zoomLevel]);
 
   const handleSetZoom = useCallback(

@@ -157,12 +157,32 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
 
 function useZoomSetting() {
   const [state, actions] = useReduction(INITIAL_STATE, reducer);
-  const { zoomSetting, zoomLevel, workspaceSize, scrollOffset } = state;
+  const {
+    zoomSetting,
+    zoomLevel: _zoomLevel,
+    workspaceSize,
+    scrollOffset,
+  } = state;
 
   const viewportProperties = useMemo(
-    () => calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel),
-    [workspaceSize, zoomSetting, zoomLevel]
+    () => calculateViewportProperties(workspaceSize, zoomSetting, _zoomLevel),
+    [workspaceSize, zoomSetting, _zoomLevel]
   );
+
+  const { pageWidth } = viewportProperties;
+
+  const zoomLevel = useMemo(() => {
+    const maxPageWidth = Math.ceil(
+      (pageWidth / PAGE_WIDTH_FACTOR) * PAGE_WIDTH_FACTOR
+    );
+    switch (zoomSetting) {
+      case ZOOM_SETTING.FILL:
+      case ZOOM_SETTING.FIT:
+        return maxPageWidth / PAGE_WIDTH;
+      default:
+        return _zoomLevel;
+    }
+  }, [_zoomLevel, pageWidth, zoomSetting]);
 
   return {
     state: {
