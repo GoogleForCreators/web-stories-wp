@@ -363,7 +363,7 @@ export class Fixture {
         await this.events.click(this.editor.helpCenter.toggleButton);
         await this.events.sleep(500);
       },
-      { timeout: 10000 }
+      { timeout: 5000 }
     );
 
     // @todo: find a stable way to wait for the story to fully render. Can be
