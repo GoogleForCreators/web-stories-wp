@@ -50,6 +50,9 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
+  // The first page of templates to fetch is 1.
+  const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
+
   const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
@@ -99,6 +102,7 @@ function LibraryProvider({ children }) {
         tab,
         textSets,
         savedTemplates,
+        nextTemplatesToFetch,
       },
       actions: {
         setTab,
@@ -106,6 +110,7 @@ function LibraryProvider({ children }) {
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
+        setNextTemplatesToFetch,
       },
       data: {
         tabs: tabs,
@@ -119,6 +124,8 @@ function LibraryProvider({ children }) {
       insertTextSet,
       insertTextSetByOffset,
       tabs,
+      nextTemplatesToFetch,
+      setNextTemplatesToFetch,
     ]
   );
   const getTextSets = useCallback(async () => {
