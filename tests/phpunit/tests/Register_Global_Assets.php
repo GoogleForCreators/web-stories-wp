@@ -38,12 +38,10 @@ class Register_Global_Assets extends Test_Case {
 	 */
 	public function test_register() {
 		$register_font   = new \Google\Web_Stories\Register_Global_Assets(new Assets());
-		$before_register = $this->get_private_property( $register_font, 'register' );
 		$register_font->register();
-		$after_register = $this->get_private_property( $register_font, 'register' );
 
 		$this->assertTrue( wp_style_is( $register_font->get_font_handle(), 'registered' ) );
-		$this->assertFalse( $before_register );
-		$this->assertTrue( $after_register );
+		$this->assertTrue( wp_style_is( $register_font->get_player_handle(), 'registered' ) );
+		$this->assertTrue( wp_script_is( $register_font->get_player_handle(), 'registered' ) );
 	}
 }

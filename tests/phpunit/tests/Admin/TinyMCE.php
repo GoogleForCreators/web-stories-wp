@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Admin\Tests;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
@@ -37,6 +38,9 @@ class TinyMCE extends Test_Case {
 				->willReturn( false );
 		$tinymce->method( 'is_edit_screen' )
 				->willReturn( false );
+
+		$this->set_private_property( $tinymce, 'assets', new Assets() );
+
 		$tinymce->register();
 
 		$this->assertSame( 10, has_filter( 'mce_buttons', [ $tinymce, 'tinymce_web_stories_button' ] ) );
