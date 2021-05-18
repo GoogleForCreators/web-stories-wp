@@ -34,9 +34,14 @@ function usePinchToZoom({ containerRef }) {
     })
   );
   const zoomLevelTracker = useRef(zoomLevel);
-  const [handleZoom] = useDebouncedCallback(
+  /*const [handleZoom] = useDebouncedCallback(
     () => setZoomLevel(zoomLevelTracker.current),
-    50,
+    100,
+    [setZoomLevel]
+  );*/
+  const [handleZoom] = useDebouncedCallback(
+    (level) => setZoomLevel(level),
+    100,
     [setZoomLevel]
   );
 
@@ -51,10 +56,14 @@ function usePinchToZoom({ containerRef }) {
       const { ctrlKey, deltaY } = e;
       const node = containerRef.current.childNodes[0];
       if (ctrlKey && node.contains(e.target) && deltaY) {
-        const newZoom = zoomLevelTracker.current - deltaY * 0.01;
-        zoomLevelTracker.current = Math.min(3, Math.max(0.25, newZoom));
-        if (Math.abs(newZoom - zoomLevel) >= 0.04) {
-          handleZoom();
+        //const newZoom = zoomLevelTracker.current - deltaY * 0.01;
+        const newZoom = zoomLevel - deltaY * 0.01;
+        //zoomLevelTracker.current = Math.min(3, Math.max(0.25, newZoom));
+        if (Math.abs(newZoom - zoomLevel) >= 0.02) {
+          const newStepZoom = deltaY > 0 ? zoomLevel - 0.25 : zoomLevel + 0.25;
+          handleZoom(
+            Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
+          );
         }
         e.preventDefault();
       }
