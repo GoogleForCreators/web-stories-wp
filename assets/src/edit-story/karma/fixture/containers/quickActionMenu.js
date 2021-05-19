@@ -25,43 +25,43 @@ export class QuickActionMenu extends Container {
   }
 
   get changeBackgroundColorButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
     });
   }
 
   get insertBackgroundMediaButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
     });
   }
 
   get insertTextButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.INSERT_TEXT,
     });
   }
 
   get replaceMediaButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.REPLACE_MEDIA,
     });
   }
 
   get addAnimationButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.ADD_ANIMATION,
     });
   }
 
   get addLinkButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.ADD_LINK,
     });
   }
 
   get clearAnimationsButton() {
-    return this.getByRole('button', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.CLEAR_ANIMATIONS,
     });
   }

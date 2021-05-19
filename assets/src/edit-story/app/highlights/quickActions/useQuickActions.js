@@ -112,7 +112,9 @@ const useQuickActions = () => {
       // Choose properties to clear
       if (properties.includes('backgroundOverlay')) {
         newProperties.backgroundOverlay = null;
-      } else if (properties.includes('animation')) {
+      }
+
+      if (properties.includes('animation')) {
         newProperties.animation = {
           ...selectedElementAnimations?.[0],
           delete: true,
@@ -133,16 +135,15 @@ const useQuickActions = () => {
   );
 
   /**
-   * Clear animations and show a snackbar. Clicking the action
-   * in the snackbar adds the animations back to the element.
+   * Clear animations and show a confirmation snackbar. Clicking
+   * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
-   * @param {Array.<string>} properties The properties of the element to update
    * @return {void}
    */
   const handleClearAnimations = useCallback(
-    (elementId, properties) => {
-      handleResetProperties(elementId, properties);
+    (elementId) => {
+      handleResetProperties(elementId, ['animation']);
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
@@ -243,8 +244,7 @@ const useQuickActions = () => {
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_ANIMATIONS,
-        onClick: () =>
-          handleClearAnimations(selectedElement?.id, ['animation']),
+        onClick: () => handleClearAnimations(selectedElement?.id),
         onMouseDown: handleMouseDown,
         separator: 'top',
       },

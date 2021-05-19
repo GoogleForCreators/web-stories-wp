@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../app';
 import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
@@ -144,9 +145,10 @@ describe('Quick Actions integration', () => {
       );
 
       expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
-      // TODO: once #7522 is merged, we can uncomment this line.
-      // Need to add the `animation.dropdown` fixture
-      // expect(document.activeElement).toEqual(fixture.editor.inspector.designPanel.animation.dropdown);
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.animation.effectChooser
+      );
     });
 
     it(`clicking the \`${ACTION_TEXT.ADD_LINK}\` button should select the link panel and focus the input`, async () => {
@@ -156,16 +158,60 @@ describe('Quick Actions integration', () => {
       );
 
       expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
-      // TODO: once #7522 is merged, we can uncomment this line.
-      // expect(document.activeElement).toEqual(fixture.editor.inspector.designPanel.link.address);
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.link.address
+      );
     });
 
-    // TODO: add these tests
-    // it(
-    //   `clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations`
-    // );
-    // it(
-    //   `clicking the \`undo\` button should re-apply the animation that was cleared`
-    // );
+    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
+      // add animation to image
+      const effectChooserToggle =
+        fixture.editor.inspector.designPanel.animation.effectChooser;
+      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+      // animation
+      const animation = fixture.screen.getByRole('option', {
+        name: '"Pulse" Effect',
+      });
+
+      // apply animation to element
+      await fixture.events.click(animation, { clickCount: 1 });
+
+      // verify that element has animation
+      const { animations: originalAnimations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      expect(originalAnimations.length).toBe(1);
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      );
+
+      // verify that element has no animations
+      const { animations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      expect(animations.length).toBe(0);
+
+      // click `undo` button on snackbar
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/ })
+      );
+
+      // Verify that new animations match original animation
+      const { animations: revertedAnimations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      expect(revertedAnimations.length).toBe(1);
+      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+    });
   });
 });
