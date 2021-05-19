@@ -130,7 +130,7 @@ function DetailsGallery({
 
   const byLine = template
     ? sprintf(
-        /* translators: %s: template author  */
+        /* translators: byline. %s: author name. */
         __('by %s', 'web-stories'),
         template.createdBy
       )

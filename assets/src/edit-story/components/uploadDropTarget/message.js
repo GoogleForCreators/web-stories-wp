@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
@@ -65,6 +65,16 @@ const Icon = styled(Icons.ArrowCloud)`
 function UploadDropTargetMessage({ message, ...rest }) {
   const { allowedFileTypes } = useConfig();
 
+  let description = __('No file types are currently supported.', 'web-stories');
+
+  if (allowedFileTypes.length) {
+    description = sprintf(
+      /* translators: %s is a list of allowed file extensions. */
+      __('You can upload %s.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
+
   return (
     <Container {...rest}>
       <Box>
@@ -73,14 +83,7 @@ function UploadDropTargetMessage({ message, ...rest }) {
           {message}
         </Text>
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {sprintf(
-            /* translators: %s is a list of allowed file extensions. */
-            __('You can upload %s.', 'web-stories'),
-            allowedFileTypes.join(
-              /* translators: delimiter used in a list */
-              __(', ', 'web-stories')
-            )
-          )}
+          {description}
         </Text>
       </Box>
     </Container>

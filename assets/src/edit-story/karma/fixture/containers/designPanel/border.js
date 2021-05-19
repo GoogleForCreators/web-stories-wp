@@ -43,7 +43,7 @@ export class Border extends AbstractPanel {
   }
 
   get lockBorderWidth() {
-    return this.getByRole('button', { name: /Toggle border ratio lock/ });
+    return this.getByRole('button', { name: /Toggle consistent border/ });
   }
 
   get borderColor() {

@@ -30,7 +30,7 @@ function ColorPresetPanel({ pushUpdate }) {
   return (
     <PresetPanel
       presetType={PRESET_TYPES.COLOR}
-      title={__('Saved colors', 'web-stories')}
+      title={__('Saved Colors', 'web-stories')}
       pushUpdate={pushUpdate}
     />
   );
