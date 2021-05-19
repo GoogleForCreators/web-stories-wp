@@ -22,7 +22,7 @@ use Google\Web_Stories\Tests\Test_Case;
 /**
  * Class Add_Poster_Generation_Media_Source
  *
- * @covers Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source;
+ * @covers \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source;
  *
  * @package phpunit\tests\Migrations
  */

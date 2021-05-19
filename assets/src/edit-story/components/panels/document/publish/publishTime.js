@@ -49,7 +49,7 @@ function PublishTime() {
   );
   const use12HourFormat = is12Hour();
 
-  /* translators: Date format, see https://www.php.net/date */
+  /* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
   const shortDateFormat = __('d/m/Y', 'web-stories');
 
   const [showDatePicker, setShowDatePicker] = useState(false);

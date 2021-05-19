@@ -54,7 +54,7 @@ describe('Panels/VideoOptions', () => {
 
   it('should render <VideoOptions /> panel', () => {
     arrange([defaultElement]);
-    const panel = screen.getByText('Video settings');
+    const panel = screen.getByText('Video Settings');
     expect(panel).toBeInTheDocument();
   });
 });

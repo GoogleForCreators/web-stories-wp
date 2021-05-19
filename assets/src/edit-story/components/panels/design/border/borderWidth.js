@@ -26,6 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Row } from '../../../form';
+import Tooltip from '../../../tooltip';
 import {
   focusStyle,
   inputContainerStyleOverride,
@@ -188,25 +189,27 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         </>
       )}
       <ToggleWrapper locked={lockBorder}>
-        <StyledLockToggle
-          isLocked={lockBorder}
-          onClick={() => {
-            let args = {
-              lockedWidth: !lockBorder,
-            };
-            // If the border width wasn't locked before (and is now), unify all the values.
-            if (!lockBorder) {
-              args = {
-                ...args,
-                top: border.left,
-                right: border.left,
-                bottom: border.left,
+        <Tooltip title={__('Toggle consistent border', 'web-stories')}>
+          <StyledLockToggle
+            isLocked={lockBorder}
+            onClick={() => {
+              let args = {
+                lockedWidth: !lockBorder,
               };
-            }
-            handleLockChange(args);
-          }}
-          aria-label={__('Toggle border ratio lock', 'web-stories')}
-        />
+              // If the border width wasn't locked before (and is now), unify all the values.
+              if (!lockBorder) {
+                args = {
+                  ...args,
+                  top: border.left,
+                  right: border.left,
+                  bottom: border.left,
+                };
+              }
+              handleLockChange(args);
+            }}
+            aria-label={__('Toggle consistent border', 'web-stories')}
+          />
+        </Tooltip>
       </ToggleWrapper>
     </BorderRow>
   );

@@ -13,26 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
-import stickers from '@web-stories-wp/stickers';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import { LayerText } from '../shared/layerText';
+import translateToExclusiveList from '../translateToExclusiveList';
 
-function StickerLayerContent({ element }) {
-  const { sticker } = element;
-  const layerTitle =
-    stickers[sticker?.type]?.title || __('Sticker', 'web-stories');
-  return <LayerText>{layerTitle}</LayerText>;
-}
-StickerLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default StickerLayerContent;
+describe('translateToExclusiveList', () => {
+  it.each`
+    options                                        | result
+    ${[]}                                          | ${''}
+    ${['one']}                                     | ${'one'}
+    ${['doctor', 'barnacle']}                      | ${'doctor or barnacle'}
+    ${['apple', 'banana', 'mango', 'dragonfruit']} | ${'apple, banana, mango, or dragonfruit'}
+  `('should translate as expected', ({ options, result }) => {
+    expect(translateToExclusiveList(options)).toBe(result);
+  });
+});

@@ -42,7 +42,8 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
     <Dialog
       isOpen={isOpen}
       onClose={onClose}
-      title={__('Story published!', 'web-stories')}
+      // Same as item_published post type label.
+      title={__('Story published.', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
       primaryText={__('Add to new post', 'web-stories')}
       onPrimary={onAddToPostClick}
@@ -69,7 +70,10 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
         </TranslateWithMarkup>
       </Text>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__('Would you like to include it on a new post?', 'web-stories')}
+        {
+          /* translators: 'it' refers to a web story. */
+          __('Would you like to include it on a new post?', 'web-stories')
+        }
       </Text>
     </Dialog>
   );

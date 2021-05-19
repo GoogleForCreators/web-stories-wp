@@ -145,16 +145,29 @@ export function videoElementLength(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementOptimized(element = {}) {
+  if (element.resource?.local) {
+    return undefined;
+  }
+
+  if (element.resource?.isOptimized) {
+    return undefined;
+  }
+
   const idResource = element.resource?.id;
   const idOrigin = idResource?.toString().split(':')?.[0];
   const isCoverrMedia = idOrigin === 'media/coverr';
+  if (isCoverrMedia) {
+    return undefined;
+  }
+
   const videoArea =
     (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
   const isLargeVideo =
     videoArea >=
     MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
       MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
-  if (!isCoverrMedia && isLargeVideo && !element.resource?.isOptimized) {
+
+  if (isLargeVideo) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
@@ -163,5 +176,6 @@ export function videoElementOptimized(element = {}) {
       noHighlight: true,
     };
   }
+
   return undefined;
 }

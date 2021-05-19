@@ -31,7 +31,7 @@ export class TextStyle extends AbstractPanel {
 
   get bold() {
     return this._get(
-      this.getByRole('button', { name: /Toggle: bold/ }),
+      this.getByRole('button', { name: /Bold/ }),
       'bold',
       ToggleButton
     );
@@ -39,7 +39,7 @@ export class TextStyle extends AbstractPanel {
 
   get italic() {
     return this._get(
-      this.getByRole('button', { name: /Toggle: italic/ }),
+      this.getByRole('button', { name: /Italic/ }),
       'italic',
       ToggleButton
     );
@@ -47,7 +47,7 @@ export class TextStyle extends AbstractPanel {
 
   get underline() {
     return this._get(
-      this.getByRole('button', { name: /Toggle: underline/ }),
+      this.getByRole('button', { name: /Underline/ }),
       'underline',
       ToggleButton
     );

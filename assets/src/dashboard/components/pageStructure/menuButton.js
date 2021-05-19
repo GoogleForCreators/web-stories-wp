@@ -63,7 +63,7 @@ export default function NavMenuButton({ showOnlyOnSmallViewport }) {
     <TransparentButton
       onClick={actions.toggleSideBar}
       showOnlyOnSmallViewport={showOnlyOnSmallViewport}
-      aria-label={__('toggle main navigation', 'web-stories')}
+      aria-label={__('Toggle main navigation', 'web-stories')}
     >
       <MenuIcon aria-hidden />
     </TransparentButton>

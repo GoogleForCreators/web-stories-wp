@@ -91,15 +91,15 @@ export const STORY_SORT_MENU_ITEMS = [
     value: STORY_SORT_OPTIONS.NAME,
   },
   {
-    label: __('Date created', 'web-stories'),
+    label: __('Date Created', 'web-stories'),
     value: STORY_SORT_OPTIONS.DATE_CREATED,
   },
   {
-    label: __('Last modified', 'web-stories'), // default
+    label: __('Last Modified', 'web-stories'), // default
     value: STORY_SORT_OPTIONS.LAST_MODIFIED,
   },
   {
-    label: __('Created by', 'web-stories'),
+    label: __('Created By', 'web-stories'),
     value: STORY_SORT_OPTIONS.CREATED_BY,
   },
 ];

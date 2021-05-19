@@ -16,7 +16,6 @@
 /**
  * Internal dependencies
  */
-import { default as sample } from './sampleSticker';
 import * as beautyStickers from './beauty';
 import * as cookingStickers from './cooking';
 import * as diyStickers from './diy';
@@ -27,7 +26,6 @@ import * as travelStickers from './travel';
 import * as wellbeingStickers from './wellbeing';
 
 export default {
-  sample,
   ...beautyStickers,
   ...cookingStickers,
   ...diyStickers,

@@ -43,9 +43,6 @@ const MediaRectangle = styled.section`
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.colors.bg.primary};
-  :focus {
-    outline: -webkit-focus-ring-color auto 1px;
-  }
   border-radius: 4px;
   position: relative;
 `;
@@ -172,16 +169,17 @@ export const MediaInput = forwardRef(function Media(
   const hasMenu = menuOptions?.length > 0;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const buttonRef = useRef(null);
-
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
+
+  const defaultRef = useRef(null);
+  const buttonRef = ref ?? defaultRef;
 
   const StyledMedia = MediaOptions[variant];
   // Media input only allows simplified dropdown with one group.
   const options = [{ group: menuOptions }];
   return (
-    <StyledMedia ref={ref} className={className} {...rest}>
+    <StyledMedia className={className} {...rest}>
       <ImageWrapper variant={variant}>
         {value ? (
           <Img src={value} alt={alt} crossOrigin="anonymous" />

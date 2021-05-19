@@ -92,7 +92,7 @@ export class DesignPanel extends Container {
 
   get textStylePreset() {
     return this._get(
-      this.getByRole('region', { name: /Saved styles/ }),
+      this.getByRole('region', { name: /Saved Styles/i }),
       'textStylePreset',
       TextStylePreset
     );
@@ -100,7 +100,7 @@ export class DesignPanel extends Container {
 
   get colorPreset() {
     return this._get(
-      this.getByRole('region', { name: /Saved colors/ }),
+      this.getByRole('region', { name: /Saved Colors/i }),
       'colorPreset',
       ColorPreset
     );
@@ -108,7 +108,7 @@ export class DesignPanel extends Container {
 
   get borderRadius() {
     return this._get(
-      this.getByRole('region', { name: /Corner radius/ }),
+      this.getByRole('region', { name: /Corner Radius/i }),
       'borderRadius',
       BorderRadius
     );
@@ -131,7 +131,7 @@ export class DesignPanel extends Container {
 
   get sizePosition() {
     return this._get(
-      this.getByRole('region', { name: /Size & position/i }),
+      this.getByRole('region', { name: /Size & Position/i }),
       'sizePosition',
       SizePosition
     );

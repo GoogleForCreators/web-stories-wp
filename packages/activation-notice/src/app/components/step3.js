@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { trackClick } from '@web-stories-wp/tracking';
+import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
@@ -77,13 +78,13 @@ function Step3() {
           }
         </Number>
         <Paragraph>
-          {
-            /* translators: First half of "Jump into the Editor" */
-            _x('Jump into the', 'plugin activation', 'web-stories')
-          }{' '}
-          <Link href={newStoryURL} onClick={onClick}>
-            {__('Editor', 'web-stories')}
-          </Link>
+          <TranslateWithMarkup
+            mapping={{
+              a: <Link href={newStoryURL} onClick={onClick} />,
+            }}
+          >
+            {__('Jump into the<br /><a>Editor</a>', 'web-stories')}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>
