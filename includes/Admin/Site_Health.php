@@ -104,63 +104,66 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @return array The debugging information, with added information for Web stories.
 	 */
 	public function add_debug_information( array $debugging_information ) {
+		$enabled_experiments = [];
+		foreach ( $this->experiments->get_experiments() as $experiment ) {
+			$enabled = $this->experiments->is_experiment_enabled( $experiment['name'] );
+			if ( $enabled ) {
+				$enabled_experiments[ $experiment['label'] ] = $this->get_formatted_output( $enabled );
+			}
+		}
+		if ( ! $enabled_experiments ) {
+			$enabled_experiments = __( 'No experiments enabled', 'web-stories' );
+		}
+
 		$extra_data = [
-			'web_stories'             => [
-				'label'       => esc_html__( 'Web Stories Constants', 'web-stories' ),
+			'web_stories' => [
+				'label'       => esc_html__( 'Web Stories', 'web-stories' ),
 				'description' => esc_html__( 'Debugging information for the Web Stories for WordPress.', 'web-stories' ),
 				'fields'      => [
-					'web_stories_version'        => [
+					'web_stories_version'             => [
 						'label'   => 'WEBSTORIES_VERSION',
 						'value'   => WEBSTORIES_VERSION,
 						'private' => false,
 					],
-					'web_stories_db_version'     => [
+					'web_stories_db_version'          => [
 						'label'   => 'WEBSTORIES_DB_VERSION',
 						'value'   => WEBSTORIES_DB_VERSION,
 						'private' => false,
 					],
-					'web_stories_amp_version'    => [
+					'web_stories_amp_version'         => [
 						'label'   => 'WEBSTORIES_AMP_VERSION',
 						'value'   => WEBSTORIES_AMP_VERSION,
 						'private' => false,
 					],
-					'web_stories_cdn_url'        => [
+					'web_stories_cdn_url'             => [
 						'label'   => 'WEBSTORIES_CDN_URL',
 						'value'   => WEBSTORIES_CDN_URL,
 						'private' => false,
 					],
-					'web_stories_dev_mode'       => [
+					'web_stories_dev_mode'            => [
 						'label'   => 'WEBSTORIES_DEV_MODE',
 						'private' => false,
 						'value'   => $this->get_formatted_output( WEBSTORIES_DEV_MODE ),
 						'debug'   => WEBSTORIES_DEV_MODE,
 					],
-					'web_stories_theme_support'  => [
+					'web_stories_theme_support'       => [
 						'label'   => 'Theme supports',
 						'value'   => $this->get_formatted_output( current_theme_supports( 'web-stories' ) ),
 						'private' => false,
 					],
-					'web_stories_libxml_version' => [
+					'web_stories_enabled_experiments' => [
+						'label'   => 'Experiments',
+						'value'   => $enabled_experiments,
+						'private' => false,
+					],
+					'web_stories_libxml_version'      => [
 						'label'   => 'libxml Version',
 						'value'   => LIBXML_DOTTED_VERSION,
 						'private' => false,
 					],
 				],
 			],
-			'web_stories_experiments' => [
-				'label'       => esc_html__( 'Web Stories Experiments', 'web-stories' ),
-				'description' => esc_html__( 'Information on enabled and disabled experiments for the Web Stories plugin.', 'web-stories' ),
-				'fields'      => [],
-			],
 		];
-
-		foreach ( $this->experiments->get_experiments() as $experiment ) {
-			$extra_data['web_stories_experiments']['fields'][ $experiment['name'] ] = [
-				'label'   => $experiment['label'],
-				'value'   => $this->get_formatted_output( $this->experiments->is_experiment_enabled( $experiment['name'] ) ),
-				'private' => false,
-			];
-		}
 
 		return array_merge( $debugging_information, $extra_data );
 	}
