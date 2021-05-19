@@ -49,12 +49,13 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	}
 
 	/**
+	 * Get name of meta key to be used in migration.
 	 *
 	 * @since 1.7.2
 	 *
 	 * @return string
 	 */
-	protected function get_post_meta_key(){
+	protected function get_post_meta_key() {
 		return Media::POSTER_POST_META_KEY;
 	}
 }

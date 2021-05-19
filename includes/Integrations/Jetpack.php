@@ -75,7 +75,7 @@ class Jetpack extends Service_Base {
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'add_videopress' ] );
 		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_api_response' ], 10, 2 );
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 10, 2 );
-		add_filter( 'added_post_meta', [ $this, 'add_term' ], 10, 3 );
+		add_action( 'added_post_meta', [ $this, 'add_term' ], 10, 3 );
 	}
 
 	/**
