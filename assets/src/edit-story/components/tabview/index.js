@@ -238,10 +238,10 @@ function TabView({
           key={id}
           ref={(tabRef) => {
             if (tabRefs) {
-              return (tabRefs[id].current = tabRef);
+              tabRefs[id].current = tabRef;
+            } else {
+              internalTabRefs.current[id] = tabRef;
             }
-
-            return (internalTabRefs.current[id] = tabRef);
           }}
           id={getTabId(id)}
           isActive={tab === id}
