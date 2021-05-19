@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -35,21 +36,17 @@ const MIN_MAX = {
   },
 };
 
-function LinkInput({
-  onChange,
-  onBlur,
-  onFocus,
-  value = '',
-  hint,
-  hasError,
-  ...rest
-}) {
+function LinkInput(
+  { onChange, onBlur, onFocus, value = '', hint, hasError, ...rest },
+  ref
+) {
   const trimmedValue = (value || '').trim();
   const isValid = isValidUrl(withProtocol(trimmedValue));
   const isNotValid = trimmedValue.length > 0 && !isValid;
   return (
     <Row>
       <Input
+        ref={ref}
         placeholder={__('Web address', 'web-stories')}
         onChange={(evt) => onChange(evt.target.value)}
         onBlur={() => {
@@ -85,4 +82,4 @@ LinkInput.propTypes = {
   hasError: PropTypes.bool,
 };
 
-export default LinkInput;
+export default forwardRef(LinkInput);

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
@@ -82,7 +82,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     currentPage: state.state.currentPage,
   }));
 
-  const highlight = useFocusHighlight(states.LINK);
+  const linkRef = useRef(null);
+  const highlight = useFocusHighlight(states.LINK, linkRef);
 
   const { getElementsInAttachmentArea } = useElementsWithLinks();
   const hasElementsInAttachmentArea =
@@ -225,6 +226,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       css={highlight?.showEffect && styles.FLASH}
     >
       <LinkInput
+        ref={linkRef}
         onChange={(value) =>
           !displayLinkGuidelines &&
           handleChange({ url: value }, !value /* submit */)
