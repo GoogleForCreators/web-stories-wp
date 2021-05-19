@@ -35,7 +35,7 @@ function usePinchToZoom({ containerRef }) {
 
   const [handleZoom] = useDebouncedCallback(
     (level) => setZoomLevel(level),
-    100,
+    50,
     [setZoomLevel]
   );
 
@@ -48,7 +48,7 @@ function usePinchToZoom({ containerRef }) {
         // Ideally we'd use transform: scale locally and update only when the event finishes, however,
         // there are too many other pieces that would need adjustment as well.
         const newZoom = zoomLevel - deltaY * 0.01;
-        if (Math.abs(newZoom - zoomLevel) >= 0.02) {
+        if (Math.abs(newZoom - zoomLevel) >= 0.01) {
           const newStepZoom = deltaY > 0 ? zoomLevel - 0.25 : zoomLevel + 0.25;
           handleZoom(
             Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
@@ -75,13 +75,10 @@ function usePinchToZoom({ containerRef }) {
       const node = containerRef.current.childNodes[0];
       const { scale } = e;
       if (node.contains(e.target) && scale) {
-        const newZoom = zoomLevel * scale;
-        if (Math.abs(newZoom - zoomLevel) >= 0.02) {
-          const newStepZoom = scale < 1 ? zoomLevel - 0.25 : zoomLevel + 0.25;
-          handleZoom(
-            Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
-          );
-        }
+        const newStepZoom = scale < 1 ? zoomLevel - 0.25 : zoomLevel + 0.25;
+        handleZoom(
+          Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
+        );
         e.preventDefault();
       }
     },
