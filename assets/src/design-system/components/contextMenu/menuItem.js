@@ -25,7 +25,7 @@ import styled, { css } from 'styled-components';
 import { Button } from '../button';
 import { Link } from '../typography/link';
 import { Text } from '../typography/text';
-import { themeHelpers, THEME_CONSTANTS } from '../../theme';
+import { THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
 import { Tooltip, TOOLTIP_PLACEMENT } from '../tooltip';
 
@@ -40,18 +40,6 @@ const Shortcut = styled(Text)(
     white-space: nowrap;
   `
 );
-
-const StyledLink = styled(Link)`
-  :focus {
-    ${themeHelpers.focusCSS};
-  }
-`;
-
-const StyledButton = styled(Button)`
-  :focus {
-    ${themeHelpers.focusCSS};
-  }
-`;
 
 const IconWrapper = styled.span`
   width: 32px;
@@ -120,7 +108,7 @@ export const MenuItem = ({
       : {};
 
     return (
-      <StyledLink
+      <Link
         ref={itemRef}
         aria-label={label}
         href={href}
@@ -129,13 +117,13 @@ export const MenuItem = ({
         {...newTabProps}
       >
         {textContent}
-      </StyledLink>
+      </Link>
     );
   }
 
   if (onClick) {
     return (
-      <StyledButton
+      <Button
         ref={itemRef}
         aria-label={label}
         disabled={disabled}
@@ -143,7 +131,7 @@ export const MenuItem = ({
         onFocus={onFocus}
       >
         {textContent}
-      </StyledButton>
+      </Button>
     );
   }
 
