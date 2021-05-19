@@ -30,8 +30,6 @@ import { Select } from '../../../form';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
-import { useStory } from '../../../../app/story';
-import isDefaultPage from '../../../../utils/isDefaultPage';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
