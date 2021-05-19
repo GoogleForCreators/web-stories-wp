@@ -45,7 +45,7 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 */
 	public function migrate() {
 		wp_insert_term( $this->get_term_name(), Media::STORY_MEDIA_TAXONOMY );
-		$this->migrate_post_meta();
+		parent::migrate();
 	}
 
 	/**

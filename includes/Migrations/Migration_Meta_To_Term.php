@@ -41,22 +41,11 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @return void
-	 */
-	public function migrate() {
-		$this->migrate_post_meta();
-	}
-
-	/**
-	 * Migration media post meta to taxonomy term.
-	 *
-	 * @since 1.7.2
-	 *
 	 * @global \wpdb $wpdb WordPress database abstraction object.
 	 *
 	 * @return void
 	 */
-	protected function migrate_post_meta() {
+	public function migrate() {
 		global $wpdb;
 
 		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
