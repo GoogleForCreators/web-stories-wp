@@ -29,6 +29,8 @@ use Google\Web_Stories\Tests\Test_Case;
 class Add_Poster_Generation_Media_Source extends Test_Case {
 	/**
 	 * @covers ::migrate
+	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::migrate_post_meta
+	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::migrate
 	 */
 	public function test_migrate() {
 		$video_attachment_id = self::factory()->attachment->create_object(
