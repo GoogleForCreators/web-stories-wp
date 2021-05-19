@@ -102,6 +102,13 @@ function CustomStyles() {
                 bottom: 0;
                 margin: 0;
               }
+
+              @media (prefers-reduced-motion: no-preference) {
+                .animation-wrapper {
+                  opacity: var(--initial-opacity);
+                  transform: var(--initial-transform);
+                }
+              }
               `,
       }}
     />
