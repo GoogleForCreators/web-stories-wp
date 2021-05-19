@@ -110,7 +110,7 @@ describe('Panels/Preset', () => {
   const APPLY_GLOBAL_PRESET = 'Apply global color';
   const ADD_LOCAL_LABEL = 'Add local color';
   const ADD_GLOBAL_LABEL = 'Add global color';
-  const PANEL_LABEL = 'Saved colors';
+  const PANEL_LABEL = 'Saved Colors';
   const TEST_COLOR = {
     color: {
       r: 1,

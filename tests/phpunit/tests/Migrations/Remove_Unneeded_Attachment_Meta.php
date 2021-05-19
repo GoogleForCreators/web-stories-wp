@@ -22,7 +22,7 @@ use Google\Web_Stories\Tests\Test_Case;
 /**
  * Class Remove_Unneeded_Attachment_Meta
  *
- * @covers Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta;
+ * @covers \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta;
  *
  * @package phpunit\tests\Migrations
  */

@@ -82,8 +82,9 @@ class Optimization extends Test_Case {
 
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
-		$this->assertCount( 1, $config_array );
+		$this->assertCount( 2, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
+		$this->assertArrayHasKey( RewriteAmpUrls::class, $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}
 
@@ -104,8 +105,9 @@ class Optimization extends Test_Case {
 			ReorderHead::class,
 		];
 
-		$this->assertCount( 1, $config_array );
+		$this->assertCount( 2, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
+		$this->assertArrayHasKey( RewriteAmpUrls::class, $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}
 }

@@ -45,6 +45,6 @@ export default class PageTemplates extends Container {
   }
 
   get deleteTemplateBtn() {
-    return this.getByRole('button', { name: 'Delete page template' });
+    return this.getByRole('button', { name: 'Delete Page Template' });
   }
 }

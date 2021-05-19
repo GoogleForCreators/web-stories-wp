@@ -20,7 +20,7 @@
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
-describe('prepublish checklist', () => {
+describe('Pre-Publish Checklist', () => {
   it('should show the checklist', async () => {
     await createNewStory();
     await expect(page).toClick('li', { text: 'Checklist' });
@@ -39,7 +39,7 @@ describe('prepublish checklist', () => {
     await expect(page).toClick('button', {
       text: /Continue to publish/,
     });
-    await expect(page).toMatch('Story published!');
+    await expect(page).toMatch('Story published.');
     await expect(page).toClick('button', { text: 'Dismiss' });
 
     await page.reload();

@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -195,14 +196,38 @@ const RadioGroup = styled.div`
 `;
 
 const translations = {
-  [DIRECTION.RIGHT_TO_LEFT]: __('right to left', 'web-stories'),
-  [DIRECTION.LEFT_TO_RIGHT]: __('left to right', 'web-stories'),
-  [DIRECTION.TOP_TO_BOTTOM]: __('top to bottom', 'web-stories'),
-  [DIRECTION.BOTTOM_TO_TOP]: __('bottom to top', 'web-stories'),
-  [ROTATION.CLOCKWISE]: __('clockwise', 'web-stories'),
-  [ROTATION.COUNTER_CLOCKWISE]: __('counterclockwise', 'web-stories'),
-  [SCALE_DIRECTION.SCALE_IN]: __('scale in', 'web-stories'),
-  [SCALE_DIRECTION.SCALE_OUT]: __('scale out', 'web-stories'),
+  [DIRECTION.RIGHT_TO_LEFT]: _x(
+    'right to left',
+    'animation direction',
+    'web-stories'
+  ),
+  [DIRECTION.LEFT_TO_RIGHT]: _x(
+    'left to right',
+    'animation direction',
+    'web-stories'
+  ),
+  [DIRECTION.TOP_TO_BOTTOM]: _x(
+    'top to bottom',
+    'animation direction',
+    'web-stories'
+  ),
+  [DIRECTION.BOTTOM_TO_TOP]: _x(
+    'bottom to top',
+    'animation direction',
+    'web-stories'
+  ),
+  [ROTATION.CLOCKWISE]: _x('clockwise', 'rotation direction', 'web-stories'),
+  [ROTATION.COUNTER_CLOCKWISE]: _x(
+    'counterclockwise',
+    'rotation direction',
+    'web-stories'
+  ),
+  [SCALE_DIRECTION.SCALE_IN]: _x('scale in', 'scale direction', 'web-stories'),
+  [SCALE_DIRECTION.SCALE_OUT]: _x(
+    'scale out',
+    'scale direction',
+    'web-stories'
+  ),
 };
 
 const valueForInternalValue = (value) => {

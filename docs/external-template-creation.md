@@ -211,7 +211,7 @@ export const MASKS = [
       {
     type: MaskTypes.RING,
     showInLibrary: true, // mark this as true if you would like the shape to be user facing
-    name: __('Ring', 'web-stories'),
+    name: _x('Ring', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.RING],
     ratio: 392 / 392, // <Width of svg viewbox coppied from illustrator> / <Height>
   },

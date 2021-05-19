@@ -272,7 +272,7 @@ jobs:
     name: Build new version
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: [assets-version, changelog]
+    needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
     steps:
@@ -409,9 +409,6 @@ jobs:
       - name: Build plugin
         run: npm run build:js
 
-      - name: Bundle composer version
-        run: npm run workflow:build-plugin -- --composer --zip web-stories-composer.zip
-
       - name: Bundle regular version
         run: npm run workflow:build-plugin -- --zip web-stories.zip
 
@@ -460,6 +457,7 @@ jobs:
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
           echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
 
+      # TODO: Replace with maintained action.
       - name: Create Release Draft
         id: create_release
         uses: actions/create-release@v1
@@ -493,16 +491,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
 
-      - name: Upload composer bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories-composer.zip
-          asset_name: web-stories-composer.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
-
       # Done so that any triggers/webhooks will have access to the published release
       # including all the release assets.
       - name: Publish Release
@@ -513,6 +501,60 @@ jobs:
             --header 'Authorization: token ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}' \
             --header "Accept: application/vnd.github.v3+json" \
             --data-raw '{"draft":false}'
+
+  # Post-release version bumps for non-patch releases.
+  post-release:
+    name: Post-release version bump
+    needs: [create-release]
+    runs-on: ubuntu-latest
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
+
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Cache node modules
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+        env:
+          cache-name: cache-node-modules
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          CI: true
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
+      - name: Update plugin version
+        run: npm run workflow:version -- --increment preminor --preid alpha
+
+      - name: Commit changes
+        run: |
+          git add web-stories.php
+          git status
+          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
+          git commit -m "Post-release version bump"
+          git pull --rebase
+          git push -u origin HEAD
 
   # Stable releases are automatically deployed to WordPress.org.
   # TODO: Consider also deploying other types of releases (RC, beta), but without bumping the stable tag.
@@ -586,57 +628,3 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
-
-  # Post-release version bumps for non-patch releases.
-  post-release:
-    name: Post-release version bump
-    needs: [deploy]
-    runs-on: ubuntu-latest
-    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: main
-          token: ${{ secrets.PLUGIN_RELEASE_ACCESS_TOKEN }}
-
-      - name: Read .nvmrc
-        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
-        id: nvm
-
-      - name: Setup Node
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-        env:
-          cache-name: cache-node-modules
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      # If we're releasing 1.6.0, bump version on main to 1.7.0-alpha.0.
-      - name: Update plugin version
-        run: npm run workflow:version -- --increment preminor --preid alpha
-
-      - name: Commit changes
-        run: |
-          git add web-stories.php
-          git status
-          git diff --staged --quiet && echo 'No changes to commit; exiting!' && exit 1
-          git commit -m "Post-release version bump"
-          git pull --rebase
-          git push -u origin HEAD

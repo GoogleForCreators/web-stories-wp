@@ -26,6 +26,7 @@ import {
   _n,
   sprintf,
   __,
+  _x,
   translateToInclusiveList,
 } from '@web-stories-wp/i18n';
 
@@ -133,7 +134,7 @@ function TextSetsPane({ paneRef }) {
 
   const categories = useMemo(
     () => [
-      { id: null, label: __('All', 'web-stories') },
+      { id: null, label: _x('All', 'text sets', 'web-stories') },
       ...Object.keys(textSets).map((category) => ({
         id: category,
         label: CATEGORIES[category] ?? category,
