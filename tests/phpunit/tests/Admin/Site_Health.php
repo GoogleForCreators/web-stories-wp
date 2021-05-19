@@ -14,7 +14,8 @@ class Site_Health extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$site_health = new \Google\Web_Stories\Admin\Site_Health( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$site_health = new \Google\Web_Stories\Admin\Site_Health( $experiments );
 		$site_health->register();
 
 		$this->assertEquals( 10, has_filter( 'debug_information', [ $site_health, 'add_debug_information' ] ) );
@@ -26,7 +27,26 @@ class Site_Health extends Test_Case {
 	 * @covers ::add_debug_information
 	 */
 	public function test_add_debug_information() {
-		$site_health = new \Google\Web_Stories\Admin\Site_Health( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+		$experiments->method( 'get_experiments' )
+					->willReturn(
+						[
+							[
+								'name'        => 'foo',
+								'label'       => 'Foo Label',
+								'description' => 'Foo Desc',
+							],
+							[
+								'name'        => 'bar',
+								'label'       => 'Bar Label',
+								'description' => 'Bar Desc',
+								'default'     => true,
+							],
+						]
+					);
+		$site_health = new \Google\Web_Stories\Admin\Site_Health( $experiments );
 		$results     = $site_health->add_debug_information( [] );
 
 		$this->assertArrayHasKey( 'web_stories', $results );
@@ -34,6 +54,8 @@ class Site_Health extends Test_Case {
 		$this->assertArrayHasKey( 'web_stories_version', $results['web_stories']['fields'] );
 		$this->assertArrayHasKey( 'value', $results['web_stories']['fields']['web_stories_version'] );
 		$this->assertSame( WEBSTORIES_VERSION, $results['web_stories']['fields']['web_stories_version']['value'] );
-		$this->assertArrayHasKey( 'web_stories_experiments', $results );
+		$this->assertArrayHasKey( 'web_stories_enabled_experiments', $results['web_stories']['fields'] );
+		$this->assertArrayHasKey( 'value', $results['web_stories']['fields']['web_stories_enabled_experiments'] );
+		$this->assertIsArray( $results['web_stories']['fields']['web_stories_enabled_experiments']['value'] );
 	}
 }
