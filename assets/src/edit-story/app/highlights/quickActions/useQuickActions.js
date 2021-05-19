@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 /**
  * Internal dependencies
  */
@@ -115,7 +115,7 @@ const useQuickActions = () => {
   const handleResetProperties = useCallback(
     (elementId, properties) => {
       const newProperties = {};
-
+      console.log({ properties });
       // Choose properties to clear
       if (properties.includes('backgroundOverlay')) {
         newProperties.backgroundOverlay = null;
@@ -191,7 +191,6 @@ const useQuickActions = () => {
 
   const {
     handleFocusAnimationPanel,
-    handleFocusMedia3pPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
@@ -200,7 +199,6 @@ const useQuickActions = () => {
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
-      handleFocusMedia3pPanel: handleFocusPanel(states.MEDIA3P),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
@@ -276,7 +274,10 @@ const useQuickActions = () => {
       },
     ],
     [
-      handleClearAnimations,
+      handleFocusMediaPanel,
+      selectedElement?.id,
+      actionMenuProps,
+      handleFocusAnimationPanel,
       handleFocusLinkPanel,
       handleFocusAnimationPanel,
       actionMenuProps,
@@ -352,6 +353,10 @@ const useQuickActions = () => {
     ]
   );
 
+  useEffect(() => {
+    console.log({ selectedElement });
+  }, [selectedElement]);
+
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
@@ -379,7 +384,6 @@ const useQuickActions = () => {
       selectedElements?.[0]?.type
     ) > -1
   ) {
-    console.log('bg media found');
     return backgroundElementMediaActions;
   }
 
