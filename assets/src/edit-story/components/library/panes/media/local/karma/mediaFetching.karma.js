@@ -28,19 +28,10 @@ import { ROOT_MARGIN } from '../mediaPane';
 
 describe('MediaPane fetching', () => {
   let fixture;
-  let localPane;
-  let nonMediaTab;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-
-    localPane = await waitFor(() =>
-      fixture.querySelector('#library-pane-media')
-    );
-    nonMediaTab = await waitFor(() =>
-      fixture.querySelector('#library-tab-shapes')
-    );
   });
 
   afterEach(() => {
@@ -48,6 +39,9 @@ describe('MediaPane fetching', () => {
   });
 
   it('should fetch 2nd page', async () => {
+    const localPane = await waitFor(() =>
+      fixture.querySelector('#library-pane-media')
+    );
     const mediaGallery = await waitFor(() =>
       within(localPane).queryByTestId('media-gallery-container')
     );
@@ -72,6 +66,12 @@ describe('MediaPane fetching', () => {
   });
 
   it('should not load results on resize if tab is hidden', async () => {
+    const localPane = await waitFor(() =>
+      fixture.querySelector('#library-pane-media')
+    );
+    const nonMediaTab = await waitFor(() =>
+      fixture.querySelector('#library-tab-shapes')
+    );
     const mediaGallery = await waitFor(() =>
       within(localPane).queryByTestId('media-gallery-container')
     );
