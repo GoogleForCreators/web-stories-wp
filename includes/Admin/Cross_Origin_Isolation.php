@@ -271,7 +271,7 @@ class Cross_Origin_Isolation extends Service_Base {
 		$tags = [
 			'audio',
 			'img',
-			'video'
+			'video',
 		];
 		foreach ( $tags as $tag ) {
 			$html = (string) str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $html );
