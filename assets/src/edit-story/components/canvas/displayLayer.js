@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { _x } from '@web-stories-wp/i18n';
@@ -31,11 +30,8 @@ import {
   useStoryAnimationContext,
 } from '../../../animation';
 import { useStory, useCanvas } from '../../app';
-import { ContextMenu } from '../../../design-system';
-import { useQuickActions } from '../../app/highlights';
-import DirectionAware from '../directionAware';
 import DisplayElement from './displayElement';
-import { Layer, PageArea, QuickActionsArea } from './layout';
+import { Layer, PageArea } from './layout';
 import PageAttachment from './pageAttachment';
 
 const DisplayPageArea = styled(PageArea)`
@@ -105,7 +101,6 @@ function DisplayPage({
 }
 
 function DisplayLayer() {
-  const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const {
     currentPage,
     animationState,
@@ -120,9 +115,11 @@ function DisplayLayer() {
     };
   });
 
-  const quickActions = useQuickActions();
-
-  const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
+  const {
+    editingElement,
+    setPageContainer,
+    setFullbleedContainer,
+  } = useCanvas(
     ({
       state: { editingElement },
       actions: { setPageContainer, setFullbleedContainer },
@@ -136,19 +133,9 @@ function DisplayLayer() {
     updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
   }, [updateAnimationState]);
 
-  /**
-   * Stop the event from bubbling if the user clicks in between buttons.
-   *
-   * This prevents the selected element in the canvas from losing focus.
-   */
-  const handleMenuBackgroundClick = useCallback((ev) => {
-    ev.stopPropagation();
-  }, []);
-
-  const animatedElements = useMemo(
-    () => selectedElements.map((el) => el.id),
-    [selectedElements]
-  );
+  const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
+    selectedElements,
+  ]);
 
   return (
     <StoryAnimation.Provider
@@ -185,18 +172,6 @@ function DisplayLayer() {
             resetAnimationState={resetAnimationState}
           />
         </DisplayPageArea>
-        {enableQuickActionMenu && quickActions.length && (
-          <DirectionAware>
-            <QuickActionsArea>
-              <ContextMenu
-                isAlwaysVisible
-                isIconMenu
-                items={quickActions}
-                onMouseDown={handleMenuBackgroundClick}
-              />
-            </QuickActionsArea>
-          </DirectionAware>
-        )}
       </Layer>
     </StoryAnimation.Provider>
   );

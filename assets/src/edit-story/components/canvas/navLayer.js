@@ -17,26 +17,75 @@
 /**
  * External dependencies
  */
-import { memo } from 'react';
+import { memo, useRef, useCallback } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { ContextMenu } from '../../../design-system';
+import { ALL_FOCUSABLE_SELECTOR } from '../../constants';
+import { useQuickActions } from '../../app/highlights';
+import DirectionAware from '../directionAware';
 import Header from '../header';
 import Carousel from '../carousel';
-import { Layer, HeadArea, CarouselArea, Z_INDEX } from './layout';
+import {
+  Layer,
+  HeadArea,
+  CarouselArea,
+  Z_INDEX,
+  QuickActionsArea,
+} from './layout';
 
 function NavLayer() {
+  const carouselAreaRef = useRef(null);
+  const headAreaRef = useRef(null);
+  const enableQuickActionMenu = useFeature('enableQuickActionMenus');
+  const quickActions = useQuickActions();
+
+  const handleQuickMenuDismiss = useCallback(({ isAscending }) => {
+    const nextAreaRef = isAscending ? headAreaRef : carouselAreaRef;
+    const focusableChildren = nextAreaRef.current?.querySelectorAll(
+      ALL_FOCUSABLE_SELECTOR
+    );
+    const nextFocusableChildIndex = isAscending
+      ? focusableChildren?.length - 1
+      : 0;
+    focusableChildren?.[nextFocusableChildIndex]?.focus();
+  }, []);
+
+  /**
+   * Stop the event from bubbling if the user clicks in between buttons.
+   *
+   * This prevents the selected element in the canvas from losing focus.
+   */
+  const handleMenuBackgroundClick = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
   return (
     <Layer
       pointerEvents="none"
       zIndex={Z_INDEX.NAV}
       onMouseDown={(evt) => evt.stopPropagation()}
     >
-      <HeadArea pointerEvents="initial">
+      <HeadArea pointerEvents="initial" ref={headAreaRef}>
         <Header />
       </HeadArea>
-      <CarouselArea pointerEvents="initial">
+      {enableQuickActionMenu && quickActions.length && (
+        <DirectionAware>
+          <QuickActionsArea>
+            <ContextMenu
+              isAlwaysVisible
+              isIconMenu
+              items={quickActions}
+              onDismiss={handleQuickMenuDismiss}
+              onMouseDown={handleMenuBackgroundClick}
+            />
+          </QuickActionsArea>
+        </DirectionAware>
+      )}
+      <CarouselArea pointerEvents="initial" ref={carouselAreaRef}>
         <Carousel />
       </CarouselArea>
     </Layer>

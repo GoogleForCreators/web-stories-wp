@@ -94,4 +94,15 @@ export const HIDDEN_PADDING = {
 export const SAVED_COLOR_SIZE = 32;
 export const SAVED_STYLE_HEIGHT = 64;
 
+export const FOCUSABLE_SELECTORS = [
+  'button',
+  '[href]',
+  'input',
+  'select',
+  'textarea',
+  '[tabindex]:not([tabindex="-1"])',
+];
+
+export const ALL_FOCUSABLE_SELECTOR = FOCUSABLE_SELECTORS.join(', ');
+
 export * from './media';
