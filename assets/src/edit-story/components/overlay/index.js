@@ -51,6 +51,7 @@ function InOverlayWithRef(
     return null;
   }
   const slot = (
+    /* eslint-disable-next-line styled-components-a11y/no-static-element-interactions -- No role required here. */
     <Wrapper
       ref={ref}
       zIndex={zIndex || 0}
