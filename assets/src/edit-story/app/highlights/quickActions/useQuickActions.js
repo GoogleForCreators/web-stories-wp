@@ -23,8 +23,18 @@ import { useCallback, useMemo } from 'react';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { PLACEMENT } from '../../../../design-system';
-import { Bucket, LetterTPlus, Media } from '../../../../design-system/icons';
+import { useSnackbar, PLACEMENT } from '../../../../design-system';
+import {
+  Bucket,
+  CircleSpeed,
+  Eraser,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+} from '../../../../design-system/icons';
+import updateProperties from '../../../components/inspector/design/updateProperties';
+import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory } from '../../story';
 
@@ -38,9 +48,13 @@ export const ELEMENT_TYPE = {
 };
 
 export const ACTION_TEXT = {
+  ADD_ANIMATION: __('Add animation', 'web-stories'),
+  ADD_LINK: __('Add Link', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
+  CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
+  REPLACE_MEDIA: __('Replace media', 'web-stories'),
 };
 
 /**
@@ -54,32 +68,120 @@ export const ACTION_TEXT = {
  */
 const useQuickActions = () => {
   const { isRTL } = useConfig();
-  const { currentPage, selectedElements } = useStory(
-    ({ state: { currentPage, selectedElements } }) => ({
+  const {
+    currentPage,
+    selectedElementAnimations,
+    selectedElements,
+    updateElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementAnimations, selectedElements },
+      actions: { updateElementsById },
+    }) => ({
       currentPage,
+      selectedElementAnimations,
       selectedElements,
+      updateElementsById,
     })
   );
-
+  const { undo } = useHistory(({ actions: { undo } }) => ({
+    undo,
+  }));
+  const { showSnackbar } = useSnackbar();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
 
+  /**
+   * Prevent quick actions menu from removing focus from the canvas.
+   */
+  const handleMouseDown = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
+  /**
+   * Reset properties on an element. Shows a snackbar once the properties
+   * have been reset.
+   *
+   * @param {string} elementId the id of the element
+   * @param {Array.<string>} properties The properties of the element to update
+   * @return {void}
+   */
+  const handleResetProperties = useCallback(
+    (elementId, properties) => {
+      const newProperties = {};
+
+      // Choose properties to clear
+      if (properties.includes('backgroundOverlay')) {
+        newProperties.backgroundOverlay = null;
+      }
+
+      if (properties.includes('animation')) {
+        newProperties.animation = {
+          ...selectedElementAnimations?.[0],
+          delete: true,
+        };
+      }
+
+      updateElementsById({
+        elementIds: [elementId],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            newProperties,
+            /* commitValues */ true
+          ),
+      });
+    },
+    [selectedElementAnimations, updateElementsById]
+  );
+
+  /**
+   * Clear animations and show a confirmation snackbar. Clicking
+   * the action in the snackbar adds the animations back to the element.
+   *
+   * @param {string} elementId the id of the element
+   * @return {void}
+   */
+  const handleClearAnimations = useCallback(
+    (elementId) => {
+      handleResetProperties(elementId, ['animation']);
+
+      showSnackbar({
+        actionLabel: __('Undo', 'web-stories'),
+        dismissable: false,
+        message: __(
+          'All animations were removed from the image',
+          'web-stories'
+        ),
+        onAction: undo,
+      });
+    },
+    [handleResetProperties, showSnackbar, undo]
+  );
+
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId) => () => {
+    (highlight) => (elementId) => (ev) => {
+      ev.preventDefault();
       setHighlights({ elementId, highlight });
     },
     [setHighlights]
   );
 
   const {
-    handleFocusPageBackground,
+    handleFocusAnimationPanel,
     handleFocusMediaPanel,
+    handleFocusMedia3pPanel,
+    handleFocusLinkPanel,
+    handleFocusPageBackground,
     handleFocusTextSetsPanel,
   } = useMemo(
     () => ({
-      handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
+      handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
+      handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusMediaPanel: handleFocusPanel(states.MEDIA),
+      handleFocusMedia3pPanel: handleFocusPanel(states.MEDIA3P),
+      handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
     }),
     [handleFocusPanel]
@@ -88,11 +190,17 @@ const useQuickActions = () => {
   const backgroundElement =
     currentPage?.elements.find((element) => element.isBackground) ||
     selectedElements?.[0]?.isBackground;
+  const selectedElement = selectedElements?.[0];
+
+  const actionMenuProps = useMemo(
+    () => ({
+      tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
+      onMouseDown: handleMouseDown,
+    }),
+    [handleMouseDown, isRTL]
+  );
 
   const defaultActions = useMemo(() => {
-    const actionMenuProps = {
-      tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
-    };
     return [
       {
         Icon: Bucket,
@@ -111,16 +219,55 @@ const useQuickActions = () => {
         Icon: LetterTPlus,
         label: ACTION_TEXT.INSERT_TEXT,
         onClick: handleFocusTextSetsPanel(),
-        ...actionMenuProps,
+        onMouseDown: handleMouseDown,
       },
     ];
   }, [
+    actionMenuProps,
     backgroundElement?.id,
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
-    isRTL,
+    handleMouseDown,
   ]);
+
+  const foregroundImageActions = useMemo(
+    () => [
+      {
+        Icon: PictureSwap,
+        label: ACTION_TEXT.REPLACE_MEDIA,
+        onClick: handleFocusMedia3pPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: CircleSpeed,
+        label: ACTION_TEXT.ADD_ANIMATION,
+        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: Link,
+        label: ACTION_TEXT.ADD_LINK,
+        onClick: handleFocusLinkPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: Eraser,
+        label: ACTION_TEXT.CLEAR_ANIMATIONS,
+        onClick: () => handleClearAnimations(selectedElement?.id),
+        separator: 'top',
+        ...actionMenuProps,
+      },
+    ],
+    [
+      actionMenuProps,
+      handleClearAnimations,
+      handleFocusAnimationPanel,
+      handleFocusMedia3pPanel,
+      handleFocusLinkPanel,
+      selectedElement?.id,
+    ]
+  );
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
@@ -139,6 +286,7 @@ const useQuickActions = () => {
 
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPE.IMAGE:
+      return foregroundImageActions;
     case ELEMENT_TYPE.SHAPE:
     case ELEMENT_TYPE.TEXT:
     case ELEMENT_TYPE.VIDEO:

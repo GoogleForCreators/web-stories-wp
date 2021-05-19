@@ -43,6 +43,7 @@ function LibraryPanes() {
   const highlighted = useHighlights(({ ...highlighted }) => highlighted);
 
   const mediaHighlights = highlighted[MEDIA.id];
+  const media3pHighlights = highlighted[MEDIA3P.id];
   const textHighlights = highlighted[TEXT.id];
 
   return tabs.map(({ id }) => {
@@ -61,7 +62,12 @@ function LibraryPanes() {
           />
         );
       case MEDIA3P.id:
-        return <Media3pPane {...paneProps} />;
+        return (
+          <Media3pPane
+            {...paneProps}
+            css={media3pHighlights?.showEffect && styles.FLASH}
+          />
+        );
       case SHAPES.id:
         return <ShapesPane {...paneProps} />;
       case TEXT.id:

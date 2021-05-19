@@ -58,6 +58,7 @@ export const MenuItem = ({
   shortcut,
   Icon,
   tooltipPlacement = TOOLTIP_PLACEMENT.RIGHT,
+  ...menuItemProps
 }) => {
   const itemRef = useRef(null);
   /**
@@ -117,6 +118,7 @@ export const MenuItem = ({
         onClick={handleClick}
         onFocus={onFocus}
         {...newTabProps}
+        {...menuItemProps}
       >
         {textContent}
       </Link>
@@ -131,13 +133,14 @@ export const MenuItem = ({
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
+        {...menuItemProps}
       >
         {textContent}
       </Button>
     );
   }
 
-  return <div>{textContent}</div>;
+  return <div {...menuItemProps}>{textContent}</div>;
 };
 
 /**

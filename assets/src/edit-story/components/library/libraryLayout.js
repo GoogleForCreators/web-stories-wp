@@ -30,7 +30,7 @@ import { states, useFocusHighlight } from '../../app/highlights';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
 import { getTabId, getPaneId } from './panes/shared';
-import { MEDIA, TEXT } from './constants';
+import { MEDIA, MEDIA3P, TEXT } from './constants';
 
 const Layout = styled.section.attrs({
   'aria-label': __('Library', 'web-stories'),
@@ -65,6 +65,7 @@ function LibraryLayout() {
   }));
 
   useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]);
+  useFocusHighlight(states.MEDIA3P, tabRefs[MEDIA3P.id]);
   useFocusHighlight(states.TEXT, tabRefs[TEXT.id]);
 
   const onTabChange = useCallback(
