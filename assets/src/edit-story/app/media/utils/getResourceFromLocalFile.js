@@ -20,6 +20,7 @@
 import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import { createBlob } from '../../../utils/blobs';
 import getTypeFromMime from './getTypeFromMime';
+import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
 import getFileName from './getFileName';
 import getImageDimensions from './getImageDimensions';
@@ -92,13 +93,23 @@ const getVideoResource = async (file) => {
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
 
-  return createLocalResource({
+  const posterFile = await getFirstFrameOfVideo(src);
+
+  const poster = createBlob(posterFile);
+  const { width, height } = await getImageDimensions(poster);
+
+  const resource = createLocalResource({
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
+    width,
+    height,
+    poster,
     alt: fileName,
     title: fileName,
   });
+
+  return { resource, posterFile };
 };
 
 const createPlaceholderResource = (properties) => {
@@ -126,12 +137,13 @@ const getPlaceholderResource = (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('./createResource').Resource>} Resource object.
+ * @return {Object} Object containing resource object and poster file.
  */
 const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);
 
   let resource = getPlaceholderResource(file);
+  let posterFile = null;
 
   try {
     if ('image' === type) {
@@ -139,13 +151,15 @@ const getResourceFromLocalFile = async (file) => {
     }
 
     if ('video' === type) {
-      resource = await getVideoResource(file);
+      const results = await getVideoResource(file);
+      resource = results.resource;
+      posterFile = results.posterFile;
     }
   } catch {
     // Not interested in the error here.
   }
 
-  return resource;
+  return { resource, posterFile };
 };
 
 export default getResourceFromLocalFile;

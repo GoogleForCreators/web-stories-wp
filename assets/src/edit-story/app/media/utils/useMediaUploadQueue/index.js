@@ -37,7 +37,6 @@ import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import getImageDimensions from '../getImageDimensions';
-import getFirstFrameOfVideo from '../getFirstFrameOfVideo';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -84,29 +83,15 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const newResource = await getResourceFromLocalFile(file);
-            if (resource.type === 'video' && resource.src) {
-              const posterFile = await getFirstFrameOfVideo(resource.src);
+            const {
+              resource: newResource,
+              posterFile,
+            } = await getResourceFromLocalFile(file);
 
-              const poster = createBlob(posterFile);
-              const { width, height } = await getImageDimensions(poster);
-              const newResourceWithDimensions = {
-                ...resource,
-                poster,
-                width,
-                height,
-              };
-              replacePlaceholderResource({
-                id,
-                resource: newResourceWithDimensions,
-                posterFile,
-              });
-              return;
-            }
             replacePlaceholderResource({
               id,
               resource: newResource,
-              posterFile: null,
+              posterFile,
             });
           } catch {
             // Not interested in errors here.
