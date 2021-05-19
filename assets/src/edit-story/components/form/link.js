@@ -36,7 +36,7 @@ const MIN_MAX = {
   },
 };
 
-function LinkInput(
+const LinkInput = forwardRef(function LinkInput(
   { onChange, onBlur, onFocus, value = '', hint, hasError, ...rest },
   ref
 ) {
@@ -71,7 +71,7 @@ function LinkInput(
       />
     </Row>
   );
-}
+});
 
 LinkInput.propTypes = {
   value: PropTypes.string,
@@ -82,4 +82,4 @@ LinkInput.propTypes = {
   hasError: PropTypes.bool,
 };
 
-export default forwardRef(LinkInput);
+export default LinkInput;
