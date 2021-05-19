@@ -23,7 +23,7 @@ import { useCallback, useMemo } from 'react';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { useSnackbar } from '../../../../design-system';
+import { useSnackbar, PLACEMENT } from '../../../../design-system';
 import {
   Bucket,
   CircleSpeed,
@@ -35,6 +35,7 @@ import {
 } from '../../../../design-system/icons';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
+import { useConfig } from '../../config';
 import { useStory } from '../../story';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
@@ -66,6 +67,7 @@ export const ACTION_TEXT = {
  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
 const useQuickActions = () => {
+  const { isRTL } = useConfig();
   const {
     currentPage,
     selectedElementAnimations,
@@ -190,20 +192,28 @@ const useQuickActions = () => {
     selectedElements?.[0]?.isBackground;
   const selectedElement = selectedElements?.[0];
 
-  const defaultActions = useMemo(
-    () => [
+  const actionMenuProps = useMemo(
+    () => ({
+      tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
+      onMouseDown: handleMouseDown,
+    }),
+    [handleMouseDown, isRTL]
+  );
+
+  const defaultActions = useMemo(() => {
+    return [
       {
         Icon: Bucket,
         label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
         onClick: handleFocusPageBackground(backgroundElement?.id),
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
       {
         Icon: Media,
         label: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
         onClick: handleFocusMediaPanel(),
-        onMouseDown: handleMouseDown,
         separator: 'top',
+        ...actionMenuProps,
       },
       {
         Icon: LetterTPlus,
@@ -211,15 +221,15 @@ const useQuickActions = () => {
         onClick: handleFocusTextSetsPanel(),
         onMouseDown: handleMouseDown,
       },
-    ],
-    [
-      backgroundElement?.id,
-      handleFocusMediaPanel,
-      handleFocusPageBackground,
-      handleFocusTextSetsPanel,
-      handleMouseDown,
-    ]
-  );
+    ];
+  }, [
+    actionMenuProps,
+    backgroundElement?.id,
+    handleFocusMediaPanel,
+    handleFocusPageBackground,
+    handleFocusTextSetsPanel,
+    handleMouseDown,
+  ]);
 
   const foregroundImageActions = useMemo(
     () => [
@@ -227,34 +237,34 @@ const useQuickActions = () => {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
         onClick: handleFocusMedia3pPanel(selectedElement?.id),
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
         onClick: handleFocusAnimationPanel(selectedElement?.id),
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
       {
         Icon: Link,
         label: ACTION_TEXT.ADD_LINK,
         onClick: handleFocusLinkPanel(selectedElement?.id),
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_ANIMATIONS,
         onClick: () => handleClearAnimations(selectedElement?.id),
-        onMouseDown: handleMouseDown,
         separator: 'top',
+        ...actionMenuProps,
       },
     ],
     [
+      actionMenuProps,
       handleClearAnimations,
       handleFocusAnimationPanel,
       handleFocusMedia3pPanel,
       handleFocusLinkPanel,
-      handleMouseDown,
       selectedElement?.id,
     ]
   );

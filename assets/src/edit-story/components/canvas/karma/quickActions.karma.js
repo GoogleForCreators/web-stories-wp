@@ -50,6 +50,9 @@ describe('Quick Actions integration', () => {
       expect(
         fixture.editor.inspector.designPanel.pageBackground
       ).not.toBeNull();
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+      );
     });
 
     it(`clicking the \`${ACTION_TEXT.INSERT_BACKGROUND_MEDIA}\` button should select the background and open the media tab in the library`, async () => {
@@ -62,6 +65,7 @@ describe('Quick Actions integration', () => {
       );
 
       expect(fixture.editor.library.media).not.toBeNull();
+      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
     it(`clicking the \`${ACTION_TEXT.INSERT_TEXT}\` button should select the background and open the text tab in the library`, async () => {
@@ -71,6 +75,7 @@ describe('Quick Actions integration', () => {
       );
 
       expect(fixture.editor.library.text).not.toBeNull();
+      expect(document.activeElement).toEqual(fixture.editor.library.textTab);
     });
 
     it('should allow clicking multiple actions', async () => {
