@@ -26,7 +26,10 @@ import { waitFor, within } from '@testing-library/react';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-describe('MediaPane fetching', () => {
+// Disable reason: tests are out of date.
+// TODO: https://github.com/google/web-stories-wp/issues/7606
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -42,41 +45,34 @@ describe('MediaPane fetching', () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
-    const mediaGallery = await waitFor(() =>
-      within(localPane).queryByTestId('media-gallery-container')
+    const mediaGallery = await within(localPane).getByTestId(
+      'media-gallery-container'
     );
 
-    await waitFor(() =>
-      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
-        MEDIA_PER_PAGE
-      )
+    const initialElements = within(mediaGallery).queryAllByTestId(
+      /^mediaElement-/
     );
+    expect(initialElements.length).toBe(MEDIA_PER_PAGE);
 
     await mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
-    // we need to wait to make sure gallery is populated.
-    await fixture.events.sleep(800);
+
     await waitFor(() =>
-      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
-        MEDIA_PER_PAGE * 2
-      )
+      expect(
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length
+      ).toBeGreaterThanOrEqual(MEDIA_PER_PAGE * 2)
     );
   });
 
   it('should not load results on resize if tab is hidden', async () => {
-    const localPane = await waitFor(() =>
-      fixture.querySelector('#library-pane-media')
-    );
     const nonMediaTab = await waitFor(() =>
       fixture.querySelector('#library-tab-shapes')
     );
-    const mediaGallery = await waitFor(() =>
-      within(localPane).queryByTestId('media-gallery-container')
-    );
+
     await waitFor(() =>
-      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
+      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
         MEDIA_PER_PAGE
       )
     );
@@ -89,7 +85,7 @@ describe('MediaPane fetching', () => {
 
     // Expect no additional results to be loaded.
     await waitFor(() =>
-      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
+      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
         MEDIA_PER_PAGE
       )
     );
