@@ -63,4 +63,14 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
 	}
+
+	/**
+	 * @covers ::get_post_meta_key
+	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::get_post_meta_key
+	 */
+	public function test_get_post_meta_key() {
+		$object  = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source();
+		$results = $this->call_private_method( $object, 'get_post_meta_key' );
+		$this->assertSame( \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, $results );
+	}
 }
