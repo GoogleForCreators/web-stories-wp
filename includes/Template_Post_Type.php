@@ -91,6 +91,7 @@ class Template_Post_Type extends Service_Base {
 					'excerpt',
 					'thumbnail', // Used for poster images.
 				],
+				'rewrite'               => false,
 				'public'                => false,
 				'show_ui'               => false,
 				'show_in_rest'          => true,

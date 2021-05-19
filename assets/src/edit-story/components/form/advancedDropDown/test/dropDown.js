@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, waitFor } from '@testing-library/react';
+import { act, fireEvent, waitFor, screen } from '@testing-library/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
@@ -39,7 +39,7 @@ const availableCuratedFonts = fonts.filter(
   (font) => curatedFontNames.indexOf(font.name) > 0
 );
 
-function getFontPicker(options) {
+function arrange(options) {
   const fontContextValues = {
     actions: {
       ensureMenuFontsLoaded: () => {},
@@ -60,13 +60,11 @@ function getFontPicker(options) {
     ...options,
   };
 
-  const accessors = renderWithTheme(
+  return renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
       <DropDown {...props} />
     </FontContext.Provider>
   );
-
-  return accessors;
 }
 
 describe('DropDown: Font Picker', () => {
@@ -77,36 +75,36 @@ describe('DropDown: Font Picker', () => {
     value: scrollTo,
   });
 
-  it('should render font picker title and clicking the button should open the font picker', async () => {
-    const { getByRole, getAllByRole } = await getFontPicker();
+  it('should render font picker title and clicking the button should open the font picker', () => {
+    arrange();
 
     // Fire a click event.
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
     // Listbox should be showing after click
-    const fontsList = getByRole('listbox');
+    const fontsList = screen.getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
     // Should render all options
-    const allOptionItems = getAllByRole('option');
+    const allOptionItems = screen.getAllByRole('option');
     expect(allOptionItems).toHaveLength(availableCuratedFonts.length);
   });
 
-  it('should mark the currently selected font', async () => {
+  it('should mark the currently selected font', () => {
     scrollTo.mockReset();
-    const { getByRole } = await getFontPicker();
+    arrange();
 
     // Fire a click event.
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
     // Listbox should be showing after click
-    const fontsList = getByRole('listbox');
+    const fontsList = screen.getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
     // Roboto option should be visible and have a selected checkmark
-    const selectedRobotoOption = getByRole('option', {
+    const selectedRobotoOption = screen.getByRole('option', {
       // The "accessible name" is derived by concatenating the accessible names
       // of all children,  which in this case is an SVG with aria-label="Selected"
       // and a plain text node with the font name. Thus this works!
@@ -119,14 +117,14 @@ describe('DropDown: Font Picker', () => {
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
   });
 
-  it('should select the next font in the list when using the down arrow plus enter key', async () => {
+  it('should select the next font in the list when using the down arrow plus enter key', () => {
     const onChangeFn = jest.fn();
-    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+    arrange({ onChange: onChangeFn });
 
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
-    const fontsList = getByRole('listbox');
+    const fontsList = screen.getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
     // focus first element in list
@@ -153,12 +151,12 @@ describe('DropDown: Font Picker', () => {
 
   it('should close the menu when the Esc key is pressed.', async () => {
     const onChangeFn = jest.fn();
-    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+    arrange({ onChange: onChangeFn });
 
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
-    const fontsList = getByRole('listbox');
+    const fontsList = screen.getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
     act(() => {
@@ -170,14 +168,14 @@ describe('DropDown: Font Picker', () => {
     await waitFor(() => expect(fontsList).not.toBeInTheDocument());
   });
 
-  it('should select the previous font in the list when using the up arrow plus enter key', async () => {
+  it('should select the previous font in the list when using the up arrow plus enter key', () => {
     const onChangeFn = jest.fn();
-    const { getByRole } = await getFontPicker({ onChange: onChangeFn });
+    arrange({ onChange: onChangeFn });
 
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
-    const fontsList = getByRole('listbox');
+    const fontsList = screen.getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
     // Move to first element in list
@@ -214,42 +212,52 @@ describe('DropDown: Font Picker', () => {
   });
 
   it('should search and filter the list to match the results.', async () => {
-    const { getByRole, queryAllByRole } = await getFontPicker();
+    arrange();
 
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
-    expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
+    expect(screen.queryAllByRole('option')).toHaveLength(
+      availableCuratedFonts.length
+    );
 
     // Search for "Ab" which is the prefix of 3 fonts, but the substring of 5 fonts
     // only the 3 with prefix should match
     act(() => {
-      fireEvent.change(getByRole('combobox'), {
+      fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'Ab' },
       });
     });
 
-    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(3), {
-      timeout: 500,
-    });
+    await waitFor(
+      () => expect(screen.queryAllByRole('option')).toHaveLength(3),
+      {
+        timeout: 500,
+      }
+    );
   });
 
   it('should show an empty list when the search keyword has no results.', async () => {
-    const { getByRole, queryAllByRole, queryByRole } = await getFontPicker();
+    arrange();
 
-    const selectButton = getByRole('button');
+    const selectButton = screen.getByRole('button');
     fireEvent.click(selectButton);
 
-    expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
+    expect(screen.queryAllByRole('option')).toHaveLength(
+      availableCuratedFonts.length
+    );
 
     act(() => {
-      fireEvent.change(getByRole('combobox'), {
+      fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'Not a font!' },
       });
     });
 
-    await waitFor(() => expect(queryByRole('option')).not.toBeInTheDocument(), {
-      timeout: 500,
-    });
+    await waitFor(
+      () => expect(screen.queryByRole('option')).not.toBeInTheDocument(),
+      {
+        timeout: 500,
+      }
+    );
   });
 });

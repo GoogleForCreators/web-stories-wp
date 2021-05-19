@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
@@ -58,14 +58,14 @@ describe('TextTab', () => {
       },
     };
 
-    const { getByLabelText } = renderWithTheme(
+    renderWithTheme(
       <FontContext.Provider value={fontContextValues}>
         <TextIcon isActive />
       </FontContext.Provider>
     );
 
     act(() => {
-      fireEvent.click(getByLabelText('Add new text element'));
+      fireEvent.click(screen.getByLabelText('Add new text element'));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);

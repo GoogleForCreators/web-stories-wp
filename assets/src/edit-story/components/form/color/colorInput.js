@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useMemo } from 'react';
+import { forwardRef, useCallback, useState, useRef, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -118,15 +118,18 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
-function ColorInput({
-  onChange,
-  hasGradient,
-  hasOpacity,
-  value,
-  label,
-  colorPickerActions,
-  changedStyle,
-}) {
+const ColorInput = forwardRef(function ColorInput(
+  {
+    onChange,
+    hasGradient,
+    hasOpacity,
+    value,
+    label,
+    colorPickerActions,
+    changedStyle,
+  },
+  ref
+) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
@@ -165,6 +168,7 @@ function ColorInput({
         // And the text is an input field
         <Preview ref={previewRef}>
           <Input
+            ref={ref}
             aria-label={label}
             value={isMixed ? null : value}
             onChange={onChange}
@@ -221,7 +225,7 @@ function ColorInput({
       />
     </>
   );
-}
+});
 
 ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),

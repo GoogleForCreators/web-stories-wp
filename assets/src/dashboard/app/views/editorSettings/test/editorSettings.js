@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, within } from '@testing-library/react';
+import { fireEvent, within, screen } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -114,12 +114,7 @@ function createProviderValues({
 
 describe('Editor Settings: <Editor Settings />', function () {
   it('should render settings page with google analytics and publisher logo sections', function () {
-    const {
-      getByText,
-      getByRole,
-      getByTestId,
-      container,
-    } = renderWithProviders(
+    const { container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -132,23 +127,27 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
     Modal.setAppElement(container);
 
-    const googleAnalyticsHeading = getByText(GA_TEXT.SECTION_HEADING);
+    const googleAnalyticsHeading = screen.getByText(GA_TEXT.SECTION_HEADING);
     expect(googleAnalyticsHeading).toBeInTheDocument();
 
-    const input = getByRole('textbox');
+    const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
 
     expect(input).toHaveValue('UA-098909-05');
 
-    expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
-    expect(getByTestId('upload-file-input')).toBeInTheDocument();
+    expect(
+      screen.getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
 
-    expect(getByText(AD_NETWORK_TEXT.SECTION_HEADING)).toBeInTheDocument();
+    expect(
+      screen.getByText(AD_NETWORK_TEXT.SECTION_HEADING)
+    ).toBeInTheDocument();
   });
 
   it('should render settings page with publisher logos', function () {
-    const { queryAllByTestId, container } = renderWithProviders(
+    const { container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -162,13 +161,13 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
     Modal.setAppElement(container);
 
-    expect(queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
+    expect(screen.queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
     );
   });
 
   it('should call mockUpdateSettings when a logo is removed', function () {
-    const { getByTestId, getByRole } = renderWithProviders(
+    renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -181,23 +180,21 @@ describe('Editor Settings: <Editor Settings />', function () {
       })
     );
 
-    const ContextMenuButton = getByTestId(
+    const ContextMenuButton = screen.getByTestId(
       'publisher-logo-context-menu-button-1'
     );
 
     fireEvent.click(ContextMenuButton);
 
-    const ContextMenu = getByTestId('publisher-logo-context-menu-1');
+    const ContextMenu = screen.getByTestId('publisher-logo-context-menu-1');
     expect(ContextMenu).toBeInTheDocument();
 
-    const { getByText } = within(ContextMenu);
-
-    const DeleteFileButton = getByText('Delete');
+    const DeleteFileButton = within(ContextMenu).getByText('Delete');
     expect(DeleteFileButton).toBeInTheDocument();
 
     fireEvent.click(DeleteFileButton);
 
-    const DeleteDialog = getByRole('dialog');
+    const DeleteDialog = screen.getByRole('dialog');
     expect(DeleteDialog).toBeInTheDocument();
 
     const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
@@ -209,7 +206,7 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
-    const { queryByTestId, container } = renderWithProviders(
+    const { container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -222,11 +219,11 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
     Modal.setAppElement(container);
 
-    expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
-  it('should render settings page with adsense', function () {
-    const { getByText, container } = renderWithProviders(
+  it('should render settings page with AdSense', function () {
+    const { container } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -243,7 +240,7 @@ describe('Editor Settings: <Editor Settings />', function () {
     );
     Modal.setAppElement(container);
 
-    const helperLink = getByText('how to monetize your Web Stories', {
+    const helperLink = screen.getByText('how to monetize your Web Stories', {
       selector: 'a',
     });
     expect(helperLink).toBeInTheDocument();

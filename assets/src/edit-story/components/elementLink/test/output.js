@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -60,8 +60,8 @@ describe('WithLink', () => {
 
   describe('a[target]', () => {
     it('should use target=_blank', async () => {
-      const { container } = render(withLink());
-      const a = container.querySelector('a');
+      render(withLink());
+      const a = screen.getByRole('link');
       await expect(a.target).toBe('_blank');
       await expect(a.rel).toBe('noreferrer');
     });

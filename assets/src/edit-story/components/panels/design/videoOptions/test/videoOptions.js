@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import VideoOptions from '../videoOptions';
@@ -32,7 +37,7 @@ describe('Panels/VideoOptions', () => {
     type: 'video',
     resource: { posterId: 0, poster: '', alt: '' },
   };
-  function renderVideoOptions(...args) {
+  function arrange(...args) {
     return renderPanel(VideoOptions, ...args);
   }
 
@@ -48,8 +53,8 @@ describe('Panels/VideoOptions', () => {
   });
 
   it('should render <VideoOptions /> panel', () => {
-    const { getByText } = renderVideoOptions([defaultElement]);
-    const panel = getByText('Video settings');
+    arrange([defaultElement]);
+    const panel = screen.getByText('Video Settings');
     expect(panel).toBeInTheDocument();
   });
 });

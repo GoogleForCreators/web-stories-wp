@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Circled Dot', 'sticker name', 'web-stories');
 
 const FitnessCTA = ({ style }) => (
   <svg
@@ -25,6 +28,7 @@ const FitnessCTA = ({ style }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{title}</title>
     <path
       d="M20 29.5652c5.2827 0 9.5652-4.2825 9.5652-9.5652 0-5.2828-4.2825-9.5653-9.5652-9.5653-5.2828 0-9.5653 4.2825-9.5653 9.5653 0 5.2827 4.2825 9.5652 9.5653 9.5652z"
       fill="#fff"
@@ -44,4 +48,5 @@ FitnessCTA.propTypes = {
 export default {
   aspectRatio: 40 / 40,
   svg: FitnessCTA,
+  title,
 };

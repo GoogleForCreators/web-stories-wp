@@ -26,6 +26,8 @@ import { TestDisplayElement } from '../../../components/canvas/test/_utils';
 import { OverlayType } from '../../../utils/backgroundOverlay';
 import resourceList from '../../../utils/resourceList';
 
+/* eslint-disable testing-library/no-node-access, testing-library/no-container */
+
 describe('MediaDisplay', () => {
   let imageElement;
   let videoElement;
@@ -213,3 +215,5 @@ describe('MediaDisplay', () => {
     });
   });
 });
+
+/* eslint-enable testing-library/no-node-access, testing-library/no-container */

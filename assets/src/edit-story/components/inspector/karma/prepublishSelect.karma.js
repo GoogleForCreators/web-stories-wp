@@ -324,6 +324,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           width: 640 / 2,
           height: 529 / 2,
           resource: {
+            width: 640,
+            height: 529,
             type: 'image',
             mimeType: 'image/jpg',
             src: 'http://localhost:9876/__static__/earth.jpg',
@@ -351,7 +353,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
     });
 
-    it('should open the document inspector panel', async () => {
+    it('should open the document inspector panel and focus the media button', async () => {
       await enableHighPriorityMessagesWith5Pages();
       await fixture.events.click(fixture.editor.library.media.item(0));
 
@@ -377,6 +379,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           )
         ).not.toBeNull();
       });
+      const mediaButton = fixture.screen.getByLabelText('Poster image');
+      expect(mediaButton.contains(document.activeElement)).toBeTrue();
       await fixture.snapshot('document tab opened by checklist panel');
     });
   });

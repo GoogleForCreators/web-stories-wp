@@ -29,8 +29,11 @@ const formatDistanceLocale = {
   },
 
   xMinutes(count) {
-    /* translators: Time difference between two dates, in minutes. %s: Number of minutes. */
-    return sprintf(_n('%s minute', '%s minutes', count, 'web-stories'), count);
+    return sprintf(
+      /* translators: Time difference between two dates, in minutes. %s: Number of minutes. */
+      _n('%s minute', '%s minutes', count, 'web-stories'),
+      count
+    );
   },
 
   aboutXHours(count) {
@@ -38,13 +41,19 @@ const formatDistanceLocale = {
       return __('an hour', 'web-stories');
     }
 
-    /* translators: Time difference between two dates, in hours. %s: Number of hours. */
-    return sprintf(_n('%s hour', '%s hours', count, 'web-stories'), count);
+    return sprintf(
+      /* translators: Time difference between two dates, in hours. %s: Number of hours. */
+      _n('%s hour', '%s hours', count, 'web-stories'),
+      count
+    );
   },
 
   xHours(count) {
-    /* translators: Time difference between two dates, in hours. %s: Number of hours. */
-    return sprintf(_n('%s hour', '%s hours', count, 'web-stories'), count);
+    return sprintf(
+      /* translators: Time difference between two dates, in hours. %s: Number of hours. */
+      _n('%s hour', '%s hours', count, 'web-stories'),
+      count
+    );
   },
 };
 
@@ -55,11 +64,17 @@ export default function formatDistance(token, count, options) {
 
   if (options.addSuffix) {
     if (options.comparison > 0) {
-      /* translators: %s: Human-readable time difference. */
-      return sprintf(__('in %s', 'web-stories'), result);
+      return sprintf(
+        /* translators: %s: Human-readable time difference. */
+        __('in %s', 'web-stories'),
+        result
+      );
     } else {
-      /* translators: %s: Human-readable time difference. */
-      return sprintf(__('%s ago', 'web-stories'), result);
+      return sprintf(
+        /* translators: %s: Human-readable time difference. */
+        __('%s ago', 'web-stories'),
+        result
+      );
     }
   }
 

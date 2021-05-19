@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { within, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();
 
   it('should render a fileUpload container and helper text by default when canUploadFiles is true', () => {
-    const { getByTestId, getByText } = renderWithProviders(
+    renderWithProviders(
       <PublisherLogoSettings
         onAddLogos={mockHandleAddLogos}
         onRemoveLogo={noop}
@@ -43,12 +43,12 @@ describe('PublisherLogo', () => {
       />
     );
 
-    expect(getByTestId('upload-file-input')).toBeInTheDocument();
-    expect(getByText(TEXT.SECTION_HEADING)).toBeInTheDocument();
+    expect(screen.getByTestId('upload-file-input')).toBeInTheDocument();
+    expect(screen.getByText(TEXT.SECTION_HEADING)).toBeInTheDocument();
   });
 
   it('should not render fileUpload container when canUploadFiles is false', () => {
-    const { queryByTestId } = renderWithProviders(
+    renderWithProviders(
       <PublisherLogoSettings
         onAddLogos={mockHandleAddLogos}
         onRemoveLogo={noop}
@@ -58,11 +58,11 @@ describe('PublisherLogo', () => {
       />
     );
 
-    expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 
   it('should render an image for each publisherLogo in the array', () => {
-    const { queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <PublisherLogoSettings
         onAddLogos={mockHandleAddLogos}
         onRemoveLogo={noop}
@@ -72,11 +72,13 @@ describe('PublisherLogo', () => {
       />
     );
 
-    expect(queryAllByRole('img')).toHaveLength(formattedPublisherLogos.length);
+    expect(screen.queryAllByRole('img')).toHaveLength(
+      formattedPublisherLogos.length
+    );
   });
 
   it('should specify the first logo displayed as default', () => {
-    const { getAllByRole } = renderWithProviders(
+    renderWithProviders(
       <PublisherLogoSettings
         onAddLogos={mockHandleAddLogos}
         onRemoveLogo={noop}
@@ -86,13 +88,13 @@ describe('PublisherLogo', () => {
       />
     );
 
-    const FirstGridItem = getAllByRole('listitem')[0];
+    const FirstGridItem = screen.getAllByRole('listitem')[0];
     const Default = within(FirstGridItem).getByText('Default');
     expect(Default).toBeInTheDocument();
   });
 
   it('should render a context menu button for each uploaded logo', () => {
-    const { queryAllByTestId } = renderWithProviders(
+    renderWithProviders(
       <PublisherLogoSettings
         onAddLogos={mockHandleAddLogos}
         onRemoveLogo={noop}
@@ -103,12 +105,12 @@ describe('PublisherLogo', () => {
     );
 
     expect(
-      queryAllByTestId(/^publisher-logo-context-menu-button-/)
+      screen.queryAllByTestId(/^publisher-logo-context-menu-button-/)
     ).toHaveLength(formattedPublisherLogos.length);
   });
 
   it('should render an error message if uploadError is present', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <PublisherLogoSettings
         onAddLogos={mockHandleAddLogos}
         onRemoveLogo={noop}
@@ -120,6 +122,6 @@ describe('PublisherLogo', () => {
       />
     );
 
-    expect(getByText('Something went wrong.')).toBeInTheDocument();
+    expect(screen.getByText('Something went wrong.')).toBeInTheDocument();
   });
 });

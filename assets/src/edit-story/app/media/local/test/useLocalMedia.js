@@ -27,9 +27,9 @@ import MediaContext from '../../context';
 
 describe('useLocalMedia', () => {
   function renderUseLocalMedia(mediaContextValue, selector) {
-    const wrapper = (params) => (
+    const wrapper = ({ children }) => (
       <MediaContext.Provider value={mediaContextValue}>
-        {params.children}
+        {children}
       </MediaContext.Provider>
     );
 

@@ -26,13 +26,16 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useMediaPicker } from '../mediaPicker';
-import { MediaInput as Input } from '../../../design-system/components/mediaInput';
+import { MediaInput as Input, themeHelpers } from '../../../design-system';
 import { MULTIPLE_VALUE } from '../../constants';
-import { focusStyle } from '../panels/shared';
 
 const StyledInput = styled(Input)`
-  button {
-    ${focusStyle};
+  button:focus {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )}
   }
 `;
 

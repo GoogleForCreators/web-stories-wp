@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
   const mockHandleDismiss = jest.fn();
 
   it('should render 1 alert', () => {
-    const wrapper = renderWithProviders(
+    renderWithProviders(
       <SnackbarMessage
         message="this is an error"
         aria-label="aria label for my alert"
@@ -41,7 +41,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       />
     );
 
-    const alert = wrapper.getByRole('alert');
+    const alert = screen.getByRole('alert');
 
     expect(alert).toBeInTheDocument();
   });
@@ -62,7 +62,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
   });
 
   it('should call mockHandleDismiss when the close button is clicked', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
@@ -73,7 +73,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
 
     expect(mockHandleDismiss).not.toHaveBeenCalled();
 
-    const closeButton = getByRole('button');
+    const closeButton = screen.getByRole('button');
 
     fireEvent.click(closeButton);
 
@@ -81,7 +81,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
   });
 
   it('should not render a button if showCloseButton is false', () => {
-    const { queryByRole } = renderWithProviders(
+    renderWithProviders(
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
@@ -89,14 +89,14 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
         showCloseButton={false}
       />
     );
-    const buttons = queryByRole('button');
+    const buttons = screen.queryByRole('button');
 
     expect(buttons).not.toBeInTheDocument();
   });
 
   it('should recognize click on Action button', () => {
     const mockActionClick = jest.fn();
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <SnackbarMessage
         aria-label="aria label for my alert"
         message="this is an error"
@@ -106,7 +106,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
       />
     );
 
-    const button = getByText('retry');
+    const button = screen.getByText('retry');
 
     fireEvent.click(button);
 

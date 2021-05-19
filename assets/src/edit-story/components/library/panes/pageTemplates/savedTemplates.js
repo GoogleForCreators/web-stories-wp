@@ -32,6 +32,7 @@ import {
   useSnackbar,
 } from '../../../../../design-system';
 import Dialog from '../../../dialog';
+import useLibrary from '../../useLibrary';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
@@ -40,15 +41,21 @@ const Wrapper = styled.div`
   overflow-x: hidden;
 `;
 
-function SavedTemplates({
-  pageSize,
-  savedTemplates,
-  setSavedTemplates,
-  ...rest
-}) {
+function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
   const {
     actions: { deletePageTemplate },
   } = useAPI();
+
+  const {
+    savedTemplates,
+    setSavedTemplates,
+    nextTemplatesToFetch,
+  } = useLibrary((state) => ({
+    savedTemplates: state.state.savedTemplates,
+    nextTemplatesToFetch: state.state.nextTemplatesToFetch,
+    setSavedTemplates: state.actions.setSavedTemplates,
+  }));
+
   const { showSnackbar } = useSnackbar();
 
   const [showDialog, setShowDialog] = useState(null);
@@ -60,6 +67,13 @@ function SavedTemplates({
   useLayoutEffect(() => {
     setShowDialog(false);
   }, []);
+
+  const fetchTemplates = useCallback(() => {
+    if (!nextTemplatesToFetch) {
+      return;
+    }
+    loadTemplates();
+  }, [nextTemplatesToFetch, loadTemplates]);
 
   const onClickDelete = useCallback(({ templateId }, e) => {
     e?.stopPropagation();
@@ -106,6 +120,7 @@ function SavedTemplates({
           pageSize={pageSize}
           pages={savedTemplates}
           handleDelete={onClickDelete}
+          fetchTemplates={fetchTemplates}
           {...rest}
         />
       )}
@@ -132,8 +147,7 @@ function SavedTemplates({
 
 SavedTemplates.propTypes = {
   pageSize: PropTypes.object.isRequired,
-  setSavedTemplates: PropTypes.func.isRequired,
-  savedTemplates: PropTypes.array.isRequired,
+  loadTemplates: PropTypes.func.isRequired,
 };
 
 export default SavedTemplates;

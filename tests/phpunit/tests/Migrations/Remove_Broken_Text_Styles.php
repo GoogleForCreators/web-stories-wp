@@ -22,7 +22,7 @@ use Google\Web_Stories\Tests\Test_Case;
 /**
  * Class Remove_Broken_Text_Styles
  *
- * @covers Google\Web_Stories\Migrations\Remove_Broken_Text_Styles;
+ * @covers \Google\Web_Stories\Migrations\Remove_Broken_Text_Styles;
  *
  * @package phpunit\tests\Migrations
  */

@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Facebook', 'sticker name', 'web-stories');
 
 function FacebookIcon({ style }) {
   return (
@@ -26,6 +29,7 @@ function FacebookIcon({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M7.84372 24.144V13.1313H11.407L11.9415 8.83951H7.84372V6.0976C7.84372 4.85581 8.1772 4.0074 9.89487 4.0074H12.0854V0.168259C11.7062 0.116122 10.4065 0 8.89214 0C5.73318 0 3.57239 2.00015 3.57239 5.6734V8.83951H0V13.1313H3.57239V24.144H7.84372Z"
         fill="#FAF4EA"
@@ -41,4 +45,5 @@ FacebookIcon.propTypes = {
 export default {
   aspectRatio: 13 / 25,
   svg: FacebookIcon,
+  title,
 };

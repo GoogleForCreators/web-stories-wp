@@ -318,6 +318,11 @@ class KSES extends Test_Case {
 				'css'      => 'pointer-events: initial',
 				'expected' => 'pointer-events: initial',
 			],
+			// See https://github.com/google/web-stories-wp/pull/7380.
+			[
+				'css'      => 'will-change: transform',
+				'expected' => 'will-change: transform',
+			],
 		];
 	}
 

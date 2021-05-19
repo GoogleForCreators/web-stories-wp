@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from 'react-dom/server';
-
-/**
- * External dependencies
- */
 import { render } from '@testing-library/react';
 jest.mock('flagged');
 import { useFeature } from 'flagged';
@@ -33,6 +29,8 @@ import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { MaskTypes } from '../../masks/constants';
+
+/* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
 describe('Page output', () => {
   useFeature.mockImplementation((feature) => {
@@ -1083,3 +1081,5 @@ describe('Page output', () => {
     });
   });
 });
+
+/* eslint-enable testing-library/no-node-access, testing-library/no-container */

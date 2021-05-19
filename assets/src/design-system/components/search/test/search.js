@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, act } from '@testing-library/react';
+import { fireEvent, waitFor, act, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -37,28 +37,28 @@ describe('Search <Search />', () => {
   jest.useFakeTimers();
 
   it('should render a closed <Search /> menu with an input field on default', () => {
-    const { getByRole, queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <Search options={basicDropDownOptions} ariaInputLabel="label" />
     );
 
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
-    const menu = queryAllByRole('listbox');
+    const menu = screen.queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
 
   it('should show placeholder value when no selected value is found', () => {
-    const { getByPlaceholderText } = renderWithProviders(
+    renderWithProviders(
       <Search options={basicDropDownOptions} placeholder="select a value" />
     );
 
-    const placeholder = getByPlaceholderText('select a value');
+    const placeholder = screen.getByPlaceholderText('select a value');
     expect(placeholder).toBeInTheDocument();
   });
 
   it("should show selectedValue's associated label in input when selectedValue is present", () => {
-    const container = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         placeholder="select a value"
@@ -67,12 +67,12 @@ describe('Search <Search />', () => {
       />
     );
 
-    const input = container.getByDisplayValue(basicDropDownOptions[2].label);
+    const input = screen.getByDisplayValue(basicDropDownOptions[2].label);
     expect(input).toBeInTheDocument();
   });
 
   it('should allow inputState to update outside of options in menu', async () => {
-    const container = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         placeholder="select a value"
@@ -80,21 +80,21 @@ describe('Search <Search />', () => {
       />
     );
 
-    const input = container.getByPlaceholderText('select a value');
+    const input = screen.getByPlaceholderText('select a value');
 
     act(() => {
       fireEvent.change(input, { target: { value: 'bruce wayne' } });
     });
 
     await waitFor(() => {
-      expect(container.getByDisplayValue('bruce wayne')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('bruce wayne')).toBeInTheDocument();
     });
 
     expect(input).toBeInTheDocument();
   });
 
   it('should show <Search /> menu when input has 1 or more characters', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         emptyText="No options available"
         options={basicDropDownOptions}
@@ -102,7 +102,7 @@ describe('Search <Search />', () => {
       />
     );
 
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
     act(() => {
       fireEvent.click(input);
@@ -112,12 +112,12 @@ describe('Search <Search />', () => {
       jest.runOnlyPendingTimers();
     });
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
   });
 
   it('should show an active icon on list item that is active', () => {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         emptyText="No options available"
         ariaInputLabel="label"
@@ -127,7 +127,7 @@ describe('Search <Search />', () => {
       />
     );
 
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
     act(() => {
@@ -137,7 +137,7 @@ describe('Search <Search />', () => {
       jest.runOnlyPendingTimers();
     });
 
-    const activeMenuItem = getByRole('option', {
+    const activeMenuItem = screen.getByRole('option', {
       name: `Selected ${basicDropDownOptions[2].label}`,
     });
     expect(activeMenuItem).toBeInTheDocument();
@@ -145,7 +145,7 @@ describe('Search <Search />', () => {
 
   // Mouse events
   it('should not expand menu when disabled is true', () => {
-    const { getByRole, queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         ariaInputLabel="my label"
@@ -153,7 +153,7 @@ describe('Search <Search />', () => {
       />
     );
 
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
     act(() => {
@@ -163,12 +163,12 @@ describe('Search <Search />', () => {
       jest.runOnlyPendingTimers();
     });
 
-    const menu = queryAllByRole('listbox');
+    const menu = screen.queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
 
   it('should not expand menu with selected value when disabled is true', () => {
-    const { getByRole, queryAllByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         selectedValue={basicDropDownOptions[2]}
@@ -177,7 +177,7 @@ describe('Search <Search />', () => {
       />
     );
 
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     expect(input).toBeInTheDocument();
 
     act(() => {
@@ -187,14 +187,14 @@ describe('Search <Search />', () => {
       jest.runOnlyPendingTimers();
     });
 
-    const menu = queryAllByRole('listbox');
+    const menu = screen.queryAllByRole('listbox');
     expect(menu).toStrictEqual([]);
   });
 
   it('should not trigger onMenuItemClick when "enter" is hit but input has no value', () => {
     const onClickMock = jest.fn();
 
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         ariaInputLabel="my dropDown label"
@@ -204,7 +204,7 @@ describe('Search <Search />', () => {
     );
 
     // Fire click event
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     act(() => {
       fireEvent.focus(input);
       fireEvent.change(input, { target: { value: '' } });
@@ -221,7 +221,7 @@ describe('Search <Search />', () => {
   it('should trigger onMenuItemClick when "enter" is hit and input has value', () => {
     const onClickMock = jest.fn();
 
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         ariaInputLabel="my dropDown label"
@@ -230,7 +230,7 @@ describe('Search <Search />', () => {
     );
 
     // Fire click event
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
     act(() => {
       fireEvent.focus(input);
       fireEvent.change(input, { target: { value: 'tapir' } });
@@ -253,7 +253,7 @@ describe('Search <Search />', () => {
   it('should trigger onMenuItemClick from menu when input has value and menu can be seen', () => {
     const onClickMock = jest.fn();
 
-    const { getByRole, getAllByRole } = renderWithProviders(
+    renderWithProviders(
       <Search
         options={basicDropDownOptions}
         ariaInputLabel="my dropDown label"
@@ -262,7 +262,7 @@ describe('Search <Search />', () => {
     );
 
     // Fire click event
-    const input = getByRole('combobox');
+    const input = screen.getByRole('combobox');
 
     act(() => {
       fireEvent.focus(input);
@@ -272,10 +272,10 @@ describe('Search <Search />', () => {
       jest.runOnlyPendingTimers();
     });
 
-    const menu = getByRole('listbox');
+    const menu = screen.getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
-    const menuItems = getAllByRole('option');
+    const menuItems = screen.getAllByRole('option');
     expect(menuItems).toHaveLength(12);
 
     fireEvent.click(menuItems[2]);

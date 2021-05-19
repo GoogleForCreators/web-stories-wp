@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -64,7 +64,7 @@ const fakeStories = [
 
 describe('My Stories <Header />', function () {
   it('should have results label that says "Viewing all stories" on initial page view', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -84,11 +84,11 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('Viewing all stories')).toBeInTheDocument();
+    expect(screen.getByText('Viewing all stories')).toBeInTheDocument();
   });
 
   it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -112,14 +112,16 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByPlaceholderText('Search Stories')).toHaveValue('Harry Potter');
+    expect(screen.getByPlaceholderText('Search Stories')).toHaveValue(
+      'Harry Potter'
+    );
     expect(
-      getByText((_, node) => node.textContent === '19 results')
+      screen.getByText((_, node) => node.textContent === '19 results')
     ).toBeInTheDocument();
   });
 
   it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ status: 'DRAFT', value: STORY_STATUS.DRAFT }}
@@ -139,11 +141,11 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByText('Viewing drafts')).toBeInTheDocument();
+    expect(screen.getByText('Viewing drafts')).toBeInTheDocument();
   });
 
   it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
-    const { queryByText, getByRole } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -164,14 +166,14 @@ describe('My Stories <Header />', function () {
       </LayoutProvider>
     );
 
-    const allStoriesButton = getByRole('button', {
+    const allStoriesButton = screen.getByRole('button', {
       name: /Filter stories by All Stories/,
     });
 
-    const draftsButton = getByRole('button', {
+    const draftsButton = screen.getByRole('button', {
       name: /Filter stories by Drafts/,
     });
-    const publishedButton = getByRole('button', {
+    const publishedButton = screen.getByRole('button', {
       name: /Filter stories by Published/,
     });
 
@@ -179,11 +181,11 @@ describe('My Stories <Header />', function () {
     expect(draftsButton).toHaveTextContent('Drafts9');
     expect(publishedButton).toHaveTextContent('Published10');
 
-    expect(queryByText('Private')).not.toBeInTheDocument();
+    expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
 
   it('should show the private tab only when there are private stories.', function () {
-    const { getByRole } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -205,17 +207,17 @@ describe('My Stories <Header />', function () {
       </LayoutProvider>
     );
 
-    const allStoriesButton = getByRole('button', {
+    const allStoriesButton = screen.getByRole('button', {
       name: /Filter stories by All Stories/,
     });
 
-    const draftsButton = getByRole('button', {
+    const draftsButton = screen.getByRole('button', {
       name: /Filter stories by Drafts/,
     });
-    const publishedButton = getByRole('button', {
+    const publishedButton = screen.getByRole('button', {
       name: /Filter stories by Published/,
     });
-    const privateButton = getByRole('button', {
+    const privateButton = screen.getByRole('button', {
       name: /Filter stories by Private/,
     });
 
@@ -226,7 +228,7 @@ describe('My Stories <Header />', function () {
   });
 
   it('should not show the private tab even if there are private stories when the user does not have permission.', function () {
-    const { getByRole, queryByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -252,25 +254,25 @@ describe('My Stories <Header />', function () {
         },
       }
     );
-    const allStoriesButton = getByRole('button', {
+    const allStoriesButton = screen.getByRole('button', {
       name: /Filter stories by All Stories/,
     });
 
-    const draftsButton = getByRole('button', {
+    const draftsButton = screen.getByRole('button', {
       name: /Filter stories by Drafts/,
     });
-    const publishedButton = getByRole('button', {
+    const publishedButton = screen.getByRole('button', {
       name: /Filter stories by Published/,
     });
     expect(allStoriesButton).toHaveTextContent('All Stories19');
     expect(draftsButton).toHaveTextContent('Drafts9');
     expect(publishedButton).toHaveTextContent('Published10');
-    expect(queryByText('Private')).not.toBeInTheDocument();
+    expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
 
   it('should call the set keyword function when new text is searched', async function () {
     const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -293,7 +295,7 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.change(getByPlaceholderText('Search Stories'), {
+    fireEvent.change(screen.getByPlaceholderText('Search Stories'), {
       target: { value: 'Hermione Granger' },
     });
     await waitFor(() => {
@@ -303,7 +305,7 @@ describe('My Stories <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', async function () {
     const setSortFn = jest.fn();
-    const { getByLabelText, getByText } = renderWithProviders(
+    renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -326,8 +328,8 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    fireEvent.click(getByLabelText('Choose sort option for display'));
-    fireEvent.click(getByText('Last modified'));
+    fireEvent.click(screen.getByLabelText('Choose sort option for display'));
+    fireEvent.click(screen.getByText('Last Modified'));
 
     await waitFor(() => {
       expect(setSortFn).toHaveBeenCalledWith('modified');

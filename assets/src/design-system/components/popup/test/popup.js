@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Popup } from '..';
@@ -28,13 +33,13 @@ describe('Popup', () => {
       current: document.createElement('div'),
     };
     document.body.append(anchor.current);
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <Popup anchor={anchor} isOpen>
         {'Hello World!'}
       </Popup>
     );
 
-    const popup = getByText('Hello World!');
+    const popup = screen.getByText('Hello World!');
     expect(popup).toBeInTheDocument();
   });
 
@@ -43,13 +48,13 @@ describe('Popup', () => {
       current: document.createElement('div'),
     };
     document.body.append(anchor.current);
-    const { queryByText } = renderWithProviders(
+    renderWithProviders(
       <Popup anchor={anchor} isOpen={false}>
         {'Hello World!'}
       </Popup>
     );
 
-    const popup = queryByText('Hello World!');
+    const popup = screen.queryByText('Hello World!');
     expect(popup).not.toBeInTheDocument();
   });
 });

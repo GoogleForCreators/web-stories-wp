@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils';
@@ -24,17 +29,17 @@ describe('InfiniteScroller', () => {
   const onGetDataMock = jest.fn();
 
   it('should render a loading component by default', () => {
-    const { getByTestId } = renderWithProviders(
+    renderWithProviders(
       <InfiniteScroller canLoadMore onLoadMore={onGetDataMock} />
     );
 
-    const loadingComponent = getByTestId('load-more-on-scroll');
+    const loadingComponent = screen.getByTestId('load-more-on-scroll');
 
     expect(loadingComponent).toBeInTheDocument();
   });
 
   it('should show all data loaded message when `allDataLoadedMessage` is true', () => {
-    const { getByText } = renderWithProviders(
+    renderWithProviders(
       <InfiniteScroller
         onLoadMore={onGetDataMock}
         allDataLoadedMessage="All data has been fetched"
@@ -42,7 +47,7 @@ describe('InfiniteScroller', () => {
       />
     );
 
-    const allDataLoaded = getByText('All data has been fetched');
+    const allDataLoaded = screen.getByText('All data has been fetched');
 
     expect(allDataLoaded).toBeInTheDocument();
   });

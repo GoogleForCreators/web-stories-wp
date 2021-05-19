@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, createEvent, fireEvent } from '@testing-library/react';
+import { render, createEvent, fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -27,7 +27,7 @@ import useUploadDropTarget from '../use';
 
 describe('UploadDropTarget', () => {
   let onDropSpy;
-  let rendered;
+  let view;
   let container;
   let content1, isDraggingElement;
   let dataTransfer;
@@ -35,7 +35,7 @@ describe('UploadDropTarget', () => {
 
   beforeEach(() => {
     onDropSpy = jest.fn();
-    rendered = render(
+    view = render(
       <UploadDropTarget
         label="drop target"
         labelledBy="glasspane"
@@ -45,9 +45,10 @@ describe('UploadDropTarget', () => {
         <UseUploadDropTargetConsumer />
       </UploadDropTarget>
     );
-    container = rendered.container.firstElementChild;
-    content1 = rendered.getByTestId('content1');
-    isDraggingElement = rendered.getByTestId('isDragging');
+    // eslint-disable-next-line testing-library/no-node-access
+    container = view.container.firstElementChild;
+    content1 = screen.getByTestId('content1');
+    isDraggingElement = screen.getByTestId('isDragging');
     transferFile1 = {};
     dataTransfer = {
       effectAllowed: 'none',
@@ -64,6 +65,7 @@ describe('UploadDropTarget', () => {
   }
 
   function getGlasspane() {
+    // eslint-disable-next-line testing-library/no-node-access
     return container.querySelector('[aria-labelledby="glasspane"]');
   }
 

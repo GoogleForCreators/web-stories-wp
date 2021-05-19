@@ -64,7 +64,7 @@ export function VideoOptimization({ element }) {
     <Container>
       <Thumbnail
         src={resource?.poster}
-        alt={resource?.alt || __('video thumbnail', 'web-stories')}
+        alt={resource?.alt || __('Video thumbnail', 'web-stories')}
         crossOrigin="anonymous"
       />
       <OptimizeButton

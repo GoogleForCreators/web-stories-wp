@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -121,7 +121,7 @@ const shortcuts = {
           ],
         },
         {
-          label: __('Move forward or back', 'web-stories'),
+          label: __('Move forward or back', 'web-stories'),
           shortcut: [
             cmdOrCtrl,
             SPECIAL_KEYS.UP,
@@ -130,7 +130,7 @@ const shortcuts = {
           ],
         },
         {
-          label: __('Move to front or back', 'web-stories'),
+          label: __('Move to front or back', 'web-stories'),
           shortcut: [
             cmdOrCtrl,
             SPECIAL_KEYS.SHIFT,
@@ -143,7 +143,7 @@ const shortcuts = {
           label: __('Enter crop/edit mode', 'web-stories'),
           shortcut: [
             SPECIAL_KEYS.ENTER,
-            { label: __('or double-click', 'web-stories') },
+            { label: __('or double-click', 'web-stories') },
           ],
         },
         {
@@ -157,8 +157,11 @@ const shortcuts = {
           shortcut: [cmdOrCtrl, 'K'],
         },
         {
-          label: __('Disable snapping', 'web-stories'),
-          shortcut: [{ label: __('Hold', 'web-stories') }, cmdOrCtrl],
+          label: __('Disable snapping', 'web-stories'),
+          shortcut: [
+            { label: _x('Hold', 'verb, i.e. hold down a key', 'web-stories') },
+            cmdOrCtrl,
+          ],
         },
       ],
     },

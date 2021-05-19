@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Burst with Arrow', 'sticker name', 'web-stories');
 
 const FashionStarburstWithArrow = ({ style }) => (
   <svg
@@ -25,6 +28,7 @@ const FashionStarburstWithArrow = ({ style }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{title}</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -41,4 +45,5 @@ FashionStarburstWithArrow.propTypes = {
 export default {
   aspectRatio: 280 / 270,
   svg: FashionStarburstWithArrow,
+  title,
 };

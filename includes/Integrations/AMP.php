@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Integrations;
 
+use AmpProject\Optimizer;
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
@@ -66,6 +67,7 @@ class AMP extends Service_Base {
 		add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
 		add_filter( 'amp_skip_post', [ $this, 'filter_amp_skip_post' ], 10, 2 );
+		add_filter( 'amp_optimizer_config', [ $this, 'filter_amp_optimizer_config' ] );
 
 		// This filter is actually used in this plugin's `Sanitization` class.
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
@@ -228,17 +230,34 @@ class AMP extends Service_Base {
 	 * @return bool Whether post should be skipped from AMP.
 	 */
 	public function filter_amp_skip_post( $skipped, $post ) {
+		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
 			'web-story' === get_post_type( $post )
 			&&
 			defined( '\AMP__VERSION' )
 			&&
-			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>=' )
+			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>' )
 		) {
 			return true;
 		}
 
 		return $skipped;
+	}
+
+	/**
+	 * Temporarily disable ESM transformation since STAMP preview mode (#development=1) is unavailable in amp-story-1.0.mjs.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @link https://github.com/ampproject/amphtml/issues/34364
+	 *
+	 * @param array $configuration The AMP Optimizer configuration.
+	 *
+	 * @return array The modified configuration.
+	 */
+	public function filter_amp_optimizer_config( $configuration ) {
+		$configuration[ Optimizer\Transformer\RewriteAmpUrls::class ][ Optimizer\Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED ] = false;
+		return $configuration;
 	}
 
 	/**
