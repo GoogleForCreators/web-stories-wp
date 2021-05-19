@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Plus', 'sticker name', 'web-stories');
 
 function Plus({ style }) {
   return (
@@ -26,6 +29,7 @@ function Plus({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M0.5 10.4H10.4V0.5L12.6 0.5V10.4H22.5V12.6H0.5L0.5 10.4Z"
         fill="white"
@@ -45,4 +49,5 @@ Plus.propTypes = {
 export default {
   aspectRatio: 23 / 24,
   svg: Plus,
+  title,
 };

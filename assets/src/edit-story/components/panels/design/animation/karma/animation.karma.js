@@ -49,7 +49,7 @@ describe('Animation Panel', function () {
     await fixture.events.click(effectChooser);
     await fixture.events.sleep(300);
     const fadeIn = await fixture.screen.getByRole('option', {
-      name: /^Fade In Effect$/,
+      name: /^"Fade In" Effect$/,
     });
     await fixture.events.click(fadeIn);
     await fixture.events.sleep(300);
@@ -64,13 +64,13 @@ describe('Animation Panel', function () {
     await fixture.events.click(effectChooser);
 
     await fixture.events.click(
-      fixture.screen.getByRole('option', { name: /^Fade In Effect$/ })
+      fixture.screen.getByRole('option', { name: /^"Fade In" Effect$/ })
     );
 
     expect(effectChooser.innerText).toBe('Fade In');
 
     await fixture.events.click(
-      fixture.screen.getByRole('option', { name: /^Drop Effect$/ })
+      fixture.screen.getByRole('option', { name: /^"Drop" Effect$/ })
     );
 
     expect(effectChooser.innerText).toBe('Drop');
@@ -84,7 +84,7 @@ describe('Animation Panel', function () {
     await fixture.events.click(effectChooser, { clickCount: 1 });
 
     await fixture.events.click(
-      fixture.screen.getByRole('option', { name: /^Fade In Effect$/ })
+      fixture.screen.getByRole('option', { name: /^"Fade In" Effect$/ })
     );
     await fixture.events.sleep(300);
 
