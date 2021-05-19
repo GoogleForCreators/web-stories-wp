@@ -139,8 +139,7 @@ describe('Quick Actions integration', () => {
 
       expect(fixture.editor.library.media3p).not.toBeNull();
 
-      // TODO: once #7522 is merged, we can uncomment this line
-      // expect(document.activeElement).toEqual(fixture.editor.library.media3pTab);
+      expect(document.activeElement).toEqual(fixture.editor.library.media3pTab);
     });
 
     it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
