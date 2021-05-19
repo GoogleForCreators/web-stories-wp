@@ -11,6 +11,6 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/e2e-test-utils": "^5.1.3"
+    "@wordpress/e2e-test-utils": "^5.1.4"
   }
 }
