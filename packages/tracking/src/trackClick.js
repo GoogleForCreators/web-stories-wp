@@ -37,7 +37,7 @@ async function trackClick(event, eventName) {
   }
 
   const openLinkInNewTab =
-    event.currentTarget.target === '_blank' ||
+    event.currentTarget?.target === '_blank' ||
     event.ctrlKey ||
     event.shiftKey ||
     event.metaKey ||
