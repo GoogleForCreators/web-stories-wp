@@ -219,7 +219,7 @@ function SizePositionPanel({
     };
   }, []);
   return (
-    <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
+    <SimplePanel name="size" title={__('Size & Position', 'web-stories')}>
       <Grid isSingleMedia={isMedia && isSingleElement}>
         {isMedia && isSingleElement && (
           <Area area="b">
@@ -350,7 +350,7 @@ function SizePositionPanel({
         <Area area="r">
           <NumericInput
             suffix={<Icons.Angle />}
-            unit={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
+            unit={_x('°', 'Degrees, 0 - 360.', 'web-stories')}
             value={rotationAngle}
             min={MIN_MAX.ROTATION.MIN}
             max={MIN_MAX.ROTATION.MAX}

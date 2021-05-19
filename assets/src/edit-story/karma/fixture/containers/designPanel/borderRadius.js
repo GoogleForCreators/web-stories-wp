@@ -29,11 +29,13 @@ export class BorderRadius extends AbstractPanel {
 
   radius(corner = null) {
     return this.getByRole('textbox', {
-      name: corner ? `${corner} corner radius` : 'Corner radius',
+      name: corner ? `${corner} corner radius` : 'Corner Radius',
     });
   }
 
   get lockBorderRadius() {
-    return this.getByRole('button', { name: /Toggle corner radius lock/ });
+    return this.getByRole('button', {
+      name: /Toggle consistent corner radius/,
+    });
   }
 }

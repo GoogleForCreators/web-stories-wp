@@ -85,7 +85,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
         const menu = within(openMenu);
         const closeButton = menu.getByRole('button', {
-          name: /^Close menu$/,
+          name: /^Close Menu$/,
         });
         await fixture.events.click(closeButton);
         // Give time for menu to close
@@ -180,7 +180,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
         const menu = within(openMenu);
         const closeButton = menu.getByRole('button', {
-          name: /^Close menu$/,
+          name: /^Close Menu$/,
         });
 
         expect(document.activeElement).toEqual(closeButton);
@@ -192,7 +192,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
         const menu = within(openMenu);
         const closeButton = menu.getByRole('button', {
-          name: /^Close menu$/,
+          name: /^Close Menu$/,
         });
 
         await fixture.events.focus(closeButton);

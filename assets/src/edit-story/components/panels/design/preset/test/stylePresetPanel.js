@@ -99,7 +99,7 @@ function arrange(extraStylePresets, extraStateProps) {
 describe('Panels/Preset', () => {
   const EDIT_BUTTON_LABEL = 'Edit styles';
   const APPLY_PRESET = 'Apply style';
-  const PANEL_LABEL = 'Saved styles';
+  const PANEL_LABEL = 'Saved Styles';
   const TEST_COLOR = {
     color: {
       r: 1,

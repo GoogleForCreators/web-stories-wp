@@ -35,38 +35,4 @@ bin/                                                              @swissspidy @s
 /tests/phpunit                                                    @swissspidy @spacedmonkey
 
 # WordPress.org plugin directory readme file.
-readme.txt                                                        @swissspidy @pbakaus @o-fernandez
-
-# Testing
-/tests/e2e                                                        @swissspidy
-/tests/js                                                         @swissspidy
-jest-puppeteer.config.js                                          @swissspidy
-testUtils/                                                        @swissspidy
-/karma                                                            @dvoytenko
-
-# Documentation
-docs/                                                             @swissspidy
-CONTRIBUTING.md                                                   @swissspidy
-
-# Dashboard
-#assets/src/dashboard/                                             @carlos-kelly @BrittanyIRL @mariano-formidable @littlemilkstudio
-
-# Stories Editor
-#assets/src/edit-story/                                            @dvoytenko @wassgha @barklund @miina @obetomuniz @ndev1991 @merapi
-
-## Media-related functionality
-#assets/src/edit-story/app/api/                                    @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/app/media/                                  @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/app/uploader/                               @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/components/mediaPicker/                     @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/components/uploadDropTarget/                @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/elements/media/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/elements/image/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-#assets/src/edit-story/elements/video/                             @cvolzke4 @diegovar @jhtin @joannag6 @winterDroid
-
-## Moveable
-#assets/src/edit-story/components/moveable/                         @miina
-#assets/src/edit-story/elements/image/editCropMoveable.js           @miina
-#assets/src/edit-story/elements/shared/editPanMoveable.js           @miina
-#assets/src/edit-story/components/canvas/singleSelectionMoveable.js @miina
-#assets/src/edit-story/components/canvas/multiSelectionMoveable.js  @miina
+readme.txt                                                        @swissspidy @o-fernandez

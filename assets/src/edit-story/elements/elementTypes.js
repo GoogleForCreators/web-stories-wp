@@ -38,7 +38,7 @@ const elementTypes = [
   { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
   { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },
   { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
-  { type: 'gif', name: __('Gif', 'web-stories'), ...gifElement },
+  { type: 'gif', name: __('GIF', 'web-stories'), ...gifElement },
   { type: 'sticker', name: __('Sticker', 'web-stories'), ...stickerElement },
 ];
 

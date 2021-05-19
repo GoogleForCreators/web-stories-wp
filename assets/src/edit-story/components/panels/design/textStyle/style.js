@@ -158,35 +158,35 @@ function StylePanel({ selectedElements, pushUpdate }) {
         <Toggle
           isToggled={textAlign === 'left'}
           onClick={handleTextAlign('left')}
-          aria-label={__('Align: left', 'web-stories')}
+          aria-label={__('Align text left', 'web-stories')}
         >
           <Icons.AlignTextLeft />
         </Toggle>
         <Toggle
           isToggled={textAlign === 'center'}
           onClick={handleTextAlign('center')}
-          aria-label={__('Align: center', 'web-stories')}
+          aria-label={__('Align text center', 'web-stories')}
         >
           <Icons.AlignTextCenter />
         </Toggle>
         <Toggle
           isToggled={textAlign === 'right'}
           onClick={handleTextAlign('right')}
-          aria-label={__('Align: right', 'web-stories')}
+          aria-label={__('Align text right', 'web-stories')}
         >
           <Icons.AlignTextRight />
         </Toggle>
         <Toggle
           isToggled={textAlign === 'justify'}
           onClick={handleTextAlign('justify')}
-          aria-label={__('Align: justify', 'web-stories')}
+          aria-label={__('Align text justified', 'web-stories')}
         >
           <Icons.AlignTextJustified />
         </Toggle>
         <Toggle
           isToggled={isTrulyBold}
           onClick={() => handleClickBold(!isTrulyBold)}
-          aria-label={__('Toggle: bold', 'web-stories')}
+          aria-label={__('Bold', 'web-stories')}
         >
           <Icons.LetterBBold />
         </Toggle>
@@ -205,14 +205,14 @@ function StylePanel({ selectedElements, pushUpdate }) {
             );
             handleClickItalic(!isTrulyItalic);
           }}
-          aria-label={__('Toggle: italic', 'web-stories')}
+          aria-label={__('Italic', 'web-stories')}
         >
           <Icons.LetterIItalic />
         </Toggle>
         <Toggle
           isToggled={isTrulyUnderline}
           onClick={() => handleClickUnderline(!isTrulyUnderline)}
-          aria-label={__('Toggle: underline', 'web-stories')}
+          aria-label={__('Underline', 'web-stories')}
         >
           <Icons.LetterUUnderline />
         </Toggle>

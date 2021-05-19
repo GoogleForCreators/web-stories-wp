@@ -40,13 +40,13 @@ export const basicAnimationProps = {
   duration: {
     label: __('Duration', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
-    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    unit: _x('ms', 'Time in milliseconds', 'web-stories'),
     defaultValue: 1000,
   },
   delay: {
     label: __('Delay', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
-    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    unit: _x('ms', 'Time in milliseconds', 'web-stories'),
     defaultValue: 0,
   },
 };
