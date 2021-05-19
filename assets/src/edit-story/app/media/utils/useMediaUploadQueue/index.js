@@ -52,7 +52,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
-    getFirstFrameOfVideo: getFirstFrameOfVideoFFMpeg,
+    getFirstFrameOfVideo,
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
@@ -123,8 +123,8 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const posterFile = await getFirstFrameOfVideoFFMpeg(file);
-            const poster = createBlob(posterFile);
+            const videoFrame = await getFirstFrameOfVideo(file);
+            const poster = createBlob(videoFrame);
             const { width, height } = await getImageDimensions(poster);
             const newResource = {
               ...resource,
@@ -135,7 +135,7 @@ function useMediaUploadQueue() {
             replacePlaceholderResource({
               id,
               resource: newResource,
-              posterFile,
+              posterFile: videoFrame,
             });
           } catch {
             // Not interested in errors here.
@@ -150,7 +150,7 @@ function useMediaUploadQueue() {
     isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
-    getFirstFrameOfVideoFFMpeg,
+    getFirstFrameOfVideo,
     replacePlaceholderResource,
   ]);
 
