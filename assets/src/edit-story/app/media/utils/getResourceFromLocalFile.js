@@ -137,7 +137,7 @@ const getPlaceholderResource = (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Object} Object containing resource object and poster file.
+ * @return {Promise<Object<{resource: import('./createResource').Resource, posterFile: File}>>} Object containing resource object and poster file.
  */
 const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);
