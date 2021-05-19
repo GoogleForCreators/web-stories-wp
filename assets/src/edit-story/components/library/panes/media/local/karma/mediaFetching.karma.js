@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -32,61 +32,66 @@ describe('MediaPane fetching', () => {
   let nonMediaTab;
 
   beforeEach(async () => {
-    jasmine.clock().install();
-
     fixture = new Fixture();
     await fixture.render();
 
-    localPane = fixture.querySelector('#library-pane-media');
-    nonMediaTab = fixture.querySelector('#library-tab-shapes');
+    localPane = await waitFor(() =>
+      fixture.querySelector('#library-pane-media')
+    );
+    nonMediaTab = await waitFor(() =>
+      fixture.querySelector('#library-tab-shapes')
+    );
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
     fixture.restore();
   });
 
-  async function expectMediaElements(expectedCount) {
-    let mediaElements;
-    await waitFor(() => {
-      mediaElements = localPane.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements || mediaElements.length !== expectedCount) {
-        throw new Error(
-          `Not ready: ${mediaElements?.length} != ${expectedCount}`
-        );
-      }
-      jasmine.clock().tick(10);
-    });
-    expect(mediaElements.length).toBe(expectedCount);
-  }
-
   it('should fetch 2nd page', async () => {
-    const mediaGallery = localPane.querySelector(
-      '[data-testid="media-gallery-container"]'
+    const mediaGallery = await waitFor(() =>
+      within(localPane).queryByTestId('media-gallery-container')
     );
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await waitFor(() =>
+      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
+        MEDIA_PER_PAGE
+      )
+    );
 
-    mediaGallery.scrollTo(
+    await mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
-    jasmine.clock().tick(500);
-
-    await expectMediaElements(MEDIA_PER_PAGE * 2);
+    // we need to wait to make sure gallery is populated.
+    await fixture.events.sleep(800);
+    await waitFor(() =>
+      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
+        MEDIA_PER_PAGE * 2
+      )
+    );
   });
 
   it('should not load results on resize if tab is hidden', async () => {
-    localPane.querySelector('[data-testid="media-gallery-container"]');
-    await expectMediaElements(MEDIA_PER_PAGE);
+    const mediaGallery = await waitFor(() =>
+      within(localPane).queryByTestId('media-gallery-container')
+    );
+    await waitFor(() =>
+      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
+        MEDIA_PER_PAGE
+      )
+    );
 
     await fixture.events.click(nonMediaTab);
 
     // Simulate a browser window resize, and complete the event debounce cycle.
     window.dispatchEvent(new Event('resize'));
-    jasmine.clock().tick(500);
+    await fixture.events.sleep(500);
 
     // Expect no additional results to be loaded.
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await waitFor(() =>
+      expect(within(mediaGallery).queryAllByTestId(/mediaElement/).length).toBe(
+        MEDIA_PER_PAGE
+      )
+    );
   });
 });

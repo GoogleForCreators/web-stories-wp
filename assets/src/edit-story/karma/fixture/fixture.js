@@ -360,10 +360,12 @@ export class Fixture {
         // This wait + click to close the button is more in line with
         // testing the actual behavior rather than overriding the local storage.
         await this.editor.helpCenter.toggleButton;
-        await this.events.click(this.editor.helpCenter.toggleButton);
-        await this.events.sleep(500);
+        await this.events?.click(this.editor.helpCenter.toggleButton, {
+          clickCount: 1,
+        });
+        await this.events?.sleep(500);
       },
-      { timeout: 5000 }
+      { timeout: 3000 }
     );
 
     // @todo: find a stable way to wait for the story to fully render. Can be
