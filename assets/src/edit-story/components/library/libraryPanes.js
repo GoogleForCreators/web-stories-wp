@@ -16,6 +16,7 @@
 /**
  * Internal dependencies
  */
+import { styles, useHighlights } from '../../app/highlights';
 import useLibrary from './useLibrary';
 import { getTabId } from './panes/shared';
 import {
@@ -33,11 +34,16 @@ import { TextPane } from './panes/text';
 import { ElementsPane } from './panes/elements';
 import { PageTemplatesPane } from './panes/pageTemplates';
 
-function LibraryPanes({ mediaPaneStyles, textPaneStyles }) {
+function LibraryPanes() {
   const { tab, tabs } = useLibrary((state) => ({
     tab: state.state.tab,
     tabs: state.data.tabs,
   }));
+
+  const highlighted = useHighlights(({ ...highlighted }) => highlighted);
+
+  const mediaHighlights = highlighted[MEDIA.id];
+  const textHighlights = highlighted[TEXT.id];
 
   return tabs.map(({ id }) => {
     const paneProps = {
@@ -48,13 +54,23 @@ function LibraryPanes({ mediaPaneStyles, textPaneStyles }) {
 
     switch (id) {
       case MEDIA.id:
-        return <MediaPane css={mediaPaneStyles} {...paneProps} />;
+        return (
+          <MediaPane
+            css={mediaHighlights?.showEffect && styles.FLASH}
+            {...paneProps}
+          />
+        );
       case MEDIA3P.id:
         return <Media3pPane {...paneProps} />;
       case SHAPES.id:
         return <ShapesPane {...paneProps} />;
       case TEXT.id:
-        return <TextPane css={textPaneStyles} {...paneProps} />;
+        return (
+          <TextPane
+            css={textHighlights?.showEffect && styles.FLASH}
+            {...paneProps}
+          />
+        );
       case ELEMS.id:
         return <ElementsPane {...paneProps} />;
       case PAGE_TEMPLATES.id:

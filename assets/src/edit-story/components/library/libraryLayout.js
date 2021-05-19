@@ -26,7 +26,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import TabView from '../tabview';
-import { states, styles, useFocusHighlight } from '../../app/highlights';
+import { states, useFocusHighlight } from '../../app/highlights';
 import LibraryPanes from './libraryPanes';
 import useLibrary from './useLibrary';
 import { getTabId, getPaneId } from './panes/shared';
@@ -64,8 +64,8 @@ function LibraryLayout() {
     tabs: state.data.tabs,
   }));
 
-  const mediaHighlight = useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]);
-  const textHighlight = useFocusHighlight(states.TEXT, tabRefs[TEXT.id]);
+  useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]);
+  useFocusHighlight(states.TEXT, tabRefs[TEXT.id]);
 
   const onTabChange = useCallback(
     (id) => {
@@ -92,10 +92,7 @@ function LibraryLayout() {
         />
       </TabsArea>
       <LibraryPaneContainer>
-        <LibraryPanes
-          mediaPaneStyles={mediaHighlight?.showEffect && styles.FLASH}
-          textPaneStyles={textHighlight?.showEffect && styles.FLASH}
-        />
+        <LibraryPanes />
       </LibraryPaneContainer>
     </Layout>
   );
