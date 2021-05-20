@@ -114,6 +114,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 **Release Date:** May 20, 2021.
 
 * New feature: optimize videos directly from the pre-publish checklist.
+* New feature: get notified about missing video posters in the pre-publish checklist.
 * Fixes an issue with the preview mode not working anymore.
 * Improves compatibility with Jetpack VideoPress.
 
