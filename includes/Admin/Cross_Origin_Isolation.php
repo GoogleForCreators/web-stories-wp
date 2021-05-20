@@ -135,6 +135,7 @@ class Cross_Origin_Isolation extends Service_Base {
 		];
 
 		$processed = [];
+
 		foreach ( $map as $tag => $attribute ) {
 			$tags = $document->getElementsByTagName( $tag );
 			foreach ( $tags as $node ) {
