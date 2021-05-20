@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo, useRef, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { useFeature } from 'flagged';
 
 /**
@@ -37,8 +37,6 @@ import {
 } from './layout';
 
 function NavLayer() {
-  const carouselAreaRef = useRef(null);
-  const headAreaRef = useRef(null);
   const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const quickActions = useQuickActions();
 
@@ -57,7 +55,7 @@ function NavLayer() {
       zIndex={Z_INDEX.NAV}
       onMouseDown={(evt) => evt.stopPropagation()}
     >
-      <HeadArea pointerEvents="initial" ref={headAreaRef}>
+      <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>
       {enableQuickActionMenu && quickActions.length && (
@@ -73,7 +71,7 @@ function NavLayer() {
           </QuickActionsArea>
         </DirectionAware>
       )}
-      <CarouselArea pointerEvents="initial" ref={carouselAreaRef}>
+      <CarouselArea pointerEvents="initial">
         <Carousel />
       </CarouselArea>
     </Layer>

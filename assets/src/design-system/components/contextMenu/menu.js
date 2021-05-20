@@ -214,7 +214,7 @@ const Menu = ({
       // If we didn't find a focusable element or get to the start/end
       // of the list then **tabbing should close the menu**
       if (key === KEYS.TAB) {
-        onDismiss?.({ isAscending });
+        onDismiss?.();
       }
     },
     [focusedIndex, onDismiss, totalIndex]
