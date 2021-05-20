@@ -204,7 +204,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
 
     const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
     expect(result).not.toBeUndefined();
-    expect(result.message).toBe('Video is missing poster');
+    expect(result.message).toBe('Add poster image to every video');
     expect(result.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.ERROR);
     expect(result.elementId).toStrictEqual(posterlessVideo.id);
   });
