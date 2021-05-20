@@ -296,7 +296,14 @@ class Site_Kit extends Test_Case {
 	public function test_get_plugin_status_adsense_module_active() {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'adsense' ], false );
-		update_option( 'googlesitekit_adsense_settings', [ 'useSnippet' => true, 'webStoriesAdUnit' => '12345' ], false );
+		update_option(
+			'googlesitekit_adsense_settings',
+			[
+				'useSnippet'       => true,
+				'webStoriesAdUnit' => '12345',
+			],
+			false 
+		);
 
 		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
 		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );

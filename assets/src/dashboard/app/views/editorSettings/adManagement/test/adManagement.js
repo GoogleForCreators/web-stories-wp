@@ -25,7 +25,6 @@ import { screen } from '@testing-library/react';
 import { renderWithProviders } from '../../../../../testUtils';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
 import AdManagement, { TEXT } from '..';
-import GoogleAnalyticsSettings from '../../googleAnalytics';
 
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;
@@ -112,5 +111,29 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       }
     );
     expect(helperLink).toBeInTheDocument();
+  });
+
+  it('should render adsense message when site kit is installed', function () {
+    renderWithProviders(
+      <AdManagement
+        adNetwork={AD_NETWORK_TYPE.ADMANAGER}
+        updateSettings={mockUpdate}
+        publisherId=""
+        adSenseSlotId=""
+        adManagerSlotId=""
+        siteKitStatus={{
+          ...defaultsiteKitStatus,
+          active: true,
+          installed: true,
+          adsenseActive: true,
+        }}
+      />
+    );
+
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
+
+    const siteKitMessage = screen.getByText(TEXT.SITE_KIT_IN_USE);
+    expect(siteKitMessage).toBeInTheDocument();
   });
 });
