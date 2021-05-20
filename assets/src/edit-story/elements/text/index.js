@@ -19,6 +19,7 @@
  */
 export { default as Display } from './display';
 export { default as Edit } from './edit';
+export { default as SVG } from './svg';
 export { default as Frame } from './frame';
 export { default as Output } from './output';
 export { default as TextContent } from './textContent';

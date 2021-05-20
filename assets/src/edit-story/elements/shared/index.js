@@ -34,11 +34,21 @@ export const elementFillContent = css`
   height: 100%;
 `;
 
+export const svgElementFillContent = css`
+  width: 100%;
+  height: 100%;
+`;
+
 export const elementWithPosition = css`
   position: absolute;
   z-index: 1;
   left: ${({ x }) => `${x}px`};
   top: ${({ y }) => `${y}px`};
+`;
+
+export const svgElementWithPosition = css`
+  content: '${({ $x, $y }) => `${$x}px, ${$y}px`}';
+  transform: translate(${({ $x, $y }) => `${$x}px, ${$y}px`});
 `;
 
 // TODO: removed round/ceil, calculateFitTextFontSize needs to be improved?
@@ -78,9 +88,26 @@ export const elementWithBorder = css`
   background-clip: padding-box;
 `;
 
+export const svgElementWithBorder = css`
+  ${({ border }) =>
+    border?.left &&
+    css`
+      stroke-width: ${border.left};
+    ` &&
+    border.color &&
+    css`
+      stroke: ${border.color};
+    `};
+`;
+
 export const elementWithBackgroundColor = css`
   ${({ backgroundColor }) =>
     backgroundColor && generatePatternStyles(backgroundColor)};
+`;
+
+export const svgElementWithBackgroundColor = css`
+  ${({ backgroundColor }) =>
+    backgroundColor && generatePatternStyles(backgroundColor, 'fill')};
 `;
 
 export const elementWithFont = css`

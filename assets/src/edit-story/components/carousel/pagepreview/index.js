@@ -25,10 +25,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
-import { TransformProvider } from '../../transform';
-import { UnitsProvider } from '../../../units';
-import DisplayElement from '../../canvas/displayElement';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import Element from './element';
 
 const Page = styled.button`
   display: block;
@@ -79,27 +78,27 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
+const SVGNode = styled.svg.attrs({
+  viewBox: `0 0 ${PAGE_WIDTH} ${PAGE_HEIGHT}`,
+  xmlns: 'http://www.w3.org/2000/svg',
+})`
+  width: 100%;
+  height: 100%;
+`;
+
 function PagePreview({ page, ...props }) {
   const { backgroundColor } = page;
-  const { width, height } = props;
 
   return (
-    <UnitsProvider pageSize={{ width, height }}>
-      <TransformProvider>
-        <Page {...props}>
-          <PreviewWrapper background={backgroundColor}>
-            {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement
-                key={id}
-                previewMode
-                element={{ id, ...rest }}
-                page={page}
-              />
-            ))}
-          </PreviewWrapper>
-        </Page>
-      </TransformProvider>
-    </UnitsProvider>
+    <Page {...props}>
+      <PreviewWrapper background={backgroundColor}>
+        <SVGNode>
+          {page.elements.map(({ id, ...rest }) => (
+            <Element key={id} element={{ id, ...rest }} />
+          ))}
+        </SVGNode>
+      </PreviewWrapper>
+    </Page>
   );
 }
 

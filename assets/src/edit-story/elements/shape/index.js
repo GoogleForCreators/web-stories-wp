@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 export { default as Display } from './display';
+export { default as SVG } from './svg';
 export { default as Output } from './output';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
