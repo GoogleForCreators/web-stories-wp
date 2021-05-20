@@ -34,6 +34,7 @@ const keys = {
   EXCERPT: 'EXCERPT',
   CAPTIONS: 'CAPTIONS',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
+  VIDEO_A11Y_POSTER: 'VIDEO_A11Y_POSTER',
 };
 
 export const STATES = {
@@ -57,6 +58,10 @@ export const STATES = {
     tab: DESIGN,
   },
   [keys.ASSISTIVE_TEXT]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
     tab: DESIGN,
   },

@@ -190,19 +190,6 @@ export const MESSAGES = {
         </ul>
       ),
     },
-    MISSING_VIDEO_POSTER: {
-      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
-      HELPER_TEXT: (
-        <ul>
-          <li>
-            {__(
-              'Ensure a better experience by displaying a poster while users wait for the video to load',
-              'web-stories'
-            )}
-          </li>
-        </ul>
-      ),
-    },
   },
   ACCESSIBILITY: {
     LOW_CONTRAST: {
@@ -631,6 +618,19 @@ export const MESSAGES = {
                 'web-stories'
               ),
               '720p'
+            )}
+          </li>
+        </ul>
+      ),
+    },
+    VIDEO_MISSING_POSTER: {
+      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
+      HELPER_TEXT: (
+        <ul>
+          <li>
+            {__(
+              'Ensure a better experience by displaying a poster while users wait for the video to load',
+              'web-stories'
             )}
           </li>
         </ul>
