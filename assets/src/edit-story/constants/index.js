@@ -103,6 +103,4 @@ export const FOCUSABLE_SELECTORS = [
   '[tabindex]:not([tabindex="-1"])',
 ];
 
-export const ALL_FOCUSABLE_SELECTOR = FOCUSABLE_SELECTORS.join(', ');
-
 export * from './media';
