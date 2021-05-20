@@ -624,10 +624,15 @@ export const MESSAGES = {
       ),
     },
     VIDEO_MISSING_POSTER: {
-      MAIN_TEXT: __('Video is missing poster', 'web-stories'),
+      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
       HELPER_TEXT: (
         <ul>
-          <li>{__('Add poster image to every video', 'web-stories')}</li>
+          <li>
+            {__(
+              'Ensure a better experience by displaying a poster while users wait for the video to load',
+              'web-stories'
+            )}
+          </li>
         </ul>
       ),
     },
