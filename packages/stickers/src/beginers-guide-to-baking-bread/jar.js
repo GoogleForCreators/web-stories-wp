@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Jar', 'sticker name', 'web-stories');
 
 function Jar({ style }) {
   return (
@@ -26,6 +29,7 @@ function Jar({ style }) {
       viewBox="0 0 28 37"
       fill="none"
     >
+      <title>{title}</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -44,4 +48,5 @@ Jar.propTypes = {
 export default {
   aspectRatio: 28 / 37,
   svg: Jar,
+  title,
 };

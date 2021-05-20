@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Thermometer', 'sticker name', 'web-stories');
 
 function ThermoStat({ style }) {
   return (
@@ -26,6 +29,7 @@ function ThermoStat({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -59,4 +63,5 @@ ThermoStat.propTypes = {
 export default {
   aspectRatio: 28 / 50,
   svg: ThermoStat,
+  title,
 };

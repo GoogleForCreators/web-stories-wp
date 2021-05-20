@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Bowl', 'sticker name', 'web-stories');
 
 function FlourBowl({ style }) {
   return (
@@ -26,6 +29,7 @@ function FlourBowl({ style }) {
       viewBox="0 0 43 31"
       fill="none"
     >
+      <title>{title}</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -55,4 +59,5 @@ FlourBowl.propTypes = {
 export default {
   aspectRatio: 43 / 31,
   svg: FlourBowl,
+  title,
 };

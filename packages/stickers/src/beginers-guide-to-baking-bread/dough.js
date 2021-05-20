@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Yeast', 'sticker name', 'web-stories');
 
 function Dough({ style }) {
   return (
@@ -26,6 +29,7 @@ function Dough({ style }) {
       viewBox="0 0 47 21"
       fill="none"
     >
+      <title>{title}</title>
       <path
         d="M16.6458 6.87563C16.8125 8.5 20.3125 9.5 23.3125 8.5M13.9792 20H33.3125C37.3125 20 45.3125 18.95 45.3125 14.7499C45.3125 9.49975 37.3125 2.28173 31.3125 2.28173C25.3125 2.28173 17.3125 -0.999746 9.3125 2.93842C5.09625 5.01396 1.3125 10.1547 1.3125 13.4361C1.3125 16.7174 2.64583 20 13.9792 20Z"
         stroke="white"
@@ -43,4 +47,5 @@ Dough.propTypes = {
 export default {
   aspectRatio: 47 / 21,
   svg: Dough,
+  title,
 };

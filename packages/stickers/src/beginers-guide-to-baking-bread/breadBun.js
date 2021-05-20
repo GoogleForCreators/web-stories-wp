@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Bread', 'sticker name', 'web-stories');
 
 function BreadBun({ style }) {
   return (
@@ -26,6 +29,7 @@ function BreadBun({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -55,4 +59,5 @@ BreadBun.propTypes = {
 export default {
   aspectRatio: 93 / 67,
   svg: BreadBun,
+  title,
 };
