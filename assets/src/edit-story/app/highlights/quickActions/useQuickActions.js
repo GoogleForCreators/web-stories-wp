@@ -51,6 +51,7 @@ export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add Link', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
+  CHANGE_COLOR: __('Change color', 'web-stories'),
   CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
@@ -175,6 +176,7 @@ const useQuickActions = () => {
     handleFocusLinkPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
+    handleFocusStylePanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
@@ -183,6 +185,7 @@ const useQuickActions = () => {
       handleFocusMedia3pPanel: handleFocusPanel(states.MEDIA3P),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
+      handleFocusStylePanel: handleFocusPanel(states.STYLE),
     }),
     [handleFocusPanel]
   );
@@ -231,14 +234,8 @@ const useQuickActions = () => {
     handleMouseDown,
   ]);
 
-  const foregroundImageActions = useMemo(
+  const foregroundCommonActions = useMemo(
     () => [
-      {
-        Icon: PictureSwap,
-        label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMedia3pPanel(selectedElement?.id),
-        ...actionMenuProps,
-      },
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
@@ -261,13 +258,48 @@ const useQuickActions = () => {
       },
     ],
     [
-      actionMenuProps,
       handleClearAnimations,
-      handleFocusAnimationPanel,
       handleFocusLinkPanel,
-      handleFocusMedia3pPanel,
+      handleFocusAnimationPanel,
+      actionMenuProps,
       selectedElement?.id,
       selectedElementAnimations?.length,
+    ]
+  );
+
+  const foregroundImageActions = useMemo(
+    () => [
+      {
+        Icon: PictureSwap,
+        label: ACTION_TEXT.REPLACE_MEDIA,
+        onClick: handleFocusMedia3pPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
+    [
+      actionMenuProps,
+      handleFocusMedia3pPanel,
+      foregroundCommonActions,
+      selectedElement?.id,
+    ]
+  );
+
+  const shapeActions = useMemo(
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTION_TEXT.CHANGE_COLOR,
+        onClick: handleFocusStylePanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
+    [
+      handleFocusStylePanel,
+      foregroundCommonActions,
+      actionMenuProps,
+      selectedElement?.id,
     ]
   );
 
@@ -290,6 +322,7 @@ const useQuickActions = () => {
     case ELEMENT_TYPE.IMAGE:
       return foregroundImageActions;
     case ELEMENT_TYPE.SHAPE:
+      return shapeActions;
     case ELEMENT_TYPE.TEXT:
     case ELEMENT_TYPE.VIDEO:
     default:
