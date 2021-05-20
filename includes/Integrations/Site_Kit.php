@@ -63,6 +63,7 @@ class Site_Kit extends Service_Base {
 		if ( $this->is_analytics_module_active() ) {
 			remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
 		}
+		$this->is_adsense_module_active();
 	}
 
 	/**
@@ -74,6 +75,23 @@ class Site_Kit extends Service_Base {
 	 */
 	protected function is_plugin_active() {
 		return defined( 'GOOGLESITEKIT_VERSION' );
+	}
+
+
+	/**
+	 * Determines whether the built-in adsense module in Site Kit is active.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return bool Whether Site Kit's analytics module is active.
+	 */
+	protected function is_adsense_module_active() {
+		$adsense_module_active       = in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
+		$adsense_options             = get_option( 'googlesitekit_adsense_settings' );
+		$adsense_options_use_snippet = ! empty( $adsense_options['useSnippet'] );
+		$adsense_web_stories_ad_unit = ! empty( $adsense_options['webStoriesAdUnit'] );
+
+		return $adsense_module_active && $adsense_options_use_snippet && $adsense_web_stories_ad_unit;
 	}
 
 	/**
@@ -161,27 +179,40 @@ class Site_Kit extends Service_Base {
 		$is_installed        = array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
 		$is_active           = $this->is_plugin_active();
 		$is_analytics_active = $this->is_analytics_module_active();
+		$is_adsense_active   = $this->is_adsense_module_active();
 
-		$link      = __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' );
-		$dashboard = admin_url( 'admin.php?page=googlesitekit-dashboard' );
-		$settings  = admin_url( 'admin.php?page=googlesitekit-settings' );
+		$analytics_link = __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' );
+		$adsense_link   = __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' );
+		$dashboard      = admin_url( 'admin.php?page=googlesitekit-dashboard' );
+		$settings       = admin_url( 'admin.php?page=googlesitekit-settings' );
 
-		if ( $is_analytics_active ) {
-			if ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
-				$link = $dashboard;
+		if ( $is_active ) {
+			if ( $is_analytics_active ) {
+				if ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
+					$analytics_link = $dashboard;
+				}
 			}
-		} elseif ( $is_active ) {
+
+			if ( $is_adsense_active ) {
+				if ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
+					$adsense_link = $dashboard;
+				}
+			}
+
 			if ( current_user_can( 'googlesitekit_manage_options' ) ) {
-				$link = $settings;
+				$analytics_link = $settings;
+				$adsense_link   = $settings;
 			} elseif ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
-				$link = $dashboard;
+				$analytics_link = $dashboard;
+				$adsense_link   = $dashboard;
 			}
 		} elseif ( $is_installed ) {
 			if ( current_user_can( 'activate_plugin', 'google-site-kit/google-site-kit.php' ) ) {
-				$link = admin_url( 'plugins.php' );
+				$analytics_link = admin_url( 'plugins.php' );
+				$adsense_link   = $analytics_link;
 			}
 		} elseif ( current_user_can( 'install_plugins' ) ) {
-			$link = admin_url(
+			$analytics_link = admin_url(
 				add_query_arg(
 					[
 						's'   => urlencode( __( 'Site Kit by Google', 'web-stories' ) ),
@@ -190,13 +221,16 @@ class Site_Kit extends Service_Base {
 					'plugin-install.php'
 				)
 			);
+			$adsense_link   = $analytics_link;
 		}
 
 		return [
 			'installed'       => $is_active || $is_installed,
 			'active'          => $is_active,
 			'analyticsActive' => $is_analytics_active,
-			'link'            => $link,
+			'adsenseActive'   => $is_adsense_active,
+			'analyticsLink'   => $analytics_link,
+			'adsenseLink'     => $adsense_link,
 		];
 	}
 }

@@ -79,7 +79,7 @@ function GoogleAnalyticsSettings({
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
 
-  const { analyticsActive, installed, link } = siteKitStatus;
+  const { analyticsActive, installed, analyticsLink } = siteKitStatus;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -133,7 +133,7 @@ function GoogleAnalyticsSettings({
         mapping={{
           a: (
             <InlineLink
-              href={link}
+              href={analyticsLink}
               rel="noreferrer"
               target="_blank"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -146,7 +146,7 @@ function GoogleAnalyticsSettings({
         {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
       </TranslateWithMarkup>
     );
-  }, [analyticsActive, installed, link, onSiteKitClick]);
+  }, [analyticsActive, installed, analyticsLink, onSiteKitClick]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -213,8 +213,9 @@ GoogleAnalyticsSettings.propTypes = {
   siteKitStatus: PropTypes.shape({
     installed: PropTypes.bool,
     active: PropTypes.bool,
+    adsenseActive: PropTypes.bool,
     analyticsActive: PropTypes.bool,
-    link: PropTypes.string,
+    analyticsLink: PropTypes.string,
   }),
 };
 

@@ -25,10 +25,16 @@ import { screen } from '@testing-library/react';
 import { renderWithProviders } from '../../../../../testUtils';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
 import AdManagement, { TEXT } from '..';
+import GoogleAnalyticsSettings from '../../googleAnalytics';
 
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;
   let mockUpdate;
+  const defaultsiteKitStatus = {
+    installed: false,
+    adsenseActive: false,
+    active: false,
+  };
 
   beforeEach(() => {
     adNetwork = AD_NETWORK_TYPE.NONE;
@@ -47,6 +53,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        siteKitStatus={{ ...defaultsiteKitStatus }}
       />
     );
 
@@ -70,6 +77,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        siteKitStatus={{ ...defaultsiteKitStatus }}
       />
     );
 
@@ -90,6 +98,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        siteKitStatus={{ ...defaultsiteKitStatus }}
       />
     );
 
