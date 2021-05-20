@@ -43,7 +43,6 @@ const MAX_STORY_CHARACTERS = 200;
 const MAX_CHARACTER_PERCENTAGE = 10;
 const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_FPS = 24;
-const MAX_VIDEO_RESOLUTION = 4000;
 const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 const MIN_TAP_REGION_WIDTH = 48;
@@ -186,19 +185,6 @@ export const MESSAGES = {
               /* translators: %s: image dimensions. */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
-            )}
-          </li>
-        </ul>
-      ),
-    },
-    MISSING_VIDEO_POSTER: {
-      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
-      HELPER_TEXT: (
-        <ul>
-          <li>
-            {__(
-              'Ensure a better experience by displaying a poster while users wait for the video to load',
-              'web-stories'
             )}
           </li>
         </ul>
@@ -620,25 +606,35 @@ export const MESSAGES = {
         </ul>
       ),
     },
-    VIDEO_RESOLUTION_TOO_HIGH: {
-      MAIN_TEXT: sprintf(
-        /* translators: %s: maximum video resolution. */
-        __('Reduce video resolution to less than %s', 'web-stories'),
-        `${MAX_VIDEO_RESOLUTION}p`
-      ),
+    VIDEO_NOT_OPTIMIZED: {
+      MAIN_TEXT: __('Optimize video size', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
-            {__(
-              "Optimize reach and engagement by accounting for the large number of mobile devices don't support video resolutions larger than 4K",
-              'web-stories'
+            {sprintf(
+              /* translators: %s: video resolution (720p) */
+              __(
+                'Videos larger than %s can cause slower loading and higher bandwidth costs.',
+                'web-stories'
+              ),
+              '720p'
             )}
           </li>
         </ul>
       ),
     },
-    VIDEO_NOT_OPTIMIZED: {
-      MAIN_TEXT: __('Video not optimized', 'web-stories'),
+    VIDEO_MISSING_POSTER: {
+      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
+      HELPER_TEXT: (
+        <ul>
+          <li>
+            {__(
+              'Ensure a better experience by displaying a poster while users wait for the video to load',
+              'web-stories'
+            )}
+          </li>
+        </ul>
+      ),
     },
   },
 };

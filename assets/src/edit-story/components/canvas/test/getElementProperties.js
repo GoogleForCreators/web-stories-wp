@@ -19,8 +19,7 @@
  */
 import { getElementProperties } from '../useInsertElement';
 
-const BASIC_SHAPE = {
-  id: '8e06a649-ad1f-455d-a76b-ad012aff08ad',
+const COMMON_PROPERTIES = {
   opacity: 100,
   flip: {
     vertical: false,
@@ -35,7 +34,6 @@ const BASIC_SHAPE = {
       b: 196,
     },
   },
-  type: 'shape',
   x: 94,
   y: 77,
   width: 137,
@@ -43,23 +41,73 @@ const BASIC_SHAPE = {
   scale: 100,
   focalX: 50,
   focalY: 50,
+};
+
+const BASIC_SHAPE = {
+  ...COMMON_PROPERTIES,
+  id: 'fake-shape-id',
+  backgroundColor: {
+    color: {
+      r: 196,
+      g: 196,
+      b: 196,
+    },
+  },
+  type: 'shape',
   mask: {
     type: 'triangle',
   },
 };
 
-describe('getElementProperties', () => {
-  it('should keep x,y unmodified', () => {
-    const inboundsX = 50;
-    const inboundsY = 25;
+const VIDEO_RESOURCE = {
+  type: 'video',
+  mimeType: 'video/webm',
+  creationDate: '2021-05-11T21:55:24',
+  src: 'http://test.example/video.mp4',
+  width: 720,
+  height: 1280,
+  poster: 'http://test.example/video-poster.jpg',
+  posterId: 92,
+  id: 91,
+  length: 6,
+  lengthFormatted: '0:06',
+  title: 'small-video',
+  alt: 'small-video',
+  sizes: {},
+  local: false,
+  isOptimized: false,
+  baseColor: [115, 71, 39],
+};
 
-    const result = getElementProperties(BASIC_SHAPE.type, {
+describe('getElementProperties', () => {
+  it('should default x/y to (48, 0) if not provided', () => {
+    const properties = getElementProperties('shape', {
       ...BASIC_SHAPE,
-      x: inboundsX,
-      y: inboundsY,
+      x: undefined,
+      y: undefined,
     });
 
-    expect(result.x).toBe(inboundsX);
-    expect(result.y).toBe(inboundsY);
+    expect(properties.x).toBe(48);
+    expect(properties.y).toBe(0);
+  });
+
+  it('should keep x/y unmodified', () => {
+    const properties = getElementProperties('shape', {
+      ...BASIC_SHAPE,
+      x: 50,
+      y: 25,
+    });
+
+    expect(properties.x).toBe(50);
+    expect(properties.y).toBe(25);
+  });
+
+  it('should keep resource unmodified', () => {
+    const properties = getElementProperties('video', {
+      ...COMMON_PROPERTIES,
+      resource: VIDEO_RESOURCE,
+    });
+
+    expect(properties.resource).toStrictEqual(VIDEO_RESOURCE);
   });
 });
