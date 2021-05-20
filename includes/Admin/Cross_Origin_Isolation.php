@@ -136,9 +136,6 @@ class Cross_Origin_Isolation extends Service_Base {
 
 		$processed = [];
 
-		// Workaround for hardcoded underscore references to video shortcode.
-		$html = str_replace( 'class="wp-video-shortcode', 'crossorigin="anonymous" class="wp-video-shortcode', $html );
-
 		foreach ( $map as $tag => $attribute ) {
 			$tags = $document->getElementsByTagName( $tag );
 			foreach ( $tags as $node ) {
