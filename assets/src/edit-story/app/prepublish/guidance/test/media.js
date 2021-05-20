@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../constants';
 import * as mediaGuidance from '../media';
 
 describe('Pre-publish checklist - media guidelines (guidance)', () => {
@@ -204,7 +205,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
     expect(result).not.toBeUndefined();
     expect(result.message).toBe('Video is missing poster');
-    expect(result.type).toStrictEqual('guidance');
+    expect(result.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.ERROR);
     expect(result.elementId).toStrictEqual(posterlessVideo.id);
   });
 

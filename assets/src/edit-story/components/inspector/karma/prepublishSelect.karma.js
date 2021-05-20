@@ -401,10 +401,10 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       });
     });
 
-    await enableRecommendedMessagesWith2Pages();
+    await enableHighPriorityMessagesWith5Pages();
 
     await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.recommended
+      fixture.editor.inspector.checklistPanel.highPriority
     );
 
     const videoMissingPosterRow = fixture.screen.getByText(
@@ -440,10 +440,10 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       });
     });
 
-    await enableRecommendedMessagesWith2Pages();
+    await enableHighPriorityMessagesWith5Pages();
 
     await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.recommended
+      fixture.editor.inspector.checklistPanel.highPriority
     );
 
     const videoMissingPosterRow = fixture.screen.getByText(
