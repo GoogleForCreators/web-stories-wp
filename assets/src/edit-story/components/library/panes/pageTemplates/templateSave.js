@@ -48,6 +48,7 @@ const IconWrapper = styled.div`
   margin-right: 29px;
 `;
 
+// @todo The color code .gray[85] should be replaced once we have the name confirmed for it.
 const SaveButton = styled.button`
   border: 0;
   background: none;
@@ -71,9 +72,9 @@ const SaveButton = styled.button`
   ${({ isDisabled, theme }) =>
     isDisabled &&
     `
-      background-color: ${theme.colors.interactiveBg.disable};
+      background-color: ${theme.colors.gray[85]};
       &:hover {
-        background-color: ${theme.colors.interactiveBg.disable};
+        background-color: ${theme.colors.gray[85]};
       }
 
       ${IconWrapper} svg {

@@ -26,6 +26,7 @@ import { rgba } from 'polished';
 const brand = {
   gray: {
     90: '#131516',
+    85: '#1B1F20',
     80: '#26292A',
     75: '#2E3133',
     70: '#393D3F',
