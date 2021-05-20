@@ -21,8 +21,6 @@ import { VIDEO_SIZE_THRESHOLD } from '../../media/utils/useFFmpeg';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { VideoOptimization } from '../components/videoOptimization';
 
-const MAX_VIDEO_WIDTH = 3840;
-const MAX_VIDEO_HEIGHT = 2160;
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
 
@@ -58,18 +56,6 @@ function videoElementResolution(element) {
   const videoResolutionLow =
     element.resource?.sizes?.full?.height <= MIN_VIDEO_HEIGHT &&
     element.resource?.sizes?.full?.width <= MIN_VIDEO_WIDTH;
-  const videoResolutionHigh =
-    element.resource?.sizes?.full?.height >= MAX_VIDEO_HEIGHT &&
-    element.resource?.sizes?.full?.width >= MAX_VIDEO_WIDTH;
-
-  if (videoResolutionHigh) {
-    return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      elementId: element.id,
-      message: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.MAIN_TEXT,
-      help: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.HELPER_TEXT,
-    };
-  }
 
   if (videoResolutionLow) {
     return {
@@ -169,7 +155,12 @@ export function videoElementOptimized(element = {}) {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
-      help: <VideoOptimization element={element} />,
+      help: (
+        <VideoOptimization
+          element={element}
+          caption={MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.HELPER_TEXT}
+        />
+      ),
       noHighlight: true,
     };
   }
