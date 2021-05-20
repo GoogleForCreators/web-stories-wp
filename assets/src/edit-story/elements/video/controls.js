@@ -33,7 +33,7 @@ import Popup from '../../components/popup';
 import { Icons } from '../../../design-system';
 import { useConfig } from '../../app/config';
 
-const PLAY_BUTTON_SIZE = 50;
+const PLAY_BUTTON_SIZE = 52;
 const ICON_SVG_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
@@ -88,7 +88,8 @@ const iconCss = css`
   transform: translate(
     ${({ isRTL }) =>
       ((PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2) * (isRTL ? -1 : 1)}px,
-    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
+    ${({ isAbove }) =>
+      ((PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2) * (isAbove ? 1 : -1)}px
   );
   color: ${({ theme }) => theme.colors.standard.white};
   filter: drop-shadow(
@@ -242,6 +243,7 @@ function VideoControls({
       )
     : CSSTransition;
 
+  const Icon = isPlaying ? Pause : Play;
   return (
     <Controls data-controls-id={id} {...box}>
       {showControls && element.resource.src && (
@@ -258,7 +260,7 @@ function VideoControls({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
-            {isPlaying ? <Pause isRTL={isRTL} /> : <Play isRTL={isRTL} />}
+            <Icon isRTL={isRTL} isAbove={isPlayAbove} />
           </ButtonWrapper>
         </TransitionWrapper>
       )}
