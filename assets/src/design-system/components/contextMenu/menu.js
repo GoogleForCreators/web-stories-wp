@@ -167,7 +167,7 @@ const Menu = ({
   isIconMenu,
   isOpen,
   onDismiss,
-  disableTabNavigation = false,
+  disableControlledTabNavigation = false,
   ...props
 }) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
@@ -257,10 +257,10 @@ const Menu = ({
 
   const keySpec = useMemo(
     () =>
-      disableTabNavigation
+      disableControlledTabNavigation
         ? { key: ['down', 'up', 'left', 'right'] }
         : { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
-    [disableTabNavigation]
+    [disableControlledTabNavigation]
   );
 
   useKeyDownEffect(listRef, keySpec, handleKeyboardNav, [
@@ -309,7 +309,7 @@ export const MenuPropTypes = {
   isIconMenu: PropTypes.bool,
   isOpen: PropTypes.bool,
   onDismiss: PropTypes.func,
-  disableTabNavigation: PropTypes.bool,
+  disableControlledTabNavigation: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;
