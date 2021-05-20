@@ -283,6 +283,7 @@ const useQuickActions = () => {
       actionMenuProps,
       selectedElement?.id,
       selectedElementAnimations?.length,
+      handleClearAnimations,
     ]
   );
 
@@ -341,6 +342,7 @@ const useQuickActions = () => {
         label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATION,
         onClick: () => handleClearAnimations(selectedElement?.id),
         separator: 'top',
+        disabled: !selectedElementAnimations?.length,
         ...actionMenuProps,
       },
     ],
@@ -349,13 +351,10 @@ const useQuickActions = () => {
       selectedElement?.id,
       actionMenuProps,
       handleFocusAnimationPanel,
+      selectedElementAnimations?.length,
       handleClearAnimations,
     ]
   );
-
-  useEffect(() => {
-    console.log({ selectedElement });
-  }, [selectedElement]);
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
