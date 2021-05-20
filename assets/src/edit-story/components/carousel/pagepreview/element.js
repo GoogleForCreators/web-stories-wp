@@ -28,7 +28,9 @@ import {
 } from '../../../elements/shared';
 import getTransformFlip from '../../../elements/shared/getTransformFlip';
 import StoryPropTypes from '../../../types';
+import generatePatternStyles from '../../../utils/generatePatternStyles';
 import Masked from './masked';
+import { getBox } from './utils';
 
 const Position = styled.g`
   ${svgElementWithPosition}
@@ -44,23 +46,44 @@ const Flipped = styled.g`
     `${$width / 2}px ${$height / 2}px`};
 `;
 
+const BackgroundOverlay = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
 function Element({ element }) {
   const { SVG } = getDefinitionForType(element.type);
 
-  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
+  const box = getBox(element);
+
+  const $dimensions = {
+    $width: box.width,
+    $height: box.height,
+  };
   const dimensions = {
-    $width: element.width + left + right,
-    $height: element.height + top + bottom,
+    width: box.width,
+    height: box.height,
+  };
+  const offset = {
+    $x: -element.border?.left || 0,
+    $y: -element.border?.top || 0,
   };
 
   return (
-    <Position $x={element.x} $y={element.y}>
-      <Rotation rotationAngle={element.rotationAngle} {...dimensions}>
-        <Position $x={-element.border?.left} $y={-element.border?.top}>
-          <Flipped flip={element.flip} {...dimensions}>
+    <Position $x={box.x} $y={box.y}>
+      <Rotation rotationAngle={box.rotationAngle} {...$dimensions}>
+        <Position {...offset}>
+          <Flipped flip={element.flip} {...$dimensions}>
             <g opacity={element.opacity / 100}>
               <Masked element={element}>
-                <SVG element={element} />
+                <SVG element={element} box={box} />
+                {element.isBackground && element.backgroundOverlay && (
+                  <foreignObject {...dimensions}>
+                    <BackgroundOverlay
+                      style={generatePatternStyles(element.backgroundOverlay)}
+                    />
+                  </foreignObject>
+                )}
               </Masked>
             </g>
           </Flipped>

@@ -33,8 +33,9 @@ const Img = styled.img`
   ${mediaWithScale}
 `;
 
-function ImageSVG({ element }) {
-  const { resource, width, height, scale, focalX, focalY } = element;
+function ImageSVG({ element, box }) {
+  const { resource, scale, focalX, focalY } = element;
+  const { width, height } = box;
 
   const src = getSmallestUrlForWidth(0, resource);
 
@@ -50,7 +51,7 @@ function ImageSVG({ element }) {
   imgProps.crossOrigin = 'anonymous';
 
   return (
-    <MediaSVG element={element}>
+    <MediaSVG element={element} box={box}>
       <Img
         draggable={false}
         src={src}
@@ -68,6 +69,7 @@ ImageSVG.propTypes = {
     StoryPropTypes.elements.image,
     StoryPropTypes.elements.gif,
   ]).isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default ImageSVG;

@@ -115,6 +115,7 @@ function TextSVG({
     borderRadius,
     ...rest
   },
+  box,
 }) {
   const ref = useRef(null);
   const outerBorderRef = useRef(null);
@@ -150,11 +151,9 @@ function TextSVG({
     verticalPadding: rest.padding?.vertical || 0,
   };
 
-  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
-
   const foProps = {
-    width: element.width + left + right,
-    height: element.height + top + bottom,
+    width: box.width,
+    height: box.height,
   };
 
   const {
@@ -242,6 +241,7 @@ function TextSVG({
 
 TextSVG.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default TextSVG;

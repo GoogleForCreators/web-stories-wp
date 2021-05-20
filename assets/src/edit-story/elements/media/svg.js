@@ -35,20 +35,20 @@ const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementWithBorder}
 `;
 
-function MediaSVG({ element, children, previewMode, showPlaceholder = false }) {
-  const { border, borderRadius, width, height } = element;
+function MediaSVG({
+  element,
+  children,
+  box: { width, height },
+  showPlaceholder = false,
+}) {
+  const { border, borderRadius } = element;
 
-  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
-
-  const foProps = {
-    width: element.width + left + right,
-    height: element.height + top + bottom,
-  };
+  const foProps = { width, height };
 
   return (
     <foreignObject {...foProps}>
       <Element
-        border={getResponsiveBorder(border, previewMode)}
+        border={getResponsiveBorder(border)}
         borderRadius={borderRadius}
         width={width}
         height={height}
@@ -64,7 +64,7 @@ MediaSVG.propTypes = {
   element: StoryPropTypes.elements.media,
   children: PropTypes.node.isRequired,
   showPlaceholder: PropTypes.bool,
-  previewMode: PropTypes.bool,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default MediaSVG;

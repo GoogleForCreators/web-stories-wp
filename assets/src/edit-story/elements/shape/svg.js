@@ -37,7 +37,7 @@ const Element = styled.div`
   ${elementWithBorder}
 `;
 
-function ShapeSVG({ element }) {
+function ShapeSVG({ element, box: { width, height } }) {
   const {
     isDefaultBackground,
     backgroundColor,
@@ -49,12 +49,7 @@ function ShapeSVG({ element }) {
 
   const ref = useRef(null);
 
-  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
-
-  const foProps = {
-    width: element.width + left + right,
-    height: element.height + top + bottom,
-  };
+  const foProps = { width, height };
 
   if (isDefaultBackground) {
     return (
@@ -80,6 +75,7 @@ function ShapeSVG({ element }) {
 
 ShapeSVG.propTypes = {
   element: StoryPropTypes.elements.shape.isRequired,
+  box: StoryPropTypes.box.isRequired,
 };
 
 export default ShapeSVG;
