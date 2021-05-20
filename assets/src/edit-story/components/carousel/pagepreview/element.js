@@ -27,6 +27,7 @@ import {
   svgElementWithRotation,
 } from '../../../elements/shared';
 import StoryPropTypes from '../../../types';
+import Masked from './masked';
 
 const Position = styled.g`
   ${svgElementWithPosition}
@@ -47,7 +48,11 @@ function Element({ element }) {
         $height={element.height}
       >
         <Position $x={-element.border?.left} $y={-element.border?.top}>
-          <SVG element={element} />
+          <g opacity={element.opacity / 100}>
+            <Masked element={element}>
+              <SVG element={element} />
+            </Masked>
+          </g>
         </Position>
       </Rotation>
     </Position>

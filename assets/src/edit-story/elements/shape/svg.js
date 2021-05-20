@@ -31,7 +31,7 @@ import {
 import StoryPropTypes from '../../types';
 import { getResponsiveBorder } from '../../utils/elementBorder';
 
-const Element = styled.path`
+const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorder}
