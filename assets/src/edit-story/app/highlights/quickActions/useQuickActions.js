@@ -256,6 +256,7 @@ const useQuickActions = () => {
         label: ACTION_TEXT.CLEAR_ANIMATIONS,
         onClick: () => handleClearAnimations(selectedElement?.id),
         separator: 'top',
+        disabled: !selectedElementAnimations?.length,
         ...actionMenuProps,
       },
     ],
@@ -263,9 +264,10 @@ const useQuickActions = () => {
       actionMenuProps,
       handleClearAnimations,
       handleFocusAnimationPanel,
-      handleFocusMedia3pPanel,
       handleFocusLinkPanel,
+      handleFocusMedia3pPanel,
       selectedElement?.id,
+      selectedElementAnimations?.length,
     ]
   );
 
