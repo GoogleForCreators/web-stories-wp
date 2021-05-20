@@ -103,6 +103,13 @@ const secondaryColors = ({ theme }) => css`
   &:focus {
     background-color: ${theme.colors.interactiveBg.secondaryHover};
   }
+
+  &:disabled {
+    &:hover,
+    &:focus {
+      background-color: ${theme.colors.interactiveBg.disable};
+    }
+  }
 `;
 
 const tertiaryColors = ({ theme }) => css`
