@@ -136,7 +136,7 @@ export function videoElementMissingPoster(element) {
     return undefined;
   }
   return {
-    type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+    type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
     elementId: element.id,
     message: MESSAGES.MEDIA.VIDEO_MISSING_POSTER.MAIN_TEXT,
     help: MESSAGES.MEDIA.VIDEO_MISSING_POSTER.HELPER_TEXT,
