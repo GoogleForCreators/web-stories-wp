@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
-import getTransformFlip from '../../../elements/shared/getTransformFlip';
 import { shouldDisplayBorder } from '../../../utils/elementBorder';
 import { MaskTypes } from '../../../masks/constants';
 import { getElementMask } from '../../../masks';
@@ -40,9 +39,6 @@ function Masked({ element, children }) {
   ) {
     return children;
   }
-
-  const { flip } = element;
-  const transform = getTransformFlip(flip);
   const maskId = `mask-${mask.type}-${element.id}-thumbnail`;
 
   return (
@@ -54,9 +50,7 @@ function Masked({ element, children }) {
       >
         <path d={mask.path} fill="white" />
       </mask>
-      <g style={{ transform }} mask={`url(#${maskId})`}>
-        {children}
-      </g>
+      <g mask={`url(#${maskId})`}>{children}</g>
     </>
   );
 }

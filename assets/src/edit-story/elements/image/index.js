@@ -23,6 +23,7 @@ export { default as Output } from './output';
 export { default as LayerIcon } from './icon';
 export { default as LayerContent } from './layer';
 export { default as Display } from '../media/imageDisplay';
+export { default as SVG } from '../media/imageSvg';
 export { default as TextContent } from '../media/textContent';
 
 export * from './constants';

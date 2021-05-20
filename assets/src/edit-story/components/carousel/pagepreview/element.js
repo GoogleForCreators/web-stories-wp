@@ -26,6 +26,7 @@ import {
   svgElementWithPosition,
   svgElementWithRotation,
 } from '../../../elements/shared';
+import getTransformFlip from '../../../elements/shared/getTransformFlip';
 import StoryPropTypes from '../../../types';
 import Masked from './masked';
 
@@ -37,22 +38,32 @@ const Rotation = styled.g`
   ${svgElementWithRotation}
 `;
 
+const Flipped = styled.g`
+  transform: ${({ flip }) => getTransformFlip(flip)};
+  transform-origin: ${({ $width, $height }) =>
+    `${$width / 2}px ${$height / 2}px`};
+`;
+
 function Element({ element }) {
   const { SVG } = getDefinitionForType(element.type);
 
+  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
+  const dimensions = {
+    $width: element.width + left + right,
+    $height: element.height + top + bottom,
+  };
+
   return (
     <Position $x={element.x} $y={element.y}>
-      <Rotation
-        rotationAngle={element.rotationAngle}
-        $width={element.width}
-        $height={element.height}
-      >
+      <Rotation rotationAngle={element.rotationAngle} {...dimensions}>
         <Position $x={-element.border?.left} $y={-element.border?.top}>
-          <g opacity={element.opacity / 100}>
-            <Masked element={element}>
-              <SVG element={element} />
-            </Masked>
-          </g>
+          <Flipped flip={element.flip} {...dimensions}>
+            <g opacity={element.opacity / 100}>
+              <Masked element={element}>
+                <SVG element={element} />
+              </Masked>
+            </g>
+          </Flipped>
         </Position>
       </Rotation>
     </Position>
