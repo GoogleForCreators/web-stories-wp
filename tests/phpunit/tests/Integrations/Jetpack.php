@@ -152,20 +152,6 @@ class Jetpack extends Test_Case {
 		$response = wp_prepare_attachment_for_js( $attachment );
 
 		$data = $jetpack->filter_admin_ajax_response( $response, $attachment );
-		$this->assertArrayHasKey( 'mime', $data );
-		$this->assertSame( $data['mime'], Jetpack_Integration::VIDEOPRESS_MIME_TYPE );
-
-		$this->assertArrayHasKey( 'media_source', $data );
-		$this->assertEmpty( $data['media_source'] );
-
-		$_POST = [ // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			'action' => 'query-attachments',
-			'query'  => [
-				'source' => 'web_stories_editor',
-			],
-		];
-
-		$data = $jetpack->filter_admin_ajax_response( $response, $attachment );
 
 		$this->assertArrayHasKey( 'mime', $data );
 		$this->assertSame( $data['mime'], 'video/mp4' );
@@ -183,7 +169,19 @@ class Jetpack extends Test_Case {
 		$this->assertSame( $data['fileLength'], '0:05' );
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
-		unset( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+	}
+
+	/**
+	 * @covers ::filter_ajax_query_attachments_args
+	 */
+	public function test_filter_ajax_query_attachments_args() {
+		$jetpack              = new Jetpack_Integration();
+		$allowed_mime_types   = $jetpack->get_allowed_mime_types();
+		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
+		$allowed_mime_types[] = $jetpack::VIDEOPRESS_MIME_TYPE;
+		$args                 = [ 'post_mime_type' => $allowed_mime_types ];
+		$jetpack->filter_ajax_query_attachments_args( $args );
+		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $jetpack, 'filter_admin_ajax_response' ] ) );
 	}
 
 	/**

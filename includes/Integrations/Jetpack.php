@@ -29,15 +29,15 @@ namespace Google\Web_Stories\Integrations;
 use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Types;
 use WP_Post;
-use WP_REST_Request;
 use WP_REST_Response;
 
 /**
  * Class Jetpack.
  */
 class Jetpack extends Service_Base {
-
+	use Types;
 	/**
 	 * VideoPress Mime type.
 	 *
@@ -74,7 +74,7 @@ class Jetpack extends Service_Base {
 		add_filter( 'jetpack_is_amp_request', [ $this, 'force_amp_request' ] );
 		add_filter( 'web_stories_allowed_mime_types', [ $this, 'add_videopress' ] );
 		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_api_response' ], 10, 2 );
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 10, 2 );
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
 		add_action( 'added_post_meta', [ $this, 'add_term' ], 10, 3 );
 	}
 
@@ -110,6 +110,33 @@ class Jetpack extends Service_Base {
 		return $mime_types;
 	}
 
+
+	/**
+	 * Only change out of admin ajax is the mime type match exactly what web stories is looking for.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param array $args Query args.
+	 *
+	 * @return array Filtered query args.
+	 */
+	public function filter_ajax_query_attachments_args( array $args ) {
+		if ( ! isset( $args['post_mime_type'] ) ) {
+			return $args;
+		}
+		if ( ! is_array( $args['post_mime_type'] ) ) {
+			return $args;
+		}
+
+		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
+		if ( in_array( self::VIDEOPRESS_MIME_TYPE, $args['post_mime_type'], true ) && ! array_diff( $allowed_mime_types, $args['post_mime_type'] ) ) {
+			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 10, 2 );
+		}
+
+		return $args;
+	}
+
 	/**
 	 * Filter admin ajax responses to change video/videopress back to mp4.
 	 *
@@ -122,16 +149,6 @@ class Jetpack extends Service_Base {
 	 */
 	public function filter_admin_ajax_response( array $response, WP_Post $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
-			return $response;
-		}
-
-		// Get data from post, so we filter out requests from other locations.
-		$post_data = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( ! isset( $post_data['action'] ) || 'query-attachments' !== $post_data['action'] ) {
-			return $response;
-		}
-
-		if ( ! isset( $post_data['query']['source'] ) || 'web_stories_editor' !== $post_data['query']['source'] ) {
 			return $response;
 		}
 
