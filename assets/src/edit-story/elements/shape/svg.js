@@ -24,7 +24,7 @@ import { useRef } from 'react';
  * Internal dependencies
  */
 import {
-  svgElementFillContent,
+  elementFillContent,
   elementWithBackgroundColor,
   elementWithBorder,
 } from '../shared';
@@ -32,7 +32,7 @@ import StoryPropTypes from '../../types';
 import { getResponsiveBorder } from '../../utils/elementBorder';
 
 const Element = styled.path`
-  ${svgElementFillContent}
+  ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorder}
 `;
@@ -49,19 +49,32 @@ function ShapeSVG({ element }) {
 
   const ref = useRef(null);
 
+  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
+
+  const foProps = {
+    width: element.width + left + right,
+    height: element.height + top + bottom,
+  };
+
   if (isDefaultBackground) {
-    return <Element ref={ref} />;
+    return (
+      <foreignObject {...foProps}>
+        <Element ref={ref} />
+      </foreignObject>
+    );
   }
 
   return (
-    <Element
-      ref={ref}
-      backgroundColor={backgroundColor}
-      borderRadius={borderRadius}
-      width={elementWidth}
-      height={elementHeight}
-      border={getResponsiveBorder(border)}
-    />
+    <foreignObject {...foProps}>
+      <Element
+        ref={ref}
+        backgroundColor={backgroundColor}
+        borderRadius={borderRadius}
+        width={elementWidth}
+        height={elementHeight}
+        border={getResponsiveBorder(border)}
+      />
+    </foreignObject>
   );
 }
 
