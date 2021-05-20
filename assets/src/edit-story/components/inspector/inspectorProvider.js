@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -77,6 +77,19 @@ function InspectorProvider({ children }) {
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
   const firstPublishAttemptRef = useRef(false);
+
+  const designPaneRef = useRef(null);
+  const documentPaneRef = useRef(null);
+  const prepublishPaneRef = useRef(null);
+
+  const tabRefs = useMemo(
+    () => ({
+      [DESIGN]: designPaneRef,
+      [DOCUMENT]: documentPaneRef,
+      [PREPUBLISH]: prepublishPaneRef,
+    }),
+    []
+  );
 
   useEffect(() => {
     // If a user wants to review their checklist before publishing
@@ -155,6 +168,7 @@ function InspectorProvider({ children }) {
   const state = {
     state: {
       tab,
+      tabRefs,
       users,
       inspectorContentHeight,
       isUsersLoading,

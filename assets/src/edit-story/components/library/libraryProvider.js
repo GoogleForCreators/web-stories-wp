@@ -77,6 +77,25 @@ function LibraryProvider({ children }) {
     }
   }, [highlightedTab]);
 
+  const mediaTabRef = useRef(null);
+  const media3pTabRef = useRef(null);
+  const textTabRef = useRef(null);
+  const shapesTabRef = useRef(null);
+  const elementsTabRef = useRef(null);
+  const pageTemplatesTabRef = useRef(null);
+
+  const tabRefs = useMemo(
+    () => ({
+      [MEDIA.id]: mediaTabRef,
+      [MEDIA3P.id]: media3pTabRef,
+      [TEXT.id]: textTabRef,
+      [SHAPES.id]: shapesTabRef,
+      [ELEMS.id]: elementsTabRef,
+      [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
+    }),
+    []
+  );
+
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
@@ -100,6 +119,7 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
+        tabRefs,
         textSets,
         savedTemplates,
         nextTemplatesToFetch,
@@ -118,6 +138,7 @@ function LibraryProvider({ children }) {
     }),
     [
       tab,
+      tabRefs,
       textSets,
       savedTemplates,
       insertElement,

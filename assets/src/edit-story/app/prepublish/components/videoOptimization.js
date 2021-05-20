@@ -28,8 +28,13 @@ import { Button, BUTTON_TYPES, BUTTON_SIZES } from '../../../../design-system';
 import { useLocalMedia } from '../../media';
 
 const Container = styled.div`
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
+  flex-wrap: wrap;
+`;
+
+const Caption = styled.div`
+  margin-bottom: 12px;
 `;
 
 const Thumbnail = styled.img`
@@ -44,7 +49,7 @@ const OptimizeButton = styled(Button)`
   margin: auto 16px;
   border: ${({ theme }) => `1px solid ${theme.colors.border.defaultNormal}`};
 `;
-export function VideoOptimization({ element }) {
+export function VideoOptimization({ element, caption }) {
   const { resource = {} } = element;
   const { optimizeVideo } = useLocalMedia((state) => ({
     optimizeVideo: state.actions.optimizeVideo,
@@ -62,6 +67,7 @@ export function VideoOptimization({ element }) {
 
   return (
     <Container>
+      <Caption>{caption}</Caption>
       <Thumbnail
         src={resource?.poster}
         alt={resource?.alt || __('Video thumbnail', 'web-stories')}
@@ -83,4 +89,5 @@ export function VideoOptimization({ element }) {
 
 VideoOptimization.propTypes = {
   element: PropTypes.object,
+  caption: PropTypes.node,
 };

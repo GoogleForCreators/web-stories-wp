@@ -33,6 +33,7 @@ import {
 import { useStory, useCanvas } from '../../app';
 import { ContextMenu } from '../../../design-system';
 import { useQuickActions } from '../../app/highlights';
+import DirectionAware from '../directionAware';
 import DisplayElement from './displayElement';
 import { Layer, PageArea, QuickActionsArea } from './layout';
 import PageAttachment from './pageAttachment';
@@ -176,9 +177,11 @@ function DisplayLayer() {
           />
         </DisplayPageArea>
         {enableQuickActionMenu && quickActions.length && (
-          <QuickActionsArea>
-            <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
-          </QuickActionsArea>
+          <DirectionAware>
+            <QuickActionsArea>
+              <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
+            </QuickActionsArea>
+          </DirectionAware>
         )}
       </Layer>
     </StoryAnimation.Provider>
