@@ -109,6 +109,14 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.7.2 =
+
+**Release Date:** May 20, 2021.
+
+* New feature: optimize videos directly from the pre-publish checklist.
+* Fixes an issue with the preview mode not working anymore.
+* Improves compatibility with Jetpack VideoPress.
+
 = 1.7.1 =
 
 **Release Date:** May 13, 2021.
@@ -199,6 +207,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.7.2 =
+
+Restored preview mode, video optimization in the pre-publish checklist, and improved VideoPress support.
 
 = 1.7.1 =
 
