@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -44,14 +44,17 @@ import {
 } from './styles';
 import DropDownItem from './dropdownItem';
 
-export default function EffectChooserDropdown({
-  onAnimationSelected,
-  onNoEffectSelected,
-  isBackgroundEffects = false,
-  selectedEffectType,
-  disabledTypeOptionsMap,
-  direction,
-}) {
+const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
+  {
+    onAnimationSelected,
+    onNoEffectSelected,
+    isBackgroundEffects = false,
+    selectedEffectType,
+    disabledTypeOptionsMap,
+    direction,
+  },
+  ref
+) {
   const { enableExperimentalAnimationEffects } = useFeatures();
 
   const selectedValue = useMemo(
@@ -144,6 +147,7 @@ export default function EffectChooserDropdown({
 
   return (
     <DropDown
+      ref={ref}
       options={assembledOptions}
       placeholder={__('None', 'web-stories')}
       selectedValue={selectedValue}
@@ -160,7 +164,7 @@ export default function EffectChooserDropdown({
       }
     />
   );
-}
+});
 
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,
@@ -175,3 +179,5 @@ EffectChooserDropdown.propTypes = {
     })
   ),
 };
+
+export default EffectChooserDropdown;

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from 'react';
+import { forwardRef, useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -53,119 +53,126 @@ import useDropDown from './useDropDown';
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
  * @param {string} props.className Class name.
+ * @param {Object} ref An optional ref to pass to the dropdown
  * @return {*} The dropdown.
  */
-export const DropDown = ({
-  ariaLabel,
-  disabled,
-  dropDownLabel,
-  hasError,
-  hint,
-  isKeepMenuOpenOnSelection,
-  onMenuItemClick,
-  options = [],
-  placement = PLACEMENT.BOTTOM,
-  popupFillWidth = true,
-  popupZIndex,
-  isInline = false,
-  selectedValue = '',
-  className,
-  ...rest
-}) => {
-  const selectRef = useRef();
-
-  const { activeOption, isOpen, normalizedOptions } = useDropDown({
-    options,
-    selectedValue,
-  });
-
-  const handleSelectClick = useCallback(
-    (event) => {
-      event.preventDefault();
-      isOpen.set((prevIsOpen) => !prevIsOpen);
+export const DropDown = forwardRef(
+  (
+    {
+      ariaLabel,
+      disabled,
+      dropDownLabel,
+      hasError,
+      hint,
+      isKeepMenuOpenOnSelection,
+      onMenuItemClick,
+      options = [],
+      placement = PLACEMENT.BOTTOM,
+      popupFillWidth = true,
+      popupZIndex,
+      isInline = false,
+      selectedValue = '',
+      className,
+      ...rest
     },
-    [isOpen]
-  );
+    ref
+  ) => {
+    const defaultRef = useRef();
+    const selectRef = ref || defaultRef;
 
-  const handleDismissMenu = useCallback(() => {
-    isOpen.set(false);
-    selectRef.current.focus();
-  }, [isOpen]);
+    const { activeOption, isOpen, normalizedOptions } = useDropDown({
+      options,
+      selectedValue,
+    });
 
-  const handleMenuItemClick = useCallback(
-    (event, menuItem) => {
-      onMenuItemClick && onMenuItemClick(event, menuItem);
+    const handleSelectClick = useCallback(
+      (event) => {
+        event.preventDefault();
+        isOpen.set((prevIsOpen) => !prevIsOpen);
+      },
+      [isOpen]
+    );
 
-      if (!isKeepMenuOpenOnSelection) {
-        handleDismissMenu();
-      }
-    },
-    [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
-  );
+    const handleDismissMenu = useCallback(() => {
+      isOpen.set(false);
+      selectRef.current.focus();
+    }, [isOpen, selectRef]);
 
-  const listId = useMemo(() => `list-${uuidv4()}`, []);
-  const selectButtonId = useMemo(() => `select-button-${uuidv4()}`, []);
+    const handleMenuItemClick = useCallback(
+      (event, menuItem) => {
+        onMenuItemClick && onMenuItemClick(event, menuItem);
 
-  const menu = (
-    <Menu
-      activeValue={activeOption?.value}
-      parentId={selectButtonId}
-      listId={listId}
-      menuAriaLabel={sprintf(
-        /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
-        __('%s Option List Selector', 'web-stories'),
-        ariaLabel || dropDownLabel
-      )}
-      onDismissMenu={handleDismissMenu}
-      onMenuItemClick={handleMenuItemClick}
-      options={normalizedOptions}
-      isAbsolute={isInline}
-      {...rest}
-    />
-  );
+        if (!isKeepMenuOpenOnSelection) {
+          handleDismissMenu();
+        }
+      },
+      [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
+    );
 
-  return (
-    <DropDownContainer className={className}>
-      <DropDownSelect
-        activeItemLabel={activeOption?.label}
-        aria-pressed={isOpen.value}
-        aria-disabled={disabled}
-        aria-expanded={isOpen.value}
-        aria-label={ariaLabel || dropDownLabel}
-        aria-owns={listId}
-        disabled={disabled}
-        dropDownLabel={dropDownLabel}
-        hasError={hasError}
-        id={selectButtonId}
-        isOpen={isOpen.value}
-        onSelectClick={handleSelectClick}
-        ref={selectRef}
+    const listId = useMemo(() => `list-${uuidv4()}`, []);
+    const selectButtonId = useMemo(() => `select-button-${uuidv4()}`, []);
+
+    const menu = (
+      <Menu
+        activeValue={activeOption?.value}
+        parentId={selectButtonId}
+        listId={listId}
+        menuAriaLabel={sprintf(
+          /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
+          __('%s Option List Selector', 'web-stories'),
+          ariaLabel || dropDownLabel
+        )}
+        onDismissMenu={handleDismissMenu}
+        onMenuItemClick={handleMenuItemClick}
+        options={normalizedOptions}
+        isAbsolute={isInline}
         {...rest}
       />
-      {!disabled && isInline ? (
-        isOpen.value && menu
-      ) : (
-        <Popup
-          anchor={selectRef}
-          isOpen={isOpen.value}
-          placement={placement}
-          fillWidth={popupFillWidth}
-          zIndex={popupZIndex}
-        >
-          {menu}
-        </Popup>
-      )}
-      {hint && (
-        <Hint
+    );
+
+    return (
+      <DropDownContainer className={className}>
+        <DropDownSelect
+          activeItemLabel={activeOption?.label}
+          aria-pressed={isOpen.value}
+          aria-disabled={disabled}
+          aria-expanded={isOpen.value}
+          aria-label={ariaLabel || dropDownLabel}
+          aria-owns={listId}
+          disabled={disabled}
+          dropDownLabel={dropDownLabel}
           hasError={hasError}
-          size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
-        >
-          {hint}
-        </Hint>
-      )}
-    </DropDownContainer>
-  );
-};
+          id={selectButtonId}
+          isOpen={isOpen.value}
+          onSelectClick={handleSelectClick}
+          ref={selectRef}
+          {...rest}
+        />
+        {!disabled && isInline ? (
+          isOpen.value && menu
+        ) : (
+          <Popup
+            anchor={selectRef}
+            isOpen={isOpen.value}
+            placement={placement}
+            fillWidth={popupFillWidth}
+            zIndex={popupZIndex}
+          >
+            {menu}
+          </Popup>
+        )}
+        {hint && (
+          <Hint
+            hasError={hasError}
+            size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+          >
+            {hint}
+          </Hint>
+        )}
+      </DropDownContainer>
+    );
+  }
+);
 
 DropDown.propTypes = {
   ariaLabel: PropTypes.string,
