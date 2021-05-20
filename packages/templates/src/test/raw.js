@@ -84,7 +84,7 @@ describe('raw template files', () => {
     }
   );
 
-  // @see https://github.com/google/web-stories-wp/pull/5889
+  // @see https://github.com/google/web-stories-wp/issues/7227
   it.each(templates)(
     '%s template should not contain extraneaous properties',
     (template) => {
