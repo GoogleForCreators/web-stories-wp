@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Potatoes', 'sticker name', 'web-stories');
 
 function Potatoes({ style }) {
   return (
@@ -26,6 +29,7 @@ function Potatoes({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M32.4994 18.4997C36.4994 16.8997 45.8327 26.1664 49.9994 30.9997C55.9996 30.4998 68.5 29.4 70.5 29C73 28.5 79.5 25 83.5 31.5C87.5 38 81 48 75 52.5C75 65.5 64 73 46 69.5C31.6 66.7 28.3333 53.3333 28.5 47C27.6665 46.8333 25.3994 44.6 22.9994 37C19.9994 27.5 27.4994 20.4997 32.4994 18.4997Z"
         fill="#FFFEB2"
@@ -113,4 +117,5 @@ Potatoes.propTypes = {
 export default {
   aspectRatio: 87 / 73,
   svg: Potatoes,
+  title,
 };

@@ -16,8 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
+const title = _x('Pill Open', 'sticker name', 'web-stories');
 function CapsuleOpen({ style }) {
   return (
     <svg
@@ -26,6 +28,7 @@ function CapsuleOpen({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M15.1196 22.826C15.303 23.0095 15.5354 23.0951 15.7677 23.0951C16.0001 23.0951 16.2447 22.9973 16.4159 22.826C16.7706 22.4714 16.7706 21.8844 16.4159 21.5297L10.0076 15.1215C9.65298 14.7668 9.06596 14.7668 8.7113 15.1215C8.35665 15.4761 8.35665 16.0631 8.7113 16.4178L15.1196 22.826Z"
         fill="#9F240F"
@@ -85,4 +88,5 @@ CapsuleOpen.propTypes = {
 export default {
   aspectRatio: 61 / 40,
   svg: CapsuleOpen,
+  title,
 };

@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Pot', 'sticker name', 'web-stories');
 
 function HotDish({ style }) {
   return (
@@ -26,6 +29,7 @@ function HotDish({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         d="M3 8.57622C3 8.54656 3.02426 8.52252 3.05418 8.52252H30.9458C30.9757 8.52252 31 8.54656 31 8.57622C31 15.99 24.9353 22 17.4542 22H16.5458C9.06467 22 3 15.99 3 8.57622Z"
         fill="#265ECD"
@@ -65,4 +69,5 @@ HotDish.propTypes = {
 export default {
   aspectRatio: 34 / 22,
   svg: HotDish,
+  title,
 };

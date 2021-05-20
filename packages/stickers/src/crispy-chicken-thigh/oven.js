@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Oven', 'sticker name', 'web-stories');
 
 function Oven({ style }) {
   return (
@@ -26,6 +29,7 @@ function Oven({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path d="M9 23H57V57H9V23Z" fill="#FFFEB2" />
       <path
         fillRule="evenodd"
@@ -74,4 +78,5 @@ Oven.propTypes = {
 export default {
   aspectRatio: 66 / 65,
   svg: Oven,
+  title,
 };

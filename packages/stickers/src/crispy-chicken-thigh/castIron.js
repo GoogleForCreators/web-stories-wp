@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Skillet Pan', 'sticker name', 'web-stories');
 
 const CastIron = ({ style }) => (
   <svg
@@ -25,6 +28,7 @@ const CastIron = ({ style }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <title>{title}</title>
     <path
       d="M17.0002 50.5C14.0002 37.5 23.5002 33.5 26.5002 33C34.5005 33 32.5 43 38 43C43.5 43 46.8483 44.5174 46.5 48C46 53 40.8872 52.1048 38.5 53C34.5 54.5 35 58.5 31.5 60.5C29.9348 61.3944 20.0002 63.5 17.0002 50.5Z"
       fill="#FFFFA8"
@@ -63,4 +67,5 @@ CastIron.propTypes = {
 export default {
   aspectRatio: 78 / 76,
   svg: CastIron,
+  title,
 };

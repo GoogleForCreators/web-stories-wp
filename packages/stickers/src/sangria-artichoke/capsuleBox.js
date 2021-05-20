@@ -16,7 +16,10 @@
 /**
  * External dependencies
  */
+import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+
+const title = _x('Pill Box', 'sticker name', 'web-stories');
 
 function CapsuleBox({ style }) {
   return (
@@ -26,6 +29,7 @@ function CapsuleBox({ style }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <title>{title}</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -71,4 +75,5 @@ CapsuleBox.propTypes = {
 export default {
   aspectRatio: 56 / 68,
   svg: CapsuleBox,
+  title,
 };
