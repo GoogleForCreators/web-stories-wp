@@ -24,7 +24,6 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { ContextMenu } from '../../../design-system';
-import { ALL_FOCUSABLE_SELECTOR } from '../../constants';
 import { useQuickActions } from '../../app/highlights';
 import DirectionAware from '../directionAware';
 import Header from '../header';
@@ -42,17 +41,6 @@ function NavLayer() {
   const headAreaRef = useRef(null);
   const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const quickActions = useQuickActions();
-
-  const handleQuickMenuDismiss = useCallback(({ isAscending }) => {
-    const nextAreaRef = isAscending ? headAreaRef : carouselAreaRef;
-    const focusableChildren = nextAreaRef.current?.querySelectorAll(
-      ALL_FOCUSABLE_SELECTOR
-    );
-    const nextFocusableChildIndex = isAscending
-      ? focusableChildren?.length - 1
-      : 0;
-    focusableChildren?.[nextFocusableChildIndex]?.focus();
-  }, []);
 
   /**
    * Stop the event from bubbling if the user clicks in between buttons.
@@ -78,8 +66,8 @@ function NavLayer() {
             <ContextMenu
               isAlwaysVisible
               isIconMenu
+              disableTabNavigation
               items={quickActions}
-              onDismiss={handleQuickMenuDismiss}
               onMouseDown={handleMenuBackgroundClick}
             />
           </QuickActionsArea>
