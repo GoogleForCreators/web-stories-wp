@@ -35,7 +35,7 @@ function usePinchToZoom({ containerRef }) {
 
   const [handleZoom] = useDebouncedCallback(
     (level) => setZoomLevel(level),
-    50,
+    25,
     [setZoomLevel]
   );
 
