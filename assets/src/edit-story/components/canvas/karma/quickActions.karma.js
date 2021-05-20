@@ -17,9 +17,6 @@
 /**
  * Internal dependencies
  */
-/**
- * External dependencies
- */
 import { useStory } from '../../../app';
 import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
