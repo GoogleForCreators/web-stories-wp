@@ -240,6 +240,7 @@ function AnimationPanel({
       name="animation"
       title={__('Animation', 'web-stories')}
       css={highlight?.showEffect && styles.FLASH}
+      isPersistable={!highlight}
     >
       <GroupWrapper hasAnimation={selectedEffectTitle}>
         <StyledRow>

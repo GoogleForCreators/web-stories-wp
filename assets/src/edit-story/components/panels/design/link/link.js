@@ -224,6 +224,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       name="link"
       title={__('Link', 'web-stories')}
       css={highlight?.showEffect && styles.FLASH}
+      isPersistable={!highlight}
     >
       <LinkInput
         ref={linkRef}
