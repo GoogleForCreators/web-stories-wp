@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../constants';
 import * as mediaGuidance from '../media';
 
 describe('Pre-publish checklist - media guidelines (guidance)', () => {
@@ -189,6 +190,38 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(
       mediaGuidance.videoElementOptimized(smallOptimizedVideo)
     ).toBeUndefined();
+  });
+
+  it("should return a message if the video element doesn't have a poster image", () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+      },
+    };
+
+    const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
+    expect(result).not.toBeUndefined();
+    expect(result.message).toBe('Add poster image to every video');
+    expect(result.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.ERROR);
+    expect(result.elementId).toStrictEqual(posterlessVideo.id);
+  });
+
+  it('should not return a message if the video element has a poster image', () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+        poster: 'http://mydomain.com/test/poster',
+      },
+    };
+
+    const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
+    expect(result).toBeUndefined();
   });
 
   it.todo('should return a message if the video element is less than 24fps');
