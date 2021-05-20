@@ -29,7 +29,6 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
-  svgElementWithBorder,
   elementWithBorder,
   elementWithHighlightBorderRadius,
 } from '../shared';
@@ -49,7 +48,7 @@ import {
 } from './util';
 
 const OutsideBorder = styled.g`
-  ${svgElementWithBorder}
+  ${elementWithBorder}
 `;
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
@@ -151,9 +150,11 @@ function TextSVG({
     verticalPadding: rest.padding?.vertical || 0,
   };
 
+  const { left = 0, top = 0, right = 0, bottom = 0 } = element.border || {};
+
   const foProps = {
-    width: element.width,
-    height: element.height,
+    width: element.width + left + right,
+    height: element.height + top + bottom,
   };
 
   const {
@@ -177,14 +178,14 @@ function TextSVG({
     // since the highlight wrapper uses negative margin to position the content.
     // This, however, would shift the border incorrectly.
     return (
-      <OutsideBorder
-        ref={outerBorderRef}
-        border={getResponsiveBorder(border)}
-        borderRadius={borderRadius}
-        width={elementWidth}
-        height={elementHeight}
-      >
-        <foreignObject {...foProps}>
+      <foreignObject {...foProps}>
+        <OutsideBorder
+          ref={outerBorderRef}
+          border={getResponsiveBorder(border)}
+          borderRadius={borderRadius}
+          width={elementWidth}
+          height={elementHeight}
+        >
           <HighlightWrapperElement ref={ref} {...props}>
             <HighlightElement {...props}>
               <MarginedElement {...props}>
@@ -210,8 +211,8 @@ function TextSVG({
               </MarginedElement>
             </HighlightElement>
           </HighlightWrapperElement>
-        </foreignObject>
-      </OutsideBorder>
+        </OutsideBorder>
+      </foreignObject>
     );
   }
 

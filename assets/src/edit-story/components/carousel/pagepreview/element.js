@@ -24,7 +24,7 @@ import styled from 'styled-components';
 import { getDefinitionForType } from '../../../elements';
 import {
   svgElementWithPosition,
-  elementWithRotation,
+  svgElementWithRotation,
 } from '../../../elements/shared';
 import StoryPropTypes from '../../../types';
 
@@ -33,7 +33,7 @@ const Position = styled.g`
 `;
 
 const Rotation = styled.g`
-  ${elementWithRotation}
+  ${svgElementWithRotation}
 `;
 
 function Element({ element }) {
@@ -41,8 +41,14 @@ function Element({ element }) {
 
   return (
     <Position $x={element.x} $y={element.y}>
-      <Rotation rotationAngle={element.rotationAngle}>
-        <SVG element={element} />
+      <Rotation
+        rotationAngle={element.rotationAngle}
+        $width={element.width}
+        $height={element.height}
+      >
+        <Position $x={-element.border?.left} $y={-element.border?.top}>
+          <SVG element={element} />
+        </Position>
       </Rotation>
     </Position>
   );

@@ -47,7 +47,6 @@ export const elementWithPosition = css`
 `;
 
 export const svgElementWithPosition = css`
-  content: '${({ $x, $y }) => `${$x}px, ${$y}px`}';
   transform: translate(${({ $x, $y }) => `${$x}px, ${$y}px`});
 `;
 
@@ -59,6 +58,12 @@ export const elementWithSize = css`
 
 export const elementWithRotation = css`
   transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
+`;
+
+export const svgElementWithRotation = css`
+  transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
+  transform-origin: ${({ $width, $height }) =>
+    `${$width / 2}px ${$height / 2}px`};
 `;
 
 export const elementWithBorderRadius = css`
