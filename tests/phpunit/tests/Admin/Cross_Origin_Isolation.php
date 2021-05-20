@@ -217,6 +217,20 @@ class Cross_Origin_Isolation extends Test_Case {
 		$this->assertContains( '<img crossorigin="anonymous" src="http://www.example.com/test1.jpg" />', $result );
 	}
 
+
+	/**
+	 * @covers ::custom_print_media_templates
+	 */
+	public function test_custom_print_media_templates() {
+		require_once ABSPATH . WPINC . '/media-template.php';
+		$object = $this->get_coi_object();
+		$output = get_echo( [ $object, 'custom_print_media_templates' ] );
+		$this->assertContains( '<audio crossorigin="anonymous"', $output );
+		$this->assertContains( '<img crossorigin="anonymous"', $output );
+		$this->assertContains( '<video crossorigin="anonymous"', $output );
+	}
+
+
 	/**
 	 * @return \Google\Web_Stories\Admin\Cross_Origin_Isolation
 	 */
