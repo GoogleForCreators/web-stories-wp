@@ -32,7 +32,6 @@ use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Experiments;
 
 
 /**
@@ -60,6 +59,7 @@ class Cross_Origin_Isolation extends Service_Base {
 		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 10, 3 );
 		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
 		add_filter( 'get_avatar', [ $this, 'get_avatar' ], 10, 6 );
+		add_action( 'wp_enqueue_media', [ $this, 'override_media_templates' ] );
 	}
 
 	/**
@@ -242,6 +242,42 @@ class Cross_Origin_Isolation extends Service_Base {
 		$new_html = (string) str_replace( "{$attribute}='{$url}'", "crossorigin='anonymous' {$attribute}='{$url}'", $new_html );
 
 		return $new_html;
+	}
+
+	/**
+	 * Unhook wp_print_media_templates and replace with custom media templates.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function override_media_templates() {
+		remove_action( 'admin_footer', 'wp_print_media_templates' );
+		add_action( 'admin_footer', [ $this, 'custom_print_media_templates' ] );
+	}
+
+	/**
+	 * Add crossorigin attribute to all tags that could have assets loaded from a different domain.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return void
+	 */
+	public function custom_print_media_templates() {
+		ob_start();
+		wp_print_media_templates();
+		$html = (string) ob_get_clean();
+
+		$tags = [
+			'audio',
+			'img',
+			'video',
+		];
+		foreach ( $tags as $tag ) {
+			$html = (string) str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $html );
+		}
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
