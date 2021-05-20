@@ -636,5 +636,13 @@ export const MESSAGES = {
         </ul>
       ),
     },
+    VIDEO_MISSING_POSTER: {
+      MAIN_TEXT: __('Video is missing poster', 'web-stories'),
+      HELPER_TEXT: (
+        <ul>
+          <li>{__('Add poster image to every video', 'web-stories')}</li>
+        </ul>
+      ),
+    },
   },
 };

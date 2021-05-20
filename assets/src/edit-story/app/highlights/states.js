@@ -40,6 +40,7 @@ const keys = {
   PAGE_BACKGROUND: 'PAGE_BACKGROUND',
   POSTER: 'POSTER',
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
+  VIDEO_A11Y_POSTER: 'VIDEO_A11Y_POSTER',
 
   // LIBRARY
   MEDIA: 'MEDIA',
@@ -82,6 +83,10 @@ export const STATES = {
     tab: DESIGN,
   },
   [keys.LINK]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
     tab: DESIGN,
   },

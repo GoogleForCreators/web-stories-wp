@@ -20,6 +20,7 @@
 import { VIDEO_SIZE_THRESHOLD } from '../../media/utils/useFFmpeg';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { VideoOptimization } from '../components/videoOptimization';
+import { states } from '../../highlights';
 
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
@@ -121,6 +122,26 @@ export function videoElementLength(element) {
     };
   }
   return undefined;
+}
+
+/**
+ * Check a video element's poster value.
+ * If there is no poster source, return guidance. Otherwise return undefined.
+ *
+ * @param {Element} element The element being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
+export function videoElementMissingPoster(element) {
+  if (element.resource?.poster) {
+    return undefined;
+  }
+  return {
+    type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+    elementId: element.id,
+    message: MESSAGES.MEDIA.VIDEO_MISSING_POSTER.MAIN_TEXT,
+    help: MESSAGES.MEDIA.VIDEO_MISSING_POSTER.HELPER_TEXT,
+    highlight: states.VIDEO_A11Y_POSTER,
+  };
 }
 
 /**

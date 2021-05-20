@@ -191,5 +191,37 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     ).toBeUndefined();
   });
 
+  it("should return a message if the video element doesn't have a poster image", () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+      },
+    };
+
+    const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
+    expect(result).not.toBeUndefined();
+    expect(result.message).toBe('Video is missing poster');
+    expect(result.type).toStrictEqual('guidance');
+    expect(result.elementId).toStrictEqual(posterlessVideo.id);
+  });
+
+  it('should not return a message if the video element has a poster image', () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+        poster: 'http://mydomain.com/test/poster',
+      },
+    };
+
+    const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
+    expect(result).toBeUndefined();
+  });
+
   it.todo('should return a message if the video element is less than 24fps');
 });
