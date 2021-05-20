@@ -31,6 +31,7 @@ import { rgba } from 'polished';
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
 import { Icons } from '../../../design-system';
+import { useConfig } from '../../app/config';
 
 const PLAY_BUTTON_SIZE = 50;
 const ICON_SVG_SIZE = 72;
@@ -85,7 +86,8 @@ const iconCss = css`
   height: ${ICON_SVG_SIZE}px;
   pointer-events: none;
   transform: translate(
-    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px,
+    ${({ isRTL }) =>
+      ((PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2) * (isRTL ? -1 : 1)}px,
     ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
   );
   color: ${({ theme }) => theme.colors.standard.white};
@@ -114,6 +116,7 @@ function VideoControls({
   elementRef,
   element,
 }) {
+  const { isRTL } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
@@ -255,7 +258,7 @@ function VideoControls({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
-            {isPlaying ? <Pause /> : <Play />}
+            {isPlaying ? <Pause isRTL={isRTL} /> : <Play isRTL={isRTL} />}
           </ButtonWrapper>
         </TransitionWrapper>
       )}
