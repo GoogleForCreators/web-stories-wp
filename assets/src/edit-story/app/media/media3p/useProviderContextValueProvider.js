@@ -91,10 +91,10 @@ export default function useProviderContextValueProvider(
   return {
     state: reducerState[provider],
     actions: {
-      setNextPage: useCallback(() => reducerActions.setNextPage({ provider }), [
-        reducerActions,
-        provider,
-      ]),
+      setNextPage: useCallback(
+        () => reducerActions.setNextPage({ provider }),
+        [reducerActions, provider]
+      ),
       selectCategory: useCallback(
         (categoryId) => reducerActions.selectCategory({ provider, categoryId }),
         [reducerActions, provider]

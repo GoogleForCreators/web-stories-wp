@@ -85,9 +85,10 @@ function Buttons() {
     })
   );
   const [showDialog, setShowDialog] = useState(false);
-  useEffect(() => setShowDialog(Boolean(isFreshlyPublished)), [
-    isFreshlyPublished,
-  ]);
+  useEffect(
+    () => setShowDialog(Boolean(isFreshlyPublished)),
+    [isFreshlyPublished]
+  );
 
   const isDraft = 'draft' === status;
 

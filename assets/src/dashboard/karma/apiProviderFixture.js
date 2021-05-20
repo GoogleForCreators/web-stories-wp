@@ -407,8 +407,8 @@ function toggleOptInTracking(currentUser) {
     data: {
       ...currentUser.data,
       meta: {
-        web_stories_tracking_optin: !currentUser.data.meta
-          .web_stories_tracking_optin,
+        web_stories_tracking_optin:
+          !currentUser.data.meta.web_stories_tracking_optin,
       },
     },
   };

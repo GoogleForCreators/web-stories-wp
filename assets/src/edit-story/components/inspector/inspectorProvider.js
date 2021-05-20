@@ -50,11 +50,8 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const {
-    currentCheckpoint,
-    isChecklistReviewRequested,
-    refreshChecklist,
-  } = usePrepublishChecklist();
+  const { currentCheckpoint, isChecklistReviewRequested, refreshChecklist } =
+    usePrepublishChecklist();
 
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,

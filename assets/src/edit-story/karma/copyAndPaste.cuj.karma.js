@@ -319,10 +319,16 @@ describe('Background Copy & Paste', () => {
 
       // Copied and Pasted animations should share all attributes
       // except `id` & `targets`
-      const { id: cId, targets: cTargets, ...cPersisted } =
-        copied.elementAnimations[0] || {};
-      const { id: pId, targets: pTargets, ...pPersisted } =
-        pasted.elementAnimations[0] || {};
+      const {
+        id: cId,
+        targets: cTargets,
+        ...cPersisted
+      } = copied.elementAnimations[0] || {};
+      const {
+        id: pId,
+        targets: pTargets,
+        ...pPersisted
+      } = pasted.elementAnimations[0] || {};
 
       // animation properties are explicitly passed as of #6888
       // https://github.com/google/web-stories-wp/pull/6888/files#diff-e2509f6271734915fc6fb3d6b0fd1a78d6d34df81e215f0a79f2fce50586bb86R119

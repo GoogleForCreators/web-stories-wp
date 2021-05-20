@@ -172,9 +172,8 @@ describe('TextEdit integration', () => {
           'Trailing and leading newlines, after edit mode'
         );
 
-        const {
-          height: heightAfterExitingEditMode,
-        } = frame.getBoundingClientRect();
+        const { height: heightAfterExitingEditMode } =
+          frame.getBoundingClientRect();
 
         expect(initialHeight).toBeCloseTo(heightAfterExitingEditMode, 0);
 
@@ -186,9 +185,8 @@ describe('TextEdit integration', () => {
         );
         textElement = fixture.querySelector('[data-testid="textEditor"]');
 
-        const {
-          height: heightAfterReenteringEditMode,
-        } = textElement.getBoundingClientRect();
+        const { height: heightAfterReenteringEditMode } =
+          textElement.getBoundingClientRect();
 
         expect(heightAfterReenteringEditMode).toBeCloseTo(initialHeight, 0);
       });

@@ -102,9 +102,10 @@ function TemplateList({
     horizontal: true,
     size: 2,
     parentRef,
-    estimateSize: useCallback(() => pageSize.width + PANEL_GRID_ROW_GAP, [
-      pageSize.width,
-    ]),
+    estimateSize: useCallback(
+      () => pageSize.width + PANEL_GRID_ROW_GAP,
+      [pageSize.width]
+    ),
     overscan: 0,
   });
 

@@ -97,9 +97,8 @@ async function getPrepublishErrors(
             try {
               const guidanceMessage = getPageGuidance(currentPage);
               if (guidanceMessage instanceof Promise) {
-                const guidanceMessagePromise = guidanceMessage.then(
-                  prepareResult
-                );
+                const guidanceMessagePromise =
+                  guidanceMessage.then(prepareResult);
                 currentPageGuidance.push(guidanceMessagePromise);
               } else if (guidanceMessage !== undefined) {
                 currentPageGuidance.push(prepareResult(guidanceMessage));
@@ -119,9 +118,8 @@ async function getPrepublishErrors(
               try {
                 const guidanceMessage = getElementGuidance(element);
                 if (guidanceMessage instanceof Promise) {
-                  const guidanceMessagePromise = guidanceMessage.then(
-                    prepareResult
-                  );
+                  const guidanceMessagePromise =
+                    guidanceMessage.then(prepareResult);
                   currentPageGuidance.push(guidanceMessagePromise);
                 } else if (guidanceMessage !== undefined) {
                   currentPageElementGuidance.push(

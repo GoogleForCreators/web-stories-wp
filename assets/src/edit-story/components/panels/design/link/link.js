@@ -67,15 +67,12 @@ const Error = styled.span`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    clearEditing,
-    setDisplayLinkGuidelines,
-    displayLinkGuidelines,
-  } = useCanvas((state) => ({
-    clearEditing: state.actions.clearEditing,
-    setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
-    displayLinkGuidelines: state.state.displayLinkGuidelines,
-  }));
+  const { clearEditing, setDisplayLinkGuidelines, displayLinkGuidelines } =
+    useCanvas((state) => ({
+      clearEditing: state.actions.clearEditing,
+      setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
+      displayLinkGuidelines: state.state.displayLinkGuidelines,
+    }));
 
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,

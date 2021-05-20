@@ -33,8 +33,11 @@ jest.mock(
   '../../../../../../edit-story/components/previewPage/previewPage.js',
   () => () => null
 );
-jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
-  children
+jest.mock(
+  '../../../../../app/font/fontProvider.js',
+  () =>
+    ({ children }) =>
+      children
 );
 
 describe('Saved Templates <Content />', function () {
