@@ -83,4 +83,20 @@ describe('raw template files', () => {
       }
     }
   );
+
+  // @see https://github.com/google/web-stories-wp/pull/5889
+  it.each(templates)(
+    '%s template should not contain extraneaous properties',
+    (template) => {
+      const templateContent = readFileSync(
+        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
+        'utf8'
+      );
+      const templateData = JSON.parse(templateContent);
+
+      expect(templateData.current).toBeNull();
+      expect(templateData.selection).toStrictEqual([]);
+      expect(templateData.story.globalStoryStyles).toBeUndefined();
+    }
+  );
 });
