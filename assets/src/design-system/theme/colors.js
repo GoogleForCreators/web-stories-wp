@@ -144,7 +144,7 @@ const darkTheme = {
   },
   interactiveBg: {
     active: brand.violet[70],
-    disable: brand.gray[80],
+    disable: brand.gray[85],
     brandNormal: brand.violet[20],
     brandHover: brand.violet[30],
     brandPress: brand.violet[40],
