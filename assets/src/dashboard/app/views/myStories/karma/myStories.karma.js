@@ -106,9 +106,8 @@ describe('Grid view', () => {
     const contextMenuList = contextMenuLists[storyIndex];
 
     // it is focused on the link within the list
-    const contextMenuItem = within(contextMenuList).getByLabelText(
-      contextMenuText
-    );
+    const contextMenuItem =
+      within(contextMenuList).getByLabelText(contextMenuText);
 
     limit = 0;
     while (
@@ -395,9 +394,8 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.press('Enter');
 
-      const selectedStoryTitle = Object.values(stories)[
-        activeListItems.length - 1
-      ].title;
+      const selectedStoryTitle =
+        Object.values(stories)[activeListItems.length - 1].title;
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
@@ -528,12 +526,10 @@ describe('Grid view', () => {
       expect(selectedStory).toEqual(document.activeElement);
 
       let limit = 0;
-      const [activeStoryContainer] = fixture.screen.getAllByTestId(
-        /^story-grid-item/
-      );
-      const contextMenuKabab = within(activeStoryContainer).getByLabelText(
-        'More Options'
-      );
+      const [activeStoryContainer] =
+        fixture.screen.getAllByTestId(/^story-grid-item/);
+      const contextMenuKabab =
+        within(activeStoryContainer).getByLabelText('More Options');
 
       // tab to the button which opens the context menu
       while (!contextMenuKabab.contains(document.activeElement) && limit < 4) {
@@ -547,13 +543,11 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('Enter');
 
       // now the focused item should be the first context menu item
-      const [contextMenuList] = within(activeStoryContainer).getAllByTestId(
-        /context-menu-list/
-      );
+      const [contextMenuList] =
+        within(activeStoryContainer).getAllByTestId(/context-menu-list/);
       // it is focused on the link within the list
-      const [firstContextMenuItem, secondContextMenuItem] = within(
-        contextMenuList
-      ).getAllByRole('menuitem');
+      const [firstContextMenuItem, secondContextMenuItem] =
+        within(contextMenuList).getAllByRole('menuitem');
       expect(firstContextMenuItem).toEqual(document.activeElement);
 
       // tab to the next item
