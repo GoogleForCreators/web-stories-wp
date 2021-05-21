@@ -56,21 +56,17 @@ function useSingleSelectionResize({
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 
-  const {
-    editorToDataX,
-    editorToDataY,
-    dataToEditorY,
-    dataToEditorX,
-  } = useUnits(
-    ({
-      actions: { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX },
-    }) => ({
-      editorToDataX,
-      editorToDataY,
-      dataToEditorY,
-      dataToEditorX,
-    })
-  );
+  const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
+    useUnits(
+      ({
+        actions: { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX },
+      }) => ({
+        editorToDataX,
+        editorToDataY,
+        dataToEditorY,
+        dataToEditorX,
+      })
+    );
 
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type

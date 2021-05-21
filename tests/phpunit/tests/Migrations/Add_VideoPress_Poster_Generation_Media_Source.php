@@ -20,13 +20,13 @@ namespace phpunit\tests\Migrations;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * Class Add_Poster_Generation_Media_Source
+ * Class Add_VideoPress_Poster_Generation_Media_Source
  *
- * @covers \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source
+ * @covers \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source
  *
  * @package phpunit\tests\Migrations
  */
-class Add_Poster_Generation_Media_Source extends Test_Case {
+class Add_VideoPress_Poster_Generation_Media_Source extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::migrate
@@ -51,10 +51,9 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'true' );
-		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_POSTER_META_KEY, 'true' );
 
-		$object = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source();
+		$object = new \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source();
 		$slug   = $this->call_private_method( $object, 'get_term_name' );
 		$object->migrate();
 
@@ -69,8 +68,8 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::get_post_meta_key
 	 */
 	public function test_get_post_meta_key() {
-		$object  = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source();
+		$object  = new \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source();
 		$results = $this->call_private_method( $object, 'get_post_meta_key' );
-		$this->assertSame( \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, $results );
+		$this->assertSame( \Google\Web_Stories\Integrations\Jetpack::VIDEOPRESS_POSTER_META_KEY, $results );
 	}
 }

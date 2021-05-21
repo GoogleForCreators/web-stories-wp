@@ -25,7 +25,8 @@ import { readFileSync, writeFileSync } from 'fs';
 import appendRevisionToVersion from './appendRevisionToVersion.js';
 
 const VERSION_REGEX = /\* Version:(.+)/;
-const VERSION_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
+const VERSION_CONSTANT_REGEX =
+  /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
 
 /**
  * Updates version numbers in plugin files.

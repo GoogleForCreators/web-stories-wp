@@ -41,7 +41,11 @@ const HelperText = styled(Text).attrs({
 `;
 
 function StatusPanel() {
-  const { status = '', password: savedPassword, updateStory } = useStory(
+  const {
+    status = '',
+    password: savedPassword,
+    updateStory,
+  } = useStory(
     ({
       state: {
         story: { status, password },

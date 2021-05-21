@@ -83,9 +83,10 @@ function PublisherLogoSettings({
 
   const [contextMenuId, setContextMenuId] = useState(null);
 
-  const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
-    publisherLogos,
-  ]);
+  const publisherLogosById = useMemo(
+    () => publisherLogos.map(({ id }) => id),
+    [publisherLogos]
+  );
 
   const hasOnlyOneLogo = publisherLogosById.length === 1;
 

@@ -55,13 +55,8 @@ const LATEST_STORIES_QUERY = {
  * @return {*} JSX markup for the editor.
  */
 const LatestStoriesEdit = ({ attributes, setAttributes }) => {
-  const {
-    numOfStories,
-    order,
-    orderby,
-    archiveLinkLabel,
-    authors,
-  } = attributes;
+  const { numOfStories, order, orderby, archiveLinkLabel, authors } =
+    attributes;
 
   const { api } = useConfig();
 

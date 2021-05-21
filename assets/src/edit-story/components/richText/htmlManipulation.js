@@ -59,8 +59,10 @@ function updateAndReturnHTML(html, updater, ...args) {
   return renderedHTML;
 }
 
-const getHTMLFormatter = (setter) => (html, ...args) =>
-  updateAndReturnHTML(html, setter, ...args);
+const getHTMLFormatter =
+  (setter) =>
+  (html, ...args) =>
+    updateAndReturnHTML(html, setter, ...args);
 
 export const getHTMLFormatters = () => {
   return formatters.reduce(

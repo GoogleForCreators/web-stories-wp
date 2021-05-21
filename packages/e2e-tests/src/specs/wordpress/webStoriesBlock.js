@@ -68,8 +68,7 @@ describe('Web Stories Block', () => {
       if (request.url().includes('web-stories/v1/embed')) {
         request.respond({
           status: 200,
-          body:
-            '{"title":"Stories in AMP - Hello World","poster":"https:\\/\\/amp.dev\\/static\\/samples\\/img\\/story_dog2_portrait.jpg"}',
+          body: '{"title":"Stories in AMP - Hello World","poster":"https:\\/\\/amp.dev\\/static\\/samples\\/img\\/story_dog2_portrait.jpg"}',
         });
         return;
       }

@@ -51,14 +51,14 @@ const SearchInput = (
 ) => {
   // Avoid conditional rendering in this input because rerendering will remove the focus styling
 
-  const activeInput = useMemo(() => inputValue.length > 0 && isOpen, [
-    isOpen,
-    inputValue,
-  ]);
-  const alignInputCenter = useMemo(() => inputValue.length === 0 && !isOpen, [
-    isOpen,
-    inputValue,
-  ]);
+  const activeInput = useMemo(
+    () => inputValue.length > 0 && isOpen,
+    [isOpen, inputValue]
+  );
+  const alignInputCenter = useMemo(
+    () => inputValue.length === 0 && !isOpen,
+    [isOpen, inputValue]
+  );
 
   const onClearButtonKeyDown = useCallback(
     ({ key }) => {
