@@ -25,6 +25,9 @@ import { useDebouncedCallback } from 'use-debounce';
  */
 import { useLayout } from '../../app/layout';
 
+const MIN_LEVEL = 0.25;
+const MAX_LEVEL = 3;
+
 function usePinchToZoom({ containerRef }) {
   const { zoomLevel, setZoomLevel } = useLayout(
     ({ state: { zoomLevel }, actions: { setZoomLevel } }) => ({
@@ -44,6 +47,11 @@ function usePinchToZoom({ containerRef }) {
       return undefined;
     }
 
+    // Clamp zoom ensuring it's between the min-max value and ensure it only moves by steps of 25%.
+    const clampZoomLevel = (value) => {
+      return Math.min(MAX_LEVEL, Math.max(MIN_LEVEL, value - (value % 0.25)));
+    };
+
     const onWheel = (e) => {
       const { ctrlKey, deltaY } = e;
       const node = containerRef.current.childNodes[0];
@@ -52,9 +60,7 @@ function usePinchToZoom({ containerRef }) {
         // Ideally we'd use transform: scale locally and update only when the event finishes, however,
         // there are too many other pieces that would need adjustment as well.
         const newStepZoom = deltaY > 0 ? zoomLevel - 0.25 : zoomLevel + 0.25;
-        handleZoom(
-          Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
-        );
+        handleZoom(clampZoomLevel(newStepZoom));
         e.preventDefault();
       }
     };
@@ -71,9 +77,7 @@ function usePinchToZoom({ containerRef }) {
       const { scale } = e;
       if (node.contains(e.target) && scale) {
         const newStepZoom = scale < 1 ? zoomLevel - 0.25 : zoomLevel + 0.25;
-        handleZoom(
-          Math.min(3, Math.max(0.25, newStepZoom - (newStepZoom % 0.25)))
-        );
+        handleZoom(clampZoomLevel(newStepZoom));
         e.preventDefault();
       }
     };
