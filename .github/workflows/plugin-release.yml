@@ -353,6 +353,7 @@ jobs:
 
           # Patch releases are already on the correct branch.
           if $IS_PATCH_RELEASE; then
+            BRANCH=${GITHUB_REF#refs/heads/}
             echo "::set-output name=release_branch::${BRANCH}"
             exit 0
           fi
