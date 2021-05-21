@@ -6,9 +6,14 @@ Some actions are cumbersome in the editor as it's difficult to find them in the 
 
 Quick actions hook into the `highlight` api that is used in the pre-publish checklist. Using this, the quick actions can highlight specific panels in the editor.
 
-The quick action menu is located in the nav layer. This allows users to navigate around using the keyboard in an intuitive way.
+The quick action menu is located in the nav layer. This allows users to navigate around using the keyboard in an intuitive way. Clicking the quick action menu should not remove focus from any elements that have focus.
 
-Clicking the quick action menu should not remove focus from any elements that have focus.
+Quick actions have two main functions:
+
+1. Focusing a specific part of the editor
+2. Editing an element in the canvas
+
+Quick actions are not limited to just the above functionality. In the future it may be necessary to add more functionality.
 
 ### Action Types
 
