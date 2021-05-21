@@ -43,7 +43,7 @@ export const getSnackbarClearCopy = (resetProperties = [], elementType) => {
 
   return sprintf(
     /* translators: %1$s: list of element properties to be reset, %2$s is the element type */
-    __('All %1$s were removed from the %2$s', 'web-stories'),
+    __('All %1$s were removed from the %2$s.', 'web-stories'),
     translateToInclusiveList(resetPropertiesAsCopy),
     elementTypeAsCopy
   );

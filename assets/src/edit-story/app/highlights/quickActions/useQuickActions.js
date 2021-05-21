@@ -229,8 +229,13 @@ const useQuickActions = () => {
     handleMouseDown,
   ]);
 
-  const foregroundCommonActions = useMemo(
-    () => [
+  const foregroundCommonActions = useMemo(() => {
+    const resetProperties = getResetProperties(
+      selectedElement,
+      selectedElementAnimations
+    );
+
+    return [
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
@@ -246,44 +251,41 @@ const useQuickActions = () => {
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_ANIMATIONS,
+
         onClick: () =>
           handleClearAnimationsAndFilters({
             elementId: selectedElement?.id,
             resetProperties,
-            elementType: ELEMENT_TYPE.IMAGE,
+            elementType: selectedElements?.[0]?.type,
           }),
         separator: 'top',
         disabled: resetProperties.length === 0,
         ...actionMenuProps,
       },
-    ],
-    [
-      handleFocusMediaPanel,
-      selectedElement?.id,
-      actionMenuProps,
-      handleFocusAnimationPanel,
-      handleFocusLinkPanel,
-      handleFocusAnimationPanel,
-      actionMenuProps,
-      selectedElement?.id,
-      selectedElementAnimations?.length,
-      handleClearAnimations,
-    ]
-  );
+    ];
+  }, [
+    selectedElement,
+    selectedElementAnimations,
+    handleFocusAnimationPanel,
+    actionMenuProps,
+    handleFocusLinkPanel,
+    handleClearAnimationsAndFilters,
+    selectedElements,
+  ]);
 
   const foregroundImageActions = useMemo(
     () => [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMedia3pPanel(selectedElement?.id),
+        onClick: handleFocusMediaPanel(selectedElement?.id),
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
     ],
     [
       actionMenuProps,
-      handleFocusMedia3pPanel,
+      handleFocusMediaPanel,
       foregroundCommonActions,
       selectedElement?.id,
     ]
