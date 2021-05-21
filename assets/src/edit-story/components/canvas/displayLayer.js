@@ -122,7 +122,11 @@ function DisplayLayer() {
 
   const quickActions = useQuickActions();
 
-  const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
+  const {
+    editingElement,
+    setPageContainer,
+    setFullbleedContainer,
+  } = useCanvas(
     ({
       state: { editingElement },
       actions: { setPageContainer, setFullbleedContainer },
@@ -136,10 +140,18 @@ function DisplayLayer() {
     updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
   }, [updateAnimationState]);
 
-  const animatedElements = useMemo(
-    () => selectedElements.map((el) => el.id),
-    [selectedElements]
-  );
+  /**
+   * Stop the event from bubbling if the user clicks in between buttons.
+   *
+   * This prevents the selected element from losing focus.
+   */
+  const handleMenuBackgroundClick = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
+  const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
+    selectedElements,
+  ]);
 
   return (
     <StoryAnimation.Provider
@@ -179,7 +191,12 @@ function DisplayLayer() {
         {enableQuickActionMenu && quickActions.length && (
           <DirectionAware>
             <QuickActionsArea>
-              <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
+              <ContextMenu
+                isAlwaysVisible
+                isIconMenu
+                items={quickActions}
+                onMouseDown={handleMenuBackgroundClick}
+              />
             </QuickActionsArea>
           </DirectionAware>
         )}
