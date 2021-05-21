@@ -30,6 +30,12 @@ export class QuickActionMenu extends Container {
     });
   }
 
+  get changeColorButton() {
+    return this.queryByRole('menuitem', {
+      name: ACTION_TEXT.CHANGE_COLOR,
+    });
+  }
+
   get insertBackgroundMediaButton() {
     return this.queryByRole('menuitem', {
       name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
