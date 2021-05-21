@@ -28,7 +28,6 @@ import { useCallback, useEffect, useRef } from 'react';
  * Please only provide users with just a simple, concise message.
  *
  * @param {?string} politeness Optional. Politeness. Either 'polite', or 'assertive'. Default 'polite'.
- *
  * @return {Function} Function to speak a message.
  */
 function useLiveRegion(politeness = 'polite') {

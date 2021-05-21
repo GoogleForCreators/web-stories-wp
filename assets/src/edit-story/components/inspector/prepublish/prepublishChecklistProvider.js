@@ -51,9 +51,8 @@ function PrepublishChecklistProvider({ children }) {
   const isChecklistEmpty = checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES;
 
   const [currentList, setCurrentList] = useState([]);
-  const [isChecklistReviewRequested, setIsChecklistReviewRequested] = useState(
-    false
-  );
+  const [isChecklistReviewRequested, setIsChecklistReviewRequested] =
+    useState(false);
 
   const handleRefreshList = useCallback(async () => {
     const pagesWithSize = story.pages.map((page) => ({

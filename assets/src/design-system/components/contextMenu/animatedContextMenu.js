@@ -220,8 +220,10 @@ function AnimationContainer({ children, isOpen, ...props }) {
       return;
     }
 
-    const toggleBoundingBox = menuTogglePositionRef.current.getBoundingClientRect();
-    const menuWrapperBoundingBox = menuPositionRef.current.getBoundingClientRect();
+    const toggleBoundingBox =
+      menuTogglePositionRef.current.getBoundingClientRect();
+    const menuWrapperBoundingBox =
+      menuPositionRef.current.getBoundingClientRect();
 
     const menuLeft =
       toggleBoundingBox.left +

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
@@ -44,6 +44,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const IconInfo = styled.div`
   display: flex;
@@ -67,19 +68,19 @@ const Error = styled.span`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    clearEditing,
-    setDisplayLinkGuidelines,
-    displayLinkGuidelines,
-  } = useCanvas((state) => ({
-    clearEditing: state.actions.clearEditing,
-    setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
-    displayLinkGuidelines: state.state.displayLinkGuidelines,
-  }));
+  const { clearEditing, setDisplayLinkGuidelines, displayLinkGuidelines } =
+    useCanvas((state) => ({
+      clearEditing: state.actions.clearEditing,
+      setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
+      displayLinkGuidelines: state.state.displayLinkGuidelines,
+    }));
 
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
   }));
+
+  const linkRef = useRef(null);
+  const highlight = useFocusHighlight(states.LINK, linkRef);
 
   const { getElementsInAttachmentArea } = useElementsWithLinks();
   const hasElementsInAttachmentArea =
@@ -216,8 +217,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const isMultipleUrl = MULTIPLE_VALUE === link.url;
   const isMultipleDesc = MULTIPLE_VALUE === link.desc;
   return (
-    <SimplePanel name="link" title={__('Link', 'web-stories')}>
+    <SimplePanel
+      name="link"
+      title={__('Link', 'web-stories')}
+      css={highlight?.showEffect && styles.FLASH}
+    >
       <LinkInput
+        ref={linkRef}
         onChange={(value) =>
           !displayLinkGuidelines &&
           handleChange({ url: value }, !value /* submit */)

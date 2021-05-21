@@ -351,9 +351,11 @@ jobs:
           VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
 
-          # Patch releases should not create a new branch
+          # Patch releases are already on the correct branch.
           if $IS_PATCH_RELEASE; then
             BRANCH=${GITHUB_REF#refs/heads/}
+            echo "::set-output name=release_branch::${BRANCH}"
+            exit 0
           fi
 
           if [[ -z $(git ls-remote origin $BRANCH) ]]; then

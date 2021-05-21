@@ -46,15 +46,12 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
     actions: { deletePageTemplate },
   } = useAPI();
 
-  const {
-    savedTemplates,
-    setSavedTemplates,
-    nextTemplatesToFetch,
-  } = useLibrary((state) => ({
-    savedTemplates: state.state.savedTemplates,
-    nextTemplatesToFetch: state.state.nextTemplatesToFetch,
-    setSavedTemplates: state.actions.setSavedTemplates,
-  }));
+  const { savedTemplates, setSavedTemplates, nextTemplatesToFetch } =
+    useLibrary((state) => ({
+      savedTemplates: state.state.savedTemplates,
+      nextTemplatesToFetch: state.state.nextTemplatesToFetch,
+      setSavedTemplates: state.actions.setSavedTemplates,
+    }));
 
   const { showSnackbar } = useSnackbar();
 

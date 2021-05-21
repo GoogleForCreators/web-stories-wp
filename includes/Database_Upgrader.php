@@ -56,22 +56,23 @@ class Database_Upgrader extends Service_Base {
 	 * @var array
 	 */
 	const ROUTINES = [
-		'1.0.0' => Migrations\Update_1::class,
-		'2.0.0' => Migrations\Replace_Conic_Style_Presets::class,
-		'2.0.1' => Migrations\Add_Media_Source_Editor::class,
-		'2.0.2' => Migrations\Remove_Broken_Text_Styles::class,
-		'2.0.3' => Migrations\Unify_Color_Presets::class,
-		'2.0.4' => Migrations\Update_Publisher_Logos::class,
-		'3.0.0' => Migrations\Add_Stories_Caps::class,
-		'3.0.1' => Migrations\Rewrite_Flush::class,
-		'3.0.2' => Migrations\Rewrite_Flush::class,
-		'3.0.3' => Migrations\Yoast_Reindex_Stories::class,
-		'3.0.4' => Migrations\Add_Poster_Generation_Media_Source::class,
-		'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
-		'3.0.6' => Migrations\Add_Media_Source_Video_Optimization::class,
-		'3.0.7' => Migrations\Add_Media_Source_Source_Video::class,
-		'3.0.8' => Migrations\Rewrite_Flush::class,
-		'3.0.9' => Migrations\Add_Media_Source_Gif_Conversion::class,
+		'1.0.0'  => Migrations\Update_1::class,
+		'2.0.0'  => Migrations\Replace_Conic_Style_Presets::class,
+		'2.0.1'  => Migrations\Add_Media_Source_Editor::class,
+		'2.0.2'  => Migrations\Remove_Broken_Text_Styles::class,
+		'2.0.3'  => Migrations\Unify_Color_Presets::class,
+		'2.0.4'  => Migrations\Update_Publisher_Logos::class,
+		'3.0.0'  => Migrations\Add_Stories_Caps::class,
+		'3.0.1'  => Migrations\Rewrite_Flush::class,
+		'3.0.2'  => Migrations\Rewrite_Flush::class,
+		'3.0.3'  => Migrations\Yoast_Reindex_Stories::class,
+		'3.0.4'  => Migrations\Add_Poster_Generation_Media_Source::class,
+		'3.0.5'  => Migrations\Remove_Unneeded_Attachment_Meta::class,
+		'3.0.6'  => Migrations\Add_Media_Source_Video_Optimization::class,
+		'3.0.7'  => Migrations\Add_Media_Source_Source_Video::class,
+		'3.0.8'  => Migrations\Rewrite_Flush::class
+		'3.0.9'  => Migrations\Add_VideoPress_Poster_Generation_Media_Source::class,
+		'3.0.10' => Migrations\Add_Media_Source_Gif_Conversion::class,
 	];
 
 	/**

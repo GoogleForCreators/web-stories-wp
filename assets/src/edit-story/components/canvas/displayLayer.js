@@ -33,6 +33,7 @@ import {
 import { useStory, useCanvas } from '../../app';
 import { ContextMenu } from '../../../design-system';
 import { useQuickActions } from '../../app/highlights';
+import DirectionAware from '../directionAware';
 import DisplayElement from './displayElement';
 import { Layer, PageArea, QuickActionsArea } from './layout';
 import PageAttachment from './pageAttachment';
@@ -121,11 +122,7 @@ function DisplayLayer() {
 
   const quickActions = useQuickActions();
 
-  const {
-    editingElement,
-    setPageContainer,
-    setFullbleedContainer,
-  } = useCanvas(
+  const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
       state: { editingElement },
       actions: { setPageContainer, setFullbleedContainer },
@@ -139,9 +136,10 @@ function DisplayLayer() {
     updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
   }, [updateAnimationState]);
 
-  const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
-    selectedElements,
-  ]);
+  const animatedElements = useMemo(
+    () => selectedElements.map((el) => el.id),
+    [selectedElements]
+  );
 
   return (
     <StoryAnimation.Provider
@@ -179,9 +177,11 @@ function DisplayLayer() {
           />
         </DisplayPageArea>
         {enableQuickActionMenu && quickActions.length && (
-          <QuickActionsArea>
-            <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
-          </QuickActionsArea>
+          <DirectionAware>
+            <QuickActionsArea>
+              <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
+            </QuickActionsArea>
+          </DirectionAware>
         )}
       </Layer>
     </StoryAnimation.Provider>

@@ -25,9 +25,10 @@ import styled, { css } from 'styled-components';
 import { Button } from '../button';
 import { Link } from '../typography/link';
 import { Text } from '../typography/text';
-import { themeHelpers, THEME_CONSTANTS } from '../../theme';
+import { THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
 import { Tooltip, TOOLTIP_PLACEMENT } from '../tooltip';
+import { PLACEMENT } from '../popup';
 
 const ItemText = styled(Text)`
   width: 200px;
@@ -40,18 +41,6 @@ const Shortcut = styled(Text)(
     white-space: nowrap;
   `
 );
-
-const StyledLink = styled(Link)`
-  :focus {
-    ${themeHelpers.focusCSS};
-  }
-`;
-
-const StyledButton = styled(Button)`
-  :focus {
-    ${themeHelpers.focusCSS};
-  }
-`;
 
 const IconWrapper = styled.span`
   width: 32px;
@@ -68,6 +57,8 @@ export const MenuItem = ({
   onFocus,
   shortcut,
   Icon,
+  tooltipPlacement = TOOLTIP_PLACEMENT.RIGHT,
+  ...menuItemProps
 }) => {
   const itemRef = useRef(null);
   /**
@@ -84,7 +75,7 @@ export const MenuItem = ({
   const textContent = useMemo(() => {
     if (Icon) {
       return (
-        <Tooltip placement={TOOLTIP_PLACEMENT.RIGHT} title={label}>
+        <Tooltip placement={tooltipPlacement} title={label}>
           <IconWrapper>
             <Icon />
           </IconWrapper>
@@ -109,7 +100,7 @@ export const MenuItem = ({
         )}
       </>
     );
-  }, [Icon, label, shortcut]);
+  }, [Icon, label, shortcut, tooltipPlacement]);
 
   if (href) {
     const newTabProps = newTab
@@ -120,34 +111,38 @@ export const MenuItem = ({
       : {};
 
     return (
-      <StyledLink
+      <Link
         ref={itemRef}
         aria-label={label}
         href={href}
         onClick={handleClick}
         onFocus={onFocus}
+        role="menuitem"
         {...newTabProps}
+        {...menuItemProps}
       >
         {textContent}
-      </StyledLink>
+      </Link>
     );
   }
 
   if (onClick) {
     return (
-      <StyledButton
+      <Button
         ref={itemRef}
         aria-label={label}
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
+        role="menuitem"
+        {...menuItemProps}
       >
         {textContent}
-      </StyledButton>
+      </Button>
     );
   }
 
-  return <div>{textContent}</div>;
+  return <div {...menuItemProps}>{textContent}</div>;
 };
 
 /**
@@ -202,6 +197,7 @@ export const MenuItemProps = {
   onFocus: PropTypes.func,
   shortcut: PropTypes.string,
   Icon: PropTypes.func,
+  tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
 };
 
 MenuItem.propTypes = MenuItemProps;

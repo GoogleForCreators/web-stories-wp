@@ -70,12 +70,8 @@ describe('<ColorPicker /> as it loads', () => {
   });
 
   it('should have gradient buttons only if enabled', () => {
-    const {
-      getSolidButton,
-      getLinearButton,
-      getRadialButton,
-      rerender,
-    } = arrange();
+    const { getSolidButton, getLinearButton, getRadialButton, rerender } =
+      arrange();
 
     expect(getSolidButton()).toBeInTheDocument();
     expect(getLinearButton()).not.toBeInTheDocument();

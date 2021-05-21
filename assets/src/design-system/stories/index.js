@@ -78,9 +78,10 @@ const ColorBlock = styled.span`
 
 export const _default = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
-  const activeTheme = useMemo(() => (isDarkTheme ? dark : light), [
-    isDarkTheme,
-  ]);
+  const activeTheme = useMemo(
+    () => (isDarkTheme ? dark : light),
+    [isDarkTheme]
+  );
   const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES;
   return (
     <div>
