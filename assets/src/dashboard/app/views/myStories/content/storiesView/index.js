@@ -192,7 +192,8 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]: handleCreateTemplateFromStory,
+        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]:
+          handleCreateTemplateFromStory,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
         [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
@@ -297,7 +298,7 @@ function StoriesView({
           secondaryText={__('Cancel', 'web-stories')}
           secondaryRest={{
             ['aria-label']: sprintf(
-              /* translators: %s: story title */
+              /* translators: %s: story title. */
               __('Cancel deleting story "%s"', 'web-stories'),
               titleFormatted(activeStory.title)
             ),
@@ -306,7 +307,7 @@ function StoriesView({
           onPrimary={handleOnDeleteStory}
           primaryRest={{
             ['aria-label']: sprintf(
-              /* translators: %s: story title */
+              /* translators: %s: story title. */
               __('Confirm deleting story "%s"', 'web-stories'),
               titleFormatted(activeStory.title)
             ),

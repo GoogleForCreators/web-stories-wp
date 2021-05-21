@@ -50,6 +50,9 @@ function LibraryProvider({ children }) {
   const [tab, setTab] = useState(MEDIA.id);
   const [textSets, setTextSets] = useState({});
   const [savedTemplates, setSavedTemplates] = useState(null);
+  // The first page of templates to fetch is 1.
+  const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
+
   const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
@@ -74,6 +77,25 @@ function LibraryProvider({ children }) {
     }
   }, [highlightedTab]);
 
+  const mediaTabRef = useRef(null);
+  const media3pTabRef = useRef(null);
+  const textTabRef = useRef(null);
+  const shapesTabRef = useRef(null);
+  const elementsTabRef = useRef(null);
+  const pageTemplatesTabRef = useRef(null);
+
+  const tabRefs = useMemo(
+    () => ({
+      [MEDIA.id]: mediaTabRef,
+      [MEDIA3P.id]: media3pTabRef,
+      [TEXT.id]: textTabRef,
+      [SHAPES.id]: shapesTabRef,
+      [ELEMS.id]: elementsTabRef,
+      [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
+    }),
+    []
+  );
+
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
@@ -97,8 +119,10 @@ function LibraryProvider({ children }) {
     () => ({
       state: {
         tab,
+        tabRefs,
         textSets,
         savedTemplates,
+        nextTemplatesToFetch,
       },
       actions: {
         setTab,
@@ -106,6 +130,7 @@ function LibraryProvider({ children }) {
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
+        setNextTemplatesToFetch,
       },
       data: {
         tabs: tabs,
@@ -113,12 +138,15 @@ function LibraryProvider({ children }) {
     }),
     [
       tab,
+      tabRefs,
       textSets,
       savedTemplates,
       insertElement,
       insertTextSet,
       insertTextSetByOffset,
       tabs,
+      nextTemplatesToFetch,
+      setNextTemplatesToFetch,
     ]
   );
   const getTextSets = useCallback(async () => {

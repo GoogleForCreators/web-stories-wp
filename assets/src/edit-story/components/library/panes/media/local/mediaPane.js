@@ -20,7 +20,12 @@
 import { useFeature } from 'flagged';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import {
+  __,
+  _n,
+  sprintf,
+  translateToExclusiveList,
+} from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -190,14 +195,17 @@ function MediaPane(props) {
     }
   };
 
-  const onSelectErrorMessage = sprintf(
-    /* translators: %s: list of allowed file types. */
-    __('Please choose only %s to insert into page.', 'web-stories'),
-    allowedFileTypes.join(
-      /* translators: delimiter used in a list */
-      __(', ', 'web-stories')
-    )
+  let onSelectErrorMessage = __(
+    'No file types are currently supported.',
+    'web-stories'
   );
+  if (allowedFileTypes.length) {
+    onSelectErrorMessage = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s to insert into page.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
 
   const openMediaPicker = useMediaPicker({
     onSelect,

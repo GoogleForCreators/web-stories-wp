@@ -324,6 +324,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           width: 640 / 2,
           height: 529 / 2,
           resource: {
+            width: 640,
+            height: 529,
             type: 'image',
             mimeType: 'image/jpg',
             src: 'http://localhost:9876/__static__/earth.jpg',
@@ -351,7 +353,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
     });
 
-    it('should open the document inspector panel', async () => {
+    it('should open the document inspector panel and focus the media button', async () => {
       await enableHighPriorityMessagesWith5Pages();
       await fixture.events.click(fixture.editor.library.media.item(0));
 
@@ -377,7 +379,88 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           )
         ).not.toBeNull();
       });
+      const mediaButton = fixture.screen.getByLabelText('Poster image');
+      expect(mediaButton.contains(document.activeElement)).toBeTrue();
       await fixture.snapshot('document tab opened by checklist panel');
     });
+  });
+
+  it('should open the design panel video processing section and focus the reprocess video button when using mouse', async () => {
+    await fixture.act(() => {
+      insertElement('video', {
+        x: 0,
+        y: 0,
+        width: 640 / 2,
+        height: 529 / 2,
+        resource: {
+          width: 640,
+          height: 529,
+          type: 'video',
+          src: 'http://localhost:9876/__static__/earth.mp4',
+        },
+      });
+    });
+
+    await enableHighPriorityMessagesWith5Pages();
+
+    await fixture.events.click(
+      fixture.editor.inspector.checklistPanel.highPriority
+    );
+
+    const videoMissingPosterRow = fixture.screen.getByText(
+      MESSAGES.MEDIA.VIDEO_MISSING_POSTER.MAIN_TEXT
+    );
+
+    expect(videoMissingPosterRow).toBeDefined();
+
+    await fixture.events.click(videoMissingPosterRow);
+
+    const mediaButton = await fixture.editor.inspector.designPanel
+      .videoAccessibility.posterMenuButton;
+    expect(mediaButton.contains(document.activeElement)).toBeTrue();
+
+    await fixture.snapshot(
+      'design tab opened accessibility and focused on video poster button by checklist panel'
+    );
+  });
+
+  it('should open the design panel video processing section and focus the reprocess video button when using keyboard', async () => {
+    await fixture.act(() => {
+      insertElement('video', {
+        x: 0,
+        y: 0,
+        width: 640 / 2,
+        height: 529 / 2,
+        resource: {
+          width: 640,
+          height: 529,
+          type: 'video',
+          src: 'http://localhost:9876/__static__/earth.mp4',
+        },
+      });
+    });
+
+    await enableHighPriorityMessagesWith5Pages();
+
+    await fixture.events.click(
+      fixture.editor.inspector.checklistPanel.highPriority
+    );
+
+    const videoMissingPosterRow = fixture.screen.getByText(
+      MESSAGES.MEDIA.VIDEO_MISSING_POSTER.MAIN_TEXT
+    );
+
+    expect(videoMissingPosterRow).toBeDefined();
+
+    await fixture.events.focus(videoMissingPosterRow);
+    await fixture.events.keyboard.press('Enter');
+
+    const mediaButton = await fixture.editor.inspector.designPanel
+      .videoAccessibility.posterMenuButton;
+    expect(mediaButton.contains(document.activeElement)).toBeTrue();
+
+    await fixture.snapshot(
+      'design tab opened accessibility and focused on video poster button by checklist panel'
+    );
   });
 });

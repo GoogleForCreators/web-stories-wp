@@ -83,13 +83,12 @@ function DefaultTemplates({ pageSize }) {
   }, [getPageTemplates, showTemplateImages, setPageTemplates]);
 
   const pageTemplatesParentRef = useRef();
-  const [selectedPageTemplateType, setSelectedPageTemplateType] = useState(
-    null
-  );
+  const [selectedPageTemplateType, setSelectedPageTemplateType] =
+    useState(null);
 
   const pills = useMemo(
     () => [
-      { id: null, label: __('All', 'web-stories') },
+      { id: null, label: _x('All', 'page templates', 'web-stories') },
       ...Object.entries(PAGE_TEMPLATE_TYPES).map(([key, { name }]) => ({
         id: key,
         label: name,

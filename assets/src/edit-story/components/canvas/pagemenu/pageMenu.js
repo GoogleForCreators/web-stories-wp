@@ -86,13 +86,15 @@ function PageMenu() {
   }));
   const { isRTL } = useConfig();
 
-  const handleDeletePage = useCallback(() => deleteCurrentPage(), [
-    deleteCurrentPage,
-  ]);
+  const handleDeletePage = useCallback(
+    () => deleteCurrentPage(),
+    [deleteCurrentPage]
+  );
 
-  const handleAddPage = useCallback(() => addPage({ page: createPage() }), [
-    addPage,
-  ]);
+  const handleAddPage = useCallback(
+    () => addPage({ page: createPage() }),
+    [addPage]
+  );
 
   const handleDuplicatePage = useCallback(
     () => addPage({ page: duplicatePage(currentPage) }),
@@ -120,7 +122,7 @@ function PageMenu() {
       </Text>
       <CountSpace />
       <PageMenuButton
-        title={__('Delete page', 'web-stories')}
+        title={__('Delete Page', 'web-stories')}
         onClick={handleDeletePage}
         aria-label={__('Delete Page', 'web-stories')}
       >
@@ -128,7 +130,7 @@ function PageMenu() {
       </PageMenuButton>
       <IconSpace />
       <PageMenuButton
-        title={__('Duplicate page', 'web-stories')}
+        title={__('Duplicate Page', 'web-stories')}
         onClick={handleDuplicatePage}
         aria-label={__('Duplicate Page', 'web-stories')}
       >
@@ -136,7 +138,7 @@ function PageMenu() {
       </PageMenuButton>
       <IconSpace />
       <PageMenuButton
-        title={__('New page', 'web-stories')}
+        title={__('New Page', 'web-stories')}
         onClick={handleAddPage}
         aria-label={__('Add New Page', 'web-stories')}
       >

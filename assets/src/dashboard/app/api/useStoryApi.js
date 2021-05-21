@@ -324,7 +324,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
             publisher_logo,
             title: {
               raw: sprintf(
-                /* translators: %s: story title */
+                /* translators: %s: story title. */
                 __('%s (Copy)', 'web-stories'),
                 title.raw
               ),

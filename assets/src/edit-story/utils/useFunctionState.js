@@ -38,9 +38,10 @@ function useFunctionState(initialValue = undefined) {
     [setValue]
   );
 
-  const clearer = useCallback(() => setValue({ handler: undefined }), [
-    setValue,
-  ]);
+  const clearer = useCallback(
+    () => setValue({ handler: undefined }),
+    [setValue]
+  );
 
   return [value.handler, setter, clearer];
 }

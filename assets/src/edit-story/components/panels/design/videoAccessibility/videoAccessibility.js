@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 
@@ -77,29 +77,38 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
 
   const posterErrorMessage = useMemo(() => {
-    return sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s as a poster.', 'web-stories'),
-      allowedImageFileTypes.join(
-        /* translators: delimiter used in a list */
-        __(', ', 'web-stories')
-      )
-    );
+    let message = __('No file types are currently supported.', 'web-stories');
+
+    if (allowedImageFileTypes.length) {
+      message = sprintf(
+        /* translators: %s: list of allowed file types. */
+        __('Please choose only %s as a poster.', 'web-stories'),
+        translateToExclusiveList(allowedImageFileTypes)
+      );
+    }
+
+    return message;
   }, [allowedImageFileTypes]);
 
   // Used for focusing and highlighting the panel from the pre-publish checkist.
-  const ref = useRef();
-  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
+  const inputRef = useRef();
+  const mediaRef = useRef();
+  const highlightInput = useFocusHighlight(states.ASSISTIVE_TEXT, inputRef);
+  const highlightMediaPicker = useFocusHighlight(
+    states.VIDEO_A11Y_POSTER,
+    mediaRef
+  );
 
   return (
     <SimplePanel
-      css={highlight && styles.FLASH}
+      css={(highlightInput || highlightMediaPicker) && styles.FLASH}
       name="videoAccessibility"
       title={__('Accessibility', 'web-stories')}
-      isPersistable={!highlight}
+      isPersistable={!highlightInput && !highlightMediaPicker}
     >
       <Row>
         <StyledMedia
+          ref={mediaRef}
           value={poster}
           onChange={handleChangePoster}
           onChangeErrorText={posterErrorMessage}
@@ -112,7 +121,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         />
         <InputsWrapper>
           <TextArea
-            ref={ref}
+            ref={inputRef}
             placeholder={
               alt === MULTIPLE_VALUE
                 ? MULTIPLE_DISPLAY_VALUE

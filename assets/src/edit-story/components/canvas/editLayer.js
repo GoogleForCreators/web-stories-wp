@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from 'react';
-import { __ } from '@web-stories-wp/i18n';
+import { _x } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -84,7 +84,7 @@ function EditLayerForElement({ element }) {
   return (
     <LayerWithGrayout
       ref={ref}
-      aria-label={__('Edit layer', 'web-stories')}
+      aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
       data-testid="editLayer"
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}

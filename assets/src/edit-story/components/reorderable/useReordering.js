@@ -39,15 +39,16 @@ function useReordering(onPositionChange, numChildren) {
 
   const speak = useLiveRegion('assertive');
   const handleStartReordering = useCallback(
-    ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
-      // Only allow reordering with non-modified click on non-background element.
-      // Modified (shift+ or meta+) clicks are for selection.
-      if (!evt.shiftKey && !evt.metaKey) {
-        onStartReordering();
-        setCurrentPosition(currentPos);
-        setDragTarget(evt.target);
-      }
-    },
+    ({ position: currentPos, onStartReordering = () => {} }) =>
+      (evt) => {
+        // Only allow reordering with non-modified click on non-background element.
+        // Modified (shift+ or meta+) clicks are for selection.
+        if (!evt.shiftKey && !evt.metaKey) {
+          onStartReordering();
+          setCurrentPosition(currentPos);
+          setDragTarget(evt.target);
+        }
+      },
     []
   );
 

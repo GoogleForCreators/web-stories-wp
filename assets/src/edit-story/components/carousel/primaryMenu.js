@@ -82,15 +82,12 @@ function PrimaryMenu() {
     });
   }, [setIsGridViewOpen]);
 
-  const {
-    metaBoxesVisible,
-    toggleMetaBoxesVisible,
-    hasMetaBoxes,
-  } = useMetaBoxes(({ state, actions }) => ({
-    hasMetaBoxes: state.hasMetaBoxes,
-    metaBoxesVisible: state.metaBoxesVisible,
-    toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
-  }));
+  const { metaBoxesVisible, toggleMetaBoxesVisible, hasMetaBoxes } =
+    useMetaBoxes(({ state, actions }) => ({
+      hasMetaBoxes: state.hasMetaBoxes,
+      metaBoxesVisible: state.metaBoxesVisible,
+      toggleMetaBoxesVisible: actions.toggleMetaBoxesVisible,
+    }));
 
   const handleMetaBoxesClick = useCallback(() => {
     toggleMetaBoxesVisible();

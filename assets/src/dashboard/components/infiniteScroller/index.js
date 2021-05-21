@@ -88,7 +88,7 @@ const loadReducer = (state, action) => {
 };
 
 const InfiniteScroller = ({
-  allDataLoadedMessage = __('No More Stories', 'web-stories'),
+  allDataLoadedMessage = __('No more stories', 'web-stories'),
   allDataLoadedAriaMessage = __('All stories are loaded', 'web-stories'),
   onLoadMore,
   canLoadMore,

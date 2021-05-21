@@ -59,14 +59,8 @@ describe('Styling multiple text fields', () => {
     // TODO #6955
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply formatting correctly for identically styled text fields', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-        fontWeight,
-        letterSpacing,
-        fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Select both text fields
       await selectBothTextFields();
@@ -121,14 +115,8 @@ describe('Styling multiple text fields', () => {
     });
 
     it('should apply formatting correctly for multi-style text field', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-        fontWeight,
-        letterSpacing,
-        fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Edit formatting for second text field
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
@@ -202,10 +190,8 @@ describe('Styling multiple text fields', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black text field + bold text field non-bold when toggling', async () => {
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);
@@ -243,10 +229,8 @@ describe('Styling multiple text fields', () => {
     });
 
     it('should make bold text field + light text field bold when toggling', async () => {
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);

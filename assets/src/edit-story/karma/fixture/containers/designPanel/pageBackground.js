@@ -49,4 +49,8 @@ export class PageBackground extends AbstractPanel {
     color.label = 'Background color';
     return color;
   }
+
+  get backgroundColorInput() {
+    return this.getByRole('textbox', { name: /Background color/ });
+  }
 }

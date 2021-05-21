@@ -88,6 +88,7 @@ class KSES extends Service_Base {
 			'clip-path',
 			'-webkit-clip-path',
 			'pointer-events',
+			'will-change',
 		];
 
 		array_push( $attr, ...$additional );

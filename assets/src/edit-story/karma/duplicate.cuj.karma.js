@@ -20,7 +20,7 @@ import useInsertElement from '../components/canvas/useInsertElement';
 import { useStory } from '../app/story';
 import { Fixture } from './fixture';
 
-describe('Duplicate page', () => {
+describe('Duplicate Page', () => {
   let fixture;
   let duplicatePageButton;
 
@@ -57,22 +57,20 @@ describe('Duplicate page', () => {
 
     // animation
     const animation = fixture.screen.getByRole('option', {
-      name: 'Pulse Effect',
+      name: '"Pulse" Effect',
     });
 
     // apply animation to element
     await fixture.events.click(animation, { clickCount: 1 });
 
     // get original element
-    const {
-      animations: originalAnimations,
-      elements: originalElements,
-    } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        animations: state.pages[0].animations,
-        elements: state.currentPage.elements,
-      }))
-    );
+    const { animations: originalAnimations, elements: originalElements } =
+      await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          elements: state.currentPage.elements,
+        }))
+      );
     expect(originalAnimations.length).toBe(1);
 
     const {

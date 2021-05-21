@@ -82,8 +82,7 @@ describe('APIProvider', () => {
     });
 
     expect(apiFetch).toHaveBeenCalledWith({
-      path:
-        '/mediaPath?context=edit&per_page=100&page=1&_web_stories_envelope=true&cache_bust=true',
+      path: '/mediaPath?context=edit&per_page=100&page=1&_web_stories_envelope=true&cache_bust=true',
     });
   });
 

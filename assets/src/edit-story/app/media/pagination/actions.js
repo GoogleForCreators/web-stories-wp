@@ -19,66 +19,72 @@
  */
 import * as types from './types';
 
-export const fetchMediaStart = (dispatch) => ({ provider, pageToken }) => {
-  dispatch({
-    type: types.FETCH_MEDIA_START,
-    payload: {
-      provider,
-      pageToken,
-    },
-  });
-};
+export const fetchMediaStart =
+  (dispatch) =>
+  ({ provider, pageToken }) => {
+    dispatch({
+      type: types.FETCH_MEDIA_START,
+      payload: {
+        provider,
+        pageToken,
+      },
+    });
+  };
 
-export const fetchMediaSuccess = (dispatch) => ({
-  provider,
-  media,
-  nextPageToken,
-  totalPages,
-  ...otherProperties
-}) => {
-  dispatch({
-    type: types.FETCH_MEDIA_SUCCESS,
-    payload: {
-      provider,
-      media,
-      nextPageToken,
-      totalPages,
-      ...otherProperties,
-    },
-  });
-};
+export const fetchMediaSuccess =
+  (dispatch) =>
+  ({ provider, media, nextPageToken, totalPages, ...otherProperties }) => {
+    dispatch({
+      type: types.FETCH_MEDIA_SUCCESS,
+      payload: {
+        provider,
+        media,
+        nextPageToken,
+        totalPages,
+        ...otherProperties,
+      },
+    });
+  };
 
-export const fetchMediaError = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.FETCH_MEDIA_ERROR,
-    payload: { provider },
-  });
-};
+export const fetchMediaError =
+  (dispatch) =>
+  ({ provider }) => {
+    dispatch({
+      type: types.FETCH_MEDIA_ERROR,
+      payload: { provider },
+    });
+  };
 
-export const setNextPage = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.SET_NEXT_PAGE,
-    payload: { provider },
-  });
-};
+export const setNextPage =
+  (dispatch) =>
+  ({ provider }) => {
+    dispatch({
+      type: types.SET_NEXT_PAGE,
+      payload: { provider },
+    });
+  };
 
-export const updateMediaElement = (dispatch) => ({ provider, id, data }) => {
-  dispatch({
-    type: types.UPDATE_MEDIA_ELEMENT,
-    payload: {
-      provider,
-      id,
-      data,
-    },
-  });
-};
+export const updateMediaElement =
+  (dispatch) =>
+  ({ provider, id, data }) => {
+    dispatch({
+      type: types.UPDATE_MEDIA_ELEMENT,
+      payload: {
+        provider,
+        id,
+        data,
+      },
+    });
+  };
 
-export const deleteMediaElement = (dispatch) => ({ provider, id }) => {
-  dispatch({
-    type: types.DELETE_MEDIA_ELEMENT,
-    payload: {
-      provider,
-      id,
-    },
-  });
-};
+export const deleteMediaElement =
+  (dispatch) =>
+  ({ provider, id }) => {
+    dispatch({
+      type: types.DELETE_MEDIA_ELEMENT,
+      payload: {
+        provider,
+        id,
+      },
+    });
+  };
