@@ -29,7 +29,7 @@ import AdManagement, { TEXT } from '..';
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;
   let mockUpdate;
-  const defaultsiteKitStatus = {
+  const defaultSiteKitStatus = {
     installed: false,
     adsenseActive: false,
     active: false,
@@ -52,7 +52,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -76,7 +76,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -97,7 +97,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -122,7 +122,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         adSenseSlotId=""
         adManagerSlotId=""
         siteKitStatus={{
-          ...defaultsiteKitStatus,
+          ...defaultSiteKitStatus,
           active: true,
           installed: true,
           adsenseActive: true,
