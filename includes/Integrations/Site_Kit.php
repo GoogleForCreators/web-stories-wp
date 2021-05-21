@@ -63,7 +63,6 @@ class Site_Kit extends Service_Base {
 		if ( $this->is_analytics_module_active() ) {
 			remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
 		}
-		$this->is_adsense_module_active();
 	}
 
 	/**
