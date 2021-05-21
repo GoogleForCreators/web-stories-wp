@@ -21,7 +21,6 @@
  * axis tag list and axis tuple list that Google Fonts expects.
  *
  * @see https://developers.google.com/fonts/docs/css2
- *
  * @param {Array<Object<string, Array<number, number>>>} fonts List of font objects.
  * @param {string} [display] Valid font-display value, e.g. 'swap' or 'auto'. Default 'swap'.
  * @return {string} Google Fonts embed URL.

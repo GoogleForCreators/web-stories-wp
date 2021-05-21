@@ -40,7 +40,6 @@ const getNearestTuple = (tuples, tuple) => {
  * Returns a list of font declarations across all pages in a story.
  *
  * @param {Array<import('../../types').Page>} pages List of pages.
- *
  * @return {Array<string>} Font declarations.
  */
 const getFontDeclarations = (pages) => {

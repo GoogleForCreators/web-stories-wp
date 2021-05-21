@@ -49,7 +49,6 @@ export function hashToParams(hash) {
  *
  * @param {string} key  identifier for storing hash persisted value.
  * @param {*} fallback  value state intialized with if none found under key.
- *
  * @return {[*, Function]} value & setter tuple like `useState()`
  */
 function useHashState(key, fallback) {

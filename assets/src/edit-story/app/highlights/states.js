@@ -25,7 +25,6 @@ import { MEDIA, MEDIA3P, TEXT } from '../../components/library/constants';
  * @typedef {Highlight} Highlight The current state of editor highlights
  * @property {string} tab The ID of the Inspector tab to highlight
  * @property {boolean} focus Whether there is a focusable element, use for accessibility
- *
  */
 
 const keys = {
