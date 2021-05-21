@@ -46,9 +46,9 @@ describe('quickAction utils', () => {
       ${[]}                                                                | ${ELEMENT_TYPE.IMAGE}      | ${''}
       ${['opacity']}                                                       | ${ELEMENT_TYPE.IMAGE}      | ${''}
       ${['daisy', 'sunflower', false, 0]}                                  | ${ELEMENT_TYPE.IMAGE}      | ${''}
-      ${[RESET_PROPERTIES.ANIMATION]}                                      | ${ELEMENT_TYPE.IMAGE}      | ${'All animations were removed from the image'}
-      ${[RESET_PROPERTIES.BACKGROUND_OVERLAY]}                             | ${ELEMENT_TYPE.BACKGROUND} | ${'All filters were removed from the background'}
-      ${[RESET_PROPERTIES.ANIMATION, RESET_PROPERTIES.BACKGROUND_OVERLAY]} | ${ELEMENT_TYPE.BACKGROUND} | ${'All animations and filters were removed from the background'}
+      ${[RESET_PROPERTIES.ANIMATION]}                                      | ${ELEMENT_TYPE.IMAGE}      | ${'All animations were removed from the image.'}
+      ${[RESET_PROPERTIES.BACKGROUND_OVERLAY]}                             | ${ELEMENT_TYPE.BACKGROUND} | ${'All filters were removed from the background.'}
+      ${[RESET_PROPERTIES.ANIMATION, RESET_PROPERTIES.BACKGROUND_OVERLAY]} | ${ELEMENT_TYPE.BACKGROUND} | ${'All animations and filters were removed from the background.'}
     `(
       'should return snackbar copy as expected',
       ({ properties, elementType, result }) => {

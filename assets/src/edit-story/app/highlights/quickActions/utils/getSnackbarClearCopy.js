@@ -30,7 +30,7 @@ import { ELEMENT_TYPE_COPY, RESET_LIST_COPY } from '../constants';
  *
  * @param {Array} resetProperties the element's properties to reset to default values
  * @param {string} elementType the type of element getting reset
- * @return {string}
+ * @return {string} string to display in snackbar
  */
 export const getSnackbarClearCopy = (resetProperties = [], elementType) => {
   const resetPropertiesAsCopy = resetProperties

@@ -25,7 +25,7 @@ import { RESET_PROPERTIES } from '../constants';
  *
  * @param {Object} selectedElement element currently selected
  * @param {Array} selectedElementAnimations array of animations currently applied to the selected element
- * @return {Array}
+ * @return {Array} array of properties to reset on element
  */
 export const getResetProperties = (
   selectedElement,
