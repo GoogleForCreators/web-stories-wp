@@ -39,23 +39,23 @@ export const ELEMENT_TYPE_COPY = {
 
 export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
-  ADD_LINK: __('Add Link', 'web-stories'),
+  ADD_LINK: __('Add link', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
   CHANGE_COLOR: __('Change color', 'web-stories'),
   CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
   CLEAR_ANIMATION_AND_FILTERS: __('Clear filters and animation', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
-  REPLACE_MEDIA: __('Replace media', 'web-stories'),
   REPLACE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
+  REPLACE_MEDIA: __('Replace media', 'web-stories'),
 };
 
 export const RESET_PROPERTIES = {
-  BACKGROUND_OVERLAY: 'backgroundOverlay',
   ANIMATION: 'animation',
+  BACKGROUND_OVERLAY: 'backgroundOverlay',
 };
 
 export const RESET_LIST_COPY = {
-  [RESET_PROPERTIES.BACKGROUND_OVERLAY]: 'filters',
   [RESET_PROPERTIES.ANIMATION]: 'animations',
+  [RESET_PROPERTIES.BACKGROUND_OVERLAY]: 'filters',
 };
