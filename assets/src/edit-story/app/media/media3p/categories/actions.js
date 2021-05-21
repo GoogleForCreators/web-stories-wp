@@ -19,45 +19,52 @@
  */
 import * as types from './types';
 
-export const fetchCategoriesStart = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.FETCH_MEDIA_CATEGORIES_START,
-    payload: {
-      provider: provider,
-    },
-  });
-};
+export const fetchCategoriesStart =
+  (dispatch) =>
+  ({ provider }) => {
+    dispatch({
+      type: types.FETCH_MEDIA_CATEGORIES_START,
+      payload: {
+        provider: provider,
+      },
+    });
+  };
 
-export const fetchCategoriesSuccess = (dispatch) => ({
-  provider,
-  categories,
-}) => {
-  dispatch({
-    type: types.FETCH_MEDIA_CATEGORIES_SUCCESS,
-    payload: {
-      provider,
-      categories,
-    },
-  });
-};
+export const fetchCategoriesSuccess =
+  (dispatch) =>
+  ({ provider, categories }) => {
+    dispatch({
+      type: types.FETCH_MEDIA_CATEGORIES_SUCCESS,
+      payload: {
+        provider,
+        categories,
+      },
+    });
+  };
 
-export const fetchCategoriesError = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.FETCH_MEDIA_CATEGORIES_ERROR,
-    payload: { provider: provider },
-  });
-};
+export const fetchCategoriesError =
+  (dispatch) =>
+  ({ provider }) => {
+    dispatch({
+      type: types.FETCH_MEDIA_CATEGORIES_ERROR,
+      payload: { provider: provider },
+    });
+  };
 
-export const selectCategory = (dispatch) => ({ provider, categoryId }) => {
-  dispatch({
-    type: types.SELECT_CATEGORY,
-    payload: { provider, categoryId },
-  });
-};
+export const selectCategory =
+  (dispatch) =>
+  ({ provider, categoryId }) => {
+    dispatch({
+      type: types.SELECT_CATEGORY,
+      payload: { provider, categoryId },
+    });
+  };
 
-export const deselectCategory = (dispatch) => ({ provider }) => {
-  dispatch({
-    type: types.DESELECT_CATEGORY,
-    payload: { provider },
-  });
-};
+export const deselectCategory =
+  (dispatch) =>
+  ({ provider }) => {
+    dispatch({
+      type: types.DESELECT_CATEGORY,
+      payload: { provider },
+    });
+  };

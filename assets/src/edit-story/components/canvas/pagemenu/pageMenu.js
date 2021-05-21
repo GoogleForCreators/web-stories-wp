@@ -86,13 +86,15 @@ function PageMenu() {
   }));
   const { isRTL } = useConfig();
 
-  const handleDeletePage = useCallback(() => deleteCurrentPage(), [
-    deleteCurrentPage,
-  ]);
+  const handleDeletePage = useCallback(
+    () => deleteCurrentPage(),
+    [deleteCurrentPage]
+  );
 
-  const handleAddPage = useCallback(() => addPage({ page: createPage() }), [
-    addPage,
-  ]);
+  const handleAddPage = useCallback(
+    () => addPage({ page: createPage() }),
+    [addPage]
+  );
 
   const handleDuplicatePage = useCallback(
     () => addPage({ page: duplicatePage(currentPage) }),

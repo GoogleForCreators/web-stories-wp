@@ -110,44 +110,56 @@ export const initial = {
   // If there are state updates from deriving a value off of prevState
   // or nextState, place them in `deriveState(previous, next)` above.
   actions: {
-    goToNext: () => ({ navigationIndex, navigationFlow }) => ({
-      navigationIndex: clamp(navigationIndex + 1, [
-        0,
-        navigationFlow.length - 1,
-      ]),
-    }),
-    goToPrev: () => ({ navigationIndex, navigationFlow }) => ({
-      navigationIndex: clamp(navigationIndex - 1, [
-        0,
-        navigationFlow.length - 1,
-      ]),
-    }),
+    goToNext:
+      () =>
+      ({ navigationIndex, navigationFlow }) => ({
+        navigationIndex: clamp(navigationIndex + 1, [
+          0,
+          navigationFlow.length - 1,
+        ]),
+      }),
+    goToPrev:
+      () =>
+      ({ navigationIndex, navigationFlow }) => ({
+        navigationIndex: clamp(navigationIndex - 1, [
+          0,
+          navigationFlow.length - 1,
+        ]),
+      }),
     goToMenu: () => () => ({ navigationIndex: -1 }),
-    goToTip: (key) => ({ navigationFlow }) => ({
-      navigationIndex: navigationFlow.findIndex((v) => v === key),
-    }),
-    openToUnreadTip: (key) => ({ navigationFlow, readTips }) =>
-      !readTips[key]
-        ? {
-            isOpen: true,
-            isOpeningToTip: true,
-            navigationIndex: navigationFlow.findIndex((v) => v === key),
-          }
-        : {},
-    toggle: () => ({ isOpen }) => {
-      trackEvent('help_center_toggled', {
-        status: isOpen ? 'closed' : 'open',
-      });
-      return { isOpen: !isOpen };
-    },
-    close: () => ({ isOpen }) => {
-      if (isOpen) {
+    goToTip:
+      (key) =>
+      ({ navigationFlow }) => ({
+        navigationIndex: navigationFlow.findIndex((v) => v === key),
+      }),
+    openToUnreadTip:
+      (key) =>
+      ({ navigationFlow, readTips }) =>
+        !readTips[key]
+          ? {
+              isOpen: true,
+              isOpeningToTip: true,
+              navigationIndex: navigationFlow.findIndex((v) => v === key),
+            }
+          : {},
+    toggle:
+      () =>
+      ({ isOpen }) => {
         trackEvent('help_center_toggled', {
-          status: 'closed',
+          status: isOpen ? 'closed' : 'open',
         });
-      }
-      return { isOpen: false };
-    },
+        return { isOpen: !isOpen };
+      },
+    close:
+      () =>
+      ({ isOpen }) => {
+        if (isOpen) {
+          trackEvent('help_center_toggled', {
+            status: 'closed',
+          });
+        }
+        return { isOpen: false };
+      },
     hydrateReadTipsSuccess: (payload) => (state) => ({
       readTips: {
         ...(payload?.readTips ?? {}),

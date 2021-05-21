@@ -23,21 +23,17 @@ const OFFSET20 = 34.5;
 
 describe('<ColorPicker /> when adding a stop with a pointer device', () => {
   it('should show temp stop when hovering and add a stop when clicking', () => {
-    const {
-      getGradientLine,
-      getGradientStops,
-      getTempGradientStop,
-      onChange,
-    } = arrange({
-      color: {
-        type: 'linear',
-        stops: [
-          { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
-        ],
-      },
-      hasGradient: true,
-    });
+    const { getGradientLine, getGradientStops, getTempGradientStop, onChange } =
+      arrange({
+        color: {
+          type: 'linear',
+          stops: [
+            { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+            { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 1 },
+          ],
+        },
+        hasGradient: true,
+      });
 
     // Initially 2 stops should be visible
     expect(getGradientStops()).toHaveLength(2);

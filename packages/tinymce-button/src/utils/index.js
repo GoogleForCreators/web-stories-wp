@@ -80,14 +80,8 @@ export const setDefaultStateSetting = () => {
 
   views.forEach((value) => {
     const { value: viewType } = value;
-    const {
-      title,
-      author,
-      date,
-      excerpt,
-      archive_link,
-      sharp_corners,
-    } = fields[viewType];
+    const { title, author, date, excerpt, archive_link, sharp_corners } =
+      fields[viewType];
 
     state[viewType] = {
       title: title,

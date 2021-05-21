@@ -64,15 +64,13 @@ describe('Duplicate Page', () => {
     await fixture.events.click(animation, { clickCount: 1 });
 
     // get original element
-    const {
-      animations: originalAnimations,
-      elements: originalElements,
-    } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        animations: state.pages[0].animations,
-        elements: state.currentPage.elements,
-      }))
-    );
+    const { animations: originalAnimations, elements: originalElements } =
+      await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          elements: state.currentPage.elements,
+        }))
+      );
     expect(originalAnimations.length).toBe(1);
 
     const {

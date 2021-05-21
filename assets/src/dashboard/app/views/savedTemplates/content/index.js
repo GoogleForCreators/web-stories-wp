@@ -98,7 +98,8 @@ function Content({
       contextMenuId,
       menuItemActions: {
         default: () => setContextMenuId(-1),
-        [SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR]: handleCreateStoryFromTemplate,
+        [SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR]:
+          handleCreateStoryFromTemplate,
         [SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.PREVIEW]: handlePreviewTemplate,
       },
       menuItems: enabledMenuItems,

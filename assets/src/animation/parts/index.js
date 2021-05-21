@@ -116,8 +116,8 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.ROTATE_IN.value]: EffectRotateIn,
       [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: EffectBackgroundZoom,
       [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: EffectBackgroundPan,
-      [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM
-        .value]: EffectBackgroundPanAndZoom,
+      [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]:
+        EffectBackgroundPanAndZoom,
     }[type?.value || type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
@@ -169,8 +169,8 @@ export function getAnimationEffectProps(type) {
     [ANIMATION_EFFECTS.DROP.value]: dropEffectProps,
     [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: backgroundZoomEffectProps,
     [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: backgroundPanEffectProps,
-    [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM
-      .value]: backgroundPanAndZoomEffectProps,
+    [BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.value]:
+      backgroundPanAndZoomEffectProps,
   };
 
   let keyOrder = Object.keys({

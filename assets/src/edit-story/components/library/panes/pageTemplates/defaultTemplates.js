@@ -83,9 +83,8 @@ function DefaultTemplates({ pageSize }) {
   }, [getPageTemplates, showTemplateImages, setPageTemplates]);
 
   const pageTemplatesParentRef = useRef();
-  const [selectedPageTemplateType, setSelectedPageTemplateType] = useState(
-    null
-  );
+  const [selectedPageTemplateType, setSelectedPageTemplateType] =
+    useState(null);
 
   const pills = useMemo(
     () => [

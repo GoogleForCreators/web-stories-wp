@@ -395,9 +395,8 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.press('Enter');
 
-      const selectedStoryTitle = Object.values(stories)[
-        activeListItems.length - 1
-      ].title;
+      const selectedStoryTitle =
+        Object.values(stories)[activeListItems.length - 1].title;
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 

@@ -144,12 +144,8 @@ const AppContent = () => {
     matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
 
   useApiAlerts();
-  const {
-    clearSnackbar,
-    removeSnack,
-    placement,
-    currentSnacks,
-  } = useSnackbar();
+  const { clearSnackbar, removeSnack, placement, currentSnacks } =
+    useSnackbar();
 
   // if the current path changes clear the snackbar
   const prevPath = usePrevious(currentPath);
