@@ -260,7 +260,7 @@ function VideoControls({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
-            <Icon isRTL={isRTL} isAbove={isPlayAbove} />
+            <Icon isRTL={isRTL} />
           </ButtonWrapper>
         </TransitionWrapper>
       )}
