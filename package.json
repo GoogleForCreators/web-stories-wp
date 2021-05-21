@@ -201,7 +201,7 @@
     "stylelint-processor-styled-components": "^1.10.0",
     "stylis-plugin-rtl": "^1.0.0",
     "terser-webpack-plugin": "^4.2.3",
-    "thread-loader": "^3.0.3",
+    "thread-loader": "^3.0.4",
     "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
