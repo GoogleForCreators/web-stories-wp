@@ -122,7 +122,6 @@ function AdManagement({
               rel="noreferrer"
               target="_blank"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              as="a"
               onClick={onSiteKitClick}
             />
           ),
