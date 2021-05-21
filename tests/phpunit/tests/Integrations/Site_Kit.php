@@ -301,8 +301,9 @@ class Site_Kit extends Test_Case {
 			[
 				'useSnippet'       => true,
 				'webStoriesAdUnit' => '12345',
+				'clientID'         => '98765',
 			],
-			false 
+			false
 		);
 
 		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );

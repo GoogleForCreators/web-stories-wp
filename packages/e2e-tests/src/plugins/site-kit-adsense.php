@@ -38,8 +38,9 @@ add_filter( 'pre_option_googlesitekit_active_modules', __NAMESPACE__ . '\mock_en
  */
 function mock_enable_adsense_settings( $current ) {
 	return [
-		'useSnippet' => true,
+		'useSnippet'       => true,
 		'webStoriesAdUnit' => '123456',
+		'clientID'         => '98765',
 	];
 }
 add_filter( 'pre_option_googlesitekit_adsense_settings', __NAMESPACE__ . '\mock_enable_adsense_settings' );

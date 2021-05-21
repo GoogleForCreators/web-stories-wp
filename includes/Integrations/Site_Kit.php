@@ -88,10 +88,11 @@ class Site_Kit extends Service_Base {
 	protected function is_adsense_module_active() {
 		$adsense_module_active       = in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
 		$adsense_options             = get_option( 'googlesitekit_adsense_settings' );
+		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
 		$adsense_options_use_snippet = ! empty( $adsense_options['useSnippet'] );
 		$adsense_web_stories_ad_unit = ! empty( $adsense_options['webStoriesAdUnit'] );
 
-		return $adsense_module_active && $adsense_options_use_snippet && $adsense_web_stories_ad_unit;
+		return $adsense_module_active && $adsense_options_use_snippet && $adsense_web_stories_ad_unit && $adsense_options_client_id;
 	}
 
 	/**
