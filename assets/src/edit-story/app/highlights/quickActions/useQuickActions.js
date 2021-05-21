@@ -318,7 +318,7 @@ const useQuickActions = () => {
     return [
       {
         Icon: PictureSwap,
-        label: ACTION_TEXT.CHANGE_BACKGROUND_MEDIA,
+        label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
         onClick: handleFocusMediaPanel(selectedElement?.id),
         ...actionMenuProps,
       },
@@ -330,7 +330,7 @@ const useQuickActions = () => {
       },
       {
         Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATION,
+        label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
         onClick: () =>
           handleClearAnimationsAndFilters({
             elementId: selectedElement?.id,

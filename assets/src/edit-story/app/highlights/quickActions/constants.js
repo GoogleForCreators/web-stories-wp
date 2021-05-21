@@ -43,11 +43,11 @@ export const ACTION_TEXT = {
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
   CHANGE_COLOR: __('Change color', 'web-stories'),
   CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
+  CLEAR_ANIMATION_AND_FILTERS: __('Clear filters and animation', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
   REPLACE_MEDIA: __('Replace media', 'web-stories'),
-  CHANGE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
-  CLEAR_FILTERS_AND_ANIMATION: __('Clear filters and animation', 'web-stories'),
+  REPLACE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
 };
 
 export const RESET_PROPERTIES = {
