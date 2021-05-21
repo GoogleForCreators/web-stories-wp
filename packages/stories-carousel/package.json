@@ -12,7 +12,7 @@
   "type": "module",
   "dependencies": {
     "@web-stories-wp/glider": "*",
-    "@wordpress/dom-ready": "^3.0.0"
+    "@wordpress/dom-ready": "^3.1.0"
   },
   "devDependencies": {}
 }

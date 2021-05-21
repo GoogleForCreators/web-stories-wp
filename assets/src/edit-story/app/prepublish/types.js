@@ -40,7 +40,6 @@ import { PRE_PUBLISH_MESSAGE_TYPES } from './constants';
  * @property {string} [pageId] The ID of the page being checked
  * @property {string} [elementId] The ID of the element being checked
  * @property {string} [storyId] The ID of the story element being checked
- *
  */
 
 export const GuidancePropType = PropTypes.shape({

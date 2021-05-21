@@ -24,7 +24,6 @@ import { getSettings } from './settings';
  * Formats a date by dateSettings.timeFormat.
  *
  * @param {Date|string} date Date to format.
- *
  * @return {string} Displayable relative date string
  */
 function formatTime(date) {

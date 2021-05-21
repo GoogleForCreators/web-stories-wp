@@ -123,7 +123,6 @@ function applyContent(editorState, contentState) {
  * should be added or not
  * @param {Function} getStyleToSet  Optional function to get what new style
  * should be added
- *
  * @return {Object} New editor state
  */
 export function togglePrefixStyle(
