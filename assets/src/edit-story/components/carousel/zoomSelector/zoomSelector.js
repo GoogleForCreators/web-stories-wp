@@ -19,7 +19,7 @@
  */
 import { useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { __, _x } from '@web-stories-wp/i18n';
+import { __, _x, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -76,7 +76,11 @@ function ZoomSelector() {
     if (option) {
       return option.label;
     }
-    return `${Math.round(zoomLevel * 100)}%`;
+    return sprintf(
+      /* translators: 1: zoom level percentage value. */
+      _x('%1$d%%', 'zoom level', 'web-stories'),
+      Math.round(zoomLevel * 100)
+    );
   }, [zoomSetting, zoomLevel]);
 
   const handleSetZoom = useCallback(

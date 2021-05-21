@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useLayoutEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
@@ -39,8 +39,12 @@ function usePinchToZoom({ containerRef }) {
     [setZoomLevel]
   );
 
-  const onWheel = useCallback(
-    (e) => {
+  useLayoutEffect(() => {
+    if (!containerRef.current) {
+      return undefined;
+    }
+
+    const onWheel = (e) => {
       const { ctrlKey, deltaY } = e;
       const node = containerRef.current.childNodes[0];
       if (ctrlKey && node.contains(e.target) && deltaY) {
@@ -53,22 +57,16 @@ function usePinchToZoom({ containerRef }) {
         );
         e.preventDefault();
       }
-    },
-    [containerRef, zoomLevel, handleZoom]
-  );
+    };
 
-  const preventDefault = useCallback(
-    (e) => {
+    const preventDefault = (e) => {
       const node = containerRef.current.childNodes[0];
       if (node.contains(e.target)) {
         e.preventDefault();
       }
-    },
-    [containerRef]
-  );
+    };
 
-  const handleGestureChange = useCallback(
-    (e) => {
+    const handleGestureChange = (e) => {
       const node = containerRef.current.childNodes[0];
       const { scale } = e;
       if (node.contains(e.target) && scale) {
@@ -78,18 +76,13 @@ function usePinchToZoom({ containerRef }) {
         );
         e.preventDefault();
       }
-    },
-    [containerRef, handleZoom, zoomLevel]
-  );
+    };
 
-  useLayoutEffect(() => {
-    if (containerRef.current) {
-      document.addEventListener('wheel', onWheel, { passive: false });
-      // Safari.
-      document.addEventListener('gesturestart', preventDefault);
-      document.addEventListener('gestureend', preventDefault);
-      document.addEventListener('gesturechange', handleGestureChange);
-    }
+    document.addEventListener('wheel', onWheel, { passive: false });
+    // Safari.
+    document.addEventListener('gesturestart', preventDefault);
+    document.addEventListener('gestureend', preventDefault);
+    document.addEventListener('gesturechange', handleGestureChange);
     return () => {
       document.removeEventListener('wheel', onWheel, { passive: false });
       // Safari
@@ -97,7 +90,7 @@ function usePinchToZoom({ containerRef }) {
       document.removeEventListener('gestureend', preventDefault);
       document.removeEventListener('gesturechange', handleGestureChange);
     };
-  }, [onWheel, containerRef, preventDefault, handleGestureChange]);
+  }, [containerRef, handleZoom, zoomLevel]);
 }
 
 export default usePinchToZoom;
