@@ -63,6 +63,15 @@ Quick actions hook into the highlight api. To add a new quick action, the follow
 
 ## Technical notes and considerations
 
+### Focus
+
+Clicking the quick action menu should not remove focus from an element. To do this, two things were added:
+
+1. An `onMouseDown` event handler is passed to the buttons. This event handler prevents the mouse down event from unfocusing the canvas element.
+2. The context menu is given an `onMouseDown` event handler to prevent mouse  events on the menu _in between the buttons_ from bubbling up and unfocusing the element in the canvas.
+
+A user should be able to navigate the quick actions menu with their keyboard.
+
 ### Highlights
 
 This feature uses the `highlights` api that was implemented in [this pr: #6150](https://github.com/google/web-stories-wp/pull/5965).
