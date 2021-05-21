@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
+import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useEffect, useMemo } from 'react';
 /**
  * Internal dependencies
  */
@@ -37,30 +37,10 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory } from '../../story';
+import { getResetProperties, getSnackbarClearCopy } from './utils';
+import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
-
-export const ELEMENT_TYPE = {
-  IMAGE: 'image',
-  SHAPE: 'shape',
-  TEXT: 'text',
-  VIDEO: 'video',
-  GIF: 'gif',
-};
-
-export const ACTION_TEXT = {
-  ADD_ANIMATION: __('Add animation', 'web-stories'),
-  ADD_LINK: __('Add Link', 'web-stories'),
-  CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
-  CHANGE_COLOR: __('Change color', 'web-stories'),
-  CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
-  INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
-  INSERT_TEXT: __('Insert text', 'web-stories'),
-  REPLACE_MEDIA: __('Replace media', 'web-stories'),
-  CHANGE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
-  ADD_ANIMATION: __('Add animation', 'web-stories'),
-  CLEAR_FILTERS_AND_ANIMATION: __('Clear filters and animation', 'web-stories'),
-};
 
 /**
  * Determines the quick actions to display in the quick
@@ -115,13 +95,12 @@ const useQuickActions = () => {
   const handleResetProperties = useCallback(
     (elementId, properties) => {
       const newProperties = {};
-      console.log({ properties });
       // Choose properties to clear
-      if (properties.includes('backgroundOverlay')) {
+      if (properties.includes(RESET_PROPERTIES.BACKGROUND_OVERLAY)) {
         newProperties.backgroundOverlay = null;
       }
 
-      if (properties.includes('animation')) {
+      if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
         newProperties.animation = {
           ...selectedElementAnimations?.[0],
           delete: true,
@@ -146,19 +125,19 @@ const useQuickActions = () => {
    * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
+   * @param {Array} resetProperties the properties that are to be reset ('animations', 'backgroundOverlay')
+   * @param {string} elementType the type of element being adjusted
    * @return {void}
    */
-  const handleClearAnimations = useCallback(
-    (elementId) => {
-      handleResetProperties(elementId, ['animation']);
+  const handleClearAnimationsAndFilters = useCallback(
+    ({ elementId, resetProperties, elementType }) => {
+      handleResetProperties(elementId, resetProperties);
+      const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
-        message: __(
-          'All animations were removed from the image',
-          'web-stories'
-        ),
+        message,
         onAction: undo,
       });
     },
@@ -267,9 +246,14 @@ const useQuickActions = () => {
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_ANIMATIONS,
-        onClick: () => handleClearAnimations(selectedElement?.id),
+        onClick: () =>
+          handleClearAnimationsAndFilters({
+            elementId: selectedElement?.id,
+            resetProperties,
+            elementType: ELEMENT_TYPE.IMAGE,
+          }),
         separator: 'top',
-        disabled: !selectedElementAnimations?.length,
+        disabled: resetProperties.length === 0,
         ...actionMenuProps,
       },
     ],
@@ -323,8 +307,13 @@ const useQuickActions = () => {
     ]
   );
 
-  const backgroundElementMediaActions = useMemo(
-    () => [
+  const backgroundElementMediaActions = useMemo(() => {
+    const resetProperties = getResetProperties(
+      selectedElement,
+      selectedElementAnimations
+    );
+
+    return [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.CHANGE_BACKGROUND_MEDIA,
@@ -340,21 +329,25 @@ const useQuickActions = () => {
       {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_FILTERS_AND_ANIMATION,
-        onClick: () => handleClearAnimations(selectedElement?.id),
+        onClick: () =>
+          handleClearAnimationsAndFilters({
+            elementId: selectedElement?.id,
+            resetProperties,
+            elementType: ELEMENT_TYPE.BACKGROUND,
+          }),
         separator: 'top',
-        disabled: !selectedElementAnimations?.length,
+        disabled: resetProperties.length === 0,
         ...actionMenuProps,
       },
-    ],
-    [
-      handleFocusMediaPanel,
-      selectedElement?.id,
-      actionMenuProps,
-      handleFocusAnimationPanel,
-      selectedElementAnimations?.length,
-      handleClearAnimations,
-    ]
-  );
+    ];
+  }, [
+    selectedElement,
+    selectedElementAnimations,
+    handleFocusMediaPanel,
+    actionMenuProps,
+    handleFocusAnimationPanel,
+    handleClearAnimationsAndFilters,
+  ]);
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {

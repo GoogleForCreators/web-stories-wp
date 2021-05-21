@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { OUTLINE, FLASH } from './styles';
 
-export { default as useHighlights } from './useHighlights';
-export { default as useFocusHighlight } from './useFocusHighlight';
-export { default as HighlightsProvider } from './provider';
-export { default as states } from './states';
-export { ACTION_TEXT } from './quickActions/constants';
-export { useQuickActions } from './quickActions';
-
-export const styles = {
-  OUTLINE,
-  FLASH,
-};
+export { getResetProperties } from './getResetProperties';
+export { getSnackbarClearCopy } from './getSnackbarClearCopy';
