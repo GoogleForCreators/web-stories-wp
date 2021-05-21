@@ -143,7 +143,7 @@ function DisplayLayer() {
   /**
    * Stop the event from bubbling if the user clicks in between buttons.
    *
-   * This prevents the selected element from losing focus.
+   * This prevents the selected element in the canvas from losing focus.
    */
   const handleMenuBackgroundClick = useCallback((ev) => {
     ev.stopPropagation();
