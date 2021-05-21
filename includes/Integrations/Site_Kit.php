@@ -187,24 +187,25 @@ class Site_Kit extends Service_Base {
 		$settings       = admin_url( 'admin.php?page=googlesitekit-settings' );
 
 		if ( $is_active ) {
-			if ( $is_analytics_active ) {
-				if ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
-					$analytics_link = $dashboard;
-				}
-			}
+			$dashboard_capability = current_user_can( 'googlesitekit_view_dashboard' );
+			$settings_capability  = current_user_can( 'googlesitekit_manage_options' );
 
-			if ( $is_adsense_active ) {
-				if ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
-					$adsense_link = $dashboard;
-				}
-			}
-
-			if ( current_user_can( 'googlesitekit_manage_options' ) ) {
-				$analytics_link = $settings;
-				$adsense_link   = $settings;
-			} elseif ( current_user_can( 'googlesitekit_view_dashboard' ) ) {
+			// If analytics is active and current user can view dashboard.
+			if ( $is_analytics_active && $dashboard_capability ) {
 				$analytics_link = $dashboard;
-				$adsense_link   = $dashboard;
+			} elseif ( $settings_capability ) {
+				$analytics_link = $settings;
+			} elseif ( $dashboard_capability ) {
+				$analytics_link = $dashboard;
+			}
+
+			// If adsense is active and current user can view dashboard.
+			if ( $is_adsense_active && $dashboard_capability ) {
+				$adsense_link = $dashboard;
+			} elseif ( $settings_capability ) {
+				$adsense_link = $settings;
+			} elseif ( $dashboard_capability ) {
+				$adsense_link = $dashboard;
 			}
 		} elseif ( $is_installed ) {
 			if ( current_user_can( 'activate_plugin', 'google-site-kit/google-site-kit.php' ) ) {
