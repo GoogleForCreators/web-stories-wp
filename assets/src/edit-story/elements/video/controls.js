@@ -61,6 +61,7 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   pointer-events: initial;
   width: ${PLAY_BUTTON_SIZE}px;
   height: ${PLAY_BUTTON_SIZE}px;
+  overflow: hidden;
 
   opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
   &.button-enter {
@@ -88,8 +89,7 @@ const iconCss = css`
   transform: translate(
     ${({ isRTL }) =>
       ((PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2) * (isRTL ? -1 : 1)}px,
-    ${({ isAbove }) =>
-      ((PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2) * (isAbove ? 1 : -1)}px
+    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
   );
   color: ${({ theme }) => theme.colors.standard.white};
   filter: drop-shadow(
