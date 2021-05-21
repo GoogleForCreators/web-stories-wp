@@ -1,12 +1,7 @@
 {
-  "current": "17fa9c85-89c7-47d0-a7a8-29f6ef56e161",
-  "selection": ["9f187764-e909-416f-8820-9d24ac15f192"],
-  "story": {
-    "globalStoryStyles": {
-      "colors": [],
-      "textStyles": []
-    }
-  },
+  "current": null,
+  "selection": [],
+  "story": {},
   "version": 25,
   "pages": [
     {
