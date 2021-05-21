@@ -18,7 +18,6 @@
  * Returns an image of the first frame of a given video.
  *
  * @see https://github.com/ampproject/amp-wp/blob/c5fba13dd17d4f713c9889d26898aec6091e421b/assets/src/stories-editor/helpers/uploadVideoFrame.js#L10-L39
- *
  * @param {string} src Video src URL.
  * @return {Promise<string>} The extracted image in base64-encoded format.
  */

@@ -42,12 +42,10 @@ const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
  * @typedef {import('../../../types').Element} Element
  * @typedef {import('../types').Guidance} Guidance
  * @typedef {import('../types').Page} Page
- *
  * @typedef RGB The shape of color objects used for calculating color use against accessibility standards
  * @property {number} r red value
  * @property {number} g green value
  * @property {number} b blue value
- *
  */
 
 let spansFromContentBuffer;

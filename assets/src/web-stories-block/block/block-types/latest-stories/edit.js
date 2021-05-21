@@ -51,7 +51,6 @@ const LATEST_STORIES_QUERY = {
  * @param {Object}   root0               Component props.
  * @param {Object}   root0.attributes    Block attributes.
  * @param {Function} root0.setAttributes Callable function for saving attribute values.
- *
  * @return {*} JSX markup for the editor.
  */
 const LatestStoriesEdit = ({ attributes, setAttributes }) => {
