@@ -30,12 +30,7 @@ import useCarouselScroll from './useCarouselScroll';
 import useCarouselKeys from './useCarouselKeys';
 
 function CarouselProvider({ availableSpace, children }) {
-  const {
-    pages,
-    currentPageId,
-    setCurrentPage,
-    arrangePage,
-  } = useStory(
+  const { pages, currentPageId, setCurrentPage, arrangePage } = useStory(
     ({
       state: { pages, currentPageId },
       actions: { setCurrentPage, arrangePage },
@@ -58,19 +53,15 @@ function CarouselProvider({ availableSpace, children }) {
     showablePages,
   } = useCarouselSizing({ availableSpace, numPages });
 
-  const {
-    canScrollBack,
-    canScrollForward,
-    scrollBack,
-    scrollForward,
-  } = useCarouselScroll({
-    listElement,
-    carouselWidth,
-    hasOverflow,
-    showablePages,
-    pageThumbWidth,
-    pageThumbMargin,
-  });
+  const { canScrollBack, canScrollForward, scrollBack, scrollForward } =
+    useCarouselScroll({
+      listElement,
+      carouselWidth,
+      hasOverflow,
+      showablePages,
+      pageThumbWidth,
+      pageThumbMargin,
+    });
 
   useCarouselKeys({ listElement, pageRefs });
 
@@ -78,9 +69,10 @@ function CarouselProvider({ availableSpace, children }) {
     pageRefs.current[page.id] = el;
   }, []);
 
-  const clickPage = useCallback((page) => setCurrentPage({ pageId: page.id }), [
-    setCurrentPage,
-  ]);
+  const clickPage = useCallback(
+    (page) => setCurrentPage({ pageId: page.id }),
+    [setCurrentPage]
+  );
 
   const rearrangePages = useCallback(
     (oldPos, newPos) => {

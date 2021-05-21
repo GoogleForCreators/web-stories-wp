@@ -46,42 +46,32 @@ function StoryProvider({ storyId, children }) {
   } = useStoryReducer({
     current: hashPageId,
   });
-  const {
-    pages,
-    current,
-    selection,
-    story,
-    animationState,
-    capabilities,
-  } = reducerState;
+  const { pages, current, selection, story, animationState, capabilities } =
+    reducerState;
 
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
   // Generate current page info.
-  const {
-    currentPageId,
-    currentPageIndex,
-    currentPageNumber,
-    currentPage,
-  } = useMemo(() => {
-    if (!current) {
+  const { currentPageId, currentPageIndex, currentPageNumber, currentPage } =
+    useMemo(() => {
+      if (!current) {
+        return {
+          currentPageId: null,
+          currentPageIndex: null,
+          currentPageNumber: null,
+          currentPage: null,
+        };
+      }
+      const index = pages.findIndex(({ id }) => id === current);
+      const number = index + 1;
+      const page = pages[index];
       return {
-        currentPageId: null,
-        currentPageIndex: null,
-        currentPageNumber: null,
-        currentPage: null,
+        currentPageId: current,
+        currentPageIndex: index,
+        currentPageNumber: number,
+        currentPage: page,
       };
-    }
-    const index = pages.findIndex(({ id }) => id === current);
-    const number = index + 1;
-    const page = pages[index];
-    return {
-      currentPageId: current,
-      currentPageIndex: index,
-      currentPageNumber: number,
-      currentPage: page,
-    };
-  }, [pages, current]);
+    }, [pages, current]);
 
   // Generate selection info
   const {

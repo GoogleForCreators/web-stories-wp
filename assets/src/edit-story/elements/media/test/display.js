@@ -206,8 +206,9 @@ describe('MediaDisplay', () => {
           />
         );
 
-        const element = container.querySelector('[data-element-id="baz"]')
-          .firstChild;
+        const element = container.querySelector(
+          '[data-element-id="baz"]'
+        ).firstChild;
         expect(window.getComputedStyle(element)).toMatchObject({
           transform,
         });

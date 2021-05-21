@@ -97,9 +97,8 @@ function StoryPicker({
   isSortingStories,
   setIsSortingStories,
 }) {
-  const [isFetchingForTheFirstTime, setIsFetchingForTheFirstTime] = useState(
-    true
-  );
+  const [isFetchingForTheFirstTime, setIsFetchingForTheFirstTime] =
+    useState(true);
   const [currentAuthor, setCurrentAuthor] = useState([]);
   const [authorKeyword, setAuthorKeyword] = useState('');
   const { maxNumOfStories } = useConfig();

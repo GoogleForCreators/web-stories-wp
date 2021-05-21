@@ -56,8 +56,9 @@ function useSelectionManipulation(editorState, setEditorState) {
   );
 
   const getSetterCallback = useCallback(
-    (setter, autoFocus) => (...args) =>
-      updateWhileUnfocused((state) => setter(state, ...args), autoFocus),
+    (setter, autoFocus) =>
+      (...args) =>
+        updateWhileUnfocused((state) => setter(state, ...args), autoFocus),
     [updateWhileUnfocused]
   );
 

@@ -42,13 +42,8 @@ async function trackEvent(eventName, eventParameters = {}) {
   let gtagEventParameters = {};
 
   // Universal Analytics backwards compatibility.
-  const {
-    search_type,
-    duration,
-    title_length,
-    unread_count,
-    ...rest
-  } = eventParameters;
+  const { search_type, duration, title_length, unread_count, ...rest } =
+    eventParameters;
   if (search_type) {
     gtagEventParameters = {
       ...rest,

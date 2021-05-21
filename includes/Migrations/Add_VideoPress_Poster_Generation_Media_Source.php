@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Add_Poster_Generation_Media_Source
+ * Class Add_VideoPress_Poster_Generation_Media_Source
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -27,27 +27,14 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Integrations\Jetpack;
 
 /**
- * Class Add_Poster_Generation_Media_Source
+ * Class Add_VideoPress_Poster_Generation_Media_Source
  *
  * @package Google\Web_Stories\Migrations
  */
-class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
-
-	/**
-	 * Migration media post meta to taxonomy term.
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return void
-	 */
-	public function migrate() {
-		wp_insert_term( $this->get_term_name(), Media::STORY_MEDIA_TAXONOMY );
-		parent::migrate();
-	}
-
+class Add_VideoPress_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	/**
 	 * Get name of meta key to be used in migration.
 	 *
@@ -56,6 +43,6 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 * @return string
 	 */
 	protected function get_post_meta_key() {
-		return Media::POSTER_POST_META_KEY;
+		return Jetpack::VIDEOPRESS_POSTER_META_KEY;
 	}
 }

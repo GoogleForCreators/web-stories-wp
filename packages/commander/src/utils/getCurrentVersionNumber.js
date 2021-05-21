@@ -20,7 +20,8 @@
 import { readFileSync } from 'fs';
 
 const VERSION_REGEX = /\* Version:(.+)/;
-const VERSION_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
+const VERSION_CONSTANT_REGEX =
+  /define\(\s*'WEBSTORIES_VERSION',\s*'([^']*)'\s*\);/;
 
 /**
  * Returns the current version number as found in the main plugin file's header.

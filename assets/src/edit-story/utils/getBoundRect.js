@@ -70,12 +70,8 @@ export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
     return { x, y, width, height };
   }
 
-  const {
-    topLeftPoint,
-    topRightPoint,
-    bottomRightPoint,
-    bottomLeftPoint,
-  } = getCorners(angle, x, y, width, height);
+  const { topLeftPoint, topRightPoint, bottomRightPoint, bottomLeftPoint } =
+    getCorners(angle, x, y, width, height);
   /// get bounding box
   const boundTopLeftX = Math.min(
     topLeftPoint.x,
