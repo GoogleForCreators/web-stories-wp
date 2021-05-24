@@ -25,10 +25,22 @@ export function generatePulseKeyframes(scale) {
   const intensity = scale;
 
   return [
-    { transform: `scale(${baseScale})`, offset: 0.0 },
-    { transform: `scale(${baseScale - intensity})`, offset: 0.25 },
-    { transform: `scale(${baseScale + intensity})`, offset: 0.75 },
-    { transform: `scale(${baseScale})`, offset: 1.0 },
+    {
+      transform: `scale(${baseScale})`,
+      offset: 0.0,
+    },
+    {
+      transform: `scale(${baseScale + intensity})`,
+      offset: 0.333,
+    },
+    {
+      transform: `scale(${baseScale - intensity / 10})`,
+      offset: 0.666,
+    },
+    {
+      transform: `scale(${baseScale})`,
+      offset: 1.0,
+    },
   ];
 }
 
@@ -39,7 +51,7 @@ const defaults = {
 
 export function AnimationPulse({
   iterations = 1,
-  scale = 0.05,
+  scale = 0.5,
   easing = 'cubic-bezier(0.3, 0.0, 0.0, 1)',
   ...args
 }) {
