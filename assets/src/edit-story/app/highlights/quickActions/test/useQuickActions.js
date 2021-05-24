@@ -477,7 +477,7 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[3]).toBeFalsy();
+      expect(result.current[3]).toBeUndefined();
     });
 
     it('clicking `clear animations` should update the element', () => {

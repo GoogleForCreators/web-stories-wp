@@ -234,8 +234,7 @@ const useQuickActions = () => {
       selectedElement,
       selectedElementAnimations
     );
-
-    return [
+    const baseActions = [
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
@@ -248,29 +247,31 @@ const useQuickActions = () => {
         onClick: handleFocusLinkPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-      selectedElementAnimations?.length && {
-        Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_ANIMATIONS,
-
-        onClick: () =>
-          handleClearAnimationsAndFilters({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: selectedElements?.[0]?.type,
-          }),
-        separator: 'top',
-        disabled: resetProperties.length === 0,
-        ...actionMenuProps,
-      },
     ];
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.CLEAR_ANIMATIONS,
+      onClick: () =>
+        handleClearAnimationsAndFilters({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: selectedElements?.[0]?.type,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+
+    return resetProperties.length === 0
+      ? [...baseActions, clearAction]
+      : baseActions;
   }, [
-    selectedElement,
-    selectedElementAnimations,
+    handleClearAnimations,
+    handleFocusLinkPanel,
     handleFocusAnimationPanel,
     actionMenuProps,
-    handleFocusLinkPanel,
-    handleClearAnimationsAndFilters,
-    selectedElements,
+    selectedElement?.id,
+    selectedElementAnimations?.length,
   ]);
 
   const foregroundImageActions = useMemo(
