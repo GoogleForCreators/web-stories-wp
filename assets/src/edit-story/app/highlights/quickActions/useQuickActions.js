@@ -364,10 +364,9 @@ const useQuickActions = () => {
   //  1. no element is selected
   //  2. the selected element is the background element and it's not media
   if (
-      !isBackgroundElementMedia &&
-      ((selectedElements.length === 0 &&
-       backgroundElement) ||
-       selectedElements[0]?.isBackground)
+    !isBackgroundElementMedia &&
+    ((selectedElements.length === 0 && backgroundElement) ||
+      selectedElements[0]?.isBackground)
   ) {
     return defaultActions;
   }
