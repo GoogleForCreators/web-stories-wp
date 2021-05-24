@@ -25,7 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  title: _x('Beauty', 'template name', 'web-stories'),
+  title: _x('Fresh & Bright', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),
     _x('Bold', 'template keyword', 'web-stories'),
