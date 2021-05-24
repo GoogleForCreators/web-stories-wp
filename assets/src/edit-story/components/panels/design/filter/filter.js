@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * External dependencies
@@ -35,17 +35,23 @@ import {
 import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getDefinitionForType } from '../../../../elements';
+import { useCommonColorValue } from '../../shared';
 import convertOverlay from './convertOverlay';
 
 function FilterPanel({ selectedElements, pushUpdate }) {
-  const overlay = selectedElements[0].backgroundOverlay || null;
+  const propValue = useMemo(
+    () => (selectedElements[0].isBackground ? 'backgroundOverlay' : 'overlay'),
+    [selectedElements]
+  );
+  const overlay = useCommonColorValue(selectedElements, propValue);
 
-  const overlayType =
-    overlay === null ? OverlayType.NONE : overlay.type || OverlayType.SOLID;
+  const overlayType = !overlay
+    ? OverlayType.NONE
+    : overlay.type || OverlayType.SOLID;
 
   const updateOverlay = useCallback(
-    (value) => pushUpdate({ backgroundOverlay: value }, true),
-    [pushUpdate]
+    (value) => pushUpdate({ [propValue]: value }, true),
+    [pushUpdate, propValue]
   );
 
   const { LayerIcon } = getDefinitionForType(selectedElements[0].type);
