@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { default as fashionOnTheGo } from './template';
+import { default as template } from './template';
 
 export default {
   title: _x('Fashion', 'template name', 'web-stories'),
@@ -41,6 +41,7 @@ export default {
     'The elegant serif Fashion template works well for New York Fashion Week highlights, high fashion shopping guides and accessory trends.',
     'web-stories'
   ),
-  pages: fashionOnTheGo.pages,
-  version: fashionOnTheGo.version,
+  pages: template.pages,
+  version: template.version,
+  vertical: _x('Fashion', 'template vertical', 'web-stories'),
 };

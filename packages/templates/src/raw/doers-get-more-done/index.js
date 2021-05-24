@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { default as doerGetMoreDone } from './template';
+import { default as template } from './template';
 
 export default {
   title: _x('DIY', 'template name', 'web-stories'),
@@ -42,6 +42,7 @@ export default {
     'Motivate your audience to get out there and make something with the bold DIY template. Use it for DIY, crafting, 3D printing, woodworking or any other content targeting makers.',
     'web-stories'
   ),
-  pages: doerGetMoreDone.pages,
-  version: doerGetMoreDone.version,
+  pages: template.pages,
+  version: template.version,
+  vertical: _x('DIY', 'template vertical', 'web-stories'),
 };

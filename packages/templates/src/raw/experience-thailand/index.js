@@ -43,4 +43,5 @@ export default {
   ),
   pages: template.pages,
   version: template.version,
+  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

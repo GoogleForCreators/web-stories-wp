@@ -46,4 +46,5 @@ export default {
   ),
   pages: template.pages,
   version: template.version,
+  vertical: _x('Wellbeing', 'template vertical', 'web-stories'),
 };

@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { default as foodAndStuffTemplate } from './template';
+import { default as template } from './template';
 
 export default {
   title: _x('Cooking', 'template name', 'web-stories'),
@@ -42,6 +42,7 @@ export default {
     'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
     'web-stories'
   ),
-  pages: foodAndStuffTemplate.pages,
-  version: foodAndStuffTemplate.version,
+  pages: template.pages,
+  version: template.version,
+  vertical: _x('Cooking', 'template vertical', 'web-stories'),
 };

@@ -44,4 +44,5 @@ export default {
   ),
   pages: template.pages,
   version: template.version,
+  vertical: _x('Fitness', 'template vertical', 'web-stories'),
 };

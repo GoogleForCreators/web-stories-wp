@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { default as freshAndBrightTemplate } from './template';
+import { default as template } from './template';
 
 export default {
   title: _x('Beauty', 'template name', 'web-stories'),
@@ -42,6 +42,7 @@ export default {
     'The modern and bright Beauty template lends itself well as a foundation for stories covering make up, beauty products, shopping guides, instructions & tutorials and more.',
     'web-stories'
   ),
-  pages: freshAndBrightTemplate.pages,
-  version: freshAndBrightTemplate.version,
+  pages: template.pages,
+  version: template.version,
+  vertical: _x('Beauty', 'template vertical', 'web-stories'),
 };

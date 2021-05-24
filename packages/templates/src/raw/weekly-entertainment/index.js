@@ -22,7 +22,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { default as weeklyEntertainment } from './template';
+import { default as template } from './template';
 
 export default {
   title: _x('Entertainment', 'template name', 'web-stories'),
@@ -41,6 +41,7 @@ export default {
     'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',
     'web-stories'
   ),
-  pages: weeklyEntertainment.pages,
-  version: weeklyEntertainment.version,
+  pages: template.pages,
+  version: template.version,
+  vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };
