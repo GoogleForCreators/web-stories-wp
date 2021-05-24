@@ -22,7 +22,7 @@ export const isKeywordFilterable = (keyword) => keyword.trim().length >= 2;
 
 export const getOptions = (groups) => groups.flatMap(({ options }) => options);
 
-export const addUniqueEntries = (...keys) => (array) => [
+export const addUniqueEntries = (array, ...keys) => [
   ...new Set(array.concat(keys)),
 ];
 

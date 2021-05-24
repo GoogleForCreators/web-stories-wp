@@ -129,8 +129,9 @@ function OptionList({
             const newlySeenOptions = entries
               .filter((entry) => entry.isIntersecting)
               .map((entry) => entry.target.dataset.option);
-            userSeenOptions.current = addUniqueEntries(...newlySeenOptions)(
-              userSeenOptions.current
+            userSeenOptions.current = addUniqueEntries(
+              userSeenOptions.current,
+              ...newlySeenOptions
             );
             onObserve(userSeenOptions.current);
           }
@@ -164,10 +165,9 @@ function OptionList({
   /*
    * KEYBOARD ACCESSIBILITY
    */
-  const filteredOptions = useMemo(
-    () => getOptions(filteredListGroups),
-    [filteredListGroups]
-  );
+  const filteredOptions = useMemo(() => getOptions(filteredListGroups), [
+    filteredListGroups,
+  ]);
 
   const handleKeyPress = useCallback(
     (evt) => {
@@ -264,8 +264,9 @@ function OptionList({
                     data-option={option.id}
                     onClick={() => onSelect(option)}
                     ref={(el) =>
-                      (optionsRef.current[getInset(filteredListGroups, i, j)] =
-                        el)
+                      (optionsRef.current[
+                        getInset(filteredListGroups, i, j)
+                      ] = el)
                     }
                     option={option}
                     value={value}
