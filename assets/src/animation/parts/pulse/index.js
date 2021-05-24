@@ -31,11 +31,11 @@ export function generatePulseKeyframes(scale) {
     },
     {
       transform: `scale(${baseScale + intensity})`,
-      offset: 0.333,
+      offset: 0.33,
     },
     {
       transform: `scale(${baseScale - intensity / 10})`,
-      offset: 0.666,
+      offset: 0.66,
     },
     {
       transform: `scale(${baseScale})`,

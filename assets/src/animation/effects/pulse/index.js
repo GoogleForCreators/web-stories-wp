@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../constants';
 import { AnimationPulse } from '../../parts/pulse';
 
 export function EffectPulse({
@@ -25,7 +24,7 @@ export function EffectPulse({
   scale = 0.5,
   duration = 1450,
   delay,
-  easing = BEZIER.inOutQuad,
+  easing = 'ease-in-out',
 }) {
   return AnimationPulse({
     scale,
