@@ -71,7 +71,11 @@ function FontControls({ selectedElements, pushUpdate }) {
     handlers: { handleSelectFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const { fonts = [], maybeEnqueueFontStyle, getFontByName } = useFont(
+  const {
+    fonts = [],
+    maybeEnqueueFontStyle,
+    getFontByName,
+  } = useFont(
     ({
       actions: { maybeEnqueueFontStyle, getFontByName },
       state: { fonts },
@@ -82,10 +86,10 @@ function FontControls({ selectedElements, pushUpdate }) {
     })
   );
 
-  const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
-    getFontByName,
-    fontFamily,
-  ]);
+  const fontWeights = useMemo(
+    () => getFontWeights(getFontByName(fontFamily)),
+    [getFontByName, fontFamily]
+  );
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontWeightPickerChange = useCallback(

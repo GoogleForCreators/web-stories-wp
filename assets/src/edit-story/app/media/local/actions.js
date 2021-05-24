@@ -37,12 +37,14 @@ export const fetchMediaError = (dispatch) => (properties) =>
   });
 export const setNextPage = (dispatch) => (properties) =>
   common.setNextPage(dispatch)({ ...properties, provider: 'local' });
-export const updateMediaElement = (dispatch) => ({ id, data }) =>
-  common.updateMediaElement(dispatch)({
-    provider: 'local',
-    id,
-    data,
-  });
+export const updateMediaElement =
+  (dispatch) =>
+  ({ id, data }) =>
+    common.updateMediaElement(dispatch)({
+      provider: 'local',
+      id,
+      data,
+    });
 export const deleteMediaElement = (dispatch) => (properties) =>
   common.deleteMediaElement(dispatch)({
     ...properties,
@@ -53,38 +55,50 @@ export const resetFilters = (dispatch) => () => {
   dispatch({ type: types.LOCAL_MEDIA_RESET_FILTERS });
 };
 
-export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
-  dispatch({
-    type: types.LOCAL_MEDIA_SET_SEARCH_TERM,
-    payload: { searchTerm },
-  });
-};
+export const setSearchTerm =
+  (dispatch) =>
+  ({ searchTerm }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_SET_SEARCH_TERM,
+      payload: { searchTerm },
+    });
+  };
 
-export const setMediaType = (dispatch) => ({ mediaType }) => {
-  dispatch({
-    type: types.LOCAL_MEDIA_SET_MEDIA_TYPE,
-    payload: { mediaType },
-  });
-};
+export const setMediaType =
+  (dispatch) =>
+  ({ mediaType }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_SET_MEDIA_TYPE,
+      payload: { mediaType },
+    });
+  };
 
-export const setProcessing = (dispatch) => ({ id }) => {
-  dispatch({ type: types.LOCAL_MEDIA_ADD_PROCESSING, payload: { id } });
-};
+export const setProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({ type: types.LOCAL_MEDIA_ADD_PROCESSING, payload: { id } });
+  };
 
-export const removeProcessing = (dispatch) => ({ id }) => {
-  dispatch({ type: types.LOCAL_MEDIA_REMOVE_PROCESSING, payload: { id } });
-};
+export const removeProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({ type: types.LOCAL_MEDIA_REMOVE_PROCESSING, payload: { id } });
+  };
 
-export const setMedia = (dispatch) => ({ media }) => {
-  dispatch({
-    type: types.LOCAL_MEDIA_SET_MEDIA,
-    payload: { media },
-  });
-};
+export const setMedia =
+  (dispatch) =>
+  ({ media }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_SET_MEDIA,
+      payload: { media },
+    });
+  };
 
-export const prependMedia = (dispatch) => ({ media }) => {
-  dispatch({
-    type: types.LOCAL_MEDIA_PREPEND_MEDIA,
-    payload: { media },
-  });
-};
+export const prependMedia =
+  (dispatch) =>
+  ({ media }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_PREPEND_MEDIA,
+      payload: { media },
+    });
+  };

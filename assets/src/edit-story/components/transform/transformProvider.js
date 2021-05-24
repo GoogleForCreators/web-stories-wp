@@ -55,9 +55,8 @@ function TransformProvider({ children }) {
     }
 
     if (isDoneTransform(lastTransforms[id])) {
-      const allTransformsDone = Object.values(lastTransforms).every(
-        isDoneTransform
-      );
+      const allTransformsDone =
+        Object.values(lastTransforms).every(isDoneTransform);
       if (allTransformsDone) {
         lastTransformsRef.current = {};
         setIsAnythingTransforming(false);

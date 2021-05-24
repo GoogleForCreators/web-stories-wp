@@ -83,12 +83,14 @@ const Radial = styled(TypeSelector)`
 `;
 
 function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
-  const setToLinear = useCallback(() => setToGradient('linear'), [
-    setToGradient,
-  ]);
-  const setToRadial = useCallback(() => setToGradient('radial'), [
-    setToGradient,
-  ]);
+  const setToLinear = useCallback(
+    () => setToGradient('linear'),
+    [setToGradient]
+  );
+  const setToRadial = useCallback(
+    () => setToGradient('radial'),
+    [setToGradient]
+  );
 
   const solid = useRef();
   useEffect(() => {

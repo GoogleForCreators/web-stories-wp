@@ -51,9 +51,9 @@ function KeyboardShortcutsMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = useCallback(() => setIsOpen(false), [setIsOpen]);
-  const {
-    close: closeHelpCenter,
-  } = useHelpCenter(({ actions: { close } }) => ({ close }));
+  const { close: closeHelpCenter } = useHelpCenter(
+    ({ actions: { close } }) => ({ close })
+  );
 
   const toggleMenu = useCallback(
     (e, showMenu) => {

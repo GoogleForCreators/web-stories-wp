@@ -51,9 +51,8 @@ function Preview() {
     isUploading: state.state.isUploading,
   }));
 
-  const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] = useState(
-    null
-  );
+  const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =
+    useState(null);
   const isDraft = 'draft' === status;
 
   /**

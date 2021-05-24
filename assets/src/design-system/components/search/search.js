@@ -180,9 +180,10 @@ export const Search = ({
     isMenuFocused.set(false);
   }, [isOpen, isMenuFocused]);
 
-  const focusSentToList = useCallback(() => isMenuFocused.set(true), [
-    isMenuFocused,
-  ]);
+  const focusSentToList = useCallback(
+    () => isMenuFocused.set(true),
+    [isMenuFocused]
+  );
 
   const trimInputState = useCallback(() => {
     if (

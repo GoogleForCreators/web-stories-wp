@@ -65,11 +65,8 @@ describe('updateSelectedElements', () => {
   });
 
   it('should do nothing if elements selected and animation playing or scrubbing', () => {
-    const {
-      restore,
-      updateSelectedElements,
-      updateAnimationState,
-    } = setupReducer();
+    const { restore, updateSelectedElements, updateAnimationState } =
+      setupReducer();
 
     const initialState = restore({
       pages: [

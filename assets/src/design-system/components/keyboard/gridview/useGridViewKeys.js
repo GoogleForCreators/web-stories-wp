@@ -94,10 +94,8 @@ function useGridViewKeys(props) {
         }
         case 'ArrowUp':
         case 'ArrowDown': {
-          const {
-            rows: numRows,
-            columns: numColumns,
-          } = getGridColumnAndRowCount(gridRef?.current, itemIds.length);
+          const { rows: numRows, columns: numColumns } =
+            getGridColumnAndRowCount(gridRef?.current, itemIds.length);
           const currentIndex = itemIds.indexOf(focusedItemId);
           const dir = key === 'ArrowDown' ? 1 : -1;
 
@@ -182,10 +180,8 @@ function useGridViewKeys(props) {
         }
         case 'ArrowUp':
         case 'ArrowDown': {
-          const {
-            rows: numRows,
-            columns: numColumns,
-          } = getGridColumnAndRowCount(gridRef.current, itemIds.length);
+          const { rows: numRows, columns: numColumns } =
+            getGridColumnAndRowCount(gridRef.current, itemIds.length);
           const currentIndex = itemIds.indexOf(focusedItemId);
           const dir = key === 'ArrowDown' ? 1 : -1;
 
