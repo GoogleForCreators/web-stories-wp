@@ -86,13 +86,29 @@ const getVideoResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
 
+  let length = 0;
+  let lengthFormatted = '';
+
   const reader = await createFileReader(file);
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
+  if (canPlayVideo) {
+    videoEl.src = src;
+    videoEl.addEventListener('loadedmetadata', () => {
+      length = Math.round(videoEl.duration);
+      let seconds = length % 60;
+      const minutes = parseInt(length / 60);
+      seconds = seconds.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      });
 
+      lengthFormatted = `${minutes}:${seconds}`;
+    });
+  }
   const frame = await getFirstFrameOfVideo(src);
 
   const poster = createBlob(frame);
@@ -105,6 +121,8 @@ const getVideoResource = async (file) => {
     width,
     height,
     poster,
+    length,
+    lengthFormatted,
     alt: fileName,
     title: fileName,
   });
