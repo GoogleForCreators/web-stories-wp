@@ -59,7 +59,7 @@ async function getTemplates(imageBaseUrl) {
     'doers-get-more-done',
     'weekly-entertainment',
     'fashion-on-the-go',
-    // 'fitness',
+    'no-days-off',
     // 'travel',
     // 'wellbeing',
   ];

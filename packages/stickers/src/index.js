@@ -21,7 +21,7 @@ import * as cookingStickers from './food-and-stuff';
 import * as doersGetMoreDoneStickers from './doers-get-more-done';
 import * as weeklyEntertainmentStickers from './weekly-entertainment';
 import * as fashionOnTheGoStickers from './fashion-on-the-go';
-import * as fitnessStickers from './fitness';
+import * as noDaysOffStickers from './no-days-off';
 import * as travelStickers from './travel';
 import * as wellbeingStickers from './wellbeing';
 
@@ -31,7 +31,7 @@ export default {
   ...doersGetMoreDoneStickers,
   ...weeklyEntertainmentStickers,
   ...fashionOnTheGoStickers,
-  ...fitnessStickers,
+  ...noDaysOffStickers,
   ...travelStickers,
   ...wellbeingStickers,
 };
