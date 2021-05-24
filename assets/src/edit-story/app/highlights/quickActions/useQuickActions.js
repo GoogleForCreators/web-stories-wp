@@ -248,7 +248,7 @@ const useQuickActions = () => {
         onClick: handleFocusLinkPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-      {
+      selectedElementAnimations?.length && {
         Icon: Eraser,
         label: ACTION_TEXT.CLEAR_ANIMATIONS,
 
