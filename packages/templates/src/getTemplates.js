@@ -58,7 +58,7 @@ async function getTemplates(imageBaseUrl) {
     'food-and-stuff',
     'doers-get-more-done',
     'weekly-entertainment',
-    // 'fashion',
+    'fashion-on-the-go',
     // 'fitness',
     // 'travel',
     // 'wellbeing',
