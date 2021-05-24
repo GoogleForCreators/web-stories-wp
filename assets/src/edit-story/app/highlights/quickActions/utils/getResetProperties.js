@@ -24,8 +24,8 @@ import { RESET_PROPERTIES } from '../constants';
  * the "clear" action is selected from a quick action menu
  *
  * @param {Object} selectedElement element currently selected
- * @param {Array} selectedElementAnimations array of animations currently applied to the selected element
- * @return {Array} array of properties to reset on element
+ * @param {Array.<Object>} selectedElementAnimations array of animations currently applied to the selected element
+ * @return {Array.<string>} array of properties to reset on element
  */
 export const getResetProperties = (
   selectedElement,
