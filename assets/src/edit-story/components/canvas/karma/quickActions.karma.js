@@ -420,7 +420,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERSS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
+    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
       // quick action should be disabled if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
