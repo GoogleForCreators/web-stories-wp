@@ -60,8 +60,8 @@ async function getTemplates(imageBaseUrl) {
     'weekly-entertainment',
     'fashion-on-the-go',
     'no-days-off',
-    // 'travel',
-    // 'wellbeing',
+    'experience-thailand',
+    'sleep',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
