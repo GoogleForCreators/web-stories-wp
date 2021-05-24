@@ -165,9 +165,10 @@ function OptionList({
   /*
    * KEYBOARD ACCESSIBILITY
    */
-  const filteredOptions = useMemo(() => getOptions(filteredListGroups), [
-    filteredListGroups,
-  ]);
+  const filteredOptions = useMemo(
+    () => getOptions(filteredListGroups),
+    [filteredListGroups]
+  );
 
   const handleKeyPress = useCallback(
     (evt) => {
@@ -264,9 +265,8 @@ function OptionList({
                     data-option={option.id}
                     onClick={() => onSelect(option)}
                     ref={(el) =>
-                      (optionsRef.current[
-                        getInset(filteredListGroups, i, j)
-                      ] = el)
+                      (optionsRef.current[getInset(filteredListGroups, i, j)] =
+                        el)
                     }
                     option={option}
                     value={value}
