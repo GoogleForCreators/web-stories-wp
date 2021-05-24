@@ -23,6 +23,7 @@ import { waitFor, within } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { DONE_TIP_ENTRY, KEYS, TIPS } from '../constants';
 
 describe('Help Center integration', () => {
   let fixture;
@@ -60,7 +61,7 @@ describe('Help Center integration', () => {
       await fixture.events.click(cropTip);
 
       const exposedCropTip = getByText(
-        /^Double click any image or video element to enter edit mode/
+        TIPS[KEYS.CROP_SELECTED_ELEMENTS].description
       );
       expect(exposedCropTip).toBeDefined();
 
@@ -104,61 +105,32 @@ describe('Help Center integration', () => {
       const { queryAllByRole } = within(mainMenu);
 
       const tips = queryAllByRole('button');
-
+      // go to the first tip
       await fixture.events.click(tips[0]);
-
-      // click through all tips
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help7');
-      });
 
       const nextButton = fixture.screen.getByRole('button', { name: /^Next$/ });
       expect(nextButton).toBeTruthy();
 
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help6');
-      });
-
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help5');
-      });
-
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help4');
-      });
-
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help3');
-      });
-
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help2');
-      });
-
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(nextButton.getAttribute('disabled')).toBeNull();
-        expect(toggleButton).toHaveTextContent('Help1');
-      });
-
-      await fixture.events.click(nextButton);
-      waitFor(() => {
-        expect(toggleButton).toHaveTextContent('Help');
-      });
-
-      await fixture.events.click(nextButton);
+      let clickCount = 1;
+      const totalTipCount = Object.keys(TIPS).length;
+      while (clickCount <= totalTipCount) {
+        // eslint-disable-next-line no-loop-func
+        waitFor(() => {
+          expect(toggleButton).toHaveTextContent(
+            `Help${8 - clickCount <= 0 ? '' : 8 - clickCount}`
+          );
+        });
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.click(nextButton);
+        clickCount++;
+      }
 
       // disabled is null before this, we're just seeing it's present.
       waitFor(() => expect(nextButton.getAttribute('disabled')).toBe(''));
 
       // now that we have gone through all the tips we should see a "done" screen
       expect(
-        fixture.screen.getByText(/^You’re caught up with quick tips/)
+        fixture.screen.getByText(DONE_TIP_ENTRY[1].description)
       ).toBeDefined();
     });
   });
@@ -214,7 +186,7 @@ describe('Help Center integration', () => {
       await fixture.events.keyboard.press('Enter');
 
       const exposedCropTip = getByText(
-        /^Select a shape from the Shape menu to create a frame/
+        TIPS[KEYS.CROP_ELEMENTS_WITH_SHAPES].description
       );
       expect(exposedCropTip).toBeDefined();
       expect(toggleButton).toHaveTextContent('Help7');
