@@ -21,7 +21,7 @@ import { RESET_PROPERTIES } from '../constants';
 
 /**
  * Determines which properties on an element are to be reset when
- * "clear" is selected from a quick action menu
+ * the "clear" action is selected from a quick action menu
  *
  * @param {Object} selectedElement element currently selected
  * @param {Array} selectedElementAnimations array of animations currently applied to the selected element
