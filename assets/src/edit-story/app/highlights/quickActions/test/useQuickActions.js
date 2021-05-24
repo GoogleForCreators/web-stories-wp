@@ -465,7 +465,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should be disabled if element has no animations`, () => {
+    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT],
@@ -477,7 +477,7 @@ describe('useQuickActions', () => {
 
       const { result } = renderHook(() => useQuickActions());
 
-      expect(result.current[3].disabled).toBe(true);
+      expect(result.current[3]).toBeFalsy();
     });
 
     it('clicking `clear animations` should update the element', () => {
@@ -497,7 +497,11 @@ describe('useQuickActions', () => {
         currentPage: {
           elements: [BACKGROUND_ELEMENT, SHAPE_ELEMENT],
         },
-        selectedElementAnimations: [],
+        selectedElementAnimations: [
+          {
+            target: [IMAGE_ELEMENT.id],
+          },
+        ],
         selectedElements: [SHAPE_ELEMENT],
         updateElementsById: mockUpdateElementsById,
       });
