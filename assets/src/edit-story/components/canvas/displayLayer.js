@@ -122,11 +122,7 @@ function DisplayLayer() {
 
   const quickActions = useQuickActions();
 
-  const {
-    editingElement,
-    setPageContainer,
-    setFullbleedContainer,
-  } = useCanvas(
+  const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
       state: { editingElement },
       actions: { setPageContainer, setFullbleedContainer },
@@ -149,9 +145,10 @@ function DisplayLayer() {
     ev.stopPropagation();
   }, []);
 
-  const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
-    selectedElements,
-  ]);
+  const animatedElements = useMemo(
+    () => selectedElements.map((el) => el.id),
+    [selectedElements]
+  );
 
   return (
     <StoryAnimation.Provider
