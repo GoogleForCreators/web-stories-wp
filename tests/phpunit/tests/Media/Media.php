@@ -119,6 +119,7 @@ class Media extends Test_Case {
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
+				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
 			get_post( $poster_attachment_id )
 		);
@@ -126,18 +127,23 @@ class Media extends Test_Case {
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
+				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
 			get_post( $video_attachment_id )
 		);
 
 		$this->assertEqualSets(
 			[
-				'type'         => 'image',
-				'media_source' => '',
-				'id'           => $poster_attachment_id,
+				'type'          => 'image',
+				'media_source'  => '',
+				'id'            => $poster_attachment_id,
+				'url'           => wp_get_attachment_url( $poster_attachment_id ),
+				'source_url'    => wp_get_attachment_url( $poster_attachment_id ),
+				'media_details' => [],
 			],
 			$image
 		);
+
 		$this->assertArrayHasKey( 'media_source', $image );
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
