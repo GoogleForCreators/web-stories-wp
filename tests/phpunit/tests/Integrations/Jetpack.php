@@ -166,8 +166,8 @@ class Jetpack extends Test_Case {
 		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertSame( $data['media_source'], 'video-optimization' );
 
-		$this->assertArrayHasKey( 'source_url', $data );
-		$this->assertSame( $data['source_url'], self::ATTACHMENT_URL );
+		$this->assertArrayHasKey( 'url', $data );
+		$this->assertSame( $data['url'], self::ATTACHMENT_URL );
 
 		$this->assertArrayHasKey( 'media_details', $data );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );

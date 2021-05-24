@@ -156,7 +156,7 @@ class Jetpack extends Service_Base {
 		$response['mime']    = 'video/mp4';
 		$response['subtype'] = 'mp4';
 
-		$response = $this->add_extra_data( $response );
+		$response = $this->add_extra_data( $response, 'url' );
 
 		return $response;
 	}
@@ -181,7 +181,7 @@ class Jetpack extends Service_Base {
 		// Reset mime type back to mp4, as this is the correct value.
 		$data['mime_type'] = 'video/mp4';
 
-		$data = $this->add_extra_data( $data );
+		$data = $this->add_extra_data( $data, 'source_url' );
 
 		$response->set_data( $data );
 
@@ -193,11 +193,12 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param array $data Source data to be modified.
+	 * @param array  $data           Source data to be modified.
+	 * @param string $videopress_key VideoPress array key.
 	 *
 	 * @return array
 	 */
-	protected function add_extra_data( array $data ) {
+	protected function add_extra_data( array $data, $videopress_key ) {
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
 
@@ -206,15 +207,12 @@ class Jetpack extends Service_Base {
 			// If videopress has finished processing, use the duration in millions to get formatted seconds and minutes.
 			if ( isset( $videopress['duration'] ) && $videopress['duration'] ) {
 				$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress['duration'] );
-				$data['media_details']['length']           = floor( $videopress['duration'] / 1000 );
+				$data['media_details']['length']           = (int) floor( $videopress['duration'] / 1000 );
 			}
 
 			// If video has not finished processing, reset request to original url.
 			if ( isset( $videopress['finished'], $videopress['original'] ) && ! $videopress['finished'] ) {
-				$data['source_url'] = $videopress['original'];
-				if ( isset( $videopress['url'] ) ) {
-					$data['url'] = $videopress['original'];
-				}
+				$data[ $videopress_key ] = $videopress['original'];
 			}
 		}
 

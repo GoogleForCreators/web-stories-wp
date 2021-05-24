@@ -491,8 +491,6 @@ class Media extends Service_Base {
 		}
 
 		$response['media_source'] = $this->get_callback_media_source( $response );
-		// Keep inline with reponse with REST API.
-		$response['source_url'] = $response['url'];
 
 		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
 		$response['media_details'] = wp_get_attachment_metadata( $attachment->ID );

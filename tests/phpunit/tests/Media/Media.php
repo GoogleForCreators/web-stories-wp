@@ -138,7 +138,6 @@ class Media extends Test_Case {
 				'media_source'  => '',
 				'id'            => $poster_attachment_id,
 				'url'           => wp_get_attachment_url( $poster_attachment_id ),
-				'source_url'    => wp_get_attachment_url( $poster_attachment_id ),
 				'media_details' => [],
 			],
 			$image

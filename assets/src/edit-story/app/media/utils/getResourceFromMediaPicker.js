@@ -28,7 +28,7 @@ import getResourceSize from './getResourceSize';
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
-    source_url: src,
+    src,
     url,
     mime: mimeType,
     title,
