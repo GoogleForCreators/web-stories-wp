@@ -69,6 +69,7 @@ class Jetpack extends Test_Case {
 
 	/**
 	 * @covers ::filter_api_response
+	 * @covers ::add_extra_data
 	 */
 	public function test_filter_api_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -107,7 +108,9 @@ class Jetpack extends Test_Case {
 
 		$this->assertArrayHasKey( 'media_details', $data );
 		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
+		$this->assertArrayHasKey( 'length', $data['media_details'] );
 		$this->assertSame( $data['media_details']['length_formatted'], '0:05' );
+		$this->assertSame( $data['media_details']['length'], 5 );
 	}
 
 	/**
@@ -135,6 +138,7 @@ class Jetpack extends Test_Case {
 
 	/**
 	 * @covers ::filter_admin_ajax_response
+	 * @covers ::add_extra_data
 	 */
 	public function test_filter_admin_ajax_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -162,11 +166,14 @@ class Jetpack extends Test_Case {
 		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertSame( $data['media_source'], 'video-optimization' );
 
-		$this->assertArrayHasKey( 'url', $data );
-		$this->assertSame( $data['url'], self::ATTACHMENT_URL );
+		$this->assertArrayHasKey( 'source_url', $data );
+		$this->assertSame( $data['source_url'], self::ATTACHMENT_URL );
 
-		$this->assertArrayHasKey( 'fileLength', $data );
-		$this->assertSame( $data['fileLength'], '0:05' );
+		$this->assertArrayHasKey( 'media_details', $data );
+		$this->assertArrayHasKey( 'length_formatted', $data['media_details'] );
+		$this->assertArrayHasKey( 'length', $data['media_details'] );
+		$this->assertSame( $data['media_details']['length_formatted'], '0:05' );
+		$this->assertSame( $data['media_details']['length'], 5 );
 
 		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
 	}
@@ -181,7 +188,7 @@ class Jetpack extends Test_Case {
 		$allowed_mime_types[] = $jetpack::VIDEOPRESS_MIME_TYPE;
 		$args                 = [ 'post_mime_type' => $allowed_mime_types ];
 		$jetpack->filter_ajax_query_attachments_args( $args );
-		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $jetpack, 'filter_admin_ajax_response' ] ) );
+		$this->assertSame( 15, has_filter( 'wp_prepare_attachment_for_js', [ $jetpack, 'filter_admin_ajax_response' ] ) );
 	}
 
 	/**

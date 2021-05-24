@@ -131,7 +131,7 @@ class Jetpack extends Service_Base {
 		$allowed_mime_types = $this->get_allowed_mime_types();
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 		if ( in_array( self::VIDEOPRESS_MIME_TYPE, $args['post_mime_type'], true ) && ! array_diff( $allowed_mime_types, $args['post_mime_type'] ) ) {
-			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 10, 2 );
+			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
 		}
 
 		return $args;
@@ -155,22 +155,8 @@ class Jetpack extends Service_Base {
 		// Reset mime type back to mp4, as this is the correct value.
 		$response['mime']    = 'video/mp4';
 		$response['subtype'] = 'mp4';
-		// Make video as optimized.
-		$response['media_source'] = 'video-optimization';
 
-		$media_details = wp_get_attachment_metadata( $attachment->ID );
-		if ( is_array( $media_details ) && isset( $media_details['videopress'] ) ) {
-			$videopress = $media_details['videopress'];
-			// If videopress has finished processing, use the duration in millions to get formatted seconds and minutes.
-			if ( isset( $videopress['duration'] ) && $videopress['duration'] ) {
-				$response['fileLength'] = $this->format_milliseconds( $videopress['duration'] );
-
-			}
-			// If video has not finished processing, reset request to original url.
-			if ( isset( $videopress['finished'], $videopress['original'] ) && ! $videopress['finished'] ) {
-				$response['url'] = $videopress['original'];
-			}
-		}
+		$response = $this->add_extra_data( $response );
 
 		return $response;
 	}
@@ -194,6 +180,24 @@ class Jetpack extends Service_Base {
 
 		// Reset mime type back to mp4, as this is the correct value.
 		$data['mime_type'] = 'video/mp4';
+
+		$data = $this->add_extra_data( $data );
+
+		$response->set_data( $data );
+
+		return $response;
+	}
+
+	/**
+	 * Add extra data to an source array.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array $data Source data to be modified.
+	 *
+	 * @return array
+	 */
+	protected function add_extra_data( array $data ) {
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
 
@@ -202,16 +206,19 @@ class Jetpack extends Service_Base {
 			// If videopress has finished processing, use the duration in millions to get formatted seconds and minutes.
 			if ( isset( $videopress['duration'] ) && $videopress['duration'] ) {
 				$data['media_details']['length_formatted'] = $this->format_milliseconds( $videopress['duration'] );
+				$data['media_details']['length']           = floor( $videopress['duration'] / 1000 );
 			}
+
 			// If video has not finished processing, reset request to original url.
 			if ( isset( $videopress['finished'], $videopress['original'] ) && ! $videopress['finished'] ) {
 				$data['source_url'] = $videopress['original'];
+				if ( isset( $videopress['url'] ) ) {
+					$data['url'] = $videopress['original'];
+				}
 			}
 		}
 
-		$response->set_data( $data );
-
-		return $response;
+		return $data;
 	}
 
 	/**
