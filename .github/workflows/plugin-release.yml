@@ -54,23 +54,23 @@ jobs:
             exit 1
           fi
 
-#      - name: Ensure RC exists for stable release
-#        if: ${{ ! contains(github.event.inputs.version, 'rc') }}
-#        run: |
-#          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
-#          BRANCH=release/$VERSION_WITHOUT_SUFFIX
-#
-#          if [[ -z $(git ls-remote origin $BRANCH) ]]; then
-#            echo "No release branch exists for this planned stable release"
-#            exit 1
-#          fi
-#
-#          git checkout --track origin/$BRANCH
-#
-#          if ! git describe --abbrev=0 --tags --match "$TAG_NAME-rc.*" &>/dev/null; then
-#            echo "No RC exists for this planned stable release"
-#            exit 1
-#          fi
+      #      - name: Ensure RC exists for stable release
+      #        if: ${{ ! contains(github.event.inputs.version, 'rc') }}
+      #        run: |
+      #          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
+      #          BRANCH=release/$VERSION_WITHOUT_SUFFIX
+      #
+      #          if [[ -z $(git ls-remote origin $BRANCH) ]]; then
+      #            echo "No release branch exists for this planned stable release"
+      #            exit 1
+      #          fi
+      #
+      #          git checkout --track origin/$BRANCH
+      #
+      #          if ! git describe --abbrev=0 --tags --match "$TAG_NAME-rc.*" &>/dev/null; then
+      #            echo "No RC exists for this planned stable release"
+      #            exit 1
+      #          fi
 
       - name: Ensure readme.txt contains changelog
         run: |
@@ -351,9 +351,11 @@ jobs:
           VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
 
-          # Patch releases should not create a new branch
+          # Patch releases are already on the correct branch.
           if $IS_PATCH_RELEASE; then
             BRANCH=${GITHUB_REF#refs/heads/}
+            echo "::set-output name=release_branch::${BRANCH}"
+            exit 0
           fi
 
           if [[ -z $(git ls-remote origin $BRANCH) ]]; then

@@ -61,7 +61,10 @@ export const setSearchTerm = (dispatch) => ({ searchTerm }) => {
 };
 
 export const setMediaType = (dispatch) => ({ mediaType }) => {
-  dispatch({ type: types.LOCAL_MEDIA_SET_MEDIA_TYPE, payload: { mediaType } });
+  dispatch({
+    type: types.LOCAL_MEDIA_SET_MEDIA_TYPE,
+    payload: { mediaType },
+  });
 };
 
 export const setProcessing = (dispatch) => ({ id }) => {

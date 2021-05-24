@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,21 @@
 /**
  * Internal dependencies
  */
-import format from './format';
-import { getSettings } from './settings';
+import { AbstractPanel } from './abstractPanel';
 
 /**
- * Formats a date by dateSettings.timeFormat.
- *
- * @param {Date|string} date Date to format.
- * @return {string} Displayable relative date string
+ * The size position panel containing inputs for adding managing the size, position and rotationAngle.
  */
-function formatTime(date) {
-  const settings = getSettings();
-  const { timeFormat } = settings;
-  return format(date, timeFormat);
-}
+export class ShapeStyle extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-export default formatTime;
+  get backgroundColor() {
+    return this.getByRole('textbox', { name: /Background color/i });
+  }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /Opacity/i });
+  }
+}

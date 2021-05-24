@@ -169,6 +169,11 @@ describe('Quick Actions integration', () => {
     });
 
     it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
+      // quick action should be disabled if there are no animations yet
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(true);
+
       // add animation to image
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
@@ -191,6 +196,9 @@ describe('Quick Actions integration', () => {
       expect(originalAnimations.length).toBe(1);
 
       // click quick menu button
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(false);
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.clearAnimationsButton
       );
@@ -202,6 +210,9 @@ describe('Quick Actions integration', () => {
         }))
       );
       expect(animations.length).toBe(0);
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(true);
 
       // click `undo` button on snackbar
       await fixture.events.click(
@@ -216,6 +227,146 @@ describe('Quick Actions integration', () => {
       );
       expect(revertedAnimations.length).toBe(1);
       expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(false);
+    });
+  });
+
+  describe('shape selected', () => {
+    beforeEach(async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const shapeElement = await fixture.act(() =>
+        insertElement('shape', {
+          backgroundColor: {
+            color: {
+              r: 203,
+              g: 103,
+              b: 103,
+            },
+          },
+          type: 'shape',
+          x: 48,
+          y: 0,
+          width: 148,
+          height: 137,
+          scale: 100,
+          focalX: 50,
+          focalY: 50,
+          mask: {
+            type: 'heart',
+          },
+          id: 'cb89750a-3ffd-4876-8ed9-d715c553e05b',
+          link: null,
+        })
+      );
+
+      await clickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(shapeElement.id).node
+      );
+    });
+
+    it(`should select the \`${ACTION_TEXT.CHANGE_COLOR}\` button and select the shape style panel and focus the input`, async () => {
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeColorButton
+      );
+
+      expect(
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+      ).not.toBeNull();
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor
+      );
+    });
+
+    it(`should select the \`${ACTION_TEXT.ADD_ANIMATION}\` button and select the animation panel and focus the dropdown`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addAnimationButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.animation.effectChooser
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addLinkButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.link.address
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation.`, async () => {
+      // quick action should be disabled if there are no animations yet
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(true);
+
+      // add animation to image
+      const effectChooserToggle =
+        fixture.editor.inspector.designPanel.animation.effectChooser;
+      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+      // animation
+      const animation = fixture.screen.getByRole('option', {
+        name: '"Drop" Effect',
+      });
+
+      // apply animation to element
+      await fixture.events.click(animation, { clickCount: 1 });
+
+      // verify that element has animation
+      const { animations: originalAnimations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      expect(originalAnimations.length).toBe(1);
+
+      // click quick menu button
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(false);
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      );
+
+      // verify that element has no animations
+      const { animations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      expect(animations.length).toBe(0);
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(true);
+
+      // click `undo` button on snackbar
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/ })
+      );
+
+      // Verify that new animations match original animation
+      const { animations: revertedAnimations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      expect(revertedAnimations.length).toBe(1);
+      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton.disabled
+      ).toBe(false);
     });
   });
 });

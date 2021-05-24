@@ -26,7 +26,6 @@ import { execSync } from 'child_process';
  * appending a plus sign.
  *
  * @see https://semver.org/
- *
  * @param {string} version Version number.
  * @return {string} Modified version.
  */

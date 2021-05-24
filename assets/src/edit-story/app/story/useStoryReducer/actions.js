@@ -36,7 +36,10 @@ const updatePageProperties = (dispatch) => ({ pageId, properties }) =>
   dispatch({ type: types.UPDATE_PAGE, payload: { pageId, properties } });
 
 const updateCurrentPageProperties = (dispatch) => ({ properties }) =>
-  dispatch({ type: types.UPDATE_PAGE, payload: { pageId: null, properties } });
+  dispatch({
+    type: types.UPDATE_PAGE,
+    payload: { pageId: null, properties },
+  });
 
 const arrangePage = (dispatch) => ({ pageId, position }) =>
   dispatch({ type: types.ARRANGE_PAGE, payload: { pageId, position } });
@@ -136,13 +139,19 @@ const removeElementFromSelection = (dispatch) => ({ elementId }) =>
   dispatch({ type: types.UNSELECT_ELEMENT, payload: { elementId } });
 
 const toggleElementInSelection = (dispatch) => ({ elementId }) =>
-  dispatch({ type: types.TOGGLE_ELEMENT_IN_SELECTION, payload: { elementId } });
+  dispatch({
+    type: types.TOGGLE_ELEMENT_IN_SELECTION,
+    payload: { elementId },
+  });
 
 const updateStory = (dispatch) => ({ properties }) =>
   dispatch({ type: types.UPDATE_STORY, payload: { properties } });
 
 const updateAnimationState = (dispatch) => ({ animationState }) =>
-  dispatch({ type: types.UPDATE_ANIMATION_STATE, payload: { animationState } });
+  dispatch({
+    type: types.UPDATE_ANIMATION_STATE,
+    payload: { animationState },
+  });
 
 const addAnimations = (dispatch) => ({ animations }) =>
   dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });

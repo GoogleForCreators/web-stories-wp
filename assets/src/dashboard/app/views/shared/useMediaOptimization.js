@@ -36,7 +36,11 @@ export default function useMediaOptimization() {
       actions: {
         usersApi: { toggleWebStoriesMediaOptimization, fetchCurrentUser },
       },
-    }) => ({ currentUser, toggleWebStoriesMediaOptimization, fetchCurrentUser })
+    }) => ({
+      currentUser,
+      toggleWebStoriesMediaOptimization,
+      fetchCurrentUser,
+    })
   );
 
   const dataIsLoaded =

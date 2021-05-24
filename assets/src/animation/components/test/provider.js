@@ -216,7 +216,7 @@ describe('StoryAnimation.Provider', () => {
     });
 
     /**
-     * **Animation.cancel()**
+     * Animation.cancel()**
      *
      * Clears all KeyframeEffects caused by this animation
      * and aborts its playback.

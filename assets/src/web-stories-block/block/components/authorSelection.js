@@ -45,7 +45,6 @@ const USERS_LIST_QUERY = {
  * AuthorSelection props.
  *
  * @typedef AuthorSelectionProps
- *
  * @property {Array<number>} authors List of author IDs.
  * @property {()=>void} setAttributes Callable function for saving attribute values.
  */
@@ -54,7 +53,6 @@ const USERS_LIST_QUERY = {
  * AuthorSelection component. Used for selecting authors of stories.
  *
  * @param {AuthorSelection} props Component props.
- *
  * @return {*} JSX markup.
  */
 const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
