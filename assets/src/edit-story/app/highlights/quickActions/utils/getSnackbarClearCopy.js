@@ -26,7 +26,7 @@ import { ELEMENT_TYPE_COPY, RESET_LIST_COPY } from '../constants';
 
 /**
  * Sets up the copy to display on snackbar in editor
- * when 'clear' is selected from a quick action menu
+ * when the 'clear' action is selected from a quick action menu
  *
  * @param {Array} resetProperties the element's properties to reset to default values
  * @param {string} elementType the type of element getting reset
