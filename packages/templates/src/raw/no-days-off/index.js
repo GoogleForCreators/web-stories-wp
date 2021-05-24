@@ -42,7 +42,6 @@ export default {
     'This modern, bold theme lends itself well for workout routines, fitness gear shopping lists, but also tech, internet and gadget news, reviews, recommendations and coverage, due to its timeless, simple look.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Fitness', 'template vertical', 'web-stories'),
 };

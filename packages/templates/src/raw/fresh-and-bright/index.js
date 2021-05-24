@@ -42,7 +42,6 @@ export default {
     'The modern and bright Beauty template lends itself well as a foundation for stories covering make up, beauty products, shopping guides, instructions & tutorials and more.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Beauty', 'template vertical', 'web-stories'),
 };

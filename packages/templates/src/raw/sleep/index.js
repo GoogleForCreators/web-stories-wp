@@ -44,7 +44,6 @@ export default {
     'With a warm color palette and soothing shapes, the Wellbeing template works best for web stories covering mindfulness, lifestyle health and related exercise and activities like Yoga, Spa treatments and the like.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Wellbeing', 'template vertical', 'web-stories'),
 };

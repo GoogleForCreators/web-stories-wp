@@ -41,7 +41,6 @@ export default {
     'Designed to instil a sense of wanderlust & wonder, the Travel template can be a great foundation for travel inspiration, travel itineraries, restaurant hopping guides, Best-of attraction listicles and other types of travel content.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

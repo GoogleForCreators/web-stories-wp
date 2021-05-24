@@ -41,7 +41,6 @@ export default {
     'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };

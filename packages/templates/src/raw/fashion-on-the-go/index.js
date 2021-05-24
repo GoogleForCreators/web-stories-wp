@@ -41,7 +41,6 @@ export default {
     'The elegant serif Fashion template works well for New York Fashion Week highlights, high fashion shopping guides and accessory trends.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Fashion', 'template vertical', 'web-stories'),
 };

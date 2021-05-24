@@ -42,7 +42,6 @@ export default {
     'Motivate your audience to get out there and make something with the bold DIY template. Use it for DIY, crafting, 3D printing, woodworking or any other content targeting makers.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('DIY', 'template vertical', 'web-stories'),
 };

@@ -42,7 +42,6 @@ export default {
     'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
     'web-stories'
   ),
-  pages: template.pages,
-  version: template.version,
+  ...template,
   vertical: _x('Cooking', 'template vertical', 'web-stories'),
 };
