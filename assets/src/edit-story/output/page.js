@@ -91,11 +91,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
                 <OutputElement element={backgroundElement} />
-                {backgroundElement.backgroundOverlay && (
+                {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
                     style={generatePatternStyles(
-                      backgroundElement.backgroundOverlay
+                      backgroundElement.overlay
                     )}
                   />
                 )}

@@ -113,8 +113,8 @@ const useQuickActions = () => {
       const newProperties = {};
 
       // Choose properties to clear
-      if (properties.includes('backgroundOverlay')) {
-        newProperties.backgroundOverlay = null;
+      if (properties.includes('overlay')) {
+        newProperties.overlay = null;
       }
 
       if (properties.includes('animation')) {

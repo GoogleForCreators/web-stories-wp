@@ -43,6 +43,7 @@ import dataPixelTo412 from './migrations/v0022_dataPixelTo412';
 import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
 import blobsToSingleBlob from './migrations/v0024_blobsToSingleBlob';
 import singleAnimationTarget from './migrations/v0025_singleAnimationTarget';
+import backgroundOverlayToOverlay from './migrations/v0026_backgroundOverlayToOverlay';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -70,6 +71,7 @@ const MIGRATIONS = {
   23: [convertOverlayPattern],
   24: [blobsToSingleBlob],
   25: [singleAnimationTarget],
+  26: [backgroundOverlayToOverlay],
 };
 
 export const DATA_VERSION = Math.max.apply(

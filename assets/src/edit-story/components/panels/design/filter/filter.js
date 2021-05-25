@@ -31,7 +31,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   OverlayPreset,
   OverlayType,
-} from '../../../../utils/backgroundOverlay';
+} from '../../../../utils/overlay';
 import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getDefinitionForType } from '../../../../elements';
@@ -40,18 +40,15 @@ import { MULTIPLE_VALUE } from '../../../../constants';
 import convertOverlay from './convertOverlay';
 
 function FilterPanel({ selectedElements, pushUpdate }) {
-  const propValue = selectedElements[0].isBackground
-    ? 'backgroundOverlay'
-    : 'overlay';
-  const overlay = useCommonColorValue(selectedElements, propValue);
+  const overlay = useCommonColorValue(selectedElements, 'overlay');
   const isMultiple = overlay === MULTIPLE_VALUE;
   const overlayType = !overlay
     ? OverlayType.NONE
     : overlay.type || OverlayType.SOLID;
 
   const updateOverlay = useCallback(
-    (value) => pushUpdate({ [propValue]: value }, true),
-    [pushUpdate, propValue]
+    (value) => pushUpdate({ overlay: value }, true),
+    [pushUpdate]
   );
 
   const { LayerIcon } = getDefinitionForType(selectedElements[0].type);

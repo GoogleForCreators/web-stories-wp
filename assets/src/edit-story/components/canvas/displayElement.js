@@ -102,7 +102,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     opacity,
     type,
     isBackground,
-    backgroundOverlay,
+    overlay,
     border = {},
     flip,
   } = element;
@@ -204,10 +204,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             )}
           </ReplacementContainer>
         )}
-        {isBackground && backgroundOverlay && !hasReplacement && (
+        {isBackground && overlay && !hasReplacement && (
           <BackgroundOverlay
             ref={bgOverlayRef}
-            style={generatePatternStyles(backgroundOverlay)}
+            style={generatePatternStyles(overlay)}
           />
         )}
       </AnimationWrapper>

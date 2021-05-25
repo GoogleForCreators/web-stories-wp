@@ -137,7 +137,7 @@ describe('Page output', () => {
           elements: [
             {
               ...backgroundElement,
-              backgroundOverlay: { color: { r: 0, g: 255, b: 0, a: 0.4 } },
+              overlay: { color: { r: 0, g: 255, b: 0, a: 0.4 } },
             },
           ],
         },
