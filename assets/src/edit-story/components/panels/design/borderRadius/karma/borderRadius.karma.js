@@ -82,6 +82,7 @@ describe('Border Radius Panel', () => {
 
       // Take off lock.
       await fixture.events.click(panel.lockBorderRadius);
+      await fixture.events.keyboard.press('Escape');
       await fixture.events.click(panel.radius('Bottom left'), {
         clickCount: 3,
       });
