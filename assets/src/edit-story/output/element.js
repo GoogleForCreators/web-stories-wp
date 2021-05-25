@@ -114,10 +114,12 @@ function OutputElement({ element }) {
           </WithLink>
         </WithMask>
       </StoryAnimation.AMPWrapper>
-      <div
-        className="element-overlay-area"
-        style={generatePatternStyles(overlay)}
-      />
+      {overlay && (
+        <div
+          className="element-overlay-area"
+          style={generatePatternStyles(overlay)}
+        />)
+      }
     </div>
   );
 }
