@@ -154,6 +154,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$this->query           = $query;
 		$this->attributes      = $this->query->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
+		// TODO, find a way to inject this a cleaner way.
+		$injector              = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return;
+		}
+		$this->assets = $injector->make( Assets::class );
 	}
 
 	/**
@@ -254,12 +260,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function load_assets() {
-		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
-		$this->assets = $injector->make( Assets::class );
-
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 

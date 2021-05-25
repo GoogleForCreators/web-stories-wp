@@ -42,6 +42,8 @@ use WP_Styles;
  */
 class Google_Fonts implements Conditional, Service, Registerable {
 
+	const HANDLE = 'web-stories-fonts';
+
 	/**
 	 * Check whether the conditional object is currently needed.
 	 *
@@ -61,7 +63,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 * @return string
 	 */
 	public function get_handle() {
-		return 'web-stories-fonts';
+		return self::HANDLE;
 	}
 
 	/**
