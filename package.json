@@ -100,7 +100,7 @@
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.7.5",
-    "@axe-core/puppeteer": "^4.2.0",
+    "@axe-core/puppeteer": "^4.2.1",
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.3",
     "@babel/eslint-plugin": "^7.13.16",
