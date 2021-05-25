@@ -135,6 +135,7 @@ describe('combineElements', () => {
           vertical: false,
           horizontal: true,
         },
+        overlay: { r: 1, g: 1, b: 1 },
       },
     ]);
   });
@@ -179,6 +180,7 @@ describe('combineElements', () => {
           vertical: false,
           horizontal: true,
         },
+        overlay: { r: 1, g: 1, b: 1 },
       },
     ]);
   });
@@ -660,6 +662,7 @@ function getDefaultState1() {
               vertical: false,
               horizontal: true,
             },
+            overlay: { r: 1, g: 1, b: 1 },
           },
         ],
       },
