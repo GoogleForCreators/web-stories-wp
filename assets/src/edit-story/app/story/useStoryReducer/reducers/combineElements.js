@@ -103,8 +103,9 @@ function combineElements(
       propsFromFirst.push('borderRadius');
     }
   } else {
-    // If we're dropping into background, maintain the flip, too.
+    // If we're dropping into background, maintain the flip and overlay, too.
     propsFromFirst.push('flip');
+    propsFromFirst.push('overlay');
   }
   const mediaProps = objectPick(element, propsFromFirst);
 
