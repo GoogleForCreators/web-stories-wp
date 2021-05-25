@@ -161,7 +161,7 @@ function AdManagement({
         </SettingSubheading>
       </div>
 
-      {installed && adsenseActive ? (
+      {adsenseActive ? (
         <div>
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
