@@ -30,6 +30,8 @@ import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { MaskTypes } from '../../masks/constants';
 
+/* eslint-disable testing-library/no-node-access, testing-library/no-container */
+
 describe('Page output', () => {
   useFeature.mockImplementation((feature) => {
     const config = {
@@ -1168,3 +1170,5 @@ describe('Page output', () => {
     });
   });
 });
+
+/* eslint-enable testing-library/no-node-access, testing-library/no-container */

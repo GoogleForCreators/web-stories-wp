@@ -28,10 +28,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  OverlayPreset,
-  OverlayType,
-} from '../../../../utils/overlay';
+import { OverlayPreset, OverlayType } from '../../../../utils/overlay';
 import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getDefinitionForType } from '../../../../elements';

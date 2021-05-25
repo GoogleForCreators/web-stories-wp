@@ -94,9 +94,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
-                    style={generatePatternStyles(
-                      backgroundElement.overlay
-                    )}
+                    style={generatePatternStyles(backgroundElement.overlay)}
                   />
                 )}
               </div>
