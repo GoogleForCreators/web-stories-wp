@@ -93,9 +93,10 @@ describe('Page output', () => {
       expect(layer.firstElementChild).toHaveClass('page-fullbleed-area', {
         exact: true,
       });
-      expect(
-        layer.firstElementChild.firstElementChild
-      ).toHaveClass('page-safe-area', { exact: true });
+      expect(layer.firstElementChild.firstElementChild).toHaveClass(
+        'page-safe-area',
+        { exact: true }
+      );
     });
 
     it('should render the layer for background', () => {
