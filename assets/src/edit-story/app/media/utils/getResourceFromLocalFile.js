@@ -99,14 +99,16 @@ const getVideoResource = async (file) => {
     videoEl.src = src;
     videoEl.addEventListener('loadedmetadata', () => {
       length = Math.round(videoEl.duration);
-      let seconds = length % 60;
-      const minutes = parseInt(length / 60);
-      seconds = seconds.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false,
-      });
+      const seconds = formatDuration(length % 60);
+      let minutes = Math.floor(length / 60);
+      const hours = Math.floor(minutes / 60);
 
-      lengthFormatted = `${minutes}:${seconds}`;
+      if (hours) {
+        minutes = formatDuration(minutes % 60);
+        lengthFormatted = `${hours}:${minutes}:${seconds}`;
+      } else {
+        lengthFormatted = `${minutes}:${seconds}`;
+      }
     });
   }
   const frame = await getFirstFrameOfVideo(src);
@@ -125,6 +127,13 @@ const getVideoResource = async (file) => {
     lengthFormatted,
     alt: fileName,
     title: fileName,
+  });
+};
+
+const formatDuration = (time) => {
+  return time.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
   });
 };
 
