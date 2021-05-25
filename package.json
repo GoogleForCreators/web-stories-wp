@@ -140,7 +140,7 @@
     "browserslist": "^4.16.6",
     "commander": "^7.2.0",
     "core-js": "^3.12.1",
-    "css-loader": "^5.2.5",
+    "css-loader": "^5.2.6",
     "cssnano": "^5.0.4",
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
