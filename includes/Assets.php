@@ -51,7 +51,7 @@ class Assets {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param string $path Path
+	 * @param string $path Path.
 	 *
 	 * @return string
 	 */
@@ -64,7 +64,7 @@ class Assets {
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param string $path Path
+	 * @param string $path Path.
 	 *
 	 * @return string
 	 */
@@ -75,7 +75,7 @@ class Assets {
 	/**
 	 * Get asset metadata.
 	 *
-	 * @since 1.0.0
+	 * @since 1.8.0
 	 *
 	 * @param string $handle Script handle.
 	 *
@@ -103,7 +103,7 @@ class Assets {
 	/**
 	 * Register script using handle.
 	 *
-	 * @since 1.0.0
+	 * @since 1.8.0
 	 *
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
@@ -148,7 +148,7 @@ class Assets {
 	/**
 	 * Enqueue script using handle.
 	 *
-	 * @since 1.0.0
+	 * @since 1.8.0
 	 *
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
@@ -163,7 +163,7 @@ class Assets {
 	/**
 	 * Register style using handle.
 	 *
-	 * @since 1.0.0
+	 * @since 1.8.0
 	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
@@ -175,7 +175,7 @@ class Assets {
 			return;
 		}
 
-		$base_style_path = $this->get_base_url('assets/css/' );
+		$base_style_path = $this->get_base_url( 'assets/css/' );
 
 		// Register any chunks of $style_handle first.
 		$asset = $this->get_asset_metadata( $style_handle );
@@ -205,7 +205,7 @@ class Assets {
 	/**
 	 * Enqueue style using handle.
 	 *
-	 * @since 1.0.0
+	 * @since 1.8.0
 	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
@@ -219,6 +219,10 @@ class Assets {
 
 	/**
 	 * Register a CSS stylesheet.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.8.0
 	 *
 	 * @param string           $style_handle Name of the stylesheet. Should be unique.
 	 * @param string|bool      $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
@@ -244,6 +248,10 @@ class Assets {
 	/**
 	 * Register a new script.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.8.0
+	 *
 	 * @param string           $script_handle    Name of the script. Should be unique.
 	 * @param string|bool      $src       Full URL of the script, or path of the script relative to the WordPress root directory.
 	 *                                    If source is set to false, script is an alias of other scripts it depends on.
@@ -267,6 +275,10 @@ class Assets {
 	/**
 	 * Enqueue a style.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.8.0
+	 *
 	 * @param string           $style_handle Name of the stylesheet. Should be unique.
 	 * @param string           $src    Full URL of the stylesheet, or path of the stylesheet relative to the WordPress root directory.
 	 *                                 Default empty.
@@ -288,6 +300,10 @@ class Assets {
 	/**
 	 * Enqueue a script.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.8.0
+	 *
 	 * @param string           $script_handle    Name of the script. Should be unique.
 	 * @param string           $src       Full URL of the script, or path of the script relative to the WordPress root directory.
 	 *                                    Default empty.
@@ -308,7 +324,7 @@ class Assets {
 	/**
 	 * Remove admin styles.
 	 *
-	 * @since 1.0.0
+	 * @since 1.8.0
 	 *
 	 * @param array $styles Array to style to be removed.
 	 *

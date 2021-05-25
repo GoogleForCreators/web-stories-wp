@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Register_Global_Assets;
+use Google\Web_Stories\Amp_Player_Assets;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Test_Case;
 
@@ -73,10 +73,10 @@ class Generic_Renderer extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 
-		$this->story_model = $this->createMock( Story::class );
-		$this->story_query = $this->createMock( Story_Query::class );
-		$this->assets = $this->createMock( Assets::class );
-		$this->register_global_assets = $this->createMock( Register_Global_Assets::class );
+		$this->story_model       = $this->createMock( Story::class );
+		$this->story_query       = $this->createMock( Story_Query::class );
+		$this->assets            = $this->createMock( Assets::class );
+		$this->amp_player_assets = $this->createMock( Amp_Player_Assets::class );
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
@@ -93,10 +93,10 @@ class Generic_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->amp_player_assets );
 		$renderer->init();
 
-		$this->assertTrue( wp_style_is( \Google\Web_Stories\Embed_Base::STORY_PLAYER_HANDLE ) );
+		$this->assertTrue( wp_style_is( $this->amp_player_assets->get_handle() ) );
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Generic_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->amp_player_assets );
 		$renderer->init();
 
 		$output = $renderer->render();

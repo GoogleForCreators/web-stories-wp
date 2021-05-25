@@ -91,23 +91,20 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
+		$assets        = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets->method( 'get_asset_metadata' )
+			->willReturn(
+				[
+					'dependencies' => [],
+					'version'      => '9.9.9',
+					'js'           => [ 'fake_js_chunk' ],
+					'css'          => [ 'fake_css_chunk' ],
+				]
+			);
 
-		$args   = [ $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets ];
-		$editor = $this->getMockBuilder( \Google\Web_Stories\Admin\Editor::class )
-								->setConstructorArgs( $args )
-								->setMethods( [ 'get_asset_metadata' ] )
-								->getMock();
-		$editor->method( 'get_asset_metadata' )
-						->willReturn(
-							[
-								'dependencies' => [],
-								'version'      => '9.9.9',
-								'js'           => [ 'fake_js_chunk' ],
-								'css'          => [ 'fake_css_chunk' ],
-							]
-						);
+		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
+
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$editor->admin_enqueue_scripts( 'post.php' );
 
@@ -132,7 +129,7 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
 		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
 		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
@@ -152,7 +149,7 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
 		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
 		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
@@ -171,7 +168,7 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
 		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
 		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
@@ -195,7 +192,7 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
 		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
 		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
@@ -217,7 +214,7 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
+		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
 		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
 
 		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );

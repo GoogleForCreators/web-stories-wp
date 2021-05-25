@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Register_Global_Assets;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Infrastructure\Registerable;
@@ -53,11 +52,11 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	protected $activation_flag;
 
 	/**
-	 * Register_Global_Assets instance.
+	 * Google_Fonts instance.
 	 *
-	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	protected $register_global_assets;
+	protected $google_fonts;
 
 	/**
 	 * Assets instance.
@@ -71,14 +70,14 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Activation_Flag        $activation_flag Activation flag instance.
-	 * @param Register_Global_Assets $register_global_assets   Register_Global_Assets instance.
-	 * @param Assets                 $assets          Assets instance.
+	 * @param Activation_Flag $activation_flag Activation flag instance.
+	 * @param Google_Fonts    $google_fonts   Google_Fonts instance.
+	 * @param Assets          $assets          Assets instance.
 	 */
-	public function __construct( Activation_Flag $activation_flag, Register_Global_Assets $register_global_assets, Assets $assets ) {
-		$this->activation_flag        = $activation_flag;
-		$this->register_global_assets = $register_global_assets;
-		$this->assets                 = $assets;
+	public function __construct( Activation_Flag $activation_flag, Google_Fonts $google_fonts, Assets $assets ) {
+		$this->activation_flag = $activation_flag;
+		$this->google_fonts    = $google_fonts;
+		$this->assets          = $assets;
 	}
 
 	/**
@@ -115,8 +114,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		 */
 		unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.VIP.SuperGlobalInputUsage
 
-		$this->register_global_assets->register();
-		$font_handle = $this->register_global_assets->get_font_handle();
+		$font_handle = $this->google_fonts->get_handle();
 		$this->assets->enqueue_style( $font_handle );
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );

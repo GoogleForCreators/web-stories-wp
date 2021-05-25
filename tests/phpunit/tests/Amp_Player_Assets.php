@@ -20,28 +20,27 @@ namespace Google\Web_Stories\Tests;
 use Google\Web_Stories\Assets;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Register_Global_Assets
+ * @coversDefaultClass \Google\Web_Stories\Amp_Player_Assets
  */
-class Register_Global_Assets extends Test_Case {
+class Amp_Player_Assets extends Test_Case {
 
 	/**
 	 * @covers ::get_font_handle
 	 */
 	public function test_get_handle() {
-		$actual = ( new \Google\Web_Stories\Register_Global_Assets(new Assets()) )->get_font_handle();
+		$actual = ( new \Google\Web_Stories\Amp_Player_Assets() )->get_handle();
 
-		$this->assertSame( 'web-stories-fonts', $actual );
+		$this->assertSame( 'standalone-amp-story-player', $actual );
 	}
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$register_font   = new \Google\Web_Stories\Register_Global_Assets(new Assets());
-		$register_font->register();
+		$amp_player_assets = new \Google\Web_Stories\Amp_Player_Assets();
+		$amp_player_assets->register();
 
-		$this->assertTrue( wp_style_is( $register_font->get_font_handle(), 'registered' ) );
-		$this->assertTrue( wp_style_is( $register_font->get_player_handle(), 'registered' ) );
-		$this->assertTrue( wp_script_is( $register_font->get_player_handle(), 'registered' ) );
+		$this->assertTrue( wp_style_is( $amp_player_assets->get_handle(), 'registered' ) );
+		$this->assertTrue( wp_script_is( $amp_player_assets->get_handle(), 'registered' ) );
 	}
 }

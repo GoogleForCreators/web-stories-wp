@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Register_Global_Assets.
+ * Class Amp_Player_Assets.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -26,81 +26,77 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
+use WP_Styles;
+use WP_Scripts;
+
 /**
- * Class Register_Global_Assets
+ * Class Amp_Player_Assets
  *
  * @package Google\Web_Stories
  */
-class Register_Global_Assets {
+class Amp_Player_Assets implements Service, Registerable {
+
+	const HANDLE = 'standalone-amp-story-player';
 
 	/**
-	 * Assets instance.
+	 * Script handle
 	 *
-	 * @var Assets Assets instance.
+	 * @since 1.7.0
+	 *
+	 * @return string
 	 */
-	private $assets;
+	public function get_handle() {
+		return self::HANDLE;
+	}
 
 	/**
-	 * Tinymce constructor.
+	 * Runs on instantiation.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @param Assets $assets Assets instance.
-	 */
-	public function __construct( Assets $assets ) {
-		$this->assets = $assets;
-	}
-
-	/**
-	 * Script handle
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return string
-	 */
-	public function get_font_handle() {
-		return 'web-stories-fonts';
-	}
-
-	/**
-	 * Script handle
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return string
-	 */
-	public function get_player_handle() {
-		return 'standalone-amp-story-player';
-	}
-
-	/**
-	 * Register style with prefix.
-	 *
-	 * @since 1.7.0
 	 *
 	 * @return void
 	 */
 	public function register() {
-		$this->assets->register_style(
-			$this->get_font_handle(),
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-			[],
-			WEBSTORIES_VERSION
-		);
+		add_action( 'wp_default_styles', [ $this, 'register_style' ] );
+		add_action( 'wp_default_scripts', [ $this, 'register_scripts' ] );
+	}
 
-		$this->assets->register_script(
-			$this->get_player_handle(),
+	/**
+	 * Registers the amp player style.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WP_Styles $wp_styles WP_Styles instance.
+	 *
+	 * @return void
+	 */
+	public function register_style( WP_Styles $wp_styles ) {
+		$wp_styles->add(
+			$this->get_handle(),
+			'https://cdn.ampproject.org/amp-story-player-v0.css',
+			[],
+			'v0'
+		);
+	}
+
+	/**
+	 * Registers the amp player script.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WP_Scripts $wp_scripts WP_Scripts instance.
+	 *
+	 * @return void
+	 */
+	public function register_scripts( WP_Scripts $wp_scripts ) {
+		$wp_scripts->add(
+			$this->get_handle(),
 			'https://cdn.ampproject.org/amp-story-player-v0.js',
 			[],
 			'v0',
 			false
-		);
-
-		$this->assets->register_style(
-			$this->get_player_handle(),
-			'https://cdn.ampproject.org/amp-story-player-v0.css',
-			[],
-			'v0'
 		);
 	}
 }

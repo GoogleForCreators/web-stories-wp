@@ -47,7 +47,7 @@ class Core_Themes_Support extends Test_Case {
 		// Set stylesheet from one of the supported themes.
 		update_option( 'stylesheet', 'twentytwentyone' );
 		update_option( Customizer::STORY_OPTION, [ 'show_stories' => true ] );
-		$assets = new \Google\Web_Stories\Assets();
+		$assets     = new \Google\Web_Stories\Assets();
 		$this->stub = new \Google\Web_Stories\Integrations\Core_Themes_Support( $assets );
 	}
 

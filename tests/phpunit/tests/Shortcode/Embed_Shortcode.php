@@ -43,9 +43,9 @@ class Embed_Shortcode extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode() {
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode($assets, $register_font);
+		$register_font   = $this->createMock( \Google\Web_Stories\Amp_Player_Assets::class );
+		$assets          = $this->createMock( \Google\Web_Stories\Assets::class );
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $register_font );
 
 		$actual = $embed_shortcode->render_shortcode(
 			[
@@ -68,9 +68,9 @@ class Embed_Shortcode extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode_missing_url() {
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode($assets, $register_font);
+		$register_font   = $this->createMock( \Google\Web_Stories\Amp_Player_Assets::class );
+		$assets          = $this->createMock( \Google\Web_Stories\Assets::class );
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $register_font );
 
 		$actual = $embed_shortcode->render_shortcode(
 			[
@@ -93,9 +93,9 @@ class Embed_Shortcode extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_shortcode_missing_title() {
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode($assets, $register_font);
+		$register_font   = $this->createMock( \Google\Web_Stories\Amp_Player_Assets::class );
+		$assets          = $this->createMock( \Google\Web_Stories\Assets::class );
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $register_font );
 
 		$actual = $embed_shortcode->render_shortcode(
 			[
@@ -118,9 +118,9 @@ class Embed_Shortcode extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_shortcode_feed_no_poster() {
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode($assets, $register_font);
+		$register_font   = $this->createMock( \Google\Web_Stories\Amp_Player_Assets::class );
+		$assets          = $this->createMock( \Google\Web_Stories\Assets::class );
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $register_font );
 
 		$this->go_to( '/?feed=rss2' );
 
@@ -143,9 +143,9 @@ class Embed_Shortcode extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_shortcode_with_poster() {
-		$register_font = $this->createMock( \Google\Web_Stories\Register_Global_Assets::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
-		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode($assets, $register_font);
+		$register_font   = $this->createMock( \Google\Web_Stories\Amp_Player_Assets::class );
+		$assets          = $this->createMock( \Google\Web_Stories\Assets::class );
+		$embed_shortcode = new \Google\Web_Stories\Shortcode\Embed_Shortcode( $assets, $register_font );
 		$embed_shortcode->register();
 
 		$this->go_to( '/?feed=rss2' );

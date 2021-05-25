@@ -30,7 +30,7 @@ namespace Google\Web_Stories\Renderer\Story;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Register_Global_Assets;
+use Google\Web_Stories\Amp_Player_Assets;
 use Google\Web_Stories\Traits\Amp;
 
 /**
@@ -57,25 +57,25 @@ class Embed {
 	private $assets;
 
 	/**
-	 * Register_Global_Assets instance.
+	 * Amp_Player_Assets instance.
 	 *
-	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 * @var Amp_Player_Assets Amp_Player_Assets instance.
 	 */
-	protected $register_global_assets;
+	protected $amp_player_assets;
 
 	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story                  $story   Story Object.
-	 * @param Assets                 $assets Assets instance.
-	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
+	 * @param Story             $story                  Story Object.
+	 * @param Assets            $assets                 Assets instance.
+	 * @param Amp_Player_Assets $amp_player_assets Amp_Player_Assets instance.
 	 */
-	public function __construct( Story $story, Assets $assets, Register_Global_Assets $register_global_assets ) {
-		$this->assets                 = $assets;
-		$this->story                  = $story;
-		$this->register_global_assets = $register_global_assets;
+	public function __construct( Story $story, Assets $assets, Amp_Player_Assets $amp_player_assets ) {
+		$this->assets            = $assets;
+		$this->story             = $story;
+		$this->amp_player_assets = $amp_player_assets;
 	}
 
 	/**
@@ -135,9 +135,8 @@ class Embed {
 			return (string) ob_get_clean();
 		}
 
-		$this->register_global_assets->register();
-		$this->assets->enqueue_style( $this->register_global_assets->get_player_handle() );
-		$this->assets->enqueue_script( $this->register_global_assets->get_player_handle() );
+		$this->assets->enqueue_style( $this->amp_player_assets->get_handle() );
+		$this->assets->enqueue_script( $this->amp_player_assets->get_handle() );
 
 		ob_start();
 		?>

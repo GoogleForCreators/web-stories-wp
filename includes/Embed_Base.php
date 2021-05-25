@@ -50,23 +50,23 @@ class Embed_Base extends Service_Base {
 	protected $assets;
 
 	/**
-	 * Register_Global_Assets instance.
+	 * Amp_Player_Assets instance.
 	 *
-	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 * @var Amp_Player_Assets Amp_Player_Assets instance.
 	 */
-	protected $register_global_assets;
+	protected $amp_player_assets;
 
 	/**
 	 * Embed Base constructor.
 	 *
 	 * @since 1.8.0
 	 *
-	 * @param Assets                 $assets Assets instance.
-	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
+	 * @param Assets            $assets                 Assets instance.
+	 * @param Amp_Player_Assets $amp_player_assets Amp_Player_Assets instance.
 	 */
-	public function __construct( Assets $assets, Register_Global_Assets $register_global_assets ) {
-		$this->assets                 = $assets;
-		$this->register_global_assets = $register_global_assets;
+	public function __construct( Assets $assets, Amp_Player_Assets $amp_player_assets ) {
+		$this->assets            = $assets;
+		$this->amp_player_assets = $amp_player_assets;
 	}
 
 	/**
@@ -77,15 +77,14 @@ class Embed_Base extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$this->register_global_assets->register();
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 		// Set a style without a `src` allows us to just use the inline style below
 		// without needing an external stylesheet.
 		wp_styles()->registered[ self::SCRIPT_HANDLE ]->src = false;
 
-		$path = $this->assets->get_base_path( sprintf( "assets/css/%s.css", self::SCRIPT_HANDLE ) );
+		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s.css', self::SCRIPT_HANDLE ) );
 		if ( is_rtl() ) {
-			$path = $this->assets->get_base_path( sprintf( "assets/css/%s-rtl.css", self::SCRIPT_HANDLE ) );
+			$path = $this->assets->get_base_path( sprintf( 'assets/css/%s-rtl.css', self::SCRIPT_HANDLE ) );
 		}
 
 		if ( is_readable( $path ) ) {
@@ -185,17 +184,12 @@ class Embed_Base extends Service_Base {
 			'poster_portrait' => $attributes['poster'],
 		];
 
-		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return '';
-		}
-
-		$story = $injector->make( Story::class, [ $data ] );
+		$story = new Story( $data );
 
 		if ( is_feed() ) {
-			$renderer = $injector->make( Image::class, [ $story ] );
+			$renderer = new Image( $story );
 		} else {
-			$renderer = $injector->make( Embed::class, [ $story ] );
+			$renderer = new Embed( $story, $this->assets, $this->amp_player_assets );
 		}
 
 		return $renderer->render( $attributes );

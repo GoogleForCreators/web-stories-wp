@@ -32,7 +32,6 @@ use Google\Web_Stories\Locale;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Register_Global_Assets;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Publisher;
@@ -88,11 +87,11 @@ class Editor extends Service_Base {
 	private $locale;
 
 	/**
-	 * Register_Global_Assets instance.
+	 * Google_Fonts instance.
 	 *
-	 * @var Register_Global_Assets Register_Global_Assets instance.
+	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	private $register_global_assets;
+	private $google_fonts;
 
 	/**
 	 * Assets instance.
@@ -106,20 +105,20 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments            $experiments   Experiments instance.
-	 * @param Meta_Boxes             $meta_boxes    Meta_Boxes instance.
-	 * @param Decoder                $decoder       Decoder instance.
-	 * @param Locale                 $locale        Locale instance.
-	 * @param Register_Global_Assets $register_global_assets Register_Global_Assets instance.
-	 * @param Assets                 $assets        Assets instance.
+	 * @param Experiments  $experiments   Experiments instance.
+	 * @param Meta_Boxes   $meta_boxes    Meta_Boxes instance.
+	 * @param Decoder      $decoder       Decoder instance.
+	 * @param Locale       $locale        Locale instance.
+	 * @param Google_Fonts $google_fonts  Google_Fonts instance.
+	 * @param Assets       $assets        Assets instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Register_Global_Assets $register_global_assets, Assets $assets ) {
-		$this->experiments            = $experiments;
-		$this->meta_boxes             = $meta_boxes;
-		$this->decoder                = $decoder;
-		$this->locale                 = $locale;
-		$this->register_global_assets = $register_global_assets;
-		$this->assets                 = $assets;
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Google_Fonts $google_fonts, Assets $assets ) {
+		$this->experiments  = $experiments;
+		$this->meta_boxes   = $meta_boxes;
+		$this->decoder      = $decoder;
+		$this->locale       = $locale;
+		$this->google_fonts = $google_fonts;
+		$this->assets       = $assets;
 	}
 
 	/**
@@ -206,14 +205,13 @@ class Editor extends Service_Base {
 
 		// Force media model to load.
 		wp_enqueue_media();
-		$this->register_global_assets->register();
 		$script_dependencies = [
 			Tracking::SCRIPT_HANDLE,
 			'postbox',
 		];
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
-		$font_handle = $this->register_global_assets->get_font_handle();
+		$font_handle = $this->google_fonts->get_handle();
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
