@@ -118,7 +118,7 @@ class Site_Health extends Service_Base implements Conditional {
 		$extra_data = [
 			'web_stories' => [
 				'label'       => esc_html__( 'Web Stories', 'web-stories' ),
-				'description' => esc_html__( 'Debugging information for the Web Stories for WordPress.', 'web-stories' ),
+				'description' => esc_html__( 'Debugging information for the Web Stories plugin.', 'web-stories' ),
 				'fields'      => [
 					'web_stories_version'             => [
 						'label'   => 'WEBSTORIES_VERSION',
