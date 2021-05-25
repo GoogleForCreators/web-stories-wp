@@ -256,7 +256,9 @@ class AMP extends Service_Base {
 	 * @return array The modified configuration.
 	 */
 	public function filter_amp_optimizer_config( $configuration ) {
-		$configuration[ Optimizer\Transformer\RewriteAmpUrls::class ][ Optimizer\Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED ] = false;
+		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+			$configuration[ Optimizer\Transformer\RewriteAmpUrls::class ][ Optimizer\Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED ] = false;
+		}
 		return $configuration;
 	}
 
