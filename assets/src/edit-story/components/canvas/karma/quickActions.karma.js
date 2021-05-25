@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { waitFor } from '@testing-library/dom';
 import { useStory } from '../../../app';
 import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
-fdescribe('Quick Actions integration', () => {
+describe('Quick Actions integration', () => {
   let fixture;
 
   async function clickOnTarget(target) {
@@ -421,7 +423,7 @@ fdescribe('Quick Actions integration', () => {
       );
     });
 
-    fit(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
+    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
       // quick action should be disabled if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
