@@ -22,7 +22,7 @@ import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
-describe('Quick Actions integration', () => {
+fdescribe('Quick Actions integration', () => {
   let fixture;
 
   async function clickOnTarget(target) {
@@ -499,8 +499,8 @@ describe('Quick Actions integration', () => {
       );
       expect(revertedAnimations.length).toBe(1);
       expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-      expect(revertedSelectedElement.backgroundOverlay.type).toEqual(
-        originalSelectedElement.backgroundOverlay.type
+      expect(revertedSelectedElement.backgroundOverlay?.type).toEqual(
+        originalSelectedElement.backgroundOverlay?.type
       );
 
       expect(
