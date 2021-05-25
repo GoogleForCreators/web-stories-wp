@@ -40,6 +40,13 @@ use Google\Web_Stories\Traits\Amp;
  */
 class Embed {
 
+	/**
+	 * Script handle for frontend assets.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_HANDLE = 'web-stories-embed';
+
 	use Amp;
 
 	/**
@@ -111,7 +118,7 @@ class Embed {
 		);
 
 		// This CSS is used for AMP and non-AMP.
-		$this->assets->enqueue_style_asset( Embed_Base::SCRIPT_HANDLE );
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
 
 		if ( $this->is_amp() ) {
 			ob_start();
