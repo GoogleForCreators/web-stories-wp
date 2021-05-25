@@ -136,6 +136,15 @@ function DisplayLayer() {
     updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
   }, [updateAnimationState]);
 
+  /**
+   * Stop the event from bubbling if the user clicks in between buttons.
+   *
+   * This prevents the selected element in the canvas from losing focus.
+   */
+  const handleMenuBackgroundClick = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
   const animatedElements = useMemo(
     () => selectedElements.map((el) => el.id),
     [selectedElements]
@@ -179,7 +188,12 @@ function DisplayLayer() {
         {enableQuickActionMenu && quickActions.length && (
           <DirectionAware>
             <QuickActionsArea>
-              <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
+              <ContextMenu
+                isAlwaysVisible
+                isIconMenu
+                items={quickActions}
+                onMouseDown={handleMenuBackgroundClick}
+              />
             </QuickActionsArea>
           </DirectionAware>
         )}

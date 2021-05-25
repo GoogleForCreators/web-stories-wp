@@ -78,7 +78,6 @@ function Media3pApiProvider({ children }) {
    * @property {?string} searchTerm Optional. The search term to send,
    * eg: 'cute cats'.
    * @property {?string} categoryId Optional. Id of the selected category.
-   *
    * @type {import('./typedefs').ListMediaFn}
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
