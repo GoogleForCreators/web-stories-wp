@@ -256,22 +256,22 @@ const useQuickActions = () => {
         handleClearAnimationsAndFilters({
           elementId: selectedElement?.id,
           resetProperties,
-          elementType: selectedElements?.[0]?.type,
+          elementType: selectedElement?.type,
         }),
       separator: 'top',
       ...actionMenuProps,
     };
 
-    return resetProperties.length === 0
+    return resetProperties.length > 0
       ? [...baseActions, clearAction]
       : baseActions;
   }, [
-    handleClearAnimations,
+    handleClearAnimationsAndFilters,
     handleFocusLinkPanel,
     handleFocusAnimationPanel,
     actionMenuProps,
-    selectedElement?.id,
-    selectedElementAnimations?.length,
+    selectedElement,
+    selectedElementAnimations,
   ]);
 
   const foregroundImageActions = useMemo(
@@ -316,7 +316,7 @@ const useQuickActions = () => {
       selectedElementAnimations
     );
 
-    return [
+    const baseActions = [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
@@ -329,20 +329,24 @@ const useQuickActions = () => {
         onClick: handleFocusAnimationPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-      {
-        Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
-        onClick: () =>
-          handleClearAnimationsAndFilters({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: ELEMENT_TYPE.BACKGROUND,
-          }),
-        separator: 'top',
-        disabled: resetProperties.length === 0,
-        ...actionMenuProps,
-      },
     ];
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      onClick: () =>
+        handleClearAnimationsAndFilters({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: ELEMENT_TYPE.BACKGROUND,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+
+    return resetProperties.length > 0
+      ? [...baseActions, clearAction]
+      : baseActions;
   }, [
     selectedElement,
     selectedElementAnimations,
