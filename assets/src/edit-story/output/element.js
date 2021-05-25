@@ -118,8 +118,8 @@ function OutputElement({ element }) {
         <div
           className="element-overlay-area"
           style={generatePatternStyles(overlay)}
-        />)
-      }
+        />
+      )}
     </div>
   );
 }
