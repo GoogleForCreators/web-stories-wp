@@ -49,9 +49,8 @@ xdescribe('MediaPane fetching', () => {
       'media-gallery-container'
     );
 
-    const initialElements = within(mediaGallery).queryAllByTestId(
-      /^mediaElement-/
-    );
+    const initialElements =
+      within(mediaGallery).queryAllByTestId(/^mediaElement-/);
     expect(initialElements.length).toBe(MEDIA_PER_PAGE);
 
     await mediaGallery.scrollTo(
