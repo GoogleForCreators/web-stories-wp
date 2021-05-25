@@ -105,7 +105,7 @@ const Pause = styled(Icons.StopFilled)`
 `;
 
 const playAboveSpacing = {
-  y: 18,
+  y: 22,
 };
 
 function VideoControls({
