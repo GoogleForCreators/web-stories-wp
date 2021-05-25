@@ -482,8 +482,6 @@ fdescribe('Quick Actions integration', () => {
       await waitFor(() => {
         expect(animations.length).toBe(0);
         expect(selectedElement.backgroundOverlay).toBeNull();
-        expect(selectedElement).toBeFalsy();
-
         expect(
           fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
             .disabled
