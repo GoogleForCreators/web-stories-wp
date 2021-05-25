@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { waitFor } from '@testing-library/dom';
 import { useStory } from '../../../app';
 import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
@@ -427,6 +428,11 @@ fdescribe('Quick Actions integration', () => {
           .disabled
       ).toBe(true);
 
+      // apply filter to background element
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.filters.linear
+      );
+
       // add animation to image
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
@@ -440,11 +446,6 @@ fdescribe('Quick Actions integration', () => {
       // apply animation to element
       await fixture.events.click(animation, { clickCount: 1 });
 
-      // apply filter to background element
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.filters.linear
-      );
-
       // verify that element has animation and filter
       const {
         animations: originalAnimations,
@@ -455,19 +456,20 @@ fdescribe('Quick Actions integration', () => {
           selectedElement: state.selectedElements[0],
         }))
       );
-      expect(originalAnimations.length).toBe(1);
-      expect(originalSelectedElement.backgroundOverlay.type).toBe('linear');
+
+      await waitFor(() => {
+        expect(originalAnimations.length).toBe(1);
+        expect(originalSelectedElement.backgroundOverlay.type).toBe('linear');
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+            .disabled
+        ).toBe(false);
+      });
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-          .disabled
-      ).toBe(false);
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
       );
-
-      await fixture.events.sleep(500);
 
       // verify that element has no animations
       const { animations, selectedElement } = await fixture.renderHook(() =>
@@ -476,14 +478,17 @@ fdescribe('Quick Actions integration', () => {
           selectedElement: state.selectedElements[0],
         }))
       );
-      expect(animations.length).toBe(0);
-      expect(selectedElement.backgroundOverlay).toBeNull();
-      expect(selectedElement).toBeFalsy();
 
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-          .disabled
-      ).toBe(true);
+      await waitFor(() => {
+        expect(animations.length).toBe(0);
+        expect(selectedElement.backgroundOverlay).toBeNull();
+        expect(selectedElement).toBeFalsy();
+
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+            .disabled
+        ).toBe(true);
+      });
 
       // click `undo` button on snackbar
       await fixture.events.click(
@@ -500,16 +505,19 @@ fdescribe('Quick Actions integration', () => {
           selectedElement: state.selectedElements[0],
         }))
       );
-      expect(revertedAnimations.length).toBe(1);
-      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-      expect(revertedSelectedElement.backgroundOverlay?.type).toEqual(
-        originalSelectedElement.backgroundOverlay?.type
-      );
 
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-          .disabled
-      ).toBe(false);
+      await waitFor(() => {
+        expect(revertedAnimations.length).toBe(1);
+        expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+        expect(revertedSelectedElement.backgroundOverlay?.type).toEqual(
+          originalSelectedElement.backgroundOverlay?.type
+        );
+
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+            .disabled
+        ).toBe(false);
+      });
     });
   });
 
