@@ -158,7 +158,7 @@ function GoogleAnalyticsSettings({
           {siteKitDisplayText}
         </SettingSubheading>
       </div>
-      {installed && analyticsActive ? (
+      {analyticsActive ? (
         <div>
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
