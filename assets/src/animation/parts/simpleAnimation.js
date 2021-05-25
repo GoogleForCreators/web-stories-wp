@@ -73,7 +73,6 @@ function SimpleAnimation(
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
   const AMPTarget = function ({ children, style = {} }) {
-    // TODO: Support opacity as well?
     const animationStyle = targetLeafElement
       ? {}
       : getInitialStyleFromKeyframes(keyframes);
