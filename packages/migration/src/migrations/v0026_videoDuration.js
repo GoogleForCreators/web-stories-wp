@@ -37,10 +37,17 @@ function updateElement(element) {
   ) {
     const times = element.resource.lengthFormatted.split(':');
     const timesNumbers = times.map(Number);
-    const [minutes, seconds] = timesNumbers;
-    const length = 60 * minutes + seconds;
+    if (timesNumbers.length === 2) {
+      const [minutes, seconds] = timesNumbers;
+      const length = 60 * minutes + seconds;
 
-    element.resource.length = length;
+      element.resource.length = length;
+    } else if (timesNumbers.length === 3) {
+      const [hours, minutes, seconds] = timesNumbers;
+      const length = 60 * 60 * hours + 60 * minutes + seconds;
+
+      element.resource.length = length;
+    }
   }
   return element;
 }
