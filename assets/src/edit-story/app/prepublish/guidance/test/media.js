@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../constants';
 import * as mediaGuidance from '../media';
 
 describe('Pre-publish checklist - media guidelines (guidance)', () => {
@@ -103,29 +104,6 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
   });
 
-  it('should return a message if any video resolution is too high to display on most mobile devices (>4k)', () => {
-    const tooHighVideoResolution = {
-      id: 101,
-      type: 'video',
-      resource: {
-        sizes: {
-          full: {
-            height: 2160,
-            width: 3840,
-          },
-        },
-      },
-    };
-
-    const result = mediaGuidance.mediaElementResolution(tooHighVideoResolution);
-    expect(result).not.toBeUndefined();
-    expect(result.message).toMatchInlineSnapshot(
-      `"Reduce video resolution to less than 4000p"`
-    );
-    expect(result.type).toStrictEqual('guidance');
-    expect(result.elementId).toStrictEqual(tooHighVideoResolution.id);
-  });
-
   it('should return a message if the video element is longer than 1 minute', () => {
     const tooLongVideo = {
       id: 202,
@@ -163,7 +141,7 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     };
 
     const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
-    expect(result.message).toBe('Video not optimized');
+    expect(result.message).toBe('Optimize video size');
     expect(result.type).toStrictEqual('guidance');
     expect(result.elementId).toStrictEqual(largeUnoptimizedVideo.id);
   });
@@ -212,6 +190,38 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(
       mediaGuidance.videoElementOptimized(smallOptimizedVideo)
     ).toBeUndefined();
+  });
+
+  it("should return a message if the video element doesn't have a poster image", () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+      },
+    };
+
+    const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
+    expect(result).not.toBeUndefined();
+    expect(result.message).toBe('Add poster image to every video');
+    expect(result.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.ERROR);
+    expect(result.elementId).toStrictEqual(posterlessVideo.id);
+  });
+
+  it('should not return a message if the video element has a poster image', () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+        poster: 'http://mydomain.com/test/poster',
+      },
+    };
+
+    const result = mediaGuidance.videoElementMissingPoster(posterlessVideo);
+    expect(result).toBeUndefined();
   });
 
   it.todo('should return a message if the video element is less than 24fps');

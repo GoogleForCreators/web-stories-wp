@@ -68,9 +68,16 @@ function PageTemplatesPane(props) {
     actions: { getCustomPageTemplates },
   } = useAPI();
 
-  const { savedTemplates, setSavedTemplates } = useLibrary((state) => ({
+  const {
+    savedTemplates,
+    setSavedTemplates,
+    nextTemplatesToFetch,
+    setNextTemplatesToFetch,
+  } = useLibrary((state) => ({
     savedTemplates: state.state.savedTemplates,
+    nextTemplatesToFetch: state.state.nextTemplatesToFetch,
     setSavedTemplates: state.actions.setSavedTemplates,
+    setNextTemplatesToFetch: state.actions.setNextTemplatesToFetch,
   }));
 
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(true);
@@ -85,8 +92,23 @@ function PageTemplatesPane(props) {
   );
 
   const loadTemplates = useCallback(() => {
-    getCustomPageTemplates().then(setSavedTemplates);
-  }, [getCustomPageTemplates, setSavedTemplates]);
+    getCustomPageTemplates(nextTemplatesToFetch)
+      .then(({ templates, hasMore }) => {
+        setSavedTemplates([...(savedTemplates || []), ...templates]);
+        if (!hasMore) {
+          setNextTemplatesToFetch(false);
+        } else {
+          setNextTemplatesToFetch(nextTemplatesToFetch + 1);
+        }
+      })
+      .catch(() => setNextTemplatesToFetch(false));
+  }, [
+    getCustomPageTemplates,
+    nextTemplatesToFetch,
+    setSavedTemplates,
+    savedTemplates,
+    setNextTemplatesToFetch,
+  ]);
 
   useEffect(() => {
     if (!savedTemplates && customPageTemplates) {
@@ -151,10 +173,9 @@ function PageTemplatesPane(props) {
           <DefaultTemplates pageSize={pageSize} />
         ) : (
           <SavedTemplates
-            savedTemplates={savedTemplates}
-            setSavedTemplates={setSavedTemplates}
             pageSize={pageSize}
             highlightedTemplate={highlightedTemplate}
+            loadTemplates={loadTemplates}
           />
         )}
       </PaneInner>

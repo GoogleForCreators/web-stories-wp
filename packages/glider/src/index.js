@@ -28,11 +28,9 @@ import 'glider-js/glider.css';
  * becomes useless on RTL sites.
  *
  * @todo Maybe replace glider-js with other lightweight lib which has RTL support. or Replace it with 'amp-carousel' once we have the support.
- *
  * @param {Object|string} slide Slide arrow string based on action.
  * @param {boolean}       dot   Is dot navigation action.
  * @param {Object}        e     Event object.
- *
  * @return {boolean} Navigation done.
  */
 Glider.prototype.scrollItem = function (slide, dot, e) {

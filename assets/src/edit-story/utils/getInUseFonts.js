@@ -18,7 +18,6 @@
  * Returns a list of font names used across all pages in a story.
  *
  * @param {Array<import('../types').Page>} pages List of pages.
- *
  * @return {Array<string>} Font names.
  */
 export function getInUseFontsForPages(pages) {
@@ -45,7 +44,6 @@ export function getInUseFontsForPages(pages) {
  * Returns a list of text sets that include the fonts provided in the options object.
  *
  * @param {Array<Object>} options Object containing an array of fonts and text sets to filter.
- *
  * @return {Array<Object>} List of text sets that match the array of fonts.
  */
 export function getTextSetsForFonts({ fonts, textSets }) {

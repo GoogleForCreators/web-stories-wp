@@ -34,13 +34,11 @@ describe('useLibrary()', () => {
     });
     const [media3p, text, pageTemplates] = [1, 2, 4];
 
-    const { Pane: ShouldBeEmptyMedia3pPane } = result.current.data.tabs[
-      media3p
-    ];
+    const { Pane: ShouldBeEmptyMedia3pPane } =
+      result.current.data.tabs[media3p];
     const { Pane: ShouldBeEmptyTextPane } = result.current.data.tabs[text];
-    const { Pane: ShouldBeEmptyPageTemplatesPane } = result.current.data.tabs[
-      pageTemplates
-    ];
+    const { Pane: ShouldBeEmptyPageTemplatesPane } =
+      result.current.data.tabs[pageTemplates];
 
     expect(<ShouldBeEmptyMedia3pPane />).toMatchInlineSnapshot('<EmptyPane />');
     const { container: emptyMedia3pPane } = render(
@@ -67,9 +65,8 @@ describe('useLibrary()', () => {
     await act(async () => {
       await result.current.actions.setTab(result.current.data.tabs[media3p].id);
     });
-    const { Pane: ShouldBeRenderedMedia3pPane } = result.current.data.tabs[
-      media3p
-    ];
+    const { Pane: ShouldBeRenderedMedia3pPane } =
+      result.current.data.tabs[media3p];
     expect(<ShouldBeRenderedMedia3pPane />).toMatchInlineSnapshot(
       `<Media3pPane />`
     );
@@ -85,9 +82,8 @@ describe('useLibrary()', () => {
         result.current.data.tabs[pageTemplates].id
       );
     });
-    const {
-      Pane: ShouldBeRenderedPageTemplatesPane,
-    } = result.current.data.tabs[pageTemplates];
+    const { Pane: ShouldBeRenderedPageTemplatesPane } =
+      result.current.data.tabs[pageTemplates];
     expect(<ShouldBeRenderedPageTemplatesPane />).toMatchInlineSnapshot(
       `<PageTemplatesPane />`
     );

@@ -26,18 +26,19 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import useApi from '../../api/useApi';
 
 export default function useMediaOptimization() {
-  const {
-    currentUser,
-    toggleWebStoriesMediaOptimization,
-    fetchCurrentUser,
-  } = useApi(
-    ({
-      state: { currentUser },
-      actions: {
-        usersApi: { toggleWebStoriesMediaOptimization, fetchCurrentUser },
-      },
-    }) => ({ currentUser, toggleWebStoriesMediaOptimization, fetchCurrentUser })
-  );
+  const { currentUser, toggleWebStoriesMediaOptimization, fetchCurrentUser } =
+    useApi(
+      ({
+        state: { currentUser },
+        actions: {
+          usersApi: { toggleWebStoriesMediaOptimization, fetchCurrentUser },
+        },
+      }) => ({
+        currentUser,
+        toggleWebStoriesMediaOptimization,
+        fetchCurrentUser,
+      })
+    );
 
   const dataIsLoaded =
     currentUser.data.meta?.web_stories_media_optimization !== undefined;

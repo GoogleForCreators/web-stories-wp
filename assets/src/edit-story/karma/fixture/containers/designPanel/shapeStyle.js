@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,24 @@
  * limitations under the License.
  */
 
-export { default } from './videoProcessing';
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
+
+/**
+ * The size position panel containing inputs for adding managing the size, position and rotationAngle.
+ */
+export class ShapeStyle extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get backgroundColor() {
+    return this.getByRole('textbox', { name: /Background color/i });
+  }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /Opacity/i });
+  }
+}

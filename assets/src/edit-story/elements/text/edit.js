@@ -147,21 +147,17 @@ function TextEdit({
     };
   }, [content]);
 
-  const {
-    dataToEditorX,
-    dataToEditorY,
-    editorToDataX,
-    editorToDataY,
-  } = useUnits(
-    ({
-      actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
-    }) => ({
-      dataToEditorX,
-      dataToEditorY,
-      editorToDataX,
-      editorToDataY,
-    })
-  );
+  const { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY } =
+    useUnits(
+      ({
+        actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
+      }) => ({
+        dataToEditorX,
+        dataToEditorY,
+        editorToDataX,
+        editorToDataY,
+      })
+    );
 
   const textProps = {
     ...generateParagraphTextStyle(

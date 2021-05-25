@@ -33,7 +33,6 @@ import { updateViewSettings } from '../../utils';
  * Toggle component for TinyMCE popup.
  *
  * @param {Object} props Component props.
- *
  * @return {*} React component.
  */
 const TinyMCEToggle = (props) => {

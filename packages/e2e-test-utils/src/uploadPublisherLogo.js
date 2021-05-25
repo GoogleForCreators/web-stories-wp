@@ -30,7 +30,6 @@ import getFileName from './getFileName';
  *
  * @param {string} file Filename
  * @param {boolean} checkUpload Check if upload was successful.
- *
  * @return {Promise<string>} Return the filename.
  */
 async function uploadPublisherLogo(file, checkUpload = true) {

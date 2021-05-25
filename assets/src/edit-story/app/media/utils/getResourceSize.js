@@ -24,7 +24,6 @@
  * @param {boolean} posterGenerated Whether a poster has been generated.
  * @param {number} posterWidth Poster width.
  * @param {number} posterHeight Poster height.karma-puppeteer-launcher/snapshot.cjs
- *
  * @return {Object} The resource's size (width and height).
  */
 function getResourceSize(

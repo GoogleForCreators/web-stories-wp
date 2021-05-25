@@ -42,7 +42,6 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  * Checks whether the file size is too large for transcoding.
  *
  * @see https://github.com/ffmpegwasm/ffmpeg.wasm/tree/9b56b7f05b552c404aa0f62f46bed2592d9daf06#what-is-the-maximum-size-of-input-file
- *
  * @param {File} file File object.
  * @param {number} file.size File size.
  * @return {boolean} Whether the file is too  large.
@@ -53,7 +52,6 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  * Custom hook to interact with FFmpeg.
  *
  * @see https://ffmpeg.org/ffmpeg.html
- *
  * @return {{
  * isFeatureEnabled: boolean,
  * isFileTooLarge: (file: File) => boolean,

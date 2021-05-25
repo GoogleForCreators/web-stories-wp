@@ -32,11 +32,13 @@ export const expandPresetStyles = ({ preset, theme }) => css`
   text-decoration: ${preset.textDecoration || 'none'};
 `;
 
-export const expandTextPreset = (presetSelector) => ({ theme }) =>
-  expandPresetStyles({
-    preset: presetSelector(
-      theme.typography.presets,
-      THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES
-    ),
-    theme,
-  });
+export const expandTextPreset =
+  (presetSelector) =>
+  ({ theme }) =>
+    expandPresetStyles({
+      preset: presetSelector(
+        theme.typography.presets,
+        THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES
+      ),
+      theme,
+    });

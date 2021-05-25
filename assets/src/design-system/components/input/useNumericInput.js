@@ -35,12 +35,10 @@ export const useNumericInput = ({
   const oldValue = useRef(value);
   const revertToOriginal = useRef(false);
   const [currentValue, setCurrentValue] = useState(value);
-  const options = useMemo(() => ({ allowEmpty, isFloat, max, min }), [
-    allowEmpty,
-    isFloat,
-    max,
-    min,
-  ]);
+  const options = useMemo(
+    () => ({ allowEmpty, isFloat, max, min }),
+    [allowEmpty, isFloat, max, min]
+  );
 
   /**
    * Call external `onChange`

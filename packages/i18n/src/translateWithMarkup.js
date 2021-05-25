@@ -93,7 +93,6 @@ function transform(node, mapping = {}) {
  * This way, using dangerouslySetInnerHTML can be avoided.
  *
  * @see https://github.com/google/web-stories-wp/issues/1578
- *
  * @param {Object} props Component props.
  * @param {?Object.<string, ReactElement>} props.mapping Map of tag names to React components.
  * @param {ReactNode[]|string} props.children Children / string to parse.

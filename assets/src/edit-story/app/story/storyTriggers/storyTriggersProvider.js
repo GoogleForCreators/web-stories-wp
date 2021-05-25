@@ -75,10 +75,10 @@ export function StoryTriggersProvider({ children, story }) {
   );
 
   // Memoizing provider values
-  const value = useMemo(() => [addEventListener, dispatchStoryEvent], [
-    addEventListener,
-    dispatchStoryEvent,
-  ]);
+  const value = useMemo(
+    () => [addEventListener, dispatchStoryEvent],
+    [addEventListener, dispatchStoryEvent]
+  );
 
   return (
     <Context.Provider value={value}>

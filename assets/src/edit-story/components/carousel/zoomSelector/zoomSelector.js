@@ -66,9 +66,10 @@ function ZoomSelector() {
     [zoomSetting]
   );
 
-  const handleSetZoom = useCallback((_event, value) => setZoomSetting(value), [
-    setZoomSetting,
-  ]);
+  const handleSetZoom = useCallback(
+    (_event, value) => setZoomSetting(value),
+    [setZoomSetting]
+  );
 
   return (
     <StyledDropDown

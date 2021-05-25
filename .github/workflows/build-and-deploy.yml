@@ -143,12 +143,7 @@ jobs:
         run: |
           npm run build:js
           npm run workflow:version -- --nightly
-          mkdir -p build/web-stories-composer build/web-stories-regular build/web-stories-dev
-
-      - name: Bundle composer version
-        run: |
-          npm run workflow:build-plugin -- --composer
-          mv build/web-stories build/web-stories-composer/
+          mkdir -p build/web-stories-regular build/web-stories-dev
 
       - name: Bundle regular version
         run: |
@@ -161,12 +156,6 @@ jobs:
           NODE_ENV=development npx webpack --config webpack.config.cjs
           npm run workflow:build-plugin
           mv build/web-stories build/web-stories-dev/
-
-      - name: Upload composer bundle
-        uses: actions/upload-artifact@v2
-        with:
-          name: web-stories-composer
-          path: build/web-stories-composer
 
       - name: Upload regular bundle
         uses: actions/upload-artifact@v2
@@ -205,7 +194,7 @@ jobs:
 
       - name: ZIP artifacts
         run: |
-          rm -rf web-stories.zip web-stories-composer.zip web-stories-composer web-stories-dev.zip
+          rm -rf web-stories.zip web-stories-dev.zip
           (cd web-stories && zip -mrT web-stories.zip web-stories && mv web-stories.zip ../ )
           (cd web-stories-dev && zip -mrT web-stories-dev.zip web-stories && mv web-stories-dev.zip ../ )
         working-directory: ${{ github.ref }}

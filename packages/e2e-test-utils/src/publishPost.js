@@ -36,7 +36,6 @@ import {
  * Instead, we wait to receive the post's updated permalink.
  *
  * @see https://github.com/WordPress/gutenberg/blob/f96bd6b6fdfca02d47edce8c2f0d68dccf3a37be/packages/e2e-test-utils/src/toggle-screen-option.js#L20-L23
- *
  * @return {Promise<string>} The post's permalink.
  */
 async function publishPost() {

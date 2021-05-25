@@ -22,7 +22,7 @@ use Google\Web_Stories\Tests\Test_Case;
 /**
  * Class Replace_Conic_Style_Presets
  *
- * @covers Google\Web_Stories\Migrations\Replace_Conic_Style_Presets;
+ * @covers \Google\Web_Stories\Migrations\Replace_Conic_Style_Presets;
  *
  * @package phpunit\tests\Migrations
  */

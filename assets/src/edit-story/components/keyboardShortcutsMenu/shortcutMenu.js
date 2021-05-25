@@ -97,7 +97,8 @@ function ShortcutMenu({ toggleMenu }) {
     const calc = () => {
       // Find node bottom offset from bottom of browser window
       const nodeRect = node.getBoundingClientRect();
-      const docRect = node.ownerDocument.documentElement.getBoundingClientRect();
+      const docRect =
+        node.ownerDocument.documentElement.getBoundingClientRect();
       setBottomOffset(docRect.height - nodeRect.y - nodeRect.height);
     };
     // Call it now
@@ -111,9 +112,10 @@ function ShortcutMenu({ toggleMenu }) {
     return () => window.removeEventListener('resize', calc);
   }, []);
 
-  const handleCloseClick = useCallback((e) => toggleMenu(e, false), [
-    toggleMenu,
-  ]);
+  const handleCloseClick = useCallback(
+    (e) => toggleMenu(e, false),
+    [toggleMenu]
+  );
 
   useEffect(() => {
     // When the popup opens, move focus inside it

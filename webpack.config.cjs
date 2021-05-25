@@ -151,7 +151,10 @@ const sharedConfig = {
     ].filter(Boolean),
   },
   plugins: [
-    process.env.BUNDLE_ANALYZER && new BundleAnalyzerPlugin(),
+    process.env.BUNDLE_ANALYZER &&
+      new BundleAnalyzerPlugin({
+        analyzerPort: 'auto',
+      }),
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),

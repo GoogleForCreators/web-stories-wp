@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Test_REST_TestCase;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -76,7 +77,7 @@ class Autosaves_Controller extends Test_REST_TestCase {
 
 		$story = self::factory()->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 			]
 		);
 
@@ -88,9 +89,9 @@ class Autosaves_Controller extends Test_REST_TestCase {
 			]
 		);
 
-
 		$response = rest_get_server()->dispatch( $request );
 		$new_data = $response->get_data();
+
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
 

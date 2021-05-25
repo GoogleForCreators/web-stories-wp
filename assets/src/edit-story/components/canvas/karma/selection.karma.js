@@ -140,7 +140,8 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
 
-    const prevPage = fixture.editor.canvas.framesLayer.prevPage.getBoundingClientRect();
+    const prevPage =
+      fixture.editor.canvas.framesLayer.prevPage.getBoundingClientRect();
     const resizeW = fixture
       .querySelector('.moveable-w')
       .getBoundingClientRect();
