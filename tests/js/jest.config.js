@@ -24,9 +24,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
   rootDir: '../../',
-  transform: {
-    '^.+\\.[jt]sx?$': 'babel-jest',
-  },
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),

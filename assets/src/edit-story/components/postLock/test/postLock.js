@@ -19,7 +19,7 @@
  */
 import { FlagsProvider } from 'flagged';
 import Modal from 'react-modal';
-import { screen } from '@testing-library/react';
+import { screen, act, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -126,14 +126,16 @@ describe('PostLock', () => {
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const myStoriesButton = screen.getByText('My Stories');
+    const myStoriesButton = screen.getByRole('link', { name: 'My Stories'});
     expect(myStoriesButton).toBeInTheDocument();
 
     const takeOverButton = screen.getByRole('button', { name: 'Take over' });
     expect(takeOverButton).toBeInTheDocument();
   });
 
-  it('should display dialog', async () => {
+  it.only('should display dialog', async () => {
+    jest.spyOn(window, 'setInterval');
+
     setup(
       Promise.resolve({
         locked: true,
@@ -143,19 +145,23 @@ describe('PostLock', () => {
       })
     );
 
-    jest.advanceTimersByTime(152 * 1000);
+    expect(setInterval).toHaveBeenCalledTimes(1);
 
-    const dialog = await screen.findByRole('dialog');
+    act(() => {
+      jest.advanceTimersByTime(160 * 1000);
+    });
+
+    const dialog = screen.getByRole('dialog');
     expect(dialog).toBeInTheDocument();
 
-    const myStoriesButton = screen.getByText('My Stories');
+    const myStoriesButton = screen.getByRole('link', {name: 'My Stories'});
     expect(myStoriesButton).toBeInTheDocument();
     expect(
       screen.getByText('John Doe now has editing control of this story.')
     ).toBeInTheDocument();
   });
 
-  it('should not display dialog', async () => {
+  it('should not display dialog', () => {
     setup(
       Promise.resolve({
         locked: true,
@@ -165,9 +171,7 @@ describe('PostLock', () => {
       })
     );
 
-    await expect(screen.findByRole('dialog')).rejects.toThrow(
-      /Unable to find role="dialog"/
-    );
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('should register beforeunload listener', () => {
