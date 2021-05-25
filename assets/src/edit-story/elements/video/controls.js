@@ -33,7 +33,7 @@ import Popup from '../../components/popup';
 import { Icons } from '../../../design-system';
 import { useConfig } from '../../app/config';
 
-const PLAY_BUTTON_SIZE = 52;
+const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
@@ -105,7 +105,7 @@ const Pause = styled(Icons.StopFilled)`
 `;
 
 const playAboveSpacing = {
-  y: 28,
+  y: 18,
 };
 
 function VideoControls({
