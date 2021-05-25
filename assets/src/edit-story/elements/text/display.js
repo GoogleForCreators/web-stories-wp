@@ -52,6 +52,7 @@ import {
   getHighlightLineheight,
   generateParagraphTextStyle,
   calcFontMetrics,
+  generateFontFamily,
 } from './util';
 
 const OutsideBorder = styled.div`
@@ -97,11 +98,40 @@ const ForegroundSpan = styled(Span)`
   background: none;
 `;
 
-const FillElement = styled.p`
+// Using attributes to avoid creation of hundreds of classes by styled components.
+const FillElement = styled.p.attrs(
+  ({
+    fontStyle,
+    fontSize,
+    fontWeight,
+    font,
+    marginOffset,
+    padding,
+    lineHeight,
+    textAlign,
+    dataToEditorY,
+  }) => ({
+    style: {
+      fontStyle,
+      fontSize: `${fontSize}px`,
+      fontWeight,
+      fontFamily: generateFontFamily(font),
+      margin: `${-dataToEditorY(marginOffset / 2)}px 0`,
+      padding: padding || 0,
+      lineHeight,
+      textAlign,
+    },
+  })
+)`
   margin: 0;
+  position: absolute;
+  z-index: 1;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  letter-spacing: normal;
+  color: #000000;
   ${elementFillContent}
-  ${elementWithFont}
-  ${elementWithTextParagraphStyle}
 `;
 
 const Background = styled.div`
@@ -281,6 +311,8 @@ function TextDisplay({
         dangerouslySetInnerHTML={{
           __html: content,
         }}
+        marginOffset={marginOffset}
+        dataToEditorY={dataToEditorY}
         {...props}
       />
     </Background>

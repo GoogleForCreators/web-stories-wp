@@ -25,11 +25,7 @@ import styled, { css } from 'styled-components';
  */
 import { StoryAnimation } from '../../../animation';
 import { getDefinitionForType } from '../../elements';
-import {
-  elementWithPosition,
-  elementWithRotation,
-  elementWithSize,
-} from '../../elements/shared';
+import { elementWithRotation } from '../../elements/shared';
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
@@ -42,9 +38,17 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 
-const Wrapper = styled.div`
-  ${elementWithPosition}
-  ${elementWithSize}
+// Using attributes to avoid creation of hundreds of classes by styled components.
+const Wrapper = styled.div.attrs(({ x, y, width, height }) => ({
+  style: {
+    left: `${x}px`,
+    top: `${y}px`,
+    width: `${width}px`,
+    height: `${height}px`,
+  },
+}))`
+  position: absolute;
+  z-index: 1;
   ${elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
