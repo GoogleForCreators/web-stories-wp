@@ -37,6 +37,7 @@ export default {
     'jest-canvas-mock',
     'core-js',
   ],
+  testEnvironment: 'jsdom',
   testMatch: [
     '**/__tests__/**/*.[jt]s',
     '**/test/**/*.[jt]s',
