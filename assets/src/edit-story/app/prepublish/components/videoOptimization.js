@@ -68,11 +68,13 @@ export function VideoOptimization({ element, caption }) {
   return (
     <Container>
       <Caption>{caption}</Caption>
-      <Thumbnail
-        src={resource?.poster}
-        alt={resource?.alt || __('Video thumbnail', 'web-stories')}
-        crossOrigin="anonymous"
-      />
+      {resource?.poster && (
+        <Thumbnail
+          src={resource.poster}
+          alt={resource?.alt || __('Video thumbnail', 'web-stories')}
+          crossOrigin="anonymous"
+        />
+      )}
       <OptimizeButton
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,4 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as useQuickActions } from './useQuickActions';
+
+/**
+ * Internal dependencies
+ */
+import { Container } from './container';
+
+/**
+ * The help center that can be toggled open
+ * or will show for specific interaction to help first time users.
+ */
+export class HelpCenter extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+  get toggleButton() {
+    return this.getByRole('button', { name: /^Help Center/ });
+  }
+
+  get quickTips() {
+    return this.queryByRole('dialog', { name: /^Help Center$/ });
+  }
+}
