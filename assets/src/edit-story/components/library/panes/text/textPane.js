@@ -35,10 +35,11 @@ import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
 
 if (!('ResizeObserver' in window)) {
-  const module = await import(
+  import(
     /* webpackChunkName: "resize-observer-polyfill" */ 'resize-observer-polyfill'
-  );
-  window.ResizeObserver = module.ResizeObserver;
+  )
+    .then((module) => (window.ResizeObserver = module.ResizeObserver))
+    .catch(() => undefined);
 }
 
 // Relative position needed for Moveable to update its position properly.
