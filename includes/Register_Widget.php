@@ -33,6 +33,24 @@ use Google\Web_Stories\Widgets\Stories;
  */
 class Register_Widget extends Service_Base {
 	/**
+	 * Stories instance.
+	 *
+	 * @var Stories Stories instance.
+	 */
+	private $stories;
+
+	/**
+	 * Register_Widget constructor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Stories $stories Stories instance.
+	 */
+	public function __construct( Stories $stories ) {
+		$this->stories = $stories;
+	}
+
+	/**
 	 * Register Widgets.
 	 *
 	 * @since 1.6.0
@@ -40,12 +58,7 @@ class Register_Widget extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		$injector = Services::get_injector();
-		if ( ! method_exists( $injector, 'make' ) ) {
-			return;
-		}
-		$story = $injector->make( Stories::class );
-		register_widget( $story );
+		register_widget( $this->stories );
 	}
 
 	/**
