@@ -28,7 +28,6 @@ import MediaSVG from '../media/svg';
 import { getBackgroundStyle } from './util';
 
 const Image = styled.img`
-  position: absolute;
   max-height: initial;
   object-fit: contain;
   width: ${({ width }) => `${width}px`};

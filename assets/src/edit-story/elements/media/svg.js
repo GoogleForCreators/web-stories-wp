@@ -33,6 +33,7 @@ const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   color: transparent;
   overflow: hidden;
   ${elementWithBorder}
+  position: static;
 `;
 
 function MediaSVG({

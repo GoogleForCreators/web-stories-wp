@@ -35,6 +35,7 @@ const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorder}
+  position: static;
 `;
 
 function ShapeSVG({ element, box: { width, height } }) {

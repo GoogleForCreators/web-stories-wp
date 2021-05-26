@@ -29,7 +29,6 @@ import MediaSVG from './svg';
 import { getMediaSizePositionProps } from '.';
 
 const Img = styled.img`
-  position: absolute;
   ${mediaWithScale}
 `;
 

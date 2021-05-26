@@ -95,6 +95,7 @@ const FillElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
+  position: static;
 `;
 
 const Background = styled.div`
@@ -102,6 +103,7 @@ const Background = styled.div`
   ${elementFillContent}
   ${elementWithBorder}
   margin: 0;
+  position: static;
 `;
 
 function TextSVG({
