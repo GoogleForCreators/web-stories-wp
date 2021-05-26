@@ -90,7 +90,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 */
 	public function register_scripts( WP_Scripts $wp_scripts ) {
 		$wp_scripts->add(
-			$this->handle(),
+			$this->get_handle(),
 			'https://cdn.ampproject.org/amp-story-player-v0.js',
 			[],
 			'v0',
