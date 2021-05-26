@@ -306,7 +306,7 @@ class Media extends Test_Case {
 
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
-	 * @covers ::get_poster_tax_query
+	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args() {
 		$expected = [
@@ -328,7 +328,7 @@ class Media extends Test_Case {
 
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
-	 * @covers ::get_poster_tax_query
+	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
 		$expected = [
