@@ -120,14 +120,12 @@ class Assets {
 
 		// Register any chunks of $script_handle first.
 		$asset = $this->get_asset_metadata( $script_handle );
-		// Webpack appends "-[contenthash]" to filenames of chunks, so omit the `?ver=` query param.
-		$chunk_version = null;
 		foreach ( $asset['js'] as $script_chunk ) {
 			$this->register_script(
 				$script_chunk,
 				$base_script_path . $script_chunk . '.js',
 				[],
-				$chunk_version,
+				WEBSTORIES_VERSION,
 				$in_footer
 			);
 		}
