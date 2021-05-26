@@ -67,7 +67,7 @@ class Stories extends Test_Case {
 	}
 
 	/**
-	 * @covers ::stories_widget_scripts
+	 * @covers ::enqueue_scripts
 	 */
 	public function test_enqueue_scripts() {
 		self::$testee->enqueue_scripts();
