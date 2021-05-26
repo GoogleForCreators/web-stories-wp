@@ -92,6 +92,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
+
+  // Firefox warns about cookies using `Same-Site: None`.
+  'will be soon rejected because it has the “SameSite” attribute set to “None”',
 ];
 
 export function addAllowedErrorMessage(message) {
