@@ -39,9 +39,8 @@ function getInsertedElementSize(
   ratio = 1,
   resource = null
 ) {
-  const { updateForResizeEvent, defaultAttributes } = getDefinitionForType(
-    type
-  );
+  const { updateForResizeEvent, defaultAttributes } =
+    getDefinitionForType(type);
 
   if (!isNum(width)) {
     if (isNum(height)) {

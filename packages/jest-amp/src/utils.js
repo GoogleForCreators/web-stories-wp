@@ -82,7 +82,6 @@ AmpStory.propTypes = {
  * Uses AMP Optimizer to add any missing tags and extension imports.
  *
  * @see https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer#incomplete-markup
- *
  * @param {string} string Input string.
  * @param {boolean} [optimize=true] Whether to use AMP Optimizer on the input string.
  * @return {Promise<[]>} List of AMP validation errors.

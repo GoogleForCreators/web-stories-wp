@@ -173,11 +173,8 @@ describe('setSelectedElementsById', () => {
   });
 
   it('should not update animationState if nothing has changed', () => {
-    const {
-      restore,
-      setSelectedElementsById,
-      updateAnimationState,
-    } = setupReducer();
+    const { restore, setSelectedElementsById, updateAnimationState } =
+      setupReducer();
 
     // Set an initial state.
     restore({
@@ -202,11 +199,8 @@ describe('setSelectedElementsById', () => {
   });
 
   it('should reset animationState if selection has changed', () => {
-    const {
-      restore,
-      setSelectedElementsById,
-      updateAnimationState,
-    } = setupReducer();
+    const { restore, setSelectedElementsById, updateAnimationState } =
+      setupReducer();
 
     // Set an initial state.
     restore({

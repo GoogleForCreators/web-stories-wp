@@ -25,10 +25,8 @@
  * orderBy: ?string,
  * pageToken: ?string
  * }) => Promise<{nextPageToken: *, media: *}>} ListMediaFn
- *
  * @typedef {(obj:{provider: string, orderBy: ?string})
  * => Promise<{categories: *}>} ListCategoriesFn
- *
  * @typedef {(obj:{registerUsageUrl: string})
  * => Promise<undefined>} RegisterUsageFn
  */

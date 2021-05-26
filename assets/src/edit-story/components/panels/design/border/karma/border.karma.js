@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
@@ -77,9 +82,14 @@ describe('Border Panel', () => {
       await fixture.events.keyboard.press('Tab');
 
       const borderColor = panel.borderColor;
+      await fixture.events.focus(borderColor.opacity);
       await fixture.events.click(borderColor.opacity, { clickCount: 3 });
       await fixture.events.keyboard.type('30');
       await fixture.events.keyboard.press('Tab');
+
+      await waitFor(() => {
+        expect(borderColor.opacity.getAttribute('value')).toBe('30%');
+      });
 
       const [element] = await getSelection();
       const {

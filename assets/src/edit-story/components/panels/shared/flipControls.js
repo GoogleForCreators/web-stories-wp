@@ -57,9 +57,10 @@ const StyledToggleButton = styled(ToggleButton)`
  * @return {*} Rendered component.
  */
 function FlipControls({ value, onChange }) {
-  const getCurrentFlipValue = useCallback((prop) => value[prop] === true, [
-    value,
-  ]);
+  const getCurrentFlipValue = useCallback(
+    (prop) => value[prop] === true,
+    [value]
+  );
   return (
     <ControlsContainer>
       <Tooltip title={__('Flip horizontally', 'web-stories')}>

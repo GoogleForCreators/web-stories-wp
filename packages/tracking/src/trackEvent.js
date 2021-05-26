@@ -29,7 +29,6 @@ import track from './track';
  * @see https://developers.google.com/analytics/devguides/collection/ga4/events
  * @see https://support.google.com/analytics/answer/9267735
  * @see https://support.google.com/analytics/answer/9310895?hl=en
- *
  * @param {string} eventName The event name (e.g. 'search'). The value that will appear as the event action in Google Analytics Event reports.
  * @param {Object<*>} [eventParameters] Event parameters.
  * @return {Promise<void>} Promise that always resolves.
@@ -42,13 +41,8 @@ async function trackEvent(eventName, eventParameters = {}) {
   let gtagEventParameters = {};
 
   // Universal Analytics backwards compatibility.
-  const {
-    search_type,
-    duration,
-    title_length,
-    unread_count,
-    ...rest
-  } = eventParameters;
+  const { search_type, duration, title_length, unread_count, ...rest } =
+    eventParameters;
   if (search_type) {
     gtagEventParameters = {
       ...rest,

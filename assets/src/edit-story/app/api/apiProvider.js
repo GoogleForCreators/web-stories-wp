@@ -225,7 +225,6 @@ function APIProvider({ children }) {
    *
    * @param {File}    file           Media File to Save.
    * @param {?Object} additionalData Additional data to include in the request.
-   *
    * @return {Promise} Media Object Promise.
    */
   const uploadMedia = useCallback(

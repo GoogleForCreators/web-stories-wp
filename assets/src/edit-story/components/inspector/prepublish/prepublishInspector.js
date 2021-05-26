@@ -22,11 +22,8 @@ import usePrepublishChecklist from './usePrepublishChecklist';
 import { ChecklistTab } from './components';
 
 function PrepublishInspector() {
-  const {
-    checklist,
-    currentCheckpoint,
-    isChecklistEmpty,
-  } = usePrepublishChecklist();
+  const { checklist, currentCheckpoint, isChecklistEmpty } =
+    usePrepublishChecklist();
 
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
     ({ state, actions }) => ({

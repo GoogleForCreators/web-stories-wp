@@ -20,7 +20,8 @@
 import { readFileSync, writeFileSync } from 'fs';
 
 const CDN_BASE_URL = 'https://wp.stories.google/static/';
-const CDN_URL_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_CDN_URL',\s*'([^']*)'\s*\);/;
+const CDN_URL_CONSTANT_REGEX =
+  /define\(\s*'WEBSTORIES_CDN_URL',\s*'([^']*)'\s*\);/;
 
 /**
  * Updates CDN URL in thhe main plugin file.

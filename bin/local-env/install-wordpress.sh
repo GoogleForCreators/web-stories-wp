@@ -151,14 +151,14 @@ echo -e $(status_message "Configuring site constants...")
 WP_DEBUG_CURRENT=$(wp config get --type=constant --format=json WP_DEBUG | tr -d '\r')
 
 if [ "$WP_DEBUG" != $WP_DEBUG_CURRENT ]; then
-	wp config set WP_DEBUG $WP_DEBUG --raw --type=constant --quiet
+	wp config set WP_DEBUG $WP_DEBUG --raw --type=constant --quiet --anchor="That's all, stop editing"
 	WP_DEBUG_RESULT=$(wp config get --type=constant --format=json WP_DEBUG | tr -d '\r')
 	echo -e $(status_message "WP_DEBUG: $WP_DEBUG_RESULT...")
 fi
 
 SCRIPT_DEBUG_CURRENT=$(wp config get --type=constant --format=json SCRIPT_DEBUG | tr -d '\r')
 if [ "$SCRIPT_DEBUG" != $SCRIPT_DEBUG_CURRENT ]; then
-	wp config set SCRIPT_DEBUG $SCRIPT_DEBUG --raw --type=constant --quiet
+	wp config set SCRIPT_DEBUG $SCRIPT_DEBUG --raw --type=constant --quiet --anchor="That's all, stop editing"
 	SCRIPT_DEBUG_RESULT=$(wp config get --type=constant --format=json SCRIPT_DEBUG | tr -d '\r')
 	echo -e $(status_message "SCRIPT_DEBUG: $SCRIPT_DEBUG_RESULT...")
 fi
@@ -169,7 +169,7 @@ if [ "$(wp config has --type=constant WEBSTORIES_DEV_MODE)" ]; then
 fi
 
 if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
-  wp config set WEBSTORIES_DEV_MODE $WEBSTORIES_DEV_MODE --raw --type=constant --quiet
+  wp config set WEBSTORIES_DEV_MODE $WEBSTORIES_DEV_MODE --raw --type=constant --quiet --anchor="That's all, stop editing"
   WEBSTORIES_DEV_MODE_RESULT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
@@ -179,7 +179,7 @@ if [ "$(wp config has --type=constant MEDIA_TRASH)" ]; then
   $MEDIA_TRASH_CURRENT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
 fi
 if [ "$MEDIA_TRASH" != $MEDIA_TRASH_CURRENT ]; then
-  wp config set MEDIA_TRASH $MEDIA_TRASH --raw --type=constant --quiet
+  wp config set MEDIA_TRASH $MEDIA_TRASH --raw --type=constant --quiet --anchor="That's all, stop editing"
   MEDIA_TRASH_RESULT=$(wp config get --type=constant --format=json MEDIA_TRASH | tr -d '\r')
   echo -e $(status_message "MEDIA_TRASH: $MEDIA_TRASH_RESULT...")
 fi

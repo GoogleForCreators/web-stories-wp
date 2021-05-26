@@ -50,9 +50,10 @@ function DropTargetsProvider({ children }) {
     })
   );
 
-  const elements = useMemo(() => currentPage?.elements || [], [
-    currentPage?.elements,
-  ]);
+  const elements = useMemo(
+    () => currentPage?.elements || [],
+    [currentPage?.elements]
+  );
 
   const sortedDropTargetIds = useMemo(
     () =>

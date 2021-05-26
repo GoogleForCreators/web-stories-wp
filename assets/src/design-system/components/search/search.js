@@ -61,7 +61,6 @@ import useSearch from './useSearch';
  * @param {number} props.popupZIndex Allows for an override of the default popup z index (2).
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue The selected value, should correspond to an object in the options array of objects.
- *
  */
 
 export const Search = ({
@@ -108,7 +107,7 @@ export const Search = ({
 
   /**
    * Callbacks that begin search interaction
-   * */
+   */
   const handleInputFocus = useCallback(() => {
     isOpen.set(true);
     isMenuFocused.set(false);
@@ -181,9 +180,10 @@ export const Search = ({
     isMenuFocused.set(false);
   }, [isOpen, isMenuFocused]);
 
-  const focusSentToList = useCallback(() => isMenuFocused.set(true), [
-    isMenuFocused,
-  ]);
+  const focusSentToList = useCallback(
+    () => isMenuFocused.set(true),
+    [isMenuFocused]
+  );
 
   const trimInputState = useCallback(() => {
     if (

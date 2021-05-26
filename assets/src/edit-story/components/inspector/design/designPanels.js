@@ -40,11 +40,8 @@ const Note = styled(Text)`
 `;
 
 function DesignPanels() {
-  const {
-    panels,
-    createSubmitHandlerForPanel,
-    panelProperties,
-  } = useDesignPanels();
+  const { panels, createSubmitHandlerForPanel, panelProperties } =
+    useDesignPanels();
   if (!panels?.length) {
     return (
       <NoSelection>

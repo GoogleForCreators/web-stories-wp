@@ -51,9 +51,10 @@ export default function useVirtualizedGridNavigation({
   const [activeGridItemId, setActiveGridItemId] = useState();
 
   const [isGridFocused, setIsGridFocused] = useState(false);
-  const currentAvailableRows = useMemo(() => rowVirtualizer.virtualItems, [
-    rowVirtualizer,
-  ]);
+  const currentAvailableRows = useMemo(
+    () => rowVirtualizer.virtualItems,
+    [rowVirtualizer]
+  );
   const currentAvailableRowsRef = useRef();
 
   /**

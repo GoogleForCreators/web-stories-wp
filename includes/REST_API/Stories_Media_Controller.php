@@ -31,6 +31,7 @@ use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Traits\Types;
+use WP_Post;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -196,6 +197,34 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		return $query_args;
 	}
 
+
+	/**
+	 * Prepares a single attachment output for response.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @param WP_Post         $post    Attachment object.
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response Response object.
+	 */
+	public function prepare_item_for_response( $post, $request ) {
+		$response = parent::prepare_item_for_response( $post, $request );
+
+		/**
+		 * Filters an attachment returned from the REST API.
+		 *
+		 * Allows modification of the attachment right before it is returned.
+		 *
+		 * Note the filter is run after rest_prepare_attachment is run. This filter is designed to only target web stories rest api requests.
+		 *
+		 * @since 1.7.2
+		 *
+		 * @param WP_REST_Response $response The response object.
+		 * @param WP_Post          $post     The original attachment post.
+		 * @param WP_REST_Request  $request  Request used to generate the response.
+		 */
+		return apply_filters( 'web_stories_rest_prepare_attachment', $response, $post, $request );
+	}
 
 	/**
 	 * Retrieves the supported media types.

@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace phpunit\tests\Migrations;
+namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Add_Media_Source_Editor
+ *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Editor
- * @package phpunit\tests\Migrations
  */
 class Add_Media_Source_Editor extends Test_Case {
 	/**

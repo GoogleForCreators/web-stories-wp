@@ -59,9 +59,10 @@ function useDesignPanels() {
     }
   );
 
-  const panels = useMemo(() => getDesignPanelsForSelection(selectedElements), [
-    selectedElements,
-  ]);
+  const panels = useMemo(
+    () => getDesignPanelsForSelection(selectedElements),
+    [selectedElements]
+  );
   const [submitHandlers, registerSubmitHandler] = useHandlers();
   const onSetProperties = useCallback(
     (newPropertiesOrUpdater) => {

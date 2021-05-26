@@ -25,8 +25,7 @@ const PHOTOS_BODY_JSON = {
       name: 'photo 29044',
       imageUrls: [
         {
-          url:
-            'https://upload.wikimedia.org/wikipedia/en/2/2e/Donald_Duck_-_temper.png',
+          url: 'https://upload.wikimedia.org/wikipedia/en/2/2e/Donald_Duck_-_temper.png',
           imageName: 'original',
         },
       ],

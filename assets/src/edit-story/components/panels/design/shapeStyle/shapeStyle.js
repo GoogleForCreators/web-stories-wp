@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -28,6 +28,7 @@ import { Row, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import getColorPickerActions from '../../shared/getColorPickerActions';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -40,14 +41,19 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
+  const colorInputRef = useRef();
+  const highlight = useFocusHighlight(states.STYLE, colorInputRef);
+
   return (
     <SimplePanel
+      css={highlight?.showEffect && styles.FLASH}
       name="style"
       title={__('Style', 'web-stories')}
-      isPersistable={false}
+      isPersistable={!highlight}
     >
       <Row>
         <Color
+          ref={colorInputRef}
           hasGradient
           value={backgroundColor}
           isMultiple={backgroundColor === ''}

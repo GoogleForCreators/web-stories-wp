@@ -67,7 +67,6 @@ function useUploader() {
    * Validates a file for upload.
    *
    * @throws Throws an error if file doesn't meet requirements.
-   *
    * @param {Object} file File object.
    * @param {boolean} canTranscodeFile Whether file can be transcoded by consumer.
    * @param {boolean} isFileTooLarge Whether file is too large for consumer.
