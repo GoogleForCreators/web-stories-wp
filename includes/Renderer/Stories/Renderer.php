@@ -28,7 +28,7 @@ namespace Google\Web_Stories\Renderer\Stories;
 
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Amp_Player_Assets;
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Services;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
@@ -55,11 +55,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $assets;
 
 	/**
-	 * Amp_Player_Assets instance.
+	 * AMP_Story_Player_Assets instance.
 	 *
-	 * @var Amp_Player_Assets Amp_Player_Assets instance.
+	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
 	 */
-	protected $amp_player_assets;
+	protected $amp_story_player_assets;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -166,8 +166,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;
 		}
-		$this->assets            = $injector->make( Assets::class );
-		$this->amp_player_assets = $injector->make( Amp_Player_Assets::class );
+		$this->assets                  = $injector->make( Assets::class );
+		$this->amp_story_player_assets = $injector->make( AMP_Story_Player_Assets::class );
 	}
 
 	/**
@@ -271,7 +271,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
-		$player_handle = ( $this->amp_player_assets )::HANDLE;
+		$player_handle = ( $this->amp_story_player_assets )::HANDLE;
 		// Web Stories lightbox script.
 		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ $player_handle ] );
 	}
@@ -512,7 +512,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
-			$player_handle = ( $this->amp_player_assets )::HANDLE;
+			$player_handle = ( $this->amp_story_player_assets )::HANDLE;
 			$this->assets->enqueue_style( $player_handle );
 			$this->assets->enqueue_script( $player_handle );
 			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );

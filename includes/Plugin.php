@@ -69,7 +69,7 @@ class Plugin extends ServiceBasedPlugin {
 		'activation_flag'              => Admin\Activation_Flag::class,
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
-		'amp_player_assets'            => Amp_Player_Assets::class,
+		'amp_story_player_assets'      => AMP_Story_Player_Assets::class,
 		'adsense'                      => AdSense::class,
 		'ad_manager'                   => Ad_Manager::class,
 		'admin'                        => Admin\Admin::class,
@@ -182,7 +182,7 @@ class Plugin extends ServiceBasedPlugin {
 			Integrations\Site_Kit::class,
 			Analytics::class,
 			Decoder::class,
-			Amp_Player_Assets::class,
+			AMP_Story_Player_Assets::class,
 			Admin\Google_Fonts::class,
 		];
 	}

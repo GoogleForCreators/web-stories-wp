@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Amp_Player_Assets.
+ * Class AMP_Story_Player_Assets.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -32,11 +32,11 @@ use WP_Styles;
 use WP_Scripts;
 
 /**
- * Class Amp_Player_Assets
+ * Class AMP_Story_Player_Assets
  *
  * @package Google\Web_Stories
  */
-class Amp_Player_Assets implements Service, Registerable {
+class AMP_Story_Player_Assets implements Service, Registerable {
 	/**
 	 * Amp story player handle.
 	 *

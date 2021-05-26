@@ -20,18 +20,18 @@ namespace Google\Web_Stories\Tests;
 use Google\Web_Stories\Assets;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Amp_Player_Assets
+ * @coversDefaultClass \Google\Web_Stories\AMP_Story_Player_Assets
  */
-class Amp_Player_Assets extends Test_Case {
+class AMP_Story_Player_Assets extends Test_Case {
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$amp_player_assets = new \Google\Web_Stories\Amp_Player_Assets();
-		$amp_player_assets->register();
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$amp_story_player_assets->register();
 
-		$this->assertTrue( wp_style_is( $amp_player_assets::HANDLE, 'registered' ) );
-		$this->assertTrue( wp_script_is( $amp_player_assets::HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( $amp_story_player_assets::HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( $amp_story_player_assets::HANDLE, 'registered' ) );
 	}
 }

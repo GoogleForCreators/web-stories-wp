@@ -30,7 +30,7 @@ namespace Google\Web_Stories\Renderer\Story;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Amp_Player_Assets;
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Traits\Amp;
 
 /**
@@ -64,25 +64,25 @@ class Embed {
 	private $assets;
 
 	/**
-	 * Amp_Player_Assets instance.
+	 * AMP_Story_Player_Assets instance.
 	 *
-	 * @var Amp_Player_Assets Amp_Player_Assets instance.
+	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
 	 */
-	protected $amp_player_assets;
+	protected $amp_story_player_assets;
 
 	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story             $story                  Story Object.
-	 * @param Assets            $assets                 Assets instance.
-	 * @param Amp_Player_Assets $amp_player_assets Amp_Player_Assets instance.
+	 * @param Story                   $story             Story Object.
+	 * @param Assets                  $assets            Assets instance.
+	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
 	 */
-	public function __construct( Story $story, Assets $assets, Amp_Player_Assets $amp_player_assets ) {
-		$this->assets            = $assets;
-		$this->story             = $story;
-		$this->amp_player_assets = $amp_player_assets;
+	public function __construct( Story $story, Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
+		$this->assets                  = $assets;
+		$this->story                   = $story;
+		$this->amp_story_player_assets = $amp_story_player_assets;
 	}
 
 	/**
@@ -142,8 +142,8 @@ class Embed {
 			return (string) ob_get_clean();
 		}
 
-		$this->assets->enqueue_style( ( $this->amp_player_assets )::HANDLE );
-		$this->assets->enqueue_script( ( $this->amp_player_assets )::HANDLE );
+		$this->assets->enqueue_style( ( $this->amp_story_player_assets )::HANDLE );
+		$this->assets->enqueue_script( ( $this->amp_story_player_assets )::HANDLE );
 
 		ob_start();
 		?>

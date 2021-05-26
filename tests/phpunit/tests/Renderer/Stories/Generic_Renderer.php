@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Renderer\Stories;
 
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Amp_Player_Assets;
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Test_Case;
 
@@ -94,7 +94,7 @@ class Generic_Renderer extends Test_Case {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_style_is( Amp_Player_Assets::HANDLE ) );
+		$this->assertTrue( wp_style_is( AMP_Story_Player_Assets::HANDLE ) );
 	}
 
 	/**
