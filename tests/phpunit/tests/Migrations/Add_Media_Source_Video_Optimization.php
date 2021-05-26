@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
-/**s
+/**
  * Class Add_Media_Source_Video_Optimization
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization
