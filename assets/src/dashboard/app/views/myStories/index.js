@@ -74,18 +74,12 @@ function MyStories() {
     })
   );
 
-  const {
-    filter,
-    page,
-    search,
-    sort,
-    view,
-    showStoriesWhileLoading,
-  } = useStoryView({
-    filters: STORY_STATUSES,
-    isLoading,
-    totalPages,
-  });
+  const { filter, page, search, sort, view, showStoriesWhileLoading } =
+    useStoryView({
+      filters: STORY_STATUSES,
+      isLoading,
+      totalPages,
+    });
 
   const { wpListURL } = useConfig();
 

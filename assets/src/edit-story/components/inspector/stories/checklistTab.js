@@ -49,15 +49,13 @@ export const _default = () => {
       type: 'error',
       storyId: 120,
       message: 'Missing poster image',
-      help:
-        'Used as the poster image for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
+      help: 'Used as the poster image for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
     },
     {
       type: 'error',
       storyId: 120,
       message: 'Missing story title',
-      help:
-        'Keep the title clear and clean, ideally under 10 words in less than 40 characters.',
+      help: 'Keep the title clear and clean, ideally under 10 words in less than 40 characters.',
     },
     {
       message: 'Missing Story Description',
@@ -75,8 +73,7 @@ export const _default = () => {
       storyId: 120,
       type: 'guidance',
       message: 'Too little text',
-      help:
-        'The entire story should have a minimum of 100 characters of text in total.',
+      help: 'The entire story should have a minimum of 100 characters of text in total.',
     },
   ];
   return (
@@ -97,15 +94,13 @@ export const withPages = () => {
       type: 'error',
       storyId: 120,
       message: 'Missing poster image',
-      help:
-        'Used as the poster image for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
+      help: 'Used as the poster image for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.',
     },
     {
       type: 'error',
       storyId: 120,
       message: 'Missing story title',
-      help:
-        'Keep the title clear and clean, ideally under 10 words in less than 40 characters.',
+      help: 'Keep the title clear and clean, ideally under 10 words in less than 40 characters.',
     },
     {
       message: 'Font size too small',
@@ -117,8 +112,7 @@ export const withPages = () => {
     },
     {
       message: 'Image missing description',
-      help:
-        'Add meaningful assistive text to images to optimize accessibility and indexability.',
+      help: 'Add meaningful assistive text to images to optimize accessibility and indexability.',
       elementId: 123,
       type: 'warning',
       page: 2,
@@ -143,16 +137,14 @@ export const withPages = () => {
       ],
       type: 'guidance',
       message: 'Too much text on page',
-      help:
-        'Keep text to max 200 characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than 10% of the pages in the story.',
+      help: 'Keep text to max 200 characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than 10% of the pages in the story.',
       page: 1,
     },
     {
       type: 'guidance',
       elementId: 123,
       message: 'Video or image too small on the page',
-      help:
-        'Use full screen videos and images where possible to keep to an immersive feeling. <a>(more info)</a>',
+      help: 'Use full screen videos and images where possible to keep to an immersive feeling. <a>(more info)</a>',
 
       page: 2,
       pageId: 456,

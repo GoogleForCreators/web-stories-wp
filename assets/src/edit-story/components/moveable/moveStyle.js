@@ -104,13 +104,8 @@ export const GlobalStyle = createGlobalStyle`
   .default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
     background: ${({ theme }) => theme.colors.border.selection} !important;
     width: 1px;
-    height: 13px;
-    top: 2px;
-  }
-
-  .default-moveable.moveable-control-box .moveable-rotation {
-    top: -15px;
-    bottom: initial;
+    height: 15px;
+    top: 25px;
   }
 
   .default-moveable.moveable-control-box .moveable-control.moveable-rotation-control {
@@ -118,6 +113,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 10px;
     height: 10px;
     margin-left: -5px;
+    top: 25px;
   }
 
   .default-moveable.hide-handles .moveable-line.moveable-rotation-line,

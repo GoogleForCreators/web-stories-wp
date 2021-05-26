@@ -63,7 +63,12 @@ const LinkContainer = styled.div`
 `;
 
 function SlugPanel() {
-  const { slug: savedSlug, link, permalinkConfig, updateStory } = useStory(
+  const {
+    slug: savedSlug,
+    link,
+    permalinkConfig,
+    updateStory,
+  } = useStory(
     ({
       state: {
         story: { slug = '', link, permalinkConfig },
@@ -94,9 +99,10 @@ function SlugPanel() {
     []
   );
 
-  const handleBlur = useCallback((evt) => updateSlug(evt.target.value), [
-    updateSlug,
-  ]);
+  const handleBlur = useCallback(
+    (evt) => updateSlug(evt.target.value),
+    [updateSlug]
+  );
 
   const displayLink =
     slug && permalinkConfig && inRange(slug.length, MIN_MAX.PERMALINK)

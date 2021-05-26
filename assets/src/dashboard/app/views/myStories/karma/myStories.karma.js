@@ -56,6 +56,73 @@ describe('Grid view', () => {
     return stories;
   }
 
+  async function focusOnGridByKeyboard() {
+    let limit = 0;
+    const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
+
+    while (!gridContainer.contains(document.activeElement) && limit < 20) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+
+    return gridContainer.contains(document.activeElement)
+      ? Promise.resolve()
+      : Promise.reject(new Error('could not focus on grid'));
+  }
+
+  async function getContextMenuItem(contextMenuText, storyIndex = 0) {
+    const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+    const selectedStory = storyCards[storyIndex];
+    await focusOnGridByKeyboard();
+
+    for (let i = 0; i <= storyIndex; i++) {
+      const expectedStory = storyCards[i];
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('right');
+      expect(expectedStory).toEqual(document.activeElement);
+    }
+
+    // we should have focused the indicated story in the grid
+    expect(selectedStory).toEqual(document.activeElement);
+
+    let limit = 0;
+    const contextMenuKababs = fixture.screen.getAllByLabelText('More Options');
+    const contextMenuKabab = contextMenuKababs[storyIndex];
+
+    // tab to the button which opens the context menu
+    while (!contextMenuKabab.contains(document.activeElement) && limit < 4) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+
+    expect(contextMenuKabab).toEqual(contextMenuKabab);
+
+    await fixture.events.keyboard.press('Enter');
+
+    // now the focused item should be the first context menu item
+    const contextMenuLists = fixture.screen.getAllByTestId(/context-menu-list/);
+    const contextMenuList = contextMenuLists[storyIndex];
+
+    // it is focused on the link within the list
+    const contextMenuItem =
+      within(contextMenuList).getByLabelText(contextMenuText);
+
+    limit = 0;
+    while (
+      document.activeElement.getAttribute('aria-label') !== contextMenuText &&
+      limit < 8
+    ) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+
+    expect(contextMenuItem).toEqual(document.activeElement);
+    return contextMenuItem;
+  }
+
   it('should render', async () => {
     const { storiesOrderById } = await getStoriesState();
     const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
@@ -327,9 +394,8 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.press('Enter');
 
-      const selectedStoryTitle = Object.values(stories)[
-        activeListItems.length - 1
-      ].title;
+      const selectedStoryTitle =
+        Object.values(stories)[activeListItems.length - 1].title;
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
@@ -434,6 +500,179 @@ describe('Grid view', () => {
       );
 
       expect(renderedStoriesById).toEqual(storiesOrderById);
+    });
+  });
+
+  describe('Dashboard keyboard navigation and focus logic', () => {
+    it('should navigate the grid via keyboard', async () => {
+      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      await focusOnGridByKeyboard();
+
+      for (let i = 0; i < storyCards.length; i++) {
+        const expectedStory = storyCards[i];
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('right');
+        expect(expectedStory).toEqual(document.activeElement);
+      }
+    });
+
+    it('should focus on context menu items via keyboard', async () => {
+      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const [selectedStory] = storyCards;
+      await focusOnGridByKeyboard();
+      await fixture.events.keyboard.press('right');
+
+      // we should have focused the first story in the grid
+      expect(selectedStory).toEqual(document.activeElement);
+
+      let limit = 0;
+      const [activeStoryContainer] =
+        fixture.screen.getAllByTestId(/^story-grid-item/);
+      const contextMenuKabab =
+        within(activeStoryContainer).getByLabelText('More Options');
+
+      // tab to the button which opens the context menu
+      while (!contextMenuKabab.contains(document.activeElement) && limit < 4) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('tab');
+        limit++;
+      }
+
+      expect(contextMenuKabab).toEqual(document.activeElement);
+
+      await fixture.events.keyboard.press('Enter');
+
+      // now the focused item should be the first context menu item
+      const [contextMenuList] =
+        within(activeStoryContainer).getAllByTestId(/context-menu-list/);
+      // it is focused on the link within the list
+      const [firstContextMenuItem, secondContextMenuItem] =
+        within(contextMenuList).getAllByRole('menuitem');
+      expect(firstContextMenuItem).toEqual(document.activeElement);
+
+      // tab to the next item
+      await fixture.events.keyboard.press('tab');
+      expect(secondContextMenuItem).toEqual(document.activeElement);
+    });
+
+    it('should rename a story via keyboard', async () => {
+      await getContextMenuItem('Rename');
+      await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('Backspace');
+      await fixture.events.keyboard.type('A New Title');
+      await fixture.events.keyboard.press('Enter');
+      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const firstStory = stories[0];
+      const { getByText } = within(firstStory);
+      expect(getByText(/A New Title/)).toBeTruthy();
+    });
+
+    it('should delete a story via keyboard', async () => {
+      let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      // count the original number of stories
+      const initialNumStories = stories.length;
+
+      // focus the delete context menu item of the first story with the keyboard
+      await getContextMenuItem('Delete Story');
+
+      // delete the story and confirm deletion
+      await fixture.events.keyboard.press('Enter');
+      const confirmDeleteButton = fixture.screen.getByRole('button', {
+        name: /^Confirm deleting story/,
+      });
+      let limit = 0;
+      while (
+        !confirmDeleteButton.contains(document.activeElement) &&
+        limit < 3
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('tab');
+        limit++;
+      }
+
+      // confirm deletion
+      await fixture.events.keyboard.press('Enter');
+
+      // count the new number of stories
+      stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(stories.length).toEqual(initialNumStories - 1);
+    });
+
+    it('should duplicate a story via keyboard', async () => {
+      let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+      // count the initial number of stories
+      const initialNumStories = stories.length;
+
+      //focus the duplicate item of the context menu of the first story
+      await getContextMenuItem('Duplicate');
+
+      // confirm duplication
+      await fixture.events.keyboard.press('Enter');
+
+      // count the new number of stories
+      stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      expect(stories.length).toEqual(initialNumStories + 1);
+
+      // the copied story is now the first story and contains (Copy)
+      const firstStory = stories[0];
+      const utils = within(firstStory);
+      const copiedStory = utils.queryAllByText(/Copy/)[0];
+      expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
+    });
+
+    it('should retain focus on menu close', async () => {
+      const storyIndex = 1;
+      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const selectedStory = storyCards[storyIndex];
+      // focus the delete context menu item of the first story with the keyboard
+      // test cancelling deletion of the second story (not the default first story)
+      // to make sure focus is retained
+      await getContextMenuItem('Delete Story', storyIndex);
+
+      // delete the story and confirm deletion
+      await fixture.events.keyboard.press('Enter');
+      const cancelDeleteButton = fixture.screen.getByRole('button', {
+        name: /^Cancel/,
+      });
+      let limit = 0;
+      while (
+        !cancelDeleteButton.contains(document.activeElement) &&
+        limit < 3
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('tab');
+        limit++;
+      }
+
+      // confirm deletion
+      await fixture.events.keyboard.press('Enter');
+
+      // focus should return to the second story
+      expect(selectedStory).toEqual(document.activeElement);
+    });
+
+    it('should exit the grid and re-focus the first item', async () => {
+      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const firstStory = storyCards[0];
+      const lastStory = storyCards[storyCards.length - 1];
+      await focusOnGridByKeyboard();
+
+      for (let i = 0; i < storyCards.length; i++) {
+        const expectedStory = storyCards[i];
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('right');
+        expect(expectedStory).toEqual(document.activeElement);
+      }
+      expect(lastStory).toEqual(document.activeElement);
+
+      const searchInput = fixture.screen.getByPlaceholderText('Search Stories');
+      expect(searchInput).toBeTruthy();
+      await fixture.events.focus(searchInput);
+
+      await focusOnGridByKeyboard();
+      await fixture.events.keyboard.press('right');
+      expect(firstStory).toEqual(document.activeElement);
     });
   });
 });

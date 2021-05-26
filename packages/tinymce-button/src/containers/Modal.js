@@ -32,7 +32,6 @@ import { prepareShortCode } from '../utils';
  * Pass extended props to the Modal component.
  *
  * @param {Function} select Store selector.
- *
  * @return {Object} Injected props.
  */
 const mapSelectToProps = (select) => {

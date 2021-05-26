@@ -120,13 +120,8 @@ function getExtractedInlineValue(value) {
 }
 
 function getTextInlineStyles(content) {
-  const {
-    color,
-    fontWeight,
-    isItalic,
-    isUnderline,
-    letterSpacing,
-  } = getHTMLInfo(content);
+  const { color, fontWeight, isItalic, isUnderline, letterSpacing } =
+    getHTMLInfo(content);
   return {
     color: color !== MULTIPLE_VALUE ? color : createSolid(0, 0, 0),
     fontWeight: getExtractedInlineValue(fontWeight),

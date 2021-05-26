@@ -28,7 +28,6 @@ import PropTypes from 'prop-types';
  * The server-side 'render_callback' is used to override this on page load.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/
- *
  * @param {Object} props Props.
  * @param {Object} props.attributes Block attributes.
  * @return {null|*} Rendered block.

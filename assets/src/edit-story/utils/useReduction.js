@@ -25,9 +25,10 @@ import { useReducer, useMemo } from 'react';
 
 export default function useReduction(initialState, reducerMap) {
   const [state, dispatch] = useReducer(makeReducer(reducerMap), initialState);
-  const actions = useMemo(() => makeActions(reducerMap, dispatch), [
-    reducerMap,
-  ]);
+  const actions = useMemo(
+    () => makeActions(reducerMap, dispatch),
+    [reducerMap]
+  );
   return [state, actions];
 }
 

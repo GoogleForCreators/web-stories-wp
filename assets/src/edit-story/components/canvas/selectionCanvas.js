@@ -179,12 +179,8 @@ function SelectionCanvas({ children }) {
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
-      const {
-        offsetLeft,
-        offsetTop,
-        offsetHeight,
-        offsetWidth,
-      } = fullbleedContainer;
+      const { offsetLeft, offsetTop, offsetHeight, offsetWidth } =
+        fullbleedContainer;
       const { offsetLeft: scrollLeft, offsetTop: scrollTop } = scrollContainer;
       // Offset from the fullbleed to the safe zone.
       const dx = offsetLeft + scrollLeft;

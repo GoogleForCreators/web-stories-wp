@@ -76,7 +76,7 @@ describe('StoryMenu', () => {
     );
 
     const menuItem = screen.getAllByRole('listitem')[0];
-    const menuItemButton = within(menuItem).getByRole('button');
+    const menuItemButton = within(menuItem).getByRole('menuitem');
 
     fireEvent.click(menuItemButton);
 

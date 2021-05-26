@@ -86,8 +86,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page1_bg.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page1_bg.jpg',
             width: 220,
             height: 330,
             posterId: 0,
@@ -149,8 +148,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_logo.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_logo.png',
             width: 75,
             height: 23,
             id: 1627,
@@ -327,8 +325,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_radish.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_radish.png',
             width: 220,
             height: 309,
             posterId: 0,
@@ -578,8 +575,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page3_image1.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page3_image1.jpg',
             width: 220,
             height: 147,
             posterId: 0,
@@ -639,8 +635,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_persimmon.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_persimmon.png',
             width: 220,
             height: 228,
             posterId: 0,
@@ -1036,8 +1031,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_radish.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_radish.png',
             width: 220,
             height: 309,
             posterId: 0,
@@ -1071,8 +1065,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_carrot.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_carrot.png',
             width: 220,
             height: 237,
             posterId: 0,
@@ -1106,8 +1099,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_persimmon.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_persimmon.png',
             width: 220,
             height: 228,
             posterId: 0,
@@ -1141,8 +1133,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/png',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_artichoke.png',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_artichoke.png',
             width: 220,
             height: 223,
             posterId: 0,
@@ -1723,8 +1714,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page5_bg.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page5_bg.jpg',
             width: 220,
             height: 391,
             posterId: 0,
@@ -1984,8 +1974,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page5_bg.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page5_bg.jpg',
             width: 220,
             height: 391,
             posterId: 0,
@@ -2964,8 +2953,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page7_bg.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page7_bg.jpg',
             width: 220,
             height: 330,
             posterId: 0,
@@ -3649,8 +3637,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page8_image1.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page8_image1.jpg',
             width: 330,
             height: 220,
             id: 1648,
@@ -4095,8 +4082,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image1.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image1.jpg',
             width: 220,
             height: 294,
             posterId: 0,
@@ -4129,8 +4115,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image4.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image4.jpg',
             width: 220,
             height: 284,
             posterId: 0,
@@ -4161,8 +4146,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image3.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image3.jpg',
             width: 220,
             height: 275,
             posterId: 0,
@@ -4193,8 +4177,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image2.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image2.jpg',
             width: 220,
             height: 330,
             posterId: 0,
@@ -4226,8 +4209,7 @@ const completeTemplateObject = {
           resource: {
             type: 'image',
             mimeType: 'image/jpeg',
-            src:
-              '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image1.jpg',
+            src: '__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image1.jpg',
             width: 220,
             height: 294,
             posterId: 0,

@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { DOCUMENT, DESIGN } from '../../components/inspector';
-import { MEDIA, TEXT } from '../../components/library/constants';
+import { MEDIA, MEDIA3P, TEXT } from '../../components/library/constants';
 
 /**
  * Highlight state object
@@ -25,22 +25,26 @@ import { MEDIA, TEXT } from '../../components/library/constants';
  * @typedef {Highlight} Highlight The current state of editor highlights
  * @property {string} tab The ID of the Inspector tab to highlight
  * @property {boolean} focus Whether there is a focusable element, use for accessibility
- *
  */
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
 
   // INSPECTOR
+  ANIMATION: 'ANIMATION',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
   CAPTIONS: 'CAPTIONS',
   EXCERPT: 'EXCERPT',
+  LINK: 'LINK',
   PAGE_BACKGROUND: 'PAGE_BACKGROUND',
   POSTER: 'POSTER',
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
+  VIDEO_A11Y_POSTER: 'VIDEO_A11Y_POSTER',
+  STYLE: 'STYLE',
 
   // LIBRARY
   MEDIA: 'MEDIA',
+  MEDIA3P: 'MEDIA3P',
   TEXT: 'TEXT',
 };
 
@@ -74,11 +78,31 @@ export const STATES = {
     focus: true,
     tab: DESIGN,
   },
+  [keys.ANIMATION]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.LINK]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.VIDEO_A11Y_POSTER]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.STYLE]: {
+    focus: true,
+    tab: DESIGN,
+  },
 
   // Library
   [keys.MEDIA]: {
     focus: true,
     tab: MEDIA.id,
+  },
+  [keys.MEDIA3P]: {
+    focus: true,
+    tab: MEDIA3P.id,
   },
   [keys.TEXT]: {
     focus: true,

@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
-import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
+import {
+  BG_MIN_SCALE,
+  BG_MAX_SCALE,
+  SCALE_DIRECTION,
+  BEZIER,
+} from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
 import { lerp, getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
@@ -26,7 +31,7 @@ export function EffectBackgroundZoom({
   zoomDirection = SCALE_DIRECTION.SCALE_OUT,
   duration = 1000,
   delay,
-  easing,
+  easing = BEZIER.inOut,
   transformOrigin,
 }) {
   // Define the range based off the element scale

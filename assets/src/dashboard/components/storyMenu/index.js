@@ -82,9 +82,10 @@ export default function StoryMenu({
 }) {
   const isPopoverMenuOpen = contextMenuId === story.id;
 
-  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
-    onMoreButtonSelected,
-  ]);
+  const handleDismiss = useCallback(
+    () => onMoreButtonSelected(-1),
+    [onMoreButtonSelected]
+  );
 
   return (
     <MenuContainer verticalAlign={verticalAlign}>

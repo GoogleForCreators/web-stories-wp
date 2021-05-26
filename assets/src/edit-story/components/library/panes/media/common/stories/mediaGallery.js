@@ -39,8 +39,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 18,
     height: 12,
-    src:
-      'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
+    src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
     id: 1,
@@ -50,8 +49,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 128,
     height: 72,
-    src:
-      'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
+    src: 'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
   },
   {
     id: 1,
@@ -61,8 +59,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 110,
     height: 62,
-    src:
-      'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg',
+    src: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg',
   },
   {
     id: 1,
@@ -82,8 +79,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 18,
     height: 12,
-    src:
-      'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
+    src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
     id: 1,
@@ -93,8 +89,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 218,
     height: 278,
-    src:
-      'https://i0.wp.com/rollinsps.vic.edu.au/wp-content/uploads/2018/11/IMG_0451.jpg',
+    src: 'https://i0.wp.com/rollinsps.vic.edu.au/wp-content/uploads/2018/11/IMG_0451.jpg',
   },
   {
     id: 1,
@@ -104,8 +99,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 1100,
     height: 825,
-    src:
-      'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
+    src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
     id: 1,
@@ -125,8 +119,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 640,
     height: 635,
-    src:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*',
+    src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*',
   },
   {
     id: 1,
@@ -136,8 +129,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 1100,
     height: 825,
-    src:
-      'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
+    src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
     id: 1,
@@ -147,8 +139,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 18,
     height: 12,
-    src:
-      'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
+    src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
     id: 1,
@@ -158,8 +149,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 320,
     height: 400,
-    src:
-      'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
+    src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
   {
     id: 1,
@@ -169,8 +159,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 1100,
     height: 825,
-    src:
-      'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
+    src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
     id: 1,
@@ -180,8 +169,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 480,
     height: 720,
-    src:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bernese-mountain-dog-royalty-free-image-1581013857.jpg?crop=0.87845xw:1xh;center,top&resize=480:*',
+    src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bernese-mountain-dog-royalty-free-image-1581013857.jpg?crop=0.87845xw:1xh;center,top&resize=480:*',
   },
   {
     id: 1,
@@ -191,8 +179,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 640,
     height: 640,
-    src:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-lead-1587757081.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*',
+    src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-lead-1587757081.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*',
   },
   {
     id: 1,
@@ -202,8 +189,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 320,
     height: 400,
-    src:
-      'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
+    src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
   {
     id: 1,
@@ -223,8 +209,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 640,
     height: 635,
-    src:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*',
+    src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*',
   },
   {
     id: 1,
@@ -234,8 +219,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 1100,
     height: 825,
-    src:
-      'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
+    src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
     id: 1,
@@ -245,8 +229,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 18,
     height: 12,
-    src:
-      'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
+    src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
     id: 1,
@@ -256,8 +239,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 320,
     height: 400,
-    src:
-      'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
+    src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
   {
     id: 1,
@@ -267,8 +249,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 1100,
     height: 825,
-    src:
-      'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
+    src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
     id: 1,
@@ -278,8 +259,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 480,
     height: 720,
-    src:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bernese-mountain-dog-royalty-free-image-1581013857.jpg?crop=0.87845xw:1xh;center,top&resize=480:*',
+    src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bernese-mountain-dog-royalty-free-image-1581013857.jpg?crop=0.87845xw:1xh;center,top&resize=480:*',
   },
   {
     id: 1,
@@ -289,8 +269,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 640,
     height: 640,
-    src:
-      'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-lead-1587757081.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*',
+    src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-lead-1587757081.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*',
   },
   {
     id: 1,
@@ -300,8 +279,7 @@ const resources = [
     mimeType: 'image/jpeg',
     width: 320,
     height: 400,
-    src:
-      'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
+    src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
 ];
 

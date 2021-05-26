@@ -25,7 +25,6 @@ const MODAL = '.media-modal';
  *
  * @param {string}file Filename
  * @param {boolean}exit If this helper should exit the dialog.
- *
  * @return {Promise<string>} Return the filename without ext.
  */
 async function uploadMedia(file, exit = true) {

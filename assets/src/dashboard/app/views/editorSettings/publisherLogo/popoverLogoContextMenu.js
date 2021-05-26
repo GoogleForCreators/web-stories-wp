@@ -47,9 +47,10 @@ function PopoverLogoContextMenu({
     [contextMenuId]
   );
 
-  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
-    onMoreButtonSelected,
-  ]);
+  const handleDismiss = useCallback(
+    () => onMoreButtonSelected(-1),
+    [onMoreButtonSelected]
+  );
 
   return (
     <MenuContainer>

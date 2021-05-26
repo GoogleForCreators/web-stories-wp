@@ -71,8 +71,9 @@ describe('Drop-Target order', () => {
     // Get the new element
     const otherImage = (await getElements(fixture))[2];
 
-    const otherFrame = fixture.editor.canvas.framesLayer.frame(otherImage.id)
-      .node;
+    const otherFrame = fixture.editor.canvas.framesLayer.frame(
+      otherImage.id
+    ).node;
 
     // Drag image by edge to position of top image edge
     // (which should collide with bg image edge)

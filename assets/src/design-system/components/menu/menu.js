@@ -47,7 +47,6 @@ import { EmptyList, ListGroupings } from './list';
  * @param {string} props.menuAriaLabel Specific label to use as menu's aria label for screen readers.
  * @param {string} props.parentId if in a dropDownMenu, this is the id associated with the button that controls when the menu is visible.
  * @param {boolean} props.isAbsolute If true, menu will be placed absolutely rather than statically.
- *
  */
 
 const Menu = ({

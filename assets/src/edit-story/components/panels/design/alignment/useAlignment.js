@@ -34,12 +34,8 @@ function useAlignment() {
     pushUpdate((properties) => {
       const { id } = properties;
       let offset = 0;
-      const {
-        width,
-        height,
-        frameWidth,
-        frameHeight,
-      } = updatedSelectedElementsWithFrame.find((item) => item.id === id);
+      const { width, height, frameWidth, frameHeight } =
+        updatedSelectedElementsWithFrame.find((item) => item.id === id);
       offset =
         direction === 'left' || direction === 'right'
           ? (frameWidth - width) / 2

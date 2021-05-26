@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { states, styles, useFocusHighlight } from '../../app/highlights';
+import { styles, useHighlights } from '../../app/highlights';
 import useLibrary from './useLibrary';
 import { getTabId } from './panes/shared';
 import {
@@ -41,8 +40,11 @@ function LibraryPanes() {
     tabs: state.data.tabs,
   }));
 
-  const mediaHighlight = useFocusHighlight(states.MEDIA);
-  const textHighlight = useFocusHighlight(states.TEXT);
+  const highlighted = useHighlights(({ ...highlighted }) => highlighted);
+
+  const mediaHighlights = highlighted[MEDIA.id];
+  const media3pHighlights = highlighted[MEDIA3P.id];
+  const textHighlights = highlighted[TEXT.id];
 
   return tabs.map(({ id }) => {
     const paneProps = {
@@ -55,19 +57,24 @@ function LibraryPanes() {
       case MEDIA.id:
         return (
           <MediaPane
+            css={mediaHighlights?.showEffect && styles.FLASH}
             {...paneProps}
-            css={mediaHighlight?.showEffect && styles.FLASH}
           />
         );
       case MEDIA3P.id:
-        return <Media3pPane {...paneProps} />;
+        return (
+          <Media3pPane
+            {...paneProps}
+            css={media3pHighlights?.showEffect && styles.FLASH}
+          />
+        );
       case SHAPES.id:
         return <ShapesPane {...paneProps} />;
       case TEXT.id:
         return (
           <TextPane
+            css={textHighlights?.showEffect && styles.FLASH}
             {...paneProps}
-            css={textHighlight?.showEffect && styles.FLASH}
           />
         );
       case ELEMS.id:

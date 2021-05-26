@@ -14,11 +14,11 @@
     "prop-types": "^15.7.2",
     "@wordpress/compose": "^3.23.0",
     "@wordpress/components": "^13.0.1",
-    "@wordpress/data": "^5.0.0",
+    "@wordpress/data": "^5.1.0",
     "@wordpress/element": "^2.19.0",
     "@wordpress/i18n": "^3.17.0"
   },
   "devDependencies": {
-    "react-test-renderer": "^16.14.0"
+    "react-test-renderer": "^17.0.2"
   }
 }
