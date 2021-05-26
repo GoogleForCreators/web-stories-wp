@@ -25,22 +25,13 @@ use Google\Web_Stories\Assets;
 class Amp_Player_Assets extends Test_Case {
 
 	/**
-	 * @covers ::get_font_handle
-	 */
-	public function test_get_handle() {
-		$actual = ( new \Google\Web_Stories\Amp_Player_Assets() )->get_handle();
-
-		$this->assertSame( 'standalone-amp-story-player', $actual );
-	}
-
-	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
 		$amp_player_assets = new \Google\Web_Stories\Amp_Player_Assets();
 		$amp_player_assets->register();
 
-		$this->assertTrue( wp_style_is( $amp_player_assets->get_handle(), 'registered' ) );
-		$this->assertTrue( wp_script_is( $amp_player_assets->get_handle(), 'registered' ) );
+		$this->assertTrue( wp_style_is( $amp_player_assets::HANDLE, 'registered' ) );
+		$this->assertTrue( wp_script_is( $amp_player_assets::HANDLE, 'registered' ) );
 	}
 }

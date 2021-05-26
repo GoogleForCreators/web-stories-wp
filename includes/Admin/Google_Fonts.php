@@ -41,7 +41,11 @@ use WP_Styles;
  * @package Google\Web_Stories\Admin
  */
 class Google_Fonts implements Conditional, Service, Registerable {
-
+	/**
+	 * Web stories font handle.
+	 *
+	 * @var string
+	 */
 	const HANDLE = 'web-stories-fonts';
 
 	/**
@@ -53,17 +57,6 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 */
 	public static function is_needed() {
 		return is_admin() && ! wp_doing_ajax();
-	}
-
-	/**
-	 * Provides the asset handle.
-	 *
-	 * @since 1.8.0
-	 *
-	 * @return string
-	 */
-	public function get_handle() {
-		return self::HANDLE;
 	}
 
 	/**
@@ -90,7 +83,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 		// PHPCS ignore reason: WP will strip multiple `family` args from the Google fonts URL while adding the version string,
 		// so we need to avoid specifying a version at all.
 		$wp_styles->add(
-			$this->get_handle(),
+			self::HANDLE,
 			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
 			[],
 			WEBSTORIES_VERSION

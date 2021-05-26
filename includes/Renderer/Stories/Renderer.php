@@ -55,6 +55,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $assets;
 
 	/**
+	 * Amp_Player_Assets instance.
+	 *
+	 * @var Amp_Player_Assets Amp_Player_Assets instance.
+	 */
+	protected $amp_player_assets;
+
+	/**
 	 * Web Stories stylesheet handle.
 	 *
 	 * @var string
@@ -159,7 +166,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;
 		}
-		$this->assets = $injector->make( Assets::class );
+		$this->assets            = $injector->make( Assets::class );
+		$this->amp_player_assets = $injector->make( Amp_Player_Assets::class );
 	}
 
 	/**
@@ -263,8 +271,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories styles for AMP and non-AMP pages.
 		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
+		$player_handle = ( $this->amp_player_assets )::HANDLE;
 		// Web Stories lightbox script.
-		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ Amp_Player_Assets::HANDLE ] );
+		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ $player_handle ] );
 	}
 
 	/**
@@ -503,8 +512,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
-			$this->assets->enqueue_style( Amp_Player_Assets::HANDLE );
-			$this->assets->enqueue_script( Amp_Player_Assets::HANDLE );
+			$player_handle = ( $this->amp_player_assets )::HANDLE;
+			$this->assets->enqueue_style( $player_handle );
+			$this->assets->enqueue_script( $player_handle );
 			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">

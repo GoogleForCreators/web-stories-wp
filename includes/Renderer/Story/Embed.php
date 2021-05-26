@@ -142,8 +142,8 @@ class Embed {
 			return (string) ob_get_clean();
 		}
 
-		$this->assets->enqueue_style( $this->amp_player_assets->get_handle() );
-		$this->assets->enqueue_script( $this->amp_player_assets->get_handle() );
+		$this->assets->enqueue_style( ( $this->amp_player_assets )::HANDLE );
+		$this->assets->enqueue_script( ( $this->amp_player_assets )::HANDLE );
 
 		ob_start();
 		?>

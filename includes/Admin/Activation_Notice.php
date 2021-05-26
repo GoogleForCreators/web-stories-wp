@@ -114,7 +114,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		 */
 		unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.VIP.SuperGlobalInputUsage
 
-		$font_handle = $this->google_fonts->get_handle();
+		$font_handle = ( $this->google_fonts )::HANDLE;
 		$this->assets->enqueue_style( $font_handle );
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );

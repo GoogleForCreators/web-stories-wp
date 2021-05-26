@@ -77,8 +77,9 @@ class Web_Stories_Block extends Embed_Base {
 	 */
 	public function register() {
 		parent::register();
-		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [ $this->amp_player_assets->get_handle(), Tracking::SCRIPT_HANDLE ] );
-		$this->assets->register_style_asset( self::SCRIPT_HANDLE, [ $this->amp_player_assets->get_handle(), parent::SCRIPT_HANDLE ] );
+		$player_handle = ( $this->amp_player_assets )::HANDLE;
+		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [ $player_handle, Tracking::SCRIPT_HANDLE ] );
+		$this->assets->register_style_asset( self::SCRIPT_HANDLE, [ $player_handle, parent::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
