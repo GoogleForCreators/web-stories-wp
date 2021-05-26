@@ -83,7 +83,7 @@ class Tracking extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
-		$assets   = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets   = new \Google\Web_Stories\Assets();
 		$settings = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit, $assets ) )->get_settings();
 
 		$this->assertArrayHasKey( 'trackingAllowed', $settings );
@@ -140,7 +140,7 @@ class Tracking extends Test_Case {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'get_enabled_experiments' )
 					->willReturn( [ 'enableFoo', 'enableBar' ] );
-		$assets           = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets           = new \Google\Web_Stories\Assets();
 		$settings         = ( new \Google\Web_Stories\Tracking( $experiments, $site_kit, $assets ) )->get_settings();
 		$tracking_allowed = $settings['trackingAllowed'];
 

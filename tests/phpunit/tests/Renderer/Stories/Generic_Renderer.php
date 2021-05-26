@@ -73,17 +73,15 @@ class Generic_Renderer extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 
-		$this->story_model       = $this->createMock( Story::class );
-		$this->story_query       = $this->createMock( Story_Query::class );
-		$this->assets            = $this->createMock( Assets::class );
-		$this->amp_player_assets = $this->createMock( Amp_Player_Assets::class );
+		$this->story_model = $this->createMock( Story::class );
+		$this->story_query = $this->createMock( Story_Query::class );
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
 	/**
-	 * @covers ::assets
+	 * @covers ::load_assets
 	 */
-	public function test_assets() {
+	public function test_load_assets() {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
@@ -93,10 +91,10 @@ class Generic_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->amp_player_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_style_is( $this->amp_player_assets->get_handle() ) );
+		$this->assertTrue( wp_style_is( Amp_Player_Assets::HANDLE ) );
 	}
 
 	/**
@@ -121,7 +119,7 @@ class Generic_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->amp_player_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
 		$output = $renderer->render();

@@ -29,7 +29,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$assets  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets  = new \Google\Web_Stories\Assets();
 		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
 
 		$tinymce->register();
@@ -55,7 +55,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::tinymce_web_stories_button
 	 */
 	public function test_tinymce_web_stories_button() {
-		$assets  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets  = new \Google\Web_Stories\Assets();
 		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
 		$result  = $tinymce->tinymce_web_stories_button( [] );
 
@@ -66,7 +66,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::web_stories_mce_plugin
 	 */
 	public function test_web_stories_mce_plugin() {
-		$assets  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets  = new \Google\Web_Stories\Assets();
 		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
 		$result  = $tinymce->web_stories_mce_plugin( [] );
 
@@ -77,7 +77,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::web_stories_tinymce_root_element
 	 */
 	public function test_web_stories_tinymce_root_element() {
-		$assets  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets  = new \Google\Web_Stories\Assets();
 		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
 		$result  = get_echo( [ $tinymce, 'web_stories_tinymce_root_element' ] );
 		$result  = trim( $result );
@@ -89,7 +89,7 @@ class TinyMCE extends Test_Case {
 	 * @covers ::script_loader_tag
 	 */
 	public function test_script_loader_tag() {
-		$assets  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets  = new \Google\Web_Stories\Assets();
 		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
 		$result  = $tinymce->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
 
@@ -101,7 +101,7 @@ class TinyMCE extends Test_Case {
 	 * @covers \Google\Web_Stories\Traits\Screen::is_block_editor
 	 */
 	public function test_is_block_editor() {
-		$assets  = $this->createMock( \Google\Web_Stories\Assets::class );
+		$assets  = new \Google\Web_Stories\Assets();
 		$tinymce = new \Google\Web_Stories\Admin\TinyMCE( $assets );
 		$result  = $this->call_private_method( $tinymce, 'is_block_editor' );
 

@@ -17,9 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Stories;
 
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Amp_Player_Assets;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Test_Case;
 
@@ -77,10 +75,8 @@ class Carousel_Renderer extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 
-		$this->story_model            = $this->createMock( Story::class );
-		$this->story_query            = $this->createMock( Story_Query::class );
-		$this->assets                 = $this->createMock( Assets::class );
-		$this->register_global_assets = $this->createMock( Amp_Player_Assets::class );
+		$this->story_model = $this->createMock( Story::class );
+		$this->story_query = $this->createMock( Story_Query::class );
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
@@ -97,7 +93,7 @@ class Carousel_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query );
 		$renderer->init();
 
 		$this->assertTrue( wp_script_is( $renderer::SCRIPT_HANDLE, 'registered' ) );
@@ -126,7 +122,7 @@ class Carousel_Renderer extends Test_Case {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Carousel_Renderer( $this->story_query );
 
 		$renderer->init();
 

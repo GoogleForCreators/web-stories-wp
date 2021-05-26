@@ -84,9 +84,7 @@ class Renderer extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 
-		$this->story_model            = $this->createMock( Story::class );
-		$this->assets                 = $this->createMock( Assets::class );
-		$this->register_global_assets = $this->createMock( Amp_Player_Assets::class );
+		$this->story_model = $this->createMock( Story::class );
 		$this->story_model->load_from_post( self::$story_id );
 
 		$this->story_query = $this->createMock( Story_Query::class );
@@ -106,7 +104,7 @@ class Renderer extends Test_Case {
 	 * @covers ::load_assets
 	 */
 	public function test_assets() {
-		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new Test_Renderer( $this->story_query );
 
 		$renderer->load_assets();
 
@@ -118,7 +116,7 @@ class Renderer extends Test_Case {
 	 */
 	public function test_is_view_type() {
 
-		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new Test_Renderer( $this->story_query );
 
 		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'grid' ] );
 
@@ -139,7 +137,7 @@ class Renderer extends Test_Case {
 				'view_type' => 'grid',
 			]
 		);
-		$renderer = new Test_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new Test_Renderer( $this->story_query );
 
 		$output = $this->call_private_method( $renderer, 'get_view_type' );
 

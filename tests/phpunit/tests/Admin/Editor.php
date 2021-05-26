@@ -91,7 +91,7 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
+		$register_font = new \Google\Web_Stories\Admin\Google_Fonts();
 		$assets        = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
@@ -129,8 +129,8 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$register_font = new \Google\Web_Stories\Admin\Google_Fonts();
+		$assets        = new \Google\Web_Stories\Assets();
 
 		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 		$results = $editor->get_editor_settings();
@@ -149,8 +149,9 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$register_font = new \Google\Web_Stories\Admin\Google_Fonts();
+		$assets        = new \Google\Web_Stories\Assets();
+
 
 		$editor  = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 		$results = $editor->get_editor_settings();
@@ -168,8 +169,9 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$register_font = new \Google\Web_Stories\Admin\Google_Fonts();
+		$assets        = new \Google\Web_Stories\Assets();
+
 
 		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 
@@ -192,8 +194,9 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$register_font = new \Google\Web_Stories\Admin\Google_Fonts();
+		$assets        = new \Google\Web_Stories\Assets();
+
 
 		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 
@@ -214,8 +217,9 @@ class Editor extends Test_Case {
 		$meta_boxes    = $this->createMock( \Google\Web_Stories\Admin\Meta_Boxes::class );
 		$decoder       = $this->createMock( \Google\Web_Stories\Decoder::class );
 		$locale        = $this->createMock( \Google\Web_Stories\Locale::class );
-		$register_font = $this->createMock( \Google\Web_Stories\Admin\Google_Fonts::class );
-		$assets        = $this->createMock( \Google\Web_Stories\Assets::class );
+		$register_font = new \Google\Web_Stories\Admin\Google_Fonts();
+		$assets        = new \Google\Web_Stories\Assets();
+
 
 		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $register_font, $assets );
 
