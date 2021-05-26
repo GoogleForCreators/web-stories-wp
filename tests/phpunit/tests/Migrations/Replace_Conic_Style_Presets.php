@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-namespace phpunit\tests\Migrations;
+namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Replace_Conic_Style_Presets
  *
- * @covers \Google\Web_Stories\Migrations\Replace_Conic_Style_Presets;
- *
- * @package phpunit\tests\Migrations
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Replace_Conic_Style_Presets
  */
 class Replace_Conic_Style_Presets extends Test_Case {
 	/**

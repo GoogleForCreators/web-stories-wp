@@ -104,7 +104,7 @@ class Story_Sanitizer extends Test_Case {
 	/**
 	 * @dataProvider get_poster_image_data
 	 * @covers ::sanitize
-	 * @covers Sanitization_Utils::add_poster_images
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 *
 	 * @param string   $source   Source.
 	 * @param string   $expected Expected.
@@ -213,7 +213,7 @@ class Story_Sanitizer extends Test_Case {
 	}
 
 	/**
-	 * @covers Sanitization_Utils::transform_html_start_tag
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_html_start_tag
 	 */
 	public function test_transform_html_start_tag() {
 		$source = '<html><head></head><body><amp-story></amp-story></body></html>';
@@ -231,7 +231,7 @@ class Story_Sanitizer extends Test_Case {
 	}
 
 	/**
-	 * @covers Sanitization_Utils::transform_a_tags
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
 	 */
 	public function test_transform_a_tags() {
 		$source = '<html><head></head><body><amp-story><a href="https://www.google.com">Google</a></amp-story></body></html>';
