@@ -20,7 +20,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import ResizeObserver from 'resize-observer-polyfill';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -34,6 +33,13 @@ import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
+
+if (!('ResizeObserver' in window)) {
+  const module = await import(
+    /* webpackChunkName: "resize-observer-polyfill" */ 'resize-observer-polyfill'
+  );
+  window.ResizeObserver = module.ResizeObserver;
+}
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`

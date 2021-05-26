@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * Internal dependencies
  */
 import { BEZIER } from '../../../../design-system';
 import { TRANSITION_DURATION } from '../constants';
+
+if (!('ResizeObserver' in window)) {
+  const module = await import(
+    /* webpackChunkName: "resize-observer-polyfill" */ 'resize-observer-polyfill'
+  );
+  window.ResizeObserver = module.ResizeObserver;
+}
 
 /**
  * Removes inner Element from the layout flow without disrupting

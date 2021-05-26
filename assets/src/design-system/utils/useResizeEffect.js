@@ -17,12 +17,14 @@
 /**
  * External dependencies
  */
-import ResizeObserver from 'resize-observer-polyfill';
-
-/**
- * External dependencies
- */
 import { useEffect } from 'react';
+
+if (!('ResizeObserver' in window)) {
+  const module = await import(
+    /* webpackChunkName: "resize-observer-polyfill" */ 'resize-observer-polyfill'
+  );
+  window.ResizeObserver = module.ResizeObserver;
+}
 
 /**
  * @param {Object<{current: ?Element}>} ref Target node ref.
