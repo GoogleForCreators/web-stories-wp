@@ -40,6 +40,7 @@ export const ELEMENT_TYPE_COPY = {
 export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add link', 'web-stories'),
+  ADD_CAPTIONS: __('Add captions', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
   CHANGE_COLOR: __('Change color', 'web-stories'),
   CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
@@ -53,6 +54,10 @@ export const ACTION_TEXT = {
 export const RESET_PROPERTIES = {
   ANIMATION: 'animation',
   OVERLAY: 'overlay',
+  BACKGROUND_OVERLAY: 'backgroundOverlay',
+  OPACITY: 'opacity',
+  BORDER: 'border',
+  BORDER_RADIUS: 'borderRadius',
 };
 
 export const RESET_LIST_COPY = {

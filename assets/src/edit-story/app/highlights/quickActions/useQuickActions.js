@@ -32,6 +32,7 @@ import {
   Link,
   Media,
   PictureSwap,
+  Captions,
 } from '../../../../design-system/icons';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
@@ -107,6 +108,18 @@ const useQuickActions = () => {
         };
       }
 
+      if (properties.includes(RESET_PROPERTIES.OPACITY)) {
+        newProperties.opacity = 100;
+      }
+
+      if (properties.includes(RESET_PROPERTIES.BORDER)) {
+        newProperties.border = null;
+      }
+
+      if (properties.includes(RESET_PROPERTIES.BORDER_RADIUS)) {
+        newProperties.borderRadius = null;
+      }
+
       updateElementsById({
         elementIds: [elementId],
         properties: (currentProperties) =>
@@ -174,6 +187,7 @@ const useQuickActions = () => {
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
+    handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
@@ -181,6 +195,7 @@ const useQuickActions = () => {
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
+      handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
     [handleFocusPanel]
   );
@@ -356,6 +371,52 @@ const useQuickActions = () => {
     handleClearAnimationsAndFilters,
   ]);
 
+  const videoActions = useMemo(() => {
+    const resetProperties = getResetProperties(
+      selectedElement,
+      selectedElementAnimations
+    );
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.CLEAR_ANIMATIONS,
+      onClick: () =>
+        handleClearAnimationsAndFilters({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: selectedElement?.type,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+    const actions = [
+      {
+        Icon: PictureSwap,
+        label: ACTION_TEXT.REPLACE_MEDIA,
+        onClick: handleFocusMediaPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+      {
+        Icon: Captions,
+        label: ACTION_TEXT.ADD_CAPTIONS,
+        onClick: handleFocusCaptionsPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+    ];
+    if (resetProperties.length > 0) {
+      actions.push(clearAction);
+    }
+    return actions;
+  }, [
+    selectedElement,
+    selectedElementAnimations,
+    actionMenuProps,
+    handleFocusMediaPanel,
+    foregroundCommonActions,
+    handleFocusCaptionsPanel,
+    handleClearAnimationsAndFilters,
+  ]);
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
@@ -390,8 +451,9 @@ const useQuickActions = () => {
       return foregroundImageActions;
     case ELEMENT_TYPE.SHAPE:
       return shapeActions;
-    case ELEMENT_TYPE.TEXT:
     case ELEMENT_TYPE.VIDEO:
+      return videoActions;
+    case ELEMENT_TYPE.TEXT:
     default:
       return [];
   }

@@ -39,5 +39,17 @@ export const getResetProperties = (
   if (selectedElementAnimations?.length) {
     resetProperties.push(RESET_PROPERTIES.ANIMATION);
   }
+  if (selectedElement?.opacity < 100) {
+    resetProperties.push(RESET_PROPERTIES.OPACITY);
+  }
+
+  if (selectedElement?.borderRadius) {
+    resetProperties.push(RESET_PROPERTIES.borderRadius);
+  }
+
+  if (selectedElement?.border) {
+    resetProperties.push(RESET_PROPERTIES.border);
+  }
+
   return resetProperties;
 };

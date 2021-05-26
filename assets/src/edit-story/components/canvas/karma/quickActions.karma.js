@@ -537,4 +537,59 @@ describe('Quick Actions integration', () => {
       up(),
     ]);
   }
+  describe('video selected', () => {
+    beforeEach(async () => {
+      const videoElement = {
+        resource: {
+          type: 'video',
+          mimeType: 'video/webm',
+          creationDate: '2021-05-21T00:09:18',
+          src:
+            'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
+          width: 560,
+          height: 320,
+          poster:
+            'http://localhost:8899/wp-content/uploads/2021/05/small-video-poster-10.jpg',
+          posterId: 11,
+          id: 10,
+          length: 6,
+          lengthFormatted: '0:06',
+          title: 'small-video',
+          alt: 'small-video',
+          sizes: {},
+          local: false,
+          isOptimized: false,
+          baseColor: [115, 71, 39],
+        },
+        controls: false,
+        loop: false,
+        autoPlay: true,
+        tracks: [],
+        type: 'video',
+        x: 66,
+        y: 229,
+        width: 280,
+        height: 160,
+        id: '6e7f5de8-7793-4aef-8835-c1d32477b4e0',
+      };
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const foregroundVideo = await fixture.act(() =>
+        insertElement('video', videoElement)
+      );
+
+      await clickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(foregroundVideo.id).node
+      );
+    });
+
+    // it(`should click the \`${ACTION_TEXT.REPLACE_MEDIA}\` button and open the media panel`, () => {});
+
+    // it(`should click the \`${ACTION_TEXT.ADD_ANIMATION}\` button and open the animation panel and focus the animation dropdown`, () => {});
+
+    // it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, () => {});
+
+    // it(`should click the \`${ACTION_TEXT.ADD_CAPTIONS}\` button and open the captions panel and focus the add captions input`, () => {});
+
+    // it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation`, () => {});
+  });
 });
