@@ -122,6 +122,9 @@ function PageTemplate(
       pageSize={pageSize}
       role="listitem"
       ref={ref}
+      // TODO: Investigate
+      // See https://github.com/google/web-stories-wp/issues/6671
+      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}

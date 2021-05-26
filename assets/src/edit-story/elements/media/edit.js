@@ -162,6 +162,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   const fadedMediaProps = {
     ref: setFullMedia,
     draggable: false,
+    alt: '',
     opacity: opacity / 100,
     ...mediaProps,
   };
@@ -220,6 +221,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   return (
     <Element ref={elementRef}>
       {isImage && (
+        /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
         <FadedImage
           {...fadedMediaProps}
           src={resource.src}
@@ -227,6 +229,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
         />
       )}
       {isVideo && (
+        //eslint-disable-next-line styled-components-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
           {resource.src && (
             <source src={resource.src} type={resource.mimeType} />
@@ -235,8 +238,10 @@ function MediaEdit({ element, box, setLocalProperties }) {
       )}
       <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill applyFlip={false} box={box}>
+          {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
+            /*eslint-disable-next-line styled-components-a11y/media-has-caption -- Tracks might not exist. Also, unwanted in edit mode. */
             <CropVideo {...cropMediaProps}>
               <source src={resource.src} type={resource.mimeType} />
             </CropVideo>
