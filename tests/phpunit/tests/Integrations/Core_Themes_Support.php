@@ -93,9 +93,7 @@ class Core_Themes_Support extends Test_Case {
 		$this->assertFalse( has_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] ) );
 	}
 
-	/**
-	 * @covers ::get_supported_themes
-	 */
+
 	public function test_get_supported_themes() {
 
 		$expected = [

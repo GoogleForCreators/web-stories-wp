@@ -25,8 +25,6 @@ use Google\Web_Stories\Tests\Test_Case;
  * Class Stories
  *
  * @coversDefaultClass \Google\Web_Stories\Widgets\Stories
- *
- * @package Google\Web_Stories\Tests
  */
 class Stories extends Test_Case {
 	/**

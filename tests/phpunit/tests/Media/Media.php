@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Media;
 
+use Google\Web_Stories\Tests\Test_Case;
 use WP_Query;
 use WP_REST_Request;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media
+ * @coversDefaultClass \Google\Web_Stories\Media\Media
  */
 class Media extends Test_Case {
 
