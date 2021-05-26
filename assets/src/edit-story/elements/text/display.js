@@ -130,7 +130,7 @@ const FillElement = styled.p.attrs(
   overflow-wrap: break-word;
   word-break: break-word;
   letter-spacing: normal;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.standard.black};
   ${elementFillContent}
 `;
 
