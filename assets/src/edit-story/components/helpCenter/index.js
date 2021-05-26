@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { useRef, useEffect } from 'react';
-import { useFeatures } from 'flagged';
 import styled from 'styled-components';
 
 /**
@@ -38,14 +37,13 @@ const Wrapper = styled.div`
   /**
    * sibling inherits parent z-index of Z_INDEX.EDIT
    * so this needs to be placed above that while still
-   * retaining its postion in the DOM for focus purposes
+   * retaining its position in the DOM for focus purposes
    */
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
 export const HelpCenter = () => {
   const ref = useRef(null);
-  const { enableQuickTips } = useFeatures();
   const { state, actions } = useHelpCenter();
 
   // Set Focus on the expanded companion
@@ -56,7 +54,7 @@ export const HelpCenter = () => {
     }
   }, [state.isOpen]);
 
-  return enableQuickTips ? (
+  return (
     <DirectionAware>
       <>
         <ThemeGlobals.Styles />
@@ -88,5 +86,5 @@ export const HelpCenter = () => {
         </Wrapper>
       </>
     </DirectionAware>
-  ) : null;
+  );
 };
