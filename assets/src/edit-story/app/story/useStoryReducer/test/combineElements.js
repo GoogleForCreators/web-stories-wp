@@ -229,6 +229,7 @@ describe('combineElements', () => {
       {
         id: '123',
         resource: { type: 'image', src: '1' },
+        alt: 'Hello',
         type: 'image',
         focalX: 50,
         focalY: 50,
@@ -278,6 +279,7 @@ describe('combineElements', () => {
         id: '456',
         type: 'image',
         resource: { type: 'image', src: '1' },
+        alt: 'Hello',
         x: 10,
         y: 10,
         width: 10,
@@ -691,6 +693,7 @@ function getDefaultState2() {
             y: 10,
             width: 10,
             height: 10,
+            alt: 'Hello',
           },
         ],
       },
