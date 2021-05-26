@@ -211,7 +211,7 @@ class Editor extends Service_Base {
 		];
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
-		$font_handle = ( $this->google_fonts )::HANDLE;
+		$font_handle = $this->google_fonts->get_handle();
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(

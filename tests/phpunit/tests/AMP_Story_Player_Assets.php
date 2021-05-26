@@ -31,7 +31,7 @@ class AMP_Story_Player_Assets extends Test_Case {
 		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
 		$amp_story_player_assets->register();
 
-		$this->assertTrue( wp_style_is( $amp_story_player_assets::HANDLE, 'registered' ) );
-		$this->assertTrue( wp_script_is( $amp_story_player_assets::HANDLE, 'registered' ) );
+		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle(), 'registered' ) );
+		$this->assertTrue( wp_script_is( $amp_story_player_assets->get_handle(), 'registered' ) );
 	}
 }

@@ -94,7 +94,8 @@ class Generic_Renderer extends Test_Case {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_style_is( AMP_Story_Player_Assets::HANDLE ) );
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle() ) );
 	}
 
 	/**
