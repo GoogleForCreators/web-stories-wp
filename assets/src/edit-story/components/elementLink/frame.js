@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -69,7 +70,11 @@ function WithLink({ element, active, children, anchorRef }) {
   const tooltipContent =
     link?.url && active ? (
       <>
-        <IconWrapper>{link?.icon && <BrandIcon src={link.icon} />}</IconWrapper>
+        <IconWrapper>
+          {link?.icon && (
+            <BrandIcon src={link.icon} alt={__('Site Icon', 'web-stories')} />
+          )}
+        </IconWrapper>
         <LinkDesc>{link.desc || link.url}</LinkDesc>
       </>
     ) : null;

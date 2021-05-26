@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -121,7 +124,7 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.REPLACE_MEDIA}\` button should select select the media 3p tab and focus the media 3p tab`, async () => {
+    it(`clicking the \`${ACTION_TEXT.REPLACE_MEDIA}\` button should select select the media tab and focus the media tab`, async () => {
       // hide 3p modal before we click the quick action
       await fixture.events.click(fixture.editor.library.media3pTab);
       // tab to dismiss button and press enter
@@ -129,17 +132,14 @@ describe('Quick Actions integration', () => {
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('Enter');
 
-      // change tab to make sure tab isn't selected before quick action
-      await fixture.events.click(fixture.editor.library.mediaTab);
-
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.replaceMediaButton
       );
 
-      expect(fixture.editor.library.media3p).not.toBeNull();
+      expect(fixture.editor.library.media).not.toBeNull();
 
-      expect(document.activeElement).toEqual(fixture.editor.library.media3pTab);
+      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
     it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -369,4 +369,168 @@ describe('Quick Actions integration', () => {
       ).toBe(false);
     });
   });
+
+  describe('background image selected', () => {
+    beforeEach(async () => {
+      await addBackgroundImage(0);
+
+      const {
+        state: {
+          currentPage: {
+            elements: [{ id }],
+          },
+        },
+      } = await fixture.renderHook(() => useStory());
+
+      const canvasElementWrapperId = fixture.querySelector(
+        `[data-testid="safezone"] [data-element-id="${id}"]`
+      );
+
+      await fixture.events.click(canvasElementWrapperId);
+    });
+
+    it(`clicking the \`${ACTION_TEXT.REPLACE_BACKGROUND_MEDIA}\` button should select select the media tab and focus the media tab`, async () => {
+      // change tab to make sure tab isn't selected before quick action
+      // hide 3p modal before we click the quick action
+      await fixture.events.click(fixture.editor.library.mediaTab);
+      // tab to dismiss button and press enter
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('Enter');
+
+      const bgMediaButton =
+        fixture.editor.canvas.quickActionMenu.replaceBackgroundMediaButton;
+      expect(bgMediaButton).toBeDefined();
+
+      // click quick menu button
+      await fixture.events.click(bgMediaButton);
+
+      expect(fixture.editor.library.media).not.toBeNull();
+
+      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+    });
+
+    it(`clicking the \`${ACTION_TEXT.ADD_ANIMATION}\` button should select the animation panel and focus the dropdown`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addAnimationButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.animation.effectChooser
+      );
+    });
+
+    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
+      // quick action should be disabled if there are no animations yet
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+          .disabled
+      ).toBe(true);
+
+      // apply filter to background element
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.filters.linear
+      );
+
+      // add animation to image
+      const effectChooserToggle =
+        fixture.editor.inspector.designPanel.animation.effectChooser;
+      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+      // animation
+      const animation = fixture.screen.getByRole('option', {
+        name: '"Pan and Zoom" Effect',
+      });
+
+      // apply animation to element
+      await fixture.events.click(animation, { clickCount: 1 });
+
+      // verify that element has animation and filter
+      const {
+        animations: originalAnimations,
+        selectedElement: originalSelectedElement,
+      } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+
+      await waitFor(() => {
+        expect(originalAnimations.length).toBe(1);
+        expect(originalSelectedElement.backgroundOverlay.type).toBe('linear');
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+            .disabled
+        ).toBe(false);
+      });
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+      );
+
+      // verify that element has no animations
+      const { animations, selectedElement } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+
+      await waitFor(() => {
+        expect(animations.length).toBe(0);
+        expect(selectedElement.backgroundOverlay).toBeNull();
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+            .disabled
+        ).toBe(true);
+      });
+
+      // click `undo` button on snackbar
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/ })
+      );
+
+      // Verify that new animations match original animation
+      const {
+        animations: revertedAnimations,
+        selectedElement: revertedSelectedElement,
+      } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          selectedElement: state.selectedElements[0],
+        }))
+      );
+
+      await waitFor(() => {
+        expect(revertedAnimations.length).toBe(1);
+        expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+        expect(revertedSelectedElement.backgroundOverlay?.type).toEqual(
+          originalSelectedElement.backgroundOverlay?.type
+        );
+
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+            .disabled
+        ).toBe(false);
+      });
+    });
+  });
+
+  async function addBackgroundImage(index) {
+    // Drag image to canvas corner to set as background
+    const image = fixture.editor.library.media.item(index);
+    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
+
+    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
+      moveRel(image, 20, 20),
+      down(),
+      moveRel(canvas, 10, 10),
+      up(),
+    ]);
+  }
 });
