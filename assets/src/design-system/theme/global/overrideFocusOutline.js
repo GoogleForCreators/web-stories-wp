@@ -20,6 +20,10 @@
 import { createGlobalStyle, css } from 'styled-components';
 import 'focus-visible';
 
+import(
+  /* webpackChunkName: "focus-visible" */ 'focus-visible'
+).catch(() => undefined);
+
 /**
  * Relies on https://github.com/WICG/focus-visible for polyfill
  * Focus styles are handled in helpers/outline because our focus style is a border it needs to have consistent spacing around it, which means a transparent border when not focused.
