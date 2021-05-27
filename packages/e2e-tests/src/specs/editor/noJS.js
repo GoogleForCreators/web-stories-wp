@@ -20,18 +20,22 @@
 import percySnapshot from '@percy/puppeteer';
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
-describe('Story Editor with disabled JavaScript', () => {
-  it('should display error message', async () => {
-    // Disable javascript for test.
-    await page.setJavaScriptEnabled(false);
+// Disabling JS like this is not yet supported in Firefox.
+// See https://bugzilla.mozilla.org/show_bug.cgi?id=1549437.
+if ('firefox' !== process.env.PUPPETEER_PRODUCT) {
+  describe('Story Editor with disabled JavaScript', () => {
+    it('should display error message', async () => {
+      // Disable javascript for test.
+      await page.setJavaScriptEnabled(false);
 
-    await createNewStory();
+      await createNewStory();
 
-    await expect(page).toMatchElement('.web-stories-wp-no-js');
+      await expect(page).toMatchElement('.web-stories-wp-no-js');
 
-    // Re-enable javascript for snapshots.
-    await page.setJavaScriptEnabled(true);
+      // Re-enable javascript for snapshots.
+      await page.setJavaScriptEnabled(true);
 
-    await percySnapshot(page, 'Editor no js');
+      await percySnapshot(page, 'Editor no js');
+    });
   });
-});
+}
