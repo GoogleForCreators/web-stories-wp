@@ -93,8 +93,14 @@ const ALLOWED_ERROR_MESSAGES = [
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
 
-  // Firefox warns about cookies using `Same-Site: None`.
+  // Firefox cookie warning.
   'will be soon rejected because it has the “SameSite” attribute set to “None”',
+
+  // Firefox cookie warning.
+  'has been rejected because it is already expired',
+
+  // WordPress causes this on the widgets screen.
+  'MouseEvent.mozPressure is deprecated',
 ];
 
 export function addAllowedErrorMessage(message) {
