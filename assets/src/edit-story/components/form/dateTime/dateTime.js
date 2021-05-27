@@ -105,7 +105,7 @@ function DateTime({
           }}
           aria-label={__('Reset publish time', 'web-stories')}
         >
-          {__('Reset date', 'web-stories')}
+          {__('Reset', 'web-stories')}
         </StyledButton>
       )}
     </DateTimeWrapper>
