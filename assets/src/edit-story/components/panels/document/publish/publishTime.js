@@ -36,14 +36,16 @@ import DropDownSelect from '../../../../../design-system/components/dropDown/sel
 import { focusStyle } from '../../shared';
 
 function PublishTime() {
-  const { date, updateStory } = useStory(
+  const { date, modified, status, updateStory } = useStory(
     ({
       state: {
-        story: { date },
+        story: { date, modified, status },
       },
       actions: { updateStory },
     }) => ({
       date,
+      modified,
+      status,
       updateStory,
     })
   );
@@ -77,6 +79,13 @@ function PublishTime() {
     [showDatePicker, updateStory]
   );
 
+  // Floating date means an unset date so that the story publish date will match the time it will get published.
+  const floatingDate =
+    ['draft', 'pending', 'auto-draft'].includes(status) &&
+    (date === modified || date === null);
+  const displayLabel = !floatingDate
+    ? format(date, shortDateFormat) + ' ' + formatTime(date)
+    : __('Immediately', 'web-stories');
   return (
     <>
       <Row>
@@ -94,9 +103,7 @@ function PublishTime() {
             }
           }}
           ref={dateFieldRef}
-          activeItemLabel={
-            format(date, shortDateFormat) + ' ' + formatTime(date)
-          }
+          activeItemLabel={displayLabel}
           selectButtonStylesOverride={focusStyle}
         />
       </Row>
@@ -106,7 +113,7 @@ function PublishTime() {
         placement={PLACEMENT.BOTTOM_END}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
-            value={date}
+            value={floatingDate ? Date.now() : date}
             onChange={(value, close = false) => {
               handleDateChange(value, close);
             }}
