@@ -99,8 +99,17 @@ const ALLOWED_ERROR_MESSAGES = [
   // Firefox cookie warning.
   'has been rejected because it is already expired',
 
-  // WordPress causes this on the widgets screen.
+  // WordPress causes this on the widgets screen in Firefox.
   'MouseEvent.mozPressure is deprecated',
+
+  // Firefox + Feature Policy for embeds.
+  'Skipping unsupported feature name',
+
+  // Firefox + CSP for embeds.
+  'Ignoring duplicate source',
+
+  // Another CSP warning in Firefox for embeds.
+  'An iframe which has both allow-top-navigation and allow-top-navigation-by-user-activation',
 ];
 
 export function addAllowedErrorMessage(message) {
