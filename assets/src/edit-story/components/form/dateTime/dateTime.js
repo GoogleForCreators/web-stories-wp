@@ -46,7 +46,7 @@ const DateTimeWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  color: ${({ theme }) => theme.colors.blue[70]};
+  color: #006edc;
   margin: 5px 0;
 `;
 

@@ -47,7 +47,7 @@ const inputCSS = css`
   box-shadow: 0 0 0 transparent;
   transition: box-shadow 0.1s linear;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colors.blue[70]};
+  border: 1px solid #006edc;
   height: 28px;
   vertical-align: middle;
   background-color: ${({ theme }) => theme.colors.standard.white};
@@ -88,8 +88,8 @@ const Button = styled.button`
   white-space: nowrap;
   border-width: 1px;
   border-style: solid;
-  color: ${({ theme }) => theme.colors.blue[70]};
-  border-color: ${({ theme }) => theme.colors.blue[70]};
+  color: #006edc;
+  border-color: #006edc;
   background: #f3f5f6;
 
   &:focus {
