@@ -36,27 +36,6 @@ import {
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Publishing Flow', () => {
-  let stopRequestInterception;
-
-  beforeAll(async () => {
-    await page.setRequestInterception(true);
-    stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().startsWith('https://cdn.ampproject.org/')) {
-        request.respond({
-          status: 200,
-          body: '',
-        });
-      } else {
-        request.continue();
-      }
-    });
-  });
-
-  afterAll(async () => {
-    await page.setRequestInterception(false);
-    stopRequestInterception();
-  });
-
   it('should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 

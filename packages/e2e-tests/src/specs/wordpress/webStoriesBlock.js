@@ -55,15 +55,6 @@ describe('Web Stories Block', () => {
     );
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
-      // amp-story-player scripts
-      if (request.url().startsWith('https://cdn.ampproject.org/')) {
-        request.respond({
-          status: 200,
-          body: '',
-        });
-        return;
-      }
-
       // Fetching metadata for the story.
       if (request.url().includes('web-stories/v1/embed')) {
         request.respond({
