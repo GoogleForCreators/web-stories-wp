@@ -92,6 +92,7 @@ function combineElements(
     'focalX',
     'focalY',
     'tracks',
+    'poster',
   ];
 
   // If the element we're dropping into is not background, maintain link, too.
