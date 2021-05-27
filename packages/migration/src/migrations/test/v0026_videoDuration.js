@@ -20,7 +20,7 @@
 import videoDuration from '../v0026_videoDuration';
 
 describe('videoDuration', () => {
-  it('should migrate videoId to id', () => {
+  it('should migrate lengthFormatted to length', () => {
     expect(
       videoDuration({
         _test: 'story',
