@@ -114,7 +114,7 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
 // Retry flaky tests at most 2 times in CI.
 if ('true' === process.env.CI) {
-  jest.retryTimes(2);
+  jest.retryTimes(3);
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
