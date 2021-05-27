@@ -37,10 +37,9 @@ import {
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
-import { HighlightsProvider } from '../../../../../app/highlights';
 
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('../../../../form/advancedDropDown', () => jest.fn());
+jest.mock('../../../../form/advancedDropDown');
 jest.mock('../../../../form/color/color', () => ({
   __esModule: true,
   default: jest.fn(),
@@ -55,48 +54,31 @@ const DEFAULT_PADDING = {
 
 function Wrapper({ children }) {
   return (
-    <HighlightsProvider>
-      <CanvasContext.Provider
+    <CanvasContext.Provider
+      value={{
+        state: {},
+        actions: {
+          clearEditing: jest.fn(),
+        },
+      }}
+    >
+      <FontContext.Provider
         value={{
-          state: {},
-          actions: {
-            clearEditing: jest.fn(),
-          },
-        }}
-      >
-        <FontContext.Provider
-          value={{
-            state: {
-              fonts: [
-                {
-                  name: 'ABeeZee',
-                  value: 'ABeeZee',
-                  service: 'foo.bar.baz',
-                  weights: [400],
-                  styles: ['italic', 'regular'],
-                  variants: [
-                    [0, 400],
-                    [1, 400],
-                  ],
-                  fallbacks: ['serif'],
-                },
-                {
-                  name: 'Neu Font',
-                  value: 'Neu Font',
-                  service: 'foo.bar.baz',
-                  weights: [400],
-                  styles: ['italic', 'regular'],
-                  variants: [
-                    [0, 400],
-                    [1, 400],
-                  ],
-                  fallbacks: ['fallback1'],
-                },
-              ],
-            },
-            actions: {
-              maybeEnqueueFontStyle: () => Promise.resolve(),
-              getFontByName: () => ({
+          state: {
+            fonts: [
+              {
+                name: 'ABeeZee',
+                value: 'ABeeZee',
+                service: 'foo.bar.baz',
+                weights: [400],
+                styles: ['italic', 'regular'],
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
+                fallbacks: ['serif'],
+              },
+              {
                 name: 'Neu Font',
                 value: 'Neu Font',
                 service: 'foo.bar.baz',
@@ -107,19 +89,34 @@ function Wrapper({ children }) {
                   [1, 400],
                 ],
                 fallbacks: ['fallback1'],
-              }),
-              addRecentFont: jest.fn(),
-            },
-          }}
+              },
+            ],
+          },
+          actions: {
+            maybeEnqueueFontStyle: () => Promise.resolve(),
+            getFontByName: () => ({
+              name: 'Neu Font',
+              value: 'Neu Font',
+              service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+              fallbacks: ['fallback1'],
+            }),
+            addRecentFont: jest.fn(),
+          },
+        }}
+      >
+        <RichTextContext.Provider
+          value={{ state: {}, actions: { selectionActions: {} } }}
         >
-          <RichTextContext.Provider
-            value={{ state: {}, actions: { selectionActions: {} } }}
-          >
-            {children}
-          </RichTextContext.Provider>
-        </FontContext.Provider>
-      </CanvasContext.Provider>
-    </HighlightsProvider>
+          {children}
+        </RichTextContext.Provider>
+      </FontContext.Provider>
+    </CanvasContext.Provider>
   );
 }
 
@@ -154,7 +151,6 @@ describe('Panels/TextStyle', () => {
     };
 
     controls = {};
-
     AdvancedDropDown.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });

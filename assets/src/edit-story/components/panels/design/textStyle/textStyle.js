@@ -32,9 +32,9 @@ import FontControls from './font';
 
 function StylePanel(props) {
   const fontDropdownRef = useRef(null);
-  const fontColorRef = useRef(null);
+  const textColorRef = useRef(null);
   const dropdownHighlight = useFocusHighlight(states.FONT, fontDropdownRef);
-  const colorHighlight = useFocusHighlight(states.TEXT_COLOR, fontColorRef);
+  const colorHighlight = useFocusHighlight(states.TEXT_COLOR, textColorRef);
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
@@ -50,7 +50,7 @@ function StylePanel(props) {
     >
       <FontControls {...props} fontDropdownRef={fontDropdownRef} />
       <StyleControls {...props} />
-      <ColorControls {...props} fontColorRef={fontColorRef} />
+      <ColorControls {...props} textColorRef={textColorRef} />
     </SimplePanel>
   );
 }

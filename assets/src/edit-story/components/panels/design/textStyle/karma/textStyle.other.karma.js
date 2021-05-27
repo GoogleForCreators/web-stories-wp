@@ -27,7 +27,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts'
 import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma/fixture';
 
-fdescribe('Text Style Panel', () => {
+describe('Text Style Panel', () => {
   let fixture;
 
   const addText = async (extraProps = null) => {
