@@ -103,6 +103,7 @@ function DateTime({
             onChange(null);
             onClose();
           }}
+          aria-label={__('Reset publish time', 'web-stories')}
         >
           {__('Reset date', 'web-stories')}
         </StyledButton>
