@@ -53,11 +53,11 @@ describe('Status Check', () => {
 
   describe('Invalid JSON response', () => {
     beforeAll(async () => {
-      await activatePlugin('status-check-200-invalid');
+      await activatePlugin('web-stories-test-plugin-status-check-200-invalid');
     });
 
     afterAll(async () => {
-      await deactivatePlugin('status-check-200-invalid');
+      await deactivatePlugin('web-stories-test-plugin-status-check-200-invalid');
     });
 
     it('should display error dialog', async () => {
@@ -68,11 +68,11 @@ describe('Status Check', () => {
 
   describe('403 Forbidden (WAF)', () => {
     beforeAll(async () => {
-      await activatePlugin('status-check-403');
+      await activatePlugin('web-stories-test-plugin-status-check-403');
     });
 
     afterAll(async () => {
-      await deactivatePlugin('status-check-403');
+      await deactivatePlugin('web-stories-test-plugin-status-check-403');
     });
 
     it('should display error dialog', async () => {
@@ -83,11 +83,11 @@ describe('Status Check', () => {
 
   describe('500 Internal Server Error', () => {
     beforeAll(async () => {
-      await activatePlugin('status-check-500');
+      await activatePlugin('web-stories-test-plugin-status-check-500');
     });
 
     afterAll(async () => {
-      await deactivatePlugin('status-check-500');
+      await deactivatePlugin('web-stories-test-plugin-status-check-500');
     });
 
     it('should display error dialog', async () => {
