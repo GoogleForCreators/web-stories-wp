@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, within } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -150,14 +150,10 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
-      await fixture.events.sleep(200);
-      let message = await fixture.screen.getByRole('alert');
-      expect(message.textContent).toBe(
-        'An empty page can’t be saved as a template. Add elements and try again.'
-      );
-      const { getByRole } = within(message);
 
-      await fixture.events.click(getByRole('button', { name: 'Close' }));
+      expect(
+        () => fixture.editor.library.pageTemplatesPane.pageTemplates.length
+      ).toThrow();
 
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
@@ -165,7 +161,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
       await fixture.events.sleep(200);
-      message = await fixture.screen.getByRole('alert');
+      const message = await fixture.screen.getByRole('alert');
       expect(message.textContent).toBe('Page template saved.');
 
       expect(
