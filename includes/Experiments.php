@@ -253,18 +253,6 @@ class Experiments extends Service_Base {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 5880
-			 * Creation date: 2021-01-19
-			 */
-			[
-				'name'        => 'enableQuickTips',
-				'label'       => __( 'Quick Tips', 'web-stories' ),
-				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Image = styled.img`
   display: block;
@@ -28,7 +29,13 @@ const Image = styled.img`
 `;
 
 function VisibleImage({ ...attrs }) {
+  // eslint-disable-next-line styled-components-a11y/alt-text
   return <Image {...attrs} crossOrigin="anonymous" />;
 }
+
+VisibleImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+};
 
 export default VisibleImage;

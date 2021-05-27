@@ -161,25 +161,32 @@ function DropDown({
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
-    <Container onKeyDown={handleKeyPress}>
-      <DropDownSelect
-        aria-pressed={isOpen}
-        aria-haspopup
-        aria-expanded={isOpen}
-        ref={ref}
-        activeItemLabel={selectedOption?.name}
-        dropDownLabel={dropDownLabel}
-        onSelectClick={toggleDropDown}
-        selectButtonStylesOverride={focusStyle}
-        {...rest}
-      />
-      {isOpen && !disabled && isInline && list}
-      {!disabled && !isInline && (
-        <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
-          {list}
-        </Popup>
-      )}
-    </Container>
+    <>
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
+      <Container onKeyDown={handleKeyPress}>
+        <DropDownSelect
+          aria-pressed={isOpen}
+          aria-haspopup
+          aria-expanded={isOpen}
+          ref={ref}
+          activeItemLabel={selectedOption?.name}
+          dropDownLabel={dropDownLabel}
+          onSelectClick={toggleDropDown}
+          selectButtonStylesOverride={focusStyle}
+          {...rest}
+        />
+        {isOpen && !disabled && isInline && list}
+        {!disabled && !isInline && (
+          <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+            {list}
+          </Popup>
+        )}
+      </Container>
+    </>
   );
 }
 

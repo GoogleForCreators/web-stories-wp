@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-namespace phpunit\tests\Migrations;
+namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Remove_Broken_Text_Styles
  *
- * @covers \Google\Web_Stories\Migrations\Remove_Broken_Text_Styles;
- *
- * @package phpunit\tests\Migrations
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Remove_Broken_Text_Styles
  */
 class Remove_Broken_Text_Styles extends Test_Case {
 	/**

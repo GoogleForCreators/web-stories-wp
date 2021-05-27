@@ -385,7 +385,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
   });
 
-  it('should open the design panel video processing section and focus the reprocess video button when using mouse', async () => {
+  it('should open the design panel accessibility section and focus the video poster button when using mouse', async () => {
     await fixture.act(() => {
       insertElement('video', {
         x: 0,
@@ -424,7 +424,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     );
   });
 
-  it('should open the design panel video processing section and focus the reprocess video button when using keyboard', async () => {
+  it('should open the design panel accessibility section and focus the video poster button when using keyboard', async () => {
     await fixture.act(() => {
       insertElement('video', {
         x: 0,
