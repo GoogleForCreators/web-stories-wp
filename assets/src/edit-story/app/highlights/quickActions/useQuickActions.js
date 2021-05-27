@@ -185,9 +185,9 @@ const useQuickActions = () => {
     [handleFocusPanel]
   );
 
-  const backgroundElement =
-    currentPage?.elements.find((element) => element.isBackground) ||
-    selectedElements?.[0]?.isBackground;
+  const backgroundElement = currentPage?.elements.find(
+    (element) => element.isBackground
+  );
   const selectedElement = selectedElements?.[0];
 
   const actionMenuProps = useMemo(
@@ -364,24 +364,24 @@ const useQuickActions = () => {
   const isBackgroundElementMedia = Boolean(
     backgroundElement && backgroundElement?.resource
   );
+  const isSelectedElementMedia =
+    [ELEMENT_TYPE.IMAGE, ELEMENT_TYPE.VIDEO, ELEMENT_TYPE.GIF].indexOf(
+      selectedElements?.[0]?.type
+    ) > -1;
+  const noElementsSelected = selectedElements.length === 0;
+  const isBackgroundSelected = backgroundElement?.id === selectedElement?.id;
 
   // Return the base state if:
   //  1. no element is selected
   //  2. the selected element is the background element and it's not media
   if (
     !isBackgroundElementMedia &&
-    ((selectedElements.length === 0 && backgroundElement) ||
-      selectedElements[0]?.isBackground)
+    (noElementsSelected || isBackgroundSelected)
   ) {
     return defaultActions;
   }
 
-  if (
-    isBackgroundElementMedia &&
-    [ELEMENT_TYPE.IMAGE, ELEMENT_TYPE.VIDEO, ELEMENT_TYPE.GIF].indexOf(
-      selectedElements?.[0]?.type
-    ) > -1
-  ) {
+  if (isBackgroundElementMedia && isSelectedElementMedia) {
     return backgroundElementMediaActions;
   }
 
