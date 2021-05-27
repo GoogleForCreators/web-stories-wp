@@ -28,7 +28,6 @@ import {
  * External dependencies
  */
 import {
-  addRequestInterception,
   publishPost,
   withDisabledToolbarOnFrontend,
   insertBlock,
@@ -46,31 +45,15 @@ const EMBED_BLOCK_CONTENT = `
 `;
 
 describe('Web Stories Block', () => {
-  let stopRequestInterception;
   let removeErrorMessage;
 
-  beforeAll(async () => {
+  beforeAll(() => {
     removeErrorMessage = addAllowedErrorMessage(
       'Failed to load resource: the server responded with a status of 404'
     );
-    await page.setRequestInterception(true);
-    stopRequestInterception = addRequestInterception((request) => {
-      // Fetching metadata for the story.
-      if (request.url().includes('web-stories/v1/embed')) {
-        request.respond({
-          status: 200,
-          body: '{"title":"Stories in AMP - Hello World","poster":"https:\\/\\/amp.dev\\/static\\/samples\\/img\\/story_dog2_portrait.jpg"}',
-        });
-        return;
-      }
-
-      request.continue();
-    });
   });
 
-  afterAll(async () => {
-    await page.setRequestInterception(false);
-    stopRequestInterception();
+  afterAll(() => {
     removeErrorMessage();
   });
 
