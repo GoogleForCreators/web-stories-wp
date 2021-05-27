@@ -121,6 +121,10 @@ function PublishTime() {
             is12Hour={use12HourFormat}
             forwardedRef={dateTimeNode}
             onClose={() => setShowDatePicker(false)}
+            canReset={
+              ['draft', 'pending', 'auto-draft'].includes(status) &&
+              !floatingDate
+            }
           />
         )}
       />

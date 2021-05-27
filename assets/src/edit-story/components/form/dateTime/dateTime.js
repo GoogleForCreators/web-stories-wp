@@ -21,11 +21,16 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  useKeyDownEffect,
+} from '../../../../design-system';
 import useFocusTrapping from '../../../utils/useFocusTrapping';
 import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 import TimePicker from './timePicker';
@@ -40,6 +45,11 @@ const DateTimeWrapper = styled.div`
   padding: 4px;
 `;
 
+const StyledButton = styled(Button)`
+  color: rgb(0, 117, 175);
+  margin: 5px 0;
+`;
+
 function DateTime({
   value,
   onChange,
@@ -47,6 +57,7 @@ function DateTime({
   is12Hour = true,
   forwardedRef,
   onClose,
+  canReset = false,
 }) {
   const selectedTime = value ? new Date(value) : new Date();
   const initialHours = selectedTime.getHours();
@@ -85,6 +96,17 @@ function DateTime({
         onChange={onChange}
         onViewChange={onViewChange}
       />
+      {canReset && (
+        <StyledButton
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => {
+            onChange(null);
+            onClose();
+          }}
+        >
+          {__('Reset date', 'web-stories')}
+        </StyledButton>
+      )}
     </DateTimeWrapper>
   );
 }
@@ -96,6 +118,7 @@ DateTime.propTypes = {
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
   forwardedRef: PropTypes.object,
+  canReset: PropTypes.bool,
 };
 
 export default DateTime;
