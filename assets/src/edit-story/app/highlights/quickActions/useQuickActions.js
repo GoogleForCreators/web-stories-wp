@@ -28,6 +28,7 @@ import {
   Bucket,
   CircleSpeed,
   Eraser,
+  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
@@ -172,6 +173,8 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
+    handleFocusTextColor,
+    handleFocusFontPicker,
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
   } = useMemo(
@@ -179,7 +182,9 @@ const useQuickActions = () => {
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
-      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
+      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT_SET),
+      handleFocusFontPicker: handleFocusPanel(states.FONT),
+      handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
     }),
     [handleFocusPanel]
@@ -310,6 +315,31 @@ const useQuickActions = () => {
     ]
   );
 
+  const textActions = useMemo(
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTION_TEXT.CHANGE_COLOR,
+        onClick: handleFocusTextColor(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: LetterTLargeLetterTSmall,
+        label: ACTION_TEXT.CHANGE_FONT,
+        onClick: handleFocusFontPicker(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
+    [
+      foregroundCommonActions,
+      actionMenuProps,
+      selectedElement?.id,
+      handleFocusTextColor,
+      handleFocusFontPicker,
+    ]
+  );
+
   const backgroundElementMediaActions = useMemo(() => {
     const resetProperties = getResetProperties(
       selectedElement,
@@ -391,6 +421,7 @@ const useQuickActions = () => {
     case ELEMENT_TYPE.SHAPE:
       return shapeActions;
     case ELEMENT_TYPE.TEXT:
+      return textActions;
     case ELEMENT_TYPE.VIDEO:
     default:
       return [];

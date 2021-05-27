@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
+import { useRef } from 'react';
 /**
  * Internal dependencies
  */
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
+import { styles, useFocusHighlight, states } from '../../../../app/highlights';
 import { SimplePanel } from '../../panel';
 import { usePresubmitHandler } from '../../../form';
 import StyleControls from './style';
@@ -32,16 +33,24 @@ import FontControls from './font';
 function StylePanel(props) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
+  const fontDropdownRef = useRef(null);
+  const fontColorRef = useRef(null);
+  const dropdownHighlight = useFocusHighlight(states.FONT, fontDropdownRef);
+  const colorHighlight = useFocusHighlight(states.TEXT_COLOR, fontColorRef);
 
   return (
     <SimplePanel
       name="textStyle"
       title={__('Text', 'web-stories')}
-      isPersistable={false}
+      css={
+        (dropdownHighlight?.showEffect || colorHighlight?.showEffect) &&
+        styles.FLASH
+      }
+      isPersistable={!dropdownHighlight && !colorHighlight}
     >
-      <FontControls {...props} />
+      <FontControls {...props} fontDropdownRef={fontDropdownRef} />
       <StyleControls {...props} />
-      <ColorControls {...props} />
+      <ColorControls {...props} colorInputRef={fontColorRef} />
     </SimplePanel>
   );
 }

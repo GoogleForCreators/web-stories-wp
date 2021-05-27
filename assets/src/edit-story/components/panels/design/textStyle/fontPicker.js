@@ -34,7 +34,7 @@ import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getClosestFontWeight from './getClosestFontWeight';
 
-function FontPicker({ selectedElements, pushUpdate }) {
+function FontPicker({ selectedElements, pushUpdate, fontDropdownRef }) {
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -151,6 +151,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
 
   return (
     <AdvancedDropDown
+      ref={fontDropdownRef}
       data-testid="font"
       aria-label={__('Font family', 'web-stories')}
       options={fonts}
@@ -176,6 +177,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
 FontPicker.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
+  fontDropdownRef: PropTypes.object,
 };
 
 export default FontPicker;

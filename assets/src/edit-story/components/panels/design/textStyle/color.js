@@ -27,7 +27,7 @@ import { Color, Row } from '../../../form';
 import getColorPickerActions from '../../shared/getColorPickerActions';
 import useRichTextFormatting from './useRichTextFormatting';
 
-function ColorControls({ selectedElements, pushUpdate }) {
+function ColorControls({ selectedElements, pushUpdate, colorInputRef }) {
   const {
     textInfo: { color },
     handlers: { handleSetColor },
@@ -45,6 +45,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
         label={__('Text color', 'web-stories')}
         labelId="text-color-label"
         changedStyle="color"
+        ref={colorInputRef}
       />
     </Row>
   );
@@ -53,6 +54,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
+  colorInputRef: PropTypes.object,
 };
 
 export default ColorControls;
