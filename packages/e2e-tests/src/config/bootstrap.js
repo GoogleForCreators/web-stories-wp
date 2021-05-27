@@ -112,7 +112,7 @@ const pageEvents = [];
 // The Jest timeout is increased because these tests are a bit slow
 jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
-// Retry flaky tests at most 2 times in CI.
+// Retry flaky tests at most 2 times in CI (off by 1).
 if ('true' === process.env.CI) {
   jest.retryTimes(3);
 }
