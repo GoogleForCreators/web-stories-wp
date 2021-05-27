@@ -164,7 +164,7 @@ const foregroundImageQuickActionsWithClear = [
 
 const textQuickActions = [
   expect.objectContaining({
-    label: ACTION_TEXT.CHANGE_FONT_COLOR,
+    label: ACTION_TEXT.CHANGE_TEXT_COLOR,
     onClick: expect.any(Function),
     Icon: Bucket,
   }),

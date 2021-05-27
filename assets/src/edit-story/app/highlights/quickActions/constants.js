@@ -41,7 +41,7 @@ export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add link', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
-  CHANGE_FONT_COLOR: __('Change color', 'web-stories'),
+  CHANGE_TEXT_COLOR: __('Change color', 'web-stories'),
   CHANGE_COLOR: __('Change color', 'web-stories'),
   CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
   CLEAR_ANIMATION_AND_FILTERS: __('Clear filters and animation', 'web-stories'),

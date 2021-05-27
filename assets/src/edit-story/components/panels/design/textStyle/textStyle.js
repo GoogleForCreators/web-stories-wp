@@ -33,8 +33,14 @@ import FontControls from './font';
 function StylePanel(props) {
   const fontDropdownRef = useRef(null);
   const textColorRef = useRef(null);
+  // use highlights to update panel styles
+  // but don't dynamically adjust the `isPersistable` prop on `SimplePanel`
+  // the textStyle panel automatically opens already whenever a text element is selected
+  // if we update this to only be when there's a highlight the functionality that is expected
+  // will be wrong.
   const dropdownHighlight = useFocusHighlight(states.FONT, fontDropdownRef);
   const colorHighlight = useFocusHighlight(states.TEXT_COLOR, textColorRef);
+
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
