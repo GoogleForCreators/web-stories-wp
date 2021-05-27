@@ -46,6 +46,13 @@ export const SelectButton = styled.button(
     text-overflow: ellipsis;
     cursor: pointer;
 
+    :focus {
+      ${themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+    }
+
     ${themeHelpers.focusableOutlineCSS}
 
     &:hover {
