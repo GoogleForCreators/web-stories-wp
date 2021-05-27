@@ -26,6 +26,7 @@ import useHighlights from '../../useHighlights';
 import { useStory } from '../../../story';
 import {
   Bucket,
+  Captions,
   CircleSpeed,
   Eraser,
   LetterTPlus,
@@ -104,12 +105,18 @@ const TEXT_ELEMENT = {
 };
 
 const VIDEO_ELEMENT = {
-  id: 'image-element-id',
-  type: 'image',
+  id: 'video-element-id',
+  type: 'video',
 };
 
 const clearAnimationAndFiltersAction = expect.objectContaining({
   label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+  onClick: expect.any(Function),
+  Icon: Eraser,
+});
+
+const clearMediaStylesAction = expect.objectContaining({
+  label: ACTION_TEXT.CLEAR_MEDIA_STYLES,
   onClick: expect.any(Function),
   Icon: Eraser,
 });
@@ -175,11 +182,7 @@ const shapeQuickActions = [
 
 const shapeQuickActionsWithClear = [
   ...shapeQuickActions,
-  expect.objectContaining({
-    label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
-    onClick: expect.any(Function),
-    Icon: Eraser,
-  }),
+  clearAnimationAndFiltersAction,
 ];
 
 const backgroundMediaQuickActions = [
@@ -197,6 +200,20 @@ const backgroundMediaQuickActions = [
 const backgroundMediaQuickActionsWithClear = [
   ...backgroundMediaQuickActions,
   clearAnimationAndFiltersAction,
+];
+
+const videoQuickActions = [
+  ...foregroundImageQuickActions,
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_CAPTIONS,
+    onClick: expect.any(Function),
+    Icon: Captions,
+  }),
+];
+
+const videoQuickActionsWithClear = [
+  ...videoQuickActions,
+  clearMediaStylesAction,
 ];
 
 describe('useQuickActions', () => {
@@ -592,10 +609,10 @@ describe('useQuickActions', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
-          elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
+          elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
         },
         selectedElementAnimations: [],
-        selectedElements: [VIDEO_ELEMENT],
+        selectedElements: [TEXT_ELEMENT],
         updateElementsById: mockUpdateElementsById,
       });
     });
@@ -607,15 +624,142 @@ describe('useQuickActions', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
-          elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
+          elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
         },
-        selectedElementAnimations: [],
-        selectedElements: [TEXT_ELEMENT],
+        selectedElementAnimations: [
+          {
+            id: VIDEO_ELEMENT.id,
+          },
+        ],
+        selectedElements: [VIDEO_ELEMENT],
         updateElementsById: mockUpdateElementsById,
       });
     });
 
-    it.todo('should return the quick actions');
-    it.todo('should set the correct highlight');
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+      expect(result.current).toStrictEqual(videoQuickActionsWithClear);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.MEDIA,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[2].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.LINK,
+      });
+
+      result.current[3].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.CAPTIONS,
+      });
+    });
+
+    it(`should not show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES}\` action if element has no animations`, () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [VIDEO_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[4]).toBeUndefined();
+    });
+
+    it(`should show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} action if element has a changed opacity`, () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, { ...VIDEO_ELEMENT, opacity: 50 }],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [{ ...VIDEO_ELEMENT, opacity: 50 }],
+        updateElementsById: mockUpdateElementsById,
+      });
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[4]).toStrictEqual(videoQuickActionsWithClear[4]);
+    });
+
+    it(`should show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} action if element has a changed border`, () => {
+      const videoElWithBorder = {
+        ...VIDEO_ELEMENT,
+        border: {
+          left: 2,
+          right: 2,
+          top: 2,
+          bottom: 2,
+          color: {
+            color: {
+              r: 0,
+              g: 0,
+              b: 0,
+            },
+          },
+        },
+      };
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, videoElWithBorder],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [videoElWithBorder],
+        updateElementsById: mockUpdateElementsById,
+      });
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[4]).toStrictEqual(videoQuickActionsWithClear[4]);
+    });
+
+    it(`should show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} action if element has a changed border radius`, () => {
+      const videoElWithBorderRadius = {
+        ...VIDEO_ELEMENT,
+        borderRadius: {
+          topLeft: 2,
+          topRight: 2,
+          bottomRight: 2,
+          bottomLeft: 2,
+          locked: true,
+        },
+      };
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, videoElWithBorderRadius],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [videoElWithBorderRadius],
+        updateElementsById: mockUpdateElementsById,
+      });
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[4]).toStrictEqual(videoQuickActionsWithClear[4]);
+    });
+
+    it(`should click \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} and update the element`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[4].onClick(mockClickEvent);
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [VIDEO_ELEMENT.id],
+        properties: expect.any(Function),
+      });
+    });
   });
 });

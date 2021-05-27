@@ -544,8 +544,7 @@ describe('Quick Actions integration', () => {
           type: 'video',
           mimeType: 'video/webm',
           creationDate: '2021-05-21T00:09:18',
-          src:
-            'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
+          src: 'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
           width: 560,
           height: 320,
           poster:
@@ -591,5 +590,7 @@ describe('Quick Actions integration', () => {
     // it(`should click the \`${ACTION_TEXT.ADD_CAPTIONS}\` button and open the captions panel and focus the add captions input`, () => {});
 
     // it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation`, () => {});
+
+    // it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all styles, then click the undo button and reapply the styles`, () => {});
   });
 });
