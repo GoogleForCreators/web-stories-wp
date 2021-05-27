@@ -37,9 +37,10 @@ import {
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
+import { HighlightsProvider } from '../../../../../app/highlights';
 
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('../../../../form/advancedDropDown');
+jest.mock('../../../../form/advancedDropDown', () => jest.fn());
 jest.mock('../../../../form/color/color', () => ({
   __esModule: true,
   default: jest.fn(),
@@ -54,31 +55,48 @@ const DEFAULT_PADDING = {
 
 function Wrapper({ children }) {
   return (
-    <CanvasContext.Provider
-      value={{
-        state: {},
-        actions: {
-          clearEditing: jest.fn(),
-        },
-      }}
-    >
-      <FontContext.Provider
+    <HighlightsProvider>
+      <CanvasContext.Provider
         value={{
-          state: {
-            fonts: [
-              {
-                name: 'ABeeZee',
-                value: 'ABeeZee',
-                service: 'foo.bar.baz',
-                weights: [400],
-                styles: ['italic', 'regular'],
-                variants: [
-                  [0, 400],
-                  [1, 400],
-                ],
-                fallbacks: ['serif'],
-              },
-              {
+          state: {},
+          actions: {
+            clearEditing: jest.fn(),
+          },
+        }}
+      >
+        <FontContext.Provider
+          value={{
+            state: {
+              fonts: [
+                {
+                  name: 'ABeeZee',
+                  value: 'ABeeZee',
+                  service: 'foo.bar.baz',
+                  weights: [400],
+                  styles: ['italic', 'regular'],
+                  variants: [
+                    [0, 400],
+                    [1, 400],
+                  ],
+                  fallbacks: ['serif'],
+                },
+                {
+                  name: 'Neu Font',
+                  value: 'Neu Font',
+                  service: 'foo.bar.baz',
+                  weights: [400],
+                  styles: ['italic', 'regular'],
+                  variants: [
+                    [0, 400],
+                    [1, 400],
+                  ],
+                  fallbacks: ['fallback1'],
+                },
+              ],
+            },
+            actions: {
+              maybeEnqueueFontStyle: () => Promise.resolve(),
+              getFontByName: () => ({
                 name: 'Neu Font',
                 value: 'Neu Font',
                 service: 'foo.bar.baz',
@@ -89,34 +107,19 @@ function Wrapper({ children }) {
                   [1, 400],
                 ],
                 fallbacks: ['fallback1'],
-              },
-            ],
-          },
-          actions: {
-            maybeEnqueueFontStyle: () => Promise.resolve(),
-            getFontByName: () => ({
-              name: 'Neu Font',
-              value: 'Neu Font',
-              service: 'foo.bar.baz',
-              weights: [400],
-              styles: ['italic', 'regular'],
-              variants: [
-                [0, 400],
-                [1, 400],
-              ],
-              fallbacks: ['fallback1'],
-            }),
-            addRecentFont: jest.fn(),
-          },
-        }}
-      >
-        <RichTextContext.Provider
-          value={{ state: {}, actions: { selectionActions: {} } }}
+              }),
+              addRecentFont: jest.fn(),
+            },
+          }}
         >
-          {children}
-        </RichTextContext.Provider>
-      </FontContext.Provider>
-    </CanvasContext.Provider>
+          <RichTextContext.Provider
+            value={{ state: {}, actions: { selectionActions: {} } }}
+          >
+            {children}
+          </RichTextContext.Provider>
+        </FontContext.Provider>
+      </CanvasContext.Provider>
+    </HighlightsProvider>
   );
 }
 
@@ -127,7 +130,7 @@ Wrapper.propTypes = {
   ]),
 };
 
-describe('Panels/TextStyle', () => {
+fdescribe('Panels/TextStyle', () => {
   let textElement;
   let controls;
 
@@ -151,12 +154,14 @@ describe('Panels/TextStyle', () => {
     };
 
     controls = {};
+
     AdvancedDropDown.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });
 
   function FakeControl(props) {
     controls[props['data-testid']] = props;
+
     return <div />;
   }
 

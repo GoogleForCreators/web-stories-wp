@@ -88,7 +88,8 @@ const DropDown = forwardRef(function DropDown(
   if (!hasSearch) {
     primaryOptions = options;
   }
-  const dropdownRef = useRef();
+  const dropdownBackupRef = useRef();
+  const dropdownRef = ref || dropdownBackupRef;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -170,7 +171,7 @@ const DropDown = forwardRef(function DropDown(
         See https://github.com/google/web-stories-wp/issues/6671
         */}
       {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
-      <Container onKeyDown={handleKeyPress} ref={ref}>
+      <Container onKeyDown={handleKeyPress}>
         <DropDownSelect
           aria-pressed={isOpen}
           aria-haspopup
