@@ -56,6 +56,6 @@ export const RESET_PROPERTIES = {
 };
 
 export const RESET_LIST_COPY = {
-  [RESET_PROPERTIES.ANIMATION]: 'animations',
-  [RESET_PROPERTIES.OVERLAY]: 'filters',
+  [RESET_PROPERTIES.ANIMATION]: __('animations', 'web-stories'),
+  [RESET_PROPERTIES.OVERLAY]: __('filters', 'web-stories'),
 };

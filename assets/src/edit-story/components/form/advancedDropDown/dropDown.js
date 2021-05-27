@@ -47,7 +47,7 @@ const Container = styled.div`
  * @param {Array} props.options All options, used for search.
  * @param {boolean} props.hasSearch If to enable search feature in the dropdown.
  * @param {Function} props.getOptionsByQuery Function to query options in case options are not set.
- * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the funcion for these entries.
+ * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the function for these entries.
  * @param {Array} props.primaryOptions Array of options to display by default when not searching
  * @param {string} props.primaryLabel Label to display above the primary options.
  * @param {Array} props.priorityOptions Options to display in front of all the other options in a separate group (will not remove these from the `options`).

@@ -234,8 +234,7 @@ const useQuickActions = () => {
       selectedElement,
       selectedElementAnimations
     );
-
-    return [
+    const baseActions = [
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
@@ -248,29 +247,31 @@ const useQuickActions = () => {
         onClick: handleFocusLinkPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-      {
-        Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_ANIMATIONS,
-
-        onClick: () =>
-          handleClearAnimationsAndFilters({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: selectedElements?.[0]?.type,
-          }),
-        separator: 'top',
-        disabled: resetProperties.length === 0,
-        ...actionMenuProps,
-      },
     ];
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.CLEAR_ANIMATIONS,
+      onClick: () =>
+        handleClearAnimationsAndFilters({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: selectedElement?.type,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+
+    return resetProperties.length > 0
+      ? [...baseActions, clearAction]
+      : baseActions;
   }, [
-    selectedElement,
-    selectedElementAnimations,
+    handleClearAnimationsAndFilters,
+    handleFocusLinkPanel,
     handleFocusAnimationPanel,
     actionMenuProps,
-    handleFocusLinkPanel,
-    handleClearAnimationsAndFilters,
-    selectedElements,
+    selectedElement,
+    selectedElementAnimations,
   ]);
 
   const foregroundImageActions = useMemo(
@@ -315,7 +316,7 @@ const useQuickActions = () => {
       selectedElementAnimations
     );
 
-    return [
+    const baseActions = [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
@@ -328,20 +329,24 @@ const useQuickActions = () => {
         onClick: handleFocusAnimationPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-      {
-        Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
-        onClick: () =>
-          handleClearAnimationsAndFilters({
-            elementId: selectedElement?.id,
-            resetProperties,
-            elementType: ELEMENT_TYPE.BACKGROUND,
-          }),
-        separator: 'top',
-        disabled: resetProperties.length === 0,
-        ...actionMenuProps,
-      },
     ];
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      onClick: () =>
+        handleClearAnimationsAndFilters({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: ELEMENT_TYPE.BACKGROUND,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+
+    return resetProperties.length > 0
+      ? [...baseActions, clearAction]
+      : baseActions;
   }, [
     selectedElement,
     selectedElementAnimations,
