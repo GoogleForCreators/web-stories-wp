@@ -99,7 +99,7 @@ const ALLOWED_ERROR_MESSAGES = [
   // Firefox cookie warning.
   'has been rejected because it is already expired',
 
-  // WordPress causes this on the widgets screen in Firefox.
+  // Firefox warns about this usage in TinyMCE.
   'MouseEvent.mozPressure is deprecated',
 
   // Firefox + Feature Policy for embeds.
@@ -109,7 +109,13 @@ const ALLOWED_ERROR_MESSAGES = [
   'Ignoring duplicate source',
 
   // Another CSP warning in Firefox for embeds.
+  'Content Security Policy: Couldn’t parse invalid host',
+
+  // Another CSP warning in Firefox for embeds.
   'An iframe which has both allow-top-navigation and allow-top-navigation-by-user-activation',
+
+  // Firefox warns about this in WP admin
+  'For more information see “The Principal Writing Mode”',
 ];
 
 export function addAllowedErrorMessage(message) {
