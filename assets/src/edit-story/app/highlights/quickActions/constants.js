@@ -45,22 +45,32 @@ export const ACTION_TEXT = {
   CHANGE_COLOR: __('Change color', 'web-stories'),
   CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
   CLEAR_ANIMATION_AND_FILTERS: __('Clear filters and animation', 'web-stories'),
+  CLEAR_MEDIA_STYLES: __('Clear media styles', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
   REPLACE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
   REPLACE_MEDIA: __('Replace media', 'web-stories'),
 };
 
+export const RESET_PROPERTIES_LABEL = {
+  [ELEMENT_TYPE.IMAGE]: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+  [ELEMENT_TYPE.SHAPE]: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+  [ELEMENT_TYPE.TEXT]: ACTION_TEXT.CLEAR_ANIMATIONS,
+  [ELEMENT_TYPE.VIDEO]: ACTION_TEXT.CLEAR_MEDIA_STYLES,
+  [ELEMENT_TYPE.GIF]: ACTION_TEXT.CLEAR_MEDIA_STYLES,
+  [ELEMENT_TYPE.BACKGROUND]: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+};
+
 export const RESET_PROPERTIES = {
   ANIMATION: 'animation',
   OVERLAY: 'overlay',
   BACKGROUND_OVERLAY: 'backgroundOverlay',
-  OPACITY: 'opacity',
-  BORDER: 'border',
-  BORDER_RADIUS: 'borderRadius',
+  STYLES: 'styles',
 };
 
 export const RESET_LIST_COPY = {
   [RESET_PROPERTIES.ANIMATION]: __('animations', 'web-stories'),
   [RESET_PROPERTIES.OVERLAY]: __('filters', 'web-stories'),
+  [RESET_PROPERTIES.BACKGROUND_OVERLAY]: __('filters', 'web-stories'),
+  [RESET_PROPERTIES.STYLES]: __('styles', 'web-stories'),
 };

@@ -36,19 +36,20 @@ export const getResetProperties = (
   if (selectedElement?.overlay) {
     resetProperties.push(RESET_PROPERTIES.OVERLAY);
   }
+
+  if (
+    selectedElement?.opacity < 100 ||
+    selectedElement?.borderRadius ||
+    selectedElement?.border
+  ) {
+    resetProperties.push(RESET_PROPERTIES.STYLES);
+  }
+
+  if (selectedElement?.backgroundOverlay) {
+    resetProperties.push(RESET_PROPERTIES.BACKGROUND_OVERLAY);
+  }
   if (selectedElementAnimations?.length) {
     resetProperties.push(RESET_PROPERTIES.ANIMATION);
-  }
-  if (selectedElement?.opacity < 100) {
-    resetProperties.push(RESET_PROPERTIES.OPACITY);
-  }
-
-  if (selectedElement?.borderRadius) {
-    resetProperties.push(RESET_PROPERTIES.borderRadius);
-  }
-
-  if (selectedElement?.border) {
-    resetProperties.push(RESET_PROPERTIES.border);
   }
 
   return resetProperties;

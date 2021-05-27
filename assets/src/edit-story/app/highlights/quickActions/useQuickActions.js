@@ -39,7 +39,12 @@ import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory } from '../../story';
 import { getResetProperties, getSnackbarClearCopy } from './utils';
-import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
+import {
+  ELEMENT_TYPE,
+  ACTION_TEXT,
+  RESET_PROPERTIES,
+  RESET_PROPERTIES_LABEL,
+} from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
 
@@ -108,15 +113,9 @@ const useQuickActions = () => {
         };
       }
 
-      if (properties.includes(RESET_PROPERTIES.OPACITY)) {
+      if (properties.includes(RESET_PROPERTIES.STYLES)) {
         newProperties.opacity = 100;
-      }
-
-      if (properties.includes(RESET_PROPERTIES.BORDER)) {
         newProperties.border = null;
-      }
-
-      if (properties.includes(RESET_PROPERTIES.BORDER_RADIUS)) {
         newProperties.borderRadius = null;
       }
 
@@ -244,12 +243,8 @@ const useQuickActions = () => {
     handleMouseDown,
   ]);
 
-  const foregroundCommonActions = useMemo(() => {
-    const resetProperties = getResetProperties(
-      selectedElement,
-      selectedElementAnimations
-    );
-    const baseActions = [
+  const foregroundCommonActions = useMemo(
+    () => [
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
@@ -262,32 +257,14 @@ const useQuickActions = () => {
         onClick: handleFocusLinkPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-    ];
-
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATIONS,
-      onClick: () =>
-        handleClearAnimationsAndFilters({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: selectedElement?.type,
-        }),
-      separator: 'top',
-      ...actionMenuProps,
-    };
-
-    return resetProperties.length > 0
-      ? [...baseActions, clearAction]
-      : baseActions;
-  }, [
-    handleClearAnimationsAndFilters,
-    handleFocusLinkPanel,
-    handleFocusAnimationPanel,
-    actionMenuProps,
-    selectedElement,
-    selectedElementAnimations,
-  ]);
+    ],
+    [
+      handleFocusLinkPanel,
+      handleFocusAnimationPanel,
+      actionMenuProps,
+      selectedElement,
+    ]
+  );
 
   const foregroundImageActions = useMemo(
     () => [
@@ -325,13 +302,8 @@ const useQuickActions = () => {
     ]
   );
 
-  const backgroundElementMediaActions = useMemo(() => {
-    const resetProperties = getResetProperties(
-      selectedElement,
-      selectedElementAnimations
-    );
-
-    const baseActions = [
+  const backgroundElementMediaActions = useMemo(
+    () => [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
@@ -344,83 +316,33 @@ const useQuickActions = () => {
         onClick: handleFocusAnimationPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-    ];
+    ],
 
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
-      onClick: () =>
-        handleClearAnimationsAndFilters({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: ELEMENT_TYPE.BACKGROUND,
-        }),
-      separator: 'top',
-      ...actionMenuProps,
-    };
-
-    return resetProperties.length > 0
-      ? [...baseActions, clearAction]
-      : baseActions;
-  }, [
-    selectedElement,
-    selectedElementAnimations,
-    handleFocusMediaPanel,
-    actionMenuProps,
-    handleFocusAnimationPanel,
-    handleClearAnimationsAndFilters,
-  ]);
-
-  const videoActions = useMemo(() => {
-    const resetProperties = getResetProperties(
+    [
       selectedElement,
-      selectedElementAnimations
-    );
+      handleFocusMediaPanel,
+      actionMenuProps,
+      handleFocusAnimationPanel,
+    ]
+  );
 
-    const clearAction = {
-      Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATIONS,
-      onClick: () =>
-        handleClearAnimationsAndFilters({
-          elementId: selectedElement?.id,
-          resetProperties,
-          elementType: selectedElement?.type,
-        }),
-      separator: 'top',
-      ...actionMenuProps,
-    };
-    const actions = [
-      {
-        Icon: PictureSwap,
-        label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMediaPanel(selectedElement?.id),
-        ...actionMenuProps,
-      },
-      ...foregroundCommonActions,
+  const videoActions = useMemo(
+    () => [
+      ...foregroundImageActions,
       {
         Icon: Captions,
         label: ACTION_TEXT.ADD_CAPTIONS,
         onClick: handleFocusCaptionsPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-    ];
-    if (resetProperties.length > 0) {
-      actions.push(clearAction);
-    }
-    return actions;
-  }, [
-    selectedElement,
-    selectedElementAnimations,
-    actionMenuProps,
-    handleFocusMediaPanel,
-    foregroundCommonActions,
-    handleFocusCaptionsPanel,
-    handleClearAnimationsAndFilters,
-  ]);
-  // Hide menu if there are multiple elements selected
-  if (selectedElements.length > 1) {
-    return [];
-  }
+    ],
+    [
+      selectedElement,
+      actionMenuProps,
+      foregroundImageActions,
+      handleFocusCaptionsPanel,
+    ]
+  );
 
   const isBackgroundElementMedia = Boolean(
     backgroundElement && backgroundElement?.resource
@@ -431,6 +353,49 @@ const useQuickActions = () => {
     ) > -1;
   const noElementsSelected = selectedElements.length === 0;
   const isBackgroundSelected = backgroundElement?.id === selectedElement?.id;
+  const isBackgroundMediaSelected =
+    isBackgroundElementMedia && isSelectedElementMedia;
+
+  const clearActions = useMemo(() => {
+    const resetProperties = getResetProperties(
+      selectedElement,
+      selectedElementAnimations
+    );
+    return resetProperties.length === 0
+      ? []
+      : [
+          {
+            Icon: Eraser,
+            label:
+              RESET_PROPERTIES_LABEL[
+                isBackgroundMediaSelected
+                  ? ELEMENT_TYPE.BACKGROUND
+                  : selectedElement?.type
+              ],
+            onClick: () =>
+              handleClearAnimationsAndFilters({
+                elementId: selectedElement?.id,
+                resetProperties,
+                elementType: isBackgroundMediaSelected
+                  ? ELEMENT_TYPE.BACKGROUND
+                  : selectedElement?.type,
+              }),
+            separator: 'top',
+            ...actionMenuProps,
+          },
+        ];
+  }, [
+    actionMenuProps,
+    handleClearAnimationsAndFilters,
+    isBackgroundMediaSelected,
+    selectedElement,
+    selectedElementAnimations,
+  ]);
+
+  // Hide menu if there are multiple elements selected
+  if (selectedElements.length > 1) {
+    return [];
+  }
 
   // Return the base state if:
   //  1. no element is selected
@@ -442,17 +407,17 @@ const useQuickActions = () => {
     return defaultActions;
   }
 
-  if (isBackgroundElementMedia && isSelectedElementMedia) {
-    return backgroundElementMediaActions;
+  if (isBackgroundMediaSelected) {
+    return [...backgroundElementMediaActions, ...clearActions];
   }
 
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPE.IMAGE:
-      return foregroundImageActions;
+      return [...foregroundImageActions, ...clearActions];
     case ELEMENT_TYPE.SHAPE:
-      return shapeActions;
+      return [...shapeActions, ...clearActions];
     case ELEMENT_TYPE.VIDEO:
-      return videoActions;
+      return [...videoActions, ...clearActions];
     case ELEMENT_TYPE.TEXT:
     default:
       return [];
