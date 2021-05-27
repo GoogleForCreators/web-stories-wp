@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { createGlobalStyle, css } from 'styled-components';
-import 'focus-visible';
 
 import(/* webpackChunkName: "focus-visible" */ 'focus-visible').catch(
   () => undefined
