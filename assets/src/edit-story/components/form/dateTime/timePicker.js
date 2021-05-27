@@ -47,10 +47,10 @@ const inputCSS = css`
   box-shadow: 0 0 0 transparent;
   transition: box-shadow 0.1s linear;
   border-radius: 4px;
-  border: 1px solid #7e8993;
+  border: 1px solid ${({ theme }) => theme.colors.blue[70]};
   height: 28px;
   vertical-align: middle;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.colors.standard.white};
   color: #32373c;
 `;
 
@@ -88,16 +88,16 @@ const Button = styled.button`
   white-space: nowrap;
   border-width: 1px;
   border-style: solid;
-  color: rgb(0, 117, 175);
-  border-color: rgb(0, 117, 175);
+  color: ${({ theme }) => theme.colors.blue[70]};
+  border-color: ${({ theme }) => theme.colors.blue[70]};
   background: #f3f5f6;
 
   &:focus {
     outline: 2px solid transparent;
     background: #f3f5f6;
     color: rgb(0, 93, 140);
-    border-color: rgb(0, 118, 177);
-    box-shadow: 0 0 0 1px rgb(0, 118, 177);
+    border-color: ${({ theme }) => theme.colors.fg.linkHover};
+    box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.fg.linkHover};
     text-decoration: none;
   }
   ${({ isToggled }) =>
