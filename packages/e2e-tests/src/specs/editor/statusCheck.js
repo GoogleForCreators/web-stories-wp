@@ -57,7 +57,9 @@ describe('Status Check', () => {
     });
 
     afterAll(async () => {
-      await deactivatePlugin('web-stories-test-plugin-status-check-200-invalid');
+      await deactivatePlugin(
+        'web-stories-test-plugin-status-check-200-invalid'
+      );
     });
 
     it('should display error dialog', async () => {
