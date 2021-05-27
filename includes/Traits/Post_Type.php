@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\Traits;
 
 use WP_Post_Type;
-use WP_REST_Controller;
 use WP_REST_Posts_Controller;
 
 /**
@@ -132,7 +131,7 @@ trait Post_Type {
 	 *
 	 * @param string $slug The post type slug.
 	 *
-	 * @return WP_REST_Posts_Controller|WP_REST_Controller
+	 * @return \WP_REST_Posts_Controller|\WP_REST_Controller
 	 */
 	protected function get_post_type_parent_controller( $slug ) {
 		$post_type_obj     = get_post_type_object( $slug );

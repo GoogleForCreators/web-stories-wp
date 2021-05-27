@@ -21,7 +21,6 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Test_Case;
-use WP_Post;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\HTML

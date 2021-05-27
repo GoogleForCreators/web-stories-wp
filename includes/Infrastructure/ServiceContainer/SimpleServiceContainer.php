@@ -17,10 +17,10 @@
 
 namespace Google\Web_Stories\Infrastructure\ServiceContainer;
 
+use ArrayObject;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\ServiceContainer;
-use ArrayObject;
 
 /**
  * A simplified implementation of a service container.

@@ -27,9 +27,9 @@
 namespace Google\Web_Stories\Block;
 
 use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
@@ -37,8 +37,8 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * Latest Stories block class.
  */
 class Web_Stories_Block extends Embed_Base {
-	use Stories_Script_Data;
 	use Post_Type;
+	use Stories_Script_Data;
 
 	/**
 	 * Script handle.

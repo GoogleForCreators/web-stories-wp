@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests;
 
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * Trait Private_Access.

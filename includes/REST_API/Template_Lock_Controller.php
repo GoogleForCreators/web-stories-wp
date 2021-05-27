@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Template_Post_Type;
-use WP_REST_Controller;
 
 /**
  * Class Template_Lock_Controller

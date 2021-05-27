@@ -30,13 +30,13 @@ namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Locale;
-use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Template_Post_Type;
 use Google\Web_Stories\Register_Font;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Integrations\Site_Kit;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Template_Post_Type;
+use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Screen;
@@ -47,9 +47,9 @@ use Google\Web_Stories\Traits\Types;
  */
 class Dashboard extends Service_Base {
 	use Assets;
-	use Types;
-	use Screen;
 	use Post_Type;
+	use Screen;
+	use Types;
 
 	/**
 	 * Script handle.

@@ -28,8 +28,6 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Renderer\Stories\Carousel_Renderer;
 use Google\Web_Stories\Renderer\Stories\Generic_Renderer;
-use Google\Web_Stories\Renderer\Stories\Renderer;
-use WP_Post;
 use WP_Query;
 
 /**
@@ -59,7 +57,7 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @var Renderer
+	 * @var Renderer\Stories\Renderer
 	 */
 	public $renderer;
 
@@ -103,7 +101,7 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return WP_Post[] List of Story posts.
+	 * @return \WP_Post[] List of Story posts.
 	 */
 	public function get_stories() {
 		$stories_query = new WP_Query();
@@ -111,7 +109,7 @@ class Story_Query {
 		/**
 		 * List of story posts.
 		 *
-		 * @var WP_Post[] $result
+		 * @var \WP_Post[] $result
 		 */
 		$result = $stories_query->query( $this->query_args );
 
@@ -123,7 +121,7 @@ class Story_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return Renderer Renderer Instance.
+	 * @return Renderer\Stories\Renderer Renderer Instance.
 	 */
 	public function get_renderer() {
 		$story_attributes = $this->get_story_attributes();

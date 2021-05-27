@@ -48,7 +48,7 @@ $preload_paths = [
  * Filters the array of paths that will be preloaded.
  *
  * @param string[] $preload_paths Array of paths to preload.
- * @param WP_Post  $post          Post being edited.
+ * @param \WP_Post  $post          Post being edited.
  */
 $preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
 

@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Model;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**

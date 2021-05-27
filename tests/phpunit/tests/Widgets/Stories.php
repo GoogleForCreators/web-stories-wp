@@ -17,9 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Widgets;
 
+use Google\Web_Stories\Tests\Test_Case;
 use Google\Web_Stories\Widgets\Stories as Testee;
 use WP_Widget;
-use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Stories

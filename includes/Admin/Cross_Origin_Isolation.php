@@ -33,7 +33,6 @@ use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
-
 /**
  * Class Cross_Origin_Isolation
  *

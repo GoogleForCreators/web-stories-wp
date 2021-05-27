@@ -83,7 +83,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param WP_Error $error       WP_Error object passed back.
+	 * @param \WP_Error $error       WP_Error object passed back.
 	 */
 	public function __construct( WP_Error $error ) {
 		$this->error = $error;
@@ -372,7 +372,7 @@ class Web_Stories_Compatibility {
 	 * @since 1.2.0
 	 *
 	 * @codeCoverageIgnore
-	 * @return WP_Error
+	 * @return \WP_Error
 	 */
 	public function get_error() {
 		return $this->error;

@@ -27,11 +27,9 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Traits\Post_Type;
-use WP_REST_Controller;
-use WP_REST_Response;
-use WP_REST_Request;
-use WP_REST_Server;
 use WP_Error;
+use WP_REST_Response;
+use WP_REST_Server;
 
 /**
  * Class Lock_Controller
@@ -43,7 +41,7 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Parent post controller.
 	 *
-	 * @var WP_REST_Controller
+	 * @var \WP_REST_Controller
 	 */
 	private $parent_controller;
 
@@ -115,8 +113,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Get post lock
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|\WP_Error Response object on success.
 	 */
 	public function get_item( $request ) {
 		$lock = $this->get_lock( $request['id'] );
@@ -127,8 +125,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Update post lock
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response|WP_Error Response object on success.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response|\WP_Error Response object on success.
 	 */
 	public function update_item( $request ) {
 		if ( ! function_exists( 'wp_set_post_lock' ) ) {
@@ -144,8 +142,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Delete post lock
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return WP_REST_Response Response object on success.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return \WP_REST_Response Response object on success.
 	 */
 	public function delete_item( $request ) {
 		$lock     = $this->get_lock( $request['id'] );
@@ -188,8 +186,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Checks if a given request has access to read a lock.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return true|WP_Error True if the request has read access for the item, WP_Error object otherwise.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has read access for the item, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
 		return $this->parent_controller->update_item_permissions_check( $request );
@@ -198,8 +196,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Checks if a given request has access to update a lock.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return true|WP_Error True if the request has access to update the item, WP_Error object otherwise.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to update the item, WP_Error object otherwise.
 	 */
 	public function update_item_permissions_check( $request ) {
 		return $this->parent_controller->update_item_permissions_check( $request );
@@ -208,8 +206,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Checks if a given request has access to delete a lock.
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 * @return true|WP_Error True if the request has access to delete the item, WP_Error object otherwise.
+	 * @param \WP_REST_Request $request Full details about the request.
+	 * @return true|\WP_Error True if the request has access to delete the item, WP_Error object otherwise.
 	 */
 	public function delete_item_permissions_check( $request ) {
 		$result = $this->parent_controller->update_item_permissions_check( $request );
@@ -232,10 +230,10 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Prepares a single lock output for response.
 	 *
-	 * @param array|false     $lock Lock value, default to false is not set.
-	 * @param WP_REST_Request $request Request object.
+	 * @param array|false      $lock Lock value, default to false is not set.
+	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response|WP_Error Response object.
+	 * @return \WP_REST_Response|\WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $lock, $request ) {
 		$nonce = wp_create_nonce( 'wp_rest' );
@@ -274,9 +272,9 @@ abstract class Lock_Controller extends REST_Controller {
 		 *
 		 * @since 1.6.0
 		 *
-		 * @param WP_REST_Response $response The response object.
+		 * @param \WP_REST_Response $response The response object.
 		 * @param Array            $lock     Lock array.
-		 * @param WP_REST_Request  $request  Request object.
+		 * @param \WP_REST_Request  $request  Request object.
 		 */
 		return apply_filters( "rest_prepare_{$this->post_type}_lock", $response, $lock, $request );
 	}

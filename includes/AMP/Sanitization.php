@@ -26,6 +26,11 @@
 
 namespace Google\Web_Stories\AMP;
 
+use Google\Web_Stories_Dependencies\AmpProject\Amp;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Extension;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
@@ -33,12 +38,6 @@ use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
-use Google\Web_Stories_Dependencies\AmpProject\Amp;
-use Google\Web_Stories_Dependencies\AmpProject\Attribute;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories_Dependencies\AmpProject\Extension;
-use Google\Web_Stories_Dependencies\AmpProject\Tag;
-use DOMElement;
 
 /**
  * Sanitization class.
@@ -107,7 +106,7 @@ class Sanitization {
 		/**
 		 * Script element.
 		 *
-		 * @var DOMElement $script
+		 * @var \DOMElement $script
 		 */
 		foreach ( $document->head->getElementsByTagName( Tag::SCRIPT ) as $script ) {
 			$head_scripts[] = $script;
@@ -197,7 +196,7 @@ class Sanitization {
 			/**
 			 * AMP script element.
 			 *
-			 * @var DOMElement $script_element
+			 * @var \DOMElement $script_element
 			 */
 			$script_element = $amp_scripts[ $script_handle ];
 
@@ -232,7 +231,7 @@ class Sanitization {
 			/**
 			 * Link node.
 			 *
-			 * @var DOMElement $link
+			 * @var \DOMElement $link
 			 */
 			foreach ( $links[ $rel ] as $link ) {
 				if ( $link->parentNode ) {
@@ -280,7 +279,7 @@ class Sanitization {
 		/**
 		 * Script element.
 		 *
-		 * @var DOMElement $ordered_script
+		 * @var \DOMElement $ordered_script
 		 */
 		foreach ( $ordered_scripts as $ordered_script ) {
 			if ( $previous_node && $previous_node->nextSibling ) {

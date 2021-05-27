@@ -29,8 +29,8 @@ namespace Google\Web_Stories\Renderer\Stories;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Traits\Amp;
 use Google\Web_Stories\Traits\Assets;
 use Iterator;
@@ -45,8 +45,8 @@ use WP_Post;
  */
 abstract class Renderer implements RenderingInterface, Iterator {
 
-	use Assets;
 	use Amp;
+	use Assets;
 
 	/**
 	 * Web Stories stylesheet handle.

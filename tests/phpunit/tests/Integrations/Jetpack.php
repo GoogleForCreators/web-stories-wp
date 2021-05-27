@@ -17,9 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integrations;
 
+use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Test_Case;
-use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack

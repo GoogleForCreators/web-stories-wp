@@ -28,8 +28,8 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\Injector;
+use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 
 /**
  * Plugin class.

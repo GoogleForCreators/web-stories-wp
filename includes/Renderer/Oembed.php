@@ -29,7 +29,6 @@ namespace Google\Web_Stories\Renderer;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use WP_Post;
 
 /**
  * Class Oembed
@@ -76,10 +75,10 @@ class Oembed extends Service_Base {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param string  $output Embed code.
-	 * @param WP_Post $post Post object.
-	 * @param int     $width  The width for the response.
-	 * @param int     $height The height for the response.
+	 * @param string   $output Embed code.
+	 * @param \WP_Post $post Post object.
+	 * @param int      $width  The width for the response.
+	 * @param int      $height The height for the response.
 	 *
 	 * @return string Filtered embed code.
 	 */
@@ -116,9 +115,9 @@ class Oembed extends Service_Base {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param array   $data   The response data.
-	 * @param WP_Post $post   The post object.
-	 * @param int     $width  The requested width.
+	 * @param array    $data   The response data.
+	 * @param \WP_Post $post   The post object.
+	 * @param int      $width  The requested width.
 	 * @return array The modified response data.
 	 */
 	public function filter_oembed_response_data( $data, $post, $width ) {

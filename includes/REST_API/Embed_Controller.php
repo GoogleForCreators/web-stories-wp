@@ -33,8 +33,6 @@ use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
 use WP_Post;
-use WP_REST_Request;
-use WP_REST_Response;
 use WP_REST_Server;
 
 /**
@@ -89,9 +87,9 @@ class Embed_Controller extends REST_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
+	 * @param \WP_REST_Request $request Full data about the request.
 	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_proxy_item( $request ) {
 		$url = urldecode( untrailingslashit( $request['url'] ) );
@@ -331,7 +329,7 @@ class Embed_Controller extends REST_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 * @return true|\WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function get_proxy_item_permissions_check() {
 		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {

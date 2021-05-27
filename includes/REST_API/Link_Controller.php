@@ -33,8 +33,6 @@ use Google\Web_Stories\Traits\Document_Parser;
 use Google\Web_Stories\Traits\Post_Type;
 use WP_Error;
 use WP_Http;
-use WP_REST_Request;
-use WP_REST_Response;
 use WP_REST_Server;
 
 /**
@@ -91,9 +89,9 @@ class Link_Controller extends REST_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request Full data about the request.
+	 * @param \WP_REST_Request $request Full data about the request.
 	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function parse_link( $request ) {
 		$url = untrailingslashit( $request['url'] );
@@ -235,7 +233,7 @@ class Link_Controller extends REST_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 * @return true|\WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function parse_link_permissions_check() {
 		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {

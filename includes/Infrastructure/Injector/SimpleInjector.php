@@ -17,12 +17,11 @@
 
 namespace Google\Web_Stories\Infrastructure\Injector;
 
+use Exception;
 use Google\Web_Stories\Exception\FailedToMakeInstance;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Instantiator;
-use Exception;
 use ReflectionClass;
-use ReflectionNamedType;
 use ReflectionParameter;
 
 /**

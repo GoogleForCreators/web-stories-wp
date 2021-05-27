@@ -28,9 +28,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Media\Media;
 
 use WP_Post;
 
@@ -38,8 +38,8 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery extends Service_Base {
-	use Publisher;
 	use Post_Type;
+	use Publisher;
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -196,7 +196,7 @@ class Discovery extends Service_Base {
 		 * @since 1.0.0
 		 *
 		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
+		 * @param \WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
 	}
@@ -271,7 +271,7 @@ class Discovery extends Service_Base {
 		 * @since 1.3.0
 		 *
 		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
+		 * @param \WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_open_graph_metadata', $metadata, $post );
 	}
@@ -336,7 +336,7 @@ class Discovery extends Service_Base {
 		 * @since 1.3.0
 		 *
 		 * @param array $metadata The structured data.
-		 * @param WP_Post $post The current post object.
+		 * @param \WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_twitter_metadata', $metadata, $post );
 	}

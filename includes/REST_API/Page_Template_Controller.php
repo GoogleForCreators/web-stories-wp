@@ -26,10 +26,6 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use WP_Error;
-use WP_REST_Request;
-use WP_REST_Response;
-
 /**
  * Page_Template_Controller class.
  */
@@ -39,9 +35,9 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
+	 * @param \WP_REST_Request $request Full details about the request.
 	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
 		$response = parent::get_items( $request );

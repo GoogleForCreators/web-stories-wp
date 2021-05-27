@@ -17,10 +17,9 @@
 
 namespace Google\Web_Stories\Infrastructure;
 
+use function Google\Web_Stories\rewrite_flush;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
-use function Google\Web_Stories\rewrite_flush;
-
 
 /**
  * This abstract base plugin provides all the boilerplate code for working with

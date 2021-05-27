@@ -142,8 +142,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array    $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
+	 * @param \WP_Post $attachment Attachment object.
 	 *
 	 * @return array
 	 */
@@ -180,8 +180,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @param WP_REST_Response $response The response object.
-	 * @param WP_Post          $post     The original attachment post.
+	 * @param \WP_REST_Response $response The response object.
+	 * @param \WP_Post          $post     The original attachment post.
 	 *
 	 * @return WP_REST_Response
 	 */

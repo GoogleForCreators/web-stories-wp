@@ -18,8 +18,6 @@
 namespace Google\Web_Stories\Tests\AMP;
 
 use AMP_DOM_Utils;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**

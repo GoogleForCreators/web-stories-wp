@@ -27,8 +27,8 @@
 namespace Google\Web_Stories\AMP\Traits;
 
 use DOMElement;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use \AmpProject\Dom\Document as AMP_Document;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document; // phpcs:ignore PSR2R.Namespaces.UnusedUseStatement.UnusedUse
+use \AmpProject\Dom\Document as AMP_Document; // phpcs:ignore PSR2R.Namespaces.UnusedUseStatement.UnusedUse
 
 /**
  * Trait Sanitization_Utils

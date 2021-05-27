@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\User;
 
-use Spy_REST_Server;
 use WP_REST_Request;
 
 /**

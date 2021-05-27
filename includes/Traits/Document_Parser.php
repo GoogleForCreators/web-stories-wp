@@ -26,10 +26,9 @@
 
 namespace Google\Web_Stories\Traits;
 
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use DOMXpath;
-use DOMNodeList;
 use DOMElement;
+use DOMNodeList;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * Trait Document_Parser
@@ -73,7 +72,7 @@ trait Document_Parser {
 	 *
 	 * @param string $html HTML Blob.
 	 *
-	 * @return DOMXPath|false
+	 * @return \DOMXPath|false
 	 */
 	protected function html_to_xpath( $html ) {
 		$document = Document::fromHtml( $html );

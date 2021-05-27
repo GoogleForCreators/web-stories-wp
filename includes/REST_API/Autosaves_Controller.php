@@ -29,14 +29,9 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Media\Media;
-use WP_Error;
-use WP_Post;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_REST_Autosaves_Controller;
-use WP_REST_Controller;
-use WP_REST_Posts_Controller;
-use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 
@@ -50,7 +45,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	/**
 	 * Parent post controller.
 	 *
-	 * @var WP_REST_Controller
+	 * @var \WP_REST_Controller
 	 */
 	protected $parent_controller;
 
@@ -165,10 +160,10 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_Post         $post Post object.
-	 * @param WP_REST_Request $request Request object.
+	 * @param \WP_Post         $post Post object.
+	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response Response object.
+	 * @return \WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );

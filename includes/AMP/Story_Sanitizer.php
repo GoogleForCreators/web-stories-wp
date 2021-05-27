@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories\AMP\Traits\Sanitization_Utils;
+use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 
 /**
  * Story sanitizer.

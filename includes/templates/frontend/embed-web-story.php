@@ -8,8 +8,8 @@
  * @link      https://github.com/google/web-stories-wp
  */
 
-use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Story\Image;
 
 /**
  * Copyright 2021 Google LLC

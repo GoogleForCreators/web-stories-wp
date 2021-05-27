@@ -26,11 +26,11 @@
 
 namespace Google\Web_Stories\Integrations;
 
-use Google\Web_Stories\Admin\Customizer;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Renderer\Stories\Renderer;
-use Google\Web_Stories\Traits\Assets;
 use function Google\Web_Stories\render_theme_stories;
+use Google\Web_Stories\Admin\Customizer;
+use Google\Web_Stories\Renderer\Stories\Renderer;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Traits\Assets;
 
 /**
  * Class Core_Themes_Support.

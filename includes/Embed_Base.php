@@ -27,8 +27,8 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Renderer\Story\Embed;
+use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Traits\Assets;
 
 /**

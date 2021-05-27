@@ -23,8 +23,6 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
-
 /**
  * Class ListView.
  */
@@ -35,7 +33,7 @@ final class ListView extends BaseFieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function excerpt() {
 		$label = parent::excerpt()->label();
@@ -54,7 +52,7 @@ final class ListView extends BaseFieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function date() {
 		$label = parent::date()->label();
@@ -73,7 +71,7 @@ final class ListView extends BaseFieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function image_alignment() {
 		$label = parent::image_alignment()->label();

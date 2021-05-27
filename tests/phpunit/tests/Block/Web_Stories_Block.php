@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Block;
 
-use WP_Block_Type_Registry;
 use Google\Web_Stories\Tests\Test_Case;
+use WP_Block_Type_Registry;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block

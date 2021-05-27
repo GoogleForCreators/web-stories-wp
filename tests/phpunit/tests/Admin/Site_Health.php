@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**

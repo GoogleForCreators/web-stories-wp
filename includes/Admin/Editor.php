@@ -29,17 +29,16 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
+use Google\Web_Stories\Page_Template_Post_Type;
+use Google\Web_Stories\Register_Font;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Register_Font;
-use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
-use Google\Web_Stories\Traits\Post_Type;
-use WP_Post;
 
 /**
  * Class Editor
@@ -47,11 +46,11 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base {
-	use Publisher;
-	use Types;
 	use Assets;
-	use Screen;
 	use Post_Type;
+	use Publisher;
+	use Screen;
+	use Types;
 
 	/**
 	 * Web Stories editor script handle.
@@ -134,8 +133,8 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post    Current post object.
+	 * @param bool     $replace Bool if to replace editor or not.
+	 * @param \WP_Post $post    Current post object.
 	 *
 	 * @return bool Whether the editor has been replaced.
 	 */

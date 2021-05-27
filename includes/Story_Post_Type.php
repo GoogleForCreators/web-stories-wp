@@ -27,9 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Stories_Controller;
-use WP_Post_Type;
 use WP_Rewrite;
-use WP_Query;
 
 /**
  * Class Story_Post_Type.
@@ -155,8 +153,8 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array        $query_params Array of allowed query params.
-	 * @param WP_Post_Type $post_type Post type.
+	 * @param array         $query_params Array of allowed query params.
+	 * @param \WP_Post_Type $post_type Post type.
 	 *
 	 * @return array Array of query params.
 	 */
@@ -199,8 +197,8 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool     $bypass Pass-through of the pre_handle_404 filter value.
-	 * @param WP_Query $query The WP_Query object.
+	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param \WP_Query $query The WP_Query object.
 	 * @return bool Whether to pass-through or not.
 	 */
 	public function redirect_post_type_archive_urls( $bypass, $query ) {

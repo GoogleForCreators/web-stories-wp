@@ -17,9 +17,6 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Spy_REST_Server;
-use WP_REST_Request;
-
 /**
  * @coversDefaultClass \Google\Web_Stories\Demo_Content
  */

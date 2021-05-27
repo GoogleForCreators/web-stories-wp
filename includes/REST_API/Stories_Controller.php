@@ -32,9 +32,6 @@ use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
-use WP_Error;
-use WP_Post;
-use WP_REST_Request;
 use WP_REST_Response;
 
 /**
@@ -57,10 +54,10 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_Post         $post Post object.
-	 * @param WP_REST_Request $request Request object.
+	 * @param \WP_Post         $post Post object.
+	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response Response object.
+	 * @return \WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -132,9 +129,9 @@ class Stories_Controller extends Stories_Base_Controller {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param WP_REST_Response $response The response object.
-		 * @param WP_Post $post Post object.
-		 * @param WP_REST_Request $request Request object.
+		 * @param \WP_REST_Response $response The response object.
+		 * @param \WP_Post $post Post object.
+		 * @param \WP_REST_Request $request Request object.
 		 */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
@@ -144,9 +141,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
+	 * @param \WP_REST_Request $request Full details about the request.
 	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
 		$response = parent::update_item( $request );
@@ -231,8 +228,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string[] $clauses Associative array of the clauses for the query.
-	 * @param WP_Query $query   The WP_Query instance.
+	 * @param string[]  $clauses Associative array of the clauses for the query.
+	 * @param \WP_Query $query   The WP_Query instance.
 	 *
 	 * @return array Filtered query clauses.
 	 */
@@ -263,9 +260,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request Full details about the request.
+	 * @param \WP_REST_Request $request Full details about the request.
 	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 * @return \WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
 		add_filter( 'posts_clauses', [ $this, 'filter_posts_clauses' ], 10, 2 );
@@ -348,7 +345,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		 * @since 1.0.0
 		 *
 		 * @param array           $args    Key value array of query var to query value.
-		 * @param WP_REST_Request $request The request used.
+		 * @param \WP_REST_Request $request The request used.
 		 */
 		$args       = apply_filters( "rest_{$this->post_type}_query", $args, $request );
 		$query_args = $this->prepare_items_query( $args, $request );
@@ -423,7 +420,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares links for the request.
 	 *
-	 * @param WP_Post $post Post object.
+	 * @param \WP_Post $post Post object.
 	 *
 	 * @return array Links for the given post.
 	 */

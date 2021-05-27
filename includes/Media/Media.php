@@ -28,8 +28,6 @@ namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
-use WP_Post;
-use WP_Query;
 use WP_REST_Request;
 
 /**
@@ -298,7 +296,7 @@ class Media extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_Query $query WP_Query instance, passed by reference.
+	 * @param \WP_Query $query WP_Query instance, passed by reference.
 	 *
 	 * @return void
 	 */
@@ -323,8 +321,8 @@ class Media extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 *
-	 * @param array           $args Query args.
-	 * @param WP_REST_Request $request The current REST request.
+	 * @param array            $args Query args.
+	 * @param \WP_REST_Request $request The current REST request.
 	 *
 	 * @return array Filtered query args.
 	 */
@@ -436,8 +434,8 @@ class Media extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param mixed   $value Value to update.
-	 * @param WP_Post $object Object to update on.
+	 * @param mixed    $value Value to update.
+	 * @param \WP_Post $object Object to update on.
 	 *
 	 * @return true|\WP_Error
 	 */
@@ -474,8 +472,8 @@ class Media extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array   $response   Array of prepared attachment data.
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array    $response   Array of prepared attachment data.
+	 * @param \WP_Post $attachment Attachment object.
 	 *
 	 * @return array $response;
 	 */

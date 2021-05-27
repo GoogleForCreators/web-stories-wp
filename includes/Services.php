@@ -7,10 +7,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Infrastructure\ServiceContainer;
-
 /**
  * Convenience class to get easy access to the service container.
  *
@@ -31,14 +27,14 @@ final class Services {
 	/**
 	 * Service container object instance.
 	 *
-	 * @var ServiceContainer
+	 * @var Infrastructure\ServiceContainer
 	 */
 	private static $container;
 
 	/**
 	 * Dependency injector object instance.
 	 *
-	 * @var Injector|Service
+	 * @var Infrastructure\Injector|Infrastructure\Service
 	 */
 	private static $injector;
 
@@ -49,7 +45,7 @@ final class Services {
 	 *
 	 * @param string $service Service ID to retrieve.
 	 *
-	 * @return Service
+	 * @return Infrastructure\Service
 	 */
 	public static function get( $service ) {
 		return self::get_container()->get( $service );
@@ -87,7 +83,7 @@ final class Services {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return ServiceContainer Service container object instance.
+	 * @return Infrastructure\ServiceContainer Service container object instance.
 	 */
 	public static function get_container() {
 		if ( null === self::$container ) {
@@ -102,7 +98,7 @@ final class Services {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return Injector|Service Dependency injector object instance.
+	 * @return Infrastructure\Injector|Infrastructure\Service Dependency injector object instance.
 	 */
 	public static function get_injector() {
 		if ( null === self::$injector ) {

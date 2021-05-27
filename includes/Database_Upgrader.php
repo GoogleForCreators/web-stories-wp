@@ -26,9 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\Service;
-
 /**
  * Class Database_Upgrader
  *
@@ -77,7 +74,7 @@ class Database_Upgrader extends Service_Base {
 	/**
 	 * Injector instance.
 	 *
-	 * @var Injector|Service Locale instance.
+	 * @var Infrastructure\Injector|Infrastructure\Service Locale instance.
 	 */
 	private $injector;
 

@@ -26,10 +26,9 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Tag;
-use DOMElement;
+use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 
 /**
  * Canonical sanitizer class.
@@ -60,7 +59,7 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 		/**
 		 * Link element.
 		 *
-		 * @var DOMElement $link
+		 * @var \DOMElement $link
 		 */
 		foreach ( $link_elements as $link ) {
 			if ( $link->hasAttribute( Attribute::REL ) ) {

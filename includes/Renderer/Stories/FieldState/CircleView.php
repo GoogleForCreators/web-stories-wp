@@ -23,8 +23,6 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
-
 /**
  * Class CircleView.
  */
@@ -35,7 +33,7 @@ final class CircleView extends BaseFieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function title() {
 		$label = parent::title()->label();
@@ -52,7 +50,7 @@ final class CircleView extends BaseFieldState {
 	/**
 	 * Author field.
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function author() {
 		$label = parent::author()->label();
@@ -69,7 +67,7 @@ final class CircleView extends BaseFieldState {
 	/**
 	 * Date field.
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function date() {
 		$label = parent::date()->label();
@@ -86,7 +84,7 @@ final class CircleView extends BaseFieldState {
 	/**
 	 * Sharp corners field.
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function sharp_corners() {
 		$label = parent::sharp_corners()->label();
@@ -103,7 +101,7 @@ final class CircleView extends BaseFieldState {
 	/**
 	 * Circle size field.
 	 *
-	 * @return BaseField
+	 * @return \Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function circle_size() {
 		$label = parent::circle_size()->label();

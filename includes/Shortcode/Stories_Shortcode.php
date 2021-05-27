@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Shortcode;
 
-use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Query as Stories;
 
 /**
  * Class Stories_Shortcode

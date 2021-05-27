@@ -23,10 +23,10 @@
 
 namespace Google\Web_Stories\Widgets;
 
-use WP_Widget;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Stories_Script_Data;
+use WP_Widget;
 
 /**
  * Class Stories
@@ -34,8 +34,8 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories extends WP_Widget {
-	use Stories_Script_Data;
 	use Assets;
+	use Stories_Script_Data;
 
 	const SCRIPT_HANDLE = 'web-stories-widget';
 

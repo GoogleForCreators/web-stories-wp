@@ -26,13 +26,12 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Traits\Layout;
 use Google\Web_Stories\Traits\Theme_Support;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
-use WP_Error;
 
 /**
  * Class customizer settings.
@@ -42,8 +41,8 @@ use WP_Error;
  * @package Google\Web_Stories
  */
 class Customizer extends Service_Base {
-	use Theme_Support;
 	use Layout;
+	use Theme_Support;
 
 	/**
 	 * Customizer section slug.
@@ -493,10 +492,10 @@ class Customizer extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param WP_Error $validity WP_Error object.
-	 * @param int      $value    Value to be validated.
+	 * @param \WP_Error $validity WP_Error object.
+	 * @param int       $value    Value to be validated.
 	 *
-	 * @return WP_Error
+	 * @return \WP_Error
 	 */
 	public function validate_number_of_stories( $validity, $value ) {
 		$value = (int) $value;
@@ -512,10 +511,10 @@ class Customizer extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param WP_Error $validity WP_Error object.
-	 * @param int      $value Value to be validated.
+	 * @param \WP_Error $validity WP_Error object.
+	 * @param int       $value Value to be validated.
 	 *
-	 * @return WP_Error
+	 * @return \WP_Error
 	 */
 	public function validate_number_of_columns( $validity, $value ) {
 		$value = (int) $value;

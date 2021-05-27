@@ -39,9 +39,9 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @package Google\Web_Stories
  */
 class TinyMCE extends Service_Base {
-	use Stories_Script_Data;
 	use Assets;
 	use Screen;
+	use Stories_Script_Data;
 
 	/**
 	 * Web Stories tinymce script handle.

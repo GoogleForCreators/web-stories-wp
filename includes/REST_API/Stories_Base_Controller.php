@@ -28,11 +28,8 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Services;
-use stdClass;
 use WP_Error;
-use WP_Post;
 use WP_REST_Posts_Controller;
-use WP_REST_Request;
 use WP_REST_Response;
 
 /**
@@ -72,9 +69,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_REST_Request $request Request object.
+	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return stdClass|WP_Error Post object or WP_Error.
+	 * @return \stdClass|\WP_Error Post object or WP_Error.
 	 */
 	protected function prepare_item_for_database( $request ) {
 		$prepared_post = parent::prepare_item_for_database( $request );
@@ -115,10 +112,10 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param WP_Post         $post Post object.
-	 * @param WP_REST_Request $request Request object.
+	 * @param \WP_Post         $post Post object.
+	 * @param \WP_REST_Request $request Request object.
 	 *
-	 * @return WP_REST_Response Response object.
+	 * @return \WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );

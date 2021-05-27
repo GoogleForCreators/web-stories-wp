@@ -18,11 +18,11 @@
 namespace Google\Web_Stories\Tests\AMP;
 
 use DOMElement;
+use Google\Web_Stories\Tests\Test_Case;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization

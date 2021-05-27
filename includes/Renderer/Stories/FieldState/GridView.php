@@ -23,8 +23,6 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
-
 /**
  * Class GridView.
  */
@@ -34,7 +32,7 @@ final class GridView extends BaseFieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 * @return \Google\Web_Stories\Interfaces\Field|\Google\Web_Stories\Renderer\Stories\Fields\BaseField
 	 */
 	public function number_of_columns() {
 		$label = parent::number_of_columns()->label();
