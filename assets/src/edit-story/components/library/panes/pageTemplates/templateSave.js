@@ -104,9 +104,10 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     currentPage,
   }));
 
-  const isDisabled = useMemo(() => currentPage && isDefaultPage(currentPage), [
-    currentPage,
-  ]);
+  const isDisabled = useMemo(
+    () => currentPage && isDefaultPage(currentPage),
+    [currentPage]
+  );
   const handleSaveTemplate = useCallback(
     (e) => {
       e.preventDefault();
