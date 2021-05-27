@@ -23,8 +23,7 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Interfaces\Field; // phpcs:ignore PSR2R.Namespaces.UnusedUseStatement.UnusedUse
-use Google\Web_Stories\Interfaces\FieldState; // phpcs:ignore PSR2R.Namespaces.UnusedUseStatement.UnusedUse
+use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 
 /**
@@ -36,7 +35,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return Field
+	 * @return \Google\Web_Stories\Interfaces\Field
 	 */
 	public function image_alignment() {
 		return new BaseField(
