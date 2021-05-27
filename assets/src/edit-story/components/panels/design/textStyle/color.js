@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -27,11 +26,7 @@ import { forwardRef } from 'react';
 import { Color, Row } from '../../../form';
 import getColorPickerActions from '../../shared/getColorPickerActions';
 import useRichTextFormatting from './useRichTextFormatting';
-
-const ColorControls = forwardRef(function ColorControls(
-  { selectedElements, pushUpdate },
-  ref
-) {
+function ColorControls({ selectedElements, pushUpdate, fontColorRef }) {
   const {
     textInfo: { color },
     handlers: { handleSetColor },
@@ -49,16 +44,16 @@ const ColorControls = forwardRef(function ColorControls(
         label={__('Text color', 'web-stories')}
         labelId="text-color-label"
         changedStyle="color"
-        ref={ref}
+        ref={fontColorRef}
       />
     </Row>
   );
-});
+}
 
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
-  colorInputRef: PropTypes.object,
+  fontColorRef: PropTypes.object,
 };
 
 export default ColorControls;

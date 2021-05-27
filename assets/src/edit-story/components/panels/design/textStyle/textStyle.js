@@ -31,11 +31,10 @@ import ColorControls from './color';
 import FontControls from './font';
 
 function StylePanel(props) {
-  const fontDropdownRef = useRef();
-  const fontColorRef = useRef();
+  const fontDropdownRef = useRef(null);
+  const fontColorRef = useRef(null);
   const dropdownHighlight = useFocusHighlight(states.FONT, fontDropdownRef);
   const colorHighlight = useFocusHighlight(states.TEXT_COLOR, fontColorRef);
-
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
@@ -47,11 +46,11 @@ function StylePanel(props) {
         (dropdownHighlight?.showEffect || colorHighlight?.showEffect) &&
         styles.FLASH
       }
-      isPersistable={!dropdownHighlight && !colorHighlight}
+      isPersistable={false}
     >
-      <FontControls {...props} ref={fontDropdownRef} />
+      <FontControls {...props} fontDropdownRef={fontDropdownRef} />
       <StyleControls {...props} />
-      <ColorControls {...props} ref={fontColorRef} />
+      <ColorControls {...props} fontColorRef={fontColorRef} />
     </SimplePanel>
   );
 }

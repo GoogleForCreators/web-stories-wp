@@ -130,7 +130,7 @@ Wrapper.propTypes = {
   ]),
 };
 
-fdescribe('Panels/TextStyle', () => {
+describe('Panels/TextStyle', () => {
   let textElement;
   let controls;
 
@@ -161,7 +161,6 @@ fdescribe('Panels/TextStyle', () => {
 
   function FakeControl(props) {
     controls[props['data-testid']] = props;
-
     return <div />;
   }
 

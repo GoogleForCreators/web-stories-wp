@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback, forwardRef } from 'react';
+import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -60,10 +60,7 @@ const StyledDropDown = styled(DropDown)`
   background-color: transparent;
 `;
 
-const FontControls = forwardRef(function FontControls(
-  { selectedElements, pushUpdate },
-  ref
-) {
+function FontControls({ selectedElements, pushUpdate, fontDropdownRef }) {
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -74,7 +71,11 @@ const FontControls = forwardRef(function FontControls(
     handlers: { handleSelectFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const { fonts = [], maybeEnqueueFontStyle, getFontByName } = useFont(
+  const {
+    fonts = [],
+    maybeEnqueueFontStyle,
+    getFontByName,
+  } = useFont(
     ({
       actions: { maybeEnqueueFontStyle, getFontByName },
       state: { fonts },
@@ -85,10 +86,10 @@ const FontControls = forwardRef(function FontControls(
     })
   );
 
-  const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
-    getFontByName,
-    fontFamily,
-  ]);
+  const fontWeights = useMemo(
+    () => getFontWeights(getFontByName(fontFamily)),
+    [getFontByName, fontFamily]
+  );
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontWeightPickerChange = useCallback(
@@ -122,7 +123,7 @@ const FontControls = forwardRef(function FontControls(
           <FontPicker
             selectedElements={selectedElements}
             pushUpdate={pushUpdate}
-            ref={ref}
+            fontDropdownRef={fontDropdownRef}
           />
         </Row>
       )}
@@ -156,11 +157,12 @@ const FontControls = forwardRef(function FontControls(
       </Row>
     </>
   );
-});
+}
 
 FontControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
+  fontDropdownRef: PropTypes.object,
 };
 
 export default FontControls;

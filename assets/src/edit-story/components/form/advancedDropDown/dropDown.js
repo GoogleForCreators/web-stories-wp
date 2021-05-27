@@ -88,8 +88,8 @@ const DropDown = forwardRef(function DropDown(
   if (!hasSearch) {
     primaryOptions = options;
   }
-  const dropdownBackupRef = useRef();
-  const dropdownRef = ref || dropdownBackupRef;
+  const localRef = useRef();
+  const dropdownRef = ref || localRef;
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -99,7 +99,8 @@ const DropDown = forwardRef(function DropDown(
     if (dropdownRef.current) {
       dropdownRef.current.focus();
     }
-  }, []);
+  }, [dropdownRef]);
+
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)
@@ -111,7 +112,7 @@ const DropDown = forwardRef(function DropDown(
       setIsOpen(false);
       dropdownRef.current.focus();
     },
-    [onChange]
+    [onChange, dropdownRef]
   );
 
   const handleKeyPress = useCallback(
@@ -124,7 +125,7 @@ const DropDown = forwardRef(function DropDown(
         setIsOpen(true);
       }
     },
-    [isOpen]
+    [isOpen, dropdownRef]
   );
 
   const list = (
