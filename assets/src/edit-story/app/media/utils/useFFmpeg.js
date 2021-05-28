@@ -25,10 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
-import {
-  MEDIA_TRANSCODING_MAX_FILE_SIZE,
-  MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
-} from '../../../constants';
+import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
 import getFileName from './getFileName';
 
 export const VIDEO_SIZE_THRESHOLD = {
@@ -62,7 +59,7 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  * }} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl } = useConfig();
+  const { ffmpegCoreUrl, allowedAllowedTranscodableTypes } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -219,7 +216,7 @@ function useFFmpeg() {
    * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = (file) =>
-    MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type);
+    allowedAllowedTranscodableTypes.includes(file.type);
 
   /**
    * Whether user opted in to video optimization.

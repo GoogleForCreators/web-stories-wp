@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
+
+/**
  * Returns the best known size of the resource. The generated poster can
  * override the resource's size because the poster generation has a more
  * accurate data.
@@ -27,16 +32,23 @@
  * @return {Object} The resource's size (width and height).
  */
 function getResourceSize(
-  width,
-  height,
-  posterGenerated,
-  posterWidth,
-  posterHeight
+  width = 0,
+  height = 0,
+  posterGenerated = false,
+  posterWidth = 0,
+  posterHeight = 0
 ) {
   if (posterGenerated && posterWidth && posterHeight) {
     return { width: posterWidth, height: posterHeight };
   }
-  return { width, height };
+  if (width || height) {
+    return { width, height };
+  }
+
+  return {
+    width: PAGE_WIDTH,
+    height: FULLBLEED_HEIGHT,
+  };
 }
 
 export default getResourceSize;

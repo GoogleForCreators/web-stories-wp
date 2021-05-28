@@ -25,6 +25,7 @@ import { FlagsProvider } from 'flagged';
  */
 import CurrentUserContext from '../../../currentUser/context';
 import useFFmpeg from '../useFFmpeg';
+import { ConfigProvider } from '../../../config';
 
 jest.mock('@ffmpeg/ffmpeg', () => {
   return {
@@ -43,6 +44,27 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
       web_stories_media_optimization: userSettingEnabled,
     },
   };
+  const configState = {
+    allowedAllowedTranscodableTypes: [
+      'video/3gpp',
+      'video/3gpp2',
+      'video/MP2T',
+      'video/mp4',
+      'video/mpeg',
+      'video/ogg',
+      'video/quicktime',
+      'video/webm',
+      'video/x-flv',
+      'video/x-h261',
+      'video/x-h263',
+      'video/x-m4v',
+      'video/x-matroska',
+      'video/x-mjpeg',
+      'video/x-ms-asf',
+      'video/x-msvideo',
+      'video/x-nut',
+    ],
+  };
 
   return renderHook(() => useFFmpeg(), {
     // eslint-disable-next-line react/display-name, react/prop-types
@@ -52,9 +74,11 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
           videoOptimization: isFeatureEnabled,
         }}
       >
-        <CurrentUserContext.Provider value={{ state: { currentUser } }}>
-          {children}
-        </CurrentUserContext.Provider>
+        <ConfigProvider config={configState}>
+          <CurrentUserContext.Provider value={{ state: { currentUser } }}>
+            {children}
+          </CurrentUserContext.Provider>
+        </ConfigProvider>
       </FlagsProvider>
     ),
   });

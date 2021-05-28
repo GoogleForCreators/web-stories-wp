@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import { createBlob } from '../../../utils/blobs';
 import getTypeFromMime from './getTypeFromMime';
+import getResourceSize from './getResourceSize';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 import createResource from './createResource';
 import getFileName from './getFileName';
@@ -69,8 +69,7 @@ const getImageResource = async (file) => {
     type: 'image',
     mimeType,
     src,
-    width,
-    height,
+    ...getResourceSize(width, height),
     alt: fileName,
     title: fileName,
   });
@@ -102,8 +101,7 @@ const getVideoResource = async (file) => {
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
-    width,
-    height,
+    ...getResourceSize(width, height),
     poster,
     alt: fileName,
     title: fileName,
@@ -124,8 +122,7 @@ const getPlaceholderResource = (file) => {
     type: type || 'image',
     mimeType: mimeType,
     src: '',
-    width: PAGE_WIDTH,
-    height: FULLBLEED_HEIGHT,
+    ...getResourceSize(),
     alt: fileName,
     title: fileName,
   });

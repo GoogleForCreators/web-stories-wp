@@ -366,6 +366,17 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @spacedmonkey
+			 * Issue: #7480
+			 * Creation date: 2021-05-28
+			 */
+			[
+				'name'        => 'enableMediaPickerVideoOptimization',
+				'label'       => __( 'Video optimization in media picker', 'web-stories' ),
+				'description' => __( 'Optimize already uploaded videos in media picker.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
 			 * Issue: #3126
 			 * Creation date: 2021-02-02
 			 */
