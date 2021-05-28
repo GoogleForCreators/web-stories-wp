@@ -84,7 +84,6 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 * @return void
 	 */
 	public function register_style( WP_Styles $wp_styles ) {
-		// PHPCS ignore reason: WP will strip multiple `family` args from the Google fonts URL while adding the version string,
 		// so we need to avoid specifying a version at all.
 		$wp_styles->add(
 			$this->get_handle(),
