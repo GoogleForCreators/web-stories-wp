@@ -47,7 +47,7 @@ const Container = styled.div`
  * @param {Array} props.options All options, used for search.
  * @param {boolean} props.hasSearch If to enable search feature in the dropdown.
  * @param {Function} props.getOptionsByQuery Function to query options in case options are not set.
- * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the funcion for these entries.
+ * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the function for these entries.
  * @param {Array} props.primaryOptions Array of options to display by default when not searching
  * @param {string} props.primaryLabel Label to display above the primary options.
  * @param {Array} props.priorityOptions Options to display in front of all the other options in a separate group (will not remove these from the `options`).
@@ -161,25 +161,32 @@ function DropDown({
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
-    <Container onKeyDown={handleKeyPress}>
-      <DropDownSelect
-        aria-pressed={isOpen}
-        aria-haspopup
-        aria-expanded={isOpen}
-        ref={ref}
-        activeItemLabel={selectedOption?.name}
-        dropDownLabel={dropDownLabel}
-        onSelectClick={toggleDropDown}
-        selectButtonStylesOverride={focusStyle}
-        {...rest}
-      />
-      {isOpen && !disabled && isInline && list}
-      {!disabled && !isInline && (
-        <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
-          {list}
-        </Popup>
-      )}
-    </Container>
+    <>
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
+      <Container onKeyDown={handleKeyPress}>
+        <DropDownSelect
+          aria-pressed={isOpen}
+          aria-haspopup
+          aria-expanded={isOpen}
+          ref={ref}
+          activeItemLabel={selectedOption?.name}
+          dropDownLabel={dropDownLabel}
+          onSelectClick={toggleDropDown}
+          selectButtonStylesOverride={focusStyle}
+          {...rest}
+        />
+        {isOpen && !disabled && isInline && list}
+        {!disabled && !isInline && (
+          <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+            {list}
+          </Popup>
+        )}
+      </Container>
+    </>
   );
 }
 

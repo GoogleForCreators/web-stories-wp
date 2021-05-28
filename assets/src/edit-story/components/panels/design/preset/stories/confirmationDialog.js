@@ -15,29 +15,32 @@
  */
 
 /**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { boolean } from '@storybook/addon-knobs';
+
+/**
  * Internal dependencies
  */
-import { Link } from '..';
-import { THEME_CONSTANTS } from '../../../..';
+import ConfirmationDialog from '../confirmationDialog';
+import { PRESET_TYPES } from '../constants';
 
 export default {
-  title: 'DesignSystem/Components/Typography/Link',
-  component: Link,
+  title: 'Stories Editor/Components/Panels/Preset/Dialog',
+  component: ConfirmationDialog,
 };
 
-const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
-
-export const _default = () => (
-  <>
-    {textPresetSizes.map((presetSize) => (
-      <Link
-        key={`${presetSize}_text_link`}
-        size={presetSize}
-        href="https://example.com"
-      >
-        {`${presetSize} - Click here for more information`}
-        <br />
-      </Link>
-    ))}
-  </>
-);
+export const _default = () => {
+  return (
+    <ConfirmationDialog
+      onClose={action('closed')}
+      onPrimary={action('confirmed')}
+      presetType={
+        boolean('Preset type - colors', true)
+          ? PRESET_TYPES.COLOR
+          : PRESET_TYPES.STYLE
+      }
+    />
+  );
+};

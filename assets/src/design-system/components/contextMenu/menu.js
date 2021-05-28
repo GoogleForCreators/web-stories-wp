@@ -274,7 +274,6 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
             }
           >
             <MenuItem
-              focusedIndex={focusedIndex}
               index={index}
               onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
               onDismiss={onDismiss}

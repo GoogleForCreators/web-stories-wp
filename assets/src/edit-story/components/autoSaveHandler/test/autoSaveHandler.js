@@ -88,9 +88,11 @@ function setup({
   };
 }
 
-jest.useFakeTimers();
-
 describe('AutoSaveHandler', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
   it('should trigger saving in case of a draft', () => {
     const { saveStory } = setup({});
     jest.runAllTimers();
@@ -126,6 +128,8 @@ describe('AutoSaveHandler', () => {
   });
 
   it('should only setup one timeout even if saveStory updates', () => {
+    jest.spyOn(window, 'setTimeout');
+
     const { renderAgain, saveStory } = setup({});
     // The number of invocations of setTimeout might vary due to other components
     // so the only thing we can check for sure is, that the number doesn't go up by
