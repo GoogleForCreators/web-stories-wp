@@ -537,6 +537,7 @@ describe('Quick Actions integration', () => {
       up(),
     ]);
   }
+
   describe('video selected', () => {
     beforeEach(async () => {
       const videoElement = {
@@ -581,16 +582,140 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    // it(`should click the \`${ACTION_TEXT.REPLACE_MEDIA}\` button and open the media panel`, () => {});
+    it(`should click the \`${ACTION_TEXT.REPLACE_MEDIA}\` button and open the media panel`, async () => {
+      // hide 3p modal before we click the quick action
+      await fixture.events.click(fixture.editor.library.media3pTab);
+      // tab to dismiss button and press enter
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('Enter');
 
-    // it(`should click the \`${ACTION_TEXT.ADD_ANIMATION}\` button and open the animation panel and focus the animation dropdown`, () => {});
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.replaceMediaButton
+      );
 
-    // it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, () => {});
+      expect(fixture.editor.library.media).not.toBeNull();
 
-    // it(`should click the \`${ACTION_TEXT.ADD_CAPTIONS}\` button and open the captions panel and focus the add captions input`, () => {});
+      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+    });
 
-    // it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation`, () => {});
+    it(`should click the \`${ACTION_TEXT.ADD_ANIMATION}\` button and open the animation panel and focus the animation dropdown`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addAnimationButton
+      );
 
-    // it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all styles, then click the undo button and reapply the styles`, () => {});
+      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.animation.effectChooser
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addLinkButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.link.address
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.ADD_CAPTIONS}\` button and open the captions panel and focus the add captions input`, async () => {
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addCaptionsButton
+      );
+      expect(
+        fixture.editor.inspector.designPanel.captions.addCaptionsButton
+      ).not.toBeNull();
+    });
+
+    it(`should click the \`${ACTION_TEXT.CLEAR_MEDIA_STYLES}\` button and remove all animations and styles, then click the undo button and reapply the animation and styles`, async () => {
+      // quick action should not be present if there are no animations yet
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+      ).toBeNull();
+
+      // add animation to image
+      const effectChooserToggle =
+        fixture.editor.inspector.designPanel.animation.effectChooser;
+      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+      // animation
+      const animation = fixture.screen.getByRole('option', {
+        name: '"Drop" Effect',
+      });
+
+      // apply animation to element
+      await fixture.events.click(animation, { clickCount: 1 });
+
+      // add a border
+      const panel = fixture.editor.inspector.designPanel.border;
+
+      await fixture.events.click(panel.width(), { clickCount: 3 });
+      await fixture.events.keyboard.type('10');
+      await fixture.events.keyboard.press('Tab');
+
+      // verify that element has animation and style
+      const { animations: originalAnimations, elements: originalElements } =
+        await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            animations: state.pages[0].animations,
+            elements: state.pages[0].elements,
+          }))
+        );
+
+      const videoWithBorder = originalElements.find((el) => el.type == 'video');
+      expect(videoWithBorder.border).not.toBeUndefined();
+      expect(originalAnimations.length).toBe(1);
+
+      // click quick menu button
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+      ).toBeDefined();
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+      );
+
+      // verify that element has no animations or border
+      const { animations, elements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+          elements: state.pages[0].elements,
+        }))
+      );
+      const video = elements.find((el) => el.type === 'video');
+      expect(video.border).toBeNull();
+      expect(animations.length).toBe(0);
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+      ).toBeNull();
+
+      // click `undo` button on snackbar
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/ })
+      );
+
+      // Verify that new animations match original animation
+      const { animations: revertedAnimations, elements: revertedElements } =
+        await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            animations: state.pages[0].animations,
+            elements: state.pages[0].elements,
+          }))
+        );
+      const revertedVideo = revertedElements.find((el) => el.type === 'video');
+      expect(revertedVideo.border).not.toBeUndefined();
+      expect(revertedAnimations.length).toBe(1);
+      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+      ).toBeDefined();
+    });
   });
 });
