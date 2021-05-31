@@ -25,7 +25,11 @@ import styled, { css } from 'styled-components';
  */
 import { StoryAnimation } from '../../../animation';
 import { getDefinitionForType } from '../../elements';
-import { elementWithRotation } from '../../elements/shared';
+import {
+  elementWithPosition,
+  elementWithRotation,
+  elementWithSize,
+} from '../../elements/shared';
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
@@ -38,17 +42,9 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 
-// Using attributes to avoid creation of hundreds of classes by styled components.
-const Wrapper = styled.div.attrs(({ x, y, width, height }) => ({
-  style: {
-    left: `${x}px`,
-    top: `${y}px`,
-    width: `${width}px`,
-    height: `${height}px`,
-  },
-}))`
-  position: absolute;
-  z-index: 1;
+const Wrapper = styled.div`
+  ${elementWithPosition}
+  ${elementWithSize}
   ${elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
@@ -140,6 +136,8 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     const target = wrapperRef.current;
     if (transform === null) {
       target.style.transform = '';
+      target.style.width = '';
+      target.style.height = '';
     } else {
       const { translate, rotate, resize, dropTargets } = transform;
       target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
