@@ -31,8 +31,8 @@ const Image = styled.img`
   max-height: initial;
   object-fit: contain;
   width: ${({ width }) => `${width}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
+  margin-left: ${({ offsetX }) => `${-offsetX}px`};
+  margin-top: ${({ offsetY }) => `${-offsetY}px`};
   max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 

@@ -22,8 +22,8 @@ import { css } from 'styled-components';
 export const mediaWithScale = css`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  left: ${({ offsetX }) => `${-offsetX}px`};
-  top: ${({ offsetY }) => `${-offsetY}px`};
+  margin-left: ${({ offsetX }) => `${-offsetX}px`};
+  margin-top: ${({ offsetY }) => `${-offsetY}px`};
 `;
 
 export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
