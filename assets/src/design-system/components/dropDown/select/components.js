@@ -46,6 +46,7 @@ export const SelectButton = styled.button(
     text-overflow: ellipsis;
     cursor: pointer;
 
+    /* focus-visible class does not get applied to elements programmatically focused with a pointer (see #7772) */
     :focus {
       ${themeHelpers.focusCSS(
         theme.colors.border.focus,
@@ -53,7 +54,7 @@ export const SelectButton = styled.button(
       )};
     }
 
-    ${themeHelpers.focusableOutlineCSS}
+    ${themeHelpers.focusableOutlineCSS};
 
     &:hover {
       border-color: ${theme.colors.border[
@@ -65,7 +66,7 @@ export const SelectButton = styled.button(
     css`
       ${themeHelpers.focusableOutlineCSS(
         theme.colors.interactiveBg.negativeNormal
-      )};
+      )}
       border-color: ${theme.colors.interactiveBg.negativeNormal};
 
       &:active,
