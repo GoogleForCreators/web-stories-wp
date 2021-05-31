@@ -36,5 +36,4 @@ export const FLASH = css`
 
 export const OUTLINE = css`
   ${themeHelpers.focusCSS};
-  border-radius: ${dsTheme.borders.radius.small};
 `;
