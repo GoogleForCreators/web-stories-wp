@@ -27,8 +27,10 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Traits\Amp;
 
 /**
@@ -37,6 +39,13 @@ use Google\Web_Stories\Traits\Amp;
  * @package Google\Web_Stories\Renderer\Story
  */
 class Embed {
+
+	/**
+	 * Script handle for frontend assets.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_HANDLE = 'web-stories-embed';
 
 	use Amp;
 
@@ -48,14 +57,32 @@ class Embed {
 	protected $story;
 
 	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
+
+	/**
+	 * AMP_Story_Player_Assets instance.
+	 *
+	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
+	 */
+	protected $amp_story_player_assets;
+
+	/**
 	 * Embed constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story $story   Story Object.
+	 * @param Story                   $story             Story Object.
+	 * @param Assets                  $assets            Assets instance.
+	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
 	 */
-	public function __construct( Story $story ) {
-		$this->story = $story;
+	public function __construct( Story $story, Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
+		$this->assets                  = $assets;
+		$this->story                   = $story;
+		$this->amp_story_player_assets = $amp_story_player_assets;
 	}
 
 	/**
@@ -91,7 +118,7 @@ class Embed {
 		);
 
 		// This CSS is used for AMP and non-AMP.
-		wp_enqueue_style( Embed_Base::SCRIPT_HANDLE );
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE );
 
 		if ( $this->is_amp() ) {
 			ob_start();
@@ -114,9 +141,9 @@ class Embed {
 
 			return (string) ob_get_clean();
 		}
-
-		wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
-		wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
+		$player_handle = $this->amp_story_player_assets->get_handle();
+		$this->assets->enqueue_style( $player_handle );
+		$this->assets->enqueue_script( $player_handle );
 
 		ob_start();
 		?>

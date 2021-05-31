@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Block;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use WP_Block_Type_Registry;
 use Google\Web_Stories\Tests\Test_Case;
 
@@ -44,7 +45,9 @@ class Web_Stories_Block extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block() {
-		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
+		$assets                  = new \Google\Web_Stories\Assets();
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$embed_block             = new \Google\Web_Stories\Block\Web_Stories_Block( $assets, $amp_story_player_assets );
 
 		$actual = $embed_block->render_block(
 			[
@@ -67,7 +70,9 @@ class Web_Stories_Block extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block_missing_url() {
-		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
+		$assets                  = new \Google\Web_Stories\Assets();
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$embed_block             = new \Google\Web_Stories\Block\Web_Stories_Block( $assets, $amp_story_player_assets );
 
 		$actual = $embed_block->render_block(
 			[
@@ -90,7 +95,9 @@ class Web_Stories_Block extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
 	public function test_render_block_missing_title() {
-		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
+		$assets                  = new \Google\Web_Stories\Assets();
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$embed_block             = new \Google\Web_Stories\Block\Web_Stories_Block( $assets, $amp_story_player_assets );
 
 		$actual = $embed_block->render_block(
 			[
@@ -113,7 +120,9 @@ class Web_Stories_Block extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_block_feed_no_poster() {
-		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
+		$assets                  = new \Google\Web_Stories\Assets();
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$embed_block             = new \Google\Web_Stories\Block\Web_Stories_Block( $assets, $amp_story_player_assets );
 
 		$this->go_to( '/?feed=rss2' );
 
@@ -136,7 +145,10 @@ class Web_Stories_Block extends Test_Case {
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
 	public function test_render_block_with_poster() {
-		$embed_block = new \Google\Web_Stories\Block\Web_Stories_Block();
+		$assets                  = new \Google\Web_Stories\Assets();
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$embed_block             = new \Google\Web_Stories\Block\Web_Stories_Block( $assets, $amp_story_player_assets );
+
 		$embed_block->register();
 
 		$this->go_to( '/?feed=rss2' );

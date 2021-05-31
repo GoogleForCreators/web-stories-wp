@@ -52,7 +52,7 @@ class Generic_Renderer extends Renderer {
 
 		parent::init();
 
-		$this->assets();
+		$this->load_assets();
 	}
 
 	/**
