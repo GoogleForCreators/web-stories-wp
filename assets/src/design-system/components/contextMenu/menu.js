@@ -18,6 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -167,6 +168,7 @@ const Menu = ({
   isIconMenu,
   isOpen,
   onDismiss,
+  groupLabel = __('menu options', 'web-stories'),
   disableControlledTabNavigation = false,
   ...props
 }) => {
@@ -269,17 +271,19 @@ const Menu = ({
   ]);
 
   return (
-    <MenuWrapper isIconMenu={isIconMenu}>
+    <MenuWrapper isIconMenu={isIconMenu} role="menu">
       <MenuList
         data-testid="context-menu-list"
         ref={listRef}
         isIconMenu={isIconMenu}
-        role="menu"
+        aria-label={groupLabel}
+        role="group"
         {...props}
       >
         {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
             key={ids[index]}
+            role="menuitem"
             className={
               (separator === 'top' && SEPARATOR_TOP_CLASS) ||
               (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
@@ -300,6 +304,7 @@ const Menu = ({
 };
 
 export const MenuPropTypes = {
+  groupLabel: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       ...MenuItemProps,
