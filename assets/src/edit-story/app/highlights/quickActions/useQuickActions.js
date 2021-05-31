@@ -39,12 +39,7 @@ import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory } from '../../story';
 import { getResetProperties, getSnackbarClearCopy } from './utils';
-import {
-  ELEMENT_TYPE,
-  ACTION_TEXT,
-  RESET_PROPERTIES,
-  RESET_PROPERTIES_LABEL,
-} from './constants';
+import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
 
@@ -366,12 +361,7 @@ const useQuickActions = () => {
       : [
           {
             Icon: Eraser,
-            label:
-              RESET_PROPERTIES_LABEL[
-                isBackgroundMediaSelected
-                  ? ELEMENT_TYPE.BACKGROUND
-                  : selectedElement?.type
-              ],
+            label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
             onClick: () =>
               handleClearAnimationsAndFilters({
                 elementId: selectedElement?.id,

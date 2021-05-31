@@ -115,12 +115,6 @@ const clearAnimationAndFiltersAction = expect.objectContaining({
   Icon: Eraser,
 });
 
-const clearMediaStylesAction = expect.objectContaining({
-  label: ACTION_TEXT.CLEAR_MEDIA_STYLES,
-  onClick: expect.any(Function),
-  Icon: Eraser,
-});
-
 const defaultQuickActions = [
   expect.objectContaining({
     label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
@@ -213,7 +207,7 @@ const videoQuickActions = [
 
 const videoQuickActionsWithClear = [
   ...videoQuickActions,
-  clearMediaStylesAction,
+  clearAnimationAndFiltersAction,
 ];
 
 describe('useQuickActions', () => {
@@ -510,7 +504,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT],
@@ -669,7 +663,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`should not show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES}\` action if element has no animations`, () => {
+    it(`should not show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` action if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
@@ -684,7 +678,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toBeUndefined();
     });
 
-    it(`should show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} action if element has a changed opacity`, () => {
+    it(`should show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} action if element has a changed opacity`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, { ...VIDEO_ELEMENT, opacity: 50 }],
@@ -698,7 +692,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toStrictEqual(videoQuickActionsWithClear[4]);
     });
 
-    it(`should show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} action if element has a changed border`, () => {
+    it(`should show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} action if element has a changed border`, () => {
       const videoElWithBorder = {
         ...VIDEO_ELEMENT,
         border: {
@@ -728,7 +722,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toStrictEqual(videoQuickActionsWithClear[4]);
     });
 
-    it(`should show \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} action if element has a changed border radius`, () => {
+    it(`should show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} action if element has a changed border radius`, () => {
       const videoElWithBorderRadius = {
         ...VIDEO_ELEMENT,
         borderRadius: {
@@ -752,7 +746,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toStrictEqual(videoQuickActionsWithClear[4]);
     });
 
-    it(`should click \`${ACTION_TEXT.CLEAR_MEDIA_STYLES} and update the element`, () => {
+    it(`should click \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} and update the element`, () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[4].onClick(mockClickEvent);

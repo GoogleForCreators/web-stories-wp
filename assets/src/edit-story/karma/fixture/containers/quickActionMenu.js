@@ -89,10 +89,4 @@ export class QuickActionMenu extends Container {
       name: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
     });
   }
-
-  get clearMediaStylesButton() {
-    return this.queryByRole('menuitem', {
-      name: ACTION_TEXT.CLEAR_MEDIA_STYLES,
-    });
-  }
 }

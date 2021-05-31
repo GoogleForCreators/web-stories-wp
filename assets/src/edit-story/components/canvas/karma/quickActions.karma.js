@@ -176,10 +176,10 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
+    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // add animation to image
@@ -205,10 +205,10 @@ describe('Quick Actions integration', () => {
 
       // click quick menu button
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeDefined();
       await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       );
 
       // verify that element has no animations
@@ -219,7 +219,7 @@ describe('Quick Actions integration', () => {
       );
       expect(animations.length).toBe(0);
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // click `undo` button on snackbar
@@ -236,7 +236,7 @@ describe('Quick Actions integration', () => {
       expect(revertedAnimations.length).toBe(1);
       expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeDefined();
     });
   });
@@ -313,10 +313,10 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation.`, async () => {
+    it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button and remove all animations, then click the undo button and reapply the animation.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // add animation to image
@@ -342,10 +342,10 @@ describe('Quick Actions integration', () => {
 
       // click quick menu button
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeDefined();
       await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       );
 
       // verify that element has no animations
@@ -356,7 +356,7 @@ describe('Quick Actions integration', () => {
       );
       expect(animations.length).toBe(0);
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // click `undo` button on snackbar
@@ -373,7 +373,7 @@ describe('Quick Actions integration', () => {
       expect(revertedAnimations.length).toBe(1);
       expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeDefined();
     });
   });
@@ -434,7 +434,7 @@ describe('Quick Actions integration', () => {
     it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // apply filter to background element
@@ -470,13 +470,13 @@ describe('Quick Actions integration', () => {
         expect(originalAnimations.length).toBe(1);
         expect(originalSelectedElement.overlay.type).toBe('linear');
         expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+          fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
         ).toBeDefined();
       });
 
       // click quick menu button
       await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       );
 
       // verify that element has no animations
@@ -491,7 +491,7 @@ describe('Quick Actions integration', () => {
         expect(animations.length).toBe(0);
         expect(selectedElement.overlay).toBeNull();
         expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+          fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
         ).toBeNull();
       });
 
@@ -519,7 +519,7 @@ describe('Quick Actions integration', () => {
         );
 
         expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+          fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
         ).toBeDefined();
       });
     });
@@ -635,10 +635,10 @@ describe('Quick Actions integration', () => {
       ).not.toBeNull();
     });
 
-    it(`should click the \`${ACTION_TEXT.CLEAR_MEDIA_STYLES}\` button and remove all animations and styles, then click the undo button and reapply the animation and styles`, async () => {
+    it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button and remove all animations and styles, then click the undo button and reapply the animation and styles`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
-        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // add animation to image
@@ -676,10 +676,10 @@ describe('Quick Actions integration', () => {
 
       // click quick menu button
       expect(
-        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeDefined();
       await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       );
 
       // verify that element has no animations or border
@@ -693,7 +693,7 @@ describe('Quick Actions integration', () => {
       expect(video.border).toBeNull();
       expect(animations.length).toBe(0);
       expect(
-        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeNull();
 
       // click `undo` button on snackbar
@@ -714,7 +714,7 @@ describe('Quick Actions integration', () => {
       expect(revertedAnimations.length).toBe(1);
       expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
       expect(
-        fixture.editor.canvas.quickActionMenu.clearMediaStylesButton
+        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       ).toBeDefined();
     });
   });
