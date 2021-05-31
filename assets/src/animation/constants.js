@@ -21,6 +21,9 @@ import { _x } from '@web-stories-wp/i18n';
 
 export const BEZIER = {
   linear: 'linear',
+  in: 'ease-in',
+  out: 'ease-out',
+  inOut: 'ease-in-out',
   inQuad: 'cubic-bezier(0.55, 0.085, 0.68, 0.53)',
   outQuad: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
   inOutQuad: 'cubic-bezier(0.455, 0.03, 0.515, 0.955)',

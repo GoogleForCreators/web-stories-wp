@@ -1,12 +1,7 @@
 {
-  "current": "47783f6c-471c-427c-804e-532ace8261d1",
+  "current": null,
   "selection": [],
-  "story": {
-    "globalStoryStyles": {
-      "colors": [],
-      "textStyles": []
-    }
-  },
+  "story": {},
   "version": 25,
   "pages": [
     {
@@ -105,13 +100,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page1_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page1_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 646,
-            "title": "wellbeing_page1_image1",
-            "alt": "wellbeing_page1_image1",
+            "title": "page1_image1",
+            "alt": "page1_image1",
             "local": false,
             "sizes": []
           },
@@ -188,12 +183,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_icon_logo.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/icon_logo.png",
             "width": 38,
             "height": 12,
             "id": 1693,
-            "title": "wellbeing_icon_logo",
-            "alt": "wellbeing_icon_logo",
+            "title": "icon_logo",
+            "alt": "icon_logo",
             "local": false,
             "sizes": []
           },
@@ -660,13 +655,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page3_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page3_bg.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 647,
-            "title": "wellbeing_page3_bg",
-            "alt": "wellbeing_page3_bg",
+            "title": "page3_bg",
+            "alt": "page3_bg",
             "local": false,
             "sizes": []
           }
@@ -1008,13 +1003,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page4_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page4_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
             "id": 648,
-            "title": "wellbeing_page4_bg",
-            "alt": "wellbeing_page4_bg",
+            "title": "page4_bg",
+            "alt": "page4_bg",
             "local": false,
             "sizes": []
           },
@@ -1329,13 +1324,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page5_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page5_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 649,
-            "title": "wellbeing_page5_image1",
-            "alt": "wellbeing_page5_image1",
+            "title": "page5_image1",
+            "alt": "page5_image1",
             "local": false,
             "sizes": []
           },
@@ -1612,13 +1607,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page6_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page6_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 650,
-            "title": "wellbeing_page6_bg",
-            "alt": "wellbeing_page6_bg",
+            "title": "page6_bg",
+            "alt": "page6_bg",
             "local": false,
             "sizes": []
           },
@@ -1898,13 +1893,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page7_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page7_bg.jpg",
             "width": 220,
             "height": 293,
             "posterId": 0,
             "id": 651,
-            "title": "wellbeing_page7_bg",
-            "alt": "wellbeing_page7_bg",
+            "title": "page7_bg",
+            "alt": "page7_bg",
             "local": false,
             "sizes": []
           },
@@ -2205,13 +2200,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page8_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page8_image1.jpg",
             "width": 220,
             "height": 220,
             "posterId": 0,
             "id": 652,
-            "title": "wellbeing_page8_image1",
-            "alt": "wellbeing_page8_image1",
+            "title": "page8_image1",
+            "alt": "page8_image1",
             "local": false,
             "sizes": []
           },
@@ -3322,13 +3317,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page10_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 653,
-            "title": "wellbeing_page10_image1",
-            "alt": "wellbeing_page10_image1",
+            "title": "page10_image1",
+            "alt": "page10_image1",
             "local": false,
             "sizes": []
           }
@@ -3363,13 +3358,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-30T20:23:34",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page10_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image2.jpg",
             "width": 330,
             "height": 494,
             "posterId": 0,
             "id": 1932,
-            "title": "wellbeing_page10_image2",
-            "alt": "wellbeing_page10_image2",
+            "title": "page10_image2",
+            "alt": "page10_image2",
             "local": false,
             "sizes": []
           },
@@ -3405,13 +3400,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page10_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image3.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
             "id": 655,
-            "title": "wellbeing_page10_image3",
-            "alt": "wellbeing_page10_image3",
+            "title": "page10_image3",
+            "alt": "page10_image3",
             "local": false,
             "sizes": []
           },
@@ -3449,13 +3444,13 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-23T00:45:25",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/wellbeing/wellbeing_page10_image4.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image4.png",
             "width": 54,
             "height": 55,
             "posterId": 0,
             "id": 1609,
-            "title": "wellbeing_page10_image4",
-            "alt": "wellbeing_page10_image4",
+            "title": "page10_image4",
+            "alt": "page10_image4",
             "local": false,
             "sizes": []
           }

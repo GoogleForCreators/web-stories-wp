@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Media;
 
+use Google\Web_Stories\Tests\Test_Case;
 use WP_Query;
 use WP_REST_Request;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media
+ * @coversDefaultClass \Google\Web_Stories\Media\Media
  */
 class Media extends Test_Case {
 
@@ -305,7 +306,7 @@ class Media extends Test_Case {
 
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
-	 * @covers ::get_poster_tax_query
+	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args() {
 		$expected = [
@@ -327,7 +328,7 @@ class Media extends Test_Case {
 
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
-	 * @covers ::get_poster_tax_query
+	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
 		$expected = [

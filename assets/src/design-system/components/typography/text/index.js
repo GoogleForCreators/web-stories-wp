@@ -66,6 +66,7 @@ const Label = styled.label`
 export const Text = ({ as, disabled, ...props }) => {
   switch (as) {
     case 'label':
+      // eslint-disable-next-line styled-components-a11y/label-has-associated-control
       return <Label disabled={disabled} {...props} />;
     case 'span':
       return <Span {...props} />;

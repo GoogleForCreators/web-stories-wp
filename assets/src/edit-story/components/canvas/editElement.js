@@ -66,6 +66,11 @@ function EditElement({ element }) {
 
   return (
     <>
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
       <Wrapper
         aria-labelledby={`layer-${id}`}
         {...box}

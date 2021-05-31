@@ -30,6 +30,12 @@ export class QuickActionMenu extends Container {
     });
   }
 
+  get changeColorButton() {
+    return this.queryByRole('menuitem', {
+      name: ACTION_TEXT.CHANGE_COLOR,
+    });
+  }
+
   get insertBackgroundMediaButton() {
     return this.queryByRole('menuitem', {
       name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
@@ -48,6 +54,12 @@ export class QuickActionMenu extends Container {
     });
   }
 
+  get replaceBackgroundMediaButton() {
+    return this.queryByRole('menuitem', {
+      name: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+    });
+  }
+
   get addAnimationButton() {
     return this.queryByRole('menuitem', {
       name: ACTION_TEXT.ADD_ANIMATION,
@@ -63,6 +75,12 @@ export class QuickActionMenu extends Container {
   get clearAnimationsButton() {
     return this.queryByRole('menuitem', {
       name: ACTION_TEXT.CLEAR_ANIMATIONS,
+    });
+  }
+
+  get clearAnimationsAndFiltersButton() {
+    return this.queryByRole('menuitem', {
+      name: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
     });
   }
 }

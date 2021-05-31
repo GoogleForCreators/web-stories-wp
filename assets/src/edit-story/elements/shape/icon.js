@@ -26,6 +26,8 @@ import { getMaskByType } from '../../masks';
 import { elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
 
+const PREVIEW_SIZE = 16;
+
 const Container = styled.div`
   display: flex;
   flex-direction: row;
@@ -39,8 +41,8 @@ const Container = styled.div`
 
 const ShapePreview = styled.div`
   ${elementWithBackgroundColor}
-  width: ${({ width = 16 }) => width}px;
-  height: auto;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
 `;
 
 function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
@@ -54,7 +56,8 @@ function ShapeLayerIcon({ element: { id, mask, backgroundColor } }) {
         style={{
           clipPath: `url(#${maskId})`,
         }}
-        width={16 * maskDef.ratio}
+        width={PREVIEW_SIZE * maskDef.ratio}
+        height={PREVIEW_SIZE}
         backgroundColor={backgroundColor}
       >
         <svg width={0} height={0}>
