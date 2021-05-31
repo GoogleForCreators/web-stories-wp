@@ -107,7 +107,7 @@ function ImageDisplay({ element, box, previewMode }) {
         ref={ref}
         draggable={false}
         src={src}
-        srcSet={srcSet}
+        _srcSet={srcSet}
         alt={resource.alt}
         data-testid="imageElement"
         data-leaf-element="true"

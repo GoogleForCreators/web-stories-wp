@@ -28,6 +28,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import App from './editorApp';
+import EyedropperTest from './eyedropperTest';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 __webpack_public_path__ = global.webStoriesEditorSettings.publicPath;
@@ -53,6 +54,7 @@ const initialize = (id, config, flags) => {
     <FlagsProvider features={flags}>
       <StrictMode>
         <App config={config} />
+        <EyedropperTest />
       </StrictMode>
     </FlagsProvider>,
     appElement
