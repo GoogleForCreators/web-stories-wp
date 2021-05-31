@@ -26,6 +26,7 @@ import { rgba } from 'polished';
 const brand = {
   gray: {
     90: '#131516',
+    85: '#1B1F20',
     80: '#26292A',
     75: '#2E3133',
     70: '#393D3F',
@@ -143,7 +144,7 @@ const darkTheme = {
   },
   interactiveBg: {
     active: brand.violet[70],
-    disable: brand.gray[80],
+    disable: brand.gray[85],
     brandNormal: brand.violet[20],
     brandHover: brand.violet[30],
     brandPress: brand.violet[40],
