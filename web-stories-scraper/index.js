@@ -199,7 +199,7 @@ class WebStoriesScraperPlugin {
           )
           .replace(/<link rel="https:\/\/api\.w\.org\/"[^>]+>/gm, '')
           // Remove noindex.
-          .replace('<meta name="robots" content="noindex,nofollow">', '')
+          .replace(/<meta name="robots" content="noindex, ?nofollow">/, '')
           // Full URLs for twitter and Open Graph images.
           .replace(
             /<meta property="twitter:image" content="([^>]+)">/gm,
