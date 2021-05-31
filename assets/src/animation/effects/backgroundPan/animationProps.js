@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 /**
@@ -28,6 +28,7 @@ import { AnimationInputPropTypes } from '../types';
 
 export const PanEffectInputPropTypes = {
   panDir: PropTypes.shape(AnimationInputPropTypes),
+  duration: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
@@ -41,5 +42,11 @@ export default {
       DIRECTION.RIGHT_TO_LEFT,
     ],
     defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  },
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds', 'web-stories'),
+    defaultValue: 2000,
   },
 };

@@ -17,19 +17,15 @@
 /**
  * Internal dependencies
  */
-import {
-  BACKGROUND_ANIMATION_EFFECTS,
-  DIRECTION,
-  BEZIER,
-} from '../../constants';
+import { BACKGROUND_ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
 import { getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundPan({
   panDir = DIRECTION.RIGHT_TO_LEFT,
-  duration = 500,
+  duration = 2000,
   delay,
-  easing = BEZIER.inOut,
+  easing = 'cubic-bezier(.3,0,.55,1)',
   element,
 }) {
   const timings = {
