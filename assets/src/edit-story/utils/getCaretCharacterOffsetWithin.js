@@ -41,16 +41,12 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
   const win = doc.defaultView || doc.parentWindow;
   if (typeof win.getSelection !== 'undefined') {
     let range;
-    if (clientX && clientY) {
-      if (doc.caretPositionFromPoint) {
-        const caretPosition = document.caretPositionFromPoint(clientX, clientY);
-        // Create a range from the caret position.
-        if (caretPosition) {
-          range = document.createRange();
-          range.setStart(caretPosition.offsetNode, caretPosition.offset);
-        }
-      } else if (doc.caretRangeFromPoint) {
-        range = document.caretRangeFromPoint(clientX, clientY);
+    if (clientX && clientY && doc.caretPositionFromPoint) {
+      const caretPosition = document.caretPositionFromPoint(clientX, clientY);
+      // Create a range from the caret position.
+      if (caretPosition) {
+        range = document.createRange();
+        range.setStart(caretPosition.offsetNode, caretPosition.offset);
       }
     }
     if (!range) {
