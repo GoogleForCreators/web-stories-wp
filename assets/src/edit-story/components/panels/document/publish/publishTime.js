@@ -83,8 +83,11 @@ function PublishTime() {
   const floatingDate =
     ['draft', 'pending', 'auto-draft'].includes(status) &&
     (date === modified || date === null);
+  const displayDate = Date.now();
   const displayLabel = !floatingDate
-    ? format(date, shortDateFormat) + ' ' + formatTime(date)
+    ? format(date || displayDate, shortDateFormat) +
+      ' ' +
+      formatTime(date || displayDate)
     : __('Immediately', 'web-stories');
   return (
     <>
@@ -113,7 +116,7 @@ function PublishTime() {
         placement={PLACEMENT.BOTTOM_END}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
-            value={floatingDate ? Date.now() : date}
+            value={floatingDate ? displayDate : date}
             onChange={(value, close = false) => {
               handleDateChange(value, close);
             }}
