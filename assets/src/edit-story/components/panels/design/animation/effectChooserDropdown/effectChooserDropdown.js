@@ -52,6 +52,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     selectedEffectType,
     disabledTypeOptionsMap,
     direction,
+    selectButtonStylesOverride,
   },
   ref
 ) {
@@ -158,9 +159,10 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
       selectButtonStylesOverride={
-        selectedValue && selectedValue !== NO_ANIMATION
+        selectButtonStylesOverride ??
+        (selectedValue && selectedValue !== NO_ANIMATION
           ? styleOverrideForSelectButton
-          : focusStyle
+          : focusStyle)
       }
     />
   );
@@ -178,6 +180,10 @@ EffectChooserDropdown.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  selectButtonStylesOverride: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
 };
 
 export default EffectChooserDropdown;
