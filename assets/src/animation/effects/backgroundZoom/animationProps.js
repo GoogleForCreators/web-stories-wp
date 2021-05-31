@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf, _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 /**
@@ -28,6 +28,7 @@ import { AnimationInputPropTypes } from '../types';
 
 export const ZoomEffectInputPropTypes = {
   zoomFrom: PropTypes.shape(AnimationInputPropTypes),
+  duration: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
@@ -42,5 +43,11 @@ export default {
     type: FIELD_TYPES.DIRECTION_PICKER,
     values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
     defaultValue: SCALE_DIRECTION.SCALE_OUT,
+  },
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds', 'web-stories'),
+    defaultValue: 2000,
   },
 };

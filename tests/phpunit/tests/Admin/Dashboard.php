@@ -16,7 +16,7 @@
  */
 
 
-namespace Google\Web_Stories\Admin\Tests;
+namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Tests\Test_Case;
 

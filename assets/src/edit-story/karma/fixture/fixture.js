@@ -61,6 +61,7 @@ if ('true' === process.env.CI) {
 }
 
 export const MEDIA_PER_PAGE = 20;
+
 const DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
@@ -351,6 +352,21 @@ export class Fixture {
         }
       });
     });
+
+    await waitFor(
+      async () => {
+        // Set help center to closed right away.
+        // Because there's logic to pop open the help center on initial load
+        // This wait + click to close the button is more in line with
+        // testing the actual behavior rather than overriding the local storage.
+        await this.editor.helpCenter.toggleButton;
+        await this.events?.click(this.editor.helpCenter.toggleButton, {
+          clickCount: 1,
+        });
+        await this.events?.sleep(500);
+      },
+      { timeout: 3000 }
+    );
 
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
