@@ -28,10 +28,9 @@ export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 
 export const ZOOM_SETTING = {
-  SINGLE: 'SINGLE',
-  DOUBLE: 'DOUBLE',
   FILL: 'FILL',
   FIT: 'FIT',
+  FIXED: 'FIXED',
 };
 
 export const PAGE_RATIO = 2 / 3;
