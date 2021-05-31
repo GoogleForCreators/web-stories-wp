@@ -23,9 +23,9 @@ import { getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundPan({
   panDir = DIRECTION.RIGHT_TO_LEFT,
-  duration = 500,
+  duration = 2000,
   delay,
-  easing,
+  easing = 'cubic-bezier(.3,0,.55,1)',
   element,
 }) {
   const timings = {

@@ -25,6 +25,7 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../../utils/localStore';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Resize from './resize';
@@ -35,6 +36,7 @@ import StyleGroup from './stylePreset/styleGroup';
 import useApplyColor from './colorPreset/useApplyColor';
 import { PRESET_TYPES } from './constants';
 import useApplyStyle from './stylePreset/useApplyStyle';
+import ConfirmationDialog from './confirmationDialog';
 
 function PresetPanel({ presetType, title, pushUpdate }) {
   const isStyle = PRESET_TYPES.STYLE === presetType;
@@ -61,7 +63,9 @@ function PresetPanel({ presetType, title, pushUpdate }) {
   // If there are any global presets or local colors in case of color.
   const hasPresets = globalPresets.length > 0 || (isColor && hasLocalPresets);
 
+  const [showDialog, setShowDialog] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [toDelete, setToDelete] = useState(null);
 
   const handleApplyColor = useApplyColor({ pushUpdate });
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -91,15 +95,33 @@ function PresetPanel({ presetType, title, pushUpdate }) {
   }
 
   const handlePresetClick = (preset, isLocal = false) => {
-    if (isEditMode) {
-      if (isLocal) {
-        deleteLocalPreset(preset);
-      } else {
-        deleteGlobalPreset(preset);
-      }
-    } else {
+    // If not in edit mode, apply the color.
+    if (!isEditMode) {
       handleApplyPreset(preset);
+      return;
     }
+    // If deleting a local color, delete without confirmation.
+    if (isLocal) {
+      deleteLocalPreset(preset);
+      return;
+    }
+
+    // If the user has dismissed the confirmation dialogue previously.
+    const storageKey =
+      PRESET_TYPES.COLOR === presetType
+        ? 'DELETE_COLOR_PRESET_DIALOG_DISMISSED'
+        : 'DELETE_STYLE_PRESET_DIALOG_DISMISSED';
+    const isDialogDismissed = localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX[storageKey]
+    );
+    if (isDialogDismissed) {
+      deleteGlobalPreset(preset);
+      return;
+    }
+
+    // Ask confirmation for a global preset.
+    setShowDialog(true);
+    setToDelete(preset);
   };
 
   const resizeable = hasPresets;
@@ -136,6 +158,17 @@ function PresetPanel({ presetType, title, pushUpdate }) {
         )}
       </PanelContent>
       {resizeable && <Resize position="bottom" />}
+      {showDialog && (
+        <ConfirmationDialog
+          presetType={presetType}
+          onClose={() => setShowDialog(false)}
+          onPrimary={() => {
+            deleteGlobalPreset(toDelete);
+            setToDelete(null);
+            setShowDialog(false);
+          }}
+        />
+      )}
     </Panel>
   );
 }

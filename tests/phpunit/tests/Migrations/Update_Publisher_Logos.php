@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-namespace phpunit\tests\Migrations;
+namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Update_Publisher_Logos
  *
- * @covers \Google\Web_Stories\Migrations\Update_Publisher_Logos;
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Update_Publisher_Logos
  *
- * @package phpunit\tests\Migrations
  */
 class Update_Publisher_Logos extends Test_Case {
 	/**

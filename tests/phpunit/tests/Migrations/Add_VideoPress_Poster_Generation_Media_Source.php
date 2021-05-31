@@ -15,16 +15,14 @@
  * limitations under the License.
  */
 
-namespace phpunit\tests\Migrations;
+namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Add_VideoPress_Poster_Generation_Media_Source
  *
- * @covers \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source
- *
- * @package phpunit\tests\Migrations
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Add_VideoPress_Poster_Generation_Media_Source
  */
 class Add_VideoPress_Poster_Generation_Media_Source extends Test_Case {
 	/**
