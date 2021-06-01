@@ -185,6 +185,64 @@ describe('combineElements', () => {
     ]);
   });
 
+  it('should keep the poster of the first video', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState4();
+    restore(getDefaultState4());
+
+    // Combine element 789 into 007
+    const result = combineElements({
+      firstElement: state.pages[0].elements[2],
+      secondId: '007',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        type: 'image',
+        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        isBackground: true,
+        x: 1,
+        y: 1,
+        width: 1,
+        height: 1,
+      },
+      {
+        id: '456',
+        type: 'image',
+        resource: { type: 'image', src: '1' },
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+        link: {
+          url: 'https://link456.example/',
+          icon: 'https://link456.example/image.png',
+          desc: 'Lorem ipsum dolor',
+        },
+      },
+      {
+        id: '007',
+        type: 'video',
+        resource: { type: 'video', src: '2' },
+        focalX: 50,
+        focalY: 50,
+        scale: 100,
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+        link: {
+          url: 'https://link789.example/',
+          icon: 'https://link789.example/image.png',
+          desc: 'Lorem ipsum dolor',
+        },
+        poster: 'img.jpg',
+      },
+    ]);
+  });
+
   it('should not remove background overlay if present on second element', () => {
     const { restore, combineElements } = setupReducer();
 
@@ -377,6 +435,7 @@ describe('combineElements', () => {
         width: 10,
         x: 10,
         y: 10,
+        poster: 'img.jpg',
       });
     });
 
@@ -404,6 +463,7 @@ describe('combineElements', () => {
           src: '3',
           type: 'video',
         },
+        poster: 'img.jpg',
         scale: 100,
         type: 'video',
         width: 10,
@@ -778,6 +838,7 @@ function getDefaultState4() {
               icon: 'https://link789.example/image.png',
               desc: 'Lorem ipsum dolor',
             },
+            poster: 'img.jpg',
           },
           {
             id: '007',
