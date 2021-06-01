@@ -27,7 +27,7 @@ import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
 import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
-import { useMediaUploadQueue } from './utils';
+import useMediaUploadQueue from './utils/useMediaUploadQueue';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
 import useFFmpeg from './utils/useFFmpeg';
 
@@ -230,7 +230,7 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          const resource = await getResourceFromLocalFile(file);
+          const { resource, posterFile } = await getResourceFromLocalFile(file);
           addItem({
             file,
             resource,
@@ -239,6 +239,7 @@ function useUploadMedia({
             onUploadError,
             onUploadSuccess,
             additionalData,
+            posterFile,
           });
         })
       );

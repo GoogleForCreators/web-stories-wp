@@ -123,6 +123,7 @@ describe('useMediaUploadQueue', () => {
 
     await waitForNextUpdate();
 
+    expect(result.current.state.failures).toHaveLength(0);
     expect(result.current.state.processed).toHaveLength(1);
 
     act(() =>
