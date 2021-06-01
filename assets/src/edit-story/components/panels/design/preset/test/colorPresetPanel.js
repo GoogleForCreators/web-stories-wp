@@ -426,6 +426,9 @@ describe('Panels/Preset', () => {
       expect(deletePresets[0]).toBeDefined();
 
       fireEvent.click(deletePresets[0]);
+      const confirmationButton = screen.getByRole('button', { name: 'Delete' });
+      fireEvent.click(confirmationButton);
+
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
@@ -528,6 +531,10 @@ describe('Panels/Preset', () => {
       });
 
       fireEvent.click(deletePreset);
+
+      const confirmationButton = screen.getByRole('button', { name: 'Delete' });
+      fireEvent.click(confirmationButton);
+
       expect(updateStory).toHaveBeenCalledTimes(1);
       expect(updateStory).toHaveBeenCalledWith({
         properties: {

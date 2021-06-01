@@ -60,7 +60,7 @@ jobs:
           cache-name: cache-node-modules
 
       - name: Setup Jest cache
-        uses: actions/cache@v2.1.5
+        uses: actions/cache@v2.1.6
         id: cache-jest-cache
         with:
           path: .jest-cache

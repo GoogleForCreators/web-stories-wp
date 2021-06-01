@@ -53,12 +53,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page1_bg-alt.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page1_bg-alt.png",
             "width": 206,
             "height": 366,
             "id": 1157,
-            "title": "beauty_page1_bg-alt",
-            "alt": "beauty_page1_bg-alt",
+            "title": "page1_bg-alt",
+            "alt": "page1_bg-alt",
             "local": false,
             "sizes": []
           },
@@ -151,12 +151,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page1_logo-generic.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page1_logo-generic.png",
             "width": 32,
             "height": 10,
             "id": 1155,
-            "title": "beauty_page1_logo-generic",
-            "alt": "beauty_page1_logo-generic",
+            "title": "page1_logo-generic",
+            "alt": "page1_logo-generic",
             "local": false,
             "sizes": []
           },
@@ -618,13 +618,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page3_figure.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page3_figure.jpg",
             "width": 220,
             "height": 258,
             "posterId": 0,
             "id": 346,
-            "title": "beauty_page3_figure",
-            "alt": "beauty_page3_figure",
+            "title": "page3_figure",
+            "alt": "page3_figure",
             "local": false,
             "sizes": []
           }
@@ -812,13 +812,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page4_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page4_bg.png",
             "width": 220,
             "height": 391,
             "posterId": 0,
             "id": 356,
-            "title": "beauty_page4_bg",
-            "alt": "beauty_page4_bg",
+            "title": "page4_bg",
+            "alt": "page4_bg",
             "local": false,
             "sizes": []
           },
@@ -1019,13 +1019,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page5_figure.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page5_figure.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 378,
-            "title": "beauty_page5_figure",
-            "alt": "beauty_page5_figure",
+            "title": "page5_figure",
+            "alt": "page5_figure",
             "local": false,
             "sizes": []
           }
@@ -1410,13 +1410,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page6_figure.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page6_figure.jpg",
             "width": 220,
             "height": 174,
             "posterId": 0,
             "id": 382,
-            "title": "beauty_page6_figure",
-            "alt": "beauty_page6_figure",
+            "title": "page6_figure",
+            "alt": "page6_figure",
             "local": false,
             "sizes": []
           },
@@ -1714,13 +1714,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page7_product1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page7_product1.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
             "id": 395,
-            "title": "beauty_page7_product1",
-            "alt": "beauty_page7_product1",
+            "title": "page7_product1",
+            "alt": "page7_product1",
             "local": false,
             "sizes": []
           }
@@ -1755,13 +1755,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page7_product2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page7_product2.jpg",
             "width": 220,
             "height": 184,
             "posterId": 0,
             "id": 393,
-            "title": "beauty_page7_product2",
-            "alt": "beauty_page7_product2",
+            "title": "page7_product2",
+            "alt": "page7_product2",
             "local": false,
             "sizes": []
           }
@@ -2420,12 +2420,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page8_figure.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page8_figure.jpg",
             "width": 370,
             "height": 492,
             "id": 409,
-            "title": "beauty_page8_figure",
-            "alt": "beauty_page8_figure",
+            "title": "page8_figure",
+            "alt": "page8_figure",
             "local": true
           }
         },
@@ -2769,13 +2769,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page9_story1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page9_story1.jpg",
             "width": 220,
             "height": 124,
             "posterId": 0,
             "id": 419,
-            "title": "beauty_page9_story1",
-            "alt": "beauty_page9_story1",
+            "title": "page9_story1",
+            "alt": "page9_story1",
             "local": false,
             "sizes": []
           }
@@ -2811,12 +2811,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page9_story2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page9_story2.jpg",
             "width": 352,
             "height": 528,
             "id": 515,
-            "title": "beauty_page9_story2",
-            "alt": "beauty_page9_story2",
+            "title": "page9_story2",
+            "alt": "page9_story2",
             "local": false,
             "sizes": []
           }
@@ -2852,13 +2852,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty/beauty_page9_story3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page9_story3.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 425,
-            "title": "beauty_page9_story3",
-            "alt": "beauty_page9_story3",
+            "title": "page9_story3",
+            "alt": "page9_story3",
             "local": false,
             "sizes": []
           }

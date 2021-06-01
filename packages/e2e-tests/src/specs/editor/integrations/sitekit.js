@@ -31,11 +31,11 @@ import {
 
 describe('Site Kit integration with editor', () => {
   beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-mock');
+    await activatePlugin('e2e-tests-site-kit-analytics-mock');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-mock');
+    await deactivatePlugin('e2e-tests-site-kit-analytics-mock');
   });
 
   it('should print an analytics tag', async () => {

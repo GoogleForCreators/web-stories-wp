@@ -24,9 +24,9 @@ import { lerp, getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 export function EffectBackgroundZoom({
   element,
   zoomDirection = SCALE_DIRECTION.SCALE_OUT,
-  duration = 1000,
+  duration = 2000,
   delay,
-  easing,
+  easing = 'cubic-bezier(.3,0,.55,1)',
   transformOrigin,
 }) {
   // Define the range based off the element scale

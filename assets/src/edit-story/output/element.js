@@ -33,8 +33,15 @@ import generatePatternStyles from '../utils/generatePatternStyles';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {
-  const { id, opacity, type, border, backgroundColor, backgroundTextMode } =
-    element;
+  const {
+    id,
+    opacity,
+    type,
+    border,
+    backgroundColor,
+    backgroundTextMode,
+    overlay,
+  } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -107,6 +114,12 @@ function OutputElement({ element }) {
           </WithLink>
         </WithMask>
       </StoryAnimation.AMPWrapper>
+      {overlay && (
+        <div
+          className="element-overlay-area"
+          style={generatePatternStyles(overlay)}
+        />
+      )}
     </div>
   );
 }

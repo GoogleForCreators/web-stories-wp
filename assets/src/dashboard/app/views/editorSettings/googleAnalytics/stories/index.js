@@ -39,7 +39,7 @@ export const _default = () => {
         installed: boolean('installed', false),
         active: boolean('siteKitActive', false),
         analyticsActive: boolean('analyticsActive', false),
-        link: text('link', ''),
+        analyticsLink: text('analyticsLink', ''),
       }}
     />
   );
