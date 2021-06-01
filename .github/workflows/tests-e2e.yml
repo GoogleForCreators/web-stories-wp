@@ -85,7 +85,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          snapshots: none
+          coverage: none
           tools: composer
 
       - name: Get Composer cache directory
