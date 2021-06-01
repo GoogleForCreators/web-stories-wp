@@ -223,6 +223,7 @@ async function runAxeTestsForStoriesEditor() {
       'scrollable-region-focusable',
       'aria-allowed-attr',
       'nested-interactive',
+      'landmark-one-main',
     ],
   });
 }
