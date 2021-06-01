@@ -118,12 +118,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
       try {
         const fileName = getFileName(src) + '-poster.jpeg';
         const obj = await getFirstFrameOfVideo(src);
-        const {
-          posterId,
-          poster,
-          posterWidth,
-          posterHeight,
-        } = await uploadVideoPoster(id, fileName, obj);
+        const { posterId, poster, posterWidth, posterHeight } =
+          await uploadVideoPoster(id, fileName, obj);
 
         // Overwrite the original video dimensions. The poster reupload has more
         // accurate dimensions of the video that includes orientation changes.

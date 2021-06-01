@@ -95,9 +95,6 @@ const getVideoResource = async (file) => {
 
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
-  const posterFile = await getFirstFrameOfVideo(src);
-  const poster = createBlob(posterFile);
-  const { width, height } = await getImageDimensions(poster);
   if (canPlayVideo) {
     videoEl.src = src;
     videoEl.addEventListener('loadedmetadata', () => {
@@ -114,6 +111,9 @@ const getVideoResource = async (file) => {
       }
     });
   }
+  const posterFile = await getFirstFrameOfVideo(src);
+  const poster = createBlob(posterFile);
+  const { width, height } = await getImageDimensions(poster);
 
   const resource = createLocalResource({
     type: 'video',

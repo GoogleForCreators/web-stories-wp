@@ -83,10 +83,8 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const {
-              resource: newResource,
-              posterFile,
-            } = await getResourceFromLocalFile(file);
+            const { resource: newResource, posterFile } =
+              await getResourceFromLocalFile(file);
 
             replacePlaceholderResource({
               id,
