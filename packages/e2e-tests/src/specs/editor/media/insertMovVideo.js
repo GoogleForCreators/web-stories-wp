@@ -18,14 +18,15 @@
  */
 import {
   createNewStory,
-  clickButton,
   uploadFile,
   deleteMedia,
+  withExperimentalFeatures,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
 describe('Inserting .mov from dialog', () => {
+  withExperimentalFeatures(['enableMediaPickerVideoOptimization']);
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   it('should not list the .mov', async () => {
     await createNewStory();
@@ -39,17 +40,10 @@ describe('Inserting .mov from dialog', () => {
     const fileName = await uploadFile('small-video.mov', false);
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 
-    await clickButton(
-      '.attachments-browser .attachments .attachment:first-of-type'
-    );
+    await expect(page).toClick('button', { text: 'Insert into page' });
 
-    await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-
-    await page.keyboard.press('Escape');
-
-    await page.waitForSelector(MODAL, {
-      visible: false,
-    });
+    await page.waitForSelector('[data-testid="videoElement"]');
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     await deleteMedia(fileNameNoExt);
   });
