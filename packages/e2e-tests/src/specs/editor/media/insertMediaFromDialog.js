@@ -43,7 +43,10 @@ describe('Inserting Media from Dialog', () => {
     await deleteMedia(filename);
   });
 
-  it('should see permission error dialog as a contributor user', async () => {
+  // Disable test, as test is not logging out as admin.
+  // TODO https://github.com/google/web-stories-wp/issues/7790
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should see permission error dialog as a contributor user', async () => {
     await loginUser('contributor', 'password');
 
     await createNewStory();
