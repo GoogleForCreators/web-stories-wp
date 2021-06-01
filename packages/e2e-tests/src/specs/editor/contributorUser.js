@@ -35,8 +35,6 @@ describe('Contributor User', () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    await expect(page).toClick('button', { text: 'Upload' });
-    await page.waitForTimeout(500);
     await percySnapshot(page, 'Permission Message');
   });
 });
