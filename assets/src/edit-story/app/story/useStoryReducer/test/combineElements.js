@@ -201,7 +201,7 @@ describe('combineElements', () => {
       {
         id: '123',
         type: 'image',
-        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        overlay: { color: { r: 0, g: 0, b: 0 } },
         isBackground: true,
         x: 1,
         y: 1,
