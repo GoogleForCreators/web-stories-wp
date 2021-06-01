@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 /**
@@ -29,6 +29,7 @@ import {
   InlineLink,
   MultilineForm,
   SettingHeading,
+  SettingSubheading,
   TextInputHelperText,
 } from '../components';
 import AdNetworkSettings from './adNetwork';
@@ -45,6 +46,18 @@ export const TEXT = {
     'https://amp.dev/documentation/guides-and-tutorials/develop/advertise_amp_stories/',
     'web-stories'
   ),
+  SITE_KIT_NOT_INSTALLED: __(
+    'Install <a>Site Kit by Google</a> to easily enable Google AdSense for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_INSTALLED: __(
+    'Use Site Kit by Google to easily<a>activate Google AdSense</a> for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_IN_USE: __(
+    'Site Kit by Google has already enabled Google AdSense for your Web Stories, all changes to your ad configuration should occur there.',
+    'web-stories'
+  ),
 };
 
 function AdManagement({
@@ -53,7 +66,10 @@ function AdManagement({
   publisherId,
   adSenseSlotId,
   adManagerSlotId,
+  siteKitStatus,
 }) {
+  const { adsenseActive, installed, adsenseLink } = siteKitStatus;
+
   const handleMonetizationClick = useCallback(
     (evt) =>
       trackClick(evt, 'monetization', 'dashboard', TEXT.HELPER_LINK_NONE),
@@ -87,10 +103,40 @@ function AdManagement({
     [updateSettings]
   );
 
+  const onSiteKitClick = useCallback(
+    (evt) => trackClick(evt, 'click_site_kit_link'),
+    []
+  );
+
+  const siteKitDisplayText = useMemo(() => {
+    if (adsenseActive) {
+      return null;
+    }
+
+    return (
+      <TranslateWithMarkup
+        mapping={{
+          a: (
+            <InlineLink
+              href={adsenseLink}
+              rel="noreferrer"
+              target="_blank"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              onClick={onSiteKitClick}
+            />
+          ),
+        }}
+      >
+        {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
+      </TranslateWithMarkup>
+    );
+  }, [adsenseActive, installed, adsenseLink, onSiteKitClick]);
+
   return (
     <MultilineForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+
         <TextInputHelperText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         >
@@ -110,28 +156,42 @@ function AdManagement({
             {TEXT.HELPER_MESSAGE_NONE}
           </TranslateWithMarkup>
         </TextInputHelperText>
+        <SettingSubheading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {siteKitDisplayText}
+        </SettingSubheading>
       </div>
-      <div>
-        <AdNetworkSettings
-          handleUpdate={handleUpdateAdNetwork}
-          adNetwork={adNetwork}
-        />
 
-        {AD_NETWORK_TYPE.ADSENSE === adNetwork && (
-          <GoogleAdSenseSettings
-            handleUpdatePublisherId={handleUpdateAdSensePublisherId}
-            handleUpdateSlotId={handleUpdateAdSenseSlotId}
-            publisherId={publisherId}
-            slotId={adSenseSlotId}
+      {adsenseActive ? (
+        <div>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+          >
+            {TEXT.SITE_KIT_IN_USE}
+          </TextInputHelperText>
+        </div>
+      ) : (
+        <div>
+          <AdNetworkSettings
+            handleUpdate={handleUpdateAdNetwork}
+            adNetwork={adNetwork}
           />
-        )}
-        {AD_NETWORK_TYPE.ADMANAGER === adNetwork && (
-          <GoogleAdManagerSettings
-            handleUpdate={handleUpdateAdManagerSlotId}
-            slotId={adManagerSlotId}
-          />
-        )}
-      </div>
+          {AD_NETWORK_TYPE.ADSENSE === adNetwork && (
+            <GoogleAdSenseSettings
+              handleUpdatePublisherId={handleUpdateAdSensePublisherId}
+              handleUpdateSlotId={handleUpdateAdSenseSlotId}
+              publisherId={publisherId}
+              slotId={adSenseSlotId}
+              siteKitStatus={siteKitStatus}
+            />
+          )}
+          {AD_NETWORK_TYPE.ADMANAGER === adNetwork && (
+            <GoogleAdManagerSettings
+              handleUpdate={handleUpdateAdManagerSlotId}
+              slotId={adManagerSlotId}
+            />
+          )}
+        </div>
+      )}
     </MultilineForm>
   );
 }
@@ -142,6 +202,13 @@ AdManagement.propTypes = {
   publisherId: PropTypes.string,
   adSenseSlotId: PropTypes.string,
   adManagerSlotId: PropTypes.string,
+  siteKitStatus: PropTypes.shape({
+    installed: PropTypes.bool,
+    active: PropTypes.bool,
+    adsenseActive: PropTypes.bool,
+    analyticsActive: PropTypes.bool,
+    adsenseLink: PropTypes.string,
+  }),
 };
 
 export default AdManagement;

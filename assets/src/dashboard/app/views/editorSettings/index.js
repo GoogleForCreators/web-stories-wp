@@ -381,6 +381,7 @@ function EditorSettings() {
                 publisherId={adSensePublisherId}
                 adSenseSlotId={adSenseSlotId}
                 adManagerSlotId={adManagerSlotId}
+                siteKitStatus={siteKitStatus}
               />
             )}
           </Main>
