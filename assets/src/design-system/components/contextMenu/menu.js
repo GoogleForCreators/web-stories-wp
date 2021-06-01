@@ -168,7 +168,7 @@ const Menu = ({
   isIconMenu,
   isOpen,
   onDismiss,
-  groupLabel = __('menu options', 'web-stories'),
+  groupLabel = __('Menu options', 'web-stories'),
   disableControlledTabNavigation = false,
   ...props
 }) => {
