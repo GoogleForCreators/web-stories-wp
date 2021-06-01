@@ -120,7 +120,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     (event, value) => {
       event.preventDefault();
       if (value === NO_ANIMATION) {
-        onNoEffectSelected();
+        Boolean(selectedValue) && onNoEffectSelected();
         return;
       }
 
@@ -141,9 +141,10 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     },
     [
       animationOptionsObject,
-      onAnimationSelected,
-      onNoEffectSelected,
       disabledTypeOptionsMap,
+      onAnimationSelected,
+      selectedValue,
+      onNoEffectSelected,
     ]
   );
 
