@@ -43,6 +43,14 @@ describe('Quick Actions integration', () => {
     fixture.restore();
   });
 
+  describe('quick action menu should have no aXe accessibility violations', () => {
+    it('should pass accessibility tests with the default menu', async () => {
+      await expectAsync(
+        fixture.editor.canvas.quickActionMenu.node
+      ).toHaveNoViolations();
+    });
+  });
+
   describe('no element selected', () => {
     it(`clicking the \`${ACTION_TEXT.CHANGE_BACKGROUND_COLOR}\` button should select the background and open the design panel`, async () => {
       // click quick menu button
