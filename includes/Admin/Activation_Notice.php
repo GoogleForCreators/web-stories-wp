@@ -26,18 +26,16 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Register_Font;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Assets;
 
 /**
  * Class Activation_Notice.
  */
 class Activation_Notice implements ServiceInterface, Registerable {
-	use Assets;
 
 	/**
 	 * Script handle.
@@ -54,11 +52,18 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	protected $activation_flag;
 
 	/**
-	 * Register_Font instance.
+	 * Google_Fonts instance.
 	 *
-	 * @var Register_Font Register_Font instance.
+	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	protected $register_font;
+	protected $google_fonts;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var \Google\Web_Stories\Assets Assets instance.
+	 */
+	private $assets;
 
 	/**
 	 * Constructor.
@@ -66,11 +71,13 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 * @since 1.0.0
 	 *
 	 * @param Activation_Flag $activation_flag Activation flag instance.
-	 * @param Register_Font   $register_font Register_Font instance.
+	 * @param Google_Fonts    $google_fonts   Google_Fonts instance.
+	 * @param Assets          $assets          Assets instance.
 	 */
-	public function __construct( Activation_Flag $activation_flag, Register_Font $register_font ) {
+	public function __construct( Activation_Flag $activation_flag, Google_Fonts $google_fonts, Assets $assets ) {
 		$this->activation_flag = $activation_flag;
-		$this->register_font   = $register_font;
+		$this->google_fonts    = $google_fonts;
+		$this->assets          = $assets;
 	}
 
 	/**
@@ -107,11 +114,10 @@ class Activation_Notice implements ServiceInterface, Registerable {
 		 */
 		unset( $_GET['activate'] ); // phpcs:ignore WordPress.Security.NonceVerification, WordPress.VIP.SuperGlobalInputUsage
 
-		$this->register_font->register();
-		$font_handle = $this->register_font->get_handle();
-		wp_enqueue_style( $font_handle );
+		$font_handle = $this->google_fonts->get_handle();
+		$this->assets->enqueue_style( $font_handle );
 
-		$this->enqueue_script( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

@@ -23,8 +23,10 @@ class Embed extends Test_Case {
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$assets                  = new \Google\Web_Stories\Assets();
 
-		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story );
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets, $amp_story_player_assets );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,

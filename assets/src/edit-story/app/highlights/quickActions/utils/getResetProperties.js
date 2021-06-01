@@ -33,8 +33,8 @@ export const getResetProperties = (
 ) => {
   const resetProperties = [];
 
-  if (selectedElement?.backgroundOverlay) {
-    resetProperties.push(RESET_PROPERTIES.BACKGROUND_OVERLAY);
+  if (selectedElement?.overlay) {
+    resetProperties.push(RESET_PROPERTIES.OVERLAY);
   }
   if (selectedElementAnimations?.length) {
     resetProperties.push(RESET_PROPERTIES.ANIMATION);

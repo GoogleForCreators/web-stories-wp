@@ -52,10 +52,10 @@ export const ACTION_TEXT = {
 
 export const RESET_PROPERTIES = {
   ANIMATION: 'animation',
-  BACKGROUND_OVERLAY: 'backgroundOverlay',
+  OVERLAY: 'overlay',
 };
 
 export const RESET_LIST_COPY = {
   [RESET_PROPERTIES.ANIMATION]: __('animations', 'web-stories'),
-  [RESET_PROPERTIES.BACKGROUND_OVERLAY]: __('filters', 'web-stories'),
+  [RESET_PROPERTIES.OVERLAY]: __('filters', 'web-stories'),
 };

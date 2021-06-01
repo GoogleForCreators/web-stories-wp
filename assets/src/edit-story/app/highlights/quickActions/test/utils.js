@@ -22,11 +22,11 @@ import { getResetProperties, getSnackbarClearCopy } from '../utils';
 describe('quickAction utils', () => {
   describe('getResetProperties', () => {
     it.each`
-      selectedElement                                          | selectedElementAnimations       | result
-      ${{ backgroundOverlay: '', id: '1234' }}                 | ${[]}                           | ${[]}
-      ${{ backgroundOverlay: { type: 'linear' }, id: '1234' }} | ${[]}                           | ${[RESET_PROPERTIES.BACKGROUND_OVERLAY]}
-      ${{ backgroundOverlay: { type: 'linear' }, id: '1234' }} | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.BACKGROUND_OVERLAY, RESET_PROPERTIES.ANIMATION]}
-      ${{ backgroundOverlay: '', id: '1234' }}                 | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.ANIMATION]}
+      selectedElement                                | selectedElementAnimations       | result
+      ${{ overlay: '', id: '1234' }}                 | ${[]}                           | ${[]}
+      ${{ overlay: { type: 'linear' }, id: '1234' }} | ${[]}                           | ${[RESET_PROPERTIES.OVERLAY]}
+      ${{ overlay: { type: 'linear' }, id: '1234' }} | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.OVERLAY, RESET_PROPERTIES.ANIMATION]}
+      ${{ overlay: '', id: '1234' }}                 | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.ANIMATION]}
     `(
       'should return array with reset properties',
       ({ selectedElement, selectedElementAnimations, result }) => {
@@ -42,13 +42,13 @@ describe('quickAction utils', () => {
 
   describe('getSnackbarClearCopy', () => {
     it.each`
-      properties                                                           | elementType                | result
-      ${[]}                                                                | ${ELEMENT_TYPE.IMAGE}      | ${''}
-      ${['opacity']}                                                       | ${ELEMENT_TYPE.IMAGE}      | ${''}
-      ${['daisy', 'sunflower', false, 0]}                                  | ${ELEMENT_TYPE.IMAGE}      | ${''}
-      ${[RESET_PROPERTIES.ANIMATION]}                                      | ${ELEMENT_TYPE.IMAGE}      | ${'All animations were removed from the image.'}
-      ${[RESET_PROPERTIES.BACKGROUND_OVERLAY]}                             | ${ELEMENT_TYPE.BACKGROUND} | ${'All filters were removed from the background.'}
-      ${[RESET_PROPERTIES.ANIMATION, RESET_PROPERTIES.BACKGROUND_OVERLAY]} | ${ELEMENT_TYPE.BACKGROUND} | ${'All animations and filters were removed from the background.'}
+      properties                                                | elementType                | result
+      ${[]}                                                     | ${ELEMENT_TYPE.IMAGE}      | ${''}
+      ${['opacity']}                                            | ${ELEMENT_TYPE.IMAGE}      | ${''}
+      ${['daisy', 'sunflower', false, 0]}                       | ${ELEMENT_TYPE.IMAGE}      | ${''}
+      ${[RESET_PROPERTIES.ANIMATION]}                           | ${ELEMENT_TYPE.IMAGE}      | ${'All animations were removed from the image.'}
+      ${[RESET_PROPERTIES.OVERLAY]}                             | ${ELEMENT_TYPE.BACKGROUND} | ${'All filters were removed from the background.'}
+      ${[RESET_PROPERTIES.ANIMATION, RESET_PROPERTIES.OVERLAY]} | ${ELEMENT_TYPE.BACKGROUND} | ${'All animations and filters were removed from the background.'}
     `(
       'should return snackbar copy as expected',
       ({ properties, elementType, result }) => {

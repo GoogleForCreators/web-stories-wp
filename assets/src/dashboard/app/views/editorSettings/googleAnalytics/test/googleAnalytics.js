@@ -27,7 +27,7 @@ import GoogleAnalyticsSettings, { TEXT } from '..';
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   let googleAnalyticsId;
   let mockUpdate;
-  const defaultsiteKitStatus = {
+  const defaultSiteKitStatus = {
     installed: false,
     analyticsActive: false,
     active: false,
@@ -49,7 +49,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -66,7 +66,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -80,7 +80,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitStatus={{
-          ...defaultsiteKitStatus,
+          ...defaultSiteKitStatus,
           active: true,
           analyticsActive: true,
         }}
@@ -97,7 +97,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitStatus={{
-          ...defaultsiteKitStatus,
+          ...defaultSiteKitStatus,
           active: false,
           installed: true,
         }}
@@ -113,7 +113,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -127,7 +127,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -141,7 +141,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -159,7 +159,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -175,7 +175,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -190,7 +190,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 

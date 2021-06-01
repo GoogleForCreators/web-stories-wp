@@ -157,6 +157,8 @@ function SingleSelectionMoveable({
       // Inline start resetting has to be done very carefully here to avoid
       // conflicts with stylesheets. See #3951.
       target.style.transform = '';
+      target.style.width = '';
+      target.style.height = '';
       if (moveable.current) {
         moveable.current.updateRect();
       }
