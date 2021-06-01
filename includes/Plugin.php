@@ -68,6 +68,8 @@ class Plugin extends ServiceBasedPlugin {
 	const SERVICES = [
 		'activation_flag'              => Admin\Activation_Flag::class,
 		'activation_notice'            => Admin\Activation_Notice::class,
+		'admin.google_fonts'           => Admin\Google_Fonts::class,
+		'amp_story_player_assets'      => AMP_Story_Player_Assets::class,
 		'adsense'                      => AdSense::class,
 		'ad_manager'                   => Ad_Manager::class,
 		'admin'                        => Admin\Admin::class,
@@ -172,6 +174,7 @@ class Plugin extends ServiceBasedPlugin {
 	 */
 	protected function get_shared_instances() {
 		return [
+			Assets::class,
 			Experiments::class,
 			Admin\Meta_Boxes::class,
 			Locale::class,
@@ -179,7 +182,8 @@ class Plugin extends ServiceBasedPlugin {
 			Integrations\Site_Kit::class,
 			Analytics::class,
 			Decoder::class,
-			Register_Font::class,
+			AMP_Story_Player_Assets::class,
+			Admin\Google_Fonts::class,
 		];
 	}
 

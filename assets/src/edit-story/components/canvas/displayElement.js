@@ -25,7 +25,11 @@ import styled, { css } from 'styled-components';
  */
 import { StoryAnimation } from '../../../animation';
 import { getDefinitionForType } from '../../elements';
-import { elementWithRotation } from '../../elements/shared';
+import {
+  elementWithPosition,
+  elementWithRotation,
+  elementWithSize,
+} from '../../elements/shared';
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
@@ -38,17 +42,9 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 
-// Using attributes to avoid creation of hundreds of classes by styled components.
-const Wrapper = styled.div.attrs(({ x, y, width, height }) => ({
-  style: {
-    left: `${x}px`,
-    top: `${y}px`,
-    width: `${width}px`,
-    height: `${height}px`,
-  },
-}))`
-  position: absolute;
-  z-index: 1;
+const Wrapper = styled.div`
+  ${elementWithPosition}
+  ${elementWithSize}
   ${elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
@@ -106,7 +102,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     opacity,
     type,
     isBackground,
-    backgroundOverlay,
+    overlay,
     border = {},
     flip,
   } = element;
@@ -119,12 +115,13 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
         scale: replacement.scale,
         focalX: replacement.focalX,
         focalY: replacement.focalY,
-        // Okay, this is a bit weird, but... the flip property is taken from the dragged image
+        // Okay, this is a bit weird, but... the flip and overlay properties are taken from the dragged image
         // if the drop-target is the background element, but from the original drop-target image
         // itself if the drop-target is a regular element.
         //
         // @see compare with similar logic in `combineElements`
         flip: isBackground ? replacement.flip : flip,
+        overlay: isBackground ? replacement.overlay : overlay,
       }
     : null;
 
@@ -140,6 +137,8 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     const target = wrapperRef.current;
     if (transform === null) {
       target.style.transform = '';
+      target.style.width = '';
+      target.style.height = '';
     } else {
       const { translate, rotate, resize, dropTargets } = transform;
       target.style.transform = `translate(${translate?.[0]}px, ${translate?.[1]}px) rotate(${rotate}deg)`;
@@ -206,10 +205,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             )}
           </ReplacementContainer>
         )}
-        {isBackground && backgroundOverlay && !hasReplacement && (
+        {isBackground && overlay && !hasReplacement && (
           <BackgroundOverlay
             ref={bgOverlayRef}
-            style={generatePatternStyles(backgroundOverlay)}
+            style={generatePatternStyles(overlay)}
           />
         )}
       </AnimationWrapper>

@@ -77,6 +77,14 @@ function CustomStyles() {
                 top: calc((1 - ${safeToFullRatio}) * 100% / 2);
               }
 
+              .element-overlay-area {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+              }
+
               .page-safe-area {
                 overflow: visible;
                 position: absolute;

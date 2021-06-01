@@ -40,7 +40,8 @@ class Stories extends Test_Case {
 	 * @return void
 	 */
 	public static function setUpBeforeClass() {
-		self::$testee = new Testee();
+		$assets       = new \Google\Web_Stories\Assets();
+		self::$testee = new Testee( $assets );
 	}
 
 	/**

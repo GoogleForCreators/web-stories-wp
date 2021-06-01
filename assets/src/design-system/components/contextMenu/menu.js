@@ -162,7 +162,14 @@ MenuList.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
-const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
+const Menu = ({
+  items,
+  isIconMenu,
+  isOpen,
+  onDismiss,
+  disableControlledTabNavigation = false,
+  ...props
+}) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
   const menuWasAlreadyOpen = useRef(isOpen);
@@ -248,12 +255,18 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
     }
   }, [isOpen]);
 
-  useKeyDownEffect(
-    listRef,
-    { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
-    handleKeyboardNav,
-    [handleKeyboardNav]
+  const keySpec = useMemo(
+    () =>
+      disableControlledTabNavigation
+        ? { key: ['down', 'up', 'left', 'right'] }
+        : { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
+    [disableControlledTabNavigation]
   );
+
+  useKeyDownEffect(listRef, keySpec, handleKeyboardNav, [
+    handleKeyboardNav,
+    keySpec,
+  ]);
 
   return (
     <MenuWrapper isIconMenu={isIconMenu}>
@@ -296,6 +309,7 @@ export const MenuPropTypes = {
   isIconMenu: PropTypes.bool,
   isOpen: PropTypes.bool,
   onDismiss: PropTypes.func,
+  disableControlledTabNavigation: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;

@@ -122,9 +122,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: StylePresetPanel };
         case PanelTypes.LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
-        case PanelTypes.BACKGROUND_OVERLAY:
-          // Only display when isBackground.
-          return null;
+        case PanelTypes.FILTER:
+          return { type, Panel: FilterPanel };
         case PanelTypes.SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
         case PanelTypes.LINK:

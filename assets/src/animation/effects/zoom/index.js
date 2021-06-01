@@ -24,10 +24,10 @@ export function EffectZoom({
   scaleDirection = SCALE_DIRECTION.SCALE_IN,
   duration = 1000,
   delay,
-  easing,
+  easing = 'cubic-bezier(.3,0,.55,1)',
 }) {
   return AnimationZoom({
-    zoomFrom: scaleDirection === SCALE_DIRECTION.SCALE_OUT ? 1 / 3 : 3,
+    zoomFrom: scaleDirection === SCALE_DIRECTION.SCALE_OUT ? 3 : 1 / 3,
     zoomTo: 1,
     duration,
     delay,

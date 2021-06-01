@@ -460,7 +460,7 @@ describe('Quick Actions integration', () => {
 
       await waitFor(() => {
         expect(originalAnimations.length).toBe(1);
-        expect(originalSelectedElement.backgroundOverlay.type).toBe('linear');
+        expect(originalSelectedElement.overlay.type).toBe('linear');
         expect(
           fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
         ).toBeDefined();
@@ -481,7 +481,7 @@ describe('Quick Actions integration', () => {
 
       await waitFor(() => {
         expect(animations.length).toBe(0);
-        expect(selectedElement.backgroundOverlay).toBeNull();
+        expect(selectedElement.overlay).toBeNull();
         expect(
           fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
         ).toBeNull();
@@ -506,8 +506,8 @@ describe('Quick Actions integration', () => {
       await waitFor(() => {
         expect(revertedAnimations.length).toBe(1);
         expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-        expect(revertedSelectedElement.backgroundOverlay?.type).toEqual(
-          originalSelectedElement.backgroundOverlay?.type
+        expect(revertedSelectedElement.overlay?.type).toEqual(
+          originalSelectedElement.overlay?.type
         );
 
         expect(

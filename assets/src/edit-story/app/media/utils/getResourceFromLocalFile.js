@@ -85,26 +85,54 @@ const getVideoResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
 
+  let length = 0;
+  let lengthFormatted = '';
+
   const reader = await createFileReader(file);
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
+  if (canPlayVideo) {
+    videoEl.src = src;
+    videoEl.addEventListener('loadedmetadata', () => {
+      length = Math.round(videoEl.duration);
+      const seconds = formatDuration(length % 60);
+      let minutes = Math.floor(length / 60);
+      const hours = Math.floor(minutes / 60);
 
-  const frame = await getFirstFrameOfVideo(src);
-
-  const poster = createBlob(frame);
+      if (hours) {
+        minutes = formatDuration(minutes % 60);
+        lengthFormatted = `${hours}:${minutes}:${seconds}`;
+      } else {
+        lengthFormatted = `${minutes}:${seconds}`;
+      }
+    });
+  }
+  const posterFile = await getFirstFrameOfVideo(src);
+  const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
-  return createLocalResource({
+  const resource = createLocalResource({
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
     ...getResourceSize(width, height),
     poster,
+    length,
+    lengthFormatted,
     alt: fileName,
     title: fileName,
+  });
+
+  return { resource, posterFile };
+};
+
+const formatDuration = (time) => {
+  return time.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
   });
 };
 
@@ -132,12 +160,13 @@ const getPlaceholderResource = (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('./createResource').Resource>} Resource object.
+ * @return {Promise<Object<{resource: import('./createResource').Resource, posterFile: File}>>} Object containing resource object and poster file.
  */
 const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);
 
   let resource = getPlaceholderResource(file);
+  let posterFile = null;
 
   try {
     if ('image' === type) {
@@ -145,13 +174,15 @@ const getResourceFromLocalFile = async (file) => {
     }
 
     if ('video' === type) {
-      resource = await getVideoResource(file);
+      const results = await getVideoResource(file);
+      resource = results.resource;
+      posterFile = results.posterFile;
     }
   } catch {
     // Not interested in the error here.
   }
 
-  return resource;
+  return { resource, posterFile };
 };
 
 export default getResourceFromLocalFile;

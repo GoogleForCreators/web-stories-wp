@@ -96,8 +96,8 @@ const useQuickActions = () => {
     (elementId, properties) => {
       const newProperties = {};
       // Choose properties to clear
-      if (properties.includes(RESET_PROPERTIES.BACKGROUND_OVERLAY)) {
-        newProperties.backgroundOverlay = null;
+      if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
+        newProperties.overlay = null;
       }
 
       if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
@@ -125,7 +125,7 @@ const useQuickActions = () => {
    * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
-   * @param {Array} resetProperties the properties that are to be reset ('animations', 'backgroundOverlay')
+   * @param {Array} resetProperties the properties that are to be reset ('animations', 'overlay')
    * @param {string} elementType the type of element being adjusted
    * @return {void}
    */
