@@ -29,6 +29,7 @@ import { useQuickActions } from '../../app/highlights';
 import DirectionAware from '../directionAware';
 import Header from '../header';
 import Carousel from '../carousel';
+import { useLayout } from '../../app';
 import {
   Layer,
   HeadArea,
@@ -39,6 +40,9 @@ import {
 
 function NavLayer() {
   const enableQuickActionMenu = useFeature('enableQuickActionMenus');
+  const { hasHorizontalOverflow } = useLayout(
+    ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
+  );
   const quickActions = useQuickActions();
 
   /**
@@ -50,6 +54,9 @@ function NavLayer() {
     ev.stopPropagation();
   }, []);
 
+  const showQuickActions =
+    enableQuickActionMenu && !hasHorizontalOverflow && quickActions.length;
+
   return (
     <Layer
       pointerEvents="none"
@@ -59,7 +66,7 @@ function NavLayer() {
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>
-      {enableQuickActionMenu && quickActions.length && (
+      {showQuickActions && (
         <DirectionAware>
           <QuickActionsArea>
             <ContextMenu

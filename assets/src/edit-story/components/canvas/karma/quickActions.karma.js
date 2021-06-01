@@ -44,6 +44,19 @@ describe('Quick Actions integration', () => {
     fixture.restore();
   });
 
+  describe('menu visibility', () => {
+    it('quick menu should not be visible if the canvas is overflowing', async () => {
+      const { zoomSelector } = fixture.editor.carousel;
+
+      await fixture.events.click(zoomSelector.select);
+      await fixture.events.sleep(300);
+      await fixture.events.click(await zoomSelector.option('Fill'));
+      await fixture.events.sleep(300);
+
+      expect(fixture.screen.queryByRole('dialog')).toBeNull();
+    });
+  });
+
   describe('quick action menu should have no aXe accessibility violations', () => {
     it('should pass accessibility tests with the default menu', async () => {
       await expectAsync(
