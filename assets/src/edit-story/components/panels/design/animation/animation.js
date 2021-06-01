@@ -252,6 +252,7 @@ function AnimationPanel({
             disabledTypeOptionsMap={disabledTypeOptionsMap}
             direction={getEffectDirection(updatedAnimations[0])}
             selectedEffectType={updatedAnimations[0]?.type}
+            selectButtonStylesOverride={highlight?.focus && styles.OUTLINE}
           />
         </StyledRow>
         {updatedAnimations[0] && (
