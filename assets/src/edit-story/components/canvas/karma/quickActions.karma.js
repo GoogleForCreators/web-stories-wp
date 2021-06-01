@@ -529,19 +529,17 @@ describe('Quick Actions integration', () => {
   describe('text element selected', () => {
     beforeEach(async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
-      const text = await fixture.act(() =>
+      await fixture.act(() =>
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
           content: 'Hello world!',
-          x: 50,
+          x: 10,
           y: 20,
           width: 400,
         })
       );
 
-      await clickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(text.id).node
-      );
+      await fixture.editor.canvas.framesLayer.waitFocusedWithin();
     });
 
     it(`clicking the \`${ACTION_TEXT.CHANGE_TEXT_COLOR}\` button should select the font styles on the design panel and focus the color input`, async () => {
