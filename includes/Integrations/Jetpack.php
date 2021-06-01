@@ -133,11 +133,11 @@ class Jetpack extends Service_Base {
 		$allowed_mime_types_transcodable = array_merge( $allowed_mime_types, $this->get_allow_transcodable_mime_types() );
 		if ( in_array( self::VIDEOPRESS_MIME_TYPE, $args['post_mime_type'], true ) ) {
 			if ( ! array_diff( $allowed_mime_types, $args['post_mime_type'] ) ) {
-        // Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
+				// Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
 				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
 			}
 			if ( ! array_diff( $allowed_mime_types_transcodable, $args['post_mime_type'] ) ) {
-        // Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
+				// Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
 				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
 			}
 		}
