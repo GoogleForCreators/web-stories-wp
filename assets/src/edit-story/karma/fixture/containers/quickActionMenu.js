@@ -85,13 +85,13 @@ export class QuickActionMenu extends Container {
   }
 
   get textColorButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.CHANGE_TEXT_COLOR,
     });
   }
 
   get fontButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.CHANGE_FONT,
     });
   }
