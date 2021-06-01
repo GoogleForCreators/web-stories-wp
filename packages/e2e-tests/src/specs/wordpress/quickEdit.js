@@ -25,14 +25,16 @@ import {
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, logOut } from '@web-stories-wp/e2e-test-utils';
 
 describe('Quick Edit', () => {
   beforeAll(async () => {
+    await logOut();
     await loginUser('author', 'password');
   });
 
   afterAll(async () => {
+    await logOut();
     await switchUserToAdmin();
   });
 

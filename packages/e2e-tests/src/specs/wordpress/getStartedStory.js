@@ -27,6 +27,7 @@ import {
   switchUserToAdmin,
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
+import { logOut } from '@web-stories-wp/e2e-test-utils';
 
 describe('Get Started Story', () => {
   describe('Admin User', () => {
@@ -50,10 +51,12 @@ describe('Get Started Story', () => {
 
   describe('Author User', () => {
     beforeAll(async () => {
+      await logOut();
       await loginUser('author', 'password');
     });
 
     afterAll(async () => {
+      await logOut();
       await switchUserToAdmin();
     });
 
