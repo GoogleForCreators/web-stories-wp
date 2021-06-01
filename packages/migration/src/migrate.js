@@ -44,6 +44,7 @@ import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
 import blobsToSingleBlob from './migrations/v0024_blobsToSingleBlob';
 import singleAnimationTarget from './migrations/v0025_singleAnimationTarget';
 import backgroundOverlayToOverlay from './migrations/v0026_backgroundOverlayToOverlay';
+import videoDuration from './migrations/v0027_videoDuration';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -72,6 +73,7 @@ const MIGRATIONS = {
   24: [blobsToSingleBlob],
   25: [singleAnimationTarget],
   26: [backgroundOverlayToOverlay],
+  27: [videoDuration],
 };
 
 export const DATA_VERSION = Math.max.apply(
