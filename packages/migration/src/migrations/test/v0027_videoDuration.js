@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import videoDuration from '../v0026_videoDuration';
+import videoDuration from '../v0027_videoDuration';
 
 describe('videoDuration', () => {
   it('should migrate lengthFormatted to length', () => {
