@@ -60,7 +60,12 @@ const StyledDropDown = styled(DropDown)`
   background-color: transparent;
 `;
 
-function FontControls({ selectedElements, pushUpdate, fontDropdownRef }) {
+function FontControls({
+  selectedElements,
+  pushUpdate,
+  fontDropdownRef,
+  highlightStylesOverride,
+}) {
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -124,6 +129,7 @@ function FontControls({ selectedElements, pushUpdate, fontDropdownRef }) {
             selectedElements={selectedElements}
             pushUpdate={pushUpdate}
             fontDropdownRef={fontDropdownRef}
+            highlightStylesOverride={highlightStylesOverride}
           />
         </Row>
       )}
@@ -163,6 +169,7 @@ FontControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
   fontDropdownRef: PropTypes.object,
+  highlightStylesOverride: PropTypes.object,
 };
 
 export default FontControls;

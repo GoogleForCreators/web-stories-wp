@@ -54,7 +54,13 @@ function StylePanel(props) {
       }
       isPersistable={false}
     >
-      <FontControls {...props} fontDropdownRef={fontDropdownRef} />
+      <FontControls
+        {...props}
+        fontDropdownRef={fontDropdownRef}
+        highlightStylesOverride={
+          dropdownHighlight?.showEffect && styles.OUTLINE
+        }
+      />
       <StyleControls {...props} />
       <ColorControls {...props} textColorRef={textColorRef} />
     </SimplePanel>

@@ -75,6 +75,7 @@ const DropDown = forwardRef(function DropDown(
     renderer,
     isInline = false,
     dropDownLabel = '',
+    highlightStylesOverride,
     ...rest
   },
   ref
@@ -181,7 +182,7 @@ const DropDown = forwardRef(function DropDown(
           activeItemLabel={selectedOption?.name}
           dropDownLabel={dropDownLabel}
           onSelectClick={toggleDropDown}
-          selectButtonStylesOverride={focusStyle}
+          selectButtonStylesOverride={highlightStylesOverride || focusStyle}
           {...rest}
         />
         {isOpen && !disabled && isInline && list}
@@ -203,6 +204,7 @@ DropDown.propTypes = {
   options: PropTypes.array,
   hasSearch: PropTypes.bool,
   getOptionsByQuery: PropTypes.func,
+  highlightStylesOverride: PropTypes.object,
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,
   primaryLabel: PropTypes.string,
