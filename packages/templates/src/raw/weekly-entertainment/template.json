@@ -1,12 +1,7 @@
 {
-  "current": "f4ea7828-e328-47e6-bf9d-a786ab192ee1",
+  "current": null,
   "selection": [],
-  "story": {
-    "globalStoryStyles": {
-      "colors": [],
-      "textStyles": []
-    }
-  },
+  "story": {},
   "version": 25,
   "pages": [
     {
@@ -117,13 +112,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page1_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 528,
-            "title": "ent_page1_bg",
-            "alt": "ent_page1_bg",
+            "title": "page1_bg",
+            "alt": "page1_bg",
             "local": false,
             "sizes": []
           }
@@ -575,13 +570,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page2_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page2_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 529,
-            "title": "ent_page2_image1",
-            "alt": "ent_page2_image1",
+            "title": "page2_image1",
+            "alt": "page2_image1",
             "local": false,
             "sizes": []
           }
@@ -1185,13 +1180,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page4_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page4_image1.jpg",
             "width": 220,
             "height": 329,
             "posterId": 0,
             "id": 530,
-            "title": "ent_page4_image1",
-            "alt": "ent_page4_image1",
+            "title": "page4_image1",
+            "alt": "page4_image1",
             "local": false,
             "sizes": []
           }
@@ -1636,13 +1631,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-15T20:53:50",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page5_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page5_image1.jpg",
             "width": 330,
             "height": 199,
             "posterId": 0,
             "id": 1248,
-            "title": "ent_page5_image1",
-            "alt": "ent_page5_image1",
+            "title": "page5_image1",
+            "alt": "page5_image1",
             "local": false,
             "sizes": []
           },
@@ -2514,13 +2509,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page6_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page6_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 532,
-            "title": "ent_page6_image1",
-            "alt": "ent_page6_image1",
+            "title": "page6_image1",
+            "alt": "page6_image1",
             "local": false,
             "sizes": []
           },
@@ -2705,13 +2700,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page7_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page7_image1.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 533,
-            "title": "ent_page7_image1",
-            "alt": "ent_page7_image1",
+            "title": "page7_image1",
+            "alt": "page7_image1",
             "local": false,
             "sizes": []
           },
@@ -3096,13 +3091,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page8_image1.jpg",
             "width": 220,
             "height": 90,
             "posterId": 0,
             "id": 534,
-            "title": "ent_page8_image1",
-            "alt": "ent_page8_image1",
+            "title": "page8_image1",
+            "alt": "page8_image1",
             "local": false,
             "sizes": []
           }
@@ -3139,13 +3134,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-26T17:40:35",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page8_image3.jpg",
             "width": 176,
             "height": 70,
             "posterId": 0,
             "id": 1834,
-            "title": "ent_page8_image3",
-            "alt": "ent_page8_image3",
+            "title": "page8_image3",
+            "alt": "page8_image3",
             "local": false,
             "sizes": []
           }
@@ -3181,13 +3176,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page8_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page8_image2.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 535,
-            "title": "ent_page8_image2",
-            "alt": "ent_page8_image2",
+            "title": "page8_image2",
+            "alt": "page8_image2",
             "local": false,
             "sizes": []
           }
@@ -4279,13 +4274,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page9_image1.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
             "id": 536,
-            "title": "ent_page9_image1",
-            "alt": "ent_page9_image1",
+            "title": "page9_image1",
+            "alt": "page9_image1",
             "local": false,
             "sizes": []
           }
@@ -4321,13 +4316,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page9_image2.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
             "id": 537,
-            "title": "ent_page9_image2",
-            "alt": "ent_page9_image2",
+            "title": "page9_image2",
+            "alt": "page9_image2",
             "local": false,
             "sizes": []
           }
@@ -4363,13 +4358,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/entertainment/ent_page9_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/weekly-entertainment/page9_image3.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 538,
-            "title": "ent_page9_image3",
-            "alt": "ent_page9_image3",
+            "title": "page9_image3",
+            "alt": "page9_image3",
             "local": false,
             "sizes": []
           }

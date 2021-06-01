@@ -14,4 +14,26 @@
  * limitations under the License.
  */
 
-export { default } from './videoProcessing';
+function backgroundOverlayToOverlay({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
+
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (typeof element.backgroundOverlay !== 'undefined') {
+    element.overlay = element.backgroundOverlay;
+    delete element.backgroundOverlay;
+  }
+  return element;
+}
+
+export default backgroundOverlayToOverlay;

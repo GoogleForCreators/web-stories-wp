@@ -111,11 +111,8 @@ function PublishPanel() {
     }
   );
 
-  const {
-    capabilities,
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
-  } = useConfig();
+  const { capabilities, allowedImageMimeTypes, allowedImageFileTypes } =
+    useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>

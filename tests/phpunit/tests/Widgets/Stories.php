@@ -25,8 +25,6 @@ use Google\Web_Stories\Tests\Test_Case;
  * Class Stories
  *
  * @coversDefaultClass \Google\Web_Stories\Widgets\Stories
- *
- * @package Google\Web_Stories\Tests
  */
 class Stories extends Test_Case {
 	/**
@@ -42,7 +40,8 @@ class Stories extends Test_Case {
 	 * @return void
 	 */
 	public static function setUpBeforeClass() {
-		self::$testee = new Testee();
+		$assets       = new \Google\Web_Stories\Assets();
+		self::$testee = new Testee( $assets );
 	}
 
 	/**
@@ -69,7 +68,7 @@ class Stories extends Test_Case {
 	}
 
 	/**
-	 * @covers ::stories_widget_scripts
+	 * @covers ::enqueue_scripts
 	 */
 	public function test_enqueue_scripts() {
 		self::$testee->enqueue_scripts();

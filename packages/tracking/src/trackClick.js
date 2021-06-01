@@ -26,7 +26,6 @@ import track from './track';
  * Works for both Universal Analytics and Google Analytics 4.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
- *
  * @param {MouseEvent} event The actual click event.
  * @param {string} eventName The event name (e.g. 'search').
  * @return {Promise<void>} Promise that always resolves.
@@ -37,7 +36,7 @@ async function trackClick(event, eventName) {
   }
 
   const openLinkInNewTab =
-    event.currentTarget.target === '_blank' ||
+    event.currentTarget?.target === '_blank' ||
     event.ctrlKey ||
     event.shiftKey ||
     event.metaKey ||

@@ -45,6 +45,14 @@ export class Library extends Container {
     return this.getByRole('tab', { name: /Explore Media/ });
   }
 
+  get media3p() {
+    return this._get(
+      this.getByRole('tabpanel', { name: /Explore Media/ }),
+      'media3p',
+      Media3P
+    );
+  }
+
   get textTab() {
     return this.getByRole('tab', { name: /Text library/ });
   }
@@ -103,5 +111,11 @@ export class Media extends Container {
 
   item(index) {
     return this.node.querySelectorAll('[data-testid^=mediaElement]')[index];
+  }
+}
+
+export class Media3P extends Container {
+  constructor(node, path) {
+    super(node, path);
   }
 }

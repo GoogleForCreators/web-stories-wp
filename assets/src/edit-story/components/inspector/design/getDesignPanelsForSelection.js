@@ -38,7 +38,6 @@ import {
   VideoOptionsPanel,
   StylePresetPanel,
   ColorPresetPanel,
-  VideoProcessingPanel,
 } from '../../panels/design';
 import PanelTypes from '../../panels/design/types';
 
@@ -123,9 +122,8 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: StylePresetPanel };
         case PanelTypes.LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
-        case PanelTypes.BACKGROUND_OVERLAY:
-          // Only display when isBackground.
-          return null;
+        case PanelTypes.FILTER:
+          return { type, Panel: FilterPanel };
         case PanelTypes.SIZE_POSITION:
           return { type, Panel: SizePositionPanel };
         case PanelTypes.LINK:
@@ -142,8 +140,6 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: BorderStylePanel };
         case PanelTypes.VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
-        case PanelTypes.VIDEO_PROCESSING:
-          return { type, Panel: VideoProcessingPanel };
         case PanelTypes.CAPTIONS:
           return { type, Panel: CaptionsPanel };
         case PanelTypes.VIDEO_ACCESSIBILITY:

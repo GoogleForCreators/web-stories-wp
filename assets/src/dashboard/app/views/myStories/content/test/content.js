@@ -70,8 +70,11 @@ jest.mock(
   () => () => null
 );
 
-jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
-  children
+jest.mock(
+  '../../../../../app/font/fontProvider.js',
+  () =>
+    ({ children }) =>
+      children
 );
 
 describe('My Stories <Content />', function () {

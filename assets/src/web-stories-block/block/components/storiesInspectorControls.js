@@ -62,7 +62,6 @@ const StyledToggle = styled(ToggleControl)`
  * StoriesInspectorControls props.
  *
  * @typedef StoriesInspectorControlsProps
- *
  * @property {string} viewType String indicator of active view type.
  * @property {number} numOfStories Number indicator of maximum number of stories to show.
  * @property {number} numOfColumns Number indicator of number of columns in grid view type.
@@ -82,7 +81,6 @@ const StyledToggle = styled(ToggleControl)`
  * LatestStoriesBlockControls component. Used for rendering block controls of the block.
  *
  * @param {StoriesInspectorControlsProps} props Component props.
- *
  * @return {*} JSX markup.
  */
 const StoriesInspectorControls = (props) => {

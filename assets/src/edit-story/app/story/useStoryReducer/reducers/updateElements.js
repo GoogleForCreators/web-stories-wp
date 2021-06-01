@@ -72,41 +72,39 @@ function updateElements(
     return state;
   }
 
-  const {
-    animationLookup,
-    elements: updatedElements,
-  } = oldPage.elements.reduce(
-    ({ animationLookup, elements }, element) => {
-      if (!idsToUpdate.includes(element.id)) {
+  const { animationLookup, elements: updatedElements } =
+    oldPage.elements.reduce(
+      ({ animationLookup, elements }, element) => {
+        if (!idsToUpdate.includes(element.id)) {
+          return {
+            animationLookup,
+            elements: [...elements, element],
+          };
+        }
+
+        const { animation, ...elem } = updateElementWithUpdater(
+          element,
+          propertiesOrUpdater,
+          pageIndex
+        );
+
+        const animLookup = animation
+          ? { [animation.id]: { ...animation, targets: [elem.id] } }
+          : {};
+
         return {
-          animationLookup,
-          elements: [...elements, element],
+          animationLookup: {
+            ...animationLookup,
+            ...animLookup,
+          },
+          elements: [...elements, elem],
         };
+      },
+      {
+        animationLookup: {},
+        elements: [],
       }
-
-      const { animation, ...elem } = updateElementWithUpdater(
-        element,
-        propertiesOrUpdater,
-        pageIndex
-      );
-
-      const animLookup = animation
-        ? { [animation.id]: { ...animation, targets: [elem.id] } }
-        : {};
-
-      return {
-        animationLookup: {
-          ...animationLookup,
-          ...animLookup,
-        },
-        elements: [...elements, elem],
-      };
-    },
-    {
-      animationLookup: {},
-      elements: [],
-    }
-  );
+    );
 
   const newAnimations =
     Object.keys(animationLookup).length > 0

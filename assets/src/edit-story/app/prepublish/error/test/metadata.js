@@ -135,12 +135,10 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
         width: 640,
       },
     });
-    const testHeight = metadataGuidelines.storyPosterPortraitSize(
-      testHeightStory
-    );
-    const testWidth = metadataGuidelines.storyPosterPortraitSize(
-      testWidthStory
-    );
+    const testHeight =
+      metadataGuidelines.storyPosterPortraitSize(testHeightStory);
+    const testWidth =
+      metadataGuidelines.storyPosterPortraitSize(testWidthStory);
     const test = metadataGuidelines.storyPosterPortraitSize(testStory);
     expect(testHappy).toBeUndefined();
     expect(testHeight).not.toBeUndefined();

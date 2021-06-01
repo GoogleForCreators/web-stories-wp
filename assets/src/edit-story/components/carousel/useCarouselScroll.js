@@ -66,14 +66,14 @@ function useCarouselScroll({
   const canScrollBack = hasOverflow && !isAtStart;
   const canScrollForward = hasOverflow && !isAtEnd;
 
-  const scrollForward = useCallback(() => scroll(scrollByPx), [
-    scroll,
-    scrollByPx,
-  ]);
-  const scrollBack = useCallback(() => scroll(-scrollByPx), [
-    scroll,
-    scrollByPx,
-  ]);
+  const scrollForward = useCallback(
+    () => scroll(scrollByPx),
+    [scroll, scrollByPx]
+  );
+  const scrollBack = useCallback(
+    () => scroll(-scrollByPx),
+    [scroll, scrollByPx]
+  );
 
   // This effects handles setting the scroll ratio, which is need to
   // enable and disable the scroll arrows correctly.

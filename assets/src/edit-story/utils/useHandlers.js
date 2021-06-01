@@ -30,9 +30,10 @@ function useHandlers() {
     };
   }, []);
 
-  return useMemo(() => [handlersRef.current, registerHandler], [
-    registerHandler,
-  ]);
+  return useMemo(
+    () => [handlersRef.current, registerHandler],
+    [registerHandler]
+  );
 }
 
 export default useHandlers;

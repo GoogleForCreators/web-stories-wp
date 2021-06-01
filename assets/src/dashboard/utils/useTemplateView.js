@@ -48,10 +48,10 @@ export default function useTemplateView({ totalPages }) {
     },
     [totalPages]
   );
-  const requestNextPage = useCallback(() => setPageClamped(page + 1), [
-    page,
-    setPageClamped,
-  ]);
+  const requestNextPage = useCallback(
+    () => setPageClamped(page + 1),
+    [page, setPageClamped]
+  );
 
   const setSort = useCallback(
     (newSort) => {

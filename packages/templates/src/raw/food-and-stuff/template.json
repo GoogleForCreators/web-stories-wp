@@ -1,12 +1,7 @@
 {
-  "current": "e8a21c0b-1db7-4777-b25d-b7d9a51b10fe",
+  "current": null,
   "selection": [],
-  "story": {
-    "globalStoryStyles": {
-      "colors": [],
-      "textStyles": []
-    }
-  },
+  "story": {},
   "version": 25,
   "pages": [
     {
@@ -69,12 +64,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_icon_logo.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/icon_logo.png",
             "width": 75,
             "height": 23,
             "id": 1627,
-            "title": "cooking_icon_logo",
-            "alt": "cooking_icon_logo",
+            "title": "icon_logo",
+            "alt": "icon_logo",
             "local": true
           },
           "type": "image",
@@ -120,13 +115,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page1_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 433,
-            "title": "cooking_page1_bg",
-            "alt": "cooking_page1_bg",
+            "title": "page1_bg",
+            "alt": "page1_bg",
             "local": false,
             "sizes": []
           }
@@ -461,13 +456,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page3_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page3_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 434,
-            "title": "cooking_page3_image1",
-            "alt": "cooking_page3_image1",
+            "title": "page3_image1",
+            "alt": "page3_image1",
             "local": false,
             "sizes": [],
             "baseColor": [255, 255, 255]
@@ -1251,13 +1246,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page5_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page5_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
             "id": 435,
-            "title": "cooking_page5_bg",
-            "alt": "cooking_page5_bg",
+            "title": "page5_bg",
+            "alt": "page5_bg",
             "local": false,
             "sizes": []
           },
@@ -1573,13 +1568,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page5_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page5_bg.jpg",
             "width": 220,
             "height": 391,
             "posterId": 0,
             "id": 435,
-            "title": "cooking_page5_bg",
-            "alt": "cooking_page5_bg",
+            "title": "page5_bg",
+            "alt": "page5_bg",
             "local": false,
             "sizes": []
           }
@@ -2539,13 +2534,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page7_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page7_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 436,
-            "title": "cooking_page7_bg",
-            "alt": "cooking_page7_bg",
+            "title": "page7_bg",
+            "alt": "page7_bg",
             "local": false,
             "sizes": []
           },
@@ -3207,12 +3202,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page8_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page8_image1.jpg",
             "width": 330,
             "height": 220,
             "id": 1648,
-            "title": "cooking_page8_image1",
-            "alt": "cooking_page8_image1",
+            "title": "page8_image1",
+            "alt": "page8_image1",
             "local": false,
             "sizes": []
           },
@@ -3625,13 +3620,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image1.jpg",
             "width": 220,
             "height": 294,
             "posterId": 0,
             "id": 438,
-            "title": "cooking_page9_image1",
-            "alt": "cooking_page9_image1",
+            "title": "page9_image1",
+            "alt": "page9_image1",
             "local": false,
             "sizes": []
           },
@@ -3669,13 +3664,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image4.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image4.jpg",
             "width": 220,
             "height": 284,
             "posterId": 0,
             "id": 441,
-            "title": "cooking_page9_image4",
-            "alt": "cooking_page9_image4",
+            "title": "page9_image4",
+            "alt": "page9_image4",
             "local": false,
             "sizes": []
           },
@@ -3711,13 +3706,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image3.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image3.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
             "id": 440,
-            "title": "cooking_page9_image3",
-            "alt": "cooking_page9_image3",
+            "title": "page9_image3",
+            "alt": "page9_image3",
             "local": false,
             "sizes": []
           },
@@ -3753,13 +3748,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image2.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image2.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 439,
-            "title": "cooking_page9_image2",
-            "alt": "cooking_page9_image2",
+            "title": "page9_image2",
+            "alt": "page9_image2",
             "local": false,
             "sizes": []
           },
@@ -3796,13 +3791,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/cooking/cooking_page9_image1.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image1.jpg",
             "width": 220,
             "height": 294,
             "posterId": 0,
             "id": 438,
-            "title": "cooking_page9_image1",
-            "alt": "cooking_page9_image1",
+            "title": "page9_image1",
+            "alt": "page9_image1",
             "local": false,
             "sizes": []
           }

@@ -82,7 +82,7 @@ class Carousel_Renderer extends Test_Case {
 
 	/**
 	 * @covers ::init
-	 * @covers ::assets
+	 * @covers ::load_assets
 	 */
 	public function test_init() {
 

@@ -36,7 +36,7 @@ import {
   createOptionFilter,
   isKeywordFilterable,
   getOptions,
-  addUniqueEntry,
+  addUniqueEntries,
   getInset,
 } from '../utils';
 import {
@@ -75,7 +75,7 @@ function OptionList({
   const listRef = useRef(null);
   const optionsRef = useRef([]);
   const [focusIndex, setFocusIndex] = useState(-1);
-  const [userSeenOptions, setUserSeenOptions] = useState([]);
+  const userSeenOptions = useRef([]);
 
   /*
    * KEYWORD FILTERING
@@ -91,7 +91,7 @@ function OptionList({
         },
       ];
     }
-    // Otherwise return primary options in one group possibly preceeded
+    // Otherwise return primary options in one group possibly preceded
     // by an optional list of priority options if such exist.
     return [
       ...(priorityOptions?.length
@@ -125,11 +125,16 @@ function OptionList({
     () =>
       new window.IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setUserSeenOptions(addUniqueEntry(entry.target.dataset.option));
-            }
-          });
+          if (onObserve) {
+            const newlySeenOptions = entries
+              .filter((entry) => entry.isIntersecting)
+              .map((entry) => entry.target.dataset.option);
+            userSeenOptions.current = addUniqueEntries(
+              userSeenOptions.current,
+              ...newlySeenOptions
+            );
+            onObserve(userSeenOptions.current);
+          }
         },
         {
           root: listRef.current,
@@ -137,7 +142,7 @@ function OptionList({
           rootMargin: '60px',
         }
       ),
-    []
+    [onObserve]
   );
 
   // Observe rendered font options
@@ -157,19 +162,13 @@ function OptionList({
     };
   }, [observer, onObserve, filteredListGroups]);
 
-  // load all seen fonts from google service
-  useEffect(() => {
-    if (onObserve) {
-      onObserve(userSeenOptions);
-    }
-  }, [onObserve, userSeenOptions]);
-
   /*
    * KEYBOARD ACCESSIBILITY
    */
-  const filteredOptions = useMemo(() => getOptions(filteredListGroups), [
-    filteredListGroups,
-  ]);
+  const filteredOptions = useMemo(
+    () => getOptions(filteredListGroups),
+    [filteredListGroups]
+  );
 
   const handleKeyPress = useCallback(
     (evt) => {
@@ -266,9 +265,8 @@ function OptionList({
                     data-option={option.id}
                     onClick={() => onSelect(option)}
                     ref={(el) =>
-                      (optionsRef.current[
-                        getInset(filteredListGroups, i, j)
-                      ] = el)
+                      (optionsRef.current[getInset(filteredListGroups, i, j)] =
+                        el)
                     }
                     option={option}
                     value={value}

@@ -92,9 +92,10 @@ export function LoadingSpinner({
   numCircles = 11,
   ...props
 }) {
-  const ids = useMemo(() => new Array(numCircles).fill(1).map(() => uuidv4()), [
-    numCircles,
-  ]);
+  const ids = useMemo(
+    () => new Array(numCircles).fill(1).map(() => uuidv4()),
+    [numCircles]
+  );
 
   return (
     <Container animationSize={animationSize} {...props}>

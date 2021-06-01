@@ -54,11 +54,10 @@ function getDispatch(v) {
  */
 export function useStoryTriggerListener(eventType, listener) {
   const addEventListener = useContextSelector(Context, getAddEventListener);
-  useEffect(() => addEventListener(eventType, listener), [
-    eventType,
-    listener,
-    addEventListener,
-  ]);
+  useEffect(
+    () => addEventListener(eventType, listener),
+    [eventType, listener, addEventListener]
+  );
 }
 
 /**

@@ -24,7 +24,6 @@ import { rgba } from 'polished';
  *
  * @param {number} val Number to truncate
  * @param {number} pos Maximum number of allowed decimals
- *
  * @return {number} Number in given precision
  */
 function truncate(val, pos) {
@@ -45,7 +44,6 @@ function truncate(val, pos) {
  * @param {number} pattern.rotation Gradient rotation between 0 and 1
  * @param {Object} pattern.center Gradient center if not 50/50
  * @param {Object} pattern.size Gradient size if not full size
- *
  * @return {string} Minimal description for gradient.
  */
 function getGradientDescription({ type, rotation, center, size }) {
@@ -78,7 +76,6 @@ function getGradientDescription({ type, rotation, center, size }) {
  *
  * @param {Array} stops List of stops as an object with color and position
  * @param {number} alpha Alpha opacity to multiple to each stop
- *
  * @return {Array} List of serialized stops
  */
 function getStopList(stops, alpha) {
@@ -95,7 +92,6 @@ function getStopList(stops, alpha) {
  * @param {Object} pattern Patterns as describe by the Pattern type
  * @param {string} property Type of CSS to generate. Defaults to 'background',
  * but can also be 'color', 'fill' or 'stroke'.
- *
  * @return {Object} CSS declaration as object, e.g. {fill: 'transparent'} or
  * {backgroundImage: 'radial-gradient(red, blue)'}.
  */
