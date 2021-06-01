@@ -23,7 +23,8 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useQuickActions } from '..';
 import { states } from '../..';
 import useHighlights from '../../useHighlights';
-import { useStory } from '../../../story';
+import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
+import { useStory, useStoryTriggersDispatch } from '../../../story';
 import {
   Bucket,
   CircleSpeed,
@@ -38,6 +39,16 @@ import { ACTION_TEXT } from '../constants';
 
 jest.mock('../../../story', () => ({
   useStory: jest.fn(),
+  useStoryTriggersDispatch: jest.fn(),
+  // Was getting a circular deps error or something
+  // trying to requireActual here so just manually
+  // set STORY_EVENTS for now:
+  // __esModule: true,
+  // ...jest.requireActual('../../../story'),
+  STORY_EVENTS: {
+    onReplaceBackgroundMedia: 'onReplaceBackgroundMedia',
+    onReplaceForegroundMedia: 'onReplaceForegroundMedia',
+  },
 }));
 
 jest.mock('../../useHighlights', () => ({
@@ -207,6 +218,7 @@ describe('useQuickActions', () => {
   let highlight;
   const mockUseHighlights = useHighlights;
   const mockUseStory = useStory;
+  const mockDispatchStoryEvent = jest.fn();
   const mockUpdateElementsById = jest.fn();
 
   beforeEach(() => {
@@ -227,6 +239,8 @@ describe('useQuickActions', () => {
       selectedElements: [],
       updateElementsById: mockUpdateElementsById,
     });
+
+    useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
   });
 
   describe('multiple elements selected', () => {
@@ -362,6 +376,16 @@ describe('useQuickActions', () => {
         elementId: BACKGROUND_IMAGE_ELEMENT.id,
         highlight: states.ANIMATION,
       });
+    });
+
+    it(`should trigger ${STORY_EVENTS.onReplaceBackgroundMedia} when replace media clicked`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(mockDispatchStoryEvent).toHaveBeenCalledTimes(1);
+      expect(mockDispatchStoryEvent).toHaveBeenCalledWith(
+        STORY_EVENTS.onReplaceBackgroundMedia
+      );
     });
   });
 
@@ -520,6 +544,16 @@ describe('useQuickActions', () => {
         elementIds: [IMAGE_ELEMENT.id],
         properties: expect.any(Function),
       });
+    });
+
+    it(`should trigger ${STORY_EVENTS.onReplaceForegroundMedia} when replace media clicked`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(mockDispatchStoryEvent).toHaveBeenCalledTimes(1);
+      expect(mockDispatchStoryEvent).toHaveBeenCalledWith(
+        STORY_EVENTS.onReplaceForegroundMedia
+      );
     });
   });
 
