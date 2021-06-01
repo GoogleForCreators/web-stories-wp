@@ -69,7 +69,7 @@ const getImageResource = async (file) => {
     type: 'image',
     mimeType,
     src,
-    ...getResourceSize(width, height),
+    ...getResourceSize({ width, height }),
     alt: fileName,
     title: fileName,
   });
@@ -118,7 +118,7 @@ const getVideoResource = async (file) => {
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
-    ...getResourceSize(width, height),
+    ...getResourceSize({ width, height }),
     poster,
     length,
     lengthFormatted,
@@ -150,7 +150,7 @@ const getPlaceholderResource = (file) => {
     type: type || 'image',
     mimeType: mimeType,
     src: '',
-    ...getResourceSize(),
+    ...getResourceSize({}),
     alt: fileName,
     title: fileName,
   });

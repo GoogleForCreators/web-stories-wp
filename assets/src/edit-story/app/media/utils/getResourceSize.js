@@ -24,20 +24,21 @@ import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
  * override the resource's size because the poster generation has a more
  * accurate data.
  *
- * @param {number} width Width.
- * @param {number} height Height.
- * @param {boolean} posterGenerated Whether a poster has been generated.
- * @param {number} posterWidth Poster width.
- * @param {number} posterHeight Poster height.karma-puppeteer-launcher/snapshot.cjs
+ * @param {Object} obj - An object with height/width params.
+ * @param {number} obj.width Width.
+ * @param {number} obj.height Height.
+ * @param {boolean} obj.posterGenerated Whether a poster has been generated.
+ * @param {number} obj.posterWidth Poster width.
+ * @param {number} obj.posterHeight Poster height.karma-puppeteer-launcher/snapshot.cjs
  * @return {Object} The resource's size (width and height).
  */
-function getResourceSize(
-  width = 0,
-  height = 0,
-  posterGenerated = false,
-  posterWidth = 0,
-  posterHeight = 0
-) {
+function getResourceSize({
+  width,
+  height,
+  posterGenerated,
+  posterWidth,
+  posterHeight,
+}) {
   if (posterGenerated && posterWidth && posterHeight) {
     return { width: posterWidth, height: posterHeight };
   }
