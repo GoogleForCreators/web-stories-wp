@@ -1,0 +1,71 @@
+# Once a PR fixing a particular issue has been merged,
+# this action adds it to the next milestone.
+#
+# See https://github.com/google/web-stories-wp/issues/6301
+
+name: Add release milestone to closed issues
+
+on:
+  pull_request:
+    # Todo: Only keep 'closed' after testing.
+    types:
+      - opened
+      - edited
+      - closed
+
+env:
+  COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+  ISSUE_REFERENCE_REGEX: \(#([0-9]+)\)$
+  ZENHUB_REPO_ID: 235435637
+
+jobs:
+  add-milestone:
+    name: Add milestone
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # Todo: Uncomment after testing.
+    # if: github.event.pull_request.merged == true
+    steps:
+      - name: Get issue number
+        id: issue_number
+        run: |
+          echo "Looking for issue number in commit message: $COMMIT_MESSAGE"
+          if [[ $COMMIT_MESSAGE =~ $ISSUE_REFERENCE_REGEX ]]; then
+            ISSUE_NUMBER = ${BASH_REMATCH[1]}
+          else
+            echo "No issue number found, cancelling"
+            # exit 0
+          fi
+
+          # Todo: remove after testing.
+          ISSUE_NUMBER=6770
+
+          echo "This merged PR closes issue $ISSUE_NUMBER"
+          echo "::set-output name=issue_number::$ISSUE_NUMBER"
+
+      # See ZenHub API docs for context.
+      # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
+      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
+      - name: Get next release
+        id: release
+        run: |
+          RELEASES=$(curl -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/$ZENHUB_REPO_ID/reports/releases")
+          NEXT_RELEASE=$((echo $RELEASES ) | jq -r 'first(sort_by(.start_date) | .[] | select( .state == "open" )) | .release_id')
+
+          echo "Determined release with ID $NEXT_RELEASE to be the next one"
+
+          echo "::set-output name=release_id::$NEXT_RELEASE"
+        env:
+          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
+
+      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
+      - name: Add issue to release
+        run: |
+          echo "Adding issue $ISSUE_NUMBER to release $RELEASE_ID"
+
+          curl -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/$RELEASE_ID/issues" -d '{ "add_issues": [{ "repo_id": $ZENHUB_REPO_ID, "issue_number": $ISSUE_NUMBER }], "remove_issues": [] }'
+          echo "::set-output name=RELEASES::$RELEASES"
+        env:
+          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
+          ISSUE_NUMBER: ${{ steps.issue_number.outputs.issue_number }}
+          RELEASE_ID: ${{ steps.release.outputs.release_id }}
