@@ -32,6 +32,8 @@ describe('Contributor User', () => {
 
   it('should see permission error dialog as a contributor user', async () => {
     await createNewStory();
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
     await expect(page).toClick('button', { text: 'Upload' });
     await expect(page).toMatch('Access Restrictions');
   });
