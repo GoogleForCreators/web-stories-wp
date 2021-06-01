@@ -21,6 +21,7 @@ import { createNewStory, logOut } from '@web-stories-wp/e2e-test-utils';
  * WordPress dependencies
  */
 import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
 
 describe('Inserting Media from Dialog', () => {
   beforeAll(async () => {
@@ -36,7 +37,7 @@ describe('Inserting Media from Dialog', () => {
   it('should see permission error dialog as a contributor user', async () => {
     await createNewStory();
     await expect(page).toClick('button', { text: 'Upload' });
-    await page.waitForSelector('.ReactModal__Content');
+    await percySnapshot(page, 'Permission dialog');
     await expect(page).toMatch('Access Restrictions');
   });
 });
