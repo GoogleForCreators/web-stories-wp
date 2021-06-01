@@ -45,9 +45,6 @@ export const getResetProperties = (
     resetProperties.push(RESET_PROPERTIES.STYLES);
   }
 
-  if (selectedElement?.backgroundOverlay) {
-    resetProperties.push(RESET_PROPERTIES.BACKGROUND_OVERLAY);
-  }
   if (selectedElementAnimations?.length) {
     resetProperties.push(RESET_PROPERTIES.ANIMATION);
   }
