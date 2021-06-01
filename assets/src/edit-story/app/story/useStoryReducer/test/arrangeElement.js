@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { LAYER_DIRECTIONS } from '../../../../constants';
-import { OverlayType } from '../../../../utils/backgroundOverlay';
+import { OverlayType } from '../../../../utils/overlay';
 import { setupReducer } from './_utils';
 
 describe('arrangeElement', () => {
@@ -230,7 +230,7 @@ function getInitialState() {
   return {
     pages: [
       {
-        backgroundOverlay: OverlayType.NONE,
+        overlay: OverlayType.NONE,
         id: '111',
         elements: [
           { id: '123', isBackground: true },

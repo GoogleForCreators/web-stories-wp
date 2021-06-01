@@ -135,6 +135,7 @@ describe('combineElements', () => {
           vertical: false,
           horizontal: true,
         },
+        overlay: { r: 1, g: 1, b: 1 },
       },
     ]);
   });
@@ -179,6 +180,7 @@ describe('combineElements', () => {
           vertical: false,
           horizontal: true,
         },
+        overlay: { r: 1, g: 1, b: 1 },
       },
     ]);
   });
@@ -203,7 +205,7 @@ describe('combineElements', () => {
         focalX: 50,
         focalY: 50,
         scale: 100,
-        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        overlay: { color: { r: 0, g: 0, b: 0 } },
         x: 10,
         y: 10,
         width: 10,
@@ -335,7 +337,7 @@ describe('combineElements', () => {
           src: '1',
           type: 'image',
         },
-        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        overlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
         type: 'image',
         width: 10,
@@ -436,7 +438,7 @@ describe('combineElements', () => {
           src: '1',
           type: 'image',
         },
-        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        overlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
         type: 'image',
         width: 10,
@@ -539,7 +541,7 @@ describe('combineElements', () => {
           src: '1',
           type: 'image',
         },
-        backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+        overlay: { color: { r: 0, g: 0, b: 0 } },
         scale: 100,
         type: 'image',
         width: 10,
@@ -660,6 +662,7 @@ function getDefaultState1() {
               vertical: false,
               horizontal: true,
             },
+            overlay: { r: 1, g: 1, b: 1 },
           },
         ],
       },
@@ -708,7 +711,7 @@ function getDefaultState3() {
           {
             id: '123',
             type: 'image',
-            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
             y: 1,
@@ -741,7 +744,7 @@ function getDefaultState4() {
           {
             id: '123',
             type: 'image',
-            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
             y: 1,
@@ -802,7 +805,7 @@ function getDefaultState5() {
           {
             id: '123',
             type: 'image',
-            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
             y: 1,
@@ -869,7 +872,7 @@ function getDefaultState6() {
           {
             id: '123',
             type: 'image',
-            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            overlay: { color: { r: 0, g: 0, b: 0 } },
             isBackground: true,
             x: 1,
             y: 1,
