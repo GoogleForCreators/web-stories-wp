@@ -41,10 +41,10 @@ jobs:
         include:
           - browser: 'chrome'
             wp: 'latest'
-            coverage: true
+            snapshots: true
           - browser: 'chrome'
             wp: '5.3.6'
-            coverage: false
+            snapshots: false
 
     steps:
       - name: Cancel previous
@@ -128,11 +128,11 @@ jobs:
         run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
-        if: ( matrix.coverage ) && ( github.event.pull_request.draft == false )
+        if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
         run: npm run test:e2e
-        if: ( ! matrix.coverage ) || ( github.event.pull_request.draft == true )
+        if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
         run: npm run env:stop
