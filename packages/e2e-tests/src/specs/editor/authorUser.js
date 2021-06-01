@@ -27,6 +27,7 @@ import {
   previewStory,
   addTextElement,
   insertStoryTitle,
+  logOut,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function publishStory() {
@@ -46,10 +47,12 @@ async function publishStory() {
 
 describe('Author User', () => {
   beforeAll(async () => {
+    await logOut();
     await loginUser('author', 'password');
   });
 
   afterAll(async () => {
+    await logOut();
     await switchUserToAdmin();
   });
 

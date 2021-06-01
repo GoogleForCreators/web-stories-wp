@@ -35,3 +35,4 @@ export { default as deleteMedia } from './deleteMedia';
 export { default as deleteWidgets } from './deleteWidgets';
 export { default as insertBlock } from './insertBlock';
 export { default as getFileName } from './getFileName';
+export { default as logOut } from './logOut';
