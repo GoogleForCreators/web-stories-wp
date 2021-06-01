@@ -33,7 +33,6 @@ describe('Contributor User', () => {
   it('should see permission error dialog as a contributor user', async () => {
     await createNewStory();
     await expect(page).toClick('button', { text: 'Upload' });
-    await page.waitForSelector('.ReactModal__Content');
     await expect(page).toMatch('Access Restrictions');
   });
 });
