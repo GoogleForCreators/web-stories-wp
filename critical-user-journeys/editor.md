@@ -13,12 +13,12 @@
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
 |                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
-| Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(6 / 6)*    |
+| Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(10 / 10)*  |
 |                                                                   | Enter edit mode                                  | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | Remove background media                          | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **77.78%** *(14 / 18)*   |
+|                                                                   | *[total]*                                        | 🛴 **81.82%** *(18 / 22)*   |
 | Creator Can Style Text                                            | Apply B                                          | 🛴 **78.95%** *(15 / 19)*   |
 |                                                                   | Apply I                                          | 🛴 **50.00%** *(5 / 10)*    |
 |                                                                   | Apply U                                          | 🚨 **44.44%** *(4 / 9)*     |
@@ -76,4 +76,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **73.37%** *(292 / 398)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **73.89%** *(300 / 406)* |
