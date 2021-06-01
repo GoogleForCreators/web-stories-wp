@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
 /**
  * WordPress dependencies
  */
@@ -35,6 +36,7 @@ describe('Contributor User', () => {
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     await expect(page).toClick('button', { text: 'Upload' });
-    await expect(page).toMatch('Access Restrictions');
+    await page.waitForTimeout(500);
+    await percySnapshot(page, 'Permission Message');
   });
 });
