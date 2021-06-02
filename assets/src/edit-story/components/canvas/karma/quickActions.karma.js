@@ -491,9 +491,6 @@ fdescribe('Quick Actions integration', () => {
         ).toBeDefined();
       });
 
-      const buttons = fixture.screen.getAllByRole('button');
-      expect(buttons).toBe('test');
-      console.log(fixture.editor.canvas.quickActionMenu);
       // click quick menu button
       await waitFor(() =>
         fixture.events.click(
@@ -512,15 +509,13 @@ fdescribe('Quick Actions integration', () => {
       );
 
       await waitFor(() => {
-        expect(animations).toBe('test');
-        // expect(animations.length).toBe(0);
-        // expect(selectedElement.overlay).toBeNull();
-        expect(selectedElement).toBe('gone');
+        expect(animations.length).toBe(0);
+        expect(selectedElement.overlay).toBeNull();
         expect(
           fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
         ).toBeNull();
       });
-
+      await fixture.events.sleep(900);
       // click `undo` button on snackbar
       await fixture.events.click(
         fixture.screen.getByRole('button', { name: /^Undo$/ })
