@@ -8,7 +8,6 @@ WP_DEBUG=${WP_DEBUG-true}
 SCRIPT_DEBUG=${SCRIPT_DEBUG-true}
 WEBSTORIES_DEV_MODE=${WEBSTORIES_DEV_MODE-true}
 MEDIA_TRASH=${MEDIA_TRASH-false}
-FORCE_CREATE_USER=${FORCE_CREATE_USER-false}
 WP_VERSION=${WP_VERSION-"latest"}
 
 # Include useful functions
@@ -65,25 +64,25 @@ fi
 
 # Create additional users.
 echo -e $(status_message "Creating additional users...")
-if [ "$FORCE_CREATE_USER" == "true" ] || [ ! "$(wp user get editor --field=login)" ]; then
+if [[ ! "$(wp user get editor --field=login)" ]]; then
 	wp user create editor editor@example.com --role=editor --user_pass=password --quiet
 	echo -e $(status_message "Editor created! Username: editor Password: password")
 else
  echo -e $(status_message "Editor already exists, skipping...")
 fi
-if [ "$FORCE_CREATE_USER" == "true" ] || [ ! "$(wp user get author --field=login)" ]; then
+if [[ ! "$(wp user get author --field=login)" ]]; then
 	wp user create author author@example.com --role=author --user_pass=password --quiet
 	echo -e $(status_message "Author created! Username: author Password: password")
 else
  echo -e $(status_message "Author already exists, skipping...")
 fi
-if [ "$FORCE_CREATE_USER" == "true" ] || [ ! "$(wp user get contributor --field=login)" ]; then
+if [[ ! "$(wp user get contributor --field=login)" ]]; then
 	wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet
 	echo -e $(status_message "Contributor created! Username: contributor Password: password")
 else
  echo -e $(status_message "Contributor already exists, skipping...")
 fi
-if [ "$FORCE_CREATE_USER" == "true" ] || [ ! "$(wp user get subscriber --field=login)" ]; then
+if [[ ! "$(wp user get subscriber --field=login)" ]]; then
 	wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet
 	echo -e $(status_message "Subscriber created! Username: subscriber Password: password")
 else
