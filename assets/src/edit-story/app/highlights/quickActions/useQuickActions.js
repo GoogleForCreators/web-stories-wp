@@ -124,7 +124,7 @@ const useQuickActions = () => {
   );
 
   /**
-   * Clear animations and show a confirmation snackbar. Clicking
+   * Reset element styles and show a confirmation snackbar. Clicking
    * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
@@ -132,7 +132,7 @@ const useQuickActions = () => {
    * @param {string} elementType the type of element being adjusted
    * @return {void}
    */
-  const handleClearAnimationsAndFilters = useCallback(
+  const handleElementReset = useCallback(
     ({ elementId, resetProperties, elementType }) => {
       handleResetProperties(elementId, resetProperties);
       const message = getSnackbarClearCopy(resetProperties, elementType);
@@ -262,9 +262,9 @@ const useQuickActions = () => {
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATIONS,
+      label: ACTION_TEXT.RESET_ELEMENT,
       onClick: () =>
-        handleClearAnimationsAndFilters({
+        handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: selectedElement?.type,
@@ -281,7 +281,7 @@ const useQuickActions = () => {
     actionMenuProps,
     handleFocusLinkPanel,
     showClearAction,
-    handleClearAnimationsAndFilters,
+    handleElementReset,
     resetProperties,
   ]);
 
@@ -397,9 +397,9 @@ const useQuickActions = () => {
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      label: ACTION_TEXT.RESET_ELEMENT,
       onClick: () =>
-        handleClearAnimationsAndFilters({
+        handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: ELEMENT_TYPE.BACKGROUND,
@@ -414,9 +414,9 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     selectedElement?.id,
     showClearAction,
+    handleElementReset,
     dispatchStoryEvent,
     handleFocusMediaPanel,
-    handleClearAnimationsAndFilters,
     resetProperties,
   ]);
 

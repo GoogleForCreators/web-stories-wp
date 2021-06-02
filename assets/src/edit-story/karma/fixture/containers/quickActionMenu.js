@@ -80,13 +80,7 @@ export class QuickActionMenu extends Container {
 
   get clearAnimationsButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CLEAR_ANIMATIONS,
-    });
-  }
-
-  get clearAnimationsAndFiltersButton() {
-    return this.queryByRole('button', {
-      name: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      name: ACTION_TEXT.RESET_ELEMENT,
     });
   }
 
