@@ -395,7 +395,7 @@ fdescribe('Quick Actions integration', () => {
     });
   });
 
-  fdescribe('background image selected', () => {
+  describe('background image selected', () => {
     beforeEach(async () => {
       await addBackgroundImage(0);
 
@@ -448,7 +448,7 @@ fdescribe('Quick Actions integration', () => {
       );
     });
 
-    fit(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
+    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
