@@ -65,19 +65,34 @@ fi
 # Create additional users.
 echo -e $(status_message "Creating additional users...")
 
-wp user get editor --field=login ||	wp user create editor editor@example.com --role=editor --user_pass=password --quiet
-echo -e $(status_message "Editor created! Username: editor Password: password")
+if [[ $(wp user get editor --field=login 2>&1) != "editor" ]]; then
+	wp user create editor editor@example.com --role=editor --user_pass=password
+	echo -e $(status_message "Editor created! Username: editor Password: password")
+else
+ echo -e $(status_message "Editor already exists, skipping...")
+fi
 
-wp user get author --field=login || wp user create author author@example.com --role=author --user_pass=password --quiet
-echo -e $(status_message "Author created! Username: author Password: password")
-
-wp user get contributor --field=login || wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet
-echo -e $(status_message "Contributor created! Username: contributor Password: password")
-
-wp user get subscriber --field=login || wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet
-echo -e $(status_message "Subscriber created! Username: subscriber Password: password")
+if [[ $(wp user get author --field=login 2>&1) != "author" ]]; then
+	wp user create author author@example.com --role=author --user_pass=password --quiet
+	echo -e $(status_message "Author created! Username: author Password: password")
+else
+ echo -e $(status_message "Author already exists, skipping...")
+fi
+if [[ $(wp user get contributor --field=login 2>&1) != "contributor" ]]; then
+	wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet
+	echo -e $(status_message "Contributor created! Username: contributor Password: password")
+else
+ echo -e $(status_message "Contributor already exists, skipping...")
+fi
+if [[ $(wp user get subscriber --field=login 2>&1) != "subscriber" ]]; then
+	wp user create subscriber subscriber@example.com --role=subscriber --user_pass=password --quiet
+	echo -e $(status_message "Subscriber created! Username: subscriber Password: password")
+else
+ echo -e $(status_message "Subscriber already exists, skipping...")
+fi
 
 wp user list
+
 # Make sure the uploads and upgrade folders exist and we have permissions to add files.
 echo -e $(status_message "Ensuring that files can be uploaded...")
 container mkdir -p \
