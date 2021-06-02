@@ -3,7 +3,7 @@
 #
 # See https://github.com/google/web-stories-wp/issues/1398
 
-name: Clean up PR assets for closed PRs
+name: Clean up PR assets
 
 on:
   pull_request:

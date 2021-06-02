@@ -3,7 +3,7 @@
 #
 # See https://github.com/google/web-stories-wp/issues/6301
 
-name: Add release milestone to closed issues
+name: Add milestone
 
 on:
   pull_request:
@@ -49,7 +49,9 @@ jobs:
       - name: Get next release
         id: release
         run: |
-          RELEASES=$(curl -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/$ZENHUB_REPO_ID/reports/releases")
+          echo "Getting list of releases from ZenHub"
+
+          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/$“ZENHUB_REPO_ID}/reports/releases")
           NEXT_RELEASE=$((echo $RELEASES ) | jq -r 'first(sort_by(.start_date) | .[] | select( .state == "open" )) | .release_id')
 
           echo "Determined release with ID $NEXT_RELEASE to be the next one"
@@ -63,8 +65,7 @@ jobs:
         run: |
           echo "Adding issue $ISSUE_NUMBER to release $RELEASE_ID"
 
-          curl -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/$RELEASE_ID/issues" -d '{ "add_issues": [{ "repo_id": $ZENHUB_REPO_ID, "issue_number": $ISSUE_NUMBER }], "remove_issues": [] }'
-          echo "::set-output name=RELEASES::$RELEASES"
+          curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$ZENHUB_REPO_ID"', "issue_number": '"$ISSUE_NUMBER"' }], "remove_issues": [] }'
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
           ISSUE_NUMBER: ${{ steps.issue_number.outputs.issue_number }}
