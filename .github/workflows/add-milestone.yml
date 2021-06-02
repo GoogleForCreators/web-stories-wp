@@ -6,10 +6,7 @@ name: Add milestone
 
 on:
   pull_request:
-    # Todo: Only keep 'closed' after testing.
     types:
-      - opened
-      - edited
       - closed
 
 env:
@@ -22,8 +19,7 @@ jobs:
     name: Add milestone
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    # Todo: Uncomment after testing.
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     steps:
       # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
       # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
@@ -42,7 +38,7 @@ jobs:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
 
       # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
-      - name: Add issue to release
+      - name: Add PR to release
         run: |
           echo "Adding PR $PR_NUMBER to release $RELEASE_ID"
 
