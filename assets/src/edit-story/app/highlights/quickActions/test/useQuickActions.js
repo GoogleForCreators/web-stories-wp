@@ -29,6 +29,7 @@ import {
   Captions,
   CircleSpeed,
   Eraser,
+  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
@@ -179,6 +180,33 @@ const shapeQuickActionsWithClear = [
   clearAnimationAndFiltersAction,
 ];
 
+const textQuickActions = [
+  expect.objectContaining({
+    label: ACTION_TEXT.CHANGE_TEXT_COLOR,
+    onClick: expect.any(Function),
+    Icon: Bucket,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.CHANGE_FONT,
+    onClick: expect.any(Function),
+    Icon: LetterTLargeLetterTSmall,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_ANIMATION,
+    onClick: expect.any(Function),
+    Icon: CircleSpeed,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_LINK,
+    onClick: expect.any(Function),
+    Icon: Link,
+  }),
+];
+const textQuickActionsWithClear = [
+  ...textQuickActions,
+  clearAnimationAndFiltersAction,
+];
+
 const backgroundMediaQuickActions = [
   expect.objectContaining({
     label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
@@ -291,7 +319,7 @@ describe('useQuickActions', () => {
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
-        highlight: states.TEXT,
+        highlight: states.TEXT_SET,
       });
     });
   });
@@ -332,7 +360,7 @@ describe('useQuickActions', () => {
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
         elementId: undefined,
-        highlight: states.TEXT,
+        highlight: states.TEXT_SET,
       });
     });
   });
@@ -610,8 +638,77 @@ describe('useQuickActions', () => {
         updateElementsById: mockUpdateElementsById,
       });
     });
-    it.todo('should return the quick actions');
-    it.todo('should set the correct highlight');
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current).toStrictEqual(textQuickActions);
+    });
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: TEXT_ELEMENT.id,
+        highlight: states.TEXT_COLOR,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: TEXT_ELEMENT.id,
+        highlight: states.FONT,
+      });
+
+      result.current[2].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: TEXT_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[3].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: TEXT_ELEMENT.id,
+        highlight: states.LINK,
+      });
+    });
+
+    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [TEXT_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[4]).toBeUndefined();
+    });
+
+    it('clicking `clear animations` should update the element', () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
+        },
+        selectedElementAnimations: [
+          {
+            target: [TEXT_ELEMENT.id],
+          },
+        ],
+        selectedElements: [TEXT_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+      expect(result.current).toStrictEqual(textQuickActionsWithClear);
+
+      result.current[4].onClick(mockClickEvent);
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [TEXT_ELEMENT.id],
+        properties: expect.any(Function),
+      });
+    });
   });
 
   describe('video element selected', () => {

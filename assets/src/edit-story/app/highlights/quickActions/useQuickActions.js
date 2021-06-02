@@ -28,6 +28,7 @@ import {
   Bucket,
   CircleSpeed,
   Eraser,
+  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
@@ -179,6 +180,8 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
+    handleFocusTextColor,
+    handleFocusFontPicker,
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
     handleFocusCaptionsPanel,
@@ -187,7 +190,9 @@ const useQuickActions = () => {
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
-      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
+      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT_SET),
+      handleFocusFontPicker: handleFocusPanel(states.FONT),
+      handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
@@ -321,6 +326,31 @@ const useQuickActions = () => {
     ]
   );
 
+  const textActions = useMemo(
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTION_TEXT.CHANGE_COLOR,
+        onClick: handleFocusTextColor(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: LetterTLargeLetterTSmall,
+        label: ACTION_TEXT.CHANGE_FONT,
+        onClick: handleFocusFontPicker(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
+    [
+      foregroundCommonActions,
+      actionMenuProps,
+      selectedElement?.id,
+      handleFocusTextColor,
+      handleFocusFontPicker,
+    ]
+  );
+
   const videoActions = useMemo(
     () => [
       ...foregroundImageActions,
@@ -406,9 +436,10 @@ const useQuickActions = () => {
       return [...foregroundImageActions, ...clearActions];
     case ELEMENT_TYPE.SHAPE:
       return [...shapeActions, ...clearActions];
+    case ELEMENT_TYPE.TEXT:
+      return [...textActions, ...clearActions];
     case ELEMENT_TYPE.VIDEO:
       return [...videoActions, ...clearActions];
-    case ELEMENT_TYPE.TEXT:
     default:
       return [];
   }
