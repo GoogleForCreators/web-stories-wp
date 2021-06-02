@@ -391,7 +391,10 @@ const useQuickActions = () => {
       : [
           {
             Icon: Eraser,
-            label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+            label:
+              selectedElement?.type === 'text'
+                ? ACTION_TEXT.CLEAR_ANIMATIONS
+                : ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
             onClick: () =>
               handleClearAnimationsAndFilters({
                 elementId: selectedElement?.id,
