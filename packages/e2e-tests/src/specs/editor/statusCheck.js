@@ -19,7 +19,8 @@
  */
 import {
   addRequestInterception,
-  createNewStory, withUser,
+  createNewStory,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 /**
  * Internal dependencies

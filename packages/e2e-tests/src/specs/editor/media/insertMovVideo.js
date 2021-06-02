@@ -21,7 +21,8 @@ import {
   createNewStory,
   clickButton,
   uploadFile,
-  deleteMedia, withUser,
+  deleteMedia,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';

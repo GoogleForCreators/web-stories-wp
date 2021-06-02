@@ -20,7 +20,8 @@
 import {
   createNewStory,
   deleteMedia,
-  uploadMedia, withUser,
+  uploadMedia,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting Media from Media Library', () => {

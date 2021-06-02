@@ -22,7 +22,8 @@ import {
   previewStory,
   insertStoryTitle,
   uploadMedia,
-  deleteMedia, withUser,
+  deleteMedia,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
