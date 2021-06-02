@@ -213,7 +213,6 @@ function MediaPane(props) {
         enableMediaPickerVideoOptimization &&
         isFeatureEnabled &&
         isTranscodingEnabled &&
-        !resource.local &&
         transcodableMimeTypes.includes(resource.mimeType)
       ) {
         optimizeVideo({ resource });
