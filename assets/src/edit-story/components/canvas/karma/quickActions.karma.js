@@ -230,6 +230,7 @@ describe('Quick Actions integration', () => {
           animations: state.pages[0].animations,
         }))
       );
+
       expect(animations.length).toBe(0);
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
@@ -490,7 +491,7 @@ describe('Quick Actions integration', () => {
       // click quick menu button
       await waitFor(() =>
         fixture.events.click(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+          fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
         )
       );
 
@@ -668,6 +669,7 @@ describe('Quick Actions integration', () => {
           animations: state.pages[0].animations,
         }))
       );
+
       expect(revertedAnimations.length).toBe(1);
       expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
       expect(
