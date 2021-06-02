@@ -491,6 +491,9 @@ fdescribe('Quick Actions integration', () => {
         ).toBeDefined();
       });
 
+      const buttons = fixture.screen.getAllByRole('button');
+      expect(buttons).toBe('test');
+      console.log(fixture.editor.canvas.quickActionMenu);
       // click quick menu button
       await waitFor(() =>
         fixture.events.click(
