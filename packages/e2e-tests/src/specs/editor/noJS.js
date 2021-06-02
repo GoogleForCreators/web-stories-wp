@@ -18,9 +18,11 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor with disabled JavaScript', () => {
+  withUser('admin', 'password');
+
   it('should display error message', async () => {
     // Disable javascript for test.
     await page.setJavaScriptEnabled(false);

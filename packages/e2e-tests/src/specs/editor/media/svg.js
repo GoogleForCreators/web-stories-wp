@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -22,11 +23,13 @@ import {
   createNewStory,
   uploadMedia,
   deleteMedia,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
 describe('SVG', () => {
+  withUser('admin', 'password');
   withExperimentalFeatures(['enableSVG']);
 
   it('should insert an existing SVG from media dialog', async () => {

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
@@ -26,6 +26,8 @@ import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
+  withUser('admin', 'password');
+
   describe('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {
       await createNewStory();

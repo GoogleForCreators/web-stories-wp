@@ -18,7 +18,8 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { activateRTL, deactivateRTL } from '@web-stories-wp/e2e-test-utils';
+import { activateRTL, deactivateRTL, withUser } from '@web-stories-wp/e2e-test-utils';
+
 /**
  * WordPress dependencies
  */
@@ -31,6 +32,8 @@ import {
 const percyCSS = `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`;
 
 describe('Plugin Activation', () => {
+  withUser('admin', 'password');
+
   beforeEach(async () => {
     await deactivatePlugin('web-stories');
     await activatePlugin('web-stories');

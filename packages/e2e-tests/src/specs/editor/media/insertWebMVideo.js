@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -21,10 +22,12 @@ import {
   previewStory,
   insertStoryTitle,
   uploadMedia,
-  deleteMedia,
+  deleteMedia, withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
+  withUser('admin', 'password');
+
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 

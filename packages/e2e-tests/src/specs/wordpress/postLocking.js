@@ -15,6 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  withExperimentalFeatures,
+  visitDashboard,
+  createNewStory,
+  insertStoryTitle,
+  withUser,
+} from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
+
+/**
  * WordPress dependencies
  */
 import {
@@ -23,23 +35,14 @@ import {
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
-/**
- * External dependencies
- */
-import {
-  withExperimentalFeatures,
-  visitDashboard,
-  createNewStory,
-  insertStoryTitle,
-} from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
-
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 const storyTitle = 'Test post lock';
 
-describe('Post locking', () => {
+describe('Post Locking', () => {
+  withUser('admin', 'password');
   withExperimentalFeatures(['enablePostLocking']);
+
   beforeAll(async () => {
     await createNewStory();
 

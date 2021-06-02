@@ -16,9 +16,11 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting 3P Media', () => {
+  withUser('admin', 'password');
+
   it('should dismiss message', async () => {
     await createNewStory();
 

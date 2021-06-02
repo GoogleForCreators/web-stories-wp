@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -28,9 +23,17 @@ import {
   previewStory,
   insertStoryTitle,
   setAnalyticsCode,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * WordPress dependencies
+ */
+import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
 describe('AMP integrations with editor', () => {
+  withUser('admin', 'password');
+
   beforeAll(async () => {
     await activatePlugin('amp');
   });

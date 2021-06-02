@@ -15,6 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  createNewStory,
+  addRequestInterception,
+  publishPost,
+  insertStoryTitle, withUser,
+} from '@web-stories-wp/e2e-test-utils';
+
+/**
  * WordPress dependencies
  */
 import {
@@ -23,19 +33,11 @@ import {
   getEditedPostContent,
 } from '@wordpress/e2e-test-utils';
 
-/**
- * External dependencies
- */
-import {
-  createNewStory,
-  addRequestInterception,
-  publishPost,
-  insertStoryTitle,
-} from '@web-stories-wp/e2e-test-utils';
-
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Publishing Flow', () => {
+  withUser('admin', 'password');
+
   let stopRequestInterception;
 
   beforeAll(async () => {

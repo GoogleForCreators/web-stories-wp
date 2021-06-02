@@ -15,16 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import { visitSettings, withUser } from '@web-stories-wp/e2e-test-utils';
+
+/**
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
-/**
- * External dependencies
- */
-import { visitSettings } from '@web-stories-wp/e2e-test-utils';
-
 describe('Site Kit integration with dashboard', () => {
+  withUser('admin', 'password');
+
   it('should be able see Site Kit specific message for Google Analytics', async () => {
     await activatePlugin('e2e-tests-site-kit-analytics-mock');
     await visitSettings();

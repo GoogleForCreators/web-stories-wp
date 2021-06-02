@@ -13,29 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * WordPress dependencies
- */
-import {
-  loginUser,
-  switchUserToAdmin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
 
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
-describe('Quick Edit', () => {
-  beforeAll(async () => {
-    await loginUser('author', 'password');
-  });
+/**
+ * WordPress dependencies
+ */
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
 
-  afterAll(async () => {
-    await switchUserToAdmin();
-  });
+describe('Quick Edit', () => {
+  withUser('author', 'password');
 
   it('should save story without breaking markup', async () => {
     await createNewStory();

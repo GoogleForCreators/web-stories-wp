@@ -15,11 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import { withUser } from '@web-stories-wp/e2e-test-utils';
+
+/**
  * WordPress dependencies
  */
 import { visitAdminPage } from '@wordpress/e2e-test-utils';
 
 describe('Admin Menu', () => {
+  withUser('admin', 'password');
+
   it('should contain links to Dashboard sub-pages', async () => {
     await visitAdminPage('index.php');
 

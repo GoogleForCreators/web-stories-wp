@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -27,6 +22,7 @@ import {
   previewStory,
   addTextElement,
   insertStoryTitle,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
@@ -46,13 +42,7 @@ async function publishStory() {
 }
 
 describe('Author User', () => {
-  beforeAll(async () => {
-    await loginUser('author', 'password');
-  });
-
-  afterAll(async () => {
-    await switchUserToAdmin();
-  });
+  withUser('author', 'password');
 
   it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();
@@ -75,9 +65,6 @@ describe('Author User', () => {
   //eslint-disable-next-line jest/no-disabled-tests
   it.skip('should be able to publish a story without markup being stripped', async () => {
     await createNewStory();
-    await expect(page).toMatchElement('.display-name', {
-      text: 'author',
-    });
 
     await insertStoryTitle('Publishing and Previewing');
 
@@ -99,9 +86,6 @@ describe('Author User', () => {
   //eslint-disable-next-line jest/no-disabled-tests
   it.skip('should be able to publish and preview a story without markup being stripped', async () => {
     await createNewStory();
-    await expect(page).toMatchElement('.display-name', {
-      text: 'author',
-    });
 
     await insertStoryTitle('Autosaving and Previewing');
 

@@ -15,6 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  addRequestInterception,
+  publishPost,
+  withDisabledToolbarOnFrontend,
+  insertBlock,
+  withUser,
+} from '@web-stories-wp/e2e-test-utils';
+
+/**
  * WordPress dependencies
  */
 import {
@@ -23,16 +34,6 @@ import {
   createNewPost,
   setPostContent,
 } from '@wordpress/e2e-test-utils';
-
-/**
- * External dependencies
- */
-import {
-  addRequestInterception,
-  publishPost,
-  withDisabledToolbarOnFrontend,
-  insertBlock,
-} from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -48,6 +49,8 @@ const EMBED_BLOCK_CONTENT = `
 describe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
+
+  withUser('admin', 'password');
 
   beforeAll(async () => {
     removeErrorMessage = addAllowedErrorMessage(

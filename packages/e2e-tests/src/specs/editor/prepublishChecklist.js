@@ -17,10 +17,12 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
+  withUser('admin', 'password');
+
   it('should show the checklist', async () => {
     await createNewStory();
     await expect(page).toClick('li', { text: 'Checklist' });
@@ -29,6 +31,7 @@ describe('Pre-Publish Checklist', () => {
     );
     await expect(page).toMatchElement('#inspector-tab-prepublish');
   });
+
   it('should show that there is no poster attached to the story', async () => {
     await createNewStory();
     await expect(page).toClick('[data-testid^="mediaElement"]');

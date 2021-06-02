@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -27,9 +22,17 @@ import {
   createNewStory,
   previewStory,
   insertStoryTitle,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * WordPress dependencies
+ */
+import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
 describe('Site Kit integration with editor', () => {
+  withUser('admin', 'password');
+
   beforeAll(async () => {
     await activatePlugin('e2e-tests-site-kit-analytics-mock');
   });

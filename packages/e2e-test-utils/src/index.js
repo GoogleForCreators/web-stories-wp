@@ -21,6 +21,7 @@ export { default as visitSettings } from './visitSettings';
 export { default as addRequestInterception } from './addRequestInterception';
 export { default as withExperimentalFeatures } from './experimentalFeatures';
 export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
+export { default as withUser } from './withUser';
 export { default as deactivateRTL } from './deactivateRTL';
 export { default as activateRTL } from './activateRTL';
 export { default as publishPost } from './publishPost';

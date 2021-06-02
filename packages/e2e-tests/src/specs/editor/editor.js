@@ -23,6 +23,7 @@ import {
   deactivateRTL,
   activateRTL,
   visitSettings,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function toggleVideoOptimization() {
@@ -38,6 +39,8 @@ async function toggleVideoOptimization() {
 }
 
 describe('Story Editor', () => {
+  withUser('admin', 'password');
+
   it('should be able to create a blank story', async () => {
     await createNewStory();
 

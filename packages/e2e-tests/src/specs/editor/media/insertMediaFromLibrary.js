@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import {
   createNewStory,
   deleteMedia,
-  uploadMedia,
+  uploadMedia, withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting Media from Media Library', () => {
+  withUser('admin', 'password');
+
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   // TODO https://github.com/google/web-stories-wp/issues/7107
   // eslint-disable-next-line jest/no-disabled-tests

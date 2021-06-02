@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -20,13 +21,12 @@ import {
   createNewStory,
   uploadMedia,
   deleteMedia,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
-/**
- * WordPress dependencies
- */
-import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 
 describe('Inserting Media from Dialog', () => {
+  withUser('admin', 'password');
+
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   // TODO https://github.com/google/web-stories-wp/issues/7107
   // eslint-disable-next-line jest/no-disabled-tests
@@ -43,16 +43,16 @@ describe('Inserting Media from Dialog', () => {
     await deleteMedia(filename);
   });
 
-  it('should see permission error dialog as a contributor user', async () => {
-    await loginUser('contributor', 'password');
+  describe('Contributor User', () => {
+    withUser('contributor', 'password');
 
-    await createNewStory();
-    await expect(page).toMatch('Howdy, contributor');
+    it('should display permission error dialog', async () => {
+      await createNewStory();
+      await expect(page).toMatch('Howdy, contributor');
 
-    await expect(page).toClick('button', { text: 'Upload' });
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toMatch('Access Restrictions');
-
-    await switchUserToAdmin();
+      await expect(page).toClick('button', { text: 'Upload' });
+      await page.waitForSelector('.ReactModal__Content');
+      await expect(page).toMatch('Access Restrictions');
+    });
   });
 });

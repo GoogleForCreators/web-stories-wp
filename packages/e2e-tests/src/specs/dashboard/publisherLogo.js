@@ -21,12 +21,14 @@ import {
   uploadPublisherLogo,
   visitSettings,
   withExperimentalFeatures,
+  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 const ERROR_TEXT =
   'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.';
 
-describe('publisher logo', () => {
+describe('Publisher logo', () => {
+  withUser('admin', 'password');
   withExperimentalFeatures(['enableSVG']);
 
   it('should not upload a logo that is an invalid type with svg enabled', async () => {
