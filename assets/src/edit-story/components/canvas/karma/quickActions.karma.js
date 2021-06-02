@@ -44,6 +44,19 @@ describe('Quick Actions integration', () => {
     fixture.restore();
   });
 
+  describe('menu visibility', () => {
+    it('quick menu should not be visible if the canvas is overflowing', async () => {
+      const { zoomSelector } = fixture.editor.carousel;
+
+      await fixture.events.click(zoomSelector.select);
+      await fixture.events.sleep(300);
+      await fixture.events.click(await zoomSelector.option('Fill'));
+      await fixture.events.sleep(300);
+
+      expect(fixture.screen.queryByRole('dialog')).toBeNull();
+    });
+  });
+
   describe('quick action menu should have no aXe accessibility violations', () => {
     it('should pass accessibility tests with the default menu', async () => {
       await expectAsync(
@@ -205,11 +218,10 @@ describe('Quick Actions integration', () => {
       expect(originalAnimations.length).toBe(1);
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
-      ).toBeDefined();
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
+        )
       );
 
       // verify that element has no animations
@@ -476,8 +488,10 @@ describe('Quick Actions integration', () => {
       });
 
       // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+        )
       );
 
       // verify that element has no animations
@@ -626,11 +640,10 @@ describe('Quick Actions integration', () => {
       expect(originalAnimations.length).toBe(1);
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        )
       );
 
       // verify that element has no animations

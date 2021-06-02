@@ -38,7 +38,7 @@ import {
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useStory } from '../../story';
+import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import { getResetProperties, getSnackbarClearCopy } from './utils';
 import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
 
@@ -55,6 +55,7 @@ import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
  */
 const useQuickActions = () => {
   const { isRTL } = useConfig();
+  const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     currentPage,
     selectedElementAnimations,
@@ -271,7 +272,10 @@ const useQuickActions = () => {
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMediaPanel(selectedElement?.id),
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
+          handleFocusMediaPanel(selectedElement?.id)(ev);
+        },
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
@@ -281,6 +285,7 @@ const useQuickActions = () => {
       handleFocusMediaPanel,
       foregroundCommonActions,
       selectedElement?.id,
+      dispatchStoryEvent,
     ]
   );
 
@@ -307,7 +312,10 @@ const useQuickActions = () => {
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
-        onClick: handleFocusMediaPanel(selectedElement?.id),
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+          handleFocusMediaPanel(selectedElement?.id)(ev);
+        },
         ...actionMenuProps,
       },
       {
@@ -323,6 +331,7 @@ const useQuickActions = () => {
       handleFocusMediaPanel,
       actionMenuProps,
       handleFocusAnimationPanel,
+      dispatchStoryEvent,
     ]
   );
 
