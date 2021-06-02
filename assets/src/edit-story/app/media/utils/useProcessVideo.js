@@ -20,8 +20,8 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../story';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import useStory from '../../story/useStory';
+import useUpdateElementDimensions from './useUpdateElementDimensions';
 import fetchRemoteFile from './fetchRemoteFile';
 
 function useProcessVideo({
@@ -30,6 +30,7 @@ function useProcessVideo({
   updateMedia,
   deleteMediaElement,
 }) {
+  const { updateElementDimensions } = useUpdateElementDimensions();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -81,36 +82,6 @@ function useProcessVideo({
       });
     },
     [updateMedia]
-  );
-
-  const updateElementDimensions = useCallback(
-    ({ id, resource }) => {
-      updateElementsByResourceId({
-        id,
-        properties: (el) => {
-          const hasChangedDimensions =
-            el.resource.width !== resource.width ||
-            el.resource.height !== resource.height;
-
-          if (!hasChangedDimensions) {
-            return {
-              type: resource.type,
-              resource,
-            };
-          }
-
-          return {
-            resource,
-            type: resource.type,
-            width: resource.width,
-            height: resource.height,
-            x: PAGE_WIDTH / 2 - resource.width / 2,
-            y: PAGE_HEIGHT / 2 - resource.height / 2,
-          };
-        },
-      });
-    },
-    [updateElementsByResourceId]
   );
 
   const optimizeVideo = useCallback(
