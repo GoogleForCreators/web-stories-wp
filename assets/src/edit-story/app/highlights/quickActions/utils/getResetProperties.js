@@ -32,7 +32,6 @@ export const getResetProperties = (
   selectedElementAnimations = []
 ) => {
   const resetProperties = [];
-  console.log({ selectedElement });
   if (selectedElement?.overlay) {
     resetProperties.push(RESET_PROPERTIES.OVERLAY);
   }
