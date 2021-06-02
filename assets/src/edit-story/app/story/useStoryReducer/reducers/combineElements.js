@@ -86,6 +86,7 @@ function combineElements(
     : {};
 
   const propsFromFirst = [
+    'alt',
     'type',
     'resource',
     'scale',
