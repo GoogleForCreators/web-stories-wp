@@ -1,12 +1,7 @@
 {
-  "current": "2572f4a4-bb11-47e2-9f77-b8371aeabe49",
+  "current": null,
   "selection": [],
-  "story": {
-    "globalStoryStyles": {
-      "colors": [],
-      "textStyles": []
-    }
-  },
+  "story": {},
   "version": 25,
   "pages": [
     {
@@ -53,12 +48,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page1_bg-red.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page1_bg-red.png",
             "width": 330,
             "height": 586,
             "id": 1297,
-            "title": "fitness_page1_bg-red",
-            "alt": "fitness_page1_bg-red",
+            "title": "page1_bg-red",
+            "alt": "page1_bg-red",
             "local": false,
             "sizes": []
           }
@@ -125,12 +120,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page1_logo-generic.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page1_logo-generic.png",
             "width": 79,
             "height": 22,
             "id": 1241,
-            "title": "fitness_page1_logo-generic",
-            "alt": "fitness_page1_logo-generic",
+            "title": "page1_logo-generic",
+            "alt": "page1_logo-generic",
             "local": false,
             "sizes": []
           },
@@ -251,13 +246,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page2_figure-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page2_figure-formatted.png",
             "width": 220,
             "height": 350,
             "posterId": 0,
             "id": 265,
-            "title": "fitness_page2_figure-formatted",
-            "alt": "fitness_page2_figure-formatted",
+            "title": "page2_figure-formatted",
+            "alt": "page2_figure-formatted",
             "local": false,
             "sizes": []
           },
@@ -430,13 +425,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page3_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page3_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 270,
-            "title": "fitness_page3_bg",
-            "alt": "fitness_page3_bg",
+            "title": "page3_bg",
+            "alt": "page3_bg",
             "local": false,
             "sizes": []
           },
@@ -678,12 +673,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page4_bg-red.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page4_bg-red.png",
             "width": 330,
             "height": 308,
             "id": 1299,
-            "title": "fitness_page4_bg-red",
-            "alt": "fitness_page4_bg-red",
+            "title": "page4_bg-red",
+            "alt": "page4_bg-red",
             "local": false,
             "sizes": []
           }
@@ -716,13 +711,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page4_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page4_bg.jpg",
             "width": 220,
             "height": 288,
             "posterId": 0,
             "id": 278,
-            "title": "fitness_page4_bg",
-            "alt": "fitness_page4_bg",
+            "title": "page4_bg",
+            "alt": "page4_bg",
             "local": false,
             "sizes": []
           },
@@ -986,12 +981,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page5_bg-no-logo.png",
             "width": 330,
             "height": 295,
             "id": 1256,
-            "title": "fitness_page5_bg-no-logo",
-            "alt": "fitness_page5_bg-no-logo",
+            "title": "page5_bg-no-logo",
+            "alt": "page5_bg-no-logo",
             "local": false,
             "sizes": []
           },
@@ -1315,13 +1310,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page6_bg.jpg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page6_bg.jpg",
             "width": 220,
             "height": 165,
             "posterId": 0,
             "id": 288,
-            "title": "fitness_page6_bg",
-            "alt": "fitness_page6_bg",
+            "title": "page6_bg",
+            "alt": "page6_bg",
             "local": false,
             "sizes": []
           },
@@ -1344,13 +1339,13 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-30T20:40:21",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page6_watch.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page6_watch.png",
             "width": 330,
             "height": 330,
             "posterId": 0,
             "id": 1940,
-            "title": "fitness_page6_watch",
-            "alt": "fitness_page6_watch",
+            "title": "page6_watch",
+            "alt": "page6_watch",
             "local": false,
             "sizes": []
           },
@@ -1691,12 +1686,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page7_bg-red.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page7_bg-red.png",
             "width": 330,
             "height": 239,
             "id": 1301,
-            "title": "fitness_page7_bg-red",
-            "alt": "fitness_page7_bg-red",
+            "title": "page7_bg-red",
+            "alt": "page7_bg-red",
             "local": false,
             "sizes": []
           }
@@ -1948,13 +1943,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page8_story3-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page8_story3-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
             "id": 310,
-            "title": "fitness_page8_story3-formatted",
-            "alt": "fitness_page8_story3-formatted",
+            "title": "page8_story3-formatted",
+            "alt": "page8_story3-formatted",
             "local": false,
             "sizes": []
           },
@@ -1985,13 +1980,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page8_story1-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page8_story1-formatted.png",
             "width": 95,
             "height": 97,
             "posterId": 0,
             "id": 308,
-            "title": "fitness_page8_story1-formatted",
-            "alt": "fitness_page8_story1-formatted",
+            "title": "page8_story1-formatted",
+            "alt": "page8_story1-formatted",
             "local": false,
             "sizes": []
           },
@@ -2022,13 +2017,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness/fitness_page8_story2-formatted.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page8_story2-formatted.png",
             "width": 188,
             "height": 97,
             "posterId": 0,
             "id": 309,
-            "title": "fitness_page8_story2-formatted",
-            "alt": "fitness_page8_story2-formatted",
+            "title": "page8_story2-formatted",
+            "alt": "page8_story2-formatted",
             "local": false,
             "sizes": []
           },

@@ -58,7 +58,7 @@ export const SelectButton = styled.button(
     css`
       ${themeHelpers.focusableOutlineCSS(
         theme.colors.interactiveBg.negativeNormal
-      )};
+      )}
       border-color: ${theme.colors.interactiveBg.negativeNormal};
 
       &:active,

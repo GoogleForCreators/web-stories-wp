@@ -29,12 +29,8 @@ import { initHelpers } from './_utils';
 describe('Styling single text field', () => {
   const data = {};
 
-  const {
-    getTextContent,
-    addInitialText,
-    setSelection,
-    richTextHasFocus,
-  } = initHelpers(data);
+  const { getTextContent, addInitialText, setSelection, richTextHasFocus } =
+    initHelpers(data);
 
   beforeEach(async () => {
     data.fixture = new Fixture();
@@ -56,14 +52,8 @@ describe('Styling single text field', () => {
     // TODO #6955
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply inline formatting correctly for single-style text field', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-        fontWeight,
-        letterSpacing,
-        fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Check all styles are default
       expect(bold.checked).toBe(false);
@@ -117,14 +107,8 @@ describe('Styling single text field', () => {
     });
 
     it('should apply inline formatting correctly for multi-style text field', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-        fontWeight,
-        letterSpacing,
-        fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // First enter edit mode, select something, style it with all styles and exit edit mode
       await data.fixture.events.keyboard.press('Enter');
@@ -201,11 +185,8 @@ describe('Styling single text field', () => {
     // Disable reason: This isn't implemented yet: Filed in #1977
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply inline formatting using shortcuts', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Check all styles are default
       expect(bold.checked).toBe(false);
@@ -236,10 +217,8 @@ describe('Styling single text field', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black+bold text field non-bold when toggling', async () => {
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Edit and make some content black, rest of content bold
       await data.fixture.events.keyboard.press('Enter');
@@ -275,10 +254,8 @@ describe('Styling single text field', () => {
     });
 
     it('should make bold+regular text field bold when toggling', async () => {
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Edit and make some content bold, rest of content unchanged
       await data.fixture.events.keyboard.press('Enter');
@@ -314,10 +291,8 @@ describe('Styling single text field', () => {
       // This is on purpose and by design.
       // See more in `richText/formatters/weight.js@toggleBold`
 
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Edit and make some content black, some bold, rest unchanged
       await data.fixture.events.keyboard.press('Enter');

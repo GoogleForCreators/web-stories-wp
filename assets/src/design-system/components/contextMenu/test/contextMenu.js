@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -36,15 +36,16 @@ describe('ContextMenu', () => {
   it('contextMenu should be invisible', () => {
     renderWithProviders(<ContextMenu items={items} />);
 
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.queryByRole('menu')).not.toBeInTheDocument();
+    expect(screen.queryByRole('menuitem')).not.toBeInTheDocument();
   });
 
   it('contextMenu should be visible', () => {
     renderWithProviders(<ContextMenu items={items} isOpen />);
 
-    expect(screen.getByRole('button')).toBeInTheDocument();
-    expect(screen.getByRole('link')).toBeInTheDocument();
+    expect(screen.getByRole('menu')).toBeInTheDocument();
+    expect(screen.getByLabelText('this is a button')).toBeInTheDocument();
+    expect(screen.getByLabelText('this is a link')).toBeInTheDocument();
   });
 
   it('clicking away from context menu should call onDismiss', () => {
@@ -71,34 +72,69 @@ describe('ContextMenu', () => {
     rerender(<ContextMenu isOpen items={items} />);
 
     // opening the menu should focus the first focusable item
-    const firstButton = screen.queryByRole('button', { name: items[0].label });
-    expect(firstButton).toHaveFocus();
+    const [firstButton] = screen.queryAllByRole('menuitem', {
+      name: items[0].label,
+    });
+
+    expect(within(firstButton).getByRole('button')).toHaveFocus();
   });
 });
 
 describe('MenuItem', () => {
-  it('should render a button if `onClick` is passed as a prop', () => {
-    renderWithProviders(<MenuItem label="my label" onClick={noop} />);
+  const testLabel = 'my label';
 
-    expect(screen.getByText('my label')).toBeInTheDocument();
-    expect(screen.queryByRole('button')).toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+  it('should render a button if `onClick` is passed as a prop', () => {
+    renderWithProviders(<MenuItem label={testLabel} onClick={noop} />);
+    expect(screen.getByText(testLabel)).toBeInTheDocument();
+    expect(
+      screen.getByLabelText(
+        (content, element) =>
+          element.tagName.toLowerCase() === 'button' &&
+          content.startsWith(testLabel)
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(
+        (content, element) =>
+          element.tagName.toLowerCase() === 'a' && content.startsWith(testLabel)
+      )
+    ).not.toBeInTheDocument();
   });
 
   it('should render a link if `href` is passed as a prop', () => {
-    renderWithProviders(<MenuItem label="my label" href="test" />);
-
-    expect(screen.getByText('my label')).toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.queryByRole('link')).toBeInTheDocument();
+    renderWithProviders(<MenuItem label={testLabel} href="test" />);
+    expect(screen.getByText(testLabel)).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(
+        (content, element) =>
+          element.tagName.toLowerCase() === 'button' &&
+          content.startsWith(testLabel)
+      )
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByLabelText(
+        (content, element) =>
+          element.tagName.toLowerCase() === 'a' && content.startsWith(testLabel)
+      )
+    ).toBeInTheDocument();
   });
 
   it('should render a div if neither `onClick` nor `href` are passed as props', () => {
-    renderWithProviders(<MenuItem label="my label" />);
-
-    expect(screen.getByText('my label')).toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    renderWithProviders(<MenuItem label={testLabel} />);
+    expect(screen.getByText(testLabel)).toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(
+        (content, element) =>
+          element.tagName.toLowerCase() === 'button' &&
+          content.startsWith(testLabel)
+      )
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByLabelText(
+        (content, element) =>
+          element.tagName.toLowerCase() === 'a' && content.startsWith(testLabel)
+      )
+    ).not.toBeInTheDocument();
   });
 
   it('should call onClick and onDismiss when a clickable item is clicked', () => {
@@ -108,7 +144,7 @@ describe('MenuItem', () => {
       <MenuItem label="my label" onClick={onClick} onDismiss={onDismiss} />
     );
 
-    const button = screen.getByRole('button');
+    const button = screen.getByLabelText('my label');
 
     fireEvent.click(button);
 

@@ -77,7 +77,7 @@ describe('<Menu />', () => {
     );
 
     const emptyMessage = screen.getByText('No options available');
-    expect(emptyMessage).toBeTruthy();
+    expect(emptyMessage).toBeInTheDocument();
   });
 
   it('should trigger onMenuItemClick when list item is clicked', () => {

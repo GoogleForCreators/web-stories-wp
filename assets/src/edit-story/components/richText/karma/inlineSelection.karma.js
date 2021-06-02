@@ -29,12 +29,8 @@ import { initHelpers } from './_utils';
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
-  const {
-    getTextContent,
-    addInitialText,
-    setSelection,
-    richTextHasFocus,
-  } = initHelpers(data);
+  const { getTextContent, addInitialText, setSelection, richTextHasFocus } =
+    initHelpers(data);
 
   beforeEach(async () => {
     data.fixture = new Fixture();
@@ -56,14 +52,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
     // Broken test, see: https://github.com/google/web-stories-wp/issues/7211
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply inline formats correctly for both single style and multiple styles', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-        fontWeight,
-        letterSpacing,
-        fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
@@ -190,11 +180,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
     it('should apply inline formats using shortcuts', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
@@ -235,9 +222,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     describe('when there is a mix of font weights', () => {
       beforeEach(async () => {
-        const {
-          fontWeight,
-        } = data.fixture.editor.inspector.designPanel.textStyle;
+        const { fontWeight } =
+          data.fixture.editor.inspector.designPanel.textStyle;
 
         // Enter edit-mode
         await data.fixture.editor.canvas.waitFocusedWithin();
@@ -261,10 +247,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       });
 
       it('should make black+bold selection non-bold when toggling', async () => {
-        const {
-          bold,
-          fontWeight,
-        } = data.fixture.editor.inspector.designPanel.textStyle;
+        const { bold, fontWeight } =
+          data.fixture.editor.inspector.designPanel.textStyle;
 
         // Select first two characters (900 and 700)
         await setSelection(0, 2);
@@ -290,10 +274,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       });
 
       it('should make bold+regular selection bold when toggling', async () => {
-        const {
-          bold,
-          fontWeight,
-        } = data.fixture.editor.inspector.designPanel.textStyle;
+        const { bold, fontWeight } =
+          data.fixture.editor.inspector.designPanel.textStyle;
 
         // Select second and third characters (700 and 400)
         await setSelection(1, 3);
@@ -325,10 +307,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       });
 
       it('should make black+bold+regular selection black when toggling', async () => {
-        const {
-          bold,
-          fontWeight,
-        } = data.fixture.editor.inspector.designPanel.textStyle;
+        const { bold, fontWeight } =
+          data.fixture.editor.inspector.designPanel.textStyle;
 
         // Select first three characters (900, 700 and 400)
         await setSelection(0, 3);
@@ -369,9 +349,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       };
       const initialLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
 
-      const {
-        lineHeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { lineHeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');

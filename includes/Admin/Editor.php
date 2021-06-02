@@ -29,12 +29,11 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Register_Font;
 use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
@@ -49,7 +48,6 @@ use WP_Post;
 class Editor extends Service_Base {
 	use Publisher;
 	use Types;
-	use Assets;
 	use Screen;
 	use Post_Type;
 
@@ -89,29 +87,38 @@ class Editor extends Service_Base {
 	private $locale;
 
 	/**
-	 * Register_Font instance.
+	 * Google_Fonts instance.
 	 *
-	 * @var Register_Font Register_Font instance.
+	 * @var Google_Fonts Google_Fonts instance.
 	 */
-	private $register_font;
+	private $google_fonts;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
 
 	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments   $experiments   Experiments instance.
-	 * @param Meta_Boxes    $meta_boxes    Meta_Boxes instance.
-	 * @param Decoder       $decoder       Decoder instance.
-	 * @param Locale        $locale        Locale instance.
-	 * @param Register_Font $register_font Register_Font instance.
+	 * @param Experiments  $experiments   Experiments instance.
+	 * @param Meta_Boxes   $meta_boxes    Meta_Boxes instance.
+	 * @param Decoder      $decoder       Decoder instance.
+	 * @param Locale       $locale        Locale instance.
+	 * @param Google_Fonts $google_fonts  Google_Fonts instance.
+	 * @param Assets       $assets        Assets instance.
 	 */
-	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Register_Font $register_font ) {
-		$this->experiments   = $experiments;
-		$this->meta_boxes    = $meta_boxes;
-		$this->decoder       = $decoder;
-		$this->locale        = $locale;
-		$this->register_font = $register_font;
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes, Decoder $decoder, Locale $locale, Google_Fonts $google_fonts, Assets $assets ) {
+		$this->experiments  = $experiments;
+		$this->meta_boxes   = $meta_boxes;
+		$this->decoder      = $decoder;
+		$this->locale       = $locale;
+		$this->google_fonts = $google_fonts;
+		$this->assets       = $assets;
 	}
 
 	/**
@@ -198,15 +205,14 @@ class Editor extends Service_Base {
 
 		// Force media model to load.
 		wp_enqueue_media();
-		$this->register_font->register();
 		$script_dependencies = [
 			Tracking::SCRIPT_HANDLE,
 			'postbox',
 		];
 
-		$this->enqueue_script( self::SCRIPT_HANDLE, $script_dependencies );
-		$font_handle = $this->register_font->get_handle();
-		$this->enqueue_style( self::SCRIPT_HANDLE, [ $font_handle ] );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
+		$font_handle = $this->google_fonts->get_handle();
+		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $font_handle ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -215,7 +221,7 @@ class Editor extends Service_Base {
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
-		$this->remove_admin_style( [ 'forms' ] );
+		$this->assets->remove_admin_style( [ 'forms' ] );
 	}
 
 	/**

@@ -64,17 +64,15 @@ function getStateFromCommmand(command, oldEditorState) {
   }
 }
 
-export const getHandleKeyCommandFromState = (setEditorState) => (
-  command,
-  currentEditorState
-) => {
-  const newEditorState = getStateFromCommmand(command, currentEditorState);
-  if (newEditorState) {
-    setEditorState(newEditorState);
-    return 'handled';
-  }
-  return 'not-handled';
-};
+export const getHandleKeyCommandFromState =
+  (setEditorState) => (command, currentEditorState) => {
+    const newEditorState = getStateFromCommmand(command, currentEditorState);
+    if (newEditorState) {
+      setEditorState(newEditorState);
+      return 'handled';
+    }
+    return 'not-handled';
+  };
 
 export function getSelectionForAll(content) {
   const firstBlock = content.getFirstBlock();

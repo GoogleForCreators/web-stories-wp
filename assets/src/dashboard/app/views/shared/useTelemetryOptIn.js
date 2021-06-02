@@ -43,18 +43,15 @@ export default function useTelemetryOptIn() {
     setInitialBannerPreviouslyClosed
   );
   const [optInCheckboxClicked, setOptInCheckboxClicked] = useState(false);
-  const {
-    currentUser,
-    toggleWebStoriesTrackingOptIn,
-    fetchCurrentUser,
-  } = useApi(
-    ({
-      state: { currentUser },
-      actions: {
-        usersApi: { toggleWebStoriesTrackingOptIn, fetchCurrentUser },
-      },
-    }) => ({ currentUser, toggleWebStoriesTrackingOptIn, fetchCurrentUser })
-  );
+  const { currentUser, toggleWebStoriesTrackingOptIn, fetchCurrentUser } =
+    useApi(
+      ({
+        state: { currentUser },
+        actions: {
+          usersApi: { toggleWebStoriesTrackingOptIn, fetchCurrentUser },
+        },
+      }) => ({ currentUser, toggleWebStoriesTrackingOptIn, fetchCurrentUser })
+    );
   const { currentPath } = useRouteHistory(({ state: { currentPath } }) => ({
     currentPath,
   }));

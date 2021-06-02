@@ -147,21 +147,17 @@ function TextEdit({
     };
   }, [content]);
 
-  const {
-    dataToEditorX,
-    dataToEditorY,
-    editorToDataX,
-    editorToDataY,
-  } = useUnits(
-    ({
-      actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
-    }) => ({
-      dataToEditorX,
-      dataToEditorY,
-      editorToDataX,
-      editorToDataY,
-    })
-  );
+  const { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY } =
+    useUnits(
+      ({
+        actions: { dataToEditorX, dataToEditorY, editorToDataX, editorToDataY },
+      }) => ({
+        dataToEditorX,
+        dataToEditorY,
+        editorToDataX,
+        editorToDataY,
+      })
+    );
 
   const textProps = {
     ...generateParagraphTextStyle(
@@ -394,6 +390,11 @@ function TextEdit({
       width={elementWidth}
       height={elementHeight}
     >
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <Wrapper
         ref={wrapperRef}
         onClick={onClick}

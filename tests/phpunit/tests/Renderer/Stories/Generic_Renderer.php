@@ -17,7 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Stories;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tests\Test_Case;
 
@@ -77,9 +79,9 @@ class Generic_Renderer extends Test_Case {
 	}
 
 	/**
-	 * @covers ::assets
+	 * @covers ::load_assets
 	 */
-	public function test_assets() {
+	public function test_load_assets() {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
@@ -92,7 +94,8 @@ class Generic_Renderer extends Test_Case {
 		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$renderer->init();
 
-		$this->assertTrue( wp_style_is( \Google\Web_Stories\Embed_Base::STORY_PLAYER_HANDLE ) );
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle() ) );
 	}
 
 	/**

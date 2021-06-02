@@ -108,6 +108,7 @@ describe('useMediaUploadQueue', () => {
               src: 'foo',
             },
             state: 'UPLOADING',
+            posterFile: {},
           },
         ],
       };
@@ -126,6 +127,7 @@ describe('useMediaUploadQueue', () => {
           {
             id: 123,
             file: {},
+            posterFile: null,
             resource: {
               src: 'bar',
             },

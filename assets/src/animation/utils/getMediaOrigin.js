@@ -60,13 +60,13 @@ export function getMediaOrigin(
   };
 
   return {
-    horizontal: lerp(isNaN(progress.horizontal) ? 0.5 : progress.horizontal, [
-      0,
-      100,
-    ]),
-    vertical: lerp(isNaN(progress.vertical) ? 0.5 : progress.vertical, [
-      0,
-      100,
-    ]),
+    horizontal: lerp(
+      isNaN(progress.horizontal) ? 0.5 : progress.horizontal,
+      [0, 100]
+    ),
+    vertical: lerp(
+      isNaN(progress.vertical) ? 0.5 : progress.vertical,
+      [0, 100]
+    ),
   };
 }

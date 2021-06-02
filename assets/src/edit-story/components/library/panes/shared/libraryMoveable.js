@@ -91,17 +91,13 @@ function LibraryMoveable({
   const { backgroundElement } = useStory((state) => ({
     backgroundElement: state.state.currentPage?.elements?.[0] ?? {},
   }));
-  const {
-    fullbleedContainer,
-    nodesById,
-    pageContainer,
-    designSpaceGuideline,
-  } = useCanvas((state) => ({
-    fullbleedContainer: state.state.fullbleedContainer,
-    pageContainer: state.state.pageContainer,
-    nodesById: state.state.nodesById,
-    designSpaceGuideline: state.state.designSpaceGuideline,
-  }));
+  const { fullbleedContainer, nodesById, pageContainer, designSpaceGuideline } =
+    useCanvas((state) => ({
+      fullbleedContainer: state.state.fullbleedContainer,
+      pageContainer: state.state.pageContainer,
+      nodesById: state.state.nodesById,
+      designSpaceGuideline: state.state.designSpaceGuideline,
+    }));
 
   const toggleDesignSpace = useCallback(
     (visible) => {

@@ -1,15 +1,15 @@
 <?php
 /**
- * Class Register_Font.
+ * Class Add_VideoPress_Poster_Generation_Media_Source
  *
  * @package   Google\Web_Stories
- * @copyright 2020 Google LLC
+ * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
  */
 
 /**
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,47 +24,25 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+
+namespace Google\Web_Stories\Migrations;
+
+use Google\Web_Stories\Integrations\Jetpack;
 
 /**
- * Class Register_Font
+ * Class Add_VideoPress_Poster_Generation_Media_Source
  *
- * @package Google\Web_Stories
+ * @package Google\Web_Stories\Migrations
  */
-class Register_Font {
+class Add_VideoPress_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	/**
-	 * Registered.
+	 * Get name of meta key to be used in migration.
 	 *
-	 * @var bool
-	 */
-	private $register = false;
-
-	/**
-	 * Script handle
-	 *
-	 * @since 1.7.0
+	 * @since 1.7.2
 	 *
 	 * @return string
 	 */
-	public function get_handle() {
-		return 'web-stories-fonts';
-	}
-
-	/**
-	 * Register style with prefix.
-	 *
-	 * @since 1.7.0
-	 *
-	 * @return void
-	 */
-	public function register() {
-		if ( ! $this->register ) {
-			$this->register = wp_register_style(
-				$this->get_handle(),
-				'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500&display=swap',
-				[],
-				WEBSTORIES_VERSION
-			);
-		}
+	protected function get_post_meta_key() {
+		return Jetpack::VIDEOPRESS_POSTER_META_KEY;
 	}
 }

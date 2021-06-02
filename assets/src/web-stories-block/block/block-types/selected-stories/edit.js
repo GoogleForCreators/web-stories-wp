@@ -49,9 +49,8 @@ const SelectedStoriesEdit = ({
 
   const [selectedStories, setSelectedStories] = useState(stories);
   const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
-  const [isFetchingSelectedStories, setIsFetchingSelectedStories] = useState(
-    false
-  );
+  const [isFetchingSelectedStories, setIsFetchingSelectedStories] =
+    useState(false);
 
   const label = __('Web Stories', 'web-stories');
 

@@ -19,12 +19,10 @@
  *
  * @param {string} url  URL to be modified.
  * @param {Object} args Query arguments to apply to URL.
- *
  * @example
  * ```js
  * const newURL = addQueryArgs( 'https://google.com', { q: 'test' } ); // https://google.com/?q=test
  * ```
- *
  * @return {string} URL with arguments applied.
  */
 export default function addQueryArgs(url, args) {

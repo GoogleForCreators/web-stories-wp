@@ -37,6 +37,7 @@ import { TextStyle } from './textStyle';
 import { TextStylePreset } from './textStylePreset';
 import { VideoPoster } from './videoPoster';
 import { TextBox } from './textBox';
+import { ShapeStyle } from './shapeStyle';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -125,8 +126,11 @@ export class DesignPanel extends Container {
   }
 
   get shapeStyle() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Style/i }),
+      'shapeStyle',
+      ShapeStyle
+    );
   }
 
   get sizePosition() {

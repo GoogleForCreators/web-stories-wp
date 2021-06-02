@@ -15,13 +15,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Media;
 
+use Google\Web_Stories\Tests\Test_Case;
 use WP_Query;
 use WP_REST_Request;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media
+ * @coversDefaultClass \Google\Web_Stories\Media\Media
  */
 class Media extends Test_Case {
 
@@ -119,6 +120,7 @@ class Media extends Test_Case {
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
+				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
 			get_post( $poster_attachment_id )
 		);
@@ -126,18 +128,22 @@ class Media extends Test_Case {
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
+				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
 			get_post( $video_attachment_id )
 		);
 
 		$this->assertEqualSets(
 			[
-				'type'         => 'image',
-				'media_source' => '',
-				'id'           => $poster_attachment_id,
+				'type'          => 'image',
+				'media_source'  => '',
+				'id'            => $poster_attachment_id,
+				'url'           => wp_get_attachment_url( $poster_attachment_id ),
+				'media_details' => [],
 			],
 			$image
 		);
+
 		$this->assertArrayHasKey( 'media_source', $image );
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
@@ -305,7 +311,7 @@ class Media extends Test_Case {
 
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
-	 * @covers ::get_poster_tax_query
+	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args() {
 		$expected = [
@@ -327,7 +333,7 @@ class Media extends Test_Case {
 
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
-	 * @covers ::get_poster_tax_query
+	 * @covers ::get_exclude_tax_query
 	 */
 	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
 		$expected = [

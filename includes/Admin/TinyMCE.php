@@ -29,7 +29,7 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Stories_Script_Data;
 
@@ -40,7 +40,6 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  */
 class TinyMCE extends Service_Base {
 	use Stories_Script_Data;
-	use Assets;
 	use Screen;
 
 	/**
@@ -49,6 +48,24 @@ class TinyMCE extends Service_Base {
 	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'tinymce-button';
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
+
+	/**
+	 * Tinymce constructor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Assets $assets Assets instance.
+	 */
+	public function __construct( Assets $assets ) {
+		$this->assets = $assets;
+	}
 
 	/**
 	 * Initialization actions.
@@ -121,9 +138,9 @@ class TinyMCE extends Service_Base {
 	 * @return void
 	 */
 	public function register_assets() {
-		$this->enqueue_style( 'wp-components' );
+		$this->assets->enqueue_style( 'wp-components' );
 
-		$this->enqueue_script( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesData',
@@ -159,8 +176,8 @@ class TinyMCE extends Service_Base {
 	 * @return void
 	 */
 	public function enqueue_assets() {
-		$this->enqueue_style( 'wp-components' );
-		wp_enqueue_script( self::SCRIPT_HANDLE );
+		$this->assets->enqueue_style( 'wp-components' );
+		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
 	}
 
 	/**

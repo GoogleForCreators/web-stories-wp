@@ -39,7 +39,6 @@ export const FORMAT_TOKEN_SEPARATOR_REGEX = new RegExp(
  *
  * @see https://www.php.net/manual/en/datetime.format.php
  * @see https://date-fns.org/v2.16.1/docs/format
- *
  * @type {Object}
  */
 const formatMap = {
@@ -216,10 +215,8 @@ const formatMap = {
  * Formats a date. Does not alter the date's timezone.
  *
  * @see https://www.php.net/manual/en/datetime.format.php
- *
  * @param {string} dateFormat PHP-style formatting string.
  * @param {Date} date Date object.
- *
  * @return {string} Formatted date.
  */
 function convertFormatString(dateFormat, date) {

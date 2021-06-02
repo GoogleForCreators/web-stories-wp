@@ -40,8 +40,8 @@ describe('Drop-Target integration', () => {
   describe('when there is nothing on the canvas', () => {
     it('should by default have transparent background', async () => {
       const backgroundId = (await getElements(fixture))[0].id;
-      const bgElement = fixture.editor.canvas.displayLayer.display(backgroundId)
-        .element;
+      const bgElement =
+        fixture.editor.canvas.displayLayer.display(backgroundId).element;
 
       // Verify that it's empty
       expect(bgElement).toBeEmpty();
@@ -54,8 +54,8 @@ describe('Drop-Target integration', () => {
       const backgroundId = (await getElements(fixture))[0].id;
 
       // Verify that bg replacement is empty
-      let rep1 = fixture.editor.canvas.displayLayer.display(backgroundId)
-        .replacement;
+      let rep1 =
+        fixture.editor.canvas.displayLayer.display(backgroundId).replacement;
       expect(rep1).toBeEmpty();
 
       // Get library element reference
@@ -65,8 +65,8 @@ describe('Drop-Target integration', () => {
       await dragToDropTarget(fixture, libraryElement, backgroundId);
 
       // Update to DOM mutations
-      rep1 = fixture.editor.canvas.displayLayer.display(backgroundId)
-        .replacement;
+      rep1 =
+        fixture.editor.canvas.displayLayer.display(backgroundId).replacement;
 
       // Verify that bg replacement is no longer empty
       expect(rep1).not.toBeEmpty();
@@ -85,14 +85,16 @@ describe('Drop-Target integration', () => {
       // Verify new background element has the correct image
       const bgElement = (await getElements(fixture))[0];
       expect(bgElement.type).toBe('image');
-      const bg = fixture.editor.canvas.displayLayer.display(bgElement.id)
-        .element;
+      const bg = fixture.editor.canvas.displayLayer.display(
+        bgElement.id
+      ).element;
       const bgImg = bg.querySelector('img');
       expect(bgImg).toHaveProperty('src', libraryImage.src);
 
       // And verify that we no longer have a replacement element
-      const rep2 = fixture.editor.canvas.displayLayer.display(bgElement.id)
-        .replacement;
+      const rep2 = fixture.editor.canvas.displayLayer.display(
+        bgElement.id
+      ).replacement;
       expect(rep2).toBeEmpty();
 
       // Verify the background base color is handled as expected.
@@ -112,16 +114,16 @@ describe('Drop-Target integration', () => {
       const backgroundId = (await getElements(fixture))[0].id;
 
       // Verify that bg replacement is empty
-      let rep1 = fixture.editor.canvas.displayLayer.display(backgroundId)
-        .replacement;
+      let rep1 =
+        fixture.editor.canvas.displayLayer.display(backgroundId).replacement;
       expect(rep1).toBeEmpty();
 
       // Drag the image element to the background
       await dragCanvasElementToDropTarget(fixture, imageData.id, backgroundId);
 
       // Update to DOM mutations
-      rep1 = fixture.editor.canvas.displayLayer.display(backgroundId)
-        .replacement;
+      rep1 =
+        fixture.editor.canvas.displayLayer.display(backgroundId).replacement;
 
       // Verify that bg replacement is no longer empty
       expect(rep1).not.toBeEmpty();
@@ -135,14 +137,14 @@ describe('Drop-Target integration', () => {
 
       // Verify new background element has the correct image
       const newBackgroundId = (await getElements(fixture))[0].id;
-      const bg = fixture.editor.canvas.displayLayer.display(newBackgroundId)
-        .element;
+      const bg =
+        fixture.editor.canvas.displayLayer.display(newBackgroundId).element;
       const bgImg = bg.querySelector('img');
       expect(bgImg).toHaveProperty('src', imageData.resource.src);
 
       // And verify that we no longer have a replacement element
-      const rep2 = fixture.editor.canvas.displayLayer.display(newBackgroundId)
-        .replacement;
+      const rep2 =
+        fixture.editor.canvas.displayLayer.display(newBackgroundId).replacement;
       expect(rep2).toBeEmpty();
     });
   });
@@ -162,14 +164,16 @@ describe('Drop-Target integration', () => {
 
     it('should correctly handle image dragged from library straight to edge replacing old image', async () => {
       // Verify that background element has the correct image before doing anything
-      const bg1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-        .element;
+      const bg1 = fixture.editor.canvas.displayLayer.display(
+        bgImageData.id
+      ).element;
       const bgImg1 = bg1.querySelector('img');
       expect(bgImg1).toHaveProperty('src', bgImageData.resource.src);
 
       // Verify that bg replacement is empty
-      let rep1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-        .replacement;
+      let rep1 = fixture.editor.canvas.displayLayer.display(
+        bgImageData.id
+      ).replacement;
       expect(rep1).toBeEmpty();
 
       // Get library element reference
@@ -180,8 +184,9 @@ describe('Drop-Target integration', () => {
       await dragToDropTarget(fixture, libraryElement, bgImageData.id);
 
       // make sure rep1 is up to date with latest DOM updates.
-      rep1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-        .replacement;
+      rep1 = fixture.editor.canvas.displayLayer.display(
+        bgImageData.id
+      ).replacement;
 
       // Verify that bg replacement is no longer empty
       expect(rep1).not.toBeEmpty();
@@ -195,14 +200,14 @@ describe('Drop-Target integration', () => {
 
       // Verify new background element has the correct image
       const newBackgroundId = (await getElements(fixture))[0].id;
-      const bg2 = fixture.editor.canvas.displayLayer.display(newBackgroundId)
-        .element;
+      const bg2 =
+        fixture.editor.canvas.displayLayer.display(newBackgroundId).element;
       const bgImg2 = bg2.querySelector('img');
       expect(bgImg2).toHaveProperty('src', libraryImage.src);
 
       // And verify that we no longer have a replacement element
-      const rep2 = fixture.editor.canvas.displayLayer.display(newBackgroundId)
-        .replacement;
+      const rep2 =
+        fixture.editor.canvas.displayLayer.display(newBackgroundId).replacement;
       expect(rep2).toBeEmpty();
     });
 
@@ -216,14 +221,16 @@ describe('Drop-Target integration', () => {
 
       it('should correctly handle image dropped on edge replacing old image', async () => {
         // Verify that background element has the correct image before doing anything
-        const bg1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-          .element;
+        const bg1 = fixture.editor.canvas.displayLayer.display(
+          bgImageData.id
+        ).element;
         const bgImg1 = bg1.querySelector('img');
         expect(bgImg1).toHaveProperty('src', bgImageData.resource.src);
 
         // Verify that bg replacement is empty
-        let rep1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-          .replacement;
+        let rep1 = fixture.editor.canvas.displayLayer.display(
+          bgImageData.id
+        ).replacement;
         expect(rep1).toBeEmpty();
 
         // Drag the image element to the background
@@ -234,8 +241,9 @@ describe('Drop-Target integration', () => {
         );
 
         // Update to DOM mutations
-        rep1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-          .replacement;
+        rep1 = fixture.editor.canvas.displayLayer.display(
+          bgImageData.id
+        ).replacement;
 
         // Verify that bg replacement is no longer empty
         expect(rep1).not.toBeEmpty();
@@ -249,14 +257,16 @@ describe('Drop-Target integration', () => {
 
         // Verify new background element has the correct image
         const newBackgroundId = (await getElements(fixture))[0].id;
-        const bg2 = fixture.editor.canvas.displayLayer.display(newBackgroundId)
-          .element;
+        const bg2 =
+          fixture.editor.canvas.displayLayer.display(newBackgroundId).element;
         const bgImg2 = bg2.querySelector('img');
         expect(bgImg2).toHaveProperty('src', imageData.resource.src);
 
         // And verify that we no longer have a replacement element
-        const rep2 = fixture.editor.canvas.displayLayer.display(newBackgroundId)
-          .replacement;
+        const rep2 =
+          fixture.editor.canvas.displayLayer.display(
+            newBackgroundId
+          ).replacement;
         expect(rep2).toBeEmpty();
       });
 
@@ -276,10 +286,12 @@ describe('Drop-Target integration', () => {
 
         it('should correctly handle image dropped on edge without flip', async () => {
           // Verify that background element has the correct transform (flip) before doing anything
-          const bg1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-            .node;
-          const rep = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-            .replacement;
+          const bg1 = fixture.editor.canvas.displayLayer.display(
+            bgImageData.id
+          ).node;
+          const rep = fixture.editor.canvas.displayLayer.display(
+            bgImageData.id
+          ).replacement;
           const bgImg1 = bg1.querySelector('img');
           const combinedBgTransform1 = getAllTransformsBetween(bgImg1, bg1);
           expect(combinedBgTransform1).toBe('matrix(-1, 0, 0, 1, 0, 0)');
@@ -301,9 +313,8 @@ describe('Drop-Target integration', () => {
 
           // Verify that new background is not flipped
           const newBackgroundId = (await getElements(fixture))[0].id;
-          const bg2 = fixture.editor.canvas.displayLayer.display(
-            newBackgroundId
-          ).node;
+          const bg2 =
+            fixture.editor.canvas.displayLayer.display(newBackgroundId).node;
           const bgImg2 = bg2.querySelector('img');
           const combinedBgTransform2 = getAllTransformsBetween(bgImg2, bg2);
           expect(combinedBgTransform2).toBe('');
@@ -313,8 +324,9 @@ describe('Drop-Target integration', () => {
       describe('when the canvas element is flipped', () => {
         beforeEach(async () => {
           // Click the corner of the on-canvas element
-          const element = fixture.editor.canvas.framesLayer.frame(imageData.id)
-            .node;
+          const element = fixture.editor.canvas.framesLayer.frame(
+            imageData.id
+          ).node;
           await fixture.events.mouse.clickOn(element, 1, 1);
 
           // And flip it
@@ -325,10 +337,12 @@ describe('Drop-Target integration', () => {
 
         it('should correctly handle image dropped on edge with flip', async () => {
           // Verify that background element has the correct transform (flip) before doing anything
-          let bg1 = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-            .node;
-          let rep = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-            .replacement;
+          let bg1 = fixture.editor.canvas.displayLayer.display(
+            bgImageData.id
+          ).node;
+          let rep = fixture.editor.canvas.displayLayer.display(
+            bgImageData.id
+          ).replacement;
           const bgImg1 = bg1.querySelector('img');
           const combinedBgTransform1 = getAllTransformsBetween(bgImg1, bg1);
           expect(combinedBgTransform1).toBe('');
@@ -342,8 +356,9 @@ describe('Drop-Target integration', () => {
 
           // Make sure rep is up to date with DOM mutations
           bg1 = fixture.editor.canvas.displayLayer.display(bgImageData.id).node;
-          rep = fixture.editor.canvas.displayLayer.display(bgImageData.id)
-            .replacement;
+          rep = fixture.editor.canvas.displayLayer.display(
+            bgImageData.id
+          ).replacement;
 
           // Verify that replacement img has correct transform
           const replaceImg = rep.querySelector('img');
@@ -355,9 +370,8 @@ describe('Drop-Target integration', () => {
 
           // Verify that new background is flipped
           const newBackgroundId = (await getElements(fixture))[0].id;
-          const bg2 = fixture.editor.canvas.displayLayer.display(
-            newBackgroundId
-          ).node;
+          const bg2 =
+            fixture.editor.canvas.displayLayer.display(newBackgroundId).node;
           const bgImg2 = bg2.querySelector('img');
           const combinedBgTransform2 = getAllTransformsBetween(bgImg2, bg2);
           expect(combinedBgTransform2).toBe('matrix(-1, 0, 0, 1, 0, 0)');
@@ -389,10 +403,12 @@ describe('Drop-Target integration', () => {
 
         it('should correctly handle flipped image dropped into non-flipped image', async () => {
           // Verify that non-flipped element has the correct transform (flip) before doing anything
-          let target = fixture.editor.canvas.displayLayer.display(imageData.id)
-            .node;
-          let rep = fixture.editor.canvas.displayLayer.display(imageData.id)
-            .replacement;
+          let target = fixture.editor.canvas.displayLayer.display(
+            imageData.id
+          ).node;
+          let rep = fixture.editor.canvas.displayLayer.display(
+            imageData.id
+          ).replacement;
           const targetImg = target.querySelector('img');
           const transformBefore = getAllTransformsBetween(targetImg, target);
           expect(transformBefore).toBe('');
@@ -405,10 +421,12 @@ describe('Drop-Target integration', () => {
           );
 
           // Make sure rep is up to date with DOM mutations
-          target = fixture.editor.canvas.displayLayer.display(imageData.id)
-            .node;
-          rep = fixture.editor.canvas.displayLayer.display(imageData.id)
-            .replacement;
+          target = fixture.editor.canvas.displayLayer.display(
+            imageData.id
+          ).node;
+          rep = fixture.editor.canvas.displayLayer.display(
+            imageData.id
+          ).replacement;
 
           // Verify that replacement img has correct transform
           const replaceImg = rep.querySelector('img');
@@ -420,9 +438,8 @@ describe('Drop-Target integration', () => {
 
           // Verify that new combined element is still not flipped
           const newElementId = (await getElements(fixture))[1].id;
-          const newTarget = fixture.editor.canvas.displayLayer.display(
-            newElementId
-          ).node;
+          const newTarget =
+            fixture.editor.canvas.displayLayer.display(newElementId).node;
           const newTargetImg = newTarget.querySelector('img');
           const transformAfter = getAllTransformsBetween(
             newTargetImg,
@@ -454,8 +471,9 @@ describe('Drop-Target integration', () => {
           target = fixture.editor.canvas.displayLayer.display(
             flippedImageData.id
           ).node;
-          rep = fixture.editor.canvas.displayLayer.display(flippedImageData.id)
-            .replacement;
+          rep = fixture.editor.canvas.displayLayer.display(
+            flippedImageData.id
+          ).replacement;
 
           // Verify that replacement img has correct transform
           const replaceImg = rep.querySelector('img');
@@ -467,9 +485,8 @@ describe('Drop-Target integration', () => {
 
           // Verify that new combined element is still flipped
           const newElementId = (await getElements(fixture))[1].id;
-          const newTarget = fixture.editor.canvas.displayLayer.display(
-            newElementId
-          ).node;
+          const newTarget =
+            fixture.editor.canvas.displayLayer.display(newElementId).node;
           const newTargetImg = newTarget.querySelector('img');
           const transformAfter = getAllTransformsBetween(
             newTargetImg,

@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { ACTION_TEXT } from '../../../app/highlights';
 import { Container } from './container';
+import { QuickActionMenu } from './quickActionMenu';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers,
@@ -63,7 +63,7 @@ export class Canvas extends Container {
 
   get quickActionMenu() {
     return this._get(
-      this.getByRole('dialog'),
+      this.getByRole('menu'),
       'quickActionMenu',
       QuickActionMenu
     );
@@ -273,29 +273,5 @@ class Header extends Container {
 
   get schedule() {
     return this.getByRole('button', { name: 'Schedule' });
-  }
-}
-
-class QuickActionMenu extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-
-  get changeBackgroundColorButton() {
-    return this.getByRole('button', {
-      name: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
-    });
-  }
-
-  get insertBackgroundMediaButton() {
-    return this.getByRole('button', {
-      name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
-    });
-  }
-
-  get insertTextButton() {
-    return this.getByRole('button', {
-      name: ACTION_TEXT.INSERT_TEXT,
-    });
   }
 }

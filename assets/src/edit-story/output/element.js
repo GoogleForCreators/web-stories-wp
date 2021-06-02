@@ -40,6 +40,7 @@ function OutputElement({ element }) {
     border,
     backgroundColor,
     backgroundTextMode,
+    overlay,
   } = element;
   const { Output } = getDefinitionForType(type);
 
@@ -113,6 +114,12 @@ function OutputElement({ element }) {
           </WithLink>
         </WithMask>
       </StoryAnimation.AMPWrapper>
+      {overlay && (
+        <div
+          className="element-overlay-area"
+          style={generatePatternStyles(overlay)}
+        />
+      )}
     </div>
   );
 }

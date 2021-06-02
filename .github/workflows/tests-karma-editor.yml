@@ -104,7 +104,11 @@ jobs:
           flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-        if: github.event.pull_request.draft == false
+        # The action cannot access the secret when run from a PR fork or authored by Dependabot.
+        if: >
+          github.event.pull_request.draft == false &&
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Upload CUJ coverage
         uses: actions/upload-artifact@v2
