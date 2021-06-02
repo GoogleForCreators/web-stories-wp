@@ -39,13 +39,16 @@ function getResourceSize({
   posterWidth,
   posterHeight,
 }) {
+  // Use poster image size, if poster is generated.
   if (posterGenerated && posterWidth && posterHeight) {
     return { width: posterWidth, height: posterHeight };
   }
+  // If height / width is set, then use them.
   if (width || height) {
     return { width, height };
   }
 
+  // Return a default height and width.
   return {
     width: PAGE_WIDTH,
     height: FULLBLEED_HEIGHT,
