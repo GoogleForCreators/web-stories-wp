@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { getSettings, format } from '@web-stories-wp/date';
-import getTimeZoneString from '@web-stories-wp/date/src/getTimeZoneString';
+import { getSettings, getOptions, format } from '@web-stories-wp/date';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -37,10 +36,11 @@ const StyledText = styled(Text)`
 
 function TimeZone({ date }) {
   const { timezone } = getSettings();
+  const { timeZone: timeZoneString } = getOptions();
 
   const zoneAbbr = timezone?.length
     ? format(date, 'T')
-    : `UTC${getTimeZoneString()}`;
+    : `UTC${timeZoneString}`;
   return (
     <Wrapper>
       <Tooltip hasTail title={timezone} placement={PLACEMENT.TOP}>
