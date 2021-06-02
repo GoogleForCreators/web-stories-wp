@@ -218,11 +218,10 @@ describe('Quick Actions integration', () => {
       expect(originalAnimations.length).toBe(1);
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        )
       );
 
       // verify that element has no animations
@@ -489,8 +488,10 @@ describe('Quick Actions integration', () => {
       });
 
       // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
+        )
       );
 
       // verify that element has no animations
@@ -639,11 +640,10 @@ describe('Quick Actions integration', () => {
       expect(originalAnimations.length).toBe(1);
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        )
       );
 
       // verify that element has no animations
