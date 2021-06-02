@@ -36,7 +36,7 @@ import DropDownSelect from '../../../../../design-system/components/dropDown/sel
 import { focusStyle } from '../../shared';
 
 // date-fns format without timezone.
-const TIMEZONELESS_FORMAT = 'Y\\-m\\-d\\TH\\:i\\:s';
+const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';
 
 function PublishTime() {
   const { date, updateStory } = useStory(
