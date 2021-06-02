@@ -286,7 +286,7 @@ class Editor extends Service_Base {
 				'isRTL'                           => is_rtl(),
 				'locale'                          => $this->locale->get_locale_settings(),
 				'allowedFileTypes'                => $this->get_allowed_file_types(),
-				'allowedAllowedTranscodableTypes' => $this->get_allow_transcodable_mime_types(),
+				'allowedAllowedTranscodableTypes' => $this->get_allowed_transcodable_mime_types(),
 				'allowedImageFileTypes'           => $this->get_file_type_exts( $mime_image_types ),
 				'allowedImageMimeTypes'           => $mime_image_types,
 				'allowedMimeTypes'                => $mime_types,

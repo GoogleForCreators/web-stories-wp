@@ -161,7 +161,7 @@ trait Types {
 	 *
 	 * @return array List of allowed transcodable mime types.
 	 */
-	public function get_allow_transcodable_mime_types() {
+	public function get_allowed_transcodable_mime_types() {
 		return [
 			'video/3gpp',
 			'video/3gpp2',
