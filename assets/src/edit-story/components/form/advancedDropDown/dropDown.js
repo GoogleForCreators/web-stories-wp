@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, forwardRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -58,24 +58,28 @@ const Container = styled.div`
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
-function DropDown({
-  onChange,
-  disabled = false,
-  selectedId,
-  options,
-  hasSearch = false,
-  getOptionsByQuery,
-  onObserve,
-  primaryOptions,
-  primaryLabel,
-  priorityOptions,
-  priorityLabel,
-  searchResultsLabel,
-  renderer,
-  isInline = false,
-  dropDownLabel = '',
-  ...rest
-}) {
+const DropDown = forwardRef(function DropDown(
+  {
+    onChange,
+    disabled = false,
+    selectedId,
+    options,
+    hasSearch = false,
+    getOptionsByQuery,
+    onObserve,
+    primaryOptions,
+    primaryLabel,
+    priorityOptions,
+    priorityLabel,
+    searchResultsLabel,
+    renderer,
+    isInline = false,
+    dropDownLabel = '',
+    highlightStylesOverride,
+    ...rest
+  },
+  ref
+) {
   if (!options && !getOptionsByQuery) {
     throw new Error(
       'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
@@ -85,17 +89,19 @@ function DropDown({
   if (!hasSearch) {
     primaryOptions = options;
   }
-  const ref = useRef();
+  const localRef = useRef();
+  const dropdownRef = ref || localRef;
 
   const [isOpen, setIsOpen] = useState(false);
 
   const closeDropDown = useCallback(() => {
     setIsOpen(false);
     // Restore focus
-    if (ref.current) {
-      ref.current.focus();
+    if (dropdownRef.current) {
+      dropdownRef.current.focus();
     }
-  }, []);
+  }, [dropdownRef]);
+
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)
@@ -105,9 +111,9 @@ function DropDown({
     (option) => {
       onChange(option);
       setIsOpen(false);
-      ref.current.focus();
+      dropdownRef.current.focus();
     },
-    [onChange]
+    [onChange, dropdownRef]
   );
 
   const handleKeyPress = useCallback(
@@ -115,12 +121,12 @@ function DropDown({
       if (
         !isOpen &&
         key === 'ArrowDown' &&
-        document.activeElement === ref.current
+        document.activeElement === dropdownRef.current
       ) {
         setIsOpen(true);
       }
     },
-    [isOpen]
+    [isOpen, dropdownRef]
   );
 
   const list = (
@@ -172,23 +178,23 @@ function DropDown({
           aria-pressed={isOpen}
           aria-haspopup
           aria-expanded={isOpen}
-          ref={ref}
+          ref={dropdownRef}
           activeItemLabel={selectedOption?.name}
           dropDownLabel={dropDownLabel}
           onSelectClick={toggleDropDown}
-          selectButtonStylesOverride={focusStyle}
+          selectButtonStylesOverride={highlightStylesOverride || focusStyle}
           {...rest}
         />
         {isOpen && !disabled && isInline && list}
         {!disabled && !isInline && (
-          <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+          <Popup anchor={dropdownRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
             {list}
           </Popup>
         )}
       </Container>
     </>
   );
-}
+});
 
 DropDown.propTypes = {
   selectedId: PropTypes.any,
@@ -198,6 +204,7 @@ DropDown.propTypes = {
   options: PropTypes.array,
   hasSearch: PropTypes.bool,
   getOptionsByQuery: PropTypes.func,
+  highlightStylesOverride: PropTypes.object,
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,
   primaryLabel: PropTypes.string,
