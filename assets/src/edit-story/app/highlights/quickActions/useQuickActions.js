@@ -408,7 +408,7 @@ const useQuickActions = () => {
               handleClearAnimationsAndFilters({
                 elementId: selectedElement?.id,
                 resetProperties,
-                elementType: isBackgroundMediaSelected
+                elementType: isBackgroundSelected
                   ? ELEMENT_TYPE.BACKGROUND
                   : selectedElement?.type,
               }),
@@ -419,7 +419,7 @@ const useQuickActions = () => {
   }, [
     actionMenuProps,
     handleClearAnimationsAndFilters,
-    isBackgroundMediaSelected,
+    isBackgroundSelected,
     selectedElement,
     selectedElementAnimations,
   ]);
@@ -439,7 +439,7 @@ const useQuickActions = () => {
     return defaultActions;
   }
 
-  if (isBackgroundMediaSelected) {
+  if (isBackgroundMediaSelected && isBackgroundSelected) {
     return [...backgroundElementMediaActions, ...clearActions];
   }
 

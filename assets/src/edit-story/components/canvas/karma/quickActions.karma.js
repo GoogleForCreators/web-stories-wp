@@ -352,12 +352,12 @@ describe('Quick Actions integration', () => {
           animations: state.pages[0].animations,
         }))
       );
-      expect(originalAnimations.length).toBe(1);
+
+      await waitFor(() => {
+        expect(originalAnimations.length).toBe(1);
+      });
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
-      ).toBeDefined();
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       );
@@ -368,10 +368,13 @@ describe('Quick Actions integration', () => {
           animations: state.pages[0].animations,
         }))
       );
-      expect(animations.length).toBe(0);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
-      ).toBeNull();
+
+      await waitFor(() => {
+        expect(animations.length).toBe(0);
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
+        ).toBeNull();
+      });
 
       // click `undo` button on snackbar
       await fixture.events.click(
@@ -824,13 +827,12 @@ describe('Quick Actions integration', () => {
         );
 
       const videoWithBorder = originalElements.find((el) => el.type == 'video');
-      expect(videoWithBorder.border).not.toBeUndefined();
-      expect(originalAnimations.length).toBe(1);
+      await waitFor(() => {
+        expect(videoWithBorder.border).not.toBeUndefined();
+        expect(originalAnimations.length).toBe(1);
+      });
 
       // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
-      ).toBeDefined();
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
       );
