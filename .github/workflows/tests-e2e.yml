@@ -122,6 +122,7 @@ jobs:
         run: npm run env:start
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
+          FORCE_CREATE_USER: true
           WP_VERSION: ${{ matrix.wp }}
 
       - name: Run E2E tests with percy

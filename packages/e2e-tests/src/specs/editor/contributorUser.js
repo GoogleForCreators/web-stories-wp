@@ -36,7 +36,5 @@ describe('Contributor User', () => {
     await percySnapshot(page, 'Contributor logged in');
     await createNewStory();
     await percySnapshot(page, 'Contributor creating a story');
-    await visitAdminPage('users.php');
-    await percySnapshot(page, 'User list');
   });
 });
