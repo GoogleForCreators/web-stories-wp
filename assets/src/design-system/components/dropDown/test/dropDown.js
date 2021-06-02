@@ -173,50 +173,6 @@ describe('DropDown <DropDown />', () => {
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
   });
 
-  // TODO: this causes prop type warnings due to bad input. Probably just remove the test.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should clean badly grouped data', () => {
-    const nestedOptions = [
-      {
-        label: 'section 1',
-        options: [
-          { value: 'one', label: '1' },
-          { value: 'two', label: '2' },
-        ],
-        somethingExtra: [1, 2, 3, 4, 5],
-      },
-      {
-        label: 'section 2',
-        options: [
-          { value: 'three', label: '3' },
-          { value: 'four', label: '4' },
-          { value: 'five', label: '5' },
-        ],
-      },
-      'should be ignored',
-    ];
-    renderWithProviders(
-      <DropDown
-        emptyText={'No options available'}
-        dropDownLabel={'label'}
-        isKeepMenuOpenOnSelection={false}
-        options={nestedOptions}
-      />
-    );
-
-    const select = screen.getByRole('button');
-    expect(select).toBeInTheDocument();
-    fireEvent.click(select);
-
-    const menuItems = screen.getAllByRole('option');
-    expect(menuItems).toHaveLength(5);
-
-    const menuLabels = screen.getAllByRole('presentation');
-    expect(menuLabels).toHaveLength(2);
-
-    expect(screen.queryAllByText('should be ignored')).toStrictEqual([]);
-  });
-
   // Mouse events
   it('should not expand menu when disabled is true', () => {
     renderWithProviders(
