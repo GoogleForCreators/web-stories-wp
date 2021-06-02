@@ -110,6 +110,12 @@ const VIDEO_ELEMENT = {
   type: 'video',
 };
 
+const clearAnimationsAction = expect.objectContaining({
+  label: ACTION_TEXT.CLEAR_ANIMATIONS,
+  onClick: expect.any(Function),
+  Icon: Eraser,
+});
+
 const clearAnimationAndFiltersAction = expect.objectContaining({
   label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
   onClick: expect.any(Function),
@@ -202,10 +208,7 @@ const textQuickActions = [
     Icon: Link,
   }),
 ];
-const textQuickActionsWithClear = [
-  ...textQuickActions,
-  clearAnimationAndFiltersAction,
-];
+const textQuickActionsWithClear = [...textQuickActions, clearAnimationsAction];
 
 const backgroundMediaQuickActions = [
   expect.objectContaining({
