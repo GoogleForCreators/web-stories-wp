@@ -38,6 +38,7 @@ describe('Quick Edit', () => {
 
   it('should save story without breaking markup', async () => {
     await createNewStory();
+    await expect(page).toMatch('Howdy, author');
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
