@@ -15,7 +15,7 @@ on:
 
 env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-  ISSUE_REFERENCE_REGEX: \(#([0-9]+)\)$
+  ISSUE_REFERENCE_REGEX: \(#([0-9]+)\)
   ZENHUB_REPO_ID: 235435637
 
 jobs:
