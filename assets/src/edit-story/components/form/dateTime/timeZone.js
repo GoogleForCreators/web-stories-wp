@@ -20,6 +20,7 @@
 import { getSettings, getOptions, format } from '@web-stories-wp/date';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -35,15 +36,30 @@ const StyledText = styled(Text)`
 `;
 
 function TimeZone({ date }) {
-  const { timezone } = getSettings();
-  const { timeZone: timeZoneString } = getOptions();
+  const { timezone, gmtOffset } = getSettings();
 
+  // Convert timezone offset to hours.
+  const userTimezoneOffset = -1 * (new Date().getTimezoneOffset() / 60);
+
+  // System timezone and user timezone match, nothing needed.
+  // Compare as numbers because it comes over as string.
+  if (Number(gmtOffset) === userTimezoneOffset) {
+    return null;
+  }
+
+  const { timeZone: timeZoneString } = getOptions();
   const zoneAbbr = timezone?.length
     ? format(date, 'T')
     : `UTC${timeZoneString}`;
+
+  const tooltip =
+    'UTC' === zoneAbbr
+      ? __('Coordinated Universal Time', 'web-stories')
+      : timezone;
+
   return (
     <Wrapper>
-      <Tooltip hasTail title={timezone} placement={PLACEMENT.TOP}>
+      <Tooltip hasTail title={tooltip} placement={PLACEMENT.TOP}>
         <StyledText
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
