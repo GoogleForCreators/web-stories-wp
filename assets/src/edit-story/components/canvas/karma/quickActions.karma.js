@@ -395,7 +395,7 @@ fdescribe('Quick Actions integration', () => {
     });
   });
 
-  describe('background image selected', () => {
+  fdescribe('background image selected', () => {
     beforeEach(async () => {
       await addBackgroundImage(0);
 
@@ -448,7 +448,7 @@ fdescribe('Quick Actions integration', () => {
       );
     });
 
-    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
+    fit(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
@@ -498,6 +498,8 @@ fdescribe('Quick Actions integration', () => {
         )
       );
 
+      await fixture.events.sleep(900);
+
       // verify that element has no animations
       const { animations, selectedElement } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
@@ -507,8 +509,10 @@ fdescribe('Quick Actions integration', () => {
       );
 
       await waitFor(() => {
-        expect(animations.length).toBe(0);
-        expect(selectedElement.overlay).toBeNull();
+        expect(animations).toBe('test');
+        // expect(animations.length).toBe(0);
+        // expect(selectedElement.overlay).toBeNull();
+        expect(selectedElement).toBe('gone');
         expect(
           fixture.editor.canvas.quickActionMenu.clearAnimationAndFiltersButton
         ).toBeNull();
