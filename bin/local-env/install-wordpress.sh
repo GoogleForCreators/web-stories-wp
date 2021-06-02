@@ -76,7 +76,6 @@ if [ ! "$(wp user get author --field=login)" ]; then
 else
  echo -e $(status_message "Author already exists, skipping...")
 fi
-wp user get contributor --field=login
 if [ ! "$(wp user get contributor --field=login)" ]; then
 	wp user create contributor contributor@example.com --role=contributor --user_pass=password --quiet
 	echo -e $(status_message "Contributor created! Username: contributor Password: password")
@@ -89,7 +88,7 @@ if [ ! "$(wp user get subscriber --field=login)" ]; then
 else
  echo -e $(status_message "Subscriber already exists, skipping...")
 fi
-
+wp user list
 # Make sure the uploads and upgrade folders exist and we have permissions to add files.
 echo -e $(status_message "Ensuring that files can be uploaded...")
 container mkdir -p \
