@@ -22,7 +22,7 @@ jobs:
   add-milestone:
     name: Add milestone
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     # Todo: Uncomment after testing.
     # if: github.event.pull_request.merged == true
     steps:
