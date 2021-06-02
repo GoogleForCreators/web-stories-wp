@@ -110,6 +110,12 @@ const useQuickActions = () => {
         };
       }
 
+      if (properties.includes(RESET_PROPERTIES.STYLES)) {
+        newProperties.opacity = 100;
+        newProperties.border = null;
+        newProperties.borderRadius = null;
+      }
+
       updateElementsById({
         elementIds: [elementId],
         properties: (currentProperties) =>

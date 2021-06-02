@@ -22,11 +22,13 @@ import { getResetProperties, getSnackbarClearCopy } from '../utils';
 describe('quickAction utils', () => {
   describe('getResetProperties', () => {
     it.each`
-      selectedElement                                | selectedElementAnimations       | result
-      ${{ overlay: '', id: '1234' }}                 | ${[]}                           | ${[]}
-      ${{ overlay: { type: 'linear' }, id: '1234' }} | ${[]}                           | ${[RESET_PROPERTIES.OVERLAY]}
-      ${{ overlay: { type: 'linear' }, id: '1234' }} | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.OVERLAY, RESET_PROPERTIES.ANIMATION]}
-      ${{ overlay: '', id: '1234' }}                 | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.ANIMATION]}
+      selectedElement                                             | selectedElementAnimations       | result
+      ${{ overlay: '', id: '1234' }}                              | ${[]}                           | ${[]}
+      ${{ overlay: { type: 'linear' }, id: '1234' }}              | ${[]}                           | ${[RESET_PROPERTIES.OVERLAY]}
+      ${{ overlay: { type: 'linear' }, id: '1234' }}              | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.OVERLAY, RESET_PROPERTIES.ANIMATION]}
+      ${{ overlay: '', id: '1234' }}                              | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.ANIMATION]}
+      ${{ overlay: { type: 'linear' }, id: '1234', opacity: 60 }} | ${[{ type: 'effect-fade-in' }]} | ${[RESET_PROPERTIES.OVERLAY, RESET_PROPERTIES.ANIMATION, RESET_PROPERTIES.STYLES]}
+      ${{ opacity: 60 }}                                          | ${[]}                           | ${[RESET_PROPERTIES.STYLES]}
     `(
       'should return array with reset properties',
       ({ selectedElement, selectedElementAnimations, result }) => {
