@@ -32,8 +32,8 @@ jobs:
         run: |
           echo "Getting list of releases from ZenHub"
 
-          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/$“ZENHUB_REPO_ID}/reports/releases")
-          NEXT_RELEASE=$((echo $RELEASES ) | jq -r 'first(sort_by(.start_date) | .[] | select( .state == "open" )) | .release_id')
+          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${ZENHUB_REPO_ID}/reports/releases")
+          NEXT_RELEASE=$((echo $RELEASES ) | jq -r 'first(sort_by(.desired_end_date) | .[] | select( .state == "open" )) | .release_id')
 
           echo "Determined release with ID $NEXT_RELEASE to be the next one"
 
