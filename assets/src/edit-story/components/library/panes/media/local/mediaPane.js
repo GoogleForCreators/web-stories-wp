@@ -153,7 +153,7 @@ function MediaPane(props) {
   );
 
   const {
-    allowedAllowedTranscodableTypes,
+    allowedTranscodableMimeTypes,
     allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -170,7 +170,7 @@ function MediaPane(props) {
       isTranscodingEnabled
     ) {
       return [
-        ...allowedAllowedTranscodableTypes,
+        ...allowedTranscodableMimeTypes,
         ...allowedImageMimeTypes,
         ...allowedVideoMimeTypes,
       ];
@@ -182,14 +182,14 @@ function MediaPane(props) {
     isFeatureEnabled,
     isTranscodingEnabled,
     enableMediaPickerVideoOptimization,
-    allowedAllowedTranscodableTypes,
+    allowedTranscodableMimeTypes,
   ]);
 
   const transcodableMimeTypes = useMemo(() => {
-    return allowedAllowedTranscodableTypes.filter(
+    return allowedTranscodableMimeTypes.filter(
       (x) => !allowedVideoMimeTypes.includes(x)
     );
-  }, [allowedAllowedTranscodableTypes, allowedVideoMimeTypes]);
+  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,

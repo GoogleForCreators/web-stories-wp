@@ -45,7 +45,7 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
     },
   };
   const configState = {
-    allowedAllowedTranscodableTypes: [
+    allowedTranscodableMimeTypes: [
       'video/3gpp',
       'video/3gpp2',
       'video/MP2T',

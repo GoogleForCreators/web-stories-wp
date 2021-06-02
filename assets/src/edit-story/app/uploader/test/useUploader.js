@@ -52,7 +52,7 @@ function setup(args) {
       'image/jpg',
       'image/gif',
     ],
-    allowedAllowedTranscodableTypes: [
+    allowedTranscodableMimeTypes: [
       'video/3gpp',
       'video/3gpp2',
       'video/MP2T',

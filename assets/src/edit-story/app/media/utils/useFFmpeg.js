@@ -59,7 +59,7 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  * }} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl, allowedAllowedTranscodableTypes } = useConfig();
+  const { ffmpegCoreUrl, allowedTranscodableMimeTypes } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -216,7 +216,7 @@ function useFFmpeg() {
    * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = (file) =>
-    allowedAllowedTranscodableTypes.includes(file.type);
+    allowedTranscodableMimeTypes.includes(file.type);
 
   /**
    * Whether user opted in to video optimization.
