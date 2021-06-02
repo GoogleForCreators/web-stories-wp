@@ -18,27 +18,16 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { withUser } from '@web-stories-wp/e2e-test-utils';
+import { withPlugin, withUser } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
  */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
 
 describe('TinyMCE button', () => {
   withUser('admin', 'password');
-
-  beforeAll(async () => {
-    await activatePlugin('classic-editor');
-  });
-
-  afterAll(async () => {
-    await deactivatePlugin('classic-editor');
-  });
+  withPlugin('classic-editor');
 
   it('should allow inserting shortcode via modal', async () => {
     await visitAdminPage('post-new.php');

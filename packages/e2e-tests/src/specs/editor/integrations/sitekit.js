@@ -23,23 +23,13 @@ import {
   previewStory,
   insertStoryTitle,
   withUser,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
 describe('Site Kit integration with editor', () => {
   withUser('admin', 'password');
 
-  beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-analytics-mock');
-  });
-
-  afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-analytics-mock');
-  });
+  withPlugin('e2e-tests-site-kit-analytics-mock');
 
   it('should print an analytics tag', async () => {
     await createNewStory();

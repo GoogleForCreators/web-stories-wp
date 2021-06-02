@@ -17,33 +17,36 @@
 /**
  * External dependencies
  */
-import { visitSettings, withUser } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import {
+  visitSettings,
+  withPlugin,
+  withUser,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit integration with dashboard', () => {
   withUser('admin', 'password');
 
-  it('should be able see Site Kit specific message for Google Analytics', async () => {
-    await activatePlugin('e2e-tests-site-kit-analytics-mock');
-    await visitSettings();
+  describe('Google Analytics', () => {
+    withPlugin('e2e-tests-site-kit-analytics-mock');
 
-    await expect(page).toMatch(
-      'Site Kit by Google has already enabled Google Analytics for your Web Stories'
-    );
-    await deactivatePlugin('e2e-tests-site-kit-analytics-mock');
+    it('should be able see Site Kit specific message for Google Analytics', async () => {
+      await visitSettings();
+
+      await expect(page).toMatch(
+        'Site Kit by Google has already enabled Google Analytics for your Web Stories'
+      );
+    });
   });
 
-  it('should be able see Site Kit specific message for Google AdSense', async () => {
-    await activatePlugin('e2e-tests-site-kit-adsense-mock');
-    await visitSettings();
+  describe('Google AdSense', () => {
+    withPlugin('e2e-tests-site-kit-adsense-mock');
 
-    await expect(page).toMatch(
-      'Site Kit by Google has already enabled Google AdSense for your Web Stories'
-    );
-    await deactivatePlugin('e2e-tests-site-kit-adsense-mock');
+    it('should be able see Site Kit specific message for Google AdSense', async () => {
+      await visitSettings();
+
+      await expect(page).toMatch(
+        'Site Kit by Google has already enabled Google AdSense for your Web Stories'
+      );
+    });
   });
 });

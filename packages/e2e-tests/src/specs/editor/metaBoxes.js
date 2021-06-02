@@ -18,12 +18,11 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import {
+  createNewStory,
+  withPlugin,
+  withUser,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
   withUser('admin', 'password');
@@ -39,13 +38,7 @@ describe('Custom Meta Boxes', () => {
   });
 
   describe('Available', () => {
-    beforeAll(async () => {
-      await activatePlugin('web-stories-test-plugin-meta-box');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin('web-stories-test-plugin-meta-box');
-    });
+    withPlugin('web-stories-test-plugin-meta-box');
 
     it('should display meta boxes and save their content', async () => {
       await createNewStory();

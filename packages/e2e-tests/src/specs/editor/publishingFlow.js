@@ -21,17 +21,15 @@ import {
   createNewStory,
   addRequestInterception,
   publishPost,
-  insertStoryTitle, withUser,
+  insertStoryTitle,
+  withUser,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
  */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  getEditedPostContent,
-} from '@wordpress/e2e-test-utils';
+import { getEditedPostContent } from '@wordpress/e2e-test-utils';
 
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests
@@ -127,13 +125,7 @@ describe.skip('Publishing Flow', () => {
   });
 
   describe('Classic Editor', () => {
-    beforeAll(async () => {
-      await activatePlugin('classic-editor');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin('classic-editor');
-    });
+    withPlugin('classic-editor');
 
     it('should guide me towards creating a new post to embed my story', async () => {
       await createNewStory();
