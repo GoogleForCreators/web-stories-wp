@@ -34,7 +34,7 @@ describe('Publisher logo', () => {
 
   let uploadedFiles = [];
 
-  beforeEach(() => uploadedFiles = []);
+  beforeEach(() => (uploadedFiles = []));
 
   afterEach(async () => {
     for (const file of uploadedFiles) {
@@ -75,7 +75,7 @@ describe('Publisher logo', () => {
     uploadedFiles.push(logoTwoName);
   });
 
-  it.only('should be able to delete all except one logo', async () => {
+  it('should be able to delete all except one logo', async () => {
     await visitSettings();
 
     // Upload publisher logo
