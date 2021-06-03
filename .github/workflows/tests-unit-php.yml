@@ -134,6 +134,9 @@ jobs:
           composer dump-autoload --no-interaction
         if: ${{ matrix.php == '8.0' }}
 
+      - name: Set up problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
       - name: Run tests
         run: |
           npm run test:php
