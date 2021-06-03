@@ -27,7 +27,7 @@ import {
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('AMP integrations with editor', () => {
+describe('AMP plugin integration', () => {
   withUser('admin', 'password');
   withPlugin('amp');
 
