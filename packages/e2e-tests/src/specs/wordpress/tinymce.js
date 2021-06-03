@@ -18,12 +18,11 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { withPlugin, withUser } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import {
+  withPlugin,
+  withUser,
+  visitAdminPage,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
   withUser('admin', 'password');

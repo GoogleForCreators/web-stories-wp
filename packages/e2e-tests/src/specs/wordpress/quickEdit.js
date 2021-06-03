@@ -17,20 +17,18 @@
 /**
  * External dependencies
  */
-import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
-
-/**
- * WordPress dependencies
- */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import {
+  createNewStory,
+  publishStory,
+  withUser,
+  visitAdminPage,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Quick Edit', () => {
   withUser('author', 'password');
 
   it('should save story without breaking markup', async () => {
     await createNewStory();
-    await percySnapshot(page, 'breaking markup');
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
@@ -38,14 +36,7 @@ describe('Quick Edit', () => {
 
     await page.type('input[placeholder="Add title"]', storyTitle);
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+    await publishStory();
 
     await visitAdminPage('edit.php', 'post_type=web-story');
 

@@ -22,16 +22,13 @@ import {
   activateRTL,
   deactivateRTL,
   withUser,
+  visitAdminPage,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
  */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
+import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
 const percyCSS = `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`;
 
