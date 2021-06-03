@@ -23,30 +23,14 @@ import {
   addTextElement,
   insertStoryTitle,
   withUser,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
-
-async function publishStory() {
-  await expect(page).toClick('button', { text: 'Publish' });
-  // Bypass checklist
-  await page.waitForSelector('.ReactModal__Content');
-  await expect(page).toClick('button', {
-    text: /Continue to publish/,
-  });
-  await expect(page).toMatch('Story published.');
-  await expect(page).toClick('button', { text: 'Dismiss' });
-  await expect(page).toMatchElement('button', {
-    text: 'Switch to Draft',
-  });
-  await expect(page).toClick('button', { text: 'Update' });
-}
 
 describe('Author User', () => {
   withUser('author', 'password');
 
   it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();
-    await percySnapshot(page, 'Stripped markup');
 
     await insertStoryTitle('Previewing without Publishing');
 

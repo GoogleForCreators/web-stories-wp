@@ -23,6 +23,7 @@ import {
   createNewStory,
   insertStoryTitle,
   withUser,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
@@ -48,19 +49,7 @@ describe('Post Locking', () => {
 
     await insertStoryTitle(storyTitle);
 
-    // Publish story.
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toClick('button', { text: 'Publish' });
-
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
-
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+    await publishStory();
 
     await activatePlugin('e2e-tests-post-lock-mock');
   });

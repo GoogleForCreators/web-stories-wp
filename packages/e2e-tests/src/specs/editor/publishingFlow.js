@@ -24,6 +24,7 @@ import {
   insertStoryTitle,
   withUser,
   withPlugin,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -62,15 +63,8 @@ describe.skip('Publishing Flow', () => {
 
     await insertStoryTitle('Publishing Flow Test');
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
+    await publishStory(false);
 
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
@@ -132,16 +126,7 @@ describe.skip('Publishing Flow', () => {
 
       await insertStoryTitle('Publishing Flow Test (Shortcode)');
 
-      // Publish story.
-      await expect(page).toClick('button', { text: 'Publish' });
-
-      // Bypass checklist
-      await page.waitForSelector('.ReactModal__Content');
-      await expect(page).toClick('button', {
-        text: /Continue to publish/,
-      });
-
-      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await publishStory(false);
 
       // Create new post and embed story.
       await expect(page).toClick('a', { text: 'Add to new post' });

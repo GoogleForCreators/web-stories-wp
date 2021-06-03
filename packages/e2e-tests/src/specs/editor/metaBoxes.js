@@ -20,6 +20,7 @@
 import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
+  publishStory,
   withPlugin,
   withUser,
 } from '@web-stories-wp/e2e-test-utils';
@@ -80,15 +81,7 @@ describe('Custom Meta Boxes', () => {
         'button.handlediv[aria-expanded="true"]'
       );
 
-      // Publish story.
-      await expect(page).toClick('button', { text: 'Publish' });
-
-      await page.waitForSelector('.ReactModal__Content');
-      await expect(page).toClick('button', {
-        text: /Continue to publish/,
-      });
-
-      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await publishStory();
 
       // Refresh page to verify that the text has been persisted.
       await page.reload();
