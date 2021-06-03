@@ -24,6 +24,7 @@ import {
   activateRTL,
   visitSettings,
   withUser,
+  previewStory,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function toggleVideoOptimization() {
@@ -77,5 +78,21 @@ describe('Story Editor', () => {
     );
     expect(crossOriginIsolated).toBeFalse();
     await toggleVideoOptimization();
+  });
+
+  it('should preview story with development mode', async () => {
+    await createNewStory();
+
+    const editorPage = page;
+    const previewPage = await previewStory(editorPage);
+
+    await expect(previewPage).toMatch(/Preview/i);
+    await expect(previewPage).toMatch(/Debug/i);
+    await expect(previewPage).toMatch(/Add device/i);
+
+    await percySnapshot(previewPage, 'Preview with development mode');
+
+    await editorPage.bringToFront();
+    await previewPage.close();
   });
 });
