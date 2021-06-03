@@ -40,7 +40,12 @@ import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import { getResetProperties, getSnackbarClearCopy } from './utils';
-import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
+import {
+  ELEMENT_TYPE,
+  ACTION_TEXT,
+  RESET_PROPERTIES,
+  RESET_DEFAULTS,
+} from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
 
@@ -96,7 +101,7 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementId, properties) => {
+    (elementType, elementId, properties) => {
       const newProperties = {};
       // Choose properties to clear
       if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
@@ -108,6 +113,16 @@ const useQuickActions = () => {
           ...selectedElementAnimations?.[0],
           delete: true,
         };
+      }
+
+      if (properties.includes(RESET_PROPERTIES.STYLES)) {
+        newProperties.opacity = 100;
+        newProperties.border = null;
+        newProperties.borderRadius = null;
+      }
+
+      if (elementType === ELEMENT_TYPE.TEXT) {
+        newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
       updateElementsById({
@@ -124,7 +139,7 @@ const useQuickActions = () => {
   );
 
   /**
-   * Clear animations and show a confirmation snackbar. Clicking
+   * Reset element styles and show a confirmation snackbar. Clicking
    * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
@@ -132,9 +147,9 @@ const useQuickActions = () => {
    * @param {string} elementType the type of element being adjusted
    * @return {void}
    */
-  const handleClearAnimationsAndFilters = useCallback(
+  const handleElementReset = useCallback(
     ({ elementId, resetProperties, elementType }) => {
-      handleResetProperties(elementId, resetProperties);
+      handleResetProperties(elementType, elementId, resetProperties);
       const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({
@@ -262,9 +277,9 @@ const useQuickActions = () => {
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATIONS,
+      label: ACTION_TEXT.RESET_ELEMENT,
       onClick: () =>
-        handleClearAnimationsAndFilters({
+        handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: selectedElement?.type,
@@ -281,7 +296,7 @@ const useQuickActions = () => {
     actionMenuProps,
     handleFocusLinkPanel,
     showClearAction,
-    handleClearAnimationsAndFilters,
+    handleElementReset,
     resetProperties,
   ]);
 
@@ -397,9 +412,9 @@ const useQuickActions = () => {
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      label: ACTION_TEXT.RESET_ELEMENT,
       onClick: () =>
-        handleClearAnimationsAndFilters({
+        handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: ELEMENT_TYPE.BACKGROUND,
@@ -414,9 +429,9 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     selectedElement?.id,
     showClearAction,
+    handleElementReset,
     dispatchStoryEvent,
     handleFocusMediaPanel,
-    handleClearAnimationsAndFilters,
     resetProperties,
   ]);
 

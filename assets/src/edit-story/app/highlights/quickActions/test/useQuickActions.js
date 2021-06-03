@@ -121,14 +121,8 @@ const VIDEO_ELEMENT = {
   type: 'video',
 };
 
-const clearAnimationAction = expect.objectContaining({
-  label: ACTION_TEXT.CLEAR_ANIMATIONS,
-  onClick: expect.any(Function),
-  Icon: Eraser,
-});
-
-const clearAnimationAndFiltersAction = expect.objectContaining({
-  label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+const resetElementAction = expect.objectContaining({
+  label: ACTION_TEXT.RESET_ELEMENT,
   onClick: expect.any(Function),
   Icon: Eraser,
 });
@@ -171,7 +165,7 @@ const foregroundImageQuickActions = [
 
 const foregroundImageQuickActionsWithClear = [
   ...foregroundImageQuickActions,
-  clearAnimationAction,
+  resetElementAction,
 ];
 
 const shapeQuickActions = [
@@ -192,7 +186,7 @@ const shapeQuickActions = [
   }),
 ];
 
-const shapeQuickActionsWithClear = [...shapeQuickActions, clearAnimationAction];
+const shapeQuickActionsWithClear = [...shapeQuickActions, resetElementAction];
 
 const textQuickActions = [
   expect.objectContaining({
@@ -216,7 +210,7 @@ const textQuickActions = [
     Icon: Link,
   }),
 ];
-const textQuickActionsWithClear = [...textQuickActions, clearAnimationAction];
+const textQuickActionsWithClear = [...textQuickActions, resetElementAction];
 
 const backgroundMediaQuickActions = [
   expect.objectContaining({
@@ -232,7 +226,7 @@ const backgroundMediaQuickActions = [
 ];
 const backgroundMediaQuickActionsWithClear = [
   ...backgroundMediaQuickActions,
-  clearAnimationAndFiltersAction,
+  resetElementAction,
 ];
 
 const videoQuickActions = [
@@ -244,7 +238,7 @@ const videoQuickActions = [
   }),
 ];
 
-const videoQuickActionsWithClear = [...videoQuickActions, clearAnimationAction];
+const videoQuickActionsWithClear = [...videoQuickActions, resetElementAction];
 
 describe('useQuickActions', () => {
   let highlight;
@@ -553,7 +547,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTION_TEXT.RESET_ELEMENT}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT],
@@ -568,7 +562,7 @@ describe('useQuickActions', () => {
       expect(result.current[3]).toBeUndefined();
     });
 
-    it('clicking `clear animations` should update the element', () => {
+    it('clicking `reset element` should update the element', () => {
       const { result } = renderHook(() => useQuickActions());
 
       result.current[3].onClick(mockClickEvent);
@@ -702,7 +696,7 @@ describe('useQuickActions', () => {
       });
     });
 
-    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+    it(`\`${ACTION_TEXT.RESET_ELEMENT}\` action should not be present if element has no animations`, () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
@@ -717,7 +711,7 @@ describe('useQuickActions', () => {
       expect(result.current[4]).toBeUndefined();
     });
 
-    it('clicking `clear animations` should update the element', () => {
+    it('clicking `reset element` should update the element', () => {
       mockUseStory.mockReturnValue({
         currentPage: {
           elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
