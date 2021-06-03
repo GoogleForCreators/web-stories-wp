@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-/**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
@@ -189,71 +185,6 @@ describe('Quick Actions integration', () => {
         fixture.editor.inspector.designPanel.link.address
       );
     });
-
-    // todo [@embarks] don't skip the clear animation/undo tests
-    // skip reason: flaky tests
-    it.skip(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
-      // quick action should not be present if there are no animations yet
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // add animation to image
-      const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
-      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
-
-      // animation
-      const animation = fixture.screen.getByRole('option', {
-        name: '"Pulse" Effect',
-      });
-
-      // apply animation to element
-      await fixture.events.click(animation, { clickCount: 1 });
-
-      // verify that element has animation
-      const { animations: originalAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(originalAnimations.length).toBe(1);
-
-      // click quick menu button
-      await waitFor(() =>
-        fixture.events.click(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-        )
-      );
-
-      // verify that element has no animations
-      const { animations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(animations.length).toBe(0);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // click `undo` button on snackbar
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
-      );
-
-      // Verify that new animations match original animation
-      const { animations: revertedAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(revertedAnimations.length).toBe(1);
-      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
-    });
   });
 
   describe('shape selected', () => {
@@ -327,72 +258,6 @@ describe('Quick Actions integration', () => {
         fixture.editor.inspector.designPanel.link.address
       );
     });
-
-    // todo [@embarks] don't skip the clear animation/undo tests
-    // skip reason: flaky tests
-    it.skip(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation.`, async () => {
-      // quick action should not be present if there are no animations yet
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // add animation to image
-      const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
-      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
-
-      // animation
-      const animation = fixture.screen.getByRole('option', {
-        name: '"Drop" Effect',
-      });
-
-      // apply animation to element
-      await fixture.events.click(animation, { clickCount: 1 });
-
-      // verify that element has animation
-      const { animations: originalAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(originalAnimations.length).toBe(1);
-
-      // click quick menu button
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      );
-
-      // verify that element has no animations
-      const { animations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(animations.length).toBe(0);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // click `undo` button on snackbar
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
-      );
-
-      // Verify that new animations match original animation
-      const { animations: revertedAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(revertedAnimations.length).toBe(1);
-      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
-    });
   });
 
   describe('background image selected', () => {
@@ -446,103 +311,6 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(
         fixture.editor.inspector.designPanel.animation.effectChooser
       );
-    });
-
-    // todo [@embarks] don't skip the clear animation/undo tests
-    // skip reason: flaky test
-    it.skip(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button should remove all animations and filters. Clicking the undo button should reapply the animation and filter.`, async () => {
-      // quick action should not be present if there are no animations yet
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-      ).toBeNull();
-
-      // apply filter to background element
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.filters.linear
-      );
-
-      // add animation to image
-      const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
-      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
-
-      // animation
-      const animation = fixture.screen.getByRole('option', {
-        name: '"Pan and Zoom" Effect',
-      });
-
-      // apply animation to element
-      await fixture.events.click(animation, { clickCount: 1 });
-
-      // verify that element has animation and filter
-      const {
-        animations: originalAnimations,
-        selectedElement: originalSelectedElement,
-      } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-          selectedElement: state.selectedElements[0],
-        }))
-      );
-
-      await waitFor(() => {
-        expect(originalAnimations.length).toBe(1);
-        expect(originalSelectedElement.overlay.type).toBe('linear');
-        expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-        ).toBeDefined();
-      });
-
-      // click quick menu button
-      await waitFor(() =>
-        fixture.events.click(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-        )
-      );
-
-      // verify that element has no animations
-      const { animations, selectedElement } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-          selectedElement: state.selectedElements[0],
-        }))
-      );
-
-      await waitFor(() => {
-        expect(animations.length).toBe(0);
-        expect(selectedElement.overlay).toBeNull();
-        expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-        ).toBeNull();
-      });
-
-      // click `undo` button on snackbar
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
-      );
-
-      // Verify that new animations match original animation
-      const {
-        animations: revertedAnimations,
-        selectedElement: revertedSelectedElement,
-      } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-          selectedElement: state.selectedElements[0],
-        }))
-      );
-
-      await waitFor(() => {
-        expect(revertedAnimations.length).toBe(1);
-        expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-        expect(revertedSelectedElement.overlay?.type).toEqual(
-          originalSelectedElement.overlay?.type
-        );
-
-        expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsAndFiltersButton
-        ).toBeDefined();
-      });
     });
   });
 
@@ -616,71 +384,6 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(
         fixture.editor.inspector.designPanel.link.address
       );
-    });
-
-    // todo [@embarks] don't skip the clear animation/undo tests
-    // skip reason: flaky tests
-    it.skip(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
-      // quick action should not be present if there are no animations yet
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // add animation to image
-      const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
-      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
-
-      // animation
-      const animation = fixture.screen.getByRole('option', {
-        name: '"Pulse" Effect',
-      });
-
-      // apply animation to element
-      await fixture.events.click(animation, { clickCount: 1 });
-
-      // verify that element has animation
-      const { animations: originalAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(originalAnimations.length).toBe(1);
-
-      // click quick menu button
-      await waitFor(() =>
-        fixture.events.click(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-        )
-      );
-
-      // verify that element has no animations
-      const { animations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(animations.length).toBe(0);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // click `undo` button on snackbar
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
-      );
-
-      // Verify that new animations match original animation
-      const { animations: revertedAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      expect(revertedAnimations.length).toBe(1);
-      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeDefined();
     });
   });
 
@@ -792,74 +495,6 @@ describe('Quick Actions integration', () => {
       expect(
         fixture.editor.inspector.designPanel.captions.addCaptionsButton
       ).not.toBeNull();
-    });
-
-    // todo [@embarks] don't skip the clear animation/undo tests
-    // skip reason: flaky tests
-    it.skip(`should click the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button and remove all animations and styles, then click the undo button and reapply the animation and styles`, async () => {
-      // quick action should not be present if there are no animations yet
-      expect(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      ).toBeNull();
-
-      // add animation to image
-      const effectChooserToggle =
-        fixture.editor.inspector.designPanel.animation.effectChooser;
-      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
-
-      // animation
-      const animation = fixture.screen.getByRole('option', {
-        name: '"Drop" Effect',
-      });
-
-      // apply animation to element
-      await fixture.events.click(animation, { clickCount: 1 });
-
-      // verify that element has animation
-      const { animations: originalAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-
-      expect(originalAnimations.length).toBe(1);
-
-      // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-      );
-
-      // verify that element has no animations or border
-      const { animations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      await waitFor(() => {
-        expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-        ).toBeNull();
-      });
-      expect(animations.length).toBe(0);
-
-      // click `undo` button on snackbar
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/ })
-      );
-
-      // Verify that new animations match original animation
-      const { animations: revertedAnimations } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          animations: state.pages[0].animations,
-        }))
-      );
-      await waitFor(() => {
-        expect(
-          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
-        ).toBeDefined();
-      });
-      expect(revertedAnimations.length).toBe(1);
-      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
     });
   });
 });
