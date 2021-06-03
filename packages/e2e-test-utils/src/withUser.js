@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { loginUser, visitAdminPage } from '@wordpress/e2e-test-utils';
+import { getCurrentUser, setCurrentUser } from './user';
 
 /**
  * Establishes test lifecycle to enforce a specific user to be logged in.
@@ -26,32 +26,11 @@ import { loginUser, visitAdminPage } from '@wordpress/e2e-test-utils';
  * @param {string} password Password.
  */
 export default function withUser(username, password) {
+  const currentUser = getCurrentUser();
+
   /* eslint-disable jest/require-top-level-describe */
-  beforeAll(async () => {
-    // This will try to access wp-admin and log in as the administrator
-    // if not already logged in as any user.
-    await visitAdminPage('index.php');
+  beforeAll(async () => await setCurrentUser( username, password ));
 
-    const currentUser = await page.evaluate(
-      () => document.querySelector('.display-name')?.textContent
-    );
-
-    // No need to proceed since we're already logged in as the right user.
-    if (currentUser === username) {
-      return;
-    }
-
-    await loginUser(username, password);
-
-    // Just visiting the admin page again so we can check for the logged-in status again.
-    await visitAdminPage('index.php');
-
-    await expect(page).toMatchElement('.display-name', {
-      text: username,
-    });
-  });
-
-  // "Reset" by trying to log in as admin again afterwards.
-  afterAll(() => loginUser());
+  afterAll(() => setCurrentUser(currentUser.username, currentUser.password));
   /* eslint-enable jest/require-top-level-describe */
 }
