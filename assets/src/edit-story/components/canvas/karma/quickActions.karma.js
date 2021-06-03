@@ -688,4 +688,168 @@ describe('Quick Actions integration', () => {
       up(),
     ]);
   }
+
+  describe('video selected', () => {
+    beforeEach(async () => {
+      const videoElement = {
+        resource: {
+          type: 'video',
+          mimeType: 'video/webm',
+          creationDate: '2021-05-21T00:09:18',
+          src: 'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
+          width: 560,
+          height: 320,
+          poster:
+            'http://localhost:8899/wp-content/uploads/2021/05/small-video-poster-10.jpg',
+          posterId: 11,
+          id: 10,
+          length: 6,
+          lengthFormatted: '0:06',
+          title: 'small-video',
+          alt: 'small-video',
+          sizes: {},
+          local: false,
+          isOptimized: false,
+          baseColor: [115, 71, 39],
+        },
+        controls: false,
+        loop: false,
+        autoPlay: true,
+        tracks: [],
+        type: 'video',
+        x: 66,
+        y: 229,
+        width: 280,
+        height: 160,
+        id: '6e7f5de8-7793-4aef-8835-c1d32477b4e0',
+      };
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const foregroundVideo = await fixture.act(() =>
+        insertElement('video', videoElement)
+      );
+
+      await clickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(foregroundVideo.id).node
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.REPLACE_MEDIA}\` button and open the media panel`, async () => {
+      // hide 3p modal before we click the quick action
+      await fixture.events.click(fixture.editor.library.media3pTab);
+      // tab to dismiss button and press enter
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('Enter');
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.replaceMediaButton
+      );
+
+      expect(fixture.editor.library.media).not.toBeNull();
+
+      expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
+    });
+
+    it(`should click the \`${ACTION_TEXT.ADD_ANIMATION}\` button and open the animation panel and focus the animation dropdown`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addAnimationButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.animation.effectChooser
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.ADD_LINK}\` button and select the link panel and focus the input`, async () => {
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addLinkButton
+      );
+
+      expect(fixture.editor.inspector.designPanel.link).not.toBeNull();
+
+      expect(document.activeElement).toEqual(
+        fixture.editor.inspector.designPanel.link.address
+      );
+    });
+
+    it(`should click the \`${ACTION_TEXT.ADD_CAPTIONS}\` button and open the captions panel and focus the add captions input`, async () => {
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.addCaptionsButton
+      );
+      expect(
+        fixture.editor.inspector.designPanel.captions.addCaptionsButton
+      ).not.toBeNull();
+    });
+
+    it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` button and remove all animations and styles, then click the undo button and reapply the animation and styles`, async () => {
+      // quick action should not be present if there are no animations yet
+      expect(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      ).toBeNull();
+
+      // add animation to image
+      const effectChooserToggle =
+        fixture.editor.inspector.designPanel.animation.effectChooser;
+      await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+      // animation
+      const animation = fixture.screen.getByRole('option', {
+        name: '"Drop" Effect',
+      });
+
+      // apply animation to element
+      await fixture.events.click(animation, { clickCount: 1 });
+
+      // verify that element has animation
+      const { animations: originalAnimations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+
+      expect(originalAnimations.length).toBe(1);
+
+      // click quick menu button
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+      );
+
+      // verify that element has no animations or border
+      const { animations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      await waitFor(() => {
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        ).toBeNull();
+      });
+      expect(animations.length).toBe(0);
+
+      // click `undo` button on snackbar
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/ })
+      );
+
+      // Verify that new animations match original animation
+      const { animations: revertedAnimations } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          animations: state.pages[0].animations,
+        }))
+      );
+      await waitFor(() => {
+        expect(
+          fixture.editor.canvas.quickActionMenu.clearAnimationsButton
+        ).toBeDefined();
+      });
+      expect(revertedAnimations.length).toBe(1);
+      expect(revertedAnimations[0]).toEqual(originalAnimations[0]);
+    });
+  });
 });

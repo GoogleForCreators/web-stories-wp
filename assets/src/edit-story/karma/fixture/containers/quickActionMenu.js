@@ -72,6 +72,12 @@ export class QuickActionMenu extends Container {
     });
   }
 
+  get addCaptionsButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.ADD_CAPTIONS,
+    });
+  }
+
   get clearAnimationsButton() {
     return this.queryByRole('button', {
       name: ACTION_TEXT.CLEAR_ANIMATIONS,
