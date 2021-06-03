@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Fragment } from 'react';
+import { sprintf, TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 /**
@@ -52,12 +52,23 @@ function LandmarkShortcuts() {
   return (
     <LandmarksWrapper role="group">
       {landmarks.map(({ label, shortcut }) => (
-        <Fragment key={label}>
-          <Landmark role="listitem">
-            <Label>{label}</Label>
-            <ShortcutLabel keys={shortcut} />
-          </Landmark>
-        </Fragment>
+        <Landmark key={label} role="listitem">
+          <TranslateWithMarkup
+            mapping={{
+              label: <Label />,
+              listOfShortcuts: <ShortcutLabel keys={shortcut} />,
+            }}
+          >
+            {sprintf(
+              /* translators: %s: action or label */
+              __(
+                '<label>%s</label> <listOfShortcuts></listOfShortcuts>',
+                'web-stories'
+              ),
+              label
+            )}
+          </TranslateWithMarkup>
+        </Landmark>
       ))}
     </LandmarksWrapper>
   );

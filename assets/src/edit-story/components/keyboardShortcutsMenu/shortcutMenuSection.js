@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Fragment } from 'react';
+import { sprintf, TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -58,10 +58,24 @@ function ShortcutMenuSection({ title, commands }) {
       <Header id={headerId}>{title}</Header>
       <List role="group" aria-labelledby={headerId}>
         {commands.map(({ label, shortcut }) => (
-          <Fragment key={label}>
-            <ShortcutLabel keys={shortcut} alignment={'left'} />
-            <Label role="listitem">{label}</Label>
-          </Fragment>
+          <TranslateWithMarkup
+            mapping={{
+              label: <Label role="listitem" />,
+              listOfShortcuts: (
+                <ShortcutLabel keys={shortcut} alignment="left" />
+              ),
+            }}
+            key={label}
+          >
+            {sprintf(
+              /* translators: %s: action or label */
+              __(
+                '<listOfShortcuts></listOfShortcuts> <label>%s</label> ',
+                'web-stories'
+              ),
+              label
+            )}
+          </TranslateWithMarkup>
         ))}
       </List>
     </>
