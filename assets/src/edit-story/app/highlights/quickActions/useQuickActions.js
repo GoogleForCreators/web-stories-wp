@@ -40,7 +40,12 @@ import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import { getResetProperties, getSnackbarClearCopy } from './utils';
-import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
+import {
+  ELEMENT_TYPE,
+  ACTION_TEXT,
+  RESET_PROPERTIES,
+  RESET_DEFAULTS,
+} from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
 
@@ -96,7 +101,7 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementId, properties) => {
+    (elementType, elementId, properties) => {
       const newProperties = {};
       // Choose properties to clear
       if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
@@ -114,6 +119,10 @@ const useQuickActions = () => {
         newProperties.opacity = 100;
         newProperties.border = null;
         newProperties.borderRadius = null;
+      }
+
+      if (elementType === ELEMENT_TYPE.TEXT) {
+        newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
       updateElementsById({
@@ -140,7 +149,7 @@ const useQuickActions = () => {
    */
   const handleElementReset = useCallback(
     ({ elementId, resetProperties, elementType }) => {
-      handleResetProperties(elementId, resetProperties);
+      handleResetProperties(elementType, elementId, resetProperties);
       const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({

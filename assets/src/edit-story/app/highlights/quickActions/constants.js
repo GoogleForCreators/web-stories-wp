@@ -63,3 +63,14 @@ export const RESET_LIST_COPY = {
   [RESET_PROPERTIES.OVERLAY]: __('filters', 'web-stories'),
   [RESET_PROPERTIES.STYLES]: __('styles', 'web-stories'),
 };
+
+export const RESET_DEFAULTS = {
+  TEXT_BORDER_RADIUS: {
+    locked: true,
+    topLeft: 2,
+    topRight: 2,
+    bottomLeft: 2,
+    bottomRight: 2,
+  },
+  STANDARD_BORDER_RADIUS: 0,
+};
