@@ -27,6 +27,7 @@ import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
 import {
   Bucket,
+  Captions,
   CircleSpeed,
   Eraser,
   LetterTLargeLetterTSmall,
@@ -116,8 +117,8 @@ const TEXT_ELEMENT = {
 };
 
 const VIDEO_ELEMENT = {
-  id: 'image-element-id',
-  type: 'image',
+  id: 'video-element-id',
+  type: 'video',
 };
 
 const clearAnimationAction = expect.objectContaining({
@@ -173,6 +174,26 @@ const foregroundImageQuickActionsWithClear = [
   clearAnimationAction,
 ];
 
+const shapeQuickActions = [
+  expect.objectContaining({
+    label: ACTION_TEXT.CHANGE_COLOR,
+    onClick: expect.any(Function),
+    Icon: Bucket,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_ANIMATION,
+    onClick: expect.any(Function),
+    Icon: CircleSpeed,
+  }),
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_LINK,
+    onClick: expect.any(Function),
+    Icon: Link,
+  }),
+];
+
+const shapeQuickActionsWithClear = [...shapeQuickActions, clearAnimationAction];
+
 const textQuickActions = [
   expect.objectContaining({
     label: ACTION_TEXT.CHANGE_TEXT_COLOR,
@@ -213,6 +234,17 @@ const backgroundMediaQuickActionsWithClear = [
   ...backgroundMediaQuickActions,
   clearAnimationAndFiltersAction,
 ];
+
+const videoQuickActions = [
+  ...foregroundImageQuickActions,
+  expect.objectContaining({
+    label: ACTION_TEXT.ADD_CAPTIONS,
+    onClick: expect.any(Function),
+    Icon: Captions,
+  }),
+];
+
+const videoQuickActionsWithClear = [...videoQuickActions, clearAnimationAction];
 
 describe('useQuickActions', () => {
   let highlight;
@@ -565,7 +597,7 @@ describe('useQuickActions', () => {
         },
         selectedElementAnimations: [
           {
-            target: [IMAGE_ELEMENT.id],
+            target: [SHAPE_ELEMENT.id],
           },
         ],
         selectedElements: [SHAPE_ELEMENT],
@@ -573,8 +605,57 @@ describe('useQuickActions', () => {
       });
     });
 
-    it.todo('should return the quick actions');
-    it.todo('should set the correct highlight');
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+      expect(result.current).toStrictEqual(shapeQuickActionsWithClear);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: SHAPE_ELEMENT.id,
+        highlight: states.STYLE,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: SHAPE_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[2].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: SHAPE_ELEMENT.id,
+        highlight: states.LINK,
+      });
+    });
+
+    it(`\`${ACTION_TEXT.CLEAR_ANIMATIONS}\` action should not be present if element has no animations`, () => {
+      mockUseStory.mockReturnValue({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, SHAPE_ELEMENT],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [SHAPE_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[3]).toBeUndefined();
+    });
+
+    it('clicking `clear animations` should call `updateElementsById`', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[3].onClick(mockClickEvent);
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [SHAPE_ELEMENT.id],
+        properties: expect.any(Function),
+      });
+    });
   });
 
   describe('text selected', () => {
@@ -665,15 +746,74 @@ describe('useQuickActions', () => {
     beforeEach(() => {
       mockUseStory.mockReturnValue({
         currentPage: {
-          elements: [BACKGROUND_ELEMENT, TEXT_ELEMENT],
+          elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
         },
-        selectedElementAnimations: [],
-        selectedElements: [TEXT_ELEMENT],
+        selectedElementAnimations: [
+          {
+            id: VIDEO_ELEMENT.id,
+          },
+        ],
+        selectedElements: [VIDEO_ELEMENT],
         updateElementsById: mockUpdateElementsById,
       });
     });
 
-    it.todo('should return the quick actions');
-    it.todo('should set the correct highlight');
+    it('should return the quick actions', () => {
+      const { result } = renderHook(() => useQuickActions());
+      expect(result.current).toStrictEqual(videoQuickActionsWithClear);
+    });
+
+    it('should set the correct highlight', () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[0].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.MEDIA,
+      });
+
+      result.current[1].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.ANIMATION,
+      });
+
+      result.current[2].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.LINK,
+      });
+
+      result.current[3].onClick(mockClickEvent);
+      expect(highlight).toStrictEqual({
+        elementId: VIDEO_ELEMENT.id,
+        highlight: states.CAPTIONS,
+      });
+    });
+
+    it(`should not show \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS}\` action if element has no animations`, () => {
+      mockUseStory.mockReturnValueOnce({
+        currentPage: {
+          elements: [BACKGROUND_ELEMENT, VIDEO_ELEMENT],
+        },
+        selectedElementAnimations: [],
+        selectedElements: [VIDEO_ELEMENT],
+        updateElementsById: mockUpdateElementsById,
+      });
+
+      const { result } = renderHook(() => useQuickActions());
+
+      expect(result.current[4]).toBeUndefined();
+    });
+
+    it(`should click \`${ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS} and update the element`, () => {
+      const { result } = renderHook(() => useQuickActions());
+
+      result.current[4].onClick(mockClickEvent);
+      expect(mockUpdateElementsById).toHaveBeenCalledWith({
+        elementIds: [VIDEO_ELEMENT.id],
+        properties: expect.any(Function),
+      });
+    });
   });
 });

@@ -40,6 +40,7 @@ export const ELEMENT_TYPE_COPY = {
 export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add link', 'web-stories'),
+  ADD_CAPTIONS: __('Add captions', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
   CHANGE_TEXT_COLOR: __('Change color', 'web-stories'),
   CHANGE_COLOR: __('Change color', 'web-stories'),
