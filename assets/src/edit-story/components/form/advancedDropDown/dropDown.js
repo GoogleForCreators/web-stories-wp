@@ -204,7 +204,7 @@ DropDown.propTypes = {
   options: PropTypes.array,
   hasSearch: PropTypes.bool,
   getOptionsByQuery: PropTypes.func,
-  highlightStylesOverride: PropTypes.object,
+  highlightStylesOverride: PropTypes.array,
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,
   primaryLabel: PropTypes.string,
