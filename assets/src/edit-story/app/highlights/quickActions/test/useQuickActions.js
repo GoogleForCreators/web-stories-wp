@@ -186,7 +186,7 @@ const shapeQuickActions = [
   }),
 ];
 
-const shapeQuickActionsWithClear = [...shapeQuickActions, clearAnimationAction];
+const shapeQuickActionsWithClear = [...shapeQuickActions, resetElementAction];
 
 const textQuickActions = [
   expect.objectContaining({
@@ -238,7 +238,7 @@ const videoQuickActions = [
   }),
 ];
 
-const videoQuickActionsWithClear = [...videoQuickActions, clearAnimationAction];
+const videoQuickActionsWithClear = [...videoQuickActions, resetElementAction];
 
 describe('useQuickActions', () => {
   let highlight;
