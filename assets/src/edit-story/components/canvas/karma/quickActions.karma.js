@@ -192,7 +192,7 @@ describe('Quick Actions integration', () => {
 
     // todo [@embarks] don't skip the clear animation/undo tests
     // skip reason: flaky tests
-    it(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
+    it.skip(`clicking the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button should remove all animations. Clicking the undo button should reapply the animation.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationsButton
@@ -330,7 +330,7 @@ describe('Quick Actions integration', () => {
 
     // todo [@embarks] don't skip the clear animation/undo tests
     // skip reason: flaky tests
-    it(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation.`, async () => {
+    it.skip(`should click the \`${ACTION_TEXT.CLEAR_ANIMATIONS}\` button and remove all animations, then click the undo button and reapply the animation.`, async () => {
       // quick action should not be present if there are no animations yet
       expect(
         fixture.editor.canvas.quickActionMenu.clearAnimationsButton
