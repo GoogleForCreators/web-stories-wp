@@ -42,6 +42,13 @@ import * as videoCallsSavedTheDayStickers from './how-video-calls-saved-the-day'
 import * as pickTheRightLaptopStickers from './laptop-buying-guide';
 import * as quizForYourBestSkinStickers from './beauty-quiz';
 import * as atHomeOfficeStickers from './diy-home-office';
+import * as rockInRotterdamStickers from './rock-in-rotterdam';
+import * as thingsYouDidnotKnowAboutLosAngelesStickers from './everything-you-did-not-know-about-los-angeles';
+import * as packingForHawaiiMainIslandsStickers from './what-to-pack-for-hawaii-main-islands';
+import * as googleMusicNewStudioStickers from './google-music-brand-new-studio';
+import * as contactTracingStickers from './how-it-works-contact-tracing';
+import * as summerTrendsStickers from './summer-trend-round-up';
+import * as artOnTheInternetStickers from './where-to-buy-affordable-art-on-the-internet';
 
 export default {
   ...beautyStickers,
@@ -70,4 +77,11 @@ export default {
   ...pickTheRightLaptopStickers,
   ...quizForYourBestSkinStickers,
   ...atHomeOfficeStickers,
+  ...rockInRotterdamStickers,
+  ...thingsYouDidnotKnowAboutLosAngelesStickers,
+  ...packingForHawaiiMainIslandsStickers,
+  ...googleMusicNewStudioStickers,
+  ...contactTracingStickers,
+  ...summerTrendsStickers,
+  ...artOnTheInternetStickers,
 };
