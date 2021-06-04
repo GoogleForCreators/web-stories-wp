@@ -207,7 +207,7 @@ function SelectionCanvas({ children }) {
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
-      data-fix-caret="true"
+      data-fix-caret
     >
       {children}
       <InOverlay ref={overlayRef}>

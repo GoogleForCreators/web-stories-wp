@@ -149,7 +149,7 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
     <Element
       ref={elementRef}
       data-testid="textFrame"
-      data-fix-caret="true"
+      data-fix-caret
       className="syncMargin"
       dangerouslySetInnerHTML={{ __html: content }}
       element={element}
