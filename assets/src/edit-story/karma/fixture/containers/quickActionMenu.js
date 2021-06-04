@@ -78,7 +78,7 @@ export class QuickActionMenu extends Container {
     });
   }
 
-  get clearAnimationsButton() {
+  get resetElementButton() {
     return this.queryByRole('button', {
       name: ACTION_TEXT.RESET_ELEMENT,
     });
