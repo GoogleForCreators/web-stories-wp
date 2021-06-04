@@ -47,7 +47,8 @@ class Dashboard extends Test_Case {
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
-			$this->createMock( \Google\Web_Stories\Register_Font::class )
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
 		);
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
@@ -63,7 +64,8 @@ class Dashboard extends Test_Case {
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
-			$this->createMock( \Google\Web_Stories\Register_Font::class )
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
 		);
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
@@ -83,7 +85,8 @@ class Dashboard extends Test_Case {
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
-			$this->createMock( \Google\Web_Stories\Register_Font::class )
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
 		);
 		$dashboard->add_menu_page();
 		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
@@ -104,7 +107,8 @@ class Dashboard extends Test_Case {
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
-			$this->createMock( \Google\Web_Stories\Register_Font::class )
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
 		);
 		$dashboard->add_menu_page();
 		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
@@ -126,7 +130,8 @@ class Dashboard extends Test_Case {
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
-			$this->createMock( \Google\Web_Stories\Register_Font::class )
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			( new \Google\Web_Stories\Assets() )
 		);
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( 'foo' );
@@ -144,26 +149,25 @@ class Dashboard extends Test_Case {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$args      = [
+		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets->method( 'get_asset_metadata' )
+			->willReturn(
+				[
+					'dependencies' => [],
+					'version'      => '9.9.9',
+					'js'           => [ 'fake_js_chunk' ],
+					'css'          => [ 'fake_css_chunk' ],
+				]
+			);
+
+		$dashboard = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class ),
 			$this->createMock( \Google\Web_Stories\Decoder::class ),
 			$this->createMock( \Google\Web_Stories\Locale::class ),
-			$this->createMock( \Google\Web_Stories\Register_Font::class ),
-		];
-		$dashboard = $this->getMockBuilder( \Google\Web_Stories\Admin\Dashboard::class )
-						->setConstructorArgs( $args )
-						->setMethods( [ 'get_asset_metadata' ] )
-						->getMock();
-		$dashboard->method( 'get_asset_metadata' )
-				->willReturn(
-					[
-						'dependencies' => [],
-						'version'      => '9.9.9',
-						'js'           => [ 'fake_js_chunk' ],
-						'css'          => [ 'fake_css_chunk' ],
-					]
-				);
+			( new \Google\Web_Stories\Admin\Google_Fonts() ),
+			$assets
+		);
 
 		$dashboard->add_menu_page();
 		$dashboard->enqueue_assets( $dashboard->get_hook_suffix( 'stories-dashboard' ) );

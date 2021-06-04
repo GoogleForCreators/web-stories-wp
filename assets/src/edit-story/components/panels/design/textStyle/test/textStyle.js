@@ -39,7 +39,10 @@ import {
 import { renderPanel } from '../../../shared/test/_utils';
 
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('../../../../form/advancedDropDown');
+jest.mock('../../../../form/advancedDropDown', () => ({
+  __esModule: true,
+  default: jest.fn(),
+}));
 jest.mock('../../../../form/color/color', () => ({
   __esModule: true,
   default: jest.fn(),
@@ -151,6 +154,7 @@ describe('Panels/TextStyle', () => {
     };
 
     controls = {};
+
     AdvancedDropDown.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });

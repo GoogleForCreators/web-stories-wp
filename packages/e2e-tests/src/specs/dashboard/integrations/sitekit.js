@@ -25,19 +25,23 @@ import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 import { visitSettings } from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit integration with dashboard', () => {
-  beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-mock');
-  });
-
-  afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-mock');
-  });
-
-  it('should be able see Site Kit specific message', async () => {
+  it('should be able see Site Kit specific message for Google Analytics', async () => {
+    await activatePlugin('e2e-tests-site-kit-analytics-mock');
     await visitSettings();
 
     await expect(page).toMatch(
       'Site Kit by Google has already enabled Google Analytics for your Web Stories'
     );
+    await deactivatePlugin('e2e-tests-site-kit-analytics-mock');
+  });
+
+  it('should be able see Site Kit specific message for Google AdSense', async () => {
+    await activatePlugin('e2e-tests-site-kit-adsense-mock');
+    await visitSettings();
+
+    await expect(page).toMatch(
+      'Site Kit by Google has already enabled Google AdSense for your Web Stories'
+    );
+    await deactivatePlugin('e2e-tests-site-kit-adsense-mock');
   });
 });

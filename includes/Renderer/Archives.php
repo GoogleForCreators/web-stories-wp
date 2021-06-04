@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Renderer;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Embed;
@@ -38,6 +40,34 @@ use WP_Post;
  * @package Google\Web_Stories\Single
  */
 class Archives extends Service_Base {
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	protected $assets;
+
+	/**
+	 * AMP_Story_Player_Assets instance.
+	 *
+	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
+	 */
+	protected $amp_story_player_assets;
+
+	/**
+	 * Archives constructor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Assets                  $assets            Assets instance.
+	 * @param AMP_Story_Player_Assets $amp_story_player_assets AMP_Story_Player_Assets instance.
+	 */
+	public function __construct( Assets $assets, AMP_Story_Player_Assets $amp_story_player_assets ) {
+		$this->assets                  = $assets;
+		$this->amp_story_player_assets = $amp_story_player_assets;
+	}
+
 	/**
 	 * Filter content and excerpt for search and post type archive.
 	 *
@@ -74,7 +104,7 @@ class Archives extends Service_Base {
 			$story = new Story();
 			$story->load_from_post( $post );
 
-			$embed   = new Embed( $story );
+			$embed   = new Embed( $story, $this->assets, $this->amp_story_player_assets );
 			$content = $embed->render();
 		}
 

@@ -207,7 +207,7 @@ describe('Background Copy Paste integration', () => {
     );
     expect(await getCanvasBackgroundOverlay()).toHaveStyle(
       'background-image',
-      'radial-gradient(67% 67%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
+      'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
     );
     await fixture.events.sleep(10000);
     expect(await getNumElements()).toBe(1);

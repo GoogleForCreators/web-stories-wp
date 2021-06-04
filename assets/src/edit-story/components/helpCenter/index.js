@@ -16,19 +16,20 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import { ThemeGlobals } from '../../../design-system';
+import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
-import { POPUP_ID } from './constants';
+import { POPUP_ID, KEYS } from './constants';
 import { Toggle } from './toggle';
 import { Popup } from './popup';
 import { forceFocusCompanion } from './utils';
@@ -53,6 +54,20 @@ export const HelpCenter = () => {
       forceFocusCompanion();
     }
   }, [state.isOpen]);
+
+  useStoryTriggerListener(
+    STORY_EVENTS.onReplaceBackgroundMedia,
+    useCallback(() => {
+      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+    }, [actions])
+  );
+
+  useStoryTriggerListener(
+    STORY_EVENTS.onReplaceForegroundMedia,
+    useCallback(() => {
+      actions.openToUnreadTip(KEYS.CROP_SELECTED_ELEMENTS);
+    }, [actions])
+  );
 
   return (
     <DirectionAware>

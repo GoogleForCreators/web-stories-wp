@@ -37,6 +37,7 @@ import { revokeBlob } from '../../../../utils/blobs';
  * @param {Function} action.payload.onUploadError Callback for when upload errors.
  * @param {Function} action.payload.onUploadSuccess Callback for when upload succeeds.
  * @param {Object}   action.payload.additionalData Additional Data object.
+ * @param {File} action.payload.posterFile File object.
  * @return {Object} New state
  */
 export function addItem(
@@ -50,6 +51,7 @@ export function addItem(
       onUploadError,
       onUploadSuccess,
       additionalData,
+      posterFile,
     },
   }
 ) {
@@ -67,6 +69,7 @@ export function addItem(
     onUploadError,
     onUploadSuccess,
     additionalData,
+    posterFile,
   };
 
   return {
@@ -126,6 +129,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
         ? {
             ...item,
             resource,
+            posterFile: null,
             state: 'UPLOADED',
           }
         : item
@@ -221,12 +225,13 @@ export function finishTranscoding(state, { payload: { id, file } }) {
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
+ * @param {File} action.payload.posterFile Poster file.
  * @param {import('../createResource').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function replacePlaceholderResource(
   state,
-  { payload: { id, resource } }
+  { payload: { id, resource, posterFile } }
 ) {
   const queueItem = state.queue.find((item) => item.id === id);
   if (!queueItem || !queueItem.resource.isPlaceholder) {
@@ -249,6 +254,7 @@ export function replacePlaceholderResource(
               id,
               isPlaceholder: false,
             },
+            posterFile,
           }
         : item
     ),

@@ -162,7 +162,7 @@ function MediaEditDialog({ resource, onClose }) {
             key={src}
             crossOrigin="anonymous"
             poster={poster}
-            preload="none"
+            preload="metadata"
             muted
           >
             <source src={src} type={mimeType} />

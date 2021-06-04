@@ -17,31 +17,21 @@
 
 namespace Google\Web_Stories\Tests;
 
+use Google\Web_Stories\Assets;
+
 /**
- * @coversDefaultClass \Google\Web_Stories\Register_Font
+ * @coversDefaultClass \Google\Web_Stories\AMP_Story_Player_Assets
  */
-class Register_Font extends Test_Case {
-
-	/**
-	 * @covers ::get_handle
-	 */
-	public function test_get_handle() {
-		$actual = ( new \Google\Web_Stories\Register_Font() )->get_handle();
-
-		$this->assertSame( 'web-stories-fonts', $actual );
-	}
+class AMP_Story_Player_Assets extends Test_Case {
 
 	/**
 	 * @covers ::register
 	 */
 	public function test_register() {
-		$register_font   = new \Google\Web_Stories\Register_Font();
-		$before_register = $this->get_private_property( $register_font, 'register' );
-		$register_font->register();
-		$after_register = $this->get_private_property( $register_font, 'register' );
+		$amp_story_player_assets = new \Google\Web_Stories\AMP_Story_Player_Assets();
+		$amp_story_player_assets->register();
 
-		$this->assertTrue( wp_style_is( $register_font->get_handle(), 'registered' ) );
-		$this->assertFalse( $before_register );
-		$this->assertTrue( $after_register );
+		$this->assertTrue( wp_style_is( $amp_story_player_assets->get_handle(), 'registered' ) );
+		$this->assertTrue( wp_script_is( $amp_story_player_assets->get_handle(), 'registered' ) );
 	}
 }

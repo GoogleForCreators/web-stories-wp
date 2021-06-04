@@ -82,11 +82,25 @@ jobs:
         run: npm run lint:css
 
       - name: JS Lint
+        run: npm run lint:js
+        if: >
+          github.event.pull_request.head.repo.fork == true ||
+          github.event.pull_request.user.login == 'dependabot[bot]'
+
+      - name: JS Lint Report
         run: npm run lint:js:report
         continue-on-error: true
+        # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
+        if: >
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Annotate JS Lint Results
         uses: ataylorme/eslint-annotate-action@1.2.0
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           report-json: 'build/lint-js-report.json'
+        # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
+        if: >
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'

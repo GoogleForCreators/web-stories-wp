@@ -18,7 +18,7 @@
     "polished": "^4.1.2"
   },
   "devDependencies": {
-    "rollup": "^2.50.1",
+    "rollup": "^2.50.3",
     "@rollup/plugin-node-resolve": "^13.0.0"
   }
 }

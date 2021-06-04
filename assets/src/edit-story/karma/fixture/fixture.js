@@ -167,7 +167,6 @@ export class Fixture {
 
     const panels = [
       'animation',
-      'backgroundOverlay',
       'borderRadius',
       'borderStyle',
       'captions',
