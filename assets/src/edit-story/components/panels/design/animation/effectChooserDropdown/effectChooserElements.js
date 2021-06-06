@@ -144,7 +144,7 @@ export const PulseAnimation = styled(BaseAnimationCell)`
 
 const rotateInLeftKeyframes = keyframes`
   0% {
-    transform: translateX(-100%) rotate(360deg);
+    transform: translateX(-100%) rotate(-360deg);
   }
   50%, 100% {
     transform: translateX(0%);
@@ -157,7 +157,7 @@ export const RotateInLeftAnimation = styled(BaseAnimationCell)`
 
 const rotateInRightKeyframes = keyframes`
   0% {
-    transform: translateX(100%) rotate(-360deg);
+    transform: translateX(100%) rotate(360deg);
   }
   50%, 100% {
     transform: translateX(0%);

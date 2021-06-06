@@ -32,7 +32,7 @@ const stopAngle = 0;
 export function EffectRotateIn({
   duration = 1000,
   rotateInDir = DIRECTION.LEFT_TO_RIGHT,
-  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
+  easing = 'cubic-bezier(.2, 0, .8, 1)',
   delay,
   element,
 }) {
@@ -52,7 +52,7 @@ export function EffectRotateIn({
     generatedKeyframes: moveKeyframes,
   } = AnimationMove({
     offsetX,
-    duration,
+    duration: duration * 0.87,
     delay,
     easing,
     element,
@@ -66,13 +66,13 @@ export function EffectRotateIn({
   } = AnimationSpin({
     rotation: `${
       (rotateInDir === DIRECTION.LEFT_TO_RIGHT ? -1 : 1) *
-      360 *
+      180 *
       numberOfRotations
     }`,
     stopAngle,
     duration,
     delay,
-    easing,
+    easing: 'cubic-bezier(.2, 0, .5, 1)',
     element,
   });
 
