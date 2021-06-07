@@ -117,7 +117,6 @@ export const MenuItem = ({
         href={href}
         onClick={handleClick}
         onFocus={onFocus}
-        role="menuitem"
         {...newTabProps}
         {...menuItemProps}
       >
@@ -134,7 +133,6 @@ export const MenuItem = ({
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
-        role="menuitem"
         {...menuItemProps}
       >
         {textContent}

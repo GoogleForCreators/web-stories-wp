@@ -59,8 +59,8 @@ const CardGrid = forwardRef(function CardGrid(
       ref={ref}
       role="list"
       data-testid={'dashboard-grid-list'}
-      // TODO: Investigate
-      // See https://github.com/google/web-stories-wp/issues/6671
+      // Disable Reason: We need to focus this div to engage with `useGridViewKeys`
+      // which is critical to avoiding focus traps for keyboard users.
       // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
       tabIndex={0}
       aria-label={ariaLabel}

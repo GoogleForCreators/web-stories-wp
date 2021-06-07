@@ -28,53 +28,55 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  OverlayPreset,
-  OverlayType,
-} from '../../../../utils/backgroundOverlay';
+import { OverlayPreset, OverlayType } from '../../../../utils/overlay';
 import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getDefinitionForType } from '../../../../elements';
+import { useCommonColorValue } from '../../shared';
+import { MULTIPLE_VALUE } from '../../../../constants';
 import convertOverlay from './convertOverlay';
 
 function FilterPanel({ selectedElements, pushUpdate }) {
-  const overlay = selectedElements[0].backgroundOverlay || null;
-
-  const overlayType =
-    overlay === null ? OverlayType.NONE : overlay.type || OverlayType.SOLID;
+  const overlay = useCommonColorValue(selectedElements, 'overlay');
+  const isMultiple = overlay === MULTIPLE_VALUE;
+  const overlayType = !overlay
+    ? OverlayType.NONE
+    : overlay.type || OverlayType.SOLID;
 
   const updateOverlay = useCallback(
-    (value) => pushUpdate({ backgroundOverlay: value }, true),
+    (value) => pushUpdate({ overlay: value }, true),
     [pushUpdate]
   );
 
   const { LayerIcon } = getDefinitionForType(selectedElements[0].type);
   return (
     <SimplePanel name="filter" title={__('Filters', 'web-stories')}>
-      <Row>
-        {Object.keys(OverlayPreset).map((type) => {
-          const { label } = OverlayPreset[type];
-          return (
-            <FilterToggle
-              key={type}
-              element={selectedElements[0]}
-              label={label}
-              isToggled={overlayType === type}
-              onClick={() =>
-                updateOverlay(convertOverlay(overlay, overlayType, type))
-              }
-              filter={convertOverlay(overlay, OverlayType.NONE, type)}
-              aria-label={sprintf(
-                /* translators: %s: Filter type */
-                __('Filter: %s', 'web-stories'),
-                label
-              )}
-            >
-              <LayerIcon element={selectedElements[0]} />
-            </FilterToggle>
-          );
-        })}
-      </Row>
+      {!isMultiple && (
+        <Row>
+          {Object.keys(OverlayPreset).map((type) => {
+            const { label } = OverlayPreset[type];
+            return (
+              <FilterToggle
+                key={type}
+                element={selectedElements[0]}
+                label={label}
+                isToggled={overlayType === type}
+                onClick={() =>
+                  updateOverlay(convertOverlay(overlay, overlayType, type))
+                }
+                filter={convertOverlay(overlay, OverlayType.NONE, type)}
+                aria-label={sprintf(
+                  /* translators: %s: Filter type */
+                  __('Filter: %s', 'web-stories'),
+                  label
+                )}
+              >
+                <LayerIcon element={selectedElements[0]} />
+              </FilterToggle>
+            );
+          })}
+        </Row>
+      )}
       {overlayType !== OverlayType.NONE && (
         <Row>
           <Color

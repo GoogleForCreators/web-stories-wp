@@ -21,7 +21,7 @@ import { css, keyframes } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme as dsTheme } from '../../../design-system';
+import { theme as dsTheme, themeHelpers } from '../../../design-system';
 
 const flash = keyframes`
   50% {
@@ -35,6 +35,5 @@ export const FLASH = css`
 `;
 
 export const OUTLINE = css`
-  box-shadow: 0 0 0 2px ${dsTheme.colors.border.focus};
-  border-radius: ${dsTheme.borders.radius.small};
+  ${themeHelpers.focusCSS};
 `;

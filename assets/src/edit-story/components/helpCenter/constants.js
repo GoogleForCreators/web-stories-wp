@@ -19,6 +19,11 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { FOCUSABLE_SELECTORS } from '../../constants';
+
 export const KEYS = {
   ADD_BACKGROUND_MEDIA: 'addBackgroundMedia',
   CROP_SELECTED_ELEMENTS: 'cropSelectedElements',
@@ -146,15 +151,6 @@ export const Z_INDEX = {
 };
 
 export const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
-
-export const FOCUSABLE_SELECTORS = [
-  'button',
-  '[href]',
-  'input',
-  'select',
-  'textarea',
-  '[tabindex]:not([tabindex="-1"])',
-];
 
 export const POPUP_ID = 'help_center_companion';
 export const FOCUSABLE_POPUP_CHILDREN_SELECTOR = FOCUSABLE_SELECTORS.map(

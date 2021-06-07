@@ -26,8 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { Color, Row } from '../../../form';
 import getColorPickerActions from '../../shared/getColorPickerActions';
 import useRichTextFormatting from './useRichTextFormatting';
-
-function ColorControls({ selectedElements, pushUpdate }) {
+function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
   const {
     textInfo: { color },
     handlers: { handleSetColor },
@@ -45,6 +44,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
         label={__('Text color', 'web-stories')}
         labelId="text-color-label"
         changedStyle="color"
+        ref={textColorRef}
       />
     </Row>
   );
@@ -53,6 +53,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
 ColorControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
+  textColorRef: PropTypes.object,
 };
 
 export default ColorControls;

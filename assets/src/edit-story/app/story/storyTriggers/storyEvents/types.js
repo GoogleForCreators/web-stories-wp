@@ -17,4 +17,6 @@ export const STORY_EVENTS = {
   onInitialElementAdded: 'onInitialElementAdded',
   onSecondPageAdded: 'onSecondPageAdded',
   onFifthPageAdded: 'onFifthPageAdded',
+  onReplaceBackgroundMedia: 'onReplaceBackgroundMedia',
+  onReplaceForegroundMedia: 'onReplaceForegroundMedia',
 };

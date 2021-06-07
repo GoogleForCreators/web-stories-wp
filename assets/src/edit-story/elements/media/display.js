@@ -25,7 +25,11 @@ import PropTypes from 'prop-types';
  */
 import { useRef } from 'react';
 import StoryPropTypes from '../../types';
-import { elementFillContent, elementWithBorder } from '../shared';
+import {
+  elementFillContent,
+  elementWithBorder,
+  elementWithBackgroundColor,
+} from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import {
   getResponsiveBorder,
@@ -42,6 +46,11 @@ const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   color: transparent;
   overflow: hidden;
   ${elementWithBorder}
+`;
+
+const Overlay = styled.div`
+  ${elementFillContent}
+  ${elementWithBackgroundColor}
 `;
 
 function MediaDisplay({
@@ -61,6 +70,7 @@ function MediaDisplay({
     borderRadius,
     width,
     height,
+    overlay,
   } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
@@ -112,6 +122,7 @@ function MediaDisplay({
       showPlaceholder={showPlaceholder}
     >
       {children}
+      {overlay && <Overlay backgroundColor={overlay} />}
     </Element>
   );
 }
