@@ -45,6 +45,9 @@ jobs:
           - browser: 'chrome'
             wp: '5.3.6'
             snapshots: false
+          - browser: 'firefox'
+            wp: 'latest'
+            snapshots: false
 
     steps:
       - name: Cancel previous
@@ -85,7 +88,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
-          coverage: none
+          snapshots: none
           tools: composer
 
       - name: Get Composer cache directory
