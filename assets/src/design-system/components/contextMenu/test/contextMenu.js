@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -75,7 +75,8 @@ describe('ContextMenu', () => {
     const [firstButton] = screen.queryAllByRole('menuitem', {
       name: items[0].label,
     });
-    expect(firstButton).toHaveFocus();
+
+    expect(within(firstButton).getByRole('button')).toHaveFocus();
   });
 });
 

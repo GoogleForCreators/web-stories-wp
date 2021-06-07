@@ -34,6 +34,7 @@ import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';
+import usePinchToZoom from './usePinchToZoom';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -377,6 +378,9 @@ const PageArea = forwardRef(function PageArea(
     }
   }, [isControlled, zoomSetting, fullbleedRef]);
 
+  const paddedRef = useRef(null);
+  usePinchToZoom({ containerRef: paddedRef });
+
   return (
     <PageAreaContainer
       showOverflow={showOverflow}
@@ -391,7 +395,7 @@ const PageArea = forwardRef(function PageArea(
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
       >
-        <PaddedPage>
+        <PaddedPage ref={paddedRef}>
           <FullbleedContainer
             aria-label={__('Fullbleed area', 'web-stories')}
             role="region"

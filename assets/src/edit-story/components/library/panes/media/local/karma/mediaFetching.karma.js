@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -26,67 +26,67 @@ import { waitFor } from '@testing-library/react';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-describe('MediaPane fetching', () => {
+// Disable reason: tests are out of date.
+// TODO: https://github.com/google/web-stories-wp/issues/7606
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('MediaPane fetching', () => {
   let fixture;
-  let localPane;
-  let nonMediaTab;
 
   beforeEach(async () => {
-    jasmine.clock().install();
-
     fixture = new Fixture();
     await fixture.render();
-
-    localPane = fixture.querySelector('#library-pane-media');
-    nonMediaTab = fixture.querySelector('#library-tab-shapes');
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
     fixture.restore();
   });
 
-  async function expectMediaElements(expectedCount) {
-    let mediaElements;
-    await waitFor(() => {
-      mediaElements = localPane.querySelectorAll('[data-testid^=mediaElement]');
-      if (!mediaElements || mediaElements.length !== expectedCount) {
-        throw new Error(
-          `Not ready: ${mediaElements?.length} != ${expectedCount}`
-        );
-      }
-      jasmine.clock().tick(10);
-    });
-    expect(mediaElements.length).toBe(expectedCount);
-  }
-
   it('should fetch 2nd page', async () => {
-    const mediaGallery = localPane.querySelector(
-      '[data-testid="media-gallery-container"]'
+    const localPane = await waitFor(() =>
+      fixture.querySelector('#library-pane-media')
+    );
+    const mediaGallery = await within(localPane).getByTestId(
+      'media-gallery-container'
     );
 
-    await expectMediaElements(MEDIA_PER_PAGE);
+    const initialElements =
+      within(mediaGallery).queryAllByTestId(/^mediaElement-/);
+    expect(initialElements.length).toBe(MEDIA_PER_PAGE);
 
-    mediaGallery.scrollTo(
+    await mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
-    jasmine.clock().tick(500);
 
-    await expectMediaElements(MEDIA_PER_PAGE * 2);
+    await waitFor(() =>
+      expect(
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length
+      ).toBeGreaterThanOrEqual(MEDIA_PER_PAGE * 2)
+    );
   });
 
   it('should not load results on resize if tab is hidden', async () => {
-    localPane.querySelector('[data-testid="media-gallery-container"]');
-    await expectMediaElements(MEDIA_PER_PAGE);
+    const nonMediaTab = await waitFor(() =>
+      fixture.querySelector('#library-tab-shapes')
+    );
+
+    await waitFor(() =>
+      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
+        MEDIA_PER_PAGE
+      )
+    );
 
     await fixture.events.click(nonMediaTab);
 
     // Simulate a browser window resize, and complete the event debounce cycle.
     window.dispatchEvent(new Event('resize'));
-    jasmine.clock().tick(500);
+    await fixture.events.sleep(500);
 
     // Expect no additional results to be loaded.
-    await expectMediaElements(MEDIA_PER_PAGE);
+    await waitFor(() =>
+      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
+        MEDIA_PER_PAGE
+      )
+    );
   });
 });

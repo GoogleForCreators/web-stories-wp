@@ -161,17 +161,19 @@ function InnerElement({
     'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
-    preload: 'none',
+    preload: 'metadata',
     poster: displayPoster,
     showWithoutDelay: Boolean(newVideoPosterRef.current),
   };
 
   if (type === ContentType.IMAGE) {
+    // eslint-disable-next-line styled-components-a11y/alt-text
     media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
+        {/* eslint-disable-next-line styled-components-a11y/media-has-caption -- No captions because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
             <>
@@ -198,6 +200,7 @@ function InnerElement({
           )}
         </Video>
         {!newVideoPosterRef.current && (
+          /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
           <HiddenPosterImage
             ref={hiddenPoster}
             src={posterSrc}

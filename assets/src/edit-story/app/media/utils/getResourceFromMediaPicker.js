@@ -31,11 +31,9 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     src,
     url,
     mime: mimeType,
-    width,
     title,
     alt,
     description,
-    height,
     date,
     id,
     featured_media: posterId,
@@ -45,20 +43,16 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       height: posterHeight,
       generated: posterGenerated,
     } = '',
-    fileLength: lengthFormatted,
-    sizes: mediaPickerSizes,
+    media_details: {
+      width,
+      height,
+      length,
+      length_formatted: lengthFormatted,
+      sizes,
+    },
     media_source: mediaSource,
   } = mediaPickerEl;
-  const sizes = Object.fromEntries(
-    Object.entries(mediaPickerSizes || {}).map(([k, size]) => [
-      k,
-      {
-        width: size.width,
-        height: size.height,
-        source_url: size.url,
-      },
-    ])
-  );
+
   return createResource({
     mimeType,
     uploadDate: date,
@@ -73,6 +67,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     poster,
     posterId,
     id,
+    length,
     lengthFormatted,
     alt: alt || description || title,
     title,

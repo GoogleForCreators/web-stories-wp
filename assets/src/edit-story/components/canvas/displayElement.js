@@ -102,7 +102,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     opacity,
     type,
     isBackground,
-    backgroundOverlay,
+    overlay,
     border = {},
     flip,
   } = element;
@@ -115,12 +115,13 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
         scale: replacement.scale,
         focalX: replacement.focalX,
         focalY: replacement.focalY,
-        // Okay, this is a bit weird, but... the flip property is taken from the dragged image
+        // Okay, this is a bit weird, but... the flip and overlay properties are taken from the dragged image
         // if the drop-target is the background element, but from the original drop-target image
         // itself if the drop-target is a regular element.
         //
         // @see compare with similar logic in `combineElements`
         flip: isBackground ? replacement.flip : flip,
+        overlay: isBackground ? replacement.overlay : overlay,
       }
     : null;
 
@@ -204,10 +205,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             )}
           </ReplacementContainer>
         )}
-        {isBackground && backgroundOverlay && !hasReplacement && (
+        {isBackground && overlay && !hasReplacement && (
           <BackgroundOverlay
             ref={bgOverlayRef}
-            style={generatePatternStyles(backgroundOverlay)}
+            style={generatePatternStyles(overlay)}
           />
         )}
       </AnimationWrapper>

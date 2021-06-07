@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Admin\Tests;
+namespace Google\Web_Stories\Tests\Admin;
 
 use Yoast\WPTestUtils\WPIntegration\TestCase;
 

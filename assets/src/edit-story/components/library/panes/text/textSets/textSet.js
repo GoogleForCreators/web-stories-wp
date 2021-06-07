@@ -105,41 +105,47 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
-    <TextSetItem
-      role="listitem"
-      tabIndex={0}
-      translateX={translateX}
-      translateY={translateY}
-      ref={ref}
-      onKeyUp={handleKeyboardPageClick}
-      {...rest}
-    >
-      <TextSetElements isForDisplay elements={elements} />
-      <LibraryMoveable
-        type={'textSet'}
-        elements={elements}
-        elementProps={{}}
-        onClick={onClick}
-        previewSize={{
-          width: TEXT_SET_SIZE,
-          height: TEXT_SET_SIZE,
-        }}
-        cloneElement={DragContainer}
-        cloneProps={{
-          width: dragWidth,
-          height: dragHeight,
-          children: (
-            <TextSetElements
-              elements={elements}
-              pageSize={{
-                width: pageWidth,
-                height: pageHeight,
-              }}
-            />
-          ),
-        }}
-      />
-    </TextSetItem>
+    <>
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions */}
+      <TextSetItem
+        role="listitem"
+        // TODO: Investigate
+        // See https://github.com/google/web-stories-wp/issues/6671
+        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
+        tabIndex={0}
+        translateX={translateX}
+        translateY={translateY}
+        ref={ref}
+        onKeyUp={handleKeyboardPageClick}
+        {...rest}
+      >
+        <TextSetElements isForDisplay elements={elements} />
+        <LibraryMoveable
+          type={'textSet'}
+          elements={elements}
+          elementProps={{}}
+          onClick={onClick}
+          cloneElement={DragContainer}
+          cloneProps={{
+            width: dragWidth,
+            height: dragHeight,
+            children: (
+              <TextSetElements
+                elements={elements}
+                pageSize={{
+                  width: pageWidth,
+                  height: pageHeight,
+                }}
+              />
+            ),
+          }}
+        />
+      </TextSetItem>
+    </>
   );
 }
 

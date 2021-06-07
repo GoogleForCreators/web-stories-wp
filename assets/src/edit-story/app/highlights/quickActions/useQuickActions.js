@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -28,35 +28,26 @@ import {
   Bucket,
   CircleSpeed,
   Eraser,
+  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
   PictureSwap,
+  Captions,
 } from '../../../../design-system/icons';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useStory } from '../../story';
+import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import { getResetProperties, getSnackbarClearCopy } from './utils';
+import {
+  ELEMENT_TYPE,
+  ACTION_TEXT,
+  RESET_PROPERTIES,
+  RESET_DEFAULTS,
+} from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
-
-export const ELEMENT_TYPE = {
-  IMAGE: 'image',
-  SHAPE: 'shape',
-  TEXT: 'text',
-  VIDEO: 'video',
-};
-
-export const ACTION_TEXT = {
-  ADD_ANIMATION: __('Add animation', 'web-stories'),
-  ADD_LINK: __('Add Link', 'web-stories'),
-  CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
-  CHANGE_COLOR: __('Change color', 'web-stories'),
-  CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
-  INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
-  INSERT_TEXT: __('Insert text', 'web-stories'),
-  REPLACE_MEDIA: __('Replace media', 'web-stories'),
-};
 
 /**
  * Determines the quick actions to display in the quick
@@ -69,6 +60,7 @@ export const ACTION_TEXT = {
  */
 const useQuickActions = () => {
   const { isRTL } = useConfig();
+  const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     currentPage,
     selectedElementAnimations,
@@ -109,19 +101,28 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementId, properties) => {
+    (elementType, elementId, properties) => {
       const newProperties = {};
-
       // Choose properties to clear
-      if (properties.includes('backgroundOverlay')) {
-        newProperties.backgroundOverlay = null;
+      if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
+        newProperties.overlay = null;
       }
 
-      if (properties.includes('animation')) {
+      if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
         newProperties.animation = {
           ...selectedElementAnimations?.[0],
           delete: true,
         };
+      }
+
+      if (properties.includes(RESET_PROPERTIES.STYLES)) {
+        newProperties.opacity = 100;
+        newProperties.border = null;
+        newProperties.borderRadius = null;
+      }
+
+      if (elementType === ELEMENT_TYPE.TEXT) {
+        newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
       updateElementsById({
@@ -138,23 +139,23 @@ const useQuickActions = () => {
   );
 
   /**
-   * Clear animations and show a confirmation snackbar. Clicking
+   * Reset element styles and show a confirmation snackbar. Clicking
    * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
+   * @param {Array} resetProperties the properties that are to be reset ('animations', 'overlay')
+   * @param {string} elementType the type of element being adjusted
    * @return {void}
    */
-  const handleClearAnimations = useCallback(
-    (elementId) => {
-      handleResetProperties(elementId, ['animation']);
+  const handleElementReset = useCallback(
+    ({ elementId, resetProperties, elementType }) => {
+      handleResetProperties(elementType, elementId, resetProperties);
+      const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
-        message: __(
-          'All animations were removed from the image',
-          'web-stories'
-        ),
+        message,
         onAction: undo,
       });
     },
@@ -169,30 +170,48 @@ const useQuickActions = () => {
     [setHighlights]
   );
 
+  const handleFocusMediaPanel = useMemo(() => {
+    const idOrigin = selectedElements?.[0]?.resource?.id
+      ?.toString()
+      .split(':')?.[0];
+    const is3PGif =
+      !idOrigin &&
+      selectedElements?.[0]?.resource?.type?.toLowerCase() === 'gif';
+    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
+    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
+
+    const panelToFocus =
+      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
+
+    return handleFocusPanel(panelToFocus);
+  }, [handleFocusPanel, selectedElements]);
+
   const {
     handleFocusAnimationPanel,
-    handleFocusMediaPanel,
-    handleFocusMedia3pPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
+    handleFocusTextColor,
+    handleFocusFontPicker,
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
+    handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
-      handleFocusMediaPanel: handleFocusPanel(states.MEDIA),
-      handleFocusMedia3pPanel: handleFocusPanel(states.MEDIA3P),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
-      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT),
+      handleFocusTextSetsPanel: handleFocusPanel(states.TEXT_SET),
+      handleFocusFontPicker: handleFocusPanel(states.FONT),
+      handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
+      handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
     [handleFocusPanel]
   );
 
-  const backgroundElement =
-    currentPage?.elements.find((element) => element.isBackground) ||
-    selectedElements?.[0]?.isBackground;
+  const backgroundElement = currentPage?.elements.find(
+    (element) => element.isBackground
+  );
   const selectedElement = selectedElements?.[0];
 
   const actionMenuProps = useMemo(
@@ -234,8 +253,14 @@ const useQuickActions = () => {
     handleMouseDown,
   ]);
 
-  const foregroundCommonActions = useMemo(
-    () => [
+  const resetProperties = useMemo(
+    () => getResetProperties(selectedElement, selectedElementAnimations),
+    [selectedElement, selectedElementAnimations]
+  );
+  const showClearAction = resetProperties.length > 0;
+
+  const foregroundCommonActions = useMemo(() => {
+    const baseActions = [
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
@@ -248,40 +273,52 @@ const useQuickActions = () => {
         onClick: handleFocusLinkPanel(selectedElement?.id),
         ...actionMenuProps,
       },
-      {
-        Icon: Eraser,
-        label: ACTION_TEXT.CLEAR_ANIMATIONS,
-        onClick: () => handleClearAnimations(selectedElement?.id),
-        separator: 'top',
-        disabled: !selectedElementAnimations?.length,
-        ...actionMenuProps,
-      },
-    ],
-    [
-      handleClearAnimations,
-      handleFocusLinkPanel,
-      handleFocusAnimationPanel,
-      actionMenuProps,
-      selectedElement?.id,
-      selectedElementAnimations?.length,
-    ]
-  );
+    ];
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.RESET_ELEMENT,
+      onClick: () =>
+        handleElementReset({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: selectedElement?.type,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
+  }, [
+    handleFocusAnimationPanel,
+    selectedElement?.id,
+    selectedElement?.type,
+    actionMenuProps,
+    handleFocusLinkPanel,
+    showClearAction,
+    handleElementReset,
+    resetProperties,
+  ]);
 
   const foregroundImageActions = useMemo(
     () => [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMedia3pPanel(selectedElement?.id),
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
+          handleFocusMediaPanel(selectedElement?.id)(ev);
+        },
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
     ],
     [
       actionMenuProps,
-      handleFocusMedia3pPanel,
+      handleFocusMediaPanel,
       foregroundCommonActions,
       selectedElement?.id,
+      dispatchStoryEvent,
     ]
   );
 
@@ -303,28 +340,140 @@ const useQuickActions = () => {
     ]
   );
 
+  const textActions = useMemo(
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTION_TEXT.CHANGE_COLOR,
+        onClick: handleFocusTextColor(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      {
+        Icon: LetterTLargeLetterTSmall,
+        label: ACTION_TEXT.CHANGE_FONT,
+        onClick: handleFocusFontPicker(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
+    [
+      foregroundCommonActions,
+      actionMenuProps,
+      selectedElement?.id,
+      handleFocusTextColor,
+      handleFocusFontPicker,
+    ]
+  );
+
+  const videoActions = useMemo(() => {
+    const [baseActions, clearActions] = showClearAction
+      ? [
+          foregroundImageActions.slice(0, foregroundImageActions.length - 1),
+          foregroundImageActions.slice(-1),
+        ]
+      : [foregroundImageActions, []];
+
+    return [
+      ...baseActions,
+      {
+        Icon: Captions,
+        label: ACTION_TEXT.ADD_CAPTIONS,
+        onClick: handleFocusCaptionsPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...clearActions,
+    ];
+  }, [
+    showClearAction,
+    foregroundImageActions,
+    handleFocusCaptionsPanel,
+    selectedElement?.id,
+    actionMenuProps,
+  ]);
+
+  const backgroundElementMediaActions = useMemo(() => {
+    const baseActions = [
+      {
+        Icon: PictureSwap,
+        label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+          handleFocusMediaPanel(selectedElement?.id)(ev);
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: CircleSpeed,
+        label: ACTION_TEXT.ADD_ANIMATION,
+        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+    ];
+
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTION_TEXT.RESET_ELEMENT,
+      onClick: () =>
+        handleElementReset({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: ELEMENT_TYPE.BACKGROUND,
+        }),
+      separator: 'top',
+      ...actionMenuProps,
+    };
+
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
+  }, [
+    actionMenuProps,
+    handleFocusAnimationPanel,
+    selectedElement?.id,
+    showClearAction,
+    handleElementReset,
+    dispatchStoryEvent,
+    handleFocusMediaPanel,
+    resetProperties,
+  ]);
+
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
     return [];
   }
 
+  const isBackgroundElementMedia = Boolean(
+    backgroundElement && backgroundElement?.resource
+  );
+
+  const noElementsSelected = selectedElements.length === 0;
+  const isBackgroundSelected = selectedElements?.[0]?.isBackground;
+
   // Return the base state if:
   //  1. no element is selected
-  //  2. the selected element is the background element
+  //  2. or, the selected element is the background element and it's not media
   if (
-    (selectedElements.length === 0 && backgroundElement) ||
-    selectedElements[0]?.isBackground
+    noElementsSelected ||
+    (isBackgroundSelected && !isBackgroundElementMedia)
   ) {
     return defaultActions;
   }
 
+  // return background media actions if:
+  // 1. the background is selected
+  // 2. and, the background is selected
+  if (isBackgroundSelected && isBackgroundElementMedia) {
+    return backgroundElementMediaActions;
+  }
+
+  // switch quick actions based on non-background element type
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPE.IMAGE:
       return foregroundImageActions;
     case ELEMENT_TYPE.SHAPE:
       return shapeActions;
     case ELEMENT_TYPE.TEXT:
+      return textActions;
     case ELEMENT_TYPE.VIDEO:
+      return videoActions;
     default:
       return [];
   }

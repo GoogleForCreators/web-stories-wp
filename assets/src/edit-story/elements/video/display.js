@@ -97,13 +97,14 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           />
         )
       ) : (
+        // eslint-disable-next-line styled-components-a11y/media-has-caption -- False positive.
         <Video
           id={`video-${id}`}
           poster={poster || resource.poster}
           style={style}
           {...videoProps}
+          preload="metadata"
           loop={loop}
-          preload="none"
           ref={ref}
           data-testid="videoElement"
           data-leaf-element="true"

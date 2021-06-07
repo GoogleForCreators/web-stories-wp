@@ -86,12 +86,14 @@ function combineElements(
     : {};
 
   const propsFromFirst = [
+    'alt',
     'type',
     'resource',
     'scale',
     'focalX',
     'focalY',
     'tracks',
+    'poster',
   ];
 
   // If the element we're dropping into is not background, maintain link, too.
@@ -103,9 +105,9 @@ function combineElements(
       propsFromFirst.push('borderRadius');
     }
   } else {
-    // If we're dropping into background, maintain the flip, too.
-    // @todo This behavior has been since the beginning, however, it's not consistent with how other elements behave -- needs confirmation.
+    // If we're dropping into background, maintain the flip and overlay, too.
     propsFromFirst.push('flip');
+    propsFromFirst.push('overlay');
   }
   const mediaProps = objectPick(element, propsFromFirst);
 

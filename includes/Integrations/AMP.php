@@ -256,7 +256,14 @@ class AMP extends Service_Base {
 	 * @return array The modified configuration.
 	 */
 	public function filter_amp_optimizer_config( $configuration ) {
-		$configuration[ Optimizer\Transformer\RewriteAmpUrls::class ][ Optimizer\Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED ] = false;
+		// These classes were only added in AMP 2.1.
+		if (
+			is_singular( Story_Post_Type::POST_TYPE_SLUG ) &&
+			class_exists( '\AmpProject\Optimizer\Transformer\RewriteAmpUrls' ) &&
+			class_exists( '\AmpProject\Optimizer\Configuration\RewriteAmpUrlsConfiguration' )
+		) {
+			$configuration[ Optimizer\Transformer\RewriteAmpUrls::class ][ Optimizer\Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED ] = false;
+		}
 		return $configuration;
 	}
 

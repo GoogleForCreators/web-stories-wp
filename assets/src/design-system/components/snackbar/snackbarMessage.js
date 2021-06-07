@@ -60,7 +60,7 @@ MessageContainer.propTypes = {
 
 const Message = styled(Text)`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
-  max-width: 206px;
+  max-width: 430px;
   padding-right: ${({ hasAction }) => (hasAction ? '52px' : '0px')};
 `;
 
@@ -76,6 +76,7 @@ const ActionButton = styled(Button)`
   height: 2em;
   padding: 0;
   color: ${({ theme }) => theme.colors.inverted.fg.linkNormal};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
 
   ${({ theme }) =>
     focusableOutlineCSS(

@@ -1,8 +1,7 @@
 {
-  "version": 25,
+  "version": 27,
   "pages": [
     {
-      "animations": [],
       "elements": [
         {
           "opacity": 100,
@@ -207,14 +206,13 @@
           "y": 355
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Roboto"],
       "id": "db308a1e-9fbd-48a0-b7ee-4ac232f23459"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -420,14 +418,14 @@
           "y": 392
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Source Serif Pro"],
       "id": "05c03e47-aa32-46c9-8324-3d1c89e40720"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -644,14 +642,14 @@
           "marginOffset": 3.599999999999998
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Poppins", "IBM Plex Sans", "Rubik"],
       "id": "b30adc33-602f-463c-8a01-3407a8ca5ab1"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -858,14 +856,14 @@
           "marginOffset": 4.199000000000002
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Playfair Display", "Source Serif Pro"],
       "id": "3762e203-e4e5-4a70-83a5-a45f832c5c6a"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1053,14 +1051,14 @@
           "y": 355
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Oswald", "Roboto Condensed"],
       "id": "23e0dfcc-a5f8-4333-b130-34c6c09790eb"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1264,14 +1262,14 @@
           "y": 397
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Raleway", "Merriweather"],
       "id": "27b30409-0757-47cd-b66b-95404b18bbd4"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1523,14 +1521,14 @@
           "y": 392
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Titillium Web", "Work Sans", "Montserrat"],
       "id": "3c30606b-4f07-47ff-9fdc-f3161a69108b"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1804,14 +1802,14 @@
           "marginOffset": 5.957999999999998
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Nunito", "Karla"],
       "id": "6074e40e-c120-498b-81d4-dc6337166914"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1938,6 +1936,8 @@
           "y": 513
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Dancing Script", "Open Sans Condensed"],

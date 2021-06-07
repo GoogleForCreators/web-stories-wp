@@ -37,11 +37,17 @@ const ScreenMask = styled.div`
 
 export default function Mask({ onDismiss }) {
   return (
-    <ScreenMask
-      data-testid="context-menu-mask"
-      hasOnDismiss={Boolean(onDismiss)}
-      onClick={onDismiss || noop}
-    />
+    <>
+      {/*
+        Disable Reason: Allow pointer events to pass through if there's no 'onDismiss' to preserve transition
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+      <ScreenMask
+        data-testid="context-menu-mask"
+        hasOnDismiss={Boolean(onDismiss)}
+        onClick={onDismiss || noop}
+      />
+    </>
   );
 }
 

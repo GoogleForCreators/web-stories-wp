@@ -16,7 +16,7 @@
  */
 
 
-namespace Google\Web_Stories\Admin\Tests;
+namespace Google\Web_Stories\Tests\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;
 use Google\Web_Stories\Traits\Theme_Support;

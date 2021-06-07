@@ -97,6 +97,7 @@ const ForegroundSpan = styled(Span)`
   background: none;
 `;
 
+// Using attributes to avoid creation of hundreds of classes by styled components.
 const FillElement = styled.p`
   margin: 0;
   ${elementFillContent}

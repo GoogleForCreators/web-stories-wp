@@ -91,6 +91,7 @@ export default function useMediaPicker({
           onPermissionError();
         }
         evt.preventDefault();
+        return;
       }
 
       // Create the media frame.

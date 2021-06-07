@@ -17,7 +17,11 @@
  * Internal dependencies
  */
 import { DOCUMENT, DESIGN } from '../../components/inspector';
-import { MEDIA, MEDIA3P, TEXT } from '../../components/library/constants';
+import {
+  MEDIA,
+  MEDIA3P,
+  TEXT as TEXT_SET,
+} from '../../components/library/constants';
 
 /**
  * Highlight state object
@@ -41,11 +45,13 @@ const keys = {
   PUBLISHER_LOGO: 'PUBLISHER_LOGO',
   VIDEO_A11Y_POSTER: 'VIDEO_A11Y_POSTER',
   STYLE: 'STYLE',
+  FONT: 'FONT',
+  TEXT_COLOR: 'TEXT_COLOR',
 
   // LIBRARY
   MEDIA: 'MEDIA',
   MEDIA3P: 'MEDIA3P',
-  TEXT: 'TEXT',
+  TEXT_SET: 'TEXT',
 };
 
 export const STATES = {
@@ -82,6 +88,10 @@ export const STATES = {
     focus: true,
     tab: DESIGN,
   },
+  [keys.FONT]: {
+    focus: true,
+    tab: DESIGN,
+  },
   [keys.LINK]: {
     focus: true,
     tab: DESIGN,
@@ -91,6 +101,10 @@ export const STATES = {
     tab: DESIGN,
   },
   [keys.STYLE]: {
+    focus: true,
+    tab: DESIGN,
+  },
+  [keys.TEXT_COLOR]: {
     focus: true,
     tab: DESIGN,
   },
@@ -104,9 +118,9 @@ export const STATES = {
     focus: true,
     tab: MEDIA3P.id,
   },
-  [keys.TEXT]: {
+  [keys.TEXT_SET]: {
     focus: true,
-    tab: TEXT.id,
+    tab: TEXT_SET.id,
   },
 };
 
