@@ -105,7 +105,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: mysql
-          coverage: xdebug
+          coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
           tools: composer, cs2pr
 
       - name: Install dependencies
@@ -133,6 +133,9 @@ jobs:
           git apply patches/composer.patch
           composer dump-autoload --no-interaction
         if: ${{ matrix.php == '8.0' }}
+
+      - name: Set up problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Run tests
         run: |
