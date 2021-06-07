@@ -21,6 +21,10 @@ import {
   uploadMedia,
   deleteMedia,
 } from '@web-stories-wp/e2e-test-utils';
+/**
+ * WordPress dependencies
+ */
+import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 
 describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -37,5 +41,19 @@ describe('Inserting Media from Dialog', () => {
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await deleteMedia(filename);
+  });
+
+  // Disable test, as test is not logging out as admin.
+  // TODO https://github.com/google/web-stories-wp/issues/7790
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should see permission error dialog as a contributor user', async () => {
+    await loginUser('contributor', 'password');
+
+    await createNewStory();
+    await expect(page).toClick('button', { text: 'Upload' });
+    await page.waitForSelector('.ReactModal__Content');
+    await expect(page).toMatch('Access Restrictions');
+
+    await switchUserToAdmin();
   });
 });

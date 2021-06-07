@@ -137,7 +137,7 @@ describe('Page output', () => {
           elements: [
             {
               ...backgroundElement,
-              backgroundOverlay: { color: { r: 0, g: 255, b: 0, a: 0.4 } },
+              overlay: { color: { r: 0, g: 255, b: 0, a: 0.4 } },
             },
           ],
         },
@@ -870,6 +870,95 @@ describe('Page output', () => {
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).not.toContain('border-width:10px 10px 10px 10px;');
       expect(content).not.toContain('border-color:rgba(255,255,255,1);');
+    });
+  });
+
+  describe('overlay', () => {
+    const BACKGROUND_ELEMENT = {
+      isBackground: true,
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+      },
+    };
+
+    const MEDIA_ELEMENT = {
+      ...BACKGROUND_ELEMENT,
+      isBackground: false,
+      id: 'baz',
+      type: 'image',
+    };
+
+    it('should output image with linear overlay if set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...MEDIA_ELEMENT,
+              overlay: {
+                type: 'linear',
+                rotation: 0,
+                stops: [
+                  { color: { r: 0, g: 0, b: 0, a: 0 }, position: 0 },
+                  { color: { r: 0, g: 0, b: 0, a: 1 }, position: 1 },
+                ],
+                alpha: 0.7,
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain(
+        'background-image:linear-gradient(0.5turn, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%)'
+      );
+    });
+
+    it('should output video with solid overlay if set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...MEDIA_ELEMENT,
+              type: 'video',
+              overlay: {
+                color: { r: 0, g: 0, b: 0, a: 0.5 },
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('background-color:rgba(0,0,0,0.5)');
     });
   });
 

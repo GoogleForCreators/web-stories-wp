@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const STORY_EVENTS = {
-  onInitialElementAdded: 'onInitialElementAdded',
-  onSecondPageAdded: 'onSecondPageAdded',
-  onFifthPageAdded: 'onFifthPageAdded',
-  onReplaceBackgroundMedia: 'onReplaceBackgroundMedia',
-  onReplaceForegroundMedia: 'onReplaceForegroundMedia',
-};
+
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
+
+/**
+ * The captions panel containing inputs for adding captions and subtitles.
+ */
+export class Captions extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get addCaptionsButton() {
+    return this.getByRole('button', { name: /upload a file/i });
+  }
+}

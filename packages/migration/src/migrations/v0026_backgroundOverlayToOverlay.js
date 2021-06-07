@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const STORY_EVENTS = {
-  onInitialElementAdded: 'onInitialElementAdded',
-  onSecondPageAdded: 'onSecondPageAdded',
-  onFifthPageAdded: 'onFifthPageAdded',
-  onReplaceBackgroundMedia: 'onReplaceBackgroundMedia',
-  onReplaceForegroundMedia: 'onReplaceForegroundMedia',
-};
+
+function backgroundOverlayToOverlay({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
+
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (typeof element.backgroundOverlay !== 'undefined') {
+    element.overlay = element.backgroundOverlay;
+    delete element.backgroundOverlay;
+  }
+  return element;
+}
+
+export default backgroundOverlayToOverlay;

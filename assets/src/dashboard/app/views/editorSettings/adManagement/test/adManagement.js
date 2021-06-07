@@ -29,6 +29,11 @@ import AdManagement, { TEXT } from '..';
 describe('Editor Settings: Ad Management group settings <AdManagement />', function () {
   let adNetwork;
   let mockUpdate;
+  const defaultSiteKitStatus = {
+    installed: false,
+    adsenseActive: false,
+    active: false,
+  };
 
   beforeEach(() => {
     adNetwork = AD_NETWORK_TYPE.NONE;
@@ -47,6 +52,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -70,6 +76,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -90,6 +97,7 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
         publisherId=""
         adSenseSlotId=""
         adManagerSlotId=""
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -103,5 +111,29 @@ describe('Editor Settings: Ad Management group settings <AdManagement />', funct
       }
     );
     expect(helperLink).toBeInTheDocument();
+  });
+
+  it('should render adsense message when site kit is installed', function () {
+    renderWithProviders(
+      <AdManagement
+        adNetwork={AD_NETWORK_TYPE.ADMANAGER}
+        updateSettings={mockUpdate}
+        publisherId=""
+        adSenseSlotId=""
+        adManagerSlotId=""
+        siteKitStatus={{
+          ...defaultSiteKitStatus,
+          active: true,
+          installed: true,
+          adsenseActive: true,
+        }}
+      />
+    );
+
+    const sectionHeader = screen.getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
+
+    const siteKitMessage = screen.getByText(TEXT.SITE_KIT_IN_USE);
+    expect(siteKitMessage).toBeInTheDocument();
   });
 });

@@ -63,7 +63,7 @@ export class Canvas extends Container {
 
   get quickActionMenu() {
     return this._get(
-      this.getByRole('dialog'),
+      this.getByRole('menu'),
       'quickActionMenu',
       QuickActionMenu
     );

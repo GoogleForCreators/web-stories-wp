@@ -92,7 +92,7 @@ describe('clearBackgroundElement', () => {
             isBackground: true,
           },
           elements: [
-            { id: '456', isBackground: true, backgroundOverlay: {} },
+            { id: '456', isBackground: true, overlay: {} },
             { id: '789' },
           ],
         },

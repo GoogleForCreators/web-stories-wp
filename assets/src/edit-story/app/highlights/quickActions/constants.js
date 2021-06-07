@@ -40,10 +40,12 @@ export const ELEMENT_TYPE_COPY = {
 export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add link', 'web-stories'),
+  ADD_CAPTIONS: __('Add captions', 'web-stories'),
   CHANGE_BACKGROUND_COLOR: __('Change background color', 'web-stories'),
+  CHANGE_TEXT_COLOR: __('Change color', 'web-stories'),
   CHANGE_COLOR: __('Change color', 'web-stories'),
-  CLEAR_ANIMATIONS: __('Clear animations', 'web-stories'),
-  CLEAR_ANIMATION_AND_FILTERS: __('Clear filters and animation', 'web-stories'),
+  RESET_ELEMENT: __('Reset element', 'web-stories'),
+  CHANGE_FONT: __('Edit text', 'web-stories'),
   INSERT_BACKGROUND_MEDIA: __('Insert background media', 'web-stories'),
   INSERT_TEXT: __('Insert text', 'web-stories'),
   REPLACE_BACKGROUND_MEDIA: __('Replace background', 'web-stories'),
@@ -52,10 +54,23 @@ export const ACTION_TEXT = {
 
 export const RESET_PROPERTIES = {
   ANIMATION: 'animation',
-  BACKGROUND_OVERLAY: 'backgroundOverlay',
+  OVERLAY: 'overlay',
+  STYLES: 'styles',
 };
 
 export const RESET_LIST_COPY = {
   [RESET_PROPERTIES.ANIMATION]: __('animations', 'web-stories'),
-  [RESET_PROPERTIES.BACKGROUND_OVERLAY]: __('filters', 'web-stories'),
+  [RESET_PROPERTIES.OVERLAY]: __('filters', 'web-stories'),
+  [RESET_PROPERTIES.STYLES]: __('styles', 'web-stories'),
+};
+
+export const RESET_DEFAULTS = {
+  TEXT_BORDER_RADIUS: {
+    locked: true,
+    topLeft: 2,
+    topRight: 2,
+    bottomLeft: 2,
+    bottomRight: 2,
+  },
+  STANDARD_BORDER_RADIUS: 0,
 };

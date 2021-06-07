@@ -545,14 +545,19 @@ describe('Grid view', () => {
       // now the focused item should be the first context menu item
       const [contextMenuList] =
         within(activeStoryContainer).getAllByTestId(/context-menu-list/);
+      await expectAsync(contextMenuList).toHaveNoViolations();
       // it is focused on the link within the list
       const [firstContextMenuItem, secondContextMenuItem] =
         within(contextMenuList).getAllByRole('menuitem');
-      expect(firstContextMenuItem).toEqual(document.activeElement);
+      expect(firstContextMenuItem.innerText).toEqual(
+        document.activeElement.innerText
+      );
 
       // tab to the next item
       await fixture.events.keyboard.press('tab');
-      expect(secondContextMenuItem).toEqual(document.activeElement);
+      expect(secondContextMenuItem.innerText).toEqual(
+        document.activeElement.innerText
+      );
     });
 
     it('should rename a story via keyboard', async () => {

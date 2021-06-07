@@ -71,7 +71,8 @@ const UploadingIndicator = styled.div`
   background: linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%);
   background-size: 400% 400%;
   position: absolute;
-  bottom: 10px;
+  bottom: 0px;
+  border-radius: 0px 0px 4px 4px;
 
   animation: ${gradientAnimation} 4s ease infinite;
 

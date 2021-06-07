@@ -28,7 +28,7 @@ describe('getInitialStyleFromKeyframes', () => {
     ];
 
     expect(getInitialStyleFromKeyframes(keyframes)).toStrictEqual({
-      opacity: 1,
+      '--initial-opacity': 1,
     });
   });
 
@@ -39,8 +39,7 @@ describe('getInitialStyleFromKeyframes', () => {
     };
 
     expect(getInitialStyleFromKeyframes(keyframes)).toStrictEqual({
-      opacity: 0,
-      color: '#fff',
+      '--initial-opacity': 0,
     });
   });
 
@@ -59,7 +58,7 @@ describe('getInitialStyleFromKeyframes', () => {
     ];
 
     expect(getInitialStyleFromKeyframes(easingSample)).toStrictEqual({
-      transform: 'scale(0)',
+      '--initial-transform': 'scale(0)',
     });
 
     // offset
@@ -70,8 +69,8 @@ describe('getInitialStyleFromKeyframes', () => {
     };
 
     expect(getInitialStyleFromKeyframes(offsetSample)).toStrictEqual({
-      opacity: 0,
-      transform: 'scale(0.25)',
+      '--initial-opacity': 0,
+      '--initial-transform': 'scale(0.25)',
     });
   });
 });

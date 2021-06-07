@@ -27,7 +27,7 @@ import GoogleAnalyticsSettings, { TEXT } from '..';
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   let googleAnalyticsId;
   let mockUpdate;
-  const defaultsiteKitStatus = {
+  const defaultSiteKitStatus = {
     installed: false,
     analyticsActive: false,
     active: false,
@@ -44,12 +44,12 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     googleAnalyticsId = '';
   });
 
-  it('should render google analytics input and helper text by default', function () {
+  it('should render Google Analytics input and helper text by default', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -61,12 +61,12 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
-  it('should render a visually hidden label for google analytics input', function () {
+  it('should render a visually hidden label for Google Analytics input', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -74,30 +74,30 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  it('should not allow the input to be active when analytics module is active', function () {
+  it('should not display any input field when analytics module is active', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitStatus={{
-          ...defaultsiteKitStatus,
+          ...defaultSiteKitStatus,
           active: true,
           analyticsActive: true,
         }}
       />
     );
 
-    const input = screen.getByRole('textbox');
-    expect(input).toBeDisabled();
+    const input = screen.queryByRole('textbox');
+    expect(input).not.toBeInTheDocument();
   });
 
-  it('should allow the input to be active when site kit is installed but analytics module is not active', function () {
+  it('should allow the input to be active when Site Kit is installed but analytics module is not active', function () {
     renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitStatus={{
-          ...defaultsiteKitStatus,
+          ...defaultSiteKitStatus,
           active: false,
           installed: true,
         }}
@@ -113,7 +113,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -127,7 +127,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -141,7 +141,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -159,7 +159,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -175,7 +175,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 
@@ -190,7 +190,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitStatus={{ ...defaultsiteKitStatus }}
+        siteKitStatus={defaultSiteKitStatus}
       />
     );
 

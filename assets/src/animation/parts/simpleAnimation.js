@@ -73,24 +73,28 @@ function SimpleAnimation(
   WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
   const AMPTarget = function ({ children, style = {} }) {
-    const initialStylesFromKeyframes = targetLeafElement
+    const animationStyle = targetLeafElement
       ? {}
       : getInitialStyleFromKeyframes(keyframes);
     const options = useClippingContainer
       ? {
           useClippingContainer: useClippingContainer,
           style,
-          animationStyle: initialStylesFromKeyframes,
+          animationStyle,
         }
       : {
           style: {
             ...style,
-            ...initialStylesFromKeyframes,
+            ...animationStyle,
           },
         };
 
     return (
-      <WithAnimation id={`anim-${id}`} {...options}>
+      <WithAnimation
+        id={`anim-${id}`}
+        className="animation-wrapper"
+        {...options}
+      >
         {children}
       </WithAnimation>
     );
