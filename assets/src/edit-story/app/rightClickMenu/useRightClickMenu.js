@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { useMemo } from 'react';
 
 /**
@@ -25,16 +24,9 @@ import { useMemo } from 'react';
 import { useStory } from '..';
 import { noop } from '../../utils/noop';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
+import { RIGHT_CLICK_MENU_LABELS } from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
-
-const RIGHT_CLICK_MENU_LABELS = {
-  COPY: __('Copy', 'web-stories'),
-  PASTE: __('Paste', 'web-stories'),
-  DELETE: __('Delete', 'web-stories'),
-  DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
-  DELETE_PAGE: __('Delete page', 'web-stories'),
-};
 
 /**
  * Determines the items displayed in the right click menu
