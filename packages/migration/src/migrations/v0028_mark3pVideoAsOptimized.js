@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function video3p({ pages, ...rest }) {
+function mark3pVideoAsOptimized({ pages, ...rest }) {
   return {
     pages: pages.map(reducePage),
     ...rest,
@@ -40,4 +40,4 @@ function updateElement(element) {
   return element;
 }
 
-export default video3p;
+export default mark3pVideoAsOptimized;

@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import video3p from '../v0028_video3p';
+import mark3pVideoAsOptimized from '../v0028_mark3pVideoAsOptimized';
 
-describe('video3p', () => {
-  it('should migrate lengthFormatted to length', () => {
+describe('mark3pVideoAsOptimized', () => {
+  it('should migrate 3P video to optimized', () => {
     expect(
-      video3p({
+      mark3pVideoAsOptimized({
         _test: 'story',
         pages: [
           {
