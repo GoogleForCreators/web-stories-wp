@@ -28,7 +28,9 @@ import { __ } from '@web-stories-wp/i18n';
 import Tooltip from '../../tooltip';
 import { PLACEMENT, Text, THEME_CONSTANTS } from '../../../../design-system';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  white-space: nowrap;
+`;
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
