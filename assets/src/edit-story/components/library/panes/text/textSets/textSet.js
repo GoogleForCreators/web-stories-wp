@@ -129,10 +129,6 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
           elements={elements}
           elementProps={{}}
           onClick={onClick}
-          previewSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE,
-          }}
           cloneElement={DragContainer}
           cloneProps={{
             width: dragWidth,
