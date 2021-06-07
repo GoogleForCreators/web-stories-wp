@@ -56,7 +56,6 @@ describe('Author User', () => {
 
   it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();
-    await percySnapshot(page, 'Stripped markup');
 
     await insertStoryTitle('Previewing without Publishing');
 

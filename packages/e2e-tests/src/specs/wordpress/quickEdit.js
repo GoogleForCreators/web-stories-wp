@@ -26,7 +26,6 @@ import {
  * External dependencies
  */
 import { createNewStory } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 describe('Quick Edit', () => {
   beforeAll(async () => {
@@ -39,7 +38,6 @@ describe('Quick Edit', () => {
 
   it('should save story without breaking markup', async () => {
     await createNewStory();
-    await percySnapshot(page, 'breaking markup');
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
