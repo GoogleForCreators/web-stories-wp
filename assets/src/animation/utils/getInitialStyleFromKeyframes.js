@@ -14,8 +14,16 @@
  * limitations under the License.
  */
 
-const IGNORE_LIST = new Set(['easing', 'offset', 'composite']);
+const ALLOWLIST = ['opacity', 'transform'];
 
+/**
+ * Get a key-value pair of custom CSS properties based on keyframes.
+ *
+ * The styles are used in the output's style[amp-custom].
+ *
+ * @param {Array<Object>|Object} keyframes Keyframes.
+ * @return {Object<string, string>} Key value pair of initial styles.
+ */
 function getInitialStyleFromKeyframes(keyframes) {
   const initialStyle = {};
   let frame = null;
@@ -31,12 +39,12 @@ function getInitialStyleFromKeyframes(keyframes) {
   }
 
   Object.keys(frame).forEach((key) => {
-    if (!IGNORE_LIST.has(key.toLowerCase())) {
+    if (ALLOWLIST.includes(key.toLowerCase())) {
       const value = frame[key];
       if (Array.isArray(value)) {
-        initialStyle[key] = value[0];
+        initialStyle[`--initial-${key}`] = value[0];
       } else {
-        initialStyle[key] = value;
+        initialStyle[`--initial-${key}`] = value;
       }
     }
   });
