@@ -1,9 +1,7 @@
 {
-  "version": 25,
+  "version": 27,
   "pages": [
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -142,6 +140,8 @@
           "id": "1f6c6ae7-01b2-4edb-9626-dac1cb0e5e91"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "cf91578e-22d6-424d-928a-8e0917cfa48d",
@@ -163,8 +163,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -304,6 +302,8 @@
           "type": "text"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "266aff79-1125-4ffd-a4e5-9100541c1b5f",
@@ -325,8 +325,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -465,6 +463,8 @@
           "y": 462
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "9d8b64c3-5692-4e4c-ae46-785e23613db1",
@@ -486,8 +486,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -627,6 +625,8 @@
           "type": "text"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 74, "g": 64, "b": 177 } },
       "type": "page",
       "id": "f3d54fcf-e8ae-4232-b400-465c81953282",
@@ -648,8 +648,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -788,6 +786,8 @@
           "type": "text"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "6728de08-eedb-40a2-9a3a-604ff4c87214",
@@ -809,8 +809,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -949,6 +947,8 @@
           "type": "text"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "87eb274d-a2dd-495f-add0-ad681cf757f5",
@@ -970,8 +970,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1110,6 +1108,8 @@
           "type": "text"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "f79a3e34-81ab-4165-a2aa-83da192b1e9d",
@@ -1131,8 +1131,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1167,7 +1165,7 @@
             "local": true,
             "sizes": []
           },
-          "backgroundOverlay": null
+          "overlay": null
         },
         {
           "opacity": 84,
@@ -1272,6 +1270,8 @@
           "type": "text"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "4cbf7ec8-cf12-4ff2-bfb0-3bef7f3d76cb",
@@ -1293,8 +1293,6 @@
       }
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1452,6 +1450,8 @@
           }
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
       "id": "17fc30f7-8968-41a2-aaef-c7a1be1b753c",
