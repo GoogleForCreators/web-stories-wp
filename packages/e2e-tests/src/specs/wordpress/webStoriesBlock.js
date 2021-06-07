@@ -23,12 +23,9 @@ import {
   withDisabledToolbarOnFrontend,
   insertBlock,
   withPlugin,
+  createNewPost,
+  setPostContent,
 } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { createNewPost, setPostContent } from '@wordpress/e2e-test-utils';
 
 /**
  * Internal dependencies

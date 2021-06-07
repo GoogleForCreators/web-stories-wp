@@ -24,12 +24,8 @@ import {
   insertStoryTitle,
   withPlugin,
   publishStory,
+  getEditedPostContent,
 } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { getEditedPostContent } from '@wordpress/e2e-test-utils';
 
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests

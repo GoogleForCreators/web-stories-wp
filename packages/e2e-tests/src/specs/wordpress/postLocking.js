@@ -23,17 +23,11 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
-} from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
-
-/**
- * WordPress dependencies
- */
-import {
+  visitAdminPage,
   activatePlugin,
   deactivatePlugin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
+} from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 

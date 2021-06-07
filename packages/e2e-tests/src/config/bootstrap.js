@@ -19,15 +19,12 @@
  */
 import { setDefaultOptions } from 'expect-puppeteer';
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
-import { setCurrentUser, trashAllPosts } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
 import {
   enablePageDialogAccept,
   setBrowserViewport,
-} from '@wordpress/e2e-test-utils';
+  setCurrentUser,
+  trashAllPosts,
+} from '@web-stories-wp/e2e-test-utils';
 
 // Extend Jest matchers.
 import 'jest-extended';

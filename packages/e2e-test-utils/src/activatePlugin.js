@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,20 @@
 /**
  * Internal dependencies
  */
+import { setCurrentUser } from './user';
 import visitAdminPage from './visitAdminPage';
 
-/**
- * Creates a new story.
- */
-async function visitDashboard() {
-  await visitAdminPage(
-    'edit.php',
-    'post_type=web-story&page=stories-dashboard'
-  );
-}
+async function activatePlugin(slug) {
+  await setCurrentUser('admin', 'password');
+  await visitAdminPage('plugins.php');
+  const disableLink = await page.$(`tr[data-slug="${slug}"] .deactivate a`);
 
-export default visitDashboard;
+  if (disableLink) {
+    await setCurrentUser('admin', 'password');
+    return;
+  }
+
+  await page.click(`tr[data-slug="${slug}"] .activate a`);
+  await page.waitForSelector(`tr[data-slug="${slug}"] .deactivate a`);
+}
+export default activatePlugin;

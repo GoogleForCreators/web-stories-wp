@@ -15,9 +15,10 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import activatePlugin from './activatePlugin';
+import deactivatePlugin from './deactivatePlugin';
 
 /**
  * Establishes test lifecycle to activate a given plugin
