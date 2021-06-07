@@ -30,9 +30,8 @@ function reducePage({ elements, ...rest }) {
 
 function updateElement(element) {
   if (element.type === 'video' && element.resource && element.resource?.id) {
-    const idResource = element.resource?.id;
-    const idOrigin = idResource?.toString().split(':')?.[0];
-    const isCoverrMedia = idOrigin === 'media/coverr';
+    const resourseId = element.resource.id.toString();
+    const isCoverrMedia = resourseId.startsWith('media/coverr');
     if (isCoverrMedia) {
       element.resource.isOptimized = true;
     }
