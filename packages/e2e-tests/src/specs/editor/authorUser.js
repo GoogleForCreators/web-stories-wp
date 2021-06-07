@@ -28,7 +28,6 @@ import {
   addTextElement,
   insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 async function publishStory() {
   await expect(page).toClick('button', { text: 'Publish' });
@@ -74,9 +73,6 @@ describe('Author User', () => {
   //eslint-disable-next-line jest/no-disabled-tests
   it.skip('should be able to publish a story without markup being stripped', async () => {
     await createNewStory();
-    await expect(page).toMatchElement('.display-name', {
-      text: 'author',
-    });
 
     await insertStoryTitle('Publishing and Previewing');
 
@@ -98,9 +94,6 @@ describe('Author User', () => {
   //eslint-disable-next-line jest/no-disabled-tests
   it.skip('should be able to publish and preview a story without markup being stripped', async () => {
     await createNewStory();
-    await expect(page).toMatchElement('.display-name', {
-      text: 'author',
-    });
 
     await insertStoryTitle('Autosaving and Previewing');
 
