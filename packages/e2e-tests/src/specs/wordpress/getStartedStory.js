@@ -50,6 +50,7 @@ describe('Get Started Story', () => {
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
+
       await percySnapshot(page, 'Get Started Story (Author)');
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
