@@ -91,8 +91,6 @@ else
  echo -e $(status_message "Subscriber already exists, skipping...")
 fi
 
-wp user list
-
 # Make sure the uploads and upgrade folders exist and we have permissions to add files.
 echo -e $(status_message "Ensuring that files can be uploaded...")
 container mkdir -p \
@@ -207,3 +205,7 @@ wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
 wp option patch insert web_stories_experiments enableSVG 1
 wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
 wp option patch insert web_stories_experiments enableSVG 0
+
+wp user list --format=yaml
+wp post list --post_type=attachment --format=yaml
+wp plugin list --format=yaml
