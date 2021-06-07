@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting 3P Media', () => {
-  withUser('admin', 'password');
-
   it('should dismiss message', async () => {
     await createNewStory();
 

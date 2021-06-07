@@ -22,8 +22,6 @@ import { withUser, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('Get Started Story', () => {
   describe('Admin User', () => {
-    withUser('admin', 'password');
-
     it('should pre-fill post title and post content', async () => {
       await visitAdminPage(
         'post-new.php',

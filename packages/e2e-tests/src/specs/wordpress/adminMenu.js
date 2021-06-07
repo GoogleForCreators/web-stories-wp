@@ -17,11 +17,9 @@
 /**
  * External dependencies
  */
-import { withUser, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import { visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('Admin Menu', () => {
-  withUser('admin', 'password');
-
   it('should contain links to Dashboard sub-pages', async () => {
     await visitAdminPage('index.php');
 

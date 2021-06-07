@@ -22,7 +22,6 @@ import {
   addRequestInterception,
   publishPost,
   insertStoryTitle,
-  withUser,
   withPlugin,
   publishStory,
 } from '@web-stories-wp/e2e-test-utils';
@@ -35,8 +34,6 @@ import { getEditedPostContent } from '@wordpress/e2e-test-utils';
 // Disable for https://github.com/google/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Publishing Flow', () => {
-  withUser('admin', 'password');
-
   let stopRequestInterception;
 
   beforeAll(async () => {

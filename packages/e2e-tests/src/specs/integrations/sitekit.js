@@ -22,14 +22,11 @@ import {
   createNewStory,
   previewStory,
   insertStoryTitle,
-  withUser,
   withPlugin,
   visitSettings,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Site Kit plugin integration', () => {
-  withUser('admin', 'password');
-
   describe('Google Analytics', () => {
     withPlugin('e2e-tests-site-kit-analytics-mock');
 

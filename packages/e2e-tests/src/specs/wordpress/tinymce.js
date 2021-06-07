@@ -18,14 +18,9 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import {
-  withPlugin,
-  withUser,
-  visitAdminPage,
-} from '@web-stories-wp/e2e-test-utils';
+import { withPlugin, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
-  withUser('admin', 'password');
   withPlugin('classic-editor');
 
   it('should allow inserting shortcode via modal', async () => {

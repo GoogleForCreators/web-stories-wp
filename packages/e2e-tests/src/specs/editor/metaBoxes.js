@@ -22,12 +22,9 @@ import {
   createNewStory,
   publishStory,
   withPlugin,
-  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
-  withUser('admin', 'password');
-
   describe('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {
       await createNewStory();

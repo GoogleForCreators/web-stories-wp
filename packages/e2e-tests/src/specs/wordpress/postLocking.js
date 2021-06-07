@@ -22,7 +22,6 @@ import {
   visitDashboard,
   createNewStory,
   insertStoryTitle,
-  withUser,
   publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
@@ -41,7 +40,6 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
-  withUser('admin', 'password');
   withExperimentalFeatures(['enablePostLocking']);
 
   beforeAll(async () => {

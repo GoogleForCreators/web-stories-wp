@@ -22,14 +22,11 @@ import {
   clickButton,
   uploadFile,
   deleteMedia,
-  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
 describe('Inserting .mov from dialog', () => {
-  withUser('admin', 'password');
-
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   it('should not list the .mov', async () => {
     await createNewStory();

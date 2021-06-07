@@ -23,12 +23,9 @@ import {
   insertStoryTitle,
   uploadMedia,
   deleteMedia,
-  withUser,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
-  withUser('admin', 'password');
-
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 

@@ -22,7 +22,6 @@ import {
   publishPost,
   withDisabledToolbarOnFrontend,
   insertBlock,
-  withUser,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
@@ -45,8 +44,6 @@ const EMBED_BLOCK_CONTENT = `
 describe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
-
-  withUser('admin', 'password');
 
   beforeAll(async () => {
     removeErrorMessage = addAllowedErrorMessage(

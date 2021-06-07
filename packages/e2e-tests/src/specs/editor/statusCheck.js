@@ -20,8 +20,8 @@
 import {
   addRequestInterception,
   createNewStory,
-  withUser,
 } from '@web-stories-wp/e2e-test-utils';
+
 /**
  * Internal dependencies
  */
@@ -43,8 +43,6 @@ async function interceptStatusCheck(status, body) {
 }
 
 describe('Status Check', () => {
-  withUser('admin', 'password');
-
   let removeErrorMessage;
   beforeAll(() => {
     removeErrorMessage = addAllowedErrorMessage(

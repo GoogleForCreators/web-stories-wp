@@ -23,12 +23,10 @@ import {
   previewStory,
   insertStoryTitle,
   setAnalyticsCode,
-  withUser,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('AMP plugin integration', () => {
-  withUser('admin', 'password');
   withPlugin('amp');
 
   it('should be able to directly preview a story without amp-analytics being stripped', async () => {

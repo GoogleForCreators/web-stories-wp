@@ -17,16 +17,10 @@
 /**
  * External dependencies
  */
-import {
-  createNewStory,
-  publishStory,
-  withUser,
-} from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, publishStory } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
-  withUser('admin', 'password');
-
   it('should show the checklist', async () => {
     await createNewStory();
     await expect(page).toClick('li', { text: 'Checklist' });
