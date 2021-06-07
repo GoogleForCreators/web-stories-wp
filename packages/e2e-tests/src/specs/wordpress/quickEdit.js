@@ -13,28 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * WordPress dependencies
- */
-import {
-  loginUser,
-  switchUserToAdmin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
 
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  publishStory,
+  withUser,
+  visitAdminPage,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Quick Edit', () => {
-  beforeAll(async () => {
-    await loginUser('author', 'password');
-  });
-
-  afterAll(async () => {
-    await switchUserToAdmin();
-  });
+  withUser('author', 'password');
 
   it('should save story without breaking markup', async () => {
     await createNewStory();
@@ -45,14 +36,7 @@ describe('Quick Edit', () => {
 
     await page.type('input[placeholder="Add title"]', storyTitle);
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+    await publishStory();
 
     await visitAdminPage('edit.php', 'post_type=web-story');
 

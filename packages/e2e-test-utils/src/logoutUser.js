@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import visitAdminPage from './visitAdminPage';
+import { createURL } from '@wordpress/e2e-test-utils';
 
-/**
- * Creates a new story.
- */
-async function createNewStory() {
-  await visitAdminPage('post-new.php', 'post_type=web-story');
+async function logoutUser() {
+  await page.goto(createURL('wp-login.php', 'action=logout'));
+  await expect(page).toClick('a', { text: 'log out' });
+  await page.waitForNavigation();
+
+  await expect(page).toMatch(/You are now logged out/i);
 }
 
-export default createNewStory;
+export default logoutUser;

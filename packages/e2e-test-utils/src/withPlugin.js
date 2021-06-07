@@ -20,36 +20,19 @@
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
 /**
- * External dependencies
+ * Establishes test lifecycle to activate a given plugin
+ * for the duration of the test.
+ *
+ * @param {string} slug Plugin slug.
  */
-import {
-  addTextElement,
-  createNewStory,
-  previewStory,
-  insertStoryTitle,
-} from '@web-stories-wp/e2e-test-utils';
-
-describe('Site Kit integration with editor', () => {
+export default function withPlugin(slug) {
+  /* eslint-disable jest/require-top-level-describe */
   beforeAll(async () => {
-    await activatePlugin('e2e-tests-site-kit-analytics-mock');
+    await activatePlugin(slug);
   });
 
   afterAll(async () => {
-    await deactivatePlugin('e2e-tests-site-kit-analytics-mock');
+    await deactivatePlugin(slug);
   });
-
-  it('should print an analytics tag', async () => {
-    await createNewStory();
-
-    await insertStoryTitle('Previewing Analytics');
-
-    await addTextElement();
-
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-    await expect(previewPage).toMatch('XXX-YYY');
-
-    await editorPage.bringToFront();
-    await previewPage.close();
-  });
-});
+  /* eslint-enable jest/require-top-level-describe */
+}

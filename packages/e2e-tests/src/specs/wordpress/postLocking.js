@@ -15,6 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  withExperimentalFeatures,
+  visitDashboard,
+  createNewStory,
+  insertStoryTitle,
+  publishStory,
+} from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
+
+/**
  * WordPress dependencies
  */
 import {
@@ -23,41 +35,19 @@ import {
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
-/**
- * External dependencies
- */
-import {
-  withExperimentalFeatures,
-  visitDashboard,
-  createNewStory,
-  insertStoryTitle,
-} from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
-
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 const storyTitle = 'Test post lock';
 
-describe('Post locking', () => {
+describe('Post Locking', () => {
   withExperimentalFeatures(['enablePostLocking']);
+
   beforeAll(async () => {
     await createNewStory();
 
     await insertStoryTitle(storyTitle);
 
-    // Publish story.
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toClick('button', { text: 'Publish' });
-
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
-
-    // eslint-disable-next-line jest/no-standalone-expect
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+    await publishStory();
 
     await activatePlugin('e2e-tests-post-lock-mock');
   });

@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -28,16 +23,11 @@ import {
   previewStory,
   insertStoryTitle,
   setAnalyticsCode,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('AMP integrations with editor', () => {
-  beforeAll(async () => {
-    await activatePlugin('amp');
-  });
-
-  afterAll(async () => {
-    await deactivatePlugin('amp');
-  });
+describe('AMP plugin integration', () => {
+  withPlugin('amp');
 
   it('should be able to directly preview a story without amp-analytics being stripped', async () => {
     await setAnalyticsCode('UA-10876-1');

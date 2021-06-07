@@ -18,15 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-
-/**
- * WordPress dependencies
- */
-import {
-  loginUser,
-  switchUserToAdmin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
+import { withUser, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('Get Started Story', () => {
   describe('Admin User', () => {
@@ -49,19 +41,15 @@ describe('Get Started Story', () => {
   });
 
   describe('Author User', () => {
-    beforeAll(async () => {
-      await loginUser('author', 'password');
-    });
-
-    afterAll(async () => {
-      await switchUserToAdmin();
-    });
+    withUser('author', 'password');
 
     it('should pre-fill post title and post content', async () => {
       await visitAdminPage(
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
+
+      await percySnapshot(page, 'Get Started Story (Author)');
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
       await expect(page).toMatch(

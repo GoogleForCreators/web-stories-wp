@@ -17,13 +17,20 @@
 /**
  * Internal dependencies
  */
-import visitAdminPage from './visitAdminPage';
+import { getCurrentUser, setCurrentUser } from './user';
 
 /**
- * Creates a new story.
+ * Establishes test lifecycle to enforce a specific user to be logged in.
+ *
+ * @param {string} username Username.
+ * @param {string} password Password.
  */
-async function createNewStory() {
-  await visitAdminPage('post-new.php', 'post_type=web-story');
-}
+export default function withUser(username, password) {
+  const currentUser = getCurrentUser();
 
-export default createNewStory;
+  /* eslint-disable jest/require-top-level-describe */
+  beforeAll(() => setCurrentUser(username, password));
+
+  afterAll(() => setCurrentUser(currentUser.username, currentUser.password));
+  /* eslint-enable jest/require-top-level-describe */
+}

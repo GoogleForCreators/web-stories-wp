@@ -19,6 +19,7 @@
  */
 import { setDefaultOptions } from 'expect-puppeteer';
 import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
+import { setCurrentUser, trashAllPosts } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * WordPress dependencies
@@ -26,7 +27,6 @@ import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 import {
   enablePageDialogAccept,
   setBrowserViewport,
-  trashAllPosts,
 } from '@wordpress/e2e-test-utils';
 
 // Extend Jest matchers.
@@ -118,7 +118,7 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
-setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
+setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
 /**
  * Set up browser.
@@ -238,10 +238,12 @@ beforeAll(async () => {
   enablePageDialogAccept();
   observeConsoleLogging();
   await setupBrowser();
-  await trashAllPosts();
-  await trashAllPosts('web-story');
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
+
+  await setCurrentUser('admin', 'password');
+  await trashAllPosts();
+  await trashAllPosts('web-story');
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
