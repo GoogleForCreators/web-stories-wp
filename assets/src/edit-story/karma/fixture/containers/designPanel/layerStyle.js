@@ -13,10 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const STORY_EVENTS = {
-  onInitialElementAdded: 'onInitialElementAdded',
-  onSecondPageAdded: 'onSecondPageAdded',
-  onFifthPageAdded: 'onFifthPageAdded',
-  onReplaceBackgroundMedia: 'onReplaceBackgroundMedia',
-  onReplaceForegroundMedia: 'onReplaceForegroundMedia',
-};
+
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
+
+/**
+ * The layer style panel containing inputs for adding managing the opacity
+ */
+export class LayerStyle extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /Opacity in percent/i });
+  }
+
+  get collapse() {
+    return this.getByRole('button', { name: /Layer/i });
+  }
+}

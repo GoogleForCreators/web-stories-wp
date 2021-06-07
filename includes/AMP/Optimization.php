@@ -149,11 +149,6 @@ class Optimization {
 
 		$configuration = [
 			Configuration::KEY_TRANSFORMERS => $transformers,
-			// Temporarily disable ESM transformation since STAMP preview mode (#development=1)
-			// is unavailable in amp-story-1.0.mjs (https://github.com/ampproject/amphtml/issues/34364).
-			RewriteAmpUrls::class           => [
-				Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED => false,
-			],
 		];
 
 		/**

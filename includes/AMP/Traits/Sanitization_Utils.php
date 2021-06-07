@@ -59,7 +59,10 @@ trait Sanitization_Utils {
 	}
 
 	/**
-	 * Transform all a tags to add target and rel attributes.
+	 * Transform all hyperlinks to ensure they're always valid.
+	 *
+	 * Adds target and rel attributes.
+	 * Removes empty data-tooltip-icon and data-tooltip-text attributes.
 	 *
 	 * @since 1.1.0
 	 *
@@ -68,6 +71,7 @@ trait Sanitization_Utils {
 	 */
 	private function transform_a_tags( &$document ) {
 		$hyperlinks = $document->getElementsByTagName( 'a' );
+
 		/**
 		 * The <a> element
 		 *
@@ -77,8 +81,17 @@ trait Sanitization_Utils {
 			if ( ! $hyperlink->getAttribute( 'target' ) ) {
 				$hyperlink->setAttribute( 'target', '_blank' );
 			}
+
 			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
 				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			}
+
+			if ( ! $hyperlink->getAttribute( 'data-tooltip-icon' ) ) {
+				$hyperlink->removeAttribute( 'data-tooltip-icon' );
+			}
+
+			if ( ! $hyperlink->getAttribute( 'data-tooltip-text' ) ) {
+				$hyperlink->removeAttribute( 'data-tooltip-text' );
 			}
 		}
 	}

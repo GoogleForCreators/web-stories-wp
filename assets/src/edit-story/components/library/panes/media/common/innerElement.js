@@ -161,7 +161,7 @@ function InnerElement({
     'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
-    preload: 'none',
+    preload: 'metadata',
     poster: displayPoster,
     showWithoutDelay: Boolean(newVideoPosterRef.current),
   };

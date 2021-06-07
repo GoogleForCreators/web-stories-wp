@@ -72,15 +72,15 @@ export class QuickActionMenu extends Container {
     });
   }
 
-  get clearAnimationsButton() {
+  get addCaptionsButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CLEAR_ANIMATIONS,
+      name: ACTION_TEXT.ADD_CAPTIONS,
     });
   }
 
-  get clearAnimationsAndFiltersButton() {
+  get resetElementButton() {
     return this.queryByRole('button', {
-      name: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      name: ACTION_TEXT.RESET_ELEMENT,
     });
   }
 

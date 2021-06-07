@@ -33,13 +33,19 @@ import {
   Link,
   Media,
   PictureSwap,
+  Captions,
 } from '../../../../design-system/icons';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useStory } from '../../story';
+import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import { getResetProperties, getSnackbarClearCopy } from './utils';
-import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
+import {
+  ELEMENT_TYPE,
+  ACTION_TEXT,
+  RESET_PROPERTIES,
+  RESET_DEFAULTS,
+} from './constants';
 
 /** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
 
@@ -54,6 +60,7 @@ import { ELEMENT_TYPE, ACTION_TEXT, RESET_PROPERTIES } from './constants';
  */
 const useQuickActions = () => {
   const { isRTL } = useConfig();
+  const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
     currentPage,
     selectedElementAnimations,
@@ -94,7 +101,7 @@ const useQuickActions = () => {
    * @return {void}
    */
   const handleResetProperties = useCallback(
-    (elementId, properties) => {
+    (elementType, elementId, properties) => {
       const newProperties = {};
       // Choose properties to clear
       if (properties.includes(RESET_PROPERTIES.OVERLAY)) {
@@ -106,6 +113,16 @@ const useQuickActions = () => {
           ...selectedElementAnimations?.[0],
           delete: true,
         };
+      }
+
+      if (properties.includes(RESET_PROPERTIES.STYLES)) {
+        newProperties.opacity = 100;
+        newProperties.border = null;
+        newProperties.borderRadius = null;
+      }
+
+      if (elementType === ELEMENT_TYPE.TEXT) {
+        newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
       updateElementsById({
@@ -122,7 +139,7 @@ const useQuickActions = () => {
   );
 
   /**
-   * Clear animations and show a confirmation snackbar. Clicking
+   * Reset element styles and show a confirmation snackbar. Clicking
    * the action in the snackbar adds the animations back to the element.
    *
    * @param {string} elementId the id of the element
@@ -130,9 +147,9 @@ const useQuickActions = () => {
    * @param {string} elementType the type of element being adjusted
    * @return {void}
    */
-  const handleClearAnimationsAndFilters = useCallback(
+  const handleElementReset = useCallback(
     ({ elementId, resetProperties, elementType }) => {
-      handleResetProperties(elementId, resetProperties);
+      handleResetProperties(elementType, elementId, resetProperties);
       const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({
@@ -177,6 +194,7 @@ const useQuickActions = () => {
     handleFocusFontPicker,
     handleFocusTextSetsPanel,
     handleFocusStylePanel,
+    handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
       handleFocusAnimationPanel: handleFocusPanel(states.ANIMATION),
@@ -186,13 +204,14 @@ const useQuickActions = () => {
       handleFocusFontPicker: handleFocusPanel(states.FONT),
       handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
       handleFocusStylePanel: handleFocusPanel(states.STYLE),
+      handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
     [handleFocusPanel]
   );
 
-  const backgroundElement =
-    currentPage?.elements.find((element) => element.isBackground) ||
-    selectedElements?.[0]?.isBackground;
+  const backgroundElement = currentPage?.elements.find(
+    (element) => element.isBackground
+  );
   const selectedElement = selectedElements?.[0];
 
   const actionMenuProps = useMemo(
@@ -234,11 +253,13 @@ const useQuickActions = () => {
     handleMouseDown,
   ]);
 
+  const resetProperties = useMemo(
+    () => getResetProperties(selectedElement, selectedElementAnimations),
+    [selectedElement, selectedElementAnimations]
+  );
+  const showClearAction = resetProperties.length > 0;
+
   const foregroundCommonActions = useMemo(() => {
-    const resetProperties = getResetProperties(
-      selectedElement,
-      selectedElementAnimations
-    );
     const baseActions = [
       {
         Icon: CircleSpeed,
@@ -256,9 +277,9 @@ const useQuickActions = () => {
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATIONS,
+      label: ACTION_TEXT.RESET_ELEMENT,
       onClick: () =>
-        handleClearAnimationsAndFilters({
+        handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: selectedElement?.type,
@@ -267,16 +288,16 @@ const useQuickActions = () => {
       ...actionMenuProps,
     };
 
-    return resetProperties.length > 0
-      ? [...baseActions, clearAction]
-      : baseActions;
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
   }, [
-    handleClearAnimationsAndFilters,
-    handleFocusLinkPanel,
     handleFocusAnimationPanel,
+    selectedElement?.id,
+    selectedElement?.type,
     actionMenuProps,
-    selectedElement,
-    selectedElementAnimations,
+    handleFocusLinkPanel,
+    showClearAction,
+    handleElementReset,
+    resetProperties,
   ]);
 
   const foregroundImageActions = useMemo(
@@ -284,7 +305,10 @@ const useQuickActions = () => {
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_MEDIA,
-        onClick: handleFocusMediaPanel(selectedElement?.id),
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
+          handleFocusMediaPanel(selectedElement?.id)(ev);
+        },
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
@@ -294,6 +318,7 @@ const useQuickActions = () => {
       handleFocusMediaPanel,
       foregroundCommonActions,
       selectedElement?.id,
+      dispatchStoryEvent,
     ]
   );
 
@@ -340,17 +365,41 @@ const useQuickActions = () => {
     ]
   );
 
-  const backgroundElementMediaActions = useMemo(() => {
-    const resetProperties = getResetProperties(
-      selectedElement,
-      selectedElementAnimations
-    );
+  const videoActions = useMemo(() => {
+    const [baseActions, clearActions] = showClearAction
+      ? [
+          foregroundImageActions.slice(0, foregroundImageActions.length - 1),
+          foregroundImageActions.slice(-1),
+        ]
+      : [foregroundImageActions, []];
 
+    return [
+      ...baseActions,
+      {
+        Icon: Captions,
+        label: ACTION_TEXT.ADD_CAPTIONS,
+        onClick: handleFocusCaptionsPanel(selectedElement?.id),
+        ...actionMenuProps,
+      },
+      ...clearActions,
+    ];
+  }, [
+    showClearAction,
+    foregroundImageActions,
+    handleFocusCaptionsPanel,
+    selectedElement?.id,
+    actionMenuProps,
+  ]);
+
+  const backgroundElementMediaActions = useMemo(() => {
     const baseActions = [
       {
         Icon: PictureSwap,
         label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
-        onClick: handleFocusMediaPanel(selectedElement?.id),
+        onClick: (ev) => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+          handleFocusMediaPanel(selectedElement?.id)(ev);
+        },
         ...actionMenuProps,
       },
       {
@@ -363,9 +412,9 @@ const useQuickActions = () => {
 
     const clearAction = {
       Icon: Eraser,
-      label: ACTION_TEXT.CLEAR_ANIMATION_AND_FILTERS,
+      label: ACTION_TEXT.RESET_ELEMENT,
       onClick: () =>
-        handleClearAnimationsAndFilters({
+        handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
           elementType: ELEMENT_TYPE.BACKGROUND,
@@ -374,16 +423,16 @@ const useQuickActions = () => {
       ...actionMenuProps,
     };
 
-    return resetProperties.length > 0
-      ? [...baseActions, clearAction]
-      : baseActions;
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
   }, [
-    selectedElement,
-    selectedElementAnimations,
-    handleFocusMediaPanel,
     actionMenuProps,
     handleFocusAnimationPanel,
-    handleClearAnimationsAndFilters,
+    selectedElement?.id,
+    showClearAction,
+    handleElementReset,
+    dispatchStoryEvent,
+    handleFocusMediaPanel,
+    resetProperties,
   ]);
 
   // Hide menu if there are multiple elements selected
@@ -395,26 +444,27 @@ const useQuickActions = () => {
     backgroundElement && backgroundElement?.resource
   );
 
+  const noElementsSelected = selectedElements.length === 0;
+  const isBackgroundSelected = selectedElements?.[0]?.isBackground;
+
   // Return the base state if:
   //  1. no element is selected
-  //  2. the selected element is the background element and it's not media
+  //  2. or, the selected element is the background element and it's not media
   if (
-    !isBackgroundElementMedia &&
-    ((selectedElements.length === 0 && backgroundElement) ||
-      selectedElements[0]?.isBackground)
+    noElementsSelected ||
+    (isBackgroundSelected && !isBackgroundElementMedia)
   ) {
     return defaultActions;
   }
 
-  if (
-    isBackgroundElementMedia &&
-    [ELEMENT_TYPE.IMAGE, ELEMENT_TYPE.VIDEO, ELEMENT_TYPE.GIF].indexOf(
-      selectedElements?.[0]?.type
-    ) > -1
-  ) {
+  // return background media actions if:
+  // 1. the background is selected
+  // 2. and, the background is selected
+  if (isBackgroundSelected && isBackgroundElementMedia) {
     return backgroundElementMediaActions;
   }
 
+  // switch quick actions based on non-background element type
   switch (selectedElements?.[0]?.type) {
     case ELEMENT_TYPE.IMAGE:
       return foregroundImageActions;
@@ -423,6 +473,7 @@ const useQuickActions = () => {
     case ELEMENT_TYPE.TEXT:
       return textActions;
     case ELEMENT_TYPE.VIDEO:
+      return videoActions;
     default:
       return [];
   }
