@@ -17,21 +17,22 @@
 /**
  * Internal dependencies
  */
-import { setCurrentUser } from './user';
+import { setCurrentUser, getCurrentUser } from './user';
 import visitAdminPage from './visitAdminPage';
 
 async function deactivatePlugin(slug) {
+  const currentUser = getCurrentUser();
   await setCurrentUser('admin', 'password');
+
   await visitAdminPage('plugins.php');
   const deleteLink = await page.$(`tr[data-slug="${slug}"] .delete a`);
 
-  if (deleteLink) {
-    await setCurrentUser('admin', 'password');
-    return;
+  if (!deleteLink) {
+    await page.click(`tr[data-slug="${slug}"] .deactivate a`);
+    await page.waitForSelector(`tr[data-slug="${slug}"] .delete a`);
   }
 
-  await page.click(`tr[data-slug="${slug}"] .deactivate a`);
-  await page.waitForSelector(`tr[data-slug="${slug}"] .delete a`);
+  await setCurrentUser(currentUser.username, currentUser.password);
 }
 
 export default deactivatePlugin;

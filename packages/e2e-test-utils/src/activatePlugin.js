@@ -17,20 +17,21 @@
 /**
  * Internal dependencies
  */
-import { setCurrentUser } from './user';
+import { getCurrentUser, setCurrentUser } from './user';
 import visitAdminPage from './visitAdminPage';
 
 async function activatePlugin(slug) {
+  const currentUser = getCurrentUser();
   await setCurrentUser('admin', 'password');
+
   await visitAdminPage('plugins.php');
   const disableLink = await page.$(`tr[data-slug="${slug}"] .deactivate a`);
 
   if (disableLink) {
-    await setCurrentUser('admin', 'password');
-    return;
+    await page.click(`tr[data-slug="${slug}"] .activate a`);
+    await page.waitForSelector(`tr[data-slug="${slug}"] .deactivate a`);
   }
 
-  await page.click(`tr[data-slug="${slug}"] .activate a`);
-  await page.waitForSelector(`tr[data-slug="${slug}"] .deactivate a`);
+  await setCurrentUser(currentUser.username, currentUser.password);
 }
 export default activatePlugin;
