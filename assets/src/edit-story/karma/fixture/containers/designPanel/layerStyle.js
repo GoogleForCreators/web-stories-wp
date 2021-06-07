@@ -20,18 +20,18 @@
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The shape style panel containing inputs for adding managing the background color and opacity
+ * The layer style panel containing inputs for adding managing the opacity
  */
-export class ShapeStyle extends AbstractPanel {
+export class LayerStyle extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
   }
 
-  get backgroundColor() {
-    return this.getByRole('textbox', { name: /Background color/i });
+  get opacity() {
+    return this.getByRole('textbox', { name: /Opacity in percent/i });
   }
 
-  get opacity() {
-    return this.getByRole('textbox', { name: /Opacity/i });
+  get collapse() {
+    return this.getByRole('button', { name: /Layer/i });
   }
 }
