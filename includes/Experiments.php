@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @samwhale
+			 * Issue: 6153
+			 * Creation date: 2021-06-07
+			 */
+			[
+				'name'        => 'enableRightClickMenus',
+				'label'       => __( 'Enable Right Click Menus', 'web-stories' ),
+				'description' => __( 'Adds a contextual shortcut menu when right clicking in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: 6148
 			 * Creation date: 2021-05-11
