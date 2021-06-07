@@ -22,6 +22,11 @@ import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { useEffect, useRef } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import TimeZone from './timeZone';
+
 const TimeWrapper = styled.div`
   margin-bottom: 1em;
   padding: 0 20px;
@@ -250,6 +255,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
               </PMButton>
             </InputGroup>
           )}
+          <TimeZone date={localData?.date} />
         </InputRow>
       </Fieldset>
     </TimeWrapper>

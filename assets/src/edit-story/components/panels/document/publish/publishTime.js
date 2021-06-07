@@ -35,6 +35,9 @@ import {
 import DropDownSelect from '../../../../../design-system/components/dropDown/select';
 import { focusStyle } from '../../shared';
 
+// date-fns format without timezone.
+const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';
+
 function PublishTime() {
   const { date, updateStory } = useStory(
     ({
@@ -72,7 +75,10 @@ function PublishTime() {
       if (close && showDatePicker) {
         setShowDatePicker(false);
       }
-      updateStory({ properties: { date: value } });
+      const newDate = format(new Date(value), TIMEZONELESS_FORMAT);
+      updateStory({
+        properties: { date: newDate },
+      });
     },
     [showDatePicker, updateStory]
   );
