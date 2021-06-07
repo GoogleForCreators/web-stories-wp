@@ -116,17 +116,19 @@ class KSES extends Service_Base {
 			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( (string) wp_json_encode( $story_data ) );
 		}
 
-		if ( isset( $unsanitized_postarr['post_content'] ) ) {
-			add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-
-			$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
-			$data['post_content']                = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
-			$data['post_content']                = $this->filter_content_save_pre_after_kses( $data['post_content'] );
-
-			remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-			remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
+		if ( ! isset( $unsanitized_postarr['post_content'] ) ) {
+			return $data;
 		}
+
+		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+
+		$unsanitized_postarr['post_content'] = $this->filter_content_save_pre_before_kses( $unsanitized_postarr['post_content'] );
+		$data['post_content']                = wp_filter_post_kses( $unsanitized_postarr['post_content'] );
+		$data['post_content']                = $this->filter_content_save_pre_after_kses( $data['post_content'] );
+
+		remove_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
+		remove_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ] );
 
 		return $data;
 	}
