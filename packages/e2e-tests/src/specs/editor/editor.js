@@ -20,11 +20,10 @@
 import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
-  deactivateRTL,
-  activateRTL,
   visitSettings,
   withUser,
   previewStory,
+  withRTL,
 } from '@web-stories-wp/e2e-test-utils';
 
 async function toggleVideoOptimization() {
@@ -50,14 +49,16 @@ describe('Story Editor', () => {
     await percySnapshot(page, 'Empty Editor');
   });
 
-  it('should be able to create a blank story on RTL', async () => {
-    await activateRTL();
-    await createNewStory();
+  describe('RTL', () => {
+    withRTL();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    it('should be able to create a blank story on RTL', async () => {
+      await createNewStory();
 
-    await percySnapshot(page, 'Empty Editor on RTL');
-    await deactivateRTL();
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+
+      await percySnapshot(page, 'Empty Editor on RTL');
+    });
   });
 
   it('should have cross-origin isolation enabled', async () => {

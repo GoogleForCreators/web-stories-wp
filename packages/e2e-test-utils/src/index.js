@@ -23,6 +23,7 @@ export { default as withExperimentalFeatures } from './experimentalFeatures';
 export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
 export { default as withUser } from './withUser';
 export { default as withPlugin } from './withPlugin';
+export { default as withRTL } from './withRTL';
 export { default as deactivateRTL } from './deactivateRTL';
 export { default as activateRTL } from './activateRTL';
 export { default as publishPost } from './publishPost';

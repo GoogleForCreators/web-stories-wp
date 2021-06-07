@@ -19,10 +19,9 @@
  */
 import percySnapshot from '@percy/puppeteer';
 import {
-  activateRTL,
-  deactivateRTL,
   withUser,
   visitAdminPage,
+  withRTL,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -47,15 +46,17 @@ describe('Plugin Activation', () => {
     await percySnapshot(page, 'Plugin Activation', { percyCSS });
   });
 
-  it('should display a custom message after plugin activation on RTL', async () => {
-    await activateRTL();
-    await deactivatePlugin('web-stories');
-    await activatePlugin('web-stories');
-    await expect(page).toMatch("You're all set!");
-    await expect(page).toMatch('Tell some stories.');
+  describe('RTL', () => {
+    withRTL();
 
-    await percySnapshot(page, 'Plugin Activation on RTL', { percyCSS });
-    await deactivateRTL();
+    it('should display a custom message after plugin activation', async () => {
+      await deactivatePlugin('web-stories');
+      await activatePlugin('web-stories');
+      await expect(page).toMatch("You're all set!");
+      await expect(page).toMatch('Tell some stories.');
+
+      await percySnapshot(page, 'Plugin Activation on RTL', { percyCSS });
+    });
   });
 
   it('should dismiss plugin activation message', async () => {
