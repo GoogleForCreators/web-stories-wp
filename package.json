@@ -189,7 +189,7 @@
     "optimize-css-assets-webpack-plugin": "^6.0.0",
     "percy": "^0.28.6",
     "prettier": "^2.3.0",
-    "puppeteer": "^9.1.1",
+    "puppeteer": "^10.0.0",
     "react-test-renderer": "^17.0.2",
     "rtlcss-webpack-plugin": "^4.0.6",
     "source-map-loader": "^1.1.3",
