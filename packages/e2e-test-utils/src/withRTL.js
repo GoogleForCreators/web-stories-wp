@@ -24,7 +24,7 @@ import deactivateRTL from './deactivateRTL';
  * Establishes test lifecycle to enable RTL mode
  * for the duration of the test.
  */
-export default function withPlugin() {
+export default function withRTL() {
   /* eslint-disable jest/require-top-level-describe */
   beforeAll(async () => {
     await activateRTL();
