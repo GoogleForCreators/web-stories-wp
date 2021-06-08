@@ -17,16 +17,23 @@
 /**
  * Internal dependencies
  */
-import visitAdminPage from './visitAdminPage';
+import activatePlugin from './activatePlugin';
+import deactivatePlugin from './deactivatePlugin';
 
 /**
- * Creates a new story.
+ * Establishes test lifecycle to activate a given plugin
+ * for the duration of the test.
+ *
+ * @param {string} slug Plugin slug.
  */
-async function visitDashboard() {
-  await visitAdminPage(
-    'edit.php',
-    'post_type=web-story&page=stories-dashboard'
-  );
-}
+export default function withPlugin(slug) {
+  /* eslint-disable jest/require-top-level-describe */
+  beforeAll(async () => {
+    await activatePlugin(slug);
+  });
 
-export default visitDashboard;
+  afterAll(async () => {
+    await deactivatePlugin(slug);
+  });
+  /* eslint-enable jest/require-top-level-describe */
+}

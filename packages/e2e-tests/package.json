@@ -11,7 +11,6 @@
     "@percy/puppeteer": "^2.0.0",
     "@web-stories-wp/e2e-test-utils": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
-    "@wordpress/e2e-test-utils": "^5.3.0",
     "@wordpress/jest-console": "^4.0.4",
     "@wordpress/jest-puppeteer-axe": "^3.0.4",
     "babel-jest": "^27.0.0",

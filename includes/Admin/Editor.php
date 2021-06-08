@@ -354,9 +354,14 @@ class Editor extends Service_Base {
 	 * @return void
 	 */
 	protected function setup_lock( $story_id ) {
+		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
+			return;
+		}
+
 		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
 			return;
 		}
+
 		// Make sure these functions are loaded.
 		if ( ! function_exists( 'wp_check_post_lock' ) || ! function_exists( 'wp_set_post_lock' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/post.php';

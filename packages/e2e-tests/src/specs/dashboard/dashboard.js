@@ -18,11 +18,7 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import {
-  activateRTL,
-  deactivateRTL,
-  visitDashboard,
-} from '@web-stories-wp/e2e-test-utils';
+import { withRTL, visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
@@ -35,13 +31,15 @@ describe('Stories Dashboard', () => {
     await percySnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
-  it('should be able to open the dashboard on RTL', async () => {
-    await activateRTL();
-    await visitDashboard();
+  describe('RTL', () => {
+    withRTL();
 
-    await expect(page).toMatch('My Stories');
+    it('should be able to open the dashboard', async () => {
+      await visitDashboard();
 
-    await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
-    await deactivateRTL();
+      await expect(page).toMatch('My Stories');
+
+      await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
+    });
   });
 });

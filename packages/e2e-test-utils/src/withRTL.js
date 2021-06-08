@@ -17,16 +17,21 @@
 /**
  * Internal dependencies
  */
-import visitAdminPage from './visitAdminPage';
+import activateRTL from './activateRTL';
+import deactivateRTL from './deactivateRTL';
 
 /**
- * Creates a new story.
+ * Establishes test lifecycle to enable RTL mode
+ * for the duration of the test.
  */
-async function visitDashboard() {
-  await visitAdminPage(
-    'edit.php',
-    'post_type=web-story&page=stories-dashboard'
-  );
-}
+export default function withRTL() {
+  /* eslint-disable jest/require-top-level-describe */
+  beforeAll(async () => {
+    await activateRTL();
+  });
 
-export default visitDashboard;
+  afterAll(async () => {
+    await deactivateRTL();
+  });
+  /* eslint-enable jest/require-top-level-describe */
+}
