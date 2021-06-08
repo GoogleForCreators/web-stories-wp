@@ -77,7 +77,10 @@ function PublishTime() {
       if (close && showDatePicker) {
         setShowDatePicker(false);
       }
-      const newDate = format(new Date(value), TIMEZONELESS_FORMAT);
+      // Format the date only if the value exists.
+      const newDate = value
+        ? format(new Date(value), TIMEZONELESS_FORMAT)
+        : value;
       updateStory({
         properties: { date: newDate },
       });
