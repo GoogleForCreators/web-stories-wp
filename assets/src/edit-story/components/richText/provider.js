@@ -66,7 +66,7 @@ function RichTextProvider({ children }) {
       let selection;
       if (selectAll) {
         selection = getSelectionForAll(state.getCurrentContent());
-      } else if (offset) {
+      } else if (!isNaN(offset)) {
         selection = getSelectionForOffset(state.getCurrentContent(), offset);
       }
       if (selection) {
