@@ -150,6 +150,10 @@ function useCanvasGlobalKeys() {
   useGlobalClipboardHandlers(copyCutHandler, pasteHandler);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
+  return {
+    copyCutHandler,
+    pasteHandler,
+  };
 }
 
 export default useCanvasGlobalKeys;

@@ -16,13 +16,15 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '..';
+import { createClipboardEvent } from '../../utils/copyPaste';
 import { noop } from '../../utils/noop';
+import { useCanvas } from '../canvas';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { RIGHT_CLICK_MENU_LABELS } from './constants';
 
@@ -38,9 +40,25 @@ import { RIGHT_CLICK_MENU_LABELS } from './constants';
  * @return {Array.<MenuItemProps>} an array of right click menu item objects
  */
 const useRightClickMenu = () => {
+  const { copyCutHandler } = useCanvas(
+    ({ actions: { copyCutHandler, pasteHandler } }) => ({
+      copyCutHandler,
+      pasteHandler,
+    })
+  );
   const { selectedElements } = useStory(({ state: { selectedElements } }) => ({
     selectedElements,
   }));
+
+  const copyElement = useCallback(() => {
+    const clipboardEvent = createClipboardEvent('copy');
+
+    // Won't work in internet explorer. Clipboard events
+    // are not supported.
+    if (clipboardEvent) {
+      copyCutHandler(clipboardEvent);
+    }
+  }, [copyCutHandler]);
 
   const selectedElement = selectedElements?.[0];
 
@@ -49,7 +67,7 @@ const useRightClickMenu = () => {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: '⌘ X',
-        onClick: noop,
+        onClick: copyElement,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
@@ -62,7 +80,7 @@ const useRightClickMenu = () => {
         onClick: noop,
       },
     ],
-    []
+    [copyElement]
   );
 
   const pageItems = useMemo(

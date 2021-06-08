@@ -183,3 +183,27 @@ export function getPastedCoordinates(originX, originY) {
     y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
   };
 }
+
+/**
+ * Creates a clipboard event, but won't crash the app if
+ * used in internet explorer.
+ *
+ * @param {string} type Type of clipboard event. One of ['copy', 'cut', 'paste'].
+ * @return {ClipboardEvent|null} The ClipboardEvent
+ */
+export function createClipboardEvent(type = 'copy') {
+  let evt;
+
+  try {
+    evt = new ClipboardEvent(type);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(
+      'Copy failed. ClipboardEvent not supported in Internet Explorer.',
+      error
+    );
+    return null;
+  }
+
+  return evt;
+}
