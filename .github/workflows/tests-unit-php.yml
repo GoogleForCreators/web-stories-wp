@@ -97,7 +97,7 @@ jobs:
 
       - name: Install prefixed dependencies
         run: |
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
           rm -rf vendor/*
 
       - name: Setup PHP
@@ -110,7 +110,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction --no-scripts
+          composer install --prefer-dist --no-progress --no-interaction --no-scripts
           composer dump-autoload --no-interaction
 
       - name: Shutdown default MySQL service
