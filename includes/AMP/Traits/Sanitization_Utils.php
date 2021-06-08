@@ -204,7 +204,7 @@ trait Sanitization_Utils {
 	 * De-duplicate inline styles in the story.
 	 *
 	 * Greatly reduce the amount of `style[amp-custom]` CSS for stories by de-duplicating inline styles
-	 * and moving to simple class selector style rules,avoiding the specificity hac
+	 * and moving to simple class selector style rules, avoiding the specificity hack
 	 * that the AMP plugin's style sanitizer employs.
 	 *
 	 * @since 1.8.0

@@ -284,5 +284,6 @@ class Story_Sanitizer extends Test_Case {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertContains( '<style>._a7988c6{color: blue;}._91f054f{color: blue; background: white;}._f479d19{color: red;}</style>', $actual );
+		$this->assertNotContains( 'style="', $actual );
 	}
 }
