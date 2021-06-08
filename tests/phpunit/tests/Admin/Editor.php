@@ -213,7 +213,7 @@ class Editor extends Test_Case {
 		$locale       = $this->createMock( \Google\Web_Stories\Locale::class );
 		$google_fonts = new \Google\Web_Stories\Admin\Google_Fonts();
 		$assets       = new \Google\Web_Stories\Assets();
-		$editor = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $google_fonts, $assets );
+		$editor       = new \Google\Web_Stories\Admin\Editor( $experiments, $meta_boxes, $decoder, $locale, $google_fonts, $assets );
 
 		$this->call_private_method( $editor, 'setup_lock', [ self::$story_id ] );
 
