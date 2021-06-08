@@ -92,7 +92,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
