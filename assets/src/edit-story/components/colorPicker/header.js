@@ -31,6 +31,7 @@ import {
   BUTTON_VARIANTS,
 } from '../../../design-system/components/button';
 import { Button, Icons } from '../../../design-system';
+import { focusStyle } from '../panels/shared';
 
 const HEADER_FOOTER_HEIGHT = 52;
 
@@ -55,6 +56,7 @@ const TypeSelector = styled.button`
   border-radius: 100px;
   opacity: 1;
   margin-right: 16px;
+  ${focusStyle};
 `;
 
 const Solid = styled(TypeSelector)`
