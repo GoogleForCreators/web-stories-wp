@@ -27,7 +27,7 @@ async function activatePlugin(slug) {
   await visitAdminPage('plugins.php');
   const disableLink = await page.$(`tr[data-slug="${slug}"] .deactivate a`);
 
-  if (disableLink) {
+  if (!disableLink) {
     await page.click(`tr[data-slug="${slug}"] .activate a`);
     await page.waitForSelector(`tr[data-slug="${slug}"] .deactivate a`);
   }
