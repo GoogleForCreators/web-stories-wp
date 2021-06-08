@@ -29,9 +29,9 @@ function reducePage({ elements, ...rest }) {
 }
 
 function updateElement(element) {
-  if (element.type === 'video' && element.resource && element.resource?.id) {
-    const resourseId = element.resource.id.toString();
-    const isCoverrMedia = resourseId.startsWith('media/coverr');
+  if (element.type === 'video' && element.resource?.id) {
+    const resourceId = element.resource.id.toString();
+    const isCoverrMedia = resourceId.startsWith('media/coverr');
     if (isCoverrMedia) {
       element.resource.isOptimized = true;
     }
