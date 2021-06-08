@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
+import * as htmlToImage from 'html-to-image';
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useMemo, useState } from 'react';
+import { useCallback, useRef, useMemo, useState, useLayoutEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -39,6 +40,27 @@ function CarouselProvider({ availableSpace, children }) {
 
   const [listElement, setListElement] = useState(null);
   const pageRefs = useRef([]);
+
+  const previewImages = useRef(null);
+
+  useLayoutEffect(() => {
+    if (pages && pageRefs.current?.[pages[0]?.id] && !previewImages.current) {
+      previewImages.current = {};
+      pages.forEach(({ id }) => {
+        const element = pageRefs.current[id];
+        const preview = element.querySelector('button');
+        htmlToImage
+          .toCanvas(preview)
+          .then(function (canvas) {
+            previewImages.current[id] = canvas;
+          })
+          .catch(function (error) {
+            // eslint-disable-next-line no-console
+            console.error('Oops, something went wrong!', error);
+          });
+      });
+    }
+  }, [pages]);
 
   const numPages = pages.length;
 
