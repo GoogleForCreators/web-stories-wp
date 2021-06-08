@@ -37,5 +37,5 @@ fi
 # Install/update packages
 if [ "$CI" != "true" ]; then
   echo -e $(status_message "Installing and updating Composer packages..." )
-  composer install --optimize-autoloader --no-interaction --prefer-dist --no-suggest --ignore-platform-reqs
+  composer install --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs
 fi

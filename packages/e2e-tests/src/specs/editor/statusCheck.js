@@ -21,6 +21,7 @@ import {
   addRequestInterception,
   createNewStory,
 } from '@web-stories-wp/e2e-test-utils';
+
 /**
  * Internal dependencies
  */

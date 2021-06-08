@@ -42,10 +42,24 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 
-const Wrapper = styled.div`
-  ${elementWithPosition}
-  ${elementWithSize}
-  ${elementWithRotation}
+// Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
+const Wrapper = styled.div.attrs(
+  ({ previewMode, x, y, width, height, rotationAngle }) => {
+    const style = {
+      position: 'absolute',
+      zIndex: 1,
+      left: `${x}px`,
+      top: `${y}px`,
+      width: `${width}px`,
+      height: `${height}px`,
+      transform: `rotate(${rotationAngle}deg)`,
+    };
+    return previewMode ? { style } : {};
+  }
+)`
+  ${({ previewMode }) => !previewMode && elementWithPosition}
+  ${({ previewMode }) => !previewMode && elementWithSize}
+  ${({ previewMode }) => !previewMode && elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 
@@ -167,6 +181,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       ref={wrapperRef}
       data-element-id={id}
       isBackground={element.isBackground}
+      previewMode={previewMode}
       {...box}
     >
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>

@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -26,8 +27,19 @@ import {
 const ERROR_TEXT =
   'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.';
 
-describe('publisher logo', () => {
+describe('Publisher logo', () => {
   withExperimentalFeatures(['enableSVG']);
+
+  let uploadedFiles = [];
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
 
   it('should not upload a logo that is an invalid type with svg enabled', async () => {
     await visitSettings();
@@ -57,9 +69,8 @@ describe('publisher logo', () => {
       text: ERROR_TEXT,
     });
 
-    // cleanup
-    await deleteMedia(logoOneName);
-    await deleteMedia(logoTwoName);
+    uploadedFiles.push(logoOneName);
+    uploadedFiles.push(logoTwoName);
   });
 
   it('should be able to delete all except one logo', async () => {
@@ -92,8 +103,7 @@ describe('publisher logo', () => {
       `button[aria-label^="Publisher logo menu for ${logoOneName}"`
     );
 
-    // cleanup
-    await deleteMedia(logoOneName);
-    await deleteMedia(logoTwoName);
+    uploadedFiles.push(logoOneName);
+    uploadedFiles.push(logoTwoName);
   });
 });

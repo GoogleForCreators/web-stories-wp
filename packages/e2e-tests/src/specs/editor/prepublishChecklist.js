@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { createNewStory, publishStory } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
@@ -29,18 +29,13 @@ describe('Pre-Publish Checklist', () => {
     );
     await expect(page).toMatchElement('#inspector-tab-prepublish');
   });
+
   it('should show that there is no poster attached to the story', async () => {
     await createNewStory();
     await expect(page).toClick('[data-testid^="mediaElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
-    await expect(page).toClick('button', { text: 'Publish' });
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
-    await expect(page).toMatch('Story published.');
-    await expect(page).toClick('button', { text: 'Dismiss' });
+
+    await publishStory();
 
     await page.reload();
     await expect(page).toMatchElement('input[placeholder="Add title"]');

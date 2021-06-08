@@ -248,4 +248,23 @@ class Story_Sanitizer extends Test_Case {
 		$this->assertContains( 'rel="noreferrer"', $actual );
 		$this->assertContains( 'target="_blank"', $actual );
 	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
+	 */
+	public function test_transform_a_tags_data_attributes() {
+		$source = '<html><head></head><body><amp-story><a href="https://www.google.com" data-tooltip-icon="" data-tooltip-text="">Google</a></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher'                  => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertNotContains( 'data-tooltip-icon', $actual );
+		$this->assertNotContains( 'data-tooltip-text', $actual );
+	}
 }

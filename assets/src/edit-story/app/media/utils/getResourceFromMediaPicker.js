@@ -57,13 +57,13 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     mimeType,
     uploadDate: date,
     src: url || src,
-    ...getResourceSize(
+    ...getResourceSize({
       width,
       height,
       posterGenerated,
       posterWidth,
-      posterHeight
-    ),
+      posterHeight,
+    }),
     poster,
     posterId,
     id,

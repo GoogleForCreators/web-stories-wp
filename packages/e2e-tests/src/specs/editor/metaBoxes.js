@@ -18,12 +18,11 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import {
+  createNewStory,
+  publishStory,
+  withPlugin,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
   describe('Unavailable', () => {
@@ -37,13 +36,7 @@ describe('Custom Meta Boxes', () => {
   });
 
   describe('Available', () => {
-    beforeAll(async () => {
-      await activatePlugin('web-stories-test-plugin-meta-box');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin('web-stories-test-plugin-meta-box');
-    });
+    withPlugin('web-stories-test-plugin-meta-box');
 
     it('should display meta boxes and save their content', async () => {
       await createNewStory();
@@ -85,15 +78,7 @@ describe('Custom Meta Boxes', () => {
         'button.handlediv[aria-expanded="true"]'
       );
 
-      // Publish story.
-      await expect(page).toClick('button', { text: 'Publish' });
-
-      await page.waitForSelector('.ReactModal__Content');
-      await expect(page).toClick('button', {
-        text: /Continue to publish/,
-      });
-
-      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await publishStory();
 
       // Refresh page to verify that the text has been persisted.
       await page.reload();

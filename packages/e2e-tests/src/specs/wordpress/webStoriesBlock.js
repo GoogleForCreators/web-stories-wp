@@ -15,16 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  createNewPost,
-  setPostContent,
-} from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -32,6 +22,9 @@ import {
   publishPost,
   withDisabledToolbarOnFrontend,
   insertBlock,
+  withPlugin,
+  createNewPost,
+  setPostContent,
 } from '@web-stories-wp/e2e-test-utils';
 
 /**
@@ -113,10 +106,9 @@ describe('Web Stories Block', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
     withDisabledToolbarOnFrontend();
+    withPlugin('amp');
 
     it('should produce valid AMP when using the AMP plugin', async () => {
-      await activatePlugin('amp');
-
       await createNewPost({
         showWelcomeGuide: false,
       });
@@ -140,8 +132,6 @@ describe('Web Stories Block', () => {
       await expect(page).toMatchElement('amp-story-player');
 
       await expect(page).toBeValidAMP();
-
-      await deactivatePlugin('amp');
     });
   });
 });

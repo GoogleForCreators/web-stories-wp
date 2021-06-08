@@ -116,6 +116,10 @@ class KSES extends Service_Base {
 			$data['post_content_filtered'] = null === $story_data ? '' : wp_slash( (string) wp_json_encode( $story_data ) );
 		}
 
+		if ( ! isset( $unsanitized_postarr['post_content'] ) ) {
+			return $data;
+		}
+
 		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 

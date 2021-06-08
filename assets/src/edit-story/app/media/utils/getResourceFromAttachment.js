@@ -55,13 +55,13 @@ function getResourceFromAttachment(attachment) {
     mimeType,
     creationDate: date_gmt,
     src,
-    ...getResourceSize(
+    ...getResourceSize({
       width,
       height,
       posterGenerated,
       posterWidth,
-      posterHeight
-    ),
+      posterHeight,
+    }),
     poster,
     posterId,
     id,

@@ -34,8 +34,11 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 
+// data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
+// See https://github.com/google/web-stories-wp/issues/7745.
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
+  'data-fix-caret': true,
 })`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   width: 100%;
