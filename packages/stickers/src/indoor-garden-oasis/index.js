@@ -25,7 +25,6 @@ import { default as homeGardenLight01 } from './light01';
 import { default as homeGardenLight02 } from './light02';
 import { default as homeGardenLightning } from './lightning';
 import { default as homeGardenLine01 } from './line01';
-import { default as homeGardenLine02 } from './line02';
 import { default as homeGardenScissor01 } from './scissor01';
 import { default as homeGardenScissor02 } from './scissor02';
 import { default as homeGardenWater } from './water';
@@ -40,7 +39,6 @@ export {
   homeGardenLight02,
   homeGardenLightning,
   homeGardenLine01,
-  homeGardenLine02,
   homeGardenScissor01,
   homeGardenScissor02,
   homeGardenWater,
