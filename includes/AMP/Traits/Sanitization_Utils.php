@@ -231,15 +231,24 @@ trait Sanitization_Utils {
 			}
 		}
 
+		if ( empty( $elements_by_inline_style ) ) {
+			return;
+		}
+
+		$style_element = $document->createElement( 'style' );
+
+		if ( ! $style_element ) {
+			return;
+		}
+
+		$document->head->appendChild( $style_element );
+
 		// Create style rule for each inline style and add class name to each element.
 		foreach ( $elements_by_inline_style as $inline_style => $styled_elements ) {
 			$inline_style_class_name = '_' . substr( md5( (string) $inline_style ), 0, 7 );
 
-			$style_element = $document->createElement( 'style' );
-			if ( $style_element ) {
-				$style_element->textContent = sprintf( '.%s{%s}', $inline_style_class_name, $inline_style );
-				$document->head->appendChild( $style_element );
-			}
+			$style_rule = $document->createTextNode( sprintf( '.%s{%s}', $inline_style_class_name, $inline_style ) );
+			$style_element->appendChild( $style_rule );
 
 			/**
 			 * The element with inline styles.
