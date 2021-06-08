@@ -20,6 +20,7 @@
 import { memo, useCallback } from 'react';
 import { useFeature } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -30,6 +31,7 @@ import DirectionAware from '../directionAware';
 import Header from '../header';
 import Carousel from '../carousel';
 import { useLayout } from '../../app';
+import { useRightClickMenu } from '../../app/rightClickMenu';
 import {
   Layer,
   HeadArea,
@@ -38,12 +40,19 @@ import {
   QuickActionsArea,
 } from './layout';
 
+const RightClickMenuArea = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+`;
+
 function NavLayer() {
   const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const { hasHorizontalOverflow } = useLayout(
     ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
   );
   const quickActions = useQuickActions();
+  const rightClickItems = useRightClickMenu();
 
   /**
    * Stop the event from bubbling if the user clicks in between buttons.
@@ -66,6 +75,13 @@ function NavLayer() {
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>
+      <RightClickMenuArea>
+        <ContextMenu
+          items={rightClickItems}
+          onMouseDown={handleMenuBackgroundClick}
+          isAlwaysVisible
+        />
+      </RightClickMenuArea>
       {showQuickActions && (
         <DirectionAware>
           <QuickActionsArea>

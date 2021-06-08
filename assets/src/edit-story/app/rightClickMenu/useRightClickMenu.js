@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -40,7 +40,8 @@ import { RIGHT_CLICK_MENU_LABELS } from './constants';
  * @return {Array.<MenuItemProps>} an array of right click menu item objects
  */
 const useRightClickMenu = () => {
-  const { copyCutHandler } = useCanvas(
+  const clipboardData = useRef(null);
+  const { copyCutHandler, pasteHandler } = useCanvas(
     ({ actions: { copyCutHandler, pasteHandler } }) => ({
       copyCutHandler,
       pasteHandler,
@@ -50,17 +51,44 @@ const useRightClickMenu = () => {
     selectedElements,
   }));
 
+  /**
+   * Prevent right click menu from removing focus from the canvas.
+   */
+  const handleMouseDown = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
   const copyElement = useCallback(() => {
     const clipboardEvent = createClipboardEvent('copy');
 
     // Won't work in internet explorer. Clipboard events
     // are not supported.
     if (clipboardEvent) {
-      copyCutHandler(clipboardEvent);
+      const evt = copyCutHandler(clipboardEvent);
+      // Need to copy event dude wow.
+      document.dispatchEvent(evt);
     }
   }, [copyCutHandler]);
 
+  const pasteElement = useCallback(() => {
+    const clipboardEvent = createClipboardEvent(
+      'paste',
+      clipboardData.current?.clipboardData
+    );
+
+    if (clipboardEvent) {
+      pasteHandler(clipboardEvent);
+    }
+  }, [pasteHandler]);
+
   const selectedElement = selectedElements?.[0];
+
+  const menuItemProps = useMemo(
+    () => ({
+      handleMouseDown,
+    }),
+    [handleMouseDown]
+  );
 
   const defaultItems = useMemo(
     () => [
@@ -68,19 +96,22 @@ const useRightClickMenu = () => {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: '⌘ X',
         onClick: copyElement,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
         shortcut: '⌘ V',
-        onClick: noop,
+        onClick: pasteElement,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE,
         shortcut: 'DEL',
         onClick: noop,
+        ...menuItemProps,
       },
     ],
-    [copyElement]
+    [copyElement, menuItemProps, pasteElement]
   );
 
   const pageItems = useMemo(
@@ -89,13 +120,15 @@ const useRightClickMenu = () => {
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
         onClick: noop,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
         onClick: noop,
+        ...menuItemProps,
       },
     ],
-    [defaultItems]
+    [defaultItems, menuItemProps]
   );
 
   switch (selectedElement?.type) {

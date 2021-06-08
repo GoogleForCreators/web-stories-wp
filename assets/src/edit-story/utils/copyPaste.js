@@ -109,10 +109,11 @@ export function processPastedElements(content, currentPage) {
  * @param {Array} elements Array of story elements.
  * @param {Array} animations Array of story animations.
  * @param {Object} evt Copy/cut event object.
+ * @return {ClipboardEvent|undefined} the modified clipboard event if there is one
  */
 export function addElementsToClipboard(page, elements, animations, evt) {
   if (!elements.length || !evt) {
-    return;
+    return undefined;
   }
   const { clipboardData } = evt;
   const payload = {
@@ -164,6 +165,8 @@ export function addElementsToClipboard(page, elements, animations, evt) {
     'text/html',
     `<!-- ${serializedPayload} -->${htmlContent}`
   );
+
+  return evt;
 }
 
 /**
@@ -189,13 +192,16 @@ export function getPastedCoordinates(originX, originY) {
  * used in internet explorer.
  *
  * @param {string} type Type of clipboard event. One of ['copy', 'cut', 'paste'].
+ * @param {DataTransfer} clipboardData The clipboard data to add to the clipboard event.
  * @return {ClipboardEvent|null} The ClipboardEvent
  */
-export function createClipboardEvent(type = 'copy') {
+export function createClipboardEvent(type = 'copy', clipboardData) {
   let evt;
 
   try {
-    evt = new ClipboardEvent(type);
+    evt = new ClipboardEvent(type, {
+      clipboardData: clipboardData || new DataTransfer(),
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(

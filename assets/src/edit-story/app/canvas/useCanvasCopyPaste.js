@@ -102,12 +102,15 @@ function useCanvasGlobalKeys() {
     (evt) => {
       const { clipboardData } = evt;
 
+      console.log({ evt, clipboardData });
+
       try {
         // Get the html text and plain text but only if it's not a file being copied.
         const content =
           !clipboardData.files?.length &&
           (clipboardData.getData('text/html') ||
             clipboardData.getData('text/plain'));
+        console.log({ content });
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.
