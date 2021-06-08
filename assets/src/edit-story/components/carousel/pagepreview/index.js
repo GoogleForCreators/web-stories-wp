@@ -29,6 +29,7 @@ import { TransformProvider } from '../../transform';
 import { UnitsProvider } from '../../../units';
 import DisplayElement from '../../canvas/displayElement';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
+import useCarousel from '../useCarousel';
 
 const Page = styled.button`
   display: block;
@@ -79,23 +80,31 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ page, ...props }) {
+function PagePreview({ page, isCurrentPage, ...props }) {
   const { backgroundColor } = page;
   const { width, height } = props;
+
+  const { previewImages } = useCarousel(({ state: { previewImages } }) => ({
+    previewImages,
+  }));
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
         <Page {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement
-                key={id}
-                previewMode
-                element={{ id, ...rest }}
-                page={page}
-              />
-            ))}
+            {!isCurrentPage && previewImages?.[page.id] && (
+              <img src={previewImages[page.id]} alt="Preview" />
+            )}
+            {(!previewImages?.[page.id] || isCurrentPage) &&
+              page.elements.map(({ id, ...rest }) => (
+                <DisplayElement
+                  key={id}
+                  previewMode
+                  element={{ id, ...rest }}
+                  page={page}
+                />
+              ))}
           </PreviewWrapper>
         </Page>
       </TransformProvider>
@@ -110,6 +119,7 @@ PagePreview.propTypes = {
   isInteractive: PropTypes.bool,
   isActive: PropTypes.bool,
   tabIndex: PropTypes.number,
+  isCurrentPage: PropTypes.bool.isRequired,
 };
 
 export default PagePreview;

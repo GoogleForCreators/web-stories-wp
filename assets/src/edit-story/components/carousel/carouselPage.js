@@ -148,6 +148,7 @@ function CarouselPage({ pageId, index }) {
                 )
           }
           isActive={isCurrentPage && hasMultiplePages}
+          isCurrentPage={isCurrentPage}
           page={page}
           width={pageThumbWidth}
           height={pageThumbHeight}

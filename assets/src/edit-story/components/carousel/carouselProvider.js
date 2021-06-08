@@ -39,20 +39,19 @@ function CarouselProvider({ availableSpace, children }) {
   );
 
   const [listElement, setListElement] = useState(null);
+  const [previewImages, setPreviewImages] = useState(null);
   const pageRefs = useRef([]);
 
-  const previewImages = useRef(null);
-
   useLayoutEffect(() => {
-    if (pages && pageRefs.current?.[pages[0]?.id] && !previewImages.current) {
-      previewImages.current = {};
+    // @todo Only do this if there's a specific GET param in the URL.
+    if (pages && pageRefs.current?.[pages[0]?.id] && !previewImages) {
       pages.forEach(({ id }) => {
         const element = pageRefs.current[id];
         const preview = element.querySelector('button');
         htmlToImage
-          .toCanvas(preview)
-          .then(function (canvas) {
-            previewImages.current[id] = canvas;
+          .toJpeg(preview)
+          .then(function (dataUrl) {
+            setPreviewImages((oldImages) => ({ ...oldImages, [id]: dataUrl }));
           })
           .catch(function (error) {
             // eslint-disable-next-line no-console
@@ -60,7 +59,7 @@ function CarouselProvider({ availableSpace, children }) {
           });
       });
     }
-  }, [pages]);
+  }, [pages, previewImages]);
 
   const numPages = pages.length;
 
@@ -115,6 +114,7 @@ function CarouselProvider({ availableSpace, children }) {
       hasOverflow,
       pages,
       pageIds,
+      previewImages,
       numPages,
       currentPageId,
       canScrollBack,
