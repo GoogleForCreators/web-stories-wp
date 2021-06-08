@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { memo, useCallback } from 'react';
+import { useFeature } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -38,6 +39,7 @@ import {
 } from './layout';
 
 function NavLayer() {
+  const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const { hasHorizontalOverflow } = useLayout(
     ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
   );
@@ -52,7 +54,8 @@ function NavLayer() {
     ev.stopPropagation();
   }, []);
 
-  const showQuickActions = !hasHorizontalOverflow && quickActions.length;
+  const showQuickActions =
+    enableQuickActionMenu && !hasHorizontalOverflow && quickActions.length;
 
   return (
     <Layer
