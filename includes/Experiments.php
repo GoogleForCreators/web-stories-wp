@@ -240,6 +240,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
 				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
