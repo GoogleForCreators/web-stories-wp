@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @samwhale
+			 * Issue: 6153
+			 * Creation date: 2021-06-07
+			 */
+			[
+				'name'        => 'enableRightClickMenus',
+				'label'       => __( 'Enable Right Click Menus', 'web-stories' ),
+				'description' => __( 'Adds a contextual shortcut menu when right clicking in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: 6148
 			 * Creation date: 2021-05-11
@@ -363,6 +374,17 @@ class Experiments extends Service_Base {
 				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #7480
+			 * Creation date: 2021-05-28
+			 */
+			[
+				'name'        => 'enableMediaPickerVideoOptimization',
+				'label'       => __( 'Video optimization in media picker', 'web-stories' ),
+				'description' => __( 'Optimize already uploaded videos in media picker.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey

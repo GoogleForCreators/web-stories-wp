@@ -40,8 +40,10 @@ function arrange(
       story: {
         author: { id: 1, name: 'John Doe' },
         date: '2020-01-01T20:20:20',
+        modified: '2020-01-01T20:20:19',
         featuredMedia: { url: '' },
         publisherLogoUrl: '',
+        status: 'draft',
       },
     },
     actions: { updateStory },
@@ -142,6 +144,23 @@ describe('PublishPanel', () => {
     expect(date.getMonth()).toStrictEqual(0);
     expect(date.getDate()).toStrictEqual(1);
     expect(date.getFullYear()).toStrictEqual(2020);
+  });
+
+  it('should allow resetting the publish time', async () => {
+    const { updateStory } = arrange();
+    let dateButton = screen.getByRole('button', { name: 'Story publish time' });
+
+    fireEvent.click(dateButton);
+    const resetButton = screen.getByRole('button', {
+      name: 'Reset publish time',
+    });
+    await waitFor(() => expect(resetButton).toBeDefined());
+    fireEvent.click(resetButton);
+
+    const calledArg = updateStory.mock.calls[0][0];
+    expect(calledArg.properties.date).toBeNull();
+
+    dateButton = screen.getByRole('button', { name: 'Story publish time' });
   });
 
   it('should update the story when choosing time', async () => {

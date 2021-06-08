@@ -31,6 +31,7 @@ import { PatternPropType } from '../../../../../types';
 import { Select } from '../../../../form';
 import { findMatchingColor } from '../utils';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
+import { focusStyle } from '../../../shared';
 import ColorGroup from './colorGroup';
 import useApplyColor from './useApplyColor';
 
@@ -56,6 +57,7 @@ const AddColorPreset = styled.button`
     width: 32px;
     height: 32px;
   }
+  ${focusStyle};
 `;
 
 const CtaWrapper = styled.div`
@@ -72,8 +74,10 @@ const CtaWrapper = styled.div`
 `;
 
 const ColorsWrapper = styled.div`
-  margin-top: 10px;
   max-height: ${SAVED_COLOR_SIZE * 3 + 2 * COLOR_GAP}px;
+  padding: 4px;
+  margin: 6px 0 0 -4px;
+  width: calc(100% + 8px);
   overflow-x: hidden;
   overflow-y: auto;
 `;

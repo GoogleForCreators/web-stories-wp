@@ -143,10 +143,13 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
     };
   }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
 
+  // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
+  // See https://github.com/google/web-stories-wp/issues/7745.
   return (
     <Element
       ref={elementRef}
       data-testid="textFrame"
+      data-fix-caret
       className="syncMargin"
       dangerouslySetInnerHTML={{ __html: content }}
       element={element}

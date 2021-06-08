@@ -14,6 +14,24 @@
  * limitations under the License.
  */
 
-const GB_IN_BYTES = 1024 * 1024 * 1024;
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
 
-export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;
+/**
+ * The layer style panel containing inputs for adding managing the opacity
+ */
+export class LayerStyle extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /Opacity in percent/i });
+  }
+
+  get collapse() {
+    return this.getByRole('button', { name: /Layer/i });
+  }
+}
