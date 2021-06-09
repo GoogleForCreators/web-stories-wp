@@ -80,6 +80,10 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
+const PreviewImage = styled.img`
+  width: 100%;
+`;
+
 function PagePreview({ page, isCurrentPage, ...props }) {
   const { backgroundColor } = page;
   const { width, height } = props;
@@ -88,23 +92,30 @@ function PagePreview({ page, isCurrentPage, ...props }) {
     previewImages,
   }));
 
+  const displayImagePreview = !isCurrentPage && previewImages?.[page.id];
+  if (displayImagePreview) {
+    return (
+      <Page {...props}>
+        <PreviewWrapper background={backgroundColor}>
+          <PreviewImage src={previewImages?.[page.id]} alt="" />
+        </PreviewWrapper>
+      </Page>
+    );
+  }
+
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
         <Page {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {!isCurrentPage && previewImages?.[page.id] && (
-              <img src={previewImages[page.id]} alt="Preview" />
-            )}
-            {(!previewImages?.[page.id] || isCurrentPage) &&
-              page.elements.map(({ id, ...rest }) => (
-                <DisplayElement
-                  key={id}
-                  previewMode
-                  element={{ id, ...rest }}
-                  page={page}
-                />
-              ))}
+            {page.elements.map(({ id, ...rest }) => (
+              <DisplayElement
+                key={id}
+                previewMode
+                element={{ id, ...rest }}
+                page={page}
+              />
+            ))}
           </PreviewWrapper>
         </Page>
       </TransformProvider>

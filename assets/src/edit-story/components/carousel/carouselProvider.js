@@ -41,18 +41,22 @@ function CarouselProvider({ availableSpace, children }) {
   const [listElement, setListElement] = useState(null);
   const [previewImages, setPreviewImages] = useState(null);
   const pageRefs = useRef([]);
+  const previewRefs = useRef(null);
 
   useLayoutEffect(() => {
-    // @todo Only do this if there's a specific GET param in the URL.
-    if (pages && pageRefs.current?.[pages[0]?.id] && !previewImages) {
+    if (pages && pageRefs.current?.[pages[0]?.id] && !previewRefs.current) {
       pages.forEach(({ id }) => {
         const element = pageRefs.current[id];
         const preview = element.querySelector('button');
         htmlToImage
-          .toJpeg(preview)
+          .toSvg(preview)
           .then(function (dataUrl) {
-            setPreviewImages((oldImages) => ({ ...oldImages, [id]: dataUrl }));
+            if (!previewRefs.current) {
+              previewRefs.current = {};
+            }
+            previewRefs.current[id] = dataUrl;
           })
+          .then(() => setPreviewImages(previewRefs.current))
           .catch(function (error) {
             // eslint-disable-next-line no-console
             console.error('Oops, something went wrong!', error);
