@@ -19,7 +19,6 @@
  */
 import visitAdminPage from './visitAdminPage';
 import loginUser from './loginUser';
-import logoutUser from './logoutUser';
 
 const current = {
   username: null,
@@ -34,8 +33,6 @@ export async function setCurrentUser(username, password) {
   if (current.username === username) {
     return;
   }
-
-  await logoutUser();
 
   await loginUser(username, password);
 
