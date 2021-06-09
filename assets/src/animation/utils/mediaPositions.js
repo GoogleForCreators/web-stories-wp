@@ -34,7 +34,7 @@
  */
 import {
   getBox,
-  FULLBLEED_RATIO,
+  FULLBLEED_HEIGHT,
   PAGE_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
@@ -43,7 +43,6 @@ import {
  * Internal dependencies
  */
 import getMediaSizePositionProps from '../../edit-story/elements/media/getMediaSizePositionProps';
-const FULLBLEED_PAGE_HEIGHT = (1 / FULLBLEED_RATIO) * PAGE_WIDTH;
 const PRECISION = 1;
 
 export function getMediaBoundOffsets({ element }) {
@@ -66,8 +65,7 @@ export function getMediaBoundOffsets({ element }) {
     left: (media.offsetX / media.width) * 100,
     bottom:
       -1 *
-      ((media.height - (media.offsetY + FULLBLEED_PAGE_HEIGHT)) /
-        media.height) *
+      ((media.height - (media.offsetY + FULLBLEED_HEIGHT)) / media.height) *
       100,
   };
 }
