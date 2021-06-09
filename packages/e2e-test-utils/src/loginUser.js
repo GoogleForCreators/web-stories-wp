@@ -41,6 +41,14 @@ import { createURL, isCurrentURL } from '@wordpress/e2e-test-utils';
  * @param {?string} password String to be used as user credential.
  */
 async function loginUser(username, password) {
+  // Handle upgrade required screen
+  if (isCurrentURL('wp-admin/upgrade.php')) {
+    // Click update
+    await page.click('.button.button-large.button-primary');
+    // Click continue
+    await page.click('.button.button-large');
+  }
+
   if (!isCurrentURL('wp-login.php')) {
     await page.goto(createURL('wp-login.php'));
   }
