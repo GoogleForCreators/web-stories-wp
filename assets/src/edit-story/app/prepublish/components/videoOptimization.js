@@ -93,3 +93,7 @@ VideoOptimization.propTypes = {
   element: PropTypes.object,
   caption: PropTypes.node,
 };
+
+export function BulkVideoOptimization({ elements }) {
+  return JSON.stringify(elements);
+}

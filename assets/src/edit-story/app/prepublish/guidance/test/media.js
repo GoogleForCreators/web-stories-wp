@@ -128,69 +128,69 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLongVideo.id);
   });
 
-  it('should return a message if the video element is larger than 1080x1920 and not optimized', () => {
-    const largeUnoptimizedVideo = {
-      id: 202,
-      type: 'video',
-      resource: {
-        isOptimized: false,
-        height: 2160,
-        width: 3840,
-        local: false,
-      },
-    };
+  // it('should return a message if the video element is larger than 1080x1920 and not optimized', () => {
+  //   const largeUnoptimizedVideo = {
+  //     id: 202,
+  //     type: 'video',
+  //     resource: {
+  //       isOptimized: false,
+  //       height: 2160,
+  //       width: 3840,
+  //       local: false,
+  //     },
+  //   };
 
-    const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
-    expect(result.message).toBe('Optimize video size');
-    expect(result.type).toStrictEqual('guidance');
-    expect(result.elementId).toStrictEqual(largeUnoptimizedVideo.id);
-  });
+  //   const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
+  //   expect(result.message).toBe('Optimize video size');
+  //   expect(result.type).toStrictEqual('guidance');
+  //   expect(result.elementId).toStrictEqual(largeUnoptimizedVideo.id);
+  // });
 
-  it('should not return a message if the video element is larger than 1080x1920 and Optimized', () => {
-    const largeUnoptimizedVideo = {
-      id: 202,
-      type: 'video',
-      resource: {
-        isOptimized: true,
-        height: 2160,
-        width: 3840,
-        local: false,
-      },
-    };
+  // it('should not return a message if the video element is larger than 1080x1920 and Optimized', () => {
+  //   const largeUnoptimizedVideo = {
+  //     id: 202,
+  //     type: 'video',
+  //     resource: {
+  //       isOptimized: true,
+  //       height: 2160,
+  //       width: 3840,
+  //       local: false,
+  //     },
+  //   };
 
-    const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
-    expect(result).toBeUndefined();
-  });
+  //   const result = mediaGuidance.videoElementOptimized(largeUnoptimizedVideo);
+  //   expect(result).toBeUndefined();
+  // });
 
-  it('should not return a message if the video element is smaller than 1080x1920', () => {
-    const smallUnoptimizedVideo = {
-      id: 202,
-      type: 'video',
-      resource: {
-        isOptimized: false,
-        height: 300,
-        width: 400,
-        local: false,
-      },
-    };
-    const smallOptimizedVideo = {
-      id: 203,
-      type: 'video',
-      resource: {
-        isOptimized: true,
-        height: 300,
-        width: 400,
-        local: false,
-      },
-    };
+  // it('should not return a message if the video element is smaller than 1080x1920', () => {
+  //   const smallUnoptimizedVideo = {
+  //     id: 202,
+  //     type: 'video',
+  //     resource: {
+  //       isOptimized: false,
+  //       height: 300,
+  //       width: 400,
+  //       local: false,
+  //     },
+  //   };
+  //   const smallOptimizedVideo = {
+  //     id: 203,
+  //     type: 'video',
+  //     resource: {
+  //       isOptimized: true,
+  //       height: 300,
+  //       width: 400,
+  //       local: false,
+  //     },
+  //   };
 
-    expect(
-      mediaGuidance.videoElementOptimized(smallUnoptimizedVideo)
-    ).toBeUndefined();
-    expect(
-      mediaGuidance.videoElementOptimized(smallOptimizedVideo)
-    ).toBeUndefined();
-  });
+  //   expect(
+  //     mediaGuidance.videoElementOptimized(smallUnoptimizedVideo)
+  //   ).toBeUndefined();
+  //   expect(
+  //     mediaGuidance.videoElementOptimized(smallOptimizedVideo)
+  //   ).toBeUndefined();
+  // });
 
   it("should return a message if the video element doesn't have a poster image", () => {
     const posterlessVideo = {

@@ -19,7 +19,7 @@
  */
 import { VIDEO_SIZE_THRESHOLD } from '../../media/utils/useFFmpeg';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import { VideoOptimization } from '../components/videoOptimization';
+import { BulkVideoOptimization } from '../components/videoOptimization';
 import { states } from '../../highlights';
 
 const MIN_VIDEO_HEIGHT = 480;
@@ -30,6 +30,7 @@ const MAX_VIDEO_LENGTH_SECONDS = 60;
 /**
  * @typedef {import('../../../types').Page} Page
  * @typedef {import('../../../types').Element} Element
+ * @typedef {import('../../../types').Story} Story
  * @typedef {import('../types').Guidance} Guidance
  */
 
@@ -144,40 +145,44 @@ export function videoElementMissingPoster(element) {
   };
 }
 
+function isLargeVideo(resource) {
+  const videoArea = (resource?.height ?? 0) * (resource?.width ?? 0);
+  return videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
+}
+
 /**
- * Check a if a video element's been optimized.
+ * Check a if the story's video elements have been optimized.
  * If is not optimized, return guidance. Otherwise return undefined.
  *
- * @param {Element} element The element being checked
+ * @param {Story} story The story being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
-export function videoElementOptimized(element = {}) {
-  if (element.resource?.local) {
-    return undefined;
-  }
+export function videoElementsOptimized(story) {
+  // for every page return the video elements
+  const unoptimizedVideos = story.pages.reduce((acc, { elements }) => {
+    const videoElements = elements.filter(({ type }) => type === 'video');
+    return [
+      ...acc,
+      ...videoElements.filter(
+        ({ resource }) =>
+          !resource?.local && !resource?.isOptimized && isLargeVideo(resource)
+      ),
+    ];
+  }, []);
 
-  if (element.resource?.isOptimized) {
-    return undefined;
-  }
-
-  const videoArea =
-    (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
-  const isLargeVideo =
-    videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
-  if (isLargeVideo) {
+  if (unoptimizedVideos.length > 0) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      elementId: element.id,
+      elements: unoptimizedVideos,
       message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
       help: (
-        <VideoOptimization
-          element={element}
+        <BulkVideoOptimization
+          elements={unoptimizedVideos}
           caption={MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.HELPER_TEXT}
         />
       ),
       noHighlight: true,
     };
   }
-
   return undefined;
 }
