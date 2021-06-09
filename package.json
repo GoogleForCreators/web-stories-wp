@@ -165,7 +165,7 @@
     "husky": "^4.3.7",
     "jasmine-core": "^3.7.1",
     "jest": "^27.0.3",
-    "jest-axe": "^4.1.0",
+    "jest-axe": "^5.0.1",
     "jest-canvas-mock": "^2.3.1",
     "jest-environment-jsdom": "^27.0.0",
     "jest-extended": "^0.11.5",
