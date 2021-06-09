@@ -17,17 +17,14 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_HEIGHT, DANGER_ZONE_HEIGHT } from '../constants';
-import { getCorners } from './getBoundRect';
+import {
+  identity,
+  useContextSelector,
+} from '../../../assets/src/design-system';
+import Context from './context';
 
-const isLinkBelowLimit = (element, verifyLink = true) => {
-  if (verifyLink && !element.link?.url?.length > 0) {
-    return false;
-  }
-  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
-  const { x, y, width, height, rotationAngle } = element;
-  const points = getCorners(rotationAngle, x, y, width, height);
-  return Object.keys(points).find((point) => points[point].y > limit);
-};
+function useUnits(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
 
-export default isLinkBelowLimit;
+export default useUnits;

@@ -15,10 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { PAGE_WIDTH } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
 import { addElementsToClipboard, processPastedElements } from '../copyPaste';
-import { PAGE_WIDTH } from '../../constants';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared/constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media/constants';

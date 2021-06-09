@@ -21,6 +21,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -30,7 +31,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '../../../design-system';
-import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
+import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';

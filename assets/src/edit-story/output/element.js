@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getBox } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
 import { StoryAnimation } from '../../animation';
@@ -22,7 +26,6 @@ import WithLink from '../components/elementLink/output';
 import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
-import { getBox } from '../units/dimensions';
 import {
   getBorderPositionCSS,
   getBorderRadius,

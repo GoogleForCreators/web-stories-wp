@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { dataPixels } from '../units';
+import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from './constants';
+import { dataPixels } from './dimensions';
 
 /**
  * Get the outer frame values for all objects in `list`,
@@ -128,6 +129,16 @@ export function getCorners(angle, x, y, width, height) {
     bottomRightPoint,
     bottomLeftPoint,
   };
+}
+
+export function isElementBelowLimit(element, verifyLink = true) {
+  if (verifyLink && !element.link?.url?.length > 0) {
+    return false;
+  }
+  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
+  const { x, y, width, height, rotationAngle } = element;
+  const points = getCorners(rotationAngle, x, y, width, height);
+  return Object.keys(points).find((point) => points[point].y > limit);
 }
 
 function getCorner(pivotX, pivotY, cornerX, cornerY, angle) {

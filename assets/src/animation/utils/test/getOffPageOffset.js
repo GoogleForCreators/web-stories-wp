@@ -15,13 +15,16 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   FULLBLEED_RATIO,
   PAGE_HEIGHT,
   PAGE_WIDTH,
-} from '../../../edit-story/constants';
+} from '@web-stories-wp/units';
+/**
+ * Internal dependencies
+ */
 import getOffPageOffset from '../getOffPageOffset';
 
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;

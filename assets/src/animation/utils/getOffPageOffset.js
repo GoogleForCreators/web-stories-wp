@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
+  dataToEditorY,
+  getBox,
   FULLBLEED_RATIO,
   PAGE_HEIGHT,
   PAGE_WIDTH,
-} from '../../edit-story/constants';
-import { dataToEditorY, getBox } from '../../edit-story/units/dimensions';
-
+} from '@web-stories-wp/units';
+/**
+ * Internal dependencies
+ */
 const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
 const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 

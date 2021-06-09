@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
+import { isElementBelowLimit } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../app';
-import isElementBelowLimit from './isElementBelowLimit';
 
 function useElementsWithLinks() {
   const { currentPage, selectedElements } = useStory((state) => ({

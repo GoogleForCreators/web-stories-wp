@@ -19,6 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import {
+  dataToEditorX,
+  dataToEditorY,
+  dataToFontSizeY as dataToFontSize,
+} from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -27,11 +32,6 @@ import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
-import {
-  dataToEditorX,
-  dataToEditorY,
-  dataToFontSizeY as dataToFontSize,
-} from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import {
   generateParagraphTextStyle,

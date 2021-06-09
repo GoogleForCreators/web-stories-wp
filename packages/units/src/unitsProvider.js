@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
+import StoryPropTypes from '../../../assets/src/edit-story/types';
 import Context from './context';
 import {
   dataToEditorX,

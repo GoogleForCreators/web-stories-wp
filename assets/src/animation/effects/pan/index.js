@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   FULLBLEED_RATIO,
   PAGE_HEIGHT,
   PAGE_WIDTH,
-} from '../../../edit-story/constants';
-import { dataToEditorY, getBox } from '../../../edit-story/units/dimensions';
+  dataToEditorY,
+  getBox,
+} from '@web-stories-wp/units';
+
+/**
+ * Internal dependencies
+ */
 import { ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
 

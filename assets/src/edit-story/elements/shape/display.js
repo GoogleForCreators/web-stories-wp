@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useUnits } from '@web-stories-wp/units';
 import {
   elementFillContent,
   elementWithBackgroundColor,
@@ -36,7 +37,6 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import { useUnits } from '../../units';
 
 const Element = styled.div`
   ${elementFillContent}

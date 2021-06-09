@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { calcRotatedObjectPositionAndSize } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
-import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { MIN_MAX } from './constants';
 
 export function getReducedValue(items, key, smallest = true) {

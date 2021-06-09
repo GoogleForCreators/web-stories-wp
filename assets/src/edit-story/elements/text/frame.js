@@ -24,9 +24,9 @@ import { useRef, useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { useUnits } from '@web-stories-wp/units';
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
 import { useStory, useCanvas } from '../../app';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,

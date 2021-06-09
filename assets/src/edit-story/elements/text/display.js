@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useUnits } from '@web-stories-wp/units';
 import { useFont } from '../../app';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,

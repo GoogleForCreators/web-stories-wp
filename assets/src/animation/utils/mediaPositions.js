@@ -28,17 +28,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
+  getBox,
   FULLBLEED_RATIO,
   PAGE_HEIGHT,
   PAGE_WIDTH,
-} from '../../edit-story/constants';
-import getMediaSizePositionProps from '../../edit-story/elements/media/getMediaSizePositionProps';
-import { getBox } from '../../edit-story/units/dimensions';
+} from '@web-stories-wp/units';
 
+/**
+ * Internal dependencies
+ */
+import getMediaSizePositionProps from '../../edit-story/elements/media/getMediaSizePositionProps';
 const FULLBLEED_PAGE_HEIGHT = (1 / FULLBLEED_RATIO) * PAGE_WIDTH;
 const PRECISION = 1;
 

@@ -30,10 +30,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useUnits } from '@web-stories-wp/units';
 import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,

@@ -20,13 +20,13 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
 import { TransformProvider } from '../../transform';
-import { UnitsProvider } from '../../../units';
 import DisplayElement from '../../canvas/displayElement';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 

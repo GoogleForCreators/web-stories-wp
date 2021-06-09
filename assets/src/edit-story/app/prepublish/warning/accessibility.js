@@ -15,6 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+  dataToFontSizeY,
+  dataFontEm,
+  getBox,
+  getBoundRect,
+} from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
 import {
@@ -22,10 +33,7 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
-import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
-import { dataToFontSizeY, dataFontEm, getBox } from '../../../units/dimensions';
 import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
 import {
   setOrCreateImage,

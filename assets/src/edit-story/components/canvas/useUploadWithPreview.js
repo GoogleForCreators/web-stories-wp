@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { DANGER_ZONE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import useStory from '../../app/story/useStory';
 import { useLocalMedia } from '../../app/media';
-import { DANGER_ZONE_HEIGHT } from '../../constants';
 import useUpdateElementDimensions from '../../app/media/utils/useUpdateElementDimensions';
 import useInsertElement from './useInsertElement';
 
