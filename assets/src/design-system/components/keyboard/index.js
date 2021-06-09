@@ -58,12 +58,17 @@ function setGlobalRef() {
 }
 
 /**
+ * @callback KeyEffectCallback
+ * @param {KeyboardEvent} event Event.
+ */
+
+/**
  * See https://craig.is/killing/mice#keys for the supported key codes.
  *
  * @param {Node|{current: Node}} refOrNode Node or reference to one.
  * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
  * @param {string|undefined} type Event type, either 'keydown', 'keyup', or undefined to automatically determine it.
- * @param {function(KeyboardEvent)} callback Callback.
+ * @param {KeyEffectCallback} callback Callback.
  * @param {Array|undefined} deps The effect's dependencies.
  */
 function useKeyEffectInternal(
@@ -118,7 +123,7 @@ function useKeyEffectInternal(
  *
  * @param {Node|{current: Node}} refOrNode Node or reference to one.
  * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {function(KeyboardEvent)} callback Callback.
+ * @param {KeyEffectCallback} callback Callback.
  * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyEffect(
@@ -134,7 +139,7 @@ export function useKeyEffect(
 /**
  * @param {Node|{current: Node}} refOrNode Node or reference to one.
  * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {function(KeyboardEvent)} callback Callback.
+ * @param {KeyEffectCallback} callback Callback.
  * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyDownEffect(
@@ -150,7 +155,7 @@ export function useKeyDownEffect(
 /**
  * @param {Node|{current: Node}} refOrNode Node or reference to one.
  * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {function(KeyboardEvent)} callback Callback.
+ * @param {KeyEffectCallback} callback Callback.
  * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyUpEffect(
@@ -180,7 +185,7 @@ export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
 
 /**
  * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {function(KeyboardEvent)} callback Callback.
+ * @param {KeyEffectCallback} callback Callback.
  * @param {Array} [deps] The effect's dependencies.
  */
 export function useGlobalKeyDownEffect(
@@ -195,7 +200,7 @@ export function useGlobalKeyDownEffect(
 
 /**
  * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
- * @param {function(KeyboardEvent)} callback Callback.
+ * @param {KeyEffectCallback} callback Callback.
  * @param {Array} [deps] The effect's dependencies.
  */
 export function useGlobalKeyUpEffect(

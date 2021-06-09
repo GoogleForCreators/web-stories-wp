@@ -136,9 +136,7 @@ export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
   /**
    * Returns a callback for the keydown event raised by a MediaElement.
    *
-   * @param {Object} obj Parameters object
-   * @param {boolean} obj.isRTL Whether the document is RTL.
-   * @return {function({event: Event, target: Object})} The onKeyDown handler wrapper.
+   * @param {Event} event Keydown event.
    */
   const onKeyDown = useCallback(
     ({ key, target }) => {

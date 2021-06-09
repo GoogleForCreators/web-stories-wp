@@ -29,11 +29,16 @@ import MediaElement from './mediaElement';
 const PHOTO_MARGIN = 4;
 
 /**
+ * @callback InsertionCallback
+ * @param {Object} element Inserted element.
+ */
+
+/**
  * Displays a gallery of media elements arranged in a row-based format.
  *
  * @param {Object} props Component props.
  * @param {Array.<Object>} props.resources List of resources to display.
- * @param {function(Object)} props.onInsert Called when element is selected.
+ * @param {InsertionCallback} props.onInsert Called when element is selected.
  * @param {string} props.providerType Provider of gallery's elements.
  * @return {*} The gallery element.
  */
