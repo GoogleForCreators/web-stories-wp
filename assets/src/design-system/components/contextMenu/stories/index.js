@@ -409,19 +409,26 @@ export const RightClickMenu = () => {
         setIsOpen(false);
       },
     }));
-  const layoutRect = layoutRef.current.getBoundingClientRect();
   const handleMenu = (e) => {
     e.preventDefault();
+    const layoutRect = layoutRef?.current?.getBoundingClientRect();
+
     setIsOpen(true);
     setMenuPosition({
-      x: e.clientX - layoutRect.left,
-      y: e.clientY - layoutRect.top,
+      x: e.clientX - layoutRect?.left,
+      y: e.clientY - layoutRect?.top,
     });
   };
-  // TODO what kind of role would this make the layout?
   return (
     <ViewportContainer>
-      <SampleLayout ref={layoutRef} onClick={handleMenu} />
+      {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions*/}
+      <SampleLayout
+        ref={layoutRef}
+        onClick={handleMenu}
+        // TODO: confirm we don't need this menu to  show up for keyboards since they have a separate menu
+        role="region"
+        onKeyDown={() => {}}
+      />
       <RightClickContextMenuContainer position={menuPosition}>
         <AnimatedContextMenu
           isOpen={isOpen}
