@@ -15,33 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
+import { withPlugin, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
-  beforeAll(async () => {
-    await activatePlugin('classic-editor');
-  });
-
-  afterAll(async () => {
-    await deactivatePlugin('classic-editor');
-  });
+  withPlugin('classic-editor');
 
   it('should allow inserting shortcode via modal', async () => {
     await visitAdminPage('post-new.php');
 
     // Ensure we're in the visual editor.
     await expect(page).toClick('#content-tmce');
+    await expect(page).toMatchElement('.mce-tinymce.mce-container', {
+      visible: true,
+    });
 
     await expect(page).toClick('.mce-web-stories button');
 

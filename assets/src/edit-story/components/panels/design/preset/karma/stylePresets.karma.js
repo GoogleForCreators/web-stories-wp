@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
@@ -136,6 +141,14 @@ describe('Panel: Style Presets', () => {
         fixture.editor.inspector.designPanel.textStylePreset.delete;
       expect(deletePresetButton).toBeTruthy();
       await fixture.events.click(deletePresetButton);
+
+      // Confirm in the dialog since it's a global preset.
+      await waitFor(() => {
+        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      });
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: 'Delete' })
+      );
 
       // Verify the edit mode was exited (due to removing all elements).
       expect(

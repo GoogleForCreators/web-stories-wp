@@ -28,14 +28,16 @@ import VisibleImage from '../media/visibleImage';
 
 function VideoLayerContent({
   element: {
-    resource: { poster, alt = __('Video', 'web-stories') },
+    resource: { poster: defaultPoster, alt = __('Video', 'web-stories') },
+    poster,
   },
 }) {
-  if (!poster) {
+  const iconImage = poster?.length ? poster : defaultPoster;
+  if (!iconImage) {
     return <Icons.Video width={28} height={28} title={alt} />;
   }
 
-  return <VisibleImage src={poster} alt={alt} width={28} height={28} />;
+  return <VisibleImage src={iconImage} alt={alt} width={28} height={28} />;
 }
 
 VideoLayerContent.propTypes = {

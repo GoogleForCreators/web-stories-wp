@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\AMP\Traits;
 
 use DOMElement;
+use DOMNodeList;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use \AmpProject\Dom\Document as AMP_Document;
 
@@ -59,7 +60,10 @@ trait Sanitization_Utils {
 	}
 
 	/**
-	 * Transform all a tags to add target and rel attributes.
+	 * Transform all hyperlinks to ensure they're always valid.
+	 *
+	 * Adds target and rel attributes.
+	 * Removes empty data-tooltip-icon and data-tooltip-text attributes.
 	 *
 	 * @since 1.1.0
 	 *
@@ -68,6 +72,7 @@ trait Sanitization_Utils {
 	 */
 	private function transform_a_tags( &$document ) {
 		$hyperlinks = $document->getElementsByTagName( 'a' );
+
 		/**
 		 * The <a> element
 		 *
@@ -77,8 +82,17 @@ trait Sanitization_Utils {
 			if ( ! $hyperlink->getAttribute( 'target' ) ) {
 				$hyperlink->setAttribute( 'target', '_blank' );
 			}
+
 			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
 				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			}
+
+			if ( ! $hyperlink->getAttribute( 'data-tooltip-icon' ) ) {
+				$hyperlink->removeAttribute( 'data-tooltip-icon' );
+			}
+
+			if ( ! $hyperlink->getAttribute( 'data-tooltip-text' ) ) {
+				$hyperlink->removeAttribute( 'data-tooltip-text' );
 			}
 		}
 	}
@@ -183,6 +197,71 @@ trait Sanitization_Utils {
 		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
 			$document->html->removeAttribute( 'amp' );
+		}
+	}
+
+	/**
+	 * De-duplicate inline styles in the story.
+	 *
+	 * Greatly reduce the amount of `style[amp-custom]` CSS for stories by de-duplicating inline styles
+	 * and moving to simple class selector style rules, avoiding the specificity hack
+	 * that the AMP plugin's style sanitizer employs.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function deduplicate_inline_styles( $document ) {
+		$elements_by_inline_style = [];
+
+		// Gather all elements based on their common inline styles.
+		$elements_with_style = $document->xpath->query( '//*[ @style ]' );
+
+		if ( $elements_with_style instanceof DOMNodeList && $elements_with_style->length > 0 ) {
+			/**
+			 * The element with inline styles.
+			 *
+			 * @var DOMElement $styled_element The element.
+			 */
+			foreach ( $elements_with_style as $styled_element ) {
+				$value = $styled_element->getAttribute( 'style' );
+				$styled_element->removeAttribute( 'style' );
+				$elements_by_inline_style[ $value ][] = $styled_element;
+			}
+		}
+
+		if ( empty( $elements_by_inline_style ) ) {
+			return;
+		}
+
+		$style_element = $document->createElement( 'style' );
+
+		if ( ! $style_element ) {
+			return;
+		}
+
+		$document->head->appendChild( $style_element );
+
+		// Create style rule for each inline style and add class name to each element.
+		foreach ( $elements_by_inline_style as $inline_style => $styled_elements ) {
+			$inline_style_class_name = '_' . substr( md5( (string) $inline_style ), 0, 7 );
+
+			$style_rule = $document->createTextNode( sprintf( '.%s{%s}', $inline_style_class_name, $inline_style ) );
+			$style_element->appendChild( $style_rule );
+
+			/**
+			 * The element with inline styles.
+			 *
+			 * @var DOMElement $styled_element The element.
+			 */
+			foreach ( $styled_elements as $styled_element ) {
+				$class_name = $inline_style_class_name;
+				if ( $styled_element->hasAttribute( 'class' ) ) {
+					$class_name .= ' ' . $styled_element->getAttribute( 'class' );
+				}
+				$styled_element->setAttribute( 'class', $class_name );
+			}
 		}
 	}
 }

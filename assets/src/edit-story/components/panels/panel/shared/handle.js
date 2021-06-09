@@ -71,22 +71,29 @@ function DragHandle({
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <Handle
-      ref={handle}
-      onClick={(e) => e.stopPropagation()}
-      onDoubleClick={handleDoubleClick}
-      $position={position}
-    >
-      <Bar
-        role="slider"
-        aria-orientation="vertical"
-        aria-valuenow={height}
-        aria-valuemin={minHeight}
-        aria-valuemax={maxHeight}
-        aria-label={__('Set panel height', 'web-stories')}
-        {...rest}
-      />
-    </Handle>
+    <>
+      {/*
+        TODO: Investigate
+        See https://github.com/google/web-stories-wp/issues/6671
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+      <Handle
+        ref={handle}
+        onClick={(e) => e.stopPropagation()}
+        onDoubleClick={handleDoubleClick}
+        $position={position}
+      >
+        <Bar
+          role="slider"
+          aria-orientation="vertical"
+          aria-valuenow={height}
+          aria-valuemin={minHeight}
+          aria-valuemax={maxHeight}
+          aria-label={__('Set panel height', 'web-stories')}
+          {...rest}
+        />
+      </Handle>
+    </>
   );
 }
 

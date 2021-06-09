@@ -29,6 +29,15 @@ import { useUploader } from '../../uploader';
 import preloadImage from './preloadImage';
 import getFirstFrameOfVideo from './getFirstFrameOfVideo';
 
+/**
+ * Helper function get the file name without the extension from a url.
+ *
+ * @param {string} url URL to file.
+ * @return {string} File name without the extension.
+ */
+const getFileName = (url) =>
+  url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
+
 function useUploadVideoFrame({ updateMediaElement }) {
   const {
     actions: { updateMedia },
@@ -47,19 +56,34 @@ function useUploadVideoFrame({ updateMediaElement }) {
     [updateElementsByResourceId]
   );
 
-  const processData = async (id, src) => {
-    const trackTiming = getTimeTracker('load_video_poster');
-    try {
-      const obj = await getFirstFrameOfVideo(src);
-      obj.name = getFileName(src) + '-poster.jpeg';
+  /**
+   * Uploads a poster file for a given video.
+   *
+   * Ensures the two are properly connected on the backend.
+   */
+  const uploadVideoPoster = useCallback(
+    /**
+     *
+     * @param {number} id Video ID.
+     * @param {string} fileName File name.
+     * @param {File} posterFile File object.
+     * @return {Promise<{posterHeight: *, posterWidth: *, poster: *, posterId: *}>} Poster information.
+     */
+    async (id, fileName, posterFile) => {
+      // TODO: Make param mandatory; don't allow calling without.
+      if (!posterFile) {
+        return {};
+      }
+      posterFile.name = fileName;
       const {
         id: posterId,
         source_url: poster,
         media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(obj, {
+      } = await uploadFile(posterFile, {
         post: id,
         media_source: 'poster-generation',
       });
+
       await updateMedia(id, {
         featured_media: posterId,
         meta: {
@@ -71,63 +95,71 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // Preload the full image in the browser to stop jumping around.
       await preloadImage(poster);
 
-      // Overwrite the original video dimensions. The poster reupload has more
-      // accurate dimensions of the video that includes orientation changes.
-      const newSize =
-        (posterWidth &&
-          posterHeight && {
-            width: posterWidth,
-            height: posterHeight,
-          }) ||
-        null;
-      const newState = ({ resource }) => ({
-        resource: {
-          ...resource,
-          posterId,
-          poster,
-          ...newSize,
-        },
-      });
-      setProperties(id, newState);
-      updateMediaElement({
-        id,
-        data: {
-          posterId,
-          poster,
-          ...newSize,
-        },
-      });
-    } catch (err) {
-      // TODO: Potentially display error message to user.
-      trackError('video_poster_generation', err.message);
-    } finally {
-      trackTiming();
-    }
-  };
+      return { posterId, poster, posterWidth, posterHeight };
+    },
+    [storyId, updateMedia, uploadFile]
+  );
 
   /**
-   * Helper function get the file name without the extension from a url.
+   * Uploads the video's first frame as its poster image.
    *
-   * @param {string} url URL to file.
-   * @return {string} File name without the extension.
+   * Updates the resource both in the media library and on the canvas
+   * to include the new poster image reference.
    */
-  const getFileName = (url) =>
-    url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
+  const uploadVideoFrame = useCallback(
+    /**
+     *
+     * @param {number} id Video ID.
+     * @param {string} src Video URL.
+     * @return {Promise<void>}
+     */
+    async (id, src) => {
+      const trackTiming = getTimeTracker('load_video_poster');
+      try {
+        const fileName = getFileName(src) + '-poster.jpeg';
+        const obj = await getFirstFrameOfVideo(src);
+        const { posterId, poster, posterWidth, posterHeight } =
+          await uploadVideoPoster(id, fileName, obj);
 
-  /**
-   * Uploads the video's first frame as an attachment.
-   *
-   */
-  const uploadVideoFrame = useCallback(processData, [
-    storyId,
-    updateMediaElement,
-    uploadFile,
-    updateMedia,
-    setProperties,
-  ]);
+        // Overwrite the original video dimensions. The poster reupload has more
+        // accurate dimensions of the video that includes orientation changes.
+        const newSize =
+          (posterWidth &&
+            posterHeight && {
+              width: posterWidth,
+              height: posterHeight,
+            }) ||
+          null;
+        const newState = ({ resource }) => ({
+          resource: {
+            ...resource,
+            posterId,
+            poster,
+            ...newSize,
+          },
+        });
+        setProperties(id, newState);
+        updateMediaElement({
+          id,
+          data: {
+            posterId,
+            poster,
+            ...newSize,
+          },
+        });
+      } catch (err) {
+        // TODO: Potentially display error message to user.
+        trackError('video_poster_generation', err.message);
+      } finally {
+        trackTiming();
+      }
+    },
+    [uploadVideoPoster, updateMediaElement, setProperties]
+  );
 
   return {
     uploadVideoFrame,
+    uploadVideoPoster,
   };
 }
 

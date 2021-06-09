@@ -493,6 +493,47 @@ class Media extends Service_Base {
 
 		$response['media_source'] = $this->get_callback_media_source( $response );
 
+		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
+		$response['media_details'] = wp_get_attachment_metadata( $attachment->ID );
+
+		// Ensure empty details is an empty object.
+		if ( empty( $response['media_details'] ) ) {
+			$response['media_details'] = [];
+		} elseif ( ! empty( $response['media_details']['sizes'] ) ) {
+			foreach ( $response['media_details']['sizes'] as $size => &$size_data ) {
+
+				if ( isset( $size_data['mime-type'] ) ) {
+					$size_data['mime_type'] = $size_data['mime-type'];
+					unset( $size_data['mime-type'] );
+				}
+
+				// Use the same method image_downsize() does.
+				$image = wp_get_attachment_image_src( $attachment->ID, $size );
+				if ( ! $image ) {
+					continue;
+				}
+
+				list ( $image_src )      = $image;
+				$size_data['source_url'] = $image_src;
+			}
+
+			$full_src                      = wp_get_attachment_image_src( $attachment->ID, 'full' );
+			list ( $src, $width, $height ) = $full_src;
+
+			if ( ! empty( $full_src ) ) {
+				$response['media_details']['sizes']['full'] = [
+					'file'       => wp_basename( $src ),
+					'width'      => $width,
+					'height'     => $height,
+					'mime_type'  => $attachment->post_mime_type,
+					'source_url' => $src,
+				];
+			}
+		} else {
+			$response['media_details']['sizes'] = [];
+		}
+
+
 		return $response;
 	}
 

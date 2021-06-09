@@ -47,8 +47,8 @@ export const resizeRules = {
 };
 
 export const MEDIA_PANELS = [
-  PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
+  PanelTypes.FILTER,
   PanelTypes.SIZE_POSITION,
   PanelTypes.BORDER_RADIUS,
   PanelTypes.BORDER,

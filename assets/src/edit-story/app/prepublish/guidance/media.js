@@ -160,13 +160,6 @@ export function videoElementOptimized(element = {}) {
     return undefined;
   }
 
-  const idResource = element.resource?.id;
-  const idOrigin = idResource?.toString().split(':')?.[0];
-  const isCoverrMedia = idOrigin === 'media/coverr';
-  if (isCoverrMedia) {
-    return undefined;
-  }
-
   const videoArea =
     (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
   const isLargeVideo =

@@ -15,16 +15,15 @@
  * limitations under the License.
  */
 
-namespace phpunit\tests\Migrations;
+namespace Google\Web_Stories\Tests\Migrations;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * Class Unify_Color_Presets
  *
- * @covers \Google\Web_Stories\Migrations\Unify_Color_Presets;
- *
- * @package phpunit\tests\Migrations
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Unify_Color_Presets
+*
  */
 class Unify_Color_Presets extends Test_Case {
 	/**

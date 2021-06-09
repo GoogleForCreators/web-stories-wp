@@ -28,7 +28,6 @@ import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
-  MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
 } from '../../../constants';
 import getFileName from './getFileName';
@@ -46,20 +45,24 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 /**
+ * @typedef FFmpegData
+ * @property {boolean} isFeatureEnabled Whether the feature is enabled.
+ * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
+ * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
+ * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
+ * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
+ * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
+ * @property {(file: File) => Promise<File>} convertGifToVideo Convert GIF to MP4.
+ */
+
+/**
  * Custom hook to interact with FFmpeg.
  *
  * @see https://ffmpeg.org/ffmpeg.html
- * @return {{
- * isFeatureEnabled: boolean,
- * isFileTooLarge: (file: File) => boolean,
- * isTranscodingEnabled: boolean,
- * canTranscodeFile: (file: File) => boolean,
- * transcodeVideo: (file: File) => Promise<File>,
- * getFirstFrameOfVideo: (file: File) => Promise<File>
- * }} Functions and vars related to FFmpeg usage.
+ * @return {FFmpegData} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl } = useConfig();
+  const { ffmpegCoreUrl, allowedTranscodableMimeTypes } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -289,8 +292,8 @@ function useFFmpeg() {
    * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = useCallback(
-    (file) => MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type),
-    []
+    (file) => allowedTranscodableMimeTypes.includes(file.type),
+    [allowedTranscodableMimeTypes]
   );
 
   /**

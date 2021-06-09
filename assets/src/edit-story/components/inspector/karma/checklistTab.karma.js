@@ -59,7 +59,6 @@ describe('Checklist Tab integration', () => {
         updateCurrentUser: mockUpdateCurrentUser,
       },
     });
-    fixture.setFlags({ enablePrePublishVideoOptimization: true });
     await fixture.render();
   });
 
@@ -119,7 +118,6 @@ describe('Checklist Tab integration - user video optimization setting enabled pr
         getCurrentUser: mockGetCurrentUser,
       },
     });
-    fixture.setFlags({ enablePrePublishVideoOptimization: true });
     await fixture.render();
   });
 

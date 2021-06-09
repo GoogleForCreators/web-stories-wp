@@ -20,7 +20,8 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../story';
+import useStory from '../../story/useStory';
+import useUpdateElementDimensions from './useUpdateElementDimensions';
 import fetchRemoteFile from './fetchRemoteFile';
 
 function useProcessVideo({
@@ -29,6 +30,7 @@ function useProcessVideo({
   updateMedia,
   deleteMediaElement,
 }) {
+  const { updateElementDimensions } = useUpdateElementDimensions();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -108,6 +110,17 @@ function useProcessVideo({
         }
       };
 
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateElementDimensions({
+          id: oldResource.id,
+          resource: oldResourceWithId,
+        });
+        updateExistingElements({
+          oldResource: oldResourceWithId,
+        });
+      };
+
       const process = async () => {
         let file = false;
         try {
@@ -120,6 +133,7 @@ function useProcessVideo({
           onUploadSuccess,
           onUploadStart,
           onUploadError,
+          onUploadProgress,
           additionalData: { alt: oldResource.alt, title: oldResource.title },
         });
       };
@@ -132,6 +146,7 @@ function useProcessVideo({
       updateOldVideo,
       deleteMediaElement,
       updateExistingElements,
+      updateElementDimensions,
     ]
   );
 

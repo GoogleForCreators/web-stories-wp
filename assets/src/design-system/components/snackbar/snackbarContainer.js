@@ -34,7 +34,8 @@ const StyledContainer = styled.div`
   top: ${({ placement }) => (placement.indexOf('top') === 0 ? 0 : 'inherit')};
   bottom: ${({ placement }) =>
     placement.indexOf('bottom') === 0 ? 0 : 'inherit'};
-  ${getSnackbarXPos}
+  ${getSnackbarXPos};
+  margin-bottom: 33px;
   display: flex;
   flex-direction: column;
   align-items: ${({ alignItems }) => alignItems};

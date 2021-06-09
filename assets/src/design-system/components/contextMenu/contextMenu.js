@@ -28,7 +28,10 @@ const ContextMenu = ({ isAlwaysVisible, items, ...props }) => {
   return (
     <>
       {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
-      <Popover role="dialog" isOpen={isAlwaysVisible || props.isOpen}>
+      <Popover
+        role={isAlwaysVisible ? '' : 'dialog'}
+        isOpen={isAlwaysVisible || props.isOpen}
+      >
         <Menu items={items} {...props} />
         <Shadow />
       </Popover>

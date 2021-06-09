@@ -25,44 +25,74 @@ export class QuickActionMenu extends Container {
   }
 
   get changeBackgroundColorButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
     });
   }
 
+  get changeColorButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.CHANGE_COLOR,
+    });
+  }
+
   get insertBackgroundMediaButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.INSERT_BACKGROUND_MEDIA,
     });
   }
 
   get insertTextButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.INSERT_TEXT,
     });
   }
 
   get replaceMediaButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.REPLACE_MEDIA,
     });
   }
 
+  get replaceBackgroundMediaButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
+    });
+  }
+
   get addAnimationButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.ADD_ANIMATION,
     });
   }
 
   get addLinkButton() {
-    return this.queryByRole('menuitem', {
+    return this.queryByRole('button', {
       name: ACTION_TEXT.ADD_LINK,
     });
   }
 
-  get clearAnimationsButton() {
-    return this.queryByRole('menuitem', {
-      name: ACTION_TEXT.CLEAR_ANIMATIONS,
+  get addCaptionsButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.ADD_CAPTIONS,
+    });
+  }
+
+  get resetElementButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.RESET_ELEMENT,
+    });
+  }
+
+  get textColorButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.CHANGE_TEXT_COLOR,
+    });
+  }
+
+  get fontButton() {
+    return this.queryByRole('button', {
+      name: ACTION_TEXT.CHANGE_FONT,
     });
   }
 }

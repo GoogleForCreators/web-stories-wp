@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 
 function WithAnimation({
   id,
+  className,
   style,
   animationStyle,
   useClippingContainer,
@@ -33,12 +34,16 @@ function WithAnimation({
         ...style,
       }}
     >
-      <div id={id} style={{ width: '100%', height: '100%', ...animationStyle }}>
+      <div
+        id={id}
+        className={className}
+        style={{ width: '100%', height: '100%', ...animationStyle }}
+      >
         {children}
       </div>
     </div>
   ) : (
-    <div id={id} style={{ ...style, ...animationStyle }}>
+    <div id={id} className={className} style={{ ...style, ...animationStyle }}>
       {children}
     </div>
   );
@@ -46,6 +51,7 @@ function WithAnimation({
 
 WithAnimation.propTypes = {
   id: PropTypes.string,
+  className: PropTypes.string,
   style: PropTypes.object,
   animationStyle: PropTypes.object,
   useClippingContainer: PropTypes.bool,

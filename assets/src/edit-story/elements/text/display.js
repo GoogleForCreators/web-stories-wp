@@ -52,6 +52,7 @@ import {
   getHighlightLineheight,
   generateParagraphTextStyle,
   calcFontMetrics,
+  generateFontFamily,
 } from './util';
 
 const OutsideBorder = styled.div`
@@ -97,11 +98,46 @@ const ForegroundSpan = styled(Span)`
   background: none;
 `;
 
-const FillElement = styled.p`
+// Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
+const FillElement = styled.p.attrs(
+  ({
+    theme,
+    previewMode,
+    fontStyle,
+    fontSize,
+    fontWeight,
+    font,
+    marginOffset,
+    padding,
+    lineHeight,
+    textAlign,
+    dataToEditorY,
+  }) => {
+    return previewMode
+      ? {
+          style: {
+            zIndex: 1,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+            letterSpacing: 'normal',
+            color: theme.colors.standard.black,
+            fontStyle,
+            fontSize: `${fontSize}px`,
+            fontWeight,
+            fontFamily: generateFontFamily(font),
+            margin: `${-dataToEditorY(marginOffset / 2)}px 0`,
+            padding: padding || 0,
+            lineHeight,
+            textAlign,
+          },
+        }
+      : {};
+  }
+)`
   margin: 0;
   ${elementFillContent}
-  ${elementWithFont}
-  ${elementWithTextParagraphStyle}
+  ${({ previewMode }) => !previewMode && elementWithFont}
+  ${({ previewMode }) => !previewMode && elementWithTextParagraphStyle}
 `;
 
 const Background = styled.div`
@@ -281,6 +317,7 @@ function TextDisplay({
         dangerouslySetInnerHTML={{
           __html: content,
         }}
+        previewMode={previewMode}
         {...props}
       />
     </Background>

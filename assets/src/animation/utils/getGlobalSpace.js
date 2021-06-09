@@ -37,6 +37,13 @@ export function literal(strings, ...args) {
 }
 
 /**
+ * @typedef TemplateTag
+ * @param {Array<string>} strings strings in template tag
+ * @param {Array<any>} args arguments in template tag
+ * @return {string} string result
+ */
+
+/**
  * Given an element, this function returns a template tag
  * that wraps any given string in a counter transform to reset the
  * global coordinate space, then reapplies the original element
@@ -51,7 +58,7 @@ export function literal(strings, ...args) {
  * ```
  *
  * @param {Element} element story element to derive counter transforms off of.
- * @return {(s: string[], ...args: any[]) => string} template string tag that resets transform space.
+ * @return {TemplateTag} template string tag that resets transform space.
  */
 export function getGlobalSpace(element = {}) {
   function global(...template) {

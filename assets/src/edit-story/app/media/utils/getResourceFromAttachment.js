@@ -19,6 +19,7 @@
  */
 import createResource from './createResource';
 import getTypeFromMime from './getTypeFromMime';
+import getResourceSize from './getResourceSize';
 
 /**
  * MediaDetails object.
@@ -94,9 +95,13 @@ function getVideoResourceFromAttachment(attachment) {
     mimeType,
     creationDate: date_gmt,
     src,
-    width: posterGenerated && posterWidth && posterHeight ? posterWidth : width,
-    height:
-      posterGenerated && posterWidth && posterHeight ? posterHeight : height,
+    ...getResourceSize({
+      width,
+      height,
+      posterGenerated,
+      posterWidth,
+      posterHeight,
+    }),
     poster,
     posterId,
     id,

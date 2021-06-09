@@ -34,7 +34,12 @@ jobs:
     name: Bundle size check
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    if: ${{ github.event_name == 'pull_request' }}
+    # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Cancel previous
         uses: styfle/cancel-workflow-action@0.9.0
@@ -116,7 +121,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer
+          tools: composer:v2.1.1
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -134,7 +139,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
@@ -173,6 +178,11 @@ jobs:
     name: Upload ZIP files to storage
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     needs: build
     steps:
       - name: Cancel previous

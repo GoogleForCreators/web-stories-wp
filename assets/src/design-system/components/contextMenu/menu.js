@@ -18,6 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -162,7 +163,15 @@ MenuList.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
-const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
+const Menu = ({
+  items,
+  isIconMenu,
+  isOpen,
+  onDismiss,
+  groupLabel = __('Menu options', 'web-stories'),
+  disableControlledTabNavigation = false,
+  ...props
+}) => {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const listRef = useRef(null);
   const menuWasAlreadyOpen = useRef(isOpen);
@@ -248,25 +257,33 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
     }
   }, [isOpen]);
 
-  useKeyDownEffect(
-    listRef,
-    { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
-    handleKeyboardNav,
-    [handleKeyboardNav]
+  const keySpec = useMemo(
+    () =>
+      disableControlledTabNavigation
+        ? { key: ['down', 'up', 'left', 'right'] }
+        : { key: ['down', 'up', 'left', 'right', 'tab'], shift: true },
+    [disableControlledTabNavigation]
   );
 
+  useKeyDownEffect(listRef, keySpec, handleKeyboardNav, [
+    handleKeyboardNav,
+    keySpec,
+  ]);
+
   return (
-    <MenuWrapper isIconMenu={isIconMenu}>
+    <MenuWrapper isIconMenu={isIconMenu} role="menu">
       <MenuList
         data-testid="context-menu-list"
         ref={listRef}
         isIconMenu={isIconMenu}
-        role="menu"
+        aria-label={groupLabel}
+        role="group"
         {...props}
       >
         {items.map(({ separator, onFocus, ...itemProps }, index) => (
           <li
             key={ids[index]}
+            role="menuitem"
             className={
               (separator === 'top' && SEPARATOR_TOP_CLASS) ||
               (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
@@ -274,7 +291,6 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
             }
           >
             <MenuItem
-              focusedIndex={focusedIndex}
               index={index}
               onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
               onDismiss={onDismiss}
@@ -288,6 +304,7 @@ const Menu = ({ items, isIconMenu, isOpen, onDismiss, ...props }) => {
 };
 
 export const MenuPropTypes = {
+  groupLabel: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       ...MenuItemProps,
@@ -297,6 +314,7 @@ export const MenuPropTypes = {
   isIconMenu: PropTypes.bool,
   isOpen: PropTypes.bool,
   onDismiss: PropTypes.func,
+  disableControlledTabNavigation: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;

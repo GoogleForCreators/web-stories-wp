@@ -47,7 +47,7 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
   const dialogContent = sprintf(
     /* translators: %s: user's name */
     __(
-      '%s is already editing this story. Do you want to take over? ',
+      '%s is already editing this story. Do you want to take over?',
       'web-stories'
     ),
     user?.name

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled from 'styled-components';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { _x } from '@web-stories-wp/i18n';
@@ -31,11 +30,8 @@ import {
   useStoryAnimationContext,
 } from '../../../animation';
 import { useStory, useCanvas } from '../../app';
-import { ContextMenu } from '../../../design-system';
-import { useQuickActions } from '../../app/highlights';
-import DirectionAware from '../directionAware';
 import DisplayElement from './displayElement';
-import { Layer, PageArea, QuickActionsArea } from './layout';
+import { Layer, PageArea } from './layout';
 import PageAttachment from './pageAttachment';
 
 const DisplayPageArea = styled(PageArea)`
@@ -105,7 +101,6 @@ function DisplayPage({
 }
 
 function DisplayLayer() {
-  const enableQuickActionMenu = useFeature('enableQuickActionMenus');
   const {
     currentPage,
     animationState,
@@ -119,8 +114,6 @@ function DisplayLayer() {
       updateAnimationState: actions.updateAnimationState,
     };
   });
-
-  const quickActions = useQuickActions();
 
   const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
@@ -176,13 +169,6 @@ function DisplayLayer() {
             resetAnimationState={resetAnimationState}
           />
         </DisplayPageArea>
-        {enableQuickActionMenu && quickActions.length && (
-          <DirectionAware>
-            <QuickActionsArea>
-              <ContextMenu isAlwaysVisible isIconMenu items={quickActions} />
-            </QuickActionsArea>
-          </DirectionAware>
-        )}
       </Layer>
     </StoryAnimation.Provider>
   );

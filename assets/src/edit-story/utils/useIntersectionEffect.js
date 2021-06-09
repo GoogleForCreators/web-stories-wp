@@ -20,9 +20,14 @@
 import { useEffect } from 'react';
 
 /**
+ * @callback IntersectionHandler
+ * @param {IntersectionObserverEntry} entry
+ */
+
+/**
  * @param {Object<{current: ?Element}>} ref Target node ref.
  * @param {?Object} options The IntersectionObserver options, root is a ref not node.
- * @param {function(IntersectionObserverEntry)} handler The intersection handler.
+ * @param {IntersectionHandler} handler The intersection handler.
  * @param {Array} [deps] The effect's dependencies.
  */
 function useIntersectionEffect(ref, options = {}, handler, deps = undefined) {

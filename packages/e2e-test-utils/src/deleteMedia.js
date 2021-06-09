@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import visitAdminPage from './visitAdminPage';
 
 /**
  * Creates a new story.
