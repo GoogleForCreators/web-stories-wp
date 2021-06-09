@@ -30,13 +30,6 @@ import ChecklistTab from '../components/checklistTab';
 import { TEXT } from '../constants';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
-jest.mock('flagged', () => ({
-  useFeature: () => true,
-  useFeatures: () => ({
-    enablePrePublishVideoOptimization: true,
-  }),
-}));
-
 const GUIDANCE_ERROR = {
   type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
   elements: [],
