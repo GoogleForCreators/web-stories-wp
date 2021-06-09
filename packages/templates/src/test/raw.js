@@ -84,7 +84,7 @@ describe('raw template files', () => {
 
   // @see https://github.com/google/web-stories-wp/issues/7227
   it.each(templates)(
-    '%s template should not contain extraneaous properties',
+    '%s template should not contain extraneous properties',
     async (template) => {
       const { default: templateData } = await import(
         /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
