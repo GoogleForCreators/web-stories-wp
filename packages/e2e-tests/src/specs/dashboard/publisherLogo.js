@@ -63,13 +63,15 @@ describe('Publisher logo', () => {
       text: ERROR_TEXT,
     });
 
+    uploadedFiles.push(logoOneName);
+
     const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+
     // verify no error message
     await expect(page).not.toMatchElement('[role="alert"]', {
       text: ERROR_TEXT,
     });
 
-    uploadedFiles.push(logoOneName);
     uploadedFiles.push(logoTwoName);
   });
 
@@ -78,16 +80,22 @@ describe('Publisher logo', () => {
 
     // Upload publisher logo
     const logoOneName = await uploadPublisherLogo('yay-fox.gif');
+
     // verify no error message
     await expect(page).not.toMatchElement('[role="alert"]', {
       text: ERROR_TEXT,
     });
 
+    uploadedFiles.push(logoOneName);
+
     const logoTwoName = await uploadPublisherLogo('its-a-walk-off.gif');
+
     // verify no error message
     await expect(page).not.toMatchElement('[role="alert"]', {
       text: ERROR_TEXT,
     });
+
+    uploadedFiles.push(logoTwoName);
 
     // Delete one logo
     await expect(page).toClick(
@@ -103,7 +111,5 @@ describe('Publisher logo', () => {
       `button[aria-label^="Publisher logo menu for ${logoOneName}"`
     );
 
-    uploadedFiles.push(logoOneName);
-    uploadedFiles.push(logoTwoName);
   });
 });
