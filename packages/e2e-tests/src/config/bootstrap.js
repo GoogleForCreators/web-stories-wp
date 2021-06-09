@@ -111,8 +111,11 @@ const ALLOWED_ERROR_MESSAGES = [
   // Another CSP warning in Firefox for embeds.
   'An iframe which has both allow-top-navigation and allow-top-navigation-by-user-activation',
 
-  // Firefox warns about this in WP admin
+  // Firefox warns about this in WP admin.
   'For more information see “The Principal Writing Mode”',
+
+  // Firefox warns about this, caused by react-modal.
+  'unreachable code after return statement',
 ];
 
 export function addAllowedErrorMessage(message) {
