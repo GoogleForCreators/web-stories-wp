@@ -95,4 +95,23 @@ describe('raw template files', () => {
       expect(templateData.story.globalStoryStyles).toBeUndefined();
     }
   );
+
+  it.each(templates)(
+    '%s template should only contain videos marked as optimized',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'video' || !element?.resource?.src) {
+            continue;
+          }
+
+          expect(element?.resource?.isOptimized).toBeTrue();
+        }
+      }
+    }
+  );
 });
