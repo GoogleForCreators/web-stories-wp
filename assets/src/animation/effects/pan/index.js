@@ -17,9 +17,9 @@
  * External dependencies
  */
 import {
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
   PAGE_WIDTH,
+  FULLBLEED_HEIGHT,
+  DANGER_ZONE_HEIGHT,
   dataToEditorY,
   getBox,
 } from '@web-stories-wp/units';
@@ -29,9 +29,6 @@ import {
  */
 import { ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
-
-const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 function getTargetScale({ width, height }) {
   if (width < PAGE_WIDTH || height < FULLBLEED_HEIGHT) {

@@ -19,15 +19,8 @@
 import {
   dataToEditorY,
   getBox,
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
+  DANGER_ZONE_HEIGHT,
 } from '@web-stories-wp/units';
-/**
- * Internal dependencies
- */
-const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 function calcTopOffset(box, dangerZoneOffset) {
   const { y, height } = box;
