@@ -94,7 +94,7 @@ function PagePreview({ page, isCurrentPage, ...props }) {
     previewImages,
   }));
 
-  const displayImagePreview = !isCurrentPage && previewImages?.[page.id];
+  const displayImagePreview = previewImages?.[page.id];
   if (displayImagePreview) {
     return (
       <Profiler
