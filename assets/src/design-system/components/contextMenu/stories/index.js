@@ -322,8 +322,8 @@ const rightClickMenuPageDeleteOptions = [
 ];
 
 const rightClickMenuStyleOptions = [
-  { label: 'Copy styles', separator: 'top', shortcut: '⌥⌘C' },
-  { label: 'Paste styles', shortcut: '⌥⌘V' },
+  { label: 'Copy style', separator: 'top', shortcut: '⌥⌘C' },
+  { label: 'Paste style', shortcut: '⌥⌘V' },
   { label: 'Clear style' },
 ];
 
