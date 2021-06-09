@@ -110,6 +110,5 @@ describe('Publisher logo', () => {
     await expect(page).not.toMatchElement(
       `button[aria-label^="Publisher logo menu for ${logoOneName}"`
     );
-
   });
 });
