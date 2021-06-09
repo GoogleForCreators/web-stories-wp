@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
-
-/**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+import { createNewStory, withPlugin } from '@web-stories-wp/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -52,15 +47,7 @@ describe('Status Check', () => {
   });
 
   describe('Invalid JSON response', () => {
-    beforeAll(async () => {
-      await activatePlugin('web-stories-test-plugin-status-check-200-invalid');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin(
-        'web-stories-test-plugin-status-check-200-invalid'
-      );
-    });
+    withPlugin('web-stories-test-plugin-status-check-200-invalid');
 
     it('should display error dialog', async () => {
       await createNewStory();
@@ -69,13 +56,7 @@ describe('Status Check', () => {
   });
 
   describe('403 Forbidden (WAF)', () => {
-    beforeAll(async () => {
-      await activatePlugin('web-stories-test-plugin-status-check-403');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin('web-stories-test-plugin-status-check-403');
-    });
+    withPlugin('web-stories-test-plugin-status-check-403');
 
     it('should display error dialog', async () => {
       await createNewStory();
@@ -84,13 +65,7 @@ describe('Status Check', () => {
   });
 
   describe('500 Internal Server Error', () => {
-    beforeAll(async () => {
-      await activatePlugin('web-stories-test-plugin-status-check-500');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin('web-stories-test-plugin-status-check-500');
-    });
+    withPlugin('web-stories-test-plugin-status-check-500');
 
     it('should display error dialog', async () => {
       await createNewStory();

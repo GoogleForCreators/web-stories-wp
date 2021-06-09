@@ -74,7 +74,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer:v1
+          tools: composer:v2.1.1
 
       - name: Get Composer cache directory
         id: composer-cache
@@ -92,7 +92,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true

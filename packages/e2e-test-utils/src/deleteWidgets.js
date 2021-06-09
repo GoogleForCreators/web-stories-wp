@@ -15,9 +15,9 @@
  */
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import visitAdminPage from './visitAdminPage';
 
 async function deleteWidgets() {
   // Remove all widgets

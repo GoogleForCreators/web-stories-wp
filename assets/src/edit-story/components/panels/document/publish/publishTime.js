@@ -39,14 +39,16 @@ import { focusStyle } from '../../shared';
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';
 
 function PublishTime() {
-  const { date, updateStory } = useStory(
+  const { date, modified, status, updateStory } = useStory(
     ({
       state: {
-        story: { date },
+        story: { date, modified, status },
       },
       actions: { updateStory },
     }) => ({
       date,
+      modified,
+      status,
       updateStory,
     })
   );
@@ -75,7 +77,10 @@ function PublishTime() {
       if (close && showDatePicker) {
         setShowDatePicker(false);
       }
-      const newDate = format(new Date(value), TIMEZONELESS_FORMAT);
+      // Format the date only if the value exists.
+      const newDate = value
+        ? format(new Date(value), TIMEZONELESS_FORMAT)
+        : value;
       updateStory({
         properties: { date: newDate },
       });
@@ -83,6 +88,16 @@ function PublishTime() {
     [showDatePicker, updateStory]
   );
 
+  // Floating date means an unset date so that the story publish date will match the time it will get published.
+  const floatingDate =
+    ['draft', 'pending', 'auto-draft'].includes(status) &&
+    (date === modified || date === null);
+  const displayDate = Date.now();
+  const displayLabel = !floatingDate
+    ? format(date || displayDate, shortDateFormat) +
+      ' ' +
+      formatTime(date || displayDate)
+    : __('Immediately', 'web-stories');
   return (
     <>
       <Row>
@@ -100,9 +115,7 @@ function PublishTime() {
             }
           }}
           ref={dateFieldRef}
-          activeItemLabel={
-            format(date, shortDateFormat) + ' ' + formatTime(date)
-          }
+          activeItemLabel={displayLabel}
           selectButtonStylesOverride={focusStyle}
         />
       </Row>
@@ -112,7 +125,7 @@ function PublishTime() {
         placement={PLACEMENT.BOTTOM_END}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
-            value={date}
+            value={floatingDate ? displayDate : date}
             onChange={(value, close = false) => {
               handleDateChange(value, close);
             }}
@@ -120,6 +133,10 @@ function PublishTime() {
             is12Hour={use12HourFormat}
             forwardedRef={dateTimeNode}
             onClose={() => setShowDatePicker(false)}
+            canReset={
+              ['draft', 'pending', 'auto-draft'].includes(status) &&
+              !floatingDate
+            }
           />
         )}
       />

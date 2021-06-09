@@ -15,21 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  getEditedPostContent,
-} from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
   createNewStory,
   publishPost,
   insertStoryTitle,
+  withPlugin,
+  publishStory,
+  getEditedPostContent,
 } from '@web-stories-wp/e2e-test-utils';
 
 // Disable for https://github.com/google/web-stories-wp/issues/6238
@@ -40,15 +34,8 @@ describe.skip('Publishing Flow', () => {
 
     await insertStoryTitle('Publishing Flow Test');
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
-    // Bypass checklist
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Continue to publish/,
-    });
+    await publishStory(false);
 
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
     // Create new post and embed story.
     await expect(page).toClick('a', { text: 'Add to new post' });
     await page.waitForNavigation();
@@ -103,29 +90,14 @@ describe.skip('Publishing Flow', () => {
   });
 
   describe('Classic Editor', () => {
-    beforeAll(async () => {
-      await activatePlugin('classic-editor');
-    });
-
-    afterAll(async () => {
-      await deactivatePlugin('classic-editor');
-    });
+    withPlugin('classic-editor');
 
     it('should guide me towards creating a new post to embed my story', async () => {
       await createNewStory();
 
       await insertStoryTitle('Publishing Flow Test (Shortcode)');
 
-      // Publish story.
-      await expect(page).toClick('button', { text: 'Publish' });
-
-      // Bypass checklist
-      await page.waitForSelector('.ReactModal__Content');
-      await expect(page).toClick('button', {
-        text: /Continue to publish/,
-      });
-
-      await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await publishStory(false);
 
       // Create new post and embed story.
       await expect(page).toClick('a', { text: 'Add to new post' });

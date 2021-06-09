@@ -240,6 +240,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
 				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -374,6 +375,17 @@ class Experiments extends Service_Base {
 				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #7480
+			 * Creation date: 2021-05-28
+			 */
+			[
+				'name'        => 'enableMediaPickerVideoOptimization',
+				'label'       => __( 'Video optimization in media picker', 'web-stories' ),
+				'description' => __( 'Optimize already uploaded videos in media picker.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey

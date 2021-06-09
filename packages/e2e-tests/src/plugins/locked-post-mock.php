@@ -32,7 +32,6 @@ function filter_meta( $value, $object_id, $meta_key ) {
 }
 add_filter( 'get_post_metadata', __NAMESPACE__ . '\filter_meta', 10, 3 );
 
-
 function activate() {
 	$user = get_user_by( 'login', USERNAME );
 	if ( ! $user ) {
