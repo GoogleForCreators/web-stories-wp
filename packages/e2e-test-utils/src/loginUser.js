@@ -18,6 +18,7 @@
  * WordPress dependencies
  */
 import { createURL, isCurrentURL } from '@wordpress/e2e-test-utils';
+import { addRequestInterception } from './index';
 
 /**
  * Performs log in with specified username and password.
@@ -48,7 +49,19 @@ async function loginUser(username, password) {
   await Promise.all([page.waitForNavigation(), page.click('#wp-submit')]);
 
   await expect(page).not.toMatchElement('#login_error', {
+    text: /Password field is empty/i,
+  });
+
+  await expect(page).not.toMatchElement('#login_error', {
+    text: /Username field is empty/i,
+  });
+
+  await expect(page).not.toMatchElement('#login_error', {
     text: /Unknown username/i,
+  });
+
+  await expect(page).not.toMatchElement('#login_error', {
+    text: /Error:/i,
   });
 }
 
