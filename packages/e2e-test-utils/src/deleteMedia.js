@@ -38,9 +38,7 @@ async function deleteMedia(fileName) {
   await page.hover(`#${elmId}`);
 
   await Promise.all([
-    await expect(page).toClick(
-      `a[aria-label="Delete “${fileName}” permanently"]`
-    ),
+    expect(page).toClick(`a[aria-label="Delete “${fileName}” permanently"]`),
     page.waitForNavigation(),
   ]);
   await page.waitForSelector(`#message`);
