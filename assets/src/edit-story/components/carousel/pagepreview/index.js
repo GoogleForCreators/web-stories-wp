@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import { Profiler } from 'react';
 
 /**
  * Internal dependencies
@@ -30,6 +31,7 @@ import { UnitsProvider } from '../../../units';
 import DisplayElement from '../../canvas/displayElement';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import useCarousel from '../useCarousel';
+import { getProfileData, logProfileData } from '../../../profiler';
 
 const Page = styled.button`
   display: block;
@@ -95,31 +97,43 @@ function PagePreview({ page, isCurrentPage, ...props }) {
   const displayImagePreview = !isCurrentPage && previewImages?.[page.id];
   if (displayImagePreview) {
     return (
-      <Page {...props}>
-        <PreviewWrapper background={backgroundColor}>
-          <PreviewImage src={previewImages?.[page.id]} alt="" />
-        </PreviewWrapper>
-      </Page>
+      <Profiler
+        id="PagePreview image"
+        onRender={(...profileData) =>
+          logProfileData(getProfileData(profileData))
+        }
+      >
+        <Page {...props}>
+          <PreviewWrapper background={backgroundColor}>
+            <PreviewImage src={previewImages?.[page.id]} alt="" />
+          </PreviewWrapper>
+        </Page>
+      </Profiler>
     );
   }
 
   return (
-    <UnitsProvider pageSize={{ width, height }}>
-      <TransformProvider>
-        <Page {...props}>
-          <PreviewWrapper background={backgroundColor}>
-            {page.elements.map(({ id, ...rest }) => (
-              <DisplayElement
-                key={id}
-                previewMode
-                element={{ id, ...rest }}
-                page={page}
-              />
-            ))}
-          </PreviewWrapper>
-        </Page>
-      </TransformProvider>
-    </UnitsProvider>
+    <Profiler
+      id="PagePreview normal"
+      onRender={(...profileData) => logProfileData(getProfileData(profileData))}
+    >
+      <UnitsProvider pageSize={{ width, height }}>
+        <TransformProvider>
+          <Page {...props}>
+            <PreviewWrapper background={backgroundColor}>
+              {page.elements.map(({ id, ...rest }) => (
+                <DisplayElement
+                  key={id}
+                  previewMode
+                  element={{ id, ...rest }}
+                  page={page}
+                />
+              ))}
+            </PreviewWrapper>
+          </Page>
+        </TransformProvider>
+      </UnitsProvider>
+    </Profiler>
   );
 }
 

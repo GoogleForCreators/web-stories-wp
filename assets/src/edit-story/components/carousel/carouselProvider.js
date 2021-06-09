@@ -43,6 +43,8 @@ function CarouselProvider({ availableSpace, children }) {
   const pageRefs = useRef([]);
   const previewRefs = useRef(null);
 
+  const numPages = pages.length;
+
   useLayoutEffect(() => {
     if (pages && pageRefs.current?.[pages[0]?.id] && !previewRefs.current) {
       pages.forEach(({ id }) => {
@@ -55,8 +57,11 @@ function CarouselProvider({ availableSpace, children }) {
               previewRefs.current = {};
             }
             previewRefs.current[id] = dataUrl;
+            if (Object.keys(previewRefs.current).length === pages.length) {
+              console.log('All done');
+              setPreviewImages(previewRefs.current);
+            }
           })
-          .then(() => setPreviewImages(previewRefs.current))
           .catch(function (error) {
             // eslint-disable-next-line no-console
             console.error('Oops, something went wrong!', error);
@@ -64,8 +69,6 @@ function CarouselProvider({ availableSpace, children }) {
       });
     }
   }, [pages, previewImages]);
-
-  const numPages = pages.length;
 
   const pageIds = useMemo(() => pages.map(({ id }) => id), [pages]);
 
