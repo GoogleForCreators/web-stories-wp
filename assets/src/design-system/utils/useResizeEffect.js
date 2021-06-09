@@ -25,8 +25,15 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { useEffect } from 'react';
 
 /**
+ * @callback ResizeHandler
+ * @param {Object} dimensions Element dimensions
+ * @param {number} dimensions.width Width.
+ * @param {number} dimensions.height Height.
+ */
+
+/**
  * @param {Object<{current: ?Element}>} ref Target node ref.
- * @param {function( {width: number, height: number} )} handler The resize handler.
+ * @param {ResizeHandler} handler The resize handler.
  * @param {Array} [deps] The effect's dependencies.
  */
 function useResizeEffect(ref, handler, deps = undefined) {

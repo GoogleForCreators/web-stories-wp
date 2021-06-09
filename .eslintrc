@@ -188,12 +188,13 @@
       }
     ],
     "jsdoc/check-indentation": "error",
-    "jsdoc/check-syntax": "warn",
+    "jsdoc/check-syntax": "error",
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
     "jsdoc/require-returns": "warn",
     "jsdoc/require-param-description": "warn",
+    "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
