@@ -58,9 +58,7 @@ describe('Handling .mov files', () => {
 
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
 
-    await page.keyboard.press('Escape');
-
-    await expect(page).not.toMatchElement(MODAL);
+    await expect(page).toClick('.media-modal-close');
   });
 
   describe('Inserting .mov from dialog', () => {
@@ -73,16 +71,12 @@ describe('Handling .mov files', () => {
 
       await expect(page).toClick('button', { text: 'Upload' });
 
-      await expect(page).toMatchElement(MODAL, { visible: true });
+      await expect(page).toMatchElement('.media-modal', { visible: true });
 
       const fileName = await uploadFile('small-video.mov', false);
       const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
 
       uploadedFiles.push(fileNameNoExt);
-
-      await expect(page).toClick(
-        '.attachments-browser .attachments .attachment:first-of-type'
-      );
 
       await expect(page).toMatchElement('.type-video.subtype-quicktime');
 
