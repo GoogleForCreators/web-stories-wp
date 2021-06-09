@@ -17,8 +17,11 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
-import { DANGER_ZONE_HEIGHT } from '../../../../units/dimensions';
+import {
+  DANGER_ZONE_HEIGHT,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '../../../../constants';
 
 export const MIN_MAX = {
   // TODO: with %360 logic this is not used, but can be utilized via keyboard arrows

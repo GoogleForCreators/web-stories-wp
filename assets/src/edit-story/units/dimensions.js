@@ -20,12 +20,10 @@
 import {
   PAGE_WIDTH,
   PAGE_HEIGHT,
-  FULLBLEED_RATIO,
   DEFAULT_EM,
+  FULLBLEED_HEIGHT,
+  DANGER_ZONE_HEIGHT,
 } from '../constants';
-
-export const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-export const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 /**
  * Rounds the pixel value to the max allowed precision in the "data" space.

@@ -25,8 +25,11 @@ import { useCallback } from 'react';
 import { useBatchingCallback } from '../../../design-system';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
-import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from '../../units/dimensions';
-import { PAGE_WIDTH } from '../../constants';
+import {
+  DANGER_ZONE_HEIGHT,
+  FULLBLEED_HEIGHT,
+  PAGE_WIDTH,
+} from '../../constants';
 import useInsertElement from './useInsertElement';
 
 function useInsertTextSet() {
