@@ -44,6 +44,30 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  */
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
+const FFMPEG_SHARED_CONFIG = [
+  // Use H.264 video codec.
+  '-vcodec',
+  'libx264',
+  // Scale down to 720p as recommended by Storytime.
+  // See https://trac.ffmpeg.org/wiki/Scaling
+  // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
+  '-vf',
+  `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
+  // Reduce to 24fps as recommended by Storytime.
+  // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
+  '-r',
+  '24',
+  // move some information to the beginning of your file.
+  '-movflags',
+  '+faststart',
+  // Simpler color profile
+  '-pix_fmt',
+  'yuv420p',
+  // As the name says...
+  '-preset',
+  'fast', // 'veryfast' seems to cause crashes.
+];
+
 /**
  * @typedef FFmpegData
  * @property {boolean} isFeatureEnabled Whether the feature is enabled.
@@ -178,27 +202,7 @@ function useFFmpeg() {
           // Input filename.
           '-i',
           file.name,
-          // Use H.264 video codec.
-          '-vcodec',
-          'libx264',
-          // Scale down to 720p as recommended by Storytime.
-          // See https://trac.ffmpeg.org/wiki/Scaling
-          // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-          '-vf',
-          `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-          // Reduce to 24fps as recommended by Storytime.
-          // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
-          '-r',
-          '24',
-          // move some information to the beginning of your file.
-          '-movflags',
-          '+faststart',
-          // Simpler color profile
-          '-pix_fmt',
-          'yuv420p',
-          // As the name says...
-          '-preset',
-          'fast', // 'veryfast' seems to cause crashes.
+          ...FFMPEG_SHARED_CONFIG,
           // Output filename. MUST be different from input filename.
           tempFileName
         );
@@ -242,27 +246,7 @@ function useFFmpeg() {
           // Input filename.
           '-i',
           file.name,
-          // Use H.264 video codec.
-          '-vcodec',
-          'libx264',
-          // Scale down to 720p as recommended by Storytime.
-          // See https://trac.ffmpeg.org/wiki/Scaling
-          // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-          '-vf',
-          `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-          // Reduce to 24fps as recommended by Storytime.
-          // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
-          '-r',
-          '24',
-          // move some information to the beginning of your file.
-          '-movflags',
-          '+faststart',
-          // Simpler color profile
-          '-pix_fmt',
-          'yuv420p',
-          // As the name says...
-          '-preset',
-          'fast', // 'veryfast' seems to cause crashes.
+          ...FFMPEG_SHARED_CONFIG,
           // Output filename. MUST be different from input filename.
           tempFileName
         );
