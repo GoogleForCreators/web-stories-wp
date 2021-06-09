@@ -20,6 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -39,6 +40,7 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
+import { Button } from '../../button';
 
 const items = [
   { label: 'Copy', shortcut: '⌘ X' },
@@ -112,7 +114,6 @@ const Grid = styled.div`
 
   ${Container} {
     width: 300px;
-    max-height: 300px;
     margin: 0 auto;
   }
 `;
@@ -288,6 +289,153 @@ export const QuickActionMenu = () => {
           items={generateMenuItemsWithEventHandler(textItems)}
           isIconMenu
           isAlwaysVisible
+        />
+      </Container>
+    </Grid>
+  );
+};
+
+// todo these shortcuts need  translations!
+// todo  why don't  all  options  get  short cuts?
+
+const rightClickMenuMainOptions = [
+  { label: 'Copy', ariaLabel: 'Copy element', shortcut: '⌘X' },
+  { label: 'Paste', ariaLabel: 'Paste element', shortcut: '⌘C' },
+  { label: 'Delete', ariaLabel: 'Delete element', shortcut: 'DEL' },
+];
+
+const rightClickMenuLayeringOptions = [
+  { label: 'Send to Back', separator: 'top', shortcut: '⌥⌘[' },
+  { label: 'Send Backwards', shortcut: '⌘[' },
+  { label: 'Bring Forward', shortcut: '⌘]' },
+  { label: 'Bring to Front', shortcut: '⌥⌘]' },
+];
+
+const rightClickMenuPageAddOptions = [
+  { label: 'Add new page before', separator: 'top' },
+  { label: 'Add new page after' },
+];
+
+const rightClickMenuPageDeleteOptions = [
+  { label: 'Duplicate page' },
+  { label: 'Delete page' },
+];
+
+const rightClickMenuStyleOptions = [
+  { label: 'Copy styles', separator: 'top', shortcut: '⌥⌘C' },
+  { label: 'Paste styles', shortcut: '⌥⌘V' },
+  { label: 'Clear style' },
+];
+
+const pageElement = [
+  ...rightClickMenuMainOptions,
+  ...rightClickMenuPageAddOptions,
+  ...rightClickMenuPageDeleteOptions,
+];
+
+const shapeElement = [
+  ...rightClickMenuMainOptions,
+  ...rightClickMenuLayeringOptions,
+  ...rightClickMenuStyleOptions,
+  { label: 'Add color to "Saved  colors"' },
+];
+
+const foregroundMediaElement = [
+  ...rightClickMenuMainOptions,
+  ...rightClickMenuLayeringOptions,
+  { label: 'Set as page background', separator: 'top' },
+  { label: 'Scale & crop image' },
+  ...rightClickMenuStyleOptions,
+];
+
+const backgroundMediaElement = [
+  ...rightClickMenuMainOptions,
+  { label: 'Detach image from background', separator: 'top' },
+  { label: 'Replace background image' },
+  { label: 'Scale & crop background image' },
+  { label: 'Clear style' },
+  ...rightClickMenuPageAddOptions,
+  ...rightClickMenuPageDeleteOptions,
+];
+
+const textElement = [
+  ...rightClickMenuMainOptions,
+  ...rightClickMenuLayeringOptions,
+  ...rightClickMenuStyleOptions,
+  { label: 'Add style to "Saved styles"' },
+  { label: 'Add color to "Saved colors"' },
+];
+
+export const RightClickMenu = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const generateMenuItemsWithEventHandler = (i) =>
+    i.map((item) => ({
+      ...item,
+      onClick: () => {
+        action(`Clicked on \`${item.label}\``)();
+        setIsOpen(false);
+      },
+    }));
+
+  // TODO set this style up like canvas to prep
+  return (
+    <ViewportContainer>
+      <Button onClick={() => setIsOpen((val) => !val)}>{'Open menu'}</Button>
+      <AnimatedContainerWrapper>
+        <AnimatedContextMenu
+          isOpen={isOpen}
+          onDismiss={() => setIsOpen(false)}
+          items={generateMenuItemsWithEventHandler(pageElement)}
+        />
+      </AnimatedContainerWrapper>
+    </ViewportContainer>
+  );
+};
+export const RightClickMenuStaticValues = () => {
+  const generateMenuItemsWithEventHandler = (i) =>
+    i.map((item) => ({
+      ...item,
+      onClick: () => {
+        action(`Clicked on \`${item.label}\``)();
+      },
+    }));
+
+  return (
+    <Grid>
+      <Container>
+        <Text>{'Right click on page element'}</Text>
+        <ContextMenu
+          isOpen={boolean('isOpen', true)}
+          items={generateMenuItemsWithEventHandler(pageElement)}
+        />
+      </Container>
+      <Container>
+        <Text>{'Right click on shape element'}</Text>
+        <ContextMenu
+          isOpen={boolean('isOpen', true)}
+          items={generateMenuItemsWithEventHandler(shapeElement)}
+        />
+      </Container>
+      <Container>
+        <Text>{'Right click on foreground media element'}</Text>
+        <ContextMenu
+          isOpen={boolean('isOpen', true)}
+          items={generateMenuItemsWithEventHandler(foregroundMediaElement)}
+        />
+      </Container>
+      <Container>
+        <Text>{'Right click on background element'}</Text>
+        <ContextMenu
+          isOpen={boolean('isOpen', true)}
+          items={generateMenuItemsWithEventHandler(backgroundMediaElement)}
+        />
+      </Container>
+      <Container>
+        <Text>{'Right click on text element'}</Text>
+        <ContextMenu
+          isOpen={boolean('isOpen', true)}
+          items={generateMenuItemsWithEventHandler(textElement)}
         />
       </Container>
     </Grid>

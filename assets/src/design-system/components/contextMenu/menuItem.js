@@ -48,6 +48,7 @@ const IconWrapper = styled.span`
 `;
 
 export const MenuItem = ({
+  ariaLabel,
   disabled,
   href,
   label,
@@ -113,7 +114,7 @@ export const MenuItem = ({
     return (
       <Link
         ref={itemRef}
-        aria-label={label}
+        aria-label={ariaLabel || label}
         href={href}
         onClick={handleClick}
         onFocus={onFocus}
@@ -129,7 +130,7 @@ export const MenuItem = ({
     return (
       <Button
         ref={itemRef}
-        aria-label={label}
+        aria-label={ariaLabel || label}
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
@@ -189,6 +190,7 @@ export const MenuItemProps = {
   disabled: PropTypes.bool,
   href: linkOrButtonValidator,
   label: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
   newTab: PropTypes.bool,
   onClick: PropTypes.func,
   onDismiss: PropTypes.func,
