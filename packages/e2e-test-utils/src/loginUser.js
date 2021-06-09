@@ -18,11 +18,25 @@
  * WordPress dependencies
  */
 import { createURL, isCurrentURL } from '@wordpress/e2e-test-utils';
-import { addRequestInterception } from './index';
 
 /**
  * Performs log in with specified username and password.
  *
+ * Sets username and password in login form with some extra hardening.
+ *
+ * Puppeteer appears to sometimes have issues with typing,
+ * where the first 1-2 characters are simply not typed.
+ *
+ * At the same time, there can be an issue where the password is not actually
+ * submitted (not part of the form data) when trying to log in.
+ *
+ * Hence not using only `page.type()` as one would typically use, but instead
+ * using two methods just to be safe.
+ *
+ * The matchers at the end try to catch any errors where form submission
+ * is incomplete for some reason.
+ *
+ * @see https://github.com/puppeteer/puppeteer/issues/1648
  * @param {?string} username String to be used as user credential.
  * @param {?string} password String to be used as user credential.
  */
@@ -31,11 +45,13 @@ async function loginUser(username, password) {
     await page.goto(createURL('wp-login.php'));
   }
 
-  // Puppeteer appears to sometimes have issues with typing,
-  // where the first 1-2 characters are simply not typed.
-  // Hence not using page.type() as one would typically use.
-  // Should be OK since there are no event listeners on the login form.
-  // See https://github.com/puppeteer/puppeteer/issues/1648
+  await page.evaluate(() => (document.getElementById('user_login').value = ''));
+  await page.evaluate(() => (document.getElementById('user_pass').value = ''));
+
+  await page.focus('#user_login');
+  await page.type('#user_login', username);
+  await page.focus('#user_pass');
+  await page.type('#user_pass', password);
 
   await page.evaluate(
     (value) => (document.getElementById('user_login').value = value),
