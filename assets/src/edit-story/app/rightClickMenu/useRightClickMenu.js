@@ -22,7 +22,10 @@ import { useCallback, useMemo, useRef } from 'react';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { createClipboardEvent } from '../../utils/copyPaste';
+import {
+  addDataToClipboardWithNavigator,
+  createClipboardEvent,
+} from '../../utils/copyPaste';
 import { noop } from '../../utils/noop';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
@@ -41,15 +44,18 @@ import { RIGHT_CLICK_MENU_LABELS } from './constants';
  */
 const useRightClickMenu = () => {
   const clipboardData = useRef(null);
-  const { copyCutHandler, pasteHandler } = useCanvas(
-    ({ actions: { copyCutHandler, pasteHandler } }) => ({
-      copyCutHandler,
-      pasteHandler,
+  const { pasteHandler } = useCanvas(({ actions: { pasteHandler } }) => ({
+    pasteHandler,
+  }));
+  const { currentPage, selectedElements, selectedElementAnimations } = useStory(
+    ({
+      state: { currentPage, selectedElements, selectedElementAnimations },
+    }) => ({
+      currentPage,
+      selectedElements,
+      selectedElementAnimations,
     })
   );
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => ({
-    selectedElements,
-  }));
 
   /**
    * Prevent right click menu from removing focus from the canvas.
@@ -59,25 +65,28 @@ const useRightClickMenu = () => {
   }, []);
 
   const copyElement = useCallback(() => {
-    const clipboardEvent = createClipboardEvent('copy');
-
-    // Won't work in internet explorer. Clipboard events
-    // are not supported.
-    if (clipboardEvent) {
-      const evt = copyCutHandler(clipboardEvent);
-      // Need to copy event dude wow.
-      document.dispatchEvent(evt);
+    if (!selectedElements.length) {
+      return;
     }
-  }, [copyCutHandler]);
 
-  const pasteElement = useCallback(() => {
+    addDataToClipboardWithNavigator(
+      currentPage,
+      selectedElements,
+      selectedElementAnimations
+    );
+  }, [currentPage, selectedElements, selectedElementAnimations]);
+
+  const pasteElement = useCallback(async () => {
+    const content = await navigator.clipboard.readText();
+
     const clipboardEvent = createClipboardEvent(
       'paste',
       clipboardData.current?.clipboardData
     );
 
-    if (clipboardEvent) {
-      pasteHandler(clipboardEvent);
+    if (content) {
+      // Don't even need the event here tbh.
+      pasteHandler(clipboardEvent, content);
     }
   }, [pasteHandler]);
 
