@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../assets/src/edit-story/types';
 import Context from './context';
 import {
   dataToEditorX,
@@ -57,7 +56,10 @@ function UnitsProvider({ pageSize, children }) {
 }
 
 UnitsProvider.propTypes = {
-  pageSize: StoryPropTypes.size.isRequired,
+  pageSize: PropTypes.exact({
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }).isRequired,
   children: PropTypes.node.isRequired,
 };
 
