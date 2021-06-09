@@ -20,7 +20,8 @@
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -40,7 +41,6 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
-import { Button } from '../../button';
 
 const items = [
   { label: 'Copy', shortcut: '⌘ X' },
@@ -296,35 +296,49 @@ export const QuickActionMenu = () => {
 };
 
 // todo these shortcuts need  translations!
-// todo  why don't  all  options  get  short cuts?
-
 const rightClickMenuMainOptions = [
-  { label: 'Copy', ariaLabel: 'Copy element', shortcut: '⌘X' },
-  { label: 'Paste', ariaLabel: 'Paste element', shortcut: '⌘C' },
-  { label: 'Delete', ariaLabel: 'Delete element', shortcut: 'DEL' },
+  {
+    label: __('Copy', 'web-stories'),
+    ariaLabel: __('Copy element', 'web-stories'),
+    shortcut: '⌘X',
+  },
+  {
+    label: __('Paste', 'web-stories'),
+    ariaLabel: __('Paste element', 'web-stories'),
+    shortcut: '⌘C',
+  },
+  {
+    label: __('Delete', 'web-stories'),
+    ariaLabel: __('Delete element', 'web-stories'),
+    shortcut: 'DEL',
+  },
 ];
 
 const rightClickMenuLayeringOptions = [
-  { label: 'Send to Back', separator: 'top', shortcut: '⌥⌘[' },
-  { label: 'Send Backwards', shortcut: '⌘[' },
-  { label: 'Bring Forward', shortcut: '⌘]' },
-  { label: 'Bring to Front', shortcut: '⌥⌘]' },
+  {
+    label: __('Send to Back', 'web-stories'),
+    separator: 'top',
+    shortcut: '⌥⌘[',
+  },
+  { label: __('Send Backwards', 'web-stories'), shortcut: '⌘[' },
+  { label: __('Bring Forward', 'web-stories'), shortcut: '⌘]' },
+  { label: __('Bring to Front', 'web-stories'), shortcut: '⌥⌘]' },
 ];
 
 const rightClickMenuPageAddOptions = [
-  { label: 'Add new page before', separator: 'top' },
-  { label: 'Add new page after' },
+  { label: __('Add new page before', 'web-stories'), separator: 'top' },
+  { label: __('Add new page after', 'web-stories') },
 ];
 
 const rightClickMenuPageDeleteOptions = [
-  { label: 'Duplicate page' },
-  { label: 'Delete page' },
+  { label: __('Duplicate page', 'web-stories') },
+  { label: __('Delete page', 'web-stories') },
 ];
 
 const rightClickMenuStyleOptions = [
-  { label: 'Copy style', separator: 'top', shortcut: '⌥⌘C' },
-  { label: 'Paste style', shortcut: '⌥⌘V' },
-  { label: 'Clear style' },
+  { label: __('Copy style', 'web-stories'), separator: 'top', shortcut: '⌥⌘C' },
+  { label: __('Paste style', 'web-stories'), shortcut: '⌥⌘V' },
+  { label: __('Clear style', 'web-stories') },
 ];
 
 const pageElement = [
@@ -337,23 +351,26 @@ const shapeElement = [
   ...rightClickMenuMainOptions,
   ...rightClickMenuLayeringOptions,
   ...rightClickMenuStyleOptions,
-  { label: 'Add color to "Saved  colors"' },
+  { label: __('Add color to "Saved colors"', 'web-stories') },
 ];
 
 const foregroundMediaElement = [
   ...rightClickMenuMainOptions,
   ...rightClickMenuLayeringOptions,
-  { label: 'Set as page background', separator: 'top' },
-  { label: 'Scale & crop image' },
+  { label: __('Set as page background', 'web-stories'), separator: 'top' },
+  { label: __('Scale & crop image', 'web-stories') },
   ...rightClickMenuStyleOptions,
 ];
 
 const backgroundMediaElement = [
   ...rightClickMenuMainOptions,
-  { label: 'Detach image from background', separator: 'top' },
-  { label: 'Replace background image' },
-  { label: 'Scale & crop background image' },
-  { label: 'Clear style' },
+  {
+    label: __('Detach image from background', 'web-stories'),
+    separator: 'top',
+  },
+  { label: __('Replace background image', 'web-stories') },
+  { label: __('Scale & crop background image', 'web-stories') },
+  { label: __('Clear style', 'web-stories') },
   ...rightClickMenuPageAddOptions,
   ...rightClickMenuPageDeleteOptions,
 ];
@@ -362,12 +379,27 @@ const textElement = [
   ...rightClickMenuMainOptions,
   ...rightClickMenuLayeringOptions,
   ...rightClickMenuStyleOptions,
-  { label: 'Add style to "Saved styles"' },
-  { label: 'Add color to "Saved colors"' },
+  { label: __('Add style to "Saved styles"', 'web-stories') },
+  { label: __('Add color to "Saved colors"', 'web-stories') },
 ];
+
+const SampleLayout = styled.div`
+  display: block;
+  width: 400px;
+  height: 800px;
+  border: 1px solid black;
+`;
+
+const RightClickContextMenuContainer = styled.div`
+  position: absolute;
+  top: ${({ position }) => position?.y ?? 0}px;
+  left: ${({ position }) => position?.x ?? 0}px;
+`;
 
 export const RightClickMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({});
+  const layoutRef = useRef();
 
   const generateMenuItemsWithEventHandler = (i) =>
     i.map((item) => ({
@@ -377,18 +409,26 @@ export const RightClickMenu = () => {
         setIsOpen(false);
       },
     }));
-
-  // TODO set this style up like canvas to prep
+  const layoutRect = layoutRef.current.getBoundingClientRect();
+  const handleMenu = (e) => {
+    e.preventDefault();
+    setIsOpen(true);
+    setMenuPosition({
+      x: e.clientX - layoutRect.left,
+      y: e.clientY - layoutRect.top,
+    });
+  };
+  // TODO what kind of role would this make the layout?
   return (
     <ViewportContainer>
-      <Button onClick={() => setIsOpen((val) => !val)}>{'Open menu'}</Button>
-      <AnimatedContainerWrapper>
+      <SampleLayout ref={layoutRef} onClick={handleMenu} />
+      <RightClickContextMenuContainer position={menuPosition}>
         <AnimatedContextMenu
           isOpen={isOpen}
           onDismiss={() => setIsOpen(false)}
           items={generateMenuItemsWithEventHandler(pageElement)}
         />
-      </AnimatedContainerWrapper>
+      </RightClickContextMenuContainer>
     </ViewportContainer>
   );
 };
