@@ -21,7 +21,7 @@ import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import { useState, useRef } from 'react';
-import { __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -43,20 +43,15 @@ import {
 import { Text } from '../../typography';
 
 const items = [
-  { label: 'Copy', shortcut: '⌘ X' },
-  { label: 'Paste', shortcut: '⌘ C' },
-  { label: 'Delete', shortcut: 'DEL' },
-  { label: 'Send to back', shortcut: '⌥ ⌘ [', separator: 'top' },
-  { label: 'Send backward', shortcut: '⌘ [', disabled: true },
-  { label: 'Bring forward', shortcut: '⌘ ]', disabled: true },
   {
     label: 'Bring to front',
-    shortcut: '⌥ ⌘ [',
+    shortcut: {
+      display: '⌥ ⌘ [',
+      title: 'my aria label for this shortcut!',
+    },
     disabled: true,
     separator: 'bottom',
   },
-  { label: 'Copy style', shortcut: '⌥ ⌘ C' },
-  { label: 'Paste Style', shortcut: '⌥ ⌘ V' },
   { label: 'Clear text styles' },
   { label: 'Add style to "Saved style"' },
   { label: 'Add color to "Saved colors"' },
@@ -64,15 +59,18 @@ const items = [
 
 const randomItems = [
   { label: 'one' },
-  { label: 'two', shortcut: '%C' },
-  { label: 'i am a button!', shortcut: '$$$' },
+  { label: 'two' },
+  { label: 'i am a button!' },
   { label: 'neither a button nor a link' },
   { label: 'this is disabled', disabled: true },
   { label: 'three', separator: 'top' },
   {
     label: 'i am a link!',
     href: 'https://www.google.com/',
-    shortcut: '⌥ ⌘ A',
+    shortcut: {
+      title: 'option command and the letter A',
+      display: '⌥ ⌘ A',
+    },
   },
   {
     label: 'i am a very very very very very very very long label',
@@ -300,17 +298,34 @@ const rightClickMenuMainOptions = [
   {
     label: __('Copy', 'web-stories'),
     ariaLabel: __('Copy element', 'web-stories'),
-    shortcut: '⌘X',
+    shortcut: {
+      display: '⌘X',
+      title: _x(
+        'Command X',
+        'The keyboard keys "Command" and "X"',
+        'web-stories'
+      ),
+    },
   },
   {
     label: __('Paste', 'web-stories'),
     ariaLabel: __('Paste element', 'web-stories'),
-    shortcut: '⌘C',
+    shortcut: {
+      display: '⌘C',
+      title: _x(
+        'Command C',
+        'The keyboard keys "Command" and "C"',
+        'web-stories'
+      ),
+    },
   },
   {
     label: __('Delete', 'web-stories'),
     ariaLabel: __('Delete element', 'web-stories'),
-    shortcut: 'DEL',
+    shortcut: {
+      display: 'DEL',
+      title: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+    },
   },
 ];
 
@@ -318,11 +333,48 @@ const rightClickMenuLayeringOptions = [
   {
     label: __('Send to Back', 'web-stories'),
     separator: 'top',
-    shortcut: '⌥⌘[',
+    shortcut: {
+      display: '⌥⌘[',
+      title: _x(
+        'Option Command Left Square Bracket',
+        'The keyboard keys "Option", "Command" and "Left Square Bracket"',
+        'web-stories'
+      ),
+    },
   },
-  { label: __('Send Backwards', 'web-stories'), shortcut: '⌘[' },
-  { label: __('Bring Forward', 'web-stories'), shortcut: '⌘]' },
-  { label: __('Bring to Front', 'web-stories'), shortcut: '⌥⌘]' },
+  {
+    label: __('Send Backwards', 'web-stories'),
+    shortcut: {
+      display: '⌘[',
+      title: _x(
+        'Command Left Square Bracket',
+        'The keyboard keys "Command" and "Left Square Bracket"',
+        'web-stories'
+      ),
+    },
+  },
+  {
+    label: __('Bring Forward', 'web-stories'),
+    shortcut: {
+      display: '⌘]',
+      title: _x(
+        'Command Right Square Bracket',
+        'The keyboard keys "Command" and "Right Square Bracket"',
+        'web-stories'
+      ),
+    },
+  },
+  {
+    label: __('Bring to Front', 'web-stories'),
+    shortcut: {
+      display: '⌥⌘]',
+      title: _x(
+        'Option Command Right Square Bracket',
+        'The keyboard keys "Option" "Command" and "Right Square Bracket"',
+        'web-stories'
+      ),
+    },
+  },
 ];
 
 const rightClickMenuPageAddOptions = [
@@ -336,8 +388,29 @@ const rightClickMenuPageDeleteOptions = [
 ];
 
 const rightClickMenuStyleOptions = [
-  { label: __('Copy style', 'web-stories'), separator: 'top', shortcut: '⌥⌘C' },
-  { label: __('Paste style', 'web-stories'), shortcut: '⌥⌘V' },
+  {
+    label: __('Copy style', 'web-stories'),
+    separator: 'top',
+    shortcut: {
+      display: '⌥⌘C',
+      title: _x(
+        'Option Command C',
+        'The keyboard keys "Option" "Command" and the letter "C"',
+        'web-stories'
+      ),
+    },
+  },
+  {
+    label: __('Paste style', 'web-stories'),
+    shortcut: {
+      display: '⌥⌘V',
+      title: _x(
+        'Option Command V',
+        'The keyboard keys "Option" "Command" and the letter "V"',
+        'web-stories'
+      ),
+    },
+  },
   { label: __('Clear style', 'web-stories') },
 ];
 

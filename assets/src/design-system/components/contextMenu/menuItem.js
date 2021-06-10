@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -34,13 +34,9 @@ const ItemText = styled(Text)`
   width: 200px;
   text-align: left;
 `;
-
-const Shortcut = styled(Text)(
-  ({ theme }) => css`
-    color: ${theme.colors.border.disable};
-    white-space: nowrap;
-  `
-);
+const Shortcut = styled(Text)`
+  color: ${({ theme }) => theme.colors.border.disable};
+`;
 
 const IconWrapper = styled.span`
   width: 32px;
@@ -91,12 +87,13 @@ export const MenuItem = ({
         >
           {label}
         </ItemText>
-        {shortcut && (
+        {shortcut?.title && (
           <Shortcut
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            forwardedAs="span"
+            forwardedAs="kbd"
+            aria-label={shortcut.title}
           >
-            {shortcut}
+            {shortcut?.display}
           </Shortcut>
         )}
       </>
@@ -195,7 +192,10 @@ export const MenuItemProps = {
   onClick: PropTypes.func,
   onDismiss: PropTypes.func,
   onFocus: PropTypes.func,
-  shortcut: PropTypes.string,
+  shortcut: PropTypes.shape({
+    display: PropTypes.string,
+    title: PropTypes.string,
+  }),
   Icon: PropTypes.func,
   tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
 };
