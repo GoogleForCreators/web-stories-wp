@@ -18,16 +18,18 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import {
+  createSolid,
+  getPreviewText as getPreviewTextMock,
+} from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
-import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 
 jest.mock('../../../../../design-system/components/popup/index.js', () => ({
   ...jest.requireActual(

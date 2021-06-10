@@ -21,6 +21,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, useCallback, useState, useRef, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { getPreviewText, getOpaquePattern } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
@@ -34,10 +35,8 @@ import {
   Text,
   THEME_CONSTANTS,
   Swatch,
-  getOpaquePattern,
   PLACEMENT,
 } from '../../../../design-system';
-import getPreviewText from '../../../../design-system/components/hex/getPreviewText';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';

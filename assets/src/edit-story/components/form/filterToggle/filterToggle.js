@@ -23,9 +23,9 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { THEME_CONSTANTS } from '../../../../design-system/theme';
 import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PatternPropType } from '../../../types';
 import { focusStyle } from '../../panels/shared';
 

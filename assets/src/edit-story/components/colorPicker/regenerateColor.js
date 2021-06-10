@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolid from '../../utils/createSolid';
 import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL } from './constants';
 
 function regenerateSolid({ currentColor: { r, g, b, a } }) {

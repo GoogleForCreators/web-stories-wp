@@ -19,6 +19,7 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import styled, { StyleSheetManager } from 'styled-components';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
@@ -28,7 +29,6 @@ import {
   STORY_ANIMATION_STATE,
 } from '../../../animation';
 import StoryPropTypes, { PageSizePropType } from '../../types';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import PagePreviewElements from './previewPageElements';
 
 /*

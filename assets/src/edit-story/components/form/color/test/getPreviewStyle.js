@@ -15,10 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  createSolid,
+  generatePatternStyles as generatePatternStylesMock,
+} from '@web-stories-wp/patterns';
+
+/**
  * Internal dependencies
  */
-import generatePatternStylesMock from '../../../../utils/generatePatternStyles';
-import createSolid from '../../../../utils/createSolid';
 import getPreviewStyle from '../getPreviewStyle';
 
 jest.mock('../../../../utils/generatePatternStyles', () => jest.fn());

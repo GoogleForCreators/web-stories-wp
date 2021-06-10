@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import { MULTIPLE_VALUE } from '../../../../constants';
 import {
   togglePrefixStyle,

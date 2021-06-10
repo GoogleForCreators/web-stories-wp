@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
@@ -41,7 +41,6 @@ import {
   getHTMLFormatters,
   getHTMLInfo,
 } from '../../components/richText/htmlManipulation';
-import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
 import {
   getResponsiveBorder,

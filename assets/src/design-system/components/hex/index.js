@@ -19,6 +19,7 @@
  */
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { getHexFromValue, getPreviewText } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
@@ -26,8 +27,6 @@ import PropTypes from 'prop-types';
 import { parseToRgb } from 'polished';
 import { useKeyDownEffect } from '../keyboard';
 import { InputPropTypes, Input } from '../input';
-import getHexFromValue from './getHexFromValue';
-import getPreviewText from './getPreviewText';
 
 export const HexInput = forwardRef(function Hex(
   { value, placeholder, onChange, ...rest },

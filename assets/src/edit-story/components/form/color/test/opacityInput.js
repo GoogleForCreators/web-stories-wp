@@ -18,14 +18,16 @@
  * External dependencies
  */
 import { waitFor, act, fireEvent, screen } from '@testing-library/react';
+import {
+  createSolid,
+  getPreviewText as getPreviewTextMock,
+} from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import OpacityInput from '../opacityInput';
 import getPreviewOpacityMock from '../getPreviewOpacity';
-import getPreviewTextMock from '../../../../../design-system/components/hex/getPreviewText';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());

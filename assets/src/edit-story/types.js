@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { HexPropType } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
@@ -25,13 +26,6 @@ import PropTypes from 'prop-types';
 import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
-
-export const HexPropType = PropTypes.shape({
-  r: PropTypes.number.isRequired,
-  g: PropTypes.number.isRequired,
-  b: PropTypes.number.isRequired,
-  a: PropTypes.number,
-});
 
 export const BorderPropTypes = PropTypes.shape({
   color: HexPropType.isRequired,

@@ -15,13 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  convertToCSS,
+  createSolid,
+  generatePatternStyles,
+  isPatternEqual,
+} from '@web-stories-wp/patterns';
+
+/**
  * Internal dependencies
  */
-import isPatternEqual from '../../../../utils/isPatternEqual';
-import convertToCSS from '../../../../utils/convertToCSS';
-import generatePatternStyles from '../../../../utils/generatePatternStyles';
 import objectPick from '../../../../utils/objectPick';
-import createSolid from '../../../../utils/createSolid';
 import { generateFontFamily } from '../../../../elements/text/util';
 import {
   BACKGROUND_TEXT_MODE,

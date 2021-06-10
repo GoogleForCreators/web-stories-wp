@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { waitForElementToBeRemoved } from '@testing-library/react';
+import { createSolid } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
-import createSolid from '../../../../utils/createSolid';
 import { useStory } from '../../../../app';
 
 describe('GridView integration', () => {
