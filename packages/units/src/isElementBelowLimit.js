@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from './constants';
+import { getCorners } from './getBoundRect';
 
-export * from './constants';
-export * from './dimensions';
-
-export { default as UnitsProvider } from './unitsProvider';
-export { default as useUnits } from './useUnits';
-export { default as isElementBelowLimit } from './isElementBelowLimit';
-export {
-  default as getBoundRect,
-  calcRotatedObjectPositionAndSize,
-  getCorners,
-} from './getBoundRect';
+function isElementBelowLimit(element, verifyLink = true) {
+  if (verifyLink && !element.link?.url?.length > 0) {
+    return false;
+  }
+  const limit = FULLBLEED_HEIGHT * 0.8 - DANGER_ZONE_HEIGHT;
+  const { x, y, width, height, rotationAngle } = element;
+  const points = getCorners(rotationAngle, x, y, width, height);
+  return Object.keys(points).find((point) => points[point].y > limit);
+}
+export default isElementBelowLimit;
