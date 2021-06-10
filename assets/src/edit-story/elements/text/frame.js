@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
 import { useStory, useCanvas } from '../../app';
 import {

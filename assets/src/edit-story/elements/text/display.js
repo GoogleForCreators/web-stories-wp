@@ -20,11 +20,11 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
 import { useFont } from '../../app';
 import {
   elementFillContent,

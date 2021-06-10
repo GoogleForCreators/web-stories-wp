@@ -26,11 +26,11 @@ import {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
 import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';

@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
 import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';

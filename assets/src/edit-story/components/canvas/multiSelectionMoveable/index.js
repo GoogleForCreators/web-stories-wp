@@ -19,11 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
-
+import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
 import Moveable from '../../moveable';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
