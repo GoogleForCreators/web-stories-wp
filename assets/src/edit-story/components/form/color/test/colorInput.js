@@ -45,6 +45,8 @@ jest.mock('@web-stories-wp/patterns', () => {
     createSolid: jest.fn(),
     getOpaquePattern: jest.fn(),
     hasOpacity: jest.fn(),
+    hasGradient: jest.fn(),
+    generatePatternStyles: jest.fn(),
     createSolidFromString: jest.fn(),
     HexPropType: { isRequired: true },
   };

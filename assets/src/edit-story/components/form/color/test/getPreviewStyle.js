@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
+import {
+  createSolid,
+  generatePatternStyles as generatePatternStylesMock,
+} from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
@@ -26,14 +29,19 @@ import getPreviewStyle from '../getPreviewStyle';
 jest.mock('@web-stories-wp/patterns', () => {
   return {
     generatePatternStyles: jest.fn(),
-    createSolid: jest.fn(),
+    createSolid: (r, g, b, a = 1) => {
+      if (a !== 1) {
+        return { color: { r, g, b, a } };
+      }
+      return { color: { r, g, b } };
+    },
   };
 });
 
 describe('getPreviewStyle', () => {
   beforeEach(() => {
-    generatePatternStyles.mockReset();
-    generatePatternStyles.mockImplementation(() => ({
+    generatePatternStylesMock.mockReset();
+    generatePatternStylesMock.mockImplementation(() => ({
       backgroundColor: 'red',
     }));
   });
@@ -42,14 +50,14 @@ describe('getPreviewStyle', () => {
     const pattern = null;
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({});
-    expect(generatePatternStyles).not.toHaveBeenCalled();
+    expect(generatePatternStylesMock).not.toHaveBeenCalled();
   });
 
   it('should return generated pattern for non-solid', () => {
     const pattern = { type: 'linear' };
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({ backgroundColor: 'red' });
-    expect(generatePatternStyles).toHaveBeenCalledWith(pattern);
+    expect(generatePatternStylesMock).toHaveBeenCalledWith(pattern);
   });
 
   it('should ignore alpha for non-solid', () => {
@@ -57,14 +65,14 @@ describe('getPreviewStyle', () => {
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({ backgroundColor: 'red' });
     // Note the absense of alpha below
-    expect(generatePatternStyles).toHaveBeenCalledWith({ type: 'linear' });
+    expect(generatePatternStylesMock).toHaveBeenCalledWith({ type: 'linear' });
   });
 
   it('should return transparent for transparent solid', () => {
     const pattern = createSolid(255, 0, 255, 0);
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({ backgroundColor: 'red' });
-    expect(generatePatternStyles).toHaveBeenCalledWith(
+    expect(generatePatternStylesMock).toHaveBeenCalledWith(
       createSolid(255, 0, 255)
     );
   });
@@ -73,7 +81,7 @@ describe('getPreviewStyle', () => {
     const pattern = createSolid(255, 0, 255, 0.1);
     const result = getPreviewStyle(pattern);
     expect(result).toStrictEqual({ backgroundColor: 'red' });
-    expect(generatePatternStyles).toHaveBeenCalledWith(
+    expect(generatePatternStylesMock).toHaveBeenCalledWith(
       createSolid(255, 0, 255)
     );
   });

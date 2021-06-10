@@ -34,7 +34,12 @@ jest.mock('../getPreviewOpacity', () => jest.fn());
 jest.mock('@web-stories-wp/patterns', () => {
   return {
     getPreviewText: jest.fn(),
-    createSolid: jest.fn(),
+    createSolid: (r, g, b, a = 1) => {
+      if (a !== 1) {
+        return { color: { r, g, b, a } };
+      }
+      return { color: { r, g, b } };
+    },
   };
 });
 
