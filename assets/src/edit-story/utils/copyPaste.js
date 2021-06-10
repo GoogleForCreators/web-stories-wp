@@ -103,14 +103,18 @@ export function processPastedElements(content, currentPage) {
 }
 
 /**
- * Serializes the text and html data from the elements and animations.
+ * Processes copied/cut content for preparing elements to add to clipboard.
  *
  * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
  * @param {Array} animations Array of story animations.
- * @return {Object} An object containing the serialized payload, text, and html content.
+ * @param {Object} evt Copy/cut event object.
  */
-function serializeTextAndHTMLData(page, elements, animations) {
+export function addElementsToClipboard(page, elements, animations, evt) {
+  if (!elements.length || !evt) {
+    return;
+  }
+  const { clipboardData } = evt;
   const payload = {
     sentinel: 'story-elements',
     // @todo: Ensure that there's no unserializable data here. The easiest
@@ -155,34 +159,11 @@ function serializeTextAndHTMLData(page, elements, animations) {
     })
     .join('\n');
 
-  return { htmlContent, serializedPayload, textContent };
-}
-
-/**
- * Processes copied/cut content for preparing elements to add to clipboard.
- *
- * @param {Object} page Page which all the elements belong to.
- * @param {Array} elements Array of story elements.
- * @param {Array} animations Array of story animations.
- * @param {Object} evt Copy/cut event object.
- */
-export function addElementsToClipboard(page, elements, animations, evt) {
-  if (!elements.length || !evt) {
-    return;
-  }
-  const { clipboardData } = evt;
-
-  const { htmlContent, serializedPayload, textContent } =
-    serializeTextAndHTMLData(elements, animations);
-
   clipboardData.setData('text/plain', textContent);
   clipboardData.setData(
     'text/html',
     `<!-- ${serializedPayload} -->${htmlContent}`
   );
-
-  // do it live here bruh.
-  navigator.clipboard.writeText(`<!-- ${serializedPayload} -->${htmlContent}`);
 }
 
 /**
@@ -201,63 +182,4 @@ export function getPastedCoordinates(originX, originY) {
     x: PAGE_WIDTH - x > allowedBorderDistance ? x : placementDiff,
     y: PAGE_HEIGHT - y > allowedBorderDistance ? y : placementDiff,
   };
-}
-
-/**
- * Creates a clipboard event, but won't crash the app if
- * used in internet explorer.
- *
- * @param {string} type Type of clipboard event. One of ['copy', 'cut', 'paste'].
- * @param {DataTransfer} clipboardData The clipboard data to add to the clipboard event.
- * @return {ClipboardEvent|null} The ClipboardEvent
- */
-export function createClipboardEvent(type = 'copy', clipboardData) {
-  let evt;
-
-  try {
-    evt = new ClipboardEvent(type, {
-      clipboardData: clipboardData || new DataTransfer(),
-    });
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(
-      'Copy failed. ClipboardEvent not supported in Internet Explorer.',
-      error
-    );
-    return null;
-  }
-
-  return evt;
-}
-
-/**
- * Processes copied/cut content for preparing elements to add to clipboard.
- *
- * @param {Object} page Page which all the elements belong to.
- * @param {Array} elements Array of story elements.
- * @param {Array} animations Array of story animations.
- */
-export async function addDataToClipboardWithNavigator(
-  page,
-  elements,
-  animations
-) {
-  if (!elements.length) {
-    return;
-  }
-
-  const { htmlContent, serializedPayload } = serializeTextAndHTMLData(
-    elements,
-    animations
-  );
-
-  // do it live here bruh.
-  try {
-    await navigator.clipboard.writeText(
-      `<!-- ${serializedPayload} -->${htmlContent}`
-    );
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('trouble copying the dooby dooby doos', { error });
-  }
 }

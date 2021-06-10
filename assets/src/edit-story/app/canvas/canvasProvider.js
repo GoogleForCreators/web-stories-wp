@@ -27,7 +27,6 @@ import SAT from 'sat';
 import { useLayout } from '../layout';
 import { useStory } from '../story';
 import { UnitsProvider } from '../../units';
-import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
 
@@ -155,8 +154,6 @@ function CanvasProvider({ children }) {
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 
-  const { copyCutHandler, pasteHandler } = useCanvasCopyPaste();
-
   const state = useMemo(
     () => ({
       state: {
@@ -173,8 +170,6 @@ function CanvasProvider({ children }) {
         designSpaceGuideline,
       },
       actions: {
-        copyCutHandler,
-        pasteHandler,
         setPageContainer,
         setFullbleedContainer,
         getNodeForElement,
@@ -191,8 +186,6 @@ function CanvasProvider({ children }) {
       },
     }),
     [
-      copyCutHandler,
-      pasteHandler,
       pageContainer,
       fullbleedContainer,
       nodesById,

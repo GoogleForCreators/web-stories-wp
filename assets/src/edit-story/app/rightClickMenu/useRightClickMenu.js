@@ -16,18 +16,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '..';
-import {
-  addDataToClipboardWithNavigator,
-  createClipboardEvent,
-} from '../../utils/copyPaste';
 import { noop } from '../../utils/noop';
-import { useCanvas } from '../canvas';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { RIGHT_CLICK_MENU_LABELS } from './constants';
 
@@ -43,11 +38,7 @@ import { RIGHT_CLICK_MENU_LABELS } from './constants';
  * @return {Array.<MenuItemProps>} an array of right click menu item objects
  */
 const useRightClickMenu = () => {
-  const clipboardData = useRef(null);
-  const { pasteHandler } = useCanvas(({ actions: { pasteHandler } }) => ({
-    pasteHandler,
-  }));
-  const { currentPage, selectedElements, selectedElementAnimations } = useStory(
+  const { selectedElements } = useStory(
     ({
       state: { currentPage, selectedElements, selectedElementAnimations },
     }) => ({
@@ -64,32 +55,6 @@ const useRightClickMenu = () => {
     ev.stopPropagation();
   }, []);
 
-  const copyElement = useCallback(() => {
-    if (!selectedElements.length) {
-      return;
-    }
-
-    addDataToClipboardWithNavigator(
-      currentPage,
-      selectedElements,
-      selectedElementAnimations
-    );
-  }, [currentPage, selectedElements, selectedElementAnimations]);
-
-  const pasteElement = useCallback(async () => {
-    const content = await navigator.clipboard.readText();
-
-    const clipboardEvent = createClipboardEvent(
-      'paste',
-      clipboardData.current?.clipboardData
-    );
-
-    if (content) {
-      // Don't even need the event here tbh.
-      pasteHandler(clipboardEvent, content);
-    }
-  }, [pasteHandler]);
-
   const selectedElement = selectedElements?.[0];
 
   const menuItemProps = useMemo(
@@ -104,13 +69,13 @@ const useRightClickMenu = () => {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: '⌘ X',
-        onClick: copyElement,
+        onClick: noop,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
         shortcut: '⌘ V',
-        onClick: pasteElement,
+        onClick: noop,
         ...menuItemProps,
       },
       {
@@ -120,7 +85,7 @@ const useRightClickMenu = () => {
         ...menuItemProps,
       },
     ],
-    [copyElement, menuItemProps, pasteElement]
+    [menuItemProps]
   );
 
   const pageItems = useMemo(
