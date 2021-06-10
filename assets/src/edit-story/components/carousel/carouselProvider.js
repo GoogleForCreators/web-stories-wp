@@ -51,7 +51,7 @@ function CarouselProvider({ availableSpace, children }) {
         const element = pageRefs.current[id];
         const preview = element.querySelector('button');
         htmlToImage
-          .toSvg(preview)
+          .toJpeg(preview, { quality: 0.75 })
           .then(function (dataUrl) {
             if (!previewRefs.current) {
               previewRefs.current = {};
