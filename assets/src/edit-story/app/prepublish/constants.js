@@ -52,6 +52,7 @@ export const PRE_PUBLISH_MESSAGE_TYPES = {
   GUIDANCE: 'guidance',
   ERROR: 'error',
   WARNING: 'warning',
+  BULK_ACTION: 'bulk-action',
 };
 
 const VIDEO_DOCUMENTATION_URL = __(

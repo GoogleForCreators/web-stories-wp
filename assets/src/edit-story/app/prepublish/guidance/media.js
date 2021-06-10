@@ -19,7 +19,10 @@
  */
 import { VIDEO_SIZE_THRESHOLD } from '../../media/utils/useFFmpeg';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import { BulkVideoOptimization } from '../components/videoOptimization';
+import {
+  VideoOptimization,
+  BulkVideoOptimization,
+} from '../components/videoOptimization';
 import { states } from '../../highlights';
 
 const MIN_VIDEO_HEIGHT = 480;
@@ -29,8 +32,8 @@ const MAX_VIDEO_LENGTH_SECONDS = 60;
 
 /**
  * @typedef {import('../../../types').Page} Page
- * @typedef {import('../../../types').Element} Element
  * @typedef {import('../../../types').Story} Story
+ * @typedef {import('../../../types').Element} Element
  * @typedef {import('../types').Guidance} Guidance
  */
 
@@ -151,6 +154,40 @@ function isLargeVideo(resource) {
 }
 
 /**
+ * Check a if a video element's been optimized.
+ * If is not optimized, return guidance. Otherwise return undefined.
+ *
+ * @param {Element} element The element being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
+export function videoElementOptimized(element = {}) {
+  if (element.resource?.local) {
+    return undefined;
+  }
+
+  if (element.resource?.isOptimized) {
+    return undefined;
+  }
+
+  if (isLargeVideo(element.resource)) {
+    return {
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      elementId: element.id,
+      message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
+      help: (
+        <VideoOptimization
+          element={element}
+          caption={MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.HELPER_TEXT}
+        />
+      ),
+      noHighlight: true,
+    };
+  }
+
+  return undefined;
+}
+
+/**
  * Check a if the story's video elements have been optimized.
  * If is not optimized, return guidance. Otherwise return undefined.
  *
@@ -172,7 +209,7 @@ export function videoElementsOptimized(story) {
 
   if (unoptimizedVideos.length > 0) {
     return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      type: PRE_PUBLISH_MESSAGE_TYPES.BULK_ACTION,
       elements: unoptimizedVideos,
       message: MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT,
       help: (
