@@ -98,7 +98,7 @@ export const MenuItem = ({
         >
           {label}
         </ItemText>
-        {shortcut?.title && (
+        {shortcut?.display && (
           <Shortcut
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             forwardedAs="kbd"

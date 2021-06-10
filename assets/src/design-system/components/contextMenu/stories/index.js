@@ -293,7 +293,6 @@ export const QuickActionMenu = () => {
   );
 };
 
-// todo these shortcuts need  translations!
 const rightClickMenuMainOptions = [
   {
     label: __('Copy', 'web-stories'),
