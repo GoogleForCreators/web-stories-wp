@@ -24,10 +24,17 @@ import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import Mask from './mask';
 
-const ContextMenu = ({ isAlwaysVisible, items, ...props }) => {
+const ContextMenu = ({
+  hideBackgroundMask,
+  isAlwaysVisible,
+  items,
+  ...props
+}) => {
   return (
     <>
-      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
+      {!hideBackgroundMask && !isAlwaysVisible && props.isOpen && (
+        <Mask onDismiss={props.onDismiss} />
+      )}
       <Popover
         role={isAlwaysVisible ? '' : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
@@ -40,6 +47,7 @@ const ContextMenu = ({ isAlwaysVisible, items, ...props }) => {
 };
 ContextMenu.propTypes = {
   ...MenuPropTypes,
+  hideBackgroundMask: PropTypes.bool,
   isOpen: PropTypes.bool,
   isAlwaysVisible: PropTypes.bool,
 };

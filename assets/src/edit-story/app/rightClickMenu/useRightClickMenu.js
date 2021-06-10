@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -47,6 +47,37 @@ const useRightClickMenu = () => {
       selectedElementAnimations,
     })
   );
+
+  // Ref to use to calculate the menu's position
+  const rightClickAreaRef = useRef();
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+  /**
+   * Open the menu at the position from the click event.
+   */
+  const handleOpenMenu = useCallback((evt) => {
+    evt.preventDefault();
+    const layoutRect = rightClickAreaRef?.current?.getBoundingClientRect();
+
+    if (layoutRect) {
+      setMenuPosition({
+        x: evt.clientX - layoutRect?.left,
+        y: evt.clientY - layoutRect?.top,
+      });
+
+      setIsMenuOpen(true);
+    }
+  }, []);
+
+  /**
+   * Close the menu and reset the tracked position.
+   */
+  const handleCloseMenu = useCallback(() => {
+    setIsMenuOpen(false);
+    setMenuPosition({ x: 0, y: 0 });
+  }, []);
 
   /**
    * Prevent right click menu from removing focus from the canvas.
@@ -105,14 +136,35 @@ const useRightClickMenu = () => {
     [defaultItems, menuItemProps]
   );
 
-  switch (selectedElement?.type) {
-    case ELEMENT_TYPE.IMAGE:
-    case ELEMENT_TYPE.SHAPE:
-    case ELEMENT_TYPE.TEXT:
-    case ELEMENT_TYPE.VIDEO:
-    default:
-      return pageItems;
-  }
+  const menuItems = useMemo(() => {
+    switch (selectedElement?.type) {
+      case ELEMENT_TYPE.IMAGE:
+      case ELEMENT_TYPE.SHAPE:
+      case ELEMENT_TYPE.TEXT:
+      case ELEMENT_TYPE.VIDEO:
+      default:
+        return pageItems;
+    }
+  }, [pageItems, selectedElement?.type]);
+
+  // Override the browser's context menu
+  useEffect(() => {
+    // document.addEventListener('click', handleClick);
+    document.addEventListener('contextmenu', handleOpenMenu);
+    return () => {
+      // document.addEventListener('click', handleClick);
+      document.removeEventListener('contextmenu', handleOpenMenu);
+    };
+  });
+
+  return {
+    isMenuOpen,
+    menuItems,
+    menuPosition,
+    onCloseMenu: handleCloseMenu,
+    onOpenMenu: handleOpenMenu,
+    rightClickAreaRef,
+  };
 };
 
 export default useRightClickMenu;
