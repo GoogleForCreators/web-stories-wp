@@ -39,7 +39,16 @@ jest.mock('../../../../../design-system/components/popup/index.js', () => ({
 }));
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('@web-stories-wp/patterns');
+jest.mock('@web-stories-wp/patterns', () => {
+  return {
+    getPreviewText: jest.fn(),
+    createSolid: jest.fn(),
+    getOpaquePattern: jest.fn(),
+    hasOpacity: jest.fn(),
+    createSolidFromString: jest.fn(),
+    HexPropType: { isRequired: true },
+  };
+});
 
 function arrange(children = null) {
   renderWithTheme(children);
