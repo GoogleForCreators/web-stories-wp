@@ -21,12 +21,11 @@ import { forwardRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { getPreviewText } from '@web-stories-wp/patterns';
+import { getPreviewText, PatternPropType } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import { PatternPropType } from '../../../types';
 import { MULTIPLE_VALUE } from '../../../constants';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';

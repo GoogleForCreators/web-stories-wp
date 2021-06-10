@@ -21,11 +21,13 @@ import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import {
+  ColorStopPropType,
+  generatePatternStyles,
+} from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { ColorStopPropType } from '../../types';
 import { themeHelpers } from '../../../design-system/theme';
 import Pointer from './pointer';
 import GradientStop from './gradientStop';

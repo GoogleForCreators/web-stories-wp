@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { HexPropType } from '@web-stories-wp/patterns';
+import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
@@ -35,27 +35,6 @@ export const BorderPropTypes = PropTypes.shape({
   bottom: PropTypes.number,
   locked: PropTypes.bool.isRequired,
   position: PropTypes.string.isRequired,
-});
-
-export const ColorStopPropType = PropTypes.shape({
-  color: HexPropType.isRequired,
-  position: PropTypes.number.isRequired,
-});
-
-export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'radial']),
-  color: HexPropType,
-  stops: PropTypes.arrayOf(ColorStopPropType),
-  rotation: PropTypes.number,
-  alpha: PropTypes.number,
-  center: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-  size: PropTypes.shape({
-    w: PropTypes.number.isRequired,
-    h: PropTypes.number.isRequired,
-  }),
 });
 
 export const StylePresetPropType = PropTypes.shape({

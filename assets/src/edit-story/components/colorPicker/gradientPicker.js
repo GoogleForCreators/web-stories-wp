@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { ColorStopPropType } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import { ColorStopPropType } from '../../types';
 import {
   Button,
   BUTTON_SIZES,
