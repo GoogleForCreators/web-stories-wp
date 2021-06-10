@@ -99,17 +99,15 @@ function useCanvasGlobalKeys() {
   );
 
   const pasteHandler = useCallback(
-    (evt, navigatorContent) => {
+    (evt) => {
       const { clipboardData } = evt;
 
       try {
         // Get the html text and plain text but only if it's not a file being copied.
         const content =
-          // ignore event if navigatorContent is passed in.
-          navigatorContent ||
-          (!clipboardData.files?.length &&
-            (clipboardData.getData('text/html') ||
-              clipboardData.getData('text/plain')));
+          !clipboardData.files?.length &&
+          (clipboardData.getData('text/html') ||
+            clipboardData.getData('text/plain'));
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.
@@ -152,10 +150,6 @@ function useCanvasGlobalKeys() {
   useGlobalClipboardHandlers(copyCutHandler, pasteHandler);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
-  return {
-    copyCutHandler,
-    pasteHandler,
-  };
 }
 
 export default useCanvasGlobalKeys;

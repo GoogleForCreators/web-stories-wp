@@ -27,6 +27,7 @@ import SAT from 'sat';
 import { useLayout } from '../layout';
 import { useStory } from '../story';
 import { UnitsProvider } from '../../units';
+import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
 
@@ -153,6 +154,8 @@ function CanvasProvider({ children }) {
       lastSelectedElementId.current = null;
     }
   }, [editingElement, selectedElementIds, clearEditing]);
+
+  useCanvasCopyPaste();
 
   const state = useMemo(
     () => ({
