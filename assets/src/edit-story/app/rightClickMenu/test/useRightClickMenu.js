@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -39,33 +39,89 @@ describe('useRightClickMenu', () => {
     });
   });
 
-  describe('Page selected from right click', () => {
-    it('should return the correct menu items', () => {
+  describe('context menu manipulation', () => {
+    it('should open the menu at the specified position', () => {
       const { result } = renderHook(() => useRightClickMenu());
 
-      expect(result.current).toStrictEqual([
+      result.current.rightClickAreaRef.current = {
+        getBoundingClientRect: () => ({ left: 0, top: 0 }),
+      };
+
+      const mockEvent = {
+        preventDefault: jest.fn(),
+        clientX: 500,
+        clientY: -1230,
+      };
+
+      act(() => {
+        result.current.onOpenMenu(mockEvent);
+      });
+
+      expect(result.current.isMenuOpen).toBe(true);
+      expect(result.current.menuPosition).toStrictEqual({ x: 500, y: -1230 });
+    });
+
+    it('should close the menu and reset the position', () => {
+      const { result } = renderHook(() => useRightClickMenu());
+
+      result.current.rightClickAreaRef.current = {
+        getBoundingClientRect: () => ({ left: 300, top: -3000 }),
+      };
+
+      const mockEvent = {
+        preventDefault: jest.fn(),
+        clientX: 500,
+        clientY: -1230,
+      };
+
+      act(() => {
+        result.current.onOpenMenu(mockEvent);
+      });
+
+      expect(result.current.isMenuOpen).toBe(true);
+      expect(result.current.menuPosition).toStrictEqual({ x: 200, y: 1770 });
+
+      act(() => {
+        result.current.onCloseMenu();
+      });
+
+      expect(result.current.isMenuOpen).toBe(false);
+      expect(result.current.menuPosition).toStrictEqual({ x: 0, y: 0 });
+    });
+  });
+
+  describe('Page selected from right click', () => {
+    it('should return menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu());
+
+      expect(result.current.menuItems).toStrictEqual([
         {
           label: 'Copy',
           onClick: expect.any(Function),
+          handleMouseDown: expect.any(Function),
           shortcut: '⌘ X',
         },
         {
           label: 'Paste',
           onClick: expect.any(Function),
+          handleMouseDown: expect.any(Function),
           shortcut: '⌘ V',
         },
         {
           label: 'Delete',
           onClick: expect.any(Function),
+          handleMouseDown: expect.any(Function),
           shortcut: 'DEL',
         },
         {
           label: 'Duplicate page',
           onClick: expect.any(Function),
+          handleMouseDown: expect.any(Function),
         },
         {
           label: 'Delete page',
           onClick: expect.any(Function),
+          handleMouseDown: expect.any(Function),
         },
       ]);
     });

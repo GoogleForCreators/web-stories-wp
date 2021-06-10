@@ -34,7 +34,6 @@ const RightClickMenu = () => {
     <RightClickPageZone ref={rightClickAreaRef}>
       <RightClickMenuContainer position={menuPosition}>
         <AnimatedContextMenu
-          hideBackgroundMask
           isOpen={isMenuOpen}
           onDismiss={onCloseMenu}
           items={rightClickMenuItems}

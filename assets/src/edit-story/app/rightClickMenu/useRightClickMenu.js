@@ -26,8 +26,6 @@ import { noop } from '../../utils/noop';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { RIGHT_CLICK_MENU_LABELS } from './constants';
 
-/** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
-
 /**
  * Determines the items displayed in the right click menu
  * based off of the right-clicked element.
@@ -35,7 +33,11 @@ import { RIGHT_CLICK_MENU_LABELS } from './constants';
  * Right click menu items should have the same shape as items
  * in the design system's context menu.
  *
- * @return {Array.<MenuItemProps>} an array of right click menu item objects
+ * @return {Object} An object containing:
+ * - The items in the menu
+ * - The menu's position
+ * - Helper functions to open and close the menu
+ * - A ref for the container where the right click menu will be rendered
  */
 const useRightClickMenu = () => {
   const { selectedElements } = useStory(
@@ -75,9 +77,11 @@ const useRightClickMenu = () => {
    * Close the menu and reset the tracked position.
    */
   const handleCloseMenu = useCallback(() => {
-    setIsMenuOpen(false);
-    setMenuPosition({ x: 0, y: 0 });
-  }, []);
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+      setMenuPosition({ x: 0, y: 0 });
+    }
+  }, [isMenuOpen]);
 
   /**
    * Prevent right click menu from removing focus from the canvas.
@@ -149,10 +153,9 @@ const useRightClickMenu = () => {
 
   // Override the browser's context menu
   useEffect(() => {
-    // document.addEventListener('click', handleClick);
     document.addEventListener('contextmenu', handleOpenMenu);
+
     return () => {
-      // document.addEventListener('click', handleClick);
       document.removeEventListener('contextmenu', handleOpenMenu);
     };
   });
