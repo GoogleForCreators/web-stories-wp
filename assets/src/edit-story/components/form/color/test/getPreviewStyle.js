@@ -21,13 +21,12 @@ import {
   createSolid,
   generatePatternStyles as generatePatternStylesMock,
 } from '@web-stories-wp/patterns';
-
 /**
  * Internal dependencies
  */
 import getPreviewStyle from '../getPreviewStyle';
 
-jest.mock('../../../../utils/generatePatternStyles', () => jest.fn());
+jest.mock('@web-stories-wp/patterns');
 
 describe('getPreviewStyle', () => {
   beforeEach(() => {

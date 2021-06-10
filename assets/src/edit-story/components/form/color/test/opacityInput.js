@@ -31,9 +31,7 @@ import getPreviewOpacityMock from '../getPreviewOpacity';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
-jest.mock('../../../../../design-system/components/hex/getPreviewText', () =>
-  jest.fn()
-);
+jest.mock('@web-stories-wp/patterns');
 
 function arrange(customProps = {}) {
   const onChange = jest.fn();
