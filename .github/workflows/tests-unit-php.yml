@@ -54,7 +54,7 @@ jobs:
             coverage: true
 
           - php: '5.6'
-            wp: '5.3'
+            wp: '5.5'
 
           - php: '8.0'
             wp: 'latest'
