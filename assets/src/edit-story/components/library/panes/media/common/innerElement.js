@@ -158,7 +158,6 @@ function InnerElement({
   };
   const videoProps = {
     ...commonProps,
-    alt: alt,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'metadata',
