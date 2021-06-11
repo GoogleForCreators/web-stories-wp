@@ -19,7 +19,7 @@
  */
 import { AnimatedContextMenu } from '../../../design-system';
 import { useRightClickMenu } from '../../app/rightClickMenu';
-import { RightClickMenuContainer, RightClickPageZone } from './layout';
+import { RightClickMenuContainer } from './layout';
 
 const RightClickMenu = () => {
   const {
@@ -27,19 +27,16 @@ const RightClickMenu = () => {
     menuItems: rightClickMenuItems,
     menuPosition,
     onCloseMenu,
-    rightClickAreaRef,
   } = useRightClickMenu();
 
   return (
-    <RightClickPageZone ref={rightClickAreaRef}>
-      <RightClickMenuContainer position={menuPosition}>
-        <AnimatedContextMenu
-          isOpen={isMenuOpen}
-          onDismiss={onCloseMenu}
-          items={rightClickMenuItems}
-        />
-      </RightClickMenuContainer>
-    </RightClickPageZone>
+    <RightClickMenuContainer position={menuPosition}>
+      <AnimatedContextMenu
+        isOpen={isMenuOpen}
+        onDismiss={onCloseMenu}
+        items={rightClickMenuItems}
+      />
+    </RightClickMenuContainer>
   );
 };
 

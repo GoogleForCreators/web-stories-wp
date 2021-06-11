@@ -16,19 +16,6 @@
 /**
  * Internal dependencies
  */
-import { useContextSelector, identity } from '../../../design-system';
-import Context from './context';
+import { createContext } from '../../../design-system';
 
-function useRightClickMenu(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-
-  if (!context) {
-    throw new Error(
-      'Must use `useRightClickMenu()` within <rightClickMenu.Provider />'
-    );
-  }
-
-  return context;
-}
-
-export default useRightClickMenu;
+export default createContext({});

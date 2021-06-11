@@ -57,7 +57,9 @@ function NavLayer() {
   }, []);
 
   const showQuickActions =
-    enableQuickActionMenu && !hasHorizontalOverflow && quickActions.length;
+    enableQuickActionMenu &&
+    !hasHorizontalOverflow &&
+    Boolean(quickActions.length);
 
   return (
     <Layer

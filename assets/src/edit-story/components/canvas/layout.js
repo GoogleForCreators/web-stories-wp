@@ -33,6 +33,7 @@ import {
 import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
+import { useRightClickMenu } from '../../app/rightClickMenu';
 import usePinchToZoom from './usePinchToZoom';
 
 /**
@@ -246,11 +247,6 @@ const CarouselArea = styled(Area).attrs({
   showOverflow: true,
 })``;
 
-const RightClickPageZone = styled.div`
-  position: relative;
-  grid-area: p;
-`;
-
 const RightClickMenuContainer = styled.div`
   position: absolute;
   top: ${({ position }) => position?.y ?? 0}px;
@@ -377,6 +373,7 @@ const PageArea = forwardRef(function PageArea(
       scrollTop,
     })
   );
+  const { rightClickAreaRef } = useRightClickMenu();
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
   const scroll = useRef();
@@ -394,6 +391,7 @@ const PageArea = forwardRef(function PageArea(
 
   return (
     <PageAreaContainer
+      ref={rightClickAreaRef}
       showOverflow={showOverflow}
       isControlled={isControlled}
       hasHorizontalOverflow={hasHorizontalOverflow}
@@ -449,7 +447,6 @@ export {
   NavNextArea,
   QuickActionsArea,
   RightClickMenuContainer,
-  RightClickPageZone,
   CarouselArea,
   useLayoutParams,
   useLayoutParamsCssVars,

@@ -13,22 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { useContextSelector, identity } from '../../../design-system';
-import Context from './context';
 
-function useRightClickMenu(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
+export const ACTION_TYPES = {
+  OPEN_MENU: 'OPEN_MENU',
+  RESET: 'RESET',
+};
 
-  if (!context) {
-    throw new Error(
-      'Must use `useRightClickMenu()` within <rightClickMenu.Provider />'
-    );
+export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
+  isMenuOpen: false,
+  menuPosition: {
+    x: 0,
+    y: 0,
+  },
+};
+
+function rightClickMenuReducer(state, action) {
+  switch (action.type) {
+    case ACTION_TYPES.OPEN_MENU:
+      return {
+        ...state,
+        isMenuOpen: true,
+        menuPosition: action.payload,
+      };
+    case ACTION_TYPES.RESET:
+      return {
+        ...state,
+        isMenuOpen: false,
+      };
+    default:
+      return state;
   }
-
-  return context;
 }
 
-export default useRightClickMenu;
+export default rightClickMenuReducer;
