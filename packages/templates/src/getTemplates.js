@@ -62,6 +62,7 @@ async function getTemplates(imageBaseUrl) {
     'no-days-off',
     'experience-thailand',
     'sleep',
+    'sangria-artichoke',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
