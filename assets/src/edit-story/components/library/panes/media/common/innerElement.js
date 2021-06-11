@@ -154,11 +154,11 @@ function InnerElement({
   const imageProps = {
     ...commonImageProps,
     src: thumbnailURL,
-    'aria-label': alt,
+    alt: alt,
   };
   const videoProps = {
     ...commonProps,
-    'aria-label': alt,
+    alt: alt,
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'metadata',
