@@ -13,9 +13,8 @@
   "sideEffects": false,
   "dependencies": {
     "@web-stories-wp/i18n": "*",
-    "polished": "^4.1.1",
+    "polished": "^4.1.3",
     "prop-types": "^15.7.2"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
