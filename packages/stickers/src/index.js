@@ -26,7 +26,7 @@ import * as experienceThailandStickers from './experience-thailand';
 import * as wellbeingSleepStickers from './sleep';
 import * as guideTobakingBreadStrickers from './beginers-guide-to-baking-bread';
 import * as sangriaArtichokeStickers from './sangria-artichoke';
-import * as crispyChickenThighStickers from './crispy-chicken-thigh';
+import * as crispyChickenThighStickers from './kitchen-stories';
 
 export default {
   ...beautyStickers,
