@@ -24,7 +24,7 @@ import * as fashionOnTheGoStickers from './fashion-on-the-go';
 import * as noDaysOffStickers from './no-days-off';
 import * as experienceThailandStickers from './experience-thailand';
 import * as wellbeingSleepStickers from './sleep';
-import * as guideTobakingBreadStrickers from './beginers-guide-to-baking-bread';
+import * as guideTobakingBreadStrickers from './baking-bread-guide';
 import * as sangriaArtichokeStickers from './sangria-artichoke';
 import * as crispyChickenThighStickers from './kitchen-stories';
 
