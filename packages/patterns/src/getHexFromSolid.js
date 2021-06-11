@@ -13,8 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function getHexFromSolid(solid) {
+  const {
+    color: { r, g, b, a = 1 },
+  } = solid;
+  const dims = [r, g, b, Math.round(a * 100)];
+  return dims
+    .map((n) => n.toString(16))
+    .map((s) => s.padStart(2, '0'))
+    .join('');
+}
 
-export { default as hasOpacity } from './hasOpacity';
-export { default as hasGradient } from './hasGradient';
-export { default as getOpaquePattern } from './getOpaquePattern';
-export { default as generatePatternStyles } from './generatePatternStyles';
+export default getHexFromSolid;

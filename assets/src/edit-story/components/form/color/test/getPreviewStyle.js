@@ -15,13 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  createSolid,
+  generatePatternStyles as generatePatternStylesMock,
+} from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import generatePatternStylesMock from '../../../../utils/generatePatternStyles';
-import createSolid from '../../../../utils/createSolid';
 import getPreviewStyle from '../getPreviewStyle';
 
-jest.mock('../../../../utils/generatePatternStyles', () => jest.fn());
+jest.mock('@web-stories-wp/patterns', () => ({
+  ...jest.requireActual('@web-stories-wp/patterns'),
+  generatePatternStyles: jest.fn(),
+}));
 
 describe('getPreviewStyle', () => {
   beforeEach(() => {

@@ -43,6 +43,7 @@
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@web-stories-wp/migration": "*",
+    "@web-stories-wp/patterns": "*",
     "@web-stories-wp/stickers": "*",
     "@web-stories-wp/stories-carousel": "*",
     "@web-stories-wp/stories-lightbox": "*",

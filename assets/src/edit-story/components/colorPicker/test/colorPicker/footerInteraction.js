@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { waitFor, fireEvent, act } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
+
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> as the footer is interacted with', () => {
