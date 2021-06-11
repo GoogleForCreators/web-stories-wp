@@ -15,12 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolidFromString } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import useInsertElement from '../useInsertElement';
-import createSolidFromString from '../../../utils/createSolidFromString';
 
 describe('Canvas Keyboard Shortcuts', () => {
   let fixture;

@@ -20,7 +20,7 @@
 import createSolidFromString from './createSolidFromString';
 import createSolid from './createSolid';
 
-export function getSolidFromHex(hex) {
+function getSolidFromHex(hex) {
   // We already have a nice parser for most of this, but we need to
   // parse opacity as the last two hex digits as percent, not 1/256th
 
@@ -33,13 +33,4 @@ export function getSolidFromHex(hex) {
   return createSolid(r, g, b, opacity / 100);
 }
 
-export function getHexFromSolid(solid) {
-  const {
-    color: { r, g, b, a = 1 },
-  } = solid;
-  const dims = [r, g, b, Math.round(a * 100)];
-  return dims
-    .map((n) => n.toString(16))
-    .map((s) => s.padStart(2, '0'))
-    .join('');
-}
+export default getSolidFromHex;

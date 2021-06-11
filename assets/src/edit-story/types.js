@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
@@ -25,13 +26,6 @@ import PropTypes from 'prop-types';
 import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
-
-export const HexPropType = PropTypes.shape({
-  r: PropTypes.number.isRequired,
-  g: PropTypes.number.isRequired,
-  b: PropTypes.number.isRequired,
-  a: PropTypes.number,
-});
 
 export const BorderPropTypes = PropTypes.shape({
   color: HexPropType.isRequired,
@@ -41,27 +35,6 @@ export const BorderPropTypes = PropTypes.shape({
   bottom: PropTypes.number,
   locked: PropTypes.bool.isRequired,
   position: PropTypes.string.isRequired,
-});
-
-export const ColorStopPropType = PropTypes.shape({
-  color: HexPropType.isRequired,
-  position: PropTypes.number.isRequired,
-});
-
-export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'radial']),
-  color: HexPropType,
-  stops: PropTypes.arrayOf(ColorStopPropType),
-  rotation: PropTypes.number,
-  alpha: PropTypes.number,
-  center: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-  size: PropTypes.shape({
-    w: PropTypes.number.isRequired,
-    h: PropTypes.number.isRequired,
-  }),
 });
 
 export const StylePresetPropType = PropTypes.shape({

@@ -84,7 +84,7 @@ describe('raw template files', () => {
 
   // @see https://github.com/google/web-stories-wp/issues/7227
   it.each(templates)(
-    '%s template should not contain extraneaous properties',
+    '%s template should not contain extraneous properties',
     async (template) => {
       const { default: templateData } = await import(
         /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
@@ -93,6 +93,25 @@ describe('raw template files', () => {
       expect(templateData.current).toBeNull();
       expect(templateData.selection).toStrictEqual([]);
       expect(templateData.story.globalStoryStyles).toBeUndefined();
+    }
+  );
+
+  it.each(templates)(
+    '%s template should only contain videos marked as optimized',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'video' || !element?.resource?.src) {
+            continue;
+          }
+
+          expect(element?.resource?.isOptimized).toBeTrue();
+        }
+      }
     }
   );
 });
