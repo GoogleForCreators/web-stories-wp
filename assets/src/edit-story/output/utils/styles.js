@@ -67,6 +67,14 @@ function CustomStyles() {
                 }
               }
 
+              @media not all and (min-resolution:.001dpcm) {
+                @media {
+                  p.text-wrapper > span:first-of-type {
+                    font-size: calc(100% - 0.5px);
+                  }
+                }
+              }
+
               .page-fullbleed-area,
               .page-background-overlay-area {
                 position: absolute;
