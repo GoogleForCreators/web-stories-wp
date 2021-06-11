@@ -39,35 +39,10 @@ jest.mock('../../../../../design-system/components/popup/index.js', () => ({
 }));
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('@web-stories-wp/patterns', () => {
-  return {
-    getPreviewText: jest.fn(),
-    createSolid: (r, g, b, a = 1) => {
-      if (a !== 1) {
-        return { color: { r, g, b, a } };
-      }
-      return { color: { r, g, b } };
-    },
-    getOpaquePattern: (pattern) => {
-      if (!pattern.type || pattern.type === 'solid') {
-        const { color } = pattern;
-        return {
-          color: {
-            ...color,
-            a: 1,
-          },
-        };
-      }
-      return { color: { r: 0, g: 0, b: 0, a: 0 } };
-    },
-    hasOpacity: jest.fn(),
-    hasGradient: jest.fn(),
-    generatePatternStyles: jest.fn(),
-    getHexFromValue: jest.fn(),
-    createSolidFromString: jest.fn(),
-    HexPropType: { isRequired: true },
-  };
-});
+jest.mock('@web-stories-wp/patterns', () => ({
+  ...jest.requireActual('@web-stories-wp/patterns'),
+  getPreviewText: jest.fn(),
+}));
 
 function arrange(children = null) {
   renderWithTheme(children);
@@ -191,8 +166,7 @@ describe('<ColorInput />', () => {
     expect(previewButton).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should invoke onChange when inputting valid hex', () => {
+  it('should invoke onChange when inputting valid hex', () => {
     getPreviewTextMock.mockImplementation(() => {
       return 'FF0000';
     });

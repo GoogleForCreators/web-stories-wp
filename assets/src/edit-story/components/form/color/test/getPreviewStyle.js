@@ -26,17 +26,10 @@ import {
  */
 import getPreviewStyle from '../getPreviewStyle';
 
-jest.mock('@web-stories-wp/patterns', () => {
-  return {
-    generatePatternStyles: jest.fn(),
-    createSolid: (r, g, b, a = 1) => {
-      if (a !== 1) {
-        return { color: { r, g, b, a } };
-      }
-      return { color: { r, g, b } };
-    },
-  };
-});
+jest.mock('@web-stories-wp/patterns', () => ({
+  ...jest.requireActual('@web-stories-wp/patterns'),
+  generatePatternStyles: jest.fn(),
+}));
 
 describe('getPreviewStyle', () => {
   beforeEach(() => {

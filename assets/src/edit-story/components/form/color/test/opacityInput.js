@@ -31,17 +31,10 @@ import getPreviewOpacityMock from '../getPreviewOpacity';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
-jest.mock('@web-stories-wp/patterns', () => {
-  return {
-    getPreviewText: jest.fn(),
-    createSolid: (r, g, b, a = 1) => {
-      if (a !== 1) {
-        return { color: { r, g, b, a } };
-      }
-      return { color: { r, g, b } };
-    },
-  };
-});
+jest.mock('@web-stories-wp/patterns', () => ({
+  ...jest.requireActual('@web-stories-wp/patterns'),
+  getPreviewText: jest.fn(),
+}));
 
 function arrange(customProps = {}) {
   const onChange = jest.fn();
