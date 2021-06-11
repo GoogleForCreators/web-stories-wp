@@ -22,12 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import {
-  Button,
-  ToolbarGroup,
-  Toolbar,
-  ToolbarButton,
-} from '@wordpress/components';
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 
@@ -52,41 +47,25 @@ import BlockTypeSwitcher from './blockTypeSwitcher';
  * @return {*} JSX markup.
  */
 const StoriesBlockControls = ({ blockType, viewType, setAttributes }) => {
-  // Note: ToolbarGroup and ToolbarButton are only available in Gutenberg 7.0 or later,
-  // so they do not exist in WP 5.3.
-  const ToolbarComponent = ToolbarGroup ? ToolbarGroup : Toolbar;
-
   return (
     <BlockControls>
-      <ToolbarComponent>
+      <ToolbarGroup>
         {blockType && BLOCK_TYPE_URL !== blockType && (
           <Fragment>
             {VIEW_TYPES.map((view) => {
-              return ToolbarButton ? (
-                <ToolbarButton
-                  key={view.id}
-                  label={view.label}
-                  icon={view.icon}
-                  onClick={() => {
-                    setAttributes({ viewType: view.id });
-                  }}
-                  isPressed={view.id === viewType}
-                />
-              ) : (
-                <Button
-                  key={view.id}
-                  label={view.label}
-                  icon={view.icon}
-                  onClick={() => {
-                    setAttributes({ viewType: view.id });
-                  }}
-                  isPressed={view.id === viewType}
-                />
-              );
+              <ToolbarButton
+                key={view.id}
+                label={view.label}
+                icon={view.icon}
+                onClick={() => {
+                  setAttributes({ viewType: view.id });
+                }}
+                isPressed={view.id === viewType}
+              />;
             })}
           </Fragment>
         )}
-      </ToolbarComponent>
+      </ToolbarGroup>
       <BlockTypeSwitcher
         selectedBlockType={blockType}
         setAttributes={setAttributes}

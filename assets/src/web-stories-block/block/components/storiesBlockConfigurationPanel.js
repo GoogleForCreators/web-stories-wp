@@ -19,33 +19,18 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const FallbackComponent = ({ children, ...additionalProps }) => (
-  <div {...additionalProps}>{children}</div>
-);
-
-FallbackComponent.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import * as Components from '@wordpress/components';
-import { BlockIcon } from '@wordpress/block-editor';
-
-// Note: Card, CardBody, CardMedia are only available in Gutenberg 7.0 or later,
-// so they do not exist in WP 5.3.
-const {
-  Card = FallbackComponent,
-  CardBody = FallbackComponent,
-  CardMedia = FallbackComponent,
+import {
+  Card,
+  CardBody,
+  CardMedia,
   Placeholder,
   Icon,
-} = Components;
+} from '@wordpress/components';
+import { BlockIcon } from '@wordpress/block-editor';
 
 const TypeGrid = styled.div`
   width: 100%;

@@ -22,7 +22,15 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import * as Components from '@wordpress/components';
+import {
+  Button,
+  BaseControl,
+  TextControl,
+  PanelBody,
+  PanelRow,
+  ToolbarGroup,
+  ToolbarButton,
+} from '@wordpress/components';
 import {
   BlockControls,
   InspectorControls,
@@ -34,20 +42,6 @@ import { createRef, useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
-
-const FallbackComponent = ({ children }) => children;
-
-// Note: ToolbarGroup and ToolbarButton are only available in Gutenberg 7.0 or later,
-// so they do not exist in WP 5.3.
-const {
-  Button,
-  BaseControl,
-  TextControl,
-  PanelBody,
-  PanelRow,
-  ToolbarGroup = FallbackComponent,
-  ToolbarButton,
-} = Components;
 
 const EmbedControls = (props) => {
   const {
@@ -87,26 +81,11 @@ const EmbedControls = (props) => {
     <>
       <BlockControls>
         <ToolbarGroup>
-          {/*
-          Using ToolbarButton if available is mandatory as other usage is deprecated
-          for accessibility reasons and causes console warnings.
-          See https://github.com/WordPress/gutenberg/pull/23316
-          See https://developer.wordpress.org/block-editor/components/toolbar-button/#inside-blockcontrols
-          */}
-          {ToolbarButton ? (
-            <ToolbarButton
-              title={__('Edit URL', 'web-stories')}
-              icon="edit"
-              onClick={switchBackToURLInput}
-            />
-          ) : (
-            <Button
-              className="components-toolbar__control"
-              label={__('Edit URL', 'web-stories')}
-              icon="edit"
-              onClick={switchBackToURLInput}
-            />
-          )}
+          <ToolbarButton
+            title={__('Edit URL', 'web-stories')}
+            icon="edit"
+            onClick={switchBackToURLInput}
+          />
         </ToolbarGroup>
       </BlockControls>
       <InspectorControls>
@@ -203,10 +182,6 @@ const EmbedControls = (props) => {
       </InspectorControls>
     </>
   );
-};
-
-FallbackComponent.propTypes = {
-  children: PropTypes.node,
 };
 
 EmbedControls.propTypes = {
