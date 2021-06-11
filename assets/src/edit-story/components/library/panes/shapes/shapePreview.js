@@ -21,13 +21,12 @@ import PropTypes from 'prop-types';
 import { createRef, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useUnits, PAGE_WIDTH } from '@web-stories-wp/units';
-
+import { createSolidFromString } from '@web-stories-wp/patterns';
+import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { ThemeGlobals } from '../../../../../design-system';
 import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
