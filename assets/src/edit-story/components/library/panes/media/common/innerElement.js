@@ -154,7 +154,7 @@ function InnerElement({
   const imageProps = {
     ...commonImageProps,
     src: thumbnailURL,
-    alt: alt,
+    alt,
   };
   const videoProps = {
     ...commonProps,
