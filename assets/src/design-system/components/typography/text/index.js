@@ -56,6 +56,11 @@ const Span = styled.span`
   ${textCss};
 `;
 
+const Kbd = styled.kbd`
+  ${textCss};
+  white-space: nowrap;
+`;
+
 const Label = styled.label`
   ${labelTextCss};
 
@@ -72,13 +77,15 @@ export const Text = ({ as, disabled, ...props }) => {
       return <Label disabled={disabled} {...props} />;
     case 'span':
       return <Span {...props} />;
+    case 'kbd':
+      return <Kbd {...props} />;
     default:
       return <Paragraph {...props} />;
   }
 };
 
 Text.propTypes = {
-  as: PropTypes.oneOf(['p', 'span', 'label']),
+  as: PropTypes.oneOf(['p', 'span', 'label', 'kbd']),
   /** only applies to label styling */
   disabled: PropTypes.bool,
   isBold: PropTypes.bool,
