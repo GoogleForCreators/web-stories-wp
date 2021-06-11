@@ -2325,7 +2325,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/album-releases/page08_image1.jpeg",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/album-releases/page08_image1.jpg",
             "width": 330,
             "height": 220,
             "id": 3264,

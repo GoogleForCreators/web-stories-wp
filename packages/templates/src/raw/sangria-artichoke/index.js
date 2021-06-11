@@ -42,7 +42,7 @@ export default {
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
   ],
   description: __(
-    'From veggies, with love. This template’s natural green color palette and lively typography will inspire your audience to cook themselves a healthy meal today.',
+    'From veggies, with love. This template’s natural green color palette and lively typography will inspire your audience to cook a healthy meal today.',
     'web-stories'
   ),
   ...template,

@@ -41,6 +41,16 @@ async function loadTemplate(title, imageBaseUrl) {
             imageBaseUrl
           );
         }
+
+        if (elem?.resource?.poster) {
+          // imageBaseUrl (cdnURL) will always have a trailing slash,
+          // so make sure to avoid double slashes when replacing.
+          elem.resource.poster = elem.resource.poster.replace(
+            '__WEB_STORIES_TEMPLATE_BASE_URL__/',
+            imageBaseUrl
+          );
+        }
+
         return elem;
       }),
     })),
