@@ -39,10 +39,12 @@ jest.mock('../../../../../design-system/components/popup/index.js', () => ({
 }));
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('@web-stories-wp/patterns', () => ({
-  ...jest.requireActual('@web-stories-wp/patterns'),
-  getPreviewText: jest.fn(),
-}));
+jest.mock('@web-stories-wp/patterns', () => {
+  return {
+    ...jest.requireActual('@web-stories-wp/patterns'),
+    getPreviewText: jest.fn(),
+  };
+});
 
 function arrange(children = null) {
   renderWithTheme(children);
