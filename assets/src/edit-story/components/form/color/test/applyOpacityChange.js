@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import applyOpacityChange from '../applyOpacityChange';
 
 describe('applyOpacityChange', () => {

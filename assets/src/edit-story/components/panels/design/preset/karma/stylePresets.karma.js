@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useInsertElement } from '../../../../canvas';
-import createSolid from '../../../../../utils/createSolid';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
 import { DEFAULT_PRESET } from '../../../../library/panes/text/textPresets';

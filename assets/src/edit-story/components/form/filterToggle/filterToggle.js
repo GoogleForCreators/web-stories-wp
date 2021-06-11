@@ -19,14 +19,16 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import {
+  generatePatternStyles,
+  PatternPropType,
+} from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../../design-system/theme';
 import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import { PatternPropType } from '../../../types';
 import { focusStyle } from '../../panels/shared';
 
 const fillCss = css`

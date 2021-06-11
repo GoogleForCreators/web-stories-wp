@@ -18,8 +18,7 @@
  * Internal dependencies
  */
 import getPreviewText from '../getPreviewText';
-// @todo should we add this to design-system?
-import createSolid from '../../../../edit-story/utils/createSolid';
+import createSolid from '../createSolid';
 
 describe('getPreviewText', () => {
   it('should return null for no pattern', () => {

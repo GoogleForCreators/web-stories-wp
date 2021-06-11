@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
@@ -33,7 +34,6 @@ import {
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
 import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
 import {
