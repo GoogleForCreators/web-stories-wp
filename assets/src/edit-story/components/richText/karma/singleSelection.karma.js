@@ -50,6 +50,7 @@ describe('Styling single text field', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     // TODO #6955
+    // When fixing this, ensure that uppercase is also handled here.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply inline formatting correctly for single-style text field', async () => {
       const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
@@ -107,8 +108,15 @@ describe('Styling single text field', () => {
     });
 
     it('should apply inline formatting correctly for multi-style text field', async () => {
-      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+      const {
+        bold,
+        italic,
+        underline,
+        uppercase,
+        fontWeight,
+        letterSpacing,
+        fontColor,
+      } = data.fixture.editor.inspector.designPanel.textStyle;
 
       // First enter edit mode, select something, style it with all styles and exit edit mode
       await data.fixture.events.keyboard.press('Enter');
@@ -125,6 +133,8 @@ describe('Styling single text field', () => {
       await richTextHasFocus();
       await data.fixture.events.click(underline.button);
       await richTextHasFocus();
+      await data.fixture.events.click(uppercase.button);
+      await richTextHasFocus();
       await data.fixture.events.click(fontWeight.select);
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(await fontWeight.option('Black'));
@@ -136,6 +146,7 @@ describe('Styling single text field', () => {
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
+      expect(uppercase.checked).toBe(false);
       expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
@@ -157,12 +168,14 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
       await data.fixture.events.keyboard.press('Enter');
+      await data.fixture.events.click(uppercase.button);
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
+      expect(uppercase.checked).toBe(true);
       expect(fontWeight.value).toBe('Bold');
       expect(letterSpacing.value).toBe('100%');
       expect(fontColor.hex.value).toBe('00FF00');
@@ -175,6 +188,7 @@ describe('Styling single text field', () => {
         'text-decoration: underline',
         'color: #0f0',
         'letter-spacing: 1em',
+        'text-transform: uppercase',
       ].join('; ');
       const expected = `<span style="${css}">Fill in some text</span>`;
       expect(actual).toBe(expected);

@@ -57,6 +57,7 @@ describe('Styling multiple text fields', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     // TODO #6955
+    // When fixing this, ensure that uppercase is also handled here.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply formatting correctly for identically styled text fields', async () => {
       const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
