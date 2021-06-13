@@ -72,6 +72,7 @@ async function getTemplates(imageBaseUrl) {
     'no-days-off',
     'experience-thailand',
     'sleep',
+    'baking-bread-guide',
     'sangria-artichoke',
     'ways-to-eat-avacado',
     'kitchen-stories',
