@@ -27,13 +27,13 @@ import { default as template } from './template';
 export default {
   title: _x('Trendy Winter Veggie', 'template name', 'web-stories'),
   tags: [
-    _x('food', 'template keyword', 'web-stories'),
-    _x('healthy', 'template keyword', 'web-stories'),
-    _x('recipe', 'template keyword', 'web-stories'),
-    _x('how-to', 'template keyword', 'web-stories'),
-    _x('earthy', 'template keyword', 'web-stories'),
-    _x('vegan', 'template keyword', 'web-stories'),
-    _x('green', 'template keyword', 'web-stories'),
+    _x('Food', 'template keyword', 'web-stories'),
+    _x('Healthy', 'template keyword', 'web-stories'),
+    _x('Recipe', 'template keyword', 'web-stories'),
+    _x('How-To', 'template keyword', 'web-stories'),
+    _x('Earthy', 'template keyword', 'web-stories'),
+    _x('Vegan', 'template keyword', 'web-stories'),
+    _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
     { label: _x('Jewel Green', 'color', 'web-stories'), color: '#0e662a' },

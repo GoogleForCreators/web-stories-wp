@@ -27,18 +27,15 @@ import { default as template } from './template';
 export default {
   title: _x('Kitchen Stories', 'template name', 'web-stories'),
   tags: [
-    _x('cooking', 'template keyword', 'web-stories'),
+    _x('Cooking', 'template keyword', 'web-stories'),
     _x('DIY', 'template keyword', 'web-stories'),
-    _x('protein', 'template keyword', 'web-stories'),
-    _x('homemade', 'template keyword', 'web-stories'),
-    _x('blue', 'template keyword', 'web-stories'),
+    _x('Protein', 'template keyword', 'web-stories'),
+    _x('Homemade', 'template keyword', 'web-stories'),
+    _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Swamp Green', 'color', 'web-stories'), color: '#a7b27e' },
-    { label: _x('Saffron Yellow', 'color', 'web-stories'), color: '#f5b435' },
-    { label: _x('Dark Moss Green', 'color', 'web-stories'), color: '#51611c' },
-    { label: _x('Rose Bud Pink', 'color', 'web-stories'), color: '#ffa797' },
-    { label: _x('Dark Coral', 'color', 'web-stories'), color: '#a35445' },
+    { label: _x('Mariner Blue', 'color', 'web-stories'), color: '#d4e3fc' },
+    { label: _x('Hawkes Blue', 'color', 'web-stories'), color: '#215fce' },
   ],
   description: __(
     'The Kitchen Stories template puts the spotlight on you by keeping the text minimal and letting you tell your story through video. Increase your audience by linking your social profile and website at the end.',

@@ -27,11 +27,11 @@ import { default as template } from './template';
 export default {
   title: _x('Album Releases', 'template name', 'web-stories'),
   tags: [
-    _x('entertainment', 'template keyword', 'web-stories'),
-    _x('music', 'template keyword', 'web-stories'),
-    _x('album', 'template keyword', 'web-stories'),
-    _x('trending', 'template keyword', 'web-stories'),
-    _x('blue', 'template keyword', 'web-stories'),
+    _x('Entertainment', 'template keyword', 'web-stories'),
+    _x('Music', 'template keyword', 'web-stories'),
+    _x('Album', 'template keyword', 'web-stories'),
+    _x('Trending', 'template keyword', 'web-stories'),
+    _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
     { label: _x('Hot Orange', 'color', 'web-stories'), color: '#f7722f' },

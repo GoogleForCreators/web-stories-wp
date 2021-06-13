@@ -27,12 +27,12 @@ import { default as template } from './template';
 export default {
   title: _x('Ways to Eat Avocado', 'template name', 'web-stories'),
   tags: [
-    _x('nutrition', 'template keyword', 'web-stories'),
-    _x('health', 'template keyword', 'web-stories'),
-    _x('fitness', 'template keyword', 'web-stories'),
-    _x('organic', 'template keyword', 'web-stories'),
-    _x('diet', 'template keyword', 'web-stories'),
-    _x('green', 'template keyword', 'web-stories'),
+    _x('Nutrition', 'template keyword', 'web-stories'),
+    _x('Health', 'template keyword', 'web-stories'),
+    _x('Fitness', 'template keyword', 'web-stories'),
+    _x('Organic', 'template keyword', 'web-stories'),
+    _x('Diet', 'template keyword', 'web-stories'),
+    _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
     { label: _x('Swamp Green', 'color', 'web-stories'), color: '#a7b27e' },
