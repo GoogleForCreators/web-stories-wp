@@ -95,6 +95,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
+            zIndex: 0,
             ...getBorderRadius(element),
             ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
               ? bgStyles
