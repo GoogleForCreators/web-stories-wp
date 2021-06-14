@@ -23,6 +23,7 @@ import {
   trackEvent,
   getTimeTracker,
 } from '@web-stories-wp/tracking';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -56,6 +57,10 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     convertGifToVideo,
   } = useFFmpeg();
+
+  const enableGifOptimization = useFeature(
+    'enableGifOptimization'
+  );
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -186,10 +191,11 @@ function useMediaUploadQueue() {
 
           // Convert animated GIFs to videos if possible.
           if (
-            resource.mimeType === 'image/gif' &&
-            isAnimatedGif(await file.arrayBuffer()) &&
+            enableGifOptimization &&
             isFeatureEnabled &&
-            isTranscodingEnabled
+            isTranscodingEnabled &&
+            resource.mimeType === 'image/gif' &&
+            isAnimatedGif(await file.arrayBuffer())
           ) {
             startTranscoding({ id });
 
@@ -318,6 +324,7 @@ function useMediaUploadQueue() {
     transcodeVideo,
     uploadVideoPoster,
     convertGifToVideo,
+    enableGifOptimization,
   ]);
 
   return useMemo(
