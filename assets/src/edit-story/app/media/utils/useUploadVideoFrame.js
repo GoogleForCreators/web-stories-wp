@@ -75,7 +75,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         return {};
       }
       // if blob given change name of file.
-      if(!posterFile.name) {
+      if (!posterFile.name) {
         posterFile.name = fileName;
       }
 
