@@ -70,19 +70,14 @@ function RightClickMenuProvider({ children }) {
    */
   const handleOpenMenu = useCallback((evt) => {
     evt.preventDefault();
-    const layoutRect = rightClickAreaRef?.current?.getBoundingClientRect();
 
-    if (layoutRect) {
-      dispatch({
-        type: ACTION_TYPES.OPEN_MENU,
-        payload: {
-          x: evt.clientX - layoutRect?.left,
-          y: evt.clientY - layoutRect?.top,
-          // x: evt?.offsetX,
-          // y: evt?.offsetY,
-        },
-      });
-    }
+    dispatch({
+      type: ACTION_TYPES.OPEN_MENU,
+      payload: {
+        x: evt?.offsetX,
+        y: evt?.offsetY,
+      },
+    });
   }, []);
 
   /**

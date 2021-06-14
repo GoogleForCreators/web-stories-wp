@@ -37,11 +37,9 @@ import {
   QuickActionsArea,
   Z_INDEX,
 } from './layout';
-import RightClickMenu from './rightClickMenu';
 
 function NavLayer() {
   const enableQuickActionMenu = useFeature('enableQuickActionMenus');
-  const enableRightClickMenus = useFeature('enableRightClickMenus');
   const { hasHorizontalOverflow } = useLayout(
     ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
   );
@@ -70,7 +68,6 @@ function NavLayer() {
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>
-      {enableRightClickMenus && <RightClickMenu />}
       {showQuickActions && (
         <DirectionAware>
           <QuickActionsArea>

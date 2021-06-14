@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef, useRef, useEffect } from 'react';
@@ -29,6 +30,7 @@ import {
   useResizeEffect,
   THEME_CONSTANTS,
   themeHelpers,
+  AnimatedContextMenu,
 } from '../../../design-system';
 import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
@@ -115,6 +117,7 @@ const Area = styled.div`
 const PageAreaContainer = styled(Area).attrs({
   area: 'p',
 })`
+  position: relative;
   display: flex;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
@@ -373,7 +376,14 @@ const PageArea = forwardRef(function PageArea(
       scrollTop,
     })
   );
-  const { rightClickAreaRef } = useRightClickMenu();
+  const enableRightClickMenus = useFeature('enableRightClickMenus');
+  const {
+    isMenuOpen,
+    menuItems: rightClickMenuItems,
+    menuPosition,
+    onCloseMenu,
+    rightClickAreaRef,
+  } = useRightClickMenu();
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
   const scroll = useRef();
@@ -400,6 +410,15 @@ const PageArea = forwardRef(function PageArea(
       data-scroll-container
       {...rest}
     >
+      {enableRightClickMenus && (
+        <RightClickMenuContainer position={menuPosition}>
+          <AnimatedContextMenu
+            isOpen={isMenuOpen}
+            onDismiss={onCloseMenu}
+            items={rightClickMenuItems}
+          />
+        </RightClickMenuContainer>
+      )}
       <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
