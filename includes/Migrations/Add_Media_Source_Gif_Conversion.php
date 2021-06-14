@@ -45,5 +45,6 @@ class Add_Media_Source_Gif_Conversion extends Migrate_Base {
 	 */
 	public function migrate() {
 		wp_insert_term( 'gif-conversion', Media\Media::STORY_MEDIA_TAXONOMY );
+		wp_insert_term( 'source-image', Media\Media::STORY_MEDIA_TAXONOMY );
 	}
 }

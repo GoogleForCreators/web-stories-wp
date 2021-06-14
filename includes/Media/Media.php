@@ -251,7 +251,7 @@ class Media extends Service_Base {
 			[
 				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
 			],
 		];
@@ -373,6 +373,7 @@ class Media extends Service_Base {
 						'poster-generation',
 						'video-optimization',
 						'source-video',
+						'source-image',
 						'gif-conversion',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],

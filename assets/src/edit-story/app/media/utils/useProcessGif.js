@@ -17,14 +17,16 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+
 /**
  * Internal dependencies
  */
-import useUpdateElementDimensions from './useUpdateElementDimensions';
-import useExistingData from './useExistingData';
 import fetchRemoteFile from './fetchRemoteFile';
+import isAnimatedGif from './isAnimatedGif';
+import useExistingData from './useExistingData';
+import useUpdateElementDimensions from './useUpdateElementDimensions';
 
-function useProcessVideo({
+function useProcessGif({
   uploadMedia,
   uploadVideoPoster,
   updateMedia,
@@ -34,28 +36,16 @@ function useProcessVideo({
   const { copyResourceData, updateOldObject, updateExistingElements } =
     useExistingData({ updateMedia });
 
-  const optimizeVideo = useCallback(
+  const optimizeGif = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
 
-      const onUploadStart = () => {
-        updateExistingElements({
-          oldResource: { ...oldResource, isOptimized: true },
-        });
-      };
-
-      const onUploadError = () => {
-        updateExistingElements({
-          oldResource: { ...oldResource, isOptimized: false },
-        });
-      };
-
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldObject(oldResource.id, resource.id, 'source-video');
+        updateOldObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
 
-        if (['video', 'gif'].includes(resource.type) && !resource.local) {
+        if (resource.type === 'gif' && !resource.local) {
           uploadVideoPoster(resource.id, resource.src);
         }
       };
@@ -79,10 +69,13 @@ function useProcessVideo({
           // Ignore for now.
           return;
         }
+        const buffer = await file.arrayBuffer();
+        if (!isAnimatedGif(buffer)) {
+          return;
+        }
+
         await uploadMedia([file], {
           onUploadSuccess,
-          onUploadStart,
-          onUploadError,
           onUploadProgress,
           additionalData: { alt: oldResource.alt, title: oldResource.title },
         });
@@ -101,8 +94,7 @@ function useProcessVideo({
   );
 
   return {
-    optimizeVideo,
+    optimizeGif,
   };
 }
-
-export default useProcessVideo;
+export default useProcessGif;

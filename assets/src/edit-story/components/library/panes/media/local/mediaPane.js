@@ -109,6 +109,7 @@ function MediaPane(props) {
     uploadVideoPoster,
     totalItems,
     optimizeVideo,
+    optimizeGif,
   } = useLocalMedia(
     ({
       state: {
@@ -127,6 +128,7 @@ function MediaPane(props) {
         setSearchTerm,
         uploadVideoPoster,
         optimizeVideo,
+        optimizeGif,
       },
     }) => {
       return {
@@ -143,6 +145,7 @@ function MediaPane(props) {
         setSearchTerm,
         uploadVideoPoster,
         optimizeVideo,
+        optimizeGif,
       };
     }
   );
@@ -209,15 +212,17 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
-      if (
-        enableMediaPickerVideoOptimization &&
-        isFeatureEnabled &&
-        isTranscodingEnabled &&
-        transcodableMimeTypes.includes(resource.mimeType)
-      ) {
-        optimizeVideo({ resource });
+      if (isFeatureEnabled && isTranscodingEnabled) {
+        if (
+          enableMediaPickerVideoOptimization &&
+          transcodableMimeTypes.includes(resource.mimeType)
+        ) {
+          optimizeVideo({ resource });
+        }
+        if (resource.mimeType === 'image/gif') {
+          optimizeGif({ resource });
+        }
       }
-
       // WordPress media picker event, sizes.medium.url is the smallest image
       insertMediaElement(
         resource,

@@ -29,6 +29,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessVideo from '../utils/useProcessVideo';
 import useUploadMedia from '../useUploadMedia';
 import getResourceFromAttachment from '../utils/getResourceFromAttachment';
+import useProcessGif from '../utils/useProcessGif';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -166,6 +167,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     deleteMediaElement,
   });
 
+  const { optimizeGif } = useProcessGif({
+    uploadVideoPoster,
+    uploadMedia,
+    updateMedia,
+    deleteMediaElement,
+  });
+
   const generateMissingPosters = useCallback(
     ({ mimeType, posterId, id, src, local, type }) => {
       if (
@@ -203,6 +211,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,
+      optimizeGif,
     },
   };
 }
