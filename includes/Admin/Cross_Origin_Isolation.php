@@ -310,12 +310,6 @@ class Cross_Origin_Isolation extends Service_Base {
 			return false;
 		}
 
-		// Backwards compatible, default values added in WP 5.5.
-		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
-		if ( empty( $check ) ) {
-			return true;
-		}
-
-		return rest_sanitize_boolean( $check[0] );
+		return get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 	}
 }
