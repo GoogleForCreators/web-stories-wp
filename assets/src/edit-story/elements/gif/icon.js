@@ -15,11 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getSmallestUrlForWidth } from '@web-stories-wp/media-utils';
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
-import { getSmallestUrlForWidth } from '../media/util';
 
 function GifLayerIcon({
   element: {

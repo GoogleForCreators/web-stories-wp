@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { getMediaSizePositionProps } from '@web-stories-wp/media-utils';
 
 /**
  * Internal dependencies
@@ -38,7 +39,6 @@ import {
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementFillContent}

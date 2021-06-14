@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const getFileNameFromUrl = (url) =>
+  url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
 
-/**
- * External dependencies
- */
-import { getSmallestUrlForWidth } from '@web-stories-wp/media-utils';
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-
-function ImageLayerIcon({
-  element: {
-    resource,
-    resource: { alt },
-  },
-}) {
-  const src = getSmallestUrlForWidth(0, resource);
-  return <VisibleImage src={src} alt={alt} height="20" />;
-}
-
-ImageLayerIcon.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default ImageLayerIcon;
+export default getFileNameFromUrl;

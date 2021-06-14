@@ -19,6 +19,11 @@
  */
 import { useCallback } from 'react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import {
+  preloadImage,
+  getFirstFrameOfVideo,
+  getFileNameFromUrl,
+} from '@web-stories-wp/media-utils';
 /**
  * Internal dependencies
  */
@@ -26,17 +31,6 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
-import preloadImage from './preloadImage';
-import getFirstFrameOfVideo from './getFirstFrameOfVideo';
-
-/**
- * Helper function get the file name without the extension from a url.
- *
- * @param {string} url URL to file.
- * @return {string} File name without the extension.
- */
-const getFileName = (url) =>
-  url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
 
 function useUploadVideoFrame({ updateMediaElement }) {
   const {
@@ -116,7 +110,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
     async (id, src) => {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
-        const fileName = getFileName(src) + '-poster.jpeg';
+        const fileName = getFileNameFromUrl(src) + '-poster.jpeg';
         const obj = await getFirstFrameOfVideo(src);
         const { posterId, poster, posterWidth, posterHeight } =
           await uploadVideoPoster(id, fileName, obj);

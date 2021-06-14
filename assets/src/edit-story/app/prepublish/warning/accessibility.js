@@ -15,6 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  getMediaSizePositionProps,
+  setOrCreateImage,
+  getImgNodeId,
+} from '@web-stories-wp/media-utils';
+/**
  * Internal dependencies
  */
 import {
@@ -26,11 +34,6 @@ import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
 import { dataToFontSizeY, dataFontEm, getBox } from '../../../units/dimensions';
-import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
-import {
-  setOrCreateImage,
-  getImgNodeId,
-} from '../../../utils/getMediaBaseColor';
 import { states } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;

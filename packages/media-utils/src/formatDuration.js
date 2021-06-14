@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const formatDuration = (time) => {
+  return time.toLocaleString('en-US', {
+    minimumIntegerDigits: 2,
+    useGrouping: false,
+  });
+};
 
-const getFileName = (name) => name.split('.').slice(0, -1).join('.');
-
-export default getFileName;
+export default formatDuration;

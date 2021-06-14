@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import {
+  FULLBLEED_HEIGHT,
+  PAGE_WIDTH,
+} from '../../../assets/src/edit-story/constants';
 
 /**
  * Returns the best known size of the resource. The generated poster can

@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
-import { revokeBlob } from '../../../../utils/blobs';
+import { revokeBlob } from '@web-stories-wp/media-utils';
 
 /**
  * Add an item to the upload queue.
@@ -31,7 +27,7 @@ import { revokeBlob } from '../../../../utils/blobs';
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {File} action.payload.file File object.
- * @param {import('../createResource').Resource} action.payload.resource Resource object.
+ * @param {import('@web-stories-wp/media-utils').Resource} action.payload.resource Resource object.
  * @param {Function} action.payload.onUploadStart Callback for when upload starts.
  * @param {Function} action.payload.onUploadProgress Callback for when upload progresses.
  * @param {Function} action.payload.onUploadError Callback for when upload errors.
@@ -108,7 +104,7 @@ export function startUploading(state, { payload: { id } }) {
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
- * @param {import('../createResource').Resource} action.payload.resource Resource object.
+ * @param {import('@web-stories-wp/media-utils').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function finishUploading(state, { payload: { id, resource } }) {
@@ -226,7 +222,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.posterFile Poster file.
- * @param {import('../createResource').Resource} action.payload.resource Resource object.
+ * @param {import('@web-stories-wp/media-utils').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function replacePlaceholderResource(

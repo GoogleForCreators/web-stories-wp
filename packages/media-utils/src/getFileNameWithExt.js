@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-function getFileName(path) {
+function getFileNameWithExt(path) {
   return /(?:\/([^/]+))?$/.exec(path)[1];
 }
 
-export default getFileName;
+export default getFileNameWithExt;

@@ -17,12 +17,13 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { fetchRemoteFile } from '@web-stories-wp/media-utils';
+
 /**
  * Internal dependencies
  */
 import useStory from '../../story/useStory';
 import useUpdateElementDimensions from './useUpdateElementDimensions';
-import fetchRemoteFile from './fetchRemoteFile';
 
 function useProcessVideo({
   uploadMedia,

@@ -15,10 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { resourceList } from '@web-stories-wp/media-utils';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import resourceList from '../../../utils/resourceList';
 import { useStory } from '../../../app/story';
 
 describe('Image resource loading integration', () => {

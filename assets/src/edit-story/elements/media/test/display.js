@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { render, act } from '@testing-library/react';
+import { resourceList } from '@web-stories-wp/media-utils';
 
 /**
  * Internal dependencies
  */
 import { TestDisplayElement } from '../../../components/canvas/test/_utils';
 import { OverlayType } from '../../../utils/overlay';
-import resourceList from '../../../utils/resourceList';
 
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 

@@ -18,7 +18,10 @@
  * Internal dependencies
  */
 import getResourceSize from '../getResourceSize';
-import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../../constants';
+import {
+  FULLBLEED_HEIGHT,
+  PAGE_WIDTH,
+} from '../../../../assets/src/edit-story/constants';
 
 describe('getResourceSize', () => {
   it('return default values', () => {

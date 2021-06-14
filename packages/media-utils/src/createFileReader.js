@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { getSmallestUrlForWidth } from '@web-stories-wp/media-utils';
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-
-function ImageLayerIcon({
-  element: {
-    resource,
-    resource: { alt },
-  },
-}) {
-  const src = getSmallestUrlForWidth(0, resource);
-  return <VisibleImage src={src} alt={alt} height="20" />;
-}
-
-ImageLayerIcon.propTypes = {
-  element: StoryPropTypes.element.isRequired,
+const createFileReader = (file) => {
+  const reader = new window.FileReader();
+  return new Promise((resolve, reject) => {
+    reader.onload = () => resolve(reader);
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
 };
 
-export default ImageLayerIcon;
+export default createFileReader;

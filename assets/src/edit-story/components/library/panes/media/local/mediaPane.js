@@ -27,6 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { resourceList } from '@web-stories-wp/media-utils';
 
 /**
  * Internal dependencies
@@ -56,7 +57,6 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
-import resourceList from '../../../../../utils/resourceList';
 import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';

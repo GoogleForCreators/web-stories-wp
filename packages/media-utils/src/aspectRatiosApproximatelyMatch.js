@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { getSmallestUrlForWidth } from '@web-stories-wp/media-utils';
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-
-function ImageLayerIcon({
-  element: {
-    resource,
-    resource: { alt },
-  },
-}) {
-  const src = getSmallestUrlForWidth(0, resource);
-  return <VisibleImage src={src} alt={alt} height="20" />;
-}
-
-ImageLayerIcon.propTypes = {
-  element: StoryPropTypes.element.isRequired,
+const aspectRatiosApproximatelyMatch = (obj1, obj2) => {
+  return Math.abs(obj1.width / obj1.height - obj2.width / obj2.height) < 0.01;
 };
 
-export default ImageLayerIcon;
+export default aspectRatiosApproximatelyMatch;

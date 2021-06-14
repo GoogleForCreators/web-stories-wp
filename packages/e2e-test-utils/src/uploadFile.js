@@ -20,10 +20,7 @@
 import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
-/**
- * Internal dependencies
- */
-import getFileName from './getFileName';
+import { getFileNameWithExt } from '@web-stories-wp/media-utils';
 
 /**
  * Uploads a file to the Media Library, and awaits its upload.
@@ -44,7 +41,7 @@ async function uploadFile(file, checkUpload = true) {
 
   // Prefixing makes it easier to identify files from tests later on.
   const newFileName = `e2e-${file}`;
-  const newBaseName = getFileName(newFileName);
+  const newBaseName = getFileNameWithExt(newFileName);
   const tmpFileName = join(tmpdir(), newFileName);
   copyFileSync(testMediaPath, tmpFileName);
 

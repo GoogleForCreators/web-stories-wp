@@ -23,6 +23,7 @@ import { useCallback, useState } from 'react';
 import { formatDate, toDate, isValid } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackError } from '@web-stories-wp/tracking';
+import { getSmallestUrlForWidth } from '@web-stories-wp/media-utils';
 /**
  * Internal dependencies
  */
@@ -35,7 +36,6 @@ import {
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
 import StoryPropTypes from '../../../../../types';
-import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import Dialog from '../../../../dialog';
 
 const THUMBNAIL_WIDTH = 152;
