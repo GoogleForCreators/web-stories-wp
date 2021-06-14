@@ -167,8 +167,6 @@ class HTML {
 	protected function get_poster_images() {
 		return [
 			'poster-portrait-src'  => $this->story->get_poster_portrait(),
-			'poster-square-src'    => $this->story->get_poster_square(),
-			'poster-landscape-src' => $this->story->get_poster_landscape(),
 		];
 	}
 

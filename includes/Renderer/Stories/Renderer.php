@@ -540,7 +540,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$story = $this->current();
 
 		// TODO: Only rely on portrait poster image going forward.
-		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story->get_poster_square() : $story->get_poster_portrait();
+		$poster_url = $story->get_poster_portrait();
 
 		if ( ! $poster_url ) {
 

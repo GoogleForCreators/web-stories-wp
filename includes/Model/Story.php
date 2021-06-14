@@ -75,18 +75,6 @@ class Story {
 	 * @var string
 	 */
 	protected $poster_portrait;
-	/**
-	 * Poster url - landscape.
-	 *
-	 * @var string
-	 */
-	protected $poster_landscape;
-	/**
-	 * Poster url - square.
-	 *
-	 * @var string
-	 */
-	protected $poster_square;
 
 	/**
 	 * Date for the story.
@@ -143,8 +131,6 @@ class Story {
 
 		if ( 0 !== $thumbnail_id ) {
 			$this->poster_portrait  = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
-			$this->poster_square    = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_SQUARE_IMAGE_SIZE );
-			$this->poster_landscape = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_LANDSCAPE_IMAGE_SIZE );
 		}
 
 		return true;
@@ -201,28 +187,6 @@ class Story {
 	 */
 	public function get_poster_portrait() {
 		return $this->poster_portrait;
-	}
-
-	/**
-	 * Getter for poster landscape attribute.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public function get_poster_landscape() {
-		return $this->poster_landscape;
-	}
-
-	/**
-	 * Getter for poster square attribute.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string
-	 */
-	public function get_poster_square() {
-		return $this->poster_square;
 	}
 
 	/**
