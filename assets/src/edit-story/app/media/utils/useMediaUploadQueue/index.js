@@ -182,6 +182,7 @@ function useMediaUploadQueue() {
 
           let newResource;
           let newFile = file;
+          let newPosterFile = posterFile;
 
           // Convert animated GIFs to videos if possible.
           if (
@@ -203,6 +204,12 @@ function useMediaUploadQueue() {
               trackError('upload_media', error?.message);
 
               return;
+            }
+
+            try {
+              newPosterFile = await getFirstFrameOfVideo( newFile );
+            } catch (error) {
+              // Do nothing here.
             }
           }
 
@@ -261,18 +268,29 @@ function useMediaUploadQueue() {
               const { poster, posterId } = await uploadVideoPoster(
                 newResource.id,
                 posterFileName,
-                posterFile
+                newPosterFile
               );
-              const newResourceWithPoster = {
+
+              let newResourceWithPoster = {
                 ...newResource,
                 poster: poster || newResource.poster || resource.poster,
                 posterId,
               };
 
-              finishUploading({
+              if (resource.mimeType === 'image/gif') {
+                newResourceWithPoster = {
+                  ...newResourceWithPoster,
+                  output: {
+                    ...newResourceWithPoster.output,
+                    poster: poster || newResource.poster || resource.poster,
+                  }
+                };
+              }
+              
+              finishUploading( {
                 id,
                 resource: newResourceWithPoster,
-              });
+              } );
             } catch (error) {
               finishUploading({
                 id,
@@ -295,6 +313,7 @@ function useMediaUploadQueue() {
     finishTranscoding,
     isFeatureEnabled,
     isTranscodingEnabled,
+    getFirstFrameOfVideo,
     canTranscodeFile,
     transcodeVideo,
     uploadVideoPoster,
