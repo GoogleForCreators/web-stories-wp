@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { THUMBNAIL_TYPES, THUMBNAIL_DIMENSIONS } from '..';
 import PagePreview from '../../carousel/pagepreview';
+import { THUMBNAIL_TYPES, THUMBNAIL_DIMENSIONS } from '..';
 
 const LayerIconImageOutput = (
   <img
