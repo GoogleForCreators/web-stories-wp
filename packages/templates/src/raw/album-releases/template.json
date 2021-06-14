@@ -337,7 +337,8 @@
           "duration": 1600,
           "delay": 200
         }
-      ]
+      ],
+      "pageTemplateType": "cover"
     },
     {
       "overlay": "none",
@@ -524,7 +525,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "8f266374-7964-4f5f-b3b7-cf61f02c6df0"
-      }
+      },
+      "pageTemplateType": "editorial"
     },
     {
       "elements": [
@@ -963,7 +965,8 @@
           "duration": 1600,
           "delay": 0
         }
-      ]
+      ],
+      "pageTemplateType": "section"
     },
     {
       "elements": [
@@ -1194,7 +1197,8 @@
           "duration": 3000,
           "delay": 0
         }
-      ]
+      ],
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -1539,7 +1543,8 @@
           "duration": 3000,
           "delay": 0
         }
-      ]
+      ],
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -1984,7 +1989,8 @@
         }
       },
       "type": "page",
-      "id": "0fe270f2-e036-4c0d-ba0d-fbaec4962362"
+      "id": "0fe270f2-e036-4c0d-ba0d-fbaec4962362",
+      "pageTemplateType": "section"
     },
     {
       "elements": [
@@ -2218,7 +2224,8 @@
           "duration": 3000,
           "delay": 0
         }
-      ]
+      ],
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -2561,7 +2568,8 @@
         "isDefaultBackground": true,
         "id": "1899b726-b36a-4990-86c8-9747fb2e5c08",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -3006,7 +3014,8 @@
         }
       },
       "type": "page",
-      "id": "eb00917e-1f2f-40d0-a8d4-a78c4e6b1274"
+      "id": "eb00917e-1f2f-40d0-a8d4-a78c4e6b1274",
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -3240,7 +3249,8 @@
         "isDefaultBackground": true,
         "id": "a05807ee-5090-4aa2-90f2-8e899d080aa9",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -3583,7 +3593,8 @@
         "isDefaultBackground": true,
         "id": "8ecdb58d-3192-47e7-b2e7-896b2d0af033",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4028,7 +4039,8 @@
         }
       },
       "type": "page",
-      "id": "c0864782-cc25-4f04-bbd8-633e2b4ac38f"
+      "id": "c0864782-cc25-4f04-bbd8-633e2b4ac38f",
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4261,7 +4273,8 @@
         "isDefaultBackground": true,
         "id": "2f709f3f-4120-4fde-9068-983f77b8c753",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4604,7 +4617,8 @@
         "isDefaultBackground": true,
         "id": "aa014c03-c406-451b-8b18-0f2fce008b43",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": "editorial"
     },
     {
       "elements": [
@@ -4938,7 +4952,8 @@
           "duration": 1600,
           "delay": 400
         }
-      ]
+      ],
+      "pageTemplateType": ""
     }
   ]
 }

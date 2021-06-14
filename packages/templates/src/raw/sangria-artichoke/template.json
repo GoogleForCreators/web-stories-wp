@@ -432,7 +432,8 @@
           "duration": 1600,
           "delay": 250
         }
-      ]
+      ],
+      "pageTemplateType": "cover"
     },
     {
       "elements": [
@@ -502,10 +503,10 @@
             "id": 3851,
             "length": 21,
             "lengthFormatted": "0:21",
-            "title": "page02_bgvideo",
-            "alt": "page02_bgvideo",
+            "title": "page02_bg_video",
+            "alt": "page02_bg_video",
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [181, 178, 179]
           },
           "tracks": [],
@@ -770,7 +771,8 @@
         "type": "shape",
         "id": "c68c0246-0102-4823-91a1-99eba95a3e01"
       },
-      "animations": []
+      "animations": [],
+      "pageTemplateType": "quote"
     },
     {
       "elements": [
@@ -1116,7 +1118,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "3fb2b819-948c-4b59-8dd8-9c54173aa4af"
-      }
+      },
+      "pageTemplateType": "editorial"
     },
     {
       "elements": [
@@ -1497,7 +1500,8 @@
           "duration": 1000,
           "delay": 300
         }
-      ]
+      ],
+      "pageTemplateType": "quote"
     },
     {
       "elements": [
@@ -2011,7 +2015,8 @@
           "duration": 1600,
           "delay": 500
         }
-      ]
+      ],
+      "pageTemplateType": "list"
     },
     {
       "elements": [
@@ -2362,7 +2367,8 @@
           "duration": 1200,
           "delay": 600
         }
-      ]
+      ],
+      "pageTemplateType": "section"
     },
     {
       "elements": [
@@ -2913,7 +2919,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "1c7cd6f4-2198-4583-a226-90450a94ced1"
-      }
+      },
+      "pageTemplateType": "list"
     },
     {
       "elements": [
@@ -3212,7 +3219,8 @@
           "duration": 1600,
           "delay": 400
         }
-      ]
+      ],
+      "pageTemplateType": "steps"
     },
     {
       "elements": [
@@ -3511,7 +3519,8 @@
         }
       },
       "type": "page",
-      "id": "063b89c5-2c8a-496a-a091-e8ad604cf903"
+      "id": "063b89c5-2c8a-496a-a091-e8ad604cf903",
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -3807,7 +3816,8 @@
         }
       },
       "type": "page",
-      "id": "687277fc-3cdc-434a-bbe7-f2d7b26af4e7"
+      "id": "687277fc-3cdc-434a-bbe7-f2d7b26af4e7",
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4106,7 +4116,8 @@
         }
       },
       "type": "page",
-      "id": "941853ce-be33-4db1-853b-44ec764b2033"
+      "id": "941853ce-be33-4db1-853b-44ec764b2033",
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4707,7 +4718,8 @@
           "duration": 1600,
           "delay": 500
         }
-      ]
+      ],
+      "pageTemplateType": "list"
     }
   ]
 }

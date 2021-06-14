@@ -349,7 +349,8 @@
           "duration": 3000,
           "delay": 0
         }
-      ]
+      ],
+      "pageTemplateType": "cover"
     },
     {
       "elements": [
@@ -621,7 +622,8 @@
           "duration": 3000,
           "delay": 0
         }
-      ]
+      ],
+      "pageTemplateType": "editorial"
     },
     {
       "elements": [
@@ -892,7 +894,8 @@
         "type": "shape",
         "id": "da50f3de-460e-4c42-bf3c-67dbe2d0ae77"
       },
-      "animations": []
+      "animations": [],
+      "pageTemplateType": "quote"
     },
     {
       "elements": [
@@ -1591,7 +1594,8 @@
           "duration": 2000,
           "delay": 3300
         }
-      ]
+      ],
+      "pageTemplateType": "list"
     },
     {
       "elements": [
@@ -1912,7 +1916,8 @@
       },
       "type": "page",
       "id": "dbcb59d0-1ecf-403b-8eef-5d9f0d595a3c",
-      "animations": []
+      "animations": [],
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -2260,7 +2265,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "aa48759a-6296-4317-961c-f74e3b3b79fe"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -2585,7 +2591,8 @@
       "pageAttachment": {
         "url": "https://www.google.com/",
         "ctaText": "Learn About Flour"
-      }
+      },
+      "pageTemplateType": "steps"
     },
     {
       "elements": [
@@ -2934,7 +2941,8 @@
         "isDefaultBackground": true,
         "id": "02869b8a-bc1c-40c7-b0ce-f0f649f51b32",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": "steps"
     },
     {
       "elements": [
@@ -3256,7 +3264,8 @@
         }
       },
       "type": "page",
-      "id": "e9734daf-b847-40d4-8821-2a8b944381bf"
+      "id": "e9734daf-b847-40d4-8821-2a8b944381bf",
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -3604,7 +3613,8 @@
         "isDefaultBackground": true,
         "id": "2e9270bd-9e9e-42de-995f-c1a11c408431",
         "type": "shape"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4307,7 +4317,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "bd8e099a-5ce9-4423-9e94-2ab1934a0557"
-      }
+      },
+      "pageTemplateType": "list"
     }
   ]
 }
