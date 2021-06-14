@@ -37,8 +37,7 @@ function rightClickMenuReducer(state, action) {
       };
     case ACTION_TYPES.RESET:
       return {
-        ...state,
-        isMenuOpen: false,
+        ...DEFAULT_RIGHT_CLICK_MENU_STATE,
       };
     default:
       return state;

@@ -57,7 +57,7 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  // Ref to use to calculate the menu's position
+  // Ref for attaching the context menu
   const rightClickAreaRef = useRef();
 
   const [{ isMenuOpen, menuPosition }, dispatch] = useReducer(

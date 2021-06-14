@@ -21,7 +21,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { useRightClickMenu } from '..';
+import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useStory } from '../../story';
 
 jest.mock('../../story', () => ({
@@ -41,16 +41,14 @@ describe('useRightClickMenu', () => {
 
   describe('context menu manipulation', () => {
     it('should open the menu at the specified position', () => {
-      const { result } = renderHook(() => useRightClickMenu());
-
-      result.current.rightClickAreaRef.current = {
-        getBoundingClientRect: () => ({ left: 0, top: 0 }),
-      };
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
 
       const mockEvent = {
         preventDefault: jest.fn(),
-        clientX: 500,
-        clientY: -1230,
+        offsetX: 500,
+        offsetY: -1230,
       };
 
       act(() => {
@@ -62,16 +60,14 @@ describe('useRightClickMenu', () => {
     });
 
     it('should close the menu and reset the position', () => {
-      const { result } = renderHook(() => useRightClickMenu());
-
-      result.current.rightClickAreaRef.current = {
-        getBoundingClientRect: () => ({ left: 300, top: -3000 }),
-      };
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
 
       const mockEvent = {
         preventDefault: jest.fn(),
-        clientX: 500,
-        clientY: -1230,
+        offsetX: 500,
+        offsetY: -1230,
       };
 
       act(() => {
@@ -79,7 +75,7 @@ describe('useRightClickMenu', () => {
       });
 
       expect(result.current.isMenuOpen).toBe(true);
-      expect(result.current.menuPosition).toStrictEqual({ x: 200, y: 1770 });
+      expect(result.current.menuPosition).toStrictEqual({ x: 500, y: -1230 });
 
       act(() => {
         result.current.onCloseMenu();
@@ -92,7 +88,9 @@ describe('useRightClickMenu', () => {
 
   describe('Page selected from right click', () => {
     it('should return menu items', () => {
-      const { result } = renderHook(() => useRightClickMenu());
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
 
       expect(result.current.menuItems).toStrictEqual([
         {
