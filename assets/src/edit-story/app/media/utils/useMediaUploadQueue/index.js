@@ -207,7 +207,7 @@ function useMediaUploadQueue() {
             }
 
             try {
-              newPosterFile = await getFirstFrameOfVideo( newFile );
+              newPosterFile = await getFirstFrameOfVideo(newFile);
             } catch (error) {
               // Do nothing here.
             }
@@ -283,14 +283,14 @@ function useMediaUploadQueue() {
                   output: {
                     ...newResourceWithPoster.output,
                     poster: poster || newResource.poster || resource.poster,
-                  }
+                  },
                 };
               }
-              
-              finishUploading( {
+
+              finishUploading({
                 id,
                 resource: newResourceWithPoster,
-              } );
+              });
             } catch (error) {
               finishUploading({
                 id,
