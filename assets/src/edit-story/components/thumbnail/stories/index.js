@@ -19,12 +19,11 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { Fragment } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Tooltip, Text, Icons } from '../../../../design-system';
+import { Tooltip, Icons } from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '..';
 import { THUMBNAIL_BG } from './demoThumbnails';
 
@@ -39,27 +38,35 @@ const Container = styled.div`
   gap: 20px;
 `;
 
+const StyledVideoOptimizationIcon = styled(Icons.GearWithGauge)`
+  rect {
+    color: ${({ theme }) => theme.colors.opacity.black64};
+  }
+
+  path {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
+`;
+
 export const _default = () => {
   const thumbnails = Object.values(THUMBNAIL_TYPES).map((thumbnailType) => (
-    <Fragment key={thumbnailType}>
-      <Text>{thumbnailType}</Text>
-      <Thumbnail
-        type={thumbnailType}
-        displayBackground={THUMBNAIL_BG[thumbnailType]}
-        isError={boolean(`${thumbnailType}_isError`, false)}
-        aria-label={text(
-          `${thumbnailType}_aria-label`,
-          'I am some helper text for screen readers. If a tooltip is present, that content should also go here'
-        )}
-        handleClick={() => action(`${thumbnailType} button clicked`)()}
-      >
-        {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
-          <Tooltip title="test tooltip">
-            <Icons.Gear />
-          </Tooltip>
-        )}
-      </Thumbnail>
-    </Fragment>
+    <Thumbnail
+      key={`${thumbnailType}_key`}
+      type={thumbnailType}
+      displayBackground={THUMBNAIL_BG[thumbnailType]}
+      isError={boolean(`${thumbnailType}_isError`, false)}
+      aria-label={text(
+        `${thumbnailType}_aria-label`,
+        'I am some helper text for screen readers. If a tooltip is present, that content should also go here'
+      )}
+      handleClick={() => action(`${thumbnailType} button clicked`)()}
+    >
+      {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
+        <Tooltip title="test tooltip">
+          <StyledVideoOptimizationIcon />
+        </Tooltip>
+      )}
+    </Thumbnail>
   ));
 
   return <Container>{thumbnails}</Container>;

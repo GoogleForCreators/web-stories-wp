@@ -90,7 +90,7 @@ export const Background = styled.div(
     img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       border-radius: ${theme.borders.radius.small};
     }
 
@@ -152,7 +152,10 @@ export const NestedIconContainer = styled.div(
     svg {
       width: 100%;
       height: auto;
-      color: ${$isError ? theme.colors.fg.negative : 'currentColor'};
+      ${$isError &&
+      css`
+        color: ${theme.colors.fg.negative};
+      `}
     }
   `
 );
