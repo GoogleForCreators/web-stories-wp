@@ -538,8 +538,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 * @var Story $story
 		 */
 		$story = $this->current();
-
-		// TODO: Only rely on portrait poster image going forward.
+		
 		$poster_url = $story->get_poster_portrait();
 
 		if ( ! $poster_url ) {
