@@ -15,10 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
+
+/**
  * Internal dependencies
  */
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import createSolid from '../../../utils/createSolid';
 import { MULTIPLE_VALUE } from '../../../constants';
 
 function getPreviewStyle(pattern) {

@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { createSolidFromString } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
-import createSolidFromString from '../../utils/createSolidFromString';
 import PanelTypes from '../../components/panels/design/types';
 
 export const defaultAttributes = {

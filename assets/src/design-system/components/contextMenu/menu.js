@@ -53,13 +53,13 @@ const separatorCSS = css`
   content: '';
   width: 100%;
   height: 1px;
-  background-color: ${({ theme }) => theme.colors.bg.tertiary};
+  background-color: ${({ theme }) => theme.colors.divider.primary};
   ${({ isIconMenu, theme }) =>
     isIconMenu &&
     css`
       width: 40%;
       margin: auto;
-      background-color: ${theme.colors.fg.primary};
+      background-color: ${theme.colors.divider.primary};
     `}
 `;
 separatorCSS.propTypes = {

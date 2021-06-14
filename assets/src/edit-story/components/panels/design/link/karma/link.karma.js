@@ -17,13 +17,13 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
 import useInsertElement from '../../../../canvas/useInsertElement';
-import createSolidFromString from '../../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 describe('Link Panel', () => {
