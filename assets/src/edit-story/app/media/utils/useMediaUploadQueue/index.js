@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import {
   trackError,
   trackEvent,
@@ -58,9 +58,7 @@ function useMediaUploadQueue() {
     convertGifToVideo,
   } = useFFmpeg();
 
-  const enableGifOptimization = useFeature(
-    'enableGifOptimization'
-  );
+  const enableGifOptimization = useFeature('enableGifOptimization');
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -158,6 +156,45 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     replacePlaceholderResource,
   ]);
+
+  const processPoster = useCallback(
+    async ({ newResource, posterFileName, newPosterFile, resource, id }) => {
+      try {
+        const { poster, posterId } = await uploadVideoPoster(
+          newResource.id,
+          posterFileName,
+          newPosterFile
+        );
+
+        let newResourceWithPoster = {
+          ...newResource,
+          poster: poster || newResource.poster || resource.poster,
+          posterId,
+        };
+
+        if (resource.mimeType === 'image/gif') {
+          newResourceWithPoster = {
+            ...newResourceWithPoster,
+            output: {
+              ...newResourceWithPoster.output,
+              poster: poster || newResource.poster || resource.poster,
+            },
+          };
+        }
+
+        finishUploading({
+          id,
+          resource: newResourceWithPoster,
+        });
+      } catch (error) {
+        finishUploading({
+          id,
+          resource: newResource,
+        });
+      }
+    },
+    [finishUploading, uploadVideoPoster]
+  );
 
   // Upload files to server, optionally first transcoding them.
   useEffect(() => {
@@ -270,39 +307,13 @@ function useMediaUploadQueue() {
           }
 
           if (newResource.id) {
-            try {
-              const { poster, posterId } = await uploadVideoPoster(
-                newResource.id,
-                posterFileName,
-                newPosterFile
-              );
-
-              let newResourceWithPoster = {
-                ...newResource,
-                poster: poster || newResource.poster || resource.poster,
-                posterId,
-              };
-
-              if (resource.mimeType === 'image/gif') {
-                newResourceWithPoster = {
-                  ...newResourceWithPoster,
-                  output: {
-                    ...newResourceWithPoster.output,
-                    poster: poster || newResource.poster || resource.poster,
-                  },
-                };
-              }
-
-              finishUploading({
-                id,
-                resource: newResourceWithPoster,
-              });
-            } catch (error) {
-              finishUploading({
-                id,
-                resource: newResource,
-              });
-            }
+            await processPoster({
+              newResource,
+              posterFileName,
+              newPosterFile,
+              resource,
+              id,
+            });
           }
         })
       );
@@ -314,7 +325,7 @@ function useMediaUploadQueue() {
     cancelUploading,
     uploadFile,
     startUploading,
-    finishUploading,
+    processPoster,
     startTranscoding,
     finishTranscoding,
     isFeatureEnabled,
@@ -322,7 +333,6 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     canTranscodeFile,
     transcodeVideo,
-    uploadVideoPoster,
     convertGifToVideo,
     enableGifOptimization,
   ]);

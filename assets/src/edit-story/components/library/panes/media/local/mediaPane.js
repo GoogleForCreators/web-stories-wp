@@ -155,9 +155,7 @@ function MediaPane(props) {
     'enableMediaPickerVideoOptimization'
   );
 
-  const enableGifOptimization = useFeature(
-    'enableGifOptimization'
-  );
+  const enableGifOptimization = useFeature('enableGifOptimization');
 
   const {
     allowedTranscodableMimeTypes,
@@ -223,10 +221,7 @@ function MediaPane(props) {
         ) {
           optimizeVideo({ resource });
         }
-        if (
-          enableGifOptimization &&
-          resource.mimeType === 'image/gif'
-        ) {
+        if (enableGifOptimization && resource.mimeType === 'image/gif') {
           optimizeGif({ resource });
         }
       }
