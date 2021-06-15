@@ -72,13 +72,12 @@ Container.propTypes = {
 
 /**
  * Backgrounds can be a few different things based on thumbnail types
- * all of which require some overriding in specific ways.
- * video and image are going to be 1 <img> tag.
- * shape is going to be 2 divs then an svg, the shape is a clipPath.
- * text is going to be 1 div and an svg with a traditional path.
- * page is going to harness the `PagePreview` component as a div rather than the
- * default button. This requires 2 nested divs.
- * page and shape, since t hey have some fun  nesting  going on  have their own props to help legibility and why the styles are nested.
+ * all of which require some overriding in specific ways:
+ * - video and image are going to be 1 <img> tag.
+ * - shape is going to be 2 divs then an svg, the shape is a clipPath.
+ * - text is going to be 1 div and an svg with a traditional path.
+ * - page is going to harness the `PagePreview` component as a div rather than the default button. This requires 2 nested divs.
+ * - page and shape, since they have some fun nesting going on have their own props to help legibility and why the styles are nested.
  */
 export const Background = styled.div(
   ({ theme, $isShape, $isPage }) => css`

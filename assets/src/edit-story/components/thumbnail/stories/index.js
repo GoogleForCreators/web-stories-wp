@@ -59,7 +59,7 @@ export const _default = () => {
         `${thumbnailType}_aria-label`,
         'I am some helper text for screen readers. If a tooltip is present, that content should also go here'
       )}
-      handleClick={() => action(`${thumbnailType} button clicked`)()}
+      onClick={() => action(`${thumbnailType} button clicked`)()}
     >
       {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
         <Tooltip title="test tooltip">
