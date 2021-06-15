@@ -25,38 +25,6 @@ import { fireEvent, act } from '@testing-library/react';
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> when selecting a stop', () => {
-  it('should have stop focused and highlighted when selected by pointer', () => {
-    const { getGradientStopAt } = arrange({
-      color: {
-        type: 'linear',
-        stops: [
-          { color: { r: 255, g: 0, b: 0 }, position: 0 },
-          { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
-          { color: { r: 0, g: 0, b: 255 }, position: 1 },
-        ],
-      },
-      hasGradient: true,
-    });
-
-    // Get first gradient stop at 0%
-    const firstStop = getGradientStopAt(0);
-
-    // Click it to make sure it's selected
-    fireEvent.click(firstStop);
-
-    // Assume it to have focus.
-    expect(firstStop).toHaveFocus();
-
-    // Get third gradient stop at 100%
-    const thirdStop = getGradientStopAt(100);
-
-    // Click it
-    fireEvent.click(thirdStop);
-
-    // Assume it to have focus.
-    expect(thirdStop).toHaveFocus();
-  });
-
   it('should have stop highlighted when focused', () => {
     const { getGradientStopAt } = arrange({
       color: {
