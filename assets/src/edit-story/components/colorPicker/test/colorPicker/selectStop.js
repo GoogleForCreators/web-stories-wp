@@ -44,8 +44,8 @@ describe('<ColorPicker /> when selecting a stop', () => {
     // Click it to make sure it's selected
     fireEvent.click(firstStop);
 
-    // Assume it to be selected
-    expect(firstStop).toHaveAttribute('aria-selected', 'true');
+    // Assume it to have focus.
+    expect(firstStop).toHaveFocus();
 
     // Get third gradient stop at 100%
     const thirdStop = getGradientStopAt(100);
@@ -53,9 +53,8 @@ describe('<ColorPicker /> when selecting a stop', () => {
     // Click it
     fireEvent.click(thirdStop);
 
-    // Assume it to be selected
-    expect(firstStop).not.toHaveAttribute('aria-selected', 'true');
-    expect(thirdStop).toHaveAttribute('aria-selected', 'true');
+    // Assume it to have focus.
+    expect(thirdStop).toHaveFocus();
   });
 
   it('should have stop highlighted when focused', () => {
@@ -78,13 +77,10 @@ describe('<ColorPicker /> when selecting a stop', () => {
     const firstStop = getGradientStopAt(0);
     act(() => firstStop.focus());
     expect(firstStop).toHaveFocus();
-    expect(firstStop).toHaveAttribute('aria-selected', 'true');
 
     // Now focus second stop and verify this is now highlighted
     const secondStop = getGradientStopAt(40);
     act(() => secondStop.focus());
     expect(secondStop).toHaveFocus();
-    expect(firstStop).not.toHaveAttribute('aria-selected', 'true');
-    expect(secondStop).toHaveAttribute('aria-selected', 'true');
   });
 });
