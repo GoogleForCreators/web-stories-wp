@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from 'react';
-import { getMediaBaseColor } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -27,6 +26,7 @@ import { useStory } from '../../app/story';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
 import { getDefinitionForType } from '../../elements';
+import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];

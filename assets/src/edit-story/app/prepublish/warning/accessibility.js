@@ -25,11 +25,7 @@ import {
   getBox,
   getBoundRect,
 } from '@web-stories-wp/units';
-import {
-  setOrCreateImage,
-  getImgNodeId,
-  getMediaSizePositionProps,
-} from '@web-stories-wp/media';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -38,6 +34,10 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
+import {
+  setOrCreateImage,
+  getImgNodeId,
+} from '../../../utils/getMediaBaseColor';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { states } from '../../highlights';
 

@@ -26,7 +26,6 @@ import {
   calcRotatedObjectPositionAndSize,
   dataPixels,
 } from '@web-stories-wp/units';
-import { getMediaBaseColor } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -52,6 +51,7 @@ import {
 } from '../../shared';
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
+import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
