@@ -21,13 +21,13 @@ import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,
-  useAverageColor,
   resourceList,
   ResourcePropTypes,
 } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
+import useAverageColor from '../../../../../elements/media/useAverageColor';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
