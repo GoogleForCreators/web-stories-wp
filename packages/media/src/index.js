@@ -28,6 +28,7 @@ export { default as getFileNameWithExt } from './getFileNameWithExt';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getImageDimensions } from './getImageDimensions';
 export { default as getResourceSize } from './getResourceSize';
+export { default as getFocalFromOffset } from './getFocalFromOffset';
 export * from './getMediaBaseColor';
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getSmallestUrlForWidth } from './getSmallestUrlForWidth';
