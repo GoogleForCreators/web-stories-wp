@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useCallback } from 'react';
 import { rgba } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -28,7 +28,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
-import { Cross } from '../../icons';
+import { Cross, CheckmarkSmall, ExclamationOutline } from '../../icons';
 import { Text } from '../typography';
 import { focusableOutlineCSS } from '../../theme/helpers';
 import { noop } from '../../utils';
@@ -37,6 +37,8 @@ import {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
   DEFAULT_MESSAGE_Z_INDEX,
+  SnackbarNotificationThumbnail,
+  THUMBNAIL_STATUS,
 } from './constants';
 
 const MessageContainer = styled.div`
@@ -61,13 +63,74 @@ MessageContainer.propTypes = {
 const Message = styled(Text)`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   max-width: 430px;
-  padding-right: ${({ hasAction }) => (hasAction ? '52px' : '0px')};
+  padding-right: ${({ hasAction, hasThumbnail }) => {
+    if (hasThumbnail) {
+      return '16px';
+    } else if (hasAction) {
+      return '52px';
+    } else {
+      return '0px';
+    }
+  }};
 `;
 
 const ActionContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+`;
+
+const ThumbnailWrapper = styled.div`
+  position: relative;
+  margin-left: 16px;
+  margin-right: ${({ hasAction }) => (hasAction ? 16 : 0)}px;
+`;
+
+const Thumbnail = styled.img`
+  max-height: 45px;
+  max-width: 45px;
+  min-height: ${(45 * 2) / 3}px;
+  min-width: ${(45 * 2) / 3}px;
+  background-color: ${({ theme }) => theme.colors.fg.tertiary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  ${({ theme, status }) => {
+    if (status === THUMBNAIL_STATUS.SUCCESS) {
+      return css`
+        border: 1px solid ${theme.colors.green[20]};
+      `;
+    } else if (status === THUMBNAIL_STATUS.ERROR) {
+      return css`
+        border: 1px solid ${theme.colors.red[20]};
+      `;
+    }
+    return undefined;
+  }};
+`;
+
+const ThumbnailIcon = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  ${({ theme, status }) => {
+    if (status === THUMBNAIL_STATUS.SUCCESS) {
+      return css`
+        width: 30px;
+        color: ${theme.colors.fg.positive};
+      `;
+    } else if (status === THUMBNAIL_STATUS.ERROR) {
+      return css`
+        width: 20px;
+        color: ${theme.colors.fg.negative};
+      `;
+    }
+    return undefined;
+  }};
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const ActionButton = styled(Button)`
@@ -114,6 +177,7 @@ const SnackbarMessage = ({
   onDismiss = noop,
   isPreventAutoDismiss,
   isPreventActionDismiss,
+  thumbnail,
   message,
   removeMessageTimeInterval,
   showCloseButton,
@@ -135,12 +199,10 @@ const SnackbarMessage = ({
     if (!autoDismissRef.current) {
       return noop;
     }
-
     const dismissTimeout = setTimeout(
       () => autoDismissRef.current(),
       messageRemovalTimeInterval.current
     );
-
     return () => clearTimeout(dismissTimeout);
   }, []);
 
@@ -150,6 +212,7 @@ const SnackbarMessage = ({
   }, [onAction, onDismiss, isPreventActionDismiss]);
 
   const hasAction = Boolean(actionLabel);
+  const hasThumbnail = Boolean(actionLabel);
 
   return (
     <MessageContainer
@@ -162,9 +225,29 @@ const SnackbarMessage = ({
         aria-label={ariaLabel}
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         hasAction={hasAction}
+        hasThumbnail={hasThumbnail}
       >
         {message}
       </Message>
+      {thumbnail && (
+        <ThumbnailWrapper hasAction={hasAction}>
+          <Thumbnail
+            src={thumbnail.src}
+            alt={thumbnail.alt}
+            status={thumbnail.status}
+          />
+          {thumbnail.status === THUMBNAIL_STATUS.SUCCESS && (
+            <ThumbnailIcon status={thumbnail.status}>
+              <CheckmarkSmall />
+            </ThumbnailIcon>
+          )}
+          {thumbnail.status === THUMBNAIL_STATUS.ERROR && (
+            <ThumbnailIcon status={thumbnail.status}>
+              <ExclamationOutline />
+            </ThumbnailIcon>
+          )}
+        </ThumbnailWrapper>
+      )}
       {(actionLabel || showCloseButton) && (
         <ActionContainer>
           {actionLabel && (
@@ -196,6 +279,7 @@ SnackbarMessage.propTypes = {
   removeMessageTimeInterval: PropTypes.number,
   showCloseButton: PropTypes.bool,
   placement: Placement,
+  thumbnail: SnackbarNotificationThumbnail,
 };
 
 SnackbarMessage.defaultProps = {

@@ -19,8 +19,19 @@
  */
 import { SnackbarContainer as Container } from './snackbarContainer';
 import { SnackbarMessage as Message } from './snackbarMessage';
-import { SnackbarNotification, Placement } from './constants';
+import {
+  SnackbarNotification,
+  Placement,
+  THUMBNAIL_STATUS,
+  SnackbarNotificationThumbnail,
+} from './constants';
 
 const Snackbar = { Container, Message };
 
-export { Snackbar, SnackbarNotification, Placement };
+export {
+  Snackbar,
+  SnackbarNotification,
+  Placement,
+  THUMBNAIL_STATUS,
+  SnackbarNotificationThumbnail,
+};
