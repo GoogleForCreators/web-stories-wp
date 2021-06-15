@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { getMediaSizePositionProps } from '@web-stories-wp/media-utils';
+import { getMediaSizePositionProps } from '@web-stories-wp/mediaxs';
 
 /**
  * Internal dependencies

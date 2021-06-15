@@ -34,7 +34,7 @@ const fetchRemoteFileMock = (url, mimeType) => {
 
   return Promise.reject(new Error('Invalid file'));
 };
-jest.mock('@web-stories-wp/media-utils', () => {
+jest.mock('@web-stories-wp/media', () => {
   return {
     fetchRemoteFile: fetchRemoteFileMock,
   };

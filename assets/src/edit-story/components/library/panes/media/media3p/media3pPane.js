@@ -23,7 +23,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media-utils';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

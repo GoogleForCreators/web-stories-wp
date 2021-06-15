@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/media-utils",
+  "name": "@web-stories-wp/media",
   "private": true,
   "engines": {
     "node": ">= 15",

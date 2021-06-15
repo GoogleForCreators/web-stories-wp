@@ -24,7 +24,7 @@ import {
   useAverageColor,
   resourceList,
   ResourcePropTypes,
-} from '@web-stories-wp/media-utils';
+} from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

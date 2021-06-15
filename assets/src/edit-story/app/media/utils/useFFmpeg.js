@@ -19,7 +19,7 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getFileName } from '@web-stories-wp/media-utils';
+import { getFileName } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

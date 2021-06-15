@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, act } from '@testing-library/react';
-import { resourceList } from '@web-stories-wp/media-utils';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

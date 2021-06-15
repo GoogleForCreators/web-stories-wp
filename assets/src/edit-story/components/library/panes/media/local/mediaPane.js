@@ -27,7 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media-utils';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

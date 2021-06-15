@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import { useCallback, useMemo } from 'react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
-import { getMediaBaseColor } from '@web-stories-wp/media-utils';
+import { getMediaBaseColor } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { revokeBlob } from '@web-stories-wp/media-utils';
+import { revokeBlob } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -31,7 +31,7 @@ import {
   startUploading,
 } from '../reducer';
 
-jest.mock('@web-stories-wp/media-utils', () => ({
+jest.mock('@web-stories-wp/media', () => ({
   revokeBlob: jest.fn(),
 }));
 

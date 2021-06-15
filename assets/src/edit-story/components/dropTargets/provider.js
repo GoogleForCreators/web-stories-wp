@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from 'react';
-import { getMediaBaseColor } from '@web-stories-wp/media-utils';
+import { getMediaBaseColor } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

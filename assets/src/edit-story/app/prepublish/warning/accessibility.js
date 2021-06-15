@@ -21,7 +21,7 @@ import {
   getMediaSizePositionProps,
   setOrCreateImage,
   getImgNodeId,
-} from '@web-stories-wp/media-utils';
+} from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

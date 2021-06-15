@@ -32,7 +32,7 @@
 /**
  * External dependencies
  */
-import { getMediaSizePositionProps } from '@web-stories-wp/media-utils';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

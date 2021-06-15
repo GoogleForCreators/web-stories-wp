@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { fetchRemoteFile } from '@web-stories-wp/media-utils';
+import { fetchRemoteFile } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

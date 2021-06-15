@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { resourceList } from '@web-stories-wp/media-utils';
+import { resourceList } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

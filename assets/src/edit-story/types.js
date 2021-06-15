@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
-import { ResourcePropTypes } from '@web-stories-wp/media-utils';
+import { ResourcePropTypes } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

@@ -27,7 +27,7 @@ import {
   createBlob,
   getImageDimensions,
   getFileName,
-} from '@web-stories-wp/media-utils';
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies

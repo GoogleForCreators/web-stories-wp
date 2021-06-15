@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { createResource, getResourceSize } from '@web-stories-wp/media-utils';
+import { createResource, getResourceSize } from '@web-stories-wp/media';
 
 /**
  * Generates a resource object from a WordPress attachment.
  *
  * @param {Object} attachment WP Attachment object.
- * @return {import('@web-stories-wp/media-utils').Resource} Resource object.
+ * @return {import('@web-stories-wp/media').Resource} Resource object.
  */
 function getResourceFromAttachment(attachment) {
   const {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { calculateSrcSet } from '@web-stories-wp/media-utils';
+import { calculateSrcSet } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */

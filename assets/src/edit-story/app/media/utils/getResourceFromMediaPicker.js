@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { createResource, getResourceSize } from '@web-stories-wp/media-utils';
+import { createResource, getResourceSize } from '@web-stories-wp/media';
 
 /**
  * Generates a resource object from a WordPress media picker object.
  *
  * @param {Object} mediaPickerEl WP Media Picker object.
- * @return {import('@web-stories-wp/media-utils').Resource} Resource object.
+ * @return {import('@web-stories-wp/media').Resource} Resource object.
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {

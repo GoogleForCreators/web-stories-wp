@@ -27,13 +27,13 @@ import {
   getFileName,
   getImageDimensions,
   createFileReader,
-} from '@web-stories-wp/media-utils';
+} from '@web-stories-wp/media';
 
 /**
  * Create a local resource object.
  *
  * @param {Object} properties The resource properties.
- * @return {import('@web-stories-wp/media-utils').Resource} The local resource object.
+ * @return {import('@web-stories-wp/media').Resource} The local resource object.
  */
 const createLocalResource = (properties) => {
   return createResource({ ...properties, local: true });
@@ -43,7 +43,7 @@ const createLocalResource = (properties) => {
  * Generates a image resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('@web-stories-wp/media-utils').Resource>} Local image resource object.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
   const fileName = getFileName(file);
@@ -68,7 +68,7 @@ const getImageResource = async (file) => {
  * Generates a video resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('@web-stories-wp/media-utils').Resource>} Local video resource object.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
   const fileName = getFileName(file);
@@ -142,7 +142,7 @@ const getPlaceholderResource = (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<Object<{resource: import('@web-stories-wp/media-utils').Resource, posterFile: File}>>} Object containing resource object and poster file.
+ * @return {Promise<Object<{resource: import('@web-stories-wp/media').Resource, posterFile: File}>>} Object containing resource object and poster file.
  */
 const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);

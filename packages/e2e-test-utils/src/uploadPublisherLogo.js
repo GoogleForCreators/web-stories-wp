@@ -20,7 +20,7 @@
 import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
-import { getFileNameWithExt } from '@web-stories-wp/media-utils';
+import { getFileNameWithExt } from '@web-stories-wp/media';
 
 /**
  * Helper that upload a publisher logo in the dashboard settings.

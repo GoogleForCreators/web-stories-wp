@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 import {
   getMediaSizePositionProps,
   calculateSrcSet,
-} from '@web-stories-wp/media-utils';
+} from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
