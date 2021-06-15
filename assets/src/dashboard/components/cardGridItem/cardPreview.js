@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-
+import { clamp, STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
@@ -36,7 +36,6 @@ import {
   PreviewErrorBoundary,
   PreviewPage,
 } from '../../../edit-story/components/previewPage';
-import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import { DEFAULT_STORY_PAGE_ADVANCE_DURATION } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
@@ -179,8 +178,8 @@ const CardPreviewContainer = ({
         {children}
       </PreviewPane>
       {/*
-        Disable Reason: As the UI stands for the dashboard grid item view we have nested functionality 
-        that is embedded in the grid and requires the user hover or focus a card in order to see options 
+        Disable Reason: As the UI stands for the dashboard grid item view we have nested functionality
+        that is embedded in the grid and requires the user hover or focus a card in order to see options
         since keyboard users can't hover we have to also harness focus and active to get consistent behavior
         the click events on this div show or hide options for each grid item.
         */}

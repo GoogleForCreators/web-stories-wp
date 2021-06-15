@@ -24,8 +24,8 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { Icons } from '../../../../design-system';
-import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory } from '../../../app';
 import PageMenuButton from './pageMenuButton';
 

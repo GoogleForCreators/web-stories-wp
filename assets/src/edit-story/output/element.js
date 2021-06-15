@@ -18,10 +18,10 @@
  * External dependencies
  */
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { StoryAnimation } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../animation';
 import WithLink from '../components/elementLink/output';
 import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';

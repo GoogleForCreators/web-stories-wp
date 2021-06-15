@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../../animation';
+/**
+ * External dependencies
+ */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { updateElementWithUpdater, updateAnimations, intersect } from './utils';
 
 /**

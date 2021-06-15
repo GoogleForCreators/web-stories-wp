@@ -20,11 +20,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
-
+import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../animation';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import usePagePreviewSize from './usePagePreviewSize';

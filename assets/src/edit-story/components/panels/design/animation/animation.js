@@ -24,10 +24,6 @@ import { shallowEqual } from 'react-pure-render';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   BACKGROUND_ANIMATION_EFFECTS,
   BG_MAX_SCALE,
@@ -37,8 +33,12 @@ import {
   progress,
   hasOffsets,
   STORY_ANIMATION_STATE,
-} from '../../../../../animation';
-import { getAnimationEffectDefaults } from '../../../../../animation/parts';
+  getAnimationEffectDefaults,
+} from '@web-stories-wp/animation';
+
+/**
+ * Internal dependencies
+ */
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';

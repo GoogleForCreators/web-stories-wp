@@ -21,10 +21,10 @@ import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { StoryAnimation } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../../animation';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,

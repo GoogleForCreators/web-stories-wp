@@ -19,11 +19,10 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../animation';
 import {
   TEMPLATES_GALLERY_SORT_OPTIONS,
   TEMPLATES_GALLERY_STATUS,

@@ -19,11 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
-
+import { AnimationProps } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 

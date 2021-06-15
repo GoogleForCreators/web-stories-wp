@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useCanvas, useLayout, useTransform } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';

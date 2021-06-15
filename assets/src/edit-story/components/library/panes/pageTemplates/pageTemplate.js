@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import {
   Button,
   BUTTON_SIZES,
@@ -36,7 +37,6 @@ import {
 } from '../../../../../design-system';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
-import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { focusStyle } from '../../../panels/shared';
 
 const PageTemplateWrapper = styled.div`

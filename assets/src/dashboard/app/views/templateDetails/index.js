@@ -19,10 +19,10 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout } from '../../../components';
 import { usePagePreviewSize } from '../../../utils';
