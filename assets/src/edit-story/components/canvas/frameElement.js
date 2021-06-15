@@ -180,10 +180,6 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        // TODO: Investigate
-        // See https://github.com/google/web-stories-wp/issues/6671
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
-        tabIndex={0}
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
         isAnimating={isAnimating}
