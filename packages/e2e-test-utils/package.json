@@ -11,7 +11,6 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/media": "*",
     "@wordpress/e2e-test-utils": "^5.3.0",
     "@wordpress/url": "^3.1.0"
   }
