@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
+export * from './constants';
+export * from './dimensions';
+
 export { default as UnitsProvider } from './unitsProvider';
 export { default as useUnits } from './useUnits';
 export {
-  dataPixels,
-  editorPixels,
-  dataToEditorX,
-  dataToEditorY,
-  editorToDataX,
-  editorToDataY,
-  dataFontEm,
-  dataToFontSizeY,
-} from './dimensions';
+  default as getBoundRect,
+  calcRotatedObjectPositionAndSize,
+  getCorners,
+} from './getBoundRect';

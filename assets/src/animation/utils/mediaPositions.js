@@ -32,18 +32,14 @@
 /**
  * External dependencies
  */
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
-/**
- * Internal dependencies
- */
 import {
-  FULLBLEED_RATIO,
+  getBox,
+  FULLBLEED_HEIGHT,
   PAGE_HEIGHT,
   PAGE_WIDTH,
-} from '../../edit-story/constants';
-import { getBox } from '../../edit-story/units/dimensions';
+} from '@web-stories-wp/units';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
-const FULLBLEED_PAGE_HEIGHT = (1 / FULLBLEED_RATIO) * PAGE_WIDTH;
 const PRECISION = 1;
 
 export function getMediaBoundOffsets({ element }) {
@@ -66,8 +62,7 @@ export function getMediaBoundOffsets({ element }) {
     left: (media.offsetX / media.width) * 100,
     bottom:
       -1 *
-      ((media.height - (media.offsetY + FULLBLEED_PAGE_HEIGHT)) /
-        media.height) *
+      ((media.height - (media.offsetY + FULLBLEED_HEIGHT)) / media.height) *
       100,
   };
 }

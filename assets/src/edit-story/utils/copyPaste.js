@@ -19,12 +19,12 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { getDefinitionForType } from '../elements';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 

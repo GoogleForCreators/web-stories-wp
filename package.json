@@ -51,6 +51,7 @@
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/text-sets": "*",
     "@web-stories-wp/tinymce-button": "*",
+    "@web-stories-wp/units": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/widget": "*",
     "@wordpress/api-fetch": "^5.1.0",

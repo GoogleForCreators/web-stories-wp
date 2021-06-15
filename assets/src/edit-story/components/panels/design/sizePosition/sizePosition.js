@@ -22,6 +22,10 @@ import styled from 'styled-components';
 import { useCallback, useMemo } from 'react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
+import {
+  calcRotatedObjectPositionAndSize,
+  dataPixels,
+} from '@web-stories-wp/units';
 import { getMediaBaseColor } from '@web-stories-wp/media';
 
 /**
@@ -37,9 +41,7 @@ import {
   BUTTON_VARIANTS,
 } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
-import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import {

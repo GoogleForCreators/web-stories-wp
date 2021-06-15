@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/media",
+  "name": "@web-stories-wp/units",
   "private": true,
   "engines": {
     "node": ">= 15",
@@ -12,12 +12,8 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/units": "*",
-    "@web-stories-wp/tracking": "*",
-    "colorthief": "^2.3.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

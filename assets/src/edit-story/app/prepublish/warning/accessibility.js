@@ -18,9 +18,17 @@
  * External dependencies
  */
 import {
-  getMediaSizePositionProps,
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+  dataToFontSizeY,
+  dataFontEm,
+  getBox,
+  getBoundRect,
+} from '@web-stories-wp/units';
+import {
   setOrCreateImage,
   getImgNodeId,
+  getMediaSizePositionProps,
 } from '@web-stories-wp/media';
 /**
  * Internal dependencies
@@ -30,10 +38,7 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
-import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
-import { dataToFontSizeY, dataFontEm, getBox } from '../../../units/dimensions';
 import { states } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;

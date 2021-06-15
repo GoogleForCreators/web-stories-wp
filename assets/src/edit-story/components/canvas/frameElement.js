@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '../../elements/shared';
-import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
