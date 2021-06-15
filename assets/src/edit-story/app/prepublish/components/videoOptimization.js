@@ -94,6 +94,39 @@ VideoOptimization.propTypes = {
   caption: PropTypes.node,
 };
 
+const BulkOptimizeButton = styled(OptimizeButton)`
+  margin: 0;
+  margin-bottom: 8px;
+`;
+
 export function BulkVideoOptimization({ elements }) {
-  return JSON.stringify(elements);
+  const { optimizeVideo } = useLocalMedia((state) => ({
+    optimizeVideo: state.actions.optimizeVideo,
+  }));
+  const [isOptimizing, setIsOptimizing] = useState(false);
+
+  const handleUpdateVideos = useCallback(async () => {
+    setIsOptimizing(true);
+    const promises = elements.map(({ resource }) => {
+      return optimizeVideo({ resource });
+      // todo show snackbar with correct video details when one fails
+      //.catch(() => showSnackbar({ ... }));
+    });
+    await Promise.all(promises).finally(() => setIsOptimizing(false));
+  }, [elements, optimizeVideo]);
+
+  return (
+    <BulkOptimizeButton
+      type={BUTTON_TYPES.TERTIARY}
+      size={BUTTON_SIZES.SMALL}
+      onClick={handleUpdateVideos}
+      disabled={isOptimizing}
+    >
+      {__('Optimize all videos', 'web-stories')}
+    </BulkOptimizeButton>
+  );
 }
+
+BulkVideoOptimization.propTypes = {
+  elements: PropTypes.arrayOf(PropTypes.object),
+};

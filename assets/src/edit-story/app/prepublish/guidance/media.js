@@ -207,7 +207,7 @@ export function videoElementsOptimized(story) {
     ];
   }, []);
 
-  if (unoptimizedVideos.length > 0) {
+  if (unoptimizedVideos.length > 1) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.BULK_ACTION,
       elements: unoptimizedVideos,

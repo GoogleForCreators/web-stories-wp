@@ -77,12 +77,12 @@ const ChecklistTab = ({
     [currentCheckpoint]
   );
 
-  // bulk actions live at the top of recommended
-  // const bulkActions = useMemo(() => {
-  //   return checklist.filter(
-  //     (item) => item.type === PRE_PUBLISH_MESSAGE_TYPES.BULK_ACTION
-  //   );
-  // }, [checklist]);
+  // bulk actions are at the top of recommended
+  const bulkActions = useMemo(() => {
+    return checklist.filter(
+      (item) => item.type === PRE_PUBLISH_MESSAGE_TYPES.BULK_ACTION
+    );
+  }, [checklist]);
 
   const { highPriority, recommended, pages } = useMemo(() => {
     return (
@@ -93,7 +93,7 @@ const ChecklistTab = ({
         .filter(
           (item) =>
             // filter out bulk actions for now and put them at the top of recommended
-            item.type !== PRE_PUBLISH_MESSAGE_TYPES.BULK_ACTION ||
+            item.type !== PRE_PUBLISH_MESSAGE_TYPES.BULK_ACTION &&
             (item.message === MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT
               ? hasUploadMediaAction
               : true)
@@ -291,8 +291,7 @@ const ChecklistTab = ({
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
         >
-          {/* todo render recommended bulk actions here */}
-
+          {bulkActions.map(({ help }) => help)}
           {hasUploadMediaAction && (
             <AutoVideoOptimization
               areVideosAutoOptimized={areVideosAutoOptimized}
