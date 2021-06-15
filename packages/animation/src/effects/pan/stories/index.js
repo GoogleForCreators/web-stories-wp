@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getBox } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
-import { getBox } from '../../../../../../assets/src/edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
 import { ANIMATION_TYPES, DIRECTION } from '../../../constants';
 import {

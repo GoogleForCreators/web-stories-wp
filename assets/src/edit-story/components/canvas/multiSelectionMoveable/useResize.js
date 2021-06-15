@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { useUnits } from '../../../units';
+import { useUnits } from '@web-stories-wp/units';
 
 function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({

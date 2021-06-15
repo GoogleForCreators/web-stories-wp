@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * WordPress dependencies
@@ -30,7 +31,6 @@ import { useEffect, useState } from '@wordpress/element';
  * Internal dependencies
  */
 import { PageSizePropType } from '../../../../dashboard/types';
-import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import FontProvider from '../../../../dashboard/app/font/fontProvider';
 import reshapeStoryObject from '../../../../dashboard/app/serializers/stories';

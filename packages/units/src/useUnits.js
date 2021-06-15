@@ -17,6 +17,14 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../design-system';
+import {
+  identity,
+  useContextSelector,
+} from '../../../assets/src/design-system';
+import Context from './context';
 
-export default createContext({ actions: {}, state: {} });
+function useUnits(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useUnits;

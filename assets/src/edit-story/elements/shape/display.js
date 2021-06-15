@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -36,7 +37,6 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import { useUnits } from '../../units';
 
 const Element = styled.div`
   ${elementFillContent}

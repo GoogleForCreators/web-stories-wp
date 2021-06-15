@@ -28,18 +28,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import {
+  getBox,
+  FULLBLEED_HEIGHT,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
-import {
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '../../../../assets/src/edit-story/constants';
 import getMediaSizePositionProps from '../../../../assets/src/edit-story/elements/media/getMediaSizePositionProps';
-import { getBox } from '../../../../assets/src/edit-story/units/dimensions';
-
-const FULLBLEED_PAGE_HEIGHT = (1 / FULLBLEED_RATIO) * PAGE_WIDTH;
 const PRECISION = 1;
 
 export function getMediaBoundOffsets({ element }) {
@@ -62,8 +65,7 @@ export function getMediaBoundOffsets({ element }) {
     left: (media.offsetX / media.width) * 100,
     bottom:
       -1 *
-      ((media.height - (media.offsetY + FULLBLEED_PAGE_HEIGHT)) /
-        media.height) *
+      ((media.height - (media.offsetY + FULLBLEED_HEIGHT)) / media.height) *
       100,
   };
 }

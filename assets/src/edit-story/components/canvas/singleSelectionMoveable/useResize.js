@@ -19,11 +19,11 @@
  */
 import { useState } from 'react';
 import classnames from 'classnames';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useUnits } from '../../../units';
 import { useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';

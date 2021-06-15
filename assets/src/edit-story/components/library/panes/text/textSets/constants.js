@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { PAGE_RATIO } from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { TEXT_SET_SIZE } from '../../../../../constants';
 
 export const CATEGORIES = {
   contact: __('Contact', 'web-stories'),

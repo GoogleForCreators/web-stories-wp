@@ -17,14 +17,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import {
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '../../../../assets/src/edit-story/constants';
 import Boilerplate from '../../../../assets/src/edit-story/output/utils/ampBoilerplate';
 import CustomCSS from '../../../../assets/src/edit-story/output/utils/styles';
 import { useStoryAnimationContext } from '../components';
