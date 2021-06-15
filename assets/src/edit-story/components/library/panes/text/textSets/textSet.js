@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useCallback, forwardRef } from 'react';
+import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -32,7 +33,6 @@ import {
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
-import { dataToEditorX, dataToEditorY } from '../../../../../units';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { focusStyle } from '../../../../panels/shared';
 import TextSetElements from './textSetElements';

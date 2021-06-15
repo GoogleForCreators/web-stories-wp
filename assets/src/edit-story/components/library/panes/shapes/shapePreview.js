@@ -22,14 +22,12 @@ import { createRef, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { createSolidFromString } from '@web-stories-wp/patterns';
-
+import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import { PAGE_WIDTH } from '../../../../constants';
 import LibraryMoveable from '../shared/libraryMoveable';
-import { useUnits } from '../../../../units';
 import { ThemeGlobals } from '../../../../../design-system';
 import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
 import { focusStyle } from '../../../panels/shared';

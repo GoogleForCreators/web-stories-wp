@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { UnitsProvider, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import TextSet from '../textSet';
 import LibraryProvider from '../../../../libraryProvider';
-import { UnitsProvider } from '../../../../../../units';
-import { getBox } from '../../../../../../units/dimensions';
 import { TransformProvider } from '../../../../../transform';
 import { FontProvider } from '../../../../../../app/font';
 import { APIProvider } from '../../../../../../app/api';
 import { ConfigProvider } from '../../../../../../app/config';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
+import { TEXT_SET_SIZE } from '../../../../../../constants';
 
 export default {
   title: 'Stories Editor/Components/Library/Panes/Text/TextSet',

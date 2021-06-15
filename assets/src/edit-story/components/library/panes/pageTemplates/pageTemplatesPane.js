@@ -20,13 +20,13 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { Pane } from '../shared';
 import { Select } from '../../../form';
-import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
 import paneId from './paneId';

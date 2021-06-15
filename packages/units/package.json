@@ -1,19 +1,19 @@
 {
-  "name": "@web-stories-wp/jest-amp",
+  "name": "@web-stories-wp/units",
   "private": true,
   "engines": {
     "node": ">= 15",
     "npm": "~7"
   },
-  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
   "dependencies": {
-    "@ampproject/toolbox-optimizer": "^2.8.0",
-    "amphtml-validator": "1.0.34",
     "prop-types": "^15.7.2",
-    "react-dom": "^17.0.2"
-  }
+    "react": "^17.0.2"
+  },
+  "devDependencies": {}
 }
