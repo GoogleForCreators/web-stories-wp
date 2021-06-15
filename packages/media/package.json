@@ -15,7 +15,7 @@
     "@web-stories-wp/tracking": "*",
     "colorthief": "^2.3.2",
     "prop-types": "^15.7.2",
-    "react": "^16.14.0"
+    "react": "^17.0.2"
   },
   "devDependencies": {
   }
