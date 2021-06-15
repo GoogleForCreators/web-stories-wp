@@ -319,7 +319,7 @@ class Media extends Test_Case {
 				[
 					'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
 				],
 			],
@@ -341,7 +341,7 @@ class Media extends Test_Case {
 				[
 					'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
 				],
 				[
@@ -431,7 +431,7 @@ class Media extends Test_Case {
 			[
 				'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
 			],
 			[
@@ -490,7 +490,7 @@ class Media extends Test_Case {
 				[
 					'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
 				],
 			],
