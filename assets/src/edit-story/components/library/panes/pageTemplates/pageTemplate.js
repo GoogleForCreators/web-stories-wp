@@ -120,10 +120,8 @@ function PageTemplate(
   return (
     <PageTemplateWrapper
       pageSize={pageSize}
-      role="listitem"
+      role="button"
       ref={ref}
-      // Disable reason: Needed for keyboard navigation.
-      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}

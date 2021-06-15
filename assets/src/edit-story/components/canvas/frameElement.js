@@ -180,7 +180,7 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        // Needed for tabbing into the element.
+        // Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
         tabIndex={0}
         aria-labelledby={`layer-${id}`}
