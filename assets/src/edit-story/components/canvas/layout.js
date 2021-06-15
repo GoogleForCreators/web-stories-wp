@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
@@ -32,7 +33,7 @@ import {
   themeHelpers,
   AnimatedContextMenu,
 } from '../../../design-system';
-import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
+import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
 import { useRightClickMenu } from '../../app/rightClickMenu';

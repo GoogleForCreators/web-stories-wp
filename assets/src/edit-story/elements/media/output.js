@@ -18,13 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { PAGE_WIDTH, PAGE_HEIGHT, editorPixels } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { editorPixels } from '../../units';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 /**
