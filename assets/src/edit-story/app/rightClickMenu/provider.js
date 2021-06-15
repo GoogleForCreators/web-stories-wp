@@ -143,7 +143,7 @@ function RightClickMenuProvider({ children }) {
 
   const menuItemProps = useMemo(
     () => ({
-      handleMouseDown,
+      onMouseDown: handleMouseDown,
     }),
     [handleMouseDown]
   );
