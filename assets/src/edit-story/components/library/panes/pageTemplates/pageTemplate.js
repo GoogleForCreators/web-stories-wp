@@ -122,8 +122,7 @@ function PageTemplate(
       pageSize={pageSize}
       role="listitem"
       ref={ref}
-      // TODO: Investigate
-      // See https://github.com/google/web-stories-wp/issues/6671
+      // Disable reason: Needed for keyboard navigation.
       // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
       tabIndex={0}
       onMouseEnter={handleSetHoverActive}
