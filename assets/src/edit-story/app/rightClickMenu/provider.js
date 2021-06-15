@@ -28,6 +28,8 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { useStory } from '..';
 import { noop } from '../../utils/noop';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
+import { serializeTextAndHTMLData } from '../../utils/copyPaste';
+import { useCanvas } from '../canvas';
 import { RIGHT_CLICK_MENU_LABELS } from './constants';
 import rightClickMenuReducer, {
   ACTION_TYPES,
@@ -50,7 +52,10 @@ import Context from './context';
 function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
-  const { selectedElements } = useStory(
+  const { pasteHandler } = useCanvas(({ actions: { pasteHandler } }) => ({
+    pasteHandler,
+  }));
+  const { selectedElements, currentPage, selectedElementAnimations } = useStory(
     ({
       state: { currentPage, selectedElements, selectedElementAnimations },
     }) => ({
@@ -68,11 +73,46 @@ function RightClickMenuProvider({ children }) {
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
 
+  const copyElement = useCallback(async () => {
+    if (!selectedElements.length) {
+      return;
+    }
+
+    const { htmlContent, serializedPayload } = serializeTextAndHTMLData(
+      currentPage,
+      selectedElements,
+      selectedElementAnimations
+    );
+
+    try {
+      await navigator.clipboard.writeText(
+        `<!-- ${serializedPayload} -->${htmlContent}`
+      );
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('trouble copying the dooby dooby doos', { error });
+    }
+  }, [currentPage, selectedElements, selectedElementAnimations]);
+
+  const pasteElement = useCallback(async () => {
+    let content;
+    try {
+      content = await navigator.clipboard.readText();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('trouble pasting the dooby dooby doos', { error });
+    }
+
+    if (content) {
+      pasteHandler(content);
+    }
+  }, [pasteHandler]);
+
   /**
    * Open the menu at the position from the click event.
    */
   const handleOpenMenu = useCallback((evt) => {
-    evt.preventDefault();
+    evt.stopPropagation();
 
     dispatch({
       type: ACTION_TYPES.OPEN_MENU,
@@ -113,13 +153,13 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: '⌘ X',
-        onClick: noop,
+        onClick: copyElement,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
         shortcut: '⌘ V',
-        onClick: noop,
+        onClick: pasteElement,
         ...menuItemProps,
       },
       {
@@ -129,7 +169,7 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
     ],
-    [menuItemProps]
+    [copyElement, menuItemProps, pasteElement]
   );
 
   const pageItems = useMemo(
