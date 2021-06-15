@@ -236,16 +236,14 @@ const SnackbarMessage = ({
             alt={thumbnail.alt}
             status={thumbnail.status}
           />
-          {thumbnail.status === THUMBNAIL_STATUS.SUCCESS && (
-            <ThumbnailIcon status={thumbnail.status}>
+          <ThumbnailIcon status={thumbnail.status}>
+            {thumbnail.status === THUMBNAIL_STATUS.SUCCESS && (
               <CheckmarkSmall />
-            </ThumbnailIcon>
-          )}
-          {thumbnail.status === THUMBNAIL_STATUS.ERROR && (
-            <ThumbnailIcon status={thumbnail.status}>
+            )}
+            {thumbnail.status === THUMBNAIL_STATUS.ERROR && (
               <ExclamationOutline />
-            </ThumbnailIcon>
-          )}
+            )}
+          </ThumbnailIcon>
         </ThumbnailWrapper>
       )}
       {(actionLabel || showCloseButton) && (
