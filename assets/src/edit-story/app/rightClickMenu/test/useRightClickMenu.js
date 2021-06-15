@@ -24,6 +24,11 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useStory } from '../../story';
 
+// TODO: #6154 remove when the `enableRightClickMenus` experiment is removed
+jest.mock('flagged', () => ({
+  useFeature: () => true,
+}));
+
 jest.mock('../../story', () => ({
   useStory: jest.fn(),
 }));

@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 
@@ -47,6 +48,8 @@ import Context from './context';
  * @return {Node} React node
  */
 function RightClickMenuProvider({ children }) {
+  const enableRightClickMenus = useFeature('enableRightClickMenus');
+
   const { selectedElements } = useStory(
     ({
       state: { currentPage, selectedElements, selectedElementAnimations },
@@ -161,7 +164,7 @@ function RightClickMenuProvider({ children }) {
   // rightClickAreaRef is set
   useEffect(() => {
     const node = rightClickAreaRef.current;
-    if (!node) {
+    if (!enableRightClickMenus || !node) {
       return undefined;
     }
 
@@ -170,7 +173,7 @@ function RightClickMenuProvider({ children }) {
     return () => {
       node.removeEventListener('contextmenu', handleOpenMenu);
     };
-  }, [handleOpenMenu]);
+  }, [enableRightClickMenus, handleOpenMenu]);
 
   const value = useMemo(
     () => ({

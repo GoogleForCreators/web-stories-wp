@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef, useRef, useEffect } from 'react';
@@ -31,13 +30,13 @@ import {
   useResizeEffect,
   THEME_CONSTANTS,
   themeHelpers,
-  AnimatedContextMenu,
 } from '../../../design-system';
 import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
 import { useRightClickMenu } from '../../app/rightClickMenu';
 import usePinchToZoom from './usePinchToZoom';
+import RightClickMenu from './rightClickMenu';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -251,13 +250,6 @@ const CarouselArea = styled(Area).attrs({
   showOverflow: true,
 })``;
 
-const RightClickMenuContainer = styled.div`
-  position: absolute;
-  top: ${({ position }) => position?.y ?? 0}px;
-  left: ${({ position }) => position?.x ?? 0}px;
-  z-index: 9999;
-`;
-
 /**
  * @param {!{current: ?Element}} containerRef Container reference.
  */
@@ -377,14 +369,7 @@ const PageArea = forwardRef(function PageArea(
       scrollTop,
     })
   );
-  const enableRightClickMenus = useFeature('enableRightClickMenus');
-  const {
-    isMenuOpen,
-    menuItems: rightClickMenuItems,
-    menuPosition,
-    onCloseMenu,
-    rightClickAreaRef,
-  } = useRightClickMenu();
+  const { rightClickAreaRef } = useRightClickMenu();
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
   const scroll = useRef();
@@ -411,15 +396,7 @@ const PageArea = forwardRef(function PageArea(
       data-scroll-container
       {...rest}
     >
-      {enableRightClickMenus && (
-        <RightClickMenuContainer position={menuPosition}>
-          <AnimatedContextMenu
-            isOpen={isMenuOpen}
-            onDismiss={onCloseMenu}
-            items={rightClickMenuItems}
-          />
-        </RightClickMenuContainer>
-      )}
+      <RightClickMenu />
       <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
@@ -466,7 +443,6 @@ export {
   NavPrevArea,
   NavNextArea,
   QuickActionsArea,
-  RightClickMenuContainer,
   CarouselArea,
   useLayoutParams,
   useLayoutParamsCssVars,
