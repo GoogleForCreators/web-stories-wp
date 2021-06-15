@@ -19,7 +19,6 @@ export * from './dimensions';
 
 export { default as UnitsProvider } from './unitsProvider';
 export { default as useUnits } from './useUnits';
-export { default as isElementBelowLimit } from './isElementBelowLimit';
 export {
   default as getBoundRect,
   calcRotatedObjectPositionAndSize,

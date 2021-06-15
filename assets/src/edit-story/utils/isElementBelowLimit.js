@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from './constants';
-import { getCorners } from './getBoundRect';
+import {
+  DANGER_ZONE_HEIGHT,
+  FULLBLEED_HEIGHT,
+  getCorners,
+} from '@web-stories-wp/units';
 
 function isElementBelowLimit(element, verifyLink = true) {
   if (verifyLink && !element.link?.url?.length > 0) {
