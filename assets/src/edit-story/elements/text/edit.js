@@ -218,16 +218,6 @@ function TextEdit({
     boxRef.current = { x, y, height, rotationAngle };
   }, [x, y, height, rotationAngle]);
 
-  // Make sure to allow the user to click in the text box while working on the text.
-  const onClick = (evt) => {
-    const editor = editorRef.current;
-    // Refocus the editor if the container outside it is clicked.
-    if (!editor.getNode().contains(evt.target)) {
-      editor.focus();
-    }
-    evt.stopPropagation();
-  };
-
   // Set focus when initially rendered.
   useLayoutEffect(() => {
     if (editorRef.current) {
@@ -389,17 +379,7 @@ function TextEdit({
       width={elementWidth}
       height={elementHeight}
     >
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
-      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
-      <Wrapper
-        ref={wrapperRef}
-        onClick={onClick}
-        data-testid="textEditor"
-        {...wrapperProps}
-      >
+      <Wrapper ref={wrapperRef} data-testid="textEditor" {...wrapperProps}>
         {editorContent && hasHighlightBackgroundTextMode && (
           <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
             <Highlight
