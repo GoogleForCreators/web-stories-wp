@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-function getFileName(path) {
-  return /(?:\/([^/]+))?$/.exec(path)[1];
+/**
+ * Internal dependencies
+ */
+import { identity } from '../../../assets/src/design-system/utils/context';
+import useContextSelector from '../../../assets/src/design-system/utils/useContextSelector';
+import Context from './context';
+
+function useUnits(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
-export default getFileName;
+export default useUnits;

@@ -15,10 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
 import getResourceSize from '../getResourceSize';
-import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 
 describe('getResourceSize', () => {
   it('return default values', () => {
