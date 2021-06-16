@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const getFileNameFromUrl = (url) =>
+  url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
 
-/**
- * Internal dependencies
- */
-import { identity } from '../../../assets/src/design-system/utils/context';
-import useContextSelector from '../../../assets/src/design-system/utils/useContextSelector';
-import Context from './context';
-
-function useUnits(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useUnits;
+export default getFileNameFromUrl;

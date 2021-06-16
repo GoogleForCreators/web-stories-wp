@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { identity } from '../../../assets/src/design-system/utils/context';
-import useContextSelector from '../../../assets/src/design-system/utils/useContextSelector';
-import Context from './context';
+const aspectRatiosApproximatelyMatch = (obj1, obj2) => {
+  return Math.abs(obj1.width / obj1.height - obj2.width / obj2.height) < 0.01;
+};
 
-function useUnits(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useUnits;
+export default aspectRatiosApproximatelyMatch;
