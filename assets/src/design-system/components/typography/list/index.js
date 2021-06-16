@@ -43,3 +43,10 @@ export const List = styled.ul(
     }
   `
 );
+
+List.propTypes = {
+  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
+};
+List.defaultProps = {
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+};

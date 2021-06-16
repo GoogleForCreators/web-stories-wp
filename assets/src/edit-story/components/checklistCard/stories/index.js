@@ -21,7 +21,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import SingleIssueCard from '..';
+import { ChecklistCard } from '..';
 import {
   Button,
   BUTTON_SIZES,
@@ -33,11 +33,11 @@ import {
 } from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
-import { CardListWrapper } from '../helpers/cardListWrapper';
+import { CardListWrapper } from '../helpers';
 
 export default {
   title: 'Stories Editor/Components/ChecklistCard',
-  component: SingleIssueCard,
+  component: ChecklistCard,
 };
 
 const Container = styled.div`
@@ -57,7 +57,7 @@ export const _default = () => {
     <Container>
       <div>
         <Text>{'Single Issue'}</Text>
-        <SingleIssueCard
+        <ChecklistCard
           title="Add video captions"
           titleProps={{
             onClick: () => action('title clicked')(),
@@ -82,7 +82,7 @@ export const _default = () => {
             </Button>
           }
           thumbnailCount={1}
-          Thumbnail={
+          thumbnail={
             <Thumbnail
               onClick={() => action('thumbnail action found')()}
               type={THUMBNAIL_TYPES.IMAGE}
@@ -94,7 +94,7 @@ export const _default = () => {
       </div>
       <div>
         <Text>{'Single Issue - No CTA'}</Text>
-        <SingleIssueCard
+        <ChecklistCard
           title="Add video captions"
           helper={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
@@ -110,7 +110,7 @@ export const _default = () => {
             </Text>
           }
           thumbnailCount={1}
-          Thumbnail={
+          thumbnail={
             <Thumbnail
               onClick={() => action('thumbnail action found')()}
               type={THUMBNAIL_TYPES.IMAGE}
@@ -122,7 +122,7 @@ export const _default = () => {
       </div>
       <div>
         <Text>{'Single Issue - No Thumbnail'}</Text>
-        <SingleIssueCard
+        <ChecklistCard
           title="Increase size of publisher logo to at least 96x96px"
           helper={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
@@ -144,7 +144,7 @@ export const _default = () => {
       </div>
       <div>
         <Text>{'Single Issue - No Thumbnail or CTA'}</Text>
-        <SingleIssueCard
+        <ChecklistCard
           title="Add Web Story title"
           helper={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
@@ -161,7 +161,7 @@ export const _default = () => {
       </div>
       <div>
         <Text>{'Single Issue - No Thumbnail with a list'}</Text>
-        <SingleIssueCard
+        <ChecklistCard
           title="Add Web Story poster image"
           helper={
             <CardListWrapper>
