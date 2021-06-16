@@ -50,8 +50,8 @@
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-| Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
+| Creator can Select an Element                                     | Transforming element                             | 🛴 **50.00%** *(1 / 2)*     |
+|                                                                   | *[total]*                                        | 🛴 **50.00%** *(1 / 2)*     |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -65,8 +65,8 @@
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
-| Page Templates                                                    | Creator can Apply a Page Template                | 🛴 **83.33%** *(5 / 6)*     |
-|                                                                   | *[total]*                                        | 🛴 **83.33%** *(5 / 6)*     |
+| Page Templates                                                    | Creator can Apply a Page Template                | 🏆 **100.00%** *(6 / 6)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
 | Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **83.33%** *(5 / 6)*     |
 |                                                                   | *[total]*                                        | 🛴 **83.33%** *(5 / 6)*     |
 | User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
