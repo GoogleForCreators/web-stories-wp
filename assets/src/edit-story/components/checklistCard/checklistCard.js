@@ -38,14 +38,14 @@ import {
 /**
  *
  * @param {Object} props Component props.
- * @param {string} props.cardType the type of card  getting rendered. Selected from constants > CARD_TYPE. Defaults to SINGLE_ISSUE
- * @param {string}  props.title text to display as title of card
+ * @param {string} props.cardType the type of card  getting rendered. Selected from constants > CARD_TYPE, defaults to SINGLE_ISSUE.
+ * @param {string}  props.title text to display as title of card.
  * @param {Object}  props.titleProps if an object is passed in it should have an onClick, these are so that issues can have buttons as titles.
  * @param {Node} props.helper will  be rendered in the helper section of a card.
  * @param {Node} props.cta will be rendered as the cta section of a card.
  * @param {Node}  props.thumbnail will be rendered in the thumbnail section of a card.
  * @param  {number} props.thumbnailCount count of how  many thumbnails are getting rendered to use to manipulate grid. Defaults to 0.
- * @return {Node} card to  display
+ * @return {Node} card to  display.
  */
 const ChecklistCard = ({
   cardType = CARD_TYPE.SINGLE_ISSUE,

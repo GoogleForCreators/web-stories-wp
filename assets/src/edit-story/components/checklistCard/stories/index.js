@@ -61,7 +61,6 @@ export const _default = () => {
           title="Add video captions"
           titleProps={{
             onClick: () => action('title clicked')(),
-            onkeydown: () => action('keydown')(),
           }}
           helper={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
