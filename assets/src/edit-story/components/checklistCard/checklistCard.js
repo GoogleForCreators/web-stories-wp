@@ -32,7 +32,7 @@ import {
   Title,
   Cta,
   ThumbnailWrapper,
-  Helper,
+  Footer,
 } from './styles';
 
 /**
@@ -41,7 +41,7 @@ import {
  * @param {string} props.cardType the type of card  getting rendered. Selected from constants > CARD_TYPE, defaults to SINGLE_ISSUE.
  * @param {string}  props.title text to display as title of card.
  * @param {Object}  props.titleProps if an object is passed in it should have an onClick, these are so that issues can have buttons as titles.
- * @param {Node} props.helper will  be rendered in the helper section of a card.
+ * @param {Node} props.footer will  be rendered in the footer section of a card.
  * @param {Node} props.cta will be rendered as the cta section of a card.
  * @param {Node}  props.thumbnail will be rendered in the thumbnail section of a card.
  * @param  {number} props.thumbnailCount count of how  many thumbnails are getting rendered to use to manipulate grid. Defaults to 0.
@@ -51,7 +51,7 @@ const ChecklistCard = ({
   cardType = CARD_TYPE.SINGLE_ISSUE,
   title,
   titleProps,
-  helper,
+  footer,
   cta,
   thumbnail,
   thumbnailCount = 0,
@@ -70,7 +70,7 @@ const ChecklistCard = ({
         </Title>
         <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
         <Cta>{cta}</Cta>
-        <Helper>{helper}</Helper>
+        <Footer>{footer}</Footer>
       </Container>
     </Wrapper>
   );
@@ -80,7 +80,7 @@ ChecklistCard.propTypes = {
   cardType: PropTypes.oneOf(Object.values(CARD_TYPE)),
   title: PropTypes.string.isRequired,
   titleProps: PropTypes.shape({ onClick: PropTypes.func }),
-  helper: PropTypes.oneOfType([
+  footer: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
     PropTypes.bool,

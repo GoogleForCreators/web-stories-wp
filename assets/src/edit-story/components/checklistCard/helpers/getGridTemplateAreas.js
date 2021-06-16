@@ -27,11 +27,11 @@ import { GRID_VARIANT } from '../constants';
 export const getGridTemplateAreas = (gridVariant) => {
   switch (gridVariant) {
     case GRID_VARIANT.SINGLE:
-      return "'title title' 'cta thumbnail' 'helper helper'";
+      return "'title title' 'cta thumbnail' 'footer footer'";
     case GRID_VARIANT.SINGLE_WITH_THUMBNAIL:
-      return "'title thumbnail' 'cta thumbnail' 'helper helper'";
+      return "'title thumbnail' 'cta thumbnail' 'footer footer'";
 
     default:
-      return "'title thumbnail' 'cta thumbnail' 'helper helper'";
+      return "'title thumbnail' 'cta thumbnail' 'footer footer'";
   }
 };

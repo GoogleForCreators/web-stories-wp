@@ -62,7 +62,7 @@ export const _default = () => {
           titleProps={{
             onClick: () => action('title clicked')(),
           }}
-          helper={
+          footer={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
@@ -95,7 +95,7 @@ export const _default = () => {
         <Text>{'Single Issue - No CTA'}</Text>
         <ChecklistCard
           title="Add video captions"
-          helper={
+          footer={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
@@ -123,7 +123,7 @@ export const _default = () => {
         <Text>{'Single Issue - No Thumbnail'}</Text>
         <ChecklistCard
           title="Increase size of publisher logo to at least 96x96px"
-          helper={
+          footer={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
               {'Maintain a 1:1 aspect ratio. '}
               <Link
@@ -145,7 +145,7 @@ export const _default = () => {
         <Text>{'Single Issue - No Thumbnail or CTA'}</Text>
         <ChecklistCard
           title="Add Web Story title"
-          helper={
+          footer={
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
               {'Keep title under 40 characters. '}
               <Link
@@ -162,7 +162,7 @@ export const _default = () => {
         <Text>{'Single Issue - No Thumbnail with a list'}</Text>
         <ChecklistCard
           title="Add Web Story poster image"
-          helper={
+          footer={
             <CardListWrapper>
               <List>
                 <li>{'Use as a representation of the story.'}</li>

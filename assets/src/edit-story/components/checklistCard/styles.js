@@ -77,8 +77,8 @@ export const ThumbnailWrapper = styled.div`
   grid-area: thumbnail;
 `;
 
-export const Helper = styled.div`
-  grid-area: helper;
+export const Footer = styled.div`
+  grid-area: footer;
   padding-top: 8px;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
