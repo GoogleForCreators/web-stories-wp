@@ -62,7 +62,7 @@ export const Title = styled.div`
     background-color: transparent;
     border: none;
     text-align: left;
-    cursor: 'pointer';
+    cursor: pointer;
     border-radius: ${({ theme }) => theme.borders.radius.small};
     ${focusableOutlineCSS}
   }
