@@ -219,6 +219,13 @@ function TextEdit({
     boxRef.current = { x, y, height, rotationAngle };
   }, [x, y, height, rotationAngle]);
 
+  // Make sure to allow the user to click in the text box while working on the text.
+  const onClick = (evt) => {
+    const editor = editorRef.current;
+    editor.focus();
+    evt.stopPropagation();
+  };
+
   // Set focus when initially rendered.
   useLayoutEffect(() => {
     if (editorRef.current) {
@@ -380,7 +387,14 @@ function TextEdit({
       width={elementWidth}
       height={elementHeight}
     >
-      <Wrapper ref={wrapperRef} data-testid="textEditor" {...wrapperProps}>
+      {/* onClick handler is needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+      <Wrapper
+        ref={wrapperRef}
+        onClick={onClick}
+        data-testid="textEditor"
+        {...wrapperProps}
+      >
         {editorContent && hasHighlightBackgroundTextMode && (
           <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
             <Highlight
