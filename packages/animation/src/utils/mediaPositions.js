@@ -38,11 +38,8 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
-/**
- * Internal dependencies
- */
-import getMediaSizePositionProps from '../../../../assets/src/edit-story/elements/media/getMediaSizePositionProps';
 const PRECISION = 1;
 
 export function getMediaBoundOffsets({ element }) {

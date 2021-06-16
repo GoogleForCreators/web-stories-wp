@@ -21,6 +21,10 @@ import styled, { css } from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+import {
+  getMediaSizePositionProps,
+  calculateSrcSet,
+} from '@web-stories-wp/media';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
@@ -33,8 +37,7 @@ import getTransformFlip from '../shared/getTransformFlip';
 import useUnmount from '../../utils/useUnmount';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import EditCropMoveable from './editCropMoveable';
-import { calculateSrcSet, mediaWithScale } from './util';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
+import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { MEDIA_MASK_OPACITY } from './constants';

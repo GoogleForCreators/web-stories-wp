@@ -19,12 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import { PAGE_WIDTH, PAGE_HEIGHT, editorPixels } from '@web-stories-wp/units';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

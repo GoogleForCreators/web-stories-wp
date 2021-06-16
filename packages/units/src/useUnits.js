@@ -17,10 +17,8 @@
 /**
  * Internal dependencies
  */
-import {
-  identity,
-  useContextSelector,
-} from '../../../assets/src/design-system';
+import { identity } from '../../../assets/src/design-system/utils/context';
+import useContextSelector from '../../../assets/src/design-system/utils/useContextSelector';
 import Context from './context';
 
 function useUnits(selector) {
