@@ -31,6 +31,9 @@ export const Wrapper = styled.div`
   display: flex;
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.bg.secondary};
+  &:hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
 `;
 
 export const Container = styled.div`
