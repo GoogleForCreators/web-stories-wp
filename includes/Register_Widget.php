@@ -58,17 +58,33 @@ class Register_Widget extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
+		add_action( 'widgets_init', [ $this, 'register_widget' ] );
+		add_filter( 'widget_types_to_hide_from_legacy_widget_block', [ $this, 'hide_widget' ] );
+	}
+
+	/**
+	 * Register widget.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return void
+	 */
+	public function register_widget() {
 		register_widget( $this->stories );
 	}
 
 	/**
-	 * Get the action to use for registering the service.
+	 * Hide widget stories from legacy widget list.
 	 *
-	 * @since 1.6.0
+	 * @since 1.9.0
 	 *
-	 * @return string Registration action to use.
+	 * @param array $widget_types An array of excluded widget-type IDs.
+	 *
+	 * @return array
 	 */
-	public static function get_registration_action() {
-		return 'widgets_init';
+	public function hide_widget( array $widget_types ) {
+		$widget_types[] = $this->stories->id_base;
+
+		return $widget_types;
 	}
 }
