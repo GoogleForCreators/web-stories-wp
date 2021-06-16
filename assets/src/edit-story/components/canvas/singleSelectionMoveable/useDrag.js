@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useUnits } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
-import { useUnits } from '../../../units';
 import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 

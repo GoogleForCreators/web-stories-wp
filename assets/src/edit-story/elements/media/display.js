@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useRef } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 import StoryPropTypes from '../../types';
 import {
   elementFillContent,
@@ -36,7 +37,6 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 

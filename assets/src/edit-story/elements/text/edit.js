@@ -27,13 +27,14 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { useUnits } from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
 import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,

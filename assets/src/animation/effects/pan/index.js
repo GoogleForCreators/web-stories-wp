@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import {
+  PAGE_WIDTH,
+  FULLBLEED_HEIGHT,
+  DANGER_ZONE_HEIGHT,
+  dataToEditorY,
+  getBox,
+} from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import {
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '../../../edit-story/constants';
-import { dataToEditorY, getBox } from '../../../edit-story/units/dimensions';
 import { ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
-
-const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 function getTargetScale({ width, height }) {
   if (width < PAGE_WIDTH || height < FULLBLEED_HEIGHT) {

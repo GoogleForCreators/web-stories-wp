@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
+import { PAGE_RATIO, useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -27,8 +28,6 @@ import { useEffect, useRef, useMemo } from 'react';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
-import { useUnits } from '../../units';
-import { PAGE_RATIO } from '../../constants';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
 
