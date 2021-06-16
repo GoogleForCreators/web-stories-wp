@@ -25,6 +25,7 @@ import {
   getBox,
   getBoundRect,
 } from '@web-stories-wp/units';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -33,12 +34,11 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
-import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
 import {
   setOrCreateImage,
   getImgNodeId,
 } from '../../../utils/getMediaBaseColor';
+import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { states } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;

@@ -17,6 +17,6 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../assets/src/design-system';
+import { createContext } from '../../../assets/src/design-system/utils/context';
 
 export default createContext({ actions: {}, state: {} });

@@ -20,6 +20,7 @@
 import { join, resolve } from 'path';
 import { tmpdir } from 'os';
 import { copyFileSync } from 'fs';
+
 /**
  * Internal dependencies
  */
