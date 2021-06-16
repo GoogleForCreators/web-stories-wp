@@ -24,7 +24,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_TYPES, BUTTON_SIZES } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  // useSnackbar,
+} from '../../../../design-system';
 import { useLocalMedia } from '../../media';
 
 const Container = styled.div`
@@ -100,20 +105,31 @@ const BulkOptimizeButton = styled(OptimizeButton)`
 `;
 
 export function BulkVideoOptimization({ elements }) {
+  // const { showSnackbar } = useSnackbar();
+
   const { optimizeVideo } = useLocalMedia((state) => ({
     optimizeVideo: state.actions.optimizeVideo,
   }));
   const [isOptimizing, setIsOptimizing] = useState(false);
 
+  const sequencedVideoOptimization = useCallback(() => {
+    return new Promise((res) => {
+      elements
+        .map(({ resource }) => async () => {
+          await optimizeVideo({ resource });
+        })
+        .reduce((p, fn) => p.then(fn), Promise.resolve())
+        .then(() => {
+          res();
+        });
+    });
+  }, [elements, optimizeVideo]);
+
   const handleUpdateVideos = useCallback(async () => {
     setIsOptimizing(true);
-    const promises = elements.map(({ resource }) => {
-      return optimizeVideo({ resource });
-      // todo show snackbar with correct video details when one fails
-      //.catch(() => showSnackbar({ ... }));
-    });
-    await Promise.all(promises).finally(() => setIsOptimizing(false));
-  }, [elements, optimizeVideo]);
+    await sequencedVideoOptimization();
+    setIsOptimizing(false);
+  }, [sequencedVideoOptimization]);
 
   return (
     <BulkOptimizeButton
