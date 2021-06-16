@@ -80,6 +80,7 @@ export { ReactComponent as Eraser } from './eraser.svg';
 export { ReactComponent as ExclamationOutline } from './exclamation_outline.svg';
 export { ReactComponent as ExclamationTriangle } from './exclamation_triangle.svg';
 export { ReactComponent as Eye } from './eye.svg';
+export { ReactComponent as Eyedropper } from './eyedropper.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
 export { ReactComponent as Gear } from './gear.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';

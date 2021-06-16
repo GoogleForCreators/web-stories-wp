@@ -339,6 +339,7 @@ const PageArea = forwardRef(function PageArea(
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
+    withSafezone = true,
     ...rest
   },
   ref
@@ -406,9 +407,13 @@ const PageArea = forwardRef(function PageArea(
             isBackgroundSelected={isBackgroundSelected}
           >
             <PageAreaWithoutOverflow showOverflow={showOverflow}>
-              <PageAreaSafeZone ref={ref} data-testid="safezone">
-                {children}
-              </PageAreaSafeZone>
+              {withSafezone ? (
+                <PageAreaSafeZone ref={ref} data-testid="safezone">
+                  {children}
+                </PageAreaSafeZone>
+              ) : (
+                children
+              )}
             </PageAreaWithoutOverflow>
           </FullbleedContainer>
         </PaddedPage>
@@ -427,6 +432,7 @@ PageArea.propTypes = {
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
+  withSafezone: PropTypes.bool,
 };
 
 export {

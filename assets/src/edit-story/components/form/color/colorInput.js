@@ -42,6 +42,7 @@ import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
+import { useCanvas } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -141,6 +142,10 @@ const ColorInput = forwardRef(function ColorInput(
   const [pickerOpen, setPickerOpen] = useState(false);
   const previewRef = useRef(null);
 
+  const { eyedropperActive } = useCanvas(({ state: { eyedropperActive } }) => ({
+    eyedropperActive,
+  }));
+
   const {
     refs: { inspector },
   } = useInspector();
@@ -209,9 +214,11 @@ const ColorInput = forwardRef(function ColorInput(
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
+        invisible={eyedropperActive}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
+            eyedropperActive={eyedropperActive}
             onChange={onChange}
             hasGradient={hasGradient}
             hasOpacity={hasOpacity}

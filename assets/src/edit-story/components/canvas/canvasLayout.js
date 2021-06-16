@@ -33,6 +33,7 @@ import SelectionCanvas from './selectionCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
+import EyedropperLayer from './eyedropperLayer';
 
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
@@ -77,6 +78,7 @@ function CanvasLayout() {
               <NavLayer />
             </SelectionCanvas>
             <EditLayer />
+            <EyedropperLayer />
           </CanvasElementDropzone>
         </CanvasUploadDropTarget>
       </Background>

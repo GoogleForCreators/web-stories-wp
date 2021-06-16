@@ -23,10 +23,19 @@ import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
+import * as htmlToImage from 'html-to-image';
 
 /**
  * Internal dependencies
  */
+import { useCanvas } from '../../app';
+import {
+  Icons,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+} from '../../../design-system';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
@@ -37,6 +46,10 @@ const CONTROLS_HEIGHT = 28;
 const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 64;
 const HEX_WIDTH = 80;
+
+const Space = styled.span`
+  margin-left: 8px;
+`;
 
 const Container = styled.div`
   user-select: none;
@@ -124,6 +137,46 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
+  const {
+    state: { fullbleedContainer },
+    actions: {
+      setEyedropperActive,
+      setEyedropperCallback,
+      setEyedropperImg,
+      setEyedropperPixelData,
+    },
+  } = useCanvas();
+
+  const prepareEyedropper = () => {
+    htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
+      const ctx = canvas.getContext('2d');
+      const pixelData = ctx.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      ).data;
+      setEyedropperPixelData(pixelData);
+      setEyedropperImg(canvas.toDataURL());
+    });
+  };
+
+  const initEyedropper = useCallback(() => {
+    setEyedropperCallback(() => (rgbObject) => {
+      onChange(rgbObject);
+      setEyedropperActive(false);
+      setEyedropperImg(null);
+      setEyedropperPixelData(null);
+    });
+    setEyedropperActive(true);
+  }, [
+    onChange,
+    setEyedropperActive,
+    setEyedropperCallback,
+    setEyedropperImg,
+    setEyedropperPixelData,
+  ]);
+
   return (
     <Container>
       <Body showOpacity={showOpacity}>
@@ -173,6 +226,17 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       </Body>
       <Footer>
         <HexValue>
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={__('Pick a color from canvas', 'web-stories')}
+            onClick={initEyedropper}
+            onMouseEnter={prepareEyedropper}
+          >
+            <Icons.Eyedropper style={{ padding: 6 }} />
+          </Button>
+          <Space />
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}
             value={hexValue}

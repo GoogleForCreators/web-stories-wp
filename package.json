@@ -73,6 +73,7 @@
     "focus-visible": "^5.2.0",
     "glider-js": "^1.7.6",
     "history": "^5.0.0",
+    "html-to-image": "github:merapi/html-to-image",
     "mousetrap": "^1.6.5",
     "patch-package": "^6.4.7",
     "polished": "^4.1.2",
