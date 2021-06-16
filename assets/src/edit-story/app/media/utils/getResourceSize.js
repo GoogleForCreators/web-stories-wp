@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 
 /**
  * Returns the best known size of the resource. The generated poster can

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { createContext } from '../../design-system';
+export const THUMBNAIL_DIMENSIONS = {
+  WIDTH: 52,
+  HEIGHT: 78,
+  NESTED_ICON: 32,
+  THUMBNAIL_SHAPE: 36,
+};
+export const THUMBNAIL_TYPES = {
+  VIDEO: 'VIDEO',
+  IMAGE: 'IMAGE',
+  TEXT: 'TEXT',
+  SHAPE: 'SHAPE',
+  PAGE: 'PAGE',
+};
 
-export default createContext({ actions: {}, state: {} });
+export const THUMBNAIL_SCRIM_CLASSNAME = 'thumbnail-scrim';

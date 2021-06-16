@@ -14,15 +14,17 @@
  * limitations under the License.
  */
 
-export { default as UnitsProvider } from './unitsProvider';
-export { default as useUnits } from './useUnits';
-export {
-  dataPixels,
-  editorPixels,
-  dataToEditorX,
-  dataToEditorY,
-  editorToDataX,
-  editorToDataY,
-  dataFontEm,
-  dataToFontSizeY,
-} from './dimensions';
+/**
+ * Internal dependencies
+ */
+import {
+  identity,
+  useContextSelector,
+} from '../../../assets/src/design-system';
+import Context from './context';
+
+function useUnits(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useUnits;

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { dataPixels } from '../units';
+import { dataPixels } from './dimensions';
 
 /**
  * Get the outer frame values for all objects in `list`,

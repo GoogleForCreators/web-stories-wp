@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
+import {
+  dataToEditorX,
+  dataToEditorY,
+  dataToFontSizeY as dataToFontSize,
+} from '@web-stories-wp/units';
 import classnames from 'classnames';
 
 /**
@@ -27,11 +32,6 @@ import classnames from 'classnames';
  */
 import StoryPropTypes from '../../types';
 import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
-import {
-  dataToEditorX,
-  dataToEditorY,
-  dataToFontSizeY as dataToFontSize,
-} from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import {
   generateParagraphTextStyle,

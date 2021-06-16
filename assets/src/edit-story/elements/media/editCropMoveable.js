@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
-import { useUnits } from '../../units';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
 import getFocalFromOffset from './getFocalFromOffset';
