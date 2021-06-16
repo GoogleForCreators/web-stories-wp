@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { DANGER_ZONE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
