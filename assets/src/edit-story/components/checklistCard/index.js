@@ -16,4 +16,5 @@
 
 export { default as ChecklistCard } from './checklistCard';
 export * from './constants';
+export * as ChecklistCardStyles from './styles';
 export { CardListWrapper } from './helpers';
