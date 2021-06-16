@@ -386,41 +386,43 @@ const PageArea = forwardRef(function PageArea(
   usePinchToZoom({ containerRef: paddedRef });
 
   return (
-    <PageAreaContainer
-      ref={rightClickAreaRef}
-      showOverflow={showOverflow}
-      isControlled={isControlled}
-      hasHorizontalOverflow={hasHorizontalOverflow}
-      hasVerticalOverflow={hasVerticalOverflow}
-      className={className}
-      data-scroll-container
-      {...rest}
-    >
-      <RightClickMenu />
-      <PageClip
+    <>
+      <PageAreaContainer
+        ref={rightClickAreaRef}
+        showOverflow={showOverflow}
+        isControlled={isControlled}
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
+        className={className}
+        data-scroll-container
+        {...rest}
       >
-        <PaddedPage ref={paddedRef}>
-          <FullbleedContainer
-            aria-label={__('Fullbleed area', 'web-stories')}
-            role="region"
-            ref={fullbleedRef}
-            data-testid="fullbleed"
-            background={background}
-            isControlled={isControlled}
-            isBackgroundSelected={isBackgroundSelected}
-          >
-            <PageAreaWithoutOverflow showOverflow={showOverflow}>
-              <PageAreaSafeZone ref={ref} data-testid="safezone">
-                {children}
-              </PageAreaSafeZone>
-            </PageAreaWithoutOverflow>
-          </FullbleedContainer>
-        </PaddedPage>
-      </PageClip>
-      {overlay}
-    </PageAreaContainer>
+        <PageClip
+          hasHorizontalOverflow={hasHorizontalOverflow}
+          hasVerticalOverflow={hasVerticalOverflow}
+        >
+          <PaddedPage ref={paddedRef}>
+            <FullbleedContainer
+              aria-label={__('Fullbleed area', 'web-stories')}
+              role="region"
+              ref={fullbleedRef}
+              data-testid="fullbleed"
+              background={background}
+              isControlled={isControlled}
+              isBackgroundSelected={isBackgroundSelected}
+            >
+              <PageAreaWithoutOverflow showOverflow={showOverflow}>
+                <PageAreaSafeZone ref={ref} data-testid="safezone">
+                  {children}
+                </PageAreaSafeZone>
+              </PageAreaWithoutOverflow>
+            </FullbleedContainer>
+          </PaddedPage>
+        </PageClip>
+        {overlay}
+      </PageAreaContainer>
+      <RightClickMenu />
+    </>
   );
 });
 
