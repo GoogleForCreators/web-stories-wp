@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 
 export const RIGHT_CLICK_MENU_LABELS = {
   COPY: __('Copy', 'web-stories'),
@@ -24,4 +24,28 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
   DELETE_PAGE: __('Delete page', 'web-stories'),
+};
+
+export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
+  COMMAND_C: _x(
+    'Command C',
+    'The keyboard keys "Command" and "C"',
+    'web-stories'
+  ),
+  CONTROL_C: _x(
+    'Control C',
+    'The keyboard keys "Control" and "C"',
+    'web-stories'
+  ),
+  COMMAND_P: _x(
+    'Command P',
+    'The keyboard keys "Command" and "P"',
+    'web-stories'
+  ),
+  CONTROL_P: _x(
+    'Control P',
+    'The keyboard keys "Control" and "P"',
+    'web-stories'
+  ),
+  DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
 };

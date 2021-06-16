@@ -30,13 +30,19 @@ import { noop } from '../../utils/noop';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { serializeTextAndHTMLData } from '../../utils/copyPaste';
 import { useCanvas } from '../canvas';
-import { RIGHT_CLICK_MENU_LABELS } from './constants';
+import { duplicatePage } from '../../elements';
+import { isPlatformMacOS } from '../../../design-system';
+import {
+  RIGHT_CLICK_MENU_LABELS,
+  RIGHT_CLICK_MENU_SHORTCUT_LABELS,
+} from './constants';
+import Context from './context';
 import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 
-import Context from './context';
+const isMacOs = isPlatformMacOS();
 
 /**
  * Determines the items displayed in the right click menu
@@ -55,11 +61,27 @@ function RightClickMenuProvider({ children }) {
   const { pasteHandler } = useCanvas(({ actions: { pasteHandler } }) => ({
     pasteHandler,
   }));
-  const { selectedElements, currentPage, selectedElementAnimations } = useStory(
+  const {
+    addPage,
+    currentPage,
+    deleteCurrentPage,
+    pages,
+    selectedElements,
+    selectedElementAnimations,
+  } = useStory(
     ({
-      state: { currentPage, selectedElements, selectedElementAnimations },
+      state: {
+        currentPage,
+        pages,
+        selectedElements,
+        selectedElementAnimations,
+      },
+      actions: { addPage, deleteCurrentPage },
     }) => ({
+      addPage,
       currentPage,
+      deleteCurrentPage,
+      pages,
       selectedElements,
       selectedElementAnimations,
     })
@@ -73,45 +95,11 @@ function RightClickMenuProvider({ children }) {
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
 
-  const copyElement = useCallback(async () => {
-    if (!selectedElements.length) {
-      return;
-    }
-
-    const { htmlContent, serializedPayload } = serializeTextAndHTMLData(
-      currentPage,
-      selectedElements,
-      selectedElementAnimations
-    );
-
-    try {
-      await navigator.clipboard.writeText(
-        `<!-- ${serializedPayload} -->${htmlContent}`
-      );
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('trouble copying the dooby dooby doos', { error });
-    }
-  }, [currentPage, selectedElements, selectedElementAnimations]);
-
-  const pasteElement = useCallback(async () => {
-    let content;
-    try {
-      content = await navigator.clipboard.readText();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('trouble pasting the dooby dooby doos', { error });
-    }
-
-    if (content) {
-      pasteHandler(content);
-    }
-  }, [pasteHandler]);
-
   /**
    * Open the menu at the position from the click event.
    */
   const handleOpenMenu = useCallback((evt) => {
+    evt.preventDefault();
     evt.stopPropagation();
 
     dispatch({
@@ -139,6 +127,61 @@ function RightClickMenuProvider({ children }) {
     ev.stopPropagation();
   }, []);
 
+  /**
+   * Copy the element and styles to the clipboard.
+   */
+  const handleCopyElement = useCallback(async () => {
+    if (!selectedElements.length) {
+      return;
+    }
+
+    const { htmlContent, serializedPayload } = serializeTextAndHTMLData(
+      currentPage,
+      selectedElements,
+      selectedElementAnimations
+    );
+
+    try {
+      await navigator.clipboard.writeText(
+        `<!-- ${serializedPayload} -->${htmlContent}`
+      );
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('trouble copying the dooby dooby doos', { error });
+    }
+  }, [currentPage, selectedElements, selectedElementAnimations]);
+
+  /**
+   * Paste the element and styles from the clipboard if one exists.
+   */
+  const handlePasteElement = useCallback(async () => {
+    let content;
+    try {
+      content = await navigator.clipboard.readText();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('trouble pasting the dooby dooby doos', { error });
+    }
+
+    if (content) {
+      pasteHandler(content);
+    }
+  }, [pasteHandler]);
+
+  /**
+   * Duplicate the current page.
+   */
+  const handleDuplicatePage = useCallback(() => {
+    addPage({ page: duplicatePage(currentPage) });
+  }, [addPage, currentPage]);
+
+  /**
+   * Delete the current page.
+   */
+  const handleDeletePage = useCallback(() => {
+    deleteCurrentPage();
+  }, [deleteCurrentPage]);
+
   const selectedElement = selectedElements?.[0];
 
   const menuItemProps = useMemo(
@@ -152,24 +195,37 @@ function RightClickMenuProvider({ children }) {
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
-        shortcut: '⌘ X',
-        onClick: copyElement,
+        shortcut: {
+          display: '⌘ C',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_C
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_C,
+        },
+        onClick: handleCopyElement,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
-        shortcut: '⌘ V',
-        onClick: pasteElement,
+        shortcut: {
+          display: '⌘ P',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_P
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_P,
+        },
+        onClick: handlePasteElement,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE,
-        shortcut: 'DEL',
+        shortcut: {
+          display: 'DEL',
+          title: RIGHT_CLICK_MENU_SHORTCUT_LABELS.DELETE,
+        },
         onClick: noop,
         ...menuItemProps,
       },
     ],
-    [copyElement, menuItemProps, pasteElement]
+    [handleCopyElement, menuItemProps, handlePasteElement]
   );
 
   const pageItems = useMemo(
@@ -177,16 +233,18 @@ function RightClickMenuProvider({ children }) {
       ...defaultItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: noop,
+        onClick: handleDuplicatePage,
+        separator: 'top',
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: noop,
+        onClick: handleDeletePage,
+        disabled: pages.length === 1,
         ...menuItemProps,
       },
     ],
-    [defaultItems, menuItemProps]
+    [defaultItems, handleDeletePage, handleDuplicatePage, menuItemProps, pages]
   );
 
   const menuItems = useMemo(() => {
