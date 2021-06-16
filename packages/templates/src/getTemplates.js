@@ -74,7 +74,7 @@ async function getTemplates(imageBaseUrl) {
     'sleep',
     'baking-bread-guide',
     'sangria-artichoke',
-    'ways-to-eat-avacado',
+    'ways-to-eat-avocado',
     'kitchen-stories',
     'album-releases',
   ];

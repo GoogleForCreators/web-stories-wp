@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Line 03', 'sticker name', 'web-stories');
+const title = _x('White scribbled underline', 'sticker name', 'web-stories');
 
 function ScribbledUnderlineWhite({ style }) {
   return (

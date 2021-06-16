@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Bread', 'sticker name', 'web-stories');
+const title = _x('Bread bun', 'sticker name', 'web-stories');
 
 function BreadBun({ style }) {
   return (

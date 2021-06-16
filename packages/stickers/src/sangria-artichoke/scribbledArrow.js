@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Arrow', 'sticker name', 'web-stories');
+const title = _x('Scribbled arrow', 'sticker name', 'web-stories');
 
 function scribbledArrow({ style }) {
   return (
