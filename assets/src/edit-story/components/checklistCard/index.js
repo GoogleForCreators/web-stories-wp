@@ -18,8 +18,26 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Headline, Text, THEME_CONSTANTS } from '../../../design-system';
+import styled, { css } from 'styled-components';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Headline,
+  Text,
+  THEME_CONSTANTS,
+} from '../../../design-system';
+import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
+
+const CARD_TYPE = {
+  SINGLE_ISSUE: 'single_issue',
+  MULTIPLE_ISSUE: 'multiple_issue',
+};
+const GRID_VARIANT = {
+  SINGLE_WITH_THUMBNAIL: 'single_with_thumbnail',
+  SINGLE: 'single',
+  DEFAULT: 'single',
+};
 
 const Wrapper = styled.div`
   width: 272px;
@@ -27,19 +45,44 @@ const Wrapper = styled.div`
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.bg.secondary};
 `;
+
+const getGridTemplateAreas = (gridVariant) => {
+  switch (gridVariant) {
+    case GRID_VARIANT.SINGLE:
+      return "'title title' 'cta thumbnail' 'helper helper'";
+    case GRID_VARIANT.SINGLE_WITH_THUMBNAIL:
+      return "'title thumbnail' 'cta thumbnail' 'helper helper'";
+
+    default:
+      return "'title thumbnail' 'cta thumbnail' 'helper helper'";
+  }
+};
 const Container = styled.div`
   width: 240px;
   display: grid;
   margin: 16px;
   grid-gap: 8px;
   grid-template-columns: 180px 52px;
-  grid-template-areas: 'title thumbnail' 'cta thumbnail' 'helper helper';
+  ${({ gridVariant }) => css`
+    grid-template-areas: ${getGridTemplateAreas(gridVariant)};
+  `}
 `;
-const Title = styled(Headline).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
-})`
+const Title = styled.div`
   grid-area: title;
+
+  &:is(button) {
+    outline: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    cursor: 'pointer';
+    border-radius: ${({ theme }) => theme.borders.radius.small};
+    ${focusableOutlineCSS}
+  }
 `;
+
 const Cta = styled.div`
   grid-area: cta;
   margin: 0;
@@ -53,11 +96,36 @@ const Helper = styled.div`
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
 
-const SingleIssueCard = ({ title, helper, cta, Thumbnail }) => {
+const getCardType = ({ cardType, thumbnailCount }) => {
+  if (cardType === CARD_TYPE.SINGLE_ISSUE) {
+    return thumbnailCount > 0
+      ? GRID_VARIANT.SINGLE_WITH_THUMBNAIL
+      : GRID_VARIANT.SINGLE;
+  }
+  return GRID_VARIANT.DEFAULT;
+};
+
+const SingleIssueCard = ({
+  cardType = CARD_TYPE.SINGLE_ISSUE,
+  title,
+  titleProps,
+  helper,
+  cta,
+  Thumbnail,
+  thumbnailCount = 0,
+}) => {
+  const gridVariant = getCardType({ cardType, thumbnailCount });
   return (
     <Wrapper>
-      <Container>
-        <Title>{title}</Title>
+      <Container gridVariant={gridVariant}>
+        <Title as={titleProps ? 'button' : 'div'} {...titleProps}>
+          <Headline
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
+            as="h4"
+          >
+            {title}
+          </Headline>
+        </Title>
         <ThumbnailWrapper>{Thumbnail}</ThumbnailWrapper>
         <Cta>{cta}</Cta>
         <Helper>{helper}</Helper>

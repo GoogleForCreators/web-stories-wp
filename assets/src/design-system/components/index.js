@@ -41,5 +41,5 @@ export * from './keyboard/gridview';
 export * from './notificationBubble';
 export { TextArea } from './textArea';
 export { Toggle } from './toggle';
-export { Display, Headline, Link, Text } from './typography';
+export { Display, Headline, Link, List, Text } from './typography';
 export { VisuallyHidden } from './visuallyHidden';
