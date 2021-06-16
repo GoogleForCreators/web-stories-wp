@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useReducer, useMemo } from 'react';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 

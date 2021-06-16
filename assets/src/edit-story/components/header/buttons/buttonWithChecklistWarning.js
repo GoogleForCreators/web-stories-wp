@@ -17,16 +17,9 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-/**
- * External dependencies
- */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -42,7 +35,6 @@ import {
   usePrepublishChecklist,
   PPC_CHECKPOINT_STATE,
 } from '../../inspector/prepublish';
-
 import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`

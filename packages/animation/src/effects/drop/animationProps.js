@@ -21,10 +21,6 @@ import PropTypes from 'prop-types';
 import { __, _x } from '@web-stories-wp/i18n';
 
 /**
- * External dependencies
- */
-
-/**
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../constants';

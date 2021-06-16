@@ -20,11 +20,11 @@
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { Icons } from '../../../../design-system';
 import { useStory } from '../../../app';
 import PageMenuButton from './pageMenuButton';
