@@ -33,7 +33,7 @@ import {
 } from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
-import { CardListWrapper } from '../helpers';
+import { CardListWrapper } from '../styles';
 
 export default {
   title: 'Stories Editor/Components/ChecklistCard',

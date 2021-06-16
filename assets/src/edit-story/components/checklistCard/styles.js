@@ -82,3 +82,8 @@ export const Footer = styled.div`
   padding-top: 8px;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
 `;
+
+// For use with lists
+export const CardListWrapper = styled.div`
+  margin-left: 16px;
+`;

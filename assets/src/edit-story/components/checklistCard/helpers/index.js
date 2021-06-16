@@ -15,4 +15,3 @@
  */
 export { getCardType } from './getCardType';
 export { getGridTemplateAreas } from './getGridTemplateAreas';
-export { CardListWrapper } from './cardListWrapper';
