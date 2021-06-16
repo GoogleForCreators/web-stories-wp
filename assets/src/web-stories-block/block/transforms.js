@@ -15,6 +15,10 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { createBlock } from '@wordpress/blocks';
+/**
  * Internal dependencies
  */
 import { BLOCK_TYPE_LATEST_STORIES, BLOCK_TYPE_URL } from './constants';
@@ -131,6 +135,47 @@ const transforms = {
             };
           },
         },
+      },
+    },
+    {
+      type: 'block',
+      blocks: ['core/legacy-widget'],
+      isMatch: ({ idBase, instance }) => {
+        if (!instance?.raw) {
+          // Can't transform if raw instance is not shown in REST API.
+          return false;
+        }
+        return idBase === 'web_stories_widget';
+      },
+      transform: ({ instance }) => {
+        const transformedBlock = createBlock('web-stories/embed', {
+          blockType: 'latest-stories',
+          viewType: instance.raw.view_type,
+          fieldState: {
+            show_title: instance.raw.show_title,
+            show_author: instance.raw.show_author,
+            show_date: instance.raw.show_date,
+            show_excerpt: instance.raw.show_excerpt,
+            show_archive_link: instance.raw.show_archive_link,
+            show_sharp_corners: instance.raw.sharp_corners,
+            show_image_alignment: instance.raw.image_alignment,
+          },
+          archiveLinkLabel: instance.raw.archive_link_label,
+          circleSize: instance.raw.circle_size,
+          numOfColumns: instance.raw.number_of_columns,
+          numOfStories: instance.raw.number_of_stories,
+          orderby: instance.raw.orderby.replace('post_', ''),
+          order: instance.raw.order.toLowerCase(),
+        });
+        if (!instance.raw?.title) {
+          return transformedBlock;
+        }
+        return [
+          createBlock('core/heading', {
+            content: instance.raw.title,
+          }),
+          transformedBlock,
+        ];
       },
     },
   ],
