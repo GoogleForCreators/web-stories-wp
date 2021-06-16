@@ -18,16 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import {
-  PAGE_HEIGHT,
-  FONT_WEIGHT,
-  BACKGROUND_TEXT_MODE,
-} from '../../../../constants';
-import { dataFontEm } from '../../../../units';
+import { FONT_WEIGHT, BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 // Measured in editor. As small as you can make

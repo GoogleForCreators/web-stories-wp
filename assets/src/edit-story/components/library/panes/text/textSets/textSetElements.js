@@ -18,14 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { UnitsProvider, PAGE_WIDTH } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
+
 import StoryPropTypes from '../../../../../types';
 import DisplayElement from '../../../../canvas/displayElement';
-import { UnitsProvider } from '../../../../../units';
-import { PAGE_WIDTH } from '../../../../../constants';
 
 function getElementContent(content, isForDisplay) {
   if (!content) {

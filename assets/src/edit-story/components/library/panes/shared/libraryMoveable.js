@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { editorToDataX, editorToDataY } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { editorToDataX, editorToDataY } from '../../../../units';
 import { ZOOM_SETTING } from '../../../../constants';
 import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';

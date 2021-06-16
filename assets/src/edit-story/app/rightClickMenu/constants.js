@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
 
-export { default as UnitsProvider } from './unitsProvider';
-export { default as useUnits } from './useUnits';
-export {
-  dataPixels,
-  editorPixels,
-  dataToEditorX,
-  dataToEditorY,
-  editorToDataX,
-  editorToDataY,
-  dataFontEm,
-  dataToFontSizeY,
-} from './dimensions';
+export const RIGHT_CLICK_MENU_LABELS = {
+  COPY: __('Copy', 'web-stories'),
+  PASTE: __('Paste', 'web-stories'),
+  DELETE: __('Delete', 'web-stories'),
+  DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
+  DELETE_PAGE: __('Delete page', 'web-stories'),
+};

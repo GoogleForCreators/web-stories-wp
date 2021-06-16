@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { getFileName } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
-import getFileName from './getFileName';
 
 export const VIDEO_SIZE_THRESHOLD = {
   HEIGHT: 720,

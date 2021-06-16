@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
+import { ResourcePropTypes } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -104,93 +105,6 @@ StoryPropTypes.page = PropTypes.shape({
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
-StoryPropTypes.resourceSize = PropTypes.shape({
-  file: PropTypes.string,
-  source_url: PropTypes.string.isRequired,
-  mime_type: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-});
-
-StoryPropTypes.imageResourceSizes = PropTypes.shape({
-  full: StoryPropTypes.resourceSize,
-  large: StoryPropTypes.resourceSize,
-  web_stories_thumbnail: StoryPropTypes.resourceSize,
-});
-
-StoryPropTypes.videoResourceSizes = PropTypes.oneOfType([
-  PropTypes.array,
-  PropTypes.shape({
-    full: StoryPropTypes.resourceSize,
-    preview: StoryPropTypes.resourceSize,
-  }),
-]);
-
-StoryPropTypes.imageResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  alt: PropTypes.string,
-  title: PropTypes.string,
-  sizes: StoryPropTypes.imageResourceSizes,
-});
-
-StoryPropTypes.trackResource = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  track: PropTypes.string.isRequired,
-  trackId: PropTypes.number,
-  trackName: PropTypes.string.isRequired,
-  kind: PropTypes.string,
-  srclang: PropTypes.string,
-  label: PropTypes.string,
-});
-
-StoryPropTypes.videoResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  poster: PropTypes.string,
-  posterId: PropTypes.number,
-  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
-  alt: PropTypes.string,
-  title: PropTypes.string,
-  sizes: StoryPropTypes.videoResourceSizes,
-});
-
-StoryPropTypes.gifResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  title: PropTypes.string,
-  alt: PropTypes.string,
-  local: PropTypes.bool,
-  sizes: PropTypes.imageResourceSizes,
-  output: PropTypes.shape({
-    mimeType: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    sizes: PropTypes.shape({
-      mp4: StoryPropTypes.videoResourceSizes,
-      webm: StoryPropTypes.videoResourceSizes,
-    }),
-  }),
-});
-
-StoryPropTypes.resource = PropTypes.oneOfType([
-  StoryPropTypes.imageResource,
-  StoryPropTypes.videoResource,
-  StoryPropTypes.trackResource,
-  StoryPropTypes.gifResource,
-]);
-
 const StoryLayerPropTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -231,22 +145,22 @@ StoryPropTypes.elements = {};
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
-  resource: StoryPropTypes.imageResource,
+  resource: ResourcePropTypes.imageResource,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
-  resource: StoryPropTypes.videoResource,
+  resource: ResourcePropTypes.videoResource,
   poster: PropTypes.string,
-  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
+  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   loop: PropTypes.bool,
 });
 
 StoryPropTypes.elements.gif = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
-  resource: StoryPropTypes.gifResource,
+  resource: ResourcePropTypes.gifResource,
 });
 
 StoryPropTypes.elements.media = PropTypes.oneOfType([
