@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-
+import { dataFontEm, dataPixels } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
-import { dataFontEm, dataPixels } from '../../../../../units';
 import stripHTML from '../../../../../utils/stripHTML';
 import { PRESETS } from '../textPresets';
 

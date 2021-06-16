@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { dataPixels } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
@@ -21,7 +24,6 @@ import {
   calculateFitTextFontSize,
   calculateTextHeight,
 } from '../../utils/textMeasurements';
-import { dataPixels } from '../../units';
 
 function updateForResizeEvent(element, direction, newWidth, newHeight) {
   const isResizingWidth = direction[0] !== 0;

@@ -21,11 +21,11 @@ import { useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../../units';
 import {
   getVirtualizedItemIndex,
   useVirtualizedGridNavigation,

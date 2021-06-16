@@ -17,11 +17,12 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
 import useStory from '../../story/useStory';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
 
 function useUpdateElementDimensions() {
   const { updateElementsByResourceId } = useStory((state) => ({

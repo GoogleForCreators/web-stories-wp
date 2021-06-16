@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useMemo, useCallback, useRef, useEffect } from 'react';
+import { isPatternEqual } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import isPatternEqual from '../../../../utils/isPatternEqual';
 import useRichText from '../../../richText/useRichText';
 import {
   getHTMLFormatters,

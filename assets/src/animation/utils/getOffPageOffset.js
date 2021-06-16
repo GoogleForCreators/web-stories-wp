@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '../../edit-story/constants';
-import { dataToEditorY, getBox } from '../../edit-story/units/dimensions';
-
-const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
+  dataToEditorY,
+  getBox,
+  DANGER_ZONE_HEIGHT,
+} from '@web-stories-wp/units';
 
 function calcTopOffset(box, dangerZoneOffset) {
   const { y, height } = box;

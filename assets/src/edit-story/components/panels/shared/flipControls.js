@@ -49,11 +49,18 @@ const StyledToggleButton = styled(ToggleButton)`
 `;
 
 /**
+ * @callback ChangeCallback
+ * @param {Object} flip Flip value.
+ * @param {boolean} flip.horizontal Horizontal value.
+ * @param {boolean} flip.vertical Vertical value.
+ */
+
+/**
  * Get flip controls for flipping elements horizontally and vertically.
  *
  * @param {Object} props Component props.
  * @param {Object} props.value Element's flip object.
- * @param {function(boolean)} props.onChange Callback to flip element.
+ * @param {ChangeCallback} props.onChange Callback to flip element.
  * @return {*} Rendered component.
  */
 function FlipControls({ value, onChange }) {

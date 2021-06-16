@@ -23,6 +23,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -40,7 +41,6 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import resourceList from '../../../../../utils/resourceList';
 import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
 

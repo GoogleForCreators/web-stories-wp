@@ -41,7 +41,7 @@ import Dialog from '../../../../dialog';
  * @param {Object} props Component props.
  * @param {number} props.mediaId Selected media element's ID.
  * @param {string} props.type Selected media element's type.
- * @param {function()} props.onClose Callback to toggle dialog display on close.
+ * @param {Function} props.onClose Callback to toggle dialog display on close.
  * @return {null|*} The dialog element.
  */
 function DeleteDialog({ mediaId, type, onClose }) {
