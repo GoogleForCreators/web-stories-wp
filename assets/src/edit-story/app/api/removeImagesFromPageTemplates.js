@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { PAGE_WIDTH } from '../../constants';
+import { PAGE_WIDTH } from '@web-stories-wp/units';
 
 const PLACEHOLDER_WIDTH = 1680;
 const PLACEHOLDER_HEIGHT = 2938;

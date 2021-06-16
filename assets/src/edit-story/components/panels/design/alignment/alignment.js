@@ -21,6 +21,12 @@ import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  getBoundRect,
+  calcRotatedObjectPositionAndSize,
+} from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -35,10 +41,6 @@ import {
   themeHelpers,
 } from '../../../../../design-system';
 import { useConfig } from '../../../../app';
-import getBoundRect, {
-  calcRotatedObjectPositionAndSize,
-} from '../../../../utils/getBoundRect';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../../constants';
 import { Panel } from '../../panel';
 import Tooltip from '../../../tooltip';
 import useAlignment from './useAlignment';

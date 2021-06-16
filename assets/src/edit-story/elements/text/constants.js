@@ -13,13 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import createSolid from '../../utils/createSolid';
 import PanelTypes from '../../components/panels/design/types';
 
 export const defaultAttributes = {

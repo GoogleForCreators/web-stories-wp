@@ -15,10 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  dataPixels,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+  DEFAULT_DPR,
+} from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
-import { DEFAULT_DPR, PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
-import { dataPixels } from '../units';
 import { getDefinitionForType } from '../elements';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];

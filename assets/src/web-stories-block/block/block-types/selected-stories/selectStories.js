@@ -19,6 +19,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * WordPress dependencies
@@ -43,7 +44,6 @@ import {
 import { InfiniteScroller } from '../../../../dashboard/components';
 import FontProvider from '../../../../dashboard/app/font/fontProvider';
 import { Search, DropDown } from '../../../../design-system';
-import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { StoryGridItem } from './components/cardGridItem';
 import ItemOverlay from './components/itemOverlay';

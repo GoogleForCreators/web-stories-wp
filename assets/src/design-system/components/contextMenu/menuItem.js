@@ -18,7 +18,9 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo, useRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { sprintf, __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
@@ -34,13 +36,9 @@ const ItemText = styled(Text)`
   width: 200px;
   text-align: left;
 `;
-
-const Shortcut = styled(Text)(
-  ({ theme }) => css`
-    color: ${theme.colors.border.disable};
-    white-space: nowrap;
-  `
-);
+const Shortcut = styled(Text)`
+  color: ${({ theme }) => theme.colors.border.disable};
+`;
 
 const IconWrapper = styled.span`
   width: 32px;
@@ -48,6 +46,7 @@ const IconWrapper = styled.span`
 `;
 
 export const MenuItem = ({
+  ariaLabel,
   disabled,
   href,
   label,
@@ -72,6 +71,15 @@ export const MenuItem = ({
     [onClick, onDismiss]
   );
 
+  const itemLabel = shortcut?.title
+    ? sprintf(
+        /* translators: 1: Menu Item Text Label. 2: Keyboard shortcut value. */
+        __('%1$s, or use %2$s on a keyboard', 'web-stories'),
+        ariaLabel || label,
+        shortcut.title
+      )
+    : ariaLabel || label;
+
   const textContent = useMemo(() => {
     if (Icon) {
       return (
@@ -90,12 +98,12 @@ export const MenuItem = ({
         >
           {label}
         </ItemText>
-        {shortcut && (
+        {shortcut?.display && (
           <Shortcut
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            forwardedAs="span"
+            forwardedAs="kbd"
           >
-            {shortcut}
+            {shortcut?.display}
           </Shortcut>
         )}
       </>
@@ -113,7 +121,7 @@ export const MenuItem = ({
     return (
       <Link
         ref={itemRef}
-        aria-label={label}
+        aria-label={itemLabel}
         href={href}
         onClick={handleClick}
         onFocus={onFocus}
@@ -129,7 +137,7 @@ export const MenuItem = ({
     return (
       <Button
         ref={itemRef}
-        aria-label={label}
+        aria-label={itemLabel}
         disabled={disabled}
         onClick={handleClick}
         onFocus={onFocus}
@@ -189,11 +197,15 @@ export const MenuItemProps = {
   disabled: PropTypes.bool,
   href: linkOrButtonValidator,
   label: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
   newTab: PropTypes.bool,
   onClick: PropTypes.func,
   onDismiss: PropTypes.func,
   onFocus: PropTypes.func,
-  shortcut: PropTypes.string,
+  shortcut: PropTypes.shape({
+    display: PropTypes.string,
+    title: PropTypes.string,
+  }),
   Icon: PropTypes.func,
   tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
 };
