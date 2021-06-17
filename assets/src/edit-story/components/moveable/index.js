@@ -19,6 +19,7 @@
  */
 import { forwardRef } from 'react';
 import Moveable from 'react-moveable';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -27,7 +28,7 @@ import InOverlay from '../overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-function MoveableWithRef({ ...moveableProps }, ref) {
+function MoveableWithRef({ adjustForRTL = false, ...moveableProps }, ref) {
   return (
     <InOverlay
       zIndex={DEFAULT_Z_INDEX}
@@ -35,8 +36,13 @@ function MoveableWithRef({ ...moveableProps }, ref) {
       render={({ container }) => {
         return <Moveable ref={ref} container={container} {...moveableProps} />;
       }}
+      adjustForRTL={adjustForRTL}
     />
   );
 }
+
+MoveableWithRef.propTypes = {
+  adjustForRTL: PropTypes.bool,
+};
 
 export default forwardRef(MoveableWithRef);

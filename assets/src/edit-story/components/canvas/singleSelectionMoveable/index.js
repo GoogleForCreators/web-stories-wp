@@ -26,7 +26,7 @@ import { useUnits } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useBatchingCallback } from '../../../../design-system';
-import { useStory, useCanvas, useLayout } from '../../../app';
+import { useStory, useCanvas, useLayout, useConfig } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
@@ -48,6 +48,7 @@ function SingleSelectionMoveable({
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  const { isRTL } = useConfig();
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
   }));
@@ -57,8 +58,11 @@ function SingleSelectionMoveable({
   const {
     actions: { pushTransform },
   } = useTransform();
-  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
-    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
+  const { zoomSetting, scrollLeft, scrollTop, hasVerticalOverflow } = useLayout(
+    ({
+      state: { zoomSetting, scrollLeft, scrollTop, hasVerticalOverflow },
+    }) => ({
+      hasVerticalOverflow,
       zoomSetting,
       scrollLeft,
       scrollTop,
@@ -235,6 +239,7 @@ function SingleSelectionMoveable({
       {...snapProps}
       origin={false}
       pinchable
+      adjustForRTL={isRTL && hasVerticalOverflow}
     />
   );
 }

@@ -24,7 +24,7 @@ import { useUnits } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import Moveable from '../../moveable';
-import { useStory, useCanvas, useLayout } from '../../../app';
+import { useStory, useCanvas, useLayout, useConfig } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { getDefinitionForType } from '../../../elements';
@@ -40,6 +40,7 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
+  const { isRTL } = useConfig();
 
   const { updateElementsById, deleteElementsById, backgroundElement } =
     useStory((state) => ({
@@ -57,8 +58,11 @@ function MultiSelectionMoveable({ selectedElements }) {
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
   }));
-  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
-    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
+  const { zoomSetting, scrollLeft, scrollTop, hasVerticalOverflow } = useLayout(
+    ({
+      state: { zoomSetting, scrollLeft, scrollTop, hasVerticalOverflow },
+    }) => ({
+      hasVerticalOverflow,
       zoomSetting,
       scrollLeft,
       scrollTop,
@@ -246,6 +250,7 @@ function MultiSelectionMoveable({ selectedElements }) {
       {...rotateProps}
       {...resizeProps}
       {...snapProps}
+      adjustForRTL={isRTL && hasVerticalOverflow}
     />
   );
 }

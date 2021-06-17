@@ -24,7 +24,7 @@ import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { useContext } from '../../../design-system';
+import { themeHelpers, useContext } from '../../../design-system';
 
 /**
  * Internal dependencies
@@ -36,14 +36,15 @@ const Wrapper = styled.div`
   ${pointerEventsCss}
   position: absolute;
   top: 0;
-  left: 0;
+  left: ${({ adjustForRTL }) =>
+    adjustForRTL ? `${-themeHelpers.SCROLLBAR_WIDTH}px` : 0};
   width: 0;
   height: 0;
   z-index: ${({ zIndex }) => `${zIndex}`};
 `;
 
 function InOverlayWithRef(
-  { zIndex, pointerEvents, render, children = null },
+  { zIndex, pointerEvents, render, children = null, ...rest },
   ref
 ) {
   const { container, overlay } = useContext(Context);
@@ -57,6 +58,7 @@ function InOverlayWithRef(
       zIndex={zIndex || 0}
       pointerEvents={pointerEvents}
       onMouseDown={(evt) => evt.stopPropagation()}
+      {...rest}
     >
       {render ? render({ container, overlay }) : children}
     </Wrapper>
