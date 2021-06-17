@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { ReactComponent as icon } from '../images/icon.svg';
@@ -30,23 +25,15 @@ import metadata from './block';
 import { BLOCK_TYPE_LATEST_STORIES, GRID_VIEW_TYPE } from './constants';
 import transforms from './transforms';
 
-const { name, category, attributes } = metadata;
+const { name, category, attributes, supports, title, description, keywords } =
+  metadata;
 
 const settings = {
-  title: __('Web Stories', 'web-stories'),
-  description: __('Embed Web Stories.', 'web-stories'),
+  title,
+  description,
   category,
   icon,
-  keywords: [
-    /* translators: block keyword. */
-    __('embed', 'web-stories'),
-    /* translators: block keyword. */
-    __('web stories', 'web-stories'),
-    /* translators: block keyword. */
-    __('story', 'web-stories'),
-    /* translators: block keyword. */
-    __('stories', 'web-stories'),
-  ],
+  keywords,
   attributes,
   example: {
     attributes: {
@@ -55,9 +42,7 @@ const settings = {
       numberOfColumns: 2,
     },
   },
-  supports: {
-    align: ['wide', 'full', 'left', 'right', 'center'],
-  },
+  supports,
   deprecated,
   edit,
   save,
