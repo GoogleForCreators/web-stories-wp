@@ -22,19 +22,13 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { ChecklistCard } from '..';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
-  Text,
-  Link,
-  List,
-} from '../../../../design-system';
+import { THEME_CONSTANTS, Text, Link, List } from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../constants';
 import { CardListWrapper } from '../styles';
+import { DefaultCtaButton } from '../defaultCtaButton';
+import { DefaultFooterText } from '../defaultFooterText';
 
 export default {
   title: 'Stories Editor/Components/ChecklistCard',
@@ -64,7 +58,7 @@ export const _default = () => {
             onClick: () => action('title clicked')(),
           }}
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
@@ -74,13 +68,9 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
-          cta={
-            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
-              {'Replace File'}
-            </Button>
-          }
+          cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
           thumbnailCount={1}
           thumbnail={
             <Thumbnail
@@ -97,7 +87,7 @@ export const _default = () => {
         <ChecklistCard
           title="Add video captions"
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
@@ -107,7 +97,7 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
           thumbnailCount={1}
           thumbnail={
@@ -125,7 +115,7 @@ export const _default = () => {
         <ChecklistCard
           title="Increase size of publisher logo to at least 96x96px"
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {'Maintain a 1:1 aspect ratio. '}
               <Link
                 href="/demo"
@@ -133,13 +123,9 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
-          cta={
-            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
-              {'Replace File'}
-            </Button>
-          }
+          cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
         />
       </div>
       <div>
@@ -147,7 +133,7 @@ export const _default = () => {
         <ChecklistCard
           title="Add Web Story title"
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {'Keep title under 40 characters. '}
               <Link
                 href="/demo"
@@ -155,7 +141,7 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
         />
       </div>
@@ -180,11 +166,7 @@ export const _default = () => {
               </Link>
             </CardListWrapper>
           }
-          cta={
-            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
-              {'Upload'}
-            </Button>
-          }
+          cta={<DefaultCtaButton>{'Upload'}</DefaultCtaButton>}
         />
       </div>
       <div>
@@ -192,7 +174,7 @@ export const _default = () => {
         <ChecklistCard
           title="Add video captions"
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
@@ -202,7 +184,7 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
           thumbnailCount={3}
@@ -234,13 +216,9 @@ export const _default = () => {
         <Text>{'Multiple Issues'}</Text>
         <ChecklistCard
           title="Add video captions"
-          cta={
-            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
-              {'Fix everything'}
-            </Button>
-          }
+          cta={<DefaultCtaButton>{'Fix everything'}</DefaultCtaButton>}
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
@@ -250,7 +228,7 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
           thumbnailCount={3}
@@ -283,13 +261,9 @@ export const _default = () => {
         <Text>{'Multiple Issues - more than 4'}</Text>
         <ChecklistCard
           title="Add video captions"
-          cta={
-            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
-              {'Fix everything'}
-            </Button>
-          }
+          cta={<DefaultCtaButton>{'Fix everything'}</DefaultCtaButton>}
           footer={
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            <DefaultFooterText>
               {
                 'Keep the audience engaged even when they can’t listen to the audio. '
               }
@@ -299,7 +273,7 @@ export const _default = () => {
               >
                 {'Learn more'}
               </Link>
-            </Text>
+            </DefaultFooterText>
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
           thumbnailCount={6}

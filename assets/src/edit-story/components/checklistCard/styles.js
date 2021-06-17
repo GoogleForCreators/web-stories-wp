@@ -44,7 +44,7 @@ export const Container = styled.div`
   `}
 `;
 Container.propTypes = {
-  gridVariant: PropTypes.oneOf(Object.values(GRID_VARIANT)).isRequired,
+  gridVariant: PropTypes.oneOf(Object.values(GRID_VARIANT)),
 };
 
 // Titles can be divs or buttons. Buttons are for if there is an action for the user to take (like highlighting)
