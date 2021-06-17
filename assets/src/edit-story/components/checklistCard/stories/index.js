@@ -306,37 +306,37 @@ export const _default = () => {
           thumbnail={
             <>
               <Thumbnail
-                onClick={() => action('thumbnail action found')()}
+                onClick={() => action('1 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />
               <Thumbnail
-                onClick={() => action('thumbnail action found')()}
+                onClick={() => action('2 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />
               <Thumbnail
-                onClick={() => action('thumbnail action found')()}
+                onClick={() => action('3 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />
               <Thumbnail
-                onClick={() => action('thumbnail action found')()}
+                onClick={() => action('4 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />
               <Thumbnail
-                onClick={() => action('thumbnail action found')()}
+                onClick={() => action('5 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />
               <Thumbnail
-                onClick={() => action('thumbnail action found')()}
+                onClick={() => action('6 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"

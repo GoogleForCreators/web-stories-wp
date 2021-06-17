@@ -25,13 +25,19 @@ import PropTypes from 'prop-types';
 
 import { Headline, THEME_CONSTANTS } from '../../../design-system';
 import { getGridVariant } from './helpers';
-import { CARD_TYPE } from './constants';
+import {
+  CARD_TYPE,
+  MAX_THUMBNAILS_DISPLAYED,
+  DEFAULT_OVERFLOW_LABEL,
+} from './constants';
+
 import {
   Wrapper,
   Container,
   Title,
   Cta,
   ThumbnailWrapper,
+  StyledOverflowThumbnail,
   Footer,
 } from './styles';
 
@@ -43,6 +49,7 @@ import {
  * @param {Object}  props.titleProps if an object is passed in it should have an onClick, these are so that issues can have buttons as titles.
  * @param {Node} props.footer will  be rendered in the footer section of a card.
  * @param {Node} props.cta will be rendered as the cta section of a card.
+ * @param {string} props.overflowLabel will be used as the aria label for the overflow thumbnail
  * @param {Node}  props.thumbnail will be rendered in the thumbnail section of a card.
  * @param  {number} props.thumbnailCount count of how  many thumbnails are getting rendered to use to manipulate grid. Defaults to 0.
  * @return {Node} card to  display.
@@ -53,6 +60,7 @@ const ChecklistCard = ({
   titleProps,
   footer,
   cta,
+  overflowLabel = DEFAULT_OVERFLOW_LABEL,
   thumbnail,
   thumbnailCount = 0,
 }) => {
@@ -61,6 +69,8 @@ const ChecklistCard = ({
     thumbnailCount,
     hasCta: Boolean(cta),
   });
+
+  const hasOverflowThumbnail = thumbnailCount > 0 && thumbnailCount > 4;
 
   return (
     <Wrapper>
@@ -73,9 +83,18 @@ const ChecklistCard = ({
             {title}
           </Headline>
         </Title>
-        <ThumbnailWrapper $isMultiple={thumbnailCount > 1}>
+        <ThumbnailWrapper
+          $isMultiple={thumbnailCount > 1}
+          $colCount={hasOverflowThumbnail ? MAX_THUMBNAILS_DISPLAYED : 4}
+        >
           {thumbnail}
         </ThumbnailWrapper>
+        {hasOverflowThumbnail && (
+          <StyledOverflowThumbnail
+            aria-label={overflowLabel}
+            overflowCount={thumbnailCount - MAX_THUMBNAILS_DISPLAYED}
+          />
+        )}
         <Cta>{cta}</Cta>
         <Footer>{footer}</Footer>
       </Container>
@@ -85,24 +104,25 @@ const ChecklistCard = ({
 
 ChecklistCard.propTypes = {
   cardType: PropTypes.oneOf(Object.values(CARD_TYPE)),
-  title: PropTypes.string.isRequired,
-  titleProps: PropTypes.shape({ onClick: PropTypes.func }),
-  footer: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-    PropTypes.bool,
-  ]),
   cta: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
     PropTypes.bool,
   ]),
+  footer: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+    PropTypes.bool,
+  ]),
+  overflowLabel: PropTypes.string,
   thumbnail: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
     PropTypes.bool,
   ]),
   thumbnailCount: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  titleProps: PropTypes.shape({ onClick: PropTypes.func }),
 };
 
 export default ChecklistCard;

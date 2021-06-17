@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { __, sprintf } from '@web-stories-wp/i18n';
+
 export const CARD_TYPE = {
   SINGLE_ISSUE: 'single_issue',
   MULTIPLE_ISSUE: 'multiple_issue',
@@ -27,13 +32,24 @@ export const GRID_VARIANT = {
 };
 
 export const GRID_TEMPLATE_AREA = {
-  [GRID_VARIANT.SINGLE]: "'title title' 'cta thumbnail' 'footer footer'",
+  [GRID_VARIANT.SINGLE]:
+    "'title title title title' 'cta cta cta thumbnail' 'footer footer footer footer'",
   [GRID_VARIANT.SINGLE_WITH_THUMBNAIL]:
-    "'title thumbnail' 'cta thumbnail' 'footer footer'",
+    "'title title title thumbnail' 'cta cta cta thumbnail' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL]:
-    "'title title' 'thumbnail thumbnail' 'footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA]:
-    "'title title' 'thumbnail thumbnail' 'cta cta' 'footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'cta cta cta cta' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA_OVERFLOW]:
-    "'title title' 'thumbnail thumbnail' 'cta cta' 'footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail-overflow' 'cta cta cta cta' 'footer footer footer footer'",
 };
+
+export const MAX_THUMBNAILS_DISPLAYED = 3;
+export const DEFAULT_OVERFLOW_LABEL = sprintf(
+  /* translators: %s: number of visible thumbnails */
+  __(
+    'Some issues are hidden, fix these first %s and the hidden ones will be visible',
+    'web-stories'
+  ),
+  MAX_THUMBNAILS_DISPLAYED
+);

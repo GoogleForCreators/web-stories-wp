@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
+import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 
 export const Wrapper = styled.div`
@@ -40,7 +41,7 @@ export const Container = styled.div`
   display: grid;
   margin: 16px;
   grid-gap: 8px;
-  grid-template-columns: 180px 52px;
+  grid-template-columns: 52px 52px 52px 52px;
   ${({ gridVariant }) => css`
     grid-template-areas: ${GRID_TEMPLATE_AREA[gridVariant]};
   `}
@@ -75,15 +76,20 @@ export const Cta = styled.div`
 export const ThumbnailWrapper = styled.div`
   grid-area: thumbnail;
 
-  ${({ $isMultiple }) =>
+  ${({ $isMultiple, $colCount }) =>
     $isMultiple &&
     css`
       display: grid;
       grid-gap: 8px;
-      grid-template-columns: 52px 52px 52px 52px;
+      grid-template-columns: repeat(${$colCount}, 52px);
       overflow: hidden;
       grid-auto-flow: column;
     `}
+`;
+
+export const StyledOverflowThumbnail = styled(OverflowThumbnail)`
+  grid-area: thumbnail-overflow;
+  width: 52px;
 `;
 
 export const Footer = styled.div`
