@@ -267,7 +267,7 @@ export const _default = () => {
       <div>
         <Text>{'Multiple Issues - more than 4'}</Text>
         <ChecklistCard
-          title="Add video captions"
+          title="Videos not optimized"
           cta={
             <>
               <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
@@ -275,7 +275,7 @@ export const _default = () => {
               </DefaultCtaButton>
               <CheckboxCta
                 id="demo-optimize"
-                ariaLabel="check this box to optimize videos by default"
+                aria-label="check this box to optimize videos by default"
               >
                 {'Enable auto optimization'}
               </CheckboxCta>
@@ -350,7 +350,7 @@ export const _default = () => {
               <DefaultCtaButton>{'Optimize all videos'}</DefaultCtaButton>
               <CheckboxCta
                 id="demo-optimize"
-                ariaLabel="check this box to optimize videos by default"
+                aria-label="check this box to optimize videos by default"
               >
                 {'Enable auto optimization'}
               </CheckboxCta>

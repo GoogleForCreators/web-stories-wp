@@ -23,22 +23,14 @@ import PropTypes from 'prop-types';
 import { Checkbox } from '../../../design-system';
 import { CheckboxCtaContainer, CheckboxCtaLabel } from './styles';
 
-export const CheckboxCta = ({
-  id,
-  ariaLabel,
-  displayLabel,
-  children,
-  ...rest
-}) => (
+export const CheckboxCta = ({ id, children, ...rest }) => (
   <CheckboxCtaContainer>
-    <Checkbox id={id} aria-label={ariaLabel || displayLabel} {...rest} />
+    <Checkbox id={id} {...rest} />
     <CheckboxCtaLabel htmlFor={id}>{children}</CheckboxCtaLabel>
   </CheckboxCtaContainer>
 );
 CheckboxCta.propTypes = {
   id: PropTypes.string.isRequired,
-  ariaLabel: PropTypes.string,
-  displayLabel: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
