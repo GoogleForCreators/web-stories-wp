@@ -26,6 +26,8 @@ import {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -33,7 +35,6 @@ import PropTypes from 'prop-types';
 import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
@@ -47,7 +48,6 @@ import { BACKGROUND_TEXT_MODE } from '../../constants';
 import useUnmount from '../../utils/useUnmount';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
 import {

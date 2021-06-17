@@ -21,11 +21,10 @@ import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { Icons, themeHelpers } from '../../../design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 

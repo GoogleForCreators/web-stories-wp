@@ -33,15 +33,7 @@ export const ZOOM_SETTING = {
   FIXED: 'FIXED',
 };
 
-export const PAGE_RATIO = 2 / 3;
-export const PAGE_WIDTH = 412;
-export const PAGE_HEIGHT = PAGE_WIDTH / PAGE_RATIO;
 export const PAGE_WIDTH_FACTOR = 12;
-
-export const FULLBLEED_RATIO = 9 / 16;
-
-export const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
-export const DANGER_ZONE_HEIGHT = (FULLBLEED_HEIGHT - PAGE_HEIGHT) / 2;
 
 export const DESIGN_SPACE_MARGIN = 48;
 
@@ -49,12 +41,6 @@ export const COLOR_PRESETS_PER_ROW = 6;
 export const STYLE_PRESETS_PER_ROW = 2;
 
 export const TEXT_SET_SIZE = 150;
-
-// Default device pixel ratio.
-export const DEFAULT_DPR = 0.5;
-
-// Default 1em value for font size.
-export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
 
 export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   scale: 100,

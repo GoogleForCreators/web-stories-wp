@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -30,7 +31,6 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '../../elements/shared';
-import { useUnits } from '../../units';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`

@@ -21,11 +21,11 @@ import { render, act } from '@testing-library/react';
 import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../units';
 import withOverlay from '../../overlay/withOverlay';
 import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
