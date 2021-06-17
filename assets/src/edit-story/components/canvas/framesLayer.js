@@ -108,9 +108,9 @@ function FramesLayer() {
             ref={setDesignSpaceGuideline}
             isVisible={isAnythingTransforming}
           />
-          <RightClickMenu />
         </FramesPageArea>
       )}
+      <RightClickMenu />
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.
