@@ -88,7 +88,7 @@ describe('TextOutput', () => {
       />
     );
     expect(output.tagName).toBe('P');
-    expect(output.innerHTML).toBe('Content');
+    expect(output.innerHTML).toBe('<span>Content</span>');
     expect(output).toHaveClass('fill', { exact: true });
     expect(output.style).toMatchObject({
       whiteSpace: 'pre-wrap',
@@ -126,7 +126,7 @@ describe('TextOutput', () => {
       />
     );
     expect(output.tagName).toBe('P');
-    expect(output.innerHTML).toBe('Content');
+    expect(output.innerHTML).toBe('<span>Content</span>');
     expect(output).toHaveClass('fill', { exact: true });
     expect(output.style).toMatchObject({
       padding: '20% 20%',
