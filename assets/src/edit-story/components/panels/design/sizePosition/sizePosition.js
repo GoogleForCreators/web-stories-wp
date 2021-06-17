@@ -43,7 +43,6 @@ import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { getDefinitionForType } from '../../../../elements';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
-import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import {
   focusStyle,
   getCommonValue,
@@ -52,6 +51,7 @@ import {
 } from '../../shared';
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
+import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';
