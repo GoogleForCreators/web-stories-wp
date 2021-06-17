@@ -73,7 +73,7 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 2px;
     width: 8px;
     height: 8px;
-    margin-left: -4px;
+    margin-${({ isRTL }) => (isRTL ? 'left' : 'right')}: -4px;
     margin-top: -4px;
   }
 
@@ -86,13 +86,13 @@ export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control.moveable-e {
     height: 16px !important;
     width: 6px !important;
-    margin-left: -3px !important;
+    margin-${({ isRTL }) => (isRTL ? 'left' : 'right')}: -3px !important;
   }
 
   .default-moveable .moveable-control.moveable-w {
     height: 16px !important;
     width: 6px !important;
-    margin-left: -3px !important;
+    margin-${({ isRTL }) => (isRTL ? 'left' : 'right')}: -3px !important;
   }
 
   .default-moveable.moveable-control-box .moveable-line.moveable-direction {
@@ -112,7 +112,7 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 50px;
     width: 10px;
     height: 10px;
-    margin-left: -5px;
+    margin-${({ isRTL }) => (isRTL ? 'left' : 'right')}: -5px;
     top: 25px;
   }
 

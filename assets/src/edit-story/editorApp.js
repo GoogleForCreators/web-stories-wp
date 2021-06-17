@@ -73,7 +73,7 @@ function App({ config }) {
                                 <TransformProvider>
                                   <DropTargetsProvider>
                                     <HelpCenterProvider>
-                                      <GlobalStyle />
+                                      <GlobalStyle isRTL={isRTL} />
                                       <DevTools />
                                       <DefaultMoveableGlobalStyle />
                                       <CropMoveableGlobalStyle />
