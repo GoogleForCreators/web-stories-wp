@@ -34,7 +34,7 @@ import { Container } from './styles';
  */
 const OverflowThumbnail = ({ overflowCount, ...rest }) => (
   <Container $isOverflow {...rest}>
-    <Text as="label" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+    <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
       {sprintf(
         /* translators: %s: number of thumbnails in overflow */
         __('+ %s', 'web-stories'),
