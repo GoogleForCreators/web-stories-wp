@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -41,9 +42,11 @@ const RightClickMenu = () => {
   return (
     <RightClickMenuContainer position={menuPosition}>
       <AnimatedContextMenu
+        data-testid="right-click-context-menu"
         isOpen={isMenuOpen}
         onDismiss={onCloseMenu}
         items={rightClickMenuItems}
+        groupLabel={__('Context Menu for the selected element', 'web-stories')}
       />
     </RightClickMenuContainer>
   );

@@ -34,9 +34,7 @@ import {
 import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
-import { useRightClickMenu } from '../../app/rightClickMenu';
 import usePinchToZoom from './usePinchToZoom';
-import RightClickMenu from './rightClickMenu';
 
 /**
  * @file See https://user-images.githubusercontent.com/726049/72654503-bfffe780-3944-11ea-912c-fc54d68b6100.png
@@ -342,6 +340,7 @@ const PageArea = forwardRef(function PageArea(
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
+    pageAreaRef = createRef(),
     ...rest
   },
   ref
@@ -369,7 +368,6 @@ const PageArea = forwardRef(function PageArea(
       scrollTop,
     })
   );
-  const { rightClickAreaRef } = useRightClickMenu();
 
   // We need to ref scroll, because scroll changes should not update a non-controlled layer
   const scroll = useRef();
@@ -386,43 +384,42 @@ const PageArea = forwardRef(function PageArea(
   usePinchToZoom({ containerRef: paddedRef });
 
   return (
-    <>
-      <PageAreaContainer
-        ref={rightClickAreaRef}
-        showOverflow={showOverflow}
-        isControlled={isControlled}
+    <PageAreaContainer
+      showOverflow={showOverflow}
+      isControlled={isControlled}
+      hasHorizontalOverflow={hasHorizontalOverflow}
+      hasVerticalOverflow={hasVerticalOverflow}
+      className={className}
+      data-scroll-container
+      {...rest}
+    >
+      <PageClip
         hasHorizontalOverflow={hasHorizontalOverflow}
         hasVerticalOverflow={hasVerticalOverflow}
-        className={className}
-        data-scroll-container
-        {...rest}
       >
-        <PageClip
-          hasHorizontalOverflow={hasHorizontalOverflow}
-          hasVerticalOverflow={hasVerticalOverflow}
-        >
-          <PaddedPage ref={paddedRef}>
-            <FullbleedContainer
-              aria-label={__('Fullbleed area', 'web-stories')}
-              role="region"
-              ref={fullbleedRef}
-              data-testid="fullbleed"
-              background={background}
-              isControlled={isControlled}
-              isBackgroundSelected={isBackgroundSelected}
+        <PaddedPage ref={paddedRef}>
+          <FullbleedContainer
+            aria-label={__('Fullbleed area', 'web-stories')}
+            role="region"
+            ref={fullbleedRef}
+            data-testid="fullbleed"
+            background={background}
+            isControlled={isControlled}
+            isBackgroundSelected={isBackgroundSelected}
+          >
+            <PageAreaWithoutOverflow
+              ref={pageAreaRef}
+              showOverflow={showOverflow}
             >
-              <PageAreaWithoutOverflow showOverflow={showOverflow}>
-                <PageAreaSafeZone ref={ref} data-testid="safezone">
-                  {children}
-                </PageAreaSafeZone>
-              </PageAreaWithoutOverflow>
-            </FullbleedContainer>
-          </PaddedPage>
-        </PageClip>
-        {overlay}
-      </PageAreaContainer>
-      <RightClickMenu />
-    </>
+              <PageAreaSafeZone ref={ref} data-testid="safezone">
+                {children}
+              </PageAreaSafeZone>
+            </PageAreaWithoutOverflow>
+          </FullbleedContainer>
+        </PaddedPage>
+      </PageClip>
+      {overlay}
+    </PageAreaContainer>
   );
 });
 
@@ -435,6 +432,7 @@ PageArea.propTypes = {
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
+  pageAreaRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 export {
