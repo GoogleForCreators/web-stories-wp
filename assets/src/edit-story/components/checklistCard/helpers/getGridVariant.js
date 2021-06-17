@@ -22,15 +22,31 @@ import { CARD_TYPE, GRID_VARIANT } from '../constants';
 /**
  *
  * @param {Object} props props passed to function
- * @param {string} props.cardType type of card getting renderedText.Text
- * @param {number} props.thumbnailCount how many thumbnails are getting rendered inside the card. Defaults to 0.
+ * @param {string} props.cardType type of card getting rendered.
+ * @param {number} props.thumbnailCount how many thumbnails are getting rendered inside the card, defaults to 0.
+ * @param {boolean} props.hasCta whether or not a card has a cta.
  * @return {string} type of card.
  */
-export const getCardType = ({ cardType, thumbnailCount }) => {
+export const getGridVariant = ({ cardType, thumbnailCount, hasCta }) => {
   if (cardType === CARD_TYPE.SINGLE_ISSUE) {
     return thumbnailCount > 0
       ? GRID_VARIANT.SINGLE_WITH_THUMBNAIL
       : GRID_VARIANT.SINGLE;
+  }
+
+  if (cardType === CARD_TYPE.MULTIPLE_ISSUE) {
+    if (!thumbnailCount) {
+      // todo
+      return GRID_VARIANT.DEFAULT;
+    }
+    if (hasCta) {
+      return thumbnailCount <= 4
+        ? GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA
+        : GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA_OVERFLOW;
+    }
+    return thumbnailCount <= 4
+      ? GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL
+      : GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_OVERFLOW;
   }
   return GRID_VARIANT.DEFAULT;
 };

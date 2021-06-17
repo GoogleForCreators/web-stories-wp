@@ -21,4 +21,19 @@ export const GRID_VARIANT = {
   SINGLE_WITH_THUMBNAIL: 'single_with_thumbnail',
   SINGLE: 'single',
   DEFAULT: 'single',
+  MULTIPLE_WITH_THUMBNAIL: 'multiple_with_thumbnail',
+  MULTIPLE_WITH_THUMBNAIL_WITH_CTA: 'multiple_with_thumbnail_with_cta',
+  MULTIPLE_WITH_THUMBNAIL_OVERFLOW: ' multiple_with_thumbnail_overflow',
+};
+
+export const GRID_TEMPLATE_AREA = {
+  [GRID_VARIANT.SINGLE]: "'title title' 'cta thumbnail' 'footer footer'",
+  [GRID_VARIANT.SINGLE_WITH_THUMBNAIL]:
+    "'title thumbnail' 'cta thumbnail' 'footer footer'",
+  [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL]:
+    "'title title' 'thumbnail thumbnail' 'footer footer'",
+  [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA]:
+    "'title title' 'thumbnail thumbnail' 'cta cta' 'footer footer'",
+  [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA_OVERFLOW]:
+    "'title title' 'thumbnail thumbnail' 'cta cta' 'footer footer'",
 };

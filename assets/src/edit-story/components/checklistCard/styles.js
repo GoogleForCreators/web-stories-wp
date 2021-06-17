@@ -23,8 +23,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
-import { GRID_VARIANT } from './constants';
-import { getGridTemplateAreas } from './helpers';
+import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 
 export const Wrapper = styled.div`
   width: 272px;
@@ -43,7 +42,7 @@ export const Container = styled.div`
   grid-gap: 8px;
   grid-template-columns: 180px 52px;
   ${({ gridVariant }) => css`
-    grid-template-areas: ${getGridTemplateAreas(gridVariant)};
+    grid-template-areas: ${GRID_TEMPLATE_AREA[gridVariant]};
   `}
 `;
 Container.propTypes = {
@@ -75,6 +74,16 @@ export const Cta = styled.div`
 
 export const ThumbnailWrapper = styled.div`
   grid-area: thumbnail;
+
+  ${({ $isMultiple }) =>
+    $isMultiple &&
+    css`
+      display: grid;
+      grid-gap: 8px;
+      grid-template-columns: 52px 52px 52px 52px;
+      overflow: hidden;
+      grid-auto-flow: column;
+    `}
 `;
 
 export const Footer = styled.div`

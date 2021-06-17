@@ -33,6 +33,7 @@ import {
 } from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
+import { CARD_TYPE } from '../constants';
 import { CardListWrapper } from '../styles';
 
 export default {
@@ -183,6 +184,164 @@ export const _default = () => {
             <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
               {'Upload'}
             </Button>
+          }
+        />
+      </div>
+      <div>
+        <Text>{'Multiple Issues - No CTA'}</Text>
+        <ChecklistCard
+          title="Add video captions"
+          footer={
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {
+                'Keep the audience engaged even when they can’t listen to the audio. '
+              }
+              <Link
+                href="/demo"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              >
+                {'Learn more'}
+              </Link>
+            </Text>
+          }
+          cardType={CARD_TYPE.MULTIPLE_ISSUE}
+          thumbnailCount={3}
+          thumbnail={
+            <>
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+            </>
+          }
+        />
+      </div>
+      <div>
+        <Text>{'Multiple Issues'}</Text>
+        <ChecklistCard
+          title="Add video captions"
+          cta={
+            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
+              {'Fix everything'}
+            </Button>
+          }
+          footer={
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {
+                'Keep the audience engaged even when they can’t listen to the audio. '
+              }
+              <Link
+                href="/demo"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              >
+                {'Learn more'}
+              </Link>
+            </Text>
+          }
+          cardType={CARD_TYPE.MULTIPLE_ISSUE}
+          thumbnailCount={3}
+          thumbnail={
+            <>
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+            </>
+          }
+        />
+      </div>
+
+      <div>
+        <Text>{'Multiple Issues - more than 4'}</Text>
+        <ChecklistCard
+          title="Add video captions"
+          cta={
+            <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY}>
+              {'Fix everything'}
+            </Button>
+          }
+          footer={
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {
+                'Keep the audience engaged even when they can’t listen to the audio. '
+              }
+              <Link
+                href="/demo"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              >
+                {'Learn more'}
+              </Link>
+            </Text>
+          }
+          cardType={CARD_TYPE.MULTIPLE_ISSUE}
+          thumbnailCount={6}
+          thumbnail={
+            <>
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+            </>
           }
         />
       </div>

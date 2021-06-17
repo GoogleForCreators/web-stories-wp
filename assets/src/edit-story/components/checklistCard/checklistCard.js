@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 
 import { Headline, THEME_CONSTANTS } from '../../../design-system';
-import { getCardType } from './helpers';
+import { getGridVariant } from './helpers';
 import { CARD_TYPE } from './constants';
 import {
   Wrapper,
@@ -56,7 +56,12 @@ const ChecklistCard = ({
   thumbnail,
   thumbnailCount = 0,
 }) => {
-  const gridVariant = getCardType({ cardType, thumbnailCount });
+  const gridVariant = getGridVariant({
+    cardType,
+    thumbnailCount,
+    hasCta: Boolean(cta),
+  });
+
   return (
     <Wrapper>
       <Container gridVariant={gridVariant}>
@@ -68,7 +73,9 @@ const ChecklistCard = ({
             {title}
           </Headline>
         </Title>
-        <ThumbnailWrapper>{thumbnail}</ThumbnailWrapper>
+        <ThumbnailWrapper $isMultiple={thumbnailCount > 1}>
+          {thumbnail}
+        </ThumbnailWrapper>
         <Cta>{cta}</Cta>
         <Footer>{footer}</Footer>
       </Container>
