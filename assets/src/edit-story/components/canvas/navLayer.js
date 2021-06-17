@@ -72,7 +72,6 @@ function NavLayer() {
         <DirectionAware>
           <QuickActionsArea>
             <ContextMenu
-              data-testid="quick-actions-menu"
               isAlwaysVisible
               isIconMenu
               disableControlledTabNavigation
