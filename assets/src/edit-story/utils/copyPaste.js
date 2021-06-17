@@ -173,7 +173,7 @@ export function addElementsToClipboard(page, elements, animations, evt) {
   const { clipboardData } = evt;
 
   const { htmlContent, serializedPayload, textContent } =
-    serializeTextAndHTMLData(elements, animations);
+    serializeTextAndHTMLData(page, elements, animations);
 
   clipboardData.setData('text/plain', textContent);
   clipboardData.setData(
