@@ -50,16 +50,12 @@ function CustomStyles() {
     ? workspaceColor
     : '#1B1D1C';
 
-  /*
-    The style starting with `@media not all and (min-resolution:.001dpcm)` is for Safari only.
-    In Safari, the font size is rounded up, causing overflow, this hack undoes this.
-    See https://github.com/google/web-stories-wp/issues/6323
-   */
   return (
     <style
       amp-custom=""
       dangerouslySetInnerHTML={{
-        __html: `
+        __html:
+          `
               amp-story-page {
                 background-color: ${pageBackgroundColor};
               }
@@ -75,10 +71,16 @@ function CustomStyles() {
                   }
                 }
               }
-
+          ` +
+          /*
+            The following rule is for Safari only.
+            In Safari, the font size is rounded up, causing overflow, this hack undoes this.
+            See https://github.com/google/web-stories-wp/issues/6323
+           */
+          `
               @media not all and (min-resolution:.001dpcm) {
                 @media {
-                  p.text-wrapper > span:first-of-type {
+                  p.text-wrapper > span {
                     font-size: calc(100% - 0.5px);
                   }
                 }
