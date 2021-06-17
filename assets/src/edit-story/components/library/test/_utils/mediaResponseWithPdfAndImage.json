@@ -171,20 +171,6 @@
           "mime_type": "image/jpeg",
           "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-696x928.jpg"
         },
-        "web-stories-poster-square": {
-          "file": "testImage-928x928.jpg",
-          "width": 928,
-          "height": 928,
-          "mime_type": "image/jpeg",
-          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-928x928.jpg"
-        },
-        "web-stories-poster-landscape": {
-          "file": "testImage-928x696.jpg",
-          "width": 928,
-          "height": 696,
-          "mime_type": "image/jpeg",
-          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-928x696.jpg"
-        },
         "web_stories_thumbnail": {
           "file": "testImage-150x204.jpg",
           "width": 150,
