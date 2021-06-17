@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { DANGER_ZONE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -41,11 +40,7 @@ function useUploadWithPreview() {
 
   const onUploadStart = useCallback(
     ({ resource }) => {
-      insertElement(resource.type, {
-        resource,
-        x: resource.isPlaceholder ? -DANGER_ZONE_HEIGHT : undefined,
-        y: resource.isPlaceholder ? 0 : undefined,
-      });
+      insertElement(resource.type, { resource });
     },
     [insertElement]
   );
