@@ -268,12 +268,22 @@ export const _default = () => {
         <Text>{'Multiple Issues - more than 4'}</Text>
         <ChecklistCard
           title="Add video captions"
-          cta={<DefaultCtaButton>{'Fix everything'}</DefaultCtaButton>}
+          cta={
+            <>
+              <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                {'Optimize all videos'}
+              </DefaultCtaButton>
+              <CheckboxCta
+                id="demo-optimize"
+                ariaLabel="check this box to optimize videos by default"
+              >
+                {'Enable auto optimization'}
+              </CheckboxCta>
+            </>
+          }
           footer={
             <DefaultFooterText>
-              {
-                'Keep the audience engaged even when they can’t listen to the audio. '
-              }
+              {'Unoptimized video may cause playback issues. '}
               <Link
                 href="/demo"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
@@ -291,37 +301,41 @@ export const _default = () => {
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
-              />
+              >
+                <Tooltip title="Optimize">
+                  <StyledVideoOptimizationIcon />
+                </Tooltip>
+              </Thumbnail>
               <Thumbnail
                 onClick={() => action('2 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
-              />
+              >
+                <Tooltip title="Optimize">
+                  <StyledVideoOptimizationIcon />
+                </Tooltip>
+              </Thumbnail>
               <Thumbnail
                 onClick={() => action('3 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
-              />
+              >
+                <Tooltip title="Optimize">
+                  <StyledVideoOptimizationIcon />
+                </Tooltip>
+              </Thumbnail>
               <Thumbnail
                 onClick={() => action('4 thumbnail action found')()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
-              />
-              <Thumbnail
-                onClick={() => action('5 thumbnail action found')()}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />
-              <Thumbnail
-                onClick={() => action('6 thumbnail action found')()}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-                aria-label="my helper text describing this thumbnail image"
-              />
+              >
+                <Tooltip title="Optimize">
+                  <StyledVideoOptimizationIcon />
+                </Tooltip>
+              </Thumbnail>
             </>
           }
         />
