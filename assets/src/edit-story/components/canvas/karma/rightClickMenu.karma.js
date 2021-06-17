@@ -17,7 +17,9 @@
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { Fixture } from '../../../karma';
+import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
   let fixture;
@@ -74,7 +76,12 @@ describe('Right Click Menu integration', () => {
   });
 
   describe('right click menu: page/background', () => {
-    it('should be able to copy a page background and paste it to a new page', async () => {
+    // Need to implement a way to give the browser permission to
+    // paste from the navigator.
+    // Some ideas: https://github.com/puppeteer/puppeteer/issues/3241
+    // Current clipboard exposure functions: packages/karma-puppeteer-launcher/src/index.cjs
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should be able to copy a page background and paste it to a new page', async () => {
       // apply a background to the page
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
 
@@ -102,6 +109,153 @@ describe('Right Click Menu integration', () => {
       );
 
       expect(pages[0].backgroundColor).toStrictEqual(pages[1].backgroundColor);
+    });
+
+    it('should duplicate the current page', async () => {
+      // insert elements
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        })
+      );
+      await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Hello world!',
+          x: 10,
+          y: 20,
+          width: 400,
+        })
+      );
+
+      // duplicate page
+      await openRightClickMenu();
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.duplicatePage
+      );
+
+      // verify duplication of all content
+      const { pages } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          pages: state.pages,
+        }))
+      );
+
+      expect(pages[0].backgroundColor).toEqual(pages[1].backgroundColor);
+      pages[0].elements.map((elem, index) => {
+        // ids won't match
+        const { id, ...originalElement } = elem;
+        const { id: newId, ...newElement } = pages[1].elements[index];
+
+        expect(originalElement).toEqual(newElement);
+      });
+    });
+
+    it('should delete the current page when clicking the "Delete" button', async () => {
+      // duplicate page
+      await openRightClickMenu();
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.duplicatePage
+      );
+
+      // insert elements on new page
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        })
+      );
+      await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Hello world!',
+          x: 10,
+          y: 20,
+          width: 400,
+        })
+      );
+
+      // delete page
+      await openRightClickMenu();
+      await fixture.events.click(fixture.editor.canvas.rightClickMenu.delete);
+
+      // verify the correct page was deleted
+      const { pages } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          pages: state.pages,
+        }))
+      );
+
+      expect(pages.length).toBe(1);
+      expect(pages[0].elements.length).toBe(1);
+      expect(pages[0].elements[0].isBackground).toBe(true);
+    });
+
+    it('should delete the current page when clicking the "Delete Page" button', async () => {
+      // duplicate page
+      await openRightClickMenu();
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.duplicatePage
+      );
+
+      // insert elements on new page
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        })
+      );
+      await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Hello world!',
+          x: 10,
+          y: 20,
+          width: 400,
+        })
+      );
+
+      // delete page
+      await openRightClickMenu();
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.deletePage
+      );
+
+      // verify the correct page was deleted
+      const { pages } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          pages: state.pages,
+        }))
+      );
+
+      expect(pages.length).toBe(1);
+      expect(pages[0].elements.length).toBe(1);
+      expect(pages[0].elements[0].isBackground).toBe(true);
     });
   });
 });

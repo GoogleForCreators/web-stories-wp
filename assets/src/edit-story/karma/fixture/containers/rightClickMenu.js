@@ -31,13 +31,25 @@ export class RightClickMenu extends Container {
 
   get paste() {
     return this.queryByRole('button', {
-      name: 'Paste, or use Command P on a keyboard',
+      name: 'Paste, or use Command V on a keyboard',
     });
   }
 
   get delete() {
     return this.queryByRole('button', {
-      name: 'Delete, or use DEL on a keyboard',
+      name: 'Delete, or use Delete on a keyboard',
+    });
+  }
+
+  get duplicatePage() {
+    return this.queryByRole('button', {
+      name: 'Duplicate page',
+    });
+  }
+
+  get deletePage() {
+    return this.queryByRole('button', {
+      name: 'Delete page',
     });
   }
 }

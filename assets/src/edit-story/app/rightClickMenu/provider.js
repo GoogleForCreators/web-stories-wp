@@ -26,7 +26,6 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { noop } from '../../utils/noop';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { serializeTextAndHTMLData } from '../../utils/copyPaste';
 import { useCanvas } from '../canvas';
@@ -196,7 +195,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: {
-          display: '⌘ C',
+          display: isMacOs ? '⌘ C' : 'ctrl C',
           title: isMacOs
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_C
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_C,
@@ -207,10 +206,10 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
         shortcut: {
-          display: '⌘ P',
+          display: isMacOs ? '⌘ V' : 'ctrl V',
           title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_P
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_P,
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_V
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_V,
         },
         onClick: handlePasteElement,
         ...menuItemProps,
@@ -221,11 +220,11 @@ function RightClickMenuProvider({ children }) {
           display: 'DEL',
           title: RIGHT_CLICK_MENU_SHORTCUT_LABELS.DELETE,
         },
-        onClick: noop,
+        onClick: handleDeletePage,
         ...menuItemProps,
       },
     ],
-    [handleCopyElement, menuItemProps, handlePasteElement]
+    [handleCopyElement, menuItemProps, handleDeletePage, handlePasteElement]
   );
 
   const pageItems = useMemo(

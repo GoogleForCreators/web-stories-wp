@@ -37,14 +37,14 @@ export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
     'The keyboard keys "Control" and "C"',
     'web-stories'
   ),
-  COMMAND_P: _x(
-    'Command P',
-    'The keyboard keys "Command" and "P"',
+  COMMAND_V: _x(
+    'Command V',
+    'The keyboard keys "Command" and "V"',
     'web-stories'
   ),
-  CONTROL_P: _x(
-    'Control P',
-    'The keyboard keys "Control" and "P"',
+  CONTROL_V: _x(
+    'Control V',
+    'The keyboard keys "Control" and "V"',
     'web-stories'
   ),
   DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
