@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
-export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
-export { default as Thumbnail } from './thumbnail';
-export { default as OverflowThumbnail } from './overflowThumbnail';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../../design-system';
+
+export const DefaultCtaButton = ({ children, ...rest }) => (
+  <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY} {...rest}>
+    {children}
+  </Button>
+);
+
+DefaultCtaButton.propTypes = {
+  children: PropTypes.string,
+};

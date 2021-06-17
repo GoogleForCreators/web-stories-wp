@@ -13,7 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
-export { default as Thumbnail } from './thumbnail';
-export { default as OverflowThumbnail } from './overflowThumbnail';
+export { getGridVariant } from './getGridVariant';
