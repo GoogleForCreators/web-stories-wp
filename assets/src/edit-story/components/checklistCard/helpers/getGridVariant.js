@@ -36,7 +36,6 @@ export const getGridVariant = ({ cardType, thumbnailCount, hasCta }) => {
 
   if (cardType === CARD_TYPE.MULTIPLE_ISSUE) {
     if (!thumbnailCount) {
-      // todo
       return GRID_VARIANT.DEFAULT;
     }
     if (hasCta) {
