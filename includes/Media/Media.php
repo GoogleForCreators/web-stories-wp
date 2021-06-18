@@ -52,34 +52,6 @@ class Media extends Service_Base {
 	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
 	/**
-	 * The image size for the poster-landscape-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_LANDSCAPE_IMAGE_SIZE = 'web-stories-poster-landscape';
-
-	/**
-	 * The image dimensions for the poster-landscape-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_LANDSCAPE_IMAGE_DIMENSIONS = [ 853, 640 ];
-
-	/**
-	 * The image size for the poster-square-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_SQUARE_IMAGE_SIZE = 'web-stories-poster-square';
-
-	/**
-	 * The image dimensions for the poster-square-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_SQUARE_IMAGE_DIMENSIONS = [ 640, 640 ];
-
-	/**
 	 * Name of size used in media library.
 	 *
 	 * @var string
@@ -190,22 +162,6 @@ class Media extends Service_Base {
 			self::POSTER_PORTRAIT_IMAGE_SIZE,
 			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0],
 			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1],
-			true
-		);
-
-		// Used for amp-story[poster-landscape-src]: The story poster in landscape format (4x3 aspect ratio).
-		add_image_size(
-			self::POSTER_LANDSCAPE_IMAGE_SIZE,
-			self::POSTER_LANDSCAPE_IMAGE_DIMENSIONS[0],
-			self::POSTER_LANDSCAPE_IMAGE_DIMENSIONS[1],
-			true
-		);
-
-		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
-		add_image_size(
-			self::POSTER_SQUARE_IMAGE_SIZE,
-			self::POSTER_SQUARE_IMAGE_DIMENSIONS[0],
-			self::POSTER_SQUARE_IMAGE_DIMENSIONS[1],
 			true
 		);
 
