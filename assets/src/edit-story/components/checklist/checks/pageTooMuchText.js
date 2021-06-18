@@ -42,7 +42,7 @@ export function pageTooMuchText(page) {
   return characterCountForPage(page) > MAX_PAGE_CHARACTER_COUNT;
 }
 
-export function StoryPosterAttached() {
+export function PageTooMuchText() {
   const story = useStory(({ state }) => state);
   const failingPages = useMemo(
     () => filterStoryPages(story, pageTooMuchText),
