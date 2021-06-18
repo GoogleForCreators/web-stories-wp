@@ -326,7 +326,7 @@ function textBackgroundHasLowContrast({
   backgroundColor,
   textStyleColors,
   fontSize,
-}) {
+} = {}) {
   const noColorsToCompare = !textStyleColors || !backgroundColor;
   if (noColorsToCompare) {
     return false;
@@ -391,11 +391,13 @@ export async function pageBackgroundTextLowContrast(page) {
 
         // prepare background color promises for the textBackgroundHasLowContrast parameter
         const prepare = (getBackgroundColorResult) => {
-          return {
-            backgroundColor: getBackgroundColorResult,
-            textStyleColors,
-            fontSize: element.fontSize,
-          };
+          return (
+            getBackgroundColorResult && {
+              backgroundColor: getBackgroundColorResult,
+              textStyleColors,
+              fontSize: element.fontSize,
+            }
+          );
         };
 
         const bgColorCompare =

@@ -19,7 +19,7 @@
 import { storyMissingExcerpt } from '../storyMissingExerpt';
 
 describe('storyMissingExcerpt', () => {
-  it('should return a warning if story is missing excerpt', () => {
+  it('should return true if story is missing excerpt', () => {
     const story = {
       id: 'storyid',
     };
@@ -27,7 +27,7 @@ describe('storyMissingExcerpt', () => {
     expect(test).toBe(true);
   });
 
-  it('should return a warning if story has empty excerpt', () => {
+  it('should return true if story has empty excerpt', () => {
     const story = {
       id: 'storyid',
       excerpt: '',
@@ -37,7 +37,7 @@ describe('storyMissingExcerpt', () => {
     expect(test).toBe(true);
   });
 
-  it('should return undefined if story has excerpt', () => {
+  it('should return true if story has excerpt', () => {
     const story = {
       id: 'storyid',
       excerpt: 'This is an excerpt',

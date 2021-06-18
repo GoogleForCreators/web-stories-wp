@@ -35,31 +35,40 @@ const PageBackgroundTextLowContrast = () => {
     () => filterStoryPages(story, pageBackgroundTextLowContrast),
     [story]
   );
-  return failingPages.length > 0 ? (
-    <ChecklistCard
-      title={__(
-        'Increase contrast between text and background color',
-        'web-stories'
-      )}
-      /* titleProps={{ onClick: () => { perform highlight here } }} */
-      footer={
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-          {__(
-            'Ensure legibility of text and ease of reading by increasing color contrast',
-            'web-stories'
-          )}
-          {
-            //       <Link
-            //         href={'#' /* figure out what this links to */}
-            //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            //       >
-            //         {'Learn more'}
-            //       </Link>
-          }
-        </Text>
-      }
-    />
-  ) : null;
+  return (
+    failingPages.length > 0 && (
+      <ChecklistCard
+        title={__(
+          'Increase contrast between text and background color',
+          'web-stories'
+        )}
+        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        footer={
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            {__(
+              'Ensure legibility of text and ease of reading by increasing color contrast',
+              'web-stories'
+            )}
+            {
+              //       <Link
+              //         href={'#' /* figure out what this links to */}
+              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              //       >
+              //         {'Learn more'}
+              //       </Link>
+            }
+          </Text>
+        }
+        /*
+          todo thumbnails for pages
+          thumbnailCount={failingPages.length}
+          thumbnail={<>
+              {failingPages.map(() => <Thumbnail />)}
+            </>}
+        */
+      />
+    )
+  );
 };
 
 export default PageBackgroundTextLowContrast;

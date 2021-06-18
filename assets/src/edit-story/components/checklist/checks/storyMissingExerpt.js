@@ -31,28 +31,30 @@ export function storyMissingExcerpt(story) {
 
 const StoryMissingExcerpt = () => {
   const story = useStory(({ state }) => state);
-  return storyMissingExcerpt(story) ? (
-    <ChecklistCard
-      title={__('Add Web Story description', 'web-stories')}
-      /* titleProps={{ onClick: () => { perform highlight here } }} */
-      footer={
-        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-          {__(
-            'Incorporate a brief description for better user experience',
-            'web-stories'
-          )}
-          {
-            //  <Link
-            //   href={'#' /* figure out what this links to */
-            //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            // >
-            //   {'Learn more'}
-            // </Link>
-          }
-        </Text>
-      }
-    />
-  ) : null;
+  return (
+    storyMissingExcerpt(story) && (
+      <ChecklistCard
+        title={__('Add Web Story description', 'web-stories')}
+        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        footer={
+          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            {__(
+              'Incorporate a brief description for better user experience',
+              'web-stories'
+            )}
+            {
+              //  <Link
+              //   href={'#' /* figure out what this links to */
+              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+              // >
+              //   {'Learn more'}
+              // </Link>
+            }
+          </Text>
+        }
+      />
+    )
+  );
 };
 
 export default StoryMissingExcerpt;
