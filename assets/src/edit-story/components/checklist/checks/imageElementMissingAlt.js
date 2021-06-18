@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -27,42 +27,25 @@ import { useStory } from '../../../app';
 import { ChecklistCard } from '../../checklistCard';
 import { filterStoryElements } from '../utils';
 
-const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
-const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
-
-export function elementLinkTappableRegionTooSmall(element) {
-  if (
-    !['text', 'image', 'shape', 'gif', 'video'].includes(element.type) ||
-    !element.link?.url?.length
-  ) {
-    return false;
-  }
-
+export function imageElementMissingAlt(element) {
   return (
-    element.width < LINK_TAPPABLE_REGION_MIN_WIDTH ||
-    element.height < LINK_TAPPABLE_REGION_MIN_HEIGHT
+    ['gif', 'image'].includes(element.type) &&
+    !element.alt?.length &&
+    !element.resource?.alt?.length
   );
 }
 
-const ElementLinkTappableRegionTooSmall = () => {
+const ImageElementMissingAlt = () => {
   const story = useStory(({ state }) => state);
-  const elements = filterStoryElements(
-    story,
-    elementLinkTappableRegionTooSmall
-  );
+  const elements = filterStoryElements(story, imageElementMissingAlt);
   return (
     elements.length > 0 && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: minimum tappable region size width x minimum tappable region size height. */
-          __('Increase tap area size to at least %s', 'web-stories'),
-          `${LINK_TAPPABLE_REGION_MIN_WIDTH}x${LINK_TAPPABLE_REGION_MIN_HEIGHT}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        title={__('Add assistive text to images', 'web-stories')}
         footer={
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
             {__(
-              'Make the linked element large enough for users to easily tap it',
+              'Optimize accessibility and indexability with meaningful text to better assist users',
               'web-stories'
             )}
             {
@@ -76,15 +59,15 @@ const ElementLinkTappableRegionTooSmall = () => {
           </Text>
         }
         /*
-        todo thumbnails for pages
-        thumbnailCount={elements.length}
-        thumbnail={<>
-            {elements.map(() => <Thumbnail />)}
-          </>}
-      */
+         todo thumbnails for pages
+         thumbnailCount={elements.length}
+         thumbnail={<>
+             {elements.map(() => <Thumbnail onClick={ perform highlight here } />)}
+           </>}
+       */
       />
     )
   );
 };
 
-export default ElementLinkTappableRegionTooSmall;
+export default ImageElementMissingAlt;
