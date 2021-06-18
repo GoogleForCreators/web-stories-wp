@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { hasNoFeaturedMedia } from './hasNoFeaturedMedia';
-export { characterCountForPage } from './characterCountForPage';
-export { filterStoryPages } from './filterStoryPages';
-export { filterStoryElements } from './filterStoryElements';
-export { getSpansFromContent } from './getSpansFromContent';
+
+export { default as PageBackgroundTextLowContrast } from './component';
+export { pageBackgroundTextLowContrast } from './check';
