@@ -55,7 +55,7 @@ describe('Handling .mov files', () => {
     });
 
     await deleteMedia(fileNameNoExt);
-    await toggleVideoOptimization(fileNameNoExt);
+    await toggleVideoOptimization();
   });
 
   // Uses the existence of the element's frame element as an indicator for successful insertion.
