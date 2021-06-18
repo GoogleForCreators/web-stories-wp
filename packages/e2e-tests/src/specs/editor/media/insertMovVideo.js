@@ -22,7 +22,7 @@ import {
   clickButton,
   uploadFile,
   deleteMedia,
-  withExperimentalFeatures,
+  toggleVideoOptimization,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
@@ -30,6 +30,7 @@ const MODAL = '.media-modal';
 describe('Handling .mov files', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   it('should not list the .mov', async () => {
+    await toggleVideoOptimization();
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
@@ -54,29 +55,27 @@ describe('Handling .mov files', () => {
     });
 
     await deleteMedia(fileNameNoExt);
+    await toggleVideoOptimization(fileNameNoExt);
   });
 
-  describe('Inserting .mov from dialog', () => {
-    withExperimentalFeatures(['enableMediaPickerVideoOptimization']);
-    // Uses the existence of the element's frame element as an indicator for successful insertion.
-    it('should not list the .mov', async () => {
-      await createNewStory();
-      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+  // Uses the existence of the element's frame element as an indicator for successful insertion.
+  it('should insert .mov', async () => {
+    await createNewStory();
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-      await expect(page).toClick('button', { text: 'Upload' });
+    await expect(page).toClick('button', { text: 'Upload' });
 
-      await page.waitForSelector(MODAL, {
-        visible: true,
-      });
-      const fileName = await uploadFile('small-video.mov', false);
-      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-
-      await expect(page).toClick('button', { text: 'Insert into page' });
-
-      await page.waitForSelector('[data-testid="videoElement"]');
-      await expect(page).toMatchElement('[data-testid="videoElement"]');
-
-      await deleteMedia(fileNameNoExt);
+    await page.waitForSelector(MODAL, {
+      visible: true,
     });
+    const fileName = await uploadFile('small-video.mov', false);
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+
+    await expect(page).toClick('button', { text: 'Insert into page' });
+
+    await page.waitForSelector('[data-testid="videoElement"]');
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
+
+    await deleteMedia(fileNameNoExt);
   });
 });
