@@ -13,18 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { storyHasNoPosterAttached } from '../storyPosterAttached';
-
-describe('storyHasNoPosterAttached', () => {
-  it('should return true if the story is missing its poster image', () => {
-    const testStory = {
-      id: 890,
-      title: 'Work work work work work',
-      featuredMedia: undefined,
-    };
-    expect(storyHasNoPosterAttached(testStory)).toBeTrue();
-  });
-});
+export function DesignChecks() {
+  return <div>{'design'}</div>;
+}
