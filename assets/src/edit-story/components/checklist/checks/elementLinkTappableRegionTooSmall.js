@@ -20,10 +20,10 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+// import { sprintf, __ } from '@web-stories-wp/i18n';
+// import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+// import { ChecklistCard } from '../../checklistCard';
 import { filterStoryElements } from '../utils';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -50,39 +50,38 @@ const ElementLinkTappableRegionTooSmall = () => {
     elementLinkTappableRegionTooSmall
   );
   return (
-    elements.length > 0 && (
-      <ChecklistCard
-        title={sprintf(
-          /* translators: %s: minimum tappable region size width x minimum tappable region size height. */
-          __('Increase tap area size to at least %s', 'web-stories'),
-          `${LINK_TAPPABLE_REGION_MIN_WIDTH}x${LINK_TAPPABLE_REGION_MIN_HEIGHT}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Make the linked element large enough for users to easily tap it',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
-        }
-        /*
-          todo thumbnails for pages
-          thumbnailCount={elements.length}
-          thumbnail={<>
-              {elements.map(() => <Thumbnail />)}
-            </>}
-        */
-      />
-    )
+    elements.length > 0 && null
+    // <ChecklistCard
+    //   title={sprintf(
+    //     /* translators: %s: minimum tappable region size width x minimum tappable region size height. */
+    //     __('Increase tap area size to at least %s', 'web-stories'),
+    //     `${LINK_TAPPABLE_REGION_MIN_WIDTH}x${LINK_TAPPABLE_REGION_MIN_HEIGHT}px`
+    //   )}
+    //   /* titleProps={{ onClick: () => { perform highlight here } }} */
+    //   footer={
+    //     <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+    //       {__(
+    //         'Make the linked element large enough for users to easily tap it',
+    //         'web-stories'
+    //       )}
+    //       {
+    //         //       <Link
+    //         //         href={'#' /* figure out what this links to */}
+    //         //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+    //         //       >
+    //         //         {'Learn more'}
+    //         //       </Link>
+    //       }
+    //     </Text>
+    //   }
+    //   /*
+    //     todo thumbnails for pages
+    //     thumbnailCount={elements.length}
+    //     thumbnail={<>
+    //         {elements.map(() => <Thumbnail />)}
+    //       </>}
+    //   */
+    // />
   );
 };
 
