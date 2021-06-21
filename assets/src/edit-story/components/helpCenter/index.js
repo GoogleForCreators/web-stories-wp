@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 
@@ -74,7 +75,11 @@ export const HelpCenter = () => {
       <>
         <ThemeGlobals.Styles />
         <Wrapper ref={ref}>
-          <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
+          <Popup
+            popupId={POPUP_ID}
+            isOpen={state.isOpen}
+            ariaLabel={__('Help Center', 'web-stories')}
+          >
             <Navigator
               onNext={actions.goToNext}
               onPrev={actions.goToPrev}

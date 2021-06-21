@@ -25,3 +25,15 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
   DELETE_PAGE: __('Delete page', 'web-stories'),
 };
+
+export const RIGHT_CLICK_SNACKBAR_TEXT = {
+  ADDED_STYLE: __('Added style to "Saved styles".', 'web-stories'),
+  ADDED_COLOR: __('Added color to "Saved colors".', 'web-stories'),
+  COPIED_STYLE: __('Copied style.', 'web-stories'),
+  PASTED_STYLE: __('Pasted style.', 'web-stories'),
+  PROPERTIES_COPIED: __('Properties copied.', 'web-stories'),
+  PROPERTIES_PASTED: __('Properties pasted.', 'web-stories'),
+  TEXT_COPIED: __('Text copied.', 'web-stories'),
+  TEXT_PASTED: __('Copied styles.', 'web-stories'),
+  UNDO: __('Undo', 'web-stories'),
+};
