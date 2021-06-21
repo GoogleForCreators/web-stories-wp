@@ -103,14 +103,18 @@ export function processPastedElements(content, currentPage) {
 }
 
 /**
- * Serializes the text and html data from the elements and animations.
+ * Processes copied/cut content for preparing elements to add to clipboard.
  *
  * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
  * @param {Array} animations Array of story animations.
- * @return {Object} An object containing the serialized payload, text, and html content.
+ * @param {Object} evt Copy/cut event object.
  */
-export function serializeTextAndHTMLData(page, elements, animations) {
+export function addElementsToClipboard(page, elements, animations, evt) {
+  if (!elements.length || !evt) {
+    return;
+  }
+  const { clipboardData } = evt;
   const payload = {
     sentinel: 'story-elements',
     // @todo: Ensure that there's no unserializable data here. The easiest
@@ -154,26 +158,6 @@ export function serializeTextAndHTMLData(page, elements, animations) {
       );
     })
     .join('\n');
-
-  return { htmlContent, serializedPayload, textContent };
-}
-
-/**
- * Processes copied/cut content for preparing elements to add to clipboard.
- *
- * @param {Object} page Page which all the elements belong to.
- * @param {Array} elements Array of story elements.
- * @param {Array} animations Array of story animations.
- * @param {Object} evt Copy/cut event object.
- */
-export function addElementsToClipboard(page, elements, animations, evt) {
-  if (!elements.length || !evt) {
-    return;
-  }
-  const { clipboardData } = evt;
-
-  const { htmlContent, serializedPayload, textContent } =
-    serializeTextAndHTMLData(page, elements, animations);
 
   clipboardData.setData('text/plain', textContent);
   clipboardData.setData(

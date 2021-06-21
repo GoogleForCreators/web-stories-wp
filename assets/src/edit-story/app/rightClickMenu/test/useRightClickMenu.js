@@ -151,7 +151,7 @@ describe('useRightClickMenu', () => {
       ]);
     });
 
-    it('delete page should be enabled if there is more than one page', () => {
+    it('"delete page" button should be enabled if there is more than one page', () => {
       const { result, rerender } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
       });
