@@ -129,13 +129,15 @@ echo -e $(status_message "Activating Web Stories plugin...")
 wp plugin activate web-stories --quiet
 
 # Install & activate testing plugins.
-echo -e $(status_message "Installing and activating RTL Tester plugin...")
-wp plugin install rtl-tester --activate --force --quiet
 
+# Only install gutenberg on latest version of WordPress. 
 if [ "$WP_VERSION" == "latest" ]; then
   echo -e $(status_message "Installing Gutenberg plugin...")
   wp plugin install gutenberg --force --quiet
 fi
+
+echo -e $(status_message "Installing and activating RTL Tester plugin...")
+wp plugin install rtl-tester --activate --force --quiet
 
 echo -e $(status_message "Installing AMP plugin...")
 wp plugin install amp --force --quiet
