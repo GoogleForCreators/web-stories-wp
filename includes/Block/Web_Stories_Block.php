@@ -87,10 +87,9 @@ class Web_Stories_Block extends Embed_Base {
 			$this->get_script_settings()
 		);
 
-		// Use path to javascript directory.
+		// Use path to javascript directory or if javascript not build, then fallback to dev location.
 		$base_path = $this->get_base_path( 'assets/js/block.json' );
 		if ( ! $base_path ) {
-			// If javascript not build, then fallback to dev location.
 			$base_path = $this->get_base_path( 'assets/src/web-stories-block/block/block.json' );
 		}
 
@@ -98,6 +97,20 @@ class Web_Stories_Block extends Embed_Base {
 			return;
 		}
 
+		$this->register_block_type( $base_path );
+	}
+
+	/**
+	 * Registers a block type from metadata stored in the `block.json` file.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $base_path Path to the JSON file with metadata definition for
+	 *     the block or path to the folder where the `block.json` file is located.
+	 *
+	 * @return void
+	 */
+	protected function register_block_type( $base_path ) {
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
 		register_block_type_from_metadata(
