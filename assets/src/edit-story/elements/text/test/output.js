@@ -89,7 +89,7 @@ describe('TextOutput', () => {
     );
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('<span>Content</span>');
-    expect(output).toHaveClass('fill', { exact: true });
+    expect(output).toHaveClass('fill text-wrapper', { exact: true });
     expect(output.style).toMatchObject({
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
@@ -127,7 +127,7 @@ describe('TextOutput', () => {
     );
     expect(output.tagName).toBe('P');
     expect(output.innerHTML).toBe('<span>Content</span>');
-    expect(output).toHaveClass('fill', { exact: true });
+    expect(output).toHaveClass('fill text-wrapper', { exact: true });
     expect(output.style).toMatchObject({
       padding: '20% 20%',
     });
