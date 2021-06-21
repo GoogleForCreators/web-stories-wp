@@ -59,14 +59,14 @@ const ColorInfo = styled.div`
   text-align: center;
 `;
 
-const ZoomCanvas = styled.canvas`
+const MagnifierCanvas = styled.canvas`
   border: 2px solid black;
   border-radius: 50%;
   transform: translate(calc(-50% + 4px), 20px);
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-const Zoom = styled.div`
+const Magnifier = styled.div`
   position: absolute;
   display: flex;
   top: 0;
@@ -107,18 +107,18 @@ function EyedropperLayer() {
   const fullHeight = pageWidth / FULLBLEED_RATIO;
   const img = eyedropperImg;
   const imgRef = useRef();
-  const zoomCanvas = useRef();
-  const zoomInfo = useRef();
-  const zoomColor = useRef();
+  const magnifier = useRef();
+  const magnifierInfo = useRef();
+  const magnifierColor = useRef();
 
   useEffect(() => {
-    const canvas = zoomCanvas.current;
+    const canvas = magnifier.current;
     if (canvas) {
-      const zoomCtx = canvas.getContext('2d');
-      zoomCtx.imageSmoothingEnabled = false;
-      zoomCtx.mozImageSmoothingEnabled = false;
-      zoomCtx.webkitImageSmoothingEnabled = false;
-      zoomCtx.msImageSmoothingEnabled = false;
+      const ctx = canvas.getContext('2d');
+      ctx.imageSmoothingEnabled = false;
+      ctx.mozImageSmoothingEnabled = false;
+      ctx.webkitImageSmoothingEnabled = false;
+      ctx.msImageSmoothingEnabled = false;
     }
   }, [eyedropperImg]);
 
@@ -126,44 +126,44 @@ function EyedropperLayer() {
     return null;
   }
 
-  const zoomSize = 200; // We can use scroll wheel to control it?
-  const zoomPixels = 7;
-  const zoomRectSize = zoomSize / zoomPixels;
+  const magnifierSize = 200; // We can use scroll wheel to control it?
+  const magnifierPixels = 7;
+  const magnifierRectSize = magnifierSize / magnifierPixels;
 
-  const zoom = function (x, y) {
-    const canvas = zoomCanvas.current;
+  const magnify = function (x, y) {
+    const canvas = magnifier.current;
     if (canvas) {
-      const zoomCtx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d');
 
       // Sometimes initial setting is not enough.
-      zoomCtx.imageSmoothingEnabled = false;
-      zoomCtx.mozImageSmoothingEnabled = false;
-      zoomCtx.webkitImageSmoothingEnabled = false;
-      zoomCtx.msImageSmoothingEnabled = false;
+      ctx.imageSmoothingEnabled = false;
+      ctx.mozImageSmoothingEnabled = false;
+      ctx.webkitImageSmoothingEnabled = false;
+      ctx.msImageSmoothingEnabled = false;
 
       // Draw enlarged cropped image.
-      zoomCtx.clearRect(0, 0, zoomSize, zoomSize);
-      zoomCtx.drawImage(
+      ctx.clearRect(0, 0, magnifierSize, magnifierSize);
+      ctx.drawImage(
         imgRef.current,
-        Math.round(x - zoomPixels / 2),
-        Math.round(y - zoomPixels / 2),
-        zoomPixels,
-        zoomPixels,
+        Math.round(x - magnifierPixels / 2),
+        Math.round(y - magnifierPixels / 2),
+        magnifierPixels,
+        magnifierPixels,
         0,
         0,
-        zoomSize,
-        zoomSize
+        magnifierSize,
+        magnifierSize
       );
 
       // Draw center rectangle for better aiming.
-      zoomCtx.beginPath();
-      zoomCtx.rect(
-        Math.round(zoomSize / 2) - zoomRectSize / 2,
-        Math.round(zoomSize / 2) - zoomRectSize / 2,
-        zoomRectSize,
-        zoomRectSize
+      ctx.beginPath();
+      ctx.rect(
+        Math.round(magnifierSize / 2) - magnifierRectSize / 2,
+        Math.round(magnifierSize / 2) - magnifierRectSize / 2,
+        magnifierRectSize,
+        magnifierRectSize
       );
-      zoomCtx.stroke();
+      ctx.stroke();
     }
   };
 
@@ -196,11 +196,11 @@ function EyedropperLayer() {
               return;
             }
 
-            // Move zoom canvas.
-            zoomInfo.current.style.transform = `translate(${x}px, ${y}px)`;
+            // Move magnifier canvas.
+            magnifierInfo.current.style.transform = `translate(${x}px, ${y}px)`;
 
-            // Redraw zoom canvas.
-            zoom(x, y);
+            // Redraw magnifier canvas.
+            magnify(x, y);
 
             // Get and print pixel color.
             const rgbaObject = getColorFromPixelData(
@@ -211,26 +211,30 @@ function EyedropperLayer() {
             );
             const { r, g, b, a } = rgbaObject;
             const hex = rgba(r, g, b, a);
-            zoomColor.current.style.background = `rgba(${r},${g},${b},${a})`;
-            zoomColor.current.style.color = readableColor(
+            magnifierColor.current.style.background = `rgba(${r},${g},${b},${a})`;
+            magnifierColor.current.style.color = readableColor(
               hex,
               '#333',
               '#EDEDED',
               false
             );
-            zoomColor.current.innerText = hex;
+            magnifierColor.current.innerText = hex;
           }}
         >
           <img ref={imgRef} src={img} alt="" />
-          <Zoom ref={zoomInfo}>
-            <ZoomCanvas ref={zoomCanvas} width={zoomSize} height={zoomSize} />
+          <Magnifier ref={magnifierInfo}>
+            <MagnifierCanvas
+              ref={magnifier}
+              width={magnifierSize}
+              height={magnifierSize}
+            />
             <ColorInfo
               style={{
-                top: zoomSize + 20 + 10,
+                top: magnifierSize + 20 + 10,
               }}
-              ref={zoomColor}
+              ref={magnifierColor}
             />
-          </Zoom>
+          </Magnifier>
         </EyedropperCanvas>
       </DisplayPageArea>
     </EyedropperBackground>
