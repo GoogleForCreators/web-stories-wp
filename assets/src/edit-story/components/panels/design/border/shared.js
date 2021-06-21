@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import createSolid from '../../../../utils/createSolid';
+import { createSolid } from '@web-stories-wp/patterns';
 
 export const DEFAULT_BORDER = {
   left: 0,

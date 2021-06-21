@@ -45,7 +45,7 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
-        php: ['7.0', '5.6']
+        php: ['8.0', '7.0']
         wp: ['latest']
         coverage: [false]
         include:
@@ -53,11 +53,8 @@ jobs:
             wp: 'latest'
             coverage: true
 
-          - php: '5.6'
-            wp: '5.3'
-
-          - php: '8.0'
-            wp: 'latest'
+          - php: '7.0'
+            wp: '5.5'
 
           - php: '7.4'
             wp: 'trunk'
@@ -93,7 +90,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 7.4
-          tools: composer:v2.1.1
+          tools: composer
 
       - name: Install prefixed dependencies
         run: |
@@ -106,7 +103,7 @@ jobs:
           php-version: ${{ matrix.php }}
           extensions: mysql
           coverage: ${{ matrix.coverage && 'xdebug' || 'none' }}
-          tools: composer:v2.1.1, cs2pr
+          tools: composer, cs2pr
 
       - name: Install dependencies
         run: |

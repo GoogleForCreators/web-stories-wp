@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { render, fireEvent, act, screen } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
 import { TestFrameElement } from '../../../components/canvas/test/_utils';
-import createSolid from '../../../utils/createSolid';
 
 jest.useFakeTimers();
 

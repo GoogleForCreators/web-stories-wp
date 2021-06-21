@@ -24,6 +24,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
  */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -37,7 +38,6 @@ import {
   THEME_CONSTANTS,
 } from '../../../../../design-system';
 import { useConfig } from '../../../../../edit-story/app';
-import { UnitsProvider } from '../../../../../edit-story/units';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   InfiniteScroller,

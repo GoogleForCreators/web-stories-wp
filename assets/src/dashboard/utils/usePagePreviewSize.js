@@ -18,6 +18,7 @@
  */
 import { useEffect, useMemo, useState, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -25,9 +26,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useResizeEffect } from '../../design-system';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
-  FULLBLEED_RATIO,
   MIN_DASHBOARD_WIDTH,
-  PAGE_RATIO,
   WPBODY_ID,
   VIEWPORT_BREAKPOINT,
   STORY_PREVIEW_WIDTH,

@@ -21,6 +21,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -54,7 +55,6 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  FULLBLEED_RATIO,
   STORY_PREVIEW_WIDTH,
   VIEWPORT_BREAKPOINT,
 } from '../../../constants';

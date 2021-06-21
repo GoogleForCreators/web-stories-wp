@@ -21,13 +21,13 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { PatternPropType } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
-import { PatternPropType } from '../../../../../types';
 import { Select } from '../../../../form';
 import { findMatchingColor } from '../utils';
 import { SAVED_COLOR_SIZE } from '../../../../../constants';
