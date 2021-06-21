@@ -20,13 +20,14 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SAT from 'sat';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { useLayout } from '../layout';
 import { useStory } from '../story';
-import { UnitsProvider } from '../../units';
+
 import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';

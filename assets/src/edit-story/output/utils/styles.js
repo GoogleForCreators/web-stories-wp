@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 import theme from '../../theme';
 
 function isHexColorString(s) {
@@ -109,6 +112,13 @@ function CustomStyles() {
                 right: 0;
                 bottom: 0;
                 margin: 0;
+              }
+
+              @media (prefers-reduced-motion: no-preference) {
+                .animation-wrapper {
+                  opacity: var(--initial-opacity);
+                  transform: var(--initial-transform);
+                }
               }
               `,
       }}

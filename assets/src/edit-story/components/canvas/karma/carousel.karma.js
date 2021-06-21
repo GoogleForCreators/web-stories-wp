@@ -15,13 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import createSolid from '../../../utils/createSolid';
 
 describe('Carousel integration', () => {
   let fixture;

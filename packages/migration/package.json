@@ -15,10 +15,10 @@
   },
   "dependencies": {
     "uuid": "^8.3.2",
-    "polished": "^4.1.2"
+    "polished": "^4.1.3"
   },
   "devDependencies": {
-    "rollup": "^2.50.3",
+    "rollup": "^2.51.1",
     "@rollup/plugin-node-resolve": "^13.0.0"
   }
 }

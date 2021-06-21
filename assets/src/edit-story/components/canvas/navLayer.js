@@ -31,11 +31,11 @@ import Header from '../header';
 import Carousel from '../carousel';
 import { useLayout } from '../../app';
 import {
-  Layer,
-  HeadArea,
   CarouselArea,
-  Z_INDEX,
+  HeadArea,
+  Layer,
   QuickActionsArea,
+  Z_INDEX,
 } from './layout';
 
 function NavLayer() {
@@ -55,7 +55,9 @@ function NavLayer() {
   }, []);
 
   const showQuickActions =
-    enableQuickActionMenu && !hasHorizontalOverflow && quickActions.length;
+    enableQuickActionMenu &&
+    !hasHorizontalOverflow &&
+    Boolean(quickActions.length);
 
   return (
     <Layer

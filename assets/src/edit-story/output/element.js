@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { getBox } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
 import { StoryAnimation } from '../../animation';
@@ -22,14 +27,12 @@ import WithLink from '../components/elementLink/output';
 import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
-import { getBox } from '../units/dimensions';
 import {
   getBorderPositionCSS,
   getBorderRadius,
   getBorderStyle,
   shouldDisplayBorder,
 } from '../utils/elementBorder';
-import generatePatternStyles from '../utils/generatePatternStyles';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {

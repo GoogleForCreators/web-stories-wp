@@ -17,11 +17,13 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { fetchRemoteFile } from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
-import { useStory } from '../../story';
-import fetchRemoteFile from './fetchRemoteFile';
+import useStory from '../../story/useStory';
+import useUpdateElementDimensions from './useUpdateElementDimensions';
 
 function useProcessVideo({
   uploadMedia,
@@ -29,6 +31,7 @@ function useProcessVideo({
   updateMedia,
   deleteMediaElement,
 }) {
+  const { updateElementDimensions } = useUpdateElementDimensions();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -108,6 +111,17 @@ function useProcessVideo({
         }
       };
 
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateElementDimensions({
+          id: oldResource.id,
+          resource: oldResourceWithId,
+        });
+        updateExistingElements({
+          oldResource: oldResourceWithId,
+        });
+      };
+
       const process = async () => {
         let file = false;
         try {
@@ -120,6 +134,7 @@ function useProcessVideo({
           onUploadSuccess,
           onUploadStart,
           onUploadError,
+          onUploadProgress,
           additionalData: { alt: oldResource.alt, title: oldResource.title },
         });
       };
@@ -132,6 +147,7 @@ function useProcessVideo({
       updateOldVideo,
       deleteMediaElement,
       updateExistingElements,
+      updateElementDimensions,
     ]
   );
 

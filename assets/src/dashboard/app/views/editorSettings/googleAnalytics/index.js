@@ -125,7 +125,7 @@ function GoogleAnalyticsSettings({
 
   const siteKitDisplayText = useMemo(() => {
     if (analyticsActive) {
-      return TEXT.SITE_KIT_IN_USE;
+      return null;
     }
 
     return (
@@ -157,55 +157,66 @@ function GoogleAnalyticsSettings({
           {siteKitDisplayText}
         </SettingSubheading>
       </div>
-      <div>
-        <InlineForm>
-          <VisuallyHiddenLabel htmlFor="gaTrackingId">
-            {TEXT.ARIA_LABEL}
-          </VisuallyHiddenLabel>
-          <SettingsTextInput
-            aria-label={TEXT.ARIA_LABEL}
-            id="gaTrackingId"
-            value={analyticsId}
-            onChange={handleUpdateId}
-            onKeyDown={handleOnKeyDown}
-            placeholder={TEXT.PLACEHOLDER}
-            hasError={Boolean(inputError)}
-            hint={inputError}
-            disabled={analyticsActive}
-          />
-          <SaveButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            disabled={disableSaveButton}
-            onClick={handleOnSave}
+      {analyticsActive ? (
+        <div>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
-            {TEXT.SUBMIT_BUTTON}
-          </SaveButton>
-        </InlineForm>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          <TranslateWithMarkup
-            mapping={{
-              a: (
-                <InlineLink
-                  href={TEXT.CONTEXT_LINK}
-                  rel="noreferrer"
-                  target="_blank"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  as="a"
-                  onClick={onContextClick}
-                />
-              ),
-            }}
+            {TEXT.SITE_KIT_IN_USE}
+          </TextInputHelperText>
+        </div>
+      ) : (
+        <div>
+          <InlineForm>
+            <VisuallyHiddenLabel htmlFor="gaTrackingId">
+              {TEXT.ARIA_LABEL}
+            </VisuallyHiddenLabel>
+            <SettingsTextInput
+              aria-label={TEXT.ARIA_LABEL}
+              id="gaTrackingId"
+              value={analyticsId}
+              onChange={handleUpdateId}
+              onKeyDown={handleOnKeyDown}
+              placeholder={TEXT.PLACEHOLDER}
+              hasError={Boolean(inputError)}
+              hint={inputError}
+              disabled={analyticsActive}
+            />
+            <SaveButton
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              disabled={disableSaveButton}
+              onClick={handleOnSave}
+            >
+              {TEXT.SUBMIT_BUTTON}
+            </SaveButton>
+          </InlineForm>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
-            {TEXT.CONTEXT}
-          </TranslateWithMarkup>
-        </TextInputHelperText>
-      </div>
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <InlineLink
+                    href={TEXT.CONTEXT_LINK}
+                    rel="noreferrer"
+                    target="_blank"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="a"
+                    onClick={onContextClick}
+                  />
+                ),
+              }}
+            >
+              {TEXT.CONTEXT}
+            </TranslateWithMarkup>
+          </TextInputHelperText>
+        </div>
+      )}
     </SettingForm>
   );
 }
+
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,

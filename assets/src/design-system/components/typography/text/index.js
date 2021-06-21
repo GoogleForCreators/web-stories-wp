@@ -56,6 +56,11 @@ const Span = styled.span`
   ${textCss};
 `;
 
+const Kbd = styled.kbd`
+  ${textCss};
+  white-space: nowrap;
+`;
+
 const Label = styled.label`
   ${labelTextCss};
 
@@ -66,17 +71,21 @@ const Label = styled.label`
 export const Text = ({ as, disabled, ...props }) => {
   switch (as) {
     case 'label':
+      // Disable Reason: This is building block in the design system that is used with inputs
+      // and therefore has no associated control in the text element itself since it is unassembled.
       // eslint-disable-next-line styled-components-a11y/label-has-associated-control
       return <Label disabled={disabled} {...props} />;
     case 'span':
       return <Span {...props} />;
+    case 'kbd':
+      return <Kbd {...props} />;
     default:
       return <Paragraph {...props} />;
   }
 };
 
 Text.propTypes = {
-  as: PropTypes.oneOf(['p', 'span', 'label']),
+  as: PropTypes.oneOf(['p', 'span', 'label', 'kbd']),
   /** only applies to label styling */
   disabled: PropTypes.bool,
   isBold: PropTypes.bool,

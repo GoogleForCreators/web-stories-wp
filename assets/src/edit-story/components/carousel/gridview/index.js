@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useRef, useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -36,7 +37,6 @@ import {
   useGridViewKeys,
 } from '../../../../design-system';
 import { useConfig, useStory } from '../../../app';
-import { PAGE_RATIO } from '../../../constants';
 import {
   Reorderable,
   ReorderableSeparator,

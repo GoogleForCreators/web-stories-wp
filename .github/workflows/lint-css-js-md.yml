@@ -103,4 +103,4 @@ jobs:
         # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
         if: >
           github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]'`
+          github.event.pull_request.user.login != 'dependabot[bot]'

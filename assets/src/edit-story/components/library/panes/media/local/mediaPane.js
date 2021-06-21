@@ -27,6 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -56,11 +57,11 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
-import resourceList from '../../../../../utils/resourceList';
 import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
+import useFFmpeg from '../../../../../app/media/utils/useFFmpeg';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
@@ -107,6 +108,7 @@ function MediaPane(props) {
     setSearchTerm,
     uploadVideoPoster,
     totalItems,
+    optimizeVideo,
   } = useLocalMedia(
     ({
       state: {
@@ -124,6 +126,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        optimizeVideo,
       },
     }) => {
       return {
@@ -139,13 +142,18 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        optimizeVideo,
       };
     }
   );
 
   const { showSnackbar } = useSnackbar();
+  const enableMediaPickerVideoOptimization = useFeature(
+    'enableMediaPickerVideoOptimization'
+  );
 
   const {
+    allowedTranscodableMimeTypes,
     allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -153,10 +161,35 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const allowedMimeTypes = useMemo(
-    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
-    [allowedImageMimeTypes, allowedVideoMimeTypes]
-  );
+  const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
+
+  const allowedMimeTypes = useMemo(() => {
+    if (
+      enableMediaPickerVideoOptimization &&
+      isFeatureEnabled &&
+      isTranscodingEnabled
+    ) {
+      return [
+        ...allowedTranscodableMimeTypes,
+        ...allowedImageMimeTypes,
+        ...allowedVideoMimeTypes,
+      ];
+    }
+    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  }, [
+    allowedImageMimeTypes,
+    allowedVideoMimeTypes,
+    isFeatureEnabled,
+    isTranscodingEnabled,
+    enableMediaPickerVideoOptimization,
+    allowedTranscodableMimeTypes,
+  ]);
+
+  const transcodableMimeTypes = useMemo(() => {
+    return allowedTranscodableMimeTypes.filter(
+      (x) => !allowedVideoMimeTypes.includes(x)
+    );
+  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -176,13 +209,26 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
+      if (
+        enableMediaPickerVideoOptimization &&
+        isFeatureEnabled &&
+        isTranscodingEnabled &&
+        transcodableMimeTypes.includes(resource.mimeType)
+      ) {
+        optimizeVideo({ resource });
+      }
+
       // WordPress media picker event, sizes.medium.url is the smallest image
       insertMediaElement(
         resource,
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
 
-      if (!resource.posterId && !resource.local) {
+      if (
+        !resource.posterId &&
+        !resource.local &&
+        allowedVideoMimeTypes.includes(resource.mimeType)
+      ) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
         uploadVideoPoster(resource.id, mediaPickerEl.url);

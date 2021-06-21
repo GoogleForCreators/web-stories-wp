@@ -31,6 +31,17 @@ export const Placement = PropTypes.oneOf([
   'bottom',
 ]);
 
+export const THUMBNAIL_STATUS = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+};
+
+export const SnackbarNotificationThumbnail = PropTypes.shape({
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string,
+  status: PropTypes.oneOf(Object.values(THUMBNAIL_STATUS)),
+});
+
 export const SnackbarNotification = PropTypes.shape({
   message: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   actionLabel: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
@@ -40,4 +51,5 @@ export const SnackbarNotification = PropTypes.shape({
   preventActionDismiss: PropTypes.bool,
   preventAutoDismiss: PropTypes.bool,
   timeout: PropTypes.number,
+  thumbnail: SnackbarNotificationThumbnail,
 });

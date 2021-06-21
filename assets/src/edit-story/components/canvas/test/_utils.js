@@ -19,6 +19,7 @@
  */
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
+import { PAGE_WIDTH, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -32,7 +33,6 @@ import StoryContext from '../../../app/story/context';
 import { TransformProvider, useTransform } from '../../transform';
 import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
-import { PAGE_WIDTH, PAGE_RATIO } from '../../../constants';
 
 jest.mock('../../../app/canvas/useEditingElement');
 

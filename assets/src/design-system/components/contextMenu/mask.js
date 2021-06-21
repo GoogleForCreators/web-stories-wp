@@ -39,8 +39,7 @@ export default function Mask({ onDismiss }) {
   return (
     <>
       {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
+        Disable Reason: Allow pointer events to pass through if there's no 'onDismiss' to preserve transition
         */}
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <ScreenMask

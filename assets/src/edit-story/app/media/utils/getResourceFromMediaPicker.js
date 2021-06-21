@@ -15,16 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import createResource from './createResource';
-import getResourceSize from './getResourceSize';
+import { createResource, getResourceSize } from '@web-stories-wp/media';
 
 /**
  * Generates a resource object from a WordPress media picker object.
  *
  * @param {Object} mediaPickerEl WP Media Picker object.
- * @return {import('./createResource').Resource} Resource object.
+ * @return {import('@web-stories-wp/media').Resource} Resource object.
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
@@ -57,13 +56,13 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     mimeType,
     uploadDate: date,
     src: url || src,
-    ...getResourceSize(
+    ...getResourceSize({
       width,
       height,
       posterGenerated,
       posterWidth,
-      posterHeight
-    ),
+      posterHeight,
+    }),
     poster,
     posterId,
     id,

@@ -18,18 +18,14 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { getFileName } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
-import {
-  MEDIA_TRANSCODING_MAX_FILE_SIZE,
-  MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
-} from '../../../constants';
-import getFileName from './getFileName';
+import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
 
 export const VIDEO_SIZE_THRESHOLD = {
   HEIGHT: 720,
@@ -49,20 +45,23 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 /**
+ * @typedef FFmpegData
+ * @property {boolean} isFeatureEnabled Whether the feature is enabled.
+ * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
+ * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
+ * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
+ * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
+ * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
+ */
+
+/**
  * Custom hook to interact with FFmpeg.
  *
  * @see https://ffmpeg.org/ffmpeg.html
- * @return {{
- * isFeatureEnabled: boolean,
- * isFileTooLarge: (file: File) => boolean,
- * isTranscodingEnabled: boolean,
- * canTranscodeFile: (file: File) => boolean,
- * transcodeVideo: (file: File) => Promise<File>,
- * getFirstFrameOfVideo: (file: File) => Promise<File>
- * }} Functions and vars related to FFmpeg usage.
+ * @return {FFmpegData} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl } = useConfig();
+  const { ffmpegCoreUrl, allowedTranscodableMimeTypes } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -219,7 +218,7 @@ function useFFmpeg() {
    * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = (file) =>
-    MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type);
+    allowedTranscodableMimeTypes.includes(file.type);
 
   /**
    * Whether user opted in to video optimization.

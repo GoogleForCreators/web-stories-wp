@@ -25,8 +25,13 @@ import { useEffect } from 'react';
 import useTransform from './useTransform';
 
 /**
+ * @callback TransformHandler
+ * @param {?Object} frameObject
+ */
+
+/**
  * @param {string} id Target element's id.
- * @param {function(?Object)} handler The transform handler. The argument is
+ * @param {TransformHandler} handler The transform handler. The argument is
  * the frame object. The `null` value resets the transform.
  * @param {Array} [deps] The effect's dependencies.
  */

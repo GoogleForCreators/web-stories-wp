@@ -20,11 +20,10 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
-
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import { getBackgroundStyle, videoWithScale } from './util';
@@ -103,8 +102,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           poster={poster || resource.poster}
           style={style}
           {...videoProps}
+          preload="metadata"
           loop={loop}
-          preload="none"
           ref={ref}
           data-testid="videoElement"
           data-leaf-element="true"

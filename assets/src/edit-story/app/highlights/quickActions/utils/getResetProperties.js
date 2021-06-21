@@ -17,8 +17,22 @@
 /**
  * Internal dependencies
  */
-import { RESET_PROPERTIES } from '../constants';
+import { RESET_PROPERTIES, ELEMENT_TYPE, RESET_DEFAULTS } from '../constants';
 
+function isBorderRadiusDefault(element) {
+  // text element presets have a different default border radius
+  if (element?.type === ELEMENT_TYPE.TEXT && element?.borderRadius) {
+    return (
+      element.borderRadius.locked &&
+      element.borderRadius.topLeft === RESET_DEFAULTS.TEXT_BORDER_RADIUS.topLeft
+    );
+  }
+  // Otherwise if borderRadius is not present or radius is 0 return false to show reset
+  return (
+    !element?.borderRadius ||
+    element.borderRadius === RESET_DEFAULTS.STANDARD_BORDER_RADIUS
+  );
+}
 /**
  * Determines which properties on an element are to be reset when
  * the "clear" action is selected from a quick action menu
@@ -31,6 +45,10 @@ export const getResetProperties = (
   selectedElement,
   selectedElementAnimations = []
 ) => {
+  if (!selectedElement) {
+    return [];
+  }
+
   const resetProperties = [];
 
   if (selectedElement?.overlay) {
@@ -38,6 +56,14 @@ export const getResetProperties = (
   }
   if (selectedElementAnimations?.length) {
     resetProperties.push(RESET_PROPERTIES.ANIMATION);
+  }
+
+  if (
+    selectedElement?.opacity < 100 ||
+    !isBorderRadiusDefault(selectedElement) ||
+    selectedElement?.border
+  ) {
+    resetProperties.push(RESET_PROPERTIES.STYLES);
   }
   return resetProperties;
 };

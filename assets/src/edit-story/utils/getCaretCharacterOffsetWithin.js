@@ -50,7 +50,16 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
           range.setStart(caretPosition.offsetNode, caretPosition.offset);
         }
       } else if (doc.caretRangeFromPoint) {
+        // Change 'user-select' temporarily to make getting the correct range work for Safari.
+        // See https://github.com/google/web-stories-wp/issues/7745.
+        const elementsToAdjust = document.querySelectorAll('[data-fix-caret]');
+        for (const elementToAdjust of elementsToAdjust) {
+          elementToAdjust.style.webkitUserSelect = 'auto';
+        }
         range = document.caretRangeFromPoint(clientX, clientY);
+        for (const elementToAdjust of elementsToAdjust) {
+          elementToAdjust.style.webkitUserSelect = 'none';
+        }
       }
     }
     if (!range) {
@@ -63,7 +72,11 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
       const preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(element);
       preCaretRange.setEnd(range.endContainer, range.endOffset);
-      return preCaretRange.toString().length;
+      // This is for ensuring that if the logic fails to get the correct offset, it won't cause unexpected behaviour.
+      if (preCaretRange.toString().length <= element.textContent.length) {
+        return preCaretRange.toString().length;
+      }
+      return 0;
     }
   }
 

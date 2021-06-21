@@ -1,8 +1,7 @@
 {
-  "version": 25,
+  "version": 28,
   "pages": [
     {
-      "animations": [],
       "elements": [
         {
           "opacity": 100,
@@ -222,14 +221,13 @@
           "id": "58240b4d-fc89-4b8c-8d0a-d1dc22885597"
         }
       ],
+      "animations": [],
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Roboto"],
       "id": "8f7d5b98-666f-4d23-bd5f-9af695c406e0"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -452,14 +450,14 @@
           "y": 429
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Source Serif Pro"],
       "id": "1abbc5b2-3682-4fbd-a697-22204c8f7df7"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -675,14 +673,14 @@
           "y": 464
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Poppins", "IBM Plex Sans", "Rubik"],
       "id": "4fb31852-a1ba-4f9d-a94d-e62b14818f07"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -886,14 +884,14 @@
           "marginOffset": 3.7399999999999984
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Playfair Display", "Lora"],
       "id": "71f21b73-f7fc-41b2-b61a-a35d0bcff633"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1100,14 +1098,14 @@
           "id": "1026e4b9-721b-4d41-86f8-db853af66e04"
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Oswald", "Roboto Condensed"],
       "id": "e1d2a549-46ca-4f67-babc-efbfe8901406"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1312,14 +1310,14 @@
           "marginOffset": 2.4309999999999974
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Raleway", "Merriweather"],
       "id": "c9dd26dd-c76c-47a1-aeed-2ad60eda048f"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1632,14 +1630,14 @@
           "y": 377
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Titillium Web", "Work Sans", "Montserrat"],
       "id": "902b7a10-0a66-4f92-998d-6c2b0a92b2b5"
     },
     {
-      "animations": [],
-      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -1878,6 +1876,8 @@
           "marginOffset": -9.828000000000003
         }
       ],
+      "animations": [],
+      "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
       "fonts": ["Nunito", "Nunito Sans", "Karla"],

@@ -43,7 +43,7 @@ jobs:
             wp: 'latest'
             snapshots: true
           - browser: 'chrome'
-            wp: '5.3.6'
+            wp: '5.5'
             snapshots: false
 
     steps:
@@ -106,7 +106,7 @@ jobs:
         run: |
           npm ci
           npm install puppeteer
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_PRODUCT: ${{ matrix.browser }}

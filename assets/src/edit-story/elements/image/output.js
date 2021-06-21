@@ -15,11 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { calculateSrcSet } from '@web-stories-wp/media';
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
-import { calculateSrcSet } from '../media/util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

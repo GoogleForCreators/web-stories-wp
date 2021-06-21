@@ -21,11 +21,10 @@ import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { Icons, themeHelpers } from '../../../design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
@@ -94,35 +93,27 @@ function GradientStopWithRef(
   ref
 ) {
   return (
-    <>
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
-      {/* eslint-disable-next-line styled-components-a11y/role-supports-aria-props */}
-      <Stop
-        ref={ref}
-        key={index}
-        isSelected={isSelected}
-        position={position}
-        onFocus={() => onSelect(index)}
-        onClick={() => onSelect(index)}
-        aria-selected={isSelected}
-        aria-label={sprintf(
-          /* translators: %d: stop percentage */
-          __('Gradient stop at %1$d%%', 'web-stories'),
-          Math.round(100 - position * 100)
-        )}
-      >
-        <IconWrapper isSelected={isSelected}>
-          <Icons.TailedRectangle />
-        </IconWrapper>
-        <StopPointer offset={-OFFSET}>
-          <Transparent />
-          <Background color={color} />
-        </StopPointer>
-      </Stop>
-    </>
+    <Stop
+      ref={ref}
+      key={index}
+      isSelected={isSelected}
+      position={position}
+      onFocus={() => onSelect(index)}
+      onClick={() => onSelect(index)}
+      aria-label={sprintf(
+        /* translators: %d: stop percentage */
+        __('Gradient stop at %1$d%%', 'web-stories'),
+        Math.round(100 - position * 100)
+      )}
+    >
+      <IconWrapper isSelected={isSelected}>
+        <Icons.TailedRectangle />
+      </IconWrapper>
+      <StopPointer offset={-OFFSET}>
+        <Transparent />
+        <Background color={color} />
+      </StopPointer>
+    </Stop>
   );
 }
 

@@ -20,13 +20,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
 import { useStory, useCanvas } from '../../app';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
@@ -143,10 +143,13 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
     };
   }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
 
+  // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
+  // See https://github.com/google/web-stories-wp/issues/7745.
   return (
     <Element
       ref={elementRef}
       data-testid="textFrame"
+      data-fix-caret
       className="syncMargin"
       dangerouslySetInnerHTML={{ __html: content }}
       element={element}

@@ -20,20 +20,21 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  preloadImage,
+  resourceList,
+  getMediaSizePositionProps,
+  calculateSrcSet,
+  getSmallestUrlForWidth,
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { preloadImage } from '../../app/media/utils';
-import resourceList from '../../utils/resourceList';
-import {
-  calculateSrcSet,
-  getSmallestUrlForWidth,
-  mediaWithScale,
-} from './util';
+
+import { mediaWithScale } from './util';
 import MediaDisplay from './display';
-import { getMediaSizePositionProps } from '.';
 
 const Img = styled.img`
   position: absolute;
