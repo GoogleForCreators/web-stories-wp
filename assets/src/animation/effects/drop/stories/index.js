@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { PAGE_HEIGHT, PAGE_WIDTH, getBox } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../edit-story/constants';
-import { getBox } from '../../../../edit-story/units/dimensions';
 import { StoryAnimation } from '../../../components';
 import { ANIMATION_TYPES } from '../../../constants';
 import {

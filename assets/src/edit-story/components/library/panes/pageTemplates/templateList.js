@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../units';
 import { PANE_PADDING } from '../shared';
 import {
   getVirtualizedItemIndex,

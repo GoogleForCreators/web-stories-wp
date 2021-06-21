@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../design-system';
+import { useContextSelector, identity } from '../../../design-system';
 import Context from './context';
 
-function useUnits(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useRightClickMenu(selector) {
+  const context = useContextSelector(Context, selector ?? identity);
+
+  if (!context) {
+    throw new Error(
+      'Must use `useRightClickMenu()` within <rightClickMenu.Provider />'
+    );
+  }
+
+  return context;
 }
 
-export default useUnits;
+export default useRightClickMenu;

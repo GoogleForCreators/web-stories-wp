@@ -19,11 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import { useRef } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 import StoryPropTypes from '../../types';
 import {
   elementFillContent,
@@ -36,9 +38,7 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementFillContent}

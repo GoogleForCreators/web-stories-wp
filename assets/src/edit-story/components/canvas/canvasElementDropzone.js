@@ -20,12 +20,12 @@
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../dropTargets';
-import { useUnits } from '../../units';
 import { isDragType } from '../../utils/dragEvent';
 import { useCanvas } from '../../app';
 import useInsertElement from './useInsertElement';

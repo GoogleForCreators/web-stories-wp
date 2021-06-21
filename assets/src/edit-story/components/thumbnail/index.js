@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,6 @@
  * limitations under the License.
  */
 
-export { default as UnitsProvider } from './unitsProvider';
-export { default as useUnits } from './useUnits';
-export {
-  dataPixels,
-  editorPixels,
-  dataToEditorX,
-  dataToEditorY,
-  editorToDataX,
-  editorToDataY,
-  dataFontEm,
-  dataToFontSizeY,
-} from './dimensions';
+export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
+export { default as Thumbnail } from './thumbnail';
+export { default as OverflowThumbnail } from './overflowThumbnail';

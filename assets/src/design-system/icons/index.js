@@ -82,6 +82,7 @@ export { ReactComponent as ExclamationTriangle } from './exclamation_triangle.sv
 export { ReactComponent as Eye } from './eye.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
 export { ReactComponent as Gear } from './gear.svg';
+export { ReactComponent as GearWithGauge } from './gear_with_gauge.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';
 export { ReactComponent as LetterAHeight } from './letter_a_height.svg';
 export { ReactComponent as LetterAWidth } from './letter_a_width.svg';

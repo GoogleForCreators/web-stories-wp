@@ -21,13 +21,13 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { render } from '@testing-library/react';
 jest.mock('flagged');
 import { useFeature } from 'flagged';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { MaskTypes } from '../../masks/constants';
 
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */

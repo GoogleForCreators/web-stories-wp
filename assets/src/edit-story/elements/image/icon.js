@@ -15,11 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getSmallestUrlForWidth } from '@web-stories-wp/media';
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
-import { getSmallestUrlForWidth } from '../media/util';
 
 function ImageLayerIcon({
   element: {
