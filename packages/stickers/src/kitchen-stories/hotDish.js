@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Pot', 'sticker name', 'web-stories');
+const title = _x('Hot dish', 'sticker name', 'web-stories');
 
 function HotDish({ style }) {
   return (

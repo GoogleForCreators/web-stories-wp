@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Pills', 'sticker name', 'web-stories');
 
-function Capsules({ style }) {
+function Pills({ style }) {
   return (
     <svg
       style={style}
@@ -39,12 +39,12 @@ function Capsules({ style }) {
   );
 }
 
-Capsules.propTypes = {
+Pills.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 63 / 64,
-  svg: Capsules,
+  svg: Pills,
   title,
 };

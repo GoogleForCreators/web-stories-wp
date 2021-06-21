@@ -21,9 +21,9 @@ import { default as scribbledUnderlineWhite } from './scribbledUnderlineWhite';
 import { default as scribbledUnderline2 } from './scribbledUnderline2';
 import { default as scribbledArrow } from './scribbledArrow';
 import { default as curvedArrow } from './curvedArrow';
-import { default as capsuleBox } from './capsuleBox';
-import { default as capsuleOpen } from './capsuleOpen';
-import { default as capsules } from './capsules';
+import { default as pillBox } from './pillBox';
+import { default as openPill } from './openPill';
+import { default as pills } from './pills';
 
 export {
   scribbledUnderline,
@@ -31,7 +31,7 @@ export {
   scribbledUnderline2,
   scribbledArrow,
   curvedArrow,
-  capsuleBox,
-  capsuleOpen,
-  capsules,
+  pillBox,
+  openPill,
+  pills,
 };

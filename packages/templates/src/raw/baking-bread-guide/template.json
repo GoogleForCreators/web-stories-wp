@@ -1440,7 +1440,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "thermoStat"
+            "type": "thermometer"
           },
           "id": "db3ce326-32cd-4a9c-9466-547b17186779"
         },

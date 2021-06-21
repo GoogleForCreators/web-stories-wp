@@ -1658,7 +1658,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "capsuleOpen"
+            "type": "openPill"
           },
           "id": "85d298dc-bc94-4123-a3a6-9d39cc173cda"
         },
@@ -1679,7 +1679,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "capsuleBox"
+            "type": "pillBox"
           },
           "id": "f1605c9e-b541-4c77-8747-69a01adbc6d2"
         },
@@ -1700,7 +1700,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "capsules"
+            "type": "pills"
           },
           "id": "d6808d8c-7294-45c1-8e17-24f7c1911a85"
         },

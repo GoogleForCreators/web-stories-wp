@@ -19,8 +19,8 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Pill Open', 'sticker name', 'web-stories');
-function CapsuleOpen({ style }) {
+const title = _x('Open pill', 'sticker name', 'web-stories');
+function OpenPill({ style }) {
   return (
     <svg
       style={style}
@@ -81,12 +81,12 @@ function CapsuleOpen({ style }) {
   );
 }
 
-CapsuleOpen.propTypes = {
+OpenPill.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 61 / 40,
-  svg: CapsuleOpen,
+  svg: OpenPill,
   title,
 };

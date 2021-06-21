@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Thermometer', 'sticker name', 'web-stories');
 
-function ThermoStat({ style }) {
+function Thermometer({ style }) {
   return (
     <svg
       style={style}
@@ -56,12 +56,12 @@ function ThermoStat({ style }) {
   );
 }
 
-ThermoStat.propTypes = {
+Thermometer.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 28 / 50,
-  svg: ThermoStat,
+  svg: Thermometer,
   title,
 };
