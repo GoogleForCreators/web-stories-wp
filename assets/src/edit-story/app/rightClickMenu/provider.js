@@ -27,8 +27,6 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
  */
 import { useStory } from '..';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
-import { serializeTextAndHTMLData } from '../../utils/copyPaste';
-import { useCanvas } from '../canvas';
 import { duplicatePage } from '../../elements';
 import { isPlatformMacOS } from '../../../design-system';
 import {
@@ -57,39 +55,31 @@ const isMacOs = isPlatformMacOS();
 function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
-  const { pasteHandler } = useCanvas(({ actions: { pasteHandler } }) => ({
-    pasteHandler,
-  }));
   const {
     addPage,
     currentPage,
     deleteCurrentPage,
     pages,
+    replaceCurrentPage,
     selectedElements,
-    selectedElementAnimations,
   } = useStory(
     ({
-      state: {
-        currentPage,
-        pages,
-        selectedElements,
-        selectedElementAnimations,
-      },
-      actions: { addPage, deleteCurrentPage },
+      state: { currentPage, pages, selectedElements },
+      actions: { addPage, deleteCurrentPage, replaceCurrentPage },
     }) => ({
       addPage,
       currentPage,
       deleteCurrentPage,
       pages,
+      replaceCurrentPage,
       selectedElements,
-      selectedElementAnimations,
     })
   );
 
   // Ref for attaching the context menu
   const rightClickAreaRef = useRef();
 
-  const [{ isMenuOpen, menuPosition }, dispatch] = useReducer(
+  const [{ copiedPage, isMenuOpen, menuPosition }, dispatch] = useReducer(
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
@@ -115,7 +105,7 @@ function RightClickMenuProvider({ children }) {
    */
   const handleCloseMenu = useCallback(() => {
     if (isMenuOpen) {
-      dispatch({ type: ACTION_TYPES.RESET });
+      dispatch({ type: ACTION_TYPES.CLOSE_MENU });
     }
   }, [isMenuOpen]);
 
@@ -127,45 +117,21 @@ function RightClickMenuProvider({ children }) {
   }, []);
 
   /**
-   * Copy the element and styles to the clipboard.
+   * Copy the page to state.
    */
-  const handleCopyElement = useCallback(async () => {
-    if (!selectedElements.length) {
-      return;
-    }
-
-    const { htmlContent, serializedPayload } = serializeTextAndHTMLData(
-      currentPage,
-      selectedElements,
-      selectedElementAnimations
-    );
-
-    try {
-      await navigator.clipboard.writeText(
-        `<!-- ${serializedPayload} -->${htmlContent}`
-      );
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('trouble copying the dooby dooby doos', { error });
-    }
-  }, [currentPage, selectedElements, selectedElementAnimations]);
+  const handleCopyPage = useCallback(() => {
+    dispatch({ type: ACTION_TYPES.COPY_PAGE, payload: currentPage });
+  }, [currentPage]);
 
   /**
-   * Paste the element and styles from the clipboard if one exists.
+   * Paste the copied page from state if one exists.
    */
-  const handlePasteElement = useCallback(async () => {
-    let content;
-    try {
-      content = await navigator.clipboard.readText();
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('trouble pasting the dooby dooby doos', { error });
+  const handlePastePage = useCallback(() => {
+    if (copiedPage) {
+      replaceCurrentPage({ page: copiedPage });
+      dispatch({ type: ACTION_TYPES.RESET });
     }
-
-    if (content) {
-      pasteHandler(content);
-    }
-  }, [pasteHandler]);
+  }, [replaceCurrentPage, copiedPage]);
 
   /**
    * Duplicate the current page.
@@ -200,7 +166,7 @@ function RightClickMenuProvider({ children }) {
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_C
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_C,
         },
-        onClick: handleCopyElement,
+        onClick: handleCopyPage,
         ...menuItemProps,
       },
       {
@@ -211,7 +177,7 @@ function RightClickMenuProvider({ children }) {
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_V
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_V,
         },
-        onClick: handlePasteElement,
+        onClick: handlePastePage,
         ...menuItemProps,
       },
       {
@@ -224,7 +190,7 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
     ],
-    [handleCopyElement, menuItemProps, handleDeletePage, handlePasteElement]
+    [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
   );
 
   const pageItems = useMemo(
