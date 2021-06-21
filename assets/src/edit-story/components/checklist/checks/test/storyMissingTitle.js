@@ -20,7 +20,7 @@
 import { storyMissingTitle } from '../storyMissingTitle';
 
 describe('storyMissingTitle', () => {
-  it('should return an error-type guidance message if the story is missing its title', () => {
+  it('should return true message if the story is missing its title', () => {
     const testEmptyStringStory = {
       id: 890,
       status: 'draft',
