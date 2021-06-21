@@ -112,11 +112,10 @@ describe('Right Click Menu integration', () => {
       );
       await fixture.events.keyboard.type('ab12dd');
 
-      throw new Error('works so far');
-
       // copy the page
       await openRightClickMenu();
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
+      throw new Error('works so far');
 
       // add new blank page
       await fixture.events.click(newPageButton);
