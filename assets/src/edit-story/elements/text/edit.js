@@ -27,13 +27,14 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { useUnits } from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
 import { useStory, useFont, useTransform } from '../../app';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
@@ -221,10 +222,7 @@ function TextEdit({
   // Make sure to allow the user to click in the text box while working on the text.
   const onClick = (evt) => {
     const editor = editorRef.current;
-    // Refocus the editor if the container outside it is clicked.
-    if (!editor.getNode().contains(evt.target)) {
-      editor.focus();
-    }
+    editor.focus();
     evt.stopPropagation();
   };
 
@@ -389,10 +387,7 @@ function TextEdit({
       width={elementWidth}
       height={elementHeight}
     >
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
+      {/* onClick handler is needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <Wrapper
         ref={wrapperRef}

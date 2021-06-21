@@ -109,6 +109,15 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.8.0 =
+
+**Release Date:** June 16, 2021.
+
+* New feature: a "quick actions" menu next to the canvas for convenient access to common tools.
+* Image filters can now be applied to non-background images.
+* Improved animation curves in the story templates.
+* Fixes an issue with links and AMP validation.
+
 = 1.7.2 =
 
 **Release Date:** May 20, 2021.
@@ -208,6 +217,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.8.0 =
+
+Quick actions menu, filters on non-background images, and bug fixes and performance improvements.
 
 = 1.7.2 =
 

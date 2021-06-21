@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
 export {
   FULLBLEED_RATIO,
   PAGE_RATIO,
   PAGE_WIDTH,
   PAGE_HEIGHT,
-} from '../../edit-story/constants';
+} from '@web-stories-wp/units';
 
 export const WPBODY_ID = 'wpbody';
 

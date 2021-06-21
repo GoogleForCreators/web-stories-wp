@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -30,7 +31,6 @@ import {
   Headline,
   THEME_CONSTANTS,
 } from '../../../../../design-system';
-import { UnitsProvider } from '../../../../../edit-story/units';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { resolveRoute } from '../../../router';
 import { APP_ROUTES } from '../../../../constants';

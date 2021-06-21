@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import getFileNameFromUrl from './getFileNameFromUrl';
+
 function generateFileName(url) {
-  const currentFileName = url.split('/').pop();
+  const currentFileName = getFileNameFromUrl(url);
   const currentFileExt = currentFileName
     .split(/[#?]/)[0]
     .split('.')
