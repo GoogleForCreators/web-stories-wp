@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, _x } from '@web-stories-wp/i18n';
+import { _x } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 /**
@@ -30,43 +30,56 @@ export const BOTTOM_MARGIN = 8;
 
 export const TOGGLE_SHORTCUTS_MENU = 'mod+/';
 
-export const KEY_SIZE = {
-  NORMAL: '24px',
-  LARGE: 'auto',
-};
-
 const Up = styled(KeyArrowUp)`
   width: 12px;
   transform-origin: 50% 50%;
 `;
-
 const Down = styled(Up)`
   transform: rotate(0.5turn);
 `;
+const Cmd = () => '⌘';
+const Ctrl = () => 'ctrl';
+const Enter = () => '⏎';
+const Shift = () => '⇧';
+const Option = () => '⌥';
+const Alt = () => _x('alt', 'The keyboard key "Alt"', 'web-stories');
+const Delete = () => _x('Delete', 'The keyboard key "Delete"', 'web-stories');
 
 export const SPECIAL_KEYS = {
   COMMAND: {
-    symbol: '⌘',
+    symbol: <Cmd />,
     title: _x('Command', 'The keyboard key "Command"', 'web-stories'),
   },
   CONTROL: {
-    symbol: 'ctrl',
+    symbol: <Ctrl />,
     title: _x('Control', 'The keyboard key "Control"', 'web-stories'),
   },
   ENTER: {
-    symbol: '⏎',
+    symbol: <Enter />,
     title: _x('Enter', 'The keyboard key "Enter"', 'web-stories'),
   },
   SHIFT: {
-    symbol: '⇧',
+    symbol: <Shift />,
     title: _x('Shift', 'The keyboard key "Shift"', 'web-stories'),
   },
   OPTION: {
-    symbol: '⌥',
+    symbol: <Option />,
     title: _x('Option', 'The keyboard key "Option"', 'web-stories'),
   },
-  ALT: _x('alt', 'The keyboard key "Alt"', 'web-stories'),
-  DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
-  UP: <Up aria-label={__('Up arrow', 'web-stories')} />,
-  DOWN: <Down aria-label={__('Down arrow', 'web-stories')} />,
+  ALT: {
+    symbol: <Alt />,
+    title: _x('alt', 'The keyboard key "Alt"', 'web-stories'),
+  },
+  DELETE: {
+    symbol: <Delete />,
+    title: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+  },
+  UP: {
+    symbol: <Up />,
+    title: _x('Up arrow', 'The keyboard key "Up"', 'web-stories'),
+  },
+  DOWN: {
+    symbol: <Down />,
+    title: _x('Down arrow', 'The keyboard key "Down"', 'web-stories'),
+  },
 };

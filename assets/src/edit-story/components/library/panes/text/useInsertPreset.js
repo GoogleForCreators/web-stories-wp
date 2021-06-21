@@ -17,15 +17,14 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef } from 'react';
+import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
-import { PAGE_HEIGHT } from '../../../../constants';
 import useLibrary from '../../useLibrary';
 import { useHistory } from '../../../../app/history';
-import { dataFontEm } from '../../../../units';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';

@@ -24,21 +24,23 @@ import {
   getTimeTracker,
 } from '@web-stories-wp/tracking';
 import { useFeature } from 'flagged';
+import {
+  createBlob,
+  getFileName,
+  getImageDimensions,
+  isAnimatedGif,
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
-import { createBlob } from '../../../../utils/blobs';
 import { noop } from '../../../../utils/noop';
-import getFileName from '../getFileName';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
-import getImageDimensions from '../getImageDimensions';
-import isAnimatedGif from '../isAnimatedGif';
 import * as reducer from './reducer';
 
 const initialState = {

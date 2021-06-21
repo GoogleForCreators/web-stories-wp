@@ -18,13 +18,16 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import {
+  dataPixels,
+  calcRotatedObjectPositionAndSize,
+} from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
+
 import clamp from '../../../../utils/clamp';
 import { getDefinitionForType } from '../../../../elements';
-import { dataPixels } from '../../../../units';
-import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import usePresubmitHandler from '../../../form/usePresubmitHandler';
 import { MIN_MAX } from './constants';
 import { isNum } from './utils';

@@ -112,22 +112,6 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         source_url:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x853.jpg',
       },
-      'web-stories-poster-landscape': {
-        file: 'IMAGE-853x640.jpg',
-        width: 853,
-        height: 640,
-        mime_type: 'image/jpeg',
-        source_url:
-          'http://wp.local/wp-content/uploads/2020/09/IMAGE-853x640.jpg',
-      },
-      'web-stories-poster-square': {
-        file: 'IMAGE-640x640.jpg',
-        width: 640,
-        height: 640,
-        mime_type: 'image/jpeg',
-        source_url:
-          'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x640.jpg',
-      },
       'web-stories-publisher-logo': {
         file: 'IMAGE-96x96.jpg',
         width: 96,

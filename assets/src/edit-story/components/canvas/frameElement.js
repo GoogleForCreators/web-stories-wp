@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '../../elements/shared';
-import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
@@ -180,8 +180,7 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        // TODO: Investigate
-        // See https://github.com/google/web-stories-wp/issues/6671
+        // Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
         tabIndex={0}
         aria-labelledby={`layer-${id}`}

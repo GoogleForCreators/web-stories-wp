@@ -21,12 +21,12 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { UnitsProvider } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../types';
 import { TransformProvider } from '../../transform';
-import { UnitsProvider } from '../../../units';
 import DisplayElement from '../../canvas/displayElement';
 
 const Page = styled.button`

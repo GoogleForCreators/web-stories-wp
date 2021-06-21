@@ -18,11 +18,12 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { getFileName } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { useCallback, useMemo } from 'react';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
@@ -30,7 +31,6 @@ import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
 } from '../../../constants';
-import getFileName from './getFileName';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

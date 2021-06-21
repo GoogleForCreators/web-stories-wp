@@ -19,15 +19,16 @@
 import styled, { css } from 'styled-components';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
+import {
+  getSmallestUrlForWidth,
+  resourceList,
+  ResourcePropTypes,
+} from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
-import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
-import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
 import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
@@ -269,7 +270,7 @@ function InnerElement({
 InnerElement.propTypes = {
   type: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  resource: StoryPropTypes.imageResource,
+  resource: ResourcePropTypes.imageResource,
   alt: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,

@@ -20,11 +20,11 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import { getMediaSizePositionProps } from '../media';
 import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import { getBackgroundStyle, videoWithScale } from '../video/util';

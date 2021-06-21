@@ -15,11 +15,13 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import createResource from './createResource';
-import getTypeFromMime from './getTypeFromMime';
-import getResourceSize from './getResourceSize';
+import {
+  createResource,
+  getTypeFromMime,
+  getResourceSize,
+} from '@web-stories-wp/media';
 
 /**
  * MediaDetails object.

@@ -34,8 +34,6 @@ class Media extends Test_Case {
 		$media->register();
 
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_LANDSCAPE_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_SQUARE_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
 

@@ -19,12 +19,12 @@
  */
 import { useCallback } from 'react';
 import STICKERS from '@web-stories-wp/stickers';
+import { dataPixels } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { createNewElement, getDefinitionForType } from '../../elements';
-import { dataPixels } from '../../units';
 import { useLocalMedia } from '../../app/media';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
