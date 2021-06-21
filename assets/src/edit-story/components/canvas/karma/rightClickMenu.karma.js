@@ -87,7 +87,7 @@ describe('Right Click Menu integration', () => {
   });
 
   describe('right click menu: page/background', () => {
-    it('should be able to copy a page and paste it to a new page', async () => {
+    fit('should be able to copy a page and paste it to a new page', async () => {
       // insert element
       const insertElement = await fixture.renderHook(() => useInsertElement());
       await fixture.act(() =>
@@ -105,8 +105,10 @@ describe('Right Click Menu integration', () => {
       );
 
       // apply a background to the page
+      console.log('clicking 1');
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
 
+      console.log('clicking 2');
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
       );
@@ -114,13 +116,16 @@ describe('Right Click Menu integration', () => {
 
       // copy the page
       await openRightClickMenu();
+      console.log('clicking 3');
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
 
       // add new blank page
+      console.log('clicking 4');
       await fixture.events.click(newPageButton);
 
       // paste page
       await openRightClickMenu();
+      console.log('clicking 5');
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.paste);
 
       // confirm the paste worked.
