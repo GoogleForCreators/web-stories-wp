@@ -42,7 +42,7 @@
             "width": 824,
             "height": 1464,
             "posterId": 0,
-            "id": 3536,
+            "id": 0,
             "title": "page01_bg",
             "alt": "page01_bg",
             "local": false,
@@ -324,7 +324,7 @@
             "width": 302,
             "height": 162,
             "posterId": 0,
-            "id": 1794,
+            "id": 0,
             "title": "page01_logo",
             "alt": "page01_logo",
             "local": false,
@@ -431,8 +431,8 @@
             "width": 304,
             "height": 540,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page02_bg_poster.jpg",
-            "posterId": 3515,
-            "id": 3514,
+            "posterId": 0,
+            "id": 0,
             "length": 26,
             "lengthFormatted": "0:26",
             "title": "page02_bg_video",
@@ -444,7 +444,17 @@
             "isTranscoding": false,
             "baseColor": [255, 255, 255]
           },
-          "tracks": []
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page02_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page02_bg_video_subtitle.vtt",
+              "id": "3b3be6d7-994b-4400-8513-60d5461856e3",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ]
         },
         {
           "opacity": 100,
@@ -1326,8 +1336,8 @@
             "width": 608,
             "height": 958,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page03_bg_poster.jpg",
-            "posterId": 3517,
-            "id": 3516,
+            "posterId": 0,
+            "id": 0,
             "length": 11,
             "lengthFormatted": "0:11",
             "title": "page03_bg_video",
@@ -2627,8 +2637,8 @@
             "width": 608,
             "height": 886,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page04_bg_poster.jpg",
-            "posterId": 3519,
-            "id": 3518,
+            "posterId": 0,
+            "id": 0,
             "length": 8,
             "lengthFormatted": "0:08",
             "title": "page04_bg_video",
@@ -3829,8 +3839,8 @@
             "width": 608,
             "height": 1040,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page06_bg_poster.jpg",
-            "posterId": 3521,
-            "id": 3520,
+            "posterId": 0,
+            "id": 0,
             "length": 43,
             "lengthFormatted": "0:43",
             "title": "page06_bg_video",
@@ -3839,7 +3849,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": [],
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page06_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page06_bg_video_subtitle.vtt",
+              "id": "b49a71c4-99a3-444b-b9b3-45fe19ce0abe",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ],
           "overlay": {
             "type": "linear",
             "stops": [
@@ -4113,8 +4133,8 @@
             "width": 608,
             "height": 1052,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page07_bg_poster.jpg",
-            "posterId": 3523,
-            "id": 3522,
+            "posterId": 0,
+            "id": 0,
             "length": 22,
             "lengthFormatted": "0:22",
             "title": "page07_bg_video",
@@ -4123,7 +4143,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": [],
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page07_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page07_bg_video_subtitle.vtt",
+              "id": "482eae12-a620-4851-8dfb-3dddb9e84653",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ],
           "overlay": {
             "type": "linear",
             "stops": [
@@ -4397,8 +4427,8 @@
             "width": 608,
             "height": 1080,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page08_bg_poster.jpg",
-            "posterId": 3525,
-            "id": 3524,
+            "posterId": 0,
+            "id": 0,
             "length": 35,
             "lengthFormatted": "0:35",
             "title": "page08_bg_video",
@@ -4407,7 +4437,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": [],
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page08_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page08_bg_video_subtitle.vtt",
+              "id": "0cb93880-3435-4c62-a70d-8d767bb31c39",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ],
           "overlay": {
             "type": "linear",
             "stops": [
@@ -4681,8 +4721,8 @@
             "width": 608,
             "height": 1080,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page09_bg_poster.jpg",
-            "posterId": 3531,
-            "id": 3530,
+            "posterId": 0,
+            "id": 0,
             "length": 57,
             "lengthFormatted": "0:57",
             "title": "page09_bg_video",
@@ -4691,7 +4731,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": [],
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page09_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page09_bg_video_subtitle.vtt",
+              "id": "201b67b8-6f11-4c9a-a694-09bc73a2130e",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ],
           "overlay": {
             "type": "linear",
             "stops": [
@@ -4965,8 +5015,8 @@
             "width": 608,
             "height": 1080,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page10_bg_poster.jpg",
-            "posterId": 3533,
-            "id": 3532,
+            "posterId": 0,
+            "id": 0,
             "length": 55,
             "lengthFormatted": "0:55",
             "title": "page10_bg_video",
@@ -4975,7 +5025,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": [],
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page010_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page010_bg_video_subtitle.vtt",
+              "id": "f655fe38-9dac-47d4-8d0a-26a8a0d7713e",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ],
           "overlay": {
             "type": "linear",
             "stops": [
@@ -5245,12 +5305,12 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-05-10T12:53:21",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page11_bg_video.mp4",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page11_bg_videon.mp4",
             "width": 608,
             "height": 1044,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page11_bg_poster.jpg",
-            "posterId": 3529,
-            "id": 3528,
+            "posterId": 0,
+            "id": 0,
             "length": 37,
             "lengthFormatted": "0:37",
             "title": "page11_bg_video",
@@ -5259,7 +5319,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": [],
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page011_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page011_bg_video_subtitle.vtt",
+              "id": "6d53fbc4-2eb6-4a07-b3e1-3a3eebadaa86",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ],
           "overlay": {
             "type": "linear",
             "stops": [
@@ -5533,8 +5603,8 @@
             "width": 608,
             "height": 1038,
             "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page12_bg_poster.jpg",
-            "posterId": 3527,
-            "id": 3526,
+            "posterId": 0,
+            "id": 0,
             "length": 11,
             "lengthFormatted": "0:11",
             "title": "page12_bg_video",
@@ -5543,7 +5613,17 @@
             "local": false,
             "isOptimized": true
           },
-          "tracks": []
+          "tracks": [
+            {
+              "track": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page012_bg_video_subtitle.vtt",
+              "trackId": 0,
+              "trackName": "page012_bg_video_subtitle.vtt",
+              "id": "d49aeba0-c1ef-4675-a57a-957ae12b76e9",
+              "kind": "captions",
+              "srclang": "",
+              "label": ""
+            }
+          ]
         }
       ],
       "backgroundOverlay": "none",
@@ -5634,7 +5714,7 @@
             "width": 330,
             "height": 586,
             "posterId": 0,
-            "id": 1854,
+            "id": 0,
             "title": "page14_bg",
             "alt": "page14_bg",
             "local": false,
@@ -6082,7 +6162,7 @@
             "width": 46,
             "height": 46,
             "posterId": 0,
-            "id": 1699,
+            "id": 0,
             "title": "page14_profileimage",
             "alt": "page14_profileimage",
             "sizes": [],
