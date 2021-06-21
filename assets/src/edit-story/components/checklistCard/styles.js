@@ -22,6 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Icons, THEME_CONSTANTS, Text } from '../../../design-system';
 import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
@@ -70,6 +71,22 @@ export const Cta = styled.div`
   margin: 0;
 `;
 
+export const CheckboxCtaLabel = styled(Text).attrs({
+  forwardedAs: 'label',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.linkNormal};
+`;
+
+export const CheckboxCtaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 14px 0 6px;
+  label {
+    margin: 0 8px;
+  }
+`;
+
 export const ThumbnailWrapper = styled.div`
   grid-area: thumbnail;
 
@@ -98,4 +115,14 @@ export const Footer = styled.div`
 // For use with lists
 export const CardListWrapper = styled.div`
   margin-left: 16px;
+`;
+
+export const StyledVideoOptimizationIcon = styled(Icons.GearWithGauge)`
+  rect {
+    color: ${({ theme }) => theme.colors.opacity.black64};
+  }
+
+  path {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
 `;
