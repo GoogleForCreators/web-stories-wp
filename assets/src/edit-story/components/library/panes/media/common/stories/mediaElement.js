@@ -25,6 +25,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import MediaElement from '../mediaElement';
+import { CanvasProvider } from '../../../../../../app/canvas';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
 import { SnackbarContext } from '../../../../../../../design-system';
@@ -76,14 +77,16 @@ export const _Image = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <Column>
-            <MediaElement
-              index={0}
-              resource={resource}
-              width={150}
-              onInsert={action('insert into canvas')}
-            />
-          </Column>
+          <CanvasProvider>
+            <Column>
+              <MediaElement
+                index={0}
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </CanvasProvider>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -115,14 +118,16 @@ export const _Image_With_Attribution = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <Column>
-            <MediaElement
-              index={0}
-              resource={resource}
-              width={150}
-              onInsert={action('insert into canvas')}
-            />
-          </Column>
+          <CanvasProvider>
+            <Column>
+              <MediaElement
+                index={0}
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </CanvasProvider>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -150,14 +155,16 @@ export const _Video = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <Column>
-            <MediaElement
-              index={0}
-              resource={resource}
-              width={150}
-              onInsert={action('insert into canvas')}
-            />
-          </Column>
+          <CanvasProvider>
+            <Column>
+              <MediaElement
+                index={0}
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </CanvasProvider>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
@@ -191,14 +198,16 @@ export const _Video_With_Attribution = () => {
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <Column>
-            <MediaElement
-              index={0}
-              resource={resource}
-              width={150}
-              onInsert={action('insert into canvas')}
-            />
-          </Column>
+          <CanvasProvider>
+            <Column>
+              <MediaElement
+                index={0}
+                resource={resource}
+                width={150}
+                onInsert={action('insert into canvas')}
+              />
+            </Column>
+          </CanvasProvider>
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>
