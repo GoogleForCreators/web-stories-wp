@@ -105,27 +105,24 @@ describe('Right Click Menu integration', () => {
       );
 
       // apply a background to the page
-      console.log('clicking 1');
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
 
-      console.log('clicking 2');
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
       );
       await fixture.events.keyboard.type('ab12dd');
 
+      throw new Error('works so far');
+
       // copy the page
       await openRightClickMenu();
-      console.log('clicking 3');
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
 
       // add new blank page
-      console.log('clicking 4');
       await fixture.events.click(newPageButton);
 
       // paste page
       await openRightClickMenu();
-      console.log('clicking 5');
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.paste);
 
       // confirm the paste worked.
