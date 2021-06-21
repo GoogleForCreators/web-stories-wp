@@ -87,9 +87,15 @@ class Web_Stories_Block extends Embed_Base {
 			$this->get_script_settings()
 		);
 
+		// Use path to javascript directory.
 		$base_path = $this->get_base_path( 'assets/js/block.json' );
 		if ( ! $base_path ) {
+			// If javascript not build, then fallback to dev location.
 			$base_path = $this->get_base_path( 'assets/src/web-stories-block/block/block.json' );
+		}
+
+		if ( ! $base_path ) {
+			return;
 		}
 
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
