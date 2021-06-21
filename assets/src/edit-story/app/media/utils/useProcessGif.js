@@ -17,12 +17,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { fetchRemoteFile } from '@web-stories-wp/media';
+import { fetchRemoteFile, isAnimatedGif } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import isAnimatedGif from '../../../../../../packages/media/src/isAnimatedGif';
 import useExistingData from './useExistingData';
 import useUpdateElementDimensions from './useUpdateElementDimensions';
 

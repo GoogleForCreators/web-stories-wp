@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import { useCallback, useMemo } from 'react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { getFileName } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import { useCallback, useMemo } from 'react';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import {
