@@ -97,6 +97,77 @@ class Web_Stories_Block extends Embed_Base {
 		register_block_type_from_metadata(
 			$base_path,
 			[
+				'attributes'      => [
+					'blockType'        => [
+						'type' => 'string',
+					],
+					'url'              => [
+						'type' => 'string',
+					],
+					'title'            => [
+						'type'    => 'string',
+						'default' => __( 'Web Story', 'web-stories' ),
+					],
+					'poster'           => [
+						'type' => 'string',
+					],
+					'width'            => [
+						'type'    => 'number',
+						'default' => 360,
+					],
+					'height'           => [
+						'type'    => 'number',
+						'default' => 600,
+					],
+					'align'            => [
+						'type'    => 'string',
+						'default' => 'none',
+					],
+					'stories'          => [
+						'type'    => 'array',
+						'default' => [],
+					],
+					'viewType'         => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'numOfStories'     => [
+						'type'    => 'number',
+						'default' => 5,
+					],
+					'numOfColumns'     => [
+						'type'    => 'number',
+						'default' => 2,
+					],
+					'circleSize'       => [
+						'type'    => 'number',
+						'default' => 96,
+					],
+					'imageAlignment'   => [
+						'type'    => 'number',
+						'default' => 96,
+					],
+					'orderby'          => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'order'            => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'archiveLinkLabel' => [
+						'type'    => 'string',
+						'default' => __( 'View all stories', 'web-stories' ),
+					],
+					'authors'          => [
+						'type'    => 'array',
+						'default' => [],
+					],
+					'fieldState'       => [
+						'type'    => 'object',
+						'default' => [],
+					],
+				],
 				'render_callback' => [ $this, 'render_block' ],
 				'editor_script'   => self::SCRIPT_HANDLE,
 				'editor_style'    => self::SCRIPT_HANDLE,
