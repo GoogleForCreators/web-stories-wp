@@ -20,12 +20,12 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
-import { FULLBLEED_RATIO } from '../../constants';
 import { Layer, PageArea } from './layout';
 
 const EyedropperBackground = styled(Layer)`
