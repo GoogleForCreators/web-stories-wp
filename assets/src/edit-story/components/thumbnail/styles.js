@@ -34,7 +34,7 @@ import { THUMBNAIL_DIMENSIONS, THUMBNAIL_SCRIM_CLASSNAME } from './constants';
  * depending on the thumbnail type.
  */
 export const Container = styled.button(
-  ({ theme, $isError }) => css`
+  ({ theme, $isError, $isOverflow }) => css`
     position: relative;
     width: ${THUMBNAIL_DIMENSIONS.WIDTH}px;
     height: ${THUMBNAIL_DIMENSIONS.HEIGHT}px;
@@ -42,7 +42,9 @@ export const Container = styled.button(
     outline: none;
     border: none;
     border-radius: ${theme.borders.radius.small};
-    background-color: transparent;
+    background-color: ${$isOverflow
+      ? theme.colors.interactiveBg.secondaryNormal
+      : 'transparent'};
     cursor: pointer;
 
     ${$isError &&
