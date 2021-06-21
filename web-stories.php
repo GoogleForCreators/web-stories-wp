@@ -206,5 +206,5 @@ if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' )
 	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
-// Main plugin initialization happens there so that this file is still parsable in PHP < 5.6.
+// Main plugin initialization happens there so that this file is still parsable in PHP < 7.0.
 require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/namespace.php';
