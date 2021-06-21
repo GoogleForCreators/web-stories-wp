@@ -14,8 +14,28 @@
  * limitations under the License.
  */
 
-export { Display } from './display';
-export { Headline } from './headline';
-export { Link } from './link';
-export { List } from './list';
-export { Text } from './text';
+/**
+ * Internal dependencies
+ */
+import { List } from '..';
+import { THEME_CONSTANTS } from '../../../..';
+
+export default {
+  title: 'DesignSystem/Components/Typography/List',
+  component: List,
+};
+
+const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
+
+export const _default = () => (
+  <>
+    {textPresetSizes.map((presetSize) => (
+      <List key={`${presetSize}_text_list`} size={presetSize}>
+        <li>{`${presetSize} - 1`}</li>
+        <li>{`${presetSize} - 2`}</li>
+        <li>{`${presetSize} - 3`}</li>
+        <li>{`${presetSize} - 4`}</li>
+      </List>
+    ))}
+  </>
+);

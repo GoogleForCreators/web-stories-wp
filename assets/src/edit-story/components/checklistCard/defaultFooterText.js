@@ -14,6 +14,25 @@
  * limitations under the License.
  */
 
-export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
-export { default as Thumbnail } from './thumbnail';
-export { default as OverflowThumbnail } from './overflowThumbnail';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { Text, THEME_CONSTANTS } from '../../../design-system';
+
+export const DefaultFooterText = ({ children, ...rest }) => (
+  <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL} {...rest}>
+    {children}
+  </Text>
+);
+
+DefaultFooterText.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+};
