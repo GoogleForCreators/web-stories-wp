@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
@@ -23,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { themeHelpers } from '../../../../design-system';
+import { POPUP_ID } from '../constants';
 import { BottomNavigation } from './bottomNavigation';
 import { NAVIGATION_WIDTH } from './constants';
 import { TopNavigation } from './topNavigation';
@@ -31,7 +33,7 @@ import {
   syncOuterHeightWithInner,
 } from './utils';
 
-const Wrapper = styled.div`
+export const NavigationWrapper = styled.div`
   position: absolute;
   left: 0;
   bottom: 0;
@@ -81,8 +83,12 @@ export function Navigator({
   );
 
   return (
-    <Wrapper>
-      <TopNavigation onClose={onClose} />
+    <NavigationWrapper>
+      <TopNavigation
+        onClose={onClose}
+        label={__('Quick Tips', 'web-stories')}
+        popupId={POPUP_ID}
+      />
       <Layout ref={layoutRef}>
         <Content ref={innerRef}>
           <ContentInner>{children}</ContentInner>
@@ -96,7 +102,7 @@ export function Navigator({
         isNextDisabled={isNextDisabled}
         isPrevDisabled={isPrevDisabled}
       />
-    </Wrapper>
+    </NavigationWrapper>
   );
 }
 
