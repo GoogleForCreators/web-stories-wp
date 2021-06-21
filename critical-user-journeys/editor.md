@@ -48,8 +48,8 @@
 |                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Border                                           | 🛴 **50.00%** *(1 / 2)*     |
-|                                                                   | *[total]*                                        | 🛴 **75.00%** *(3 / 4)*     |
+|                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 | Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
@@ -76,4 +76,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **73.40%** *(298 / 406)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **73.89%** *(300 / 406)* |
