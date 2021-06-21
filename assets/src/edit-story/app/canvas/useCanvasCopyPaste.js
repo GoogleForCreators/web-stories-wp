@@ -98,25 +98,16 @@ function useCanvasGlobalKeys() {
     [addPastedElements, currentPage]
   );
 
-  /**
-   * @param {Object|string} evtOrData event object or a string with the data to be parsed
-   */
   const pasteHandler = useCallback(
-    (evtOrData) => {
-      const { clipboardData } = evtOrData;
+    (evt) => {
+      const { clipboardData } = evt;
 
       try {
-        let content;
-        if (typeof evtOrData === 'string') {
-          content = evtOrData;
-        } else {
-          // Get the html text and plain text but only if it's not a file being copied.
-          content =
-            !clipboardData.files?.length &&
-            (clipboardData.getData('text/html') ||
-              clipboardData.getData('text/plain'));
-        }
-
+        // Get the html text and plain text but only if it's not a file being copied.
+        const content =
+          !clipboardData.files?.length &&
+          (clipboardData.getData('text/html') ||
+            clipboardData.getData('text/plain'));
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.
@@ -131,7 +122,7 @@ function useCanvasGlobalKeys() {
             hasAddedElements = pasteTextContent(template.innerHTML);
           }
           if (hasAddedElements) {
-            evtOrData?.preventDefault();
+            evt.preventDefault();
           }
         }
 
@@ -159,7 +150,6 @@ function useCanvasGlobalKeys() {
   useGlobalClipboardHandlers(copyCutHandler, pasteHandler);
 
   // @todo: return copy/cut/pasteAction that can be used in the context menus.
-  return { copyCutHandler, pasteHandler };
 }
 
 export default useCanvasGlobalKeys;

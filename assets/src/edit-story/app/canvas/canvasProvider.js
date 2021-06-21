@@ -156,7 +156,7 @@ function CanvasProvider({ children }) {
     }
   }, [editingElement, selectedElementIds, clearEditing]);
 
-  const { copyCutHandler, pasteHandler } = useCanvasCopyPaste();
+  useCanvasCopyPaste();
 
   const state = useMemo(
     () => ({
@@ -174,8 +174,6 @@ function CanvasProvider({ children }) {
         designSpaceGuideline,
       },
       actions: {
-        copyCutHandler,
-        pasteHandler,
         setPageContainer,
         setFullbleedContainer,
         getNodeForElement,
@@ -215,8 +213,6 @@ function CanvasProvider({ children }) {
       setCanvasContainer,
       designSpaceGuideline,
       setDesignSpaceGuideline,
-      pasteHandler,
-      copyCutHandler,
     ]
   );
   return (

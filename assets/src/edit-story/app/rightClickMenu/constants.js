@@ -48,7 +48,7 @@ export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
     'web-stories'
   ),
   DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
-}
+};
 
 export const RIGHT_CLICK_SNACKBAR_TEXT = {
   ADDED_STYLE: __('Added style to "Saved styles".', 'web-stories'),

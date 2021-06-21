@@ -34,12 +34,6 @@ jest.mock('../../story', () => ({
   useStory: jest.fn(),
 }));
 
-jest.mock('../../canvas', () => ({
-  useCanvas: jest.fn(() => ({
-    pasteHandler: jest.fn(),
-  })),
-}));
-
 jest.mock('../../../../design-system', () => ({
   ...jest.requireActual('../../../../design-system'),
   isPlatformMacOS: jest.fn(),
@@ -57,6 +51,7 @@ const defaultStoryContext = {
   currentPage: {},
   deleteCurrentPage: jest.fn(),
   pages: [{}],
+  replaceCurrentPage: jest.fn(),
   selectedElements: [],
   selectedElementAnimations: [],
 };

@@ -50,6 +50,17 @@ describe('Right Click Menu integration', () => {
     });
   };
 
+  const verifyPageDuplicated = (pages = []) => {
+    expect(pages[0].backgroundColor).toEqual(pages[1].backgroundColor);
+    pages[0].elements.map((elem, index) => {
+      // ids won't match
+      const { id, ...originalElement } = elem;
+      const { id: newId, ...newElement } = pages[1].elements[index];
+
+      expect(originalElement).toEqual(newElement);
+    });
+  };
+
   describe('menu visibility', () => {
     it('right clicking on the canvas should open the custom right click menu', async () => {
       await openRightClickMenu();
@@ -76,12 +87,23 @@ describe('Right Click Menu integration', () => {
   });
 
   describe('right click menu: page/background', () => {
-    // Need to implement a way to give the browser permission to
-    // paste from the navigator.
-    // Some ideas: https://github.com/puppeteer/puppeteer/issues/3241
-    // Current clipboard exposure functions: packages/karma-puppeteer-launcher/src/index.cjs
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should be able to copy a page background and paste it to a new page', async () => {
+    it('should be able to copy a page and paste it to a new page', async () => {
+      // insert element
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        })
+      );
+
       // apply a background to the page
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
 
@@ -90,14 +112,14 @@ describe('Right Click Menu integration', () => {
       );
       await fixture.events.keyboard.type('ab12dd');
 
-      // copy the page background
+      // copy the page
       await openRightClickMenu();
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
 
-      // add new page
+      // add new blank page
       await fixture.events.click(newPageButton);
 
-      // paste page background
+      // paste page
       await openRightClickMenu();
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.paste);
 
@@ -108,7 +130,7 @@ describe('Right Click Menu integration', () => {
         }))
       );
 
-      expect(pages[0].backgroundColor).toStrictEqual(pages[1].backgroundColor);
+      verifyPageDuplicated(pages);
     });
 
     it('should duplicate the current page', async () => {
@@ -150,14 +172,7 @@ describe('Right Click Menu integration', () => {
         }))
       );
 
-      expect(pages[0].backgroundColor).toEqual(pages[1].backgroundColor);
-      pages[0].elements.map((elem, index) => {
-        // ids won't match
-        const { id, ...originalElement } = elem;
-        const { id: newId, ...newElement } = pages[1].elements[index];
-
-        expect(originalElement).toEqual(newElement);
-      });
+      verifyPageDuplicated(pages);
     });
 
     it('should delete the current page when clicking the "Delete" button', async () => {
