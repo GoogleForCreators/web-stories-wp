@@ -24,7 +24,9 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { theme } from '../../..';
+import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 import { SnackbarContainer } from '../snackbarContainer';
+import { THUMBNAIL_STATUS } from '../constants';
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.colors.bg.primary};
@@ -146,3 +148,38 @@ export const LongMessage = () => (
     ]}
   />
 );
+
+export const ThumbnailMessage = () => {
+  const success = boolean('success');
+  const landscape = boolean('landscape');
+
+  return (
+    <DarkThemeProvider>
+      <Container>
+        <SnackbarContainer
+          notifications={[
+            {
+              actionLabel: text('actionLabel', 'Retry'),
+              customZIndex: number('customZIndex'),
+              dismissable: boolean('dismissable'),
+              onAction: action('on action clicked'),
+              onDismiss: action('on dismiss fired'),
+              preventAutoDismiss: boolean('preventAutoDismiss'),
+              message: text(
+                'message',
+                'Optimization failed. Try uploading a different file.'
+              ),
+              thumbnail: {
+                src: `https://picsum.photos/${landscape ? '90/60' : '60/90'}`,
+                alt: 'test',
+                status: success
+                  ? THUMBNAIL_STATUS.SUCCESS
+                  : THUMBNAIL_STATUS.ERROR,
+              },
+            },
+          ]}
+        />
+      </Container>
+    </DarkThemeProvider>
+  );
+};

@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+/**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 import theme from '../../theme';
 
 function isHexColorString(s) {
