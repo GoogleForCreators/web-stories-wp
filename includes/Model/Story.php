@@ -91,6 +91,13 @@ class Story {
 	protected $author;
 
 	/**
+	 * Thumbnail ID.
+	 *
+	 * @var int
+	 */
+	protected $thumbnail_id = 0;
+
+	/**
 	 * Story constructor.
 	 *
 	 * @since 1.0.0
@@ -127,10 +134,10 @@ class Story {
 		$this->markup  = $post->post_content;
 		$this->url     = (string) get_permalink( $post );
 
-		$thumbnail_id = (int) get_post_thumbnail_id( $post );
+		$this->thumbnail_id = (int) get_post_thumbnail_id( $post );
 
-		if ( 0 !== $thumbnail_id ) {
-			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+		if ( 0 !== $this->thumbnail_id ) {
+			$this->poster_portrait = (string) wp_get_attachment_image_url( $this->thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 		}
 
 		return true;
@@ -196,6 +203,15 @@ class Story {
 	 */
 	public function get_id() {
 		return $this->id;
+	}
+
+	/**
+	 * Get the thumbnail ID.
+	 *
+	 * @return int
+	 */
+	public function get_thumbnail_id() {
+		return $this->thumbnail_id;
 	}
 
 	/**
