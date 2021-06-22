@@ -8,6 +8,6 @@
   "main": "./src/index.js",
   "dependencies": {
     "karma": "^6.3.3",
-    "markdown-table": "^2.0.0"
+    "markdown-table": "^3.0.1"
   }
 }
