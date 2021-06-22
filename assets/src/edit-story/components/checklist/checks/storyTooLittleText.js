@@ -25,19 +25,9 @@ import { useStory } from '../../../app/story';
 
 import { ChecklistCard } from '../../checklistCard';
 import { THEME_CONSTANTS, Text } from '../../../../design-system';
-import stripHTML from '../../../utils/stripHTML';
+import { characterCountForPage } from '../utils';
 
 const MIN_STORY_CHARACTER_COUNT = 100;
-
-function characterCountForPage(page) {
-  let characterCount = 0;
-  page.elements.forEach((element) => {
-    if (element.type === 'text') {
-      characterCount += stripHTML(element.content).length;
-    }
-  });
-  return characterCount;
-}
 
 export function storyTooLittleText(story) {
   let characterCount = 0;
