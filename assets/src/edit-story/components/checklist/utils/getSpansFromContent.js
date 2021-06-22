@@ -13,8 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { hasNoFeaturedMedia } from './hasNoFeaturedMedia';
-export { characterCountForPage } from './characterCountForPage';
-export { filterStoryPages } from './filterStoryPages';
-export { filterStoryElements } from './filterStoryElements';
-export { getSpansFromContent } from './getSpansFromContent';
+
+let spansFromContentBuffer;
+/**
+ *
+ * @param {string} content the buffer containing text element content
+ * @return {Array} list of individual span elements from the content
+ */
+export function getSpansFromContent(content) {
+  // memoize buffer
+  if (!spansFromContentBuffer) {
+    spansFromContentBuffer = document.createElement('div');
+  }
+
+  spansFromContentBuffer.innerHTML = content;
+
+  // return Array instead of HtmlCollection
+  return Array.prototype.slice.call(
+    spansFromContentBuffer.getElementsByTagName('span')
+  );
+}
