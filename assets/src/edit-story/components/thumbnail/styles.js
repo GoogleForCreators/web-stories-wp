@@ -36,6 +36,9 @@ import { THUMBNAIL_DIMENSIONS, THUMBNAIL_SCRIM_CLASSNAME } from './constants';
 export const Container = styled.button(
   ({ theme, $isError, $isOverflow }) => css`
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: ${THUMBNAIL_DIMENSIONS.WIDTH}px;
     height: ${THUMBNAIL_DIMENSIONS.HEIGHT}px;
     padding: 0;

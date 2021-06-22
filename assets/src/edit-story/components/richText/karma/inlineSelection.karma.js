@@ -50,6 +50,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     // Broken test, see: https://github.com/google/web-stories-wp/issues/7211
+    // When fixing this test, ensure that uppercase is handled here, too.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply inline formats correctly for both single style and multiple styles', async () => {
       const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
@@ -178,7 +179,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
     });
   });
 
-  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
+  describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Apply Uppercase', () => {
     it('should apply inline formats using shortcuts', async () => {
       const { bold, italic, underline } =
         data.fixture.editor.inspector.designPanel.textStyle;
@@ -215,6 +216,33 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         'text-decoration: underline',
       ].join('; ');
       const expected = `Fill <span style="${firstCSS}">in</span> some text`;
+      expect(actual).toBe(expected);
+    });
+
+    it('should apply inline format for uppercase', async () => {
+      const { uppercase } = data.fixture.editor.inspector.designPanel.textStyle;
+
+      // Enter edit-mode
+      await data.fixture.events.keyboard.press('Enter');
+
+      // Select character 5 and 6 (the word "in" in "Fill in some text")
+      await setSelection(5, 7);
+
+      // Check style is default.
+      expect(uppercase.checked).toBe(false);
+
+      // Toggle uppercase
+      await data.fixture.events.click(uppercase.button);
+
+      // Verify the updated style.
+      expect(uppercase.checked).toBe(true);
+
+      // Exit edit-mode
+      await data.fixture.events.keyboard.press('Escape');
+
+      // Assume text content to match expectation
+      const actual = getTextContent();
+      const expected = `Fill <span style="text-transform: uppercase">in</span> some text`;
       expect(actual).toBe(expected);
     });
   });
