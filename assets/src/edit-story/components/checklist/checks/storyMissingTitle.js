@@ -23,9 +23,6 @@ import { states, useHighlights } from '../../../app/highlights';
 import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 
-export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
-export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
-
 export function storyMissingTitle(story) {
   return typeof story.title !== 'string' || story.title?.trim() === '';
 }

@@ -26,8 +26,6 @@ import { hasNoFeaturedMedia } from '../utils';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
-export const ASPECT_RATIO_LEFT = 3;
-export const ASPECT_RATIO_RIGHT = 4;
 
 export function storyPosterPortraitSize(story) {
   if (hasNoFeaturedMedia(story)) {
