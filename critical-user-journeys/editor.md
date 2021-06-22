@@ -29,10 +29,10 @@
 |                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
 |                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
-| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🚨 **0.00%** *(0 / 2)*      |
+|                                                                   | Adding link to element in Attachment area        | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | Remove Page Attachment                           | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*      |
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.60%** *(302 / 416)* |
