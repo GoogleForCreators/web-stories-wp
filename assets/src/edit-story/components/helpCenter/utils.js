@@ -16,12 +16,12 @@
 /**
  * Internal dependencies
  */
-import { FOCUSABLE_POPUP_CHILDREN_SELECTOR, POPUP_ID } from './constants';
+import { FOCUSABLE_POPUP_CHILDREN_SELECTOR } from './constants';
 
 export function forceFocusCompanion() {
   document.querySelector(FOCUSABLE_POPUP_CHILDREN_SELECTOR)?.focus();
 }
 
-export function forceFocusCompanionToggle() {
-  document.querySelector(`[aria-owns=${POPUP_ID}]`)?.focus();
+export function forceFocusCompanionToggle(popupId) {
+  document.querySelector(`[aria-owns=${popupId}]`)?.focus();
 }

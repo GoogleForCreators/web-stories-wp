@@ -25,6 +25,8 @@ import {
   dataToEditorY,
   dataToFontSizeY as dataToFontSize,
 } from '@web-stories-wp/units';
+import classnames from 'classnames';
+
 /**
  * Internal dependencies
  */
@@ -178,6 +180,7 @@ export function TextOutputWithUnits({
     [content]
   );
 
+  className = classnames(className, 'text-wrapper');
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <>
@@ -205,11 +208,9 @@ export function TextOutputWithUnits({
     );
   }
   return (
-    <p
-      className={className}
-      style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: content }}
-    />
+    <p className={className} style={fillStyle}>
+      <span dangerouslySetInnerHTML={{ __html: content }} />
+    </p>
   );
 }
 

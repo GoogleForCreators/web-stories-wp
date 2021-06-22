@@ -30,6 +30,13 @@ on:
       - synchronize
       - ready_for_review
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
@@ -47,11 +54,6 @@ jobs:
             snapshots: false
 
     steps:
-      - name: Cancel previous
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
