@@ -71,10 +71,9 @@ class Stories extends WP_Widget {
 		$id_base        = 'web_stories_widget';
 		$name           = __( 'Web Stories', 'web-stories' );
 		$widget_options = [
-			'description'                 => __( 'Display Web Stories in Sidebar Section.', 'web-stories' ),
-			'classname'                   => 'web-stories-widget',
-			'customize_selective_refresh' => true,
-			'show_instance_in_rest'       => true,
+			'description'           => __( 'Display Web Stories in Sidebar Section.', 'web-stories' ),
+			'classname'             => 'web-stories-widget',
+			'show_instance_in_rest' => true,
 		];
 
 		parent::__construct( $id_base, $name, $widget_options );
