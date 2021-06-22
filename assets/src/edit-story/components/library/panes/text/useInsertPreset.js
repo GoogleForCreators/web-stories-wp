@@ -26,6 +26,7 @@ import * as htmlToImage from 'html-to-image';
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
 import { useHistory, useCanvas } from '../../../../app';
+import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
@@ -41,6 +42,9 @@ function useInsertPreset() {
   const { fullbleedContainer } = useCanvas((state) => ({
     fullbleedContainer: state.state.fullbleedContainer,
   }));
+
+  const htmlFormatters = getHTMLFormatters();
+  const { setColor } = htmlFormatters;
 
   const [autoColor, setAutoColor] = useState(null);
   const [presetAtts, setPresetAtts] = useState(null);
@@ -96,6 +100,7 @@ function useInsertPreset() {
       htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
         const ctx = canvas.getContext('2d');
         const { x, y, width, height = 41 } = atts;
+        console.log('canvas', canvas.width, canvas.height, 'element', width, height);
         const pixelData = ctx.getImageData(x, y, width, height).data;
         setAutoColor(sampleColors(pixelData));
       });
@@ -106,9 +111,11 @@ function useInsertPreset() {
 
   useEffect(() => {
     if (autoColor && presetAtts) {
+      const { content } = presetAtts;
+      const test = setColor(content, { color: autoColor });
       const addedElement = insertElement(TYPE, {
         ...presetAtts,
-        color: autoColor,
+        content: setColor(content, { color: autoColor }),
       });
       lastPreset.current = {
         versionNumber: null,
@@ -117,7 +124,7 @@ function useInsertPreset() {
       setAutoColor(null);
       setPresetAtts(null);
     }
-  }, [autoColor, presetAtts, insertElement]);
+  }, [autoColor, presetAtts, insertElement, setColor]);
 
   const insertPreset = useCallback(
     (element) => {
@@ -171,8 +178,8 @@ function sampleColors(pixelData) {
   const contrastIsGreat = !contrasts.some((ct) => ct < REQUIRED_CONTRAST);
   const contrastIsOK = !contrasts.some((ct) => ct < OK_CONTRAST);
 
-  if (contrastIsGreat) {
-    console.log('contrast is great with white font color');
+  if (contrastIsGreat || contrastIsOK) {
+    console.log('contrast is ok/great with white font color');
     return {
       r: 255,
       g: 255,
