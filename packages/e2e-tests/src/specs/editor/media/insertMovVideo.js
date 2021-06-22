@@ -38,12 +38,33 @@ describe('Handling .mov files', () => {
       await deleteMedia(file);
     }
   });
+
+  // Uses the existence of the element's frame element as an indicator for successful insertion.
+  it('should insert .mov', async () => {
+    await createNewStory();
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    await expect(page).toClick('button', { text: 'Upload' });
+
+    await page.waitForSelector(MODAL, {
+      visible: true,
+    });
+    const fileName = await uploadFile('small-video.mov', false);
+    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+    uploadedFiles.push(fileNameNoExt);
+
+    await expect(page).toClick('button', { text: 'Insert into page' });
+
+    await page.waitForSelector('[data-testid="videoElement"]');
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
+  });
+
   describe('Inserting .mov from dialog', () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
       await toggleVideoOptimization();
     });
 
-    afterAll(async () => {
+    afterEach(async () => {
       await toggleVideoOptimization();
     });
     // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -72,25 +93,5 @@ describe('Handling .mov files', () => {
         visible: false,
       });
     });
-  });
-
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should insert .mov', async () => {
-    await createNewStory();
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
-    await expect(page).toClick('button', { text: 'Upload' });
-
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-    const fileName = await uploadFile('small-video.mov', false);
-    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-    uploadedFiles.push(fileNameNoExt);
-
-    await expect(page).toClick('button', { text: 'Insert into page' });
-
-    await page.waitForSelector('[data-testid="videoElement"]');
-    await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
 });
