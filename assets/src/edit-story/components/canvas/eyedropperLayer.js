@@ -28,6 +28,7 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { useCanvas, useLayout } from '../../app';
 import { useFocusOut } from '../../../design-system';
 import { Layer, PageArea } from './layout';
+import getColorFromPixelData from './utils/getColorFromPixelData';
 
 const EyedropperBackground = styled(Layer)`
   background: rgba(0, 0, 0, 0.7);
@@ -177,60 +178,59 @@ function EyedropperLayer() {
     }
   };
 
+  const onMouseMove = (e) => {
+    const { left, top, width, height } =
+      fullbleedContainer.getBoundingClientRect();
+    const x = (e.clientX - left) * (pageWidth / width);
+    const y = (e.clientY - top) * (fullHeight / height);
+
+    if (x < 0 || y < 0 || x > width || y > height) {
+      return;
+    }
+
+    // Move magnifier canvas.
+    magnifierInfo.current.style.transform = `translate(${x}px, ${y}px)`;
+
+    // Redraw magnifier canvas.
+    magnify(x, y);
+
+    // Get and print pixel color.
+    const rgbaObject = getColorFromPixelData(eyedropperPixelData, x, y, width);
+    const { r, g, b, a } = rgbaObject;
+    const hex = rgba(r, g, b, a);
+    magnifierColor.current.style.background = `rgba(${r},${g},${b},${a})`;
+    magnifierColor.current.style.color = readableColor(
+      hex,
+      '#333',
+      '#EDEDED',
+      false
+    );
+    magnifierColor.current.innerText = hex;
+  };
+
+  const onClick = (e) => {
+    const { left, top, width, height } =
+      fullbleedContainer.getBoundingClientRect();
+    const x = (e.clientX - left) * (pageWidth / width);
+    const y = (e.clientY - top) * (fullHeight / height);
+
+    const rgbaObject = getColorFromPixelData(
+      eyedropperPixelData,
+      x,
+      y,
+      pageWidth
+    );
+    eyedropperCallback(rgbaObject);
+  };
+
   return (
     <EyedropperBackground>
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <EyedropperCanvas
           ref={eyedropperCanvas}
-          onClick={(e) => {
-            const { left, top, width, height } =
-              fullbleedContainer.getBoundingClientRect();
-            const x = (e.clientX - left) * (pageWidth / width);
-            const y = (e.clientY - top) * (fullHeight / height);
-
-            const rgbaObject = getColorFromPixelData(
-              eyedropperPixelData,
-              x,
-              y,
-              pageWidth
-            );
-            eyedropperCallback(rgbaObject);
-          }}
-          onMouseMove={(e) => {
-            const { left, top, width, height } =
-              fullbleedContainer.getBoundingClientRect();
-            const x = (e.clientX - left) * (pageWidth / width);
-            const y = (e.clientY - top) * (fullHeight / height);
-
-            if (x < 0 || y < 0 || x > width || y > height) {
-              return;
-            }
-
-            // Move magnifier canvas.
-            magnifierInfo.current.style.transform = `translate(${x}px, ${y}px)`;
-
-            // Redraw magnifier canvas.
-            magnify(x, y);
-
-            // Get and print pixel color.
-            const rgbaObject = getColorFromPixelData(
-              eyedropperPixelData,
-              x,
-              y,
-              width
-            );
-            const { r, g, b, a } = rgbaObject;
-            const hex = rgba(r, g, b, a);
-            magnifierColor.current.style.background = `rgba(${r},${g},${b},${a})`;
-            magnifierColor.current.style.color = readableColor(
-              hex,
-              '#333',
-              '#EDEDED',
-              false
-            );
-            magnifierColor.current.innerText = hex;
-          }}
+          onClick={onClick}
+          onMouseMove={onMouseMove}
         >
           <img ref={imgRef} src={img} alt="" />
           <Magnifier ref={magnifierInfo}>
@@ -253,17 +253,3 @@ function EyedropperLayer() {
 }
 
 export default EyedropperLayer;
-
-const getColorIndicesForCoord = (x, y, width) => {
-  const red = (Math.floor(y) * width + Math.floor(x)) * 4;
-  return [red, red + 1, red + 2, red + 3];
-};
-function getColorFromPixelData(pixelData, x, y, width) {
-  const colorIndices = getColorIndicesForCoord(x, y, width);
-  const [redIndex, greenIndex, blueIndex, alphaIndex] = colorIndices;
-  const r = pixelData[redIndex];
-  const g = pixelData[greenIndex];
-  const b = pixelData[blueIndex];
-  const a = pixelData[alphaIndex] / 255;
-  return { r, g, b, a };
-}
