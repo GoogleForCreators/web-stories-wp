@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import StoryMissingTitle from './checks/storyMissingTitle';
+import StoryPosterAspectRatio from './checks/storyPosterAspectRatio';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
 
 export function PriorityChecks() {
@@ -25,6 +26,7 @@ export function PriorityChecks() {
     <div>
       <StoryMissingTitle />
       <StoryPosterPortraitSize />
+      <StoryPosterAspectRatio />
     </div>
   );
 }

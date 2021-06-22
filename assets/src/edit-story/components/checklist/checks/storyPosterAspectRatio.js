@@ -13,23 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import {
+  PRIORITY_COPY,
+  ASPECT_RATIO_LEFT,
+  ASPECT_RATIO_RIGHT,
+} from '../../../app/prepublish/newConstants';
+import { states, useHighlights } from '../../../app/highlights';
+import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
-
-const POSTER_DIMENSION_WIDTH_PX = 640;
-const POSTER_DIMENSION_HEIGHT_PX = 853;
-export const ASPECT_RATIO_LEFT = 3;
-export const ASPECT_RATIO_RIGHT = 4;
 
 export function storyPosterAspectRatio(story) {
   if (
@@ -50,39 +47,22 @@ export function storyPosterAspectRatio(story) {
 }
 
 const StoryPosterAspectRatio = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = PRIORITY_COPY.storyPosterWrongRatio;
+
   return (
     storyPosterAspectRatio(story) && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: image dimensions.  */
-          __('Correct poster image aspect ratio to %s', 'web-stories'),
-          `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        title={title}
+        titleProps={{
+          onClick: () => setHighlights({ highlight: states.POSTER }),
+        }}
         footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            <>
-              {sprintf(
-                /* translators: %s: image dimensions.  */
-                __("Use an image that's at least %s", 'web-stories'),
-                `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
-              )}
-              {sprintf(
-                /* translators: %s: aspect ratio.  */
-                __('Maintain a %s aspect ratio', 'web-stories'),
-                `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
-              )}
-            </>
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
+          <ChecklistCardStyles.CardListWrapper>
+            <List>{footer}</List>
+          </ChecklistCardStyles.CardListWrapper>
         }
       />
     )
