@@ -21,7 +21,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
-fdescribe('Right Click Menu integration', () => {
+describe('Right Click Menu integration', () => {
   let fixture;
   let newPageButton;
   let duplicatePageButton;
@@ -82,24 +82,24 @@ fdescribe('Right Click Menu integration', () => {
   });
 
   describe('right click menu: page/background', () => {
-    // TODO: fix flakey test. It is failing in CI but not locally
+    // TODO: #8024 fix flakey test.
     // eslint-disable-next-line jasmine/no-disabled-tests
-    fit('should be able to copy a page and paste it to a new page', async () => {
-      // // insert element
-      // const insertElement = await fixture.renderHook(() => useInsertElement());
-      // await fixture.act(() =>
-      //   insertElement('image', {
-      //     x: 0,
-      //     y: 0,
-      //     width: 640 / 2,
-      //     height: 529 / 2,
-      //     resource: {
-      //       type: 'image',
-      //       mimeType: 'image/jpg',
-      //       src: 'http://localhost:9876/__static__/earth.jpg',
-      //     },
-      //   })
-      // );
+    xit('should be able to copy a page and paste it to a new page', async () => {
+      // insert element
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+          },
+        })
+      );
 
       // apply a background to the page
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
