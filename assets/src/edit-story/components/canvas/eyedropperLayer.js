@@ -45,6 +45,8 @@ const EyedropperCanvas = styled.div`
   border-radius: 5px;
   color: black;
   position: absolute;
+  z-index: 2;
+  transform: translateZ(0);
   top: 0;
   left: 0;
   bottom: 0;
