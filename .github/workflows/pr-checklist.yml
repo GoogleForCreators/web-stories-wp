@@ -5,6 +5,13 @@ on:
       - opened
       - edited
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   task-check:
     name: Task Check
@@ -16,11 +23,6 @@ jobs:
       github.event.pull_request.head.repo.fork == false &&
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
-      - name: Cancel previous
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-
       - uses: kentaro-m/task-completed-checker-action@v0.1.0
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'

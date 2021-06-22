@@ -85,11 +85,7 @@ class Preferences extends Service_Base {
 				'type'              => 'boolean',
 				'sanitize_callback' => 'rest_sanitize_boolean',
 				'default'           => true,
-				'show_in_rest'      => [
-					'schema' => [
-						'default' => true,
-					],
-				],
+				'show_in_rest'      => true,
 				'auth_callback'     => [ $this, 'can_edit_current_user' ],
 				'single'            => true,
 			]
