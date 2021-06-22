@@ -54,18 +54,18 @@
 | Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
-|                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
+|                                                                   | Align element to page                            | 🚨 **11.11%** *(1 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
+|                                                                   | *[total]*                                        | 🚨 **40.00%** *(12 / 30)*   |
 | Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
-| Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
-| Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
+| Creator can View and Modify Document                              | Author                                           | 🚨 **0.00%** *(0 / 2)*      |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*      |
+| Creator can transform an element                                  | Snap to place                                    | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*      |
 | Page Templates                                                    | Creator can Apply a Page Template                | 🏆 **100.00%** *(6 / 6)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
 | Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **83.33%** *(5 / 6)*     |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.60%** *(302 / 416)* |
