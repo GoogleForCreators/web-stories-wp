@@ -14,65 +14,40 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { __, sprintf } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-
-const PUBLISHER_LOGO_MIN_HEIGHT = 96;
-const PUBLISHER_LOGO_MIN_WIDTH = 96;
-const PUBLISHER_LOGO_RATIO = 1;
+import {
+  PRIORITY_COPY,
+  PUBLISHER_LOGO_DIMENSION,
+} from '../../../app/prepublish/newConstants';
+import { states, useHighlights } from '../../../app/highlights';
+import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 
 export function publisherLogoSize(story) {
   return (
-    story.publisherLogo?.height < PUBLISHER_LOGO_MIN_HEIGHT ||
-    story.publisherLogo?.width < PUBLISHER_LOGO_MIN_WIDTH
+    story.publisherLogo?.height < PUBLISHER_LOGO_DIMENSION ||
+    story.publisherLogo?.width < PUBLISHER_LOGO_DIMENSION
   );
 }
 
 const PublisherLogoSize = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = PRIORITY_COPY.logoTooSmall;
   return (
     publisherLogoSize(story) && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: image dimensions. */
-          __('Increase size of publisher logo to at least %s', 'web-stories'),
-          `${PUBLISHER_LOGO_MIN_WIDTH}x${PUBLISHER_LOGO_MIN_WIDTH}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        title={title}
+        titleProps={{
+          onClick: () => setHighlights({ highlight: states.PUBLISHER_LOGO }),
+        }}
         footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            <>
-              {sprintf(
-                /* translators: %s: image dimensions. */
-                __("Use an image that's at least %s", 'web-stories'),
-                `${PUBLISHER_LOGO_MIN_WIDTH}x${PUBLISHER_LOGO_MIN_HEIGHT}px`
-              )}
-              {sprintf(
-                /* translators: %s: aspect ratio.  */
-                __('Maintain a %s aspect ratio', 'web-stories'),
-                `${PUBLISHER_LOGO_RATIO}:${PUBLISHER_LOGO_RATIO}`
-              )}
-            </>
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
+          <ChecklistCardStyles.CardListWrapper>
+            <List>{footer}</List>
+          </ChecklistCardStyles.CardListWrapper>
         }
       />
     )

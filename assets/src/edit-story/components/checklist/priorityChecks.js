@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import PublisherLogoSize from './checks/publisherLogoSize';
 import StoryMissingTitle from './checks/storyMissingTitle';
 import StoryPosterAspectRatio from './checks/storyPosterAspectRatio';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
@@ -27,6 +28,7 @@ export function PriorityChecks() {
       <StoryMissingTitle />
       <StoryPosterPortraitSize />
       <StoryPosterAspectRatio />
+      <PublisherLogoSize />
     </div>
   );
 }
