@@ -104,7 +104,7 @@
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.0",
     "@axe-core/puppeteer": "^4.2.1",
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.4",
     "@babel/eslint-plugin": "^7.13.16",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
