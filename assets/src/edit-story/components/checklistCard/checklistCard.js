@@ -93,7 +93,7 @@ const ChecklistCard = ({
         </ThumbnailWrapper>
         {hasOverflowThumbnail && (
           <StyledOverflowThumbnail
-            aria-label={overflowLabel}
+            screenReaderText={overflowLabel}
             overflowCount={thumbnailCount - MAX_THUMBNAILS_DISPLAYED}
           />
         )}

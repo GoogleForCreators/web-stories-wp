@@ -22,8 +22,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
+import { Checklist } from '../checklist';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,11 +56,18 @@ const Space = styled.span`
 `;
 
 function SecondaryMenu() {
+  const enableChecklistCompanion = useFeature('enableChecklistCompanion');
   return (
     <Wrapper>
       <MenuItems>
         <HelpCenter />
         <Space />
+        {enableChecklistCompanion && (
+          <>
+            <Checklist />
+            <Space />
+          </>
+        )}
         <Box>
           <KeyboardShortcutsMenu />
         </Box>

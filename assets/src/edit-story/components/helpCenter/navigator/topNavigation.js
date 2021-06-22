@@ -39,15 +39,15 @@ const Label = styled.div`
   padding-left: 24px;
 `;
 
-export function TopNavigation({ onClose }) {
+export function TopNavigation({ onClose, label, popupId }) {
   return (
     <NavBar>
-      <Label>{__('Quick Tips', 'web-stories')}</Label>
+      <Label>{label}</Label>
       <TopNavButtons>
         <NavButton
           aria-label={__('Close', 'web-stories')}
           onClick={() => {
-            forceFocusCompanionToggle();
+            forceFocusCompanionToggle(popupId);
             onClose();
           }}
           type={BUTTON_TYPES.PLAIN}
@@ -63,4 +63,6 @@ export function TopNavigation({ onClose }) {
 
 TopNavigation.propTypes = {
   onClose: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  popupId: PropTypes.string.isRequired,
 };
