@@ -13,6 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
+
 export function AccessibilityChecks() {
-  return <div>{'accessibility'}</div>;
+  return (
+    <div>
+      <TextElementFontSizeTooSmall />
+    </div>
+  );
 }

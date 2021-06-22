@@ -17,17 +17,24 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { useHighlights } from '../../../app/highlights';
+import {
+  ACCESSIBILITY_COPY,
+  MIN_FONT_SIZE,
+} from '../../../app/prepublish/newConstants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
-
-const MIN_FONT_SIZE = 12;
 
 export function textElementFontSizeTooSmall(element) {
   return (
@@ -40,41 +47,38 @@ export function textElementFontSizeTooSmall(element) {
 const TextElementFontSizeTooSmall = () => {
   const story = useStory(({ state }) => state);
   const elements = filterStoryElements(story, textElementFontSizeTooSmall);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = ACCESSIBILITY_COPY.fontSizeTooSmall;
+
   return (
     elements.length > 0 && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %d: minimum font size. */
-          __('Increase font size to %s or above', 'web-stories'),
-          MIN_FONT_SIZE
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %d: minimum font size. */
-              __(
-                'Ensure legibility by selecting text size %d or greater',
-                'web-stories'
-              ),
-              MIN_FONT_SIZE
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          elements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-        todo thumbnails for elements
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         thumbnailCount={elements.length}
-        thumbnail={<>
-            {elements.map(() => <Thumbnail />)}
-          </>}
-      */
+        thumbnail={
+          <>
+            {elements.map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => {
+                  setHighlights({
+                    elementId: element.id,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.TEXT}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending text element', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );
