@@ -18,15 +18,26 @@
  * External dependencies
  */
 import { useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { useHighlights } from '../../../app/highlights';
+import { DESIGN_COPY } from '../../../app/prepublish/newConstants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
 import { filterStoryPages } from '../utils';
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  Thumbnail,
+  THUMBNAIL_TYPES,
+  THUMBNAIL_DIMENSIONS,
+} from '../../thumbnail';
+import PagePreview from '../../carousel/pagepreview';
 
 const MAX_LINKS_PER_PAGE = 3;
 
@@ -44,38 +55,48 @@ const PageTooManyLinks = () => {
     () => filterStoryPages(story, pageTooManyLinks),
     [story]
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
+
   return (
     failingPages.length > 0 && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: maximum number of links per page. */
-          __('Avoid including more than %s links per page', 'web-stories'),
-          MAX_LINKS_PER_PAGE
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %s: maximum number of links per page. */
-              __('Avoid having more than %s links on one page', 'web-stories'),
-              MAX_LINKS_PER_PAGE
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingPages.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-         todo thumbnails for pages
-         thumbnailCount={failingPages.length}
-         thumbnail={<>
-             {failingPages.map(() => <Thumbnail onClick={ perform highlight here }  />)}
-           </>}
-       */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={failingPages.length}
+        thumbnail={
+          <>
+            {failingPages.map((page) => (
+              <Thumbnail
+                key={page.id}
+                onClick={() => {
+                  setHighlights({
+                    pageId: page.id,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.PAGE}
+                displayBackground={
+                  <PagePreview
+                    page={page}
+                    width={THUMBNAIL_DIMENSIONS.WIDTH}
+                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                    as="div"
+                  />
+                }
+                aria-label={__(
+                  'Preview of page with checklist issue',
+                  'web-stories'
+                )}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

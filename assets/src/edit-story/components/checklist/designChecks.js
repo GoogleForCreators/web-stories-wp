@@ -13,6 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import PageTooManyLinks from './checks/pageTooManyLinks';
+
 export function DesignChecks() {
-  return <div>{'design'}</div>;
+  return (
+    <div>
+      <PageTooManyLinks />
+    </div>
+  );
 }
