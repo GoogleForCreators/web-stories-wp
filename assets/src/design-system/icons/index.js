@@ -94,6 +94,7 @@ export { ReactComponent as LetterSStrikethrough } from './letter_s_strikethrough
 export { ReactComponent as LetterT } from './letter_t.svg';
 export { ReactComponent as LetterTArrow } from './letter_t_arrow.svg';
 export { ReactComponent as LetterTPlus } from './letter_t_plus.svg';
+export { ReactComponent as LetterTUppercase } from './letter_t_uppercase.svg';
 export { ReactComponent as LetterTLargeLetterTSmall } from './letter_t_large_letter_t_small.svg';
 export { ReactComponent as LetterUUnderline } from './letter_u_underline.svg';
 export { ReactComponent as Link } from './link.svg';

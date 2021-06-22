@@ -27,6 +27,13 @@ on:
       - 'includes/data/**'
       - '.github/workflows/tests-unit-php.yml'
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   unit-php:
     name: 'PHP ${{ matrix.php }} - WP ${{ matrix.wp }}'
@@ -61,11 +68,6 @@ jobs:
             experimental: true
 
     steps:
-      - name: Cancel previous
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
