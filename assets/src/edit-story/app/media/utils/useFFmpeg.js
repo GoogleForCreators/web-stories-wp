@@ -197,8 +197,9 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName = getFileName(file) + MEDIA_TRANSCODED_FILE_TYPE;
+        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName =
+          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -241,8 +242,9 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + MEDIA_TRANSCODED_FILE_TYPE;
-        const outputFileName = getFileName(file) + MEDIA_TRANSCODED_FILE_TYPE;
+        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName =
+          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
