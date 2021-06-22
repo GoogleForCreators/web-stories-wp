@@ -28,7 +28,7 @@ import * as htmlToImage from 'html-to-image';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../app';
+import { useCanvas, useLayout } from '../../app';
 import {
   Icons,
   Button,
@@ -38,6 +38,7 @@ import {
 } from '../../../design-system';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
+import { ZOOM_SETTING } from '../../constants';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
@@ -147,21 +148,33 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     },
   } = useCanvas();
 
-  const prepareEyedropper = () => {
-    htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
-      const ctx = canvas.getContext('2d');
-      const pixelData = ctx.getImageData(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      ).data;
-      setEyedropperPixelData(pixelData);
-      setEyedropperImg(canvas.toDataURL());
-    });
-  };
+  const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
+    setZoomSetting,
+  }));
 
-  const initEyedropper = useCallback(() => {
+  const initEyedropper = useCallback(async () => {
+    setZoomSetting(ZOOM_SETTING.FIT);
+    const prepareEyedropper = () =>
+      new Promise((resolve) => {
+        // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+        setTimeout(() => {
+          htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
+            const ctx = canvas.getContext('2d');
+            const pixelData = ctx.getImageData(
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            ).data;
+            setEyedropperPixelData(pixelData);
+            setEyedropperImg(canvas.toDataURL());
+            resolve();
+          });
+        });
+      });
+
+    await prepareEyedropper();
+
     setEyedropperCallback(() => (rgbObject) => {
       onChange(rgbObject);
       setEyedropperActive(false);
@@ -170,11 +183,13 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     });
     setEyedropperActive(true);
   }, [
+    fullbleedContainer,
     onChange,
     setEyedropperActive,
     setEyedropperCallback,
     setEyedropperImg,
     setEyedropperPixelData,
+    setZoomSetting,
   ]);
 
   return (
@@ -232,7 +247,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
             size={BUTTON_SIZES.SMALL}
             aria-label={__('Pick a color from canvas', 'web-stories')}
             onClick={initEyedropper}
-            onMouseEnter={prepareEyedropper}
           >
             <Icons.Eyedropper style={{ padding: 6 }} />
           </Button>
