@@ -89,10 +89,7 @@ const PageTooManyLinks = () => {
                     as="div"
                   />
                 }
-                aria-label={__(
-                  'Preview of page with checklist issue',
-                  'web-stories'
-                )}
+                aria-label={__('Go to offending page', 'web-stories')}
               />
             ))}
           </>
