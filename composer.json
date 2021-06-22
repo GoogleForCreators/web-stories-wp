@@ -5,7 +5,7 @@
   "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
   "require": {
-    "php": "^5.6.20 || ^7.0 || ^8.0",
+    "php": "^7.0 || ^8.0",
     "ext-dom": "*",
     "ext-iconv": "*",
     "ext-json": "*",
@@ -39,7 +39,7 @@
   "config": {
     "discard-changes": true,
     "platform": {
-      "php": "5.6.20"
+      "php": "7.0.0"
     },
     "sort-packages": true
   },
