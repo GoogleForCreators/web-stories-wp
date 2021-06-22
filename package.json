@@ -131,7 +131,7 @@
     "@testing-library/react-hooks": "^7.0.0",
     "@testing-library/user-event": "^13.1.9",
     "@web-stories-wp/e2e-tests": "*",
-    "@wordpress/babel-plugin-import-jsx-pragma": "^3.0.2",
+    "@wordpress/babel-plugin-import-jsx-pragma": "^3.0.5",
     "@wordpress/dependency-extraction-webpack-plugin": "^3.1.4",
     "@wordpress/eslint-plugin": "^9.0.6",
     "axe-core": "^4.2.2",
