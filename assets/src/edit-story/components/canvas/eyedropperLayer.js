@@ -26,6 +26,7 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
+import { useFocusOut } from '../../../design-system';
 import { Layer, PageArea } from './layout';
 
 const EyedropperBackground = styled(Layer)`
@@ -82,6 +83,7 @@ function EyedropperLayer() {
     eyedropperCallback,
     eyedropperImg,
     eyedropperPixelData,
+    setEyedropperActive,
   } = useCanvas(
     ({
       state: {
@@ -91,12 +93,14 @@ function EyedropperLayer() {
         eyedropperImg,
         eyedropperPixelData,
       },
+      actions: { setEyedropperActive },
     }) => ({
       fullbleedContainer,
       eyedropperActive,
       eyedropperCallback,
       eyedropperImg,
       eyedropperPixelData,
+      setEyedropperActive,
     })
   );
 
@@ -121,6 +125,12 @@ function EyedropperLayer() {
       ctx.msImageSmoothingEnabled = false;
     }
   }, [eyedropperImg]);
+
+  const eyedropperCanvas = useRef();
+
+  const closeEyedropper = () => setEyedropperActive(false);
+
+  useFocusOut(eyedropperCanvas, closeEyedropper, [eyedropperActive, img]);
 
   if (!eyedropperActive || !img) {
     return null;
@@ -172,6 +182,7 @@ function EyedropperLayer() {
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <EyedropperCanvas
+          ref={eyedropperCanvas}
           onClick={(e) => {
             const { left, top, width, height } =
               fullbleedContainer.getBoundingClientRect();
