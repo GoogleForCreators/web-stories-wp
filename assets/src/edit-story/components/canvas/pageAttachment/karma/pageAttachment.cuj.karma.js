@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolidFromString } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolidFromString from '../../../../utils/createSolidFromString';
 import useInsertElement from '../../useInsertElement';
 import { useStory } from '../../../../app/story';
 import { Fixture } from '../../../../karma';

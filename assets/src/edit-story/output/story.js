@@ -28,6 +28,7 @@ import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
 import getFontDeclarations from './utils/getFontDeclarations';
 import OutputPage from './page';
+import getPreloadResources from './utils/getPreloadResources';
 
 function OutputStory({
   story: {
@@ -42,6 +43,7 @@ function OutputStory({
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const fontDeclarations = getFontDeclarations(pages);
+  const preloadResources = getPreloadResources(pages);
 
   return (
     <html amp="" lang="en">
@@ -56,6 +58,9 @@ function OutputStory({
         ))}
         {fontDeclarations.map((url) => (
           <link key={url} href={url} rel="stylesheet" />
+        ))}
+        {preloadResources.map(({ url, type }) => (
+          <link key={url} href={url} rel="preload" as={type} />
         ))}
         <Boilerplate />
         <CustomCSS />

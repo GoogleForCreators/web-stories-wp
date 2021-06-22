@@ -44,15 +44,10 @@ const Handle = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-`;
-
-const Bar = styled.div`
-  width: 100%;
-  height: 4px;
 
   &:focus {
-    height: 3px;
-    border-bottom: 1px solid ${({ theme }) => theme.colors.opacity.overlay};
+    height: 5px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.border.focus};
   }
 `;
 
@@ -71,29 +66,22 @@ function DragHandle({
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <>
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
-      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
-      <Handle
-        ref={handle}
-        onClick={(e) => e.stopPropagation()}
-        onDoubleClick={handleDoubleClick}
-        $position={position}
-      >
-        <Bar
-          role="slider"
-          aria-orientation="vertical"
-          aria-valuenow={height}
-          aria-valuemin={minHeight}
-          aria-valuemax={maxHeight}
-          aria-label={__('Set panel height', 'web-stories')}
-          {...rest}
-        />
-      </Handle>
-    </>
+    // Disable reason: handled via useKeyboardHandlers.
+    // eslint-disable-next-line styled-components-a11y/click-events-have-key-events
+    <Handle
+      ref={handle}
+      onClick={(e) => e.stopPropagation()}
+      onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      $position={position}
+      role="slider"
+      aria-orientation="vertical"
+      aria-valuenow={height}
+      aria-valuemin={minHeight}
+      aria-valuemax={maxHeight}
+      aria-label={__('Set panel height', 'web-stories')}
+      {...rest}
+    />
   );
 }
 

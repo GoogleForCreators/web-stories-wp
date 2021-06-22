@@ -19,17 +19,17 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { themeHelpers } from '../../theme';
 import {
   generatePatternStyles,
   getOpaquePattern,
   hasGradient,
   hasOpacity,
-} from '../../utils/patterns';
+} from '@web-stories-wp/patterns';
+
+/**
+ * Internal dependencies
+ */
+import { themeHelpers } from '../../theme';
 
 const RADIUS_LARGE = 32;
 const RADIUS_SMALL = 24;

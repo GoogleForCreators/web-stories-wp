@@ -19,15 +19,14 @@
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { Pane } from '../shared';
 import { Select } from '../../../form';
-import { FULLBLEED_RATIO, PAGE_RATIO } from '../../../../constants';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
 import paneId from './paneId';
@@ -63,7 +62,6 @@ const ButtonWrapper = styled.div`
 `;
 
 function PageTemplatesPane(props) {
-  const { customPageTemplates } = useFeatures();
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
@@ -111,10 +109,10 @@ function PageTemplatesPane(props) {
   ]);
 
   useEffect(() => {
-    if (!savedTemplates && customPageTemplates) {
+    if (!savedTemplates) {
       loadTemplates();
     }
-  }, [savedTemplates, loadTemplates, customPageTemplates]);
+  }, [savedTemplates, loadTemplates]);
 
   useEffect(() => {
     let timeout = null;
@@ -147,28 +145,26 @@ function PageTemplatesPane(props) {
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
-        {customPageTemplates && (
-          <>
-            {savedTemplates && (
-              <ButtonWrapper>
-                <TemplateSave
-                  setShowDefaultTemplates={setShowDefaultTemplates}
-                  updateList={updateTemplatesList}
-                />
-              </ButtonWrapper>
-            )}
-            <DropDownWrapper>
-              <Select
-                options={options}
-                selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-                onMenuItemClick={(evt, value) =>
-                  setShowDefaultTemplates(value === DEFAULT)
-                }
-                aria-label={__('Select templates type', 'web-stories')}
+        <>
+          {savedTemplates && (
+            <ButtonWrapper>
+              <TemplateSave
+                setShowDefaultTemplates={setShowDefaultTemplates}
+                updateList={updateTemplatesList}
               />
-            </DropDownWrapper>
-          </>
-        )}
+            </ButtonWrapper>
+          )}
+          <DropDownWrapper>
+            <Select
+              options={options}
+              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+              onMenuItemClick={(evt, value) =>
+                setShowDefaultTemplates(value === DEFAULT)
+              }
+              aria-label={__('Select templates type', 'web-stories')}
+            />
+          </DropDownWrapper>
+        </>
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
         ) : (

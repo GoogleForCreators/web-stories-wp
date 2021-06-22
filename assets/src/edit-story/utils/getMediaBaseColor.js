@@ -20,9 +20,6 @@
 import ColorThief from 'colorthief';
 import { trackError } from '@web-stories-wp/tracking';
 
-/**
- * Internal dependencies
- */
 const thief = new ColorThief();
 
 const STYLES = {

@@ -24,8 +24,6 @@ import styled from 'styled-components';
  */
 import { elementWithBorderRadius } from '../shared';
 
-export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
-export { default as getFocalFromOffset } from './getFocalFromOffset';
 export { default as EditPanMoveable } from './editPanMoveable';
 export { default as ScalePanel } from './scalePanel';
 

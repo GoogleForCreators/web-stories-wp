@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useMemo, useCallback, useRef, useEffect } from 'react';
+import { isPatternEqual } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import isPatternEqual from '../../../../utils/isPatternEqual';
 import useRichText from '../../../richText/useRichText';
 import {
   getHTMLFormatters,
@@ -140,6 +140,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleSelectFontWeight: selectionActions.setFontWeightInSelection,
         handleClickItalic: selectionActions.toggleItalicInSelection,
         handleClickUnderline: selectionActions.toggleUnderlineInSelection,
+        handleClickUppercase: selectionActions.toggleUppercaseInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
         // when editing, resetting font weight needs to save before resetting
@@ -159,6 +160,8 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleClickItalic: (flag) => push(htmlFormatters.toggleItalic, flag),
       handleClickUnderline: (flag) =>
         push(htmlFormatters.toggleUnderline, flag),
+      handleClickUppercase: (flag) =>
+        push(htmlFormatters.toggleUppercase, flag),
       handleSetLetterSpacing: (letterSpacing) =>
         push(htmlFormatters.setLetterSpacing, letterSpacing),
       handleSetColor: (color) => push(htmlFormatters.setColor, color),

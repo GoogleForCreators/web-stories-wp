@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+
+/**
  * Internal dependencies
  */
 import { createPage } from '../../elements';
 import isDefaultPage from '../isDefaultPage';
-import createSolid from '../createSolid';
 
 describe('isDefaultPage', () => {
   it('should return true with base page', () => {

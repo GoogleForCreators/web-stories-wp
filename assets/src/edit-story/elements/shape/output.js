@@ -15,10 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

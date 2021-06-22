@@ -26,9 +26,9 @@ import { unstable_batchedUpdates as batchedUpdates } from 'react-dom';
  * or for microtasks.
  * See https://blog.logrocket.com/simplifying-state-management-in-react-apps-with-batched-updates/.
  *
- * @param {function()} callback The callback to be batched and memoized.
+ * @param {Function} callback The callback to be batched and memoized.
  * @param {Array} [deps] The optional callback dependencies.
- * @return {function()} The memoized batching function.
+ * @return {Function} The memoized batching function.
  */
 function useBatchingCallback(callback, deps = undefined) {
   return useCallback(

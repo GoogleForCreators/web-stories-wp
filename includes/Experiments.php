@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 7965
+			 * Creation date: 2021-06-18
+			 */
+			[
+				'name'        => 'enableChecklistCompanion',
+				'label'       => __( 'Enable Checklist Companion', 'web-stories' ),
+				'description' => __( 'Enables v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @samwhale
 			 * Issue: 6153
 			 * Creation date: 2021-06-07
@@ -353,30 +364,6 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #3134
-			 * Creation date: 2020-10-28
-			 */
-			[
-				'name'        => 'customMetaBoxes',
-				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
-				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #6943
-			 * Creation date: 2021-04-07
-			 */
-			[
-				'name'        => 'enablePrePublishVideoOptimization',
-				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
-				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #7480
 			 * Creation date: 2021-05-28
@@ -397,18 +384,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Post locking', 'web-stories' ),
 				'description' => __( 'Enable post locking', 'web-stories' ),
 				'group'       => 'general',
-			],
-			/**
-			 * Author: @miina
-			 * Issue: #7055
-			 * Creation date: 2021-04-09
-			 */
-			[
-				'name'        => 'customPageTemplates',
-				'label'       => __( 'Custom Page Templates', 'web-stories' ),
-				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}

@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { useMemo } from 'react';
+import { convertToCSS, generatePatternStyles } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE } from '../../../constants';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import convertToCSS from '../../../utils/convertToCSS';
 
 /**
  * Memoizes the common color value.

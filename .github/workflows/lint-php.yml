@@ -23,17 +23,19 @@ on:
       - 'composer.json'
       - 'composer.lock'
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - name: Cancel previous
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -42,7 +44,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer:v2.1.1, cs2pr
+          tools: composer, cs2pr
 
       - name: Get Composer cache directory
         id: composer-cache

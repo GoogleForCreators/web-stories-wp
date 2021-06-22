@@ -24,7 +24,6 @@ import { useCallback } from 'react';
  */
 import useStory from '../../app/story/useStory';
 import { useLocalMedia } from '../../app/media';
-import { DANGER_ZONE_HEIGHT } from '../../constants';
 import useUpdateElementDimensions from '../../app/media/utils/useUpdateElementDimensions';
 import useInsertElement from './useInsertElement';
 
@@ -41,11 +40,7 @@ function useUploadWithPreview() {
 
   const onUploadStart = useCallback(
     ({ resource }) => {
-      insertElement(resource.type, {
-        resource,
-        x: resource.isPlaceholder ? -DANGER_ZONE_HEIGHT : undefined,
-        y: resource.isPlaceholder ? 0 : undefined,
-      });
+      insertElement(resource.type, { resource });
     },
     [insertElement]
   );

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
@@ -30,7 +30,6 @@ import { calculateTextHeight } from '../../../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../../../utils/calcRotatedResizeOffset';
 import AdvancedDropDown from '../../../../form/advancedDropDown';
 import ColorInput from '../../../../form/color/color';
-import createSolid from '../../../../../utils/createSolid';
 import CanvasContext from '../../../../../app/canvas/context';
 import {
   MULTIPLE_VALUE,
