@@ -96,7 +96,6 @@ function useInsertPreset() {
 
   const getInsertionColors = useCallback(
     (atts) => {
-      console.log(atts);
       htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
         const ctx = canvas.getContext('2d');
         const box = getBox(
@@ -116,7 +115,6 @@ function useInsertPreset() {
   useEffect(() => {
     if (autoColor && presetAtts) {
       const { content } = presetAtts;
-      const test = setColor(content, { color: autoColor });
       const addedElement = insertElement(TYPE, {
         ...presetAtts,
         content: setColor(content, { color: autoColor }),
