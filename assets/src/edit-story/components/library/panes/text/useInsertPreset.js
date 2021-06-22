@@ -16,15 +16,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
+import * as htmlToImage from 'html-to-image';
 
 /**
  * Internal dependencies
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
-import { useHistory } from '../../../../app/history';
+import { useHistory, useCanvas } from '../../../../app';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
@@ -36,6 +37,13 @@ function useInsertPreset() {
   const {
     state: { versionNumber },
   } = useHistory();
+
+  const { fullbleedContainer } = useCanvas((state) => ({
+    fullbleedContainer: state.state.fullbleedContainer,
+  }));
+
+  const [autoColor, setAutoColor] = useState(null);
+  const [presetAtts, setPresetAtts] = useState(null);
 
   const lastPreset = useRef(null);
 
@@ -82,21 +90,137 @@ function useInsertPreset() {
     };
   }, []);
 
-  const insertPreset = useCallback(
-    (element) => {
-      const atts = getPosition(element);
+  const getInsertionColors = useCallback(
+    (atts) => {
+      console.log(atts);
+      htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
+        const ctx = canvas.getContext('2d');
+        const { x, y, width, height = 41 } = atts;
+        const pixelData = ctx.getImageData(x, y, width, height).data;
+        setAutoColor(sampleColors(pixelData));
+      });
+      return null;
+    },
+    [fullbleedContainer]
+  );
+
+  useEffect(() => {
+    if (autoColor && presetAtts) {
       const addedElement = insertElement(TYPE, {
-        ...element,
-        ...atts,
+        ...presetAtts,
+        color: autoColor,
       });
       lastPreset.current = {
         versionNumber: null,
         element: addedElement,
       };
+      setAutoColor(null);
+      setPresetAtts(null);
+    }
+  }, [autoColor, presetAtts, insertElement]);
+
+  const insertPreset = useCallback(
+    (element) => {
+      const atts = getPosition(element);
+      setPresetAtts({
+        ...element,
+        ...atts,
+      });
+      getInsertionColors({ ...element, ...atts });
     },
-    [getPosition, insertElement]
+    [getPosition, getInsertionColors]
   );
   return insertPreset;
+}
+
+// constants (mess with these)
+const REQUIRED_CONTRAST = 3;
+const OK_CONTRAST = 1.5;
+
+// global helper functions
+function calculateContrast(rgb1, rgb2) {
+  const luminance = (r, g, b) => {
+    const a = [r, g, b].map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  };
+
+  const lum1 = luminance(rgb1[0], rgb1[1], rgb1[2]);
+  const lum2 = luminance(rgb2[0], rgb2[1], rgb2[2]);
+  const brightest = Math.max(lum1, lum2);
+  const darkest = Math.min(lum1, lum2);
+  return (brightest + 0.05) / (darkest + 0.05);
+}
+
+function sampleColors(pixelData) {
+  const white = [255, 255, 255, 255];
+  const black = [0, 0, 0, 255];
+  const colors = [];
+  for (let i = 0; i < pixelData.length; i += 4) {
+    colors.push([
+      pixelData[i],
+      pixelData[i + 1],
+      pixelData[i + 2],
+      pixelData[i + 3],
+    ]);
+  }
+
+  const contrasts = colors.map((c) => calculateContrast(white, c));
+  const contrastIsGreat = !contrasts.some((ct) => ct < REQUIRED_CONTRAST);
+  const contrastIsOK = !contrasts.some((ct) => ct < OK_CONTRAST);
+
+  if (contrastIsGreat) {
+    console.log('contrast is great with white font color');
+    return {
+      r: 255,
+      g: 255,
+      b: 255,
+      a: 1,
+    };
+  }
+
+  /*if(contrastIsOK && DEBUG.FROSTED_EFFECT && !elem.dataset.nofrost) {
+    elem.classList.remove('highlight');
+    elem.classList.add('frosted');
+    elem.style.color = '#fff';
+
+    if(DEBUG.PROFILING)
+      console.timeEnd("sample colors took");
+    return;
+  }*/
+
+  // try black (or alternative, dark color)..
+  const altContrasts = colors.map((c) => calculateContrast(black, c));
+  const altContrastIsGreat = !altContrasts.some((ct) => ct < REQUIRED_CONTRAST);
+  const altContrastIsOK = !contrasts.some((ct) => ct < OK_CONTRAST);
+
+  // Return just default black otherwise.
+  return {
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 1,
+  };
+
+  // if no dark or light text color worked, we have an uneven background,
+  // an need to apply a text highlight
+  /*elem.classList.add('highlight');
+  elem.classList.remove('frosted');
+  const darkHighlightWorksBetter =
+    contrasts.reduce((a, c) => a + c, 0) <
+    altContrasts.reduce((a, c) => a + c, 0);
+
+  if (darkHighlightWorksBetter) {
+    //console.log('contrast is great with dark highlight');
+    elem.style.setProperty('--theme-color', `rgb(${THEME_COLOR_BG[0]},${THEME_COLOR_BG[1]},${THEME_COLOR_BG[2]})`);
+    elem.style.color = '#fff';
+  } else {
+    //console.log('contrast is great with white highlight');
+    elem.style.setProperty('--theme-color', '#fff');
+    elem.style.color = `rgb(${black[0]},${black[1]},${black[2]})`;
+  }*/
 }
 
 export default useInsertPreset;

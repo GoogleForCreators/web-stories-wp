@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect, useCallback } from 'react';
+import {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import ResizeObserver from 'resize-observer-polyfill';
