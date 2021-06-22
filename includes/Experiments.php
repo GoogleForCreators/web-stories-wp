@@ -380,7 +380,7 @@ class Experiments extends Service_Base {
 			 * Creation date: 2021-07-14
 			 */
 			[
-				'name'        => 'enableGifOptimization',
+				'name'        => 'isGifOptimizationEnabled',
 				'label'       => __( 'Convert gifs to videos', 'web-stories' ),
 				'description' => __( 'Enable the convertion of gifs to videos', 'web-stories' ),
 				'group'       => 'editor',

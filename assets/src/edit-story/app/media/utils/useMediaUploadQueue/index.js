@@ -60,7 +60,7 @@ function useMediaUploadQueue() {
     convertGifToVideo,
   } = useFFmpeg();
 
-  const enableGifOptimization = useFeature('enableGifOptimization');
+  const isGifOptimizationEnabled = useFeature('isGifOptimizationEnabled');
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -230,7 +230,7 @@ function useMediaUploadQueue() {
 
           // Convert animated GIFs to videos if possible.
           if (
-            enableGifOptimization &&
+            isGifOptimizationEnabled &&
             isFeatureEnabled &&
             isTranscodingEnabled &&
             resource.mimeType === 'image/gif' &&
@@ -336,7 +336,7 @@ function useMediaUploadQueue() {
     canTranscodeFile,
     transcodeVideo,
     convertGifToVideo,
-    enableGifOptimization,
+    isGifOptimizationEnabled,
   ]);
 
   return useMemo(
