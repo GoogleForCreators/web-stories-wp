@@ -16,14 +16,22 @@
 /**
  * External dependencies
  */
-// import { __ } from '@web-stories-wp/i18n';
-
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
+import { states, useHighlights } from '../../../app/highlights';
+import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
+import { List, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  ChecklistCard,
+  CardListWrapper,
+  FooterText,
+  DefaultCtaButton,
+  LearnMoreLink,
+} from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
-// import ChecklistCard from '../../../checklistCard';
 
 export function storyHasNoPosterAttached(story) {
   return (
@@ -34,46 +42,32 @@ export function storyHasNoPosterAttached(story) {
 export function StoryPosterAttached() {
   //@TODO refine this context selector and storyHasNoPosterAttached to run more selectively
   const story = useStory(({ state }) => state);
-  return storyHasNoPosterAttached(story)
-    ? // <ChecklistCard
-      //   title={__('Add Web Story poster image', 'web-stories')}
-      //   titleProps={{
-      //     onClick: () => {
-      //       /* perform highlight here */
-      //     },
-      //   }}
-      //   footer={
-      //     <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-      //       <ul>
-      //         <li>
-      //           {__('Use as a representation of the story.', 'web-stories')}
-      //         </li>
-      //         <li>{__('Avoid images with embedded text.', 'web-stories')}</li>
-      //         <li>
-      //           {__("Use an image that's at least 640x853px.", 'web-stories')}
-      //         </li>
-      //         <li>{__('Maintain a 3:4 aspect ratio.', 'web-stories')}</li>
-      //       </ul>
-      //       <Link
-      //         href={'#' /* figure out what this links to */}
-      //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-      //       >
-      //         {'Learn more'}
-      //       </Link>
-      //     </Text>
-      //   }
-      //   cta={
-      //     <Button
-      //       size={BUTTON_SIZES.SMALL}
-      //       type={BUTTON_TYPES.SECONDARY}
-      //       onClick={() => {
-      //         /* perform highlight here */
-      //       }}
-      //     >
-      //       {__('Upload', 'web-stories')}
-      //     </Button>
-      //   }
-      // />
-      null
-    : null;
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  return storyHasNoPosterAttached(story) ? (
+    <ChecklistCard
+      title={PRIORITY_COPY.storyMissingPoster.title}
+      footer={
+        <FooterText>
+          <CardListWrapper>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {PRIORITY_COPY.storyMissingPoster.footer}
+            </List>
+            <LearnMoreLink />
+          </CardListWrapper>
+        </FooterText>
+      }
+      cta={
+        <DefaultCtaButton
+          onClick={() =>
+            setHighlights({
+              highlight: states.POSTER,
+            })
+          }
+        >
+          {__('Upload', 'web-stories')}
+        </DefaultCtaButton>
+      }
+    />
+  ) : null;
 }

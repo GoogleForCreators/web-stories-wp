@@ -13,10 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { LEARN_MORE } from '../../../app/prepublish/newConstants';
+import { THEME_CONSTANTS, Link } from '../../../../design-system';
 
-export { default as ChecklistCard } from './checklistCard';
-export * from './constants';
-export * from './styles';
-export { DefaultCtaButton } from './defaultCtaButton';
-export { DefaultFooterText } from './defaultFooterText';
-export { LearnMoreLink } from './components';
+export function LearnMoreLink() {
+  return (
+    <Link
+      href={'/#' /* figure out what this links to */}
+      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+    >
+      {LEARN_MORE}
+    </Link>
+  );
+}

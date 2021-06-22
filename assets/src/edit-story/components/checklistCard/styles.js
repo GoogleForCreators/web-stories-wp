@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
+import { THEME_CONSTANTS } from '../../../design-system';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 
@@ -31,6 +32,16 @@ export const Wrapper = styled.div`
   display: flex;
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.bg.secondary};
+`;
+
+export const FooterText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  as: 'div',
+})`
+  &,
+  li {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 export const Container = styled.div`

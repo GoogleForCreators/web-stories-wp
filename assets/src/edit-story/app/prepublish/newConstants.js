@@ -43,6 +43,8 @@ const POSTER_DIMENSION_HEIGHT_PX = 853;
 const PUBLISHER_LOGO_DIMENSION = 96;
 const PUBLISHER_LOGO_RATIO = 1;
 
+export const LEARN_MORE = __('Learn more', 'web-stories');
+
 export const ISSUE_TYPES = {
   ACCESSIBILITY: 'accessibility',
   DESIGN: 'design',

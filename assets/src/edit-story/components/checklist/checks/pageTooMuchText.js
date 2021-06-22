@@ -16,15 +16,29 @@
 /**
  * External dependencies
  */
-// import { __ } from '@web-stories-wp/i18n';
 import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS, List } from '../../../../design-system';
+import { useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app/story';
+import { DESIGN_COPY } from '../../../app/prepublish/newConstants';
 import { characterCountForPage, filterStoryPages } from '../utils';
-// import ChecklistCard from '../../../checklistCard';
+import {
+  ChecklistCard,
+  FooterText,
+  CardListWrapper,
+  CARD_TYPE,
+  LearnMoreLink,
+} from '../../checklistCard';
+import {
+  Thumbnail,
+  THUMBNAIL_TYPES,
+  THUMBNAIL_DIMENSIONS,
+} from '../../thumbnail';
+import PagePreview from '../../carousel/pagepreview';
 
 const MAX_PAGE_CHARACTER_COUNT = 200;
 
@@ -48,26 +62,50 @@ export function PageTooMuchText() {
     () => filterStoryPages(story, pageTooMuchText),
     [story]
   );
-  return failingPages.length > 0
-    ? // <ChecklistCard
-      //   title={__('Reduce amount of text on pages', 'web-stories')}
-      //   titleProps={{
-      //     onClick: () => {
-      //       /* perform highlight here */
-      //     },
-      //   }}
-      //   footer={
-      //     <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-      //       {__('Keep text to max 200 characters per page.', 'web-stories')}
-      //       <Link
-      //         href={'#' /* figure out what this links to */}
-      //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-      //       >
-      //         {'Learn more'}
-      //       </Link>
-      //     </Text>
-      //   }
-      // />
-      null
-    : null;
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  return failingPages.length > 0 ? (
+    <ChecklistCard
+      title={DESIGN_COPY.tooMuchPageText.title}
+      cardType={
+        failingPages.length > 1
+          ? CARD_TYPE.MULTIPLE_ISSUE
+          : CARD_TYPE.SINGLE_ISSUE
+      }
+      thumbnailCount={failingPages.length}
+      thumbnail={
+        <>
+          {failingPages.map((page) => (
+            <Thumbnail
+              key={page.id}
+              onClick={() => {
+                setHighlights({
+                  pageId: page.id,
+                });
+              }}
+              type={THUMBNAIL_TYPES.PAGE}
+              displayBackground={
+                <PagePreview
+                  page={page}
+                  width={THUMBNAIL_DIMENSIONS.WIDTH}
+                  height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                  as="div"
+                />
+              }
+              aria-label="my helper text describing this thumbnail image"
+            />
+          ))}
+        </>
+      }
+      footer={
+        <FooterText>
+          <CardListWrapper>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {DESIGN_COPY.tooMuchPageText.footer}
+            </List>
+            <LearnMoreLink />
+          </CardListWrapper>
+        </FooterText>
+      }
+    />
+  ) : null;
 }

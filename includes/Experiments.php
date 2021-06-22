@@ -227,7 +227,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'enableChecklistCompanion',
 				'label'       => __( 'Enable Checklist Companion', 'web-stories' ),
-				'description' => __( 'Enables v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
+				'description' => __( 'Enable v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**

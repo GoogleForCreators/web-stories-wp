@@ -56,6 +56,10 @@ const Span = styled.span`
   ${textCss};
 `;
 
+const Div = styled.div`
+  ${textCss};
+`;
+
 const Kbd = styled.kbd`
   ${textCss};
   white-space: nowrap;
@@ -77,6 +81,8 @@ export const Text = ({ as, disabled, ...props }) => {
       return <Label disabled={disabled} {...props} />;
     case 'span':
       return <Span {...props} />;
+    case 'div':
+      return <Div {...props} />;
     case 'kbd':
       return <Kbd {...props} />;
     default:

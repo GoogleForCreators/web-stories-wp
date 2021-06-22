@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 export function AccessibilityChecks() {
-  return <div>{'accessibility'}</div>;
+  return null;
 }
