@@ -33,7 +33,7 @@ class Add_Media_Source_Source_Image extends Test_Case {
 	public function test_migrate() {
 		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Source_Image();
 		$object->migrate();
-		$term = $object->get_term();
+		$term = $this->call_private_method( $object, 'get_term' );
 
 		$terms = get_terms(
 			[

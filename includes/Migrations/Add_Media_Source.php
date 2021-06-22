@@ -53,7 +53,5 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	public function get_term() {
-		return '';
-	}
+	abstract protected function get_term();
 }
