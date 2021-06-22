@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ruleset name="Web Stories PHP Coding Standards Rules">
-	<config name="minimum_supported_wp_version" value="5.3" />
+	<config name="minimum_supported_wp_version" value="5.5" />
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
