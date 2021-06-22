@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
+import { dataFontEm, PAGE_HEIGHT, getBox } from '@web-stories-wp/units';
 import * as htmlToImage from 'html-to-image';
 
 /**
@@ -99,8 +99,12 @@ function useInsertPreset() {
       console.log(atts);
       htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
         const ctx = canvas.getContext('2d');
-        const { x, y, width, height = 41 } = atts;
-        console.log('canvas', canvas.width, canvas.height, 'element', width, height);
+        const box = getBox(
+          { ...atts, height: atts.height ? atts.height : 41 },
+          canvas.width,
+          canvas.height
+        );
+        const { x, y, width, height } = box;
         const pixelData = ctx.getImageData(x, y, width, height).data;
         setAutoColor(sampleColors(pixelData));
       });
@@ -202,6 +206,12 @@ function sampleColors(pixelData) {
   const altContrasts = colors.map((c) => calculateContrast(black, c));
   const altContrastIsGreat = !altContrasts.some((ct) => ct < REQUIRED_CONTRAST);
   const altContrastIsOK = !contrasts.some((ct) => ct < OK_CONTRAST);
+
+  if (altContrastIsGreat) {
+    console.log('great with black color');
+  } else {
+    console.log('is OK with black?', contrastIsOK);
+  }
 
   // Return just default black otherwise.
   return {
