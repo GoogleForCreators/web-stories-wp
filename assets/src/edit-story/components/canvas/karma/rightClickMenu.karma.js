@@ -21,7 +21,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
-describe('Right Click Menu integration', () => {
+fdescribe('Right Click Menu integration', () => {
   let fixture;
   let newPageButton;
   let duplicatePageButton;
@@ -45,7 +45,7 @@ describe('Right Click Menu integration', () => {
 
   const openRightClickMenu = async () => {
     // right click canvas
-    await fixture.events.click(fixture.screen.getByTestId('FramesLayer'), {
+    await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
       button: 'right',
     });
   };
@@ -115,7 +115,6 @@ describe('Right Click Menu integration', () => {
       // copy the page
       await openRightClickMenu();
       await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
-      throw new Error('works so far');
 
       // add new blank page
       await fixture.events.click(newPageButton);
