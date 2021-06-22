@@ -18,11 +18,13 @@
  * Internal dependencies
  */
 import StoryMissingTitle from './checks/storyMissingTitle';
+import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
 
 export function PriorityChecks() {
   return (
     <div>
       <StoryMissingTitle />
+      <StoryPosterPortraitSize />
     </div>
   );
 }

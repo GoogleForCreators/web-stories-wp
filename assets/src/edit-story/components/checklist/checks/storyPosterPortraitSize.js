@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
+import { states, useHighlights } from '../../../app/highlights';
+import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
@@ -43,39 +41,22 @@ export function storyPosterPortraitSize(story) {
 }
 
 const StoryPosterPortraitSize = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = PRIORITY_COPY.posterTooSmall;
+
   return (
     storyPosterPortraitSize(story) && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: image dimensions.  */
-          __('Increase poster image size to at least %s', 'web-stories'),
-          `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        title={title}
+        titleProps={{
+          onClick: () => setHighlights({ highlight: states.POSTER }),
+        }}
         footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            <>
-              {sprintf(
-                /* translators: %s: image dimensions.  */
-                __("Use an image that's at least %s", 'web-stories'),
-                `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-              )}
-              {sprintf(
-                /* translators: %s: aspect ratio.  */
-                __('Maintain a %s aspect ratio', 'web-stories'),
-                `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
-              )}
-            </>
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
+          <ChecklistCardStyles.CardListWrapper>
+            <List>{footer}</List>
+          </ChecklistCardStyles.CardListWrapper>
         }
       />
     )
