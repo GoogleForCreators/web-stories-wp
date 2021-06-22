@@ -60,7 +60,7 @@ function useMediaUploadQueue() {
     convertGifToVideo,
   } = useFFmpeg();
 
-  const isGifOptimizationEnabled = useFeature('isGifOptimizationEnabled');
+  const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({

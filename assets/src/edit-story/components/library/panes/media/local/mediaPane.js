@@ -155,7 +155,7 @@ function MediaPane(props) {
     'enableMediaPickerVideoOptimization'
   );
 
-  const isGifOptimizationEnabled = useFeature('isGifOptimizationEnabled');
+  const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const {
     allowedTranscodableMimeTypes,
