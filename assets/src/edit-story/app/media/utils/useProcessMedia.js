@@ -160,7 +160,6 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-
         if (resource.type === 'gif' && !resource.local) {
           uploadVideoPoster(resource.id, resource.src);
         }
@@ -185,6 +184,7 @@ function useProcessMedia({
           // Ignore for now.
           return;
         }
+
         const buffer = await file.arrayBuffer();
         if (!isAnimatedGif(buffer)) {
           return;
