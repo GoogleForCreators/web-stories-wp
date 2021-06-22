@@ -30,6 +30,8 @@ import { useCurrentUser } from '../../currentUser';
 import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
+  MEDIA_TRANSCODED_MINE_TYPE,
+  MEDIA_TRANSCODED_FILE_TYPE,
 } from '../../../constants';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -195,8 +197,8 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.mp4';
-        const outputFileName = getFileName(file) + '.mp4';
+        const tempFileName = uuidv4() + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName = getFileName(file) + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -209,10 +211,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
         return new File(
-          [new Blob([data.buffer], { type: 'video/mp4' })],
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MINE_TYPE })],
           outputFileName,
           {
-            type: 'video/mp4',
+            type: MEDIA_TRANSCODED_MINE_TYPE,
           }
         );
       } catch (err) {
@@ -239,8 +241,8 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.mp4';
-        const outputFileName = getFileName(file) + '.mp4';
+        const tempFileName = uuidv4() + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName = getFileName(file) + MEDIA_TRANSCODED_FILE_TYPE;
 
         await ffmpeg.run(
           // Input filename.
@@ -253,10 +255,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
         return new File(
-          [new Blob([data.buffer], { type: 'video/mp4' })],
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MINE_TYPE })],
           outputFileName,
           {
-            type: 'video/mp4',
+            type: MEDIA_TRANSCODED_MINE_TYPE,
           }
         );
       } catch (err) {
