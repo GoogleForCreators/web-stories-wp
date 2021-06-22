@@ -232,7 +232,7 @@ jobs:
           path: build
 
       - name: Setup SSH Keys and known_hosts
-        uses: webfactory/ssh-agent@v0.5.2
+        uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
 
