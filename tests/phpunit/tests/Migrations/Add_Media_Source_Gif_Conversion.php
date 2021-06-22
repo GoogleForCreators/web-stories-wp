@@ -20,18 +20,18 @@ namespace Google\Web_Stories\Tests\Migrations;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * Class Add_Media_Source_Video_Optimization
+ * Class Add_Media_Source_Gif_Conversion
  *
- * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization
+ * @coversDefaultClass \Google\Web_Stories\Migrations\Add_Media_Source_Gif_Conversion
  */
-class Add_Media_Source_Video_Optimization extends Test_Case {
+class Add_Media_Source_Gif_Conversion extends Test_Case {
 	/**
 	 * @covers ::migrate
 	 * @covers ::get_term
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
 	public function test_migrate() {
-		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization();
+		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Gif_Conversion();
 		$object->migrate();
 		$term = $object->get_term();
 

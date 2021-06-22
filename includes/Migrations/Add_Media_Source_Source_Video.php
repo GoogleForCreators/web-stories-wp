@@ -27,23 +27,20 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media;
-
 /**
  * Class Add_Media_Source_Source_Video
  *
  * @package Google\Web_Stories\Migrations
  */
-class Add_Media_Source_Source_Video extends Migrate_Base {
-
+class Add_Media_Source_Source_Video extends Add_Media_Source {
 	/**
-	 * Add the video optimization term, to make sure it exists.
+	 * Term name.
 	 *
-	 * @since 1.4.0
+	 * @since 1.9.0
 	 *
-	 * @return void
+	 * @return string
 	 */
-	public function migrate() {
-		wp_insert_term( 'source-video', Media::STORY_MEDIA_TAXONOMY );
+	public function get_term() {
+		return 'source-video';
 	}
 }

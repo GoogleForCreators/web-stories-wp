@@ -73,6 +73,7 @@ class Database_Upgrader extends Service_Base {
 		'3.0.8'  => Migrations\Rewrite_Flush::class,
 		'3.0.9'  => Migrations\Add_VideoPress_Poster_Generation_Media_Source::class,
 		'3.0.10' => Migrations\Add_Media_Source_Gif_Conversion::class,
+		'3.0.11' => Migrations\Add_Media_Source_Source_Image::class,
 	];
 
 	/**

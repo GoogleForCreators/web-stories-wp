@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Add_Media_Source_Gif_Conversion
+ * Class Add_Media_Source_Editor
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -27,20 +27,33 @@
 
 namespace Google\Web_Stories\Migrations;
 
+use Google\Web_Stories\Media\Media;
+
 /**
- * Class Add_Media_Source_Gif_Conversion
+ * Class Add_Media_Source
  *
  * @package Google\Web_Stories\Migrations
  */
-class Add_Media_Source_Gif_Conversion extends Add_Media_Source {
+abstract class Add_Media_Source extends Migrate_Base {
 	/**
-	 * Term name.
+	 * Add the editor term, to make sure it exists.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return void
+	 */
+	public function migrate() {
+		wp_insert_term( $this->get_term(), Media::STORY_MEDIA_TAXONOMY );
+	}
+
+	/**
+	 * Override this method.
 	 *
 	 * @since 1.9.0
 	 *
 	 * @return string
 	 */
 	public function get_term() {
-		return 'gif-conversion';
+		return '';
 	}
 }
