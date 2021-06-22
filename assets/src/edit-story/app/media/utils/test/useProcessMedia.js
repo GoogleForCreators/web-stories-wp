@@ -23,7 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../story/context';
-import useProcessVideo from '../useProcessVideo';
+import useProcessMedia from '../useProcessMedia';
 
 const fetchRemoteFileMock = (url, mimeType) => {
   if (url === 'http://www.google.com/test.jpg') {
@@ -72,7 +72,7 @@ function setup() {
 
   const { result } = renderHook(
     () =>
-      useProcessVideo({
+      useProcessMedia({
         uploadMedia,
         uploadVideoPoster,
         updateMedia,
@@ -90,7 +90,7 @@ function setup() {
   };
 }
 
-describe('useProcessVideo', () => {
+describe('useProcessMedia', () => {
   it('should process file', async () => {
     const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
     act(() => {

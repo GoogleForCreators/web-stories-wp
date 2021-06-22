@@ -26,10 +26,9 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import useUploadVideoFrame from '../utils/useUploadVideoFrame';
-import useProcessVideo from '../utils/useProcessVideo';
+import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import getResourceFromAttachment from '../utils/getResourceFromAttachment';
-import useProcessGif from '../utils/useProcessGif';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -160,14 +159,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
-  const { optimizeVideo } = useProcessVideo({
-    uploadVideoPoster,
-    uploadMedia,
-    updateMedia,
-    deleteMediaElement,
-  });
-
-  const { optimizeGif } = useProcessGif({
+  const { optimizeVideo, optimizeGif } = useProcessMedia({
     uploadVideoPoster,
     uploadMedia,
     updateMedia,
