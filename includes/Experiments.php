@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 7965
+			 * Creation date: 2021-06-18
+			 */
+			[
+				'name'        => 'enableChecklistCompanion',
+				'label'       => __( 'Enable Checklist Companion', 'web-stories' ),
+				'description' => __( 'Enables v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @samwhale
 			 * Issue: 6153
 			 * Creation date: 2021-06-07
