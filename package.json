@@ -102,7 +102,7 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.8.0",
+    "@ampproject/toolbox-optimizer": "^2.8.1",
     "@axe-core/puppeteer": "^4.2.1",
     "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.7",
