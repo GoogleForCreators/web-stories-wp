@@ -104,12 +104,11 @@ function ImageDisplay({ element, box, previewMode }) {
       showPlaceholder={showPlaceholder}
       previewMode={previewMode}
     >
-      {/* srcSet disabled just for now */}
       <Img
         ref={ref}
         draggable={false}
         src={src}
-        _srcSet={srcSet}
+        srcSet={srcSet}
         alt={resource.alt}
         data-testid="imageElement"
         data-leaf-element="true"
