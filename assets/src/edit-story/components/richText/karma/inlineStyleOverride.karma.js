@@ -47,6 +47,37 @@ describe('Inline style override', () => {
       await setSelection(2, 2);
     });
 
+    describe('CUJ: Creator Can Style Text: Apply Uppercase', () => {
+      it('should have correct formatting when pressing uppercase toggle, then inserting text', async () => {
+        // Verify that uppercase is untoggled in design panel
+        const { uppercase } =
+          data.fixture.editor.inspector.designPanel.textStyle;
+        expect(uppercase.checked).toBe(false);
+
+        // Toggle uppercase by button
+        await data.fixture.events.click(uppercase.button);
+
+        // Verify that uppercase is now toggled on
+        expect(uppercase.checked).toBe(true);
+
+        // Type "foo"
+        await data.fixture.events.keyboard.type('foo');
+
+        // Exit edit-mode
+        await data.fixture.events.keyboard.press('Escape');
+
+        // Expect correct result
+        const actual = getTextContent();
+        const expected =
+          'Fi<span style="text-transform: uppercase">foo</span>ll in some text';
+        expect(actual).toBe(expected);
+
+        await data.fixture.snapshot(
+          '"Fifooll in some text" in mixed formatting'
+        );
+      });
+    });
+
     describe('CUJ: Creator Can Style Text: Apply B', () => {
       it('should have correct formatting when pressing mod+b for bold, then inserting text', async () => {
         // Verify that bold is untoggled in design panel

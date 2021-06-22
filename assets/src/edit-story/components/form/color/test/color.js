@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import Color from '../color';
 import applyOpacityChange from '../applyOpacityChange';
 import { renderWithTheme } from '../../../../testUtils';

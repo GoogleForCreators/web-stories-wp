@@ -19,19 +19,19 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
+import {
+  dataToEditorX,
+  dataToEditorY,
+  dataToFontSizeY as dataToFontSize,
+} from '@web-stories-wp/units';
+import classnames from 'classnames';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
-import createSolid from '../../utils/createSolid';
-import {
-  dataToEditorX,
-  dataToEditorY,
-  dataToFontSizeY as dataToFontSize,
-} from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import {
   generateParagraphTextStyle,
@@ -180,6 +180,7 @@ export function TextOutputWithUnits({
     [content]
   );
 
+  className = classnames(className, 'text-wrapper');
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <>
@@ -207,11 +208,9 @@ export function TextOutputWithUnits({
     );
   }
   return (
-    <p
-      className={className}
-      style={fillStyle}
-      dangerouslySetInnerHTML={{ __html: content }}
-    />
+    <p className={className} style={fillStyle}>
+      <span dangerouslySetInnerHTML={{ __html: content }} />
+    </p>
   );
 }
 

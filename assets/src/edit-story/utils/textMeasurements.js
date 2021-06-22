@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from 'react-dom/server';
+import { dataPixels, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT } from '../constants';
 import { TextOutputWithUnits } from '../elements/text/output';
 import { calcFontMetrics } from '../elements/text/util';
-import { dataPixels } from '../units/dimensions';
 
 const MEASURER_STYLES = {
   boxSizing: 'border-box',

@@ -15,10 +15,13 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
-import { DANGER_ZONE_HEIGHT } from '../../../../units/dimensions';
+import {
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+  DANGER_ZONE_HEIGHT,
+} from '@web-stories-wp/units';
 
 export const MIN_MAX = {
   // TODO: with %360 logic this is not used, but can be utilized via keyboard arrows

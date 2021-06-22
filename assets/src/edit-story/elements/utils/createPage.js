@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolid from '../../utils/createSolid';
 import createNewElement from './createNewElement';
 
 const createPage = (pageProps = null) => {

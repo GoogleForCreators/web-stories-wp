@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from 'react';
-
 /**
  * Internal dependencies
  */
