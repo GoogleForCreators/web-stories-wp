@@ -13,6 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Internal dependencies
+ */
+import StoryMissingTitle from './checks/storyMissingTitle';
+
 export function PriorityChecks() {
-  return <div>{'priority'}</div>;
+  return (
+    <div>
+      <StoryMissingTitle />
+    </div>
+  );
 }
