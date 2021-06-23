@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -25,11 +26,24 @@ import {
   Button,
   BUTTON_VARIANTS,
   Headline,
+  themeHelpers,
   THEME_CONSTANTS,
 } from '../../../design-system';
 
-export const Wrapper = styled.div`
-  /* width: 100%; */
+// height: 728?
+
+export const Tablist = styled.div`
+  width: 308px;
+  background: ${({ theme }) => theme.colors.bg.primary};
+`;
+Tablist.propTypes = {
+  // label to describe purpose of tabs
+  'aria-label': PropTypes.string.isRequired,
+};
+
+export const PanelWrapper = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 export const SmallHeadline = styled(Headline).attrs({
@@ -44,8 +58,16 @@ export const TabButton = styled(Button).attrs({
   height: 60px;
   width: 100%;
   padding: 16px 16px 16px 4px;
-  background-color: ${({ isExpanded, theme }) =>
-    isExpanded ? theme.colors.bg.primary : theme.colors.bg.secondary};
+  margin-bottom: 1px;
+  border-radius: 0;
+  box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+
+  &,
+  :hover,
+  :focus {
+    background-color: ${({ isExpanded, theme }) =>
+      isExpanded ? theme.colors.bg.primary : theme.colors.bg.secondary};
+  }
 `;
 
 export const ButtonText = styled.div`
@@ -76,12 +98,17 @@ export const Badge = styled.div`
 
 export const TabPanel = styled.div`
   height: 560px;
-  overflow-x: scroll;
   padding: 16px;
+  overflow-x: scroll;
   background: ${({ theme }) => theme.colors.bg.primary};
-  visibility: ${({ isExpanded }) => (isExpanded ? 'auto' : 'hidden')};
-`;
 
-export const Divider = styled.div`
-  /* border: 1px solid ${({ theme }) => theme.colors.divider.primary}; */
+  ${themeHelpers.scrollbarCSS};
+
+  ${({ isExpanded }) =>
+    !isExpanded &&
+    css`
+      height: 0;
+      padding: 0;
+      visibility: hidden;
+    `};
 `;

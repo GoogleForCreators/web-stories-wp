@@ -14,4 +14,5 @@
  * limitations under the License.
  */
 
-export { default } from './panel';
+export { Tablist } from './styles';
+export { default as TablistPanel } from './panel';

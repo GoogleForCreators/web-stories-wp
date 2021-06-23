@@ -27,12 +27,11 @@ import { Icons } from '../../../design-system';
 import {
   Badge,
   ButtonText,
-  Divider,
   IconContainer,
+  PanelWrapper,
   SmallHeadline,
   TabButton,
   TabPanel,
-  Wrapper,
 } from './styles';
 
 const Panel = ({
@@ -46,35 +45,32 @@ const Panel = ({
   const panelId = useMemo(uuidv4, []);
 
   return (
-    <>
-      <Wrapper className={className}>
-        <TabButton
-          aria-controls={panelId}
-          aria-selected={isExpanded}
-          isExpanded={isExpanded}
-          onClick={onClick}
-          role="tab"
-        >
-          <ButtonText>
-            <IconContainer>
-              <Icons.ChevronRightSmall />
-            </IconContainer>
-            <SmallHeadline id={`${title}-${panelId}`}>{title}</SmallHeadline>
-          </ButtonText>
-          <Badge>
-            <SmallHeadline>{numIssues}</SmallHeadline>
-          </Badge>
-        </TabButton>
-        <TabPanel
-          aria-labelledby={`${title}-${panelId}`}
-          isExpanded={isExpanded}
-          role="tabpanel"
-        >
-          {children}
-        </TabPanel>
-      </Wrapper>
-      <Divider />
-    </>
+    <PanelWrapper className={className}>
+      <TabButton
+        aria-controls={panelId}
+        aria-selected={isExpanded}
+        isExpanded={isExpanded}
+        onClick={onClick}
+        role="tab"
+      >
+        <ButtonText>
+          <IconContainer>
+            <Icons.ChevronRightSmall />
+          </IconContainer>
+          <SmallHeadline id={`${title}-${panelId}`}>{title}</SmallHeadline>
+        </ButtonText>
+        <Badge>
+          <SmallHeadline>{numIssues}</SmallHeadline>
+        </Badge>
+      </TabButton>
+      <TabPanel
+        aria-labelledby={`${title}-${panelId}`}
+        isExpanded={isExpanded}
+        role="tabpanel"
+      >
+        {children}
+      </TabPanel>
+    </PanelWrapper>
   );
 };
 Panel.propTypes = {
