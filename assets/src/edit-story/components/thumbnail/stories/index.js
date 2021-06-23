@@ -60,6 +60,11 @@ export const _default = () => {
         'I am some helper text for screen readers. If a tooltip is present, that content should also go here'
       )}
       onClick={() => action(`${thumbnailType} button clicked`)()}
+      isLoading={boolean(`${thumbnailType}_isLoading`, false)}
+      loadingMessage={text(
+        `${thumbnailType}_loadingMessage`,
+        'some aria specific loading copy'
+      )}
     >
       {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
         <Tooltip title="test tooltip">

@@ -17,3 +17,4 @@ export { hasNoFeaturedMedia } from './hasNoFeaturedMedia';
 export { characterCountForPage } from './characterCountForPage';
 export { filterStoryPages } from './filterStoryPages';
 export { filterStoryElements } from './filterStoryElements';
+export { getSpansFromContent } from './getSpansFromContent';
