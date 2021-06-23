@@ -1,12 +1,12 @@
 | **CUJ**                                                           | **Action**                                       | **Completion**              |
 | ----------------------------------------------------------------- | ------------------------------------------------ | --------------------------- |
-| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **33.33%** *(4 / 12)*    |
+| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **25.00%** *(3 / 12)*    |
 |                                                                   | Apply a link to multi-selection                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Edit brand icon                                  | 🚨 **0.00%** *(0 / 2)*      |
 |                                                                   | Edit description                                 | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Link with Page Attachment                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **36.84%** *(7 / 19)*    |
+|                                                                   | *[total]*                                        | 🚨 **31.58%** *(6 / 19)*    |
 | Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
@@ -19,16 +19,16 @@
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
 |                                                                   | *[total]*                                        | 🛴 **81.82%** *(18 / 22)*   |
-| Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
-|                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
-|                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
+| Creator Can Style Text                                            | Apply B                                          | 🛴 **65.00%** *(13 / 20)*   |
+|                                                                   | Apply I                                          | 🚨 **45.45%** *(5 / 11)*    |
+|                                                                   | Apply U                                          | 🚨 **40.00%** *(4 / 10)*    |
 |                                                                   | Apply Uppercase                                  | 🏆 **100.00%** *(3 / 3)*    |
-|                                                                   | Select weight                                    | 🏆 **100.00%** *(9 / 9)*    |
-|                                                                   | Set kerning                                      | 🚨 **40.00%** *(2 / 5)*     |
+|                                                                   | Select weight                                    | 🛴 **77.78%** *(7 / 9)*     |
+|                                                                   | Set kerning                                      | 🚨 **20.00%** *(1 / 5)*     |
 |                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
+|                                                                   | Set text color                                   | 🚨 **20.00%** *(1 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
-|                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
+|                                                                   | *[total]*                                        | 🛴 **78.95%** *(30 / 38)*   |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **71.15%** *(296 / 416)* |
