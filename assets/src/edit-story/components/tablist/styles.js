@@ -47,6 +47,10 @@ export const PanelWrapper = styled.div`
     isExpanded &&
     css`
       & > ${TabButton} {
+        ${SmallHeadline} {
+          opacity: 1;
+        }
+
         :hover,
         :focus {
           background-color: theme.colors.bg.primary;
@@ -85,6 +89,10 @@ export const TabButton = styled(Button).attrs({
   :hover,
   :focus {
     background-color: ${({ theme }) => theme.colors.bg.secondary};
+  }
+
+  ${SmallHeadline} {
+    opacity: 0.8;
   }
 
   ${({ status }) =>
