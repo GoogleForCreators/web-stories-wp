@@ -26,6 +26,7 @@ import {
   Button,
   BUTTON_VARIANTS,
   Headline,
+  ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
 } from '../../../design-system';
@@ -88,8 +89,14 @@ export const TabButton = styled(Button).attrs({
 
   &,
   :hover,
-  :focus {
+  :focus,
+  .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
     background-color: ${({ theme }) => theme.colors.bg.secondary};
+  }
+
+  :focus,
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    z-index: 2;
   }
 
   ${SmallHeadline} {
