@@ -24,9 +24,20 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../../../app';
-import { ChecklistCard } from '../../../checklistCard';
+import { useHighlights } from '../../../../app/highlights';
+import PagePreview from '../../../carousel/pagepreview';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../../checklistCard';
+import {
+  Thumbnail,
+  THUMBNAIL_DIMENSIONS,
+  THUMBNAIL_TYPES,
+} from '../../../thumbnail';
 import { filterStoryPages } from '../../utils';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import { ACCESSIBILITY_COPY } from '../../constants';
 import { pageBackgroundTextLowContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
@@ -35,37 +46,44 @@ const PageBackgroundTextLowContrast = () => {
     () => filterStoryPages(story, pageBackgroundTextLowContrast),
     [story]
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { title, footer } = ACCESSIBILITY_COPY.lowContrast;
   return (
     failingPages.length > 0 && (
       <ChecklistCard
-        title={__(
-          'Increase contrast between text and background color',
-          'web-stories'
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Ensure legibility of text and ease of reading by increasing color contrast',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingPages.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-        todo thumbnails for pages
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         thumbnailCount={failingPages.length}
-        thumbnail={<>
-            {failingPages.map(() => <Thumbnail />)}
-          </>}
-      */
+        thumbnail={
+          <>
+            {failingPages.map((page) => (
+              <Thumbnail
+                key={page.id}
+                onClick={() => {
+                  setHighlights({
+                    pageId: page.id,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.PAGE}
+                displayBackground={
+                  <PagePreview
+                    page={page}
+                    width={THUMBNAIL_DIMENSIONS.WIDTH}
+                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                    as="div"
+                  />
+                }
+                aria-label={__('Go to offending page', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

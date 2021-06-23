@@ -16,11 +16,13 @@
 /**
  * Internal dependencies
  */
+import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
 
 export function AccessibilityChecks() {
   return (
     <div>
+      <PageBackgroundTextLowContrast />
       <TextElementFontSizeTooSmall />
     </div>
   );
