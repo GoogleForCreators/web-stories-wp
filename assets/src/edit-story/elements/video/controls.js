@@ -172,12 +172,12 @@ function VideoControls({
     return () => videoNode.removeEventListener('ended', onVideoEnd);
   }, [getVideoNode, id]);
 
-  const [checkShowControls] = useDebouncedCallback(() => {
+  const checkShowControls = useDebouncedCallback(() => {
     if (!isPlayAbove) {
       setShowControls(!isPlaying);
     }
   }, 2000);
-  const [checkMouseInBBox] = useDebouncedCallback((evt) => {
+  const checkMouseInBBox = useDebouncedCallback((evt) => {
     const node = elementRef.current;
     if (!node) {
       return;
