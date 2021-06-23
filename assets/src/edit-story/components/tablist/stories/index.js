@@ -38,6 +38,7 @@ import { Tablist } from '../styles';
 import TablistPanel from '../panel';
 import { CheckboxCta } from '../../checklistCard/checkboxCta';
 import { ChecklistCard } from '../../checklistCard';
+import { PANEL_STATES } from '../constants';
 
 export default {
   title: 'Stories Editor/Components/Tablist',
@@ -79,8 +80,8 @@ export const _default = () => {
           title={'High Priority'}
           isExpanded={openPanel === 'highPriority'}
           onClick={handleClick('highPriority')}
-          numIssues={3}
-          status={'danger'}
+          badgeCount={3}
+          status={PANEL_STATES.DANGER}
         >
           <ChecklistCard
             title="Add video captions"
@@ -229,7 +230,7 @@ export const _default = () => {
           title={'Design'}
           isExpanded={openPanel === 'design'}
           onClick={handleClick('design')}
-          numIssues={1}
+          badgeCount={1}
         >
           <ChecklistCard
             title="Videos not optimized"
@@ -309,7 +310,7 @@ export const _default = () => {
           title={'Accessibility'}
           isExpanded={openPanel === 'accessibility'}
           onClick={handleClick('accessibility')}
-          numIssues={9}
+          badgeCount={9}
         >
           <ChecklistCard
             title="Add video captions"

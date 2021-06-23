@@ -24,6 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { Icons } from '../../../design-system';
+import { PANEL_STATES } from './constants';
 import {
   Badge,
   ButtonText,
@@ -35,12 +36,12 @@ import {
 } from './styles';
 
 const Panel = ({
+  badgeCount = 0,
   children,
   className,
   isExpanded,
-  numIssues = 0,
   onClick,
-  status = 'normal',
+  status = PANEL_STATES.NORMAL,
   title,
 }) => {
   const panelId = useMemo(uuidv4, []);
@@ -61,7 +62,7 @@ const Panel = ({
           <SmallHeadline id={`${title}-${panelId}`}>{title}</SmallHeadline>
         </ButtonText>
         <Badge>
-          <SmallHeadline>{numIssues}</SmallHeadline>
+          <SmallHeadline>{badgeCount}</SmallHeadline>
         </Badge>
       </TabButton>
       <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
@@ -71,11 +72,11 @@ const Panel = ({
   );
 };
 Panel.propTypes = {
+  badgeCount: PropTypes.number,
   children: PropTypes.node,
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.click,
-  numIssues: PropTypes.number,
   status: PropTypes.oneOf(['normal', 'danger']),
   title: PropTypes.string.isRequired,
 };
