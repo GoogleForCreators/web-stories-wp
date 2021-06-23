@@ -17,14 +17,20 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { useHighlights } from '../../../app/highlights';
+import { ACCESSIBILITY_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -50,38 +56,38 @@ const ElementLinkTappableRegionTooSmall = () => {
     story,
     elementLinkTappableRegionTooSmall
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooSmall;
+
   return (
     elements.length > 0 && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: minimum tappable region size width x minimum tappable region size height. */
-          __('Increase tap area size to at least %s', 'web-stories'),
-          `${LINK_TAPPABLE_REGION_MIN_WIDTH}x${LINK_TAPPABLE_REGION_MIN_HEIGHT}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Make the linked element large enough for users to easily tap it',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          elements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-        todo thumbnails for pages
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         thumbnailCount={elements.length}
-        thumbnail={<>
-            {elements.map(() => <Thumbnail />)}
-          </>}
-      */
+        thumbnail={
+          <>
+            {elements.map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => {
+                  setHighlights({
+                    elementId: element.id,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.TEXT}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending link', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );
