@@ -22,10 +22,16 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryElements } from '../utils/filterStoryElements';
+import { states, useHighlights } from '../../../app/highlights';
+import { PRIORITY_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
+import { filterStoryElements } from '../utils';
 
 export function videoElementMissingPoster(element) {
   return element.type === 'video' && !element.resource?.poster;
@@ -35,33 +41,39 @@ const VideoElementMissingPoster = () => {
   const story = useStory(({ state }) => state);
 
   const failingElements = filterStoryElements(story, videoElementMissingPoster);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = PRIORITY_COPY.videoMissingPoster;
+
   return (
     failingElements.length > 0 && (
       <ChecklistCard
-        title={__('Add poster image to every video', 'web-stories')}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Ensure a better experience by displaying a poster while users wait for the video to load',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingElements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-          todo thumbnails for elements
-          thumbnailCount={elements.length}
-          thumbnail={<>
-              {elements.map(() => <Thumbnail onClick={() => perform highlight here } />)}
-            </>}
-        */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={failingElements.length}
+        thumbnail={
+          <>
+            {failingElements.map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => {
+                  setHighlights({
+                    elementId: element.id,
+                    highlight: states.VIDEO_A11Y_POSTER,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.VIDEO}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending video', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );
