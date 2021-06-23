@@ -42,6 +42,27 @@ Tablist.propTypes = {
 export const PanelWrapper = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.colors.bg.primary};
+
+  ${({ isExpanded }) =>
+    isExpanded &&
+    css`
+      & > ${TabButton} {
+        :hover,
+        :focus {
+          background-color: theme.colors.bg.primary;
+        }
+
+        svg {
+          transform: rotate(90deg);
+        }
+      }
+
+      & > ${TabPanel} {
+        height: 560px;
+        padding: 16px;
+        visibility: visible;
+      }
+    `};
 `;
 
 export const SmallHeadline = styled(Headline).attrs({
@@ -63,9 +84,21 @@ export const TabButton = styled(Button).attrs({
   &,
   :hover,
   :focus {
-    background-color: ${({ isExpanded, theme }) =>
-      isExpanded ? theme.colors.bg.primary : theme.colors.bg.secondary};
+    background-color: ${({ theme }) => theme.colors.bg.secondary};
   }
+
+  ${({ status }) =>
+    status === 'danger' &&
+    css`
+      &,
+      ${SmallHeadline} {
+        color: ${({ theme }) => theme.colors.fg.negative};
+      }
+
+      ${Badge} {
+        background-color: ${({ theme }) => theme.colors.fg.negative};
+      }
+    `};
 `;
 
 export const ButtonText = styled.div`
@@ -77,6 +110,12 @@ export const ButtonText = styled.div`
 export const IconContainer = styled.div`
   height: 32px;
   width: 32px;
+
+  color: ${({ theme }) => theme.colors.fg.primary};
+
+  svg {
+    transition: transform 300ms ease-in-out;
+  }
 `;
 
 export const Badge = styled.div`
@@ -86,7 +125,7 @@ export const Badge = styled.div`
   height: 20px;
   width: 20px;
   border-radius: ${({ theme }) => theme.borders.radius.round};
-  background-color: ${({ theme }) => theme.colors.fg.negative};
+  background-color: ${({ theme }) => theme.colors.fg.primary};
 
   ${SmallHeadline} {
     color: ${({ theme }) => theme.colors.inverted.fg.primary};
@@ -95,18 +134,12 @@ export const Badge = styled.div`
 `;
 
 export const TabPanel = styled.div`
-  height: 560px;
-  padding: 16px;
+  height: 0;
+  padding: 0;
+  visibility: hidden;
   overflow-x: scroll;
   background: ${({ theme }) => theme.colors.bg.primary};
+  transition: 250ms ease-in;
 
   ${themeHelpers.scrollbarCSS};
-
-  ${({ isExpanded }) =>
-    !isExpanded &&
-    css`
-      height: 0;
-      padding: 0;
-      visibility: hidden;
-    `};
 `;

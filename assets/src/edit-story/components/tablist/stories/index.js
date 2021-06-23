@@ -79,6 +79,8 @@ export const _default = () => {
           title={'High Priority'}
           isExpanded={openPanel === 'highPriority'}
           onClick={handleClick('highPriority')}
+          numIssues={3}
+          status={'danger'}
         >
           <ChecklistCard
             title="Add video captions"
@@ -227,6 +229,87 @@ export const _default = () => {
           title={'Design'}
           isExpanded={openPanel === 'design'}
           onClick={handleClick('design')}
+          numIssues={1}
+        >
+          <ChecklistCard
+            title="Videos not optimized"
+            cta={
+              <>
+                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                  {'Optimize all videos'}
+                </DefaultCtaButton>
+                <CheckboxCta
+                  id="demo-optimize"
+                  aria-label="check this box to optimize videos by default"
+                >
+                  {'Enable auto optimization'}
+                </CheckboxCta>
+              </>
+            }
+            footer={
+              <DefaultFooterText>
+                {'Unoptimized video may cause playback issues. '}
+                <Link
+                  href="/demo"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={6}
+            thumbnail={
+              <>
+                <Thumbnail
+                  onClick={() => action('1 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+                <Thumbnail
+                  onClick={() => action('2 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+                <Thumbnail
+                  onClick={() => action('3 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+                <Thumbnail
+                  onClick={() => action('4 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+              </>
+            }
+          />
+        </TablistPanel>
+        <TablistPanel
+          title={'Accessibility'}
+          isExpanded={openPanel === 'accessibility'}
+          onClick={handleClick('accessibility')}
+          numIssues={9}
         >
           <ChecklistCard
             title="Add video captions"
@@ -370,12 +453,148 @@ export const _default = () => {
               </>
             }
           />
-        </TablistPanel>
-        <TablistPanel
-          title={'Accessibility'}
-          isExpanded={openPanel === 'accessibility'}
-          onClick={handleClick('accessibility')}
-        >
+          <ChecklistCard
+            title="Add video captions"
+            titleProps={{
+              onClick: () => action('title clicked')(),
+            }}
+            footer={
+              <DefaultFooterText>
+                {
+                  'Keep the audience engaged even when they can’t listen to the audio. '
+                }
+                <Link
+                  href="/demo"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
+            thumbnailCount={1}
+            thumbnail={
+              <Thumbnail
+                onClick={() => action('thumbnail action found')()}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                aria-label="my helper text describing this thumbnail image"
+              />
+            }
+          />
+          <ChecklistCard
+            title="Add video captions"
+            footer={
+              <DefaultFooterText>
+                {
+                  'Keep the audience engaged even when they can’t listen to the audio. '
+                }
+                <Link
+                  href="/demo"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={3}
+            thumbnail={
+              <>
+                <Thumbnail
+                  onClick={() => action('thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />
+                <Thumbnail
+                  onClick={() => action('thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />
+                <Thumbnail
+                  onClick={() => action('thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                />
+              </>
+            }
+          />
+          <ChecklistCard
+            title="Videos not optimized"
+            cta={
+              <>
+                <DefaultCtaButton aria-label={'Optimize all 6 videos'}>
+                  {'Optimize all videos'}
+                </DefaultCtaButton>
+                <CheckboxCta
+                  id="demo-optimize"
+                  aria-label="check this box to optimize videos by default"
+                >
+                  {'Enable auto optimization'}
+                </CheckboxCta>
+              </>
+            }
+            footer={
+              <DefaultFooterText>
+                {'Unoptimized video may cause playback issues. '}
+                <Link
+                  href="/demo"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                >
+                  {'Learn more'}
+                </Link>
+              </DefaultFooterText>
+            }
+            cardType={CARD_TYPE.MULTIPLE_ISSUE}
+            thumbnailCount={6}
+            thumbnail={
+              <>
+                <Thumbnail
+                  onClick={() => action('1 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+                <Thumbnail
+                  onClick={() => action('2 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+                <Thumbnail
+                  onClick={() => action('3 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+                <Thumbnail
+                  onClick={() => action('4 thumbnail action found')()}
+                  type={THUMBNAIL_TYPES.IMAGE}
+                  displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+                  aria-label="my helper text describing this thumbnail image"
+                >
+                  <Tooltip title="Optimize">
+                    <StyledVideoOptimizationIcon />
+                  </Tooltip>
+                </Thumbnail>
+              </>
+            }
+          />
           <ChecklistCard
             title="Add video captions"
             titleProps={{

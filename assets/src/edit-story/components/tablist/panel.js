@@ -40,18 +40,19 @@ const Panel = ({
   isExpanded,
   numIssues = 0,
   onClick,
+  status = 'normal',
   title,
 }) => {
   const panelId = useMemo(uuidv4, []);
 
   return (
-    <PanelWrapper className={className}>
+    <PanelWrapper className={className} isExpanded={isExpanded}>
       <TabButton
         aria-controls={panelId}
         aria-selected={isExpanded}
-        isExpanded={isExpanded}
         onClick={onClick}
         role="tab"
+        status={status}
       >
         <ButtonText>
           <IconContainer>
@@ -63,11 +64,7 @@ const Panel = ({
           <SmallHeadline>{numIssues}</SmallHeadline>
         </Badge>
       </TabButton>
-      <TabPanel
-        aria-labelledby={`${title}-${panelId}`}
-        isExpanded={isExpanded}
-        role="tabpanel"
-      >
+      <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
         {children}
       </TabPanel>
     </PanelWrapper>
@@ -79,6 +76,7 @@ Panel.propTypes = {
   isExpanded: PropTypes.bool,
   onClick: PropTypes.click,
   numIssues: PropTypes.number,
+  status: PropTypes.oneOf(['normal', 'danger']),
   title: PropTypes.string.isRequired,
 };
 
