@@ -56,7 +56,7 @@ const Panel = ({
       >
         <ButtonText>
           <IconContainer>
-            <Icons.ChevronRightSmall />
+            <Icons.ChevronDownSmall />
           </IconContainer>
           <SmallHeadline id={`${title}-${panelId}`}>{title}</SmallHeadline>
         </ButtonText>

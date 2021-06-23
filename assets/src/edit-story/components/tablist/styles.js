@@ -57,7 +57,7 @@ export const PanelWrapper = styled.div`
         }
 
         svg {
-          transform: rotate(90deg);
+          transform: rotate(0);
         }
       }
 
@@ -80,7 +80,7 @@ export const TabButton = styled(Button).attrs({
   justify-content: space-between;
   height: 60px;
   width: 100%;
-  padding: 16px 16px 16px 4px;
+  padding: 16px;
   margin-bottom: 1px;
   border-radius: 0;
   box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
@@ -113,6 +113,7 @@ export const ButtonText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: -12px;
 `;
 
 export const IconContainer = styled.div`
@@ -122,6 +123,7 @@ export const IconContainer = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
 
   svg {
+    transform: rotate(-90deg);
     transition: transform 300ms ease-in-out;
   }
 `;
