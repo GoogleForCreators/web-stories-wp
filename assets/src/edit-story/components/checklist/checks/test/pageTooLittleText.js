@@ -45,6 +45,12 @@ describe('pageTooLittleText', () => {
           content:
             '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">FRESH</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">BRIGHT</span>',
         },
+        {
+          id: '85b6f99b-3f69-4351-9e18-31b8ef1d1a61',
+          type: 'text',
+          content:
+            '<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">"I wish it need not have happened in my time," said Frodo.\n"So do I," said Gandalf\n"and so do all who live to see such times. But that is not for them to decide. All we have to decide is what to do with the time that is given us.</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">&amp;&nbsp;</span>\n<span style="font-weight: 400; color: #fff; letter-spacing: 0.09em">The Fellowship of the Ring</span>',
+        },
       ],
     };
     expect(pageTooLittleText(page)).toBe(false);
