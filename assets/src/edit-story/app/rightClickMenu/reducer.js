@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { duplicatePage } from '../../elements';
+
 export const ACTION_TYPES = {
+  COPY_PAGE: 'COPY_PAGE',
   OPEN_MENU: 'OPEN_MENU',
+  CLOSE_MENU: 'CLOSE_MENU',
   RESET: 'RESET',
 };
 
 export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
+  copiedPage: null,
   isMenuOpen: false,
   menuPosition: {
     x: 0,
@@ -27,8 +35,20 @@ export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
   },
 };
 
+// TODO: check if we need to add tracking events when we come back to right click menu.
 function rightClickMenuReducer(state, action) {
   switch (action.type) {
+    case ACTION_TYPES.CLOSE_MENU:
+      return {
+        ...state,
+        isMenuOpen: false,
+        menuPosition: DEFAULT_RIGHT_CLICK_MENU_STATE.menuPosition,
+      };
+    case ACTION_TYPES.COPY_PAGE:
+      return {
+        ...state,
+        copiedPage: duplicatePage(action.payload),
+      };
     case ACTION_TYPES.OPEN_MENU:
       return {
         ...state,

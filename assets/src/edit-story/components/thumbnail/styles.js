@@ -23,7 +23,11 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THUMBNAIL_DIMENSIONS, THUMBNAIL_SCRIM_CLASSNAME } from './constants';
+import {
+  THUMBNAIL_DIMENSIONS,
+  THUMBNAIL_SCRIM_CLASSNAME,
+  THUMBNAIL_SHOW_ON_HOVER_FOCUS,
+} from './constants';
 
 /**
  * Set Scrim styles on button state here with the THUMBNAIL_SCRIM_CLASSNAME
@@ -50,6 +54,15 @@ export const Container = styled.button(
       : 'transparent'};
     cursor: pointer;
 
+    .${THUMBNAIL_SHOW_ON_HOVER_FOCUS} {
+      display: none;
+    }
+
+    &:hover {
+      .${THUMBNAIL_SHOW_ON_HOVER_FOCUS} {
+        display: flex;
+      }
+    }
     ${$isError &&
     css`
       .${THUMBNAIL_SCRIM_CLASSNAME} {
@@ -63,6 +76,9 @@ export const Container = styled.button(
 
     &:focus,
       &:focus-within {
+      .${THUMBNAIL_SHOW_ON_HOVER_FOCUS} {
+        display: flex;
+      }
       .${THUMBNAIL_SCRIM_CLASSNAME} {
         background-color: ${theme.colors.opacity.black64};
         border: 1px solid

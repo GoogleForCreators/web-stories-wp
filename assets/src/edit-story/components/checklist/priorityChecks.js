@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Internal dependencies
+ */
+import PublisherLogoSize from './checks/publisherLogoSize';
+import StoryMissingTitle from './checks/storyMissingTitle';
+import StoryPosterAspectRatio from './checks/storyPosterAspectRatio';
+import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
+
 export function PriorityChecks() {
-  return <div>{'priority'}</div>;
+  return (
+    <div>
+      <StoryMissingTitle />
+      <StoryPosterPortraitSize />
+      <StoryPosterAspectRatio />
+      <PublisherLogoSize />
+    </div>
+  );
 }
