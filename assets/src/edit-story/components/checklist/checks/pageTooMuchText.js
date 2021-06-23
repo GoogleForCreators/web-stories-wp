@@ -55,7 +55,7 @@ export function pageTooMuchText(page) {
   return characterCountForPage(page) > MAX_PAGE_CHARACTER_COUNT;
 }
 
-export function PageTooMuchText() {
+const PageTooMuchText = () => {
   const story = useStory(({ state }) => state);
   const failingPages = useMemo(
     () => filterStoryPages(story, pageTooMuchText),
@@ -107,6 +107,6 @@ export function PageTooMuchText() {
       />
     )
   );
-}
+};
 
 export default PageTooMuchText;
