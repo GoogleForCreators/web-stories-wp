@@ -38,11 +38,14 @@ function getInitialStyleFromKeyframes(keyframes) {
     return initialStyle;
   }
 
+  // Set initial opacity and transforms so that
+  // unspecified opacity & transforms aren't inherited
+  initialStyle[`--initial-opacity`] = 1;
+  initialStyle[`--initial-transform`] = 'none';
+
   Object.keys(frame).forEach((key) => {
     if (ALLOWLIST.includes(key.toLowerCase())) {
       const value = frame[key];
-      initialStyle[`--initial-opacity`] = 1;
-      initialStyle[`--initial-transform`] = 'none';
       if (Array.isArray(value)) {
         initialStyle[`--initial-${key}`] = value[0];
       } else {
