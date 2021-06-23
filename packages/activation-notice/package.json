@@ -24,6 +24,6 @@
   },
   "devDependencies": {
     "@testing-library/react": "^12.0.0",
-    "@storybook/addon-knobs": "^6.1.17"
+    "@storybook/addon-knobs": "^6.3.0"
   }
 }
