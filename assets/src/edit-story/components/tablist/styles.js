@@ -76,6 +76,7 @@ export const SmallHeadline = styled(Headline).attrs({
 export const TabButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.PLAIN,
 })`
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: 60px;
