@@ -22,7 +22,12 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useState } from 'react';
-import { THEME_CONSTANTS, Link, Tooltip } from '../../../../design-system';
+import {
+  THEME_CONSTANTS,
+  Link,
+  Tooltip,
+  Text,
+} from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../../checklistCard/constants';
@@ -40,12 +45,17 @@ export default {
 };
 
 const Container = styled.div`
-  /* background-color: ${({ theme }) => theme.colors.bg.primary}; */
-  background-color: white;
-  display: flex;
-  flex-wrap: wrap;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
+  display: grid;
+  grid-template-rows: 1fr auto;
   padding: 16px;
   width: 900px;
+  height: 900px;
+
+  ${Tablist} {
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
 `;
 
 export const _default = () => {
@@ -63,6 +73,7 @@ export const _default = () => {
 
   return (
     <Container>
+      <Text>{'Scroll Down or collapse actions bar to see the tabs'}</Text>
       <Tablist aria-label={'Pre publish checklist example'}>
         <TablistPanel
           title={'High Priority'}
