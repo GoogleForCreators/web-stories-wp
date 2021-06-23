@@ -21,12 +21,14 @@ import PublisherLogoSize from './checks/publisherLogoSize';
 import StoryMissingTitle from './checks/storyMissingTitle';
 import StoryPosterAspectRatio from './checks/storyPosterAspectRatio';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
+import StoryTitleLength from './checks/storyTitleLength';
 import VideoElementMissingPoster from './checks/videoElementMissingPoster';
 
 export function PriorityChecks() {
   return (
     <div>
       <StoryMissingTitle />
+      <StoryTitleLength />
       <StoryPosterPortraitSize />
       <StoryPosterAspectRatio />
       <PublisherLogoSize />
