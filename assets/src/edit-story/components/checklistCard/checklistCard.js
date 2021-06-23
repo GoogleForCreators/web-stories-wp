@@ -45,6 +45,7 @@ import {
  *
  * @param {Object} props Component props.
  * @param {string} props.cardType the type of card  getting rendered. Selected from constants > CARD_TYPE, defaults to SINGLE_ISSUE.
+ * @param {string} props.className the className to be passed to the outermost element.
  * @param {string}  props.title text to display as title of card.
  * @param {Object}  props.titleProps if an object is passed in it should have an onClick, these are so that issues can have buttons as titles.
  * @param {Node} props.footer will  be rendered in the footer section of a card.
@@ -56,6 +57,7 @@ import {
  */
 const ChecklistCard = ({
   cardType = CARD_TYPE.SINGLE_ISSUE,
+  className,
   title,
   titleProps,
   footer,
@@ -75,7 +77,7 @@ const ChecklistCard = ({
   const hasOverflowThumbnail =
     thumbnailCount > 0 && thumbnailCount > MAX_THUMBNAILS_DISPLAYED + 1;
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Container gridVariant={gridVariant}>
         <Title as={titleProps?.onClick ? 'button' : 'div'} {...titleProps}>
           <Headline
@@ -106,6 +108,7 @@ const ChecklistCard = ({
 
 ChecklistCard.propTypes = {
   cardType: PropTypes.oneOf(Object.values(CARD_TYPE)),
+  className: PropTypes.string,
   cta: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
