@@ -115,7 +115,7 @@
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@prettier/plugin-xml": "^0.13.1",
     "@storybook/addon-a11y": "^6.3.0",
-    "@storybook/addon-actions": "^6.2.9",
+    "@storybook/addon-actions": "^6.3.0",
     "@storybook/addon-backgrounds": "^6.3.0",
     "@storybook/addon-docs": "^6.2.9",
     "@storybook/addon-knobs": "^6.3.0",
