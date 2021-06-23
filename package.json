@@ -64,7 +64,7 @@
     "@wordpress/element": "^2.19.0",
     "@wordpress/i18n": "^3.17.0",
     "@wordpress/url": "^3.1.1",
-    "@wordpress/viewport": "^3.1.1",
+    "@wordpress/viewport": "^3.1.2",
     "big.js": "^6.1.1",
     "classnames": "^2.3.1",
     "colorthief": "^2.3.2",
