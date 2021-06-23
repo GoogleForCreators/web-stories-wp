@@ -156,6 +156,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     setZoomSetting(ZOOM_SETTING.FIT);
     const prepareEyedropper = () =>
       new Promise((resolve) => {
+        // Wait one tick for the zoom to settle in.
         // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
         setTimeout(() => {
           htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
