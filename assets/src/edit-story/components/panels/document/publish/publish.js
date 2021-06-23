@@ -193,6 +193,12 @@ function PublishPanel() {
                 ref={posterButtonRef}
                 width={54}
                 height={96}
+                params={{
+                  flex_width: false,
+                  flex_height: false,
+                  width: 640,
+                  height: 853,
+                }}
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
                 title={__('Select as poster image', 'web-stories')}
@@ -212,6 +218,12 @@ function PublishPanel() {
               <StyledMedia
                 width={72}
                 height={72}
+                params={{
+                  flex_width: false,
+                  flex_height: false,
+                  width: 96,
+                  height: 96,
+                }}
                 ref={publisherLogoRef}
                 value={publisherLogoUrl}
                 onChange={handleChangePublisherLogo}

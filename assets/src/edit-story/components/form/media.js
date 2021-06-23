@@ -28,6 +28,7 @@ import styled from 'styled-components';
 import { useMediaPicker } from '../mediaPicker';
 import { MediaInput as Input, themeHelpers } from '../../../design-system';
 import { MULTIPLE_VALUE } from '../../constants';
+import { useImageCrop } from '../imageCrop';
 
 const StyledInput = styled(Input)`
   button:focus {
@@ -51,6 +52,7 @@ function MediaInput(
     title = __('Choose an image', 'web-stories'),
     type = 'image',
     value,
+    params,
     ...rest
   },
   forwardedRef
@@ -62,6 +64,16 @@ function MediaInput(
     onSelectErrorMessage: onChangeErrorText,
     type,
   });
+
+  const openCropper = useImageCrop({
+    title,
+    buttonInsertText,
+    onSelect: onChange,
+    onSelectErrorMessage: onChangeErrorText,
+    params,
+  });
+
+  const openDialog = params ? openCropper : openMediaPicker;
 
   // Options available for the media input menu.
   const availableMenuOptions = [
@@ -83,7 +95,7 @@ function MediaInput(
     (evt, opt) => {
       switch (opt) {
         case 'edit':
-          openMediaPicker(evt);
+          openDialog(evt);
           break;
         case 'remove':
         case 'reset':
@@ -93,14 +105,14 @@ function MediaInput(
           break;
       }
     },
-    [onChange, openMediaPicker]
+    [onChange, openDialog]
   );
 
   return (
     <StyledInput
       onMenuOption={onOption}
       menuOptions={dropdownOptions}
-      openMediaPicker={openMediaPicker}
+      openMediaPicker={openDialog}
       ref={forwardedRef}
       value={value === MULTIPLE_VALUE ? null : value}
       {...rest}
@@ -120,6 +132,7 @@ MediaInput.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
+  params: PropTypes.object,
   title: PropTypes.string,
   value: PropTypes.string,
 };

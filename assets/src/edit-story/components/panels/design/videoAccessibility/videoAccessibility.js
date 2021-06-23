@@ -35,6 +35,8 @@ import { styles, states, useFocusHighlight } from '../../../../app/highlights';
 const DEFAULT_RESOURCE = {
   alt: null,
   poster: null,
+  height: 0,
+  width: 0,
 };
 
 export const MIN_MAX = {
@@ -60,6 +62,8 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
+  const height = getCommonValue(selectedElements, 'height', resource.height);
+  const width = getCommonValue(selectedElements, 'width', resource.width);
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
@@ -99,6 +103,21 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     mediaRef
   );
 
+  let params = null;
+  if (
+    height &&
+    height !== MULTIPLE_VALUE &&
+    width &&
+    width !== MULTIPLE_VALUE
+  ) {
+    params = {
+      height,
+      width,
+      flex_width: false,
+      flex_height: false,
+    };
+  }
+
   return (
     <SimplePanel
       css={(highlightInput || highlightMediaPicker) && styles.FLASH}
@@ -110,6 +129,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         <StyledMedia
           ref={mediaRef}
           value={poster}
+          params={params}
           onChange={handleChangePoster}
           onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}
