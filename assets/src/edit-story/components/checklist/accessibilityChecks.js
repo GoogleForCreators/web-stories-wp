@@ -18,12 +18,14 @@
  */
 import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
+import VideoElementMissingDescription from './checks/videoElementMissingDescription';
 
 export function AccessibilityChecks() {
   return (
     <div>
       <PageBackgroundTextLowContrast />
       <TextElementFontSizeTooSmall />
+      <VideoElementMissingDescription />
     </div>
   );
 }
