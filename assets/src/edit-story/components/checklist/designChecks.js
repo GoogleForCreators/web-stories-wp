@@ -21,6 +21,7 @@ import PageTooMuchText from './checks/pageTooMuchText';
 import PageTooLittleText from './checks/pageTooLittleText';
 import VideoElementResolution from './checks/videoElementResolution';
 import ImageElementResolution from './checks/imageElementResolution';
+import VideoElementLength from './checks/videoElementLength';
 
 export function DesignChecks() {
   return (
@@ -29,6 +30,7 @@ export function DesignChecks() {
       <PageTooLittleText />
       <PageTooManyLinks />
       <VideoElementResolution />
+      <VideoElementLength />
       <ImageElementResolution />
     </>
   );
