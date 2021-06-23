@@ -23,7 +23,7 @@ import {
   PRIORITY_COPY,
   ASPECT_RATIO_LEFT,
   ASPECT_RATIO_RIGHT,
-} from '../../../app/prepublish/newConstants';
+} from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';

@@ -18,12 +18,9 @@
  */
 import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import {
-  PRIORITY_COPY,
-  PUBLISHER_LOGO_DIMENSION,
-} from '../../../app/prepublish/newConstants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
+import { PRIORITY_COPY, PUBLISHER_LOGO_DIMENSION } from '../constants';
 
 export function publisherLogoSize(story) {
   return (
