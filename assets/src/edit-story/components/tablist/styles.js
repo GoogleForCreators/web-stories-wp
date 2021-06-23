@@ -30,8 +30,6 @@ import {
   THEME_CONSTANTS,
 } from '../../../design-system';
 
-// height: 728?
-
 export const Tablist = styled.div`
   width: 308px;
   background: ${({ theme }) => theme.colors.bg.primary};
