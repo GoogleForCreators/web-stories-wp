@@ -114,6 +114,7 @@ function web_stories_get_compat_instance() {
 	$compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
 	$compatibility->set_required_files(
 		array(
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/block.json',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-block.js',
