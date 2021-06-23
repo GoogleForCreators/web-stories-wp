@@ -19,7 +19,7 @@
  */
 import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
+import { PRIORITY_COPY } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
