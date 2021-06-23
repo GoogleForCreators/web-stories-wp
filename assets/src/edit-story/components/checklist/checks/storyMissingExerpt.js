@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
+import { PRIORITY_COPY } from '../constants';
 
 export function storyMissingExcerpt(story) {
   return !story.excerpt?.length;
@@ -31,27 +28,18 @@ export function storyMissingExcerpt(story) {
 
 const StoryMissingExcerpt = () => {
   const story = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { title, footer } = PRIORITY_COPY.storyMissingDescription;
+
   return (
     storyMissingExcerpt(story) && (
       <ChecklistCard
-        title={__('Add Web Story description', 'web-stories')}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Incorporate a brief description for better user experience',
-              'web-stories'
-            )}
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
-        }
+        title={title}
+        titleProps={{
+          onClick: () => setHighlights({ highlight: states.EXCERPT }),
+        }}
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
       />
     )
   );
