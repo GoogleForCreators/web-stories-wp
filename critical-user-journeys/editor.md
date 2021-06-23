@@ -13,22 +13,22 @@
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
 |                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
-| Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🛴 **80.00%** *(8 / 10)*    |
+| Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(10 / 10)*  |
 |                                                                   | Enter edit mode                                  | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | Remove background media                          | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                                   | *[total]*                                        | 🛴 **72.73%** *(16 / 22)*   |
-| Creator Can Style Text                                            | Apply B                                          | 🛴 **50.00%** *(10 / 20)*   |
-|                                                                   | Apply I                                          | 🚨 **36.36%** *(4 / 11)*    |
-|                                                                   | Apply U                                          | 🚨 **30.00%** *(3 / 10)*    |
-|                                                                   | Apply Uppercase                                  | 🚨 **33.33%** *(1 / 3)*     |
-|                                                                   | Select weight                                    | 🛴 **66.67%** *(6 / 9)*     |
+|                                                                   | *[total]*                                        | 🛴 **81.82%** *(18 / 22)*   |
+| Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
+|                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
+|                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
+|                                                                   | Apply Uppercase                                  | 🏆 **100.00%** *(3 / 3)*    |
+|                                                                   | Select weight                                    | 🏆 **100.00%** *(9 / 9)*    |
 |                                                                   | Set kerning                                      | 🚨 **40.00%** *(2 / 5)*     |
-|                                                                   | Set line height                                  | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
-|                                                                   | *[total]*                                        | 🛴 **71.05%** *(27 / 38)*   |
+|                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -36,9 +36,9 @@
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Select an individual word to edit                | 🚨 **0.00%** *(0 / 10)*     |
+|                                                                   | Select an individual word to edit                | 🏔️ **90.00%** *(9 / 10)*   |
 |                                                                   | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🚨 **31.25%** *(5 / 16)*    |
+|                                                                   | *[total]*                                        | 🛴 **87.50%** *(14 / 16)*   |
 | Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **63.94%** *(266 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
