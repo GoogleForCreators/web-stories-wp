@@ -64,7 +64,7 @@ const ScrollToTop = () => {
     actions: { scrollToTop },
   } = useLayoutContext();
 
-  const [handleScroll] = useDebouncedCallback(
+  const handleScroll = useDebouncedCallback(
     () => setIsVisible(window.scrollY > 0),
     100
   );

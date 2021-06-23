@@ -101,11 +101,7 @@ function PaginatedMediaGallery({
   }, [searchTerm, selectedCategoryId]);
 
   // After scroll or resize, see if we need the load the next page.
-  const [handleScrollOrResize] = useDebouncedCallback(
-    loadNextPageIfNeeded,
-    500,
-    [loadNextPageIfNeeded]
-  );
+  const handleScrollOrResize = useDebouncedCallback(loadNextPageIfNeeded, 500);
 
   // After loading a next page, see if we need to load another,
   // ie. when the page of results isn't full.

@@ -97,7 +97,7 @@ function ColorPicker({
     }
   );
 
-  const [onDebouncedChange] = useDebouncedCallback(onChange, 100, {
+  const onDebouncedChange = useDebouncedCallback(onChange, 100, {
     leading: true,
   });
 
