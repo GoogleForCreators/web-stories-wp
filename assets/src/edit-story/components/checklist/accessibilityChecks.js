@@ -17,6 +17,7 @@
  * Internal dependencies
  */
 import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
+import ImageElementMissingAlt from './checks/imageElementMissingAlt';
 import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
 import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
@@ -30,6 +31,7 @@ export function AccessibilityChecks() {
       <VideoElementMissingDescription />
       <VideoElementMissingCaptions />
       <ElementLinkTappableRegionTooSmall />
+      <ImageElementMissingAlt />
     </div>
   );
 }
