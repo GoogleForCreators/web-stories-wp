@@ -21,10 +21,9 @@
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
-import { useHighlights } from '../../../app/highlights';
+import { useHighlights, states } from '../../../app/highlights';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
-import { STATES } from '../../../app/highlights/states';
 
 export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
 
@@ -44,7 +43,7 @@ const StoryTitleLength = () => {
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         titleProps={{
           onClick: () => {
-            setHighlights({ highlight: STATES.STORY_TITLE });
+            setHighlights({ highlight: states.STORY_TITLE });
           },
         }}
       />
