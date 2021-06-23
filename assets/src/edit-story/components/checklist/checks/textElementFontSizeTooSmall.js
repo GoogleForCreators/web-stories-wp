@@ -24,10 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
-import {
-  ACCESSIBILITY_COPY,
-  MIN_FONT_SIZE,
-} from '../../../app/prepublish/newConstants';
+import { ACCESSIBILITY_COPY, MIN_FONT_SIZE } from '../constants';
 import {
   CARD_TYPE,
   ChecklistCard,

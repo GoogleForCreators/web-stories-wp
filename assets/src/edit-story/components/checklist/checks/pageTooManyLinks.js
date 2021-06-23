@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY } from '../../../app/prepublish/newConstants';
+import { DESIGN_COPY } from '../constants';
 import {
   CARD_TYPE,
   ChecklistCard,

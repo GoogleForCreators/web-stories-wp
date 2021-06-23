@@ -24,7 +24,7 @@ import { useMemo } from 'react';
  */
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY } from '../../../app/prepublish/newConstants';
+import { DESIGN_COPY } from '../constants';
 import {
   Thumbnail,
   THUMBNAIL_TYPES,
