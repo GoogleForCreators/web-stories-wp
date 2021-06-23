@@ -18,11 +18,13 @@
  */
 import PageTooManyLinks from './checks/pageTooManyLinks';
 import PageTooMuchText from './checks/pageTooMuchText';
+import PageTooLittleText from './checks/pageTooLittleText';
 
 export function DesignChecks() {
   return (
     <>
       <PageTooMuchText />
+      <PageTooLittleText />
       <PageTooManyLinks />
     </>
   );
