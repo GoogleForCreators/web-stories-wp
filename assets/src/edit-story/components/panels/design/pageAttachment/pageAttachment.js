@@ -90,12 +90,9 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
-  const [debouncedCTAUpdate, cancelCTAUpdate] = useDebouncedCallback(
-    (value) => {
-      updatePageAttachment({ ctaText: value });
-    },
-    300
-  );
+  const debouncedCTAUpdate = useDebouncedCallback((value) => {
+    updatePageAttachment({ ctaText: value });
+  }, 300);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
     !isValidUrl(withProtocol(url || '').trim())
@@ -120,13 +117,13 @@ function PageAttachmentPanel() {
         updatePageAttachment({ ctaText: defaultCTA });
         _setCtaText(defaultCTA);
       } else {
-        cancelCTAUpdate();
+        debouncedCTAUpdate.cancel();
         updatePageAttachment({
           ctaText: _ctaText ? _ctaText : defaultCTA,
         });
       }
     },
-    [_ctaText, cancelCTAUpdate, defaultCTA, updatePageAttachment]
+    [_ctaText, debouncedCTAUpdate, defaultCTA, updatePageAttachment]
   );
 
   return (
