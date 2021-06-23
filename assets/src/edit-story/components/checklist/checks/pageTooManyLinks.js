@@ -25,21 +25,19 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY } from '../constants';
+import { DESIGN_COPY, MAX_LINKS_PER_PAGE } from '../constants';
 import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
 } from '../../checklistCard';
-import { filterStoryPages } from '../utils';
+import { filterStoryPages, getActiveThumbnails } from '../utils';
 import {
   Thumbnail,
   THUMBNAIL_TYPES,
   THUMBNAIL_DIMENSIONS,
 } from '../../thumbnail';
 import PagePreview from '../../carousel/pagepreview';
-
-const MAX_LINKS_PER_PAGE = 3;
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {
@@ -72,7 +70,7 @@ const PageTooManyLinks = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {failingPages.map((page) => (
+            {getActiveThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

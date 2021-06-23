@@ -31,7 +31,7 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements } from '../utils';
+import { filterStoryElements, getActiveThumbnails } from '../utils';
 
 export function imageElementMissingAlt(element) {
   return (
@@ -60,7 +60,7 @@ const ImageElementMissingAlt = () => {
         thumbnailCount={elements.length}
         thumbnail={
           <>
-            {elements.map((element) => (
+            {getActiveThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => {

@@ -24,10 +24,7 @@ import { useMemo } from 'react';
 import { useStory } from '../../../app/story';
 
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
-import { DESIGN_COPY } from '../constants';
-
-export const MIN_STORY_PAGES = 4;
-export const MAX_STORY_PAGES = 30;
+import { DESIGN_COPY, MAX_STORY_PAGES, MIN_STORY_PAGES } from '../constants';
 
 export function storyPagesCount(story) {
   const hasTooFewPages = story.pages.length < MIN_STORY_PAGES;

@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { List } from '../../../../design-system';
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY } from '../constants';
+import { DESIGN_COPY, MAX_PAGE_CHARACTER_COUNT } from '../constants';
 import {
   Thumbnail,
   THUMBNAIL_TYPES,
@@ -37,9 +37,11 @@ import {
   CARD_TYPE,
   ChecklistCardStyles,
 } from '../../checklistCard';
-import { characterCountForPage, filterStoryPages } from '../utils';
-
-const MAX_PAGE_CHARACTER_COUNT = 200;
+import {
+  characterCountForPage,
+  filterStoryPages,
+  getActiveThumbnails,
+} from '../utils';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -82,7 +84,7 @@ const PageTooMuchText = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {failingPages.map((page) => (
+            {getActiveThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

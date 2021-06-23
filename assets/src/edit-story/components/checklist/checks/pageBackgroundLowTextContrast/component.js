@@ -36,7 +36,7 @@ import {
   THUMBNAIL_DIMENSIONS,
   THUMBNAIL_TYPES,
 } from '../../../thumbnail';
-import { filterStoryPages } from '../../utils';
+import { filterStoryPages, getActiveThumbnails } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { pageBackgroundTextLowContrast } from './check';
 
@@ -49,6 +49,7 @@ const PageBackgroundTextLowContrast = () => {
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
   const { title, footer } = ACCESSIBILITY_COPY.lowContrast;
+
   return (
     failingPages.length > 0 && (
       <ChecklistCard
@@ -62,7 +63,7 @@ const PageBackgroundTextLowContrast = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {failingPages.map((page) => (
+            {getActiveThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

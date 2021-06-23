@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { hasNoFeaturedMedia } from './hasNoFeaturedMedia';
-export { characterCountForPage } from './characterCountForPage';
-export { filterStoryPages } from './filterStoryPages';
-export { filterStoryElements } from './filterStoryElements';
-export { getActiveThumbnails } from './getActiveThumbnails';
-export { getSpansFromContent } from './getSpansFromContent';
+/**
+ * Internal dependencies
+ */
+import { THUMBNAIL_COUNT_FOR_OVERFLOW, THUMBNAIL_MAX } from '../constants';
+
+export function getActiveThumbnails(items) {
+  if (items.length > THUMBNAIL_MAX) {
+    return items.slice(0, THUMBNAIL_COUNT_FOR_OVERFLOW);
+  }
+  return items;
+}

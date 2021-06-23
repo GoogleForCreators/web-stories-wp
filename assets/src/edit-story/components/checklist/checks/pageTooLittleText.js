@@ -24,7 +24,7 @@ import { useMemo } from 'react';
  */
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY } from '../constants';
+import { DESIGN_COPY, MIN_STORY_CHARACTER_COUNT } from '../constants';
 import {
   Thumbnail,
   THUMBNAIL_TYPES,
@@ -36,9 +36,11 @@ import {
   CARD_TYPE,
   DefaultFooterText,
 } from '../../checklistCard';
-import { characterCountForPage, filterStoryPages } from '../utils';
-
-const MIN_STORY_CHARACTER_COUNT = 100;
+import {
+  characterCountForPage,
+  filterStoryPages,
+  getActiveThumbnails,
+} from '../utils';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
@@ -67,7 +69,7 @@ const PageTooLittleText = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {failingPages.map((page) => (
+            {getActiveThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

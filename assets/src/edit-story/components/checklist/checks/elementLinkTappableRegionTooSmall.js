@@ -31,7 +31,7 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements } from '../utils';
+import { filterStoryElements, getActiveThumbnails } from '../utils';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
@@ -73,7 +73,7 @@ const ElementLinkTappableRegionTooSmall = () => {
         thumbnailCount={elements.length}
         thumbnail={
           <>
-            {elements.map((element) => (
+            {getActiveThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => {
