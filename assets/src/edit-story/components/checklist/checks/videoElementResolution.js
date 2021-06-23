@@ -78,7 +78,7 @@ const VideoElementResolution = () => {
                 }}
                 type={THUMBNAIL_TYPES.VIDEO}
                 displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending video element', 'web-stories')}
+                aria-label={__('Go to offending video', 'web-stories')}
               />
             ))}
           </>

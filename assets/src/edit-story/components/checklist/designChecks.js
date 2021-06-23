@@ -20,6 +20,7 @@ import PageTooManyLinks from './checks/pageTooManyLinks';
 import PageTooMuchText from './checks/pageTooMuchText';
 import PageTooLittleText from './checks/pageTooLittleText';
 import VideoElementResolution from './checks/videoElementResolution';
+import ImageElementResolution from './checks/imageElementResolution';
 
 export function DesignChecks() {
   return (
@@ -28,6 +29,7 @@ export function DesignChecks() {
       <PageTooLittleText />
       <PageTooManyLinks />
       <VideoElementResolution />
+      <ImageElementResolution />
     </>
   );
 }

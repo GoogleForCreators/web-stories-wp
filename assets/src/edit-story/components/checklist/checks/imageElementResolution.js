@@ -18,18 +18,22 @@
  * External dependencies
  */
 import { useMemo } from 'react';
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { useHighlights } from '../../../app/highlights';
+import { DESIGN_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  ChecklistCardStyles,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
-
-const IMAGE_SIZE_WIDTH = 828;
-const IMAGE_SIZE_HEIGHT = 1792;
 
 export function mediaElementResolution(element) {
   switch (element.type) {
@@ -38,7 +42,7 @@ export function mediaElementResolution(element) {
     case 'gif':
       return gifElementResolution(element);
     default:
-      return () => false;
+      return false;
   }
 }
 
@@ -67,50 +71,42 @@ const ImageElementResolution = () => {
     () => filterStoryElements(story, mediaElementResolution),
     [story]
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = DESIGN_COPY.lowImageResolution;
 
   return (
     failingElements.length > 0 && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: minimum image size width x minimum image size height. */
-          __(
-            'Upload a higher resolution poster image to at least %s',
-            'web-stories'
-          ),
-          `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {
-              <>
-                {sprintf(
-                  /* translators: %s: minimum image size width x minimum image size height. */
-                  __('Use %s for a full-screen image', 'web-stories'),
-                  `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
-                )}{' '}
-                {__(
-                  'Consider similar pixel density for cropped images',
-                  'web-stories'
-                )}
-              </>
-            }
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingElements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-        todo thumbnails for elements
-        thumbnailCount={elements.length}
-        thumbnail={<>
-            {elements.map(() => <Thumbnail onClick={() => perform highlight here } />)}
-          </>}
-      */
+        footer={
+          <ChecklistCardStyles.CardListWrapper>
+            <List>{footer}</List>
+          </ChecklistCardStyles.CardListWrapper>
+        }
+        thumbnailCount={failingElements.length}
+        thumbnail={
+          <>
+            {failingElements.map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => {
+                  setHighlights({
+                    elementId: element.id,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.IMAGE}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending image', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );
