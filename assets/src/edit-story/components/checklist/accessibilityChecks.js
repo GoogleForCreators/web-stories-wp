@@ -18,6 +18,7 @@
  */
 import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
+import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from './checks/videoElementMissingDescription';
 
 export function AccessibilityChecks() {
@@ -26,6 +27,7 @@ export function AccessibilityChecks() {
       <PageBackgroundTextLowContrast />
       <TextElementFontSizeTooSmall />
       <VideoElementMissingDescription />
+      <VideoElementMissingCaptions />
     </div>
   );
 }

@@ -22,9 +22,15 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { useHighlights, states } from '../../../app/highlights';
+import { ACCESSIBILITY_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
 
 export function videoElementMissingCaptions(element) {
@@ -34,33 +40,39 @@ export function videoElementMissingCaptions(element) {
 const VideoElementMissingCaptions = () => {
   const story = useStory(({ state }) => state);
   const elements = filterStoryElements(story, videoElementMissingCaptions);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+
+  const { footer, title } = ACCESSIBILITY_COPY.videoMissingCaptions;
+
   return (
     elements.length > 0 && (
       <ChecklistCard
-        title={__('Add assistive text to images', 'web-stories')}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Optimize accessibility and indexability with meaningful text to better assist users',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          elements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-         todo thumbnails for pages
-         thumbnailCount={elements.length}
-         thumbnail={<>
-             {elements.map(() => <Thumbnail onClick={ perform highlight here } />)}
-           </>}
-       */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={elements.length}
+        thumbnail={
+          <>
+            {elements.map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => {
+                  setHighlights({
+                    elementId: element.id,
+                    highlight: states.CAPTIONS,
+                  });
+                }}
+                type={THUMBNAIL_TYPES.VIDEO}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending video', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );
