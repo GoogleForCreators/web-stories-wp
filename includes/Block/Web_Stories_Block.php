@@ -187,18 +187,6 @@ class Web_Stories_Block extends Embed_Base {
 						'default' => [],
 					],
 				],
-				'title'           => __( 'Web Stories', 'web-stories' ),
-				'description'     => __( 'Embed Web Stories.', 'web-stories' ),
-				'keywords'        => [
-					/* translators: block keyword. */
-					__( 'embed', 'web-stories' ),
-					/* translators: block keyword. */
-					__( 'web stories', 'web-stories' ),
-					/* translators: block keyword. */
-					__( 'story', 'web-stories' ),
-					/* translators: block keyword. */
-					__( 'stories', 'web-stories' ),
-				],
 				'render_callback' => [ $this, 'render_block' ],
 				'editor_script'   => self::SCRIPT_HANDLE,
 				'editor_style'    => self::SCRIPT_HANDLE,
