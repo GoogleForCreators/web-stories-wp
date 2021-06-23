@@ -17,11 +17,13 @@
  * Internal dependencies
  */
 import PageTooManyLinks from './checks/pageTooManyLinks';
+import PageTooMuchText from './checks/pageTooMuchText';
 
 export function DesignChecks() {
   return (
-    <div>
+    <>
+      <PageTooMuchText />
       <PageTooManyLinks />
-    </div>
+    </>
   );
 }
