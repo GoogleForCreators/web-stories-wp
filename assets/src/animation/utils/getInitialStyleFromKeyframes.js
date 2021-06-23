@@ -41,6 +41,8 @@ function getInitialStyleFromKeyframes(keyframes) {
   Object.keys(frame).forEach((key) => {
     if (ALLOWLIST.includes(key.toLowerCase())) {
       const value = frame[key];
+      initialStyle[`--initial-opacity`] = 1;
+      initialStyle[`--initial-transform`] = 'none';
       if (Array.isArray(value)) {
         initialStyle[`--initial-${key}`] = value[0];
       } else {
