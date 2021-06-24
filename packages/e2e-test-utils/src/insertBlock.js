@@ -47,7 +47,7 @@ async function insertBlock(searchTerm) {
   await searchForBlock(searchTerm);
   await expect(page).toClick('button span', { text: searchTerm });
   // We should wait until the inserter closes and the focus moves to the content.
-  await waitForInserterCloseAndContentFocus();
+  // await waitForInserterCloseAndContentFocus();
 }
 
 export default insertBlock;
