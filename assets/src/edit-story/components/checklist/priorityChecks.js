@@ -25,18 +25,21 @@ import { StoryPosterAttached } from './checks/storyPosterAttached';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
 import StoryTitleLength from './checks/storyTitleLength';
 import VideoElementMissingPoster from './checks/videoElementMissingPoster';
+import { ChecklistCategoryProvider, CHECK_CATEGORY } from './checkCountContext';
 
 export function PriorityChecks() {
   return (
-    <div>
-      <StoryMissingTitle />
-      <StoryTitleLength />
-      <StoryMissingExcerpt />
-      <StoryPosterAttached />
-      <StoryPosterPortraitSize />
-      <StoryPosterAspectRatio />
-      <PublisherLogoSize />
-      <VideoElementMissingPoster />
-    </div>
+    <ChecklistCategoryProvider category={CHECK_CATEGORY.priority}>
+      <div>
+        <StoryMissingTitle />
+        <StoryTitleLength />
+        <StoryMissingExcerpt />
+        <StoryPosterAttached />
+        <StoryPosterPortraitSize />
+        <StoryPosterAspectRatio />
+        <PublisherLogoSize />
+        <VideoElementMissingPoster />
+      </div>
+    </ChecklistCategoryProvider>
   );
 }

@@ -33,6 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
@@ -68,8 +69,10 @@ const ElementLinkTappableRegionTooSmall = () => {
 
   const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooSmall;
 
+  const isRendered = elements.elements.length > 0;
+  useRegisterCheck('ElementLinkTappableRegionTooSmall', isRendered);
   return (
-    elements.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

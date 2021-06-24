@@ -22,16 +22,19 @@ import PageTooLittleText from './checks/pageTooLittleText';
 import VideoElementResolution from './checks/videoElementResolution';
 import ImageElementResolution from './checks/imageElementResolution';
 import StoryPagesCount from './checks/storyPagesCount';
+import { ChecklistCategoryProvider, CHECK_CATEGORY } from './checkCountContext';
 
 export function DesignChecks() {
   return (
-    <>
-      <StoryPagesCount />
-      <PageTooMuchText />
-      <PageTooLittleText />
-      <PageTooManyLinks />
-      <VideoElementResolution />
-      <ImageElementResolution />
-    </>
+    <ChecklistCategoryProvider category={CHECK_CATEGORY.design}>
+      <>
+        <StoryPagesCount />
+        <PageTooMuchText />
+        <PageTooLittleText />
+        <PageTooManyLinks />
+        <VideoElementResolution />
+        <ImageElementResolution />
+      </>
+    </ChecklistCategoryProvider>
   );
 }

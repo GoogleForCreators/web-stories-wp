@@ -22,16 +22,19 @@ import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextCon
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
 import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from './checks/videoElementMissingDescription';
+import { ChecklistCategoryProvider, CHECK_CATEGORY } from './checkCountContext';
 
 export function AccessibilityChecks() {
   return (
-    <div>
-      <PageBackgroundTextLowContrast />
-      <TextElementFontSizeTooSmall />
-      <VideoElementMissingDescription />
-      <VideoElementMissingCaptions />
-      <ElementLinkTappableRegionTooSmall />
-      <ImageElementMissingAlt />
-    </div>
+    <ChecklistCategoryProvider category={CHECK_CATEGORY.accessibility}>
+      <div>
+        <PageBackgroundTextLowContrast />
+        <TextElementFontSizeTooSmall />
+        <VideoElementMissingDescription />
+        <VideoElementMissingCaptions />
+        <ElementLinkTappableRegionTooSmall />
+        <ImageElementMissingAlt />
+      </div>
+    </ChecklistCategoryProvider>
   );
 }

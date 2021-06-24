@@ -42,6 +42,7 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -73,8 +74,10 @@ const PageTooMuchText = () => {
   );
   const { footer, title } = DESIGN_COPY.tooMuchPageText;
 
+  const isRendered = failingPages.length > 0;
+  useRegisterCheck('PageTooMuchText', isRendered);
   return (
-    failingPages.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={
