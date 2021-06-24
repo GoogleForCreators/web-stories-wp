@@ -103,7 +103,7 @@
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.1",
-    "@axe-core/puppeteer": "^4.2.1",
+    "@axe-core/puppeteer": "^4.2.2",
     "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.7",
     "@babel/eslint-plugin": "^7.14.5",
@@ -122,7 +122,7 @@
     "@storybook/addon-storysource": "^6.3.0",
     "@storybook/addon-viewport": "^6.3.0",
     "@storybook/client-api": "^6.3.0",
-    "@storybook/client-logger": "^6.2.9",
+    "@storybook/client-logger": "^6.3.0",
     "@storybook/react": "^6.2.9",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.0.0",
