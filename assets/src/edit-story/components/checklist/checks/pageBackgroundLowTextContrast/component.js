@@ -73,7 +73,6 @@ const PageBackgroundTextLowContrast = () => {
     });
   }, [getFailingPages, story]);
 
-  useEffect(() => {}, [story]);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     (pageId) =>
