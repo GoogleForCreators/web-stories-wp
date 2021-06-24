@@ -43,7 +43,7 @@ async function focusSelectedBlock() {
  *
  * @param {string} searchTerm The text to search the inserter for.
  */
-export async function insertBlock(searchTerm) {
+async function insertBlock(searchTerm) {
   await searchForBlock(searchTerm);
   const insertButton = await page.waitForXPath(
     `//button//span[contains(text(), '${searchTerm}')]`
