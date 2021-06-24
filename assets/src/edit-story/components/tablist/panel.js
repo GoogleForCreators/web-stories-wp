@@ -30,8 +30,8 @@ import {
   Badge,
   ButtonText,
   IconContainer,
+  PanelText,
   PanelWrapper,
-  SmallHeadline,
   TabButton,
   TabPanel,
 } from './styles';
@@ -66,12 +66,12 @@ const Panel = ({
           <IconContainer>
             <Icons.ChevronDownSmall />
           </IconContainer>
-          <SmallHeadline id={`${title}-${panelId}`} aria-hidden>
+          <PanelText id={`${title}-${panelId}`} aria-hidden>
             {title}
-          </SmallHeadline>
+          </PanelText>
         </ButtonText>
         <Badge>
-          <SmallHeadline aria-hidden>{badgeCount}</SmallHeadline>
+          <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
       <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">

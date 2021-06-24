@@ -32,7 +32,7 @@ import {
 } from '../../../design-system';
 import { PANEL_STATES } from './constants';
 
-export const Tablist = styled.div`
+export const Tablist = styled.div.attrs({ role: 'tablist' })`
   width: 308px;
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
@@ -49,7 +49,7 @@ export const PanelWrapper = styled.div`
     isExpanded &&
     css`
       & > ${TabButton} {
-        ${SmallHeadline} {
+        ${PanelText} {
           opacity: 1;
         }
 
@@ -72,7 +72,7 @@ export const PanelWrapper = styled.div`
     `};
 `;
 
-export const SmallHeadline = styled(Text).attrs({
+export const PanelText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
   isBold: true,
 })`
@@ -104,7 +104,7 @@ export const TabButton = styled(Button).attrs({
     z-index: 2;
   }
 
-  ${SmallHeadline} {
+  ${PanelText} {
     opacity: 0.8;
   }
 
@@ -112,7 +112,7 @@ export const TabButton = styled(Button).attrs({
     status === PANEL_STATES.DANGER &&
     css`
       &,
-      ${SmallHeadline} {
+      ${PanelText} {
         color: ${({ theme }) => theme.colors.fg.negative};
       }
 
@@ -150,7 +150,7 @@ export const Badge = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.round};
   background-color: ${({ theme }) => theme.colors.fg.primary};
 
-  ${SmallHeadline} {
+  ${PanelText} {
     color: ${({ theme }) => theme.colors.inverted.fg.primary};
     line-height: 20px;
   }
