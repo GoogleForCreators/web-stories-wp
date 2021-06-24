@@ -83,7 +83,6 @@ describe('Web Stories Block', () => {
     await insertBlock('Web Stories');
 
     await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-
     await expect(page).toClick('div.components-card__body', {
       text: 'Story URL',
     });
