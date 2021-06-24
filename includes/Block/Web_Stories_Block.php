@@ -48,13 +48,6 @@ class Web_Stories_Block extends Embed_Base {
 	const SCRIPT_HANDLE = 'web-stories-block';
 
 	/**
-	 * Block name.
-	 *
-	 * @var string
-	 */
-	const BLOCK_NAME = 'web-stories/embed';
-
-	/**
 	 * Current block's block attributes.
 	 *
 	 * @var array Block Attributes.
