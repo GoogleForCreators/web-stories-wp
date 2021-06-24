@@ -18,7 +18,7 @@
  */
 import { THUMBNAIL_COUNT_FOR_OVERFLOW, THUMBNAIL_MAX } from '../constants';
 
-export function getActiveThumbnails(items) {
+export function getVisibleThumbnails(items) {
   if (items.length > THUMBNAIL_MAX) {
     return items.slice(0, THUMBNAIL_COUNT_FOR_OVERFLOW);
   }

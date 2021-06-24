@@ -32,7 +32,7 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getActiveThumbnails } from '../utils';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
@@ -68,7 +68,7 @@ const VideoElementResolution = () => {
         thumbnailCount={failingElements.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingElements).map((element) => (
+            {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => {

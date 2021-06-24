@@ -31,7 +31,7 @@ import {
   ChecklistCard,
   DefaultFooterText,
 } from '../../checklistCard';
-import { filterStoryPages, getActiveThumbnails } from '../utils';
+import { filterStoryPages, getVisibleThumbnails } from '../utils';
 import {
   Thumbnail,
   THUMBNAIL_TYPES,
@@ -70,7 +70,7 @@ const PageTooManyLinks = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingPages).map((page) => (
+            {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

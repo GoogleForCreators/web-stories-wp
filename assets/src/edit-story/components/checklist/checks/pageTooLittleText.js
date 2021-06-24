@@ -39,7 +39,7 @@ import {
 import {
   characterCountForPage,
   filterStoryPages,
-  getActiveThumbnails,
+  getVisibleThumbnails,
 } from '../utils';
 
 export function pageTooLittleText(page) {
@@ -69,7 +69,7 @@ const PageTooLittleText = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingPages).map((page) => (
+            {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

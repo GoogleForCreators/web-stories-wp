@@ -40,7 +40,7 @@ import {
 import {
   characterCountForPage,
   filterStoryPages,
-  getActiveThumbnails,
+  getVisibleThumbnails,
 } from '../utils';
 
 /**
@@ -84,7 +84,7 @@ const PageTooMuchText = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingPages).map((page) => (
+            {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

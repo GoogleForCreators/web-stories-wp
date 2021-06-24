@@ -36,7 +36,7 @@ import {
   THUMBNAIL_DIMENSIONS,
   THUMBNAIL_TYPES,
 } from '../../../thumbnail';
-import { filterStoryPages, getActiveThumbnails } from '../../utils';
+import { filterStoryPages, getVisibleThumbnails } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { pageBackgroundTextLowContrast } from './check';
 
@@ -63,7 +63,7 @@ const PageBackgroundTextLowContrast = () => {
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingPages).map((page) => (
+            {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => {

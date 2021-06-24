@@ -31,7 +31,7 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getActiveThumbnails } from '../utils';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 
 export function videoElementMissingPoster(element) {
   return element.type === 'video' && !element.resource?.poster;
@@ -58,7 +58,7 @@ const VideoElementMissingPoster = () => {
         thumbnailCount={failingElements.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingElements).map((element) => (
+            {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => {

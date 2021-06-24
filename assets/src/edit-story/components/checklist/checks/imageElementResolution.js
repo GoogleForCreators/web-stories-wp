@@ -33,7 +33,7 @@ import {
   ChecklistCardStyles,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getActiveThumbnails } from '../utils';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 
 export function mediaElementResolution(element) {
   switch (element.type) {
@@ -92,7 +92,7 @@ const ImageElementResolution = () => {
         thumbnailCount={failingElements.length}
         thumbnail={
           <>
-            {getActiveThumbnails(failingElements).map((element) => (
+            {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => {
