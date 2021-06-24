@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -50,6 +51,12 @@ const Panel = ({
     <PanelWrapper className={className} isExpanded={isExpanded}>
       <TabButton
         aria-controls={panelId}
+        aria-label={sprintf(
+          /* translators: %d: number of issues, %s: title */
+          _n('%1$d %2$s issue', '%1$d %2$s issues', badgeCount, 'web-stories'),
+          badgeCount,
+          title
+        )}
         aria-selected={isExpanded}
         onClick={onClick}
         role="tab"
@@ -59,10 +66,12 @@ const Panel = ({
           <IconContainer>
             <Icons.ChevronDownSmall />
           </IconContainer>
-          <SmallHeadline id={`${title}-${panelId}`}>{title}</SmallHeadline>
+          <SmallHeadline id={`${title}-${panelId}`} aria-hidden>
+            {title}
+          </SmallHeadline>
         </ButtonText>
         <Badge>
-          <SmallHeadline>{badgeCount}</SmallHeadline>
+          <SmallHeadline aria-hidden>{badgeCount}</SmallHeadline>
         </Badge>
       </TabButton>
       <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
@@ -77,7 +86,7 @@ Panel.propTypes = {
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.click,
-  status: PropTypes.oneOf(['normal', 'danger']),
+  status: PropTypes.oneOf(Object.values(PANEL_STATES)),
   title: PropTypes.string.isRequired,
 };
 

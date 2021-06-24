@@ -25,11 +25,12 @@ import styled, { css } from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
-  Headline,
+  Text,
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
 } from '../../../design-system';
+import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div`
   width: 308px;
@@ -44,7 +45,7 @@ export const PanelWrapper = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.colors.bg.primary};
 
-  ${({ isExpanded }) =>
+  ${({ isExpanded, theme }) =>
     isExpanded &&
     css`
       & > ${TabButton} {
@@ -52,9 +53,10 @@ export const PanelWrapper = styled.div`
           opacity: 1;
         }
 
+        &,
         :hover,
         :focus {
-          background-color: theme.colors.bg.primary;
+          background-color: ${theme.colors.bg.primary};
         }
 
         svg {
@@ -70,9 +72,12 @@ export const PanelWrapper = styled.div`
     `};
 `;
 
-export const SmallHeadline = styled(Headline).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
-})``;
+export const SmallHeadline = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  isBold: true,
+})`
+  transition: background-color 300ms ease-in;
+`;
 
 export const TabButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.PLAIN,
@@ -104,7 +109,7 @@ export const TabButton = styled(Button).attrs({
   }
 
   ${({ status }) =>
-    status === 'danger' &&
+    status === PANEL_STATES.DANGER &&
     css`
       &,
       ${SmallHeadline} {
@@ -155,7 +160,7 @@ export const TabPanel = styled.div`
   height: 0;
   padding: 0;
   visibility: hidden;
-  overflow-x: scroll;
+  overflow-y: scroll;
   background: ${({ theme }) => theme.colors.bg.primary};
   transition: 250ms ease-in;
 
