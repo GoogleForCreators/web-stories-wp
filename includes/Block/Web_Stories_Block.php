@@ -89,9 +89,6 @@ class Web_Stories_Block extends Embed_Base {
 
 		// Use path to javascript directory or if javascript not build, then fallback to dev location.
 		$base_path = $this->get_base_path( 'assets/js/block.json' );
-		if ( ! $base_path ) {
-			$base_path = $this->get_base_path( 'assets/src/web-stories-block/block/block.json' );
-		}
 
 		if ( ! $base_path ) {
 			return;
