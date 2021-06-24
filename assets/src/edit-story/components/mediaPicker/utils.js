@@ -14,6 +14,15 @@
  * limitations under the License.
  */
 
+/**
+ * Returns a set of options, computed from the attached image data and
+ * control-specific data, to be fed to the imgAreaSelect plugin in
+ * wp.media.view.Cropper.
+ *
+ * @param {wp.media.model.Attachment} attachment Attachment object.
+ * @param {wp.media.controller.Cropper} controller wp.media controller object.
+ * @return {Object} Options
+ */
 export const calculateImageSelectOptions = (attachment, controller) => {
   const control = controller.get('control');
   const flexWidth = Boolean(parseInt(control.params.flex_width));
@@ -81,6 +90,17 @@ export const calculateImageSelectOptions = (attachment, controller) => {
   return imgSelectOptions;
 };
 
+/**
+ * Return whether the image must be cropped, based on required dimensions.
+ *
+ * @param {boolean} flexW Flexible width.
+ * @param {boolean} flexH Flexible height.
+ * @param {number}  dstW Destination width.
+ * @param {number}  dstH Destination height.
+ * @param {number}  imgW Image Width.
+ * @param {number}  imgH Image height.
+ * @return {boolean} Weather or not an image must be cropped or not.
+ */
 export const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
   if (true === flexW && true === flexH) {
     return false;
