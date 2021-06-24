@@ -29,9 +29,7 @@ import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../checkCountContext';
 
 export function storyMissingTitle(story) {
-  return (
-    typeof story.story.title !== 'string' || story.story.title?.trim() === ''
-  );
+  return typeof story.title !== 'string' || story.title?.trim() === '';
 }
 
 const StoryMissingTitle = () => {

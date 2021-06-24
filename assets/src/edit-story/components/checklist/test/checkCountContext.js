@@ -111,7 +111,3 @@ describe('useRegisterCheck', () => {
     });
   });
 });
-
-describe.todo('useIsChecklistEmpty', () => {});
-
-describe.todo('useCategoryCount', () => {});
