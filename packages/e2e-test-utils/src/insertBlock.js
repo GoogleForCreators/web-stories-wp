@@ -20,18 +20,18 @@
 import { searchForBlock } from '@wordpress/e2e-test-utils';
 
 /**
- * Retrieves the document container by css class and checks
- * to make sure the document's active element is within it.
- *
- * Differs from waitForInserterCloseAndContentFocus() in `@wordpress/e2e-test-utils`
- * by using a simpler selector and optional chaining to avoid crashes.
+ * Moves focus to the selected block.
  */
-async function waitForInserterCloseAndContentFocus() {
-  await page.waitForFunction(() =>
-    document.body
-      .querySelector('.block-editor-block-list__layout')
-      ?.contains(document.activeElement)
-  );
+async function focusSelectedBlock() {
+  // Ideally there shouuld be a UI way to do this. (Focus the selected block)
+  await page.evaluate(() => {
+    wp.data
+      .dispatch('core/block-editor')
+      .selectBlock(
+        wp.data.select('core/block-editor').getSelectedBlockClientId(),
+        0
+      );
+  });
 }
 
 /**
@@ -43,11 +43,13 @@ async function waitForInserterCloseAndContentFocus() {
  *
  * @param {string} searchTerm The text to search the inserter for.
  */
-async function insertBlock(searchTerm) {
+export async function insertBlock(searchTerm) {
   await searchForBlock(searchTerm);
-  await expect(page).toClick('button span', { text: searchTerm });
-  // We should wait until the inserter closes and the focus moves to the content.
-  await waitForInserterCloseAndContentFocus();
+  const insertButton = await page.waitForXPath(
+    `//button//span[contains(text(), '${searchTerm}')]`
+  );
+  await insertButton.click();
+  await focusSelectedBlock();
 }
 
 export default insertBlock;
