@@ -26,6 +26,7 @@ import { useStory } from '../../../app/story';
 import { useHighlights, states } from '../../../app/highlights';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY, MAX_STORY_TITLE_LENGTH_CHARS } from '../constants';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyTitleLength(story) {
   return story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS;
@@ -41,9 +42,13 @@ const StoryTitleLength = () => {
       }),
     [setHighlights]
   );
+
+  const isRendered = storyTitleLength(story);
+  useRegisterCheck('StoryTitleLength', isRendered);
+
   const { title, footer } = PRIORITY_COPY.storyTitleTooLong;
   return (
-    storyTitleLength(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
