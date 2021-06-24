@@ -26,7 +26,6 @@ import {
   createNewPost,
   setPostContent,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 /**
  * Internal dependencies
@@ -84,12 +83,10 @@ describe('Web Stories Block', () => {
     await insertBlock('Web Stories');
 
     await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await percySnapshot(page, 'Insert block');
 
     await expect(page).toClick('div.components-card__body', {
       text: 'Story URL',
     });
-    await percySnapshot(page, 'Insert block');
 
     await page.type(
       'input[aria-label="Story URL"]',
