@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -42,7 +43,14 @@ const VideoElementMissingPoster = () => {
 
   const failingElements = filterStoryElements(story, videoElementMissingPoster);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+        highlight: states.VIDEO_A11Y_POSTER,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = PRIORITY_COPY.videoMissingPoster;
 
   return (
@@ -61,12 +69,7 @@ const VideoElementMissingPoster = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                    highlight: states.VIDEO_A11Y_POSTER,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.VIDEO}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}

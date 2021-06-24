@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -52,7 +52,13 @@ const VideoElementResolution = () => {
     [story]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = DESIGN_COPY.videoResolutionTooLow;
 
   return (
@@ -71,11 +77,7 @@ const VideoElementResolution = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.VIDEO}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}

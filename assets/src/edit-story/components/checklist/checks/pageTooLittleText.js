@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -53,7 +53,13 @@ const PageTooLittleText = () => {
     [story]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    (pageId) =>
+      setHighlights({
+        pageId,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = DESIGN_COPY.tooLittlePageText;
 
   return (
@@ -72,11 +78,7 @@ const PageTooLittleText = () => {
             {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
-                onClick={() => {
-                  setHighlights({
-                    pageId: page.id,
-                  });
-                }}
+                onClick={() => handleClick(page.id)}
                 type={THUMBNAIL_TYPES.PAGE}
                 displayBackground={
                   <PagePreview

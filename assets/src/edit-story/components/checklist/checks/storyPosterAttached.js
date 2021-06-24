@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-// import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -38,14 +38,20 @@ export function StoryPosterAttached() {
   //@TODO refine this context selector and storyHasNoPosterAttached to run more selectively
   const story = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.POSTER,
+      }),
+    [setHighlights]
+  );
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;
   return (
     storyHasNoPosterAttached(story) && (
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.POSTER }),
+          onClick: handleClick,
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>

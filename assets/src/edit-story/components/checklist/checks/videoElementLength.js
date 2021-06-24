@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -45,7 +46,13 @@ const VideoElementLength = () => {
 
   const failingElements = filterStoryElements(story, videoElementLength);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = DESIGN_COPY.videoResolutionTooHigh;
 
   return (
@@ -64,11 +71,7 @@ const VideoElementLength = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.VIDEO}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}

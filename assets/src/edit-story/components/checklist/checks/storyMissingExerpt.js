@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -29,6 +33,13 @@ export function storyMissingExcerpt(story) {
 const StoryMissingExcerpt = () => {
   const story = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.EXCERPT,
+      }),
+    [setHighlights]
+  );
 
   const { title, footer } = PRIORITY_COPY.storyMissingDescription;
 
@@ -37,7 +48,7 @@ const StoryMissingExcerpt = () => {
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.EXCERPT }),
+          onClick: handleClick,
         }}
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
       />

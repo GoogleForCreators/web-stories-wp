@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -57,6 +58,13 @@ const ElementLinkTappableRegionTooSmall = () => {
     elementLinkTappableRegionTooSmall
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
 
   const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooSmall;
 
@@ -76,11 +84,7 @@ const ElementLinkTappableRegionTooSmall = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.TEXT}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending link', 'web-stories')}

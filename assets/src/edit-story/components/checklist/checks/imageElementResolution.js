@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -72,6 +72,13 @@ const ImageElementResolution = () => {
     [story]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
 
   const { footer, title } = DESIGN_COPY.lowImageResolution;
 
@@ -95,11 +102,7 @@ const ImageElementResolution = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending image', 'web-stories')}

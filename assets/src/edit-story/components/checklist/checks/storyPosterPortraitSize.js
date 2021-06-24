@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -41,7 +45,13 @@ export function storyPosterPortraitSize(story) {
 const StoryPosterPortraitSize = () => {
   const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.POSTER,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = PRIORITY_COPY.posterTooSmall;
 
   return (
@@ -49,7 +59,7 @@ const StoryPosterPortraitSize = () => {
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.POSTER }),
+          onClick: handleClick,
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>

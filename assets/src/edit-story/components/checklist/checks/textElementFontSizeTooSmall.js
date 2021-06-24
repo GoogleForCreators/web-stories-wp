@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -45,7 +46,13 @@ const TextElementFontSizeTooSmall = () => {
   const story = useStory(({ state }) => state);
   const elements = filterStoryElements(story, textElementFontSizeTooSmall);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = ACCESSIBILITY_COPY.fontSizeTooSmall;
 
   return (
@@ -64,11 +71,7 @@ const TextElementFontSizeTooSmall = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.TEXT}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending text element', 'web-stories')}

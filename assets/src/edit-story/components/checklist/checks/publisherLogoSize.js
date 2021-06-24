@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
 import { List } from '../../../../design-system';
@@ -32,14 +37,20 @@ export function publisherLogoSize(story) {
 const PublisherLogoSize = () => {
   const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.PUBLISHER_LOGO,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = PRIORITY_COPY.logoTooSmall;
   return (
     publisherLogoSize(story) && (
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.PUBLISHER_LOGO }),
+          onClick: handleClick,
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>

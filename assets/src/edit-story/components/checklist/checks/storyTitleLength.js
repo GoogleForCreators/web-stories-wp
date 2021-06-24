@@ -15,8 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
+import { useCallback } from 'react';
+
 /**
  * Internal dependencies
  */
@@ -32,7 +34,13 @@ export function storyTitleLength(story) {
 const StoryTitleLength = () => {
   const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.STORY_TITLE,
+      }),
+    [setHighlights]
+  );
   const { title, footer } = PRIORITY_COPY.storyTitleTooLong;
   return (
     storyTitleLength(story) && (
@@ -40,9 +48,7 @@ const StoryTitleLength = () => {
         title={title}
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         titleProps={{
-          onClick: () => {
-            setHighlights({ highlight: states.STORY_TITLE });
-          },
+          onClick: handleClick,
         }}
       />
     )

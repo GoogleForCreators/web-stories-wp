@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -45,6 +46,14 @@ const ImageElementMissingAlt = () => {
   const story = useStory(({ state }) => state);
   const elements = filterStoryElements(story, imageElementMissingAlt);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+        highlight: states.ASSISTIVE_TEXT,
+      }),
+    [setHighlights]
+  );
 
   const { footer, title } = ACCESSIBILITY_COPY.imagesMissingAltText;
   return (
@@ -63,12 +72,7 @@ const ImageElementMissingAlt = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                    highlight: states.ASSISTIVE_TEXT,
-                  });
-                }}
+                onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}
