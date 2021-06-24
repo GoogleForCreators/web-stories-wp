@@ -199,7 +199,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Number of Stories', 'web-stories' ),
 				'type'          => 'number',
 				'classname'     => 'widefat number_of_stories stories-widget-field',
-				'wrapper_class' => 'number_of_stories_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper number_of_stories_wrapper',
 				'value'         => $number_of_stories,
 				'label_before'  => true,
 				'attributes'    => [
@@ -245,7 +245,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Circle Size', 'web-stories' ),
 				'type'          => 'number',
 				'classname'     => 'widefat circle_size stories-widget-field',
-				'wrapper_class' => 'circle_size_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper circle_size_wrapper',
 				'value'         => $circle_size,
 				'label_before'  => true,
 				'attributes'    => [
@@ -263,7 +263,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Number of Columns', 'web-stories' ),
 				'type'          => 'number',
 				'classname'     => 'widefat number_of_columns stories-widget-field',
-				'wrapper_class' => 'number_of_columns_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper number_of_columns_wrapper',
 				'value'         => $number_of_columns,
 				'label_before'  => true,
 				'attributes'    => [
@@ -280,7 +280,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Display Title', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat title stories-widget-field',
-				'wrapper_class' => 'title_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper title_wrapper',
 				'value'         => $show_title,
 			]
 		);
@@ -292,7 +292,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Display Excerpt', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat excerpt stories-widget-field',
-				'wrapper_class' => 'excerpt_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper excerpt_wrapper',
 				'value'         => $show_excerpt,
 			]
 		);
@@ -304,7 +304,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Display Author', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat author stories-widget-field',
-				'wrapper_class' => 'author_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper author_wrapper',
 				'value'         => $show_author,
 			]
 		);
@@ -316,7 +316,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Display Date', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat date stories-widget-field',
-				'wrapper_class' => 'date_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper date_wrapper',
 				'value'         => $show_date,
 			]
 		);
@@ -332,7 +332,7 @@ class Stories extends WP_Widget {
 				'name'          => 'image_alignment',
 				'label'         => __( 'Image Alignment', 'web-stories' ),
 				'classname'     => 'widefat image_alignment stories-widget-field',
-				'wrapper_class' => 'image_alignment_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper image_alignment_wrapper',
 			]
 		);
 
@@ -343,7 +343,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Use Sharp Corners', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat sharp_corners stories-widget-field',
-				'wrapper_class' => 'sharp_corners_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper sharp_corners_wrapper',
 				'value'         => $sharp_corners,
 			]
 		);
@@ -355,7 +355,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Display Archive Link', 'web-stories' ),
 				'type'          => 'checkbox',
 				'classname'     => 'widefat show_archive_link stories-widget-field',
-				'wrapper_class' => 'archive_link_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper archive_link_wrapper',
 				'value'         => $show_archive_link,
 			]
 		);
@@ -367,7 +367,7 @@ class Stories extends WP_Widget {
 				'label'         => __( 'Archive Link Label', 'web-stories' ),
 				'type'          => 'text',
 				'classname'     => 'widefat archive_link_label stories-widget-field',
-				'wrapper_class' => 'archive_link_label_wrapper',
+				'wrapper_class' => 'web-stories-field-wrapper archive_link_label_wrapper',
 				'value'         => $archive_link_label,
 				'label_before'  => true,
 			]
@@ -484,7 +484,7 @@ class Stories extends WP_Widget {
 			]
 		);
 		?>
-	<p class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
+	<div class="<?php echo esc_attr( $args['wrapper_class'] ); ?>">
 		<?php echo $this->label( $args ); ?>
 
 		<select
@@ -505,7 +505,7 @@ class Stories extends WP_Widget {
 			}
 			?>
 		</select>
-		</p>
+		</div>
 		<?php
 	}
 
@@ -583,7 +583,7 @@ class Stories extends WP_Widget {
 		);
 
 		?>
-		<p class="<?php echo esc_attr( (string) $args['wrapper_class'] ); ?>">
+		<div class="<?php echo esc_attr( (string) $args['wrapper_class'] ); ?>">
 
 			<?php
 			if ( $args['label_before'] ) {
@@ -619,7 +619,7 @@ class Stories extends WP_Widget {
 			}
 			?>
 
-		</p>
+		</div>
 		<?php
 	}
 
