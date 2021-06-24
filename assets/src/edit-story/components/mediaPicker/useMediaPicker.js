@@ -199,7 +199,10 @@ export default function useMediaPicker({
         ],
       });
 
-      fileFrame.on('cropped', onSelect);
+      fileFrame.on('cropped', (attachment) => {
+        updateMedia(attachment.id, { media_source: 'editor' });
+        onSelect(attachment);
+      });
 
       fileFrame.on('skippedcrop', onSelect);
 
@@ -257,6 +260,7 @@ export default function useMediaPicker({
       onSelect,
       onClose,
       onPermissionError,
+      updateMedia,
       showSnackbar,
       onSelectErrorMessage,
     ]
