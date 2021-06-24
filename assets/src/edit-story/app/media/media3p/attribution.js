@@ -24,7 +24,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
-import { ReactComponent as CoverrLogoFull } from '../../../icons/coverr_logo.svg';
+import { ReactComponent as CoverrLogoFull } from '../../../images/coverr_logo.svg';
 import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo_white.svg';
 import {
   Text as DefaultText,
@@ -43,6 +43,7 @@ const AttributionPill = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.7)};
   cursor: pointer;
   align-items: center;
+  z-index: 9999;
 `;
 
 const Text = styled(DefaultText)`

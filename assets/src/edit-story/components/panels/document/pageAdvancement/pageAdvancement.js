@@ -91,7 +91,7 @@ function PageAdvancementPanel() {
     [updateStory, duration]
   );
 
-  const [updateDefaultPageDuration] = useDebouncedCallback((value) => {
+  const updateDefaultPageDuration = useDebouncedCallback((value) => {
     const newValue = clamp(value, MIN_MAX.PAGE_DURATION);
     if (value !== newValue) {
       setDuration(newValue);

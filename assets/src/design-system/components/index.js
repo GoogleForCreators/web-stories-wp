@@ -22,6 +22,7 @@ export { Dialog } from './dialog';
 export { DropDown } from './dropDown';
 export { HexInput } from './hex';
 export { Input } from './input';
+export { LoadingBar, LOADING_INDICATOR_CLASS } from './loadingBar';
 export { LoadingSpinner } from './loadingSpinner';
 export { MediaInput } from './mediaInput';
 export { Modal, ModalGlobalStyle } from './modal';
