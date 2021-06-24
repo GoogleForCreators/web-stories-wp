@@ -77,7 +77,6 @@ describe('Web Stories Block', () => {
     removeErrorMessage();
   });
 
-  // eslint-disable-next-line jest/expect-expect
   it('should insert a new web stories block', async () => {
     await createNewPost({
       showWelcomeGuide: false,
@@ -86,10 +85,11 @@ describe('Web Stories Block', () => {
 
     await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
     await percySnapshot(page, 'Insert block');
-    /**
+
     await expect(page).toClick('div.components-card__body', {
       text: 'Story URL',
     });
+    await percySnapshot(page, 'Insert block');
 
     await page.type(
       'input[aria-label="Story URL"]',
@@ -105,7 +105,6 @@ describe('Web Stories Block', () => {
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
-     */
   });
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
