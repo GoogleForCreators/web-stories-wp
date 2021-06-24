@@ -28,23 +28,23 @@ import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
 import CarouselList from './carouselList';
 import useCarousel from './useCarousel';
-import { MENU_GUTTER, BUTTON_WIDTH, BUTTON_GAP } from './constants';
+import { BUTTON_WIDTH, BUTTON_GAP } from './constants';
 
 const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid:
     /* Note the two empty 1fr areas each side of the buttons - that's on purpose */
-    'secondary . prev-navigation . carousel . next-navigation . primary' auto /
-    ${MENU_GUTTER}px
-    1fr
-    ${BUTTON_WIDTH}px
-    ${BUTTON_GAP}px
-    auto
+    [row1-start] '. prev-navigation . carousel . next-navigation .' [row1-end]
+    [row2-start] 'secondary secondary . none . . primary' [row2-end]
+    /
     ${BUTTON_GAP}px
     ${BUTTON_WIDTH}px
+    ${BUTTON_GAP}px
     1fr
-    ${MENU_GUTTER}px;
+    ${BUTTON_GAP}px
+    ${BUTTON_WIDTH}px
+    ${BUTTON_GAP}px;
   width: 100%;
   height: 100%;
 `;

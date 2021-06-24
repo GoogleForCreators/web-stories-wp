@@ -24,7 +24,6 @@ import { useMemo } from 'react';
  */
 import {
   BUTTON_GUTTER,
-  MENU_GUTTER,
   WIDE_WORKSPACE_LIMIT,
   WIDE_THUMBNAIL_WIDTH,
   WIDE_THUMBNAIL_HEIGHT,
@@ -36,8 +35,7 @@ import {
 function useCarouselSizing({ availableSpace, numPages }) {
   return useMemo(() => {
     const isWideWorkspace = availableSpace >= WIDE_WORKSPACE_LIMIT;
-    const spaceForCarousel =
-      availableSpace - 2 * MENU_GUTTER - 2 * BUTTON_GUTTER;
+    const spaceForCarousel = availableSpace - 4 * BUTTON_GUTTER;
     const pageThumbWidth = isWideWorkspace
       ? WIDE_THUMBNAIL_WIDTH
       : NARROW_THUMBNAIL_WIDTH;

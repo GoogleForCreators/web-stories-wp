@@ -87,7 +87,7 @@ const Layer = styled.section`
     '. . . . . . .' ${MENU_GAP}px
     'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
-    'c c c c c c c' ${CAROUSEL_HEIGHT}px
+    'c c c c c c c' ${CAROUSEL_HEIGHT * 1.5}px
     /
     1fr
     var(--page-nav-width)
