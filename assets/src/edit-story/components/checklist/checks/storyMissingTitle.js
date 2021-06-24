@@ -20,8 +20,8 @@
 import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
-import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
+import { PRIORITY_COPY } from '../constants';
 
 export function storyMissingTitle(story) {
   return typeof story.title !== 'string' || story.title?.trim() === '';
