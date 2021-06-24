@@ -13,70 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { sprintf, _n } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
-/**
- * Internal dependencies
- */
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
-
-import { ChecklistCard } from '../../checklistCard';
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
-
-export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
+import { useHighlights, states } from '../../../app/highlights';
+import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
+import { PRIORITY_COPY, MAX_STORY_TITLE_LENGTH_CHARS } from '../constants';
 
 export function storyTitleLength(story) {
   return story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS;
 }
 
 const StoryTitleLength = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.STORY_TITLE,
+      }),
+    [setHighlights]
+  );
+  const { title, footer } = PRIORITY_COPY.storyTitleTooLong;
   return (
     storyTitleLength(story) && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %d: minimum number of story characters. */
-          _n(
-            'Shorten title to fewer than %d character',
-            'Shorten title to fewer than %d characters',
-            MAX_STORY_TITLE_LENGTH_CHARS,
-            'web-stories'
-          ),
-          MAX_STORY_TITLE_LENGTH_CHARS
-        )}
+        title={title}
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         titleProps={{
-          onClick: () => {
-            /* perform highlight here */
-          },
+          onClick: handleClick,
         }}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %d: maximum number of story characters. */
-              _n(
-                'Limit story title to %d character or less',
-                'Limit story title to %d characters or less',
-                MAX_STORY_TITLE_LENGTH_CHARS,
-                'web-stories'
-              ),
-              MAX_STORY_TITLE_LENGTH_CHARS
-            )}
-            {
-              // <Link
-              //  href={'#' figure out what this links to */}
-              //  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              // {'Learn more'}
-              // </Link>
-            }
-          </Text>
-        }
       />
     )
   );

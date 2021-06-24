@@ -17,18 +17,22 @@
 /**
  * External dependencies
  */
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryElements } from '../utils/filterStoryElements';
-
-const MAX_VIDEO_LENGTH_SECONDS = 60;
-const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
+import { useHighlights } from '../../../app/highlights';
+import { DESIGN_COPY, MAX_VIDEO_LENGTH_SECONDS } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 
 export function videoElementLength(element) {
   return (
@@ -41,39 +45,40 @@ const VideoElementLength = () => {
   const story = useStory(({ state }) => state);
 
   const failingElements = filterStoryElements(story, videoElementLength);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = DESIGN_COPY.videoResolutionTooHigh;
+
   return (
     failingElements.length > 0 && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %d: maximum video length in minutes. */
-          _n(
-            'Split videos into segments of %d minute or less',
-            'Split videos into segments of %d minutes or less',
-            MAX_VIDEO_LENGTH_MINUTES,
-            'web-stories'
-          ),
-          MAX_VIDEO_LENGTH_MINUTES
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__('Shorter videos help readers navigate stories', 'web-stories')}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingElements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-          todo thumbnails for elements
-          thumbnailCount={elements.length}
-          thumbnail={<>
-              {elements.map(() => <Thumbnail onClick={() => perform highlight here } />)}
-            </>}
-        */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={failingElements.length}
+        thumbnail={
+          <>
+            {getVisibleThumbnails(failingElements).map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => handleClick(element.id)}
+                type={THUMBNAIL_TYPES.VIDEO}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending video', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );
