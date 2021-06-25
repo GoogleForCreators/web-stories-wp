@@ -22,19 +22,19 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
+import { ISSUE_TYPES } from '../constants';
 import {
   ChecklistCountProvider,
   ChecklistCategoryProvider,
   CategoryContext,
   CountContext,
   useRegisterCheck,
-  CHECK_CATEGORY,
 } from '../checkCountContext';
 
 describe('ChecklistCategoryProvider', () => {
   it('throws an error if used outside of ChecklistCountProvider', () => {
     expect(() =>
-      render(<ChecklistCategoryProvider category={CHECK_CATEGORY.design} />)
+      render(<ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN} />)
     ).toThrow(
       'Cannot use `ChecklistCategoryProvider` outside of `ChecklistCountProvider`'
     );
@@ -44,7 +44,7 @@ describe('ChecklistCategoryProvider', () => {
     // eslint-disable-next-line react/prop-types
     const ChecklistWrapper = ({ children }) => (
       <ChecklistCountProvider>
-        <ChecklistCategoryProvider category={CHECK_CATEGORY.priority}>
+        <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
           {children}
         </ChecklistCategoryProvider>
       </ChecklistCountProvider>
@@ -61,11 +61,11 @@ describe('ChecklistCategoryProvider', () => {
     });
     const [categories] = result.current.countContextValue;
     expect(categories).toStrictEqual({
-      [CHECK_CATEGORY.priority]: {
+      [ISSUE_TYPES.PRIORITY]: {
         testEntry: true,
       },
-      [CHECK_CATEGORY.design]: {},
-      [CHECK_CATEGORY.accessibility]: {},
+      [ISSUE_TYPES.DESIGN]: {},
+      [ISSUE_TYPES.ACCESSIBILITY]: {},
     });
   });
 });
@@ -76,7 +76,7 @@ describe('useRegisterCheck', () => {
     // eslint-disable-next-line react/prop-types
     const ChecklistWrapper = ({ children }) => (
       <ChecklistCountProvider>
-        <ChecklistCategoryProvider category={CHECK_CATEGORY.priority}>
+        <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
           {children}
         </ChecklistCategoryProvider>
       </ChecklistCountProvider>
@@ -94,20 +94,20 @@ describe('useRegisterCheck', () => {
     );
 
     expect(result.current.countContextValue[0]).toStrictEqual({
-      [CHECK_CATEGORY.priority]: {
+      [ISSUE_TYPES.PRIORITY]: {
         [testKey]: true,
       },
-      [CHECK_CATEGORY.design]: {},
-      [CHECK_CATEGORY.accessibility]: {},
+      [ISSUE_TYPES.DESIGN]: {},
+      [ISSUE_TYPES.ACCESSIBILITY]: {},
     });
 
     rerender(false);
     expect(result.current.countContextValue[0]).toStrictEqual({
-      [CHECK_CATEGORY.priority]: {
+      [ISSUE_TYPES.PRIORITY]: {
         [testKey]: false,
       },
-      [CHECK_CATEGORY.design]: {},
-      [CHECK_CATEGORY.accessibility]: {},
+      [ISSUE_TYPES.DESIGN]: {},
+      [ISSUE_TYPES.ACCESSIBILITY]: {},
     });
   });
 });

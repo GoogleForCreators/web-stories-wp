@@ -16,17 +16,18 @@
 /**
  * Internal dependencies
  */
+import { ISSUE_TYPES } from './constants';
 import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
 import ImageElementMissingAlt from './checks/imageElementMissingAlt';
 import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
 import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from './checks/videoElementMissingDescription';
-import { ChecklistCategoryProvider, CHECK_CATEGORY } from './checkCountContext';
+import { ChecklistCategoryProvider } from './checkCountContext';
 
 export function AccessibilityChecks() {
   return (
-    <ChecklistCategoryProvider category={CHECK_CATEGORY.accessibility}>
+    <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <div>
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />

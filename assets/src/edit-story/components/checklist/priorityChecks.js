@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { ISSUE_TYPES } from './constants';
 import PublisherLogoSize from './checks/publisherLogoSize';
 import StoryMissingExcerpt from './checks/storyMissingExerpt';
 import StoryMissingTitle from './checks/storyMissingTitle';
@@ -25,11 +26,11 @@ import { StoryPosterAttached } from './checks/storyPosterAttached';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
 import StoryTitleLength from './checks/storyTitleLength';
 import VideoElementMissingPoster from './checks/videoElementMissingPoster';
-import { ChecklistCategoryProvider, CHECK_CATEGORY } from './checkCountContext';
+import { ChecklistCategoryProvider } from './checkCountContext';
 
 export function PriorityChecks() {
   return (
-    <ChecklistCategoryProvider category={CHECK_CATEGORY.priority}>
+    <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <div>
         <StoryMissingTitle />
         <StoryTitleLength />

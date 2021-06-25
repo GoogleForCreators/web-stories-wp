@@ -16,17 +16,18 @@
 /**
  * Internal dependencies
  */
+import { ISSUE_TYPES } from './constants';
 import PageTooManyLinks from './checks/pageTooManyLinks';
 import PageTooMuchText from './checks/pageTooMuchText';
 import PageTooLittleText from './checks/pageTooLittleText';
 import VideoElementResolution from './checks/videoElementResolution';
 import ImageElementResolution from './checks/imageElementResolution';
 import StoryPagesCount from './checks/storyPagesCount';
-import { ChecklistCategoryProvider, CHECK_CATEGORY } from './checkCountContext';
+import { ChecklistCategoryProvider } from './checkCountContext';
 
 export function DesignChecks() {
   return (
-    <ChecklistCategoryProvider category={CHECK_CATEGORY.design}>
+    <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <>
         <StoryPagesCount />
         <PageTooMuchText />

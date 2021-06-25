@@ -25,19 +25,18 @@ import {
 } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import { ISSUE_TYPES } from './constants';
+
 export const CountContext = createContext(null);
 export const CategoryContext = createContext(null);
 
-const CHECK_CATEGORY = {
-  priority: 'priority',
-  design: 'design',
-  accessibility: 'accessibility',
-};
-
 const INITIAL_STATE = {
-  [CHECK_CATEGORY.priority]: {},
-  [CHECK_CATEGORY.design]: {},
-  [CHECK_CATEGORY.accessibility]: {},
+  [ISSUE_TYPES.PRIORITY]: {},
+  [ISSUE_TYPES.DESIGN]: {},
+  [ISSUE_TYPES.ACCESSIBILITY]: {},
 };
 function ChecklistCountProvider({ children }) {
   const value = useState(INITIAL_STATE);
@@ -77,7 +76,7 @@ function ChecklistCategoryProvider({ children, category }) {
 }
 ChecklistCategoryProvider.propTypes = {
   children: PropTypes.node,
-  category: PropTypes.oneOf(Object.values(CHECK_CATEGORY)).isRequired,
+  category: PropTypes.oneOf(Object.values(ISSUE_TYPES)).isRequired,
 };
 
 function useRegisterCheck(id, isRendered) {
@@ -123,5 +122,5 @@ export {
   useRegisterCheck,
   useIsChecklistEmpty,
   useCategoryCount,
-  CHECK_CATEGORY,
+  ISSUE_TYPES,
 };

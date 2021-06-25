@@ -67,10 +67,10 @@ const ElementLinkTappableRegionTooSmall = () => {
     [setHighlights]
   );
 
-  const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooSmall;
-
-  const isRendered = elements.elements.length > 0;
+  const isRendered = elements.length > 0;
   useRegisterCheck('ElementLinkTappableRegionTooSmall', isRendered);
+
+  const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooSmall;
   return (
     isRendered && (
       <ChecklistCard
