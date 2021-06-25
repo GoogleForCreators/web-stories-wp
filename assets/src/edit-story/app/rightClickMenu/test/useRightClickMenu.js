@@ -34,8 +34,8 @@ jest.mock('../../story', () => ({
   useStory: jest.fn(),
 }));
 
-jest.mock('../../../../design-system', () => ({
-  ...jest.requireActual('../../../../design-system'),
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   isPlatformMacOS: jest.fn(),
 }));
 

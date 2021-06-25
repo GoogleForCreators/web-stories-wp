@@ -60,8 +60,8 @@ jest.mock('../../useHighlights', () => ({
   default: jest.fn(),
 }));
 
-jest.mock('../../../../../design-system', () => ({
-  ...jest.requireActual('../../../../../design-system'),
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
 }));
 

@@ -28,8 +28,7 @@ import { useRef } from 'react';
 import { useContextSelector, useFocusOut } from '@web-stories-wp/design-system';
 import useFocusHighlight from '../useFocusHighlight';
 
-jest.mock('../../../../design-system/utils/useContextSelector');
-jest.mock('../../../../design-system/utils/useFocusOut');
+jest.mock('@web-stories-wp/design-system');
 
 describe('useFocusHighlight()', () => {
   jest.useFakeTimers();

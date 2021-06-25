@@ -31,9 +31,9 @@ import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 
-jest.mock('../../../../../design-system/components/popup/index.js', () => ({
+jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual(
-    '../../../../../design-system/components/popup/index.js'
+    '@web-stories-wp/design-system'
   ),
   Popup: ({ children, isOpen }) => (isOpen ? children : null),
 }));
