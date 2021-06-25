@@ -13,44 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
-import { DESIGN_COPY, MAX_LINKS_PER_PAGE } from '../constants';
-import {
-  CARD_TYPE,
-  ChecklistCard,
-  DefaultFooterText,
-} from '../../checklistCard';
-import { filterStoryPages, getVisibleThumbnails } from '../utils';
+import { DESIGN_COPY, MIN_STORY_CHARACTER_COUNT } from '../constants';
 import {
   Thumbnail,
   THUMBNAIL_TYPES,
   THUMBNAIL_DIMENSIONS,
 } from '../../thumbnail';
 import PagePreview from '../../carousel/pagepreview';
+import {
+  ChecklistCard,
+  CARD_TYPE,
+  DefaultFooterText,
+} from '../../checklistCard';
+import {
+  characterCountForPage,
+  filterStoryPages,
+  getVisibleThumbnails,
+} from '../utils';
 
-export function pageTooManyLinks(page) {
-  const elementsWithLinks = page.elements.filter((element) => {
-    return Boolean(element.link?.url?.length);
-  });
-
-  return elementsWithLinks.length > MAX_LINKS_PER_PAGE;
+export function pageTooLittleText(page) {
+  return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
 }
 
-const PageTooManyLinks = () => {
+const PageTooLittleText = () => {
   const story = useStory(({ state }) => state);
   const failingPages = useMemo(
-    () => filterStoryPages(story, pageTooManyLinks),
+    () => filterStoryPages(story, pageTooLittleText),
     [story]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
@@ -61,10 +60,10 @@ const PageTooManyLinks = () => {
       }),
     [setHighlights]
   );
-  const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
+  const { footer, title } = DESIGN_COPY.tooLittlePageText;
 
   return (
-    failingPages.length > 0 && (
+    failingPages.length && (
       <ChecklistCard
         title={title}
         cardType={
@@ -99,4 +98,4 @@ const PageTooManyLinks = () => {
   );
 };
 
-export default PageTooManyLinks;
+export default PageTooLittleText;

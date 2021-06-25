@@ -27,7 +27,7 @@ module.exports = {
     '@storybook/addon-a11y/register',
     '@storybook/addon-actions',
     '@storybook/addon-docs',
-    '@storybook/addon-knobs/register',
+    '@storybook/addon-knobs',
     '@storybook/addon-storysource/register',
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',

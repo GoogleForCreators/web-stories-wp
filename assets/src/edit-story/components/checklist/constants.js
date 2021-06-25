@@ -19,22 +19,25 @@
  */
 import { __, sprintf, _n } from '@web-stories-wp/i18n';
 
+export const THUMBNAIL_MAX = 4;
+export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
+
 export const ASPECT_RATIO_LEFT = 3;
 export const ASPECT_RATIO_RIGHT = 4;
 const IMAGE_SIZE_WIDTH = 828;
 const IMAGE_SIZE_HEIGHT = 1792;
 const MAX_CHARACTER_PERCENTAGE = 10;
-const MIN_FONT_SIZE = 12;
-const MIN_STORY_CHARACTERS = 100;
-const MAX_STORY_CHARACTERS = 200;
+export const MIN_FONT_SIZE = 12;
+export const MIN_STORY_CHARACTER_COUNT = 100;
+export const MAX_PAGE_CHARACTER_COUNT = 200;
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
 export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
 export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
-const MAX_VIDEO_LENGTH_SECONDS = 60;
+export const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 const MIN_TAP_REGION_WIDTH = 48;
-const MAX_LINKS_PER_PAGE = 3;
+export const MAX_LINKS_PER_PAGE = 3;
 const MAX_VIDEO_RESOLUTION = 720;
 const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_FPS = 24;
@@ -163,10 +166,10 @@ export const DESIGN_COPY = {
       _n(
         'Include at least %d character',
         'Include at least %d characters',
-        MIN_STORY_CHARACTERS,
+        MIN_STORY_CHARACTER_COUNT,
         'web-stories'
       ),
-      MIN_STORY_CHARACTERS
+      MIN_STORY_CHARACTER_COUNT
     ),
   },
   tooMuchPageText: {
@@ -179,10 +182,10 @@ export const DESIGN_COPY = {
             _n(
               'Include no more than %d character',
               'Include no more than %d characters',
-              MAX_STORY_CHARACTERS,
+              MAX_PAGE_CHARACTER_COUNT,
               'web-stories'
             ),
-            MAX_STORY_CHARACTERS
+            MAX_PAGE_CHARACTER_COUNT
           )}
         </li>
         <li>

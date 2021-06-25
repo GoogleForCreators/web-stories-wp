@@ -18,17 +18,21 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryElements } from '../utils';
+import { states, useHighlights } from '../../../app/highlights';
+import { ACCESSIBILITY_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 
 export function videoElementMissingDescription(element) {
   return (
@@ -41,33 +45,41 @@ export function videoElementMissingDescription(element) {
 const VideoElementMissingDescription = () => {
   const story = useStory(({ state }) => state);
   const elements = filterStoryElements(story, videoElementMissingDescription);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+        highlight: states.ASSISTIVE_TEXT,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = ACCESSIBILITY_COPY.videoMissingTitle;
+
   return (
     elements.length > 0 && (
       <ChecklistCard
-        title={__('Add video description', 'web-stories')}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Improves indexability and accessibility (for videos without captions)',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          elements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-          todo thumbnails for pages
-          thumbnailCount={elements.length}
-          thumbnail={<>
-              {elements.map(() => <Thumbnail onClick={ perform highlight here } />)}
-            </>}
-        */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={elements.length}
+        thumbnail={
+          <>
+            {getVisibleThumbnails(elements).map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => handleClick(element.id)}
+                type={THUMBNAIL_TYPES.VIDEO}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending video', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

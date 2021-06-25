@@ -13,8 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { THUMBNAIL_COUNT_FOR_OVERFLOW, THUMBNAIL_MAX } from '../constants';
 
-export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
-export { default as Thumbnail } from './thumbnail';
-export { default as OverflowThumbnail } from './overflowThumbnail';
-export { LayerThumbnail } from './components/LayerThumbnail';
+export function getVisibleThumbnails(items) {
+  if (items.length > THUMBNAIL_MAX) {
+    return items.slice(0, THUMBNAIL_COUNT_FOR_OVERFLOW);
+  }
+  return items;
+}

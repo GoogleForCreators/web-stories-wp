@@ -13,8 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { getDefinitionForType } from '../../../elements';
 
-export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
-export { default as Thumbnail } from './thumbnail';
-export { default as OverflowThumbnail } from './overflowThumbnail';
-export { LayerThumbnail } from './components/LayerThumbnail';
+export const LayerThumbnail = ({ page }) => {
+  const { LayerIcon } = getDefinitionForType(page?.type);
+  return <LayerIcon element={page} />;
+};
+
+LayerThumbnail.propTypes = {
+  page: PropTypes.object.isRequired,
+};

@@ -42,6 +42,8 @@ export const GRID_TEMPLATE_AREA = {
     "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'cta cta cta cta' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA_OVERFLOW]:
     "'title title title title' 'thumbnail thumbnail thumbnail thumbnail-overflow' 'cta cta cta cta' 'footer footer footer footer'",
+  [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_OVERFLOW]:
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail-overflow' 'footer footer footer footer'",
 };
 
 export const MAX_THUMBNAILS_DISPLAYED = 3;
