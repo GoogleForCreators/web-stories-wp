@@ -19,16 +19,16 @@
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
 |                                                                   | *[total]*                                        | 🛴 **81.82%** *(18 / 22)*   |
-| Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
-|                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
-|                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
+| Creator Can Style Text                                            | Apply B                                          | 🛴 **65.00%** *(13 / 20)*   |
+|                                                                   | Apply I                                          | 🚨 **45.45%** *(5 / 11)*    |
+|                                                                   | Apply U                                          | 🚨 **40.00%** *(4 / 10)*    |
 |                                                                   | Apply Uppercase                                  | 🏆 **100.00%** *(3 / 3)*    |
-|                                                                   | Select weight                                    | 🏆 **100.00%** *(9 / 9)*    |
-|                                                                   | Set kerning                                      | 🚨 **40.00%** *(2 / 5)*     |
+|                                                                   | Select weight                                    | 🛴 **77.78%** *(7 / 9)*     |
+|                                                                   | Set kerning                                      | 🚨 **20.00%** *(1 / 5)*     |
 |                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
+|                                                                   | Set text color                                   | 🚨 **20.00%** *(1 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
-|                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
+|                                                                   | *[total]*                                        | 🛴 **78.95%** *(30 / 38)*   |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -45,9 +45,9 @@
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
 | Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors from Color Picker                     | 🏆 **100.00%** *(3 / 3)*    |
-|                                                                   | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
+|                                                                   | Add Colors                                       | 🚨 **25.00%** *(1 / 4)*     |
+|                                                                   | Manage Color Presets                             | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🛴 **50.00%** *(4 / 8)*     |
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
@@ -60,8 +60,8 @@
 |                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
-| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
+| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*      |
 | Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **69.23%** *(288 / 416)* |
