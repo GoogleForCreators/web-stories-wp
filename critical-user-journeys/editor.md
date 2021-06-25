@@ -33,11 +33,12 @@
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-| Creator can Add and Write Text                                    | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
+| Creator can Add and Write Text                                    | Consecutive text presets                         | 🏆 **100.00%** *(2 / 2)*    |
+|                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Select an individual word to edit                | 🏔️ **90.00%** *(9 / 10)*   |
 |                                                                   | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🛴 **85.71%** *(12 / 14)*   |
+|                                                                   | *[total]*                                        | 🛴 **87.50%** *(14 / 16)*   |
 | Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
@@ -50,21 +51,30 @@
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+| Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🚨 **26.09%** *(6 / 23)*    |
+|                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
 | Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
-| User can interact with menu using keyboard                        | Tab to menu                                      | 🛴 **75.00%** *(3 / 4)*     |
-|                                                                   | *[total]*                                        | 🛴 **75.00%** *(3 / 4)*     |
-|                                                                   | enter to open                                    | 🛴 **75.00%** *(3 / 4)*     |
-|                                                                   | esc to close                                     | 🛴 **75.00%** *(3 / 4)*     |
+| Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
+| Page Templates                                                    | Creator can Apply a Page Template                | 🏆 **100.00%** *(6 / 6)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
+| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **83.33%** *(5 / 6)*     |
+|                                                                   | *[total]*                                        | 🛴 **83.33%** *(5 / 6)*     |
+| User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | enter to open                                    | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | esc to close                                     | 🏆 **100.00%** *(4 / 4)*    |
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **70.65%** *(260 / 368)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
