@@ -120,7 +120,6 @@ describe('Web Stories Block', () => {
     await page.waitForSelector('.components-modal__screen-overlay');
     await expect(page).toMatchElement('.components-modal__screen-overlay');
     await percySnapshot(page, 'Story select model');
-
   });
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
