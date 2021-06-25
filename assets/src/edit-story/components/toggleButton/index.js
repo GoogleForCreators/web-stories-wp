@@ -34,7 +34,7 @@ import {
 
 const Button = styled(dsButton)`
   height: 36px;
-  width: 58px;
+  width: ${({ isSquare }) => (isSquare ? 36 : 58)}px;
   display: inline-block;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   padding: 2px 0;
@@ -64,7 +64,7 @@ const NotificationCount = styled(Text).attrs({ as: 'span' })`
 
 export const ToggleButton = ({
   isOpen = false,
-  notificationCount = 0,
+  notificationCount,
   MainIcon,
   label,
   ...rest
@@ -77,6 +77,7 @@ export const ToggleButton = ({
         aria-pressed={isOpen}
         aria-expanded={isOpen}
         isOpen={isOpen}
+        isSquare={!hasNotifications}
         type={BUTTON_TYPES.TERTIARY}
         variant={BUTTON_VARIANTS.RECTANGLE}
         size={BUTTON_SIZES.MEDIUM}
