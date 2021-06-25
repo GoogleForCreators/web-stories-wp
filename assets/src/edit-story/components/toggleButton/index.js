@@ -37,7 +37,7 @@ const Button = styled(dsButton)`
   width: 58px;
   display: inline-block;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 2px 6px 2px 0;
+  padding: 2px 0;
   color: ${({ theme }) => theme.colors.fg.primary};
   ${({ isOpen, theme }) =>
     isOpen &&
@@ -57,6 +57,7 @@ const Wrapper = styled.div`
 
 const NotificationCount = styled(Text).attrs({ as: 'span' })`
   margin: -2px 0 -2px;
+  padding-right: 6px;
   line-height: 20px;
   color: ${({ theme }) => theme.colors.violet[20]};
 `;
