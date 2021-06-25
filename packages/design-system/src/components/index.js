@@ -24,7 +24,7 @@ export { HexInput } from './hex';
 export { Input } from './input';
 export { LoadingBar, LOADING_INDICATOR_CLASS } from './loadingBar';
 export { LoadingSpinner } from './loadingSpinner';
-export { MediaInput } from './mediaInput';
+export { MediaInput, MEDIA_VARIANTS } from './mediaInput';
 export { Modal, ModalGlobalStyle } from './modal';
 export { NumericInput } from './input/numericInput';
 export * from './menu';

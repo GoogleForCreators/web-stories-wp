@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
 import { noop } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import {
   STORY_CONTEXT_MENU_ITEMS,
   STORY_CONTEXT_MENU_ACTIONS,

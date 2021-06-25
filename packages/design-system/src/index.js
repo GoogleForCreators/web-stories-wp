@@ -24,4 +24,5 @@ export * from './components';
 export * from './contexts';
 export * from './images';
 export * from './theme';
+export * from './testUtils';
 export * from './utils';

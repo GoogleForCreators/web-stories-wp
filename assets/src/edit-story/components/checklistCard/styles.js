@@ -23,7 +23,7 @@ import {
   Icons,
   THEME_CONSTANTS,
   Text,
-  focusableOutlineCSS,
+  themeHelpers,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -31,6 +31,8 @@ import {
  */
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
+
+const { focusableOutlineCSS } = themeHelpers;
 
 export const Wrapper = styled.div`
   width: 272px;

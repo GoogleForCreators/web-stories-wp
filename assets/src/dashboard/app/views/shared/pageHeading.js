@@ -19,14 +19,14 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
 import {
   Display,
   Search,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 
 const HeadingContainer = styled(StandardViewContentGutter)`

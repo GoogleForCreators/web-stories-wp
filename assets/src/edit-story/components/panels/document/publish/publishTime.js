@@ -21,7 +21,7 @@ import { useCallback, useRef, useState } from 'react';
 import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import {
-  DropDownSelect,
+  DropDown,
   PLACEMENT,
   useKeyDownEffect,
   useFocusOut,
@@ -101,7 +101,7 @@ function PublishTime() {
   return (
     <>
       <Row>
-        <DropDownSelect
+        <DropDown
           dropDownLabel={__('Publish', 'web-stories')}
           aria-pressed={showDatePicker}
           aria-haspopup

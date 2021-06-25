@@ -18,15 +18,13 @@
  * External dependencies
  */
 import { within, screen } from '@testing-library/react';
-
+import { noop } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-
 import PublisherLogoSettings, { TEXT } from '..';
 import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
-import { noop } from '@web-stories-wp/design-system';
 
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();

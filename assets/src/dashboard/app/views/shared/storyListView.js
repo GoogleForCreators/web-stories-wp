@@ -23,6 +23,13 @@ import { useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Headline,
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -64,13 +71,8 @@ import {
 } from '../../../../edit-story/components/previewPage';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { titleFormatted } from '../../../utils';
-import {
-  Headline,
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-  focusableOutlineCSS
-} from '@web-stories-wp/design-system';
+
+const { focusableOutlineCSS } = themeHelpers;
 
 const ListView = styled.div`
   width: 100%;

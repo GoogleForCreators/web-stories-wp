@@ -24,7 +24,6 @@ import { SnackbarProvider } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Content from '..';

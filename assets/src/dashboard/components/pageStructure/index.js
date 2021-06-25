@@ -22,10 +22,6 @@ import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   BEZIER,
   Button,
@@ -36,6 +32,10 @@ import {
   THEME_CONSTANTS,
   useFocusOut,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';

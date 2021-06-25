@@ -20,10 +20,10 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { AD_NETWORK_TYPE } from '../../../../constants';
 import {
   InlineLink,

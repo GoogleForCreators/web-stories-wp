@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useGridViewKeys, useFocusOut } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -40,7 +41,6 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { useGridViewKeys, useFocusOut } from '@web-stories-wp/design-system';
 import { useConfig } from '../../config';
 
 const GridContainer = styled(CardGrid)`

@@ -21,15 +21,15 @@ import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
 import {
   AnimatedContextMenu,
   MenuItemProps,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 

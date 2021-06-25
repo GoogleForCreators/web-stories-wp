@@ -19,19 +19,7 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  useSnackbar,
-  PLACEMENT,
-  Bucket,
-  CircleSpeed,
-  Eraser,
-  LetterTLargeLetterTSmall,
-  LetterTPlus,
-  Link,
-  Media,
-  PictureSwap,
-  Captions,
-} from '@web-stories-wp/design-system';
+import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -49,7 +37,19 @@ import {
   RESET_DEFAULTS,
 } from './constants';
 
-/** @typedef {import('@web-stories-wp/deisgn-system.MenuItemProps} MenuItemProps */
+const {
+  Bucket,
+  CircleSpeed,
+  Eraser,
+  LetterTLargeLetterTSmall,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+  Captions,
+} = Icons;
+
+/** @typedef {import('@web-stories-wp/deisgn-system').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick

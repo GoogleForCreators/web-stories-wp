@@ -20,16 +20,16 @@
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import {
+  AnimatedContextMenu,
+  MenuItemProps,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { EditPencil as EditPencilIcon } from '../../../../icons';
 import { MenuContainer, LogoMenuButton } from '../components';
-import {
-  AnimatedContextMenu,
-  MenuItemProps,
-} from '@web-stories-wp/design-system';
 
 function PopoverLogoContextMenu({
   isActive,

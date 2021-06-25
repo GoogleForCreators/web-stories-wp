@@ -22,17 +22,23 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import {
+  Headline,
+  Text,
+  THEME_CONSTANTS,
+  Icons,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Headline, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { LockClosed as LockSVG } from '@web-stories-wp/design-system/icons';
 import { STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import InlineInputForm from '../inlineInputForm';
 import { useConfig } from '../../app/config';
+
+const { LockClosed: LockSVG } = Icons;
 
 const StyledCardTitle = styled.div`
   padding: 12px 4px 0 4px;

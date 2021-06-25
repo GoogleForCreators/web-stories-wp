@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { forwardRef } from 'react';
+import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
 import { PageSizePropType } from '../../types';
 import { GRID_SPACING } from '../../constants';
 

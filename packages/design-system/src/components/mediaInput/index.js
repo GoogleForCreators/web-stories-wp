@@ -39,6 +39,8 @@ import { PLACEMENT, Popup } from '../popup';
 import { ReactComponent as Landscape } from './landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
+export { MEDIA_VARIANTS };
+
 const MediaRectangle = styled.section`
   width: 100%;
   height: 100%;

@@ -23,10 +23,10 @@ import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
+import { Pill } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Pill } from '@web-stories-wp/design-system';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,

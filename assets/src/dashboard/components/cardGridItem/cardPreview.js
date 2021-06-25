@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   Button,
@@ -32,6 +28,10 @@ import {
   ThemeGlobals,
   useFocusOut,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import {
   PreviewErrorBoundary,
   PreviewPage,

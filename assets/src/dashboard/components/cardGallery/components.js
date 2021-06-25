@@ -19,10 +19,6 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import { themeHelpers } from '@web-stories-wp/design-system';
 
 export const GalleryContainer = styled.div`

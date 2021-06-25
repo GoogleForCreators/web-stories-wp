@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { DropDown } from '@web-stories-wp/design-system';
+import { DropDown as DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,7 +30,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const StyledDropDown = styled(DropDown)`
+const StyledDropDown = styled(DropDownSelect)`
   background-color: transparent;
   border: 0;
   width: auto;

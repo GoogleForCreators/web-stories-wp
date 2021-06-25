@@ -20,13 +20,12 @@
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { FlagsProvider } from 'flagged';
-
+import { SnackbarProvider } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
-import { SnackbarProvider } from '@web-stories-wp/design-system';
 import {
   formattedStoriesArray,
   formattedTemplatesArray,

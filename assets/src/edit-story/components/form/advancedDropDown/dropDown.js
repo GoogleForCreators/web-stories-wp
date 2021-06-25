@@ -21,7 +21,7 @@ import { useState, useCallback, useRef, forwardRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { DropDownSelect } from '@web-stories-wp/design-system';
+import { DropDown as DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies

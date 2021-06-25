@@ -21,6 +21,7 @@ import propTypes from 'prop-types';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { Checkbox, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import {
   CheckboxLabel,
   CheckboxLabelText,
 } from '../components';
-import { Checkbox, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export default function TelemetrySettings({
   selected,

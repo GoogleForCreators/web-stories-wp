@@ -17,17 +17,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import {
-  Bucket,
-  Captions,
-  CircleSpeed,
-  Eraser,
-  LetterTLargeLetterTSmall,
-  LetterTPlus,
-  Link,
-  Media,
-  PictureSwap,
-} from '@web-stories-wp/design-system';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -37,6 +27,18 @@ import useHighlights from '../../useHighlights';
 import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
 import { ACTION_TEXT } from '../constants';
+
+const {
+  Bucket,
+  Captions,
+  CircleSpeed,
+  Eraser,
+  LetterTLargeLetterTSmall,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+} = Icons;
 
 jest.mock('../../../story', () => ({
   useStory: jest.fn(),
