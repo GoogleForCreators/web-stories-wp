@@ -18,14 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import {
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export const DefaultFooterText = ({ children, ...rest }) => (
   <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL} {...rest}>

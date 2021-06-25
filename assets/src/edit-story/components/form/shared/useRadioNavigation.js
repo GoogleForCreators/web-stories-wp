@@ -18,10 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-/**
- * Internal dependencies
- */
-import { useKeyDownEffect } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 function useRadioNavigation(ref) {
   const changeCurrent = useCallback(

@@ -23,7 +23,7 @@ import {
   Icons,
   THEME_CONSTANTS,
   Text,
-  focusableOutlineCSS
+  focusableOutlineCSS,
 } from '@web-stories-wp/design-system';
 
 /**

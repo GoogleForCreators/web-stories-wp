@@ -31,7 +31,7 @@ import {
   THEME_CONSTANTS,
   Text,
   useSnackbar,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import { focusStyle } from '../../../panels/shared';

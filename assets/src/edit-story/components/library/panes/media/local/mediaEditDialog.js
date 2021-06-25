@@ -35,7 +35,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
 import Dialog from '../../../../dialog';

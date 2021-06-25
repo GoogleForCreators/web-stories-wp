@@ -17,13 +17,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Button, themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
 import { focusStyle } from '../../panels/shared';
 import { NAVIGATION_HEIGHT } from './constants';
 

@@ -22,10 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';

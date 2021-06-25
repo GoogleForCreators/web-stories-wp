@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { SearchInput } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { SearchInput } from '@web-stories-wp/design-system';
 import { focusStyle } from '../../panels/shared';
 
 const StyledSearchInput = styled(SearchInput)`

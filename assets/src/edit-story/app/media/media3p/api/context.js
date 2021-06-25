@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createContext } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { createContext } from '@web-stories-wp/design-system';
 
 /**
  * @typedef {import('./typedefs').Media3pApiContext} Media3pApiContext

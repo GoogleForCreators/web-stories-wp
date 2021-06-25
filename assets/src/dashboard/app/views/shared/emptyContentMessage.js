@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DesertColor } from '../@web-stories-wp/design-system';
+import { DesertColor } from '@web-stories-wp/design-system';
 
 const Message = styled.div`
   display: flex;

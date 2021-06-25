@@ -29,7 +29,7 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Toggle,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { MAX_NUMBER_FOR_BADGE } from '../constants';
 import { focusStyle } from '../../../panels/shared';
 

@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Tooltip } from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { Tooltip } from '@web-stories-wp/design-system';
 import { AnimationListItem, ContentWrapper } from './styles';
 import { ANIMATION_DROPDOWN_OPTION_PROP_TYPE } from './types';
 

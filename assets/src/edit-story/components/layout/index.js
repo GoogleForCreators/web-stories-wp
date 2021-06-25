@@ -23,6 +23,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import {
+  Snackbar,
+  useSnackbar,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 import Library from '../library';
 import Workspace from '../workspace';
 import MetaBoxes from '../../integrations/wordpress/metaBoxes';
@@ -38,11 +43,6 @@ import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
-import {
-  Snackbar,
-  useSnackbar,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),

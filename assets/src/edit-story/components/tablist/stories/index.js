@@ -27,7 +27,7 @@ import {
   Link,
   Tooltip,
   Text,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../../checklistCard/constants';

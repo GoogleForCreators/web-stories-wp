@@ -36,7 +36,7 @@ import {
   useGridViewKeys,
   useFocusOut,
   THEME_CONSTANTS,
-} from '../../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../../config';
 import { GridItem } from './gridItem';
 import { PopoverLogoContextMenuPropTypes } from './popoverLogoContextMenu';

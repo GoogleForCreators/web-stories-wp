@@ -21,7 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { Icons } from '@web-stories-wp/design-system';
 
 function ElementsIcon() {
   return <Icons.Box4 aria-label={__('Elements library', 'web-stories')} />;

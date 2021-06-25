@@ -26,7 +26,7 @@ import {
   Display,
   Search,
   THEME_CONSTANTS,
-} from '../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 
 const HeadingContainer = styled(StandardViewContentGutter)`

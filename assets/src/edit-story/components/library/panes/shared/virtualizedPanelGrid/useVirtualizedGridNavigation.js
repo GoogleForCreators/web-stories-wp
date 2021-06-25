@@ -21,10 +21,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  useFocusOut,
-  useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+import { useFocusOut, useKeyDownEffect } from '@web-stories-wp/design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 

@@ -39,7 +39,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   themeHelpers,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../app';
 import { Panel } from '../../panel';
 import Tooltip from '../../../tooltip';

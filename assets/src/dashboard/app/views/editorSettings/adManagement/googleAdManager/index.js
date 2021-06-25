@@ -36,7 +36,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
-} from '../../../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(

@@ -23,11 +23,11 @@ import Modal from 'react-modal';
 /**
  * Internal dependencies
  */
+import { SnackbarContext } from '@web-stories-wp/design-system';
 import DeleteDialog from '../panes/media/local/deleteDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
-import { SnackbarContext } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 const deleteMedia = jest.fn();
 const deleteMediaElement = jest.fn();

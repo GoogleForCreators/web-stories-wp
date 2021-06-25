@@ -26,12 +26,6 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { Row, usePresubmitHandler } from '../../../form';
-import { useMediaPicker } from '../../../mediaPicker';
-import { SimplePanel } from '../../panel';
-import { focusStyle, getCommonValue } from '../../shared';
-import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import {
   Button,
   BUTTON_SIZES,
@@ -42,7 +36,13 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { Row, usePresubmitHandler } from '../../../form';
+import { useMediaPicker } from '../../../mediaPicker';
+import { SimplePanel } from '../../panel';
+import { focusStyle, getCommonValue } from '../../shared';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import Tooltip from '../../../tooltip';
 
 const InputRow = styled.div`

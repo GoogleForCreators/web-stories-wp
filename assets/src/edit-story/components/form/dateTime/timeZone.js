@@ -21,16 +21,16 @@ import { getSettings, getOptions, format } from '@web-stories-wp/date';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import Tooltip from '../../tooltip';
 import {
   PLACEMENT,
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import Tooltip from '../../tooltip';
 
 const Wrapper = styled.div`
   white-space: nowrap;

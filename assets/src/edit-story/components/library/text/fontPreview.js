@@ -24,10 +24,10 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { Text } from '@web-stories-wp/design-system';
 import { useFont } from '../../../app';
 import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
-import { Text } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { focusStyle } from '../../panels/shared';
 
 const Preview = styled.button`

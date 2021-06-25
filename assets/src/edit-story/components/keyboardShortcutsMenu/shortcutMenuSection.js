@@ -25,11 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import {
-  Headline,
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Headline, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import ShortcutLabel from './shortcutLabel';
 
 const Header = styled(Headline).attrs({

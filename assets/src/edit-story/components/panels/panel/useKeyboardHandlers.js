@@ -20,7 +20,7 @@
 /**
  * Internal dependencies
  */
-import { useKeyEffect } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { useKeyEffect } from '@web-stories-wp/design-system';
 
 const DELTA_CHANGE = 20; // change in pixels when pressing arrow keys
 

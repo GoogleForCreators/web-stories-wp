@@ -21,16 +21,17 @@ import { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Button,
+  Icons,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-} from '../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/button';
-import { Button, Icons } from '@web-stories-wp/design-system';
 import { focusStyle } from '../panels/shared';
 
 const HEADER_FOOTER_HEIGHT = 52;

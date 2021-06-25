@@ -28,6 +28,11 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useFocusOut,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -39,11 +44,6 @@ import {
   addUniqueEntries,
   getInset,
 } from '../utils';
-import {
-  Text,
-  THEME_CONSTANTS,
-  useFocusOut,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { List, Group, GroupLabel, NoResult } from './styled';
 import DefaultRenderer from './defaultRenderer';
 

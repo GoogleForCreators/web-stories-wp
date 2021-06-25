@@ -21,10 +21,10 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
+import { SnackbarContext } from '@web-stories-wp/design-system';
 import MissingUploadPermissionDialog from '../missingUploadPermissionDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import { SnackbarContext } from '../../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Missing Upload Permission',

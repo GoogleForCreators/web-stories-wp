@@ -18,11 +18,11 @@
  */
 import { useReducer, useEffect, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { createContext } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { STORY_EVENTS, StoryEventRegisters } from './storyEvents';
 
 export const Context = createContext({ state: {}, actions: {} });

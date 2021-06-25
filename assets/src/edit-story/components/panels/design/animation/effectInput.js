@@ -25,14 +25,14 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { FIELD_TYPES } from '../../../../../animation';
-import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
-import { AnimationFormPropTypes } from '../../../../../animation/types';
 import {
   NumericInput,
   DropDown,
   ThemeGlobals,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import { FIELD_TYPES } from '../../../../../animation';
+import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
+import { AnimationFormPropTypes } from '../../../../../animation/types';
 import { inputContainerStyleOverride } from '../../shared';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';

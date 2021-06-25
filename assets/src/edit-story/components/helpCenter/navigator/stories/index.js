@@ -18,14 +18,11 @@
  */
 import { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { Navigator as HelpCenterNavigator } from '..';
-import {
-  theme as dsTheme,
-  ThemeGlobals,
-} from '@web-stories-wp/design-system';
 
 export default {
   title: 'Stories Editor/Components/Help Center/Navigator',

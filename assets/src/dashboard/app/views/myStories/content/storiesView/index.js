@@ -30,7 +30,7 @@ import {
   useSnackbar,
   Text,
   THEME_CONSTANTS,
-} from '../../../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {

@@ -16,14 +16,10 @@
 /**
  * External dependencies
  */
-
+import { useContextSelector, identity } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  useContextSelector,
-  identity,
-} from '@web-stories-wp/design-system';
 import Context from './context';
 
 function useHighlights(selector) {

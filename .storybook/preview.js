@@ -23,6 +23,12 @@ import { addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { useDirection } from 'storybook-rtl-addon';
+import {
+  theme as designSystemTheme,
+  lightMode,
+  ThemeGlobals,
+  ModalGlobalStyle,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -35,13 +41,6 @@ import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboard
 import { ConfigProvider as DashboardConfigProvider } from '../assets/src/dashboard/app/config';
 import { ConfigProvider as EditorConfigProvider } from '../assets/src/edit-story/app/config';
 import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
-
-import {
-  theme as designSystemTheme,
-  lightMode,
-  ThemeGlobals,
-  ModalGlobalStyle,
-} from '../packages/design-system/src';
 
 // @todo: Find better way to mock these.
 const wp = {};

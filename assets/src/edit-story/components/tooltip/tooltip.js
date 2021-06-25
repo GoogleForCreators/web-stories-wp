@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   TOOLTIP_RTL_PLACEMENT,
@@ -22,6 +23,10 @@ import {
   TooltipPropTypes,
   TOOLTIP_PLACEMENT,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../app/config';
 
 export default function Tooltip({

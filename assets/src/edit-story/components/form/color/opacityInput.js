@@ -22,11 +22,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 import { PatternPropType } from '@web-stories-wp/patterns';
+import { NumericInput } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { NumericInput } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { inputContainerStyleOverride } from '../../panels/shared';
 import getPreviewOpacity from './getPreviewOpacity';
 

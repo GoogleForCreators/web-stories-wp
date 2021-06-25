@@ -25,7 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { NumericInput } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { NumericInput } from '@web-stories-wp/design-system';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, inputContainerStyleOverride } from '../../shared';

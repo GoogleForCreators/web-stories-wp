@@ -15,7 +15,7 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 

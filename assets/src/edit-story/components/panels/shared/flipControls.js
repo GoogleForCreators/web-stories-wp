@@ -30,7 +30,7 @@ import {
   BUTTON_VARIANTS,
   ToggleButton,
   Icons,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import Tooltip from '../../tooltip';
 import { focusStyle } from './styles';
 

@@ -23,11 +23,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { Pane, PANE_PADDING } from '../../shared';
-import {
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
 
 export const PaneInner = styled.div`
   height: 100%;

@@ -25,10 +25,7 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 const StyledText = styled(Text)`
   color: ${({ theme, active }) =>

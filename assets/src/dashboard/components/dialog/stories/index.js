@@ -29,7 +29,7 @@ import {
   BUTTON_TYPES,
   Text,
   THEME_CONSTANTS,
-} from '../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 import Dialog from '../dialog';
 
 export default {

@@ -24,7 +24,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Icons, Text } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { Icons, Text } from '@web-stories-wp/design-system';
 import TabView from '..';
 
 const Wrapper = styled.div`

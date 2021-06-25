@@ -19,15 +19,9 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
-import { states, useHighlights } from '..';
 import {
   useSnackbar,
   PLACEMENT,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
-import {
   Bucket,
   CircleSpeed,
   Eraser,
@@ -37,7 +31,12 @@ import {
   Media,
   PictureSwap,
   Captions,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/icons';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { states, useHighlights } from '..';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
@@ -50,7 +49,7 @@ import {
   RESET_DEFAULTS,
 } from './constants';
 
-/** @typedef {import('../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components').MenuItemProps} MenuItemProps */
+/** @typedef {import('@web-stories-wp/deisgn-system.MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick

@@ -29,7 +29,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '../../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
 import { parentRoute } from '../../../router/route';

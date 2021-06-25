@@ -40,7 +40,7 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { useGridViewKeys, useFocusOut } from '../@web-stories-wp/design-system';
+import { useGridViewKeys, useFocusOut } from '@web-stories-wp/design-system';
 import { useConfig } from '../../config';
 
 const GridContainer = styled(CardGrid)`

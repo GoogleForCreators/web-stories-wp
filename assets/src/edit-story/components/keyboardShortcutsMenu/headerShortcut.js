@@ -22,10 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  Headline,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { header } from './keyboardShortcutList';
 import ShortcutLabel from './shortcutLabel';
 

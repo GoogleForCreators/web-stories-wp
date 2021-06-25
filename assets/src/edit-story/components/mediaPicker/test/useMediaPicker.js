@@ -22,9 +22,9 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
+import { SnackbarContext } from '@web-stories-wp/design-system';
 import ConfigContext from '../../../app/config/context';
 import useMediaPicker from '../useMediaPicker';
-import { SnackbarContext } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
   useSnackbar: () => {

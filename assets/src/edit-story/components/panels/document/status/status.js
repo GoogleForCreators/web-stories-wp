@@ -24,15 +24,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
-import {
-  Input,
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
 
 const InputRow = styled(Row)`
   margin-left: 34px;

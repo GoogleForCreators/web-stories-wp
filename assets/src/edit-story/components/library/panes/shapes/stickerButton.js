@@ -26,7 +26,7 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import useLibrary from '../../useLibrary';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 

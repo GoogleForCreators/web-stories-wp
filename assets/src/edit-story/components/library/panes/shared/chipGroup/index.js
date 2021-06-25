@@ -34,7 +34,7 @@ import {
   Chip,
   Icons,
   useKeyDownEffect,
-} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { useExpandAnimation, useHandleRowVisibility } from '../hooks';
 import {

@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { LockToggle, NumericInput } from '@web-stories-wp/design-system';
 import { Union } from '../../../../icons';
 import { canMaskHaveBorder } from '../../../../masks';
 import { Row } from '../../../form';
@@ -35,10 +36,6 @@ import {
   focusStyle,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
-import {
-  LockToggle,
-  NumericInput,
-} from '@web-stories-wp/design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const TOGGLE_WIDTH = 32;

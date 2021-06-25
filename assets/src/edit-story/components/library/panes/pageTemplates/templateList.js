@@ -27,6 +27,7 @@ import { UnitsProvider } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
+import { useSnackbar } from '@web-stories-wp/design-system';
 import { PANE_PADDING } from '../shared';
 import {
   getVirtualizedItemIndex,
@@ -37,7 +38,6 @@ import {
 } from '../shared/virtualizedPanelGrid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
-import { useSnackbar } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import PageTemplate from './pageTemplate';
 
 const THRESHOLD = 6;

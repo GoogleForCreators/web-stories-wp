@@ -21,16 +21,12 @@ import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from 'react';
 import { trackClick } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   Link as DsLink,
   THEME_CONSTANTS,
   Text,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;

@@ -25,12 +25,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../../../app/api';
 import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import { useAPI } from '../../../../app/api';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import TemplateList from './templateList';

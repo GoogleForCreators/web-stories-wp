@@ -30,8 +30,8 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
 import { useResizeEffect } from '@web-stories-wp/design-system';
+import { useConfig } from '../../app/config';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
 

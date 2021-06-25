@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { Icons } from '@web-stories-wp/design-system';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
 const ChecklistIcon = ({ checkpoint, ...rest }) => {

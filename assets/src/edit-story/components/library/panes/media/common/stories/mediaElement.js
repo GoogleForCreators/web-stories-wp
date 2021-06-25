@@ -24,11 +24,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { SnackbarContext } from '@web-stories-wp/design-system';
 import MediaElement from '../mediaElement';
 import { CanvasProvider } from '../../../../../../app/canvas';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import { SnackbarContext } from '../../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import testImage from '../../local/stories/test-image.jpg';
 import testPoster from './test-poster.png';
 import testVideo from './test-video.mp4';

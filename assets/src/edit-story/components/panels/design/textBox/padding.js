@@ -25,6 +25,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import {
+  LockToggle as DefaultLockToggle,
+  NumericInput,
+} from '@web-stories-wp/design-system';
 import { TurningLine } from '../../../../icons';
 import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
@@ -34,10 +38,6 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
-import {
-  LockToggle as DefaultLockToggle,
-  NumericInput,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { getHiddenPadding, removeHiddenPadding } from './utils';
 

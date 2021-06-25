@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
+
 /**
  * External dependencies
  */
 import { boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+/**
+ * Internal dependencies
+ */
 import { TelemetryOptInBanner } from '../telemetryBanner';
 
 export default {

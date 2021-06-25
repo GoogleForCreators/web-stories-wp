@@ -19,18 +19,18 @@
  */
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { useStory, useLocalMedia } from '../../../app';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { useStory, useLocalMedia } from '../../../app';
 import Tooltip from '../../tooltip';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
 

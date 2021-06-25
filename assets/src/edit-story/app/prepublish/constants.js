@@ -19,14 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
-import {
-  Link,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;

@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { useConfig } from '../app/config';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * A point in 2D space.

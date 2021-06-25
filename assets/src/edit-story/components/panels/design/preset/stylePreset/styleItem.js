@@ -24,11 +24,11 @@ import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
+import { Icons } from '@web-stories-wp/design-system';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { generatePresetStyle } from '../utils';
 import stripHTML from '../../../../../utils/stripHTML';
 import { useStory } from '../../../../../app/story';
-import { Icons } from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { focusStyle } from '../../../shared';
 
 const REMOVE_ICON_SIZE = 32;

@@ -27,7 +27,7 @@ import {
   useKeyDownEffect,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../../app/config';
 import { focusStyle } from '../../../../panels/shared';
 

@@ -22,10 +22,10 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
+import { SnackbarContext } from '@web-stories-wp/design-system';
 import DeleteDialog from '../deleteDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import { SnackbarContext } from '../../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import StoryContext from '../../../../../../app/story/context';
 
 export default {

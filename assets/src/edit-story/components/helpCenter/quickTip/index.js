@@ -19,17 +19,17 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { TranslateWithMarkup } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Link,
   themeHelpers,
   Text,
   THEME_CONSTANTS,
   VisuallyHidden,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';

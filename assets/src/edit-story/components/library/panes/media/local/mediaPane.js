@@ -40,7 +40,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';

@@ -29,7 +29,7 @@ import { usePagePreviewSize } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
-import { useSnackbar } from '../@web-stories-wp/design-system';
+import { useSnackbar } from '@web-stories-wp/design-system';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';

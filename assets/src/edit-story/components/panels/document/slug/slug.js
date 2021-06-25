@@ -24,17 +24,17 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app/story';
-import cleanForSlug from '../../../../utils/cleanForSlug';
-import inRange from '../../../../utils/inRange';
-import { Row } from '../../../form';
-import { SimplePanel } from '../../panel';
 import {
   Input,
   Link,
   ThemeGlobals,
   THEME_CONSTANTS,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import { useStory } from '../../../../app/story';
+import cleanForSlug from '../../../../utils/cleanForSlug';
+import inRange from '../../../../utils/inRange';
+import { Row } from '../../../form';
+import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared';
 
 export const MIN_MAX = {

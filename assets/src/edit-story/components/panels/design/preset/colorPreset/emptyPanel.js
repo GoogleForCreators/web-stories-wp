@@ -24,11 +24,7 @@ import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import ColorAdd from './colorAdd';
 
 const InlineIcon = styled(Icons.Plus)`

@@ -25,15 +25,15 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Row as DefaultRow } from '../../../form';
-import { SimplePanel } from '../../panel';
-import { getCommonValue } from '../../shared';
 import {
   Checkbox,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import { Row as DefaultRow } from '../../../form';
+import { SimplePanel } from '../../panel';
+import { getCommonValue } from '../../shared';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;

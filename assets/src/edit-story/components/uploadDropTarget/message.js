@@ -25,12 +25,12 @@ import { memo } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
 import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import { useConfig } from '../../app/config';
 import UploadDropTargetOverlay from './overlay';
 
 const Container = styled(UploadDropTargetOverlay)`

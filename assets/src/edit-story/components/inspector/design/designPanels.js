@@ -19,12 +19,11 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { THEME_CONSTANTS, Text } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme/constants';
-import { Text } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/typography/text';
 import useDesignPanels from './useDesignPanels';
 import DesignPanel from './designPanel';
 

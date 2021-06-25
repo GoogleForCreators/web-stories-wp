@@ -21,15 +21,13 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { Text, Checkbox, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Text } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/typography/text';
-import { THEME_CONSTANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme/constants';
 import Dialog from '../../../dialog';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../../../utils/localStore';
-import { Checkbox } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { PRESET_TYPES } from './constants';
 
 const Label = styled.label`

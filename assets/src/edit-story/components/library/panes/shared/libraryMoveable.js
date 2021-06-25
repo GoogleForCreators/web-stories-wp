@@ -25,6 +25,7 @@ import { editorToDataX, editorToDataY } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import { ZOOM_SETTING } from '../../../../constants';
 import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
@@ -34,7 +35,6 @@ import { useInsertTextSet } from '../../../canvas';
 import areEventsDragging from '../../../../utils/areEventsDragging';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
-import { useKeyDownEffect } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';

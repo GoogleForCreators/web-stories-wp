@@ -18,12 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { useStory, useLocalMedia, useHistory } from '../../../app';
-import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import {
   Button,
   BUTTON_SIZES,
@@ -31,7 +25,13 @@ import {
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
   Icons,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { useStory, useLocalMedia, useHistory } from '../../../app';
+import { useMetaBoxes } from '../../../integrations/wordpress/metaBoxes';
 import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 

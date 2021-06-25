@@ -18,11 +18,12 @@
  * External dependencies
  */
 import stickers from '@web-stories-wp/stickers';
+import { noop } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { noop } from '@web-stories-wp/design-system';
 
 const style = {
   display: 'block',

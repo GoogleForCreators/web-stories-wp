@@ -23,11 +23,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Button,
-  BUTTON_TYPES,
-  Icons,
-} from '@web-stories-wp/design-system';
+import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
 import StoryPropTypes from '../../../../types';
 import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';

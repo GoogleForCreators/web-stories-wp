@@ -19,11 +19,11 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { List } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY } from '../constants';

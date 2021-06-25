@@ -21,8 +21,8 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 import { useRightClickMenu, RightClickMenuProvider } from '..';
-import { isPlatformMacOS } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory } from '../../story';
 
 // TODO: #6154 remove when the `enableRightClickMenus` experiment is removed

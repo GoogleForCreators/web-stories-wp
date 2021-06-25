@@ -23,7 +23,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import Dialog from '../dialog';
 import {
   Button,
   BUTTON_SIZES,
@@ -32,6 +31,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import Dialog from '../dialog';
 import { Img } from './shared';
 
 /**

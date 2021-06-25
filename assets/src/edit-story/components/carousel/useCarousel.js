@@ -15,12 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
+
+/**
  * Internal dependencies
  */
-import {
-  identity,
-  useContextSelector,
-} from '@web-stories-wp/design-system';
 import CarouselContext from './carouselContext';
 
 function useCarousel(selector) {

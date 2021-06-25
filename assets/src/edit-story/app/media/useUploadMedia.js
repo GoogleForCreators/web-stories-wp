@@ -19,13 +19,13 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
-import { useSnackbar } from '@web-stories-wp/design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import useMediaUploadQueue from './utils/useMediaUploadQueue';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';

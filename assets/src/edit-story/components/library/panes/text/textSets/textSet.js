@@ -29,7 +29,7 @@ import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
 import {
   BUTTON_TRANSITION_TIMING,
   ThemeGlobals,
-} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';

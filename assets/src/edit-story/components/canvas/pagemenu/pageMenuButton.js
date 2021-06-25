@@ -18,16 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Tooltip from '../../tooltip';
 
 function PageMenuButton({ children, title, shortcut, ...rest }) {

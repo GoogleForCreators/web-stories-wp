@@ -26,12 +26,9 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import {
-  LoadingBar,
-  useKeyDownEffect,
-} from '@web-stories-wp/design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';

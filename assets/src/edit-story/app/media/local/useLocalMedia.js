@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { identity } from '@web-stories-wp/design-system';
+/**
  * Internal dependencies
  */
-import { identity } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import useMedia from '../useMedia';
 
 /**

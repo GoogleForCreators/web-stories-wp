@@ -26,6 +26,14 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Tooltip,
+} from '@web-stories-wp/design-system';
+import {
   DIRECTION,
   ROTATION,
   SCALE_DIRECTION,
@@ -33,14 +41,6 @@ import {
 } from '../../../../../animation';
 import { useConfig } from '../../../../app/config';
 import useRadioNavigation from '../../../form/shared/useRadioNavigation';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Icons,
-  Tooltip,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 const StyledButton = styled(Button)`
   z-index: 0;

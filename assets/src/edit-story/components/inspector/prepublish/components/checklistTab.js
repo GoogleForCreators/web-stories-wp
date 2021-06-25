@@ -24,7 +24,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { Icons } from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../app';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,

@@ -26,7 +26,7 @@ import { renderWithProviders } from '../../../../../testUtils';
 
 import PublisherLogoSettings, { TEXT } from '..';
 import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
-import { noop } from '../../../@web-stories-wp/design-system';
+import { noop } from '@web-stories-wp/design-system';
 
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();

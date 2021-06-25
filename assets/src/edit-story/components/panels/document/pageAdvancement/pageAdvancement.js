@@ -30,15 +30,15 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
-import { useStory } from '../../../../app/story';
-import { Row, Switch } from '../../../form';
-import { SimplePanel } from '../../panel';
 import {
   NumericInput,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import clamp from '../../../../utils/clamp';
+import { useStory } from '../../../../app/story';
+import { Row, Switch } from '../../../form';
+import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared';
 
 const SwitchRow = styled.div`

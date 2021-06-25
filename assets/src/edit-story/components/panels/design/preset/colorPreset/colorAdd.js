@@ -24,10 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import {
-  Icons,
-  Text,
-} from '@web-stories-wp/design-system';
+import { Icons, Text } from '@web-stories-wp/design-system';
 import { focusStyle } from '../../../shared';
 
 const COLOR_SIZE = 32;

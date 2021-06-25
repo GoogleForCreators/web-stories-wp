@@ -20,15 +20,10 @@
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
 import { useStory, useHistory, useConfig, useLayout } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import PageMenuButton from './pageMenuButton';

@@ -25,11 +25,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Color, Row as DefaultRow } from '../../../form';
-import { useStory } from '../../../../app';
-import { SimplePanel } from '../../panel';
-import { FlipControls } from '../../shared';
-import getColorPickerActions from '../../shared/getColorPickerActions';
 import {
   Button,
   BUTTON_SIZES,
@@ -38,7 +33,12 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import { Color, Row as DefaultRow } from '../../../form';
+import { useStory } from '../../../../app';
+import { SimplePanel } from '../../panel';
+import { FlipControls } from '../../shared';
+import getColorPickerActions from '../../shared/getColorPickerActions';
 import { getDefinitionForType } from '../../../../elements';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 

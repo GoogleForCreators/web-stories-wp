@@ -25,10 +25,7 @@ import { hasOpacity, hasGradient } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import {
-  Swatch,
-  Icons,
-} from '@web-stories-wp/design-system';
+import { Swatch, Icons } from '@web-stories-wp/design-system';
 import { useStory } from '../../../../../app/story';
 import { areAllType } from '../utils';
 import Tooltip from '../../../../tooltip';

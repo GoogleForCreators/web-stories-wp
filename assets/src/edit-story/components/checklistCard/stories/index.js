@@ -18,16 +18,17 @@
  */
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   THEME_CONSTANTS,
   Text,
   Link,
   List,
   Tooltip,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../constants';

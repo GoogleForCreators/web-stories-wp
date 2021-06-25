@@ -23,13 +23,13 @@ import { isPatternEqual } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import useRichText from '../../../richText/useRichText';
 import {
   getHTMLFormatters,
   getHTMLInfo,
 } from '../../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../../../constants';
-import { useGlobalKeyDownEffect } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useCanvas } from '../../../../app';
 
 /**

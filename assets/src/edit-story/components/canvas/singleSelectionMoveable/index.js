@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useRef, useEffect, useState, useMemo } from 'react';
 import classnames from 'classnames';
 import { useUnits } from '@web-stories-wp/units';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';

@@ -21,12 +21,12 @@ import { useState, useCallback, useRef, forwardRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import Popup from '../../popup';
-import DropDownSelect from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/dropDown/select';
 import { focusStyle } from '../../panels/shared';
 import OptionsContainer from './container';
 import List from './list';

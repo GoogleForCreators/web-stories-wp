@@ -22,16 +22,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Input,
   Text,
   THEME_CONSTANTS,
+  MEDIA_VARIANTS,
   useBatchingCallback,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+
 import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
@@ -43,7 +45,6 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import { MEDIA_VARIANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/mediaInput/constants';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const IconInfo = styled.div`

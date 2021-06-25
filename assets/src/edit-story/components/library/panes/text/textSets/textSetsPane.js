@@ -39,7 +39,7 @@ import {
   Toggle,
   Headline,
   useLiveRegion,
-} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { FullWidthWrapper } from '../../common/styles';
 import { ChipGroup } from '../../shared';
 import localStore, {

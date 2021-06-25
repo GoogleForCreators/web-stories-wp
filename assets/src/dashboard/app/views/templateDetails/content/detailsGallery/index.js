@@ -34,7 +34,7 @@ import {
   Icons,
   Text,
   THEME_CONSTANTS,
-} from '../../../@web-stories-wp/design-system';
+} from '@web-stories-wp/design-system';
 import { CardGallery, ColorList } from '../../../../../components';
 import { TemplatePropType } from '../../../../../types';
 import { Column, ColumnContainer, DetailContainer } from '../../components';

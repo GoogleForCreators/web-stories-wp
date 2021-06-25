@@ -15,7 +15,7 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
 import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 

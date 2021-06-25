@@ -22,11 +22,8 @@ import { useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 import { ReviewChecklistDialog } from '../prepublish';
-import {
-  Button,
-  BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Review Prepublish Checklist',

@@ -31,7 +31,7 @@ import {
   NotificationBubble,
   Button as dsButton,
   BEZIER,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 
 const Button = styled(dsButton)`
   height: 36px;

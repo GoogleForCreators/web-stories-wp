@@ -24,9 +24,6 @@ import { useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import useInspector from '../../../inspector/useInspector';
-import panelContext from '../context';
-import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import {
   BUTTON_TRANSITION_TIMING,
   useContext,
@@ -35,7 +32,10 @@ import {
   Headline,
   themeHelpers,
   ThemeGlobals,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+import useInspector from '../../../inspector/useInspector';
+import panelContext from '../context';
+import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { focusStyle } from '../../shared';
 import DragHandle from './handle';
 

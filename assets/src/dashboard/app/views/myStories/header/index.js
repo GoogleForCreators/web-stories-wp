@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Pill } from '../../@web-stories-wp/design-system';
+import { Pill } from '@web-stories-wp/design-system';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,

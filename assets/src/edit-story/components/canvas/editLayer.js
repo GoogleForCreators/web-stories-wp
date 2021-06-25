@@ -20,13 +20,13 @@
 import styled from 'styled-components';
 import { memo, useEffect, useRef } from 'react';
 import { _x } from '@web-stories-wp/i18n';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';

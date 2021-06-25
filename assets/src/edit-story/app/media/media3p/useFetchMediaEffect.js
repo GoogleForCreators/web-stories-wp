@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useEffect, useRef } from 'react';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useSnackbar } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 

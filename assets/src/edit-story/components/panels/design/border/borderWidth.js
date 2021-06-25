@@ -25,6 +25,12 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import {
+  LockToggle,
+  NumericInput,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import { Row } from '../../../form';
 import Tooltip from '../../../tooltip';
 import {
@@ -32,12 +38,6 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import {
-  LockToggle,
-  NumericInput,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 

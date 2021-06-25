@@ -28,10 +28,7 @@ import { resourceList } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import {
-  Headline,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import {

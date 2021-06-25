@@ -31,7 +31,7 @@ import {
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';

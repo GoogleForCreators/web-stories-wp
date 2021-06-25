@@ -26,7 +26,7 @@ import { PatternPropType } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { Icons } from '@web-stories-wp/design-system';
 import { useStory } from '../../../../../app/story';
 import { Select } from '../../../../form';
 import { findMatchingColor } from '../utils';

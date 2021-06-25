@@ -17,14 +17,6 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-/**
- * Internal dependencies
- */
-import { useQuickActions } from '..';
-import { states } from '../..';
-import useHighlights from '../../useHighlights';
-import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
-import { useStory, useStoryTriggersDispatch } from '../../../story';
 import {
   Bucket,
   Captions,
@@ -35,7 +27,15 @@ import {
   Link,
   Media,
   PictureSwap,
-} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/icons';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { useQuickActions } from '..';
+import { states } from '../..';
+import useHighlights from '../../useHighlights';
+import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
+import { useStory, useStoryTriggersDispatch } from '../../../story';
 import { ACTION_TEXT } from '../constants';
 
 jest.mock('../../../story', () => ({

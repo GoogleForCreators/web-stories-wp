@@ -24,10 +24,7 @@ import { trackClick } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import {
-  Link,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../app';
 import {
   DescriptionText,

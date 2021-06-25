@@ -22,15 +22,15 @@ import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
   useKeyDownEffect,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import useFocusTrapping from '../../../utils/useFocusTrapping';
 import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 import TimePicker from './timePicker';

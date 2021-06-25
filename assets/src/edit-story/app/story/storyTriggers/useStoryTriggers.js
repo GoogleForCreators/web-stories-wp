@@ -17,14 +17,11 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  identity,
-  useContextSelector,
-} from '@web-stories-wp/design-system';
 import { Context } from './storyTriggersProvider';
 
 export function useStoryTriggers(selector) {

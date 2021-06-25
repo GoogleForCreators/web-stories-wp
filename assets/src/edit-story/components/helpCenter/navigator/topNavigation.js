@@ -19,15 +19,16 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { forceFocusCompanionToggle } from '../utils';
 import { NavBar, NavButton } from './components';
 

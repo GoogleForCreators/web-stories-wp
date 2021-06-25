@@ -22,10 +22,6 @@ import PropTypes from 'prop-types';
 import { useState, useRef, useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { PAGE_RATIO } from '@web-stories-wp/units';
-
-/**
- * Internal dependencies
- */
 import {
   Slider,
   Button,
@@ -35,7 +31,11 @@ import {
   Icons,
   useResizeEffect,
   useGridViewKeys,
-} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig, useStory } from '../../../app';
 import {
   Reorderable,
