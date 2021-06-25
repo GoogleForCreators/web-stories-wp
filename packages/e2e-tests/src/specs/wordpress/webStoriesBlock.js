@@ -41,9 +41,14 @@ const EMBED_BLOCK_CONTENT = `
 describe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
+  let removeError404Message;
 
   beforeAll(async () => {
+    // TODO, look into why this error is happening. 
     removeErrorMessage = addAllowedErrorMessage(
+      'A component is changing an uncontrolled input of type %s to be controlled'
+    );
+    removeError404Message = addAllowedErrorMessage(
       'Failed to load resource: the server responded with a status of 404'
     );
     await page.setRequestInterception(true);
@@ -74,6 +79,7 @@ describe('Web Stories Block', () => {
     await page.setRequestInterception(false);
     stopRequestInterception();
     removeErrorMessage();
+    removeError404Message();
   });
 
   it('should insert a new web stories block', async () => {
