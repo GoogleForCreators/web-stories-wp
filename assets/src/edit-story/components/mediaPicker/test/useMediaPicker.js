@@ -26,6 +26,7 @@ import ConfigContext from '../../../app/config/context';
 import useMediaPicker from '../useMediaPicker';
 
 jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => {
     return {
       showSnackbar: jest.fn(),

@@ -59,6 +59,7 @@ jest.mock('../utils/useMediaUploadQueue', () => ({
 const mockShowSnackbar = jest.fn();
 
 jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: jest.fn(() => ({
     showSnackbar: mockShowSnackbar,
   })),

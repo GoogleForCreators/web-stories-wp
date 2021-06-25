@@ -36,6 +36,7 @@ jest.mock('../api', () => ({
 
 const mockShowSnackbar = jest.fn();
 jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 

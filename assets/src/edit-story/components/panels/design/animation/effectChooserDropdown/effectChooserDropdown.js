@@ -24,7 +24,6 @@ import { useFeatures } from 'flagged';
 import { css } from 'styled-components';
 import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
 
-
 /**
  * Internal dependencies
  */

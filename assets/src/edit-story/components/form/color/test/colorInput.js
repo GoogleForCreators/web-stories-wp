@@ -32,9 +32,7 @@ import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 
 jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual(
-    '@web-stories-wp/design-system'
-  ),
+  ...jest.requireActual('@web-stories-wp/design-system'),
   Popup: ({ children, isOpen }) => (isOpen ? children : null),
 }));
 
