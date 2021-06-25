@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { noop, renderWithProviders } from '@web-stories-wp/design-system';
+import { noop } from '@web-stories-wp/design-system';
+import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils';
 
 /**
  * Internal dependencies
