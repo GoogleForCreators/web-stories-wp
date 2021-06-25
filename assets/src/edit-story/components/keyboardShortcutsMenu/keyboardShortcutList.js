@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
-
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
 import { SPECIAL_KEYS } from './constants';
 
 const isMacOs = isPlatformMacOS();

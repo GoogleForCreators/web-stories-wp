@@ -21,10 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { ColorStopPropType } from '@web-stories-wp/patterns';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -32,6 +28,10 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Tooltip from '../tooltip';
 import GradientLine from './gradientLine';
 

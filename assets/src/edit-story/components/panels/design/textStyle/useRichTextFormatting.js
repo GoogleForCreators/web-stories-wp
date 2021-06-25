@@ -19,11 +19,11 @@
  */
 import { useMemo, useCallback, useRef, useEffect } from 'react';
 import { isPatternEqual } from '@web-stories-wp/patterns';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import useRichText from '../../../richText/useRichText';
 import {
   getHTMLFormatters,

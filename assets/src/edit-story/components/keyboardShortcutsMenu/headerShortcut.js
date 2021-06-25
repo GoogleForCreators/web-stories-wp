@@ -18,11 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { header } from './keyboardShortcutList';
 import ShortcutLabel from './shortcutLabel';
 

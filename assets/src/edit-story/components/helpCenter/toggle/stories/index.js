@@ -19,10 +19,11 @@
 import { useState } from 'react';
 import { number } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
+import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
 import { Toggle as HelpCenterToggle } from '..';
 
 export default {

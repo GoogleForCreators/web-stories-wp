@@ -18,9 +18,6 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
 import { Icons } from '@web-stories-wp/design-system';
 
 function ElementsIcon() {

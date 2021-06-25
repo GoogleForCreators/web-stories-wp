@@ -17,10 +17,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons } from '@web-stories-wp/design-system';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
 const ChecklistIcon = ({ checkpoint, ...rest }) => {

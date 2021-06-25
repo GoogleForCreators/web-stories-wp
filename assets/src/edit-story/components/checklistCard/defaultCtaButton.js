@@ -18,10 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,

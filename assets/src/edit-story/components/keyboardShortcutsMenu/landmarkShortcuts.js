@@ -19,11 +19,10 @@
  */
 import { Fragment } from 'react';
 import styled from 'styled-components';
-
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { landmarks } from './keyboardShortcutList';
 import ShortcutLabel from './shortcutLabel';
 

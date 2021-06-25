@@ -19,15 +19,15 @@
  */
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import {
   useGlobalKeyDownEffect,
   useSnackbar,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useStory } from '../../app/story';
 import { dummyImage, dummyVideo } from './dummyData';
 

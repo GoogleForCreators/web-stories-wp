@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
 import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useStory } from '../../story';
 

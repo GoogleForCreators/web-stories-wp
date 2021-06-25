@@ -19,11 +19,10 @@
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
 import Modal from 'react-modal';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { SnackbarContext } from '@web-stories-wp/design-system';
 import DeleteDialog from '../panes/media/local/deleteDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';

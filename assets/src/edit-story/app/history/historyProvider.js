@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState, useRef } from 'react';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import useHistoryReducer from './useHistoryReducer';
 import Context from './context';

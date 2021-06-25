@@ -20,10 +20,6 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,

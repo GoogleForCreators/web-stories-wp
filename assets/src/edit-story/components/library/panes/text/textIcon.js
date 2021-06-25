@@ -22,11 +22,11 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '@web-stories-wp/design-system';
 import useLibrary from '../../useLibrary';
 import { DEFAULT_PRESET } from './textPresets';
 

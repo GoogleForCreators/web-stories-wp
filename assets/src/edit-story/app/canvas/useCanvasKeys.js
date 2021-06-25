@@ -19,11 +19,11 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import { useStory } from '../story';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';

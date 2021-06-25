@@ -18,9 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
 import { Icons } from '@web-stories-wp/design-system';
 
 const IconContainer = styled.div`

@@ -20,10 +20,6 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Switch as BaseSwitch,
   SwitchPropTypes,

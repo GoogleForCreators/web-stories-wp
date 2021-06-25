@@ -22,10 +22,11 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { Icons, themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Icons, themeHelpers } from '@web-stories-wp/design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
 const POINTER_MARGIN = 10;

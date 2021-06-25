@@ -19,11 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import Dialog from '../../../dialog';
 
 const TEXT = {

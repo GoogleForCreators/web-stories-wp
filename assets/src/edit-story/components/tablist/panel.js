@@ -21,10 +21,10 @@ import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons } from '@web-stories-wp/design-system';
 import { PANEL_STATES } from './constants';
 import {
   Badge,

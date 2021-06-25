@@ -21,15 +21,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { EditableInput } from 'react-color/lib/components/common';
 import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
-
-/**
- * Internal dependencies
- */
 import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { focusStyle } from '../panels/shared';
 
 const Preview = styled.button`

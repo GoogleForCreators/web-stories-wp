@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { useState, useCallback, useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
 import { useBatchingCallback } from '@web-stories-wp/design-system';
 
 const SCROLL_PERCENT = 0.2;

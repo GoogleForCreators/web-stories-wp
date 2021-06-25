@@ -21,15 +21,15 @@ import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useResizeEffect } from '@web-stories-wp/design-system';
+
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useResizeEffect } from '@web-stories-wp/design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
-
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
 import PrepublishInspector, {

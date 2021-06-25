@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { Pane, PANE_PADDING } from '../../shared';
 
 export const PaneInner = styled.div`

@@ -22,10 +22,6 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -35,6 +31,10 @@ import {
   Icons,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { useExpandAnimation, useHandleRowVisibility } from '../hooks';
 import {

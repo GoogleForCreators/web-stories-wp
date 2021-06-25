@@ -19,11 +19,10 @@
  */
 import { useMemo } from 'react';
 import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@web-stories-wp/units';
-
+import { themeHelpers } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '@web-stories-wp/design-system';
 import {
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,

@@ -19,9 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
 import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export const Container = styled.div`

@@ -21,10 +21,6 @@ import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, _x } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -33,6 +29,10 @@ import {
   Icons,
   Tooltip,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import {
   DIRECTION,
   ROTATION,

@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { AnimatedContextMenu } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { AnimatedContextMenu } from '@web-stories-wp/design-system';
 import { useRightClickMenu } from '../../app/rightClickMenu';
 import DirectionAware from '../directionAware';
 

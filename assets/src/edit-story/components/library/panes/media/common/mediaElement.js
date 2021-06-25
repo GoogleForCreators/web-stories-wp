@@ -22,11 +22,10 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef } from 'react';
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
-
+import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';

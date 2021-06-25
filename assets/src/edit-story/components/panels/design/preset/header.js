@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -31,6 +27,10 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { PanelTitle } from '../../panel';
 import { focusStyle } from '../../shared';
 import { PRESET_TYPES } from './constants';

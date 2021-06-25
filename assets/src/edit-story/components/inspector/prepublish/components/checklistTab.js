@@ -20,11 +20,10 @@ import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons } from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../app';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,

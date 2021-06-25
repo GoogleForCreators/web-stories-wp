@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '@web-stories-wp/design-system';
 import { useStory } from '../story';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import {

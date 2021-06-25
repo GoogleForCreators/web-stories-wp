@@ -19,15 +19,14 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Snackbar,
   useSnackbar,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import Library from '../library';
 import Workspace from '../workspace';
 import MetaBoxes from '../../integrations/wordpress/metaBoxes';

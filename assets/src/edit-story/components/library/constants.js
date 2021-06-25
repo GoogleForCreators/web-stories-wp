@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
 import { MediaPane, MediaIcon } from './panes/media/local';
 import { Media3pPane, Media3pIcon } from './panes/media/media3p';
 import { ShapesPane, ShapesIcon } from './panes/shapes';

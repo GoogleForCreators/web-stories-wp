@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { ThemeProvider } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Dialog as StyledDialog,
   Button,

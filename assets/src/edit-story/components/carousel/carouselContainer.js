@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { useMemo, useRef, useState } from 'react';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useResizeEffect } from '@web-stories-wp/design-system';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';

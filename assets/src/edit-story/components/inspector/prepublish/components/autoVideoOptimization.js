@@ -20,11 +20,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useConfig } from '../../../../app';
 import {
   DescriptionText,

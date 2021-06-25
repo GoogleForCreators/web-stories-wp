@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { SnackbarContext } from '@web-stories-wp/design-system';
 import ConfigContext from '../../../app/config/context';
 import useMediaPicker from '../useMediaPicker';
 

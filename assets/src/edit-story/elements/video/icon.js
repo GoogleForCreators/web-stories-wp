@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '@web-stories-wp/design-system';
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
 

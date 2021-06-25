@@ -17,10 +17,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { Checkbox } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Checkbox } from '@web-stories-wp/design-system';
 import { CheckboxCtaContainer, CheckboxCtaLabel } from './styles';
 
 export const CheckboxCta = ({ id, children, ...rest }) => (
