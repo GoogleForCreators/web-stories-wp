@@ -26,15 +26,15 @@ import { useDebouncedCallback } from 'use-debounce';
  */
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   NumericInput,
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import clamp from '../../../../utils/clamp';
 import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';

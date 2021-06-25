@@ -20,10 +20,6 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
 import {
   BUTTON_TRANSITION_TIMING,
   useContext,
@@ -33,6 +29,10 @@ import {
   themeHelpers,
   ThemeGlobals,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import useInspector from '../../../inspector/useInspector';
 import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';

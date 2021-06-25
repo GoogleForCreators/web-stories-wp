@@ -20,11 +20,10 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import ColorAdd from './colorAdd';
 
 const InlineIcon = styled(Icons.Plus)`

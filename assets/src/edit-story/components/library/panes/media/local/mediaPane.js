@@ -28,10 +28,6 @@ import {
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { resourceList } from '@web-stories-wp/media';
-
-/**
- * Internal dependencies
- */
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -41,6 +37,10 @@ import {
   THEME_CONSTANTS,
   useSnackbar,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';

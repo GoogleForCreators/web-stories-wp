@@ -21,11 +21,10 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@web-stories-wp/units';
-
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import { ZOOM_SETTING } from '../../../../constants';
 import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';

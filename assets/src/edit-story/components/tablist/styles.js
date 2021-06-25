@@ -19,9 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_VARIANTS,
@@ -30,6 +27,9 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`

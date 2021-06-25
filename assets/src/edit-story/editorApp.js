@@ -20,14 +20,13 @@
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   SnackbarProvider,
   ModalGlobalStyle,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import theme, { GlobalStyle } from './theme';
 import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';

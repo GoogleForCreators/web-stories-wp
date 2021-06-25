@@ -20,11 +20,10 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Input } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Input } from '@web-stories-wp/design-system';
 import { useStory, useCanvas } from '../../../../app';
 import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';

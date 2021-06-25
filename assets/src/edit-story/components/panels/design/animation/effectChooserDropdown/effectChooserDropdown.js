@@ -20,14 +20,14 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import { useFeatures } from 'flagged';
 import { css } from 'styled-components';
 import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
 
+
+/**
+ * Internal dependencies
+ */
 import { focusStyle } from '../../../shared';
 import {
   backgroundEffectOptions,

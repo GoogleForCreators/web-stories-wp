@@ -19,10 +19,10 @@
  */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { Tooltip } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Tooltip } from '@web-stories-wp/design-system';
 import { AnimationListItem, ContentWrapper } from './styles';
 import { ANIMATION_DROPDOWN_OPTION_PROP_TYPE } from './types';
 

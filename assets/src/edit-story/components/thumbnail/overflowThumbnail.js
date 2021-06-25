@@ -19,14 +19,14 @@
  */
 import { sprintf, __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
 import {
   THEME_CONSTANTS,
   Text,
   VisuallyHidden,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { Container } from './styles';
 
 /**

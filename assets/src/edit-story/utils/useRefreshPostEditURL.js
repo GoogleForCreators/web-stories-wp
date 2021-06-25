@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**

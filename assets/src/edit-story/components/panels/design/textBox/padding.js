@@ -21,14 +21,13 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   LockToggle as DefaultLockToggle,
   NumericInput,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { TurningLine } from '../../../../icons';
 import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';

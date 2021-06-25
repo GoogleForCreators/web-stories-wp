@@ -19,11 +19,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
-
+import { Text, Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Text, Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';

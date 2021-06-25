@@ -27,10 +27,6 @@ import {
   getBoundRect,
   calcRotatedObjectPositionAndSize,
 } from '@web-stories-wp/units';
-
-/**
- * Internal dependencies
- */
 import {
   useKeyDownEffect,
   Icons,
@@ -40,6 +36,10 @@ import {
   BUTTON_VARIANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../app';
 import { Panel } from '../../panel';
 import Tooltip from '../../../tooltip';

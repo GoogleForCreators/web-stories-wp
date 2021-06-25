@@ -19,15 +19,15 @@
 import PropTypes from 'prop-types';
 import { useCallback, useRef } from 'react';
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   useKeyDownEffect,
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../../app/config';
 import { focusStyle } from '../../../../panels/shared';
 

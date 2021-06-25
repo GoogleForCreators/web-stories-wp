@@ -21,11 +21,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
+import { PillGroup } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { PillGroup } from '@web-stories-wp/design-system';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { Color, Row } from '../../../form';
 import { useCommonColorValue, getCommonValue, focusStyle } from '../../shared';

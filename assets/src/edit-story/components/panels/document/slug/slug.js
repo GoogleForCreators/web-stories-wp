@@ -20,16 +20,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Input,
   Link,
   ThemeGlobals,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useStory } from '../../../../app/story';
 import cleanForSlug from '../../../../utils/cleanForSlug';
 import inRange from '../../../../utils/inRange';

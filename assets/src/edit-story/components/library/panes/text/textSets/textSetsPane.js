@@ -29,10 +29,6 @@ import {
   _x,
   translateToInclusiveList,
 } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   THEME_CONSTANTS,
   Text,
@@ -40,6 +36,10 @@ import {
   Headline,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { FullWidthWrapper } from '../../common/styles';
 import { ChipGroup } from '../../shared';
 import localStore, {

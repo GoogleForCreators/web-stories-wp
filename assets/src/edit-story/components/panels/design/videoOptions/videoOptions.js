@@ -21,16 +21,16 @@ import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Checkbox,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';

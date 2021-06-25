@@ -21,15 +21,15 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useAPI } from '../../../../app/api';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';

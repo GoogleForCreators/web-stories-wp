@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { DropDown, NumericInput } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { DropDown, NumericInput } from '@web-stories-wp/design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';

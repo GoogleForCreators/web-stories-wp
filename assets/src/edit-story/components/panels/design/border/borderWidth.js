@@ -21,16 +21,16 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   LockToggle,
   NumericInput,
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { Row } from '../../../form';
 import Tooltip from '../../../tooltip';
 import {

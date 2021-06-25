@@ -22,11 +22,10 @@ import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
-
+import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
 import base64Encode from '../../../edit-story/utils/base64Encode';
 import {
   STORY_STATUSES,

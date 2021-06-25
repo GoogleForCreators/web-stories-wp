@@ -18,10 +18,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Headline,
   Icons,
@@ -30,6 +26,10 @@ import {
   THEME_CONSTANTS,
   Toggle,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { MAX_NUMBER_FOR_BADGE } from '../constants';
 import { focusStyle } from '../../../panels/shared';
 

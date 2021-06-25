@@ -17,11 +17,10 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
+import { useFocusOut, useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useFocusOut, useKeyDownEffect } from '@web-stories-wp/design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 
