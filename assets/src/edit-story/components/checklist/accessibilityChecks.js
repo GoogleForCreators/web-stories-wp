@@ -13,6 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
+import ImageElementMissingAlt from './checks/imageElementMissingAlt';
+import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
+import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
+import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
+import VideoElementMissingDescription from './checks/videoElementMissingDescription';
+
 export function AccessibilityChecks() {
-  return <div>{'accessibility'}</div>;
+  return (
+    <div>
+      <PageBackgroundTextLowContrast />
+      <TextElementFontSizeTooSmall />
+      <VideoElementMissingDescription />
+      <VideoElementMissingCaptions />
+      <ElementLinkTappableRegionTooSmall />
+      <ImageElementMissingAlt />
+    </div>
+  );
 }

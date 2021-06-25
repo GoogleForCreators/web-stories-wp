@@ -110,11 +110,18 @@ export const Footer = styled.div`
   grid-area: footer;
   padding-top: 8px;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+
+  & > * {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 // For use with lists
 export const CardListWrapper = styled.div`
   margin-left: 16px;
+  li {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 export const StyledVideoOptimizationIcon = styled(Icons.GearWithGauge)`

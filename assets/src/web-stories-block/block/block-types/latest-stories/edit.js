@@ -84,7 +84,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
     }
   };
 
-  const [debouncedFetchStories] = useDebouncedCallback(
+  const debouncedFetchStories = useDebouncedCallback(
     fetchStories,
     FETCH_STORIES_DEBOUNCE
   );
