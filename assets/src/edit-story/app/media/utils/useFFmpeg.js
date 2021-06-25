@@ -30,7 +30,7 @@ import { useCurrentUser } from '../../currentUser';
 import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
-  MEDIA_TRANSCODED_MINE_TYPE,
+  MEDIA_TRANSCODED_MIME_TYPE,
   MEDIA_TRANSCODED_FILE_TYPE,
 } from '../../../constants';
 
@@ -212,10 +212,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
         return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MINE_TYPE })],
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
           {
-            type: MEDIA_TRANSCODED_MINE_TYPE,
+            type: MEDIA_TRANSCODED_MIME_TYPE,
           }
         );
       } catch (err) {
@@ -257,10 +257,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
         return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MINE_TYPE })],
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
           outputFileName,
           {
-            type: MEDIA_TRANSCODED_MINE_TYPE,
+            type: MEDIA_TRANSCODED_MIME_TYPE,
           }
         );
       } catch (err) {

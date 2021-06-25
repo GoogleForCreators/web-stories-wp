@@ -18,7 +18,7 @@ const GB_IN_BYTES = 1024 * 1024 * 1024;
 
 export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;
 
-export const MEDIA_TRANSCODED_MINE_TYPE = 'video/mp4';
+export const MEDIA_TRANSCODED_MIME_TYPE = 'video/mp4';
 export const MEDIA_TRANSCODED_FILE_TYPE = 'mp4';
 
 export const MEDIA_VIDEO_DIMENSIONS_THRESHOLD = {
