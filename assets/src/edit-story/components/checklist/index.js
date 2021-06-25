@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -31,8 +31,9 @@ import { Popup } from '../helpCenter/popup';
 import { NavigationWrapper } from '../helpCenter/navigator';
 import { TopNavigation } from '../helpCenter/navigator/topNavigation';
 import { Z_INDEX } from '../canvas/layout';
+import { Tablist } from '../tablist';
 import { Toggle } from './toggle';
-import { POPUP_ID } from './constants';
+import { CATEGORY_LABELS, ISSUE_TYPES, POPUP_ID } from './constants';
 import { DesignChecks } from './designChecks';
 import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
@@ -56,6 +57,15 @@ export function Checklist() {
       close,
       isHelpCenterOpen,
     })
+  );
+
+  const [openPanel, setOpenPanel] = useState(null);
+  const handleOpenPanel = useCallback(
+    (panelName) => () =>
+      setOpenPanel((currentOpenPanel) =>
+        currentOpenPanel === panelName ? null : panelName
+      ),
+    []
   );
 
   // Set Focus within the popup on open
@@ -89,9 +99,23 @@ export function Checklist() {
                 label={__('Checklist', 'web-stories')}
                 popupId={POPUP_ID}
               />
-              <PriorityChecks />
-              <DesignChecks />
-              <AccessibilityChecks />
+              <Tablist aria-label={__('Tab list of issues', 'web-stories')}>
+                <PriorityChecks
+                  isOpen={openPanel === ISSUE_TYPES.PRIORITY}
+                  onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
+                />
+                <DesignChecks
+                  isOpen={openPanel === ISSUE_TYPES.DESIGN}
+                  onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+                />
+                <AccessibilityChecks
+                  isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
+                  onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+                />
+              </Tablist>
             </NavigationWrapper>
           </Popup>
           <Toggle

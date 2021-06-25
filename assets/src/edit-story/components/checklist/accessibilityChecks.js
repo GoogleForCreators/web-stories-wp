@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
+import { TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
 import ImageElementMissingAlt from './checks/imageElementMissingAlt';
@@ -25,17 +30,22 @@ import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from './checks/videoElementMissingDescription';
 import { ChecklistCategoryProvider } from './checkCountContext';
 
-export function AccessibilityChecks() {
+export function AccessibilityChecks({ isOpen, onClick, title }) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <div>
+      <TablistPanel isExpanded={isOpen} onClick={onClick} title={title}>
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
         <VideoElementMissingCaptions />
         <ElementLinkTappableRegionTooSmall />
         <ImageElementMissingAlt />
-      </div>
+      </TablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+AccessibilityChecks.propTypes = {
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};

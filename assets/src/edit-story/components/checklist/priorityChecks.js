@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { PANEL_STATES, TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import PublisherLogoSize from './checks/publisherLogoSize';
 import StoryMissingExcerpt from './checks/storyMissingExerpt';
@@ -28,10 +32,15 @@ import StoryTitleLength from './checks/storyTitleLength';
 import VideoElementMissingPoster from './checks/videoElementMissingPoster';
 import { ChecklistCategoryProvider } from './checkCountContext';
 
-export function PriorityChecks() {
+export function PriorityChecks({ isOpen, onClick, title }) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
-      <div>
+      <TablistPanel
+        isExpanded={isOpen}
+        onClick={onClick}
+        status={PANEL_STATES.DANGER}
+        title={title}
+      >
         <StoryMissingTitle />
         <StoryTitleLength />
         <StoryMissingExcerpt />
@@ -40,7 +49,12 @@ export function PriorityChecks() {
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />
-      </div>
+      </TablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+PriorityChecks.propTypes = {
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};

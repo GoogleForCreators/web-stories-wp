@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
+import { TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import PageTooManyLinks from './checks/pageTooManyLinks';
 import PageTooMuchText from './checks/pageTooMuchText';
@@ -25,17 +30,22 @@ import ImageElementResolution from './checks/imageElementResolution';
 import StoryPagesCount from './checks/storyPagesCount';
 import { ChecklistCategoryProvider } from './checkCountContext';
 
-export function DesignChecks() {
+export function DesignChecks({ isOpen, onClick, title }) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <>
+      <TablistPanel isExpanded={isOpen} onClick={onClick} title={title}>
         <StoryPagesCount />
         <PageTooMuchText />
         <PageTooLittleText />
         <PageTooManyLinks />
         <VideoElementResolution />
         <ImageElementResolution />
-      </>
+      </TablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+DesignChecks.propTypes = {
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};
