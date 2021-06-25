@@ -28,12 +28,22 @@ import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextCon
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
 import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from './checks/videoElementMissingDescription';
-import { ChecklistCategoryProvider } from './checkCountContext';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from './checkCountContext';
 
 export function AccessibilityChecks({ isOpen, onClick, title }) {
+  const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <TablistPanel isExpanded={isOpen} onClick={onClick} title={title}>
+      <TablistPanel
+        badgeCount={count}
+        isExpanded={isOpen}
+        onClick={onClick}
+        title={title}
+      >
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />

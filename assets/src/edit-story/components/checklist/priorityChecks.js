@@ -30,12 +30,18 @@ import { StoryPosterAttached } from './checks/storyPosterAttached';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
 import StoryTitleLength from './checks/storyTitleLength';
 import VideoElementMissingPoster from './checks/videoElementMissingPoster';
-import { ChecklistCategoryProvider } from './checkCountContext';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from './checkCountContext';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
+  const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <TablistPanel
+        badgeCount={count}
         isExpanded={isOpen}
         onClick={onClick}
         status={PANEL_STATES.DANGER}

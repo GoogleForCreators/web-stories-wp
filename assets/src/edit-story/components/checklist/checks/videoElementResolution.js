@@ -33,6 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
@@ -61,8 +62,11 @@ const VideoElementResolution = () => {
   );
   const { footer, title } = DESIGN_COPY.videoResolutionTooLow;
 
+  const isRendered = failingElements.length > 0;
+  useRegisterCheck('VideoElementResolution', isRendered);
+
   return (
-    failingElements.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

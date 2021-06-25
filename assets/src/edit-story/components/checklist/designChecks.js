@@ -28,12 +28,22 @@ import PageTooLittleText from './checks/pageTooLittleText';
 import VideoElementResolution from './checks/videoElementResolution';
 import ImageElementResolution from './checks/imageElementResolution';
 import StoryPagesCount from './checks/storyPagesCount';
-import { ChecklistCategoryProvider } from './checkCountContext';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from './checkCountContext';
 
 export function DesignChecks({ isOpen, onClick, title }) {
+  const count = useCategoryCount(ISSUE_TYPES.DESIGN);
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <TablistPanel isExpanded={isOpen} onClick={onClick} title={title}>
+      <TablistPanel
+        badgeCount={count}
+        isExpanded={isOpen}
+        onClick={onClick}
+        title={title}
+      >
         <StoryPagesCount />
         <PageTooMuchText />
         <PageTooLittleText />
