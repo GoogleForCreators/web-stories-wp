@@ -19,6 +19,6 @@
 import { MEDIA_POSTER_IMAGE_EXT } from '../../../constants';
 
 const getPosterName = (fileName) => {
-  return fileName + '.' + MEDIA_POSTER_IMAGE_EXT;
+  return fileName + '-poster.' + MEDIA_POSTER_IMAGE_EXT;
 };
 export default getPosterName;
