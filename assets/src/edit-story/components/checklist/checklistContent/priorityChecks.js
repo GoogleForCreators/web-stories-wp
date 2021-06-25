@@ -35,6 +35,7 @@ import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
+import VideoOptimization from '../checks/videoOptimization';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
@@ -73,6 +74,7 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />
+        <VideoOptimization />
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
