@@ -76,7 +76,6 @@ export const ToggleButton = ({
         aria-haspopup
         aria-pressed={isOpen}
         aria-expanded={isOpen}
-        hasNotifications={hasNotifications}
         isOpen={isOpen}
         type={BUTTON_TYPES.TERTIARY}
         variant={BUTTON_VARIANTS.RECTANGLE}

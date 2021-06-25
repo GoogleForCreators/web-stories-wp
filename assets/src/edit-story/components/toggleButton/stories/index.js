@@ -49,7 +49,7 @@ const ChecklistIcon = styled(Icons.Checkbox)`
   width: auto;
   display: block;
 `;
-// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
+
 export const _default = () => (
   <Container>
     <ToggleButton
