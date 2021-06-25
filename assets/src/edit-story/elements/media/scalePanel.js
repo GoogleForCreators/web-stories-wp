@@ -24,7 +24,7 @@ import { _x } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Slider } from '../../../design-system';
+import { Slider } from '@web-stories-wp/design-system';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import InOverlay from '../../components/overlay';
 import { Z_INDEX_CANVAS } from '../../constants';

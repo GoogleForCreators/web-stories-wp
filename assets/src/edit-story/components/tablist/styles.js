@@ -29,7 +29,7 @@ import {
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`

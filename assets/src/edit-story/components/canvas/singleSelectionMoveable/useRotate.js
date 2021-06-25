@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useGlobalIsKeyPressed } from '../../../../design-system';
+import { useGlobalIsKeyPressed } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 import normalizeRotationDegrees from '../utils/normalizeRotationDegrees';

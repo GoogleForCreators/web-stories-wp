@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../../design-system';
+import { THEME_CONSTANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { EmptyPanelContainer, EmptyPanelText, Checkmark } from './styles';
 
 const EmptyChecklist = ({ body }) => {

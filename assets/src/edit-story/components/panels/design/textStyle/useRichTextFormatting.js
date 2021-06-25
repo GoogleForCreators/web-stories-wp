@@ -29,7 +29,7 @@ import {
   getHTMLInfo,
 } from '../../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../../../constants';
-import { useGlobalKeyDownEffect } from '../../../../../design-system';
+import { useGlobalKeyDownEffect } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useCanvas } from '../../../../app';
 
 /**

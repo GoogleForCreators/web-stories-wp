@@ -23,7 +23,7 @@ import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../../design-system';
+import { THEME_CONSTANTS } from '../../@web-stories-wp/design-system';
 import { AD_NETWORK_TYPE } from '../../../../constants';
 import {
   InlineLink,

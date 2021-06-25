@@ -27,7 +27,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import StoryPropTypes from '../../types';
 import Tooltip from '../tooltip';
-import { TOOLTIP_PLACEMENT } from '../../../design-system/components/tooltip';
+import { TOOLTIP_PLACEMENT } from '../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/tooltip';
 import { getLinkFromElement } from '.';
 
 const StyledTooltip = styled(Tooltip)`

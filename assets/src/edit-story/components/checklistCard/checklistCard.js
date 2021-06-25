@@ -23,7 +23,10 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 
-import { Headline, THEME_CONSTANTS } from '../../../design-system';
+import {
+  Headline,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import { getGridVariant } from './helpers';
 import {
   CARD_TYPE,

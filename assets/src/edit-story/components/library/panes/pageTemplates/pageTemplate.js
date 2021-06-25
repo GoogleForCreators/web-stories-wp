@@ -33,7 +33,7 @@ import {
   themeHelpers,
   useFocusOut,
   Icons,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { STORY_ANIMATION_STATE } from '../../../../../animation';

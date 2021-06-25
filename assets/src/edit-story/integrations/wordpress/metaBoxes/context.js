@@ -17,6 +17,6 @@
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../../design-system';
+import { createContext } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 export default createContext({ state: {}, actions: {} });

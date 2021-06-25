@@ -24,7 +24,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { SnackbarProvider, ModalGlobalStyle } from '../design-system';
+import {
+  SnackbarProvider,
+  ModalGlobalStyle,
+} from '@web-stories-wp/design-system';
 import theme, { GlobalStyle } from './theme';
 import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';

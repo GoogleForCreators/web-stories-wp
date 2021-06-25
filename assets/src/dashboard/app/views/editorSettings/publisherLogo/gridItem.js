@@ -29,7 +29,7 @@ import {
   GridItemContainer,
   Logo,
 } from '../components';
-import { THEME_CONSTANTS } from '../../../../../design-system';
+import { THEME_CONSTANTS } from '../../@web-stories-wp/design-system';
 import PopoverLogoContextMenu, {
   PopoverLogoContextMenuPropTypes,
 } from './popoverLogoContextMenu';

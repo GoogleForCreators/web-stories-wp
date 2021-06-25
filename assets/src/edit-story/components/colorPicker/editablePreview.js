@@ -29,7 +29,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { focusStyle } from '../panels/shared';
 
 const Preview = styled.button`

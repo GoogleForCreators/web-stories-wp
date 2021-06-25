@@ -26,7 +26,10 @@ import userEvent from '@testing-library/user-event';
  */
 import { useRef } from 'react';
 import useFocusHighlight from '../useFocusHighlight';
-import { useContextSelector, useFocusOut } from '../../../../design-system';
+import {
+  useContextSelector,
+  useFocusOut,
+} from '@web-stories-wp/design-system';
 
 jest.mock('../../../../design-system/utils/useContextSelector');
 jest.mock('../../../../design-system/utils/useFocusOut');

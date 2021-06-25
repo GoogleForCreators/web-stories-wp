@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../design-system';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 import { useStory } from '../story';
 import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import {

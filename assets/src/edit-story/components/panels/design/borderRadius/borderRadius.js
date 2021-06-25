@@ -35,7 +35,10 @@ import {
   focusStyle,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { LockToggle, NumericInput } from '../../../../../design-system';
+import {
+  LockToggle,
+  NumericInput,
+} from '@web-stories-wp/design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const TOGGLE_WIDTH = 32;

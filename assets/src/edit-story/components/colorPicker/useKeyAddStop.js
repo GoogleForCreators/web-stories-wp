@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../design-system';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 function truncate(val, pos) {
   return Number(val.toFixed(pos));

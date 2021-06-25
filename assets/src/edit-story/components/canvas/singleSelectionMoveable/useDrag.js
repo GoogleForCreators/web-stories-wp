@@ -22,7 +22,7 @@ import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../../design-system';
+import { useBatchingCallback } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useDropTargets } from '../../dropTargets';
 import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';

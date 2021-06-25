@@ -40,7 +40,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Tooltip,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 const StyledButton = styled(Button)`
   z-index: 0;

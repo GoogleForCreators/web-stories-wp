@@ -30,7 +30,7 @@ import {
   Button,
   BUTTON_SIZES,
   useKeyDownEffect,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import useFocusTrapping from '../../../utils/useFocusTrapping';
 import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 import TimePicker from './timePicker';

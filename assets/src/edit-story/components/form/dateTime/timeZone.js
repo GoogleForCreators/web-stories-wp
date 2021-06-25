@@ -26,7 +26,11 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
-import { PLACEMENT, Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  PLACEMENT,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 const Wrapper = styled.div`
   white-space: nowrap;

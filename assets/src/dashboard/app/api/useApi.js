@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../../design-system';
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
 import { ApiContext } from './apiProvider';
 
 export default function useApi(selector = identity) {

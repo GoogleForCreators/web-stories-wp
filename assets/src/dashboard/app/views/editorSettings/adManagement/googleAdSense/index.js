@@ -41,7 +41,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
-} from '../../../../../../design-system';
+} from '../../../@web-stories-wp/design-system';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(

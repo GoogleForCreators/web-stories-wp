@@ -20,7 +20,10 @@
 /**
  * Internal dependencies
  */
-import { useContextSelector, identity } from '../../../design-system';
+import {
+  useContextSelector,
+  identity,
+} from '@web-stories-wp/design-system';
 import Context from './context';
 
 function useHighlights(selector) {

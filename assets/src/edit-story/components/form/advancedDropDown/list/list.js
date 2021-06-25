@@ -43,7 +43,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useFocusOut,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { List, Group, GroupLabel, NoResult } from './styled';
 import DefaultRenderer from './defaultRenderer';
 

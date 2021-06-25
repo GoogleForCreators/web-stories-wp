@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DropDown } from '../../../../design-system';
+import { DropDown } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { focusStyle } from '../../panels/shared';
 
 const Container = styled.div`

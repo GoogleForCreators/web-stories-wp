@@ -25,8 +25,8 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 import { useLayoutContext } from '../layout';
-import { Button, BUTTON_VARIANTS, Icons } from '../../../design-system';
 
 const StyledButton = styled(Button)(
   ({ isVisible, theme }) => css`

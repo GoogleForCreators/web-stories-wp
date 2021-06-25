@@ -28,7 +28,7 @@ import {
   BUTTON_TYPES,
   Icons,
   BEZIER,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useConfig } from '../../../app/config';
 import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';

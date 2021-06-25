@@ -37,7 +37,7 @@ import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 import {
   LockToggle as DefaultLockToggle,
   NumericInput,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { getHiddenPadding, removeHiddenPadding } from './utils';
 

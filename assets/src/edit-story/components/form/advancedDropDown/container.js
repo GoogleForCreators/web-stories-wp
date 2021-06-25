@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useFocusOut } from '../../../../design-system';
+import { useFocusOut } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import SearchInput from './searchInput';
 import { isKeywordFilterable } from './utils';
 

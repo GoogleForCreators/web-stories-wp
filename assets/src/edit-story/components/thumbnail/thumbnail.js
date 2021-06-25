@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Icons, LoadingBar } from '../../../design-system';
+import { Icons, LoadingBar } from '@web-stories-wp/design-system';
 import {
   THUMBNAIL_TYPES,
   THUMBNAIL_SCRIM_CLASSNAME,

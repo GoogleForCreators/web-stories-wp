@@ -26,7 +26,7 @@ import { PatternPropType } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { NumericInput } from '../../../../design-system';
+import { NumericInput } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { inputContainerStyleOverride } from '../../panels/shared';
 import getPreviewOpacity from './getPreviewOpacity';
 

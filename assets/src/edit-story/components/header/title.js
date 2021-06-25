@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system';
+import { themeHelpers } from '@web-stories-wp/design-system';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';

@@ -37,7 +37,7 @@ import {
 } from '../shared/virtualizedPanelGrid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
-import { useSnackbar } from '../../../../../design-system';
+import { useSnackbar } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import PageTemplate from './pageTemplate';
 
 const THRESHOLD = 6;

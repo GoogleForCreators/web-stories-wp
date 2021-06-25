@@ -30,7 +30,7 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import UploadDropTargetOverlay from './overlay';
 
 const Container = styled(UploadDropTargetOverlay)`

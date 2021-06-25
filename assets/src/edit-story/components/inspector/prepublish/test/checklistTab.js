@@ -22,8 +22,8 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { noop } from '../../../../../design-system';
-import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
+import { noop } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { renderWithProviders } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/testUtils/renderWithProviders';
 import { ConfigProvider } from '../../../../app/config';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../../app/prepublish';
 import ChecklistTab from '../components/checklistTab';

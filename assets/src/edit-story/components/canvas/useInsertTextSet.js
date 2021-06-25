@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../design-system';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
 import useInsertElement from './useInsertElement';

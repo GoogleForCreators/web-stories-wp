@@ -25,7 +25,10 @@ import { __, _x, sprintf } from '@web-stories-wp/i18n';
  */
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
-import { DropDown, PLACEMENT } from '../../../../design-system';
+import {
+  DropDown,
+  PLACEMENT,
+} from '@web-stories-wp/design-system';
 
 const selectButtonCSS = css`
   height: 36px;

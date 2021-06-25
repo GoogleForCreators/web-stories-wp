@@ -30,7 +30,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 
 const ScrollMessage = styled.div`
   width: 100%;

@@ -29,7 +29,7 @@ import { MenuContainer, LogoMenuButton } from '../components';
 import {
   AnimatedContextMenu,
   MenuItemProps,
-} from '../../../../../design-system';
+} from '../../@web-stories-wp/design-system';
 
 function PopoverLogoContextMenu({
   isActive,

@@ -26,7 +26,7 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import useLibrary from '../../useLibrary';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 

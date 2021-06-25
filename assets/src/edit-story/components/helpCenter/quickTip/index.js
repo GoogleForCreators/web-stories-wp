@@ -29,7 +29,7 @@ import {
   Text,
   THEME_CONSTANTS,
   VisuallyHidden,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { NAVIGATION_HEIGHT } from '../navigator/constants';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';

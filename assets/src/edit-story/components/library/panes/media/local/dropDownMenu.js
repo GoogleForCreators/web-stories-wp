@@ -26,7 +26,11 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Menu, PLACEMENT, Popup } from '../../../../../../design-system';
+import {
+  Menu,
+  PLACEMENT,
+  Popup,
+} from '@web-stories-wp/design-system';
 import { More } from '../../../../button';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';

@@ -31,7 +31,7 @@ import {
   CheckboxLabel,
   CheckboxLabelText,
 } from '../components';
-import { Checkbox, THEME_CONSTANTS } from '../../../../../design-system';
+import { Checkbox, THEME_CONSTANTS } from '../../@web-stories-wp/design-system';
 
 export default function TelemetrySettings({
   selected,

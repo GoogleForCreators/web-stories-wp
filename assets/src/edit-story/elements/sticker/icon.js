@@ -22,7 +22,7 @@ import stickers from '@web-stories-wp/stickers';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { noop } from '../../../design-system';
+import { noop } from '@web-stories-wp/design-system';
 
 const style = {
   display: 'block',

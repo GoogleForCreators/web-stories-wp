@@ -31,7 +31,7 @@ import {
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
   Icons,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import Tooltip from '../../tooltip';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 

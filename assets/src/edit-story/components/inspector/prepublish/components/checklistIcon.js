@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import { Icons } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
 
 const ChecklistIcon = ({ checkpoint, ...rest }) => {

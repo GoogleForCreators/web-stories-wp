@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Checkbox } from '../../../design-system';
+import { Checkbox } from '@web-stories-wp/design-system';
 import { CheckboxCtaContainer, CheckboxCtaLabel } from './styles';
 
 export const CheckboxCta = ({ id, children, ...rest }) => (

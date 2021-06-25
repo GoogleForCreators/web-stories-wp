@@ -27,7 +27,10 @@ import { createSolid, PatternPropType } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect, useFocusOut } from '../../../design-system';
+import {
+  useKeyDownEffect,
+  useFocusOut,
+} from '@web-stories-wp/design-system';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import { useTransform } from '../transform';
 import useStory from '../../app/story/useStory';

@@ -23,7 +23,10 @@ import { TransitionGroup } from 'react-transition-group';
  * Internal dependencies
  */
 import { Menu as HelpCenterMenu } from '..';
-import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
 
 export default {
   title: 'Stories Editor/Components/Help Center/Menu',

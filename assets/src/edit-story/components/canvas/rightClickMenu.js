@@ -21,7 +21,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { AnimatedContextMenu } from '../../../design-system';
+import { AnimatedContextMenu } from '@web-stories-wp/design-system';
 import { useRightClickMenu } from '../../app/rightClickMenu';
 import DirectionAware from '../directionAware';
 

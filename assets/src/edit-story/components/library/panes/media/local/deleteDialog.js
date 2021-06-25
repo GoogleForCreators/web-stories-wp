@@ -29,7 +29,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../design-system';
+} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
 import { useStory } from '../../../../../app/story';

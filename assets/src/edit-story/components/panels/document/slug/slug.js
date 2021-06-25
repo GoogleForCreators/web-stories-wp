@@ -34,7 +34,7 @@ import {
   Link,
   ThemeGlobals,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { inputContainerStyleOverride } from '../../shared';
 
 export const MIN_MAX = {

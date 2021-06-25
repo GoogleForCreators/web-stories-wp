@@ -20,7 +20,10 @@ import { useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useContextSelector, useFocusOut } from '../../../design-system';
+import {
+  useContextSelector,
+  useFocusOut,
+} from '@web-stories-wp/design-system';
 import Context from './context';
 
 /**

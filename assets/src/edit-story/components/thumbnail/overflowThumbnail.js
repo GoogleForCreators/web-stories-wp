@@ -22,7 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text, VisuallyHidden } from '../../../design-system';
+import {
+  THEME_CONSTANTS,
+  Text,
+  VisuallyHidden,
+} from '@web-stories-wp/design-system';
 import { Container } from './styles';
 
 /**

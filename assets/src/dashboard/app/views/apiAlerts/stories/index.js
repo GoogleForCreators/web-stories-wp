@@ -25,7 +25,7 @@ import {
   Button,
   BUTTON_TYPES,
   SnackbarProvider,
-} from '../../../../../design-system';
+} from '../../@web-stories-wp/design-system';
 import { ApiContext } from '../../../api/apiProvider';
 import useApiAlerts from '../../../api/useApiAlerts';
 

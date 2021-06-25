@@ -23,7 +23,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useLiveRegion } from '../../../design-system';
+import { useLiveRegion } from '@web-stories-wp/design-system';
 
 /* translators: %d: new position. */
 const REORDER_MESSAGE = __(

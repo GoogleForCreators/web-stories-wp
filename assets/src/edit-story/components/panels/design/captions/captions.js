@@ -42,7 +42,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import Tooltip from '../../../tooltip';
 
 const InputRow = styled.div`

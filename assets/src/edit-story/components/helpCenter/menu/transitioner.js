@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../design-system';
+import { BEZIER } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { ScheduledTransition } from '../scheduledTransition';
 import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 

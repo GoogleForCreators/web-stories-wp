@@ -22,7 +22,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Headline, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  Headline,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 export const Container = styled.div`
   position: relative;

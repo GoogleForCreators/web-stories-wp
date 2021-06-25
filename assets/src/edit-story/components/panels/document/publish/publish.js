@@ -30,8 +30,11 @@ import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import { MEDIA_VARIANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/mediaInput/constants';
+import {
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import PublishTime from './publishTime';
 import Author from './author';
 

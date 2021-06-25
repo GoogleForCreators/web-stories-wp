@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import Popup from '../../popup';
-import DropDownSelect from '../../../../design-system/components/dropDown/select';
+import DropDownSelect from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/dropDown/select';
 import { focusStyle } from '../../panels/shared';
 import OptionsContainer from './container';
 import List from './list';

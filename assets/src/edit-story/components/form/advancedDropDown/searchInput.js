@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system';
+import { themeHelpers } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
 import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
 import { noop } from '../../../utils/noop';

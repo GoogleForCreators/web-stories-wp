@@ -29,7 +29,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 
 const Message = styled.div`
   color: #fff;

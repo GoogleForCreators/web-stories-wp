@@ -23,7 +23,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useConfig } from '../app/config';
-import { useKeyDownEffect } from '../../design-system';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * A point in 2D space.

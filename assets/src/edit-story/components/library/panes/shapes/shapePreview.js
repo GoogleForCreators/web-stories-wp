@@ -28,8 +28,8 @@ import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
  */
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
-import { ThemeGlobals } from '../../../../../design-system';
-import { BUTTON_TRANSITION_TIMING } from '../../../../../design-system/components/button/constants';
+import { ThemeGlobals } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import { BUTTON_TRANSITION_TIMING } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/button/constants';
 import { focusStyle } from '../../../panels/shared';
 
 // By default, the element should be 33% of the page.

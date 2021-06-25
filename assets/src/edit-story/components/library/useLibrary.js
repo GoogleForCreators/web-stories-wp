@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../../design-system';
+import {
+  identity,
+  useContextSelector,
+} from '@web-stories-wp/design-system';
 import Context from './context';
 
 function useLibrary(selector) {

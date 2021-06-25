@@ -22,7 +22,7 @@ import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system/theme';
+import { themeHelpers } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme';
 
 export const focusStyle = css`
   ${({ theme }) =>

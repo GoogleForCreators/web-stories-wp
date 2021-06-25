@@ -31,7 +31,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useBatchingCallback,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
@@ -43,7 +43,7 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
+import { MEDIA_VARIANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/mediaInput/constants';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const IconInfo = styled.div`

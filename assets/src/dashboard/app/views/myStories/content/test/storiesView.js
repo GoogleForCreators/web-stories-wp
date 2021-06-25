@@ -23,8 +23,8 @@ import { screen } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import { SnackbarProvider } from '../../../../../../design-system/contexts';
-import { noop } from '../../../../../../design-system/utils';
+import { SnackbarProvider } from '../../../@web-stories-wp/design-system/contexts';
+import { noop } from '../../../@web-stories-wp/design-system/utils';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,

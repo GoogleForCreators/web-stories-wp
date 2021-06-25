@@ -26,6 +26,7 @@ import { getTimeTracker } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
+import { addQueryArgs } from '@web-stories-wp/design-system';
 import base64Encode from '../../../edit-story/utils/base64Encode';
 import {
   STORY_STATUSES,
@@ -38,7 +39,6 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { addQueryArgs } from '../../../design-system';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 

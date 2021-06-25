@@ -30,7 +30,7 @@ import {
   Link as DsLink,
   THEME_CONSTANTS,
   Text,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;

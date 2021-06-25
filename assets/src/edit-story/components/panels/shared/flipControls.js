@@ -30,7 +30,7 @@ import {
   BUTTON_VARIANTS,
   ToggleButton,
   Icons,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import Tooltip from '../../tooltip';
 import { focusStyle } from './styles';
 

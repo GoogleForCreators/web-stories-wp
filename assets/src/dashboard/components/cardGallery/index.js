@@ -25,10 +25,10 @@ import { UnitsProvider } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
+import { useGridViewKeys } from '@web-stories-wp/design-system';
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { StoryPropType } from '../../types';
 import { getPagePreviewHeights } from '../../utils';
-import { useGridViewKeys } from '../../../design-system';
 import { PreviewPage } from '../../../edit-story/components/previewPage';
 import {
   ActiveCard,

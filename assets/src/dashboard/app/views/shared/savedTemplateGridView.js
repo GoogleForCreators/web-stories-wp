@@ -42,7 +42,7 @@ import {
   TemplateActionsPropType,
 } from '../../../types';
 import { PAGE_WRAPPER, STORY_STATUS } from '../../../constants';
-import { useGridViewKeys, useFocusOut } from '../../../../design-system';
+import { useGridViewKeys, useFocusOut } from '../@web-stories-wp/design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 

@@ -31,7 +31,7 @@ import {
   THEME_CONSTANTS,
   DropDown,
   Link,
-} from '../../../../design-system';
+} from '../@web-stories-wp/design-system';
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import TelemetryBanner from './telemetryBanner';

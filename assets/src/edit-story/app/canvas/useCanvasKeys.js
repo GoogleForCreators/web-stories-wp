@@ -23,7 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect } from '../../../design-system';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import { useStory } from '../story';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';

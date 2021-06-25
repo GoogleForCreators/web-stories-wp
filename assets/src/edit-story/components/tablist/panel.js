@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
+import { Icons } from '@web-stories-wp/design-system';
 import { PANEL_STATES } from './constants';
 import {
   Badge,

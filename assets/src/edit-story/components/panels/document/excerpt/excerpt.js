@@ -28,7 +28,10 @@ import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useFocusHighlight, states, styles } from '../../../../app/highlights';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 // Margin -4px is making up for extra margin added by rows.
 const StyledText = styled(Text)`

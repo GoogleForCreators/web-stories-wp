@@ -34,7 +34,7 @@ import {
   Chip,
   Icons,
   useKeyDownEffect,
-} from '../../../../../../design-system';
+} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { useExpandAnimation, useHandleRowVisibility } from '../hooks';
 import {

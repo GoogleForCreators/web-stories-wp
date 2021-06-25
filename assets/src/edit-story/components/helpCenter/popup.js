@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../design-system';
+import { BEZIER } from '@web-stories-wp/design-system';
 import { ScheduledTransition } from './scheduledTransition';
 
 const DURATION = 300;

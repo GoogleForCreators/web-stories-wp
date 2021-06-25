@@ -25,7 +25,7 @@ import { useMemo } from 'react';
 import {
   useEscapeToBlurEffect,
   useKeyDownEffect,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { useStory, useConfig } from '../../app';
 import { duplicatePage } from '../../elements';
 

@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { useStory } from '../story';
-import { useBatchingCallback } from '../../../design-system';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 
 function useAddPastedElements() {
   const {

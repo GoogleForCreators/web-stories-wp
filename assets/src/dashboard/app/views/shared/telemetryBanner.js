@@ -29,7 +29,7 @@ import {
   Link,
   Text,
   THEME_CONSTANTS,
-} from '../../../../design-system';
+} from '../@web-stories-wp/design-system';
 import { useLayoutContext } from '../../../components';
 import { useConfig } from '../../config';
 import { APP_ROUTES } from '../../../constants';

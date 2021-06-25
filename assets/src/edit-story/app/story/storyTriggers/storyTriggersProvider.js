@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../../design-system';
+import { createContext } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { STORY_EVENTS, StoryEventRegisters } from './storyEvents';
 
 export const Context = createContext({ state: {}, actions: {} });

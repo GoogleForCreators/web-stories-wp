@@ -23,7 +23,7 @@ import { useState, useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { addQueryArgs } from '../../../../design-system';
+import { addQueryArgs } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory } from '../../../app';
 import CircularProgress from '../../circularProgress';
 import PostPublishDialog from '../postPublishDialog';

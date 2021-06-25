@@ -24,7 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../design-system';
+import { BEZIER } from '@web-stories-wp/design-system';
 import { ScheduledTransition } from '../transition/scheduledTransition';
 
 const DURATION = 300;

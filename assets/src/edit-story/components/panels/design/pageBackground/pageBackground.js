@@ -38,7 +38,7 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { getDefinitionForType } from '../../../../elements';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 

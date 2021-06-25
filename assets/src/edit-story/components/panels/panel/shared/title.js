@@ -35,7 +35,7 @@ import {
   Headline,
   themeHelpers,
   ThemeGlobals,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { focusStyle } from '../../shared';
 import DragHandle from './handle';
 

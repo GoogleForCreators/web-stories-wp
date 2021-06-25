@@ -25,13 +25,13 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { StoryPropType } from '../../types';
-import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import {
   AnimatedContextMenu,
   MenuItemProps,
   themeHelpers,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+import { StoryPropType } from '../../types';
+import { MoreVertical as MoreVerticalSvg } from '../../icons';
 
 export const MoreVerticalButton = styled.button`
   display: flex;

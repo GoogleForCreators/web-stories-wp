@@ -37,7 +37,7 @@ import {
   NumericInput,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 

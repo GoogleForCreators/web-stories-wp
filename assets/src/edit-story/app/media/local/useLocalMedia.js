@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { identity } from '../../../../design-system';
+import { identity } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import useMedia from '../useMedia';
 
 /**

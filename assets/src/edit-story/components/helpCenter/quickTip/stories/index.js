@@ -23,7 +23,10 @@ import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
 import { TIPS } from '../../constants';
 import { QuickTip as HelpCenterQuickTip } from '..';
 

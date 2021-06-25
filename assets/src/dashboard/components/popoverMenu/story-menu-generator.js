@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { noop } from '../../../design-system';
+/**
+ * External dependencies
+ */
+import { noop } from '@web-stories-wp/design-system';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 
 /**

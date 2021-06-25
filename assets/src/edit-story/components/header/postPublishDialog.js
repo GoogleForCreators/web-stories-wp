@@ -26,7 +26,11 @@ import { trackClick } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 
-import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
+import {
+  Link,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import Dialog from '../dialog';
 
 function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {

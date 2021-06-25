@@ -23,7 +23,10 @@ import styled, { ThemeProvider } from 'styled-components';
  * Internal dependencies
  */
 import { Toggle as HelpCenterToggle } from '..';
-import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
 
 export default {
   title: 'Stories Editor/Components/Help Center',

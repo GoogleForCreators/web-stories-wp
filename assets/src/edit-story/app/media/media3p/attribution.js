@@ -29,7 +29,7 @@ import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo_white
 import {
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 const AttributionPill = styled.div`
   position: absolute;

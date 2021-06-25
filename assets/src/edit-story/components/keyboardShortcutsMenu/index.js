@@ -34,7 +34,7 @@ import {
   TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
   useFocusOut,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { useHelpCenter } from '../../app';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import DirectionAware from '../directionAware';

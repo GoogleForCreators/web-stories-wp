@@ -22,7 +22,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Display, Search, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  Display,
+  Search,
+  THEME_CONSTANTS,
+} from '../@web-stories-wp/design-system';
 import { NavMenuButton, StandardViewContentGutter } from '../../../components';
 
 const HeadingContainer = styled(StandardViewContentGutter)`

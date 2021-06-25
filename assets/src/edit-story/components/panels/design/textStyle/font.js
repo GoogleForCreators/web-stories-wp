@@ -25,7 +25,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { DropDown, NumericInput } from '../../../../../design-system';
+import {
+  DropDown,
+  NumericInput,
+} from '@web-stories-wp/design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';

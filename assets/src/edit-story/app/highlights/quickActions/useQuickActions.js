@@ -23,7 +23,10 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { useSnackbar, PLACEMENT } from '../../../../design-system';
+import {
+  useSnackbar,
+  PLACEMENT,
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import {
   Bucket,
   CircleSpeed,
@@ -34,7 +37,7 @@ import {
   Media,
   PictureSwap,
   Captions,
-} from '../../../../design-system/icons';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/icons';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
@@ -47,7 +50,7 @@ import {
   RESET_DEFAULTS,
 } from './constants';
 
-/** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
+/** @typedef {import('../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick

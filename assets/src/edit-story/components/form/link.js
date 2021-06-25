@@ -25,7 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { isValidUrl, withProtocol } from '../../utils/url';
-import { Input } from '../../../design-system';
+import { Input } from '@web-stories-wp/design-system';
 import { inputContainerStyleOverride } from '../panels/shared';
 import Row from './row';
 

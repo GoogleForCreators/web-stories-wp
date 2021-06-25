@@ -1,0 +1,41 @@
+{
+  "name": "@web-stories-wp/design-system",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
+  "dependencies": {
+    "@web-stories-wp/i18n": "*",
+    "@web-stories-wp/patterns": "*",
+    "@web-stories-wp/tracking": "*",
+    "big.js": "^6.0.3",
+    "focus-visible": "^5.2.0",
+    "use-debounce": "^7.0.0",
+    "react-pure-render": "^1.0.2",
+    "mousetrap": "^1.6.5",
+    "polished": "^4.1.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-modal": "^3.12.1",
+    "react-transition-group": "^4.4.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "styled-components": "^5.2.1",
+    "use-context-selector": "^1.2.11",
+    "uuid": "^8.3.2",
+    "valid-url": "^1.0.9"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.1.14",
+    "@storybook/addon-knobs": "^6.1.17",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/react-hooks": "^5.1.0"
+  }
+}

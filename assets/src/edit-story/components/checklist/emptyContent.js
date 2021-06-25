@@ -22,7 +22,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Icons, Text, THEME_CONSTANTS } from '../../../design-system';
+import {
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 const Wrapper = styled.div`
   display: grid;

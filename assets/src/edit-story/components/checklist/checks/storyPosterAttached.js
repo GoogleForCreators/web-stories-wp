@@ -21,7 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
+import { List } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';

@@ -35,7 +35,7 @@ import {
   Link,
   Media,
   PictureSwap,
-} from '../../../../../design-system/icons';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/icons';
 import { ACTION_TEXT } from '../constants';
 
 jest.mock('../../../story', () => ({

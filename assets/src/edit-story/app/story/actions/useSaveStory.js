@@ -29,7 +29,7 @@ import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useSnackbar } from '../../../../design-system';
+import { useSnackbar } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
 

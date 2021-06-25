@@ -30,7 +30,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../app';
 import useCarousel from './useCarousel';
 

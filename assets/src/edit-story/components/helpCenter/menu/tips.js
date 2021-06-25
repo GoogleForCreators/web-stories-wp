@@ -26,7 +26,7 @@ import {
   BUTTON_SIZES,
   Icons,
   themeHelpers,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useConfig } from '../../../app/config';
 import { forceFocusCompanion } from '../utils';
 import { ReadTipsType, TIPS } from '../constants';

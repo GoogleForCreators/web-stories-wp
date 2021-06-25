@@ -26,7 +26,7 @@ import { _x } from '@web-stories-wp/i18n';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useKeyDownEffect } from '../../../design-system';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';

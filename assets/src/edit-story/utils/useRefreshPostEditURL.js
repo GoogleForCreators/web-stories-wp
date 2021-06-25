@@ -22,7 +22,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { addQueryArgs } from '../../design-system';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * Update page URL in browser.

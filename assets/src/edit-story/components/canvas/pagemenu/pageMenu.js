@@ -24,7 +24,11 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons, Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import { useStory, useHistory, useConfig, useLayout } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
 import PageMenuButton from './pageMenuButton';

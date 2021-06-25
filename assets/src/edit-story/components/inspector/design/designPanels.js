@@ -23,8 +23,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../design-system/theme/constants';
-import { Text } from '../../../../design-system/components/typography/text';
+import { THEME_CONSTANTS } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme/constants';
+import { Text } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/typography/text';
 import useDesignPanels from './useDesignPanels';
 import DesignPanel from './designPanel';
 

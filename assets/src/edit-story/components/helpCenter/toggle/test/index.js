@@ -21,7 +21,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
+import { renderWithProviders } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/testUtils/renderWithProviders';
 import { Toggle } from '..';
 
 describe('help center toggle <Toggle />', () => {

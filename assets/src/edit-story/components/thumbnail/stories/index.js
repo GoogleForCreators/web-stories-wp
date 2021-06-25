@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Tooltip, Icons } from '../../../../design-system';
+import { Tooltip, Icons } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { Thumbnail, THUMBNAIL_TYPES } from '..';
 import { THUMBNAIL_BG } from './demoThumbnails';
 

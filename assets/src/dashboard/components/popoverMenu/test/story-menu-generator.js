@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { noop } from '../../../../design-system';
+import { noop } from '../@web-stories-wp/design-system';
 import {
   STORY_CONTEXT_MENU_ITEMS,
   STORY_CONTEXT_MENU_ACTIONS,

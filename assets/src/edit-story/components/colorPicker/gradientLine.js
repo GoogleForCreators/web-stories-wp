@@ -28,7 +28,7 @@ import {
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system/theme';
+import { themeHelpers } from '../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme';
 import Pointer from './pointer';
 import GradientStop from './gradientStop';
 import useKeyMoveStop from './useKeyMoveStop';

@@ -27,7 +27,10 @@ import { trackClick } from '@web-stories-wp/tracking';
  */
 import { InlineLink, TextInputHelperText } from '../../components';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
-import { THEME_CONSTANTS, DropDown } from '../../../../../../design-system';
+import {
+  THEME_CONSTANTS,
+  DropDown,
+} from '../../../@web-stories-wp/design-system';
 
 export const TEXT = {
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),

@@ -21,7 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../../design-system';
+import { useKeyDownEffect } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 function useRadioNavigation(ref) {
   const changeCurrent = useCallback(

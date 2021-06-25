@@ -25,7 +25,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useEscapeToBlurEffect } from '../../../design-system';
+import { useEscapeToBlurEffect } from '@web-stories-wp/design-system';
 import TabView from '../tabview';
 import useInspector from './useInspector';
 import InspectorContent from './inspectorContent';

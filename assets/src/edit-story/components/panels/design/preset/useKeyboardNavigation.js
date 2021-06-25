@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../../../design-system/components/keyboard';
+import { useKeyDownEffect } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/keyboard';
 import {
   COLOR_PRESETS_PER_ROW,
   STYLE_PRESETS_PER_ROW,

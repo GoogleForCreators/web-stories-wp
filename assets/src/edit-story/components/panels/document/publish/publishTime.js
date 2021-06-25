@@ -31,8 +31,8 @@ import {
   PLACEMENT,
   useKeyDownEffect,
   useFocusOut,
-} from '../../../../../design-system';
-import DropDownSelect from '../../../../../design-system/components/dropDown/select';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
+import DropDownSelect from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/dropDown/select';
 import { focusStyle } from '../../shared';
 
 // date-fns format without timezone.

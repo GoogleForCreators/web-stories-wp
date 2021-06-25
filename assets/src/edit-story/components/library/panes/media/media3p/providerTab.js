@@ -27,7 +27,7 @@ import {
   useKeyDownEffect,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../design-system';
+} from '../../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useConfig } from '../../../../../app/config';
 import { focusStyle } from '../../../../panels/shared';
 

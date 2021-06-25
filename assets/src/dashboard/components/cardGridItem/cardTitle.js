@@ -26,12 +26,12 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Headline, Text, THEME_CONSTANTS } from '../../../design-system';
+import { Headline, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { LockClosed as LockSVG } from '@web-stories-wp/design-system/icons';
 import { STORY_STATUS } from '../../constants';
 import { titleFormatted } from '../../utils';
 import { DashboardStatusesPropType } from '../../types';
 import InlineInputForm from '../inlineInputForm';
-import { LockClosed as LockSVG } from '../../../design-system/icons';
 import { useConfig } from '../../app/config';
 
 const StyledCardTitle = styled.div`

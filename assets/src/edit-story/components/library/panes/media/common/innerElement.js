@@ -31,7 +31,10 @@ import useAverageColor from '../../../../../elements/media/useAverageColor';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 const styledTiles = css`
   width: 100%;

@@ -24,8 +24,8 @@ import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
+import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
 import { PageSizePropType } from '../../types';
-import { ThemeGlobals, themeHelpers } from '../../../design-system';
 import { GRID_SPACING } from '../../constants';
 
 const DashboardGrid = styled.div`

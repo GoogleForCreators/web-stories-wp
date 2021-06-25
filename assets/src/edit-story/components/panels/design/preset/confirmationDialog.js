@@ -25,11 +25,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Text } from '../../../../../design-system/components/typography/text';
-import { THEME_CONSTANTS } from '../../../../../design-system/theme/constants';
+import { Text } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/typography/text';
+import { THEME_CONSTANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme/constants';
 import Dialog from '../../../dialog';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../../../utils/localStore';
-import { Checkbox } from '../../../../../design-system';
+import { Checkbox } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { PRESET_TYPES } from './constants';
 
 const Label = styled.label`

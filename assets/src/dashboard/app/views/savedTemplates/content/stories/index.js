@@ -26,7 +26,7 @@ import { FlagsProvider } from 'flagged';
  */
 import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
-import { SnackbarProvider } from '../../../../../../design-system';
+import { SnackbarProvider } from '../../../@web-stories-wp/design-system';
 import {
   formattedStoriesArray,
   formattedTemplatesArray,

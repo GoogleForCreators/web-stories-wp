@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
  */
 import { useStory, useStoryTriggerListener, STORY_EVENTS } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
-import usePrevious from '../../../../design-system/utils/usePrevious';
+import usePrevious from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish/constants';
 import Context from './context';

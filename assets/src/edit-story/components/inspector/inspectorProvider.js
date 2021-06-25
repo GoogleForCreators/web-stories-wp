@@ -26,7 +26,7 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useResizeEffect } from '../../../design-system';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 

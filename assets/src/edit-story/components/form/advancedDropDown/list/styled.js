@@ -25,7 +25,7 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Text,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
 
 export const List = styled.div`

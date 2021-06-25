@@ -23,7 +23,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 import { landmarks } from './keyboardShortcutList';
 import ShortcutLabel from './shortcutLabel';
 

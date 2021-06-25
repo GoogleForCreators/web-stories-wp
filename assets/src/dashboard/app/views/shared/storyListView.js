@@ -69,8 +69,8 @@ import {
   Icons,
   Text,
   THEME_CONSTANTS,
-} from '../../../../design-system';
-import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
+} from '../@web-stories-wp/design-system';
+import { focusableOutlineCSS } from '../@web-stories-wp/design-system/theme/helpers';
 
 const ListView = styled.div`
   width: 100%;

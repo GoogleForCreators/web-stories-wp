@@ -28,7 +28,10 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import { LoadingBar, useKeyDownEffect } from '../../../../../../design-system';
+import {
+  LoadingBar,
+  useKeyDownEffect,
+} from '@web-stories-wp/design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';

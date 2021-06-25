@@ -24,7 +24,11 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_TYPES, BUTTON_SIZES } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '@web-stories-wp/design-system';
 import { useLocalMedia } from '../../media';
 
 const Container = styled.div`

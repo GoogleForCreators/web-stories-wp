@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
+import { List } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MAX_PAGE_CHARACTER_COUNT } from '../constants';

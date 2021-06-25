@@ -30,7 +30,7 @@ import { rgba } from 'polished';
  */
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
-import { Icons } from '../../../design-system';
+import { Icons } from '@web-stories-wp/design-system';
 import { useConfig } from '../../app/config';
 
 const PLAY_BUTTON_SIZE = 82;

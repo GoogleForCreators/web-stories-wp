@@ -27,8 +27,11 @@ import {
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../design-system/theme';
-import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
+import { THEME_CONSTANTS } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme';
+import {
+  BUTTON_TRANSITION_TIMING,
+  Text,
+} from '@web-stories-wp/design-system';
 import { focusStyle } from '../../panels/shared';
 
 const fillCss = css`

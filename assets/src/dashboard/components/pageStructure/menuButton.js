@@ -24,10 +24,10 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '@web-stories-wp/design-system';
 import { MIN_DASHBOARD_WIDTH } from '../../constants';
 import { Menu as MenuSvg } from '../../icons';
 import { useNavContext } from '../navProvider';
-import { themeHelpers } from '../../../design-system';
 
 const MenuIcon = styled(MenuSvg).attrs({ width: 24, height: 24 })`
   display: block;

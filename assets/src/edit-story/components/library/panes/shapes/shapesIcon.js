@@ -22,7 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
+import { Icons } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 function ShapesIcon() {
   return <Icons.Shapes aria-label={__('Shapes library', 'web-stories')} />;

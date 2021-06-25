@@ -39,7 +39,7 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';

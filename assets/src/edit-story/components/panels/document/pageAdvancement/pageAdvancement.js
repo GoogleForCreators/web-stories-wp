@@ -38,7 +38,7 @@ import {
   NumericInput,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { inputContainerStyleOverride } from '../../shared';
 
 const SwitchRow = styled.div`

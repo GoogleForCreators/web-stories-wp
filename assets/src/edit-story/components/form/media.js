@@ -26,7 +26,10 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useMediaPicker } from '../mediaPicker';
-import { MediaInput as Input, themeHelpers } from '../../../design-system';
+import {
+  MediaInput as Input,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 import { MULTIPLE_VALUE } from '../../constants';
 
 const StyledInput = styled(Input)`

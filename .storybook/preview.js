@@ -41,7 +41,7 @@ import {
   lightMode,
   ThemeGlobals,
   ModalGlobalStyle,
-} from '../assets/src/design-system';
+} from '../packages/design-system/src';
 
 // @todo: Find better way to mock these.
 const wp = {};

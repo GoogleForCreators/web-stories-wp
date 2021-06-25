@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system';
+import { themeHelpers } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { POPUP_ID } from '../constants';
 import { BottomNavigation } from './bottomNavigation';
 import { NAVIGATION_WIDTH } from './constants';

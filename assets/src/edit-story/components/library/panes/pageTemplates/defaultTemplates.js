@@ -30,10 +30,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAPI } from '../../../../app/api';
 import { ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
-import { Headline } from '../../../../../design-system/components/typography/headline';
-import { THEME_CONSTANTS } from '../../../../../design-system/theme/constants';
-import { Text } from '../../../../../design-system/components/typography/text';
-import { Toggle } from '../../../../../design-system/components/toggle';
+import { Headline } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/typography/headline';
+import { THEME_CONSTANTS } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/theme/constants';
+import { Text } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/typography/text';
+import { Toggle } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src/components/toggle';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 import TemplateList from './templateList';
 

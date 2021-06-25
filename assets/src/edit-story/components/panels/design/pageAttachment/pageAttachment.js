@@ -29,7 +29,7 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input } from '../../../../../design-system';
+import { Input } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({

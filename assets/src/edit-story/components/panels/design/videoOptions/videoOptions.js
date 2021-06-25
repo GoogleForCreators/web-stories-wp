@@ -33,7 +33,7 @@ import {
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;

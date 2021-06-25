@@ -27,7 +27,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import { Icons } from '../../../../../design-system';
+import { Icons } from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (

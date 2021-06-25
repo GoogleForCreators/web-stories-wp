@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useSnackbar } from '../../../../design-system';
+import { useSnackbar } from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';
 

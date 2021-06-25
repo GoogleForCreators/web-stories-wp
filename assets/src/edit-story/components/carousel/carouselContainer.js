@@ -23,7 +23,7 @@ import { useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useResizeEffect } from '../../../design-system';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';

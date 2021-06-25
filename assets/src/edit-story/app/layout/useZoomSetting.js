@@ -23,7 +23,7 @@ import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system';
+import { themeHelpers } from '@web-stories-wp/design-system';
 import {
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,

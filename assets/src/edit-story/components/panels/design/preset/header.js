@@ -30,7 +30,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { PanelTitle } from '../../panel';
 import { focusStyle } from '../../shared';
 import { PRESET_TYPES } from './constants';

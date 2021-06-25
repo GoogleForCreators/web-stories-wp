@@ -24,7 +24,11 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { Radio, ThemeGlobals, themeHelpers } from '../../../../design-system';
+import {
+  Radio,
+  ThemeGlobals,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 import useRadioNavigation from '../shared/useRadioNavigation';
 
 const VisuallyHiddenLabel = styled.h3`

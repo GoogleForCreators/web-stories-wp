@@ -30,7 +30,7 @@ import {
   useResizeEffect,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';

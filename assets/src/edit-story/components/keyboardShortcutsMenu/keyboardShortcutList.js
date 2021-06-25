@@ -22,7 +22,7 @@ import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '../../../design-system';
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 import { SPECIAL_KEYS } from './constants';
 
 const isMacOs = isPlatformMacOS();

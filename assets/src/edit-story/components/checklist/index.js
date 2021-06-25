@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useFocusOut } from '../../../design-system';
+import { useFocusOut } from '@web-stories-wp/design-system';
 import { FOCUSABLE_SELECTORS } from '../../constants';
 import { useHelpCenter } from '../../app';
 import DirectionAware from '../directionAware';

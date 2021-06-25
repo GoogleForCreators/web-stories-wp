@@ -33,7 +33,7 @@ import {
   BUTTON_SIZES,
   PLACEMENT,
   Modal,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Tooltip from '../tooltip';
 import GridView from './gridview';

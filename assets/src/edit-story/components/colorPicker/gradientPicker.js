@@ -31,7 +31,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import Tooltip from '../tooltip';
 import GradientLine from './gradientLine';
 

@@ -31,7 +31,7 @@ import {
   BUTTON_VARIANTS,
   Text,
   THEME_CONSTANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { Img } from './shared';
 
 /**

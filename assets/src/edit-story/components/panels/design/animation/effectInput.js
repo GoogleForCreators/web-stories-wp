@@ -32,7 +32,7 @@ import {
   NumericInput,
   DropDown,
   ThemeGlobals,
-} from '../../../../../design-system';
+} from '../../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import { inputContainerStyleOverride } from '../../shared';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';

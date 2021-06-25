@@ -25,7 +25,7 @@ import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { Icons, themeHelpers } from '../../../design-system';
+import { Icons, themeHelpers } from '@web-stories-wp/design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
 const POINTER_MARGIN = 10;

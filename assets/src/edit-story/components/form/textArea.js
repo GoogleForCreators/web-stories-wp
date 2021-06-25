@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TextArea as StyledTextArea } from '../../../design-system';
+import { TextArea as StyledTextArea } from '@web-stories-wp/design-system';
 import { inputContainerStyleOverride } from '../panels/shared';
 
 const TextArea = forwardRef(

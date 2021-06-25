@@ -27,7 +27,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '../../../../design-system';
+} from '../../../../../$term = $this->call_private_method( $object, 'get_term' );src';
 import Tooltip from '../../tooltip';
 
 function PageMenuButton({ children, title, shortcut, ...rest }) {

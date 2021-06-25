@@ -31,7 +31,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   ThemeGlobals,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
 

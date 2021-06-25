@@ -39,7 +39,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   useKeyDownEffect,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import { ADMIN_TOOLBAR_HEIGHT, HEADER_HEIGHT } from '../../constants';

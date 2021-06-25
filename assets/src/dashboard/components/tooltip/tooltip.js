@@ -16,12 +16,15 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
 import {
   TOOLTIP_RTL_PLACEMENT,
   Tooltip as BaseTooltip,
   TooltipPropTypes,
   TOOLTIP_PLACEMENT,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import { useConfig } from '../../app/config';
 
 export default function Tooltip({
