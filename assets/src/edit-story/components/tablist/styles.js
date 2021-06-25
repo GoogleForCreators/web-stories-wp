@@ -30,10 +30,11 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
 } from '../../../design-system';
+import { NAVIGATION_WIDTH } from '../helpCenter/navigator/constants';
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
-  width: 308px;
+  width: ${NAVIGATION_WIDTH};
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 Tablist.propTypes = {
@@ -90,7 +91,10 @@ export const TabButton = styled(Button).attrs({
   padding: 16px;
   margin-bottom: 1px;
   border-radius: 0;
-  box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+
+  :not(:last-child) {
+    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+  }
 
   &,
   :hover,
