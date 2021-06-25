@@ -44,7 +44,7 @@ describe('Web Stories Block', () => {
   let removeError404Message;
 
   beforeAll(async () => {
-    // TODO, look into why this error is happening. 
+    // TODO, look into why this error is happening.
     removeErrorMessage = addAllowedErrorMessage(
       'A component is changing an uncontrolled input of type %s to be controlled'
     );
