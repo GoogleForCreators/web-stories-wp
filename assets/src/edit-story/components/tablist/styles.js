@@ -42,37 +42,6 @@ Tablist.propTypes = {
   'aria-label': PropTypes.string.isRequired,
 };
 
-export const PanelWrapper = styled.div`
-  width: 100%;
-  background: ${({ theme }) => theme.colors.bg.primary};
-
-  ${({ isExpanded, theme }) =>
-    isExpanded &&
-    css`
-      & > ${TabButton} {
-        ${PanelText} {
-          opacity: 1;
-        }
-
-        &,
-        :hover,
-        :focus {
-          background-color: ${theme.colors.bg.primary};
-        }
-
-        svg {
-          transform: rotate(0);
-        }
-      }
-
-      & > ${TabPanel} {
-        height: 560px;
-        padding: 16px;
-        visibility: visible;
-      }
-    `};
-`;
-
 export const PanelText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
   isBold: true,
@@ -89,12 +58,7 @@ export const TabButton = styled(Button).attrs({
   height: 60px;
   width: 100%;
   padding: 16px;
-  margin-bottom: 1px;
   border-radius: 0;
-
-  :not(:last-child) {
-    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
-  }
 
   &,
   :hover,
@@ -122,6 +86,42 @@ export const TabButton = styled(Button).attrs({
 
       ${Badge} {
         background-color: ${({ theme }) => theme.colors.fg.negative};
+      }
+    `};
+`;
+
+export const PanelWrapper = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.colors.bg.primary};
+
+  :not(:last-child) ${TabButton} {
+    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+    margin-bottom: 1px;
+  }
+
+  ${({ isExpanded, theme }) =>
+    isExpanded &&
+    css`
+      & > ${TabButton} {
+        ${PanelText} {
+          opacity: 1;
+        }
+
+        &,
+        :hover,
+        :focus {
+          background-color: ${theme.colors.bg.primary};
+        }
+
+        svg {
+          transform: rotate(0);
+        }
+      }
+
+      & > ${TabPanel} {
+        height: 560px;
+        padding: 16px;
+        visibility: visible;
       }
     `};
 `;
