@@ -25,6 +25,7 @@ import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyMissingExcerpt(story) {
   return !story.excerpt?.length;
@@ -43,8 +44,10 @@ const StoryMissingExcerpt = () => {
 
   const { title, footer } = PRIORITY_COPY.storyMissingDescription;
 
+  const isRendered = storyMissingExcerpt(story);
+  useRegisterCheck('StoryMissingExcerpt', isRendered);
   return (
-    storyMissingExcerpt(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{
