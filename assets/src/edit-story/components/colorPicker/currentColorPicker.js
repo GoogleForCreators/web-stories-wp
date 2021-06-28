@@ -159,18 +159,20 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         // Wait one tick for the zoom to settle in.
         // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
         setTimeout(() => {
-          htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
-            const ctx = canvas.getContext('2d');
-            const pixelData = ctx.getImageData(
-              0,
-              0,
-              canvas.width,
-              canvas.height
-            ).data;
-            setEyedropperPixelData(pixelData);
-            setEyedropperImg(canvas.toDataURL());
-            resolve();
-          });
+          htmlToImage
+            .toCanvas(fullbleedContainer, { preferredFontFormat: 'woff2' })
+            .then((canvas) => {
+              const ctx = canvas.getContext('2d');
+              const pixelData = ctx.getImageData(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+              ).data;
+              setEyedropperPixelData(pixelData);
+              setEyedropperImg(canvas.toDataURL());
+              resolve();
+            });
         });
       });
 
