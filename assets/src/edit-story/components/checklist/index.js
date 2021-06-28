@@ -38,6 +38,7 @@ import { DesignChecks } from './designChecks';
 import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
+import EmptyContentCheck from './emptyContent';
 
 const Wrapper = styled.div`
   /**
@@ -116,6 +117,7 @@ export function Checklist() {
                   title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
                 />
               </Tablist>
+              <EmptyContentCheck />
             </NavigationWrapper>
           </Popup>
           <Toggle
