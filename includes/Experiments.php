@@ -219,7 +219,7 @@ class Experiments extends Service_Base {
 	 */
 	public function get_experiments() {
 		return [
-      /**
+			/**
 			 * Author: @embarks
 			 * Issue: 8113
 			 * Creation date: 2021-06-28
