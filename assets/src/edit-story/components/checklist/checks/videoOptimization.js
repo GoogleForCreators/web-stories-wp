@@ -36,6 +36,7 @@ import {
 import { filterStoryElements } from '../utils/filterStoryElements';
 import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../../../design-system';
 import { useHighlights } from '../../../app/highlights';
+import { useRegisterCheck } from '../checkCountContext';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
@@ -102,8 +103,12 @@ export const BulkVideoOptimization = () => {
       unoptimizedVideos.some((video) => video.resource?.isTranscoding),
     [isOptimizing, unoptimizedVideos]
   );
+
+  const isRendered = unoptimizedVideos.length > 0;
+  useRegisterCheck('VideoOptimization', isRendered);
+
   return (
-    unoptimizedVideos.length > 0 && (
+    isRendered && (
       <ChecklistCard
         cta={
           <OptimizeButton
