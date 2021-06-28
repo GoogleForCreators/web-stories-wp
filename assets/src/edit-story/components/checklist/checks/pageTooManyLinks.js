@@ -38,6 +38,7 @@ import {
   THUMBNAIL_DIMENSIONS,
 } from '../../thumbnail';
 import PagePreview from '../../carousel/pagepreview';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {
@@ -63,8 +64,10 @@ const PageTooManyLinks = () => {
   );
   const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
 
+  const isRendered = failingPages.length > 0;
+  useRegisterCheck('PageTooManyLinks', isRendered);
   return (
-    failingPages.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

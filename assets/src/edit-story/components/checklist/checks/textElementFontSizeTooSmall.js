@@ -33,6 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function textElementFontSizeTooSmall(element) {
   return (
@@ -55,8 +56,10 @@ const TextElementFontSizeTooSmall = () => {
   );
   const { footer, title } = ACCESSIBILITY_COPY.fontSizeTooSmall;
 
+  const isRendered = elements.length > 0;
+  useRegisterCheck('TextElementFontSizeTooSmall', isRendered);
   return (
-    elements.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

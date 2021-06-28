@@ -32,7 +32,10 @@ import {
   MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
   MEDIA_TRANSCODED_MIME_TYPE,
   MEDIA_TRANSCODED_FILE_TYPE,
+  MEDIA_POSTER_IMAGE_MIME_TYPE,
+  MEDIA_POSTER_IMAGE_EXT,
 } from '../../../constants';
+import getPosterName from './getPosterName';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -136,8 +139,9 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.jpeg';
-        const outputFileName = getFileName(file) + '.jpeg';
+        const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_EXT;
+        const originalFileName = getFileName(file);
+        const outputFileName = getPosterName(originalFileName);
 
         await ffmpeg.run(
           // Desired position.
@@ -167,10 +171,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
         return new File(
-          [new Blob([data.buffer], { type: 'image/jpeg' })],
+          [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
           outputFileName,
           {
-            type: 'image/jpeg',
+            type: MEDIA_POSTER_IMAGE_MIME_TYPE,
           }
         );
       } catch (err) {
