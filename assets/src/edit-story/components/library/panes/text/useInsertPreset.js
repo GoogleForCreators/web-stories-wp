@@ -32,13 +32,13 @@ const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
 
 function useInsertPreset() {
-  const { insertElement } = useLibrary((state) => ({
+  const { insertElement, pageCanvasData } = useLibrary((state) => ({
+    pageCanvasData: state.state.pageCanvasData,
     insertElement: state.actions.insertElement,
   }));
   const {
     state: { versionNumber },
   } = useHistory();
-
   const { fullbleedContainer } = useCanvas((state) => ({
     fullbleedContainer: state.state.fullbleedContainer,
   }));
@@ -96,8 +96,9 @@ function useInsertPreset() {
 
   const getInsertionColors = useCallback(
     (atts) => {
-      htmlToImage.toCanvas(fullbleedContainer).then((canvas) => {
+      const contrastCalculation = (canvas) => {
         const ctx = canvas.getContext('2d');
+        // @todo Get the correct height based on font size / line-height, etc.
         const box = getBox(
           { ...atts, height: atts.height ? atts.height : 41 },
           canvas.width,
@@ -106,10 +107,21 @@ function useInsertPreset() {
         const { x, y, width, height } = box;
         const pixelData = ctx.getImageData(x, y, width, height).data;
         setAutoColor(sampleColors(pixelData));
-      });
+      };
+      if (pageCanvasData && pageCanvasData.versionNumber === versionNumber) {
+        contrastCalculation(pageCanvasData.canvas);
+      } else {
+        htmlToImage
+          .toCanvas(fullbleedContainer, {
+            fontEmbedCss: '',
+          })
+          .then((canvas) => {
+            contrastCalculation(canvas);
+          });
+      }
       return null;
     },
-    [fullbleedContainer]
+    [fullbleedContainer, pageCanvasData, versionNumber]
   );
 
   useEffect(() => {
