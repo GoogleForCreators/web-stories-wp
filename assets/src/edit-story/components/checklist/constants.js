@@ -38,7 +38,6 @@ export const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 const MIN_TAP_REGION_WIDTH = 48;
 export const MAX_LINKS_PER_PAGE = 3;
-const MAX_VIDEO_RESOLUTION = 720;
 const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_FPS = 24;
 const POSTER_DIMENSION_WIDTH_PX = 640;
@@ -459,15 +458,8 @@ export const PRIORITY_COPY = {
     ),
   },
   videoNotOptimized: {
-    title: __('Optimize videos', 'web-stories'),
-    footer: sprintf(
-      /* translators: %s: video resolution (720p) */
-      __(
-        'Videos larger than %s can cause slower loading and higher bandwidth costs.',
-        'web-stories'
-      ),
-      `${MAX_VIDEO_RESOLUTION}p`
-    ),
+    title: __('Videos not optimized', 'web-stories'),
+    footer: __('Unoptimized videos may cause playback issues.', 'web-stories'),
   },
 };
 

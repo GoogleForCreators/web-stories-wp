@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _n, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useLocalMedia, useStory } from '../../../app';
 import { VIDEO_SIZE_THRESHOLD } from '../../../app/media/utils/useFFmpeg';
 import { PRIORITY_COPY } from '../constants';
@@ -34,13 +34,18 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { filterStoryElements } from '../utils/filterStoryElements';
-import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Tooltip,
+} from '../../../../design-system';
 import { useHighlights } from '../../../app/highlights';
 import { useRegisterCheck } from '../checkCountContext';
+import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
-  border: ${({ theme }) => `1px solid ${theme.colors.border.defaultNormal}`};
 `;
 
 export function isVideoElementOptimized(element = {}) {
@@ -65,6 +70,7 @@ export function isVideoElementOptimized(element = {}) {
 
 export const BulkVideoOptimization = () => {
   const story = useStory(({ state }) => state);
+  const optimizingResourcesRef = useRef({});
   const unoptimizedVideos = filterStoryElements(story, isVideoElementOptimized);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
@@ -73,14 +79,17 @@ export const BulkVideoOptimization = () => {
     optimizeVideo: state.actions.optimizeVideo,
   }));
 
-  const [isOptimizing, setIsOptimizing] = useState(false);
-
   const sequencedVideoOptimization = useCallback(() => {
+    // only attempt to optimize videos that are not currently being transcoded
+    const optimizingResources = unoptimizedVideos.filter(
+      ({ resource }) => !resource?.isTranscoding
+    );
     return new Promise((res) => {
-      unoptimizedVideos
-        .filter(({ resource }) => !resource?.isTranscoding)
+      optimizingResources
         .map(({ resource }) => async () => {
-          await optimizeVideo({ resource });
+          await optimizeVideo({ resource }).finally(() => {
+            optimizingResourcesRef.current[resource.id] = 'UPLOADED';
+          });
         })
         .reduce((p, fn) => p.then(fn), Promise.resolve())
         .then(() => {
@@ -90,18 +99,42 @@ export const BulkVideoOptimization = () => {
   }, [unoptimizedVideos, optimizeVideo]);
 
   const handleUpdateVideos = useCallback(async () => {
-    setIsOptimizing(true);
+    unoptimizedVideos.forEach(({ resource }) => {
+      if (!resource.isTranscoding) {
+        optimizingResourcesRef.current[resource.id] = 'UPLOADING';
+      }
+    });
     await sequencedVideoOptimization();
-    setIsOptimizing(false);
-  }, [sequencedVideoOptimization]);
+  }, [sequencedVideoOptimization, unoptimizedVideos]);
+
+  const handleClickThumbnail = useCallback(
+    (element) => async () => {
+      setHighlights({
+        pageId: element.pageId,
+        elementId: element.id,
+      });
+      if (
+        !element.resource?.isTranscoding &&
+        !['UPLOADING'].includes(
+          optimizingResourcesRef.current[element.resource.id]
+        )
+      ) {
+        optimizingResourcesRef.current[element.resource.id] = 'UPLOADING';
+        await optimizeVideo({ resource: element.resource }).finally(() => {
+          optimizingResourcesRef.current[element.resource.id] = 'UPLOADED';
+        });
+      }
+    },
+    [optimizeVideo, setHighlights]
+  );
 
   const { footer, title } = PRIORITY_COPY.videoNotOptimized;
 
   const isTranscoding = useMemo(
     () =>
-      isOptimizing ||
+      Object.values(optimizingResourcesRef.current).includes('UPLOADING') ||
       unoptimizedVideos.some((video) => video.resource?.isTranscoding),
-    [isOptimizing, unoptimizedVideos]
+    [unoptimizedVideos]
   );
 
   const isRendered = unoptimizedVideos.length > 0;
@@ -112,14 +145,24 @@ export const BulkVideoOptimization = () => {
       <ChecklistCard
         cta={
           <OptimizeButton
-            type={BUTTON_TYPES.TERTIARY}
+            type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
             onClick={handleUpdateVideos}
             disabled={isTranscoding}
           >
             {isTranscoding
-              ? __('Optimizing videos', 'web-stories')
-              : __('Optimize all videos', 'web-stories')}
+              ? _n(
+                  'Optimizing video',
+                  'Optimizing videos',
+                  unoptimizedVideos.length,
+                  'web-stories'
+                )
+              : _n(
+                  'Optimize video',
+                  'Optimize all videos',
+                  unoptimizedVideos.length,
+                  'web-stories'
+                )}
           </OptimizeButton>
         }
         title={title}
@@ -130,24 +173,24 @@ export const BulkVideoOptimization = () => {
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         thumbnailCount={unoptimizedVideos.length}
-        thumbnail={
-          <>
-            {unoptimizedVideos.map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => {
-                  setHighlights({
-                    elementId: element.id,
-                  });
-                }}
-                isLoading={element.resource?.isTranscoding}
-                type={THUMBNAIL_TYPES.VIDEO}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending video', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnail={unoptimizedVideos.map((element) => (
+          <Thumbnail
+            key={element.id}
+            onClick={handleClickThumbnail(element)}
+            isLoading={element.resource?.isTranscoding}
+            type={THUMBNAIL_TYPES.VIDEO}
+            displayBackground={<LayerThumbnail page={element} />}
+            aria-label={__('Go to offending video', 'web-stories')}
+          >
+            {!['UPLOADING'].includes(
+              optimizingResourcesRef.current[element.resource?.id]
+            ) && (
+              <Tooltip title={__('Optimize', 'web-stories')}>
+                <StyledVideoOptimizationIcon />
+              </Tooltip>
+            )}
+          </Thumbnail>
+        ))}
       />
     )
   );

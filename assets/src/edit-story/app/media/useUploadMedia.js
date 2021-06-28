@@ -170,9 +170,11 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
-        thumbnail: {
-          src: resource.type === 'video' ? resource.poster : resource.src,
-          alt: resource.alt,
+        thumbnail: resource && {
+          src: ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src,
+          alt: resource?.alt,
         },
         dismissable: true,
       });
