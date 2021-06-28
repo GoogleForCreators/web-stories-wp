@@ -43,7 +43,7 @@ const OptimizeButton = styled(Button)`
   border: ${({ theme }) => `1px solid ${theme.colors.border.defaultNormal}`};
 `;
 
-export function videoElementOptimized(element = {}) {
+export function isVideoElementOptimized(element = {}) {
   if (element.resource?.isTranscoding) {
     return true;
   }
@@ -65,7 +65,7 @@ export function videoElementOptimized(element = {}) {
 
 export const BulkVideoOptimization = () => {
   const story = useStory(({ state }) => state);
-  const unoptimizedVideos = filterStoryElements(story, videoElementOptimized);
+  const unoptimizedVideos = filterStoryElements(story, isVideoElementOptimized);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
