@@ -135,7 +135,7 @@ function PublishPanel() {
       updateStory({
         properties: {
           publisherLogo: image.id,
-          publisherLogoUrl: image.sizes?.thumbnail?.url || image.url,
+          publisherLogoUrl: image.sizes?.full?.url || image.url,
         },
       });
     },
