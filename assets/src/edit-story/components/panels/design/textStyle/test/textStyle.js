@@ -129,8 +129,7 @@ Wrapper.propTypes = {
   ]),
 };
 
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('panels/TextStyle', () => {
+describe('panels/TextStyle', () => {
   let textElement;
   let controls;
 
