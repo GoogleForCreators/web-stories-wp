@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { Simulate } from 'react-dom/test-utils';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
