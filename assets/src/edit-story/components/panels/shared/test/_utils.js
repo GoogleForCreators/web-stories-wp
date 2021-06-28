@@ -65,10 +65,7 @@ function TestPanel({
 }
 
 TestPanel.propTypes = {
-  panelType: PropTypes.oneOfType([
-    PropTypes.func.isRequired,
-    PropTypes.object.isRequired,
-  ]),
+  panelType: PropTypes.func.isRequired,
   selectedElements: PropTypes.array.isRequired,
   setPresubmitHandlers: PropTypes.func.isRequired,
   wrapperComp: PropTypes.func,
