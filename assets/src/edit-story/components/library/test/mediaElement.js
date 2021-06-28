@@ -80,10 +80,7 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
+    renderMediaElement(resource, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = screen.getByAltText('image :)');
@@ -104,10 +101,7 @@ describe('MediaElement', () => {
       alt: 'video :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
+    renderMediaElement(resource, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = screen.getByAltText('video :)');
@@ -128,10 +122,7 @@ describe('MediaElement', () => {
       alt: 'image :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
+    renderMediaElement(resource, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = screen.getByAltText('image :)');
@@ -152,10 +143,7 @@ describe('MediaElement', () => {
       alt: 'video :)',
     };
 
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
-      resource,
-      'local'
-    );
+    renderMediaElement(resource, 'local');
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = screen.getByAltText('video :)');
