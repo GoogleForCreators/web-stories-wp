@@ -49,7 +49,7 @@ const {
   Captions,
 } = Icons;
 
-/** @typedef {import('@web-stories-wp/deisgn-system').MenuItemProps} MenuItemProps */
+/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick
