@@ -95,7 +95,7 @@ export function Checklist() {
       <ChecklistCountProvider>
         <Wrapper role="region" aria-label={CHECKLIST_TITLE} ref={wrapperRef}>
           <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
-            <NavigationWrapper ref={navRef}>
+            <NavigationWrapper ref={navRef} isOpen={isOpen}>
               <TopNavigation
                 onClose={() => setIsOpen(false)}
                 label={CHECKLIST_TITLE}

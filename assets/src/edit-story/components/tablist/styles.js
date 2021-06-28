@@ -97,13 +97,19 @@ export const PanelWrapper = styled.div`
   :not(:last-child) ${TabButton} {
     box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
     margin-bottom: 1px;
+
+    ${themeHelpers.focusableOutlineCSS};
   }
 
   ${({ isExpanded, theme }) =>
     isExpanded &&
     css`
       & > ${TabButton} {
-        box-shadow: none !important;
+        :not(:last-child) {
+          box-shadow: none;
+        }
+
+        ${themeHelpers.focusableOutlineCSS};
 
         ${PanelText} {
           opacity: 1;
