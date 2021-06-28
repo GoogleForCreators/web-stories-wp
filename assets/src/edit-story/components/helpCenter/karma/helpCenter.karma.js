@@ -49,7 +49,7 @@ describe('Help Center integration', () => {
       const { quickTips, toggleButton } = await fixture.editor.helpCenter;
       expect(quickTips).toBeDefined();
 
-      expect(toggleButton).toHaveTextContent('Help8');
+      expect(toggleButton).toHaveTextContent('8');
     });
 
     it('should navigate to the second tip on click and update unread count to 7', async () => {
@@ -65,7 +65,7 @@ describe('Help Center integration', () => {
       );
       expect(exposedCropTip).toBeDefined();
 
-      waitFor(() => expect(toggleButton).toHaveTextContent('Help7'));
+      waitFor(() => expect(toggleButton).toHaveTextContent('7'));
     });
   });
 
@@ -117,7 +117,7 @@ describe('Help Center integration', () => {
         // eslint-disable-next-line no-loop-func
         waitFor(() => {
           expect(toggleButton).toHaveTextContent(
-            `Help${8 - clickCount <= 0 ? '' : 8 - clickCount}`
+            `${8 - clickCount <= 0 ? '' : 8 - clickCount}`
           );
         });
         // eslint-disable-next-line no-await-in-loop
@@ -189,7 +189,7 @@ describe('Help Center integration', () => {
         TIPS[KEYS.CROP_ELEMENTS_WITH_SHAPES].description
       );
       expect(exposedCropTip).toBeDefined();
-      expect(toggleButton).toHaveTextContent('Help7');
+      expect(toggleButton).toHaveTextContent('7');
     });
   });
 });
