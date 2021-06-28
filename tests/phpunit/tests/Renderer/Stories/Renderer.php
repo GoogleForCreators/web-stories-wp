@@ -76,6 +76,17 @@ class Renderer extends Test_Case {
 			]
 		);
 
+		$poster_attachment_id = $factory->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
+		set_post_thumbnail( self::$story_id, $poster_attachment_id );
+
 	}
 
 	/**
@@ -84,7 +95,7 @@ class Renderer extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 
-		$this->story_model = $this->createMock( Story::class );
+		$this->story_model = new \Google\Web_Stories\Model\Story();
 		$this->story_model->load_from_post( self::$story_id );
 
 		$this->story_query = $this->createMock( Story_Query::class );
@@ -158,15 +169,28 @@ class Renderer extends Test_Case {
 			]
 		);
 
+		$this->story_query->method( 'get_stories' )->willReturn(
+			[ $this->story_model ]
+		);
+
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query, $this->assets, $this->register_global_assets ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
+		$this->call_private_method( $renderer, 'init' );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
+		$this->set_private_property( $renderer, 'height', 300 );
+		$this->set_private_property( $renderer, 'width', 300 );
 
-		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster' );
-		$output = ob_get_clean();
+		$function = function () use ( $renderer ) {
+			$this->call_private_method( $renderer, 'render_story_with_poster' );
+		};
+
+		$output = get_echo( $function );
 
 		$this->assertContains( 'web-stories-list__story-poster', $output );
+		$this->assertContains( '<img', $output );
+		$this->assertContains( 'src=', $output );
+		$this->assertContains( 'srcset=', $output );
+		$this->assertContains( 'sizes=', $output );
 	}
 
 	/**
