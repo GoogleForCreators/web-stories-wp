@@ -18,11 +18,10 @@
  */
 import { action } from '@storybook/addon-actions';
 import { useCallback, useState } from 'react';
-
+import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 import { ReviewChecklistDialog } from '../prepublish';
 
 export default {

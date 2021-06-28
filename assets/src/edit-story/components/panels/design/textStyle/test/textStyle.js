@@ -129,7 +129,7 @@ Wrapper.propTypes = {
   ]),
 };
 
-describe('panels/TextStyle', () => {
+describe('Panels/TextStyle', () => {
   let textElement;
   let controls;
 

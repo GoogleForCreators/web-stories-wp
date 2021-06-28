@@ -17,10 +17,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { EmptyPanelContainer, EmptyPanelText, Checkmark } from './styles';
 
 const EmptyChecklist = ({ body }) => {

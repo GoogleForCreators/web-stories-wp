@@ -20,11 +20,10 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
+import { BEZIER } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '@web-stories-wp/design-system';
 import { ScheduledTransition } from '../transition/scheduledTransition';
 
 const DURATION = 300;

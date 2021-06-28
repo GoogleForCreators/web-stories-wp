@@ -19,10 +19,6 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,

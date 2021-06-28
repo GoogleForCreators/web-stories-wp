@@ -20,15 +20,15 @@ import PropTypes from 'prop-types';
 import { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
 import {
   Radio,
   ThemeGlobals,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import useRadioNavigation from '../shared/useRadioNavigation';
 
 const VisuallyHiddenLabel = styled.h3`

@@ -19,11 +19,10 @@
  */
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_TYPES, Icons } from '@web-stories-wp/design-system';
 import StoryPropTypes from '../../../../types';
 import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
