@@ -52,7 +52,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     expect(result).toBe(true);
   });
 
-  it('should not return true if the video element is larger than 1080x1920 and Optimized', () => {
+  it('should return false if the video element is larger than 1080x1920 and Optimized', () => {
     const largeUnoptimizedVideo = {
       id: 202,
       type: 'video',
@@ -68,7 +68,7 @@ describe('videoOptimization (pre-publish checklist card)', () => {
     expect(result).toBe(false);
   });
 
-  it('should not return a message if the video element is smaller than 1080x1920', () => {
+  it('should return false if the video element is smaller than 1080x1920', () => {
     const smallUnoptimizedVideo = {
       id: 202,
       type: 'video',
