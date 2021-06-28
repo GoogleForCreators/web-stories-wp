@@ -47,7 +47,7 @@ export class Checklist extends Container {
   }
 
   get priorityPanel() {
-    return this.getByRole('tabpanel', { name: /^Priority/ });
+    return this.queryByRole('tabpanel', { name: /^Priority/ });
   }
 
   get designTab() {
@@ -55,7 +55,7 @@ export class Checklist extends Container {
   }
 
   get designPanel() {
-    return this.getByRole('tabpanel', { name: /^Design/ });
+    return this.queryByRole('tabpanel', { name: /^Design/ });
   }
 
   get accessibilityTab() {
@@ -63,7 +63,7 @@ export class Checklist extends Container {
   }
 
   get accessibilityPanel() {
-    return this.getByRole('tabpanel', { name: /^Accessibility/ });
+    return this.queryByRole('tabpanel', { name: /^Accessibility/ });
   }
 
   get thing() {
