@@ -35,6 +35,7 @@ import { POPUP_ID } from './constants';
 import { DesignChecks } from './designChecks';
 import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
+import { ChecklistCountProvider } from './checkCountContext';
 
 const Wrapper = styled.div`
   /**
@@ -74,32 +75,34 @@ export function Checklist() {
 
   return (
     <DirectionAware>
-      <Wrapper ref={wrapperRef}>
-        <Popup
-          popupId={POPUP_ID}
-          isOpen={isOpen}
-          ariaLabel={__('Checklist', 'web-stories')}
-        >
-          <NavigationWrapper ref={navRef}>
-            <TopNavigation
-              onClose={() => setIsOpen(false)}
-              label={__('Checklist', 'web-stories')}
-              popupId={POPUP_ID}
-            />
-            <PriorityChecks />
-            <DesignChecks />
-            <AccessibilityChecks />
-          </NavigationWrapper>
-        </Popup>
-        <Toggle
-          isOpen={isOpen}
-          onClick={() => {
-            closeHelpCenter();
-            setIsOpen((v) => !v);
-          }}
-          popupId={POPUP_ID}
-        />
-      </Wrapper>
+      <ChecklistCountProvider>
+        <Wrapper ref={wrapperRef}>
+          <Popup
+            popupId={POPUP_ID}
+            isOpen={isOpen}
+            ariaLabel={__('Checklist', 'web-stories')}
+          >
+            <NavigationWrapper ref={navRef}>
+              <TopNavigation
+                onClose={() => setIsOpen(false)}
+                label={__('Checklist', 'web-stories')}
+                popupId={POPUP_ID}
+              />
+              <PriorityChecks />
+              <DesignChecks />
+              <AccessibilityChecks />
+            </NavigationWrapper>
+          </Popup>
+          <Toggle
+            isOpen={isOpen}
+            onClick={() => {
+              closeHelpCenter();
+              setIsOpen((v) => !v);
+            }}
+            popupId={POPUP_ID}
+          />
+        </Wrapper>
+      </ChecklistCountProvider>
     </DirectionAware>
   );
 }

@@ -31,6 +31,7 @@ import {
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyPosterAspectRatio(story) {
   if (
@@ -62,8 +63,10 @@ const StoryPosterAspectRatio = () => {
   );
   const { footer, title } = PRIORITY_COPY.storyPosterWrongRatio;
 
+  const isRendered = storyPosterAspectRatio(story);
+  useRegisterCheck('StoryPosterAspectRatio', isRendered);
   return (
-    storyPosterAspectRatio(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{

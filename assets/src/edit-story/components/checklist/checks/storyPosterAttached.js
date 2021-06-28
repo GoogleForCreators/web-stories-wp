@@ -27,6 +27,7 @@ import { useStory } from '../../../app';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { hasNoFeaturedMedia } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyHasNoPosterAttached(story) {
   return (
@@ -45,9 +46,13 @@ export function StoryPosterAttached() {
       }),
     [setHighlights]
   );
+
+  const isRendered = storyHasNoPosterAttached(story);
+  useRegisterCheck('StoryPosterAspectRatio', isRendered);
+
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;
   return (
-    storyHasNoPosterAttached(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{

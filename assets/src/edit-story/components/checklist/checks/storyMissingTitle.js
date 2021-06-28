@@ -26,6 +26,7 @@ import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyMissingTitle(story) {
   return typeof story.title !== 'string' || story.title?.trim() === '';
@@ -41,9 +42,13 @@ const StoryMissingTitle = () => {
       }),
     [setHighlights]
   );
+
+  const isRendered = storyMissingTitle(story);
+  useRegisterCheck('StoryMissingTitle', isRendered);
+
   const { footer, title } = PRIORITY_COPY.storyMissingTitle;
   return (
-    storyMissingTitle(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{
