@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useState } from 'react';
-
-/**
- * Internal dependencies
- */
-import { dataPixels } from '../../../../units/dimensions';
+import { dataPixels } from '@web-stories-wp/units';
 
 function useAlignment() {
   const [

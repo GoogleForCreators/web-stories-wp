@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
@@ -34,7 +34,6 @@ import {
 } from '../utils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
-import createSolid from '../../../../../utils/createSolid';
 import { PRESET_TYPES } from '../constants';
 
 jest.mock('../utils');

@@ -131,7 +131,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
       });
   };
 
-  const [debouncedOnInputChange] = useDebouncedCallback(
+  const debouncedOnInputChange = useDebouncedCallback(
     onInputChange,
     FETCH_AUTHORS_DEBOUNCE
   );

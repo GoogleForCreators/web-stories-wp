@@ -21,7 +21,8 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
@@ -30,9 +31,8 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '../../../design-system';
-import { FULLBLEED_RATIO, HEADER_HEIGHT } from '../../constants';
+import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useLayout } from '../../app';
 import usePinchToZoom from './usePinchToZoom';
 
@@ -115,6 +115,7 @@ const Area = styled.div`
 const PageAreaContainer = styled(Area).attrs({
   area: 'p',
 })`
+  position: relative;
   display: flex;
   justify-content: ${({ hasHorizontalOverflow }) =>
     hasHorizontalOverflow ? 'flex-start' : 'center'};
@@ -339,6 +340,7 @@ const PageArea = forwardRef(function PageArea(
     className = '',
     showOverflow = false,
     isBackgroundSelected = false,
+    pageAreaRef = createRef(),
     ...rest
   },
   ref
@@ -405,7 +407,10 @@ const PageArea = forwardRef(function PageArea(
             isControlled={isControlled}
             isBackgroundSelected={isBackgroundSelected}
           >
-            <PageAreaWithoutOverflow showOverflow={showOverflow}>
+            <PageAreaWithoutOverflow
+              ref={pageAreaRef}
+              showOverflow={showOverflow}
+            >
               <PageAreaSafeZone ref={ref} data-testid="safezone">
                 {children}
               </PageAreaSafeZone>
@@ -427,6 +432,7 @@ PageArea.propTypes = {
   className: PropTypes.string,
   showOverflow: PropTypes.bool,
   isBackgroundSelected: PropTypes.bool,
+  pageAreaRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 export {

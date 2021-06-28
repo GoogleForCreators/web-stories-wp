@@ -54,20 +54,7 @@ class KSES extends Service_Base {
 			return;
 		}
 
-		// The third param of the below filter was only added in WP 5.4.1.
-		if ( version_compare( get_bloginfo( 'version' ), '5.4.1', '>=' ) ) {
-			add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );
-
-			return;
-		}
-
-		// Fallback for WP < 5.4.1. Affects all post types, not just the web-story one.
-		// TODO: Remove once support for WP 5.3 is dropped.
-		add_filter( 'safe_style_css', [ $this, 'filter_safe_style_css' ] );
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_before_kses' ], 0 );
-		add_filter( 'content_save_pre', [ $this, 'filter_content_save_pre_after_kses' ], 20 );
-		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+		add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );
 	}
 
 	/**

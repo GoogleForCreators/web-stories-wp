@@ -100,6 +100,10 @@ const standard = {
   white: '#FFF',
 };
 
+const gradient = {
+  loading: `linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%)`,
+};
+
 const opacity = {
   footprint: 'transparent',
   white64: rgba(standard.white, 0.64),
@@ -117,6 +121,7 @@ const opacity = {
 };
 
 const darkTheme = {
+  gradient,
   fg: {
     primary: brand.gray[5],
     secondary: brand.gray[20],
@@ -202,6 +207,7 @@ const darkTheme = {
 };
 
 const lightTheme = {
+  gradient,
   fg: {
     primary: brand.gray[90],
     secondary: brand.gray[70],

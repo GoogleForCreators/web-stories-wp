@@ -23,13 +23,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
-
+import { createSolid, PatternPropType } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { PatternPropType } from '../../types';
 import { useKeyDownEffect, useFocusOut } from '../../../design-system';
-import createSolid from '../../utils/createSolid';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import { useTransform } from '../transform';
 import useStory from '../../app/story/useStory';
@@ -99,7 +97,7 @@ function ColorPicker({
     }
   );
 
-  const [onDebouncedChange] = useDebouncedCallback(onChange, 100, {
+  const onDebouncedChange = useDebouncedCallback(onChange, 100, {
     leading: true,
   });
 

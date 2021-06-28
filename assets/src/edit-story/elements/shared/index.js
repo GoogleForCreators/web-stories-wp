@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { css } from 'styled-components';
-
+import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
 import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 

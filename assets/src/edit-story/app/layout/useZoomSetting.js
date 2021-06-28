@@ -18,15 +18,13 @@
  * External dependencies
  */
 import { useMemo } from 'react';
+import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { themeHelpers } from '../../../design-system';
 import {
-  PAGE_WIDTH,
-  PAGE_RATIO,
-  FULLBLEED_RATIO,
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,

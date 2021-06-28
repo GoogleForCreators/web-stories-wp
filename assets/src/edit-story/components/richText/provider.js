@@ -51,7 +51,12 @@ function RichTextProvider({ children }) {
     if (editorState) {
       return getStateInfo(editorState);
     }
-    return { isBold: false, isItalic: false, isUnderline: false };
+    return {
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      isUppercase: false,
+    };
   }, [editorState]);
 
   const setStateFromContent = useCallback(

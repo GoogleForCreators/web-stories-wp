@@ -11,8 +11,8 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@ampproject/toolbox-optimizer": "^2.8.0",
-    "amphtml-validator": "^1.0.35",
+    "@ampproject/toolbox-optimizer": "^2.8.1",
+    "amphtml-validator": "1.0.35",
     "prop-types": "^15.7.2",
     "react-dom": "^17.0.2"
   }

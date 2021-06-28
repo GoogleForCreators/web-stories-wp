@@ -136,9 +136,7 @@ class AMP extends Service_Base {
 			'publisher'                  => $this->get_publisher_name(),
 			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 			'poster_images'              => [
-				'poster-portrait-src'  => $story->get_poster_portrait(),
-				'poster-square-src'    => $story->get_poster_square(),
-				'poster-landscape-src' => $story->get_poster_landscape(),
+				'poster-portrait-src' => $story->get_poster_portrait(),
 			],
 		];
 

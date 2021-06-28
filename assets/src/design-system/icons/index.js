@@ -82,6 +82,7 @@ export { ReactComponent as ExclamationTriangle } from './exclamation_triangle.sv
 export { ReactComponent as Eye } from './eye.svg';
 export { ReactComponent as FloppyDisk } from './floppy_disk.svg';
 export { ReactComponent as Gear } from './gear.svg';
+export { ReactComponent as GearWithGauge } from './gear_with_gauge.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';
 export { ReactComponent as LetterAHeight } from './letter_a_height.svg';
 export { ReactComponent as LetterAWidth } from './letter_a_width.svg';
@@ -93,6 +94,7 @@ export { ReactComponent as LetterSStrikethrough } from './letter_s_strikethrough
 export { ReactComponent as LetterT } from './letter_t.svg';
 export { ReactComponent as LetterTArrow } from './letter_t_arrow.svg';
 export { ReactComponent as LetterTPlus } from './letter_t_plus.svg';
+export { ReactComponent as LetterTUppercase } from './letter_t_uppercase.svg';
 export { ReactComponent as LetterTLargeLetterTSmall } from './letter_t_large_letter_t_small.svg';
 export { ReactComponent as LetterUUnderline } from './letter_u_underline.svg';
 export { ReactComponent as Link } from './link.svg';

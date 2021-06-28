@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO } from '../../../constants';
 import { useGlobalIsKeyPressed } from '../../../../design-system';
 import { useDropTargets } from '../../dropTargets';
 import { useCanvas, useLayout, useUserOnboarding } from '../../../app';
