@@ -541,6 +541,7 @@ class KSES extends Service_Base {
 				'object-fit'                => true,
 				'object-position'           => true,
 				'placeholder'               => true,
+				'sizes'                     => true,
 				'src'                       => true,
 				'srcset'                    => true,
 			],
