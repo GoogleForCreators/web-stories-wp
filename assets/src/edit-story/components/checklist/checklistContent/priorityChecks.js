@@ -22,6 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { useCurrentUser } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
@@ -53,6 +54,11 @@ export function PriorityChecks({ isOpen, onClick, title }) {
     ISSUE_TYPES.PRIORITY
   );
 
+  const { currentUser } = useCurrentUser(({ state, actions }) => ({
+    currentUser: state.currentUser,
+    toggleWebStoriesMediaOptimization:
+      actions.toggleWebStoriesMediaOptimization,
+  }));
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <StyledTablistPanel
@@ -75,10 +81,17 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         <PublisherLogoSize />
         <VideoElementMissingPoster />
         <VideoOptimization />
+        {
+          // todo video optimization fails when auto optimization is turned off
+          currentUser?.meta?.web_stories_media_optimization && (
+            <VideoOptimization />
+          )
+        }
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+
 PriorityChecks.propTypes = {
   isOpen: PropTypes.bool,
   onClick: PropTypes.func.isRequired,

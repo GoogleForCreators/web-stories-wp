@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useCallback, useMemo, useRef } from 'react';
+import { useFeature } from 'flagged';
 import { useLocalMedia, useStory } from '../../../app';
 import { VIDEO_SIZE_THRESHOLD } from '../../../app/media/utils/useFFmpeg';
 import { PRIORITY_COPY } from '../constants';
@@ -69,6 +70,8 @@ export function isVideoElementOptimized(element = {}) {
 }
 
 export const BulkVideoOptimization = () => {
+  const enableBulkVideoOptimization = useFeature('enableBulkVideoOptimization');
+
   const story = useStory(({ state }) => state);
   const optimizingResourcesRef = useRef({});
   const unoptimizedVideos = filterStoryElements(story, isVideoElementOptimized);
@@ -144,26 +147,29 @@ export const BulkVideoOptimization = () => {
     isRendered && (
       <ChecklistCard
         cta={
-          <OptimizeButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={handleUpdateVideos}
-            disabled={isTranscoding}
-          >
-            {isTranscoding
-              ? _n(
-                  'Optimizing video',
-                  'Optimizing videos',
-                  unoptimizedVideos.length,
-                  'web-stories'
-                )
-              : _n(
-                  'Optimize video',
-                  'Optimize all videos',
-                  unoptimizedVideos.length,
-                  'web-stories'
-                )}
-          </OptimizeButton>
+          (enableBulkVideoOptimization || unoptimizedVideos.length === 1) && (
+            <OptimizeButton
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={handleUpdateVideos}
+              disabled={isTranscoding}
+            >
+              {/* todo copy should count the number of videos */}
+              {isTranscoding
+                ? _n(
+                    'Optimizing video',
+                    'Optimizing videos',
+                    unoptimizedVideos.length,
+                    'web-stories'
+                  )
+                : _n(
+                    'Optimize video',
+                    'Optimize all videos',
+                    unoptimizedVideos.length,
+                    'web-stories'
+                  )}
+            </OptimizeButton>
+          )
         }
         title={title}
         cardType={
@@ -182,13 +188,17 @@ export const BulkVideoOptimization = () => {
             displayBackground={<LayerThumbnail page={element} />}
             aria-label={__('Go to offending video', 'web-stories')}
           >
-            {!['UPLOADING'].includes(
-              optimizingResourcesRef.current[element.resource?.id]
-            ) && (
-              <Tooltip title={__('Optimize', 'web-stories')}>
-                <StyledVideoOptimizationIcon />
-              </Tooltip>
-            )}
+            <Tooltip
+              title={
+                ['UPLOADING'].includes(
+                  optimizingResourcesRef.current[element.resource?.id]
+                ) || element.resource?.isTranscoding
+                  ? __('Video optimization in progress', 'web-stories')
+                  : __('Optimize', 'web-stories')
+              }
+            >
+              <StyledVideoOptimizationIcon />
+            </Tooltip>
           </Thumbnail>
         ))}
       />
