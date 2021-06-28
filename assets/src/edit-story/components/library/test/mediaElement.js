@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { Simulate } from 'react-dom/test-utils';
+import { render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -85,10 +86,10 @@ describe('MediaElement', () => {
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('image :)');
+    const element = screen.getByAltText('image :)');
     Simulate.focus(element);
 
-    expect(getByAriaLabel('More')).toBeInTheDocument();
+    expect(screen.getByAltText('More')).toBeInTheDocument();
   });
 
   it("should render dropdown menu's more icon for uploaded video", () => {
@@ -109,10 +110,10 @@ describe('MediaElement', () => {
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('video :)');
+    const element = screen.getByAltText('video :)');
     Simulate.focus(element);
 
-    expect(getByAriaLabel('More')).toBeInTheDocument();
+    expect(screen.getByAltText('More')).toBeInTheDocument();
   });
 
   it("should not render dropdown menu's more icon for not uploaded image", () => {
@@ -133,7 +134,7 @@ describe('MediaElement', () => {
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('image :)');
+    const element = screen.getByAltText('image :)');
     Simulate.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
@@ -157,7 +158,7 @@ describe('MediaElement', () => {
     );
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
-    const element = getByAriaLabel('video :)');
+    const element = screen.getByAltText('video :)');
     Simulate.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
