@@ -99,7 +99,7 @@ export const calculateImageSelectOptions = (attachment, controller) => {
  * @param {number}  dstH Destination height.
  * @param {number}  imgW Image Width.
  * @param {number}  imgH Image height.
- * @return {boolean} Weather or not an image must be cropped or not.
+ * @return {boolean} Whether or not an image must be cropped or not.
  */
 export const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
   if (true === flexW && true === flexH) {
