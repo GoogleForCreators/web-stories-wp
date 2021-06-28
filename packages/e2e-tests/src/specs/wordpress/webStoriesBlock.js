@@ -126,7 +126,7 @@ describe('Web Stories Block', () => {
     await expect(page).toClick('button', { text: 'Select Stories' });
     await page.waitForSelector('.components-modal__screen-overlay');
     await expect(page).toMatchElement('.components-modal__screen-overlay');
-    await percySnapshot(page, 'Story select model');
+    await percySnapshot(page, 'Story select modal');
   });
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
