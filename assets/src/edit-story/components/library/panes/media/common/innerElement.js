@@ -177,20 +177,12 @@ function InnerElement({
         {/* eslint-disable-next-line styled-components-a11y/media-has-caption -- No captions because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
-            <>
-              {resource.output.src && (
-                <source src={resource.output.src} type="video/mp4" />
-              )}
-              {resource.output.sizes.webm && (
-                <source
-                  src={getSmallestUrlForWidth(width, {
-                    ...resource,
-                    sizes: resource.output.sizes.webm,
-                  })}
-                  type="video/webm"
-                />
-              )}
-            </>
+            resource.output.src && (
+              <source
+                src={resource.output.src}
+                type={resource.output.mimeType}
+              />
+            )
           ) : (
             <source
               src={getSmallestUrlForWidth(width, resource)}

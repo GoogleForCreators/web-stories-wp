@@ -53,7 +53,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
-    isPlaceholder: undefined,
+    isPlaceholder: false,
     isOptimized: false,
     sizes: {
       medium: {

@@ -120,7 +120,7 @@ function getGifResourceFromAttachment(attachment) {
   const {
     id,
     date_gmt,
-    media_details: { width, height, sizes },
+    media_details: { width, height },
     title: { raw: title },
     description: { raw: description },
     mime_type: mimeType,
@@ -157,8 +157,6 @@ function getGifResourceFromAttachment(attachment) {
     output: {
       mimeType: mimeType,
       src: src,
-      sizes,
-      poster,
     },
   });
 }

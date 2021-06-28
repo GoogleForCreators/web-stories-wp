@@ -128,7 +128,7 @@ function createResource({
   attribution,
   output,
   local = false,
-  isPlaceholder,
+  isPlaceholder = false,
   isOptimized = false,
 }) {
   return {

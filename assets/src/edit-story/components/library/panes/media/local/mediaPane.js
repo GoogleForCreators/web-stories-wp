@@ -234,7 +234,8 @@ function MediaPane(props) {
       if (
         !resource.posterId &&
         !resource.local &&
-        allowedVideoMimeTypes.includes(resource.mimeType)
+        (allowedVideoMimeTypes.includes(resource.mimeType) ||
+          resource.type === 'gif')
       ) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.

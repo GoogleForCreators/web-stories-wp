@@ -160,7 +160,8 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-        if (resource.type === 'gif' && !resource.local) {
+
+        if (['video', 'gif'].includes(resource.type) && !resource.local) {
           uploadVideoPoster(resource.id, resource.src);
         }
       };
