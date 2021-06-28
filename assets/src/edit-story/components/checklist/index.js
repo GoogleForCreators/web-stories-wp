@@ -101,7 +101,12 @@ export function Checklist() {
                 label={CHECKLIST_TITLE}
                 popupId={POPUP_ID}
               />
-              <Tablist aria-label={__('Tab list of issues', 'web-stories')}>
+              <Tablist
+                aria-label={__(
+                  'Potential Story issues by category',
+                  'web-stories'
+                )}
+              >
                 <PriorityChecks
                   isOpen={openPanel === ISSUE_TYPES.PRIORITY}
                   onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}

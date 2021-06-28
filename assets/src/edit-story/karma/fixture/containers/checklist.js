@@ -35,7 +35,9 @@ export class Checklist extends Container {
   }
 
   get issues() {
-    return this.queryByRole('tablist', { name: /^Tab list of issues$/ });
+    return this.queryByRole('tablist', {
+      name: /^Potential Story issues by category$/,
+    });
   }
 
   get closeButton() {
