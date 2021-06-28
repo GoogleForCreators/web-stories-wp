@@ -45,6 +45,11 @@ import { useHighlights } from '../../../app/highlights';
 import { useRegisterCheck } from '../checkCountContext';
 import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 
+const STATES = {
+  UPLOADING: 'UPLOADING',
+  UPLOADED: 'UPLOADED',
+};
+
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
 `;
@@ -91,7 +96,7 @@ export const BulkVideoOptimization = () => {
       optimizingResources
         .map(({ resource }) => async () => {
           await optimizeVideo({ resource }).finally(() => {
-            optimizingResourcesRef.current[resource.id] = 'UPLOADED';
+            optimizingResourcesRef.current[resource.id] = STATES.UPLOADED;
           });
         })
         .reduce((p, fn) => p.then(fn), Promise.resolve())
@@ -104,7 +109,7 @@ export const BulkVideoOptimization = () => {
   const handleUpdateVideos = useCallback(async () => {
     unoptimizedVideos.forEach(({ resource }) => {
       if (!resource.isTranscoding) {
-        optimizingResourcesRef.current[resource.id] = 'UPLOADING';
+        optimizingResourcesRef.current[resource.id] = STATES.UPLOADING;
       }
     });
     await sequencedVideoOptimization();
@@ -118,13 +123,13 @@ export const BulkVideoOptimization = () => {
       });
       if (
         !element.resource?.isTranscoding &&
-        !['UPLOADING'].includes(
+        ![STATES.UPLOADING].includes(
           optimizingResourcesRef.current[element.resource.id]
         )
       ) {
-        optimizingResourcesRef.current[element.resource.id] = 'UPLOADING';
+        optimizingResourcesRef.current[element.resource.id] = STATES.UPLOADING;
         await optimizeVideo({ resource: element.resource }).finally(() => {
-          optimizingResourcesRef.current[element.resource.id] = 'UPLOADED';
+          optimizingResourcesRef.current[element.resource.id] = STATES.UPLOADED;
         });
       }
     },
@@ -135,8 +140,9 @@ export const BulkVideoOptimization = () => {
 
   const isTranscoding = useMemo(
     () =>
-      Object.values(optimizingResourcesRef.current).includes('UPLOADING') ||
-      unoptimizedVideos.some((video) => video.resource?.isTranscoding),
+      Object.values(optimizingResourcesRef.current).includes(
+        STATES.UPLOADING
+      ) || unoptimizedVideos.some((video) => video.resource?.isTranscoding),
     [unoptimizedVideos]
   );
 
@@ -190,7 +196,7 @@ export const BulkVideoOptimization = () => {
           >
             <Tooltip
               title={
-                ['UPLOADING'].includes(
+                [STATES.UPLOADING].includes(
                   optimizingResourcesRef.current[element.resource?.id]
                 ) || element.resource?.isTranscoding
                   ? __('Video optimization in progress', 'web-stories')
