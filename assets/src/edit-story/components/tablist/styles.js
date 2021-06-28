@@ -103,6 +103,8 @@ export const PanelWrapper = styled.div`
     isExpanded &&
     css`
       & > ${TabButton} {
+        box-shadow: none !important;
+
         ${PanelText} {
           opacity: 1;
         }
@@ -120,7 +122,7 @@ export const PanelWrapper = styled.div`
 
       & > ${TabPanel} {
         height: 560px;
-        padding: 16px;
+        padding: 0 16px 16px;
         visibility: visible;
       }
     `};

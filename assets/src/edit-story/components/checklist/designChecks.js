@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import PageTooManyLinks from './checks/pageTooManyLinks';
@@ -32,6 +33,7 @@ import {
   ChecklistCategoryProvider,
   useCategoryCount,
 } from './checkCountContext';
+import { PanelText } from './styles';
 
 export function DesignChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.DESIGN);
@@ -44,6 +46,9 @@ export function DesignChecks({ isOpen, onClick, title }) {
         onClick={onClick}
         title={title}
       >
+        <PanelText>
+          {__('Follow best practices for Web Stories.', 'web-stories')}
+        </PanelText>
         <StoryPagesCount />
         <PageTooMuchText />
         <PageTooLittleText />

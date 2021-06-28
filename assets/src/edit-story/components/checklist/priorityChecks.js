@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { PANEL_STATES, TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import PublisherLogoSize from './checks/publisherLogoSize';
@@ -34,6 +35,7 @@ import {
   ChecklistCategoryProvider,
   useCategoryCount,
 } from './checkCountContext';
+import { PanelText } from './styles';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
@@ -47,6 +49,9 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         status={PANEL_STATES.DANGER}
         title={title}
       >
+        <PanelText>
+          {__('Make this Web Story easier to discover.', 'web-stories')}
+        </PanelText>
         <StoryMissingTitle />
         <StoryTitleLength />
         <StoryMissingExcerpt />

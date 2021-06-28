@@ -33,7 +33,12 @@ import { TopNavigation } from '../helpCenter/navigator/topNavigation';
 import { Z_INDEX } from '../canvas/layout';
 import { Tablist } from '../tablist';
 import { Toggle } from './toggle';
-import { CATEGORY_LABELS, ISSUE_TYPES, POPUP_ID } from './constants';
+import {
+  CATEGORY_LABELS,
+  CHECKLIST_TITLE,
+  ISSUE_TYPES,
+  POPUP_ID,
+} from './constants';
 import { DesignChecks } from './designChecks';
 import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
@@ -88,16 +93,12 @@ export function Checklist() {
   return (
     <DirectionAware>
       <ChecklistCountProvider>
-        <Wrapper ref={wrapperRef}>
-          <Popup
-            popupId={POPUP_ID}
-            isOpen={isOpen}
-            ariaLabel={__('Checklist', 'web-stories')}
-          >
+        <Wrapper role="region" aria-label={CHECKLIST_TITLE} ref={wrapperRef}>
+          <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
             <NavigationWrapper ref={navRef}>
               <TopNavigation
                 onClose={() => setIsOpen(false)}
-                label={__('Checklist', 'web-stories')}
+                label={CHECKLIST_TITLE}
                 popupId={POPUP_ID}
               />
               <Tablist aria-label={__('Tab list of issues', 'web-stories')}>

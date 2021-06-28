@@ -48,6 +48,8 @@ const PUBLISHER_LOGO_RATIO = 1;
 
 export const POPUP_ID = 'checklist_companion';
 
+export const CHECKLIST_TITLE = __('Checklist', 'web-stories');
+
 export const ISSUE_TYPES = {
   ACCESSIBILITY: 'accessibility',
   DESIGN: 'design',
