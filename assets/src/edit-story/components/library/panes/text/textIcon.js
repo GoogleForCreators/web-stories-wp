@@ -28,7 +28,7 @@ import { getBox } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { Icons } from '../../../../../design-system';
-import useGenerateCanvasFromPage from '../../../../utils/useGenerateCanvasFromPage';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import { getAccessibleTextColorsFromPixels } from '../../../../utils/contrastUtils';
 import { useStory } from '../../../../app/story';
@@ -102,7 +102,7 @@ function TextIcon(props) {
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
   const [autoColor, setAutoColor] = useState(null);
-  const generateCanvasFromPage = useGenerateCanvasFromPage();
+  const { generateCanvasFromPage } = usePageAsCanvas();
 
   const calculateColors = useCallback(
     (atts) => {

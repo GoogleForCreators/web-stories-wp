@@ -30,7 +30,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
-import useGenerateCanvasFromPage from '../../../../utils/useGenerateCanvasFromPage';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -56,7 +56,7 @@ function TextPane(props) {
   const { showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
-  const generateCanvasFromPage = useGenerateCanvasFromPage();
+  const { generateCanvasFromPage } = usePageAsCanvas();
 
   const onClick = useCallback(
     (title, element) => {

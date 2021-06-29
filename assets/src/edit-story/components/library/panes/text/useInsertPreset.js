@@ -29,7 +29,7 @@ import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { getAccessibleTextColorsFromPixels } from '../../../../utils/contrastUtils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
-import useGenerateCanvasFromPage from '../../../../utils/useGenerateCanvasFromPage';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import { hasPageHashChanged } from './utils';
 
 const POSITION_MARGIN = dataFontEm(1);
@@ -57,7 +57,7 @@ function useInsertPreset() {
   const [presetAtts, setPresetAtts] = useState(null);
 
   const lastPreset = useRef(null);
-  const generateCanvasFromPage = useGenerateCanvasFromPage();
+  const { generateCanvasFromPage } = usePageAsCanvas();
 
   useEffect(() => {
     // Version number change is happening due to adding a preset.

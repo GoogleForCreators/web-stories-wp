@@ -30,7 +30,7 @@ import {
 import useLibrary from '../components/library/useLibrary';
 import { useCanvas, useStory } from '../app';
 
-function useGenerateCanvasFromPage() {
+function usePageAsCanvas() {
   const { pageCanvasData, setPageCanvasData } = useLibrary((state) => ({
     pageCanvasData: state.state.pageCanvasData,
     setPageCanvasData: state.actions.setPageCanvasData,
@@ -69,7 +69,9 @@ function useGenerateCanvasFromPage() {
     },
     [currentPage, fullbleedContainer, pageCanvasData, setPageCanvasData]
   );
-  return generateCanvasFromPage;
+  return {
+    generateCanvasFromPage,
+  };
 }
 
-export default useGenerateCanvasFromPage;
+export default usePageAsCanvas;
