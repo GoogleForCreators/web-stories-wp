@@ -95,7 +95,7 @@ describe('Help Center integration', () => {
 
     it('should update remaining unread tips as they are clicked through', async () => {
       const { quickTips, toggleButton } = fixture.editor.helpCenter;
-      expect(toggleButton).toHaveTextContent('Help8');
+      expect(toggleButton).toHaveTextContent('8');
 
       const { getByLabelText } = within(quickTips);
 
