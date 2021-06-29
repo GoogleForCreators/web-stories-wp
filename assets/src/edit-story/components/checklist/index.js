@@ -19,12 +19,11 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import { useFocusOut } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { FOCUSABLE_SELECTORS } from '../../constants';
-import { useHelpCenter } from '../../app';
 import DirectionAware from '../directionAware';
 import { Popup } from '../helpCenter/popup';
 import { NavigationWrapper } from '../helpCenter/navigator';
@@ -43,6 +42,7 @@ import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
 import EmptyContentCheck from './emptyContent';
+import { useChecklist } from './context';
 
 const Wrapper = styled.div`
   /**
@@ -54,13 +54,11 @@ const Wrapper = styled.div`
 `;
 
 export function Checklist() {
-  const navRef = useRef();
-  const wrapperRef = useRef();
-  const [isOpen, setIsOpen] = useState(false);
-  const { close: closeHelpCenter } = useHelpCenter(
-    ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
+  const { close, toggle, isOpen } = useChecklist(
+    ({ actions: { close, toggle }, state: { isOpen } }) => ({
       close,
-      isHelpCenterOpen,
+      toggle,
+      isOpen,
     })
   );
 
@@ -72,6 +70,7 @@ export function Checklist() {
       ),
     []
   );
+  const navRef = useRef();
 
   // Set Focus within the popup on open
   useEffect(() => {
@@ -83,20 +82,14 @@ export function Checklist() {
     }
   }, [isOpen]);
 
-  // Close this popup when focus leaves
-  // this also functions to close this popup
-  // when either the help center or keyboard
-  // actions are open.
-  useFocusOut(wrapperRef, () => setIsOpen(false), []);
-
   return (
     <DirectionAware>
       <ChecklistCountProvider>
-        <Wrapper role="region" aria-label={CHECKLIST_TITLE} ref={wrapperRef}>
+        <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
           <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
             <NavigationWrapper ref={navRef} isOpen={isOpen}>
               <TopNavigation
-                onClose={() => setIsOpen(false)}
+                onClose={close}
                 label={CHECKLIST_TITLE}
                 popupId={POPUP_ID}
               />
@@ -125,16 +118,11 @@ export function Checklist() {
               <EmptyContentCheck />
             </NavigationWrapper>
           </Popup>
-          <Toggle
-            isOpen={isOpen}
-            onClick={() => {
-              closeHelpCenter();
-              setIsOpen((v) => !v);
-            }}
-            popupId={POPUP_ID}
-          />
+          <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
         </Wrapper>
       </ChecklistCountProvider>
     </DirectionAware>
   );
 }
+
+export { ChecklistProvider, useChecklist } from './context';
