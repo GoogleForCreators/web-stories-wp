@@ -23,8 +23,9 @@
  * @param {wp.media.controller.Cropper} controller wp.media controller object.
  * @return {Object} Options
  */
-export const calculateImageSelectOptions = (attachment, controller) => {
+const calculateImageSelectOptions = (attachment, controller) => {
   const control = controller.get('control');
+
   const flexWidth = Boolean(parseInt(control.params.flex_width));
   const flexHeight = Boolean(parseInt(control.params.flex_height));
   const realWidth = attachment.get('width');
@@ -90,37 +91,4 @@ export const calculateImageSelectOptions = (attachment, controller) => {
   return imgSelectOptions;
 };
 
-/**
- * Return whether the image must be cropped, based on required dimensions.
- *
- * @param {boolean} flexW Flexible width.
- * @param {boolean} flexH Flexible height.
- * @param {number}  dstW Destination width.
- * @param {number}  dstH Destination height.
- * @param {number}  imgW Image Width.
- * @param {number}  imgH Image height.
- * @return {boolean} Whether or not an image must be cropped or not.
- */
-export const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
-  if (true === flexW && true === flexH) {
-    return false;
-  }
-
-  if (true === flexW && dstH === imgH) {
-    return false;
-  }
-
-  if (true === flexH && dstW === imgW) {
-    return false;
-  }
-
-  if (dstW === imgW && dstH === imgH) {
-    return false;
-  }
-
-  if (imgW <= dstW) {
-    return false;
-  }
-
-  return true;
-};
+export default calculateImageSelectOptions;
