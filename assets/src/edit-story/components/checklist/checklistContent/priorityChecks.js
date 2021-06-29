@@ -29,7 +29,7 @@ import StoryMissingExcerpt from '../checks/storyMissingExerpt';
 import StoryMissingTitle from '../checks/storyMissingTitle';
 import StoryPosterAspectRatio from '../checks/storyPosterAspectRatio';
 import { StoryPosterAttached } from '../checks/storyPosterAttached';
-import StoryPosterPortraitSize from '../checks/storyPosterPortraitSize';
+// import StoryPosterPortraitSize from '../checks/storyPosterPortraitSize';
 import StoryTitleLength from '../checks/storyTitleLength';
 import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import {
@@ -71,7 +71,8 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         <StoryTitleLength />
         <StoryMissingExcerpt />
         <StoryPosterAttached />
-        <StoryPosterPortraitSize />
+        {/* TODO: this overlaps alot with aspect ratio, do we need both? */}
+        {/* <StoryPosterPortraitSize /> */}
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />

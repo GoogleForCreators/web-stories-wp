@@ -56,6 +56,11 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
+const StyledNavigationWrapper = styled(NavigationWrapper)`
+  max-height: 786px;
+  height: 80vh;
+`;
+
 const ChecklistPopup = ({ isOpen, close }) => {
   const navRef = useRef();
 
@@ -84,7 +89,7 @@ const ChecklistPopup = ({ isOpen, close }) => {
       ariaLabel={CHECKLIST_TITLE}
       shouldKeepMounted // todo this makes it never open again
     >
-      <NavigationWrapper ref={navRef} isOpen={isOpen}>
+      <StyledNavigationWrapper ref={navRef} isOpen={isOpen}>
         <TopNavigation
           onClose={close}
           label={CHECKLIST_TITLE}
@@ -110,7 +115,7 @@ const ChecklistPopup = ({ isOpen, close }) => {
           />
         </Tablist>
         <EmptyContentCheck />
-      </NavigationWrapper>
+      </StyledNavigationWrapper>
     </Popup>
   );
 };

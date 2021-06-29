@@ -37,7 +37,7 @@ export function storyHasNoPosterAttached(story) {
 
 export function StoryPosterAttached() {
   //@TODO refine this context selector and storyHasNoPosterAttached to run more selectively
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
