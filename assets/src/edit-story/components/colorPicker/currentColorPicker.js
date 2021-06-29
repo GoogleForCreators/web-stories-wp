@@ -23,12 +23,10 @@ import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
-import * as htmlToImage from 'html-to-image';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout } from '../../app';
 import {
   Icons,
   Button,
@@ -36,9 +34,9 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
 } from '../../../design-system';
-import { ZOOM_SETTING } from '../../constants';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
+import useEyedropper from './eyedropper';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
@@ -138,62 +136,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
-  const {
-    state: { fullbleedContainer },
-    actions: {
-      setEyedropperActive,
-      setEyedropperCallback,
-      setEyedropperImg,
-      setEyedropperPixelData,
-    },
-  } = useCanvas();
-
-  const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
-    setZoomSetting,
-  }));
-
-  const initEyedropper = useCallback(async () => {
-    setZoomSetting(ZOOM_SETTING.FIT);
-    const prepareEyedropper = () =>
-      new Promise((resolve) => {
-        // Wait one tick for the zoom to settle in.
-        // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-        setTimeout(() => {
-          htmlToImage
-            .toCanvas(fullbleedContainer, { preferredFontFormat: 'woff2' })
-            .then((canvas) => {
-              const ctx = canvas.getContext('2d');
-              const pixelData = ctx.getImageData(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-              ).data;
-              setEyedropperPixelData(pixelData);
-              setEyedropperImg(canvas.toDataURL());
-              resolve();
-            });
-        });
-      });
-
-    await prepareEyedropper();
-
-    setEyedropperCallback(() => (rgbObject) => {
-      onChange(rgbObject);
-      setEyedropperActive(false);
-      setEyedropperImg(null);
-      setEyedropperPixelData(null);
-    });
-    setEyedropperActive(true);
-  }, [
-    fullbleedContainer,
-    onChange,
-    setEyedropperActive,
-    setEyedropperCallback,
-    setEyedropperImg,
-    setEyedropperPixelData,
-    setZoomSetting,
-  ]);
+  const { initEyedropper } = useEyedropper({ onChange });
 
   return (
     <Container>
