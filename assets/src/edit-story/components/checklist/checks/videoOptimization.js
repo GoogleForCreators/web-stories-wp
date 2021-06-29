@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { _n, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 /**
@@ -25,7 +25,7 @@ import styled from 'styled-components';
  */
 import { useCallback, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
-import { useConfig, useLocalMedia, useStory } from '../../../app';
+import { useLocalMedia, useStory } from '../../../app';
 import { VIDEO_SIZE_THRESHOLD } from '../../../app/media/utils/useFFmpeg';
 import { PRIORITY_COPY } from '../constants';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
@@ -54,12 +54,16 @@ const OptimizeButton = styled(Button)`
   margin-top: 4px;
 `;
 
-export function isVideoElementOptimized(element = {}) {
+export function videoElementsNotOptimized(element = {}) {
   if (element.resource?.isTranscoding) {
     return true;
   }
 
-  if (element.resource?.local || element.resource?.isOptimized) {
+  if (
+    element.type !== 'video' ||
+    element.resource?.local ||
+    element.resource?.isOptimized
+  ) {
     return false;
   }
 
@@ -71,18 +75,16 @@ export function isVideoElementOptimized(element = {}) {
 }
 
 export const BulkVideoOptimization = () => {
-  const enableBulkVideoOptimization = useFeature('enableBulkVideoOptimization');
-  const { allowedTranscodableMimeTypes } = useConfig();
+  const isBulkVideoOptimizationEnabled = useFeature(
+    'enableBulkVideoOptimization'
+  );
 
   const story = useStory(({ state }) => state);
   const optimizingResourcesRef = useRef({});
-  const unoptimizedVideos = filterStoryElements(story, (element) => {
-    return (
-      element.type === 'video' &&
-      allowedTranscodableMimeTypes.includes(element.resource?.mimeType) &&
-      isVideoElementOptimized(element)
-    );
-  });
+  const unoptimizedVideos = filterStoryElements(
+    story,
+    videoElementsNotOptimized
+  );
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
@@ -152,31 +154,32 @@ export const BulkVideoOptimization = () => {
   const isRendered = unoptimizedVideos.length > 0;
   useRegisterCheck('VideoOptimization', isRendered);
 
+  // todo copy should count the number of videos
+  let optimizeButtonCopy =
+    unoptimizedVideos.length === 1
+      ? __('Optimize video', 'web-stories')
+      : __('Optimize all videos', 'web-stories');
+
+  if (isTranscoding) {
+    optimizeButtonCopy =
+      unoptimizedVideos.length === 1
+        ? __('Optimizing video', 'web-stories')
+        : __('Optimizing videos', 'web-stories');
+  }
+
   return (
     isRendered && (
       <ChecklistCard
         cta={
-          (enableBulkVideoOptimization || unoptimizedVideos.length === 1) && (
+          (isBulkVideoOptimizationEnabled ||
+            unoptimizedVideos.length === 1) && (
             <OptimizeButton
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
               onClick={handleUpdateVideos}
               disabled={isTranscoding}
             >
-              {/* todo copy should count the number of videos */}
-              {isTranscoding
-                ? _n(
-                    'Optimizing video',
-                    'Optimizing videos',
-                    unoptimizedVideos.length,
-                    'web-stories'
-                  )
-                : _n(
-                    'Optimize video',
-                    'Optimize all videos',
-                    unoptimizedVideos.length,
-                    'web-stories'
-                  )}
+              {optimizeButtonCopy}
             </OptimizeButton>
           )
         }

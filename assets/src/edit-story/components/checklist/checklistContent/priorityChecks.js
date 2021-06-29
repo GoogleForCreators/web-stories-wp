@@ -22,7 +22,8 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useCurrentUser, useConfig } from '../../../app';
+import { useConfig } from '../../../app';
+import useFFmpeg from '../../../app/media/utils/useFFmpeg';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
@@ -54,19 +55,13 @@ export function PriorityChecks({ isOpen, onClick, title }) {
     ISSUE_TYPES.PRIORITY
   );
 
-  const { currentUser } = useCurrentUser(({ state, actions }) => ({
-    currentUser: state.currentUser,
-    toggleWebStoriesMediaOptimization:
-      actions.toggleWebStoriesMediaOptimization,
-  }));
+  const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const isVideoOptimizationSettingEnabled =
-    Boolean(window?.crossOriginIsolated) &&
-    currentUser?.meta?.web_stories_media_optimization &&
-    hasUploadMediaAction;
+    isFeatureEnabled && isTranscodingEnabled && hasUploadMediaAction;
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
