@@ -59,6 +59,10 @@ export function PriorityChecks({ isOpen, onClick, title }) {
     toggleWebStoriesMediaOptimization:
       actions.toggleWebStoriesMediaOptimization,
   }));
+  const isVideoOptimizationSettingEnabled =
+    Boolean(window?.crossOriginIsolated) &&
+    currentUser?.meta?.web_stories_media_optimization;
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <StyledTablistPanel
@@ -80,13 +84,7 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />
-        <VideoOptimization />
-        {
-          // todo video optimization fails when auto optimization is turned off
-          currentUser?.meta?.web_stories_media_optimization && (
-            <VideoOptimization />
-          )
-        }
+        {isVideoOptimizationSettingEnabled && <VideoOptimization />}
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );

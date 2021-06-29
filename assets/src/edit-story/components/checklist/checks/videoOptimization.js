@@ -25,7 +25,7 @@ import styled from 'styled-components';
  */
 import { useCallback, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
-import { useLocalMedia, useStory } from '../../../app';
+import { useConfig, useLocalMedia, useStory } from '../../../app';
 import { VIDEO_SIZE_THRESHOLD } from '../../../app/media/utils/useFFmpeg';
 import { PRIORITY_COPY } from '../constants';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
@@ -59,11 +59,7 @@ export function isVideoElementOptimized(element = {}) {
     return true;
   }
 
-  if (
-    element.type !== 'video' ||
-    element.resource?.local ||
-    element.resource?.isOptimized
-  ) {
+  if (element.resource?.local || element.resource?.isOptimized) {
     return false;
   }
 
@@ -76,10 +72,17 @@ export function isVideoElementOptimized(element = {}) {
 
 export const BulkVideoOptimization = () => {
   const enableBulkVideoOptimization = useFeature('enableBulkVideoOptimization');
+  const { allowedTranscodableMimeTypes } = useConfig();
 
   const story = useStory(({ state }) => state);
   const optimizingResourcesRef = useRef({});
-  const unoptimizedVideos = filterStoryElements(story, isVideoElementOptimized);
+  const unoptimizedVideos = filterStoryElements(story, (element) => {
+    return (
+      element.type === 'video' &&
+      allowedTranscodableMimeTypes.includes(element.resource?.mimeType) &&
+      isVideoElementOptimized(element)
+    );
+  });
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
 
