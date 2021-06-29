@@ -36,9 +36,9 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
 } from '../../../design-system';
+import { ZOOM_SETTING } from '../../constants';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
-import { ZOOM_SETTING } from '../../constants';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
@@ -251,7 +251,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
             aria-label={__('Pick a color from canvas', 'web-stories')}
             onClick={initEyedropper}
           >
-            <Icons.Eyedropper style={{ padding: 6 }} />
+            <Icons.Pipette />
           </Button>
           <Space />
           <EditablePreview
