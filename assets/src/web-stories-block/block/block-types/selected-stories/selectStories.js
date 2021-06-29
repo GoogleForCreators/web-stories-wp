@@ -112,7 +112,7 @@ const DropdownContainer = styled.div``;
 // Overrides WP input styles with some increased specificity.
 const StyledSearch = styled(Search)(
   ({ theme }) => css`
-    &&& {
+    input {
       box-shadow: none;
       border: 1px solid ${theme.colors.border.defaultNormal};
       padding: 8px 20px 8px 40px;
