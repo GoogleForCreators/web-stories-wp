@@ -151,18 +151,19 @@ describe('Checklist integration', () => {
       expect(fixture.editor.checklist.designPanel).toBeDefined();
       expect(fixture.editor.checklist.accessibilityPanel).toBeNull();
 
+      // TODO #8085 - a11y section not available in blank page state, no issues present
       // tab to accessibility section
-      while (
-        fixture.editor.checklist.accessibilityTab !== document.activeElement
-      ) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.keyboard.press('tab');
-      }
+      // while (
+      //   fixture.editor.checklist.accessibilityTab !== document.activeElement
+      // ) {
+      //   // eslint-disable-next-line no-await-in-loop
+      //   await fixture.events.keyboard.press('tab');
+      // }
 
-      await fixture.events.keyboard.press('Enter');
-      expect(fixture.editor.checklist.priorityPanel).toBeNull();
-      expect(fixture.editor.checklist.designPanel).toBeNull();
-      expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
+      // await fixture.events.keyboard.press('Enter');
+      // expect(fixture.editor.checklist.priorityPanel).toBeNull();
+      // expect(fixture.editor.checklist.designPanel).toBeNull();
+      // expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
     });
   });
 });
