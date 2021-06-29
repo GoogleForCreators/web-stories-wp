@@ -17,38 +17,29 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { dataFontEm, PAGE_HEIGHT, getBox } from '@web-stories-wp/units';
+import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
-import { useHistory, useStory } from '../../../../app';
+import { useHistory } from '../../../../app';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';
-import { getAccessibleTextColorsFromPixels } from '../../../../utils/contrastUtils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
-import { hasPageHashChanged } from './utils';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
 
 function useInsertPreset() {
-  const { insertElement, pageCanvasData } = useLibrary((state) => ({
-    pageCanvasData: state.state.pageCanvasData,
+  const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
   const {
     state: { versionNumber },
   } = useHistory();
-
-  const { currentPage } = useStory(({ state }) => {
-    return {
-      currentPage: state.currentPage,
-    };
-  });
 
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
@@ -57,7 +48,7 @@ function useInsertPreset() {
   const [presetAtts, setPresetAtts] = useState(null);
 
   const lastPreset = useRef(null);
-  const { generateCanvasFromPage } = usePageAsCanvas();
+  const { calculateAccessibleTextColors } = usePageAsCanvas();
 
   useEffect(() => {
     // Version number change is happening due to adding a preset.
@@ -102,34 +93,6 @@ function useInsertPreset() {
     };
   }, []);
 
-  const calculateColors = useCallback(
-    (atts) => {
-      const contrastCalculation = (canvas) => {
-        const ctx = canvas.getContext('2d');
-        // @todo Get the correct height based on font size / line-height, etc.
-        const box = getBox(
-          { ...atts, height: atts.height ? atts.height : 41 },
-          canvas.width,
-          canvas.height
-        );
-        const { x, y, width, height } = box;
-        const pixelData = ctx.getImageData(x, y, width, height).data;
-        const { fontSize } = atts;
-        setAutoColor(getAccessibleTextColorsFromPixels(pixelData, fontSize));
-      };
-      if (
-        pageCanvasData &&
-        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
-      ) {
-        contrastCalculation(pageCanvasData.canvas);
-      } else {
-        generateCanvasFromPage(contrastCalculation);
-      }
-      return null;
-    },
-    [pageCanvasData, currentPage, generateCanvasFromPage]
-  );
-
   // Once the colors have been detected, we'll insert the element.
   useEffect(() => {
     if (autoColor && presetAtts) {
@@ -164,9 +127,9 @@ function useInsertPreset() {
         ...element,
         ...atts,
       });
-      calculateColors({ ...element, ...atts });
+      calculateAccessibleTextColors({ ...element, ...atts }, setAutoColor);
     },
-    [getPosition, calculateColors]
+    [getPosition, calculateAccessibleTextColors]
   );
   return insertPreset;
 }

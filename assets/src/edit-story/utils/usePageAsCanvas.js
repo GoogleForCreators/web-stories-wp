@@ -16,19 +16,16 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import * as htmlToImage from 'html-to-image';
+import { getBox } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import {
-  getPageHash,
-  hasPageHashChanged,
-} from '../components/library/panes/text/utils';
-
 import useLibrary from '../components/library/useLibrary';
 import { useCanvas, useStory } from '../app';
+import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 
 function usePageAsCanvas() {
   const { pageCanvasData, setPageCanvasData } = useLibrary((state) => ({
@@ -44,13 +41,21 @@ function usePageAsCanvas() {
     };
   });
 
+  const pageHash = useMemo(() => {
+    const jsonStr = JSON.stringify(currentPage);
+    return window.btoa(unescape(encodeURIComponent(jsonStr)));
+  }, [currentPage]);
+
+  const hasPageHashChanged = useCallback(() => {
+    return pageHash !== pageCanvasData.currentPage;
+  }, [pageHash, pageCanvasData]);
+
   const generateCanvasFromPage = useCallback(
     (callback) => {
       if (
         !pageCanvasData ||
         hasPageHashChanged(currentPage, pageCanvasData.currentPage)
       ) {
-        // @todo Create util.
         htmlToImage
           .toCanvas(fullbleedContainer, {
             fontEmbedCss: '',
@@ -61,15 +66,52 @@ function usePageAsCanvas() {
             } else {
               setPageCanvasData({
                 canvas,
-                currentPage: getPageHash(currentPage),
+                currentPage: pageHash,
               });
             }
           });
       }
     },
-    [currentPage, fullbleedContainer, pageCanvasData, setPageCanvasData]
+    [
+      currentPage,
+      fullbleedContainer,
+      pageCanvasData,
+      setPageCanvasData,
+      hasPageHashChanged,
+      pageHash,
+    ]
   );
+
+  const calculateAccessibleTextColors = useCallback(
+    (atts, callback) => {
+      const contrastCalculation = (canvas) => {
+        const ctx = canvas.getContext('2d');
+        // @todo Get the correct height based on font size / line-height, etc.
+        const box = getBox(
+          { ...atts, height: atts.height ? atts.height : 41 },
+          canvas.width,
+          canvas.height
+        );
+        const { x, y, width, height } = box;
+        const pixelData = ctx.getImageData(x, y, width, height).data;
+        const { fontSize } = atts;
+        callback(getAccessibleTextColorsFromPixels(pixelData, fontSize));
+      };
+      if (
+        pageCanvasData &&
+        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
+      ) {
+        contrastCalculation(pageCanvasData.canvas);
+      } else {
+        generateCanvasFromPage(contrastCalculation);
+      }
+      return null;
+    },
+    [currentPage, generateCanvasFromPage, pageCanvasData, hasPageHashChanged]
+  );
+
   return {
+    calculateAccessibleTextColors,
     generateCanvasFromPage,
   };
 }

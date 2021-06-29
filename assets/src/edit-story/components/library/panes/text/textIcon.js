@@ -19,10 +19,9 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { getBox } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -30,12 +29,9 @@ import { getBox } from '@web-stories-wp/units';
 import { Icons } from '../../../../../design-system';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
-import { getAccessibleTextColorsFromPixels } from '../../../../utils/contrastUtils';
-import { useStory } from '../../../../app/story';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';
-import { hasPageHashChanged } from './utils';
 import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
@@ -88,13 +84,7 @@ const TextIconContainer = styled.div`
 `;
 
 function TextIcon(props) {
-  const { currentPage } = useStory(({ state }) => {
-    return {
-      currentPage: state.currentPage,
-    };
-  });
-  const { insertElement, pageCanvasData } = useLibrary((state) => ({
-    pageCanvasData: state.state.pageCanvasData,
+  const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
 
@@ -102,35 +92,8 @@ function TextIcon(props) {
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
   const [autoColor, setAutoColor] = useState(null);
-  const { generateCanvasFromPage } = usePageAsCanvas();
-
-  const calculateColors = useCallback(
-    (atts) => {
-      const contrastCalculation = (canvas) => {
-        const ctx = canvas.getContext('2d');
-        // @todo Get the correct height based on font size / line-height, etc.
-        const box = getBox(
-          { ...atts, height: atts.height ? atts.height : 41 },
-          canvas.width,
-          canvas.height
-        );
-        const { x, y, width, height } = box;
-        const pixelData = ctx.getImageData(x, y, width, height).data;
-        const { fontSize } = atts;
-        setAutoColor(getAccessibleTextColorsFromPixels(pixelData, fontSize));
-      };
-      if (
-        pageCanvasData &&
-        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
-      ) {
-        contrastCalculation(pageCanvasData.canvas);
-      } else {
-        generateCanvasFromPage(contrastCalculation);
-      }
-      return null;
-    },
-    [pageCanvasData, currentPage, generateCanvasFromPage]
-  );
+  const { calculateAccessibleTextColors, generateCanvasFromPage } =
+    usePageAsCanvas();
 
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
@@ -158,7 +121,7 @@ function TextIcon(props) {
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    calculateColors(DEFAULT_PRESET);
+    calculateAccessibleTextColors(DEFAULT_PRESET, setAutoColor);
     trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
