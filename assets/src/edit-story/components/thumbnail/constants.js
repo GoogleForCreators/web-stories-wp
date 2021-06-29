@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
 
 export const THUMBNAIL_DIMENSIONS = {
   WIDTH: 52,
@@ -29,3 +33,5 @@ export const THUMBNAIL_TYPES = {
 };
 
 export const THUMBNAIL_SCRIM_CLASSNAME = 'thumbnail-scrim';
+export const THUMBNAIL_SHOW_ON_HOVER_FOCUS = 'thumbnail-show-hover-focus';
+export const DEFAULT_LOADING_MESSAGE = __('Loading', 'web-stories');
