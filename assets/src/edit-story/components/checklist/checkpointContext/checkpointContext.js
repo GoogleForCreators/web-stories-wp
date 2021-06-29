@@ -51,6 +51,7 @@ const machine = {
     [PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED]: PPC_CHECKPOINT_STATE.ALL,
     [PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED]: PPC_CHECKPOINT_STATE.ALL,
   },
+  [PPC_CHECKPOINT_STATE.ALL]: {},
 };
 
 const checkpointReducer = (state, action) => {
@@ -112,6 +113,7 @@ function ChecklistCheckpointProvider({ children }) {
 
   const onReviewDialogRequest = useCallback(() => {
     setReviewDialogRequested(true);
+    dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
   }, []);
 
   const onResetReviewDialogRequest = useCallback(() => {

@@ -23,7 +23,7 @@ import { useEffect } from 'react';
  * Internal dependencies
  */
 import { PANEL_STATES } from '../../tablist';
-import { ISSUE_TYPES } from '../constants';
+import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
 import StoryMissingExcerpt from '../checks/storyMissingExerpt';
 import StoryMissingTitle from '../checks/storyMissingTitle';
@@ -41,7 +41,7 @@ import { useCheckpoint } from '../checkpointContext';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
-  const { updateHighPriorityCount } = useCheckpoint(
+  const { updateHighPriorityCount, checkpoint } = useCheckpoint(
     ({ actions: { updateHighPriorityCount }, state: { checkpoint } }) => ({
       checkpoint,
       updateHighPriorityCount,
@@ -51,10 +51,14 @@ export function PriorityChecks({ isOpen, onClick, title }) {
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
 
+  const isCheckpointMet = PANEL_VISIBILITY_BY_STATE[checkpoint].includes(
+    ISSUE_TYPES.PRIORITY
+  );
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <StyledTablistPanel
-        badgeCount={count}
+        badgeCount={isCheckpointMet ? count : 0}
         isExpanded={isOpen}
         onClick={onClick}
         status={PANEL_STATES.DANGER}

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ISSUE_TYPES } from '../constants';
+import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
 import PageTooManyLinks from '../checks/pageTooManyLinks';
 import PageTooMuchText from '../checks/pageTooMuchText';
 import PageTooLittleText from '../checks/pageTooLittleText';
@@ -33,14 +33,21 @@ import {
   useCategoryCount,
 } from '../countContext/checkCountContext';
 import { PanelText, StyledTablistPanel } from '../styles';
+import { useCheckpoint } from '../checkpointContext';
 
 export function DesignChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.DESIGN);
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
 
+  const isCheckpointMet = PANEL_VISIBILITY_BY_STATE[checkpoint].includes(
+    ISSUE_TYPES.DESIGN
+  );
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <StyledTablistPanel
-        badgeCount={count}
+        badgeCount={isCheckpointMet ? count : 0}
         isExpanded={isOpen}
         onClick={onClick}
         title={title}
