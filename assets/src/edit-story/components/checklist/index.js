@@ -43,6 +43,12 @@ import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
 import EmptyContentCheck from './emptyContent';
 import { useChecklist } from './context';
+import { ISSUE_TYPES, POPUP_ID } from './constants';
+import { DesignChecks } from './designChecks';
+import { AccessibilityChecks } from './accessibilityChecks';
+import { PriorityChecks } from './priorityChecks';
+import { ChecklistCountProvider, useCategoryCount } from './checkCountContext';
+import { useCheckpoint } from './checkpointContext';
 
 const Wrapper = styled.div`
   /**
@@ -53,12 +59,23 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
-export function Checklist() {
+const ChecklistPopup = ({ isOpen, setIsOpen }) => {
   const { close, toggle, isOpen } = useChecklist(
     ({ actions: { close, toggle }, state: { isOpen } }) => ({
       close,
       toggle,
       isOpen,
+    })
+  );
+
+  const navRef = useRef();
+
+  // TODO I need the count of priority issues regardless of if a panel has been exposed
+  const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
+  const { updateHighPriorityCount } = useCheckpoint(
+    ({ actions: { updateHighPriorityCount }, state: { checkpoint } }) => ({
+      checkpoint,
+      updateHighPriorityCount,
     })
   );
 
@@ -70,8 +87,6 @@ export function Checklist() {
       ),
     []
   );
-  const navRef = useRef();
-
   // Set Focus within the popup on open
   useEffect(() => {
     if (isOpen) {
@@ -83,42 +98,54 @@ export function Checklist() {
   }, [isOpen]);
 
   return (
+    <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
+      <NavigationWrapper ref={navRef} isOpen={isOpen}>
+        <TopNavigation
+          onClose={close}
+          label={CHECKLIST_TITLE}
+          popupId={POPUP_ID}
+        />
+        <Tablist
+          aria-label={__('Potential Story issues by category', 'web-stories')}
+        >
+          <PriorityChecks
+            isOpen={openPanel === ISSUE_TYPES.PRIORITY}
+            onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+            title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
+          />
+          <DesignChecks
+            isOpen={openPanel === ISSUE_TYPES.DESIGN}
+            onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+            title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+          />
+          <AccessibilityChecks
+            isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
+            onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+            title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+          />
+        </Tablist>
+        <EmptyContentCheck />
+      </NavigationWrapper>
+    </Popup>
+  );
+};
+
+export function Checklist() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
     <DirectionAware>
       <ChecklistCountProvider>
-        <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
-          <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
-            <NavigationWrapper ref={navRef} isOpen={isOpen}>
-              <TopNavigation
-                onClose={close}
-                label={CHECKLIST_TITLE}
-                popupId={POPUP_ID}
-              />
-              <Tablist
-                aria-label={__(
-                  'Potential Story issues by category',
-                  'web-stories'
-                )}
-              >
-                <PriorityChecks
-                  isOpen={openPanel === ISSUE_TYPES.PRIORITY}
-                  onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
-                  title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
-                />
-                <DesignChecks
-                  isOpen={openPanel === ISSUE_TYPES.DESIGN}
-                  onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
-                  title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
-                />
-                <AccessibilityChecks
-                  isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
-                  onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
-                  title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
-                />
-              </Tablist>
-              <EmptyContentCheck />
-            </NavigationWrapper>
-          </Popup>
-          <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
+        <Wrapper role="region" aria-label={CHECKLIST_TITLE} ref={wrapperRef}>
+          <ChecklistPopup isOpen={isOpen} setIsOpen={setIsOpen} />
+
+          <Toggle
+            isOpen={isOpen}
+            onClick={() => {
+              setIsOpen((v) => !v);
+            }}
+            popupId={POPUP_ID}
+          />
         </Wrapper>
       </ChecklistCountProvider>
     </DirectionAware>

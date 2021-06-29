@@ -32,10 +32,14 @@ import {
   ReviewChecklistDialog,
 } from '../../inspector/prepublish';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
+import { useFeature } from 'flagged';
+import { useCheckpoint } from '../../checklist/checkpointContext';
 
 const TRANSITION_DURATION = 300;
 
 function Publish() {
+  const isEnabledChecklistCompanion = useFeature('enableChecklistCompanion');
+
   const { isSaving, date, storyId, saveStory, title } = useStory(
     ({
       state: {
@@ -49,8 +53,25 @@ function Publish() {
     isUploading: state.state.isUploading,
   }));
 
-  const { shouldReviewDialogBeSeen, focusChecklistTab } =
-    usePrepublishChecklist();
+  const {
+    shouldReviewDialogBeSeen: DEPRECATED_shouldReviewDialogBeSeen,
+    focusChecklistTab,
+  } = usePrepublishChecklist();
+
+  const { shouldReviewDialogBeSeen } = useCheckpoint(
+    ({ state: { shouldReviewDialogBeSeen } }) => ({
+      shouldReviewDialogBeSeen,
+    })
+  );
+  console.log({ shouldReviewDialogBeSeen });
+
+  const openChecklist = useCallback(() => {
+    console.log('TODO IN #8112!!!');
+  }, []);
+
+  const TEMP_shouldReviewDialogBeSeen = isEnabledChecklistCompanion
+    ? shouldReviewDialogBeSeen
+    : DEPRECATED_shouldReviewDialogBeSeen;
 
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
@@ -80,21 +101,29 @@ function Publish() {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
-    if (shouldReviewDialogBeSeen) {
+    if (TEMP_shouldReviewDialogBeSeen) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [shouldReviewDialogBeSeen, publish]);
+  }, [TEMP_shouldReviewDialogBeSeen, publish]);
 
-  const handleReviewChecklist = useCallback(() => {
+  const DEPRECATED_handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
     // Focus Checklist Tab
     // Disable reason: If component unmounts, nothing bad can happen
     // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
     setTimeout(() => focusChecklistTab(), TRANSITION_DURATION);
   }, [focusChecklistTab]);
+
+  const handleReviewChecklist = useCallback(() => {
+    setShowDialog(false);
+    // Focus Checklist Tab
+    // Disable reason: If component unmounts, nothing bad can happen
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => openChecklist(), TRANSITION_DURATION);
+  }, [openChecklist]);
 
   const handleClose = useCallback(() => setShowDialog(false), []);
 
@@ -112,7 +141,11 @@ function Publish() {
       <ReviewChecklistDialog
         isOpen={showDialog}
         onIgnore={publish}
-        onReview={handleReviewChecklist}
+        onReview={
+          isEnabledChecklistCompanion
+            ? handleReviewChecklist
+            : DEPRECATED_handleReviewChecklist
+        }
         onClose={handleClose}
       />
     </>

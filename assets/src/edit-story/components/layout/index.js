@@ -42,6 +42,7 @@ import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
+import { ChecklistCheckpointProvider } from '../checklist/checkpointContext';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -89,19 +90,21 @@ function Layout() {
     <>
       <LayoutProvider>
         <PrepublishChecklistProvider>
-          <HighlightsProvider>
-            <Editor zIndex={3}>
-              <CanvasProvider>
-                <Area area="lib">
-                  <Library />
-                </Area>
-                <Workspace />
-              </CanvasProvider>
-              <MetaBoxesArea>
-                <MetaBoxes />
-              </MetaBoxesArea>
-            </Editor>
-          </HighlightsProvider>
+          <ChecklistCheckpointProvider>
+            <HighlightsProvider>
+              <Editor zIndex={3}>
+                <CanvasProvider>
+                  <Area area="lib">
+                    <Library />
+                  </Area>
+                  <Workspace />
+                </CanvasProvider>
+                <MetaBoxesArea>
+                  <MetaBoxes />
+                </MetaBoxesArea>
+              </Editor>
+            </HighlightsProvider>
+          </ChecklistCheckpointProvider>
         </PrepublishChecklistProvider>
       </LayoutProvider>
       <Snackbar.Container {...snackbarState} />
