@@ -13,6 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import { ISSUE_TYPES } from './constants';
+import PageTooManyLinks from './checks/pageTooManyLinks';
+import PageTooMuchText from './checks/pageTooMuchText';
+import PageTooLittleText from './checks/pageTooLittleText';
+import VideoElementResolution from './checks/videoElementResolution';
+import ImageElementResolution from './checks/imageElementResolution';
+import StoryPagesCount from './checks/storyPagesCount';
+import { ChecklistCategoryProvider } from './checkCountContext';
+
 export function DesignChecks() {
-  return <div>{'design'}</div>;
+  return (
+    <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
+      <>
+        <StoryPagesCount />
+        <PageTooMuchText />
+        <PageTooLittleText />
+        <PageTooManyLinks />
+        <VideoElementResolution />
+        <ImageElementResolution />
+      </>
+    </ChecklistCategoryProvider>
+  );
 }

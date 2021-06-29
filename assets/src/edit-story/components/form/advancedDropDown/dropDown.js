@@ -105,7 +105,7 @@ const DropDown = forwardRef(function DropDown(
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)
-  const [debouncedCloseDropDown] = useDebouncedCallback(closeDropDown, 100);
+  const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
 
   const handleSelect = useCallback(
     (option) => {

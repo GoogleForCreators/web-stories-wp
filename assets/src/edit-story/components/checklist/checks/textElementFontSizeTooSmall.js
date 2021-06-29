@@ -17,17 +17,23 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryElements } from '../utils';
-
-const MIN_FONT_SIZE = 12;
+import { useHighlights } from '../../../app/highlights';
+import { ACCESSIBILITY_COPY, MIN_FONT_SIZE } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function textElementFontSizeTooSmall(element) {
   return (
@@ -40,41 +46,42 @@ export function textElementFontSizeTooSmall(element) {
 const TextElementFontSizeTooSmall = () => {
   const story = useStory(({ state }) => state);
   const elements = filterStoryElements(story, textElementFontSizeTooSmall);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = ACCESSIBILITY_COPY.fontSizeTooSmall;
+
+  const isRendered = elements.length > 0;
+  useRegisterCheck('TextElementFontSizeTooSmall', isRendered);
   return (
-    elements.length > 0 && (
+    isRendered && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %d: minimum font size. */
-          __('Increase font size to %s or above', 'web-stories'),
-          MIN_FONT_SIZE
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %d: minimum font size. */
-              __(
-                'Ensure legibility by selecting text size %d or greater',
-                'web-stories'
-              ),
-              MIN_FONT_SIZE
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          elements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-        todo thumbnails for elements
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         thumbnailCount={elements.length}
-        thumbnail={<>
-            {elements.map(() => <Thumbnail />)}
-          </>}
-      */
+        thumbnail={
+          <>
+            {getVisibleThumbnails(elements).map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => handleClick(element.id)}
+                type={THUMBNAIL_TYPES.TEXT}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending text element', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

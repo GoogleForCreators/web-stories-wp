@@ -17,55 +17,104 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app';
-import { ChecklistCard } from '../../../checklistCard';
-import { filterStoryPages } from '../../utils';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
+import { useLayout, useStory } from '../../../../app';
+import { useHighlights } from '../../../../app/highlights';
+import PagePreview from '../../../carousel/pagepreview';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../../checklistCard';
+import {
+  Thumbnail,
+  THUMBNAIL_DIMENSIONS,
+  THUMBNAIL_TYPES,
+} from '../../../thumbnail';
+import { getVisibleThumbnails } from '../../utils';
+import { ACCESSIBILITY_COPY } from '../../constants';
 import { pageBackgroundTextLowContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
+  const [failingPages, setFailingPages] = useState([]);
   const story = useStory(({ state }) => state);
-  const failingPages = useMemo(
-    () => filterStoryPages(story, pageBackgroundTextLowContrast),
-    [story]
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
+  }));
+
+  const getFailingPages = useCallback(async () => {
+    const promises = [];
+    story?.pages.forEach((page) => {
+      const maybeTextContrastResult = pageBackgroundTextLowContrast({
+        ...page,
+        pageSize,
+      });
+      if (maybeTextContrastResult instanceof Promise) {
+        promises.push(
+          maybeTextContrastResult.then((result) => ({ result, page }))
+        );
+      } else {
+        promises.push(maybeTextContrastResult);
+      }
+    });
+    const awaitedResult = await Promise.all(promises);
+    return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
+  }, [story, pageSize]);
+
+  useEffect(() => {
+    getFailingPages().then((failures) => {
+      setFailingPages(failures);
+    });
+  }, [getFailingPages, story]);
+
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (pageId) =>
+      setHighlights({
+        pageId,
+      }),
+    [setHighlights]
   );
+
+  const { title, footer } = ACCESSIBILITY_COPY.lowContrast;
+
   return (
     failingPages.length > 0 && (
       <ChecklistCard
-        title={__(
-          'Increase contrast between text and background color',
-          'web-stories'
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Ensure legibility of text and ease of reading by increasing color contrast',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingPages.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-        todo thumbnails for pages
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
         thumbnailCount={failingPages.length}
-        thumbnail={<>
-            {failingPages.map(() => <Thumbnail />)}
-          </>}
-      */
+        thumbnail={
+          <>
+            {getVisibleThumbnails(failingPages).map((page) => (
+              <Thumbnail
+                key={page.id}
+                onClick={() => handleClick(page.id)}
+                type={THUMBNAIL_TYPES.PAGE}
+                displayBackground={
+                  <PagePreview
+                    page={page}
+                    width={THUMBNAIL_DIMENSIONS.WIDTH}
+                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                    as="div"
+                  />
+                }
+                aria-label={__('Go to offending page', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

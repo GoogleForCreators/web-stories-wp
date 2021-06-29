@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
+import { PRIORITY_COPY } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
@@ -41,15 +46,23 @@ export function storyPosterPortraitSize(story) {
 const StoryPosterPortraitSize = () => {
   const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.POSTER,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = PRIORITY_COPY.posterTooSmall;
 
+  const isRendered = storyPosterPortraitSize(story);
+  useRegisterCheck('StoryPosterAspectRatio', isRendered);
   return (
-    storyPosterPortraitSize(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.POSTER }),
+          onClick: handleClick,
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>

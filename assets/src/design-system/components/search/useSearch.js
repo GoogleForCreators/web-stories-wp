@@ -36,7 +36,7 @@ export default function useSearch({
    *Control when associated menu of search should be visible.
    */
   const [_isOpen, _setIsOpen] = useState(false);
-  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 100);
+  const setIsOpen = useDebouncedCallback(_setIsOpen, 100);
 
   const isOpen = useMemo(
     () => ({
@@ -50,7 +50,7 @@ export default function useSearch({
    * Control whether focus is shifted to menu or input.
    */
   const [_isMenuFocused, _setIsMenuFocused] = useState(false);
-  const [setIsMenuFocused] = useDebouncedCallback(_setIsMenuFocused, 300, {
+  const setIsMenuFocused = useDebouncedCallback(_setIsMenuFocused, 300, {
     leading: true,
   });
 

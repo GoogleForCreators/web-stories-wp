@@ -64,6 +64,27 @@ describe('raw template files', () => {
     }
   );
 
+  it.each(templates)(
+    '%s template should contain replaceable poster URLs',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'video' || !element?.resource?.poster) {
+            continue;
+          }
+
+          expect(element?.resource?.poster).toStartWith(
+            `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${template}`
+          );
+        }
+      }
+    }
+  );
+
   // @see https://github.com/google/web-stories-wp/pull/5889
   it.each(templates)(
     '%s template should contain pageTemplateType',

@@ -125,7 +125,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     !isValidUrl(withProtocol(link.url || ''))
   );
 
-  const [populateMetadata] = useDebouncedCallback((url) => {
+  const populateMetadata = useDebouncedCallback((url) => {
     setFetchingMetadata(true);
     getLinkMetadata(url)
       .then(({ title, image }) => {

@@ -53,10 +53,7 @@ function InspectorProvider({ children }) {
   const { currentCheckpoint, isChecklistReviewRequested, refreshChecklist } =
     usePrepublishChecklist();
 
-  const [refreshChecklistDebounced] = useDebouncedCallback(
-    refreshChecklist,
-    500
-  );
+  const refreshChecklistDebounced = useDebouncedCallback(refreshChecklist, 500);
 
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
