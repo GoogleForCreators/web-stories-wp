@@ -22,7 +22,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useCurrentUser } from '../../../app';
+import { useCurrentUser, useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
@@ -59,9 +59,14 @@ export function PriorityChecks({ isOpen, onClick, title }) {
     toggleWebStoriesMediaOptimization:
       actions.toggleWebStoriesMediaOptimization,
   }));
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+
   const isVideoOptimizationSettingEnabled =
     Boolean(window?.crossOriginIsolated) &&
-    currentUser?.meta?.web_stories_media_optimization;
+    currentUser?.meta?.web_stories_media_optimization &&
+    hasUploadMediaAction;
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
