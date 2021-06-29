@@ -25,7 +25,12 @@ import { getFileName } from '@web-stories-wp/media';
  */
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
-import { MEDIA_TRANSCODING_MAX_FILE_SIZE } from '../../../constants';
+import {
+  MEDIA_TRANSCODING_MAX_FILE_SIZE,
+  MEDIA_POSTER_IMAGE_MIME_TYPE,
+  MEDIA_POSTER_IMAGE_EXT,
+} from '../../../constants';
+import getPosterName from './getPosterName';
 
 export const VIDEO_SIZE_THRESHOLD = {
   HEIGHT: 720,
@@ -105,8 +110,9 @@ function useFFmpeg() {
     try {
       const ffmpeg = await getFFmpegInstance(file);
 
-      const tempFileName = uuidv4() + '.jpeg';
-      const outputFileName = getFileName(file) + '.jpeg';
+      const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_EXT;
+      const originalFileName = getFileName(file);
+      const outputFileName = getPosterName(originalFileName);
 
       await ffmpeg.run(
         // Desired position.
@@ -136,10 +142,10 @@ function useFFmpeg() {
 
       const data = ffmpeg.FS('readFile', tempFileName);
       return new File(
-        [new Blob([data.buffer], { type: 'image/jpeg' })],
+        [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
         outputFileName,
         {
-          type: 'image/jpeg',
+          type: MEDIA_POSTER_IMAGE_MIME_TYPE,
         }
       );
     } catch (err) {

@@ -29,6 +29,7 @@ describe('getInitialStyleFromKeyframes', () => {
 
     expect(getInitialStyleFromKeyframes(keyframes)).toStrictEqual({
       '--initial-opacity': 1,
+      '--initial-transform': 'none',
     });
   });
 
@@ -40,6 +41,7 @@ describe('getInitialStyleFromKeyframes', () => {
 
     expect(getInitialStyleFromKeyframes(keyframes)).toStrictEqual({
       '--initial-opacity': 0,
+      '--initial-transform': 'none',
     });
   });
 
@@ -59,6 +61,7 @@ describe('getInitialStyleFromKeyframes', () => {
 
     expect(getInitialStyleFromKeyframes(easingSample)).toStrictEqual({
       '--initial-transform': 'scale(0)',
+      '--initial-opacity': 1,
     });
 
     // offset

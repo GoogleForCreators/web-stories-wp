@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../app';
+import { useLayout, useStory } from '../../../../app';
 import { useHighlights } from '../../../../app/highlights';
 import PagePreview from '../../../carousel/pagepreview';
 import {
@@ -36,16 +36,43 @@ import {
   THUMBNAIL_DIMENSIONS,
   THUMBNAIL_TYPES,
 } from '../../../thumbnail';
-import { filterStoryPages, getVisibleThumbnails } from '../../utils';
+import { getVisibleThumbnails } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { pageBackgroundTextLowContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
+  const [failingPages, setFailingPages] = useState([]);
   const story = useStory(({ state }) => state);
-  const failingPages = useMemo(
-    () => filterStoryPages(story, pageBackgroundTextLowContrast),
-    [story]
-  );
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
+  }));
+
+  const getFailingPages = useCallback(async () => {
+    const promises = [];
+    story?.pages.forEach((page) => {
+      const maybeTextContrastResult = pageBackgroundTextLowContrast({
+        ...page,
+        pageSize,
+      });
+      if (maybeTextContrastResult instanceof Promise) {
+        promises.push(
+          maybeTextContrastResult.then((result) => ({ result, page }))
+        );
+      } else {
+        promises.push(maybeTextContrastResult);
+      }
+    });
+    const awaitedResult = await Promise.all(promises);
+    return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
+  }, [story, pageSize]);
+
+  useEffect(() => {
+    getFailingPages().then((failures) => {
+      setFailingPages(failures);
+    });
+  }, [getFailingPages, story]);
+
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     (pageId) =>
