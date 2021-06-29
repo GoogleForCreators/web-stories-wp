@@ -19,15 +19,23 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { getBox } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import useLibrary from '../../useLibrary';
 import { Icons } from '../../../../../design-system';
+import useGenerateCanvasFromPage from '../../../../utils/useGenerateCanvasFromPage';
+import useLibrary from '../../useLibrary';
+import { getAccessibleTextColorsFromPixels } from '../../../../utils/contrastUtils';
+import { useStory } from '../../../../app/story';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
+import { getHTMLFormatters } from '../../../richText/htmlManipulation';
+import { hasPageHashChanged } from './utils';
 import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
@@ -80,16 +88,77 @@ const TextIconContainer = styled.div`
 `;
 
 function TextIcon(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { currentPage } = useStory(({ state }) => {
+    return {
+      currentPage: state.currentPage,
+    };
+  });
+  const { insertElement, pageCanvasData } = useLibrary((state) => ({
+    pageCanvasData: state.state.pageCanvasData,
+    insertElement: state.actions.insertElement,
+  }));
 
   const [isHoveringQuick, setIsHoveringQuick] = useState(false);
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
+  const [autoColor, setAutoColor] = useState(null);
+  const generateCanvasFromPage = useGenerateCanvasFromPage();
+
+  const calculateColors = useCallback(
+    (atts) => {
+      const contrastCalculation = (canvas) => {
+        const ctx = canvas.getContext('2d');
+        // @todo Get the correct height based on font size / line-height, etc.
+        const box = getBox(
+          { ...atts, height: atts.height ? atts.height : 41 },
+          canvas.width,
+          canvas.height
+        );
+        const { x, y, width, height } = box;
+        const pixelData = ctx.getImageData(x, y, width, height).data;
+        const { fontSize } = atts;
+        setAutoColor(getAccessibleTextColorsFromPixels(pixelData, fontSize));
+      };
+      if (
+        pageCanvasData &&
+        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
+      ) {
+        contrastCalculation(pageCanvasData.canvas);
+      } else {
+        generateCanvasFromPage(contrastCalculation);
+      }
+      return null;
+    },
+    [pageCanvasData, currentPage, generateCanvasFromPage]
+  );
+
+  const htmlFormatters = getHTMLFormatters();
+  const { setColor } = htmlFormatters;
+
+  useEffect(() => {
+    if (autoColor) {
+      // Add all the necessary props in case of color / highlight.
+      const { content } = DEFAULT_PRESET;
+      const { color, backgroundColor } = autoColor;
+      const highlightProps = backgroundColor
+        ? {
+            backgroundColor: { color: backgroundColor },
+            backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
+            padding: applyHiddenPadding(DEFAULT_PRESET),
+          }
+        : null;
+      insertElement('text', {
+        ...DEFAULT_PRESET,
+        content: setColor(content, { color }),
+        ...highlightProps,
+      });
+      setAutoColor(null);
+    }
+  }, [autoColor, insertElement, setColor]);
+
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    insertElement('text', DEFAULT_PRESET);
+    calculateColors(DEFAULT_PRESET);
     trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
@@ -109,7 +178,10 @@ function TextIcon(props) {
         tabIndex={isActive ? 0 : -1}
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
-        onPointerOver={() => setIsHoveringQuick(true)}
+        onPointerOver={() => {
+          generateCanvasFromPage();
+          setIsHoveringQuick(true);
+        }}
       >
         <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>

@@ -23,7 +23,6 @@ import { useFeatures } from 'flagged';
 import ResizeObserver from 'resize-observer-polyfill';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import * as htmlToImage from 'html-to-image';
 
 /**
  * Internal dependencies
@@ -31,14 +30,11 @@ import * as htmlToImage from 'html-to-image';
 import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
-import useLibrary from '../../useLibrary';
-import { useCanvas } from '../../../../app/canvas';
-import { useStory } from '../../../../app';
+import useGenerateCanvasFromPage from '../../../../utils/useGenerateCanvasFromPage';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
-import { getPageHash, hasPageHashChanged } from './utils';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -56,23 +52,11 @@ const GridContainer = styled.div`
 function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
-  const { pageCanvasData, setPageCanvasData } = useLibrary((state) => ({
-    pageCanvasData: state.state.pageCanvasData,
-    setPageCanvasData: state.actions.setPageCanvasData,
-  }));
-  const { fullbleedContainer } = useCanvas((state) => ({
-    fullbleedContainer: state.state.fullbleedContainer,
-  }));
-
-  const { currentPage } = useStory(({ state }) => {
-    return {
-      currentPage: state.currentPage,
-    };
-  });
 
   const { showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
+  const generateCanvasFromPage = useGenerateCanvasFromPage();
 
   const onClick = useCallback(
     (title, element) => {
@@ -96,28 +80,6 @@ function TextPane(props) {
     return () => ro.disconnect();
   }, []);
 
-  const onPointerEnter = useCallback(() => {
-    // Let's create the canvas image already when hovering for color calculations.
-    if (
-      !pageCanvasData ||
-      hasPageHashChanged(currentPage, pageCanvasData.currentPage)
-    ) {
-      // @todo Create util.
-      htmlToImage
-        .toCanvas(fullbleedContainer, {
-          fontEmbedCss: '',
-        })
-        .then((canvas) => {
-          setPageCanvasData({
-            canvas,
-            currentPage: getPageHash(currentPage),
-          });
-          // @todo Remove -- for testing only!
-          document.body.appendChild(canvas);
-        });
-    }
-  }, [fullbleedContainer, pageCanvasData, currentPage, setPageCanvasData]);
-
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
@@ -131,7 +93,7 @@ function TextPane(props) {
 
       <Section
         title={__('Presets', 'web-stories')}
-        onPointerEnter={onPointerEnter}
+        onPointerEnter={generateCanvasFromPage}
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (

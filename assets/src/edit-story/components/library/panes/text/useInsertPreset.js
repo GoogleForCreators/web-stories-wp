@@ -18,18 +18,18 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { dataFontEm, PAGE_HEIGHT, getBox } from '@web-stories-wp/units';
-import * as htmlToImage from 'html-to-image';
 
 /**
  * Internal dependencies
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
-import { useHistory, useCanvas, useStory } from '../../../../app';
+import { useHistory, useStory } from '../../../../app';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { getAccessibleTextColorsFromPixels } from '../../../../utils/contrastUtils';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
+import useGenerateCanvasFromPage from '../../../../utils/useGenerateCanvasFromPage';
 import { hasPageHashChanged } from './utils';
 
 const POSITION_MARGIN = dataFontEm(1);
@@ -43,9 +43,6 @@ function useInsertPreset() {
   const {
     state: { versionNumber },
   } = useHistory();
-  const { fullbleedContainer } = useCanvas((state) => ({
-    fullbleedContainer: state.state.fullbleedContainer,
-  }));
 
   const { currentPage } = useStory(({ state }) => {
     return {
@@ -60,6 +57,7 @@ function useInsertPreset() {
   const [presetAtts, setPresetAtts] = useState(null);
 
   const lastPreset = useRef(null);
+  const generateCanvasFromPage = useGenerateCanvasFromPage();
 
   useEffect(() => {
     // Version number change is happening due to adding a preset.
@@ -125,17 +123,11 @@ function useInsertPreset() {
       ) {
         contrastCalculation(pageCanvasData.canvas);
       } else {
-        htmlToImage
-          .toCanvas(fullbleedContainer, {
-            fontEmbedCss: '',
-          })
-          .then((canvas) => {
-            contrastCalculation(canvas);
-          });
+        generateCanvasFromPage(contrastCalculation);
       }
       return null;
     },
-    [fullbleedContainer, pageCanvasData, currentPage]
+    [pageCanvasData, currentPage, generateCanvasFromPage]
   );
 
   // Once the colors have been detected, we'll insert the element.
