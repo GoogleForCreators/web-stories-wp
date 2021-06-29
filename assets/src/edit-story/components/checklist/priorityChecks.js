@@ -16,12 +16,12 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { PANEL_STATES, TablistPanel } from '../tablist';
+import { PANEL_STATES } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import PublisherLogoSize from './checks/publisherLogoSize';
 import StoryMissingExcerpt from './checks/storyMissingExerpt';
@@ -35,14 +35,14 @@ import {
   ChecklistCategoryProvider,
   useCategoryCount,
 } from './checkCountContext';
-import { PanelText } from './styles';
+import { PanelText, StyledTablistPanel } from './styles';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
-      <TablistPanel
+      <StyledTablistPanel
         badgeCount={count}
         isExpanded={isOpen}
         onClick={onClick}
@@ -60,7 +60,7 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />
-      </TablistPanel>
+      </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }

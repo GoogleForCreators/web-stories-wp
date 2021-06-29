@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
 import ImageElementMissingAlt from './checks/imageElementMissingAlt';
@@ -33,14 +32,14 @@ import {
   ChecklistCategoryProvider,
   useCategoryCount,
 } from './checkCountContext';
-import { PanelText } from './styles';
+import { PanelText, StyledTablistPanel } from './styles';
 
 export function AccessibilityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <TablistPanel
+      <StyledTablistPanel
         badgeCount={count}
         isExpanded={isOpen}
         onClick={onClick}
@@ -55,7 +54,7 @@ export function AccessibilityChecks({ isOpen, onClick, title }) {
         <VideoElementMissingCaptions />
         <ElementLinkTappableRegionTooSmall />
         <ImageElementMissingAlt />
-      </TablistPanel>
+      </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }

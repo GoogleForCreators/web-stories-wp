@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { TablistPanel } from '../tablist';
 import { ISSUE_TYPES } from './constants';
 import PageTooManyLinks from './checks/pageTooManyLinks';
 import PageTooMuchText from './checks/pageTooMuchText';
@@ -33,14 +32,14 @@ import {
   ChecklistCategoryProvider,
   useCategoryCount,
 } from './checkCountContext';
-import { PanelText } from './styles';
+import { PanelText, StyledTablistPanel } from './styles';
 
 export function DesignChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.DESIGN);
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <TablistPanel
+      <StyledTablistPanel
         badgeCount={count}
         isExpanded={isOpen}
         onClick={onClick}
@@ -55,7 +54,7 @@ export function DesignChecks({ isOpen, onClick, title }) {
         <PageTooManyLinks />
         <VideoElementResolution />
         <ImageElementResolution />
-      </TablistPanel>
+      </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }

@@ -22,6 +22,12 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { Text, THEME_CONSTANTS } from '../../../design-system';
+import { TablistPanel } from '../tablist';
+
+export const StyledTablistPanel = styled(TablistPanel)`
+  height: ${({ badgeCount }) => (badgeCount === 0 ? 0 : 'auto')};
+  visibility: ${({ badgeCount }) => (badgeCount === 0 ? 'hidden' : 'visible')};
+`;
 
 export const PanelText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
