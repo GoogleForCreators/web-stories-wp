@@ -25,8 +25,9 @@ import * as htmlToImage from 'html-to-image';
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
-import { useHistory, useCanvas } from '../../../../app';
+import { useHistory, useCanvas, useStory } from '../../../../app';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';
+import { hasPageHashChanged } from './utils';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
@@ -42,6 +43,12 @@ function useInsertPreset() {
   const { fullbleedContainer } = useCanvas((state) => ({
     fullbleedContainer: state.state.fullbleedContainer,
   }));
+
+  const { currentPage } = useStory(({ state }) => {
+    return {
+      currentPage: state.currentPage,
+    };
+  });
 
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
@@ -108,7 +115,10 @@ function useInsertPreset() {
         const pixelData = ctx.getImageData(x, y, width, height).data;
         setAutoColor(sampleColors(pixelData));
       };
-      if (pageCanvasData && pageCanvasData.versionNumber === versionNumber) {
+      if (
+        pageCanvasData &&
+        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
+      ) {
         contrastCalculation(pageCanvasData.canvas);
       } else {
         htmlToImage
@@ -121,7 +131,7 @@ function useInsertPreset() {
       }
       return null;
     },
-    [fullbleedContainer, pageCanvasData, versionNumber]
+    [fullbleedContainer, pageCanvasData, currentPage]
   );
 
   useEffect(() => {

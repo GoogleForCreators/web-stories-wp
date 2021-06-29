@@ -33,11 +33,12 @@ import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
 import useLibrary from '../../useLibrary';
 import { useCanvas } from '../../../../app/canvas';
-import { useHistory } from '../../../../app';
+import { useStory } from '../../../../app';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
+import { getPageHash, hasPageHashChanged } from './utils';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -62,9 +63,12 @@ function TextPane(props) {
   const { fullbleedContainer } = useCanvas((state) => ({
     fullbleedContainer: state.state.fullbleedContainer,
   }));
-  const {
-    state: { versionNumber },
-  } = useHistory();
+
+  const { currentPage } = useStory(({ state }) => {
+    return {
+      currentPage: state.currentPage,
+    };
+  });
 
   const { showTextAndShapesSearchInput } = useFeatures();
 
@@ -94,7 +98,10 @@ function TextPane(props) {
 
   const onPointerEnter = useCallback(() => {
     // Let's create the canvas image already when hovering for color calculations.
-    if (!pageCanvasData || pageCanvasData.versionNumber !== versionNumber) {
+    if (
+      !pageCanvasData ||
+      hasPageHashChanged(currentPage, pageCanvasData.currentPage)
+    ) {
       // @todo Create util.
       htmlToImage
         .toCanvas(fullbleedContainer, {
@@ -103,11 +110,11 @@ function TextPane(props) {
         .then((canvas) =>
           setPageCanvasData({
             canvas,
-            versionNumber,
+            currentPage: getPageHash(currentPage),
           })
         );
     }
-  }, [fullbleedContainer, pageCanvasData, versionNumber, setPageCanvasData]);
+  }, [fullbleedContainer, pageCanvasData, currentPage, setPageCanvasData]);
 
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
