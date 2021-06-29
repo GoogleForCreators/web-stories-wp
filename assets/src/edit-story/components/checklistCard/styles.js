@@ -32,6 +32,7 @@ export const Wrapper = styled.div`
   display: flex;
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.bg.secondary};
+  margin: 8px 0;
 `;
 
 export const Container = styled.div`

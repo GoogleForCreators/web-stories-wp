@@ -33,6 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function videoElementMissingCaptions(element) {
   return element.type === 'video' && !element.tracks?.length;
@@ -52,8 +53,10 @@ const VideoElementMissingCaptions = () => {
   );
   const { footer, title } = ACCESSIBILITY_COPY.videoMissingCaptions;
 
+  const isRendered = elements.length > 0;
+  useRegisterCheck('VideoElementMissingCaptions', isRendered);
   return (
-    elements.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={
