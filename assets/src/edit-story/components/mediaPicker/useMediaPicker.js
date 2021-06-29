@@ -158,7 +158,7 @@ export default function useMediaPicker({
 
   const openCropper = useCallback(
     (evt) => {
-      trackEvent('open_crop_modal');
+      trackEvent('open_media_crop_modal');
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {
         if (onPermissionError) {
