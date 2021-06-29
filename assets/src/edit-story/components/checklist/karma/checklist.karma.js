@@ -88,8 +88,9 @@ describe('Checklist integration', () => {
       await fixture.events.click(fixture.editor.checklist.designTab);
       expect(fixture.editor.checklist.designPanel).toBeDefined();
     });
-
-    it('should open the accessibility section', async () => {
+    // TODO #8085 - a11y section not available in blank page state, no issues present.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should open the accessibility section', async () => {
       await openChecklist();
 
       await fixture.events.click(fixture.editor.checklist.accessibilityTab);

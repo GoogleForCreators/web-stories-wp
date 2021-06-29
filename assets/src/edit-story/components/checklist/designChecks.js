@@ -16,11 +16,11 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { ISSUE_TYPES } from './constants';
 import PageTooManyLinks from './checks/pageTooManyLinks';
 import PageTooMuchText from './checks/pageTooMuchText';
