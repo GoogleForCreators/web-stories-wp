@@ -31,6 +31,7 @@ import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
 import { useUploader } from '../../uploader';
+import getPosterName from './getPosterName';
 
 function useUploadVideoFrame({ updateMediaElement }) {
   const {
@@ -110,7 +111,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
     async (id, src) => {
       const trackTiming = getTimeTracker('load_video_poster');
       try {
-        const fileName = getFileNameFromUrl(src) + '-poster.jpeg';
+        const originalFileName = getFileNameFromUrl(src);
+        const fileName = getPosterName(originalFileName);
         const obj = await getFirstFrameOfVideo(src);
         const { posterId, poster, posterWidth, posterHeight } =
           await uploadVideoPoster(id, fileName, obj);

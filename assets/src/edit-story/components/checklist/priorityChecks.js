@@ -13,22 +13,59 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { PANEL_STATES } from '../tablist';
+import { ISSUE_TYPES } from './constants';
 import PublisherLogoSize from './checks/publisherLogoSize';
+import StoryMissingExcerpt from './checks/storyMissingExerpt';
 import StoryMissingTitle from './checks/storyMissingTitle';
 import StoryPosterAspectRatio from './checks/storyPosterAspectRatio';
+import { StoryPosterAttached } from './checks/storyPosterAttached';
 import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
+import StoryTitleLength from './checks/storyTitleLength';
+import VideoElementMissingPoster from './checks/videoElementMissingPoster';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from './checkCountContext';
+import { PanelText, StyledTablistPanel } from './styles';
 
-export function PriorityChecks() {
+export function PriorityChecks({ isOpen, onClick, title }) {
+  const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
   return (
-    <div>
-      <StoryMissingTitle />
-      <StoryPosterPortraitSize />
-      <StoryPosterAspectRatio />
-      <PublisherLogoSize />
-    </div>
+    <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
+      <StyledTablistPanel
+        badgeCount={count}
+        isExpanded={isOpen}
+        onClick={onClick}
+        status={PANEL_STATES.DANGER}
+        title={title}
+      >
+        <PanelText>
+          {__('Make this Web Story easier to discover.', 'web-stories')}
+        </PanelText>
+        <StoryMissingTitle />
+        <StoryTitleLength />
+        <StoryMissingExcerpt />
+        <StoryPosterAttached />
+        <StoryPosterPortraitSize />
+        <StoryPosterAspectRatio />
+        <PublisherLogoSize />
+        <VideoElementMissingPoster />
+      </StyledTablistPanel>
+    </ChecklistCategoryProvider>
   );
 }
+PriorityChecks.propTypes = {
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};

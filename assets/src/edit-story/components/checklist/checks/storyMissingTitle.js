@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -20,8 +24,9 @@
 import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
-import { PRIORITY_COPY } from '../../../app/prepublish/newConstants';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
+import { PRIORITY_COPY } from '../constants';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyMissingTitle(story) {
   return typeof story.title !== 'string' || story.title?.trim() === '';
@@ -30,14 +35,24 @@ export function storyMissingTitle(story) {
 const StoryMissingTitle = () => {
   const story = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.STORY_TITLE,
+      }),
+    [setHighlights]
+  );
+
+  const isRendered = storyMissingTitle(story);
+  useRegisterCheck('StoryMissingTitle', isRendered);
 
   const { footer, title } = PRIORITY_COPY.storyMissingTitle;
   return (
-    storyMissingTitle(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.STORY_TITLE }),
+          onClick: handleClick,
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>

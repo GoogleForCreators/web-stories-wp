@@ -153,7 +153,7 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+  const debouncedSearchChange = useDebouncedCallback(async (value) => {
     await trackEvent('search', {
       search_type: 'dashboard',
       search_term: value,

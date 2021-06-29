@@ -138,11 +138,11 @@ function SelectStories({
   currentAuthor,
   setCurrentAuthor,
 }) {
-  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+  const debouncedTypeaheadChange = useDebouncedCallback((value) => {
     search.setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
 
-  const [debouncedTypeaheadAuthorChange] = useDebouncedCallback((value) => {
+  const debouncedTypeaheadAuthorChange = useDebouncedCallback((value) => {
     // Set the user input as the current search keyword.
     setAuthorKeyword(value);
 
@@ -162,7 +162,7 @@ function SelectStories({
     }
   }, TEXT_INPUT_DEBOUNCE);
 
-  const [debouncedAuthorChange] = useDebouncedCallback((evt, newOption) => {
+  const debouncedAuthorChange = useDebouncedCallback((evt, newOption) => {
     // On selecting author from the dropdown, '<Search />' component sets the newOption from the
     // suggestions array, which in our case is author ID. Check the newOption is a number.
     if (newOption.value) {
