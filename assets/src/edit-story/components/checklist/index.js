@@ -19,7 +19,7 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -42,6 +42,7 @@ import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
 import EmptyContentCheck from './emptyContent';
+import { useChecklist } from './context';
 
 const Wrapper = styled.div`
   /**
@@ -52,15 +53,7 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
-const ChecklistPopup = ({ isOpen, setIsOpen }) => {
-  const { close, toggle, isOpen } = useChecklist(
-    ({ actions: { close, toggle }, state: { isOpen } }) => ({
-      close,
-      toggle,
-      isOpen,
-    })
-  );
-
+const ChecklistPopup = ({ isOpen, close }) => {
   const navRef = useRef();
 
   const [openPanel, setOpenPanel] = useState(null);
@@ -118,22 +111,27 @@ const ChecklistPopup = ({ isOpen, setIsOpen }) => {
     </Popup>
   );
 };
+ChecklistPopup.propTypes = {
+  isOpen: PropTypes.bool,
+  close: PropTypes.func,
+};
 
 export function Checklist() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { close, toggle, isOpen } = useChecklist(
+    ({ actions: { close, toggle }, state: { isOpen } }) => ({
+      close,
+      toggle,
+      isOpen,
+    })
+  );
+
   return (
     <DirectionAware>
       <ChecklistCountProvider>
         <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
-          <ChecklistPopup isOpen={isOpen} setIsOpen={setIsOpen} />
+          <ChecklistPopup isOpen={isOpen} close={close} />
 
-          <Toggle
-            isOpen={isOpen}
-            onClick={() => {
-              setIsOpen((v) => !v);
-            }}
-            popupId={POPUP_ID}
-          />
+          <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
         </Wrapper>
       </ChecklistCountProvider>
     </DirectionAware>
