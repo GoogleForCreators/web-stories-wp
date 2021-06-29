@@ -81,9 +81,14 @@ describe('Image output', () => {
     await expect(outputStr).toStrictEqual(
       expect.stringMatching('src="https://example.com/image.png"')
     );
-    // The image size is 412px wide, which is full page width.
+    // Generated sizes attribute should match: "(min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>".
+    // The image size is 412px wide, which is full page width. 45vh is the page width of stories in desktop mode.
     await expect(outputStr).toStrictEqual(
-      expect.stringMatching('sizes="100vw"')
+      expect.stringMatching(/sizes="\(min-width: 1024px\) 45vh, 100vw"/)
+    );
+    // The "disable-inline-width" attribute should accompany the "sizes" attribute.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('disable-inline-width="true"')
     );
   });
 
