@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -31,12 +31,19 @@ import { Popup } from '../helpCenter/popup';
 import { NavigationWrapper } from '../helpCenter/navigator';
 import { TopNavigation } from '../helpCenter/navigator/topNavigation';
 import { Z_INDEX } from '../canvas/layout';
+import { Tablist } from '../tablist';
 import { Toggle } from './toggle';
-import { POPUP_ID } from './constants';
+import {
+  CATEGORY_LABELS,
+  CHECKLIST_TITLE,
+  ISSUE_TYPES,
+  POPUP_ID,
+} from './constants';
 import { DesignChecks } from './designChecks';
 import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
+import EmptyContentCheck from './emptyContent';
 
 const Wrapper = styled.div`
   /**
@@ -58,6 +65,15 @@ export function Checklist() {
     })
   );
 
+  const [openPanel, setOpenPanel] = useState(null);
+  const handleOpenPanel = useCallback(
+    (panelName) => () =>
+      setOpenPanel((currentOpenPanel) =>
+        currentOpenPanel === panelName ? null : panelName
+      ),
+    []
+  );
+
   // Set Focus within the popup on open
   useEffect(() => {
     if (isOpen) {
@@ -77,21 +93,37 @@ export function Checklist() {
   return (
     <DirectionAware>
       <ChecklistCountProvider>
-        <Wrapper ref={wrapperRef}>
-          <Popup
-            popupId={POPUP_ID}
-            isOpen={isOpen}
-            ariaLabel={__('Checklist', 'web-stories')}
-          >
-            <NavigationWrapper ref={navRef}>
+        <Wrapper role="region" aria-label={CHECKLIST_TITLE} ref={wrapperRef}>
+          <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
+            <NavigationWrapper ref={navRef} isOpen={isOpen}>
               <TopNavigation
                 onClose={() => setIsOpen(false)}
-                label={__('Checklist', 'web-stories')}
+                label={CHECKLIST_TITLE}
                 popupId={POPUP_ID}
               />
-              <PriorityChecks />
-              <DesignChecks />
-              <AccessibilityChecks />
+              <Tablist
+                aria-label={__(
+                  'Potential Story issues by category',
+                  'web-stories'
+                )}
+              >
+                <PriorityChecks
+                  isOpen={openPanel === ISSUE_TYPES.PRIORITY}
+                  onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
+                />
+                <DesignChecks
+                  isOpen={openPanel === ISSUE_TYPES.DESIGN}
+                  onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+                />
+                <AccessibilityChecks
+                  isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
+                  onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+                />
+              </Tablist>
+              <EmptyContentCheck />
             </NavigationWrapper>
           </Popup>
           <Toggle
