@@ -64,3 +64,97 @@ export function checkContrastFromLuminances(luminanceA, luminanceB, fontSize) {
   const ratio = hues.contrast(luminanceA, luminanceB);
   return { ratio, WCAG_AA: hues.aa(ratio, fontSize) };
 }
+
+/**
+ * Calculates contrast between two rgb colors, considering font size.
+ *
+ * @param {Object} rgb1 First color.
+ * @param {Object} rgb2 Second color.
+ * @param {number} fontSize Font size.
+ * @return {{WCAG_AA: boolean, ratio: *}} Object including contrast ratio and true/false if the contrast has WCAG AA rating.
+ */
+function calculateContrast(rgb1, rgb2, fontSize) {
+  const lum1 = calculateLuminanceFromRGB({
+    r: rgb1[0],
+    g: rgb1[1],
+    b: rgb1[2],
+  });
+  const lum2 = calculateLuminanceFromRGB({
+    r: rgb2[0],
+    g: rgb2[1],
+    b: rgb2[2],
+  });
+  return checkContrastFromLuminances(lum1, lum2, fontSize);
+}
+
+/**
+ * Gets accessible colors from pixel data. Returns the text color and background color.
+ *
+ * @param {Array} pixelData Array of pixel data.
+ * @param {number} fontSize Font size, influences the contrast rating.
+ * @return {Object} Returns object consisting of color and backgroundColor in case relevant.
+ */
+export function getAccessibleTextColorsFromPixels(pixelData, fontSize) {
+  const white = [255, 255, 255, 255];
+  const black = [0, 0, 0, 255];
+  const colors = [];
+
+  const whiteRgb = {
+    r: 255,
+    g: 255,
+    b: 255,
+    a: 1,
+  };
+  const blackRgb = {
+    r: 0,
+    g: 0,
+    b: 0,
+    a: 1,
+  };
+
+  for (let i = 0; i < pixelData.length; i += 4) {
+    colors.push([
+      pixelData[i],
+      pixelData[i + 1],
+      pixelData[i + 2],
+      pixelData[i + 3],
+    ]);
+  }
+
+  const contrasts = colors.map((c) => calculateContrast(black, c, fontSize));
+  const contrastIsOK = !contrasts.some(({ WCAG_AA }) => !WCAG_AA);
+
+  if (contrastIsOK) {
+    return {
+      color: blackRgb,
+    };
+  }
+
+  // Try white color.
+  const altContrasts = colors.map((c) => calculateContrast(white, c, fontSize));
+  const altContrastIsOK = !altContrasts.some(({ WCAG_AA }) => !WCAG_AA);
+
+  if (altContrastIsOK) {
+    return {
+      color: whiteRgb,
+    };
+  }
+
+  const whiteHighlightWorksBetter =
+    contrasts.reduce((a, c) => a + c.ratio, 0) <
+    altContrasts.reduce((a, c) => a + c.ratio, 0);
+
+  if (whiteHighlightWorksBetter) {
+    // Black fg color and white bg color.
+    return {
+      color: blackRgb,
+      backgroundColor: whiteRgb,
+    };
+  }
+
+  // White fg color and black bg color.
+  return {
+    color: whiteRgb,
+    backgroundColor: blackRgb,
+  };
+}
