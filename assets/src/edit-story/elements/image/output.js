@@ -47,12 +47,7 @@ function ImageOutput({ element, box }) {
 
     // If `srcset` exists but `sizes` doesn't, amp-img will generate a sizes attribute
     // with best-guess values that can result in poor image selection.
-    const imageWidthPercent = element.width / PAGE_WIDTH;
-    const mobileWidth = Math.round(imageWidthPercent * 100) + 'vw';
-    // Width of a story page in desktop mode is 45vh.
-    const desktopWidth = Math.round(imageWidthPercent * 45) + 'vh';
-    // 1024px is the minimum width for STAMP desktop mode.
-    props.sizes = `(min-width: 1024px) ${desktopWidth}, ${mobileWidth}`;
+    props.sizes = (element.width / PAGE_WIDTH) * 100 + 'vw';
   }
 
   return (
