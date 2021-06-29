@@ -57,16 +57,19 @@ function Publish() {
     focusChecklistTab,
   } = usePrepublishChecklist();
 
-  const { shouldReviewDialogBeSeen } = useCheckpoint(
-    ({ state: { shouldReviewDialogBeSeen } }) => ({
+  const { shouldReviewDialogBeSeen, onReviewDialogRequest } = useCheckpoint(
+    ({
+      actions: { onReviewDialogRequest },
+      state: { shouldReviewDialogBeSeen },
+    }) => ({
       shouldReviewDialogBeSeen,
+      onReviewDialogRequest,
     })
   );
-  console.log({ shouldReviewDialogBeSeen });
 
   const openChecklist = useCallback(() => {
-    console.log('TODO IN #8112!!!');
-  }, []);
+    onReviewDialogRequest();
+  }, [onReviewDialogRequest]);
 
   const TEMP_shouldReviewDialogBeSeen = isEnabledChecklistCompanion
     ? shouldReviewDialogBeSeen

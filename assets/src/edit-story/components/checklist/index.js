@@ -142,3 +142,7 @@ export function Checklist() {
 }
 
 export { ChecklistProvider, useChecklist } from './checklistContext';
+export {
+  ChecklistCheckpointProvider,
+  useCheckpoint,
+} from './checkpointContext';

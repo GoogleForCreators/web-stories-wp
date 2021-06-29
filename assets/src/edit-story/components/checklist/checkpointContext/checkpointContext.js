@@ -66,10 +66,8 @@ function ChecklistCheckpointProvider({ children }) {
   );
 
   const [highPriorityCount, setHighPriorityCount] = useState();
+  const [reviewDialogRequested, setReviewDialogRequested] = useState();
 
-  // TODO get highPriorityCount to track without opening popup first
-  // this should be && not ||
-  // If checkpoint hasn't hit ALL yet and the count is over 0, should see review dialog
   const shouldReviewDialogBeSeen =
     highPriorityCount > 0 ||
     [
@@ -112,12 +110,35 @@ function ChecklistCheckpointProvider({ children }) {
     setHighPriorityCount(count);
   }, []);
 
+  const onReviewDialogRequest = useCallback(() => {
+    setReviewDialogRequested(true);
+  }, []);
+
+  const onResetReviewDialogRequest = useCallback(() => {
+    setReviewDialogRequested(false);
+  }, []);
+
   const value = useMemo(
     () => ({
-      state: { checkpoint: checkpointState, shouldReviewDialogBeSeen },
-      actions: { updateHighPriorityCount },
+      state: {
+        checkpoint: checkpointState,
+        shouldReviewDialogBeSeen,
+        reviewDialogRequested,
+      },
+      actions: {
+        updateHighPriorityCount,
+        onReviewDialogRequest,
+        onResetReviewDialogRequest,
+      },
     }),
-    [checkpointState, shouldReviewDialogBeSeen, updateHighPriorityCount]
+    [
+      checkpointState,
+      onReviewDialogRequest,
+      onResetReviewDialogRequest,
+      reviewDialogRequested,
+      shouldReviewDialogBeSeen,
+      updateHighPriorityCount,
+    ]
   );
 
   return (
