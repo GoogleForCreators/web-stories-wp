@@ -56,7 +56,8 @@ const StoryPosterPortraitSize = () => {
   const { footer, title } = PRIORITY_COPY.posterTooSmall;
 
   const isRendered = storyPosterPortraitSize(story);
-  useRegisterCheck('StoryPosterAspectRatio', isRendered);
+  useRegisterCheck('StoryPosterPortraitSize', isRendered);
+
   return (
     isRendered && (
       <ChecklistCard

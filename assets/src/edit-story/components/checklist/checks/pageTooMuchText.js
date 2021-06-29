@@ -76,6 +76,7 @@ const PageTooMuchText = () => {
 
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooMuchText', isRendered);
+
   return (
     isRendered && (
       <ChecklistCard

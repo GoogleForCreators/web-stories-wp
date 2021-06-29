@@ -48,7 +48,7 @@ export function StoryPosterAttached() {
   );
 
   const isRendered = storyHasNoPosterAttached(story);
-  useRegisterCheck('StoryPosterAspectRatio', isRendered);
+  useRegisterCheck('StoryPosterAttached', isRendered);
 
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;
   return (
