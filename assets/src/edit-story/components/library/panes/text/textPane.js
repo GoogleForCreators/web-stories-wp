@@ -107,12 +107,14 @@ function TextPane(props) {
         .toCanvas(fullbleedContainer, {
           fontEmbedCss: '',
         })
-        .then((canvas) =>
+        .then((canvas) => {
           setPageCanvasData({
             canvas,
             currentPage: getPageHash(currentPage),
-          })
-        );
+          });
+          // @todo Remove -- for testing only!
+          document.body.appendChild(canvas);
+        });
     }
   }, [fullbleedContainer, pageCanvasData, currentPage, setPageCanvasData]);
 
