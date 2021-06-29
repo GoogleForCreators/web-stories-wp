@@ -234,12 +234,12 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @param string $path Path to file.
 	 *
-	 * @return false|string
+	 * @return string
 	 */
 	protected function get_base_path( $path ) {
 		$base_path = $this->assets->get_base_path( $path );
 		if ( ! is_readable( $base_path ) ) {
-			return false;
+			return '';
 		}
 
 		return $base_path;
