@@ -32,11 +32,18 @@ describe('Popup Menus - Help Center and Checklist', () => {
     fixture.restore();
   });
 
-  it('should start with both popups closed', () => {
+  it('should start with both popups closed', async () => {
     const { helpCenterToggle, checklistToggle } = fixture.editor.carousel;
 
     expect(helpCenterToggle).toBeDefined();
     expect(checklistToggle).toBeDefined();
+
+    const checklistDialog = await fixture.screen.queryByRole('dialog', {
+      name: /^Checklist/,
+    });
+
+    expect(checklistDialog).toBeNull();
+    expect(fixture.editor.helpCenter.quickTips).toBeNull();
   });
 
   it('should collapse helpCenter when checklist is expanded', async () => {
@@ -47,6 +54,7 @@ describe('Popup Menus - Help Center and Checklist', () => {
     expect(quickTips).toBeDefined();
 
     await fixture.events.click(checklistToggle);
+    // TODO FIX ONCE SAMUEL'S PR IS MERGED
     const checklistHeader = await fixture.screen.getByRole('dialog', {
       name: /^Checklist/,
     });
