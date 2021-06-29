@@ -18,6 +18,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
@@ -36,9 +37,19 @@ import {
   useCategoryCount,
 } from './checkCountContext';
 import { PanelText, StyledTablistPanel } from './styles';
+import { useCheckpoint } from './checkpointContext';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
+  const { updateHighPriorityCount } = useCheckpoint(
+    ({ actions: { updateHighPriorityCount }, state: { checkpoint } }) => ({
+      checkpoint,
+      updateHighPriorityCount,
+    })
+  );
+  useEffect(() => {
+    updateHighPriorityCount(count);
+  }, [updateHighPriorityCount, count]);
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>

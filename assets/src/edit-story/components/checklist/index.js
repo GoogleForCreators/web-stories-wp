@@ -42,13 +42,6 @@ import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
 import EmptyContentCheck from './emptyContent';
-import { useChecklist } from './context';
-import { ISSUE_TYPES, POPUP_ID } from './constants';
-import { DesignChecks } from './designChecks';
-import { AccessibilityChecks } from './accessibilityChecks';
-import { PriorityChecks } from './priorityChecks';
-import { ChecklistCountProvider, useCategoryCount } from './checkCountContext';
-import { useCheckpoint } from './checkpointContext';
 
 const Wrapper = styled.div`
   /**
@@ -70,15 +63,6 @@ const ChecklistPopup = ({ isOpen, setIsOpen }) => {
 
   const navRef = useRef();
 
-  // TODO I need the count of priority issues regardless of if a panel has been exposed
-  const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
-  const { updateHighPriorityCount } = useCheckpoint(
-    ({ actions: { updateHighPriorityCount }, state: { checkpoint } }) => ({
-      checkpoint,
-      updateHighPriorityCount,
-    })
-  );
-
   const [openPanel, setOpenPanel] = useState(null);
   const handleOpenPanel = useCallback(
     (panelName) => () =>
@@ -98,7 +82,12 @@ const ChecklistPopup = ({ isOpen, setIsOpen }) => {
   }, [isOpen]);
 
   return (
-    <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
+    <Popup
+      popupId={POPUP_ID}
+      isOpen={isOpen}
+      ariaLabel={CHECKLIST_TITLE}
+      shouldKeepMounted // todo this makes it never open again
+    >
       <NavigationWrapper ref={navRef} isOpen={isOpen}>
         <TopNavigation
           onClose={close}
@@ -132,11 +121,10 @@ const ChecklistPopup = ({ isOpen, setIsOpen }) => {
 
 export function Checklist() {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <DirectionAware>
       <ChecklistCountProvider>
-        <Wrapper role="region" aria-label={CHECKLIST_TITLE} ref={wrapperRef}>
+        <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
           <ChecklistPopup isOpen={isOpen} setIsOpen={setIsOpen} />
 
           <Toggle
