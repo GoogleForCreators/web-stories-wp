@@ -29,7 +29,7 @@ import {
   CategoryContext,
   CountContext,
   useRegisterCheck,
-} from '../checkCountContext';
+} from '../countContext/checkCountContext';
 
 describe('ChecklistCategoryProvider', () => {
   it('throws an error if used outside of ChecklistCountProvider', () => {

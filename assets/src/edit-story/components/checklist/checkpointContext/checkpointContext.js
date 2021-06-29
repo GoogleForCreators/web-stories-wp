@@ -21,14 +21,41 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../design-system/utils/context';
-import { useContextSelector, identity } from '../../../design-system';
-import { STORY_EVENTS, useStory, useStoryTriggerListener } from '../../app';
 import {
-  checkpointReducer,
-  PPC_CHECKPOINT_STATE,
-  PPC_CHECKPOINT_ACTION,
-} from './checkpointState';
+  createContext,
+  useContextSelector,
+  identity,
+} from '../../../../design-system';
+import { STORY_EVENTS, useStory, useStoryTriggerListener } from '../../../app';
+import { PPC_CHECKPOINT_STATE } from '../constants';
+
+export const PPC_CHECKPOINT_ACTION = {
+  ON_INITIAL_ELEMENT_ADDED: 'story is no longer empty',
+  ON_PUBLISH_CLICKED: 'publish button is pressed',
+  ON_STORY_HAS_2_PAGES: "story 'recommended' section enabled",
+  ON_STORY_HAS_5_PAGES: "story 'high priority' section enabled",
+  ON_STORY_IS_PUBLISHED: 'story is published, regardless of recommendations',
+};
+
+const machine = {
+  [PPC_CHECKPOINT_STATE.UNAVAILABLE]: {
+    [PPC_CHECKPOINT_ACTION.ON_INITIAL_ELEMENT_ADDED]:
+      PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
+    [PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED]: PPC_CHECKPOINT_STATE.ALL,
+    [PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED]: PPC_CHECKPOINT_STATE.ALL,
+    [PPC_CHECKPOINT_ACTION.ON_STORY_HAS_2_PAGES]:
+      PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
+  },
+  [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: {
+    [PPC_CHECKPOINT_ACTION.ON_STORY_HAS_5_PAGES]: PPC_CHECKPOINT_STATE.ALL,
+    [PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED]: PPC_CHECKPOINT_STATE.ALL,
+    [PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED]: PPC_CHECKPOINT_STATE.ALL,
+  },
+};
+
+const checkpointReducer = (state, action) => {
+  return machine[state][action] || state;
+};
 
 export const CheckpointContext = createContext({ state: {}, actions: {} });
 

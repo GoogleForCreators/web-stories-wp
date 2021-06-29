@@ -27,7 +27,7 @@ import { useStory } from '../../../app';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { hasNoFeaturedMedia } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext/checkCountContext';
 
 export function storyHasNoPosterAttached(story) {
   return (

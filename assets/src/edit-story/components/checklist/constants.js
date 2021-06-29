@@ -470,3 +470,9 @@ export const PRIORITY_COPY = {
     ),
   },
 };
+
+export const PPC_CHECKPOINT_STATE = {
+  UNAVAILABLE: 'unavailable',
+  ONLY_RECOMMENDED: 'recommended',
+  ALL: 'all',
+};

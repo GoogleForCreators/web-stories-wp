@@ -26,10 +26,9 @@ import { Icons } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { ToggleButton } from '../../toggleButton';
-import { useCategoryCount } from '../checkCountContext';
+import { useCategoryCount } from '../countContext/checkCountContext';
 import { useCheckpoint } from '../checkpointContext';
-import { PPC_CHECKPOINT_STATE } from '../checkpointState';
-import { ISSUE_TYPES } from '../constants';
+import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
 
 const MainIcon = styled(Icons.Checkbox)`
   height: 32px;

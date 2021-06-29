@@ -21,18 +21,18 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ISSUE_TYPES } from './constants';
-import PageTooManyLinks from './checks/pageTooManyLinks';
-import PageTooMuchText from './checks/pageTooMuchText';
-import PageTooLittleText from './checks/pageTooLittleText';
-import VideoElementResolution from './checks/videoElementResolution';
-import ImageElementResolution from './checks/imageElementResolution';
-import StoryPagesCount from './checks/storyPagesCount';
+import { ISSUE_TYPES } from '../constants';
+import PageTooManyLinks from '../checks/pageTooManyLinks';
+import PageTooMuchText from '../checks/pageTooMuchText';
+import PageTooLittleText from '../checks/pageTooLittleText';
+import VideoElementResolution from '../checks/videoElementResolution';
+import ImageElementResolution from '../checks/imageElementResolution';
+import StoryPagesCount from '../checks/storyPagesCount';
 import {
   ChecklistCategoryProvider,
   useCategoryCount,
-} from './checkCountContext';
-import { PanelText, StyledTablistPanel } from './styles';
+} from '../countContext/checkCountContext';
+import { PanelText, StyledTablistPanel } from '../styles';
 
 export function DesignChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.DESIGN);

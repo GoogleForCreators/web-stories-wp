@@ -24,8 +24,8 @@ import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useCategoryCount } from './checkCountContext';
-import { ISSUE_TYPES } from './constants';
+import { useCategoryCount } from '../countContext/checkCountContext';
+import { ISSUE_TYPES } from '../constants';
 
 const Wrapper = styled.div`
   display: grid;

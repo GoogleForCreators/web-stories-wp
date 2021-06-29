@@ -22,22 +22,22 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { PANEL_STATES } from '../tablist';
-import { ISSUE_TYPES } from './constants';
-import PublisherLogoSize from './checks/publisherLogoSize';
-import StoryMissingExcerpt from './checks/storyMissingExerpt';
-import StoryMissingTitle from './checks/storyMissingTitle';
-import StoryPosterAspectRatio from './checks/storyPosterAspectRatio';
-import { StoryPosterAttached } from './checks/storyPosterAttached';
-import StoryPosterPortraitSize from './checks/storyPosterPortraitSize';
-import StoryTitleLength from './checks/storyTitleLength';
-import VideoElementMissingPoster from './checks/videoElementMissingPoster';
+import { PANEL_STATES } from '../../tablist';
+import { ISSUE_TYPES } from '../constants';
+import PublisherLogoSize from '../checks/publisherLogoSize';
+import StoryMissingExcerpt from '../checks/storyMissingExerpt';
+import StoryMissingTitle from '../checks/storyMissingTitle';
+import StoryPosterAspectRatio from '../checks/storyPosterAspectRatio';
+import { StoryPosterAttached } from '../checks/storyPosterAttached';
+import StoryPosterPortraitSize from '../checks/storyPosterPortraitSize';
+import StoryTitleLength from '../checks/storyTitleLength';
+import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import {
   ChecklistCategoryProvider,
   useCategoryCount,
-} from './checkCountContext';
-import { PanelText, StyledTablistPanel } from './styles';
-import { useCheckpoint } from './checkpointContext';
+} from '../countContext/checkCountContext';
+import { PanelText, StyledTablistPanel } from '../styles';
+import { useCheckpoint } from '../checkpointContext';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);

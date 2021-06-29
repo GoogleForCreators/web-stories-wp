@@ -21,19 +21,19 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { ISSUE_TYPES } from './constants';
-import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
-import ImageElementMissingAlt from './checks/imageElementMissingAlt';
-import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
-import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
-import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
-import VideoElementMissingDescription from './checks/videoElementMissingDescription';
+import { ISSUE_TYPES } from '../constants';
+import ElementLinkTappableRegionTooSmall from '../checks/elementLinkTappableRegionTooSmall';
+import ImageElementMissingAlt from '../checks/imageElementMissingAlt';
+import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextContrast';
+import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
+import VideoElementMissingCaptions from '../checks/videoElementMissingCaptions';
+import VideoElementMissingDescription from '../checks/videoElementMissingDescription';
 import {
   ChecklistCategoryProvider,
   useCategoryCount,
-} from './checkCountContext';
-import { PanelText, StyledTablistPanel } from './styles';
-import VideoOptimizationToggle from './videoOptimizationCheckbox';
+} from '../countContext/checkCountContext';
+import { PanelText, StyledTablistPanel } from '../styles';
+import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 
 export function AccessibilityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);

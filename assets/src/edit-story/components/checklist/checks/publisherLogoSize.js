@@ -26,7 +26,7 @@ import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY, PUBLISHER_LOGO_DIMENSION } from '../constants';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext/checkCountContext';
 
 export function publisherLogoSize(story) {
   return (

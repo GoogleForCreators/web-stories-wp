@@ -21,19 +21,18 @@ import { useCallback, useEffect, useState } from 'react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
+import { useCheckpoint } from '../../checklist/checkpointContext';
 import {
   usePrepublishChecklist,
   ReviewChecklistDialog,
 } from '../../inspector/prepublish';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
-import { useFeature } from 'flagged';
-import { useCheckpoint } from '../../checklist/checkpointContext';
 
 const TRANSITION_DURATION = 300;
 

@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ISSUE_TYPES } from './constants';
+import { ISSUE_TYPES } from '../constants';
 
 export const CountContext = createContext(null);
 export const CategoryContext = createContext(null);

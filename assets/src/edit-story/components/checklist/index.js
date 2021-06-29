@@ -37,12 +37,15 @@ import {
   ISSUE_TYPES,
   POPUP_ID,
 } from './constants';
-import { DesignChecks } from './designChecks';
-import { AccessibilityChecks } from './accessibilityChecks';
-import { PriorityChecks } from './priorityChecks';
-import { ChecklistCountProvider } from './checkCountContext';
-import EmptyContentCheck from './emptyContent';
-import { useChecklist } from './context';
+import {
+  AccessibilityChecks,
+  DesignChecks,
+  EmptyContentCheck,
+  PriorityChecks,
+} from './checklistContent';
+
+import { ChecklistCountProvider } from './countContext/checkCountContext';
+import { useChecklist } from './checklistContext';
 
 const Wrapper = styled.div`
   /**
@@ -138,4 +141,4 @@ export function Checklist() {
   );
 }
 
-export { ChecklistProvider, useChecklist } from './context';
+export { ChecklistProvider, useChecklist } from './checklistContext';
