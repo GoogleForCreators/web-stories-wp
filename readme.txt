@@ -109,6 +109,13 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.8.1 =
+
+**Release Date:** June 29, 2021.
+
+* New feature: 5 beautifully designed templates for creators to choose from.
+* Fixes an issue with elements disappearing when using certain animations.
+
 = 1.8.0 =
 
 **Release Date:** June 16, 2021.
@@ -217,6 +224,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+
+5 new templates for inspiring story creation, plus some bug fixes related to animations.
 
 = 1.8.0 =
 
