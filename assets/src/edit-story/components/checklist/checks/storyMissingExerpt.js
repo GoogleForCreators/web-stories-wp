@@ -32,7 +32,7 @@ export function storyMissingExcerpt(story) {
 }
 
 const StoryMissingExcerpt = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
