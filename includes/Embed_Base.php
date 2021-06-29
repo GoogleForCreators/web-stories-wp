@@ -33,7 +33,7 @@ use Google\Web_Stories\Renderer\Story\Embed;
 /**
  * Embed block class.
  */
-class Embed_Base extends Service_Base {
+abstract class Embed_Base extends Service_Base {
 
 	/**
 	 * Script handle for frontend assets.
@@ -106,7 +106,7 @@ class Embed_Base extends Service_Base {
 	 * @return int Registration action priority to use.
 	 */
 	public static function get_registration_action_priority() {
-		return 9;
+		return 11;
 	}
 
 	/**

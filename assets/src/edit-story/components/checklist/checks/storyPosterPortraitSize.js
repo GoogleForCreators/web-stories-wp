@@ -16,20 +16,21 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { PRIORITY_COPY } from '../constants';
+import { states, useHighlights } from '../../../app/highlights';
+import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
-export const ASPECT_RATIO_LEFT = 3;
-export const ASPECT_RATIO_RIGHT = 4;
 
 export function storyPosterPortraitSize(story) {
   if (hasNoFeaturedMedia(story)) {
@@ -43,39 +44,30 @@ export function storyPosterPortraitSize(story) {
 }
 
 const StoryPosterPortraitSize = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.POSTER,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = PRIORITY_COPY.posterTooSmall;
+
+  const isRendered = storyPosterPortraitSize(story);
+  useRegisterCheck('StoryPosterAspectRatio', isRendered);
   return (
-    storyPosterPortraitSize(story) && (
+    isRendered && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: image dimensions.  */
-          __('Increase poster image size to at least %s', 'web-stories'),
-          `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-        )}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        title={title}
+        titleProps={{
+          onClick: handleClick,
+        }}
         footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            <>
-              {sprintf(
-                /* translators: %s: image dimensions.  */
-                __("Use an image that's at least %s", 'web-stories'),
-                `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-              )}
-              {sprintf(
-                /* translators: %s: aspect ratio.  */
-                __('Maintain a %s aspect ratio', 'web-stories'),
-                `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
-              )}
-            </>
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
+          <ChecklistCardStyles.CardListWrapper>
+            <List>{footer}</List>
+          </ChecklistCardStyles.CardListWrapper>
         }
       />
     )

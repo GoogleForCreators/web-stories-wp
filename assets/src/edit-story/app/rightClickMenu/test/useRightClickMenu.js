@@ -22,6 +22,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 import { useRightClickMenu, RightClickMenuProvider } from '..';
+import { isPlatformMacOS } from '../../../../design-system';
 import { useStory } from '../../story';
 
 // TODO: #6154 remove when the `enableRightClickMenus` experiment is removed
@@ -33,15 +34,37 @@ jest.mock('../../story', () => ({
   useStory: jest.fn(),
 }));
 
+jest.mock('../../../../design-system', () => ({
+  ...jest.requireActual('../../../../design-system'),
+  isPlatformMacOS: jest.fn(),
+}));
+
+const mockEvent = {
+  preventDefault: jest.fn(),
+  stopPropagation: jest.fn(),
+  offsetX: 500,
+  offsetY: -1230,
+};
+
+const defaultStoryContext = {
+  addPage: jest.fn(),
+  currentPage: {},
+  deleteCurrentPage: jest.fn(),
+  pages: [{}],
+  replaceCurrentPage: jest.fn(),
+  selectedElements: [],
+  selectedElementAnimations: [],
+};
+
 describe('useRightClickMenu', () => {
   const mockUseStory = useStory;
+  const mockIsPlatformMacOS = isPlatformMacOS;
 
   beforeEach(() => {
     jest.clearAllMocks();
 
-    mockUseStory.mockReturnValue({
-      selectedElements: [],
-    });
+    mockUseStory.mockReturnValue(defaultStoryContext);
+    mockIsPlatformMacOS.mockReturnValue(false);
   });
 
   describe('context menu manipulation', () => {
@@ -49,12 +72,6 @@ describe('useRightClickMenu', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
       });
-
-      const mockEvent = {
-        preventDefault: jest.fn(),
-        offsetX: 500,
-        offsetY: -1230,
-      };
 
       act(() => {
         result.current.onOpenMenu(mockEvent);
@@ -68,12 +85,6 @@ describe('useRightClickMenu', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
       });
-
-      const mockEvent = {
-        preventDefault: jest.fn(),
-        offsetX: 500,
-        offsetY: -1230,
-      };
 
       act(() => {
         result.current.onOpenMenu(mockEvent);
@@ -101,32 +112,63 @@ describe('useRightClickMenu', () => {
         {
           label: 'Copy',
           onClick: expect.any(Function),
-          handleMouseDown: expect.any(Function),
-          shortcut: '⌘ X',
+          onMouseDown: expect.any(Function),
+          shortcut: {
+            display: 'ctrl C',
+            title: 'Control C',
+          },
         },
         {
           label: 'Paste',
           onClick: expect.any(Function),
-          handleMouseDown: expect.any(Function),
-          shortcut: '⌘ V',
+          onMouseDown: expect.any(Function),
+          shortcut: {
+            display: 'ctrl V',
+            title: 'Control V',
+          },
         },
         {
           label: 'Delete',
           onClick: expect.any(Function),
-          handleMouseDown: expect.any(Function),
-          shortcut: 'DEL',
+          onMouseDown: expect.any(Function),
+          shortcut: {
+            display: 'DEL',
+            title: 'Delete',
+          },
         },
         {
           label: 'Duplicate page',
           onClick: expect.any(Function),
-          handleMouseDown: expect.any(Function),
+          onMouseDown: expect.any(Function),
+          separator: 'top',
         },
         {
           label: 'Delete page',
           onClick: expect.any(Function),
-          handleMouseDown: expect.any(Function),
+          onMouseDown: expect.any(Function),
+          disabled: expect.any(Boolean),
         },
       ]);
+    });
+
+    it('"delete page" button should be enabled if there is more than one page', () => {
+      const { result, rerender } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      expect(
+        result.current.menuItems.find((item) => item.label === 'Delete page')
+          .disabled
+      ).toBe(true);
+
+      mockUseStory.mockReturnValue({ ...defaultStoryContext, pages: [{}, {}] });
+
+      rerender();
+
+      expect(
+        result.current.menuItems.find((item) => item.label === 'Delete page')
+          .disabled
+      ).toBe(false);
     });
   });
 

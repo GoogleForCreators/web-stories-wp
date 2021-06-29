@@ -16,17 +16,17 @@
 /**
  * External dependencies
  */
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-
-export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
-export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
+import { states, useHighlights } from '../../../app/highlights';
+import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
+import { PRIORITY_COPY } from '../constants';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyMissingTitle(story) {
   return typeof story.title !== 'string' || story.title?.trim() === '';
@@ -34,32 +34,30 @@ export function storyMissingTitle(story) {
 
 const StoryMissingTitle = () => {
   const story = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.STORY_TITLE,
+      }),
+    [setHighlights]
+  );
+
+  const isRendered = storyMissingTitle(story);
+  useRegisterCheck('StoryMissingTitle', isRendered);
+
+  const { footer, title } = PRIORITY_COPY.storyMissingTitle;
   return (
-    storyMissingTitle(story) && (
+    isRendered && (
       <ChecklistCard
-        title={__('Add Web Story title', 'web-stories')}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
+        title={title}
+        titleProps={{
+          onClick: handleClick,
+        }}
         footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %d: maximum story title length in words. */
-              _n(
-                'Keep under %d word',
-                'Keep under %d words',
-                MAX_STORY_TITLE_LENGTH_WORDS,
-                'web-stories'
-              ),
-              MAX_STORY_TITLE_LENGTH_WORDS
-            )}
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
+          <ChecklistCardStyles.CardListWrapper>
+            <List>{footer}</List>
+          </ChecklistCardStyles.CardListWrapper>
         }
       />
     )

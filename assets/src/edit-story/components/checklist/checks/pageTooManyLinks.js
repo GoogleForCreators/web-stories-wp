@@ -17,18 +17,28 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback, useMemo } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryPages } from '../utils';
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
-
-const MAX_LINKS_PER_PAGE = 3;
+import { useHighlights } from '../../../app/highlights';
+import { DESIGN_COPY, MAX_LINKS_PER_PAGE } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { filterStoryPages, getVisibleThumbnails } from '../utils';
+import {
+  Thumbnail,
+  THUMBNAIL_TYPES,
+  THUMBNAIL_DIMENSIONS,
+} from '../../thumbnail';
+import PagePreview from '../../carousel/pagepreview';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {
@@ -44,38 +54,49 @@ const PageTooManyLinks = () => {
     () => filterStoryPages(story, pageTooManyLinks),
     [story]
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (pageId) =>
+      setHighlights({
+        pageId,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
+
+  const isRendered = failingPages.length > 0;
+  useRegisterCheck('PageTooManyLinks', isRendered);
   return (
-    failingPages.length > 0 && (
+    isRendered && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: maximum number of links per page. */
-          __('Avoid including more than %s links per page', 'web-stories'),
-          MAX_LINKS_PER_PAGE
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %s: maximum number of links per page. */
-              __('Avoid having more than %s links on one page', 'web-stories'),
-              MAX_LINKS_PER_PAGE
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingPages.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-         todo thumbnails for pages
-         thumbnailCount={failingPages.length}
-         thumbnail={<>
-             {failingPages.map(() => <Thumbnail onClick={ perform highlight here }  />)}
-           </>}
-       */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={failingPages.length}
+        thumbnail={
+          <>
+            {getVisibleThumbnails(failingPages).map((page) => (
+              <Thumbnail
+                key={page.id}
+                onClick={() => handleClick(page.id)}
+                type={THUMBNAIL_TYPES.PAGE}
+                displayBackground={
+                  <PagePreview
+                    page={page}
+                    width={THUMBNAIL_DIMENSIONS.WIDTH}
+                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                    as="div"
+                  />
+                }
+                aria-label={__('Go to offending page', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
+
 /**
  * Internal dependencies
  */
 import { KEYS } from '../../components/helpCenter/constants';
 import { useHelpCenter } from '../helpCenter';
+import { noop } from '../../utils/noop';
 
 const TRIGGER_CONTEXTS = {
   SAFE_ZONE: 'safeZone',
@@ -31,11 +34,11 @@ const TRIGGER_CONTEXTS = {
 export function useUserOnboarding(selector) {
   const triggerType = selector(TRIGGER_CONTEXTS);
 
-  const { openToUnreadTip } = useHelpCenter(({ actions }) => ({
+  const { openToUnreadTip = noop } = useHelpCenter(({ actions }) => ({
     openToUnreadTip: actions.openToUnreadTip,
   }));
 
-  const [openToUnreadTipDebounced] = useDebouncedCallback(openToUnreadTip, 300);
+  const openToUnreadTipDebounced = useDebouncedCallback(openToUnreadTip, 300);
 
   const trigger = useCallback(() => {
     switch (triggerType) {
