@@ -16,7 +16,7 @@
 
 export function getPageHash(page) {
   const jsonStr = JSON.stringify(page);
-  return window.btoa(jsonStr);
+  return window.btoa(unescape(encodeURIComponent(jsonStr)));
 }
 
 export function hasPageHashChanged(page, hash) {
