@@ -16,30 +16,36 @@
 /**
  * External dependencies
  */
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
-import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { trackClick } from '../../../../../../packages/tracking/src';
 import {
   Checkbox,
   Link,
   Text,
   THEME_CONSTANTS,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
+import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
 import { useConfig, useCurrentUser } from '../../../app';
+import { CARD_WIDTH } from '../../helpCenter/navigator/constants';
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: ${CARD_WIDTH}px;
   margin: 16px 0;
+  padding: 16px;
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
 const CheckboxContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 `;
 
 const DescriptionText = styled(Text).attrs({
@@ -52,9 +58,10 @@ const DescriptionText = styled(Text).attrs({
 const CheckboxLabel = styled(DescriptionText)`
   margin-left: 8px;
   margin-bottom: 0;
+  line-height: 20px;
 `;
 
-function VideoOptimizationToggle() {
+function VideoOptimizationCheckbox() {
   const { dashboardSettingsLink } = useConfig();
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
     ({ state, actions }) => ({
@@ -64,7 +71,9 @@ function VideoOptimizationToggle() {
     })
   );
 
-  return (
+  const checked = currentUser?.meta?.web_stories_media_optimization;
+
+  return checked ? null : (
     <Container>
       <DescriptionText>
         {__(
@@ -107,4 +116,4 @@ function VideoOptimizationToggle() {
   );
 }
 
-export default VideoOptimizationToggle;
+export default VideoOptimizationCheckbox;
