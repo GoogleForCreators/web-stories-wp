@@ -111,7 +111,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.8.1 =
 
-**Release Date:** June 29, 2021.
+**Release Date:** June 30, 2021.
 
 * New feature: 5 beautifully designed templates for creators to choose from.
 * Fixes an issue with elements disappearing when using certain animations.
