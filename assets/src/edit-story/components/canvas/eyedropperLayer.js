@@ -30,6 +30,10 @@ import { useFocusOut, useKeyDownEffect } from '../../../design-system';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
 
+const MAGNIFIER_SIZE = 200;
+const MAGNIFIER_PIXELS = 7;
+const MAGNIFIER_RECT_SIZE = MAGNIFIER_SIZE / MAGNIFIER_PIXELS;
+
 const EyedropperBackground = styled(Layer)`
   background: rgba(0, 0, 0, 0.7);
   cursor: not-allowed;
@@ -141,10 +145,6 @@ function EyedropperLayer() {
     return null;
   }
 
-  const magnifierSize = 200; // We can use scroll wheel to control it?
-  const magnifierPixels = 7;
-  const magnifierRectSize = magnifierSize / magnifierPixels;
-
   const magnify = function (x, y) {
     const canvas = magnifier.current;
     if (canvas) {
@@ -157,26 +157,26 @@ function EyedropperLayer() {
       ctx.msImageSmoothingEnabled = false;
 
       // Draw enlarged cropped image.
-      ctx.clearRect(0, 0, magnifierSize, magnifierSize);
+      ctx.clearRect(0, 0, MAGNIFIER_SIZE, MAGNIFIER_SIZE);
       ctx.drawImage(
         imgRef.current,
-        Math.round(x - magnifierPixels / 2),
-        Math.round(y - magnifierPixels / 2),
-        magnifierPixels,
-        magnifierPixels,
+        Math.round(x - MAGNIFIER_PIXELS / 2),
+        Math.round(y - MAGNIFIER_PIXELS / 2),
+        MAGNIFIER_PIXELS,
+        MAGNIFIER_PIXELS,
         0,
         0,
-        magnifierSize,
-        magnifierSize
+        MAGNIFIER_SIZE,
+        MAGNIFIER_SIZE
       );
 
       // Draw center rectangle for better aiming.
       ctx.beginPath();
       ctx.rect(
-        Math.round(magnifierSize / 2) - magnifierRectSize / 2,
-        Math.round(magnifierSize / 2) - magnifierRectSize / 2,
-        magnifierRectSize,
-        magnifierRectSize
+        Math.round(MAGNIFIER_SIZE / 2) - MAGNIFIER_RECT_SIZE / 2,
+        Math.round(MAGNIFIER_SIZE / 2) - MAGNIFIER_RECT_SIZE / 2,
+        MAGNIFIER_RECT_SIZE,
+        MAGNIFIER_RECT_SIZE
       );
       ctx.stroke();
     }
@@ -241,12 +241,12 @@ function EyedropperLayer() {
           <Magnifier ref={magnifierInfo}>
             <MagnifierCanvas
               ref={magnifier}
-              width={magnifierSize}
-              height={magnifierSize}
+              width={MAGNIFIER_SIZE}
+              height={MAGNIFIER_SIZE}
             />
             <ColorInfo
               style={{
-                top: magnifierSize + 20 + 10,
+                top: MAGNIFIER_SIZE + 30, // 30px gap looks good.
               }}
               ref={magnifierColor}
             />
