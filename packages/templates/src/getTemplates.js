@@ -41,6 +41,16 @@ async function loadTemplate(title, imageBaseUrl) {
             imageBaseUrl
           );
         }
+
+        if (elem?.resource?.poster) {
+          // imageBaseUrl (cdnURL) will always have a trailing slash,
+          // so make sure to avoid double slashes when replacing.
+          elem.resource.poster = elem.resource.poster.replace(
+            '__WEB_STORIES_TEMPLATE_BASE_URL__/',
+            imageBaseUrl
+          );
+        }
+
         return elem;
       }),
     })),
@@ -62,6 +72,11 @@ async function getTemplates(imageBaseUrl) {
     'no-days-off',
     'experience-thailand',
     'sleep',
+    'baking-bread-guide',
+    'sangria-artichoke',
+    'ways-to-eat-avocado',
+    'kitchen-stories',
+    'album-releases',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

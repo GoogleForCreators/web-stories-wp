@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +31,7 @@ import {
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyPosterAspectRatio(story) {
   if (
@@ -49,15 +54,23 @@ export function storyPosterAspectRatio(story) {
 const StoryPosterAspectRatio = () => {
   const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.POSTER,
+      }),
+    [setHighlights]
+  );
   const { footer, title } = PRIORITY_COPY.storyPosterWrongRatio;
 
+  const isRendered = storyPosterAspectRatio(story);
+  useRegisterCheck('StoryPosterAspectRatio', isRendered);
   return (
-    storyPosterAspectRatio(story) && (
+    isRendered && (
       <ChecklistCard
         title={title}
         titleProps={{
-          onClick: () => setHighlights({ highlight: states.POSTER }),
+          onClick: handleClick,
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>

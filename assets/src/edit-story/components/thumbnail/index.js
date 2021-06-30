@@ -17,3 +17,4 @@
 export { THUMBNAIL_DIMENSIONS, THUMBNAIL_TYPES } from './constants';
 export { default as Thumbnail } from './thumbnail';
 export { default as OverflowThumbnail } from './overflowThumbnail';
+export { LayerThumbnail } from './components/LayerThumbnail';

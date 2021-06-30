@@ -16,14 +16,16 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
+import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
+import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
+import { PRIORITY_COPY } from '../constants';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function storyMissingExcerpt(story) {
   return !story.excerpt?.length;
@@ -31,27 +33,27 @@ export function storyMissingExcerpt(story) {
 
 const StoryMissingExcerpt = () => {
   const story = useStory(({ state }) => state);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    () =>
+      setHighlights({
+        highlight: states.EXCERPT,
+      }),
+    [setHighlights]
+  );
+
+  const { title, footer } = PRIORITY_COPY.storyMissingDescription;
+
+  const isRendered = storyMissingExcerpt(story);
+  useRegisterCheck('StoryMissingExcerpt', isRendered);
   return (
-    storyMissingExcerpt(story) && (
+    isRendered && (
       <ChecklistCard
-        title={__('Add Web Story description', 'web-stories')}
-        /* titleProps={{ onClick: () => { perform highlight here } }} */
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Incorporate a brief description for better user experience',
-              'web-stories'
-            )}
-            {
-              //  <Link
-              //   href={'#' /* figure out what this links to */
-              //   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              //   {'Learn more'}
-              // </Link>
-            }
-          </Text>
-        }
+        title={title}
+        titleProps={{
+          onClick: handleClick,
+        }}
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
       />
     )
   );

@@ -16,18 +16,16 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
 
-import { ChecklistCard } from '../../checklistCard';
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
-
-export const MIN_STORY_PAGES = 4;
-export const MAX_STORY_PAGES = 30;
+import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
+import { useRegisterCheck } from '../checkCountContext';
+import { DESIGN_COPY, MAX_STORY_PAGES, MIN_STORY_PAGES } from '../constants';
 
 export function storyPagesCount(story) {
   const hasTooFewPages = story.pages.length < MIN_STORY_PAGES;
@@ -38,68 +36,24 @@ export function storyPagesCount(story) {
 
 const StoryPagesCount = () => {
   const story = useStory(({ state }) => state);
+
+  const badPageCount = useMemo(() => storyPagesCount(story), [story]);
+
+  const { storyTooShort, storyTooLong } = DESIGN_COPY;
+  const copySource = badPageCount
+    ? story.pages.length < MIN_STORY_PAGES
+      ? storyTooShort
+      : storyTooLong
+    : {};
+
+  const isRendered = badPageCount.length > 0;
+  useRegisterCheck('StoryPagesCount', isRendered);
+
   return (
-    storyPagesCount(story) && (
+    isRendered && (
       <ChecklistCard
-        title={
-          story.pages.length < MIN_STORY_PAGES
-            ? sprintf(
-                /* translators: %d: maximum number of pages. */
-                _n(
-                  'Make Web Story at least %d page',
-                  'Make Web Story at least %d pages',
-                  MIN_STORY_PAGES,
-                  'web-stories'
-                ),
-                MIN_STORY_PAGES
-              )
-            : sprintf(
-                /* translators: %d: minimum number of pages. */
-                _n(
-                  'Make Web Story fewer than %d page',
-                  'Make Web Story fewer than %d pages',
-                  MAX_STORY_PAGES,
-                  'web-stories'
-                ),
-                MAX_STORY_PAGES
-              )
-        }
-        titleProps={{
-          onClick: () => {
-            /* perform highlight here */
-          },
-        }}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {story.pages.length < MIN_STORY_PAGES
-              ? sprintf(
-                  /* translators: 1: minimum number of pages. 2: maximum number of pages. */
-                  __(
-                    'It is recommended to have between %1$d and %2$d pages in your story',
-                    'web-stories'
-                  ),
-                  MIN_STORY_PAGES,
-                  MAX_STORY_PAGES
-                )
-              : sprintf(
-                  /* translators: 1: minimum number of pages. 2: maximum number of pages. */
-                  __(
-                    'It is recommended to have between %1$d and %2$d pages in your story',
-                    'web-stories'
-                  ),
-                  MIN_STORY_PAGES,
-                  MAX_STORY_PAGES
-                )}
-            {
-              // <Link
-              //  href={'#' figure out what this links to */}
-              //  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              // >
-              // {'Learn more'}
-              // </Link>
-            }
-          </Text>
-        }
+        title={copySource.title}
+        footer={<DefaultFooterText>{copySource.title}</DefaultFooterText>}
       />
     )
   );

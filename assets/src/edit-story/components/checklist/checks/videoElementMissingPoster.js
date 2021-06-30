@@ -18,14 +18,22 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, Text } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryElements } from '../utils/filterStoryElements';
+import { states, useHighlights } from '../../../app/highlights';
+import { PRIORITY_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function videoElementMissingPoster(element) {
   return element.type === 'video' && !element.resource?.poster;
@@ -35,33 +43,44 @@ const VideoElementMissingPoster = () => {
   const story = useStory(({ state }) => state);
 
   const failingElements = filterStoryElements(story, videoElementMissingPoster);
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+        highlight: states.VIDEO_A11Y_POSTER,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = PRIORITY_COPY.videoMissingPoster;
+
+  const isRendered = failingElements.length > 0;
+  useRegisterCheck('VideoElementMissingPoster', isRendered);
+
   return (
-    failingElements.length > 0 && (
+    isRendered && (
       <ChecklistCard
-        title={__('Add poster image to every video', 'web-stories')}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {__(
-              'Ensure a better experience by displaying a poster while users wait for the video to load',
-              'web-stories'
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingElements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-          todo thumbnails for elements
-          thumbnailCount={elements.length}
-          thumbnail={<>
-              {elements.map(() => <Thumbnail onClick={() => perform highlight here } />)}
-            </>}
-        */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={failingElements.length}
+        thumbnail={
+          <>
+            {getVisibleThumbnails(failingElements).map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => handleClick(element.id)}
+                type={THUMBNAIL_TYPES.VIDEO}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending video', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

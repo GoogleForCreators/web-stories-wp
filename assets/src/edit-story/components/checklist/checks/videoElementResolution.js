@@ -17,18 +17,24 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { useMemo, useCallback } from 'react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import { useStory } from '../../../app';
-import { ChecklistCard } from '../../checklistCard';
-import { filterStoryElements } from '../utils';
+import { useHighlights } from '../../../app/highlights';
+import { DESIGN_COPY } from '../constants';
+import {
+  CARD_TYPE,
+  ChecklistCard,
+  DefaultFooterText,
+} from '../../checklistCard';
+import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
-const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
 
@@ -46,42 +52,43 @@ const VideoElementResolution = () => {
     () => filterStoryElements(story, videoElementResolution),
     [story]
   );
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const handleClick = useCallback(
+    (elementId) =>
+      setHighlights({
+        elementId,
+      }),
+    [setHighlights]
+  );
+  const { footer, title } = DESIGN_COPY.videoResolutionTooLow;
+
+  const isRendered = failingElements.length > 0;
+  useRegisterCheck('VideoElementResolution', isRendered);
 
   return (
-    failingElements.length > 0 && (
+    isRendered && (
       <ChecklistCard
-        title={sprintf(
-          /* translators: %s: minimum video resolution. */
-          __('Increase video resolution to at least %s', 'web-stories'),
-          `${MIN_VIDEO_RESOLUTION}p`
-        )}
-        footer={
-          <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {sprintf(
-              /* translators: %s: minimum video resolution. */
-              __(
-                'Ensure your video has a minimum resolution of %s',
-                'web-stories'
-              ),
-              `${MIN_VIDEO_RESOLUTION}p`
-            )}
-            {
-              //       <Link
-              //         href={'#' /* figure out what this links to */}
-              //         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-              //       >
-              //         {'Learn more'}
-              //       </Link>
-            }
-          </Text>
+        title={title}
+        cardType={
+          failingElements.length > 1
+            ? CARD_TYPE.MULTIPLE_ISSUE
+            : CARD_TYPE.SINGLE_ISSUE
         }
-        /*
-         todo thumbnails for elements
-         thumbnailCount={elements.length}
-         thumbnail={<>
-             {elements.map(() => <Thumbnail onClick={() => perform highlight here } />)}
-           </>}
-       */
+        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        thumbnailCount={failingElements.length}
+        thumbnail={
+          <>
+            {getVisibleThumbnails(failingElements).map((element) => (
+              <Thumbnail
+                key={element.id}
+                onClick={() => handleClick(element.id)}
+                type={THUMBNAIL_TYPES.VIDEO}
+                displayBackground={<LayerThumbnail page={element} />}
+                aria-label={__('Go to offending video', 'web-stories')}
+              />
+            ))}
+          </>
+        }
       />
     )
   );

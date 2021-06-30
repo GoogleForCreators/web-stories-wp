@@ -24,6 +24,7 @@ import { useMemo, useRef, useState } from 'react';
  * Internal dependencies
  */
 import { useResizeEffect } from '../../../design-system';
+import { ChecklistProvider } from '../checklist';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';
@@ -48,11 +49,13 @@ function CarouselContainer() {
 
   return (
     <CarouselProvider availableSpace={width}>
-      <Outer ref={ref}>
-        <Inner marginRight={margin}>
-          <CarouselLayout />
-        </Inner>
-      </Outer>
+      <ChecklistProvider>
+        <Outer ref={ref}>
+          <Inner marginRight={margin}>
+            <CarouselLayout />
+          </Inner>
+        </Outer>
+      </ChecklistProvider>
     </CarouselProvider>
   );
 }
