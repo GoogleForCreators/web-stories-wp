@@ -26,12 +26,14 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Widgets\Stories;
 
 /**
  * Class RegisterWidget
  */
-class Register_Widget extends Service_Base {
+class Register_Widget implements Service, Registerable  {
 	/**
 	 * Stories instance.
 	 *
@@ -60,6 +62,7 @@ class Register_Widget extends Service_Base {
 	public function register() {
 		add_action( 'widgets_init', [ $this, 'register_widget' ] );
 		add_filter( 'widget_types_to_hide_from_legacy_widget_block', [ $this, 'hide_widget' ] );
+		add_filter( 'body_class', [ $this, 'body_class' ] );
 	}
 
 	/**
@@ -86,5 +89,22 @@ class Register_Widget extends Service_Base {
 		$widget_types[] = $this->stories->id_base;
 
 		return $widget_types;
+	}
+
+	/**
+     * Filters the list of CSS body class names for embedded iframes to add a class.
+     *
+     * @since 1.9.0
+     *
+     * @param string[] $classes An array of body class names.
+	 *
+	 * @return array
+	 */
+	public function body_class( array $classes ) {
+		if ( is_admin() && defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+			$classes[] = 'iframe-embed';
+		}
+
+		return $classes;
 	}
 }

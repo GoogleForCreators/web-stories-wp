@@ -6,6 +6,10 @@
     max-width: var(--ws-story-max-width);
   }
 }
+.iframe-embed .web-stories-list.is-view-type-carousel .web-stories-list__story {
+  margin: 0 5px;
+  max-width: var(--ws-story-max-width);
+}
 
 .web-stories-list.is-carousel.has-archive-link {
   margin-top: calc(
