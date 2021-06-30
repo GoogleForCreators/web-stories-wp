@@ -52,6 +52,7 @@ function Publish() {
     isUploading: state.state.isUploading,
   }));
 
+  // TODO #7978 - Remove Old Checklist
   const {
     shouldReviewDialogBeSeen: DEPRECATED_shouldReviewDialogBeSeen,
     focusChecklistTab,
@@ -71,6 +72,7 @@ function Publish() {
     onReviewDialogRequest();
   }, [onReviewDialogRequest]);
 
+  // TODO #7978 - Remove Old Checklist
   const TEMP_shouldReviewDialogBeSeen = isEnabledChecklistCompanion
     ? shouldReviewDialogBeSeen
     : DEPRECATED_shouldReviewDialogBeSeen;
@@ -111,6 +113,7 @@ function Publish() {
     publish();
   }, [TEMP_shouldReviewDialogBeSeen, publish]);
 
+  // TODO #7978 - Remove Old Checklist
   const DEPRECATED_handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
     // Focus Checklist Tab
@@ -143,6 +146,7 @@ function Publish() {
       <ReviewChecklistDialog
         isOpen={showDialog}
         onIgnore={publish}
+        // TODO #7978 - Remove Old Checklist
         onReview={
           isEnabledChecklistCompanion
             ? handleReviewChecklist
