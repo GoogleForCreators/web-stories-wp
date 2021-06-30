@@ -76,9 +76,7 @@ const TextElementFontSizeTooSmall = () => {
                 key={element.id}
                 onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.TEXT}
-                displayBackground={
-                  <LayerThumbnail page={element} showVideoPreviewAsBackup />
-                }
+                displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending text element', 'web-stories')}
               />
             ))}

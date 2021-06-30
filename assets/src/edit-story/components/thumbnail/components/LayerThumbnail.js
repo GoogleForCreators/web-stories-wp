@@ -22,13 +22,13 @@ import PropTypes from 'prop-types';
  */
 import { getDefinitionForType } from '../../../elements';
 
-export const LayerThumbnail = ({ page, showVideoPreviewAsBackup }) => {
+export const LayerThumbnail = ({ page }) => {
   const { LayerIcon } = getDefinitionForType(page?.type);
 
   const props = { element: page };
 
   if (page?.type === 'video') {
-    props.showVideoPreviewAsBackup = showVideoPreviewAsBackup;
+    props.showVideoPreviewAsBackup = true;
   }
 
   return <LayerIcon {...props} />;
@@ -36,5 +36,4 @@ export const LayerThumbnail = ({ page, showVideoPreviewAsBackup }) => {
 
 LayerThumbnail.propTypes = {
   page: PropTypes.object.isRequired,
-  showVideoPreviewAsBackup: PropTypes.bool,
 };

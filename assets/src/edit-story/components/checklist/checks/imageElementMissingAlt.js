@@ -78,9 +78,7 @@ const ImageElementMissingAlt = () => {
                 key={element.id}
                 onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={
-                  <LayerThumbnail page={element} showVideoPreviewAsBackup />
-                }
+                displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}
               />
             ))}
