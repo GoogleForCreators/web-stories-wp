@@ -57,8 +57,8 @@ const Wrapper = styled.div`
 `;
 
 const StyledNavigationWrapper = styled(NavigationWrapper)`
-  max-height: 786px;
-  height: 80vh;
+  max-height: 80vh;
+  overflow: hidden;
 `;
 
 const ChecklistPopup = ({ isOpen, close }) => {
