@@ -45,6 +45,14 @@ async function loginUser(username, password) {
     await page.goto(createURL('wp-login.php'));
   }
 
+  const cookies = (await page.cookies())
+    .filter((cookie) => Boolean(cookie?.name?.startsWith('wordpress_')))
+    .map((cookie) => cookie.name);
+  for (const cookie of cookies) {
+    //eslint-disable-next-line no-await-in-loop
+    await page.deleteCookie(cookie);
+  }
+
   await page.evaluate(() => (document.getElementById('user_login').value = ''));
   await page.evaluate(() => (document.getElementById('user_pass').value = ''));
 
