@@ -534,6 +534,7 @@ class KSES extends Service_Base {
 				'data-amp-bind-attribution' => true,
 				'data-amp-bind-src'         => true,
 				'data-amp-bind-srcset'      => true,
+				'disable-inline-width'      => true,
 				'lightbox'                  => true,
 				'lightbox-thumbnail-id'     => true,
 				'media'                     => true,
