@@ -149,6 +149,6 @@ describe('MediaElement', () => {
     const element = screen.getByAltText('video :)');
     Simulate.focus(element);
 
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    expect(screen.queryByAltText('More')).not.toBeInTheDocument();
   });
 });
