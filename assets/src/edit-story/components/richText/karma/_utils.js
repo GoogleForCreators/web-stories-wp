@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
@@ -27,9 +32,11 @@ export function initHelpers(data) {
 
   async function addInitialText(addExtra = false) {
     await data.fixture.events.click(data.fixture.editor.library.textAdd);
+    await waitFor(() => data.fixture.editor.canvas.framesLayer.frames[1].node);
 
     if (addExtra) {
       await data.fixture.events.click(data.fixture.editor.library.textAdd);
+      await waitFor(() => data.fixture.editor.canvas.framesLayer.frames[2].node);
     }
 
     await data.fixture.editor.canvas.framesLayer.waitFocusedWithin();

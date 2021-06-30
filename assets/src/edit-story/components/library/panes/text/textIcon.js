@@ -112,7 +112,7 @@ function TextIcon(props) {
         : null;
       insertElement('text', {
         ...DEFAULT_PRESET,
-        content: setColor(content, { color }),
+        content: color ? setColor(content, { color }) : content,
         ...highlightProps,
       });
       setAutoColor(null);

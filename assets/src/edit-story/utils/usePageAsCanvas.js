@@ -115,9 +115,14 @@ function usePageAsCanvas() {
           canvas.height
         );
         const { x, y, width, height } = box;
-        const pixelData = ctx.getImageData(x, y, width, height).data;
-        const { fontSize } = atts;
-        callback(getAccessibleTextColorsFromPixels(pixelData, fontSize));
+        try {
+          const pixelData = ctx.getImageData(x, y, width, height).data;
+          const { fontSize } = atts;
+          callback(getAccessibleTextColorsFromPixels(pixelData, fontSize));
+        } catch (e) {
+          // Fall back to default color if failing to get image data.
+          callback({ color: null });
+        }
       };
       if (
         pageCanvasData &&

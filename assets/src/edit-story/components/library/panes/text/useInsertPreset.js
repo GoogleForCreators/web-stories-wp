@@ -109,7 +109,7 @@ function useInsertPreset() {
         : null;
       const elementProps = {
         ...presetAtts,
-        content: setColor(content, { color }),
+        content: color ? setColor(content, { color }) : content,
         ...highlightProps,
       };
       const addedElement = insertElement(TYPE, {
