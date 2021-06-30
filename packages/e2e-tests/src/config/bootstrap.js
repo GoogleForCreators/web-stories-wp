@@ -119,6 +119,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Some bug in Firefox?
   '0xc1f30001 (NS_ERROR_NOT_INITIALIZED)',
+
+  // Firefox doesn't support MP4s. The "Web Stories Block" test embeds a story containing an MP4.
+  'Your system may not have the required video codecs for: video/mp4',
 ];
 
 export function addAllowedErrorMessage(message) {
