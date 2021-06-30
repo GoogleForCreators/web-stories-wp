@@ -29,6 +29,7 @@ import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import { calculateTextHeight } from '../../../../utils/textMeasurements';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
@@ -106,10 +107,14 @@ function useInsertPreset() {
             padding: applyHiddenPadding(presetAtts),
           }
         : null;
-      const addedElement = insertElement(TYPE, {
+      const elementProps = {
         ...presetAtts,
         content: setColor(content, { color }),
         ...highlightProps,
+      };
+      const addedElement = insertElement(TYPE, {
+        ...elementProps,
+        height: calculateTextHeight(elementProps, elementProps.width),
       });
       lastPreset.current = {
         versionNumber: null,

@@ -26,6 +26,7 @@ import { getBox } from '@web-stories-wp/units';
 import useLibrary from '../components/library/useLibrary';
 import { useCanvas, useStory } from '../app';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
+import { calculateTextHeight } from './textMeasurements';
 
 function usePageAsCanvas() {
   const { pageCanvasData, setPageCanvasData } = useLibrary((state) => ({
@@ -86,9 +87,9 @@ function usePageAsCanvas() {
     (atts, callback) => {
       const contrastCalculation = (canvas) => {
         const ctx = canvas.getContext('2d');
-        // @todo Get the correct height based on font size / line-height, etc.
+        const calcHeight = calculateTextHeight(atts, atts.width);
         const box = getBox(
-          { ...atts, height: atts.height ? atts.height : 41 },
+          { ...atts, height: atts.height ? atts.height : calcHeight },
           canvas.width,
           canvas.height
         );
