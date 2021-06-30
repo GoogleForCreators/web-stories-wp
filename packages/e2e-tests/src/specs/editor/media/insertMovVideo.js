@@ -72,6 +72,7 @@ describe('Handling .mov files', () => {
     afterEach(async () => {
       await toggleVideoOptimization();
     });
+
     // Uses the existence of the element's frame element as an indicator for successful insertion.
     it('should not list the .mov', async () => {
       await createNewStory();
