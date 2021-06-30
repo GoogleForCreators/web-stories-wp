@@ -26,7 +26,7 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
-import { useFocusOut, useKeyDownEffect } from '../../../design-system';
+import { useFocusOut, useGlobalKeyDownEffect } from '../../../design-system';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
 
@@ -47,7 +47,6 @@ const DisplayPageArea = styled(PageArea)`
 const EyedropperCanvas = styled.div`
   background: transparent;
   border-radius: 5px;
-  color: black;
   position: absolute;
   z-index: 2;
   transform: translateZ(0);
@@ -139,7 +138,7 @@ function EyedropperLayer() {
 
   useFocusOut(eyedropperCanvas, closeEyedropper, [isEyedropperActive, img]);
 
-  useKeyDownEffect(document.body, 'esc', closeEyedropper);
+  useGlobalKeyDownEffect('esc', closeEyedropper);
 
   if (!isEyedropperActive || !img) {
     return null;
