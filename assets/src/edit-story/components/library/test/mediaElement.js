@@ -128,7 +128,7 @@ describe('MediaElement', () => {
     const element = screen.getByAltText('image :)');
     Simulate.focus(element);
 
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    expect(screen.queryByAltText('More')).not.toBeInTheDocument();
   });
 
   it("should not render dropdown menu's more icon for not uploaded video", () => {
