@@ -229,6 +229,7 @@ function EyedropperLayer() {
 
   return (
     <EyedropperBackground>
+      {/* Remove the safezone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <EyedropperCanvas
