@@ -163,6 +163,7 @@ const transforms = {
           archiveLinkLabel: instance.raw.archive_link_label,
           circleSize: instance.raw.circle_size,
           numOfColumns: instance.raw.number_of_columns,
+          imageAlignment: instance.raw.image_alignment,
           numOfStories: instance.raw.number_of_stories,
           orderby: instance.raw.orderby.replace('post_', ''),
           order: instance.raw.order.toLowerCase(),
