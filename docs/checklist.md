@@ -13,6 +13,12 @@ The Prepublish Checklist to help users make the best Stories possible.
 
 - All checks are nested in checklist/checks, the logic and requirements for each check are stored here. They render their own component based on the  check and that component is given  to the checklist category to render making the list self contained.
 
+## Adding a new check
+
+- Follow patterning in `checklist/checks`. The logic for the check should be kept internal to the check itself. 
+- Give it a unique name when hooking into `useRegisterCheck`, this is what tracks issue counts.
+- Tests for checks are stored in `checklist/checks/test`. 
+
 ## Context
 
 Comes in three sections. You need varying degrees of access depending on where you are in the app. 
@@ -23,4 +29,5 @@ Comes in three sections. You need varying degrees of access depending on where y
 
 ## Future  Improvements
 
-Now that the checklist has self contained checks there's room to improve perf on one off situations. 
+- Now that the checklist has self contained checks there's room to improve perf on one off situations. 
+- Add role based checks 

@@ -56,6 +56,7 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
     checkpoint,
   }));
 
+  // TODO #7978 - Remove Old Checklist
   const checkpointForIcon = isEnabledChecklistCompanion
     ? checkpoint
     : currentCheckpoint;
