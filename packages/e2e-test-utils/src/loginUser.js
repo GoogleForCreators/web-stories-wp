@@ -45,30 +45,10 @@ async function loginUser(username, password) {
     await page.goto(createURL('wp-login.php'));
   }
 
-  const cookies = (await page.cookies())
-    .filter((cookie) => Boolean(cookie?.name?.startsWith('wordpress_')))
-    .map((cookie) => cookie.name);
-  for (const cookie of cookies) {
-    //eslint-disable-next-line no-await-in-loop
-    await page.deleteCookie(cookie);
-  }
-
-  await page.evaluate(() => (document.getElementById('user_login').value = ''));
-  await page.evaluate(() => (document.getElementById('user_pass').value = ''));
-
   await page.focus('#user_login');
   await page.type('#user_login', username);
   await page.focus('#user_pass');
   await page.type('#user_pass', password);
-
-  await page.evaluate(
-    (value) => (document.getElementById('user_login').value = value),
-    username
-  );
-  await page.evaluate(
-    (value) => (document.getElementById('user_pass').value = value),
-    password
-  );
 
   await Promise.all([page.waitForNavigation(), page.click('#wp-submit')]);
 
