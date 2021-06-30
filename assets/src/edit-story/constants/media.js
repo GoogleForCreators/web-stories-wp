@@ -17,3 +17,5 @@
 const GB_IN_BYTES = 1024 * 1024 * 1024;
 
 export const MEDIA_TRANSCODING_MAX_FILE_SIZE = 2 * GB_IN_BYTES;
+export const MEDIA_POSTER_IMAGE_EXT = 'jpeg';
+export const MEDIA_POSTER_IMAGE_MIME_TYPE = 'image/jpeg';
