@@ -21,7 +21,6 @@ export { default as calculateSrcSet } from './calculateSrcSet';
 export { default as createResource } from './createResource';
 export { default as getFileName } from './getFileName';
 export { default as formatDuration } from './formatDuration';
-export { default as createFileReader } from './createFileReader';
 export { default as fetchRemoteFile } from './fetchRemoteFile';
 export { default as getFileNameFromUrl } from './getFileNameFromUrl';
 export { default as getFileNameWithExt } from './getFileNameWithExt';
