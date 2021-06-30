@@ -188,7 +188,10 @@ function EyedropperLayer() {
     const y = (e.clientY - top) * (fullHeight / height);
 
     if (x < 0 || y < 0 || x > width || y > height) {
+      magnifierInfo.current.style.display = 'none';
       return;
+    } else {
+      magnifierInfo.current.style.display = 'block';
     }
 
     // Move magnifier canvas.
@@ -227,15 +230,11 @@ function EyedropperLayer() {
   };
 
   return (
-    <EyedropperBackground>
+    <EyedropperBackground onMouseMove={onMouseMove}>
       {/* Remove the safezone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
-        <EyedropperCanvas
-          ref={eyedropperCanvas}
-          onClick={onClick}
-          onMouseMove={onMouseMove}
-        >
+        <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
           <img ref={imgRef} src={img} alt="" />
           <Magnifier ref={magnifierInfo}>
             <MagnifierCanvas
