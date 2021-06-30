@@ -116,6 +116,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Firefox warns about this, caused by react-modal.
   'unreachable code after return statement',
+
+  // Some bug in Firefox?
+  '0xc1f30001 (NS_ERROR_NOT_INITIALIZED)',
 ];
 
 export function addAllowedErrorMessage(message) {
