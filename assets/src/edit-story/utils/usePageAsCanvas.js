@@ -88,7 +88,8 @@ function usePageAsCanvas() {
                   currentPage: pageHash,
                 });
               }
-            });
+            })
+            .catch(() => resetZoom && callback());
         });
       }
     },
@@ -107,15 +108,15 @@ function usePageAsCanvas() {
   const calculateAccessibleTextColors = useCallback(
     (atts, callback) => {
       const contrastCalculation = (canvas) => {
-        const ctx = canvas.getContext('2d');
-        const calcHeight = calculateTextHeight(atts, atts.width);
-        const box = getBox(
-          { ...atts, height: atts.height ? atts.height : calcHeight },
-          canvas.width,
-          canvas.height
-        );
-        const { x, y, width, height } = box;
         try {
+          const ctx = canvas.getContext('2d');
+          const calcHeight = calculateTextHeight(atts, atts.width);
+          const box = getBox(
+            { ...atts, height: atts.height ? atts.height : calcHeight },
+            canvas.width,
+            canvas.height
+          );
+          const { x, y, width, height } = box;
           const pixelData = ctx.getImageData(x, y, width, height).data;
           const { fontSize } = atts;
           callback(getAccessibleTextColorsFromPixels(pixelData, fontSize));

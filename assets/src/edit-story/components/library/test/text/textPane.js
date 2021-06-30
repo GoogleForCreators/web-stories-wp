@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 
@@ -41,6 +41,9 @@ describe('TextPane', () => {
   beforeAll(() => {
     useLibrary.mockImplementation((selector) =>
       selector({
+        state: {
+          textSets: {},
+        },
         actions: {
           insertElement: insertElement,
         },
@@ -54,7 +57,7 @@ describe('TextPane', () => {
     }));
   });
 
-  it('should insert text with preset text style on pressing a preset', () => {
+  it('should insert text with preset text style on pressing a preset', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -87,7 +90,13 @@ describe('TextPane', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Title 1' }));
     });
 
-    expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', PRESETS[0].element);
+    await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));
+    // Height is being assigned in the process of text insertion.
+    await waitFor(() =>
+      expect(insertElement).toHaveBeenCalledWith('text', {
+        ...PRESETS[0].element,
+        height: 0,
+      })
+    );
   });
 });

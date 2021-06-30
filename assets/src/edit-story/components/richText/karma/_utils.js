@@ -36,7 +36,9 @@ export function initHelpers(data) {
 
     if (addExtra) {
       await data.fixture.events.click(data.fixture.editor.library.textAdd);
-      await waitFor(() => data.fixture.editor.canvas.framesLayer.frames[2].node);
+      await waitFor(
+        () => data.fixture.editor.canvas.framesLayer.frames[2].node
+      );
     }
 
     await data.fixture.editor.canvas.framesLayer.waitFocusedWithin();

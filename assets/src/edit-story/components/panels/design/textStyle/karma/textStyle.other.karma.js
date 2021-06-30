@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import {waitFor, waitForElementToBeRemoved} from '@testing-library/react';
+import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 
 /**
  * Internal dependencies
