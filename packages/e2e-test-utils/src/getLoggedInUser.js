@@ -15,34 +15,21 @@
  */
 
 /**
- * Internal dependencies
+ * Get the username of the user that's currently logged into WordPress (if any).
+ *
+ * @return {string?} username The user that's currently logged into WordPress (if any).
  */
-import loginUser from './loginUser';
-import getLoggedInUser from './getLoggedInUser';
+async function getLoggedInUser() {
+  const cookies = await page.cookies();
+  const cookie = cookies.find((c) =>
+    Boolean(c?.name?.startsWith('wordpress_logged_in_'))
+  );
 
-const current = {
-  username: null,
-  password: null,
-};
-
-export async function setCurrentUser(username, password) {
-  if (username === null) {
-    return;
+  if (!cookie?.value) {
+    return null;
   }
 
-  if (current.username === username) {
-    return;
-  }
-
-  await loginUser(username, password);
-
-  const currentUser = await getLoggedInUser();
-  expect(currentUser).toMatch(username);
-
-  current.username = username;
-  current.password = password;
+  return decodeURIComponent(cookie.value).split('|')[0];
 }
 
-export function getCurrentUser() {
-  return current;
-}
+export default getLoggedInUser;
