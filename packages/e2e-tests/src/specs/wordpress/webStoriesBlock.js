@@ -25,6 +25,7 @@ import {
   createNewPost,
   setPostContent,
 } from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
 
 /**
  * Internal dependencies
@@ -39,15 +40,22 @@ const EMBED_BLOCK_CONTENT = `
 
 describe('Web Stories Block', () => {
   let removeErrorMessage;
+  let removeError404Message;
 
   beforeAll(() => {
+    // Disable reason: Investigation is required why this error is happening.
+    // See https://github.com/google/web-stories-wp/issues/8096
     removeErrorMessage = addAllowedErrorMessage(
+      'A component is changing an uncontrolled input of type %s to be controlled'
+    );
+    removeError404Message = addAllowedErrorMessage(
       'Failed to load resource: the server responded with a status of 404'
     );
   });
 
   afterAll(() => {
     removeErrorMessage();
+    removeError404Message();
   });
 
   it('should insert a new web stories block', async () => {
@@ -75,6 +83,25 @@ describe('Web Stories Block', () => {
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
+  });
+
+  it('should insert a new web stories block and select story', async () => {
+    await createNewPost({
+      showWelcomeGuide: false,
+    });
+    await insertBlock('Web Stories');
+
+    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
+    await expect(page).toClick('div.components-card__body', {
+      text: 'Selected Stories',
+    });
+    await expect(page).toClick('div.components-card__body', {
+      text: 'Box Carousel',
+    });
+    await expect(page).toClick('button', { text: 'Select Stories' });
+    await page.waitForSelector('.components-modal__screen-overlay');
+    await expect(page).toMatchElement('.components-modal__screen-overlay');
+    await percySnapshot(page, 'Story select modal');
   });
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests

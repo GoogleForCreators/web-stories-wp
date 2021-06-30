@@ -17,62 +17,19 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  BUTTON_SIZES,
-  Icons,
-  NotificationBubble,
-  Button as dsButton,
-  BEZIER,
-} from '../../../../design-system';
+import { Icons } from '../../../../design-system';
+import { ToggleButton } from '../../toggleButton';
 
-const Button = styled(dsButton)`
-  height: 36px;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 8px;
-  color: ${({ theme }) => theme.colors.fg.primary};
-
-  ${({ isOpen, theme }) =>
-    isOpen &&
-    css`
-      border-color: ${theme.colors.bg.secondary};
-      background-color: ${theme.colors.bg.secondary};
-    `}
-`;
-
-const Label = styled.span`
-  display: block;
-  line-height: 20px;
-  text-align: left;
-`;
-
-const NotificationWrapper = styled.div`
-  margin: -2px 0 -2px 20px;
-`;
-
-const Chevron = styled(Icons.ChevronUpSmall)`
-  display: block;
-  margin: -6px 0 -6px 16px;
-  width: 32px;
+const MainIcon = styled(Icons.QuestionMarkOutline)`
   height: 32px;
-  transform-origin: 50% 50%;
-  transform: rotate(${({ $isOpen }) => ($isOpen ? 0 : 180)}deg);
-  transition: transform 300ms ${BEZIER.default};
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    ${({ hasNotifications }) =>
-      hasNotifications &&
-      css`
-        display: none;
-      `}
-  }
+  width: auto;
+  display: block;
 `;
 
 function Toggle({
@@ -81,15 +38,11 @@ function Toggle({
   onClick = () => {},
   notificationCount = 0,
 }) {
-  const hasNotifications = notificationCount > 0;
   return (
-    <Button
-      aria-haspopup
-      aria-pressed={isOpen}
-      aria-expanded={isOpen}
+    <ToggleButton
       aria-owns={popupId}
       aria-label={
-        hasNotifications
+        notificationCount > 0
           ? sprintf(
               /* translators: %s:  number of unread notifications. */
               _n(
@@ -103,21 +56,11 @@ function Toggle({
           : __('Help Center', 'web-stories')
       }
       onClick={onClick}
-      hasNotifications={hasNotifications}
       isOpen={isOpen}
-      type={BUTTON_TYPES.TERTIARY}
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      size={BUTTON_SIZES.MEDIUM}
-    >
-      <Label>{__('Help', 'web-stories')}</Label>
-      {hasNotifications ? (
-        <NotificationWrapper>
-          <NotificationBubble notificationCount={notificationCount} />
-        </NotificationWrapper>
-      ) : (
-        <Chevron $isOpen={isOpen} />
-      )}
-    </Button>
+      label={__('Help', 'web-stories')}
+      MainIcon={MainIcon}
+      notificationCount={notificationCount}
+    />
   );
 }
 

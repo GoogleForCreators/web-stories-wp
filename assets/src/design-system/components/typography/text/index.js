@@ -58,6 +58,7 @@ const Span = styled.span`
 
 const Kbd = styled.kbd`
   ${textCss};
+  background-color: transparent;
   white-space: nowrap;
 `;
 

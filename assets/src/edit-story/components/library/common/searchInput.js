@@ -63,7 +63,7 @@ function WrappedSearchInput({
   const [localValue, setLocalValue] = useState(initialValue);
 
   // Effectively performs a search, triggered at most every `delayMs`.
-  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+  const changeSearchTermDebounced = useDebouncedCallback(() => {
     onSearch(localValue);
   }, delayMs);
 

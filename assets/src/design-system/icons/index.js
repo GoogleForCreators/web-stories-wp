@@ -56,6 +56,8 @@ export { ReactComponent as Box4Alternate } from './box4_alternate.svg';
 export { ReactComponent as Box6 } from './box6.svg';
 export { ReactComponent as Bucket } from './bucket.svg';
 export { ReactComponent as Captions } from './captions.svg';
+export { ReactComponent as Checkbox } from './checkbox.svg';
+export { ReactComponent as Checklist } from './checklist.svg';
 export { ReactComponent as Checkmark } from './checkmark.svg';
 export { ReactComponent as CheckmarkCircle } from './checkmark_circle.svg';
 export { ReactComponent as CheckmarkSmall } from './checkmark_small.svg';

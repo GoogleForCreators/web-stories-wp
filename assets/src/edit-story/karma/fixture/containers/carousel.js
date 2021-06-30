@@ -51,6 +51,14 @@ export class Carousel extends Container {
     return this.getByRole('button', { name: 'Grid View' });
   }
 
+  get helpCenterToggle() {
+    return this.getByRole('button', { name: /^Help Center/ });
+  }
+
+  get checklistToggle() {
+    return this.getByRole('button', { name: /^Checklist/ });
+  }
+
   get zoomSelector() {
     return this._get(
       this.getByRole('button', { name: 'Zoom Level' }),

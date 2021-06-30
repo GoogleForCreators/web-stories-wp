@@ -125,7 +125,7 @@ export default function usePagePreviewSize(options = {}) {
     )
   );
 
-  const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
+  const debounceSetViewportWidth = useDebouncedCallback((width) => {
     setViewportWidth(width);
   }, 500);
 
