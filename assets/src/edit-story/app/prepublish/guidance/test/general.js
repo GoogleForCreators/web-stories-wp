@@ -71,10 +71,10 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     expect(test).not.toBeUndefined();
 
     render(test.help);
-    screen.getByText(/40 characters/);
+    screen.getByText(/70 characters/);
     expect(test.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE);
     expect(test.message).toMatchInlineSnapshot(
-      `"Shorten title to fewer than 40 characters"`
+      `"Shorten title to fewer than 70 characters"`
     );
     expect(test.storyId).toStrictEqual(testStory.id);
     expect(testUndefined).toBeUndefined();
