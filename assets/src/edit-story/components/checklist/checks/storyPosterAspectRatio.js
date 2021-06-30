@@ -31,7 +31,7 @@ import {
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
-import { useRegisterCheck } from '../countContext/checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function storyPosterAspectRatio(story) {
   if (

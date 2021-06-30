@@ -34,7 +34,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../countContext/checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function mediaElementResolution(element) {
   switch (element.type) {

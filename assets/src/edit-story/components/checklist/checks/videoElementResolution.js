@@ -33,7 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../countContext/checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;

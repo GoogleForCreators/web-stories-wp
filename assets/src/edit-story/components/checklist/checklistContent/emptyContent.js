@@ -24,7 +24,7 @@ import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useCategoryCount } from '../countContext/checkCountContext';
+import { useCategoryCount } from '../countContext';
 import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
 import { useCheckpoint } from '../checkpointContext';
 

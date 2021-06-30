@@ -42,7 +42,7 @@ import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
-import { ChecklistCheckpointProvider } from '../checklist/checkpointContext';
+import { ChecklistCheckpointProvider } from '../checklist';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),

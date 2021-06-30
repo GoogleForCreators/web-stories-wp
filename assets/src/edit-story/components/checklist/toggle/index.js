@@ -26,7 +26,7 @@ import { Icons } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { ToggleButton } from '../../toggleButton';
-import { useCategoryCount } from '../countContext/checkCountContext';
+import { useCategoryCount } from '../countContext';
 import { useCheckpoint } from '../checkpointContext';
 import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
 

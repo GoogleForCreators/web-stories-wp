@@ -32,10 +32,7 @@ import { StoryPosterAttached } from '../checks/storyPosterAttached';
 // import StoryPosterPortraitSize from '../checks/storyPosterPortraitSize';
 import StoryTitleLength from '../checks/storyTitleLength';
 import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
-import {
-  ChecklistCategoryProvider,
-  useCategoryCount,
-} from '../countContext/checkCountContext';
+import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 

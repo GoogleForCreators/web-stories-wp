@@ -28,10 +28,7 @@ import PageTooLittleText from '../checks/pageTooLittleText';
 import VideoElementResolution from '../checks/videoElementResolution';
 import ImageElementResolution from '../checks/imageElementResolution';
 import StoryPagesCount from '../checks/storyPagesCount';
-import {
-  ChecklistCategoryProvider,
-  useCategoryCount,
-} from '../countContext/checkCountContext';
+import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 

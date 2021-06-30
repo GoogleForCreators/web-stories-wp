@@ -25,7 +25,7 @@ import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
-import { useRegisterCheck } from '../countContext/checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function storyMissingExcerpt(story) {
   return !story.excerpt?.length;

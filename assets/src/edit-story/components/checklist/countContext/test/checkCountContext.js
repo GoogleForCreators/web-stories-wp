@@ -22,14 +22,14 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { ISSUE_TYPES } from '../constants';
+import { ISSUE_TYPES } from '../../constants';
 import {
   ChecklistCountProvider,
   ChecklistCategoryProvider,
   CategoryContext,
   CountContext,
   useRegisterCheck,
-} from '../countContext/checkCountContext';
+} from '../checkCountContext';
 
 describe('ChecklistCategoryProvider', () => {
   it('throws an error if used outside of ChecklistCountProvider', () => {

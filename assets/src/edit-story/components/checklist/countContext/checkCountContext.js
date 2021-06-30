@@ -117,5 +117,4 @@ export {
   useRegisterCheck,
   useIsChecklistEmpty,
   useCategoryCount,
-  ISSUE_TYPES,
 };
