@@ -46,7 +46,7 @@ describe('Web Stories Block', () => {
     // Disable reason: Investigation is required why this error is happening.
     // See https://github.com/google/web-stories-wp/issues/8096
     removeErrorMessage = addAllowedErrorMessage(
-      'A component is changing an uncontrolled input of type %s to be controlled'
+      'A component is changing an uncontrolled input'
     );
     removeError404Message = addAllowedErrorMessage(
       'Failed to load resource: the server responded with a status of 404'
