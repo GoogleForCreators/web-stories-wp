@@ -24,7 +24,8 @@ import { getBox } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import useLibrary from '../components/library/useLibrary';
-import { useCanvas, useStory } from '../app';
+import { useCanvas, useLayout, useStory } from '../app';
+import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 import { calculateTextHeight } from './textMeasurements';
 
@@ -41,6 +42,12 @@ function usePageAsCanvas() {
       currentPage: state.currentPage,
     };
   });
+  const { zoomSetting, setZoomSetting } = useLayout(
+    ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
+      zoomSetting,
+      setZoomSetting,
+    })
+  );
 
   const pageHash = useMemo(() => {
     const jsonStr = JSON.stringify(currentPage);
@@ -52,25 +59,37 @@ function usePageAsCanvas() {
   }, [pageHash, pageCanvasData]);
 
   const generateCanvasFromPage = useCallback(
-    (callback) => {
+    (callback, resetZoom = false) => {
+      // If we're not resetting the zoom and we're zoomed in, skip pre-generation of the canvas.
+      // We'll be resetting the zoom later when inserting any element so it would be not useful.
+      if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
+        return;
+      }
       if (
         !pageCanvasData ||
         hasPageHashChanged(currentPage, pageCanvasData.currentPage)
       ) {
-        htmlToImage
-          .toCanvas(fullbleedContainer, {
-            fontEmbedCss: '',
-          })
-          .then((canvas) => {
-            if (callback) {
-              callback(canvas);
-            } else {
-              setPageCanvasData({
-                canvas,
-                currentPage: pageHash,
-              });
-            }
-          });
+        if (resetZoom) {
+          // If we're inserting an element, we need to reset zoom, too.
+          setZoomSetting(ZOOM_SETTING.FIT);
+        }
+        // Wait one tick for the zoom to settle in.
+        setTimeout(() => {
+          htmlToImage
+            .toCanvas(fullbleedContainer, {
+              fontEmbedCss: '',
+            })
+            .then((canvas) => {
+              if (callback) {
+                callback(canvas);
+              } else {
+                setPageCanvasData({
+                  canvas,
+                  currentPage: pageHash,
+                });
+              }
+            });
+        });
       }
     },
     [
@@ -78,6 +97,8 @@ function usePageAsCanvas() {
       fullbleedContainer,
       pageCanvasData,
       setPageCanvasData,
+      setZoomSetting,
+      zoomSetting,
       hasPageHashChanged,
       pageHash,
     ]
@@ -104,7 +125,7 @@ function usePageAsCanvas() {
       ) {
         contrastCalculation(pageCanvasData.canvas);
       } else {
-        generateCanvasFromPage(contrastCalculation);
+        generateCanvasFromPage(contrastCalculation, true /* reset zoom */);
       }
       return null;
     },
