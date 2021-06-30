@@ -102,7 +102,7 @@ describe('MediaElement', () => {
     };
 
     renderMediaElement(resource, 'local');
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+    expect(screen.queryByAltText('More')).not.toBeInTheDocument();
 
     const element = screen.getByAltText('video :)');
     Simulate.focus(element);
