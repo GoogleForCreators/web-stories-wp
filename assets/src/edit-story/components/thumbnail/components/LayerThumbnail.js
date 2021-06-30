@@ -22,11 +22,17 @@ import PropTypes from 'prop-types';
  */
 import { getDefinitionForType } from '../../../elements';
 
-export const LayerThumbnail = ({ page }) => {
+export const LayerThumbnail = ({ page, showVideoPreviewAsBackup }) => {
   const { LayerIcon } = getDefinitionForType(page?.type);
-  return <LayerIcon element={page} />;
+  return (
+    <LayerIcon
+      element={page}
+      showVideoPreviewAsBackup={showVideoPreviewAsBackup}
+    />
+  );
 };
 
 LayerThumbnail.propTypes = {
   page: PropTypes.object.isRequired,
+  showVideoPreviewAsBackup: PropTypes.bool,
 };

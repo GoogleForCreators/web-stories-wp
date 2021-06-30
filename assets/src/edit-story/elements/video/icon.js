@@ -18,10 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { Icons } from '../../../design-system';
 import StoryPropTypes from '../../types';
 import VideoImage from '../media/videoImage';
 import VisibleImage from '../media/visibleImage';
@@ -31,10 +33,14 @@ function VideoLayerContent({
     resource: { poster: defaultPoster, alt = __('Video', 'web-stories'), src },
     poster,
   },
+  showVideoPreviewAsBackup,
 }) {
   const iconImage = poster?.length ? poster : defaultPoster;
-  if (!iconImage) {
+
+  if (!iconImage && showVideoPreviewAsBackup) {
     return <VideoImage src={src} alt={alt} />;
+  } else if (!iconImage) {
+    return <Icons.Video width={28} height={28} title={alt} />;
   }
 
   return <VisibleImage src={iconImage} alt={alt} width={28} height={28} />;
@@ -42,6 +48,7 @@ function VideoLayerContent({
 
 VideoLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  showVideoPreviewAsBackup: PropTypes.bool,
 };
 
 export default VideoLayerContent;

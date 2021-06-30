@@ -77,7 +77,9 @@ const VideoElementLength = () => {
                 key={element.id}
                 onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.VIDEO}
-                displayBackground={<LayerThumbnail page={element} />}
+                displayBackground={
+                  <LayerThumbnail page={element} showVideoPreviewAsBackup />
+                }
                 aria-label={__('Go to offending video', 'web-stories')}
               />
             ))}

@@ -89,7 +89,9 @@ const ElementLinkTappableRegionTooSmall = () => {
                 key={element.id}
                 onClick={() => handleClick(element.id)}
                 type={THUMBNAIL_TYPES.TEXT}
-                displayBackground={<LayerThumbnail page={element} />}
+                displayBackground={
+                  <LayerThumbnail page={element} showVideoPreviewAsBackup />
+                }
                 aria-label={__('Go to offending link', 'web-stories')}
               />
             ))}
