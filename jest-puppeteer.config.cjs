@@ -24,12 +24,16 @@ const {
   PUPPETEER_SLOWMO = 0,
 } = process.env;
 
+// Same window size as in percy.config.yml.
+const ARGS_CHROME = ['--window-size=1600,1000'];
+const ARGS_FIREFOX = ['--width=1600', '--height=1000'];
+
 module.exports = {
   launch: {
     devtools: PUPPETEER_DEVTOOLS === 'true',
     headless: PUPPETEER_HEADLESS !== 'false',
     slowMo: Number(PUPPETEER_SLOWMO) || 0,
     product: PUPPETEER_PRODUCT,
-    args: ['--window-size=1600,1000'], // Same as in percy.config.yml.
+    args: 'chrome' === PUPPETEER_PRODUCT ? ARGS_CHROME : ARGS_FIREFOX,
   },
 };
