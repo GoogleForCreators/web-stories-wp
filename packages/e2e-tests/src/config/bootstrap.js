@@ -23,6 +23,7 @@ import {
   enablePageDialogAccept,
   setBrowserViewport,
   setCurrentUser,
+  toggleVideoOptimization,
   trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
@@ -274,6 +275,9 @@ beforeAll(async () => {
   await setCurrentUser('admin', 'password');
   await trashAllPosts();
   await trashAllPosts('web-story');
+
+  // Disable cross-origin isolation by default as it causes issues in Firefox.
+  await toggleVideoOptimization();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
