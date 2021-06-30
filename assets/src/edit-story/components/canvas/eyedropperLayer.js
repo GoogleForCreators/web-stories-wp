@@ -79,7 +79,7 @@ const Magnifier = styled.div`
   display: flex;
   top: 0;
   left: 0;
-  transform: translateY(-1000px);
+  transform: translateY(-2000px); // Initially hide the magnifier.
   pointer-events: none;
 `;
 
