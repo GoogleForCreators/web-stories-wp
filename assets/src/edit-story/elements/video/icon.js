@@ -22,19 +22,19 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
 import StoryPropTypes from '../../types';
+import VideoImage from '../media/videoImage';
 import VisibleImage from '../media/visibleImage';
 
 function VideoLayerContent({
   element: {
-    resource: { poster: defaultPoster, alt = __('Video', 'web-stories') },
+    resource: { poster: defaultPoster, alt = __('Video', 'web-stories'), src },
     poster,
   },
 }) {
   const iconImage = poster?.length ? poster : defaultPoster;
   if (!iconImage) {
-    return <Icons.Video width={28} height={28} title={alt} />;
+    return <VideoImage src={src} alt={alt} />;
   }
 
   return <VisibleImage src={iconImage} alt={alt} width={28} height={28} />;
