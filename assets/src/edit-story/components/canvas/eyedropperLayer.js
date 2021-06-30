@@ -86,28 +86,28 @@ const Magnifier = styled.div`
 function EyedropperLayer() {
   const {
     fullbleedContainer,
-    eyedropperActive,
+    isEyedropperActive,
     eyedropperCallback,
     eyedropperImg,
     eyedropperPixelData,
-    setEyedropperActive,
+    setIsEyedropperActive,
   } = useCanvas(
     ({
       state: {
         fullbleedContainer,
-        eyedropperActive,
+        isEyedropperActive,
         eyedropperCallback,
         eyedropperImg,
         eyedropperPixelData,
       },
-      actions: { setEyedropperActive },
+      actions: { setIsEyedropperActive },
     }) => ({
       fullbleedContainer,
-      eyedropperActive,
+      isEyedropperActive,
       eyedropperCallback,
       eyedropperImg,
       eyedropperPixelData,
-      setEyedropperActive,
+      setIsEyedropperActive,
     })
   );
 
@@ -135,13 +135,13 @@ function EyedropperLayer() {
 
   const eyedropperCanvas = useRef();
 
-  const closeEyedropper = () => setEyedropperActive(false);
+  const closeEyedropper = () => setIsEyedropperActive(false);
 
-  useFocusOut(eyedropperCanvas, closeEyedropper, [eyedropperActive, img]);
+  useFocusOut(eyedropperCanvas, closeEyedropper, [isEyedropperActive, img]);
 
   useKeyDownEffect(document.body, 'esc', closeEyedropper);
 
-  if (!eyedropperActive || !img) {
+  if (!isEyedropperActive || !img) {
     return null;
   }
 

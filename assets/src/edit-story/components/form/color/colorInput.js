@@ -144,9 +144,11 @@ const ColorInput = forwardRef(function ColorInput(
   const [pickerOpen, setPickerOpen] = useState(false);
   const previewRef = useRef(null);
 
-  const { eyedropperActive } = useCanvas(({ state: { eyedropperActive } }) => ({
-    eyedropperActive,
-  }));
+  const { isEyedropperActive } = useCanvas(
+    ({ state: { isEyedropperActive } }) => ({
+      isEyedropperActive,
+    })
+  );
 
   const {
     refs: { inspector },
@@ -216,11 +218,11 @@ const ColorInput = forwardRef(function ColorInput(
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
-        invisible={eyedropperActive}
+        invisible={isEyedropperActive}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
-            eyedropperActive={eyedropperActive}
+            isEyedropperActive={isEyedropperActive}
             onChange={onChange}
             hasGradient={hasGradient}
             hasOpacity={hasOpacity}

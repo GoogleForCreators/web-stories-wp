@@ -29,7 +29,7 @@ export default ({ onChange }) => {
   const {
     state: { fullbleedContainer },
     actions: {
-      setEyedropperActive,
+      setIsEyedropperActive,
       setEyedropperCallback,
       setEyedropperImg,
       setEyedropperPixelData,
@@ -71,15 +71,15 @@ export default ({ onChange }) => {
 
     setEyedropperCallback(() => (rgbObject) => {
       onChange(rgbObject);
-      setEyedropperActive(false);
+      setIsEyedropperActive(false);
       setEyedropperImg(null);
       setEyedropperPixelData(null);
     });
-    setEyedropperActive(true);
+    setIsEyedropperActive(true);
   }, [
     fullbleedContainer,
     onChange,
-    setEyedropperActive,
+    setIsEyedropperActive,
     setEyedropperCallback,
     setEyedropperImg,
     setEyedropperPixelData,
