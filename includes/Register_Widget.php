@@ -33,7 +33,7 @@ use Google\Web_Stories\Widgets\Stories;
 /**
  * Class RegisterWidget
  */
-class Register_Widget implements Service, Registerable  {
+class Register_Widget implements Service, Registerable {
 	/**
 	 * Stories instance.
 	 *
@@ -92,11 +92,11 @@ class Register_Widget implements Service, Registerable  {
 	}
 
 	/**
-     * Filters the list of CSS body class names for embedded iframes to add a class.
-     *
-     * @since 1.9.0
-     *
-     * @param string[] $classes An array of body class names.
+	 * Filters the list of CSS body class names for embedded iframes to add a class.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string[] $classes An array of body class names.
 	 *
 	 * @return array
 	 */
