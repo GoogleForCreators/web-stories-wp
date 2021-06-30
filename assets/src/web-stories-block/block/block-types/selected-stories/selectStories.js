@@ -112,7 +112,7 @@ const DropdownContainer = styled.div``;
 // Overrides WP input styles with some increased specificity.
 const StyledSearch = styled(Search)(
   ({ theme }) => css`
-    &&& {
+    input {
       box-shadow: none;
       border: 1px solid ${theme.colors.border.defaultNormal};
       padding: 8px 20px 8px 40px;
@@ -138,11 +138,11 @@ function SelectStories({
   currentAuthor,
   setCurrentAuthor,
 }) {
-  const [debouncedTypeaheadChange] = useDebouncedCallback((value) => {
+  const debouncedTypeaheadChange = useDebouncedCallback((value) => {
     search.setKeyword(value);
   }, TEXT_INPUT_DEBOUNCE);
 
-  const [debouncedTypeaheadAuthorChange] = useDebouncedCallback((value) => {
+  const debouncedTypeaheadAuthorChange = useDebouncedCallback((value) => {
     // Set the user input as the current search keyword.
     setAuthorKeyword(value);
 
@@ -162,7 +162,7 @@ function SelectStories({
     }
   }, TEXT_INPUT_DEBOUNCE);
 
-  const [debouncedAuthorChange] = useDebouncedCallback((evt, newOption) => {
+  const debouncedAuthorChange = useDebouncedCallback((evt, newOption) => {
     // On selecting author from the dropdown, '<Search />' component sets the newOption from the
     // suggestions array, which in our case is author ID. Check the newOption is a number.
     if (newOption.value) {

@@ -16,12 +16,20 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
 import { AnimatedContextMenu } from '../../../design-system';
 import { useRightClickMenu } from '../../app/rightClickMenu';
+import DirectionAware from '../directionAware';
+
+const GridContainer = styled.div`
+  /* Grid areas defined in canvas grid layout */
+  grid-area: p;
+  position: relative;
+`;
 
 const RightClickMenuContainer = styled.div`
   position: absolute;
@@ -39,13 +47,22 @@ const RightClickMenu = () => {
   } = useRightClickMenu();
 
   return (
-    <RightClickMenuContainer position={menuPosition}>
-      <AnimatedContextMenu
-        isOpen={isMenuOpen}
-        onDismiss={onCloseMenu}
-        items={rightClickMenuItems}
-      />
-    </RightClickMenuContainer>
+    <DirectionAware>
+      <GridContainer>
+        <RightClickMenuContainer position={menuPosition}>
+          <AnimatedContextMenu
+            data-testid="right-click-context-menu"
+            isOpen={isMenuOpen}
+            onDismiss={onCloseMenu}
+            items={rightClickMenuItems}
+            groupLabel={__(
+              'Context Menu for the selected element',
+              'web-stories'
+            )}
+          />
+        </RightClickMenuContainer>
+      </GridContainer>
+    </DirectionAware>
   );
 };
 

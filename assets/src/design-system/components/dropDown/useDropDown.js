@@ -30,7 +30,7 @@ export default function useDropDown({ options = [], selectedValue }) {
   const [_isOpen, _setIsOpen] = useState(false);
   const speak = useLiveRegion('assertive');
 
-  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
+  const setIsOpen = useDebouncedCallback(_setIsOpen, 300, {
     leading: true,
     trailing: false,
   });

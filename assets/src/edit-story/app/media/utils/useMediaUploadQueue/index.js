@@ -39,6 +39,7 @@ import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
+import getPosterName from '../getPosterName';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -171,7 +172,8 @@ function useMediaUploadQueue() {
             return;
           }
 
-          const fileName = getFileName(file) + '-poster.jpeg';
+          const originalFileName = getFileName(file);
+          const fileName = getPosterName(originalFileName);
           let newResource;
 
           if (
