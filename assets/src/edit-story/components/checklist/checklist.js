@@ -55,10 +55,8 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
-const StyledNavigationWrapper = styled(NavigationWrapper)`
-  max-height: 80vh;
-  overflow: hidden;
-`;
+// TODO make this responsive so that title bar is never covered by popup.
+const StyledNavigationWrapper = styled(NavigationWrapper)``;
 
 export function Checklist() {
   const { close, toggle, isOpen } = useChecklist(
