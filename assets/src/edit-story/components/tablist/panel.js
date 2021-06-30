@@ -85,7 +85,7 @@ Panel.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
-  onClick: PropTypes.click,
+  onClick: PropTypes.func.isRequired,
   status: PropTypes.oneOf(Object.values(PANEL_STATES)),
   title: PropTypes.string.isRequired,
 };

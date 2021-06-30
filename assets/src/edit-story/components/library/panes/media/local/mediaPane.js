@@ -151,10 +151,6 @@ function MediaPane(props) {
   );
 
   const { showSnackbar } = useSnackbar();
-  const enableMediaPickerVideoOptimization = useFeature(
-    'enableMediaPickerVideoOptimization'
-  );
-
   const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const {
@@ -169,11 +165,7 @@ function MediaPane(props) {
   const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
 
   const allowedMimeTypes = useMemo(() => {
-    if (
-      enableMediaPickerVideoOptimization &&
-      isFeatureEnabled &&
-      isTranscodingEnabled
-    ) {
+    if (isFeatureEnabled && isTranscodingEnabled) {
       return [
         ...allowedTranscodableMimeTypes,
         ...allowedImageMimeTypes,
@@ -186,7 +178,6 @@ function MediaPane(props) {
     allowedVideoMimeTypes,
     isFeatureEnabled,
     isTranscodingEnabled,
-    enableMediaPickerVideoOptimization,
     allowedTranscodableMimeTypes,
   ]);
 
@@ -215,12 +206,10 @@ function MediaPane(props) {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
       if (isFeatureEnabled && isTranscodingEnabled) {
-        if (
-          enableMediaPickerVideoOptimization &&
-          transcodableMimeTypes.includes(resource.mimeType)
-        ) {
+        if (transcodableMimeTypes.includes(resource.mimeType)) {
           optimizeVideo({ resource });
         }
+
         if (isGifOptimizationEnabled && resource.mimeType === 'image/gif') {
           optimizeGif({ resource });
         }

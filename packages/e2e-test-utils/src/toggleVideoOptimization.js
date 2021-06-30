@@ -13,5 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const NAVIGATION_HEIGHT = 48;
-export const NAVIGATION_WIDTH = 308;
+
+/**
+ * Internal dependencies
+ */
+import visitSettings from './visitSettings';
+
+async function toggleVideoOptimization() {
+  await visitSettings();
+  const selector = '[data-testid="media-optimization-settings-checkbox"]';
+  await page.waitForSelector(selector);
+  // Clicking will only act on the first element.
+  await expect(page).toClick(selector);
+  // Await REST API request.
+  await page.waitForResponse((response) =>
+    response.url().includes('web-stories/v1/users/me')
+  );
+}
+export default toggleVideoOptimization;

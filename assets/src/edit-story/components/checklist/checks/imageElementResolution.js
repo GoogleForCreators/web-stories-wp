@@ -34,6 +34,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../checkCountContext';
 
 export function mediaElementResolution(element) {
   switch (element.type) {
@@ -81,9 +82,11 @@ const ImageElementResolution = () => {
   );
 
   const { footer, title } = DESIGN_COPY.lowImageResolution;
+  const isRendered = failingElements.length > 0;
+  useRegisterCheck('ImageElementResolution', isRendered);
 
   return (
-    failingElements.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

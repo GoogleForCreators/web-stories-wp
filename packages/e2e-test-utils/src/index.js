@@ -35,6 +35,7 @@ export { default as clickButton } from './clickButton';
 export { default as uploadFile } from './uploadFile';
 export { default as uploadMedia } from './uploadMedia';
 export { default as uploadPublisherLogo } from './uploadPublisherLogo';
+export { default as toggleVideoOptimization } from './toggleVideoOptimization';
 export { default as deleteMedia } from './deleteMedia';
 export { default as deleteWidgets } from './deleteWidgets';
 export { default as insertBlock } from './insertBlock';

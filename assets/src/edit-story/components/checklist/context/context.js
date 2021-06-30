@@ -13,5 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const NAVIGATION_HEIGHT = 48;
-export const NAVIGATION_WIDTH = 308;
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../../../design-system/utils/context';
+
+export default createContext({ state: {}, actions: {} });
