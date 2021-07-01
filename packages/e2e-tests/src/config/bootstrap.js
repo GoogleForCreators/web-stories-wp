@@ -129,6 +129,9 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Flaky image loading in Firefox.
   'Image corrupt or truncated.',
+
+  // Some bug in Firefox?
+  'TypeError: can\'t access property "docShell", target.defaultView is undefined',
 ];
 
 export function addAllowedErrorMessage(message) {
