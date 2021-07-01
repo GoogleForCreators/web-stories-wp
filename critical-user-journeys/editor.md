@@ -27,8 +27,8 @@
 |                                                                   | Set kerning                                      | 🚨 **40.00%** *(2 / 5)*     |
 |                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
-|                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
-|                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
+|                                                                   | Use font picker                                  | 🚨 **0.00%** *(0 / 14)*     |
+|                                                                   | *[total]*                                        | 🛴 **50.00%** *(19 / 38)*   |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -39,11 +39,11 @@
 |                                                                   | Select an individual word to edit                | 🏔️ **90.00%** *(9 / 10)*   |
 |                                                                   | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🛴 **87.50%** *(14 / 16)*   |
-| Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
+| Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🚨 **0.00%** *(0 / 2)*      |
+|                                                                   | Display Panel                                    | 🛴 **50.00%** *(1 / 2)*     |
+|                                                                   | Manage Text Style Presets                        | 🚨 **0.00%** *(0 / 2)*      |
+|                                                                   | Save Text Style                                  | 🛴 **50.00%** *(1 / 2)*     |
+|                                                                   | *[total]*                                        | 🚨 **25.00%** *(2 / 8)*     |
 | Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors from Color Picker                     | 🏆 **100.00%** *(3 / 3)*    |
 |                                                                   | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.52%** *(310 / 416)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **64.90%** *(270 / 416)* |
