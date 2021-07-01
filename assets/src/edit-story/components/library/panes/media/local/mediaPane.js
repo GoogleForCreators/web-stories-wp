@@ -322,8 +322,8 @@ function MediaPane(props) {
                 {sprintf(
                   /* translators: %d: number of results. */
                   _n(
-                    '%d result found',
-                    '%d results found',
+                    '%s result found.',
+                    '%s results found.',
                     totalItems,
                     'web-stories'
                   ),
@@ -347,8 +347,8 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <MediaGalleryMessage>
             {isSearching
-              ? __('No results found', 'web-stories')
-              : __('No media found', 'web-stories')}
+              ? __('No results found.', 'web-stories')
+              : __('No media found.', 'web-stories')}
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery

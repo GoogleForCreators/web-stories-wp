@@ -293,7 +293,7 @@ class SVG extends Service_Base {
 		$xml = $this->get_xml( $svg );
 
 		if ( false === $xml ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$width  = (int) $xml->getAttribute( 'width' );
@@ -333,7 +333,7 @@ class SVG extends Service_Base {
 		$clean     = $sanitizer->sanitize( $dirty );
 
 		if ( empty( $clean ) ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$errors = $sanitizer->getXmlIssues();

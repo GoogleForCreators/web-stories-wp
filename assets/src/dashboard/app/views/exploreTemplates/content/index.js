@@ -114,7 +114,7 @@ function Content({
             as="a"
             href={newStoryURL}
           >
-            {__('Create a new Story', 'web-stories')}
+            {__('Create New Story', 'web-stories')}
           </Button>
         )}
       </EmptyContentMessage>

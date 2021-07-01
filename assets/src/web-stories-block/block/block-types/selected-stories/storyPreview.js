@@ -63,7 +63,7 @@ function StoryPreview({ story, pageSize }) {
       <StoryPreviewCover
         ariaLabel={sprintf(
           /* translators: %s: story title. */
-          __('preview of %s', 'web-stories'),
+          __('Preview of %s', 'web-stories'),
           story.title
         )}
         coverImage={story.originalStoryData.featured_media_url}
@@ -85,7 +85,7 @@ function StoryPreview({ story, pageSize }) {
     <CardPreviewContainer
       ariaLabel={sprintf(
         /* translators: %s: story title. */
-        __('preview of %s', 'web-stories'),
+        __('Preview of %s', 'web-stories'),
         story.title
       )}
       pageSize={pageSize}
