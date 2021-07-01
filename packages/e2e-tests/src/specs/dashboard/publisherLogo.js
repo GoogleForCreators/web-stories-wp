@@ -19,6 +19,7 @@
  */
 import {
   deleteMedia,
+  skipSuiteOnFirefox,
   uploadPublisherLogo,
   visitSettings,
   withExperimentalFeatures,
@@ -28,6 +29,9 @@ const ERROR_TEXT =
   'Sorry, this file type is not supported. Only jpg, png, and static gifs are supported for publisher logos.';
 
 describe('Publisher logo', () => {
+  // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+  skipSuiteOnFirefox();
+
   withExperimentalFeatures(['enableSVG']);
 
   let uploadedFiles = [];

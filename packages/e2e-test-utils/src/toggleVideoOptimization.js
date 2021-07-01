@@ -22,22 +22,22 @@ import visitSettings from './visitSettings';
 /**
  * Toggle video optimization user preference on the settings page.
  *
- * @param {boolean} toggle Desired state (enabled or disabled)
+ * @param {boolean} enable Whether the setting should be enabled or not.
  * @return {Promise<void>}
  */
-async function toggleVideoOptimization(toggle = true) {
+async function enableVideoOptimization(enable = true) {
   await visitSettings();
   await page.waitForSelector(
     '[data-testid="media-optimization-settings-checkbox"]'
   );
 
-  const isChecked = await (
-    await (
-      await page.$('[data-testid="media-optimization-settings-checkbox"]')
-    ).getProperty('checked')
-  ).jsonValue();
+  const isChecked = Boolean(
+    await page.$(
+      '[data-testid="media-optimization-settings-checkbox"][checked=checked]'
+    )
+  );
 
-  if ((isChecked && toggle) || (!isChecked && !toggle)) {
+  if ((isChecked && enable) || (!isChecked && !enable)) {
     return;
   }
 
@@ -50,4 +50,4 @@ async function toggleVideoOptimization(toggle = true) {
     response.url().includes('web-stories/v1/users/me')
   );
 }
-export default toggleVideoOptimization;
+export default enableVideoOptimization;

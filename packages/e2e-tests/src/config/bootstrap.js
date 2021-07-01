@@ -123,6 +123,12 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Firefox doesn't support MP4s. The "Web Stories Block" test embeds a story containing an MP4.
   'Your system may not have the required video codecs for: video/mp4',
+
+  // Firefox warning for AMP scripts that can be neglected in tests.
+  'Loading failed for the module with source “https://cdn.ampproject.org',
+
+  // Flaky image loading in Firefox.
+  'Image corrupt or truncated.',
 ];
 
 export function addAllowedErrorMessage(message) {
