@@ -18,14 +18,14 @@
  */
 import { useEffect, useState, useCallback, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
 import {
   createContext,
   useContextSelector,
   identity,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { STORY_EVENTS, useStory, useStoryTriggerListener } from '../../../app';
 import { PPC_CHECKPOINT_STATE } from '../constants';
 
