@@ -25,7 +25,7 @@ import visitSettings from './visitSettings';
  * @param {boolean} enable Whether the setting should be enabled or not.
  * @return {Promise<void>}
  */
-async function enableVideoOptimization(enable = true) {
+async function toggleVideoOptimization(enable = true) {
   await visitSettings();
   await page.waitForSelector(
     '[data-testid="media-optimization-settings-checkbox"]'
@@ -50,4 +50,4 @@ async function enableVideoOptimization(enable = true) {
     response.url().includes('web-stories/v1/users/me')
   );
 }
-export default enableVideoOptimization;
+export default toggleVideoOptimization;
