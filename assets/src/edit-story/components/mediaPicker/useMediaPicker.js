@@ -174,20 +174,19 @@ export default function useMediaPicker({
         mustBeCropped,
       };
 
+      const button = {
+        text: buttonInsertText,
+        close: false,
+      };
+
       // Create the media frame.
       const fileFrame = global.wp.media({
-        button: {
-          text: buttonInsertText,
-          close: false,
-        },
+        button,
         states: [
           new wp.media.controller.Library({
             title,
             library: wp.media.query({ type }),
-            button: {
-              text: buttonInsertText,
-              close: false,
-            },
+            button,
             multiple,
             suggestedWidth: params.width,
             suggestedHeight: params.height,
