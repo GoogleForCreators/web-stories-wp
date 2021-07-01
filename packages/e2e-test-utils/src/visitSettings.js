@@ -33,9 +33,10 @@ async function visitSettings() {
     text: 'Settings',
   });
 
-  await page.waitForResponse((response) =>
-    response.url().includes('web-stories/v1/media')
-  );
+  // TODO: This does not apply to author users as they cannot upload media.
+  //await page.waitForResponse((response) =>
+  //  response.url().includes('web-stories/v1/media')
+  //);
 }
 
 export default visitSettings;
