@@ -20,13 +20,13 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
-import { useSnackbar } from '../../../design-system';
 import { calculateImageSelectOptions, mustBeCropped } from './utils';
 
 /**
