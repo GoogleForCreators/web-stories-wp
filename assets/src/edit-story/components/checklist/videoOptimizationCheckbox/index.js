@@ -59,6 +59,7 @@ const CheckboxLabel = styled(DescriptionText)`
   margin-left: 8px;
   margin-bottom: 0;
   line-height: 20px;
+  cursor: pointer;
 `;
 
 function VideoOptimizationCheckbox() {
