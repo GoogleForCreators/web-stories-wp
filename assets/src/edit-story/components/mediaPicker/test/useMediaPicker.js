@@ -34,7 +34,7 @@ jest.mock('@web-stories-wp/design-system', () => ({
   },
 }));
 
-function setup({ args, params }) {
+function setup({ args, cropParams }) {
   const configValue = {
     capabilities: {
       hasUploadMediaAction: true,
@@ -51,7 +51,7 @@ function setup({ args, params }) {
   const onClose = jest.fn();
   const onPermissionError = jest.fn();
   const { result } = renderHook(
-    () => useMediaPicker({ onSelect, onClose, onPermissionError, params }),
+    () => useMediaPicker({ onSelect, onClose, onPermissionError, cropParams }),
     {
       wrapper,
     }
@@ -84,7 +84,7 @@ describe('useMediaPicker', () => {
           hasUploadMediaAction: false,
         },
       },
-      params: {
+      cropParams: {
         height: 500,
         width: 500,
         flex_width: false,
