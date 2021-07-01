@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { List } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
 import { PRIORITY_COPY } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
@@ -56,7 +56,8 @@ const StoryPosterPortraitSize = () => {
   const { footer, title } = PRIORITY_COPY.posterTooSmall;
 
   const isRendered = storyPosterPortraitSize(story);
-  useRegisterCheck('StoryPosterAspectRatio', isRendered);
+  useRegisterCheck('StoryPosterPortraitSize', isRendered);
+
   return (
     isRendered && (
       <ChecklistCard

@@ -25,10 +25,11 @@ import {
   ColorStopPropType,
   generatePatternStyles,
 } from '@web-stories-wp/patterns';
+import { themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system/theme';
 import Pointer from './pointer';
 import GradientStop from './gradientStop';
 import useKeyMoveStop from './useKeyMoveStop';

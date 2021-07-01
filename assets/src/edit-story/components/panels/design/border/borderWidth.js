@@ -21,6 +21,12 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  LockToggle,
+  NumericInput,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -32,12 +38,6 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import {
-  LockToggle,
-  NumericInput,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 

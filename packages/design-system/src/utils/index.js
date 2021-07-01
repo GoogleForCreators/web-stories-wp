@@ -25,5 +25,6 @@ export { default as useFocusOut } from './useFocusOut';
 export { default as useInputEventHandlers } from './useInputEventHandlers';
 export { default as useLiveRegion } from './useLiveRegion';
 export { default as useResizeEffect } from './useResizeEffect';
+export { default as usePrevious } from './usePrevious';
 export * from './constants';
 export * from './directions';

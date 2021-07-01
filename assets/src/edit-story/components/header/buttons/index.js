@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { addQueryArgs } from '../../../../design-system';
 import { useStory } from '../../../app';
 import CircularProgress from '../../circularProgress';
 import PostPublishDialog from '../postPublishDialog';

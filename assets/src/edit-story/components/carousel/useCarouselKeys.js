@@ -18,14 +18,14 @@
  * External dependencies
  */
 import { useMemo } from 'react';
+import {
+  useEscapeToBlurEffect,
+  useKeyDownEffect,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  useEscapeToBlurEffect,
-  useKeyDownEffect,
-} from '../../../design-system';
 import { useStory, useConfig } from '../../app';
 import { duplicatePage } from '../../elements';
 

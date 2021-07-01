@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { useSnackbar } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { useSnackbar } from '../../../design-system';
 import useApi from './useApi';
 
 function useApiAlerts() {

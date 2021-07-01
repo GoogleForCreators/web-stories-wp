@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -25,7 +26,9 @@ import { states } from '../..';
 import useHighlights from '../../useHighlights';
 import { STORY_EVENTS } from '../../../story/storyTriggers/storyEvents';
 import { useStory, useStoryTriggersDispatch } from '../../../story';
-import {
+import { ACTION_TEXT } from '../constants';
+
+const {
   Bucket,
   Captions,
   CircleSpeed,
@@ -35,8 +38,7 @@ import {
   Link,
   Media,
   PictureSwap,
-} from '../../../../../design-system/icons';
-import { ACTION_TEXT } from '../constants';
+} = Icons;
 
 jest.mock('../../../story', () => ({
   useStory: jest.fn(),
@@ -58,8 +60,8 @@ jest.mock('../../useHighlights', () => ({
   default: jest.fn(),
 }));
 
-jest.mock('../../../../../design-system', () => ({
-  ...jest.requireActual('../../../../../design-system'),
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
 }));
 

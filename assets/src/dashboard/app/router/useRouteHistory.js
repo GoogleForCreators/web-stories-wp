@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
+
+/**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../../design-system';
 import { RouterContext } from './routerProvider';
 
 function useRouteHistory(selector = identity) {

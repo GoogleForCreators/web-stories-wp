@@ -21,10 +21,10 @@ import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
 import { PANEL_STATES } from './constants';
 import {
   Badge,
@@ -85,7 +85,7 @@ Panel.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
-  onClick: PropTypes.click,
+  onClick: PropTypes.func.isRequired,
   status: PropTypes.oneOf(Object.values(PANEL_STATES)),
   title: PropTypes.string.isRequired,
 };

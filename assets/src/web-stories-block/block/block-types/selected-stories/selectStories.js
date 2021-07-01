@@ -20,6 +20,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 import { UnitsProvider } from '@web-stories-wp/units';
+import { Search, DropDown } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -43,7 +44,6 @@ import {
 } from '../../../../dashboard/constants';
 import { InfiniteScroller } from '../../../../dashboard/components';
 import FontProvider from '../../../../dashboard/app/font/fontProvider';
-import { Search, DropDown } from '../../../../design-system';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { StoryGridItem } from './components/cardGridItem';
 import ItemOverlay from './components/itemOverlay';
@@ -112,7 +112,7 @@ const DropdownContainer = styled.div``;
 // Overrides WP input styles with some increased specificity.
 const StyledSearch = styled(Search)(
   ({ theme }) => css`
-    &&& {
+    input {
       box-shadow: none;
       border: 1px solid ${theme.colors.border.defaultNormal};
       padding: 8px 20px 8px 40px;

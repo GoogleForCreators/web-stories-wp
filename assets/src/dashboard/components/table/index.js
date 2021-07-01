@@ -18,11 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { themeHelpers, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { themeHelpers, THEME_CONSTANTS } from '../../../design-system';
 import { STORY_PREVIEW_WIDTH, VIEWPORT_BREAKPOINT } from '../../constants';
 
 const CELL_PADDING = 16;

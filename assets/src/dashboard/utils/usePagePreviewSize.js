@@ -19,11 +19,11 @@
 import { useEffect, useMemo, useState, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useResizeEffect } from '../../design-system';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   MIN_DASHBOARD_WIDTH,

@@ -27,15 +27,16 @@ import {
   getSmallestUrlForWidth,
   ResourcePropTypes,
 } from '@web-stories-wp/media';
-/**
- * Internal dependencies
- */
 import {
   Input,
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
 import Dialog from '../../../../dialog';

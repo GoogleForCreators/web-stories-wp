@@ -17,26 +17,32 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useFocusOut } from '../../../design-system';
 import { FOCUSABLE_SELECTORS } from '../../constants';
-import { useHelpCenter } from '../../app';
 import DirectionAware from '../directionAware';
 import { Popup } from '../helpCenter/popup';
 import { NavigationWrapper } from '../helpCenter/navigator';
 import { TopNavigation } from '../helpCenter/navigator/topNavigation';
 import { Z_INDEX } from '../canvas/layout';
+import { Tablist } from '../tablist';
 import { Toggle } from './toggle';
-import { POPUP_ID } from './constants';
+import {
+  CATEGORY_LABELS,
+  CHECKLIST_TITLE,
+  ISSUE_TYPES,
+  POPUP_ID,
+} from './constants';
 import { DesignChecks } from './designChecks';
 import { AccessibilityChecks } from './accessibilityChecks';
 import { PriorityChecks } from './priorityChecks';
 import { ChecklistCountProvider } from './checkCountContext';
+import EmptyContentCheck from './emptyContent';
+import { useChecklist } from './context';
 
 const Wrapper = styled.div`
   /**
@@ -48,15 +54,23 @@ const Wrapper = styled.div`
 `;
 
 export function Checklist() {
-  const navRef = useRef();
-  const wrapperRef = useRef();
-  const [isOpen, setIsOpen] = useState(false);
-  const { close: closeHelpCenter } = useHelpCenter(
-    ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
+  const { close, toggle, isOpen } = useChecklist(
+    ({ actions: { close, toggle }, state: { isOpen } }) => ({
       close,
-      isHelpCenterOpen,
+      toggle,
+      isOpen,
     })
   );
+
+  const [openPanel, setOpenPanel] = useState(null);
+  const handleOpenPanel = useCallback(
+    (panelName) => () =>
+      setOpenPanel((currentOpenPanel) =>
+        currentOpenPanel === panelName ? null : panelName
+      ),
+    []
+  );
+  const navRef = useRef();
 
   // Set Focus within the popup on open
   useEffect(() => {
@@ -68,42 +82,47 @@ export function Checklist() {
     }
   }, [isOpen]);
 
-  // Close this popup when focus leaves
-  // this also functions to close this popup
-  // when either the help center or keyboard
-  // actions are open.
-  useFocusOut(wrapperRef, () => setIsOpen(false), []);
-
   return (
     <DirectionAware>
       <ChecklistCountProvider>
-        <Wrapper ref={wrapperRef}>
-          <Popup
-            popupId={POPUP_ID}
-            isOpen={isOpen}
-            ariaLabel={__('Checklist', 'web-stories')}
-          >
-            <NavigationWrapper ref={navRef}>
+        <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
+          <Popup popupId={POPUP_ID} isOpen={isOpen} ariaLabel={CHECKLIST_TITLE}>
+            <NavigationWrapper ref={navRef} isOpen={isOpen}>
               <TopNavigation
-                onClose={() => setIsOpen(false)}
-                label={__('Checklist', 'web-stories')}
+                onClose={close}
+                label={CHECKLIST_TITLE}
                 popupId={POPUP_ID}
               />
-              <PriorityChecks />
-              <DesignChecks />
-              <AccessibilityChecks />
+              <Tablist
+                aria-label={__(
+                  'Potential Story issues by category',
+                  'web-stories'
+                )}
+              >
+                <PriorityChecks
+                  isOpen={openPanel === ISSUE_TYPES.PRIORITY}
+                  onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
+                />
+                <DesignChecks
+                  isOpen={openPanel === ISSUE_TYPES.DESIGN}
+                  onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+                />
+                <AccessibilityChecks
+                  isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
+                  onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+                  title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+                />
+              </Tablist>
+              <EmptyContentCheck />
             </NavigationWrapper>
           </Popup>
-          <Toggle
-            isOpen={isOpen}
-            onClick={() => {
-              closeHelpCenter();
-              setIsOpen((v) => !v);
-            }}
-            popupId={POPUP_ID}
-          />
+          <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
         </Wrapper>
       </ChecklistCountProvider>
     </DirectionAware>
   );
 }
+
+export { ChecklistProvider, useChecklist } from './context';
