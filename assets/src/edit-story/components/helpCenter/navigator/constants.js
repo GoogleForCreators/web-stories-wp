@@ -15,3 +15,4 @@
  */
 export const NAVIGATION_HEIGHT = 48;
 export const NAVIGATION_WIDTH = 308;
+export const CARD_WIDTH = 272;

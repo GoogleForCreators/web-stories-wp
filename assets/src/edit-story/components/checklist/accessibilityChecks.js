@@ -33,6 +33,7 @@ import {
   useCategoryCount,
 } from './checkCountContext';
 import { PanelText, StyledTablistPanel } from './styles';
+import VideoOptimizationToggle from './videoOptimizationCheckbox';
 
 export function AccessibilityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
@@ -48,6 +49,7 @@ export function AccessibilityChecks({ isOpen, onClick, title }) {
         <PanelText>
           {__('Make your Web Story accessible.', 'web-stories')}
         </PanelText>
+        <VideoOptimizationToggle />
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
