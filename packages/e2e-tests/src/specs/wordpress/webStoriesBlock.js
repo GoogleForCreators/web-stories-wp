@@ -25,6 +25,7 @@ import {
   withPlugin,
   createNewPost,
   setPostContent,
+  checkVersion,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 /**
@@ -38,7 +39,13 @@ const EMBED_BLOCK_CONTENT = `
 <!-- /wp:web-stories/embed -->
 `;
 
-describe('Web Stories Block', () => {
+const maybe = !checkVersion(process.env?.WP_VERSION, '5.8')
+  ? describe
+  : describe.skip;
+
+// TODO Fix https://github.com/google/web-stories-wp/issues/8160
+/* eslint-disable jest/require-top-level-describe, jest/consistent-test-it */
+maybe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
   let removeError404Message;
@@ -161,3 +168,4 @@ describe('Web Stories Block', () => {
     });
   });
 });
+/* eslint-enable jest/require-top-level-describe, jest/consistent-test-it */
