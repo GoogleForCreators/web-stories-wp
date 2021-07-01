@@ -54,7 +54,9 @@ describe('Popup Menus - Help Center and Checklist', () => {
     await fixture.events.click(checklistToggle);
     await fixture.events.sleep(500);
 
-    expect(fixture.editor.checklist.issues).toBeDefined();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('true');
     expect(fixture.editor.helpCenter.quickTips).toBeNull();
   });
 
@@ -75,6 +77,8 @@ describe('Popup Menus - Help Center and Checklist', () => {
     await fixture.events.sleep(500);
 
     expect(quickTips).toBeDefined();
-    expect(fixture.editor.checklist.issues).toBeNull();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('false');
   });
 });
