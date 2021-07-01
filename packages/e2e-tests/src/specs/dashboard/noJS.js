@@ -18,24 +18,27 @@
  * External dependencies
  */
 import percySnapshot from '@percy/puppeteer';
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import {
+  skipSuiteOnFirefox,
+  visitDashboard,
+} from '@web-stories-wp/e2e-test-utils';
 
-// Disabling JS like this is not yet supported in Firefox.
-// See https://bugzilla.mozilla.org/show_bug.cgi?id=1549437.
-if ('firefox' !== process.env.PUPPETEER_PRODUCT) {
-  describe('Stories Dashboard with disabled JavaScript', () => {
-    it('should display error message', async () => {
-      // Disable javascript for test.
-      await page.setJavaScriptEnabled(false);
+describe('Stories Dashboard with disabled JavaScript', () => {
+  // Disabling JS like this is not yet supported in Firefox.
+  // See https://bugzilla.mozilla.org/show_bug.cgi?id=1549437.
+  skipSuiteOnFirefox();
 
-      await visitDashboard();
+  it('should display error message', async () => {
+    // Disable javascript for test.
+    await page.setJavaScriptEnabled(false);
 
-      await expect(page).toMatchElement('.web-stories-wp-no-js');
+    await visitDashboard();
 
-      // Re-enable javascript for snapshots.
-      await page.setJavaScriptEnabled(true);
+    await expect(page).toMatchElement('.web-stories-wp-no-js');
 
-      await percySnapshot(page, 'Dashboard no js');
-    });
+    // Re-enable javascript for snapshots.
+    await page.setJavaScriptEnabled(true);
+
+    await percySnapshot(page, 'Dashboard no js');
   });
-}
+});

@@ -277,7 +277,7 @@ beforeAll(async () => {
   await trashAllPosts('web-story');
 
   // Disable cross-origin isolation by default as it causes issues in Firefox.
-  await toggleVideoOptimization();
+  await toggleVideoOptimization(false);
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

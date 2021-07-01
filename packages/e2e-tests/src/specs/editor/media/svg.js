@@ -23,6 +23,7 @@ import {
   createNewStory,
   uploadMedia,
   deleteMedia,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
@@ -50,19 +51,34 @@ describe('SVG', () => {
     await percySnapshot(page, 'Inserting SVG from Dialog');
   });
 
-  it('should upload an SVG file via media dialog', async () => {
-    await createNewStory();
+  describe('Upload', () => {
+    // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+    skipSuiteOnFirefox();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const filename = await uploadMedia('close.svg', false);
+    let uploadedFiles = [];
 
-    await expect(page).toClick('button', { text: 'Insert into page' });
+    beforeEach(() => (uploadedFiles = []));
 
-    await expect(page).toMatchElement('[data-testid="imageElement"]');
+    afterEach(async () => {
+      for (const file of uploadedFiles) {
+        // eslint-disable-next-line no-await-in-loop
+        await deleteMedia(file);
+      }
+    });
 
-    await percySnapshot(page, 'Uploading SVG to editor');
+    it('should upload an SVG file via media dialog', async () => {
+      await createNewStory();
 
-    await deleteMedia(filename);
+      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+      const fileName = await uploadMedia('close.svg', false);
+      uploadedFiles.push(fileName);
+
+      await expect(page).toClick('button', { text: 'Insert into page' });
+
+      await expect(page).toMatchElement('[data-testid="imageElement"]');
+
+      await percySnapshot(page, 'Uploading SVG to editor');
+    });
   });
 
   it('not should be to select SVG as publisher logo', async () => {

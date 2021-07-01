@@ -22,23 +22,39 @@ import {
   uploadMedia,
   deleteMedia,
   withUser,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting Media from Dialog', () => {
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  // TODO https://github.com/google/web-stories-wp/issues/7107
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert an image by clicking on it', async () => {
-    await createNewStory();
+  describe('Administrator', () => {
+    // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+    skipSuiteOnFirefox();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const filename = await uploadMedia('example-1.jpg', false);
+    let uploadedFiles = [];
 
-    await expect(page).toClick('button', { text: 'Insert into page' });
+    beforeEach(() => (uploadedFiles = []));
 
-    await expect(page).toMatchElement('[data-testid="imageElement"]');
+    afterEach(async () => {
+      for (const file of uploadedFiles) {
+        // eslint-disable-next-line no-await-in-loop
+        await deleteMedia(file);
+      }
+    });
 
-    await deleteMedia(filename);
+    // Uses the existence of the element's frame element as an indicator for successful insertion.
+    // TODO https://github.com/google/web-stories-wp/issues/7107
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should insert an image by clicking on it', async () => {
+      await createNewStory();
+
+      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+      const fileName = await uploadMedia('example-1.jpg', false);
+      uploadedFiles.push(fileName);
+
+      await expect(page).toClick('button', { text: 'Insert into page' });
+
+      await expect(page).toMatchElement('[data-testid="imageElement"]');
+    });
   });
 
   describe('Contributor User', () => {

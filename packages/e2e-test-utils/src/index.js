@@ -46,6 +46,7 @@ export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
 export { default as createNewPost } from './createNewPost';
+export * from './conditions';
 export {
   getEditedPostContent,
   setPostContent,

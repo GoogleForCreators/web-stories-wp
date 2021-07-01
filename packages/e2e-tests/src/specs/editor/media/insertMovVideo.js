@@ -23,11 +23,15 @@ import {
   uploadFile,
   deleteMedia,
   toggleVideoOptimization,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
 describe('Handling .mov files', () => {
+  // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+  skipSuiteOnFirefox();
+
   let uploadedFiles = [];
 
   beforeEach(() => (uploadedFiles = []));
@@ -66,11 +70,11 @@ describe('Handling .mov files', () => {
 
   describe('Inserting .mov from dialog', () => {
     beforeEach(async () => {
-      await toggleVideoOptimization();
+      await toggleVideoOptimization(true);
     });
 
     afterEach(async () => {
-      await toggleVideoOptimization();
+      await toggleVideoOptimization(false);
     });
 
     // Uses the existence of the element's frame element as an indicator for successful insertion.

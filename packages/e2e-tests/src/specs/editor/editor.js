@@ -23,6 +23,7 @@ import {
   toggleVideoOptimization,
   previewStory,
   withRTL,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor', () => {
@@ -46,24 +47,41 @@ describe('Story Editor', () => {
     });
   });
 
-  it('should have cross-origin isolation enabled', async () => {
-    await createNewStory();
+  describe('Cross-Origin Isolation', () => {
+    describe('Enabled', () => {
+      // Firefox+Puppeteer has issues with cross-origin isolation resulting in unexpected timeouts.
+      // See https://github.com/google/web-stories-wp/pull/7748.
+      skipSuiteOnFirefox();
 
-    const crossOriginIsolated = await page.evaluate(
-      () => window.crossOriginIsolated
-    );
-    expect(crossOriginIsolated).toBeTrue();
-  });
+      beforeEach(async () => {
+        await toggleVideoOptimization(true);
+      });
 
-  it('should have cross-origin isolation disabled', async () => {
-    await toggleVideoOptimization();
-    await createNewStory();
+      afterEach(async () => {
+        await toggleVideoOptimization(false);
+      });
 
-    const crossOriginIsolated = await page.evaluate(
-      () => window.crossOriginIsolated
-    );
-    expect(crossOriginIsolated).toBeFalse();
-    await toggleVideoOptimization();
+      it('should have cross-origin isolation enabled', async () => {
+        await createNewStory();
+
+        const crossOriginIsolated = await page.evaluate(
+          () => window.crossOriginIsolated
+        );
+        expect(crossOriginIsolated).toBeTrue();
+      });
+    });
+
+    describe('Disabled', () => {
+      // It's disabled by default in e2e tests.
+      it('should have cross-origin isolation disabled', async () => {
+        await createNewStory();
+
+        const crossOriginIsolated = await page.evaluate(
+          () => window.crossOriginIsolated
+        );
+        expect(crossOriginIsolated).toBeFalse();
+      });
+    });
   });
 
   it('should preview story with development mode', async () => {

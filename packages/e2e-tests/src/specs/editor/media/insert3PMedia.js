@@ -30,6 +30,7 @@ describe('Inserting 3P Media', () => {
       'Your use of stock content is subject to third party terms'
     );
   });
+
   it('should insert an Unsplash image', async () => {
     await createNewStory();
 
@@ -52,7 +53,7 @@ describe('Inserting 3P Media', () => {
   });
   // Skipped for https://github.com/google/web-stories-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert an coverr video', async () => {
+  it.skip('should insert a Coverr video', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
@@ -72,7 +73,8 @@ describe('Inserting 3P Media', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
-  it('should insert an tenor gif', async () => {
+
+  it('should insert a Tenor GIF', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');

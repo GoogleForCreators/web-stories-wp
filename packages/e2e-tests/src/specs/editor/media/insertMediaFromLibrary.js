@@ -20,10 +20,25 @@
 import {
   createNewStory,
   deleteMedia,
+  skipSuiteOnFirefox,
   uploadMedia,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting Media from Media Library', () => {
+  // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+  skipSuiteOnFirefox();
+
+  let uploadedFiles = [];
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
+
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   // TODO https://github.com/google/web-stories-wp/issues/7107
   // eslint-disable-next-line jest/no-disabled-tests
@@ -31,7 +46,8 @@ describe('Inserting Media from Media Library', () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-    const filename = await uploadMedia('example-1.jpg', true);
+    const fileName = await uploadMedia('example-1.jpg', true);
+    uploadedFiles.push(fileName);
 
     await page.waitForSelector('[data-testid="mediaElement-image"]');
     // Clicking will only act on the first element.
@@ -45,7 +61,5 @@ describe('Inserting Media from Media Library', () => {
     );
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
-
-    await deleteMedia(filename);
   });
 });
