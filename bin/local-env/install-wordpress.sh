@@ -145,6 +145,9 @@ wp plugin install amp --force --quiet
 echo -e $(status_message "Installing Classic editor plugin...")
 wp plugin install classic-editor --force --quiet
 
+echo -e $(status_message "Installing Classic Widgets plugin...")
+wp plugin install classic-widgets --force --quiet
+
 echo -e $(status_message "Activating Twenty Twenty theme...")
 wp theme activate twentytwenty --quiet
 
