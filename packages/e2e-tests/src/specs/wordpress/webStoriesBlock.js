@@ -79,7 +79,10 @@ describe('Web Stories Block', () => {
       'Sorry, this content could not be embedded.'
     );
 
-    // Wait a little longer for embed REST API request to come back.
+    await page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/embed')
+    );
+
     await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
@@ -103,6 +106,7 @@ describe('Web Stories Block', () => {
     await expect(page).toMatchElement('.components-modal__screen-overlay');
     await percySnapshot(page, 'Story select modal');
   });
+
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
