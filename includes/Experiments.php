@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 7965
+			 * Creation date: 2021-06-18
+			 */
+			[
+				'name'        => 'enableChecklistCompanion',
+				'label'       => __( 'Enable Checklist Companion', 'web-stories' ),
+				'description' => __( 'Enables v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @samwhale
 			 * Issue: 6153
 			 * Creation date: 2021-06-07
@@ -351,17 +362,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'SVG upload', 'web-stories' ),
 				'description' => __( 'Enable SVG upload', 'web-stories' ),
 				'group'       => 'general',
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #7480
-			 * Creation date: 2021-05-28
-			 */
-			[
-				'name'        => 'enableMediaPickerVideoOptimization',
-				'label'       => __( 'Video optimization in media picker', 'web-stories' ),
-				'description' => __( 'Optimize already uploaded videos in media picker.', 'web-stories' ),
-				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey

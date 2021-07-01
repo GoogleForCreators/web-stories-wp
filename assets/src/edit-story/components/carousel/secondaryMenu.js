@@ -18,12 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
+import { Checklist, useChecklist } from '../checklist';
+import { useHelpCenter } from '../../app';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,11 +58,46 @@ const Space = styled.span`
 `;
 
 function SecondaryMenu() {
+  const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
+    ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
+      close,
+      isHelpCenterOpen,
+    })
+  );
+
+  const { close: closeChecklist, isChecklistOpen } = useChecklist(
+    ({ actions: { close }, state: { isOpen: isChecklistOpen } }) => ({
+      close,
+      isChecklistOpen,
+    })
+  );
+
+  // Only one popup is open at a time
+  // we want to close an open popup if a new one is opened.
+  useEffect(() => {
+    if (isChecklistOpen) {
+      closeHelpCenter();
+    }
+  }, [closeHelpCenter, isChecklistOpen]);
+
+  useEffect(() => {
+    if (isHelpCenterOpen) {
+      closeChecklist();
+    }
+  }, [closeChecklist, isHelpCenterOpen]);
+
+  const enableChecklistCompanion = useFeature('enableChecklistCompanion');
   return (
     <Wrapper>
       <MenuItems>
         <HelpCenter />
         <Space />
+        {enableChecklistCompanion && (
+          <>
+            <Checklist />
+            <Space />
+          </>
+        )}
         <Box>
           <KeyboardShortcutsMenu />
         </Box>

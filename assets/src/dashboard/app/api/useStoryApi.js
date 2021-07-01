@@ -22,7 +22,7 @@ import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
-
+import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -38,7 +38,6 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { addQueryArgs } from '../../../design-system';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 

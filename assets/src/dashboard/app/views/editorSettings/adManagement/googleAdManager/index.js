@@ -20,6 +20,11 @@
 import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -32,11 +37,6 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../../components';
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
-} from '../../../../../../design-system';
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(

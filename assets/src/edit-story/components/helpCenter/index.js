@@ -16,13 +16,14 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { ThemeGlobals } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { ThemeGlobals } from '../../../design-system';
 import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
@@ -74,7 +75,11 @@ export const HelpCenter = () => {
       <>
         <ThemeGlobals.Styles />
         <Wrapper ref={ref}>
-          <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
+          <Popup
+            popupId={POPUP_ID}
+            isOpen={state.isOpen}
+            ariaLabel={__('Help Center', 'web-stories')}
+          >
             <Navigator
               onNext={actions.goToNext}
               onPrev={actions.goToPrev}

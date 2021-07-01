@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@web-stories-wp/i18n';
 
 export const RIGHT_CLICK_MENU_LABELS = {
   COPY: __('Copy', 'web-stories'),
@@ -24,4 +24,40 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
   DELETE_PAGE: __('Delete page', 'web-stories'),
+};
+
+export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
+  COMMAND_C: _x(
+    'Command C',
+    'The keyboard keys "Command" and "C"',
+    'web-stories'
+  ),
+  CONTROL_C: _x(
+    'Control C',
+    'The keyboard keys "Control" and "C"',
+    'web-stories'
+  ),
+  COMMAND_V: _x(
+    'Command V',
+    'The keyboard keys "Command" and "V"',
+    'web-stories'
+  ),
+  CONTROL_V: _x(
+    'Control V',
+    'The keyboard keys "Control" and "V"',
+    'web-stories'
+  ),
+  DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+};
+
+export const RIGHT_CLICK_SNACKBAR_TEXT = {
+  ADDED_STYLE: __('Added style to "Saved styles".', 'web-stories'),
+  ADDED_COLOR: __('Added color to "Saved colors".', 'web-stories'),
+  COPIED_STYLE: __('Copied style.', 'web-stories'),
+  PASTED_STYLE: __('Pasted style.', 'web-stories'),
+  PROPERTIES_COPIED: __('Properties copied.', 'web-stories'),
+  PROPERTIES_PASTED: __('Properties pasted.', 'web-stories'),
+  TEXT_COPIED: __('Text copied.', 'web-stories'),
+  TEXT_PASTED: __('Copied styles.', 'web-stories'),
+  UNDO: __('Undo', 'web-stories'),
 };

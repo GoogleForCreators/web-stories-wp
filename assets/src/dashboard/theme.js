@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { themeHelpers } from '../design-system';
+import { themeHelpers } from '@web-stories-wp/design-system';
 
 export const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6, p, a {

@@ -18,11 +18,11 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { DropDown } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { DropDown } from '../../../../design-system';
 import { focusStyle } from '../../panels/shared';
 
 const Container = styled.div`

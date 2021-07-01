@@ -18,11 +18,6 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { StandardViewContentGutter } from '../../../components';
 import {
   Button,
   Headline,
@@ -31,7 +26,11 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { StandardViewContentGutter } from '../../../components';
 
 export const Wrapper = styled.div``;
 

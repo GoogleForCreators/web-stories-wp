@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useEffect, useState } from 'react';
+import { usePrevious } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import useMetaBoxes from '../../../integrations/wordpress/metaBoxes/useMetaBoxes';
-import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useAPI } from '../../api';
 
 /**

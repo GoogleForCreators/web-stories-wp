@@ -17,24 +17,25 @@
 /**
  * External dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import {
   ChecklistIcon,
   usePrepublishChecklist,
   PPC_CHECKPOINT_STATE,
 } from '../../inspector/prepublish';
+
 import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`

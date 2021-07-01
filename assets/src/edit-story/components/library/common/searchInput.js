@@ -22,11 +22,10 @@ import { useState, useCallback } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
+import { SearchInput } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { SearchInput } from '../../../../design-system';
 import { focusStyle } from '../../panels/shared';
 
 const StyledSearchInput = styled(SearchInput)`
@@ -63,7 +62,7 @@ function WrappedSearchInput({
   const [localValue, setLocalValue] = useState(initialValue);
 
   // Effectively performs a search, triggered at most every `delayMs`.
-  const [changeSearchTermDebounced] = useDebouncedCallback(() => {
+  const changeSearchTermDebounced = useDebouncedCallback(() => {
     onSearch(localValue);
   }, delayMs);
 

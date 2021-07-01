@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
+/**
  * Internal dependencies
  */
-import {
-  identity,
-  useContextSelector,
-} from '../../../../assets/src/design-system';
 import { StoryAnimationContext } from './provider';
 
 function useStoryAnimationContext(selector) {

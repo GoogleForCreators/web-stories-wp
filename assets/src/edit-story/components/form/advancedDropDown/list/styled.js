@@ -17,15 +17,15 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   THEME_CONSTANTS,
   Text,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
 
 export const List = styled.div`

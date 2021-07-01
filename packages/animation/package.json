@@ -11,6 +11,7 @@
   },
   "main": "./src/index.js",
   "dependencies": {
+    "@web-stories-wp/design-system": "*",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/units": "*",

@@ -21,16 +21,12 @@ import { __ } from '@web-stories-wp/i18n';
 import { useEffect, useRef, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   LoadingSpinner,
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 
 const ScrollMessage = styled.div`
   width: 100%;

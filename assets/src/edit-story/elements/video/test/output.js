@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from 'react-dom/server';
+
 /**
  * Internal dependencies
  */

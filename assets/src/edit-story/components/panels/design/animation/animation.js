@@ -24,6 +24,7 @@ import { shallowEqual } from 'react-pure-render';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import {
   BACKGROUND_ANIMATION_EFFECTS,
   BG_MAX_SCALE,
@@ -35,14 +36,12 @@ import {
   STORY_ANIMATION_STATE,
   getAnimationEffectDefaults,
 } from '@web-stories-wp/animation';
-
 /**
  * Internal dependencies
  */
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';
@@ -152,7 +151,7 @@ function AnimationPanel({
   // the all the focus updates go through prevents the reset from
   // overriding this play call.
   const activeElement = document.activeElement;
-  const [debouncedUpdateAnimationState] = useDebouncedCallback(() => {
+  const debouncedUpdateAnimationState = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,

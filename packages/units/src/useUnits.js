@@ -15,10 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
+
+/**
  * Internal dependencies
  */
-import { identity } from '../../../assets/src/design-system/utils/context';
-import useContextSelector from '../../../assets/src/design-system/utils/useContextSelector';
 import Context from './context';
 
 function useUnits(selector) {

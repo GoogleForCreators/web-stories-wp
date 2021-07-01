@@ -22,19 +22,18 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import {
+  NumericInput,
+  DropDown,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
+import {
   FIELD_TYPES,
   GeneralAnimationPropTypes,
   AnimationFormPropTypes,
 } from '@web-stories-wp/animation';
-
 /**
  * Internal dependencies
  */
-import {
-  NumericInput,
-  DropDown,
-  ThemeGlobals,
-} from '../../../../../design-system';
 import { inputContainerStyleOverride } from '../../shared';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
@@ -53,7 +54,8 @@ function CustomStyles() {
     <style
       amp-custom=""
       dangerouslySetInnerHTML={{
-        __html: `
+        __html:
+          `
               amp-story-page {
                 background-color: ${pageBackgroundColor};
               }
@@ -66,6 +68,20 @@ function CustomStyles() {
                 @media (min-aspect-ratio: ${gridLayerExpandLowerBound}) {
                   amp-story-grid-layer.grid-layer {
                     margin-top: calc((100% / ${fullRatio} - 100% / ${safeRatio}) / 2);
+                  }
+                }
+              }
+          ` +
+          /*
+            The following rule is for Safari only.
+            In Safari, the font size is rounded up, causing overflow, this hack undoes this.
+            See https://github.com/google/web-stories-wp/issues/6323
+           */
+          `
+              @media not all and (min-resolution:.001dpcm) {
+                @media {
+                  p.text-wrapper > span {
+                    font-size: calc(100% - 0.5px);
                   }
                 }
               }

@@ -21,12 +21,12 @@ import { useState, useCallback, useRef, forwardRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import Popup from '../../popup';
-import DropDownSelect from '../../../../design-system/components/dropDown/select';
 import { focusStyle } from '../../panels/shared';
 import OptionsContainer from './container';
 import List from './list';
@@ -105,7 +105,7 @@ const DropDown = forwardRef(function DropDown(
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)
-  const [debouncedCloseDropDown] = useDebouncedCallback(closeDropDown, 100);
+  const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
 
   const handleSelect = useCallback(
     (option) => {
@@ -114,19 +114,6 @@ const DropDown = forwardRef(function DropDown(
       dropdownRef.current.focus();
     },
     [onChange, dropdownRef]
-  );
-
-  const handleKeyPress = useCallback(
-    ({ key }) => {
-      if (
-        !isOpen &&
-        key === 'ArrowDown' &&
-        document.activeElement === dropdownRef.current
-      ) {
-        setIsOpen(true);
-      }
-    },
-    [isOpen, dropdownRef]
   );
 
   const list = (
@@ -167,32 +154,25 @@ const DropDown = forwardRef(function DropDown(
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
-    <>
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
-      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
-      <Container onKeyDown={handleKeyPress}>
-        <DropDownSelect
-          aria-pressed={isOpen}
-          aria-haspopup
-          aria-expanded={isOpen}
-          ref={dropdownRef}
-          activeItemLabel={selectedOption?.name}
-          dropDownLabel={dropDownLabel}
-          onSelectClick={toggleDropDown}
-          selectButtonStylesOverride={highlightStylesOverride || focusStyle}
-          {...rest}
-        />
-        {isOpen && !disabled && isInline && list}
-        {!disabled && !isInline && (
-          <Popup anchor={dropdownRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
-            {list}
-          </Popup>
-        )}
-      </Container>
-    </>
+    <Container>
+      <DropDownSelect
+        aria-pressed={isOpen}
+        aria-haspopup
+        aria-expanded={isOpen}
+        ref={dropdownRef}
+        activeItemLabel={selectedOption?.name}
+        dropDownLabel={dropDownLabel}
+        onSelectClick={toggleDropDown}
+        selectButtonStylesOverride={highlightStylesOverride || focusStyle}
+        {...rest}
+      />
+      {isOpen && !disabled && isInline && list}
+      {!disabled && !isInline && (
+        <Popup anchor={dropdownRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+          {list}
+        </Popup>
+      )}
+    </Container>
   );
 });
 

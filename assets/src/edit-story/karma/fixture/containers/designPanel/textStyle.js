@@ -53,6 +53,14 @@ export class TextStyle extends AbstractPanel {
     );
   }
 
+  get uppercase() {
+    return this._get(
+      this.getByRole('button', { name: /Uppercase/ }),
+      'uppercase',
+      ToggleButton
+    );
+  }
+
   get fontWeight() {
     return this._get(
       this.getByRole('button', { name: /Font weight/ }),

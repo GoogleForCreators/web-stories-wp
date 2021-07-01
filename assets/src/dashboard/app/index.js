@@ -23,10 +23,6 @@ import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackScreenView } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   theme as externalDesignSystemTheme,
   lightMode,
@@ -35,7 +31,12 @@ import {
   SnackbarProvider,
   Snackbar,
   ModalGlobalStyle,
-} from '../../design-system';
+  usePrevious,
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
@@ -46,7 +47,6 @@ import {
 } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
-import usePrevious from '../../design-system/utils/usePrevious';
 import ApiProvider from './api/apiProvider';
 import { ConfigProvider } from './config';
 import { Route, RouterProvider, matchPath, useRouteHistory } from './router';

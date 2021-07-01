@@ -19,7 +19,11 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
+import {
+  Snackbar,
+  useSnackbar,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -38,7 +42,6 @@ import { CanvasProvider } from '../../app/canvas';
 import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
-import { Snackbar, useSnackbar, themeHelpers } from '../../../design-system';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),

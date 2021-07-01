@@ -19,22 +19,12 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { useSnackbar, PLACEMENT } from '../../../../design-system';
-import {
-  Bucket,
-  CircleSpeed,
-  Eraser,
-  LetterTLargeLetterTSmall,
-  LetterTPlus,
-  Link,
-  Media,
-  PictureSwap,
-  Captions,
-} from '../../../../design-system/icons';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
@@ -47,7 +37,19 @@ import {
   RESET_DEFAULTS,
 } from './constants';
 
-/** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
+const {
+  Bucket,
+  CircleSpeed,
+  Eraser,
+  LetterTLargeLetterTSmall,
+  LetterTPlus,
+  Link,
+  Media,
+  PictureSwap,
+  Captions,
+} = Icons;
+
+/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick

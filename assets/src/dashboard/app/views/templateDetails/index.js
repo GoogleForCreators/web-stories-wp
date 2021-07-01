@@ -19,6 +19,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useSnackbar } from '@web-stories-wp/design-system';
 import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import { usePagePreviewSize } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
-import { useSnackbar } from '../../../../design-system';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';

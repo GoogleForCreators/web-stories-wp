@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { clamp, STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   Button,
@@ -31,7 +27,12 @@ import {
   BUTTON_SIZES,
   ThemeGlobals,
   useFocusOut,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+import { clamp, STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+
+/**
+ * Internal dependencies
+ */
 import {
   PreviewErrorBoundary,
   PreviewPage,

@@ -18,11 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { Icons, LoadingBar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../design-system';
-import { THUMBNAIL_TYPES, THUMBNAIL_SCRIM_CLASSNAME } from './constants';
+import {
+  THUMBNAIL_TYPES,
+  THUMBNAIL_SCRIM_CLASSNAME,
+  DEFAULT_LOADING_MESSAGE,
+  THUMBNAIL_SHOW_ON_HOVER_FOCUS,
+} from './constants';
 import { Container, Background, NestedIconContainer, Scrim } from './styles';
 
 const includeDefaultScrimBackground = [
@@ -36,6 +41,8 @@ const includeDefaultScrimBackground = [
  * @param {Object} props Component props.
  * @param {Node} props.displayBackground Node that renders the element. Relies on PagePreview or LayerIcon (getDefinitionForType, see panels/design/layer) to keep element rendering consistent with carousel and layer panels. See /storybook for demo.
  * @param {boolean} props.isError Thumbnail errors don't prevent further interaction with the thumbnail, they just change the presentation so user knows the action failed.
+ * @param {boolean} props.isLoading If a thumbnail needs to show a loading progress bar this should be true.
+ * @param {string} props.loadingMessage If a thumbnail needs an aria alert with loading bar this should be used.
  * @param {Function} props.onClick If a thumbnail has an action, it's called on onClick. Responsible for making sure the thumbnail is rendered as a button instead of a div.
  * @param {string} props.type One of the values of THUMBNAIL_TYPES. Responsible for specific context renderings based on thumbnail type.
  * @param {Node} props.children Content rendered within a thumbnail, according to designs, are icons with tooltips.
@@ -46,6 +53,8 @@ const Thumbnail = ({
   isError,
   onClick,
   type,
+  isLoading,
+  loadingMessage = DEFAULT_LOADING_MESSAGE,
   children,
   ...rest
 }) => (
@@ -55,8 +64,11 @@ const Thumbnail = ({
     $isError={isError}
     {...rest}
   >
-    {!isError && children && (
-      <NestedIconContainer>{children}</NestedIconContainer>
+    {isLoading && <LoadingBar loadingMessage={loadingMessage} />}
+    {!isError && !isLoading && children && (
+      <NestedIconContainer className={THUMBNAIL_SHOW_ON_HOVER_FOCUS}>
+        {children}
+      </NestedIconContainer>
     )}
     {isError && (
       <NestedIconContainer $isError={isError}>
@@ -89,5 +101,7 @@ Thumbnail.propTypes = {
   ]),
   onClick: PropTypes.func,
   isError: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  loadingMessage: PropTypes.string,
 };
 export default Thumbnail;

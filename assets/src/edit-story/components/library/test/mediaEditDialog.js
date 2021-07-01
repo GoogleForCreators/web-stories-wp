@@ -19,7 +19,7 @@
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
 import Modal from 'react-modal';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -27,7 +27,6 @@ import MediaEditDialog from '../panes/media/local/mediaEditDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
-import { SnackbarContext } from '../../../../design-system';
 
 const updateMedia = jest.fn();
 const updateMediaElement = jest.fn();

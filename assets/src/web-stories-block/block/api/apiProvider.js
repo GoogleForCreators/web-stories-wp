@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { createContext } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -28,7 +29,6 @@ import { useMemo } from '@wordpress/element';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { createContext } from '../../../design-system';
 import useStoryApi from './useStoryApi';
 import useUsersApi from './useUserApi';
 

@@ -27,6 +27,7 @@ import {
   useState,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { createContext } from '@web-stories-wp/design-system';
 
 if (!('KeyframeEffect' in window)) {
   import(
@@ -39,7 +40,6 @@ if (!('KeyframeEffect' in window)) {
  */
 import StoryPropTypes from '../../../../assets/src/edit-story/types';
 import { clamp } from '../utils/range';
-import { createContext } from '../../../../assets/src/design-system';
 import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
 

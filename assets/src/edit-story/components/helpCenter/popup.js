@@ -18,12 +18,10 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-
+import { BEZIER } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../design-system';
 import { ScheduledTransition } from './scheduledTransition';
 
 const DURATION = 300;
@@ -47,6 +45,7 @@ const transitionStyles = {
 const Controller = styled.div`
   position: absolute;
   top: -12px;
+  left: 0px;
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity ${DURATION}ms ${BEZIER.default},
@@ -55,7 +54,7 @@ const Controller = styled.div`
   ${({ state }) => transitionStyles[state]}
 `;
 
-export function Popup({ isOpen, popupId, children }) {
+export function Popup({ isOpen, popupId, children, ariaLabel }) {
   return (
     <ScheduledTransition
       in={isOpen}
@@ -67,7 +66,7 @@ export function Popup({ isOpen, popupId, children }) {
         <Controller
           id={popupId}
           role="dialog"
-          aria-label={__('Help Center', 'web-stories')}
+          aria-label={ariaLabel}
           state={state}
         >
           {children}
@@ -80,4 +79,5 @@ Popup.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   popupId: PropTypes.string,
+  ariaLabel: PropTypes.string,
 };
