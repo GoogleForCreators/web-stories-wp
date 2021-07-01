@@ -19,10 +19,11 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Icons, Text, THEME_CONSTANTS } from '../../../design-system';
 import { useCategoryCount } from './checkCountContext';
 import { ISSUE_TYPES } from './constants';
 

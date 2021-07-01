@@ -20,10 +20,6 @@
 import styled, { css } from 'styled-components';
 import { useRef, useCallback, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   useKeyDownEffect,
   useGlobalKeyDownEffect,
@@ -31,7 +27,11 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   ThemeGlobals,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
 

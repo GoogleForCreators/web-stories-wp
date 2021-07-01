@@ -19,10 +19,10 @@
  */
 import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';

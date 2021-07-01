@@ -20,15 +20,11 @@
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useRef } from 'react';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Switch as BaseSwitch,
   SwitchPropTypes,
   useKeyDownEffect,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 
 const StyledSwitch = styled(BaseSwitch)`
   label:focus-within ~ span {

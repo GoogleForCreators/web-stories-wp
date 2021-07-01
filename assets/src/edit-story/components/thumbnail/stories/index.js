@@ -19,11 +19,10 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-
+import { Tooltip, Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Tooltip, Icons } from '../../../../design-system';
 import { Thumbnail, THUMBNAIL_TYPES } from '..';
 import { THUMBNAIL_BG } from './demoThumbnails';
 

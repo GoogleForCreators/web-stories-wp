@@ -19,8 +19,8 @@
  */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies

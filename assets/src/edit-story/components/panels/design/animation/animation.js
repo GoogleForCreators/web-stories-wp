@@ -24,7 +24,7 @@ import { shallowEqual } from 'react-pure-render';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -42,7 +42,6 @@ import { getAnimationEffectDefaults } from '../../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../../types';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import { EffectChooserDropdown } from './effectChooserDropdown';

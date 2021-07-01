@@ -20,14 +20,13 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useEffect } from 'react';
-
+import { Text } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { useFont } from '../../../app';
 import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
-import { Text } from '../../../../design-system';
 import { focusStyle } from '../../panels/shared';
 
 const Preview = styled.button`
