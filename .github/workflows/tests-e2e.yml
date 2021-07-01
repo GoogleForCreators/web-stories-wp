@@ -132,14 +132,14 @@ jobs:
           WP_VERSION: ${{ matrix.wp }}
 
       - name: Run E2E tests with percy
-        run: npm run test:e2e:percy
+        run: npm run test:e2e:percy packages/e2e-tests/src/specs/wordpress/blockWidget.js
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e packages/e2e-tests/src/specs/wordpress/blockWidget.js
         env:
           WP_VERSION: ${{ matrix.wp }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
