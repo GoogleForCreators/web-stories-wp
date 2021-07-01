@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { useContextSelector, identity } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useContextSelector, identity } from '../../../design-system';
 import Context from './context';
 
 function useRightClickMenu(selector) {

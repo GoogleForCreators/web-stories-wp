@@ -18,10 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../design-system';
 import { TablistPanel } from '../tablist';
 
 export const StyledTablistPanel = styled(TablistPanel)`

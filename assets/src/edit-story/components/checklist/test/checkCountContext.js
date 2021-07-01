@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
+import { useContext } from '@web-stories-wp/design-system';
 import { render } from '@testing-library/react';
 import { act, renderHook } from '@testing-library/react-hooks';
 /**

@@ -28,12 +28,12 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,

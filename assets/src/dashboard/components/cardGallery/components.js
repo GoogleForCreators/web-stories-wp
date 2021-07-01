@@ -19,11 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { themeHelpers } from '../../../design-system';
+import { themeHelpers } from '@web-stories-wp/design-system';
 
 export const GalleryContainer = styled.div`
   ${({ maxWidth }) => `
@@ -93,7 +89,7 @@ export const MiniCard = styled.div(
     border: 1px solid ${theme.colors.border.defaultNormal};
     border-radius: ${theme.borders.radius.small};
     overflow: hidden;
- 
+
   `
 );
 MiniCard.propTypes = {

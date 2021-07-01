@@ -20,17 +20,17 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   Icons,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../app';
 import useCarousel from './useCarousel';
 

@@ -19,6 +19,7 @@
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
 
@@ -28,7 +29,6 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { useStory } from '..';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { duplicatePage } from '../../elements';
-import { isPlatformMacOS } from '../../../design-system';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUT_LABELS,

@@ -15,8 +15,8 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createContext } from '../../../assets/src/design-system/utils/context';
+import { createContext } from '@web-stories-wp/design-system';
 
 export default createContext({ actions: {}, state: {} });

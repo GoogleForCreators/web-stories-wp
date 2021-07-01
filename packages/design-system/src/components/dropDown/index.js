@@ -32,6 +32,8 @@ import { DropDownContainer, Hint } from './components';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 
+export { DropDownSelect };
+
 /**
  *
  * @param {Object} props All props.

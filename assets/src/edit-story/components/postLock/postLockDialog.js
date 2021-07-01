@@ -19,17 +19,17 @@
  */
 import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Dialog from '../dialog';
 import { Img } from './shared';
 

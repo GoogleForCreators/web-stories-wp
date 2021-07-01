@@ -19,9 +19,6 @@
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_TYPES,
@@ -29,7 +26,10 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { Layout } from '../../../../components';
 import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
 import { parentRoute } from '../../../router/route';

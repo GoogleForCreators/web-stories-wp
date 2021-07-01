@@ -21,16 +21,15 @@ import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useConfig } from '../../app/config';
 import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../app/config';
 import UploadDropTargetOverlay from './overlay';
 
 const Container = styled(UploadDropTargetOverlay)`

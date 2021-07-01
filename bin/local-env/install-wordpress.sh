@@ -130,7 +130,7 @@ wp plugin activate web-stories --quiet
 
 # Install & activate testing plugins.
 
-# Only install gutenberg on latest version of WordPress. 
+# Only install gutenberg on latest version of WordPress.
 if [ "$WP_VERSION" == "latest" ]; then
   echo -e $(status_message "Installing Gutenberg plugin...")
   wp plugin install gutenberg --force --quiet
@@ -144,6 +144,9 @@ wp plugin install amp --force --quiet
 
 echo -e $(status_message "Installing Classic editor plugin...")
 wp plugin install classic-editor --force --quiet
+
+echo -e $(status_message "Installing Classic Widgets plugin...")
+wp plugin install classic-widgets --force --quiet
 
 echo -e $(status_message "Activating Twenty Twenty theme...")
 wp theme activate twentytwenty --quiet
