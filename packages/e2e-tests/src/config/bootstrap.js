@@ -126,6 +126,7 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Firefox warning for AMP scripts that can be neglected in tests.
   'Loading failed for the module with source “https://cdn.ampproject.org',
+  'Loading failed for the <script> with source “https://cdn.ampproject.org',
 
   // Flaky image loading in Firefox.
   'Image corrupt or truncated.',
