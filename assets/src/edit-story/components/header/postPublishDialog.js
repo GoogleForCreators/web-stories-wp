@@ -21,12 +21,11 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-
-import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
 function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {

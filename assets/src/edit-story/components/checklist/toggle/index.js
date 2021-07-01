@@ -17,75 +17,49 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  BUTTON_SIZES,
-  Icons,
-  Button as dsButton,
-  BEZIER,
-} from '../../../../design-system';
+import { ToggleButton } from '../../toggleButton';
 
-const Button = styled(dsButton)`
-  height: 36px;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 8px;
-  color: ${({ theme }) => theme.colors.fg.primary};
-
-  ${({ isOpen, theme }) =>
-    isOpen &&
-    css`
-      border-color: ${theme.colors.bg.secondary};
-      background-color: ${theme.colors.bg.secondary};
-    `}
-`;
-
-const Label = styled.span`
-  display: block;
-  line-height: 20px;
-  text-align: left;
-`;
-
-const Chevron = styled(Icons.ChevronUpSmall)`
-  display: block;
-  margin: -6px 0 -6px 8px;
-  width: 32px;
+const MainIcon = styled(Icons.Checkbox)`
   height: 32px;
-  transform-origin: 50% 50%;
-  transform: rotate(${({ $isOpen }) => ($isOpen ? 0 : 180)}deg);
-  transition: transform 300ms ${BEZIER.default};
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    ${({ hasNotifications }) =>
-      hasNotifications &&
-      css`
-        display: none;
-      `}
-  }
+  width: auto;
+  display: block;
 `;
 
-function Toggle({ isOpen = false, popupId = '', onClick = () => {} }) {
+function Toggle({
+  isOpen = false,
+  popupId = '',
+  onClick = () => {},
+  notificationCount = 0,
+}) {
   return (
-    <Button
-      aria-haspopup
-      aria-pressed={isOpen}
-      aria-expanded={isOpen}
+    <ToggleButton
       aria-owns={popupId}
       onClick={onClick}
       isOpen={isOpen}
-      type={BUTTON_TYPES.TERTIARY}
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      size={BUTTON_SIZES.MEDIUM}
-    >
-      <Label>{__('Checklist', 'web-stories')}</Label>
-      <Chevron $isOpen={isOpen} />
-    </Button>
+      MainIcon={MainIcon}
+      label={__('Checklist', 'web-stories')}
+      aria-label={
+        notificationCount > 0
+          ? sprintf(
+              /* translators: %s:  number of unaddressed issues. */
+              _n(
+                'Checklist: %s unaddressed issue',
+                'Checklist: %s unaddressed issues',
+                notificationCount,
+                'web-stories'
+              ),
+              notificationCount
+            )
+          : __('Checklist', 'web-stories')
+      }
+    />
   );
 }
 
@@ -93,6 +67,7 @@ Toggle.propTypes = {
   isOpen: PropTypes.bool,
   popupId: PropTypes.string,
   onClick: PropTypes.func,
+  notificationCount: PropTypes.number,
 };
 
 export { Toggle };

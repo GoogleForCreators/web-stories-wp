@@ -26,12 +26,12 @@ import {
   useState,
   useRef,
 } from 'react';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import { useResizeEffect } from '../../../design-system';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
 

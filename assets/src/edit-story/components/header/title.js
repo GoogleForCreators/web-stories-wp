@@ -20,11 +20,11 @@
 import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';

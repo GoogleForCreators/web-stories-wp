@@ -28,10 +28,6 @@ import {
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { resourceList } from '@web-stories-wp/media';
-
-/**
- * Internal dependencies
- */
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -40,7 +36,11 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
@@ -148,9 +148,6 @@ function MediaPane(props) {
   );
 
   const { showSnackbar } = useSnackbar();
-  const enableMediaPickerVideoOptimization = useFeature(
-    'enableMediaPickerVideoOptimization'
-  );
 
   const {
     allowedTranscodableMimeTypes,
@@ -164,11 +161,7 @@ function MediaPane(props) {
   const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
 
   const allowedMimeTypes = useMemo(() => {
-    if (
-      enableMediaPickerVideoOptimization &&
-      isFeatureEnabled &&
-      isTranscodingEnabled
-    ) {
+    if (isFeatureEnabled && isTranscodingEnabled) {
       return [
         ...allowedTranscodableMimeTypes,
         ...allowedImageMimeTypes,
@@ -181,7 +174,6 @@ function MediaPane(props) {
     allowedVideoMimeTypes,
     isFeatureEnabled,
     isTranscodingEnabled,
-    enableMediaPickerVideoOptimization,
     allowedTranscodableMimeTypes,
   ]);
 
@@ -210,7 +202,6 @@ function MediaPane(props) {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
       if (
-        enableMediaPickerVideoOptimization &&
         isFeatureEnabled &&
         isTranscodingEnabled &&
         transcodableMimeTypes.includes(resource.mimeType)

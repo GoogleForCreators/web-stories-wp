@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { __ } from '@web-stories-wp/i18n';
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
 import { ISSUE_TYPES } from './constants';
@@ -23,19 +28,38 @@ import PageTooLittleText from './checks/pageTooLittleText';
 import VideoElementResolution from './checks/videoElementResolution';
 import ImageElementResolution from './checks/imageElementResolution';
 import StoryPagesCount from './checks/storyPagesCount';
-import { ChecklistCategoryProvider } from './checkCountContext';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from './checkCountContext';
+import { PanelText, StyledTablistPanel } from './styles';
 
-export function DesignChecks() {
+export function DesignChecks({ isOpen, onClick, title }) {
+  const count = useCategoryCount(ISSUE_TYPES.DESIGN);
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <>
+      <StyledTablistPanel
+        badgeCount={count}
+        isExpanded={isOpen}
+        onClick={onClick}
+        title={title}
+      >
+        <PanelText>
+          {__('Follow best practices for Web Stories.', 'web-stories')}
+        </PanelText>
         <StoryPagesCount />
         <PageTooMuchText />
         <PageTooLittleText />
         <PageTooManyLinks />
         <VideoElementResolution />
         <ImageElementResolution />
-      </>
+      </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+DesignChecks.propTypes = {
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};

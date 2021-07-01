@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
+import { __ } from '@web-stories-wp/i18n';
 import { ISSUE_TYPES } from './constants';
 import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
 import ImageElementMissingAlt from './checks/imageElementMissingAlt';
@@ -23,19 +28,38 @@ import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextCon
 import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
 import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from './checks/videoElementMissingDescription';
-import { ChecklistCategoryProvider } from './checkCountContext';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from './checkCountContext';
+import { PanelText, StyledTablistPanel } from './styles';
 
-export function AccessibilityChecks() {
+export function AccessibilityChecks({ isOpen, onClick, title }) {
+  const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <div>
+      <StyledTablistPanel
+        badgeCount={count}
+        isExpanded={isOpen}
+        onClick={onClick}
+        title={title}
+      >
+        <PanelText>
+          {__('Make your Web Story accessible.', 'web-stories')}
+        </PanelText>
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
         <VideoElementMissingCaptions />
         <ElementLinkTappableRegionTooSmall />
         <ImageElementMissingAlt />
-      </div>
+      </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+AccessibilityChecks.propTypes = {
+  isOpen: PropTypes.bool,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};

@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { SnackbarProvider } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '..';
 
 const fakeStories = [

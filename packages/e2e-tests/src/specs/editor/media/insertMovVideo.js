@@ -22,14 +22,25 @@ import {
   clickButton,
   uploadFile,
   deleteMedia,
-  withExperimentalFeatures,
+  toggleVideoOptimization,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
 
 describe('Handling .mov files', () => {
+  let uploadedFiles = [];
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
+
   // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should not list the .mov', async () => {
+  it('should insert .mov', async () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
@@ -40,24 +51,27 @@ describe('Handling .mov files', () => {
     });
     const fileName = await uploadFile('small-video.mov', false);
     const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+    uploadedFiles.push(fileNameNoExt);
 
-    await clickButton(
-      '.attachments-browser .attachments .attachment:first-of-type'
-    );
+    await expect(page).toClick('button', { text: 'Insert into page' });
 
-    await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-
-    await page.keyboard.press('Escape');
-
-    await page.waitForSelector(MODAL, {
-      visible: false,
+    await page.waitForSelector('.ReactModal__Content');
+    await expect(page).toClick('button', {
+      text: /Sounds good/,
     });
 
-    await deleteMedia(fileNameNoExt);
+    await page.waitForSelector('[data-testid="videoElement"]');
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
 
   describe('Inserting .mov from dialog', () => {
-    withExperimentalFeatures(['enableMediaPickerVideoOptimization']);
+    beforeEach(async () => {
+      await toggleVideoOptimization();
+    });
+
+    afterEach(async () => {
+      await toggleVideoOptimization();
+    });
     // Uses the existence of the element's frame element as an indicator for successful insertion.
     it('should not list the .mov', async () => {
       await createNewStory();
@@ -70,13 +84,19 @@ describe('Handling .mov files', () => {
       });
       const fileName = await uploadFile('small-video.mov', false);
       const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+      uploadedFiles.push(fileNameNoExt);
 
-      await expect(page).toClick('button', { text: 'Insert into page' });
+      await clickButton(
+        '.attachments-browser .attachments .attachment:first-of-type'
+      );
 
-      await page.waitForSelector('[data-testid="videoElement"]');
-      await expect(page).toMatchElement('[data-testid="videoElement"]');
+      await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
 
-      await deleteMedia(fileNameNoExt);
+      await page.keyboard.press('Escape');
+
+      await page.waitForSelector(MODAL, {
+        visible: false,
+      });
     });
   });
 });
