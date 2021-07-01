@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { forwardRef } from 'react';
+import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../types';
-import { ThemeGlobals, themeHelpers } from '../../../design-system';
 import { GRID_SPACING } from '../../constants';
 
 const DashboardGrid = styled.div`

@@ -21,6 +21,14 @@ import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, _x } from '@web-stories-wp/i18n';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Tooltip,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -33,14 +41,6 @@ import {
 } from '../../../../../animation';
 import { useConfig } from '../../../../app/config';
 import useRadioNavigation from '../../../form/shared/useRadioNavigation';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Icons,
-  Tooltip,
-} from '../../../../../design-system';
 
 const StyledButton = styled(Button)`
   z-index: 0;

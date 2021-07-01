@@ -19,12 +19,12 @@
  */
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { parseToRgb } from 'polished';
 import { getHexFromValue, getPreviewText } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import { parseToRgb } from 'polished';
 import { useKeyDownEffect } from '../keyboard';
 import { InputPropTypes, Input } from '../input';
 

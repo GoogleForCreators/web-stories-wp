@@ -20,6 +20,11 @@
 import { useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import {
+  MEDIA_VARIANTS,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,8 +35,6 @@ import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import PublishTime from './publishTime';
 import Author from './author';
 

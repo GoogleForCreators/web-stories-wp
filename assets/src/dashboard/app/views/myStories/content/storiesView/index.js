@@ -22,15 +22,15 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-/**
- * Internal dependencies
- */
 import {
   LoadingSpinner,
   useSnackbar,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {

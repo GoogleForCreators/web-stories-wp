@@ -18,10 +18,7 @@
  */
 import { rgba } from 'polished';
 import { css, keyframes } from 'styled-components';
-/**
- * Internal dependencies
- */
-import { theme as dsTheme, themeHelpers } from '../../../design-system';
+import { theme as dsTheme, themeHelpers } from '@web-stories-wp/design-system';
 
 const flash = keyframes`
   50% {

@@ -20,7 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -28,7 +28,6 @@ import MediaElement from '../mediaElement';
 import { CanvasProvider } from '../../../../../../app/canvas';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import { SnackbarContext } from '../../../../../../../design-system';
 import testImage from '../../local/stories/test-image.jpg';
 import testPoster from './test-poster.png';
 import testVideo from './test-video.mp4';

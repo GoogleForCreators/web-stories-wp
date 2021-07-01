@@ -21,11 +21,11 @@ import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useEscapeToBlurEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useEscapeToBlurEffect } from '../../../design-system';
 import TabView from '../tabview';
 import useInspector from './useInspector';
 import InspectorContent from './inspectorContent';

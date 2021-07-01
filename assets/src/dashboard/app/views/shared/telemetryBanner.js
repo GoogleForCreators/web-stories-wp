@@ -20,16 +20,16 @@ import styled from 'styled-components';
 import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
 import {
   Banner,
   Checkbox,
   Link,
   Text,
   THEME_CONSTANTS,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { useLayoutContext } from '../../../components';
 import { useConfig } from '../../config';
 import { APP_ROUTES } from '../../../constants';

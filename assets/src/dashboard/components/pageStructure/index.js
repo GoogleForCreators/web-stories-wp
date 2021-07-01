@@ -22,13 +22,6 @@ import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
-import { useConfig } from '../../app/config';
-import { resolveRoute, useRouteHistory } from '../../app/router';
-import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
   BEZIER,
   Button,
@@ -38,7 +31,14 @@ import {
   Text,
   THEME_CONSTANTS,
   useFocusOut,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../app/config';
+import { resolveRoute, useRouteHistory } from '../../app/router';
+import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   MIN_DASHBOARD_WIDTH,

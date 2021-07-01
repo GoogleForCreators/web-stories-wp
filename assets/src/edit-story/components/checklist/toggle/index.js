@@ -19,11 +19,11 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
 import { ToggleButton } from '../../toggleButton';
 
 const MainIcon = styled(Icons.Checkbox)`

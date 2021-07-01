@@ -19,13 +19,20 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import {
+  Icons,
+  THEME_CONSTANTS,
+  Text,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Icons, THEME_CONSTANTS, Text } from '../../../design-system';
-import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
+
+const { focusableOutlineCSS } = themeHelpers;
 
 export const Wrapper = styled.div`
   width: 272px;

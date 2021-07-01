@@ -18,10 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
-import { Icons } from '../../../../../design-system';
+import { Icons } from '@web-stories-wp/design-system';
 
 function ElementsIcon() {
   return <Icons.Box4 aria-label={__('Elements library', 'web-stories')} />;

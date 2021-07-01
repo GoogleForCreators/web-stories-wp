@@ -19,11 +19,11 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import useApi from '../../api/useApi';
 import { Dialog, Layout } from '../../../components';
 import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
