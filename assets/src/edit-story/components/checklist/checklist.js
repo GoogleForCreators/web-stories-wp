@@ -104,7 +104,7 @@ export function Checklist() {
                 popupId={POPUP_ID}
               />
               <Tablist
-                data-isExpanded={isOpen}
+                data-isexpanded={isOpen}
                 aria-label={__(
                   'Potential Story issues by category',
                   'web-stories'

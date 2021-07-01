@@ -20,7 +20,7 @@ import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons, noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -36,7 +36,7 @@ const MainIcon = styled(Icons.Checkbox)`
   display: block;
 `;
 
-function Toggle({ isOpen = false, popupId = '', onClick = () => {} }) {
+function Toggle({ isOpen = false, popupId = '', onClick = noop }) {
   const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
 
   const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({

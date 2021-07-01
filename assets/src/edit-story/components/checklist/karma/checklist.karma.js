@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -31,6 +34,19 @@ describe('Checklist integration', () => {
   afterEach(() => {
     fixture.restore();
   });
+
+  const addPages = async (count) => {
+    let clickCount = 1;
+    while (clickCount <= count) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      // eslint-disable-next-line no-await-in-loop, no-loop-func
+      await waitFor(() => {
+        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+      });
+      clickCount++;
+    }
+  };
 
   const openChecklist = async () => {
     const { toggleButton } = fixture.editor.checklist;
@@ -89,10 +105,7 @@ describe('Checklist integration', () => {
   describe('Checklist cursor interaction', () => {
     it('should open the high priority section', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage, {
-        clickCount: 5,
-      });
-      await fixture.events.sleep(500);
+      await addPages(4);
       await openChecklist();
       await fixture.events.click(fixture.editor.checklist.priorityTab);
       expect(fixture.editor.checklist.priorityPanel).toBeDefined();
@@ -100,9 +113,7 @@ describe('Checklist integration', () => {
 
     it('should open the design section', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage, {
-        clickCount: 2,
-      });
+      await addPages(2);
       await openChecklist();
 
       await fixture.events.click(fixture.editor.checklist.designTab);
@@ -112,10 +123,7 @@ describe('Checklist integration', () => {
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should open the accessibility section', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage, {
-        clickCount: 2,
-      });
-      await openChecklist();
+      await addPages(2);
 
       await fixture.events.click(fixture.editor.checklist.accessibilityTab);
       expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
@@ -160,9 +168,7 @@ describe('Checklist integration', () => {
 
     it('should open the tab panels with tab and enter', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
-      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage, {
-        clickCount: 5,
-      });
+      await addPages(4);
 
       await openChecklistWithKeyboard();
 
