@@ -177,6 +177,28 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       expect(text2.backgroundColor).toEqual({
         color: { r: 255, g: 255, b: 255, a: 1 },
       });
+
+      // Title should also have white highlight / black color since it's placed on top of the previous texts.
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
+      const [title] = await getSelection();
+      expect(title.content).toEqual(
+        '<span style="font-weight: 700">Title 1</span>'
+      );
+      expect(title.backgroundTextMode).toEqual(BACKGROUND_TEXT_MODE.HIGHLIGHT);
+      expect(title.backgroundColor).toEqual({
+        color: { r: 255, g: 255, b: 255, a: 1 },
+      });
+
+      // Next title should be added without Highlight since it's placed below.
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[4].node);
+      const [title2] = await getSelection();
+      expect(title2.content).toEqual(
+        '<span style="font-weight: 700; color: #fff">Title 1</span>'
+      );
+      expect(title2.backgroundTextMode).toEqual(BACKGROUND_TEXT_MODE.NONE);
     });
   });
 });
