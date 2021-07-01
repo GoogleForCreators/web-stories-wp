@@ -175,7 +175,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       expect(text2.content).toEqual('Fill in some text');
       expect(text2.backgroundTextMode).toEqual(BACKGROUND_TEXT_MODE.HIGHLIGHT);
       expect(text2.backgroundColor).toEqual({
-        color: { r: 255, g: 255, b: 255, a: 1 },
+        color: { r: 255, g: 255, b: 255, a: 0.7 },
       });
 
       // Title should also have white highlight / black color since it's placed on top of the previous texts.
@@ -188,7 +188,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
       expect(title.backgroundTextMode).toEqual(BACKGROUND_TEXT_MODE.HIGHLIGHT);
       expect(title.backgroundColor).toEqual({
-        color: { r: 255, g: 255, b: 255, a: 1 },
+        color: { r: 255, g: 255, b: 255, a: 0.7 },
       });
 
       // Next title should be added without Highlight since it's placed below.
