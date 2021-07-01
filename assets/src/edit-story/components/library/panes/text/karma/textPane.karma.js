@@ -26,6 +26,7 @@ import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
 import stripHTML from '../../../../../utils/stripHTML';
 import { PRESETS } from '../textPresets';
+import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 
 const TIMEOUT_INTERVAL = 300000;
 
@@ -144,5 +145,38 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await verifyStaggeredPosition('LABEL');
 
     await fixture.snapshot('staggered all text presets');
+  });
+
+  const getSelection = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  };
+
+  describe('Easier/smarter text color', () => {
+    it('should add text color based on background', async () => {
+      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+      );
+      await fixture.events.keyboard.type('000');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const [text] = await getSelection();
+      expect(text.content).toEqual(
+        '<span style="color: #fff">Fill in some text</span>'
+      );
+
+      // The next text should have white highlight and black color since it's placed on top of the previous white text.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+
+      const [text2] = await getSelection();
+      expect(text2.content).toEqual('Fill in some text');
+      expect(text2.backgroundTextMode).toEqual(BACKGROUND_TEXT_MODE.HIGHLIGHT);
+      expect(text2.backgroundColor).toEqual({
+        color: { r: 255, g: 255, b: 255, a: 1 },
+      });
+    });
   });
 });
