@@ -220,6 +220,10 @@ export default function useMediaPicker({
           return;
         }
 
+        if (onClose) {
+          fileFrame.once('close', onClose);
+        }
+
         if (
           control.params.width === mediaPickerEl.width &&
           control.params.height === mediaPickerEl.height &&
@@ -232,10 +236,6 @@ export default function useMediaPicker({
           fileFrame.setState('cropper');
         }
       });
-
-      if (onClose) {
-        fileFrame.once('close', onClose);
-      }
 
       fileFrame.once('content:activate:browse', () => {
         // Force-refresh media modal contents every time
