@@ -56,6 +56,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
     await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
 
     await fixture.snapshot('consecutively added different text presets');
   });
@@ -69,8 +70,13 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     let nextY;
     let nextHeight;
     let storyContext;
+    let nodeIndex = 1;
 
     const verifyDefaultPosition = async (name, content) => {
+      await waitFor(
+        () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+      );
+      nodeIndex++;
       storyContext = await fixture.renderHook(() => useStory());
       const element = storyContext.state.selectedElements[0];
       await waitFor(() => {
@@ -83,6 +89,10 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     };
 
     const verifyStaggeredPosition = async (content) => {
+      await waitFor(
+        () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+      );
+      nodeIndex++;
       // Store both last and next value to ensure incorrect value isn't used within waitFor.
       lastY = nextY;
       lastHeight = nextHeight;
@@ -108,7 +118,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     );
 
     // Stagger all different text presets.
-
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
     await verifyDefaultPosition('Title 1', 'Title 1');
 

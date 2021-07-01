@@ -18,7 +18,7 @@
  */
 import { useCallback, useMemo } from 'react';
 import * as htmlToImage from 'html-to-image';
-import { getBox } from '@web-stories-wp/units';
+import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -50,8 +50,7 @@ function usePageAsCanvas() {
   );
 
   const pageHash = useMemo(() => {
-    const jsonStr = JSON.stringify(currentPage);
-    return window.btoa(unescape(encodeURIComponent(jsonStr)));
+    return JSON.stringify(currentPage);
   }, [currentPage]);
 
   const hasPageHashChanged = useCallback(() => {
@@ -110,13 +109,21 @@ function usePageAsCanvas() {
       const contrastCalculation = (canvas) => {
         try {
           const ctx = canvas.getContext('2d');
-          const calcHeight = calculateTextHeight(atts, atts.width);
+          // The canvas does not consider danger zone as y = 0, so we need to adjust that.
+          const safeZoneDiff =
+            (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;
           const box = getBox(
-            { ...atts, height: atts.height ? atts.height : calcHeight },
+            {
+              ...atts,
+              height: atts.height
+                ? atts.height
+                : calculateTextHeight(atts, atts.width),
+            },
             canvas.width,
-            canvas.height
+            canvas.height - 2 * safeZoneDiff
           );
-          const { x, y, width, height } = box;
+          const { x, y: origY, width, height } = box;
+          const y = origY + safeZoneDiff;
           const pixelData = ctx.getImageData(x, y, width, height).data;
           const { fontSize } = atts;
           callback(getAccessibleTextColorsFromPixels(pixelData, fontSize));

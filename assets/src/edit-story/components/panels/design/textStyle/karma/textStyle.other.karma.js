@@ -69,7 +69,7 @@ describe('Text Style Panel', () => {
 
       // Add a new text now.
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
       // Expect the inputs to be visible again, since the panel should be expanded again.
       expect(
         fixture.editor.inspector.designPanel.textStyle.lineHeight
