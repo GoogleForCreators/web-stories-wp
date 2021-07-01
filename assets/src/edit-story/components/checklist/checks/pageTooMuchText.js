@@ -42,7 +42,7 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 /**
  * @typedef {import('../../../types').Page} Page

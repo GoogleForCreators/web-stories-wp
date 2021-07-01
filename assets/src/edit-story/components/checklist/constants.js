@@ -470,3 +470,18 @@ export const PRIORITY_COPY = {
     ),
   },
 };
+
+export const PPC_CHECKPOINT_STATE = {
+  UNAVAILABLE: 'unavailable',
+  ONLY_RECOMMENDED: 'recommended',
+  ALL: 'all',
+};
+
+export const PANEL_VISIBILITY_BY_STATE = {
+  [PPC_CHECKPOINT_STATE.UNAVAILABLE]: [],
+  [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: [
+    ISSUE_TYPES.ACCESSIBILITY,
+    ISSUE_TYPES.DESIGN,
+  ],
+  [PPC_CHECKPOINT_STATE.ALL]: Object.values(ISSUE_TYPES),
+};

@@ -24,8 +24,9 @@ import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useCategoryCount } from './checkCountContext';
-import { ISSUE_TYPES } from './constants';
+import { useCategoryCount } from '../countContext';
+import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
+import { useCheckpoint } from '../checkpointContext';
 
 const Wrapper = styled.div`
   display: grid;
@@ -71,10 +72,15 @@ const EmptyContentCheck = () => {
   const accessibilityCount = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
   const designCount = useCategoryCount(ISSUE_TYPES.DESIGN);
   const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
 
-  return accessibilityCount + designCount + priorityCount === 0 ? (
-    <EmptyContent />
-  ) : null;
+  const isEmptyView =
+    accessibilityCount + designCount + priorityCount === 0 ||
+    checkpoint === PPC_CHECKPOINT_STATE.UNAVAILABLE;
+
+  return isEmptyView ? <EmptyContent /> : null;
 };
 
 export default EmptyContentCheck;

@@ -27,7 +27,7 @@ import { useStory } from '../../../app';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { hasNoFeaturedMedia } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function storyHasNoPosterAttached(story) {
   return (
@@ -37,7 +37,7 @@ export function storyHasNoPosterAttached(story) {
 
 export function StoryPosterAttached() {
   //@TODO refine this context selector and storyHasNoPosterAttached to run more selectively
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>

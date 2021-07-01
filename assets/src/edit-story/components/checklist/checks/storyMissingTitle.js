@@ -26,14 +26,14 @@ import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function storyMissingTitle(story) {
   return typeof story.title !== 'string' || story.title?.trim() === '';
 }
 
 const StoryMissingTitle = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>

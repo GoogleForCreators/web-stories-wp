@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -32,9 +35,24 @@ describe('Checklist integration', () => {
     fixture.restore();
   });
 
+  const addPages = async (count) => {
+    let clickCount = 1;
+    while (clickCount <= count) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      // eslint-disable-next-line no-await-in-loop, no-loop-func
+      await waitFor(() => {
+        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+      });
+      clickCount++;
+    }
+  };
+
   const openChecklist = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(fixture.editor.checklist.issues).toBeNull();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('false');
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
@@ -42,7 +60,9 @@ describe('Checklist integration', () => {
 
   const openChecklistWithKeyboard = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(fixture.editor.checklist.issues).toBeNull();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('false');
     await fixture.events.focus(toggleButton);
     await fixture.events.keyboard.press('Enter');
     // wait for animation
@@ -52,17 +72,23 @@ describe('Checklist integration', () => {
   describe('open and close', () => {
     it('should toggle the checklist', async () => {
       const { toggleButton } = fixture.editor.checklist;
-      expect(fixture.editor.checklist.issues).toBeNull();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('false');
 
       await fixture.events.click(toggleButton);
       // wait for animation
       await fixture.events.sleep(500);
-      expect(fixture.editor.checklist.issues).toBeDefined();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('true');
 
       await fixture.events.click(toggleButton);
       // wait for animation
       await fixture.events.sleep(500);
-      expect(fixture.editor.checklist.issues).toBeNull();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('false');
     });
 
     it('should close the checklist when the "close" button is clicked', async () => {
@@ -70,19 +96,24 @@ describe('Checklist integration', () => {
 
       await fixture.events.click(fixture.editor.checklist.closeButton);
       await fixture.events.sleep(500);
-      expect(fixture.editor.checklist.issues).toBeNull();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('false');
     });
   });
 
   describe('Checklist cursor interaction', () => {
     it('should open the high priority section', async () => {
+      // need to add some pages, the add page button is under the checklist so do this before expanding
+      await addPages(4);
       await openChecklist();
-
       await fixture.events.click(fixture.editor.checklist.priorityTab);
       expect(fixture.editor.checklist.priorityPanel).toBeDefined();
     });
 
     it('should open the design section', async () => {
+      // need to add some pages, the add page button is under the checklist so do this before expanding
+      await addPages(2);
       await openChecklist();
 
       await fixture.events.click(fixture.editor.checklist.designTab);
@@ -91,7 +122,8 @@ describe('Checklist integration', () => {
     // TODO #8085 - a11y section not available in blank page state, no issues present.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should open the accessibility section', async () => {
-      await openChecklist();
+      // need to add some pages, the add page button is under the checklist so do this before expanding
+      await addPages(2);
 
       await fixture.events.click(fixture.editor.checklist.accessibilityTab);
       expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
@@ -104,29 +136,40 @@ describe('Checklist integration', () => {
       await fixture.events.keyboard.press('Enter');
       // wait for animation
       await fixture.events.sleep(500);
-      expect(fixture.editor.checklist.issues).toBeDefined();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('true');
 
       await fixture.events.keyboard.press('Enter');
       // wait for animation
       await fixture.events.sleep(500);
-      expect(fixture.editor.checklist.issues).toBeNull();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('false');
     });
 
     it('should close the Checklist when pressing enter on the "close" button', async () => {
       await openChecklistWithKeyboard();
 
       // will already be focused on the close button
-      expect(fixture.editor.checklist.issues).toBeDefined();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('true');
       expect(fixture.editor.checklist.closeButton).toEqual(
         document.activeElement
       );
 
       await fixture.events.keyboard.press('Enter');
       await fixture.events.sleep(500);
-      expect(fixture.editor.checklist.issues).toBeNull();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('false');
     });
 
     it('should open the tab panels with tab and enter', async () => {
+      // need to add some pages, the add page button is under the checklist so do this before expanding
+      await addPages(4);
+
       await openChecklistWithKeyboard();
 
       // tab to priority section

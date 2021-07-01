@@ -21,27 +21,35 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { ISSUE_TYPES } from './constants';
-import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
-import ImageElementMissingAlt from './checks/imageElementMissingAlt';
-import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
-import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
-import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
-import VideoElementMissingDescription from './checks/videoElementMissingDescription';
+import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
+import ElementLinkTappableRegionTooSmall from '../checks/elementLinkTappableRegionTooSmall';
+import ImageElementMissingAlt from '../checks/imageElementMissingAlt';
+import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextContrast';
+import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
+import VideoElementMissingCaptions from '../checks/videoElementMissingCaptions';
+import VideoElementMissingDescription from '../checks/videoElementMissingDescription';
+import { useCheckpoint } from '../checkpointContext';
 import {
   ChecklistCategoryProvider,
   useCategoryCount,
-} from './checkCountContext';
-import { PanelText, StyledTablistPanel } from './styles';
-import VideoOptimizationToggle from './videoOptimizationCheckbox';
+} from '../countContext/checkCountContext';
+import { PanelText, StyledTablistPanel } from '../styles';
+import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 
 export function AccessibilityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
+
+  const isCheckpointMet = PANEL_VISIBILITY_BY_STATE[checkpoint].includes(
+    ISSUE_TYPES.ACCESSIBILITY
+  );
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <StyledTablistPanel
-        badgeCount={count}
+        badgeCount={isCheckpointMet ? count : 0}
         isExpanded={isOpen}
         onClick={onClick}
         title={title}
