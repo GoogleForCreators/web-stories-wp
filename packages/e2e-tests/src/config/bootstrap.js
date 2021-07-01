@@ -121,8 +121,11 @@ const ALLOWED_ERROR_MESSAGES = [
   // Some bug in Firefox?
   '0xc1f30001 (NS_ERROR_NOT_INITIALIZED)',
 
-  // Firefox doesn't support MP4s. The "Web Stories Block" test embeds a story containing an MP4.
+  // Firefox Nightly does not appear to support MP4.
+  // The "Web Stories Block" test embeds a story containing an MP4,
+  // and the Tenor test loads MP4s as well.
   'Your system may not have the required video codecs for: video/mp4',
+  'Specified “type” attribute of “video/mp4” is not supported',
 
   // Firefox warning for AMP scripts that can be neglected in tests.
   'Loading failed for the module with source “https://cdn.ampproject.org',
