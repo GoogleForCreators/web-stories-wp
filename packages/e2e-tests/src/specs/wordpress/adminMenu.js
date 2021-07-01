@@ -68,7 +68,7 @@ describe('Admin Menu', () => {
     // The dashboard redirects users to templates on first load if they have no stories,
     // hence checking for both just in case.
     // See https://github.com/google/web-stories-wp/pull/7213.
-    expect(currentPage).toBeOneOf(['#/', '#/templates-gallery']);
+    expect(currentPage).toBeOneOf(['', '#/', '#/templates-gallery']);
   });
 
   it('should link to "Explore Templates"', async () => {
