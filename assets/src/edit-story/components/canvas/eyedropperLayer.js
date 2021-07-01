@@ -137,7 +137,6 @@ function EyedropperLayer() {
     if (canvas) {
       const ctx = canvas.getContext('2d');
 
-      // Sometimes initial setting is not enough.
       ctx.imageSmoothingEnabled = false;
       ctx.mozImageSmoothingEnabled = false;
       ctx.webkitImageSmoothingEnabled = false;
@@ -157,7 +156,7 @@ function EyedropperLayer() {
         MAGNIFIER_SIZE
       );
 
-      // Draw center rectangle for better aiming.
+      // Draw center square for better aiming.
       ctx.beginPath();
       ctx.rect(
         Math.round(MAGNIFIER_SIZE / 2) - MAGNIFIER_RECT_SIZE / 2,
@@ -219,7 +218,7 @@ function EyedropperLayer() {
 
   return (
     <EyedropperBackground onMouseMove={onMouseMove}>
-      {/* Remove the safezone so we don't have to move the canvas image up (we have fullbleed image). */}
+      {/* Remove the safe zone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* Disable reason: No pixel-by-pixel keyboard navigation. */}
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
