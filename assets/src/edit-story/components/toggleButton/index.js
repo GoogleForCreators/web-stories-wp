@@ -18,10 +18,6 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Button as dsButton,
   BUTTON_TYPES,
@@ -30,7 +26,7 @@ import {
   Text,
   TOOLTIP_PLACEMENT,
   Tooltip,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 
 const Button = styled(dsButton)`
   height: 36px;

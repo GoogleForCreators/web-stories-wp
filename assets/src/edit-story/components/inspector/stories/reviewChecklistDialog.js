@@ -18,12 +18,11 @@
  */
 import { action } from '@storybook/addon-actions';
 import { useCallback, useState } from 'react';
-
+import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { ReviewChecklistDialog } from '../prepublish';
-import { Button, BUTTON_TYPES } from '../../../../design-system';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Review Prepublish Checklist',

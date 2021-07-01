@@ -19,9 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_VARIANTS,
@@ -29,7 +26,11 @@ import {
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { NAVIGATION_WIDTH } from '../helpCenter/navigator/constants';
 import { PANEL_STATES } from './constants';
 

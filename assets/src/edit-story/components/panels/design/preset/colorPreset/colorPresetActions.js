@@ -22,11 +22,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { PatternPropType } from '@web-stories-wp/patterns';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { Select } from '../../../../form';
 import { findMatchingColor } from '../utils';

@@ -20,10 +20,11 @@ import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../../design-system';
 import { POPUP_ID } from '../constants';
 import { BottomNavigation } from './bottomNavigation';
 import { NAVIGATION_WIDTH } from './constants';

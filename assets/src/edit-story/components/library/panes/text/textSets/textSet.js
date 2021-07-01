@@ -22,14 +22,14 @@ import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useCallback, forwardRef } from 'react';
 import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
+import {
+  BUTTON_TRANSITION_TIMING,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_TRANSITION_TIMING,
-  ThemeGlobals,
-} from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';

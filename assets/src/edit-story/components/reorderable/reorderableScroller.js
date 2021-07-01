@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useEffect, useState, useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useContext } from '../../../design-system';
+import { useContext } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies

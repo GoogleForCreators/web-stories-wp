@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
+/**
  * Internal dependencies
  */
-import { useGlobalIsKeyPressed } from '../../../../design-system';
 import normalizeRotationDegrees from '../utils/normalizeRotationDegrees';
 
 function useRotate({

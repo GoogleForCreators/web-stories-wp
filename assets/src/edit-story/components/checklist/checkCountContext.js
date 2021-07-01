@@ -16,13 +16,8 @@
 /**
  * External dependencies
  */
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-} from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { createContext, useContext } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
 
 /**

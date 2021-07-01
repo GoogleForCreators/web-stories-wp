@@ -18,15 +18,15 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
   Icons,
   themeHelpers,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../app/config';
 import { forceFocusCompanion } from '../utils';
 import { ReadTipsType, TIPS } from '../constants';

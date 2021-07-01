@@ -20,13 +20,6 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
-import useInspector from '../../../inspector/useInspector';
-import panelContext from '../context';
-import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import {
   BUTTON_TRANSITION_TIMING,
   useContext,
@@ -35,7 +28,14 @@ import {
   Headline,
   themeHelpers,
   ThemeGlobals,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import useInspector from '../../../inspector/useInspector';
+import panelContext from '../context';
+import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { focusStyle } from '../../shared';
 import DragHandle from './handle';
 
