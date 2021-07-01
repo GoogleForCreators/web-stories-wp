@@ -148,32 +148,53 @@ const transforms = {
         return idBase === 'web_stories_widget';
       },
       transform: ({ instance }) => {
+        const {
+          raw: {
+            archive_link_label: archiveLinkLabel,
+            circle_size: circleSize,
+            image_alignment: imageAlignment,
+            number_of_columns: numOfColumns,
+            number_of_columns: numOfStories,
+            view_type: viewType,
+            show_title,
+            show_author,
+            show_date,
+            show_excerpt,
+            show_archive_link,
+            sharp_corners: show_sharp_corners,
+            show_image_alignment,
+            title,
+            orderby = '',
+            order = '',
+          },
+        } = instance;
+
         const transformedBlock = createBlock('web-stories/embed', {
           blockType: 'latest-stories',
-          viewType: instance.raw.view_type,
+          viewType,
           fieldState: {
-            show_title: instance.raw.show_title,
-            show_author: instance.raw.show_author,
-            show_date: instance.raw.show_date,
-            show_excerpt: instance.raw.show_excerpt,
-            show_archive_link: instance.raw.show_archive_link,
-            show_sharp_corners: instance.raw.sharp_corners,
-            show_image_alignment: instance.raw.image_alignment,
+            show_title,
+            show_author,
+            show_date,
+            show_excerpt,
+            show_archive_link,
+            show_sharp_corners,
+            show_image_alignment,
           },
-          archiveLinkLabel: instance.raw.archive_link_label,
-          circleSize: instance.raw.circle_size,
-          numOfColumns: instance.raw.number_of_columns,
-          imageAlignment: instance.raw.image_alignment,
-          numOfStories: instance.raw.number_of_stories,
-          orderby: instance.raw.orderby.replace('post_', ''),
-          order: instance.raw.order.toLowerCase(),
+          archiveLinkLabel,
+          circleSize,
+          numOfColumns,
+          imageAlignment,
+          numOfStories,
+          orderby: orderby.replace('post_', ''),
+          order: order.toLowerCase(),
         });
-        if (!instance.raw?.title) {
+        if (!title) {
           return transformedBlock;
         }
         return [
           createBlock('core/heading', {
-            content: instance.raw.title,
+            content: title,
           }),
           transformedBlock,
         ];
