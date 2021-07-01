@@ -120,18 +120,6 @@ function EyedropperLayer() {
   const magnifier = useRef();
   const magnifierInfo = useRef();
   const magnifierColor = useRef();
-
-  useEffect(() => {
-    const canvas = magnifier.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      ctx.imageSmoothingEnabled = false;
-      ctx.mozImageSmoothingEnabled = false;
-      ctx.webkitImageSmoothingEnabled = false;
-      ctx.msImageSmoothingEnabled = false;
-    }
-  }, [eyedropperImg]);
-
   const eyedropperCanvas = useRef();
 
   const closeEyedropper = () => setIsEyedropperActive(false);
@@ -233,6 +221,7 @@ function EyedropperLayer() {
     <EyedropperBackground onMouseMove={onMouseMove}>
       {/* Remove the safezone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
+        {/* Disable reason: No pixel-by-pixel keyboard navigation. */}
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
           <img ref={imgRef} src={img} alt="" />
