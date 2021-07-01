@@ -103,18 +103,16 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     mediaRef
   );
 
-  let params = null;
+  let cropParams = null;
   if (
     height &&
     height !== MULTIPLE_VALUE &&
     width &&
     width !== MULTIPLE_VALUE
   ) {
-    params = {
+    cropParams = {
       height,
       width,
-      flex_width: false,
-      flex_height: false,
     };
   }
 
@@ -129,7 +127,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         <StyledMedia
           ref={mediaRef}
           value={poster}
-          params={params}
+          cropParams={cropParams}
           onChange={handleChangePoster}
           onChangeErrorText={posterErrorMessage}
           title={__('Select as video poster', 'web-stories')}

@@ -29,6 +29,13 @@ import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
 import { calculateImageSelectOptions, mustBeCropped } from './utils';
 
+const defaultCropParams = {
+  height: 0,
+  width: 0,
+  flex_width: false,
+  flex_height: false,
+};
+
 /**
  * Custom hook to open the WordPress media modal.
  *
@@ -41,7 +48,7 @@ import { calculateImageSelectOptions, mustBeCropped } from './utils';
  * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
  * @param {string|string[]} props.type Media type(s).
  * @param {boolean} props.multiple Whether multi-selection should be allowed.
- * @param {Object} props.params Object params for cropped images.
+ * @param {Object} props.cropParams Object params for cropped images.
  * @return {Function} Callback to open the media picker.
  */
 export default function useMediaPicker({
@@ -53,7 +60,7 @@ export default function useMediaPicker({
   onPermissionError,
   type = '',
   multiple = false,
-  params,
+  cropParams,
 }) {
   const {
     actions: { updateMedia },
@@ -168,6 +175,11 @@ export default function useMediaPicker({
         return;
       }
 
+      const params = {
+        ...defaultCropParams,
+        ...cropParams,
+      };
+
       const control = {
         id: 'control-id',
         params,
@@ -251,7 +263,7 @@ export default function useMediaPicker({
     },
     [
       hasUploadMediaAction,
-      params,
+      cropParams,
       buttonInsertText,
       title,
       type,
@@ -266,6 +278,6 @@ export default function useMediaPicker({
   );
 
   return useMemo(() => {
-    return params ? openCropper : openMediaDialog;
-  }, [params, openCropper, openMediaDialog]);
+    return cropParams ? openCropper : openMediaDialog;
+  }, [cropParams, openCropper, openMediaDialog]);
 }

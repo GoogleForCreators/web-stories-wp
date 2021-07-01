@@ -280,9 +280,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <StyledMedia
               value={link.icon || ''}
-              params={{
-                flex_width: false,
-                flex_height: false,
+              cropParams={{
                 width: 96,
                 height: 96,
               }}

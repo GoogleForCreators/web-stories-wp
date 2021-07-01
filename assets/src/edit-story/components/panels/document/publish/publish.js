@@ -196,9 +196,7 @@ function PublishPanel() {
                 ref={posterButtonRef}
                 width={54}
                 height={96}
-                params={{
-                  flex_width: false,
-                  flex_height: false,
+                cropParams={{
                   width: 640,
                   height: 853,
                 }}
@@ -221,9 +219,7 @@ function PublishPanel() {
               <StyledMedia
                 width={72}
                 height={72}
-                params={{
-                  flex_width: false,
-                  flex_height: false,
+                cropParams={{
                   width: 96,
                   height: 96,
                 }}
