@@ -35,7 +35,7 @@ const mockUseCurrentUser = useCurrentUser;
 const mockToggleWebStoriesMediaOptimization = jest.fn();
 const mockUser = {
   meta: {
-    web_stories_media_optimization: true,
+    web_stories_media_optimization: false,
   },
 };
 
@@ -43,20 +43,34 @@ const Wrapper = (props) => <ThemeProvider theme={theme} {...props} />;
 
 describe('VideoOptimizationCheckbox', () => {
   beforeEach(() => {
-    mockUseConfig.mockReturnValue({ dashboardSettingsLink: '/' });
+    mockUseConfig.mockReturnValue({
+      capabilities: { hasUploadMediaAction: true },
+      dashboardSettingsLink: '/',
+    });
     mockUseCurrentUser.mockReturnValue({
       currentUser: mockUser,
       toggleWebStoriesMediaOptimization: mockToggleWebStoriesMediaOptimization,
     });
   });
 
-  it('should not render `null` if auto video optimization is enabled', () => {
+  it('should render `null` if auto video optimization is enabled', () => {
+    mockUseCurrentUser.mockReturnValue({
+      currentUser: {
+        ...mockUser,
+        meta: { ...mockUser.meta, web_stories_media_optimization: true },
+      },
+      toggleWebStoriesMediaOptimization: mockToggleWebStoriesMediaOptimization,
+    });
     render(<VideoOptimizationCheckbox />, { wrapper: Wrapper });
 
     expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
   });
 
-  it('should render the checkbox if auto video optimization is disabled', () => {
+  it('should render `null` if the user does not have the permission to upload media and auto video optimization is disabled', () => {
+    mockUseConfig.mockReturnValue({
+      capabilities: { hasUploadMediaAction: false },
+      dashboardSettingsLink: '/',
+    });
     mockUseCurrentUser.mockReturnValue({
       currentUser: {
         ...mockUser,
@@ -65,6 +79,12 @@ describe('VideoOptimizationCheckbox', () => {
       toggleWebStoriesMediaOptimization: mockToggleWebStoriesMediaOptimization,
     });
 
+    render(<VideoOptimizationCheckbox />, { wrapper: Wrapper });
+
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+  });
+
+  it('should render the checkbox if auto video optimization is disabled and the user is able to upload media', () => {
     render(<VideoOptimizationCheckbox />, { wrapper: Wrapper });
 
     expect(screen.getByRole('checkbox')).toBeInTheDocument();

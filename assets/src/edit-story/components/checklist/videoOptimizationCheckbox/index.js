@@ -63,7 +63,8 @@ const CheckboxLabel = styled(DescriptionText)`
 `;
 
 function VideoOptimizationCheckbox() {
-  const { dashboardSettingsLink } = useConfig();
+  const { capabilities: { hasUploadMediaAction } = {}, dashboardSettingsLink } =
+    useConfig();
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
     ({ state, actions }) => ({
       currentUser: state.currentUser,
@@ -73,8 +74,9 @@ function VideoOptimizationCheckbox() {
   );
 
   const checked = currentUser?.meta?.web_stories_media_optimization;
+  const showCheckbox = !checked && hasUploadMediaAction;
 
-  return checked ? null : (
+  return showCheckbox ? (
     <Container>
       <DescriptionText>
         {__(
@@ -114,7 +116,7 @@ function VideoOptimizationCheckbox() {
         </CheckboxLabel>
       </CheckboxContainer>
     </Container>
-  );
+  ) : null;
 }
 
 export default VideoOptimizationCheckbox;
