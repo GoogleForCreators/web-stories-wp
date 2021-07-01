@@ -30,7 +30,8 @@ import {
 const maybe = checkVersion(process.env?.WP_VERSION, '5.8')
   ? describe
   : describe.skip;
-
+// eslint-disable-next-line no-console
+console.log(checkVersion(process.env?.WP_VERSION, '5.8'));
 /* eslint-disable jest/require-top-level-describe, jest/consistent-test-it */
 maybe('Web Stories Widget Block', () => {
   beforeEach(async () => {
