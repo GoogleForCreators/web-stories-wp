@@ -23,15 +23,15 @@ import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { UnitsProvider } from '@web-stories-wp/units';
-/**
- * Internal dependencies
- */
-import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   Headline,
   LoadingSpinner,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   Layout,
   LoadingContainer,

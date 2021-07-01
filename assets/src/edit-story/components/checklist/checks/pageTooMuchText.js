@@ -18,11 +18,11 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { List } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MAX_PAGE_CHARACTER_COUNT } from '../constants';

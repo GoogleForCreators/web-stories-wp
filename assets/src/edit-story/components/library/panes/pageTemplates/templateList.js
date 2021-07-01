@@ -23,7 +23,7 @@ import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { UnitsProvider } from '@web-stories-wp/units';
-
+import { useSnackbar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -37,7 +37,6 @@ import {
 } from '../shared/virtualizedPanelGrid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
-import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 
 const THRESHOLD = 6;

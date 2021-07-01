@@ -19,6 +19,10 @@
 import { __, sprintf } from '@web-stories-wp/i18n';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
+import {
+  Text as DefaultText,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -26,10 +30,6 @@ import { rgba } from 'polished';
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
 import { ReactComponent as CoverrLogoFull } from '../../../images/coverr_logo.svg';
 import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo_white.svg';
-import {
-  Text as DefaultText,
-  THEME_CONSTANTS,
-} from '../../../../design-system';
 
 const AttributionPill = styled.div`
   position: absolute;

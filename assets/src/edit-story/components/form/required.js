@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import { _x } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { Text, THEME_CONSTANTS } from '../../../design-system';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 const RequiredWrapper = styled.div`
   display: flex;

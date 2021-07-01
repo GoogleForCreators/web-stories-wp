@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { identity } from '@web-stories-wp/design-system';
+/**
  * Internal dependencies
  */
-import { identity } from '../../../../design-system';
 import useMedia from '../useMedia';
 
 /**

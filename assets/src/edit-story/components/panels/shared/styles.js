@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { themeHelpers } from '../../../../design-system/theme';
+import { themeHelpers } from '@web-stories-wp/design-system';
 
 export const focusStyle = css`
   ${({ theme }) =>

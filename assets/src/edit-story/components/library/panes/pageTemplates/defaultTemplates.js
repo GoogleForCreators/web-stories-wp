@@ -23,6 +23,12 @@ import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  Headline,
+  THEME_CONSTANTS,
+  Text,
+  Toggle,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,10 +36,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useAPI } from '../../../../app/api';
 import { ChipGroup } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
-import { Headline } from '../../../../../design-system/components/typography/headline';
-import { THEME_CONSTANTS } from '../../../../../design-system/theme/constants';
-import { Text } from '../../../../../design-system/components/typography/text';
-import { Toggle } from '../../../../../design-system/components/toggle';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 import TemplateList from './templateList';
 

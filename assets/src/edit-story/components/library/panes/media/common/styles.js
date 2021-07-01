@@ -19,12 +19,12 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { Pane, PANE_PADDING } from '../../shared';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 
 export const PaneInner = styled.div`
   height: 100%;

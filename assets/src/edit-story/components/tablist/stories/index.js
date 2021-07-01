@@ -18,16 +18,16 @@
  */
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { useState } from 'react';
 import {
   THEME_CONSTANTS,
   Link,
   Tooltip,
   Text,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { useState } from 'react';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../../checklistCard/constants';

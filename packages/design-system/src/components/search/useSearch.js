@@ -16,9 +16,9 @@
 /**
  * External dependencies
  */
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { sprintf, _n, __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
