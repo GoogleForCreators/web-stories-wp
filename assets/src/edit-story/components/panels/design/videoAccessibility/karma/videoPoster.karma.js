@@ -47,6 +47,9 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.click(fixture.editor.library.media.item(5)); // item 5 is a video
       vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
 
+      class Library {}
+      class CustomizeImageCropper {}
+
       // Create fake media browser
       window.wp = {
         ...window.wp,
@@ -64,6 +67,13 @@ describe('Video Accessibility Panel', () => {
           on: (type, callback) => callback(),
           once: (type, callback) => callback(),
           open: () => {},
+          close: () => {},
+          controller: {
+            CustomizeImageCropper,
+            Library,
+          },
+          query: () => {},
+          setState: () => {},
         }),
       };
     });
