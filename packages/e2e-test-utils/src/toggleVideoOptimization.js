@@ -27,9 +27,15 @@ import visitSettings from './visitSettings';
  */
 async function toggleVideoOptimization(enable = true) {
   await visitSettings();
-  await page.waitForSelector(
-    '[data-testid="media-optimization-settings-checkbox"]'
+
+  // Contributor users won't have this setting as they cannot upload media.
+  const settingExists = Boolean(
+    await page.$('[data-testid="media-optimization-settings-checkbox"]')
   );
+
+  if (!settingExists) {
+    return;
+  }
 
   const isChecked = Boolean(
     await page.$('[data-testid="media-optimization-settings-checkbox"]:checked')
