@@ -148,13 +148,13 @@ export function getAccessibleTextColorsFromPixels(pixelData, fontSize) {
     // Black fg color and white bg color.
     return {
       color: blackRgb,
-      backgroundColor: whiteRgb,
+      backgroundColor: { ...whiteRgb, a: 0.7 },
     };
   }
 
   // White fg color and black bg color.
   return {
     color: whiteRgb,
-    backgroundColor: blackRgb,
+    backgroundColor: { ...blackRgb, a: 0.7 },
   };
 }
