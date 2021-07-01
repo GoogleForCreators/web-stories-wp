@@ -33,7 +33,7 @@ async function enableVideoOptimization(enable = true) {
 
   const isChecked = Boolean(
     await page.$(
-      '[data-testid="media-optimization-settings-checkbox"][checked=checked]'
+      '[data-testid="media-optimization-settings-checkbox"]:checked'
     )
   );
 
