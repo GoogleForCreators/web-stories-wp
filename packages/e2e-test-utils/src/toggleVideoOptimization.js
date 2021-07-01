@@ -32,9 +32,7 @@ async function toggleVideoOptimization(enable = true) {
   );
 
   const isChecked = Boolean(
-    await page.$(
-      '[data-testid="media-optimization-settings-checkbox"]:checked'
-    )
+    await page.$('[data-testid="media-optimization-settings-checkbox"]:checked')
   );
 
   if ((isChecked && enable) || (!isChecked && !enable)) {

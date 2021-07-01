@@ -32,6 +32,8 @@ export default function withUser(username, password) {
   /* eslint-disable jest/require-top-level-describe */
   beforeAll(async () => {
     await setCurrentUser(username, password);
+
+    // Disable cross-origin isolation by default as it causes issues in Firefox.
     await toggleVideoOptimization(false);
   });
 
