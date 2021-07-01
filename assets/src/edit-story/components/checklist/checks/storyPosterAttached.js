@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { List } from '@web-stories-wp/design-system';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -60,7 +60,9 @@ export function StoryPosterAttached() {
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
       />
