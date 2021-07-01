@@ -28,10 +28,6 @@ import {
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -39,7 +35,11 @@ import {
   BUTTON_VARIANTS,
   Icons,
   useKeyDownEffect,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import { ADMIN_TOOLBAR_HEIGHT, HEADER_HEIGHT } from '../../constants';

@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { useEffect } from 'react';
+import { identity, useContextSelector } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { identity, useContextSelector } from '../../../../design-system';
 import { Context } from './storyTriggersProvider';
 
 export function useStoryTriggers(selector) {
@@ -40,7 +40,7 @@ function getDispatch(v) {
  * Example usage:
  * ```js
  *  useStoryTriggerListener(
-      STORY_EVENTS.onInitialElementAdded, 
+      STORY_EVENTS.onInitialElementAdded,
       useCallback((story) => {
         // do something with new story data
         // on this event

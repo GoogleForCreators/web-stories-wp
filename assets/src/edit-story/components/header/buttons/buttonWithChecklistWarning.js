@@ -18,25 +18,18 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-/**
- * External dependencies
- */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import {
   ChecklistIcon,
   usePrepublishChecklist,

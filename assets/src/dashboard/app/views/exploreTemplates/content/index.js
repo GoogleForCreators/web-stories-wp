@@ -25,10 +25,6 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { UnitsProvider } from '@web-stories-wp/units';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -36,7 +32,11 @@ import {
   Headline,
   LoadingSpinner,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../../edit-story/app';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {

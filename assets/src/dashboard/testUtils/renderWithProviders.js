@@ -20,15 +20,15 @@
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { FlagsProvider } from 'flagged';
-
-/**
- * Internal dependencies
- */
 import {
   theme as externalDesignSystemTheme,
   lightMode,
   SnackbarProvider,
-} from '../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { ConfigProvider } from '../app/config';
 import MockApiProvider from './mockApiProvider';
 

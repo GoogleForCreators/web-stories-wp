@@ -19,11 +19,12 @@
 import styled, { ThemeProvider } from 'styled-components';
 import { useState } from 'react';
 import { TransitionGroup } from 'react-transition-group';
+import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { Menu as HelpCenterMenu } from '..';
-import { theme as dsTheme, ThemeGlobals } from '../../../../../design-system';
 
 export default {
   title: 'Stories Editor/Components/Help Center/Menu',

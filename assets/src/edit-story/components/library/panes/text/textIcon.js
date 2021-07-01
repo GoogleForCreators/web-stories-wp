@@ -22,13 +22,13 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
 import { getHTMLFormatters } from '../../../richText/htmlManipulation';

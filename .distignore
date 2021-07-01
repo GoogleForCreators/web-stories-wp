@@ -17,6 +17,7 @@ packages
 patches
 plugin-assets
 public
+sitemap-generator
 static
 tests
 third-party/composer.json

@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { List } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
 import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
@@ -48,7 +48,7 @@ export function StoryPosterAttached() {
   );
 
   const isRendered = storyHasNoPosterAttached(story);
-  useRegisterCheck('StoryPosterAspectRatio', isRendered);
+  useRegisterCheck('StoryPosterAttached', isRendered);
 
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;
   return (

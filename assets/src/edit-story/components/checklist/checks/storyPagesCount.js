@@ -24,6 +24,7 @@ import { useMemo } from 'react';
 import { useStory } from '../../../app/story';
 
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
+import { useRegisterCheck } from '../checkCountContext';
 import { DESIGN_COPY, MAX_STORY_PAGES, MIN_STORY_PAGES } from '../constants';
 
 export function storyPagesCount(story) {
@@ -44,8 +45,12 @@ const StoryPagesCount = () => {
       ? storyTooShort
       : storyTooLong
     : {};
+
+  const isRendered = badPageCount.length > 0;
+  useRegisterCheck('StoryPagesCount', isRendered);
+
   return (
-    badPageCount && (
+    isRendered && (
       <ChecklistCard
         title={copySource.title}
         footer={<DefaultFooterText>{copySource.title}</DefaultFooterText>}

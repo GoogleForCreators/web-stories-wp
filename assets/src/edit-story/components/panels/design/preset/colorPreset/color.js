@@ -21,11 +21,10 @@ import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { hasOpacity, hasGradient } from '@web-stories-wp/patterns';
-
+import { Swatch, Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Swatch, Icons } from '../../../../../../design-system';
 import { useStory } from '../../../../../app/story';
 import { areAllType } from '../utils';
 import Tooltip from '../../../../tooltip';

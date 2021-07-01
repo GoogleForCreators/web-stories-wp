@@ -19,10 +19,13 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Icons, Text, THEME_CONSTANTS } from '../../../design-system';
+import { useCategoryCount } from './checkCountContext';
+import { ISSUE_TYPES } from './constants';
 
 const Wrapper = styled.div`
   display: grid;
@@ -63,3 +66,15 @@ export const EmptyContent = () => {
     </Wrapper>
   );
 };
+
+const EmptyContentCheck = () => {
+  const accessibilityCount = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
+  const designCount = useCategoryCount(ISSUE_TYPES.DESIGN);
+  const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
+  return accessibilityCount + designCount + priorityCount === 0 ? (
+    <EmptyContent />
+  ) : null;
+};
+
+export default EmptyContentCheck;
