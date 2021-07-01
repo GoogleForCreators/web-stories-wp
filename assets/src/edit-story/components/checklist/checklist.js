@@ -35,6 +35,7 @@ import {
   CHECKLIST_TITLE,
   ISSUE_TYPES,
   POPUP_ID,
+  PANEL_EXPANSION_BY_CHECKPOINT,
 } from './constants';
 import {
   AccessibilityChecks,
@@ -45,6 +46,7 @@ import {
 
 import { ChecklistCountProvider } from './countContext';
 import { useChecklist } from './checklistContext';
+import { useCheckpoint } from './checkpointContext';
 
 const Wrapper = styled.div`
   /**
@@ -67,6 +69,10 @@ export function Checklist() {
     })
   );
 
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
+
   const navRef = useRef();
 
   const [openPanel, setOpenPanel] = useState(null);
@@ -86,6 +92,12 @@ export function Checklist() {
       firstFocusableChild?.focus();
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (checkpoint) {
+      setOpenPanel(PANEL_EXPANSION_BY_CHECKPOINT[checkpoint]);
+    }
+  }, [checkpoint]);
 
   return (
     <DirectionAware>

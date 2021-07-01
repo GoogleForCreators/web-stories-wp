@@ -103,20 +103,26 @@ describe('Checklist integration', () => {
   });
 
   describe('Checklist cursor interaction', () => {
-    it('should open the high priority section', async () => {
+    it('should open the high priority section by default when 4 pages are added to the story', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
       await addPages(4);
       await openChecklist();
-      await fixture.events.click(fixture.editor.checklist.priorityTab);
       expect(fixture.editor.checklist.priorityPanel).toBeDefined();
     });
 
-    it('should open the design section', async () => {
+    it('should open the design section when clicked', async () => {
+      // need to add some pages, the add page button is under the checklist so do this before expanding
+      await addPages(4);
+      await openChecklist();
+      await fixture.events.click(fixture.editor.checklist.designTab);
+      expect(fixture.editor.checklist.designPanel).toBeDefined();
+    });
+
+    it('should open the design section by default when 2 pages are added to the story', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
       await addPages(2);
       await openChecklist();
 
-      await fixture.events.click(fixture.editor.checklist.designTab);
       expect(fixture.editor.checklist.designPanel).toBeDefined();
     });
     // TODO #8085 - a11y section not available in blank page state, no issues present.
