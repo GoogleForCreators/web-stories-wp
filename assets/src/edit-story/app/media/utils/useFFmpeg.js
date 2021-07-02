@@ -51,7 +51,7 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 /**
  * @typedef FFmpegData
- * @property {boolean} isFeatureEnabled Whether the feature is enabled.
+ * @property {boolean} isCrossOriginIsolationEnabled Whether the feature is enabled.
  * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
  * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
@@ -66,7 +66,11 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  * @return {FFmpegData} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl, allowedTranscodableMimeTypes } = useConfig();
+  const {
+    ffmpegCoreUrl,
+    allowedTranscodableMimeTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -77,7 +81,7 @@ function useFFmpeg() {
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
-  const isFeatureEnabled = Boolean(window?.crossOriginIsolated);
+  const isCrossOriginIsolationEnabled = Boolean(window?.crossOriginIsolated);
 
   async function getFFmpegInstance(file) {
     const { createFFmpeg, fetchFile } = await import(
@@ -236,8 +240,10 @@ function useFFmpeg() {
   );
 
   return {
-    isFeatureEnabled,
-    isTranscodingEnabled,
+    isTranscodingEnabled:
+      hasUploadMediaAction &&
+      isTranscodingEnabled &&
+      isCrossOriginIsolationEnabled,
     canTranscodeFile,
     isFileTooLarge,
     transcodeVideo,
