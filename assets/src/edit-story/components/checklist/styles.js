@@ -24,6 +24,17 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { TablistPanel } from '../tablist';
+import { NAVIGATION_HEIGHT } from '../helpCenter/navigator/constants';
+
+export const DISTANCE_FROM_TOP = 60 + 32; // toolbar height + input height
+export const DISTANCE_FROM_BOTTOM = 69;
+const BUTTON_HEIGHT = 60;
+export const TABPANEL_MAX_HEIGHT = `100vh - ${
+  NAVIGATION_HEIGHT +
+  3 * BUTTON_HEIGHT +
+  DISTANCE_FROM_TOP +
+  DISTANCE_FROM_BOTTOM
+}px`;
 
 export const StyledTablistPanel = styled(TablistPanel)`
   height: ${({ badgeCount }) => (badgeCount === 0 ? 0 : 'auto')};

@@ -38,15 +38,17 @@ import {
 } from './styles';
 
 const Scrollable = styled.div`
-  position: absolute;
+  max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
+  overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'auto')};
 `;
 
-const Panel = ({
+const TablistPanel = ({
   badgeCount = 0,
   children,
   className,
   isExpanded,
   onClick,
+  panelMaxHeight,
   status = PANEL_STATES.NORMAL,
   title,
 }) => {
@@ -79,22 +81,23 @@ const Panel = ({
           <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
-      {/* <Scrollable> */}
-      <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
-        {children}
-      </TabPanel>
-      {/* </Scrollable> */}
+      <Scrollable maxHeight={panelMaxHeight}>
+        <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
+          {children}
+        </TabPanel>
+      </Scrollable>
     </PanelWrapper>
   );
 };
-Panel.propTypes = {
+TablistPanel.propTypes = {
   badgeCount: PropTypes.number,
   children: PropTypes.node,
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  panelMaxHeight: PropTypes.string,
   status: PropTypes.oneOf(Object.values(PANEL_STATES)),
   title: PropTypes.string.isRequired,
 };
 
-export default Panel;
+export default TablistPanel;

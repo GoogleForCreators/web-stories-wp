@@ -35,7 +35,7 @@ import StoryPosterPortraitSize from '../checks/storyPosterPortraitSize';
 import StoryTitleLength from '../checks/storyTitleLength';
 import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
-import { PanelText, StyledTablistPanel } from '../styles';
+import { PanelText, StyledTablistPanel, TABPANEL_MAX_HEIGHT } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
 
@@ -69,6 +69,7 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         badgeCount={isCheckpointMet ? count : 0}
         isExpanded={isOpen}
         onClick={onClick}
+        panelMaxHeight={TABPANEL_MAX_HEIGHT}
         status={PANEL_STATES.DANGER}
         title={title}
       >

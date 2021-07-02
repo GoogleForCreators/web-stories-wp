@@ -33,7 +33,7 @@ import {
   ChecklistCategoryProvider,
   useCategoryCount,
 } from '../countContext/checkCountContext';
-import { PanelText, StyledTablistPanel } from '../styles';
+import { PanelText, StyledTablistPanel, TABPANEL_MAX_HEIGHT } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 
 export function AccessibilityChecks({ isOpen, onClick, title }) {
@@ -52,6 +52,7 @@ export function AccessibilityChecks({ isOpen, onClick, title }) {
         badgeCount={isCheckpointMet ? count : 0}
         isExpanded={isOpen}
         onClick={onClick}
+        panelMaxHeight={TABPANEL_MAX_HEIGHT}
         title={title}
       >
         <PanelText>

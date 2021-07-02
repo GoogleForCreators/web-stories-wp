@@ -31,11 +31,9 @@ import {
 /**
  * Internal dependencies
  */
-import { NAVIGATION_WIDTH } from '../helpCenter/navigator/constants';
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
-  width: ${NAVIGATION_WIDTH}px;
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 Tablist.propTypes = {
@@ -127,9 +125,9 @@ export const PanelWrapper = styled.div`
         }
       }
 
-      & > ${TabPanel} {
+      * > ${TabPanel} {
         height: 560px;
-        padding: 0 16px 16px;
+        padding: 0 0 16px 16px;
         visibility: visible;
       }
     `};
@@ -174,6 +172,7 @@ export const TabPanel = styled.div`
   padding: 0;
   visibility: hidden;
   overflow-y: scroll;
+  overflow-x: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
   transition: 250ms ease-in;
 

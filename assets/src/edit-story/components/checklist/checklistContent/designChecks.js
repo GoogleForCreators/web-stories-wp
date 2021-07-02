@@ -29,7 +29,7 @@ import VideoElementResolution from '../checks/videoElementResolution';
 import ImageElementResolution from '../checks/imageElementResolution';
 import StoryPagesCount from '../checks/storyPagesCount';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
-import { PanelText, StyledTablistPanel } from '../styles';
+import { PanelText, StyledTablistPanel, TABPANEL_MAX_HEIGHT } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 
 export function DesignChecks({ isOpen, onClick, title }) {
@@ -47,6 +47,7 @@ export function DesignChecks({ isOpen, onClick, title }) {
         badgeCount={isCheckpointMet ? count : 0}
         isExpanded={isOpen}
         onClick={onClick}
+        panelMaxHeight={TABPANEL_MAX_HEIGHT}
         title={title}
       >
         <PanelText>

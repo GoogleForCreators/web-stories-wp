@@ -26,6 +26,10 @@ import { themeHelpers } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { POPUP_ID } from '../constants';
+import {
+  DISTANCE_FROM_TOP,
+  DISTANCE_FROM_BOTTOM,
+} from '../../checklist/styles';
 import { BottomNavigation } from './bottomNavigation';
 import { NAVIGATION_WIDTH } from './constants';
 import { TopNavigation } from './topNavigation';
@@ -34,21 +38,17 @@ import {
   syncOuterHeightWithInner,
 } from './utils';
 
-const DISTANCE_TO_TOP = 59 + 32; // height from input + toolbar height
-const DISTANCE_TO_BOTTOM = 69;
-
 export const NavigationWrapper = styled.div`
   position: absolute;
   left: 0;
   bottom: 0;
+  max-height: calc(100vh - ${DISTANCE_FROM_TOP + DISTANCE_FROM_BOTTOM}px);
   width: ${NAVIGATION_WIDTH}px;
   color: ${({ theme }) => theme.colors.fg.primary};
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  /* overflow-y: hidden;
-  overflow-x: visible; */
-  max-height: calc(100vh - ${DISTANCE_TO_TOP + DISTANCE_TO_BOTTOM}px);
+  overflow-y: hidden;
 `;
 
 const Layout = styled.div`
