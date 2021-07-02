@@ -93,7 +93,7 @@ function TextPane(props) {
 
       <Section
         title={__('Presets', 'web-stories')}
-        onPointerEnter={() => generateCanvasFromPage()}
+        onPointerOver={() => generateCanvasFromPage()}
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (
