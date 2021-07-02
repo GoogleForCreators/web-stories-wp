@@ -24,6 +24,7 @@ import {
 } from '@testing-library/react';
 import Modal from 'react-modal';
 import MockDate from 'mockdate';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -43,6 +44,7 @@ function setupButtons({
   media: extraMediaProps,
   config: extraConfigProps,
   history: extraHistoryProps,
+  checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
@@ -81,6 +83,7 @@ function setupButtons({
   const prepublishChecklistContextValue = {
     state: {
       shouldReviewDialogBeSeen: false,
+      ...extraChecklistProps,
     },
     actions: {
       onReviewDialogRequest,
@@ -89,15 +92,19 @@ function setupButtons({
   renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <StoryTriggersProvider story={storyContextValue}>
-            <CheckpointContext.Provider value={prepublishChecklistContextValue}>
-              <MediaContext.Provider value={mediaContextValue}>
-                <Buttons />
-              </MediaContext.Provider>
-            </CheckpointContext.Provider>
-          </StoryTriggersProvider>
-        </StoryContext.Provider>
+        <FlagsProvider features={{ enableChecklistCompanion: true }}>
+          <StoryContext.Provider value={storyContextValue}>
+            <StoryTriggersProvider story={storyContextValue}>
+              <CheckpointContext.Provider
+                value={prepublishChecklistContextValue}
+              >
+                <MediaContext.Provider value={mediaContextValue}>
+                  <Buttons />
+                </MediaContext.Provider>
+              </CheckpointContext.Provider>
+            </StoryTriggersProvider>
+          </StoryContext.Provider>
+        </FlagsProvider>
       </ConfigContext.Provider>
     </HistoryContext.Provider>
   );
@@ -262,7 +269,7 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
-      prepublish: {
+      checklist: {
         shouldReviewDialogBeSeen: true,
       },
     });
@@ -289,7 +296,7 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
-      prepublish: {
+      checklist: {
         shouldReviewDialogBeSeen: true,
       },
     });
