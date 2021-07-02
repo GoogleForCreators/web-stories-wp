@@ -33,7 +33,7 @@ export const MAX_PAGE_CHARACTER_COUNT = 200;
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
 export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
-export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
+export const MAX_STORY_TITLE_LENGTH_CHARS = 70;
 export const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 const MIN_TAP_REGION_WIDTH = 48;
@@ -363,7 +363,7 @@ export const PRIORITY_COPY = {
   },
   storyTitleTooLong: {
     title: sprintf(
-      /* translators: %d: minimum number of story characters. */
+      /* translators: %d: maximum number of story characters. */
       _n(
         'Shorten title to fewer than %d character',
         'Shorten title to fewer than %d characters',
@@ -469,4 +469,19 @@ export const PRIORITY_COPY = {
       `${MAX_VIDEO_RESOLUTION}p`
     ),
   },
+};
+
+export const PPC_CHECKPOINT_STATE = {
+  UNAVAILABLE: 'unavailable',
+  ONLY_RECOMMENDED: 'recommended',
+  ALL: 'all',
+};
+
+export const PANEL_VISIBILITY_BY_STATE = {
+  [PPC_CHECKPOINT_STATE.UNAVAILABLE]: [],
+  [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: [
+    ISSUE_TYPES.ACCESSIBILITY,
+    ISSUE_TYPES.DESIGN,
+  ],
+  [PPC_CHECKPOINT_STATE.ALL]: Object.values(ISSUE_TYPES),
 };

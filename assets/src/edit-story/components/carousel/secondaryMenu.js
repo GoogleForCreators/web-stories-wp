@@ -26,8 +26,8 @@ import { useEffect } from 'react';
 import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
-import { Checklist, useChecklist } from '../checklist';
 import { useHelpCenter } from '../../app';
+import { Checklist, useChecklist, useCheckpoint } from '../checklist';
 
 const Wrapper = styled.div`
   display: flex;
@@ -65,10 +65,25 @@ function SecondaryMenu() {
     })
   );
 
-  const { close: closeChecklist, isChecklistOpen } = useChecklist(
-    ({ actions: { close }, state: { isOpen: isChecklistOpen } }) => ({
+  const {
+    close: closeChecklist,
+    open: openChecklist,
+    isChecklistOpen,
+  } = useChecklist(
+    ({ actions: { close, open }, state: { isOpen: isChecklistOpen } }) => ({
       close,
+      open,
       isChecklistOpen,
+    })
+  );
+
+  const { onResetReviewDialogRequest, reviewDialogRequested } = useCheckpoint(
+    ({
+      actions: { onResetReviewDialogRequest },
+      state: { reviewDialogRequested },
+    }) => ({
+      reviewDialogRequested,
+      onResetReviewDialogRequest,
     })
   );
 
@@ -85,6 +100,13 @@ function SecondaryMenu() {
       closeChecklist();
     }
   }, [closeChecklist, isHelpCenterOpen]);
+
+  useEffect(() => {
+    if (reviewDialogRequested) {
+      onResetReviewDialogRequest();
+      openChecklist();
+    }
+  }, [reviewDialogRequested, onResetReviewDialogRequest, openChecklist]);
 
   const enableChecklistCompanion = useFeature('enableChecklistCompanion');
   return (

@@ -38,7 +38,9 @@ describe('Popup Menus - Help Center and Checklist', () => {
     expect(helpCenterToggle).toBeDefined();
     expect(checklistToggle).toBeDefined();
 
-    expect(fixture.editor.checklist.issues).toBeNull();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('false');
     expect(fixture.editor.helpCenter.quickTips).toBeNull();
   });
 
@@ -52,7 +54,9 @@ describe('Popup Menus - Help Center and Checklist', () => {
     await fixture.events.click(checklistToggle);
     await fixture.events.sleep(500);
 
-    expect(fixture.editor.checklist.issues).toBeDefined();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('true');
     expect(fixture.editor.helpCenter.quickTips).toBeNull();
   });
 
@@ -61,7 +65,9 @@ describe('Popup Menus - Help Center and Checklist', () => {
 
     await fixture.events.click(checklistToggle);
 
-    expect(fixture.editor.checklist.issues).toBeDefined();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('true');
     expect(fixture.editor.helpCenter.quickTips).toBeNull();
 
     await fixture.events.click(helpCenterToggle);
@@ -71,6 +77,8 @@ describe('Popup Menus - Help Center and Checklist', () => {
     await fixture.events.sleep(500);
 
     expect(quickTips).toBeDefined();
-    expect(fixture.editor.checklist.issues).toBeNull();
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('false');
   });
 });

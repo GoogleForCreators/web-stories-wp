@@ -41,7 +41,7 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;

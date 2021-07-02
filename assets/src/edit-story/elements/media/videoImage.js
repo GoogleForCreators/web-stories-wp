@@ -13,27 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../../elements';
 
-export const LayerThumbnail = ({ page }) => {
-  const { LayerIcon } = getDefinitionForType(page?.type);
+const Video = styled.video`
+  display: block;
+  height: 28px;
+  width: 28px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  object-fit: cover;
+`;
 
-  const props = { element: page };
+function VideoImage({ alt, ...attrs }) {
+  return (
+    <Video
+      controls={false}
+      crossOrigin="anonymous"
+      disablePictureInPicture
+      muted
+      noControls
+      title={alt}
+      {...attrs}
+    />
+  );
+}
 
-  if (page?.type === 'video') {
-    props.showVideoPreviewAsBackup = true;
-  }
-
-  return <LayerIcon {...props} />;
+VideoImage.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
 };
 
-LayerThumbnail.propTypes = {
-  page: PropTypes.object.isRequired,
-};
+export default VideoImage;
