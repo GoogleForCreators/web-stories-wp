@@ -43,32 +43,7 @@ describe('Handling .mov files', () => {
     }
   });
 
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should insert .mov', async () => {
-    await createNewStory();
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
-    await expect(page).toClick('button', { text: 'Upload' });
-
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-    const fileName = await uploadFile('small-video.mov', false);
-    const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
-    uploadedFiles.push(fileNameNoExt);
-
-    await expect(page).toClick('button', { text: 'Insert into page' });
-
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Sounds good/,
-    });
-
-    await page.waitForSelector('[data-testid="videoElement"]');
-    await expect(page).toMatchElement('[data-testid="videoElement"]');
-  });
-
-  describe('Inserting .mov from dialog', () => {
+  describe('Enabled', () => {
     beforeEach(async () => {
       await toggleVideoOptimization(true);
     });
@@ -78,7 +53,33 @@ describe('Handling .mov files', () => {
     });
 
     // Uses the existence of the element's frame element as an indicator for successful insertion.
-    it('should not list the .mov', async () => {
+    it('should insert .mov video from media dialog', async () => {
+      await createNewStory();
+      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+      await expect(page).toClick('button', { text: 'Upload' });
+
+      await page.waitForSelector(MODAL, {
+        visible: true,
+      });
+      const fileName = await uploadFile('small-video.mov', false);
+      const fileNameNoExt = fileName.replace(/\.[^/.]+$/, '');
+      uploadedFiles.push(fileNameNoExt);
+
+      await expect(page).toClick('button', { text: 'Insert into page' });
+
+      await page.waitForSelector('.ReactModal__Content');
+      await expect(page).toClick('button', {
+        text: /Sounds good/,
+      });
+
+      await page.waitForSelector('[data-testid="videoElement"]');
+      await expect(page).toMatchElement('[data-testid="videoElement"]');
+    });
+  });
+
+  describe('Disabled', () => {
+    it('should not list the .mov video in the media dialog', async () => {
       await createNewStory();
       await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
