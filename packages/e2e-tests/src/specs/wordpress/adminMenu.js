@@ -46,20 +46,19 @@ describe('Admin Menu', () => {
   it('should link to "My Stories"', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
-
     await expect(page).toMatchElement('#menu-posts-web-story.wp-has-submenu');
 
     // Hovering should theoretically be enough to make the submenu appear before clicking,
     // but it doesn't work in Firefox, hence first clicking on the top-level menu item.
     await expect(page).toClick('#menu-posts-web-story a', { text: 'Stories' });
+    await page.waitForNavigation();
 
+    const adminMenuItem = await expect(page).toMatchElement(
+      '#menu-posts-web-story'
+    );
     await expect(adminMenuItem).toClick('a', {
       text: 'My Stories',
     });
-    await page.waitForNavigation();
 
     await expect(page).toMatch('My Stories');
 
@@ -74,20 +73,19 @@ describe('Admin Menu', () => {
   it('should link to "Explore Templates"', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
-
     await expect(page).toMatchElement('#menu-posts-web-story.wp-has-submenu');
 
     // Hovering should theoretically be enough to make the submenu appear before clicking,
     // but it doesn't work in Firefox, hence first clicking on the top-level menu item.
     await expect(page).toClick('#menu-posts-web-story a', { text: 'Stories' });
+    await page.waitForNavigation();
 
+    const adminMenuItem = await expect(page).toMatchElement(
+      '#menu-posts-web-story'
+    );
     await expect(adminMenuItem).toClick('a', {
       text: 'Explore Templates',
     });
-    await page.waitForNavigation();
 
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
@@ -99,20 +97,19 @@ describe('Admin Menu', () => {
   it('should link to "Settings"', async () => {
     await visitAdminPage('index.php');
 
-    const adminMenuItem = await expect(page).toMatchElement(
-      '#menu-posts-web-story'
-    );
-
     await expect(page).toMatchElement('#menu-posts-web-story.wp-has-submenu');
 
     // Hovering should theoretically be enough to make the submenu appear before clicking,
     // but it doesn't work in Firefox, hence first clicking on the top-level menu item.
     await expect(page).toClick('#menu-posts-web-story a', { text: 'Stories' });
+    await page.waitForNavigation();
 
+    const adminMenuItem = await expect(page).toMatchElement(
+      '#menu-posts-web-story'
+    );
     await expect(adminMenuItem).toClick('a', {
       text: 'Settings',
     });
-    await page.waitForNavigation();
 
     await expect(page).toMatch('Google Analytics Tracking ID');
 
