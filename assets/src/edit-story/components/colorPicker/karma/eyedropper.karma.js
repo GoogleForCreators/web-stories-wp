@@ -65,6 +65,7 @@ describe('Eyedropper', () => {
     const rect = fullbleed.getBoundingClientRect();
     await fixture.events.mouse.click(rect.left + 61, rect.top + 61);
 
+    await fixture.snapshot('BG color from image');
     expect(bgPanel.backgroundColor.hex.value).toBe('C2A387');
   });
 });
