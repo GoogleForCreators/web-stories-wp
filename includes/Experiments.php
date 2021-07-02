@@ -229,7 +229,8 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Enable bulk video optimization', 'web-stories' ),
 				'description' => __( 'Enables an option to optimize multiple videos at once in v2 of prepublish checklist.', 'web-stories' ),
 				'group'       => 'editor',
-			], 
+				'default'     => true,
+			],
 			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 7965
