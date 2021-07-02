@@ -22,6 +22,8 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../app';
+import useFFmpeg from '../../../app/media/utils/useFFmpeg';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
@@ -35,6 +37,7 @@ import VideoElementMissingPoster from '../checks/videoElementMissingPoster';
 import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
+import VideoOptimization from '../checks/videoOptimization';
 
 export function PriorityChecks({ isOpen, onClick, title }) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
@@ -51,6 +54,14 @@ export function PriorityChecks({ isOpen, onClick, title }) {
   const isCheckpointMet = PANEL_VISIBILITY_BY_STATE[checkpoint].includes(
     ISSUE_TYPES.PRIORITY
   );
+
+  const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+
+  const isVideoOptimizationSettingEnabled =
+    isFeatureEnabled && isTranscodingEnabled && hasUploadMediaAction;
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
@@ -73,10 +84,12 @@ export function PriorityChecks({ isOpen, onClick, title }) {
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />
+        {isVideoOptimizationSettingEnabled && <VideoOptimization />}
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );
 }
+
 PriorityChecks.propTypes = {
   isOpen: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
