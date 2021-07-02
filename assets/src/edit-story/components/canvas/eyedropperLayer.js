@@ -25,11 +25,11 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout } from '../../app';
 import {
   useFocusOut,
   useGlobalKeyDownEffect,
 } from '@web-stories-wp/design-system';
+import { useCanvas, useLayout } from '../../app';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
 
