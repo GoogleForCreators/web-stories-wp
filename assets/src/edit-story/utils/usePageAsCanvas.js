@@ -30,9 +30,16 @@ import { getAccessibleTextColorsFromPixels } from './contrastUtils';
 import { calculateTextHeight } from './textMeasurements';
 
 function usePageAsCanvas() {
-  const { pageCanvasData, setPageCanvasData } = useLibrary((state) => ({
+  const {
+    pageCanvasData,
+    setPageCanvasData,
+    pageCanvasPromise,
+    setPageCanvasPromise,
+  } = useLibrary((state) => ({
     pageCanvasData: state.state.pageCanvasData,
+    pageCanvasPromise: state.state.pageCanvasPromise,
     setPageCanvasData: state.actions.setPageCanvasData,
+    setPageCanvasPromise: state.actions.setPageCanvasPromise,
   }));
   const { fullbleedContainer } = useCanvas((state) => ({
     fullbleedContainer: state.state.fullbleedContainer,
@@ -72,30 +79,44 @@ function usePageAsCanvas() {
           // If we're inserting an element, we need to reset zoom, too.
           setZoomSetting(ZOOM_SETTING.FIT);
         }
-        // Wait one tick for the zoom to settle in.
-        setTimeout(() => {
-          htmlToImage
-            .toCanvas(fullbleedContainer, {
-              fontEmbedCss: '',
-            })
-            .then((canvas) => {
-              if (callback) {
-                callback(canvas);
-              } else {
-                setPageCanvasData({
-                  canvas,
-                  currentPage: pageHash,
-                });
-              }
-            })
-            .catch(() => resetZoom && callback());
-        });
+        const onCompletion = (canvas) => {
+          if (callback) {
+            callback(canvas);
+          } else {
+            setPageCanvasData({
+              canvas,
+              currentPage: pageHash,
+            });
+          }
+          setPageCanvasPromise(null);
+        };
+        const onFail = () => {
+          resetZoom && callback();
+          setPageCanvasPromise(null);
+        };
+        // If we haven't started the generation yet, create a promise.
+        if (!pageCanvasPromise) {
+          const promise = htmlToImage.toCanvas(fullbleedContainer, {
+            fontEmbedCss: '',
+          });
+          setPageCanvasPromise(promise);
+          promise.then(onCompletion).catch(() => onFail());
+        } else if (resetZoom) {
+          // If we already have a promise and we're resetting zoom, we're inserting an element.
+          // This means that the callback might have changed and we need to handle the promise again.
+          // Wait one tick for the zoom to settle in.
+          setTimeout(() => {
+            pageCanvasPromise.then(onCompletion).catch(() => onFail());
+          });
+        }
       }
     },
     [
       currentPage,
       fullbleedContainer,
       pageCanvasData,
+      pageCanvasPromise,
+      setPageCanvasPromise,
       setPageCanvasData,
       setZoomSetting,
       zoomSetting,
