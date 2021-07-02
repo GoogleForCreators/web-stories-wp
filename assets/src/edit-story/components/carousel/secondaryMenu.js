@@ -27,7 +27,12 @@ import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
 import { useHelpCenter } from '../../app';
-import { Checklist, useChecklist, useCheckpoint } from '../checklist';
+import {
+  Checklist,
+  ChecklistCountProvider,
+  useChecklist,
+  useCheckpoint,
+} from '../checklist';
 
 const Wrapper = styled.div`
   display: flex;
@@ -116,7 +121,9 @@ function SecondaryMenu() {
         <Space />
         {enableChecklistCompanion && (
           <>
-            <Checklist />
+            <ChecklistCountProvider>
+              <Checklist />
+            </ChecklistCountProvider>
             <Space />
           </>
         )}

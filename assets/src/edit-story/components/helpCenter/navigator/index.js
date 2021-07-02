@@ -19,7 +19,7 @@
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { themeHelpers } from '@web-stories-wp/design-system';
 
 /**
@@ -43,12 +43,22 @@ export const NavigationWrapper = styled.div`
   left: 0;
   bottom: 0;
   max-height: calc(100vh - ${DISTANCE_FROM_TOP + DISTANCE_FROM_BOTTOM}px);
-  width: ${NAVIGATION_WIDTH}px;
+  width: ${NAVIGATION_WIDTH + 2}px; /* account for border width */
   color: ${({ theme }) => theme.colors.fg.primary};
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  overflow-y: hidden;
+  overflow: hidden;
+
+  ${({ isOpen }) =>
+    !isOpen &&
+    css`
+      &,
+      * {
+        height: 0;
+        visibility: hidden;
+      }
+    `}
 `;
 
 const Layout = styled.div`
@@ -63,6 +73,7 @@ const ContentInner = styled.div`
 
 export function Navigator({
   children,
+  isOpen,
   onClose,
   onNext,
   onPrev,
@@ -89,7 +100,7 @@ export function Navigator({
   );
 
   return (
-    <NavigationWrapper>
+    <NavigationWrapper isOpen={isOpen}>
       <TopNavigation
         onClose={onClose}
         label={__('Quick Tips', 'web-stories')}
@@ -113,6 +124,7 @@ export function Navigator({
 }
 
 Navigator.propTypes = {
+  isOpen: PropTypes.bool,
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
   onNext: PropTypes.func.isRequired,

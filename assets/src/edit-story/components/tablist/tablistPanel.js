@@ -48,7 +48,7 @@ const TablistPanel = ({
   className,
   isExpanded,
   onClick,
-  panelMaxHeight,
+  maxHeight,
   status = PANEL_STATES.NORMAL,
   title,
 }) => {
@@ -81,7 +81,7 @@ const TablistPanel = ({
           <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
-      <Scrollable maxHeight={panelMaxHeight}>
+      <Scrollable maxHeight={maxHeight}>
         <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
           {children}
         </TabPanel>
@@ -95,7 +95,7 @@ TablistPanel.propTypes = {
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
-  panelMaxHeight: PropTypes.string,
+  maxHeight: PropTypes.string,
   status: PropTypes.oneOf(Object.values(PANEL_STATES)),
   title: PropTypes.string.isRequired,
 };
