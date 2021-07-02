@@ -53,11 +53,6 @@ function getConfig(group, { coverage = false } = {}) {
             !(plugin instanceof DependencyExtractionWebpackPlugin) &&
             !(plugin instanceof HtmlWebpackPlugin)
         ),
-        // React Testing Library checks for this variable, but webpack does
-        // no longer polyfill `process` in the browser.
-        new webpack.DefinePlugin({
-          'process.env.RTL_SKIP_AUTO_CLEANUP': false,
-        }),
       ],
     }))[0];
   if (coverage) {
