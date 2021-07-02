@@ -25,6 +25,12 @@ import styled from 'styled-components';
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import { useFeature } from 'flagged';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Tooltip,
+} from '@web-stories-wp/design-system';
 import { useLocalMedia, useStory } from '../../../app';
 import { VIDEO_SIZE_THRESHOLD } from '../../../app/media/utils/useFFmpeg';
 import { PRIORITY_COPY } from '../constants';
@@ -35,14 +41,8 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { filterStoryElements } from '../utils/filterStoryElements';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  Tooltip,
-} from '../../../../design-system';
 import { useHighlights } from '../../../app/highlights';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 
 const OptimizeButton = styled(Button)`
