@@ -2,7 +2,7 @@
 
 Contributors:      google
 Tested up to:      5.7
-Requires at least: 5.3
+Requires at least: 5.5
 Stable tag:        V.V.V
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
@@ -109,6 +109,31 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.8.1 =
+
+**Release Date:** June 30, 2021.
+
+* New feature: 5 beautifully designed templates for creators to choose from.
+* Fixes an issue with elements disappearing when using certain animations.
+
+= 1.8.0 =
+
+**Release Date:** June 16, 2021.
+
+* New feature: a "quick actions" menu next to the canvas for convenient access to common tools.
+* Image filters can now be applied to non-background images.
+* Improved animation curves in the story templates.
+* Fixes an issue with links and AMP validation.
+
+= 1.7.2 =
+
+**Release Date:** May 20, 2021.
+
+* New feature: optimize videos directly from the pre-publish checklist.
+* New feature: get notified about missing video posters in the pre-publish checklist.
+* Fixes an issue with the preview mode not working anymore.
+* Improves compatibility with Jetpack VideoPress.
+
 = 1.7.1 =
 
 **Release Date:** May 13, 2021.
@@ -199,6 +224,18 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+
+5 new templates for inspiring story creation, plus some bug fixes related to animations.
+
+= 1.8.0 =
+
+Quick actions menu, filters on non-background images, and bug fixes and performance improvements.
+
+= 1.7.2 =
+
+Restored preview mode, video optimization in the pre-publish checklist, and improved VideoPress support.
 
 = 1.7.1 =
 

@@ -26,6 +26,7 @@ import { filterEditorState } from 'draftjs-filters';
 import weightFormatter from './formatters/weight';
 import italicFormatter from './formatters/italic';
 import underlineFormatter from './formatters/underline';
+import uppercaseFormatter from './formatters/uppercase';
 
 export function getFilteredState(editorState, oldEditorState) {
   const shouldFilterPaste =
@@ -59,22 +60,23 @@ function getStateFromCommmand(command, oldEditorState) {
     case 'underline':
       return underlineFormatter.setters.toggleUnderline(oldEditorState);
 
+    case 'uppercase':
+      return uppercaseFormatter.setters.toggleUppercase(oldEditorState);
+
     default:
       return null;
   }
 }
 
-export const getHandleKeyCommandFromState = (setEditorState) => (
-  command,
-  currentEditorState
-) => {
-  const newEditorState = getStateFromCommmand(command, currentEditorState);
-  if (newEditorState) {
-    setEditorState(newEditorState);
-    return 'handled';
-  }
-  return 'not-handled';
-};
+export const getHandleKeyCommandFromState =
+  (setEditorState) => (command, currentEditorState) => {
+    const newEditorState = getStateFromCommmand(command, currentEditorState);
+    if (newEditorState) {
+      setEditorState(newEditorState);
+      return 'handled';
+    }
+    return 'not-handled';
+  };
 
 export function getSelectionForAll(content) {
   const firstBlock = content.getFirstBlock();

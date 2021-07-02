@@ -89,8 +89,9 @@ describe('prepublish checklist', () => {
         image: [...actual.image, mockFn],
       };
     });
-    const getPrepublishErrorsCopy = jest.requireActual('../getPrepublishErrors')
-      .default;
+    const getPrepublishErrorsCopy = jest.requireActual(
+      '../getPrepublishErrors'
+    ).default;
     const malformedStory = {
       title: undefined,
       pages: [{ elements: [{ type: 'image', height: 1, width: 1 }] }],

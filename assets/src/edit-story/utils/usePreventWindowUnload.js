@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
-import { createContext, useContext } from '../../design-system';
+import { createContext, useContext } from '@web-stories-wp/design-system';
 
 const PreventUnloadContext = createContext({ listeners: new Map() });
 

@@ -21,16 +21,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Text,
+  THEME_CONSTANTS,
+  useSnackbar,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
-import {
-  Text,
-  THEME_CONSTANTS,
-  useSnackbar,
-} from '../../../../../design-system';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import TemplateList from './templateList';
@@ -46,15 +46,12 @@ function SavedTemplates({ pageSize, loadTemplates, ...rest }) {
     actions: { deletePageTemplate },
   } = useAPI();
 
-  const {
-    savedTemplates,
-    setSavedTemplates,
-    nextTemplatesToFetch,
-  } = useLibrary((state) => ({
-    savedTemplates: state.state.savedTemplates,
-    nextTemplatesToFetch: state.state.nextTemplatesToFetch,
-    setSavedTemplates: state.actions.setSavedTemplates,
-  }));
+  const { savedTemplates, setSavedTemplates, nextTemplatesToFetch } =
+    useLibrary((state) => ({
+      savedTemplates: state.state.savedTemplates,
+      nextTemplatesToFetch: state.state.nextTemplatesToFetch,
+      setSavedTemplates: state.actions.setSavedTemplates,
+    }));
 
   const { showSnackbar } = useSnackbar();
 

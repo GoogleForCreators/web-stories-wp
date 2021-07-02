@@ -21,23 +21,25 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useCallback, forwardRef } from 'react';
+import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
+import {
+  BUTTON_TRANSITION_TIMING,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_TRANSITION_TIMING,
-  ThemeGlobals,
-} from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
-import { dataToEditorX, dataToEditorY } from '../../../../../units';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { focusStyle } from '../../../../panels/shared';
 import TextSetElements from './textSetElements';
 
-const TextSetItem = styled.div`
+const TextSetItem = styled.button`
+  border: 0;
+  background: none;
   position: absolute;
   top: 0;
   height: ${TEXT_SET_SIZE}px;
@@ -93,8 +95,8 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   }, [elements, insertTextSet]);
 
   const handleKeyboardPageClick = useCallback(
-    ({ key }) => {
-      if (key === 'Enter') {
+    ({ code }) => {
+      if (code === 'Enter' || code === 'Space') {
         onClick();
       }
     },
@@ -106,8 +108,6 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
     <TextSetItem
-      role="listitem"
-      tabIndex={0}
       translateX={translateX}
       translateY={translateY}
       ref={ref}
@@ -120,10 +120,6 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
         elements={elements}
         elementProps={{}}
         onClick={onClick}
-        previewSize={{
-          width: TEXT_SET_SIZE,
-          height: TEXT_SET_SIZE,
-        }}
         cloneElement={DragContainer}
         cloneProps={{
           width: dragWidth,

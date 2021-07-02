@@ -34,33 +34,28 @@ use Google\Web_Stories\Media\Media;
  *
  * @package Google\Web_Stories\Migrations
  */
-class Add_Poster_Generation_Media_Source extends Migrate_Base {
+class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 
 	/**
 	 * Migration media post meta to taxonomy term.
 	 *
 	 * @since 1.7.0
 	 *
-	 * @global \wpdb $wpdb WordPress database abstraction object.
-	 *
 	 * @return void
 	 */
 	public function migrate() {
-		global $wpdb;
+		wp_insert_term( $this->get_term_name(), Media::STORY_MEDIA_TAXONOMY );
+		parent::migrate();
+	}
 
-		wp_insert_term( 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
-
-		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->prepare(
-				"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s",
-				Media::POSTER_POST_META_KEY
-			)
-		);
-
-		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
-			foreach ( $post_ids as $post_id ) {
-				wp_set_object_terms( (int) $post_id, 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
-			}
-		}
+	/**
+	 * Get name of meta key to be used in migration.
+	 *
+	 * @since 1.7.2
+	 *
+	 * @return string
+	 */
+	protected function get_post_meta_key() {
+		return Media::POSTER_POST_META_KEY;
 	}
 }

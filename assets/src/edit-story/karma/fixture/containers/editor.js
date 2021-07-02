@@ -24,6 +24,9 @@ import { Carousel } from './carousel';
 import { Library } from './library';
 import { Inspector } from './inspector';
 import { Header } from './header';
+import { HelpCenter } from './helpCenter';
+import { Checklist } from './checklist';
+
 /**
  * The complete editor container, including library, canvas, inspector, etc.
  */
@@ -79,6 +82,22 @@ export class Editor extends Container {
       }),
       'gridView',
       GridView
+    );
+  }
+
+  get helpCenter() {
+    return this._get(
+      this.getByRole('region', { name: 'Page Carousel' }),
+      'helpCenter',
+      HelpCenter
+    );
+  }
+
+  get checklist() {
+    return this._get(
+      this.getByRole('region', { name: 'Checklist' }),
+      'checklist',
+      Checklist
     );
   }
 }

@@ -20,7 +20,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -28,7 +28,6 @@ import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input, Text, THEME_CONSTANTS } from '../../../../../design-system';
 
 const InputRow = styled(Row)`
   margin-left: 34px;
@@ -41,7 +40,11 @@ const HelperText = styled(Text).attrs({
 `;
 
 function StatusPanel() {
-  const { status = '', password: savedPassword, updateStory } = useStory(
+  const {
+    status = '',
+    password: savedPassword,
+    updateStory,
+  } = useStory(
     ({
       state: {
         story: { status, password },

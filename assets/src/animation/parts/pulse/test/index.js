@@ -24,28 +24,50 @@ describe('Pulse Effect', () => {
     it('should return correct keyframes based on scale', () => {
       // scale > 1
       let scale = 2;
-      let intensity = scale;
-      let shrink = 1 - intensity;
-      let expand = 1 + intensity;
+      let expand = 1 + scale;
+      let shrink = 1 - scale / 10;
 
       expect(generatePulseKeyframes(scale)).toStrictEqual([
-        { transform: `scale(1)`, offset: 0.0 },
-        { transform: `scale(${shrink})`, offset: 0.25 },
-        { transform: `scale(${expand})`, offset: 0.75 },
-        { transform: `scale(1)`, offset: 1.0 },
+        {
+          transform: 'scale(1)',
+          offset: 0.0,
+        },
+        {
+          transform: `scale(${expand})`,
+          offset: 0.33,
+        },
+        {
+          transform: `scale(${shrink})`,
+          offset: 0.66,
+        },
+        {
+          transform: 'scale(1)',
+          offset: 1.0,
+        },
       ]);
 
       // scale < 1
       scale = 0.5;
-      intensity = scale;
-      shrink = 1 - intensity;
-      expand = 1 + intensity;
+      expand = 1 + scale;
+      shrink = 1 - scale / 10;
 
       expect(generatePulseKeyframes(scale)).toStrictEqual([
-        { transform: `scale(1)`, offset: 0.0 },
-        { transform: `scale(${shrink})`, offset: 0.25 },
-        { transform: `scale(${expand})`, offset: 0.75 },
-        { transform: `scale(1)`, offset: 1.0 },
+        {
+          transform: 'scale(1)',
+          offset: 0.0,
+        },
+        {
+          transform: `scale(${expand})`,
+          offset: 0.33,
+        },
+        {
+          transform: `scale(${shrink})`,
+          offset: 0.66,
+        },
+        {
+          transform: 'scale(1)',
+          offset: 1.0,
+        },
       ]);
     });
   });

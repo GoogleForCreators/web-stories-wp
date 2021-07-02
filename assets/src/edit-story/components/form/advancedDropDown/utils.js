@@ -22,8 +22,8 @@ export const isKeywordFilterable = (keyword) => keyword.trim().length >= 2;
 
 export const getOptions = (groups) => groups.flatMap(({ options }) => options);
 
-export const addUniqueEntry = (key) => (array) => [
-  ...new Set(array.concat([key])),
+export const addUniqueEntries = (array, ...keys) => [
+  ...new Set(array.concat(keys)),
 ];
 
 export const getInset = (groups, i, j) =>

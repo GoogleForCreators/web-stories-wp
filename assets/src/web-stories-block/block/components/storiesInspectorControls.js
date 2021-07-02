@@ -62,7 +62,6 @@ const StyledToggle = styled(ToggleControl)`
  * StoriesInspectorControls props.
  *
  * @typedef StoriesInspectorControlsProps
- *
  * @property {string} viewType String indicator of active view type.
  * @property {number} numOfStories Number indicator of maximum number of stories to show.
  * @property {number} numOfColumns Number indicator of number of columns in grid view type.
@@ -82,7 +81,6 @@ const StyledToggle = styled(ToggleControl)`
  * LatestStoriesBlockControls component. Used for rendering block controls of the block.
  *
  * @param {StoriesInspectorControlsProps} props Component props.
- *
  * @return {*} JSX markup.
  */
 const StoriesInspectorControls = (props) => {
@@ -144,11 +142,13 @@ const StoriesInspectorControls = (props) => {
     });
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values on viewType change.
 
-  const ArchiveLink = () => (
-    <a target="__blank" href={archiveURL}>
-      {__('View archive page', 'web-stories')}
-    </a>
-  );
+  const ArchiveLink = () => {
+    return archiveURL ? (
+      <a target="__blank" href={archiveURL}>
+        {__('View archive page', 'web-stories')}
+      </a>
+    ) : null;
+  };
 
   const handleToggleControl = (field) => {
     setAttributes({

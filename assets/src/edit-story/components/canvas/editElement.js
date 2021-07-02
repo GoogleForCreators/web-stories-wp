@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -30,7 +31,6 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '../../elements/shared';
-import { useUnits } from '../../units';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`
@@ -66,12 +66,7 @@ function EditElement({ element }) {
 
   return (
     <>
-      <Wrapper
-        aria-labelledby={`layer-${id}`}
-        {...box}
-        onMouseDown={(evt) => evt.stopPropagation()}
-        ref={setEditWrapper}
-      >
+      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={setEditWrapper}>
         <Edit
           element={
             localProperties ? { ...element, ...localProperties } : element

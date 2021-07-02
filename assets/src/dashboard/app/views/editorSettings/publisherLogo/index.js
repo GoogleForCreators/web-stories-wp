@@ -20,6 +20,11 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  useGridViewKeys,
+  useFocusOut,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -32,11 +37,6 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import {
-  useGridViewKeys,
-  useFocusOut,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 import { useConfig } from '../../../config';
 import { GridItem } from './gridItem';
 import { PopoverLogoContextMenuPropTypes } from './popoverLogoContextMenu';
@@ -83,9 +83,10 @@ function PublisherLogoSettings({
 
   const [contextMenuId, setContextMenuId] = useState(null);
 
-  const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
-    publisherLogos,
-  ]);
+  const publisherLogosById = useMemo(
+    () => publisherLogos.map(({ id }) => id),
+    [publisherLogos]
+  );
 
   const hasOnlyOneLogo = publisherLogosById.length === 1;
 

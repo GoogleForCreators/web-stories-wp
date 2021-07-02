@@ -18,12 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
+import { useHelpCenter } from '../../app';
+import { Checklist, useChecklist, useCheckpoint } from '../checklist';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,11 +58,68 @@ const Space = styled.span`
 `;
 
 function SecondaryMenu() {
+  const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
+    ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
+      close,
+      isHelpCenterOpen,
+    })
+  );
+
+  const {
+    close: closeChecklist,
+    open: openChecklist,
+    isChecklistOpen,
+  } = useChecklist(
+    ({ actions: { close, open }, state: { isOpen: isChecklistOpen } }) => ({
+      close,
+      open,
+      isChecklistOpen,
+    })
+  );
+
+  const { onResetReviewDialogRequest, reviewDialogRequested } = useCheckpoint(
+    ({
+      actions: { onResetReviewDialogRequest },
+      state: { reviewDialogRequested },
+    }) => ({
+      reviewDialogRequested,
+      onResetReviewDialogRequest,
+    })
+  );
+
+  // Only one popup is open at a time
+  // we want to close an open popup if a new one is opened.
+  useEffect(() => {
+    if (isChecklistOpen) {
+      closeHelpCenter();
+    }
+  }, [closeHelpCenter, isChecklistOpen]);
+
+  useEffect(() => {
+    if (isHelpCenterOpen) {
+      closeChecklist();
+    }
+  }, [closeChecklist, isHelpCenterOpen]);
+
+  useEffect(() => {
+    if (reviewDialogRequested) {
+      onResetReviewDialogRequest();
+      openChecklist();
+    }
+  }, [reviewDialogRequested, onResetReviewDialogRequest, openChecklist]);
+
+  const enableChecklistCompanion = useFeature('enableChecklistCompanion');
   return (
     <Wrapper>
       <MenuItems>
         <HelpCenter />
         <Space />
+        {enableChecklistCompanion && (
+          <>
+            <Checklist />
+            <Space />
+          </>
+        )}
         <Box>
           <KeyboardShortcutsMenu />
         </Box>

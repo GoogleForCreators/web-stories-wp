@@ -19,11 +19,7 @@
  */
 import { sprintf, __ } from '@web-stories-wp/i18n';
 import { useState, useCallback, useRef, useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useLiveRegion } from '../../../design-system';
+import { useLiveRegion } from '@web-stories-wp/design-system';
 
 /* translators: %d: new position. */
 const REORDER_MESSAGE = __(
@@ -39,15 +35,16 @@ function useReordering(onPositionChange, numChildren) {
 
   const speak = useLiveRegion('assertive');
   const handleStartReordering = useCallback(
-    ({ position: currentPos, onStartReordering = () => {} }) => (evt) => {
-      // Only allow reordering with non-modified click on non-background element.
-      // Modified (shift+ or meta+) clicks are for selection.
-      if (!evt.shiftKey && !evt.metaKey) {
-        onStartReordering();
-        setCurrentPosition(currentPos);
-        setDragTarget(evt.target);
-      }
-    },
+    ({ position: currentPos, onStartReordering = () => {} }) =>
+      (evt) => {
+        // Only allow reordering with non-modified click on non-background element.
+        // Modified (shift+ or meta+) clicks are for selection.
+        if (!evt.shiftKey && !evt.metaKey) {
+          onStartReordering();
+          setCurrentPosition(currentPos);
+          setDragTarget(evt.target);
+        }
+      },
     []
   );
 

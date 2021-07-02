@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useInsertElement } from '../../../../canvas';
-import createSolid from '../../../../../utils/createSolid';
 import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { useStory } from '../../../../../app/story';
 import { DEFAULT_PRESET } from '../../../../library/panes/text/textPresets';
@@ -136,6 +140,14 @@ describe('Panel: Style Presets', () => {
         fixture.editor.inspector.designPanel.textStylePreset.delete;
       expect(deletePresetButton).toBeTruthy();
       await fixture.events.click(deletePresetButton);
+
+      // Confirm in the dialog since it's a global preset.
+      await waitFor(() => {
+        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      });
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: 'Delete' })
+      );
 
       // Verify the edit mode was exited (due to removing all elements).
       expect(

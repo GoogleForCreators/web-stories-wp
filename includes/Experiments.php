@@ -220,6 +220,28 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 7965
+			 * Creation date: 2021-06-18
+			 */
+			[
+				'name'        => 'enableChecklistCompanion',
+				'label'       => __( 'Enable Checklist Companion', 'web-stories' ),
+				'description' => __( 'Enables v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @samwhale
+			 * Issue: 6153
+			 * Creation date: 2021-06-07
+			 */
+			[
+				'name'        => 'enableRightClickMenus',
+				'label'       => __( 'Enable Right Click Menus', 'web-stories' ),
+				'description' => __( 'Adds a contextual shortcut menu when right clicking in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: 6148
 			 * Creation date: 2021-05-11
@@ -229,6 +251,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
 				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -251,18 +274,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
 				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 5880
-			 * Creation date: 2021-01-19
-			 */
-			[
-				'name'        => 'enableQuickTips',
-				'label'       => __( 'Quick Tips', 'web-stories' ),
-				'description' => __( 'Enable quick tips for first time user experience (FTUE)', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @carlos-kelly
@@ -353,29 +364,6 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #3134
-			 * Creation date: 2020-10-28
-			 */
-			[
-				'name'        => 'customMetaBoxes',
-				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
-				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #6943
-			 * Creation date: 2021-04-07
-			 */
-			[
-				'name'        => 'enablePrePublishVideoOptimization',
-				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
-				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #3126
 			 * Creation date: 2021-02-02
@@ -385,18 +373,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Post locking', 'web-stories' ),
 				'description' => __( 'Enable post locking', 'web-stories' ),
 				'group'       => 'general',
-			],
-			/**
-			 * Author: @miina
-			 * Issue: #7055
-			 * Creation date: 2021-04-09
-			 */
-			[
-				'name'        => 'customPageTemplates',
-				'label'       => __( 'Custom Page Templates', 'web-stories' ),
-				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}

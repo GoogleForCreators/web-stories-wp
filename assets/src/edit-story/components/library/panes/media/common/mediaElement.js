@@ -17,19 +17,17 @@
 /**
  * External dependencies
  */
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
-
+import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
@@ -57,34 +55,6 @@ const InnerContainer = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.3)};
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
-  }
-`;
-
-const gradientAnimation = keyframes`
-    0% { background-position:0% 50% }
-    50% { background-position:100% 50% }
-    100% { background-position:0% 50% }
-`;
-
-const UploadingIndicator = styled.div`
-  height: 4px;
-  background: linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%);
-  background-size: 400% 400%;
-  position: absolute;
-  bottom: 10px;
-
-  animation: ${gradientAnimation} 4s ease infinite;
-
-  &.uploading-indicator {
-    &.appear {
-      width: 0;
-    }
-
-    &.appear-done {
-      width: 100%;
-      transition: 1s ease-out;
-      transition-property: width;
-    }
   }
 `;
 
@@ -237,9 +207,7 @@ function Element({
         />
         {attribution}
         {local && (
-          <CSSTransition in appear timeout={0} className="uploading-indicator">
-            <UploadingIndicator />
-          </CSSTransition>
+          <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && (
           <DropDownMenu

@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createContext } from '../../../../design-system';
+import { createContext } from '@web-stories-wp/design-system';
 
 const panelContext = createContext({ state: {}, actions: {} });
 

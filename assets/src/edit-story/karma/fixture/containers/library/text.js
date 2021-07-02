@@ -29,11 +29,11 @@ export default class Text extends Container {
   }
 
   get textSetList() {
-    return this.getByRole('list', { name: /Text Sets/ });
+    return this.getByRole('list', { name: /Text Set Options/ });
   }
 
   get textSets() {
-    return this.getAllByRole('listitem');
+    return this.getAllByRoleIn(this.textSetList, 'button');
   }
 
   textSetFilter(name) {

@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from 'react';
-
 /**
  * Internal dependencies
  */
@@ -50,9 +49,10 @@ function DropTargetsProvider({ children }) {
     })
   );
 
-  const elements = useMemo(() => currentPage?.elements || [], [
-    currentPage?.elements,
-  ]);
+  const elements = useMemo(
+    () => currentPage?.elements || [],
+    [currentPage?.elements]
+  );
 
   const sortedDropTargetIds = useMemo(
     () =>

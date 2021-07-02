@@ -21,6 +21,11 @@ import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -37,11 +42,6 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../../components';
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
-} from '../../../../../../design-system';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(

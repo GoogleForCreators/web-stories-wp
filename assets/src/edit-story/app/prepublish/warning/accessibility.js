@@ -15,6 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import {
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+  dataToFontSizeY,
+  dataFontEm,
+  getBox,
+  getBoundRect,
+} from '@web-stories-wp/units';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
+/**
  * Internal dependencies
  */
 import {
@@ -22,15 +34,11 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
-import getBoundRect from '../../../utils/getBoundRect';
-import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
-import { dataToFontSizeY, dataFontEm, getBox } from '../../../units/dimensions';
-import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
 import {
   setOrCreateImage,
   getImgNodeId,
 } from '../../../utils/getMediaBaseColor';
+import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { states } from '../../highlights';
 
 const MAX_PAGE_LINKS = 3;
@@ -42,12 +50,10 @@ const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
  * @typedef {import('../../../types').Element} Element
  * @typedef {import('../types').Guidance} Guidance
  * @typedef {import('../types').Page} Page
- *
  * @typedef RGB The shape of color objects used for calculating color use against accessibility standards
  * @property {number} r red value
  * @property {number} g green value
  * @property {number} b blue value
- *
  */
 
 let spansFromContentBuffer;

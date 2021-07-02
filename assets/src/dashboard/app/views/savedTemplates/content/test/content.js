@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { SnackbarProvider } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -26,15 +27,17 @@ import { renderWithProviders } from '../../../../../testUtils';
 import { formattedTemplatesArray } from '../../../../../storybookUtils';
 import { VIEW_STYLE, SAVED_TEMPLATES_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '..';
 
 jest.mock(
   '../../../../../../edit-story/components/previewPage/previewPage.js',
   () => () => null
 );
-jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
-  children
+jest.mock(
+  '../../../../../app/font/fontProvider.js',
+  () =>
+    ({ children }) =>
+      children
 );
 
 describe('Saved Templates <Content />', function () {

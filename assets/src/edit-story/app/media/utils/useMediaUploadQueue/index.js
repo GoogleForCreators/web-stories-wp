@@ -23,17 +23,23 @@ import {
   trackEvent,
   getTimeTracker,
 } from '@web-stories-wp/tracking';
+import {
+  createBlob,
+  getImageDimensions,
+  getFileName,
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import { useUploader } from '../../../uploader';
 import useReduction from '../../../../utils/useReduction';
-import { createBlob } from '../../../../utils/blobs';
+import { noop } from '../../../../utils/noop';
+import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
-import getImageDimensions from '../getImageDimensions';
+import getPosterName from '../getPosterName';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -53,6 +59,9 @@ function useMediaUploadQueue() {
   } = useFFmpeg();
 
   const [state, actions] = useReduction(initialState, reducer);
+  const { uploadVideoPoster } = useUploadVideoFrame({
+    updateMediaElement: noop,
+  });
   const {
     startUploading,
     finishUploading,
@@ -77,8 +86,14 @@ function useMediaUploadQueue() {
           }
 
           try {
-            const newResource = await getResourceFromLocalFile(file);
-            replacePlaceholderResource({ id, resource: newResource });
+            const { resource: newResource, posterFile } =
+              await getResourceFromLocalFile(file);
+
+            replacePlaceholderResource({
+              id,
+              resource: newResource,
+              posterFile,
+            });
           } catch {
             // Not interested in errors here.
           }
@@ -118,7 +133,11 @@ function useMediaUploadQueue() {
               width,
               height,
             };
-            replacePlaceholderResource({ id, resource: newResource });
+            replacePlaceholderResource({
+              id,
+              resource: newResource,
+              posterFile: videoFrame,
+            });
           } catch {
             // Not interested in errors here.
           }
@@ -141,10 +160,21 @@ function useMediaUploadQueue() {
     async function uploadItems() {
       await Promise.all(
         state.queue.map(async (item) => {
-          const { id, file, state: itemState, resource, additionalData } = item;
+          const {
+            id,
+            file,
+            state: itemState,
+            resource,
+            additionalData,
+            posterFile,
+          } = item;
           if ('PENDING' !== itemState) {
             return;
           }
+
+          const originalFileName = getFileName(file);
+          const fileName = getPosterName(originalFileName);
+          let newResource;
 
           if (
             !isFeatureEnabled ||
@@ -166,10 +196,12 @@ function useMediaUploadQueue() {
 
             try {
               const attachment = await uploadFile(file, additionalData);
-              finishUploading({
-                id,
-                resource: getResourceFromAttachment(attachment),
-              });
+
+              // The newly uploaded file won't have a poster yet.
+              // However, we'll likely still have one on file.
+              // Add it back so we're never without one.
+              // The final poster will be uploaded later by uploadVideoPoster().
+              newResource = getResourceFromAttachment(attachment);
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -177,6 +209,31 @@ function useMediaUploadQueue() {
               trackError('upload_media', error?.message);
             } finally {
               trackTiming();
+            }
+
+            if (newResource.id) {
+              try {
+                const { poster, posterId } = await uploadVideoPoster(
+                  newResource.id,
+                  fileName,
+                  posterFile
+                );
+                const newResourceWithPoster = {
+                  ...newResource,
+                  poster: poster || newResource.poster || resource.poster,
+                  posterId,
+                };
+
+                finishUploading({
+                  id,
+                  resource: newResourceWithPoster,
+                });
+              } catch (error) {
+                finishUploading({
+                  id,
+                  resource: newResource,
+                });
+              }
             }
 
             return;
@@ -201,21 +258,37 @@ function useMediaUploadQueue() {
             // However, we'll likely still have one on file.
             // Add it back so we're never without one.
             // The final poster will be uploaded later by uploadVideoPoster().
-            const newResource = getResourceFromAttachment(attachment);
-            const newResourceWithPoster = {
-              ...newResource,
-              poster: newResource.poster || resource.poster,
-            };
-
-            finishUploading({
-              id,
-              resource: newResourceWithPoster,
-            });
+            newResource = getResourceFromAttachment(attachment);
           } catch (error) {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });
 
             trackError('upload_media', error?.message);
+          }
+
+          if (newResource.id) {
+            try {
+              const { poster, posterId } = await uploadVideoPoster(
+                newResource.id,
+                fileName,
+                posterFile
+              );
+              const newResourceWithPoster = {
+                ...newResource,
+                poster: poster || newResource.poster || resource.poster,
+                posterId,
+              };
+
+              finishUploading({
+                id,
+                resource: newResourceWithPoster,
+              });
+            } catch (error) {
+              finishUploading({
+                id,
+                resource: newResource,
+              });
+            }
           }
         })
       );
@@ -234,6 +307,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
+    uploadVideoPoster,
   ]);
 
   return useMemo(

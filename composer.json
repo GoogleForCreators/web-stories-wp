@@ -5,14 +5,14 @@
   "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
   "require": {
-    "php": "^5.6.20 || ^7.0 || ^8.0",
+    "php": "^7.0 || ^8.0",
     "ext-dom": "*",
     "ext-iconv": "*",
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
     "ampproject/amp-toolbox": "0.5.1",
-    "ampproject/amp-wp": "2.1.1",
+    "ampproject/amp-wp": "2.1.2",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "enshrined/svg-sanitize": "^0.14.0",
@@ -31,7 +31,6 @@
     "php-stubs/wordpress-stubs": "^5.7",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
-    "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "wp-coding-standards/wpcs": "^2.3",
@@ -40,7 +39,7 @@
   "config": {
     "discard-changes": true,
     "platform": {
-      "php": "5.6.20"
+      "php": "7.0.0"
     },
     "sort-packages": true
   },

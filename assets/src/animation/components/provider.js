@@ -27,14 +27,19 @@ import {
   useState,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import 'web-animations-js/web-animations-next-lite.min.js';
+import { createContext } from '@web-stories-wp/design-system';
+
+if (!('KeyframeEffect' in window)) {
+  import(
+    /* webpackChunkName: "web-animations-js" */ 'web-animations-js/web-animations-next-lite.min.js'
+  ).catch(() => undefined);
+}
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../edit-story/types';
 import { clamp } from '../utils/range';
-import { createContext } from '../../design-system';
 import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
 

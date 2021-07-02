@@ -19,12 +19,11 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { THEME_CONSTANTS, Text } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../design-system/theme/constants';
-import { Text } from '../../../../design-system/components/typography/text';
 import useDesignPanels from './useDesignPanels';
 import DesignPanel from './designPanel';
 
@@ -40,11 +39,8 @@ const Note = styled(Text)`
 `;
 
 function DesignPanels() {
-  const {
-    panels,
-    createSubmitHandlerForPanel,
-    panelProperties,
-  } = useDesignPanels();
+  const { panels, createSubmitHandlerForPanel, panelProperties } =
+    useDesignPanels();
   if (!panels?.length) {
     return (
       <NoSelection>

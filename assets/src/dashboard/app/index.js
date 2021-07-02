@@ -24,10 +24,6 @@ Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackScreenView } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   theme as externalDesignSystemTheme,
   lightMode,
@@ -36,7 +32,12 @@ import {
   SnackbarProvider,
   Snackbar,
   ModalGlobalStyle,
-} from '../../design-system';
+  usePrevious,
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
@@ -47,7 +48,6 @@ import {
 } from '../constants';
 
 import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
-import usePrevious from '../../design-system/utils/usePrevious';
 import ApiProvider from './api/apiProvider';
 import { ConfigProvider } from './config';
 import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
@@ -145,12 +145,8 @@ const AppContent = () => {
     matchPath(currentPath, NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL);
 
   useApiAlerts();
-  const {
-    clearSnackbar,
-    removeSnack,
-    placement,
-    currentSnacks,
-  } = useSnackbar();
+  const { clearSnackbar, removeSnack, placement, currentSnacks } =
+    useSnackbar();
 
   // if the current path changes clear the snackbar
   const prevPath = usePrevious(currentPath);

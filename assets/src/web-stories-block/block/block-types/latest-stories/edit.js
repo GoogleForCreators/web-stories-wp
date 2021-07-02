@@ -51,17 +51,11 @@ const LATEST_STORIES_QUERY = {
  * @param {Object}   root0               Component props.
  * @param {Object}   root0.attributes    Block attributes.
  * @param {Function} root0.setAttributes Callable function for saving attribute values.
- *
  * @return {*} JSX markup for the editor.
  */
 const LatestStoriesEdit = ({ attributes, setAttributes }) => {
-  const {
-    numOfStories,
-    order,
-    orderby,
-    archiveLinkLabel,
-    authors,
-  } = attributes;
+  const { numOfStories, order, orderby, archiveLinkLabel, authors } =
+    attributes;
 
   const { api } = useConfig();
 
@@ -90,7 +84,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
     }
   };
 
-  const [debouncedFetchStories] = useDebouncedCallback(
+  const debouncedFetchStories = useDebouncedCallback(
     fetchStories,
     FETCH_STORIES_DEBOUNCE
   );

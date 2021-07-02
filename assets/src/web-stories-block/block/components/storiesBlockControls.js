@@ -41,7 +41,6 @@ import BlockTypeSwitcher from './blockTypeSwitcher';
  * StoriesBlockControls props.
  *
  * @typedef StoriesBlockControlsProps
- *
  * @property {string}    viewType     String indicator of active view type.
  * @property {Function} setAttributes Callable function for saving attribute values.
  */
@@ -50,7 +49,6 @@ import BlockTypeSwitcher from './blockTypeSwitcher';
  * LatestStoriesBlockControls component. Used for rendering block controls of the block.
  *
  * @param {StoriesBlockControlsProps} props Component props.
- *
  * @return {*} JSX markup.
  */
 const StoriesBlockControls = ({ blockType, viewType, setAttributes }) => {

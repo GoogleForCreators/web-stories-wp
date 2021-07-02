@@ -19,15 +19,11 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   createContext,
   useContextSelector,
   identity,
-} from '../../design-system';
+} from '@web-stories-wp/design-system';
 
 export const NavContext = createContext({ actions: {}, state: {} });
 

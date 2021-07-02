@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { OverlayType } from '../../../../../utils/backgroundOverlay';
+import { OverlayType } from '../../../../../utils/overlay';
 import convertOverlay from '../convertOverlay';
 
 describe('convertOverlay', () => {

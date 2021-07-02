@@ -18,20 +18,15 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
+import { ResourcePropTypes } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import { AnimationProps } from '../animation/parts/types';
-import { OverlayType } from './utils/backgroundOverlay';
+import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
-
-export const HexPropType = PropTypes.shape({
-  r: PropTypes.number.isRequired,
-  g: PropTypes.number.isRequired,
-  b: PropTypes.number.isRequired,
-  a: PropTypes.number,
-});
 
 export const BorderPropTypes = PropTypes.shape({
   color: HexPropType.isRequired,
@@ -41,27 +36,6 @@ export const BorderPropTypes = PropTypes.shape({
   bottom: PropTypes.number,
   locked: PropTypes.bool.isRequired,
   position: PropTypes.string.isRequired,
-});
-
-export const ColorStopPropType = PropTypes.shape({
-  color: HexPropType.isRequired,
-  position: PropTypes.number.isRequired,
-});
-
-export const PatternPropType = PropTypes.shape({
-  type: PropTypes.oneOf(['solid', 'linear', 'radial']),
-  color: HexPropType,
-  stops: PropTypes.arrayOf(ColorStopPropType),
-  rotation: PropTypes.number,
-  alpha: PropTypes.number,
-  center: PropTypes.shape({
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-  }),
-  size: PropTypes.shape({
-    w: PropTypes.number.isRequired,
-    h: PropTypes.number.isRequired,
-  }),
 });
 
 export const StylePresetPropType = PropTypes.shape({
@@ -128,95 +102,8 @@ StoryPropTypes.page = PropTypes.shape({
   id: PropTypes.string.isRequired,
   animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
-  backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
+  overlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
-
-StoryPropTypes.resourceSize = PropTypes.shape({
-  file: PropTypes.string,
-  source_url: PropTypes.string.isRequired,
-  mime_type: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-});
-
-StoryPropTypes.imageResourceSizes = PropTypes.shape({
-  full: StoryPropTypes.resourceSize,
-  large: StoryPropTypes.resourceSize,
-  web_stories_thumbnail: StoryPropTypes.resourceSize,
-});
-
-StoryPropTypes.videoResourceSizes = PropTypes.oneOfType([
-  PropTypes.array,
-  PropTypes.shape({
-    full: StoryPropTypes.resourceSize,
-    preview: StoryPropTypes.resourceSize,
-  }),
-]);
-
-StoryPropTypes.imageResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  alt: PropTypes.string,
-  title: PropTypes.string,
-  sizes: StoryPropTypes.imageResourceSizes,
-});
-
-StoryPropTypes.trackResource = PropTypes.shape({
-  id: PropTypes.string.isRequired,
-  track: PropTypes.string.isRequired,
-  trackId: PropTypes.number,
-  trackName: PropTypes.string.isRequired,
-  kind: PropTypes.string,
-  srclang: PropTypes.string,
-  label: PropTypes.string,
-});
-
-StoryPropTypes.videoResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  poster: PropTypes.string,
-  posterId: PropTypes.number,
-  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
-  alt: PropTypes.string,
-  title: PropTypes.string,
-  sizes: StoryPropTypes.videoResourceSizes,
-});
-
-StoryPropTypes.gifResource = PropTypes.shape({
-  type: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  mimeType: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-  title: PropTypes.string,
-  alt: PropTypes.string,
-  local: PropTypes.bool,
-  sizes: PropTypes.imageResourceSizes,
-  output: PropTypes.shape({
-    mimeType: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    sizes: PropTypes.shape({
-      mp4: StoryPropTypes.videoResourceSizes,
-      webm: StoryPropTypes.videoResourceSizes,
-    }),
-  }),
-});
-
-StoryPropTypes.resource = PropTypes.oneOfType([
-  StoryPropTypes.imageResource,
-  StoryPropTypes.videoResource,
-  StoryPropTypes.trackResource,
-  StoryPropTypes.gifResource,
-]);
 
 const StoryLayerPropTypes = {
   id: PropTypes.string.isRequired,
@@ -258,22 +145,22 @@ StoryPropTypes.elements = {};
 StoryPropTypes.elements.image = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
-  resource: StoryPropTypes.imageResource,
+  resource: ResourcePropTypes.imageResource,
 });
 
 StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
-  resource: StoryPropTypes.videoResource,
+  resource: ResourcePropTypes.videoResource,
   poster: PropTypes.string,
-  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
+  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   loop: PropTypes.bool,
 });
 
 StoryPropTypes.elements.gif = PropTypes.shape({
   ...StoryElementPropTypes,
   ...StoryMediaPropTypes,
-  resource: StoryPropTypes.gifResource,
+  resource: ResourcePropTypes.gifResource,
 });
 
 StoryPropTypes.elements.media = PropTypes.oneOfType([

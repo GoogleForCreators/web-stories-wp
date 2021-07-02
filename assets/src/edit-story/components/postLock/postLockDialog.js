@@ -19,17 +19,17 @@
  */
 import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Dialog from '../dialog';
 import { Img } from './shared';
 
@@ -47,7 +47,7 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
   const dialogContent = sprintf(
     /* translators: %s: user's name */
     __(
-      '%s is already editing this story. Do you want to take over? ',
+      '%s is already editing this story. Do you want to take over?',
       'web-stories'
     ),
     user?.name

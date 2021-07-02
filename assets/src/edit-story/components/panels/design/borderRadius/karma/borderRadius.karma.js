@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -82,6 +85,8 @@ describe('Border Radius Panel', () => {
 
       // Take off lock.
       await fixture.events.click(panel.lockBorderRadius);
+      // Focus the input first so that tooltip is not in the way of click.
+      await fixture.events.focus(panel.radius('Bottom left'));
       await fixture.events.click(panel.radius('Bottom left'), {
         clickCount: 3,
       });
@@ -92,18 +97,21 @@ describe('Border Radius Panel', () => {
       const {
         borderRadius: { topLeft, topRight, bottomLeft, bottomRight },
       } = element;
-      expect(topLeft).toBe(0);
-      expect(topRight).toBe(0);
-      expect(bottomLeft).toBe(50);
-      expect(bottomRight).toBe(0);
-      expect(element.borderRadius).toEqual(
-        jasmine.objectContaining({
-          topLeft: 0,
-          topRight: 0,
-          bottomLeft: 50,
-          bottomRight: 0,
-        })
-      );
+
+      await waitFor(() => {
+        expect(topLeft).toBe(0);
+        expect(topRight).toBe(0);
+        expect(bottomLeft).toBe(50);
+        expect(bottomRight).toBe(0);
+        expect(element.borderRadius).toEqual(
+          jasmine.objectContaining({
+            topLeft: 0,
+            topRight: 0,
+            bottomLeft: 50,
+            bottomRight: 0,
+          })
+        );
+      });
 
       await fixture.snapshot('Media element with bottom left corner radius');
     });

@@ -51,7 +51,12 @@ function RichTextProvider({ children }) {
     if (editorState) {
       return getStateInfo(editorState);
     }
-    return { isBold: false, isItalic: false, isUnderline: false };
+    return {
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      isUppercase: false,
+    };
   }, [editorState]);
 
   const setStateFromContent = useCallback(
@@ -66,7 +71,7 @@ function RichTextProvider({ children }) {
       let selection;
       if (selectAll) {
         selection = getSelectionForAll(state.getCurrentContent());
-      } else if (offset) {
+      } else if (!isNaN(offset)) {
         selection = getSelectionForOffset(state.getCurrentContent(), offset);
       }
       if (selection) {

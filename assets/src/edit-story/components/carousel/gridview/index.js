@@ -21,10 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useRef, useCallback } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
+import { PAGE_RATIO } from '@web-stories-wp/units';
 import {
   Slider,
   Button,
@@ -34,9 +31,12 @@ import {
   Icons,
   useResizeEffect,
   useGridViewKeys,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig, useStory } from '../../../app';
-import { PAGE_RATIO } from '../../../constants';
 import {
   Reorderable,
   ReorderableSeparator,

@@ -19,14 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import { getTotalDuration, StoryAnimation } from '../../animation';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
-import generatePatternStyles from '../utils/generatePatternStyles';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
@@ -91,12 +90,10 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
                 <OutputElement element={backgroundElement} />
-                {backgroundElement.backgroundOverlay && (
+                {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
-                    style={generatePatternStyles(
-                      backgroundElement.backgroundOverlay
-                    )}
+                    style={generatePatternStyles(backgroundElement.overlay)}
                   />
                 )}
               </div>

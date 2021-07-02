@@ -18,12 +18,13 @@
  */
 import { useCallback, useState, useEffect, useMemo, useReducer } from 'react';
 import PropTypes from 'prop-types';
+import { usePrevious } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { useStory, useStoryTriggerListener, STORY_EVENTS } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
-import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useLayout } from '../../../app/layout';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish/constants';
 import Context from './context';
@@ -51,9 +52,8 @@ function PrepublishChecklistProvider({ children }) {
   const isChecklistEmpty = checkpointState === PPC_CHECKPOINT_STATE.NO_ISSUES;
 
   const [currentList, setCurrentList] = useState([]);
-  const [isChecklistReviewRequested, setIsChecklistReviewRequested] = useState(
-    false
-  );
+  const [isChecklistReviewRequested, setIsChecklistReviewRequested] =
+    useState(false);
 
   const handleRefreshList = useCallback(async () => {
     const pagesWithSize = story.pages.map((page) => ({

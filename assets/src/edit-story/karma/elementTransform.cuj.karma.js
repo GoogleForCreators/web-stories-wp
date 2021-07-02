@@ -88,9 +88,7 @@ describe('Element transform', () => {
         const widthAfter = window.getComputedStyle(frame).width;
         // It should just be within a pixel of correct
         expect(parseInt(widthAfter) - parseInt(widthBefore)).toBeOneOf([
-          19,
-          20,
-          21,
+          19, 20, 21,
         ]);
       });
     });

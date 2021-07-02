@@ -20,12 +20,10 @@ import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { useFeatures } from 'flagged';
-
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
 import { useConfig } from '../../../../app';
 import {
   PRE_PUBLISH_MESSAGE_TYPES,
@@ -64,13 +62,9 @@ const ChecklistTab = ({
     isRTL,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const { enablePrePublishVideoOptimization } = useFeatures();
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
-
-  const canOptimizeVideo =
-    hasUploadMediaAction && enablePrePublishVideoOptimization;
 
   const { isHighPriorityDisabledState, isRecommendedDisabledState } = useMemo(
     () => ({
@@ -90,7 +84,7 @@ const ChecklistTab = ({
         // look at it.
         .filter((item) =>
           item.message === MESSAGES.MEDIA.VIDEO_NOT_OPTIMIZED.MAIN_TEXT
-            ? canOptimizeVideo
+            ? hasUploadMediaAction
             : true
         )
         .reduce(
@@ -142,7 +136,7 @@ const ChecklistTab = ({
             pages: {},
           }
         ),
-    [checklist, canOptimizeVideo]
+    [checklist, hasUploadMediaAction]
   );
 
   const getOnPrepublishSelect = useCallback(
@@ -225,7 +219,7 @@ const ChecklistTab = ({
   const hasRecommendedItems =
     Boolean(recommended.length) ||
     Boolean(pages.lengths?.recommended) ||
-    (canOptimizeVideo && !areVideosAutoOptimized);
+    (hasUploadMediaAction && !areVideosAutoOptimized);
   const isRecommendedVisible =
     !isRecommendedDisabledState && hasRecommendedItems;
 
@@ -286,7 +280,7 @@ const ChecklistTab = ({
           }
           ariaLabel={TEXT.RECOMMENDED_TITLE}
         >
-          {canOptimizeVideo && (
+          {hasUploadMediaAction && (
             <AutoVideoOptimization
               areVideosAutoOptimized={areVideosAutoOptimized}
               onAutoOptimizeVideoClick={onAutoVideoOptimizationClick}

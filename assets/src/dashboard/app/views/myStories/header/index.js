@@ -23,10 +23,10 @@ import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
+import { Pill } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Pill } from '../../../../../design-system';
 import { useLayoutContext } from '../../../../components';
 import {
   DASHBOARD_VIEWS,
@@ -153,7 +153,7 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+  const debouncedSearchChange = useDebouncedCallback(async (value) => {
     await trackEvent('search', {
       search_type: 'dashboard',
       search_term: value,

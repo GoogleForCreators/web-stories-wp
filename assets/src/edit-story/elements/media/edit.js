@@ -21,7 +21,10 @@ import styled, { css } from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-
+import {
+  getMediaSizePositionProps,
+  calculateSrcSet,
+} from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
@@ -34,8 +37,7 @@ import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import useUnmount from '../../utils/useUnmount';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import EditCropMoveable from './editCropMoveable';
-import { calculateSrcSet, mediaWithScale } from './util';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
+import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { MEDIA_MASK_OPACITY } from './constants';
@@ -162,6 +164,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   const fadedMediaProps = {
     ref: setFullMedia,
     draggable: false,
+    alt: '',
     opacity: opacity / 100,
     ...mediaProps,
   };
@@ -220,6 +223,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
   return (
     <Element ref={elementRef}>
       {isImage && (
+        /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
         <FadedImage
           {...fadedMediaProps}
           src={resource.src}
@@ -227,6 +231,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
         />
       )}
       {isVideo && (
+        //eslint-disable-next-line styled-components-a11y/media-has-caption -- Faded video doesn't need captions.
         <FadedVideo {...fadedMediaProps}>
           {resource.src && (
             <source src={resource.src} type={resource.mimeType} />
@@ -235,8 +240,10 @@ function MediaEdit({ element, box, setLocalProperties }) {
       )}
       <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill applyFlip={false} box={box}>
+          {/* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */}
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
+            /*eslint-disable-next-line styled-components-a11y/media-has-caption -- Tracks might not exist. Also, unwanted in edit mode. */
             <CropVideo {...cropMediaProps}>
               <source src={resource.src} type={resource.mimeType} />
             </CropVideo>

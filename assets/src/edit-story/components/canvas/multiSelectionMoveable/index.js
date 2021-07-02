@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from 'react';
-
+import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
@@ -27,7 +27,6 @@ import Moveable from '../../moveable';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
-import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
@@ -42,15 +41,12 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
 
-  const {
-    updateElementsById,
-    deleteElementsById,
-    backgroundElement,
-  } = useStory((state) => ({
-    updateElementsById: state.actions.updateElementsById,
-    deleteElementsById: state.actions.deleteElementsById,
-    backgroundElement: state.state.currentPage.elements[0] ?? {},
-  }));
+  const { updateElementsById, deleteElementsById, backgroundElement } =
+    useStory((state) => ({
+      updateElementsById: state.actions.updateElementsById,
+      deleteElementsById: state.actions.deleteElementsById,
+      backgroundElement: state.state.currentPage.elements[0] ?? {},
+    }));
   const { nodesById, fullbleedContainer } = useCanvas(
     ({ state: { nodesById, fullbleedContainer } }) => ({
       fullbleedContainer,

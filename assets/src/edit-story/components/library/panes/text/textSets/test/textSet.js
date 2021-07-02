@@ -15,18 +15,21 @@
  */
 
 /**
+ * External dependencies
+ */
+import { UnitsProvider, getBox, PAGE_RATIO } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
 import LibraryContext from '../../../../context';
-import { getBox } from '../../../../../../units/dimensions';
 import TransformContext from '../../../../../transform/context';
 import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
 import ConfigContext from '../../../../../../app/config/context';
 import TextSet from '../textSet';
 import { renderWithTheme } from '../../../../../../testUtils';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
-import { UnitsProvider } from '../../../../../../units';
+import { TEXT_SET_SIZE } from '../../../../../../constants';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';
 import CanvasContext from '../../../../../../app/canvas/context';

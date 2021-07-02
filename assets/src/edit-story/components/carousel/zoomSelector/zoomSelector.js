@@ -19,13 +19,14 @@
  */
 import { useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
-import { __, _x } from '@web-stories-wp/i18n';
+import { __, _x, sprintf } from '@web-stories-wp/i18n';
+import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
-import { DropDown, PLACEMENT } from '../../../../design-system';
 
 const selectButtonCSS = css`
   height: 36px;
@@ -43,32 +44,56 @@ const StyledDropDown = styled(DropDown)`
 const ZOOM_OPTIONS = [
   {
     label: _x('100%', 'zoom level', 'web-stories'),
-    value: ZOOM_SETTING.SINGLE,
+    value: 1,
   },
   {
     label: _x('200%', 'zoom level', 'web-stories'),
-    value: ZOOM_SETTING.DOUBLE,
+    value: 2,
   },
   { label: _x('Fill', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FILL },
   { label: _x('Fit', 'zoom level', 'web-stories'), value: ZOOM_SETTING.FIT },
 ];
 
 function ZoomSelector() {
-  const { zoomSetting, setZoomSetting } = useLayout(
-    ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
+  const { zoomSetting, zoomLevel, setZoomSetting, setZoomLevel } = useLayout(
+    ({
+      state: { zoomSetting, zoomLevel },
+      actions: { setZoomSetting, setZoomLevel },
+    }) => ({
       zoomSetting,
+      zoomLevel,
       setZoomSetting,
+      setZoomLevel,
     })
   );
 
-  const placeholder = useMemo(
-    () => ZOOM_OPTIONS.find(({ value }) => value === zoomSetting).label,
-    [zoomSetting]
-  );
+  const placeholder = useMemo(() => {
+    const option = ZOOM_OPTIONS.find(({ value }) => {
+      if (zoomSetting === ZOOM_SETTING.FIXED) {
+        return value === zoomLevel;
+      }
+      return value === zoomSetting;
+    });
+    if (option) {
+      return option.label;
+    }
+    return sprintf(
+      /* translators: 1: zoom level percentage value. */
+      _x('%1$d%%', 'zoom level', 'web-stories'),
+      Math.round(zoomLevel * 100)
+    );
+  }, [zoomSetting, zoomLevel]);
 
-  const handleSetZoom = useCallback((_event, value) => setZoomSetting(value), [
-    setZoomSetting,
-  ]);
+  const handleSetZoom = useCallback(
+    (_event, value) => {
+      if (Object.prototype.hasOwnProperty.call(ZOOM_SETTING, value)) {
+        setZoomSetting(value);
+      } else {
+        setZoomLevel(value);
+      }
+    },
+    [setZoomSetting, setZoomLevel]
+  );
 
   return (
     <StyledDropDown

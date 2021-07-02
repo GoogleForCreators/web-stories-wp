@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
-
+import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> as the header is interacted with', () => {

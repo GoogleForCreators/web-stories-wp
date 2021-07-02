@@ -26,11 +26,10 @@ import getAllTemplates from '@web-stories-wp/templates';
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
-
+import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { addQueryArgs } from '../../../design-system';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
@@ -225,7 +224,6 @@ function APIProvider({ children }) {
    *
    * @param {File}    file           Media File to Save.
    * @param {?Object} additionalData Additional data to include in the request.
-   *
    * @return {Promise} Media Object Promise.
    */
   const uploadMedia = useCallback(

@@ -21,10 +21,12 @@ import { useMemo, useRef, useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  getBoundRect,
+  calcRotatedObjectPositionAndSize,
+} from '@web-stories-wp/units';
 import {
   useKeyDownEffect,
   Icons,
@@ -33,12 +35,12 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   themeHelpers,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../app';
-import getBoundRect, {
-  calcRotatedObjectPositionAndSize,
-} from '../../../../utils/getBoundRect';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../../constants';
 import { Panel } from '../../panel';
 import Tooltip from '../../../tooltip';
 import useAlignment from './useAlignment';

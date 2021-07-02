@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
+/**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '../../../../../design-system/components/keyboard';
 import {
   COLOR_PRESETS_PER_ROW,
   STYLE_PRESETS_PER_ROW,

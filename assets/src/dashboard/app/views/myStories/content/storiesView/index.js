@@ -22,15 +22,15 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-/**
- * Internal dependencies
- */
 import {
   LoadingSpinner,
   useSnackbar,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {
@@ -192,7 +192,8 @@ function StoriesView({
       menuItemActions: {
         default: () => setContextMenuId(-1),
         [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]: handleCreateTemplateFromStory,
+        [STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE]:
+          handleCreateTemplateFromStory,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
         [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
         [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,

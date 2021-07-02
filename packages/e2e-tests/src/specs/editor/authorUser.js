@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -27,31 +22,12 @@ import {
   previewStory,
   addTextElement,
   insertStoryTitle,
+  withUser,
+  publishStory,
 } from '@web-stories-wp/e2e-test-utils';
 
-async function publishStory() {
-  await expect(page).toClick('button', { text: 'Publish' });
-  // Bypass checklist
-  await page.waitForSelector('.ReactModal__Content');
-  await expect(page).toClick('button', {
-    text: /Continue to publish/,
-  });
-  await expect(page).toMatch('Story published.');
-  await expect(page).toClick('button', { text: 'Dismiss' });
-  await expect(page).toMatchElement('button', {
-    text: 'Switch to Draft',
-  });
-  await expect(page).toClick('button', { text: 'Update' });
-}
-
 describe('Author User', () => {
-  beforeAll(async () => {
-    await loginUser('author', 'password');
-  });
-
-  afterAll(async () => {
-    await switchUserToAdmin();
-  });
+  withUser('author', 'password');
 
   it('should be able to directly preview a story without markup being stripped', async () => {
     await createNewStory();

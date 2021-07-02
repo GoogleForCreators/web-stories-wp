@@ -15,6 +15,10 @@
  */
 
 /**
+ * External dependencies
+ */
+import { revokeBlob } from '@web-stories-wp/media';
+/**
  * Internal dependencies
  */
 import {
@@ -26,9 +30,8 @@ import {
   startTranscoding,
   startUploading,
 } from '../reducer';
-import { revokeBlob } from '../../../../../utils/blobs';
 
-jest.mock('../../../../../utils/blobs', () => ({
+jest.mock('@web-stories-wp/media', () => ({
   revokeBlob: jest.fn(),
 }));
 
@@ -108,6 +111,7 @@ describe('useMediaUploadQueue', () => {
               src: 'foo',
             },
             state: 'UPLOADING',
+            posterFile: {},
           },
         ],
       };
@@ -126,6 +130,7 @@ describe('useMediaUploadQueue', () => {
           {
             id: 123,
             file: {},
+            posterFile: null,
             resource: {
               src: 'bar',
             },

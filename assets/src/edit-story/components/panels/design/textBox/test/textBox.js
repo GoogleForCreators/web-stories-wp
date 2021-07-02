@@ -115,9 +115,8 @@ describe('Panels/TextBox', () => {
 
       // Test that element with hidden padding retains hidden padding
       const withHiddenPadding = { hasHiddenPadding: true };
-      const updatedPropertiesWithHiddenPadding = pufoUpdateArg(
-        withHiddenPadding
-      );
+      const updatedPropertiesWithHiddenPadding =
+        pufoUpdateArg(withHiddenPadding);
       const expectedPropertiesWithHiddenPadding = [
         'horizontal',
         'vertical',

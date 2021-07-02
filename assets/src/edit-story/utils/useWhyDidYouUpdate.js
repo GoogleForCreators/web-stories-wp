@@ -25,7 +25,6 @@ import { useEffect, useRef } from 'react';
  * Only used for development, and removed for production builds.
  *
  * @see https://github.com/gragland/usehooks
- *
  * @param {string} name Component name.
  * @param {Object} props Component props.
  */

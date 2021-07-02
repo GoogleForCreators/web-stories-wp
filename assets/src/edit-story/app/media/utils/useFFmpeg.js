@@ -18,18 +18,19 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { getFileName } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
-  MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES,
+  MEDIA_POSTER_IMAGE_MIME_TYPE,
+  MEDIA_POSTER_IMAGE_EXT,
 } from '../../../constants';
-import getFileName from './getFileName';
+import getPosterName from './getPosterName';
 
 export const VIDEO_SIZE_THRESHOLD = {
   HEIGHT: 720,
@@ -42,7 +43,6 @@ const isDevelopment = WEB_STORIES_ENV === 'development';
  * Checks whether the file size is too large for transcoding.
  *
  * @see https://github.com/ffmpegwasm/ffmpeg.wasm/tree/9b56b7f05b552c404aa0f62f46bed2592d9daf06#what-is-the-maximum-size-of-input-file
- *
  * @param {File} file File object.
  * @param {number} file.size File size.
  * @return {boolean} Whether the file is too  large.
@@ -50,21 +50,23 @@ const isDevelopment = WEB_STORIES_ENV === 'development';
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 /**
+ * @typedef FFmpegData
+ * @property {boolean} isFeatureEnabled Whether the feature is enabled.
+ * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
+ * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
+ * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
+ * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
+ * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
+ */
+
+/**
  * Custom hook to interact with FFmpeg.
  *
  * @see https://ffmpeg.org/ffmpeg.html
- *
- * @return {{
- * isFeatureEnabled: boolean,
- * isFileTooLarge: (file: File) => boolean,
- * isTranscodingEnabled: boolean,
- * canTranscodeFile: (file: File) => boolean,
- * transcodeVideo: (file: File) => Promise<File>,
- * getFirstFrameOfVideo: (file: File) => Promise<File>
- * }} Functions and vars related to FFmpeg usage.
+ * @return {FFmpegData} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl } = useConfig();
+  const { ffmpegCoreUrl, allowedTranscodableMimeTypes } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -108,8 +110,9 @@ function useFFmpeg() {
     try {
       const ffmpeg = await getFFmpegInstance(file);
 
-      const tempFileName = uuidv4() + '.jpeg';
-      const outputFileName = getFileName(file) + '.jpeg';
+      const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_EXT;
+      const originalFileName = getFileName(file);
+      const outputFileName = getPosterName(originalFileName);
 
       await ffmpeg.run(
         // Desired position.
@@ -139,10 +142,10 @@ function useFFmpeg() {
 
       const data = ffmpeg.FS('readFile', tempFileName);
       return new File(
-        [new Blob([data.buffer], { type: 'image/jpeg' })],
+        [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
         outputFileName,
         {
-          type: 'image/jpeg',
+          type: MEDIA_POSTER_IMAGE_MIME_TYPE,
         }
       );
     } catch (err) {
@@ -221,7 +224,7 @@ function useFFmpeg() {
    * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = (file) =>
-    MEDIA_TRANSCODING_SUPPORTED_INPUT_TYPES.includes(file.type);
+    allowedTranscodableMimeTypes.includes(file.type);
 
   /**
    * Whether user opted in to video optimization.

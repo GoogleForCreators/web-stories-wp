@@ -17,11 +17,11 @@
  * External dependencies
  */
 import ResizeObserver from 'resize-observer-polyfill';
+import { BEZIER } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../design-system';
 import { TRANSITION_DURATION } from '../constants';
 
 /**

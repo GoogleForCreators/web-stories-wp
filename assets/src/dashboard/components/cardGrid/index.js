@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { forwardRef } from 'react';
+import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../types';
-import { ThemeGlobals, themeHelpers } from '../../../design-system';
 import { GRID_SPACING } from '../../constants';
 
 const DashboardGrid = styled.div`
@@ -59,6 +59,9 @@ const CardGrid = forwardRef(function CardGrid(
       ref={ref}
       role="list"
       data-testid={'dashboard-grid-list'}
+      // Disable Reason: We need to focus this div to engage with `useGridViewKeys`
+      // which is critical to avoiding focus traps for keyboard users.
+      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
       tabIndex={0}
       aria-label={ariaLabel}
       columnWidth={pageSize.width}

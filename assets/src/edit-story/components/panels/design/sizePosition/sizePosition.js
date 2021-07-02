@@ -22,10 +22,10 @@ import styled from 'styled-components';
 import { useCallback, useMemo } from 'react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
-
-/**
- * Internal dependencies
- */
+import {
+  calcRotatedObjectPositionAndSize,
+  dataPixels,
+} from '@web-stories-wp/units';
 import {
   Button,
   LockToggle,
@@ -34,14 +34,15 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { dataPixels } from '../../../../units';
 import { getDefinitionForType } from '../../../../elements';
-import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
-import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import {
   focusStyle,
   getCommonValue,
@@ -50,6 +51,7 @@ import {
 } from '../../shared';
 import Tooltip from '../../../tooltip';
 import useStory from '../../../../app/story/useStory';
+import { getMediaBaseColor } from '../../../../utils/getMediaBaseColor';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';

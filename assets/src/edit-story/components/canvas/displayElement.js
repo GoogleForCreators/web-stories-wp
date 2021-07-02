@@ -20,6 +20,8 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
@@ -32,8 +34,6 @@ import {
 } from '../../elements/shared';
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
-import { useUnits } from '../../units';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
 import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
 import {
@@ -42,10 +42,24 @@ import {
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 
-const Wrapper = styled.div`
-  ${elementWithPosition}
-  ${elementWithSize}
-  ${elementWithRotation}
+// Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
+const Wrapper = styled.div.attrs(
+  ({ previewMode, x, y, width, height, rotationAngle }) => {
+    const style = {
+      position: 'absolute',
+      zIndex: 1,
+      left: `${x}px`,
+      top: `${y}px`,
+      width: `${width}px`,
+      height: `${height}px`,
+      transform: `rotate(${rotationAngle}deg)`,
+    };
+    return previewMode ? { style } : {};
+  }
+)`
+  ${({ previewMode }) => !previewMode && elementWithPosition}
+  ${({ previewMode }) => !previewMode && elementWithSize}
+  ${({ previewMode }) => !previewMode && elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
 
@@ -102,7 +116,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     opacity,
     type,
     isBackground,
-    backgroundOverlay,
+    overlay,
     border = {},
     flip,
   } = element;
@@ -115,12 +129,13 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
         scale: replacement.scale,
         focalX: replacement.focalX,
         focalY: replacement.focalY,
-        // Okay, this is a bit weird, but... the flip property is taken from the dragged image
+        // Okay, this is a bit weird, but... the flip and overlay properties are taken from the dragged image
         // if the drop-target is the background element, but from the original drop-target image
         // itself if the drop-target is a regular element.
         //
         // @see compare with similar logic in `combineElements`
         flip: isBackground ? replacement.flip : flip,
+        overlay: isBackground ? replacement.overlay : overlay,
       }
     : null;
 
@@ -166,6 +181,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       ref={wrapperRef}
       data-element-id={id}
       isBackground={element.isBackground}
+      previewMode={previewMode}
       {...box}
     >
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
@@ -204,10 +220,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             )}
           </ReplacementContainer>
         )}
-        {isBackground && backgroundOverlay && !hasReplacement && (
+        {isBackground && overlay && !hasReplacement && (
           <BackgroundOverlay
             ref={bgOverlayRef}
-            style={generatePatternStyles(backgroundOverlay)}
+            style={generatePatternStyles(overlay)}
           />
         )}
       </AnimationWrapper>

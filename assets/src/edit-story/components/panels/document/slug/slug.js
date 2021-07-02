@@ -20,6 +20,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Input,
+  Link,
+  ThemeGlobals,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -29,12 +35,6 @@ import cleanForSlug from '../../../../utils/cleanForSlug';
 import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import {
-  Input,
-  Link,
-  ThemeGlobals,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 import { inputContainerStyleOverride } from '../../shared';
 
 export const MIN_MAX = {
@@ -63,7 +63,12 @@ const LinkContainer = styled.div`
 `;
 
 function SlugPanel() {
-  const { slug: savedSlug, link, permalinkConfig, updateStory } = useStory(
+  const {
+    slug: savedSlug,
+    link,
+    permalinkConfig,
+    updateStory,
+  } = useStory(
     ({
       state: {
         story: { slug = '', link, permalinkConfig },
@@ -94,9 +99,10 @@ function SlugPanel() {
     []
   );
 
-  const handleBlur = useCallback((evt) => updateSlug(evt.target.value), [
-    updateSlug,
-  ]);
+  const handleBlur = useCallback(
+    (evt) => updateSlug(evt.target.value),
+    [updateSlug]
+  );
 
   const displayLink =
     slug && permalinkConfig && inRange(slug.length, MIN_MAX.PERMALINK)

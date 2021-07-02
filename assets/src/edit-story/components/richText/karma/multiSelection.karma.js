@@ -57,16 +57,11 @@ describe('Styling multiple text fields', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     // TODO #6955
+    // When fixing this, ensure that uppercase is also handled here.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply formatting correctly for identically styled text fields', async () => {
-      const {
-        bold,
-        italic,
-        underline,
-        fontWeight,
-        letterSpacing,
-        fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Select both text fields
       await selectBothTextFields();
@@ -125,6 +120,7 @@ describe('Styling multiple text fields', () => {
         bold,
         italic,
         underline,
+        uppercase,
         fontWeight,
         letterSpacing,
         fontColor,
@@ -141,6 +137,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
+      await data.fixture.events.click(uppercase.button);
       await data.fixture.events.click(fontWeight.select);
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(await fontWeight.option('Black'));
@@ -153,6 +150,7 @@ describe('Styling multiple text fields', () => {
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
+      expect(uppercase.checked).toBe(false);
       expect(fontWeight.value).toBe('Mixed');
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
@@ -174,12 +172,14 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
       await data.fixture.events.keyboard.press('Enter');
+      await data.fixture.events.click(uppercase.button);
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
       expect(underline.checked).toBe(true);
+      expect(uppercase.checked).toBe(true);
       expect(fontWeight.value).toBe('Bold');
       expect(letterSpacing.value).toBe('100%');
       expect(fontColor.hex.value).toBe('00FF00');
@@ -192,6 +192,7 @@ describe('Styling multiple text fields', () => {
         'text-decoration: underline',
         'color: #0f0',
         'letter-spacing: 1em',
+        'text-transform: uppercase',
       ].join('; ');
       const expected = `<span style="${css}">Fill in some text</span>`;
       expect(actual).toBe(expected);
@@ -202,10 +203,8 @@ describe('Styling multiple text fields', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black text field + bold text field non-bold when toggling', async () => {
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);
@@ -243,10 +242,8 @@ describe('Styling multiple text fields', () => {
     });
 
     it('should make bold text field + light text field bold when toggling', async () => {
-      const {
-        bold,
-        fontWeight,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      const { bold, fontWeight } =
+        data.fixture.editor.inspector.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);

@@ -22,7 +22,6 @@
  *
  * @param {number} progress - value between 0 and 1
  * @param {[number, number]} range - tuple that dictates a range between 2 numbers
- *
  * @return {number} value within given range
  */
 export const lerp = (progress, range) =>
@@ -34,7 +33,6 @@ export const lerp = (progress, range) =>
  *
  * @param {number} v - value to be clamped
  * @param {[number, number]} range - range in the form of a tuple
- *
  * @return {number} - number within range
  */
 export const clamp = (v, range) => {
@@ -55,7 +53,6 @@ export const clamp = (v, range) => {
  *
  * @param {*} v - value in range
  * @param {*} range - range in the form of a tuple
- *
  * @return {number} - progress value in the range [0, 1]
  */
 export const progress = (v, range) => {

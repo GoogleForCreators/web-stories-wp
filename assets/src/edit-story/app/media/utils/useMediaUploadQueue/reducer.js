@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
-import { revokeBlob } from '../../../../utils/blobs';
+import { revokeBlob } from '@web-stories-wp/media';
 
 /**
  * Add an item to the upload queue.
@@ -31,12 +27,13 @@ import { revokeBlob } from '../../../../utils/blobs';
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {File} action.payload.file File object.
- * @param {import('../createResource').Resource} action.payload.resource Resource object.
+ * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
  * @param {Function} action.payload.onUploadStart Callback for when upload starts.
  * @param {Function} action.payload.onUploadProgress Callback for when upload progresses.
  * @param {Function} action.payload.onUploadError Callback for when upload errors.
  * @param {Function} action.payload.onUploadSuccess Callback for when upload succeeds.
  * @param {Object}   action.payload.additionalData Additional Data object.
+ * @param {File} action.payload.posterFile File object.
  * @return {Object} New state
  */
 export function addItem(
@@ -50,6 +47,7 @@ export function addItem(
       onUploadError,
       onUploadSuccess,
       additionalData,
+      posterFile,
     },
   }
 ) {
@@ -67,6 +65,7 @@ export function addItem(
     onUploadError,
     onUploadSuccess,
     additionalData,
+    posterFile,
   };
 
   return {
@@ -105,7 +104,7 @@ export function startUploading(state, { payload: { id } }) {
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
- * @param {import('../createResource').Resource} action.payload.resource Resource object.
+ * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function finishUploading(state, { payload: { id, resource } }) {
@@ -126,6 +125,7 @@ export function finishUploading(state, { payload: { id, resource } }) {
         ? {
             ...item,
             resource,
+            posterFile: null,
             state: 'UPLOADED',
           }
         : item
@@ -221,12 +221,13 @@ export function finishTranscoding(state, { payload: { id, file } }) {
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
- * @param {import('../createResource').Resource} action.payload.resource Resource object.
+ * @param {File} action.payload.posterFile Poster file.
+ * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function replacePlaceholderResource(
   state,
-  { payload: { id, resource } }
+  { payload: { id, resource, posterFile } }
 ) {
   const queueItem = state.queue.find((item) => item.id === id);
   if (!queueItem || !queueItem.resource.isPlaceholder) {
@@ -249,6 +250,7 @@ export function replacePlaceholderResource(
               id,
               isPlaceholder: false,
             },
+            posterFile,
           }
         : item
     ),

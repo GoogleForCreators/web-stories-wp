@@ -23,19 +23,22 @@ import { useCallback, useState } from 'react';
 import { formatDate, toDate, isValid } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackError } from '@web-stories-wp/tracking';
-/**
- * Internal dependencies
- */
+import {
+  getSmallestUrlForWidth,
+  ResourcePropTypes,
+} from '@web-stories-wp/media';
 import {
   Input,
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
-import StoryPropTypes from '../../../../../types';
-import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import Dialog from '../../../../dialog';
 
 const THUMBNAIL_WIDTH = 152;
@@ -162,7 +165,7 @@ function MediaEditDialog({ resource, onClose }) {
             key={src}
             crossOrigin="anonymous"
             poster={poster}
-            preload="none"
+            preload="metadata"
             muted
           >
             <source src={src} type={mimeType} />
@@ -213,7 +216,7 @@ function MediaEditDialog({ resource, onClose }) {
 }
 
 MediaEditDialog.propTypes = {
-  resource: StoryPropTypes.resource.isRequired,
+  resource: ResourcePropTypes.resource.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 

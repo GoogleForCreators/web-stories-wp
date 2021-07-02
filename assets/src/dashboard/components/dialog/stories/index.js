@@ -19,17 +19,17 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Text,
   THEME_CONSTANTS,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Dialog from '../dialog';
 
 export default {

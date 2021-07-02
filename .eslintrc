@@ -9,7 +9,8 @@
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:jsdoc/recommended"
+    "plugin:jsdoc/recommended",
+    "plugin:styled-components-a11y/recommended"
   ],
   "plugins": [
     "@babel",
@@ -19,7 +20,8 @@
     "jsx-a11y",
     "markdown",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "styled-components-a11y"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -81,6 +83,7 @@
     "import/no-useless-path-segments": ["error", {
       "noUselessIndex": true
     }],
+    "jsx-a11y/label-has-for": "off",
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -185,12 +188,13 @@
       }
     ],
     "jsdoc/check-indentation": "error",
-    "jsdoc/check-syntax": "warn",
+    "jsdoc/check-syntax": "error",
     "jsdoc/require-jsdoc": ["off", {
       "publicOnly": true
     }],
     "jsdoc/require-returns": "warn",
     "jsdoc/require-param-description": "warn",
+    "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
@@ -461,7 +465,6 @@
       "files": [
         "assets/src/animation/**/*.js",
         "assets/src/dashboard/**/*.js",
-        "assets/src/design-system/**/*.js",
         "assets/src/edit-story/**/*.js",
         "packages/**/*.js"
       ],

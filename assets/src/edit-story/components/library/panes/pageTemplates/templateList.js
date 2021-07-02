@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-
+import { UnitsProvider } from '@web-stories-wp/units';
+import { useSnackbar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../units';
 import { PANE_PADDING } from '../shared';
 import {
   getVirtualizedItemIndex,
@@ -37,7 +37,6 @@ import {
 } from '../shared/virtualizedPanelGrid';
 import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
-import { useSnackbar } from '../../../../../design-system';
 import PageTemplate from './pageTemplate';
 
 const THRESHOLD = 6;
@@ -102,9 +101,10 @@ function TemplateList({
     horizontal: true,
     size: 2,
     parentRef,
-    estimateSize: useCallback(() => pageSize.width + PANEL_GRID_ROW_GAP, [
-      pageSize.width,
-    ]),
+    estimateSize: useCallback(
+      () => pageSize.width + PANEL_GRID_ROW_GAP,
+      [pageSize.width]
+    ),
     overscan: 0,
   });
 

@@ -23,11 +23,12 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { resourceList } from '@web-stories-wp/media';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Headline, THEME_CONSTANTS } from '../../../../../../design-system';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import {
@@ -40,7 +41,6 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import resourceList from '../../../../../utils/resourceList';
 import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
 

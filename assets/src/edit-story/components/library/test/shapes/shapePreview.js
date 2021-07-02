@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { act, screen } from '@testing-library/react';
+import { UnitsProvider, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -25,8 +26,7 @@ import { act, screen } from '@testing-library/react';
 import ShapePreview from '../../panes/shapes/shapePreview';
 import { renderWithTheme } from '../../../../testUtils';
 import useLibrary from '../../useLibrary';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../constants';
-import { UnitsProvider } from '../../../../units';
+import { TEXT_SET_SIZE } from '../../../../constants';
 import CanvasContext from '../../../../app/canvas/context';
 
 jest.mock('../../useLibrary');

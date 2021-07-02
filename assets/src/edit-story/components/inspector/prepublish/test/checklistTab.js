@@ -18,24 +18,17 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { noop } from '@web-stories-wp/design-system';
+import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils';
 
 /**
  * Internal dependencies
  */
-import { noop } from '../../../../../design-system';
-import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
 import { ConfigProvider } from '../../../../app/config';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../../app/prepublish';
 import ChecklistTab from '../components/checklistTab';
 import { TEXT } from '../constants';
 import { PPC_CHECKPOINT_STATE } from '../prepublishCheckpointState';
-
-jest.mock('flagged', () => ({
-  useFeature: () => true,
-  useFeatures: () => ({
-    enablePrePublishVideoOptimization: true,
-  }),
-}));
 
 const GUIDANCE_ERROR = {
   type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,

@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { dataPixels } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
-import { dataPixels } from '../units';
 import { calculateTextHeight } from './textMeasurements';
 import calcRotatedResizeOffset from './calcRotatedResizeOffset';
 

@@ -33,17 +33,19 @@ on:
       - '**/package.json'
       - 'package-lock.json'
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - name: Cancel previous
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -52,7 +54,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.2.0
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
@@ -82,11 +84,25 @@ jobs:
         run: npm run lint:css
 
       - name: JS Lint
+        run: npm run lint:js
+        if: >
+          github.event.pull_request.head.repo.fork == true ||
+          github.event.pull_request.user.login == 'dependabot[bot]'
+
+      - name: JS Lint Report
         run: npm run lint:js:report
         continue-on-error: true
+        # Prevent generating the ESLint report if PR is from a fork or authored by Dependabot.
+        if: >
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'
 
       - name: Annotate JS Lint Results
         uses: ataylorme/eslint-annotate-action@1.2.0
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           report-json: 'build/lint-js-report.json'
+        # The action cannot annotate the PR when run from a PR fork or authored by Dependabot.
+        if: >
+          github.event.pull_request.head.repo.fork == false &&
+          github.event.pull_request.user.login != 'dependabot[bot]'

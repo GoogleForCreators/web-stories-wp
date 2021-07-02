@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { SnackbarProvider } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { SnackbarProvider } from '../../../../../../design-system';
 import Content from '..';
 
 const fakeStories = [
@@ -70,8 +69,11 @@ jest.mock(
   () => () => null
 );
 
-jest.mock('../../../../../app/font/fontProvider.js', () => ({ children }) =>
-  children
+jest.mock(
+  '../../../../../app/font/fontProvider.js',
+  () =>
+    ({ children }) =>
+      children
 );
 
 describe('My Stories <Content />', function () {

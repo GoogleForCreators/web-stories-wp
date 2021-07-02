@@ -18,19 +18,18 @@
  * External dependencies
  */
 import { useEffect, useState } from 'react';
+import { usePrevious } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import useMetaBoxes from '../../../integrations/wordpress/metaBoxes/useMetaBoxes';
-import usePrevious from '../../../../design-system/utils/usePrevious';
 import { useAPI } from '../../api';
 
 /**
  * Effect to save meta boxes for a story.
  *
  * @see https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L24-L126
- *
  * @param {Object} props Hook props.
  * @param {Object} props.story Story object.
  * @param {boolean} props.isSaving Whether saving is in progress.

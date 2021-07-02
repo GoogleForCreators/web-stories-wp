@@ -18,11 +18,11 @@
  */
 import { useReducer, useEffect, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { createContext } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { createContext } from '../../../../design-system';
 import { STORY_EVENTS, StoryEventRegisters } from './storyEvents';
 
 export const Context = createContext({ state: {}, actions: {} });
@@ -75,10 +75,10 @@ export function StoryTriggersProvider({ children, story }) {
   );
 
   // Memoizing provider values
-  const value = useMemo(() => [addEventListener, dispatchStoryEvent], [
-    addEventListener,
-    dispatchStoryEvent,
-  ]);
+  const value = useMemo(
+    () => [addEventListener, dispatchStoryEvent],
+    [addEventListener, dispatchStoryEvent]
+  );
 
   return (
     <Context.Provider value={value}>

@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
+import { PAGE_RATIO, useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
@@ -27,8 +28,6 @@ import { useEffect, useRef, useMemo } from 'react';
 import { useStory, useCanvas } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import InOverlay from '../overlay';
-import { useUnits } from '../../units';
-import { PAGE_RATIO } from '../../constants';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
 
@@ -179,12 +178,8 @@ function SelectionCanvas({ children }) {
   const onMouseUp = () => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
-      const {
-        offsetLeft,
-        offsetTop,
-        offsetHeight,
-        offsetWidth,
-      } = fullbleedContainer;
+      const { offsetLeft, offsetTop, offsetHeight, offsetWidth } =
+        fullbleedContainer;
       const { offsetLeft: scrollLeft, offsetTop: scrollTop } = scrollContainer;
       // Offset from the fullbleed to the safe zone.
       const dx = offsetLeft + scrollLeft;
@@ -204,11 +199,14 @@ function SelectionCanvas({ children }) {
 
   useEffect(updateLasso);
 
+  // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
+  // See https://github.com/google/web-stories-wp/issues/7745.
   return (
     <Container
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
       onMouseUp={onMouseUp}
+      data-fix-caret
     >
       {children}
       <InOverlay ref={overlayRef}>

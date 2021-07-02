@@ -19,16 +19,12 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
-import { Link, THEME_CONSTANTS } from '../../../design-system';
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
 export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
-export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
+export const MAX_STORY_TITLE_LENGTH_CHARS = 70;
 const POSTER_DIMENSION_WIDTH_PX = 640;
 const POSTER_DIMENSION_HEIGHT_PX = 853;
 export const ASPECT_RATIO_LEFT = 3;
@@ -43,7 +39,6 @@ const MAX_STORY_CHARACTERS = 200;
 const MAX_CHARACTER_PERCENTAGE = 10;
 const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_FPS = 24;
-const MAX_VIDEO_RESOLUTION = 4000;
 const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 const MIN_TAP_REGION_WIDTH = 48;
@@ -186,19 +181,6 @@ export const MESSAGES = {
               /* translators: %s: aspect ratio.  */
               __('Maintain a %s aspect ratio', 'web-stories'),
               `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
-            )}
-          </li>
-        </ul>
-      ),
-    },
-    MISSING_VIDEO_POSTER: {
-      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
-      HELPER_TEXT: (
-        <ul>
-          <li>
-            {__(
-              'Ensure a better experience by displaying a poster while users wait for the video to load',
-              'web-stories'
             )}
           </li>
         </ul>
@@ -423,7 +405,7 @@ export const MESSAGES = {
     },
     STORY_TITLE_TOO_LONG: {
       MAIN_TEXT: sprintf(
-        /* translators: %d: minimum number of story characters. */
+        /* translators: %d: maximum number of story characters. */
         _n(
           'Shorten title to fewer than %d character',
           'Shorten title to fewer than %d characters',
@@ -620,25 +602,35 @@ export const MESSAGES = {
         </ul>
       ),
     },
-    VIDEO_RESOLUTION_TOO_HIGH: {
-      MAIN_TEXT: sprintf(
-        /* translators: %s: maximum video resolution. */
-        __('Reduce video resolution to less than %s', 'web-stories'),
-        `${MAX_VIDEO_RESOLUTION}p`
-      ),
+    VIDEO_NOT_OPTIMIZED: {
+      MAIN_TEXT: __('Optimize video size', 'web-stories'),
       HELPER_TEXT: (
         <ul>
           <li>
-            {__(
-              "Optimize reach and engagement by accounting for the large number of mobile devices don't support video resolutions larger than 4K",
-              'web-stories'
+            {sprintf(
+              /* translators: %s: video resolution (720p) */
+              __(
+                'Videos larger than %s can cause slower loading and higher bandwidth costs.',
+                'web-stories'
+              ),
+              '720p'
             )}
           </li>
         </ul>
       ),
     },
-    VIDEO_NOT_OPTIMIZED: {
-      MAIN_TEXT: __('Video not optimized', 'web-stories'),
+    VIDEO_MISSING_POSTER: {
+      MAIN_TEXT: __('Add poster image to every video', 'web-stories'),
+      HELPER_TEXT: (
+        <ul>
+          <li>
+            {__(
+              'Ensure a better experience by displaying a poster while users wait for the video to load',
+              'web-stories'
+            )}
+          </li>
+        </ul>
+      ),
     },
   },
 };

@@ -20,10 +20,6 @@
 import styled, { css } from 'styled-components';
 import { useRef, useCallback, forwardRef } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
 import {
   useKeyDownEffect,
   useGlobalKeyDownEffect,
@@ -31,7 +27,11 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   ThemeGlobals,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
 
@@ -176,21 +176,24 @@ function TabView({
   label = '',
   shortcut = '',
   tab,
+  tabRefs,
   ...rest
 }) {
   const { isRTL } = useConfig();
 
   const ref = useRef();
-  const tabRefs = useRef({});
+  const internalTabRefs = useRef({}); // fallback if tabRefs aren't passed in
 
   const tabChanged = useCallback(
     (id) => {
-      if (tabRefs.current[id]) {
-        tabRefs.current[id].focus();
+      if (tabRefs[id]?.current) {
+        tabRefs[id].current?.focus();
+      } else if (internalTabRefs?.current[id]) {
+        internalTabRefs.current[id]?.focus();
       }
       onTabChange(id);
     },
-    [onTabChange]
+    [tabRefs, onTabChange]
   );
 
   useGlobalKeyDownEffect(
@@ -233,7 +236,13 @@ function TabView({
       {tabs.map(({ id, title, icon: Icon, ...tabRest }) => (
         <Tab
           key={id}
-          ref={(tabRef) => (tabRefs.current[id] = tabRef)}
+          ref={(tabRef) => {
+            if (tabRefs) {
+              tabRefs[id].current = tabRef;
+            } else {
+              internalTabRefs.current[id] = tabRef;
+            }
+          }}
           id={getTabId(id)}
           isActive={tab === id}
           aria-controls={getAriaControlsId ? getAriaControlsId(id) : null}
@@ -255,6 +264,9 @@ TabView.propTypes = {
   onTabChange: PropTypes.func,
   tabs: PropTypes.array.isRequired,
   tab: PropTypes.string.isRequired,
+  tabRefs: PropTypes.objectOf(
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+  ),
   label: PropTypes.string,
   shortcut: PropTypes.string,
 };

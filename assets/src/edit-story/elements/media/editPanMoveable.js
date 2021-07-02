@@ -19,6 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useCallback } from 'react';
+import { getFocalFromOffset } from '@web-stories-wp/media';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -26,9 +28,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
-import { useKeyDownEffect } from '../../../design-system';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
-import getFocalFromOffset from './getFocalFromOffset';
 
 function EditPanMoveable({
   setProperties,

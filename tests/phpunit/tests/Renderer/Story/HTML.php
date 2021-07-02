@@ -181,8 +181,6 @@ class HTML extends Test_Case {
 		$rendered = $this->setup_renderer( $post );
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
-		$this->assertContains( 'poster-square-src=', $rendered );
-		$this->assertContains( 'poster-landscape-src=', $rendered );
 	}
 
 	/**
@@ -222,8 +220,6 @@ class HTML extends Test_Case {
 		$rendered = $this->setup_renderer( $post );
 
 		$this->assertContains( 'poster-portrait-src=""', $rendered );
-		$this->assertContains( 'poster-square-src=""', $rendered );
-		$this->assertContains( 'poster-landscape-src=""', $rendered );
 	}
 
 	/**

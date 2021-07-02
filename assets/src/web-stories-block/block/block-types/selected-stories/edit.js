@@ -19,6 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
+import {
+  theme as externalDesignSystemTheme,
+  lightMode,
+} from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -29,10 +33,6 @@ import { useState, useEffect } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import {
-  theme as externalDesignSystemTheme,
-  lightMode,
-} from '../../../../design-system';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesBlockApiProvider from '../../api/apiProvider';
 import StoriesPreview from '../../components/storiesPreview';
@@ -49,9 +49,8 @@ const SelectedStoriesEdit = ({
 
   const [selectedStories, setSelectedStories] = useState(stories);
   const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
-  const [isFetchingSelectedStories, setIsFetchingSelectedStories] = useState(
-    false
-  );
+  const [isFetchingSelectedStories, setIsFetchingSelectedStories] =
+    useState(false);
 
   const label = __('Web Stories', 'web-stories');
 

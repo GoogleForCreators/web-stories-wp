@@ -21,17 +21,17 @@ import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from 'react';
+import {
+  AnimatedContextMenu,
+  MenuItemProps,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
-import {
-  AnimatedContextMenu,
-  MenuItemProps,
-  themeHelpers,
-} from '../../../design-system';
 
 export const MoreVerticalButton = styled.button`
   display: flex;
@@ -82,9 +82,10 @@ export default function StoryMenu({
 }) {
   const isPopoverMenuOpen = contextMenuId === story.id;
 
-  const handleDismiss = useCallback(() => onMoreButtonSelected(-1), [
-    onMoreButtonSelected,
-  ]);
+  const handleDismiss = useCallback(
+    () => onMoreButtonSelected(-1),
+    [onMoreButtonSelected]
+  );
 
   return (
     <MenuContainer verticalAlign={verticalAlign}>

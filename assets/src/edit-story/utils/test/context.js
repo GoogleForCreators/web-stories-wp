@@ -19,12 +19,11 @@
  */
 import { useCallback, useState } from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-
-/**
- * Internal dependencies
- */
 import PropTypes from 'prop-types';
-import { createContext, useContextSelector } from '../../../design-system';
+import {
+  createContext,
+  useContextSelector,
+} from '@web-stories-wp/design-system';
 
 describe('useContextSelector', () => {
   let context;

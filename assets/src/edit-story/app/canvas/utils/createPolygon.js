@@ -18,19 +18,11 @@
  * External dependencies
  */
 import SAT from 'sat';
-
-/**
- * Internal dependencies
- */
-import { getCorners } from '../../../utils/getBoundRect';
+import { getCorners } from '@web-stories-wp/units';
 
 export default function createPolygon(rotationAngle, x, y, width, height) {
-  const {
-    topLeftPoint,
-    topRightPoint,
-    bottomRightPoint,
-    bottomLeftPoint,
-  } = getCorners(rotationAngle, x, y, width, height);
+  const { topLeftPoint, topRightPoint, bottomRightPoint, bottomLeftPoint } =
+    getCorners(rotationAngle, x, y, width, height);
   return new SAT.Polygon(new SAT.Vector(), [
     new SAT.Vector(topLeftPoint.x, topLeftPoint.y),
     new SAT.Vector(bottomLeftPoint.x, bottomLeftPoint.y),

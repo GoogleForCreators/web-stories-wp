@@ -17,16 +17,48 @@
 /**
  * External dependencies
  */
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
+import { useFeature } from 'flagged';
+import { __ } from '@web-stories-wp/i18n';
+import { ContextMenu } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import { useQuickActions } from '../../app/highlights';
+import DirectionAware from '../directionAware';
 import Header from '../header';
 import Carousel from '../carousel';
-import { Layer, HeadArea, CarouselArea, Z_INDEX } from './layout';
+import { useLayout } from '../../app';
+import {
+  CarouselArea,
+  HeadArea,
+  Layer,
+  QuickActionsArea,
+  Z_INDEX,
+} from './layout';
 
 function NavLayer() {
+  const enableQuickActionMenu = useFeature('enableQuickActionMenus');
+  const { hasHorizontalOverflow } = useLayout(
+    ({ state: { hasHorizontalOverflow } }) => ({ hasHorizontalOverflow })
+  );
+  const quickActions = useQuickActions();
+
+  /**
+   * Stop the event from bubbling if the user clicks in between buttons.
+   *
+   * This prevents the selected element in the canvas from losing focus.
+   */
+  const handleMenuBackgroundClick = useCallback((ev) => {
+    ev.stopPropagation();
+  }, []);
+
+  const showQuickActions =
+    enableQuickActionMenu &&
+    !hasHorizontalOverflow &&
+    Boolean(quickActions.length);
+
   return (
     <Layer
       pointerEvents="none"
@@ -36,6 +68,23 @@ function NavLayer() {
       <HeadArea pointerEvents="initial">
         <Header />
       </HeadArea>
+      {showQuickActions && (
+        <DirectionAware>
+          <QuickActionsArea>
+            <ContextMenu
+              isAlwaysVisible
+              isIconMenu
+              disableControlledTabNavigation
+              groupLabel={__(
+                'Group of available options for selected element',
+                'web-stories'
+              )}
+              items={quickActions}
+              onMouseDown={handleMenuBackgroundClick}
+            />
+          </QuickActionsArea>
+        </DirectionAware>
+      )}
       <CarouselArea pointerEvents="initial">
         <Carousel />
       </CarouselArea>

@@ -21,16 +21,18 @@ import { useCallback, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Button,
+  Icons,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-} from '../../../design-system/components/button';
-import { Button, Icons } from '../../../design-system';
+import { focusStyle } from '../panels/shared';
 
 const HEADER_FOOTER_HEIGHT = 52;
 
@@ -55,6 +57,7 @@ const TypeSelector = styled.button`
   border-radius: 100px;
   opacity: 1;
   margin-right: 16px;
+  ${focusStyle};
 `;
 
 const Solid = styled(TypeSelector)`
@@ -83,12 +86,14 @@ const Radial = styled(TypeSelector)`
 `;
 
 function Header({ type, hasGradient, setToGradient, setToSolid, onClose }) {
-  const setToLinear = useCallback(() => setToGradient('linear'), [
-    setToGradient,
-  ]);
-  const setToRadial = useCallback(() => setToGradient('radial'), [
-    setToGradient,
-  ]);
+  const setToLinear = useCallback(
+    () => setToGradient('linear'),
+    [setToGradient]
+  );
+  const setToRadial = useCallback(
+    () => setToGradient('radial'),
+    [setToGradient]
+  );
 
   const solid = useRef();
   useEffect(() => {

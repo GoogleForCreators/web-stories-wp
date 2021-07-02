@@ -24,15 +24,16 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
 import { rgba } from 'polished';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
-import { Icons } from '../../../design-system';
+import { useConfig } from '../../app/config';
 
-const PLAY_BUTTON_SIZE = 50;
+const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;
 const PLAY_ABOVE_BREAKPOINT_WIDTH = 108;
 const PLAY_ABOVE_BREAKPOINT_HEIGHT = 120;
@@ -60,6 +61,7 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
   pointer-events: initial;
   width: ${PLAY_BUTTON_SIZE}px;
   height: ${PLAY_BUTTON_SIZE}px;
+  overflow: hidden;
 
   opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
   &.button-enter {
@@ -85,7 +87,8 @@ const iconCss = css`
   height: ${ICON_SVG_SIZE}px;
   pointer-events: none;
   transform: translate(
-    ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px,
+    ${({ isRTL }) =>
+      ((PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2) * (isRTL ? -1 : 1)}px,
     ${(PLAY_BUTTON_SIZE - ICON_SVG_SIZE) / 2}px
   );
   color: ${({ theme }) => theme.colors.standard.white};
@@ -102,7 +105,7 @@ const Pause = styled(Icons.StopFilled)`
 `;
 
 const playAboveSpacing = {
-  y: 28,
+  y: 22,
 };
 
 function VideoControls({
@@ -114,6 +117,7 @@ function VideoControls({
   elementRef,
   element,
 }) {
+  const { isRTL } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
@@ -168,12 +172,12 @@ function VideoControls({
     return () => videoNode.removeEventListener('ended', onVideoEnd);
   }, [getVideoNode, id]);
 
-  const [checkShowControls] = useDebouncedCallback(() => {
+  const checkShowControls = useDebouncedCallback(() => {
     if (!isPlayAbove) {
       setShowControls(!isPlaying);
     }
   }, 2000);
-  const [checkMouseInBBox] = useDebouncedCallback((evt) => {
+  const checkMouseInBBox = useDebouncedCallback((evt) => {
     const node = elementRef.current;
     if (!node) {
       return;
@@ -239,6 +243,7 @@ function VideoControls({
       )
     : CSSTransition;
 
+  const Icon = isPlaying ? Pause : Play;
   return (
     <Controls data-controls-id={id} {...box}>
       {showControls && element.resource.src && (
@@ -255,7 +260,7 @@ function VideoControls({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
-            {isPlaying ? <Pause /> : <Play />}
+            <Icon isRTL={isRTL} />
           </ButtonWrapper>
         </TransitionWrapper>
       )}

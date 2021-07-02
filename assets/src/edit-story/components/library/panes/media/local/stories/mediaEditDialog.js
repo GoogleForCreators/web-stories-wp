@@ -19,14 +19,13 @@
  */
 import { action } from '@storybook/addon-actions';
 import { object } from '@storybook/addon-knobs';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import MediaEditDialog from '../mediaEditDialog';
 import ApiContext from '../../../../../../app/api/context';
 import MediaContext from '../../../../../../app/media/context';
-import { SnackbarContext } from '../../../../../../../design-system';
 import testImage from './test-image.jpg';
 
 export default {

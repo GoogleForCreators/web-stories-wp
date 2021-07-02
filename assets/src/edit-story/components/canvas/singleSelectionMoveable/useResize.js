@@ -19,11 +19,11 @@
  */
 import { useState } from 'react';
 import classnames from 'classnames';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { useUnits } from '../../../units';
 import { useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
@@ -56,21 +56,17 @@ function useSingleSelectionResize({
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 
-  const {
-    editorToDataX,
-    editorToDataY,
-    dataToEditorY,
-    dataToEditorX,
-  } = useUnits(
-    ({
-      actions: { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX },
-    }) => ({
-      editorToDataX,
-      editorToDataY,
-      dataToEditorY,
-      dataToEditorX,
-    })
-  );
+  const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
+    useUnits(
+      ({
+        actions: { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX },
+      }) => ({
+        editorToDataX,
+        editorToDataY,
+        dataToEditorY,
+        dataToEditorX,
+      })
+    );
 
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type

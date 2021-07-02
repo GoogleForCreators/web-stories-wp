@@ -17,11 +17,10 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
+import { useFocusOut, useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useFocusOut, useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 
@@ -51,9 +50,10 @@ export default function useVirtualizedGridNavigation({
   const [activeGridItemId, setActiveGridItemId] = useState();
 
   const [isGridFocused, setIsGridFocused] = useState(false);
-  const currentAvailableRows = useMemo(() => rowVirtualizer.virtualItems, [
-    rowVirtualizer,
-  ]);
+  const currentAvailableRows = useMemo(
+    () => rowVirtualizer.virtualItems,
+    [rowVirtualizer]
+  );
   const currentAvailableRowsRef = useRef();
 
   /**

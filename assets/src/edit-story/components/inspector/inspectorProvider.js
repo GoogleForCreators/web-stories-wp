@@ -18,18 +18,17 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
-
 import { useHighlights } from '../../app/highlights';
 import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
 import PrepublishInspector, {
@@ -50,16 +49,10 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const {
-    currentCheckpoint,
-    isChecklistReviewRequested,
-    refreshChecklist,
-  } = usePrepublishChecklist();
+  const { currentCheckpoint, isChecklistReviewRequested, refreshChecklist } =
+    usePrepublishChecklist();
 
-  const [refreshChecklistDebounced] = useDebouncedCallback(
-    refreshChecklist,
-    500
-  );
+  const refreshChecklistDebounced = useDebouncedCallback(refreshChecklist, 500);
 
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
@@ -80,6 +73,19 @@ function InspectorProvider({ children }) {
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
   const firstPublishAttemptRef = useRef(false);
+
+  const designPaneRef = useRef(null);
+  const documentPaneRef = useRef(null);
+  const prepublishPaneRef = useRef(null);
+
+  const tabRefs = useMemo(
+    () => ({
+      [DESIGN]: designPaneRef,
+      [DOCUMENT]: documentPaneRef,
+      [PREPUBLISH]: prepublishPaneRef,
+    }),
+    []
+  );
 
   useEffect(() => {
     // If a user wants to review their checklist before publishing
@@ -158,6 +164,7 @@ function InspectorProvider({ children }) {
   const state = {
     state: {
       tab,
+      tabRefs,
       users,
       inspectorContentHeight,
       isUsersLoading,

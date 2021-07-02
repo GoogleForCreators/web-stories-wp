@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> as it loads', () => {
@@ -70,12 +73,8 @@ describe('<ColorPicker /> as it loads', () => {
   });
 
   it('should have gradient buttons only if enabled', () => {
-    const {
-      getSolidButton,
-      getLinearButton,
-      getRadialButton,
-      rerender,
-    } = arrange();
+    const { getSolidButton, getLinearButton, getRadialButton, rerender } =
+      arrange();
 
     expect(getSolidButton()).toBeInTheDocument();
     expect(getLinearButton()).not.toBeInTheDocument();

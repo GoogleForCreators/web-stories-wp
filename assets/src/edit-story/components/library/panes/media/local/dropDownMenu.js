@@ -22,11 +22,10 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
-
+import { Menu, PLACEMENT, Popup } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Menu, PLACEMENT, Popup } from '../../../../../../design-system';
 import { More } from '../../../../button';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
@@ -104,14 +103,16 @@ function DropDownMenu({
   };
 
   // On Delete dialog closing.
-  const onDeleteDialogClose = useCallback(() => setShowDeleteDialog(false), [
-    setShowDeleteDialog,
-  ]);
+  const onDeleteDialogClose = useCallback(
+    () => setShowDeleteDialog(false),
+    [setShowDeleteDialog]
+  );
 
   // On Edit dialog closing.
-  const onEditDialogClose = useCallback(() => setShowEditDialog(false), [
-    setShowEditDialog,
-  ]);
+  const onEditDialogClose = useCallback(
+    () => setShowEditDialog(false),
+    [setShowEditDialog]
+  );
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);

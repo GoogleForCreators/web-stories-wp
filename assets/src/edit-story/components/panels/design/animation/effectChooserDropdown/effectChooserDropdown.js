@@ -17,16 +17,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeatures } from 'flagged';
+import { css } from 'styled-components';
+import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useFeatures } from 'flagged';
-import { DropDown, PLACEMENT } from '../../../../../../design-system';
-
 import { focusStyle } from '../../../shared';
 import {
   backgroundEffectOptions,
@@ -44,14 +44,18 @@ import {
 } from './styles';
 import DropDownItem from './dropdownItem';
 
-export default function EffectChooserDropdown({
-  onAnimationSelected,
-  onNoEffectSelected,
-  isBackgroundEffects = false,
-  selectedEffectType,
-  disabledTypeOptionsMap,
-  direction,
-}) {
+const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
+  {
+    onAnimationSelected,
+    onNoEffectSelected,
+    isBackgroundEffects = false,
+    selectedEffectType,
+    disabledTypeOptionsMap,
+    direction,
+    selectButtonStylesOverride,
+  },
+  ref
+) {
   const { enableExperimentalAnimationEffects } = useFeatures();
 
   const selectedValue = useMemo(
@@ -115,7 +119,7 @@ export default function EffectChooserDropdown({
     (event, value) => {
       event.preventDefault();
       if (value === NO_ANIMATION) {
-        onNoEffectSelected();
+        Boolean(selectedValue) && onNoEffectSelected();
         return;
       }
 
@@ -136,14 +140,26 @@ export default function EffectChooserDropdown({
     },
     [
       animationOptionsObject,
-      onAnimationSelected,
-      onNoEffectSelected,
       disabledTypeOptionsMap,
+      onAnimationSelected,
+      selectedValue,
+      onNoEffectSelected,
     ]
   );
 
+  const innerStyleOverrides =
+    selectedValue && selectedValue !== NO_ANIMATION
+      ? styleOverrideForSelectButton
+      : focusStyle;
+  const buttonStyleOverride = css`
+    ${innerStyleOverrides}
+    ${typeof selectButtonStylesOverride !== 'undefined' &&
+    selectButtonStylesOverride}
+  `;
+
   return (
     <DropDown
+      ref={ref}
       options={assembledOptions}
       placeholder={__('None', 'web-stories')}
       selectedValue={selectedValue}
@@ -153,14 +169,10 @@ export default function EffectChooserDropdown({
       onMenuItemClick={handleSelect}
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
-      selectButtonStylesOverride={
-        selectedValue && selectedValue !== NO_ANIMATION
-          ? styleOverrideForSelectButton
-          : focusStyle
-      }
+      selectButtonStylesOverride={buttonStyleOverride}
     />
   );
-}
+});
 
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,
@@ -174,4 +186,10 @@ EffectChooserDropdown.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  selectButtonStylesOverride: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
 };
+
+export default EffectChooserDropdown;

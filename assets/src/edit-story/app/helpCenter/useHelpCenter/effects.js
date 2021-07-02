@@ -146,12 +146,14 @@ export function resetIsOpeningToTip(previous, next) {
  * @param {Array<Function>} effects arry of effects
  * @return {Function} (previous, next) => <object in shape of next>
  */
-export const composeEffects = (effects = []) => (previous, next) =>
-  effects.reduce(
-    (effectedNext, effect) => ({
-      ...next,
-      ...effectedNext,
-      ...effect(previous, effectedNext),
-    }),
-    next
-  );
+export const composeEffects =
+  (effects = []) =>
+  (previous, next) =>
+    effects.reduce(
+      (effectedNext, effect) => ({
+        ...next,
+        ...effectedNext,
+        ...effect(previous, effectedNext),
+      }),
+      next
+    );

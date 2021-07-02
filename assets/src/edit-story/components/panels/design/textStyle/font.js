@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { DropDown, NumericInput } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { DropDown, NumericInput } from '../../../../../design-system';
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
@@ -60,7 +60,12 @@ const StyledDropDown = styled(DropDown)`
   background-color: transparent;
 `;
 
-function FontControls({ selectedElements, pushUpdate }) {
+function FontControls({
+  selectedElements,
+  pushUpdate,
+  fontDropdownRef,
+  highlightStylesOverride,
+}) {
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -71,7 +76,11 @@ function FontControls({ selectedElements, pushUpdate }) {
     handlers: { handleSelectFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const { fonts = [], maybeEnqueueFontStyle, getFontByName } = useFont(
+  const {
+    fonts = [],
+    maybeEnqueueFontStyle,
+    getFontByName,
+  } = useFont(
     ({
       actions: { maybeEnqueueFontStyle, getFontByName },
       state: { fonts },
@@ -82,10 +91,10 @@ function FontControls({ selectedElements, pushUpdate }) {
     })
   );
 
-  const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
-    getFontByName,
-    fontFamily,
-  ]);
+  const fontWeights = useMemo(
+    () => getFontWeights(getFontByName(fontFamily)),
+    [getFontByName, fontFamily]
+  );
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontWeightPickerChange = useCallback(
@@ -119,6 +128,8 @@ function FontControls({ selectedElements, pushUpdate }) {
           <FontPicker
             selectedElements={selectedElements}
             pushUpdate={pushUpdate}
+            fontDropdownRef={fontDropdownRef}
+            highlightStylesOverride={highlightStylesOverride}
           />
         </Row>
       )}
@@ -157,6 +168,8 @@ function FontControls({ selectedElements, pushUpdate }) {
 FontControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
+  fontDropdownRef: PropTypes.object,
+  highlightStylesOverride: PropTypes.array,
 };
 
 export default FontControls;

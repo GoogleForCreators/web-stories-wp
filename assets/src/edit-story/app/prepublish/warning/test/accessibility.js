@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import { MESSAGES } from '../../constants';
 import * as accessibilityChecks from '../accessibility';
 

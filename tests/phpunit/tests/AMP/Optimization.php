@@ -23,8 +23,6 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerpl
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\PreloadHeroImage;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
@@ -82,9 +80,8 @@ class Optimization extends Test_Case {
 
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
-		$this->assertCount( 2, $config_array );
+		$this->assertCount( 1, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
-		$this->assertArrayHasKey( RewriteAmpUrls::class, $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}
 
@@ -105,9 +102,8 @@ class Optimization extends Test_Case {
 			ReorderHead::class,
 		];
 
-		$this->assertCount( 2, $config_array );
+		$this->assertCount( 1, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
-		$this->assertArrayHasKey( RewriteAmpUrls::class, $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}
 }

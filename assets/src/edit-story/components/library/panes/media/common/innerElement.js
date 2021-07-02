@@ -19,18 +19,19 @@
 import styled, { css } from 'styled-components';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
+import {
+  getSmallestUrlForWidth,
+  resourceList,
+  ResourcePropTypes,
+} from '@web-stories-wp/media';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
-import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
-import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 
 const styledTiles = css`
   width: 100%;
@@ -161,17 +162,19 @@ function InnerElement({
     'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
-    preload: 'none',
+    preload: 'metadata',
     poster: displayPoster,
     showWithoutDelay: Boolean(newVideoPosterRef.current),
   };
 
   if (type === ContentType.IMAGE) {
+    // eslint-disable-next-line styled-components-a11y/alt-text
     media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
+        {/* eslint-disable-next-line styled-components-a11y/media-has-caption -- No captions because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
             <>
@@ -198,6 +201,7 @@ function InnerElement({
           )}
         </Video>
         {!newVideoPosterRef.current && (
+          /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
           <HiddenPosterImage
             ref={hiddenPoster}
             src={posterSrc}
@@ -268,7 +272,7 @@ function InnerElement({
 InnerElement.propTypes = {
   type: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  resource: StoryPropTypes.imageResource,
+  resource: ResourcePropTypes.imageResource,
   alt: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,

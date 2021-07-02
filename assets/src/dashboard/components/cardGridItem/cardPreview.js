@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   Button,
@@ -31,7 +27,11 @@ import {
   BUTTON_SIZES,
   ThemeGlobals,
   useFocusOut,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import {
   PreviewErrorBoundary,
   PreviewPage,
@@ -178,6 +178,13 @@ const CardPreviewContainer = ({
         </PreviewErrorBoundary>
         {children}
       </PreviewPane>
+      {/*
+        Disable Reason: As the UI stands for the dashboard grid item view we have nested functionality
+        that is embedded in the grid and requires the user hover or focus a card in order to see options
+        since keyboard users can't hover we have to also harness focus and active to get consistent behavior
+        the click events on this div show or hide options for each grid item.
+        */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <EditControls
         aria-label={ariaLabel}
         data-testid="card-action-container"

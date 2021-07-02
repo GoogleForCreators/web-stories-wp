@@ -15,11 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { generatePatternStyles, convertToCSS } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
 import { useTransformHandler } from '../../components/transform';
-import generatePatternStyles from '../../utils/generatePatternStyles';
-import convertToCSS from '../../utils/convertToCSS';
 
 function useColorTransformHandler({
   id,

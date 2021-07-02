@@ -20,16 +20,16 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState, useMemo } from 'react';
 import classnames from 'classnames';
+import { useUnits } from '@web-stories-wp/units';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../../design-system';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
-import { useUnits } from '../../../units';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';

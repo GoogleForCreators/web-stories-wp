@@ -26,13 +26,14 @@
 
 namespace Google\Web_Stories\Renderer\Stories;
 
-use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Services;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Amp;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Assets;
 use Iterator;
 use WP_Post;
 
@@ -44,9 +45,21 @@ use WP_Post;
  * @implements Iterator<int, \WP_Post>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
-
-	use Assets;
 	use Amp;
+
+	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	protected $assets;
+
+	/**
+	 * AMP_Story_Player_Assets instance.
+	 *
+	 * @var AMP_Story_Player_Assets AMP_Story_Player_Assets instance.
+	 */
+	protected $amp_story_player_assets;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -142,12 +155,19 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param Story_Query $query Story_Query instance.
+	 * @param Story_Query $query                  Story_Query instance.
 	 */
 	public function __construct( Story_Query $query ) {
 		$this->query           = $query;
 		$this->attributes      = $this->query->get_story_attributes();
 		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'] || $this->attributes['show_excerpt'];
+		// TODO, find a way to inject this a cleaner way.
+		$injector = Services::get_injector();
+		if ( ! method_exists( $injector, 'make' ) ) {
+			return;
+		}
+		$this->assets                  = $injector->make( Assets::class );
+		$this->amp_story_player_assets = $injector->make( AMP_Story_Player_Assets::class );
 	}
 
 	/**
@@ -247,12 +267,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function assets() {
+	public function load_assets() {
 		// Web Stories styles for AMP and non-AMP pages.
-		$this->register_style( self::STYLE_HANDLE );
+		$this->assets->register_style_asset( self::STYLE_HANDLE );
 
+		$player_handle = $this->amp_story_player_assets->get_handle();
 		// Web Stories lightbox script.
-		$this->register_script( self::LIGHTBOX_SCRIPT_HANDLE, [ Embed_Base::STORY_PLAYER_HANDLE ] );
+		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ $player_handle ] );
 	}
 
 	/**
@@ -478,7 +499,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// No need to load these styles on admin as editor styles are being loaded by the block.
 		if ( ! is_admin() ) {
 			// Web Stories Styles for AMP and non-AMP pages.
-			wp_enqueue_style( self::STYLE_HANDLE );
+			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
 
 		if ( $this->is_amp() ) {
@@ -491,9 +512,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			</div>
 			<?php
 		} else {
-			wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
-			wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
-			wp_enqueue_script( self::LIGHTBOX_SCRIPT_HANDLE );
+			$player_handle = $this->amp_story_player_assets->get_handle();
+			$this->assets->enqueue_style( $player_handle );
+			$this->assets->enqueue_script( $player_handle );
+			$this->assets->enqueue_script_asset( self::LIGHTBOX_SCRIPT_HANDLE );
 			?>
 			<div class="<?php echo esc_attr( $single_story_classes ); ?>" data-story-url="<?php echo esc_url( $story->get_url() ); ?>">
 				<?php $this->render_story_with_poster(); ?>
@@ -516,9 +538,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 * @var Story $story
 		 */
 		$story = $this->current();
-
-		// TODO: Only rely on portrait poster image going forward.
-		$poster_url = ( 'circles' === $this->get_view_type() ) ? $story->get_poster_square() : $story->get_poster_portrait();
+		
+		$poster_url = $story->get_poster_portrait();
 
 		if ( ! $poster_url ) {
 

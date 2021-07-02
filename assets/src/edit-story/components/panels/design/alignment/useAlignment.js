@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useState } from 'react';
-
-/**
- * Internal dependencies
- */
-import { dataPixels } from '../../../../units/dimensions';
+import { dataPixels } from '@web-stories-wp/units';
 
 function useAlignment() {
   const [
@@ -34,12 +30,8 @@ function useAlignment() {
     pushUpdate((properties) => {
       const { id } = properties;
       let offset = 0;
-      const {
-        width,
-        height,
-        frameWidth,
-        frameHeight,
-      } = updatedSelectedElementsWithFrame.find((item) => item.id === id);
+      const { width, height, frameWidth, frameHeight } =
+        updatedSelectedElementsWithFrame.find((item) => item.id === id);
       offset =
         direction === 'left' || direction === 'right'
           ? (frameWidth - width) / 2
