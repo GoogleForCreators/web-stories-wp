@@ -210,14 +210,16 @@ export default function useMediaPicker({
         ],
       });
 
-      fileFrame.on('cropped', (attachment) => {
-        updateMedia(attachment.id, { media_source: 'editor' });
+      fileFrame.once('cropped', (attachment) => {
+        if (attachment?.id) {
+          updateMedia(attachment.id, { media_source: 'editor' });
+        }
         onSelect(attachment);
       });
 
-      fileFrame.on('skippedcrop', onSelect);
+      fileFrame.once('skippedcrop', onSelect);
 
-      fileFrame.on('select', () => {
+      fileFrame.once('select', () => {
         const mediaPickerEl = fileFrame
           .state()
           .get('selection')
@@ -232,10 +234,6 @@ export default function useMediaPicker({
           return;
         }
 
-        if (onClose) {
-          fileFrame.once('close', onClose);
-        }
-
         if (
           control.params.width === mediaPickerEl.width &&
           control.params.height === mediaPickerEl.height &&
@@ -248,6 +246,10 @@ export default function useMediaPicker({
           fileFrame.setState('cropper');
         }
       });
+
+      if (onClose) {
+        fileFrame.once('close', onClose);
+      }
 
       fileFrame.once('content:activate:browse', () => {
         // Force-refresh media modal contents every time
