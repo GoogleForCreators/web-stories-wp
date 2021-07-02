@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
@@ -35,6 +36,10 @@ import {
   TabButton,
   TabPanel,
 } from './styles';
+
+const Scrollable = styled.div`
+  position: absolute;
+`;
 
 const Panel = ({
   badgeCount = 0,
@@ -74,9 +79,11 @@ const Panel = ({
           <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
+      {/* <Scrollable> */}
       <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
         {children}
       </TabPanel>
+      {/* </Scrollable> */}
     </PanelWrapper>
   );
 };

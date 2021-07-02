@@ -35,7 +35,7 @@ import { NAVIGATION_WIDTH } from '../helpCenter/navigator/constants';
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
-  width: ${NAVIGATION_WIDTH};
+  width: ${NAVIGATION_WIDTH}px;
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 Tablist.propTypes = {

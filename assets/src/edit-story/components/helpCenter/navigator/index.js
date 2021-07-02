@@ -34,6 +34,9 @@ import {
   syncOuterHeightWithInner,
 } from './utils';
 
+const DISTANCE_TO_TOP = 59 + 32; // height from input + toolbar height
+const DISTANCE_TO_BOTTOM = 69;
+
 export const NavigationWrapper = styled.div`
   position: absolute;
   left: 0;
@@ -43,7 +46,9 @@ export const NavigationWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  overflow: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  /* overflow-y: hidden;
+  overflow-x: visible; */
+  max-height: calc(100vh - ${DISTANCE_TO_TOP + DISTANCE_TO_BOTTOM}px);
 `;
 
 const Layout = styled.div`
