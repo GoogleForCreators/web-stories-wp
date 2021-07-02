@@ -103,10 +103,14 @@ export const BulkVideoOptimization = () => {
   const isBulkVideoOptimizationEnabled = useFeature(
     'enableBulkVideoOptimization'
   );
-  const story = useStory(({ state: storyState }) => storyState);
-  const unoptimizedVideos = filterStoryElements(
-    story,
-    videoElementsNotOptimized
+  const unoptimizedElements = useStory(({ state: storyState }) =>
+    filterStoryElements(storyState, videoElementsNotOptimized)
+  );
+  const unoptimizedVideos = unoptimizedElements.filter(
+    (element, index, array) =>
+      array.findIndex(
+        (innerElement) => innerElement.resource.id === element.resource.id
+      ) === index
   );
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
