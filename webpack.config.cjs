@@ -76,6 +76,8 @@ const sharedConfig = {
         test: /\.m?js$/,
         exclude: /node_modules/,
         resolve: {
+          // Avoid having to provide full file extension for imports.
+          // See https://webpack.js.org/configuration/module/#resolvefullyspecified
           fullySpecified: false,
         },
         use: [
