@@ -54,8 +54,20 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	 * @return void
 	 */
 	public function sanitize() {
-		$links         = [];
+		/**
+		 * The rel=canonical DOM element.
+		 *
+		 * @var DOMElement The element.
+		 */
+		$rel_canonical = null;
 		$link_elements = $this->dom->head->getElementsByTagName( Tag::LINK );
+
+		// This fallback to get_permalink() ensures that there's a canonical link
+		// even when previewing drafts.
+		$canonical_url = wp_get_canonical_url();
+		if ( ! $canonical_url ) {
+			$canonical_url = get_permalink();
+		}
 
 		/**
 		 * Link element.
@@ -63,19 +75,22 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 		 * @var DOMElement $link
 		 */
 		foreach ( $link_elements as $link ) {
-			if ( $link->hasAttribute( Attribute::REL ) ) {
-				$links[ $link->getAttribute( Attribute::REL ) ][] = $link;
+			if ( $link->getAttribute( Attribute::REL ) === Attribute::REL_CANONICAL ) {
+				if ( ! empty( $link->getAttribute( Attribute::HREF ) ) ) {
+					return;
+				}
+
+				$link->setAttribute( Attribute::HREF, (string) $canonical_url );
+
+				break;
 			}
 		}
 
-		// Ensure rel=canonical link.
-		if ( empty( $links['canonical'] ) ) {
-			$rel_canonical = $this->dom->createElement( Tag::LINK );
-			if ( $rel_canonical ) {
-				$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
-				$rel_canonical->setAttribute( Attribute::HREF, (string) wp_get_canonical_url() );
-				$this->dom->head->appendChild( $rel_canonical );
-			}
+		$rel_canonical = $this->dom->createElement( Tag::LINK );
+		if ( $rel_canonical ) {
+			$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
+			$rel_canonical->setAttribute( Attribute::HREF, (string) $canonical_url );
+			$this->dom->head->appendChild( $rel_canonical );
 		}
 	}
 }
