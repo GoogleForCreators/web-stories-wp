@@ -27,7 +27,6 @@ const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const CopyPlugin = require('copy-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -310,12 +309,6 @@ const webStoriesBlock = {
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
     }),
-    new CopyPlugin([
-      {
-        from: 'assets/src/web-stories-block/block/block.json',
-        to: 'block.json',
-      },
-    ]),
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',

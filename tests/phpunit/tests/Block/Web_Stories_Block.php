@@ -34,7 +34,6 @@ class Web_Stories_Block extends Test_Case {
 	/**
 	 * @covers ::register
 	 * @covers ::register_block_type
-	 * @covers ::get_base_path
 	 */
 	public function test_registers_block_type() {
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
