@@ -107,6 +107,8 @@ class Preferences extends Service_Base {
 				'single'        => true,
 			]
 		);
+
+		add_filter( 'default_user_metadata', [ $this, 'filter_media_optimization_default_value' ], 10, 4 );
 	}
 
 	/**
@@ -116,5 +118,27 @@ class Preferences extends Service_Base {
 	 */
 	public function can_edit_current_user() {
 		return current_user_can( 'edit_user', get_current_user_id() );
+	}
+
+	/**
+	 * Filter default user meta for the media optimization meta key.
+	 *
+	 * Takes into account the user's upload capabilities.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param mixed  $value The value to return, either a single metadata value or an array of values depending on the value of $single.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key Metadata key.
+	 * @param bool   $single  Whether to return only the first value of the specified $meta_key.
+	 * @return mixed The filtered default meta value.
+	 */
+	public function filter_media_optimization_default_value( $value, $object_id, $meta_key, $single ) {
+		if ( self::MEDIA_OPTIMIZATION_META_KEY !== $meta_key ) {
+			return $value;
+		}
+
+		$value = user_can( $object_id, 'upload_files' );
+		return $single ? $value : [ $value ];
 	}
 }

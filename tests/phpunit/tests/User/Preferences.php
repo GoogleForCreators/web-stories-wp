@@ -24,12 +24,29 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
  */
 class Preferences extends \WP_UnitTestCase {
-	protected static $user_id;
+	/**
+	 * Admin user for test.
+	 *
+	 * @var int
+	 */
+	protected static $admin_id;
 
+	/**
+	 * Author user for test.
+	 *
+	 * @var int
+	 */
 	protected static $author_id;
 
+	/**
+	 * Contributor user for test.
+	 *
+	 * @var int
+	 */
+	protected static $contributor_id;
+
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user_id = $factory->user->create(
+		self::$admin_id = $factory->user->create(
 			[
 				'role' => 'administrator',
 			]
@@ -40,10 +57,14 @@ class Preferences extends \WP_UnitTestCase {
 				'role' => 'author',
 			]
 		);
+
+		self::$contributor_id = $factory->user->create(
+			[ 'role' => 'contributor' ]
+		);
 	}
 
 	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
+		self::delete_user( self::$admin_id );
 		self::delete_user( self::$author_id );
 	}
 
@@ -61,16 +82,29 @@ class Preferences extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::filter_media_optimization_default_value
+	 */
+	public function test_filter_media_optimization_default_value() {
+		$admin_default       = get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		$author_default      = get_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		$contributor_default = get_user_meta( self::$contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+
+		$this->assertTrue( $admin_default );
+		$this->assertTrue( $author_default );
+		$this->assertFalse( $contributor_default );
+	}
+
+	/**
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api() {
-		wp_set_current_user( self::$user_id );
+		wp_set_current_user( self::$admin_id );
 
-		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
-		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/users/%d', self::$user_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/users/%d', self::$admin_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
