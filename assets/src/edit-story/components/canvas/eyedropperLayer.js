@@ -61,24 +61,25 @@ const EyedropperCanvas = styled.div`
 `;
 
 const ColorInfo = styled.div`
-  position: absolute;
   text-transform: uppercase;
-  transform: translateX(-50%);
+  margin-top: 30px;
   padding: 9px;
   min-width: 102px;
   text-align: center;
 `;
 
-const MagnifierCanvas = styled.canvas`
+const Circle = styled.div`
+  transform: translateY(20px);
+  background: ${({ theme }) => theme.colors.bg.primary};
   border: 2px solid black;
   border-radius: 50%;
-  transform: translate(calc(-50% + 4px), 20px);
-  background: ${({ theme }) => theme.colors.bg.primary};
+  overflow: hidden;
+  width: ${MAGNIFIER_SIZE - 2}px;
+  height: ${MAGNIFIER_SIZE}px;
 `;
 
 const Magnifier = styled.div`
   position: absolute;
-  display: flex;
   top: 0;
   left: 0;
   transform: translateY(-2000px); // Initially hide the magnifier.
@@ -197,7 +198,9 @@ function EyedropperLayer() {
     }
 
     // Move magnifier canvas.
-    magnifierInfo.current.style.transform = `translate(${x}px, ${y}px)`;
+    magnifierInfo.current.style.transform = `translate(${
+      x - MAGNIFIER_SIZE / 2
+    }px, ${y}px)`;
 
     // Redraw magnifier canvas.
     magnify(x, y);
@@ -240,17 +243,14 @@ function EyedropperLayer() {
         <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
           <img ref={imgRef} src={img} alt="" />
           <Magnifier ref={magnifierInfo}>
-            <MagnifierCanvas
-              ref={magnifier}
-              width={MAGNIFIER_SIZE}
-              height={MAGNIFIER_SIZE}
-            />
-            <ColorInfo
-              style={{
-                top: MAGNIFIER_SIZE + 30, // 30px gap looks good.
-              }}
-              ref={magnifierColor}
-            />
+            <Circle>
+              <canvas
+                ref={magnifier}
+                width={MAGNIFIER_SIZE}
+                height={MAGNIFIER_SIZE}
+              />
+            </Circle>
+            <ColorInfo ref={magnifierColor} />
           </Magnifier>
         </EyedropperCanvas>
       </DisplayPageArea>
