@@ -38,7 +38,7 @@ const MAGNIFIER_PIXELS = 7;
 const MAGNIFIER_RECT_SIZE = MAGNIFIER_SIZE / MAGNIFIER_PIXELS;
 
 const EyedropperBackground = styled(Layer)`
-  background: rgba(0, 0, 0, 0.7);
+  background: ${({ theme }) => theme.colors.opacity.black64};
   cursor: not-allowed;
   z-index: 2;
 `;
