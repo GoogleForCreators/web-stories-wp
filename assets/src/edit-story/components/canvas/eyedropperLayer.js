@@ -235,7 +235,10 @@ function EyedropperLayer() {
   };
 
   return (
-    <EyedropperBackground onMouseMove={onMouseMove}>
+    <EyedropperBackground
+      data-testid="eyedropperLayer"
+      onMouseMove={onMouseMove}
+    >
       {/* Remove the safe zone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
         {/* Disable reason: No pixel-by-pixel keyboard navigation. */}
