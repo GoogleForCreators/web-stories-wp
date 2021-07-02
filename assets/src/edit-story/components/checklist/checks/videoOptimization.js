@@ -24,7 +24,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import { useFeature } from 'flagged';
 import {
   Button,
   BUTTON_SIZES,
@@ -100,9 +99,6 @@ function reducer(state, action) {
 
 export const BulkVideoOptimization = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const isBulkVideoOptimizationEnabled = useFeature(
-    'enableBulkVideoOptimization'
-  );
   const story = useStory(({ state: storyState }) => storyState);
   const unoptimizedVideos = filterStoryElements(
     story,
@@ -193,16 +189,14 @@ export const BulkVideoOptimization = () => {
     isRendered && (
       <ChecklistCard
         cta={
-          isBulkVideoOptimizationEnabled && (
-            <OptimizeButton
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={handleUpdateVideos}
-              disabled={isTranscoding}
-            >
-              {optimizeButtonCopy}
-            </OptimizeButton>
-          )
+          <OptimizeButton
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={handleUpdateVideos}
+            disabled={isTranscoding}
+          >
+            {optimizeButtonCopy}
+          </OptimizeButton>
         }
         title={title}
         cardType={
