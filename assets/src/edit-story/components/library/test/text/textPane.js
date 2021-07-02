@@ -46,6 +46,7 @@ describe('TextPane', () => {
         },
         actions: {
           insertElement: insertElement,
+          setPageCanvasPromise: jest.fn(),
         },
       })
     );

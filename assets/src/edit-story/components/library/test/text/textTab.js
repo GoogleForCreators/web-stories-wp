@@ -40,6 +40,7 @@ describe('TextTab', () => {
         state: {},
         actions: {
           insertElement: insertElement,
+          setPageCanvasPromise: jest.fn(),
         },
       })
     );
