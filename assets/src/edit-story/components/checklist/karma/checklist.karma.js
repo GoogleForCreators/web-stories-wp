@@ -91,6 +91,18 @@ describe('Checklist integration', () => {
     await fixture.events.sleep(500);
   };
 
+  describe('initial state', () => {
+    it('should begin with empty message on a new story', async () => {
+      await openChecklist();
+
+      const emptyMessage = fixture.screen.getByText(
+        'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.'
+      );
+
+      expect(emptyMessage).toBeTruthy();
+    });
+  });
+
   describe('open and close', () => {
     it('should toggle the checklist', async () => {
       const { toggleButton } = fixture.editor.checklist;
@@ -316,5 +328,24 @@ describe('Checklist integration', () => {
 
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
+  });
+
+  it('should open the checklist after following "review checklist" button in dialog on publishing story', async () => {
+    fixture.events.click(fixture.editor.titleBar.publish);
+    // Ensure the debounced callback has taken effect.
+    await fixture.events.sleep(800);
+
+    const reviewButton = await fixture.screen.getByRole('button', {
+      name: /^Review Checklist$/,
+    });
+    await fixture.events.click(reviewButton);
+    // This is the initial load of the checklist tab so we need to wait for it to load
+    // before we can see tabs.
+    await fixture.events.sleep(300);
+
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('true');
+    expect(fixture.editor.checklist.priorityPanel).toBeDefined();
   });
 });

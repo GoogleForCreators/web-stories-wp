@@ -34,8 +34,8 @@ import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
 import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
-import PrepublishContext from '../../inspector/prepublish/context';
 import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
+import { CheckpointContext } from '../../checklist';
 
 function setupButtons({
   story: extraStoryProps,
@@ -43,12 +43,11 @@ function setupButtons({
   media: extraMediaProps,
   config: extraConfigProps,
   history: extraHistoryProps,
-  prepublish: extraPrepublishChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
   const focusChecklistTab = jest.fn();
-  const resetReviewDialog = jest.fn();
+  const onReviewDialogRequest = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -80,24 +79,23 @@ function setupButtons({
   };
 
   const prepublishChecklistContextValue = {
-    // value: {
-    shouldReviewDialogBeSeen: false,
-    focusChecklistTab,
-    resetReviewDialog,
-    ...extraPrepublishChecklistProps,
-    // },
+    state: {
+      shouldReviewDialogBeSeen: false,
+    },
+    actions: {
+      onReviewDialogRequest,
+    },
   };
-
   renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
         <StoryContext.Provider value={storyContextValue}>
           <StoryTriggersProvider story={storyContextValue}>
-            <PrepublishContext.Provider value={prepublishChecklistContextValue}>
+            <CheckpointContext.Provider value={prepublishChecklistContextValue}>
               <MediaContext.Provider value={mediaContextValue}>
                 <Buttons />
               </MediaContext.Provider>
-            </PrepublishContext.Provider>
+            </CheckpointContext.Provider>
           </StoryTriggersProvider>
         </StoryContext.Provider>
       </ConfigContext.Provider>
