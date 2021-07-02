@@ -33,7 +33,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 import useEyedropper from './eyedropper';
@@ -136,7 +136,9 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
-  const { initEyedropper } = useEyedropper({ onChange });
+  const { initEyedropper } = useEyedropper({
+    onChange,
+  });
 
   return (
     <Container>
@@ -192,7 +194,8 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
             type={BUTTON_TYPES.QUATERNARY}
             size={BUTTON_SIZES.SMALL}
             aria-label={__('Pick a color from canvas', 'web-stories')}
-            onClick={initEyedropper}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
           >
             <Icons.Pipette />
           </Button>

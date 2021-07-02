@@ -27,64 +27,99 @@ import { ZOOM_SETTING } from '../../constants';
 
 export default ({ onChange }) => {
   const {
-    state: { fullbleedContainer },
-    actions: {
+    fullbleedContainer,
+    eyedropperPixelData,
+    setEyedropperCallback,
+    setIsEyedropperActive,
+    setEyedropperImg,
+    setEyedropperPixelData,
+  } = useCanvas(
+    ({
+      state: { fullbleedContainer, eyedropperPixelData },
+      actions: {
+        setEyedropperCallback,
+        setIsEyedropperActive,
+        setEyedropperImg,
+        setEyedropperPixelData,
+      },
+    }) => ({
+      fullbleedContainer,
+      setEyedropperCallback,
+      eyedropperPixelData,
+      setIsEyedropperActive,
+      setEyedropperImg,
+      setEyedropperPixelData,
+    })
+  );
+
+  const { zoomSetting, setZoomSetting } = useLayout(
+    ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
+      zoomSetting,
+      setZoomSetting,
+    })
+  );
+
+  const initEyedropper = useCallback(
+    (resetZoom = true) =>
+      async () => {
+        if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
+          return;
+        }
+        const prepareEyedropper = () =>
+          new Promise((resolve) => {
+            // Wait one tick for the zoom to settle in.
+            setTimeout(() => {
+              import(
+                /* webpackChunkName: "html-to-image" */ 'html-to-image'
+              ).then((htmlToImage) => {
+                htmlToImage
+                  .toCanvas(fullbleedContainer, {
+                    preferredFontFormat: 'woff2',
+                  })
+                  .then((canvas) => {
+                    const ctx = canvas.getContext('2d');
+                    const pixelData = ctx.getImageData(
+                      0,
+                      0,
+                      canvas.width,
+                      canvas.height
+                    ).data;
+                    setEyedropperPixelData(pixelData);
+                    setEyedropperImg(canvas.toDataURL());
+                    resolve();
+                  });
+              });
+            });
+          });
+
+        if (!eyedropperPixelData || !resetZoom) {
+          if (resetZoom) {
+            setZoomSetting(ZOOM_SETTING.FIT);
+          }
+          await prepareEyedropper();
+        }
+
+        setEyedropperCallback(() => (rgbObject) => {
+          onChange(rgbObject);
+          setIsEyedropperActive(false);
+          setEyedropperImg(null);
+          setEyedropperPixelData(null);
+        });
+        if (resetZoom) {
+          setIsEyedropperActive(true);
+        }
+      },
+    [
+      fullbleedContainer,
+      onChange,
+      eyedropperPixelData,
       setIsEyedropperActive,
       setEyedropperCallback,
       setEyedropperImg,
       setEyedropperPixelData,
-    },
-  } = useCanvas();
-
-  const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
-    setZoomSetting,
-  }));
-
-  const initEyedropper = useCallback(async () => {
-    setZoomSetting(ZOOM_SETTING.FIT);
-    const prepareEyedropper = () =>
-      new Promise((resolve) => {
-        // Wait one tick for the zoom to settle in.
-        setTimeout(() => {
-          import(/* webpackChunkName: "html-to-image" */ 'html-to-image').then(
-            (htmlToImage) => {
-              htmlToImage
-                .toCanvas(fullbleedContainer, { preferredFontFormat: 'woff2' })
-                .then((canvas) => {
-                  const ctx = canvas.getContext('2d');
-                  const pixelData = ctx.getImageData(
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                  ).data;
-                  setEyedropperPixelData(pixelData);
-                  setEyedropperImg(canvas.toDataURL());
-                  resolve();
-                });
-            }
-          );
-        });
-      });
-
-    await prepareEyedropper();
-
-    setEyedropperCallback(() => (rgbObject) => {
-      onChange(rgbObject);
-      setIsEyedropperActive(false);
-      setEyedropperImg(null);
-      setEyedropperPixelData(null);
-    });
-    setIsEyedropperActive(true);
-  }, [
-    fullbleedContainer,
-    onChange,
-    setIsEyedropperActive,
-    setEyedropperCallback,
-    setEyedropperImg,
-    setEyedropperPixelData,
-    setZoomSetting,
-  ]);
+      setZoomSetting,
+    ]
+  );
 
   return { initEyedropper };
 };

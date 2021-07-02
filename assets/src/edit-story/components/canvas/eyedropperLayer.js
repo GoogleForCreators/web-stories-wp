@@ -26,7 +26,10 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
-import { useFocusOut, useGlobalKeyDownEffect } from '../../../design-system';
+import {
+  useFocusOut,
+  useGlobalKeyDownEffect,
+} from '@web-stories-wp/design-system';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
 
@@ -90,6 +93,8 @@ function EyedropperLayer() {
     eyedropperImg,
     eyedropperPixelData,
     setIsEyedropperActive,
+    setEyedropperImg,
+    setEyedropperPixelData,
   } = useCanvas(
     ({
       state: {
@@ -99,7 +104,11 @@ function EyedropperLayer() {
         eyedropperImg,
         eyedropperPixelData,
       },
-      actions: { setIsEyedropperActive },
+      actions: {
+        setIsEyedropperActive,
+        setEyedropperImg,
+        setEyedropperPixelData,
+      },
     }) => ({
       fullbleedContainer,
       isEyedropperActive,
@@ -107,6 +116,8 @@ function EyedropperLayer() {
       eyedropperImg,
       eyedropperPixelData,
       setIsEyedropperActive,
+      setEyedropperImg,
+      setEyedropperPixelData,
     })
   );
 
@@ -122,7 +133,11 @@ function EyedropperLayer() {
   const magnifierColor = useRef();
   const eyedropperCanvas = useRef();
 
-  const closeEyedropper = () => setIsEyedropperActive(false);
+  const closeEyedropper = () => {
+    setIsEyedropperActive(false);
+    setEyedropperImg(null);
+    setEyedropperPixelData(null);
+  };
 
   useFocusOut(eyedropperCanvas, closeEyedropper, [isEyedropperActive, img]);
 
