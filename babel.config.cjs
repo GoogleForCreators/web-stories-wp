@@ -33,7 +33,6 @@ module.exports = function (api) {
           targets,
           useBuiltIns: 'usage',
           corejs: 3,
-          loose: true,
         },
       ],
       [
@@ -48,15 +47,12 @@ module.exports = function (api) {
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
       'babel-plugin-styled-components',
+      '@babel/plugin-proposal-class-properties',
+      '@babel/plugin-proposal-private-methods',
       'babel-plugin-inline-json-import',
       '@babel/plugin-syntax-top-level-await',
-      // TODO: Fix this. This breaks Jest tests. Should stick with the default (false).
-      // See https://github.com/testing-library/dom-testing-library/issues/370#issuecomment-538354739
-      ['@babel/plugin-proposal-class-properties', { loose: true }],
-      ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: true }],
-      ['@babel/plugin-proposal-optional-chaining', { loose: true }],
-      ['@babel/plugin-proposal-private-methods', { loose: true }],
-      ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+      '@babel/plugin-proposal-optional-chaining',
+      '@babel/plugin-proposal-nullish-coalescing-operator',
     ],
     sourceMaps: true,
     env: {
