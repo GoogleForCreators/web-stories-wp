@@ -19,18 +19,28 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import {
+  Icons,
+  THEME_CONSTANTS,
+  Text,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { focusableOutlineCSS } from '../../../design-system/theme/helpers';
+import { CARD_WIDTH } from '../helpCenter/navigator/constants';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 
+const { focusableOutlineCSS } = themeHelpers;
+
 export const Wrapper = styled.div`
-  width: 272px;
+  width: ${CARD_WIDTH}px;
   display: flex;
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.bg.secondary};
+  margin: 8px 0;
 `;
 
 export const Container = styled.div`
@@ -61,13 +71,29 @@ export const Title = styled.div`
     text-align: left;
     cursor: pointer;
     border-radius: ${({ theme }) => theme.borders.radius.small};
-    ${focusableOutlineCSS}
+    ${focusableOutlineCSS};
   }
 `;
 
 export const Cta = styled.div`
   grid-area: cta;
   margin: 0;
+`;
+
+export const CheckboxCtaLabel = styled(Text).attrs({
+  forwardedAs: 'label',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.linkNormal};
+`;
+
+export const CheckboxCtaContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 14px 0 6px;
+  label {
+    margin: 0 8px;
+  }
 `;
 
 export const ThumbnailWrapper = styled.div`
@@ -93,9 +119,26 @@ export const Footer = styled.div`
   grid-area: footer;
   padding-top: 8px;
   border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+
+  & > * {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
 `;
 
 // For use with lists
 export const CardListWrapper = styled.div`
   margin-left: 16px;
+  li {
+    color: ${({ theme }) => theme.colors.fg.secondary};
+  }
+`;
+
+export const StyledVideoOptimizationIcon = styled(Icons.GearWithGauge)`
+  rect {
+    color: ${({ theme }) => theme.colors.opacity.black64};
+  }
+
+  path {
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
 `;

@@ -16,6 +16,6 @@
 /**
  * External dependencies
  */
-import { createContext } from 'react';
+import { createContext } from '@web-stories-wp/design-system';
 
 export default createContext({ checklist: [] });

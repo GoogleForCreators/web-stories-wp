@@ -19,6 +19,7 @@
 import PropTypes from 'prop-types';
 import { forwardRef, useMemo } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import {
   GridItemContainer,
   Logo,
 } from '../components';
-import { THEME_CONSTANTS } from '../../../../../design-system';
 import PopoverLogoContextMenu, {
   PopoverLogoContextMenuPropTypes,
 } from './popoverLogoContextMenu';

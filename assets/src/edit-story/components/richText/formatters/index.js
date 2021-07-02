@@ -22,6 +22,7 @@ import italicFormatter from './italic';
 import underlineFormatter from './underline';
 import colorFormatter from './color';
 import letterSpacingFormatter from './letterSpacing';
+import uppercaseFormatter from './uppercase';
 
 const formatters = [
   weightFormatter,
@@ -29,6 +30,7 @@ const formatters = [
   underlineFormatter,
   colorFormatter,
   letterSpacingFormatter,
+  uppercaseFormatter,
 ];
 
 export default formatters;

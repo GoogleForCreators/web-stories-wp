@@ -19,7 +19,7 @@
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
 import Modal from 'react-modal';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -27,7 +27,6 @@ import DeleteDialog from '../panes/media/local/deleteDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
-import { SnackbarContext } from '../../../../design-system';
 
 const deleteMedia = jest.fn();
 const deleteMediaElement = jest.fn();

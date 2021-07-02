@@ -21,12 +21,12 @@ import { useState, useCallback, useRef, forwardRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import Popup from '../../popup';
-import DropDownSelect from '../../../../design-system/components/dropDown/select';
 import { focusStyle } from '../../panels/shared';
 import OptionsContainer from './container';
 import List from './list';
@@ -105,7 +105,7 @@ const DropDown = forwardRef(function DropDown(
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)
-  const [debouncedCloseDropDown] = useDebouncedCallback(closeDropDown, 100);
+  const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
 
   const handleSelect = useCallback(
     (option) => {

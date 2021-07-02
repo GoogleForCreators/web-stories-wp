@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useGlobalKeyDownEffect } from '../../../design-system';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 function useFocusCanvas() {
   /**

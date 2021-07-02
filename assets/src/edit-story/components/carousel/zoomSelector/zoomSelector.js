@@ -20,12 +20,13 @@
 import { useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { __, _x, sprintf } from '@web-stories-wp/i18n';
+import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
-import { DropDown, PLACEMENT } from '../../../../design-system';
 
 const selectButtonCSS = css`
   height: 36px;

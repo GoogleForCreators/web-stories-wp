@@ -20,11 +20,7 @@
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { forwardRef } from 'react';
-
-/**
- * Internal dependencies
- */
-import { useContext } from '../../../design-system';
+import { useContext } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies

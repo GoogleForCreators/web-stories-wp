@@ -26,6 +26,13 @@ import {
   getOpaquePattern,
   PatternPropType,
 } from '@web-stories-wp/patterns';
+import {
+  HexInput,
+  Text,
+  THEME_CONSTANTS,
+  Swatch,
+  PLACEMENT,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -33,13 +40,6 @@ import {
 import useUnmount from '../../../utils/useUnmount';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
-import {
-  HexInput,
-  Text,
-  THEME_CONSTANTS,
-  Swatch,
-  PLACEMENT,
-} from '../../../../design-system';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';

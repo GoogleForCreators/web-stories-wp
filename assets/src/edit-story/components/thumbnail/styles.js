@@ -23,7 +23,11 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { THUMBNAIL_DIMENSIONS, THUMBNAIL_SCRIM_CLASSNAME } from './constants';
+import {
+  THUMBNAIL_DIMENSIONS,
+  THUMBNAIL_SCRIM_CLASSNAME,
+  THUMBNAIL_SHOW_ON_HOVER_FOCUS,
+} from './constants';
 
 /**
  * Set Scrim styles on button state here with the THUMBNAIL_SCRIM_CLASSNAME
@@ -36,6 +40,9 @@ import { THUMBNAIL_DIMENSIONS, THUMBNAIL_SCRIM_CLASSNAME } from './constants';
 export const Container = styled.button(
   ({ theme, $isError, $isOverflow }) => css`
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: ${THUMBNAIL_DIMENSIONS.WIDTH}px;
     height: ${THUMBNAIL_DIMENSIONS.HEIGHT}px;
     padding: 0;
@@ -47,6 +54,15 @@ export const Container = styled.button(
       : 'transparent'};
     cursor: pointer;
 
+    .${THUMBNAIL_SHOW_ON_HOVER_FOCUS} {
+      display: none;
+    }
+
+    &:hover {
+      .${THUMBNAIL_SHOW_ON_HOVER_FOCUS} {
+        display: flex;
+      }
+    }
     ${$isError &&
     css`
       .${THUMBNAIL_SCRIM_CLASSNAME} {
@@ -60,6 +76,9 @@ export const Container = styled.button(
 
     &:focus,
       &:focus-within {
+      .${THUMBNAIL_SHOW_ON_HOVER_FOCUS} {
+        display: flex;
+      }
       .${THUMBNAIL_SCRIM_CLASSNAME} {
         background-color: ${theme.colors.opacity.black64};
         border: 1px solid
@@ -88,7 +107,8 @@ export const Background = styled.div(
     display: flex;
     border-radius: ${theme.borders.radius.small};
 
-    img {
+    img,
+    video {
       width: 100%;
       height: 100%;
       object-fit: cover;

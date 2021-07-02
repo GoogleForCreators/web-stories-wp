@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import * as ChecklistCardStyles from './styles';
+
 export { default as ChecklistCard } from './checklistCard';
 export * from './constants';
-export * as ChecklistCardStyles from './styles';
+export { ChecklistCardStyles };
 export { DefaultCtaButton } from './defaultCtaButton';
 export { DefaultFooterText } from './defaultFooterText';

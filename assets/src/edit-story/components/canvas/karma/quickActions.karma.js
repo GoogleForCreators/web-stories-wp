@@ -54,6 +54,7 @@ describe('Quick Actions integration', () => {
       await fixture.events.sleep(300);
 
       expect(fixture.screen.queryByRole('dialog')).toBeNull();
+      expect(fixture.screen.queryByTestId('quick-actions-menu')).toBeNull();
     });
   });
 

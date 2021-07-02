@@ -20,7 +20,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Input } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -29,7 +29,6 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input } from '../../../../../design-system';
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
@@ -90,12 +89,9 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
-  const [debouncedCTAUpdate, cancelCTAUpdate] = useDebouncedCallback(
-    (value) => {
-      updatePageAttachment({ ctaText: value });
-    },
-    300
-  );
+  const debouncedCTAUpdate = useDebouncedCallback((value) => {
+    updatePageAttachment({ ctaText: value });
+  }, 300);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
     !isValidUrl(withProtocol(url || '').trim())
@@ -120,13 +116,13 @@ function PageAttachmentPanel() {
         updatePageAttachment({ ctaText: defaultCTA });
         _setCtaText(defaultCTA);
       } else {
-        cancelCTAUpdate();
+        debouncedCTAUpdate.cancel();
         updatePageAttachment({
           ctaText: _ctaText ? _ctaText : defaultCTA,
         });
       }
     },
-    [_ctaText, cancelCTAUpdate, defaultCTA, updatePageAttachment]
+    [_ctaText, debouncedCTAUpdate, defaultCTA, updatePageAttachment]
   );
 
   return (
