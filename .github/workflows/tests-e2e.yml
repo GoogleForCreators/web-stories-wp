@@ -42,7 +42,7 @@ jobs:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    continue-on-error: ${{ matrix.experimental == true }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
@@ -62,6 +62,7 @@ jobs:
 
           - browser: 'firefox'
             wp: 'latest'
+            experimental: true
             snapshots: false
 
     steps:
