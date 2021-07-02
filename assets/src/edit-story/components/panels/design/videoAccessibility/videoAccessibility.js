@@ -62,8 +62,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
-  const height = getCommonValue(selectedElements, 'height', resource.height);
-  const width = getCommonValue(selectedElements, 'width', resource.width);
+  const { height, width } = resource;
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
