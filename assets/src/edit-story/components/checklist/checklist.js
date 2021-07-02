@@ -36,6 +36,7 @@ import {
   ISSUE_TYPES,
   POPUP_ID,
   PANEL_EXPANSION_BY_CHECKPOINT,
+  PANEL_VISIBILITY_BY_STATE,
 } from './constants';
 import {
   AccessibilityChecks,
@@ -44,9 +45,10 @@ import {
   PriorityChecks,
 } from './checklistContent';
 
-import { ChecklistCountProvider } from './countContext';
+import { useCategoryCount } from './countContext';
 import { useChecklist } from './checklistContext';
 import { useCheckpoint } from './checkpointContext';
+import { getTabPanelMaxHeight } from './styles';
 
 const Wrapper = styled.div`
   /**
@@ -68,6 +70,10 @@ export function Checklist() {
       isOpen,
     })
   );
+
+  const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+  const designCount = useCategoryCount(ISSUE_TYPES.DESIGN);
+  const accessibilityCount = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
 
   const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
     checkpoint,
@@ -99,51 +105,74 @@ export function Checklist() {
     }
   }, [checkpoint]);
 
+  const visiblePanels = PANEL_VISIBILITY_BY_STATE[checkpoint];
+  const priorityBadgeCount = visiblePanels.includes(ISSUE_TYPES.PRIORITY)
+    ? priorityCount
+    : 0;
+  const designBadgeCount = visiblePanels.includes(ISSUE_TYPES.DESIGN)
+    ? designCount
+    : 0;
+  const accessibilityBadgeCount = visiblePanels.includes(
+    ISSUE_TYPES.ACCESSIBILITY
+  )
+    ? accessibilityCount
+    : 0;
+
+  const maxPanelHeight = getTabPanelMaxHeight(
+    [priorityBadgeCount, designBadgeCount, accessibilityBadgeCount].filter(
+      (num) => Boolean(num)
+    ).length
+  );
+
   return (
     <DirectionAware>
-      <ChecklistCountProvider>
-        <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
-          <Popup
-            popupId={POPUP_ID}
-            isOpen={isOpen}
-            ariaLabel={CHECKLIST_TITLE}
-            shouldKeepMounted
-          >
-            <StyledNavigationWrapper ref={navRef} isOpen={isOpen}>
-              <TopNavigation
-                onClose={close}
-                label={CHECKLIST_TITLE}
-                popupId={POPUP_ID}
+      <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
+        <Popup
+          popupId={POPUP_ID}
+          isOpen={isOpen}
+          ariaLabel={CHECKLIST_TITLE}
+          shouldKeepMounted
+        >
+          <StyledNavigationWrapper ref={navRef} isOpen={isOpen}>
+            <TopNavigation
+              onClose={close}
+              label={CHECKLIST_TITLE}
+              popupId={POPUP_ID}
+            />
+            <Tablist
+              data-isexpanded={isOpen}
+              aria-label={__(
+                'Potential Story issues by category',
+                'web-stories'
+              )}
+            >
+              <PriorityChecks
+                badgeCount={priorityBadgeCount}
+                isOpen={openPanel === ISSUE_TYPES.PRIORITY}
+                onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+                maxHeight={maxPanelHeight}
+                title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
               />
-              <Tablist
-                data-isexpanded={isOpen}
-                aria-label={__(
-                  'Potential Story issues by category',
-                  'web-stories'
-                )}
-              >
-                <PriorityChecks
-                  isOpen={openPanel === ISSUE_TYPES.PRIORITY}
-                  onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
-                  title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
-                />
-                <DesignChecks
-                  isOpen={openPanel === ISSUE_TYPES.DESIGN}
-                  onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
-                  title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
-                />
-                <AccessibilityChecks
-                  isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
-                  onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
-                  title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
-                />
-              </Tablist>
-              <EmptyContentCheck />
-            </StyledNavigationWrapper>
-          </Popup>
-          <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
-        </Wrapper>
-      </ChecklistCountProvider>
+              <DesignChecks
+                badgeCount={designBadgeCount}
+                isOpen={openPanel === ISSUE_TYPES.DESIGN}
+                onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+                maxHeight={maxPanelHeight}
+                title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+              />
+              <AccessibilityChecks
+                badgeCount={accessibilityBadgeCount}
+                isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
+                onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+                maxHeight={maxPanelHeight}
+                title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+              />
+            </Tablist>
+            <EmptyContentCheck />
+          </StyledNavigationWrapper>
+        </Popup>
+        <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
+      </Wrapper>
     </DirectionAware>
   );
 }

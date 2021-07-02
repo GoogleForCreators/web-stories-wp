@@ -50,9 +50,6 @@ describe('Checklist integration', () => {
 
   const openChecklist = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(
-      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
@@ -60,9 +57,6 @@ describe('Checklist integration', () => {
 
   const openChecklistWithKeyboard = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(
-      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
     await fixture.events.focus(toggleButton);
     await fixture.events.keyboard.press('Enter');
     // wait for animation
@@ -72,9 +66,6 @@ describe('Checklist integration', () => {
   describe('open and close', () => {
     it('should toggle the checklist', async () => {
       const { toggleButton } = fixture.editor.checklist;
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
 
       await fixture.events.click(toggleButton);
       // wait for animation
@@ -86,9 +77,6 @@ describe('Checklist integration', () => {
       await fixture.events.click(toggleButton);
       // wait for animation
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
 
     it('should close the checklist when the "close" button is clicked', async () => {
@@ -96,9 +84,6 @@ describe('Checklist integration', () => {
 
       await fixture.events.click(fixture.editor.checklist.closeButton);
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
   });
 
@@ -149,9 +134,6 @@ describe('Checklist integration', () => {
       await fixture.events.keyboard.press('Enter');
       // wait for animation
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
 
     it('should close the Checklist when pressing enter on the "close" button', async () => {
@@ -167,9 +149,6 @@ describe('Checklist integration', () => {
 
       await fixture.events.keyboard.press('Enter');
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
 
     it('should open the tab panels with tab and enter', async () => {

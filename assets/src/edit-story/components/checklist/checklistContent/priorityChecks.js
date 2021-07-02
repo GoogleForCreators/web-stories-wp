@@ -25,7 +25,7 @@ import { useEffect } from 'react';
 import { useConfig } from '../../../app';
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
 import { PANEL_STATES } from '../../tablist';
-import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
+import { ISSUE_TYPES } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
 import StoryMissingExcerpt from '../checks/storyMissingExerpt';
 import StoryMissingTitle from '../checks/storyMissingTitle';
@@ -39,21 +39,22 @@ import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
 
-export function PriorityChecks({ isOpen, onClick, title }) {
+export function PriorityChecks({
+  badgeCount = 0,
+  maxHeight,
+  isOpen,
+  onClick,
+  title,
+}) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
-  const { updateHighPriorityCount, checkpoint } = useCheckpoint(
-    ({ actions: { updateHighPriorityCount }, state: { checkpoint } }) => ({
-      checkpoint,
+  const { updateHighPriorityCount } = useCheckpoint(
+    ({ actions: { updateHighPriorityCount } }) => ({
       updateHighPriorityCount,
     })
   );
   useEffect(() => {
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
-
-  const isCheckpointMet = PANEL_VISIBILITY_BY_STATE[checkpoint].includes(
-    ISSUE_TYPES.PRIORITY
-  );
 
   const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
   const {
@@ -66,9 +67,10 @@ export function PriorityChecks({ isOpen, onClick, title }) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
       <StyledTablistPanel
-        badgeCount={isCheckpointMet ? count : 0}
+        badgeCount={badgeCount}
         isExpanded={isOpen}
         onClick={onClick}
+        maxHeight={maxHeight}
         status={PANEL_STATES.DANGER}
         title={title}
       >
@@ -91,7 +93,9 @@ export function PriorityChecks({ isOpen, onClick, title }) {
 }
 
 PriorityChecks.propTypes = {
+  badgeCount: PropTypes.number,
   isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
