@@ -49,7 +49,7 @@ import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import singleSavedTemplate from './db/singleSavedTemplate';
 
-if ('true' === process.env.CI) {
+if ('true' === WEB_STORIES_CI) {
   configure({
     getElementError: (message) => {
       const error = new Error(message);
