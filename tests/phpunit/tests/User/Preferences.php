@@ -38,13 +38,6 @@ class Preferences extends \WP_UnitTestCase {
 	 */
 	protected static $author_id;
 
-	/**
-	 * Contributor user for test.
-	 *
-	 * @var int
-	 */
-	protected static $contributor_id;
-
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
 			[
@@ -56,10 +49,6 @@ class Preferences extends \WP_UnitTestCase {
 			[
 				'role' => 'author',
 			]
-		);
-
-		self::$contributor_id = $factory->user->create(
-			[ 'role' => 'contributor' ]
 		);
 	}
 
@@ -79,19 +68,6 @@ class Preferences extends \WP_UnitTestCase {
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
 		parent::tearDown();
-	}
-
-	/**
-	 * @covers ::filter_media_optimization_default_value
-	 */
-	public function test_filter_media_optimization_default_value() {
-		$admin_default       = get_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
-		$author_default      = get_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
-		$contributor_default = get_user_meta( self::$contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
-
-		$this->assertTrue( $admin_default );
-		$this->assertTrue( $author_default );
-		$this->assertFalse( $contributor_default );
 	}
 
 	/**
