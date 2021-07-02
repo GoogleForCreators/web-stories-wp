@@ -29,7 +29,7 @@ function FileProvider({ children }) {
   const getFonts = useCallback(
     () =>
       import(
-        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/raw'
+        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/raw' //eslint-disable-line import/no-unresolved -- False positive.
       ).then((res) => res.default),
     []
   );
