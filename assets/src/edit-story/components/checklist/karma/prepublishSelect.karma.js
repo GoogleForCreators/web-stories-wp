@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -97,11 +97,17 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
 
-      const tooMuchTextOnPage = fixture.screen.getByText(
+      const tooMuchTextOnTitle = fixture.screen.getByText(
         DESIGN_COPY.tooMuchPageText.title
       );
-      await fixture.events.click(tooMuchTextOnPage);
-      await fixture.events.sleep(1000);
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        tooMuchTextOnTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(4);
       expect(
@@ -144,10 +150,17 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(storyContext.state.selectedElementIds[0]).toEqual(
         normalFontElement.id
       );
-      const fontTooSmallRow = fixture.screen.getByText(
+      const fontTooSmallTitle = fixture.screen.getByText(
         ACCESSIBILITY_COPY.fontSizeTooSmall.title
       );
-      await fixture.events.click(fontTooSmallRow);
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        fontTooSmallTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.click(fontTooSmallTitle);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -168,7 +181,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           height: 40,
         })
       );
-
       await clickOnCanvas();
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
@@ -177,13 +189,18 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
 
       await openChecklist();
-
       await fixture.events.click(fixture.editor.checklist.accessibilityTab);
 
-      const linkTooSmallRow = fixture.screen.getByText(
+      const linkTooSmallTitle = fixture.screen.getByText(
         ACCESSIBILITY_COPY.linkTappableRegionTooSmall.title
       );
-      await fixture.events.click(linkTooSmallRow);
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        linkTooSmallTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -217,19 +234,15 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await openChecklist();
 
       await fixture.events.keyboard.press('tab');
+      // Collapse priority panel which is expanded by default
+      await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('tab');
       // Navigate to accessibility panel
       await fixture.events.keyboard.press('tab');
       // Expand panel
       await fixture.events.keyboard.press('Enter');
-      // There are three issues in the recommended section, we want the last one.
-      await fixture.events.keyboard.press('tab');
-      await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
 
-      expect(document.activeElement).toHaveTextContent(
-        ACCESSIBILITY_COPY.linkTappableRegionTooSmall.title
-      );
       await fixture.events.keyboard.press('Enter');
 
       storyContext = await fixture.renderHook(() => useStory());
@@ -258,12 +271,18 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
       await addPages(2);
       await openChecklist();
-
-      const imageMissingAltTextRow = fixture.screen.getByText(
+      await fixture.events.click(fixture.editor.checklist.accessibilityTab);
+      const imageMissingAltTextTitle = fixture.screen.getByText(
         ACCESSIBILITY_COPY.imagesMissingAltText.title
       );
-      await fixture.events.click(imageMissingAltTextRow);
-
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        imageMissingAltTextTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.sleep(500);
       expect(
         fixture.editor.inspector.designPanel.node.contains(
           document.activeElement
@@ -302,80 +321,82 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(mediaButton.contains(document.activeElement)).toBeTrue();
       await fixture.snapshot('document tab opened by checklist panel');
     });
-  });
 
-  it('should open the design panel accessibility section and focus the video poster button when using mouse', async () => {
-    await fixture.act(() => {
-      insertElement('video', {
-        x: 0,
-        y: 0,
-        width: 640 / 2,
-        height: 529 / 2,
-        resource: {
-          width: 640,
-          height: 529,
-          type: 'video',
-          src: 'http://localhost:9876/__static__/earth.mp4',
-        },
+    it('should open the design panel accessibility section and focus the video poster button when using mouse', async () => {
+      await fixture.act(() => {
+        insertElement('video', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            width: 640,
+            height: 529,
+            type: 'video',
+            src: 'http://localhost:9876/__static__/earth.mp4',
+          },
+        });
       });
+
+      await addPages(5);
+      await openChecklist();
+      // high priority should auto expand
+      const videoMissingPosterTitle = fixture.screen.getByText(
+        PRIORITY_COPY.videoMissingPoster.title
+      );
+
+      expect(videoMissingPosterTitle).toBeDefined();
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        videoMissingPosterTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.sleep(500);
+
+      const mediaButton = await fixture.editor.inspector.designPanel
+        .videoAccessibility.posterMenuButton;
+      expect(mediaButton.contains(document.activeElement)).toBeTrue();
+
+      await fixture.snapshot(
+        'design tab opened accessibility and focused on video poster button by checklist panel'
+      );
     });
 
-    await addPages(4);
-    await openChecklist();
-    // high priority should auto expand
-
-    const videoMissingPosterRow = fixture.screen.getByText(
-      PRIORITY_COPY.videoMissingPoster.title
-    );
-
-    expect(videoMissingPosterRow).toBeDefined();
-
-    await fixture.events.click(videoMissingPosterRow);
-
-    const mediaButton = await fixture.editor.inspector.designPanel
-      .videoAccessibility.posterMenuButton;
-    expect(mediaButton.contains(document.activeElement)).toBeTrue();
-
-    await fixture.snapshot(
-      'design tab opened accessibility and focused on video poster button by checklist panel'
-    );
-  });
-
-  it('should open the design panel accessibility section and focus the video poster button when using keyboard', async () => {
-    await fixture.act(() => {
-      insertElement('video', {
-        x: 0,
-        y: 0,
-        width: 640 / 2,
-        height: 529 / 2,
-        resource: {
-          width: 640,
-          height: 529,
-          type: 'video',
-          src: 'http://localhost:9876/__static__/earth.mp4',
-        },
+    it('should open the design panel accessibility section and focus the video poster button when using keyboard', async () => {
+      await fixture.act(() => {
+        insertElement('video', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            width: 640,
+            height: 529,
+            type: 'video',
+            src: 'http://localhost:9876/__static__/earth.mp4',
+          },
+        });
       });
+
+      await addPages(4);
+      await openChecklist();
+      // high priority should auto expand
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
+
+      const mediaButton = await fixture.editor.inspector.designPanel
+        .videoAccessibility.posterMenuButton;
+      expect(mediaButton.contains(document.activeElement)).toBeTrue();
+
+      await fixture.snapshot(
+        'design tab opened accessibility and focused on video poster button by checklist panel'
+      );
     });
-
-    await addPages(4);
-    await openChecklist();
-    // high priority should auto expand
-
-    const videoMissingPosterRow = fixture.screen.getByText(
-      PRIORITY_COPY.videoMissingPoster.title
-    );
-
-    expect(videoMissingPosterRow).toBeDefined();
-
-    await fixture.events.focus(videoMissingPosterRow);
-    await fixture.events.keyboard.press('Enter');
-
-    const mediaButton = await fixture.editor.inspector.designPanel
-      .videoAccessibility.posterMenuButton;
-    expect(mediaButton.contains(document.activeElement)).toBeTrue();
-
-    await fixture.snapshot(
-      'design tab opened accessibility and focused on video poster button by checklist panel'
-    );
   });
 });
