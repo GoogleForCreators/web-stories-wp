@@ -235,15 +235,24 @@ function useFFmpeg() {
    *
    * @type {boolean}
    */
-  const isTranscodingEnabled = Boolean(
+  const isUserSettingEnabled = Boolean(
     currentUser.meta?.web_stories_media_optimization
   );
 
+  /**
+   * Whether transcoding as a whole is supported.
+   *
+   * Considers user opt-in, cross-site isolation, and upload permissions.
+   *
+   * @type {boolean}
+   */
+  const isTranscodingEnabled =
+    hasUploadMediaAction &&
+    isUserSettingEnabled &&
+    isCrossOriginIsolationEnabled;
+
   return {
-    isTranscodingEnabled:
-      hasUploadMediaAction &&
-      isTranscodingEnabled &&
-      isCrossOriginIsolationEnabled,
+    isTranscodingEnabled,
     canTranscodeFile,
     isFileTooLarge,
     transcodeVideo,
