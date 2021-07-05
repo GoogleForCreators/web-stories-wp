@@ -51,10 +51,9 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 /**
  * @typedef FFmpegData
- * @property {boolean} isCrossOriginIsolationEnabled Whether the feature is enabled.
- * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
  * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
+ * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
  * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
  */
