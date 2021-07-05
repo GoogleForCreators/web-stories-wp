@@ -18,7 +18,12 @@
  */
 import visitAdminPage from './visitAdminPage';
 
-async function visitWidgetScreen() {
+/**
+ * Visit block based widget screen, found in WordPress 5.8+ and dismiss welcome message.
+ *
+ * @return {Promise<void>}
+ */
+async function visitBlockWidgetScreen() {
   await visitAdminPage('widgets.php');
 
   // Disable welcome guide if it is enabled.
@@ -35,4 +40,4 @@ async function visitWidgetScreen() {
     );
   }
 }
-export default visitWidgetScreen;
+export default visitBlockWidgetScreen;

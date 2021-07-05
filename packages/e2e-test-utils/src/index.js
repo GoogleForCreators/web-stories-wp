@@ -47,7 +47,7 @@ export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
 export { default as createNewPost } from './createNewPost';
 export { default as checkVersion } from './checkVersion';
-export { default as visitWidgetScreen } from './visitWidgetScreen';
+export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
 export { default as insertWidget } from './insertWidget';
 export {
   getEditedPostContent,

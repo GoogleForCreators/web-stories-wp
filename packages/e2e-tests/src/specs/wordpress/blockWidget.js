@@ -23,7 +23,7 @@ import {
   activatePlugin,
   deactivatePlugin,
   checkVersion,
-  visitWidgetScreen,
+  visitBlockWidgetScreen,
   insertWidget,
 } from '@web-stories-wp/e2e-test-utils';
 
@@ -42,7 +42,7 @@ maybe('Web Stories Widget Block', () => {
   });
 
   it('should insert a new web stories block', async () => {
-    await visitWidgetScreen();
+    await visitBlockWidgetScreen();
     await expect(page).toClick('button[aria-label="Add block"]');
     await page.type('.block-editor-inserter__search-input', 'Web Stories');
     await expect(page).toClick('button span', { text: 'Web Stories' });
@@ -109,7 +109,7 @@ maybe('Web Stories Widget Block', () => {
     );
 
     await deactivatePlugin('classic-widgets');
-    await visitWidgetScreen();
+    await visitBlockWidgetScreen();
     const selector = '.wp-block-legacy-widget';
 
     await expect(page).toMatchElement(selector);
