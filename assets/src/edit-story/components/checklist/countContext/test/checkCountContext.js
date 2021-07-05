@@ -22,7 +22,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import { ISSUE_TYPES } from '../constants';
+import { ISSUE_TYPES } from '../../constants';
 import {
   ChecklistCountProvider,
   ChecklistCategoryProvider,
