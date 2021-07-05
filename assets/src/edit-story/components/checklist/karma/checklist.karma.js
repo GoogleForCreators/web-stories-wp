@@ -50,9 +50,6 @@ describe('Checklist integration', () => {
 
   const openChecklist = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(
-      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
@@ -60,9 +57,6 @@ describe('Checklist integration', () => {
 
   const openChecklistWithKeyboard = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(
-      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
     await fixture.events.focus(toggleButton);
     await fixture.events.keyboard.press('Enter');
     // wait for animation
@@ -72,9 +66,6 @@ describe('Checklist integration', () => {
   describe('open and close', () => {
     it('should toggle the checklist', async () => {
       const { toggleButton } = fixture.editor.checklist;
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
 
       await fixture.events.click(toggleButton);
       // wait for animation
@@ -86,9 +77,6 @@ describe('Checklist integration', () => {
       await fixture.events.click(toggleButton);
       // wait for animation
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
 
     it('should close the checklist when the "close" button is clicked', async () => {
@@ -96,27 +84,30 @@ describe('Checklist integration', () => {
 
       await fixture.events.click(fixture.editor.checklist.closeButton);
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
   });
 
   describe('Checklist cursor interaction', () => {
-    it('should open the high priority section', async () => {
+    it('should open the high priority section by default when 4 pages are added to the story', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
       await addPages(4);
       await openChecklist();
-      await fixture.events.click(fixture.editor.checklist.priorityTab);
       expect(fixture.editor.checklist.priorityPanel).toBeDefined();
     });
 
-    it('should open the design section', async () => {
+    it('should open the design section when clicked', async () => {
+      // need to add some pages, the add page button is under the checklist so do this before expanding
+      await addPages(4);
+      await openChecklist();
+      await fixture.events.click(fixture.editor.checklist.designTab);
+      expect(fixture.editor.checklist.designPanel).toBeDefined();
+    });
+
+    it('should open the design section by default when 2 pages are added to the story', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
       await addPages(2);
       await openChecklist();
 
-      await fixture.events.click(fixture.editor.checklist.designTab);
       expect(fixture.editor.checklist.designPanel).toBeDefined();
     });
     // TODO #8085 - a11y section not available in blank page state, no issues present.
@@ -143,9 +134,6 @@ describe('Checklist integration', () => {
       await fixture.events.keyboard.press('Enter');
       // wait for animation
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
 
     it('should close the Checklist when pressing enter on the "close" button', async () => {
@@ -161,9 +149,6 @@ describe('Checklist integration', () => {
 
       await fixture.events.keyboard.press('Enter');
       await fixture.events.sleep(500);
-      expect(
-        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-      ).toBe('false');
     });
 
     it('should open the tab panels with tab and enter', async () => {

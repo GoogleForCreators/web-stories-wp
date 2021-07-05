@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import metadata from '../../../../blocks/embed/block.json';
 
-export { default as TablistPanel } from './tablistPanel';
-export { PANEL_STATES } from './constants';
-export { Tablist } from './styles';
+export default metadata;

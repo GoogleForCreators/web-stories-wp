@@ -158,10 +158,10 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
+  const { isTranscodingEnabled } = useFFmpeg();
 
   const allowedMimeTypes = useMemo(() => {
-    if (isFeatureEnabled && isTranscodingEnabled) {
+    if (isTranscodingEnabled) {
       return [
         ...allowedTranscodableMimeTypes,
         ...allowedImageMimeTypes,
@@ -172,7 +172,6 @@ function MediaPane(props) {
   }, [
     allowedImageMimeTypes,
     allowedVideoMimeTypes,
-    isFeatureEnabled,
     isTranscodingEnabled,
     allowedTranscodableMimeTypes,
   ]);
@@ -202,7 +201,6 @@ function MediaPane(props) {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
       if (
-        isFeatureEnabled &&
         isTranscodingEnabled &&
         transcodableMimeTypes.includes(resource.mimeType)
       ) {

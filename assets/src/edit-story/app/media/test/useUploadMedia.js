@@ -79,7 +79,6 @@ jest.mock('../../../app/media/utils');
 jest.mock('../utils/useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    isFeatureEnabled: true,
     isTranscodingEnabled: true,
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),

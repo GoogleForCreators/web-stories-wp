@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
@@ -36,12 +37,18 @@ import {
   TabPanel,
 } from './styles';
 
-const Panel = ({
+const Scrollable = styled.div`
+  max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
+  overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'auto')};
+`;
+
+const TablistPanel = ({
   badgeCount = 0,
   children,
   className,
   isExpanded,
   onClick,
+  maxHeight,
   status = PANEL_STATES.NORMAL,
   title,
 }) => {
@@ -74,20 +81,23 @@ const Panel = ({
           <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
-      <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
-        {children}
-      </TabPanel>
+      <Scrollable maxHeight={maxHeight}>
+        <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
+          {children}
+        </TabPanel>
+      </Scrollable>
     </PanelWrapper>
   );
 };
-Panel.propTypes = {
+TablistPanel.propTypes = {
   badgeCount: PropTypes.number,
   children: PropTypes.node,
   className: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  maxHeight: PropTypes.string,
   status: PropTypes.oneOf(Object.values(PANEL_STATES)),
   title: PropTypes.string.isRequired,
 };
 
-export default Panel;
+export default TablistPanel;

@@ -51,7 +51,6 @@ function useMediaUploadQueue() {
     actions: { uploadFile },
   } = useUploader();
   const {
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
@@ -115,11 +114,7 @@ function useMediaUploadQueue() {
             return;
           }
 
-          if (
-            !isFeatureEnabled ||
-            !isTranscodingEnabled ||
-            !canTranscodeFile(file)
-          ) {
+          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
             return;
           }
 
@@ -148,7 +143,6 @@ function useMediaUploadQueue() {
     updateItems();
   }, [
     state.queue,
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     getFirstFrameOfVideo,
@@ -176,11 +170,7 @@ function useMediaUploadQueue() {
           const fileName = getPosterName(originalFileName);
           let newResource;
 
-          if (
-            !isFeatureEnabled ||
-            !isTranscodingEnabled ||
-            !canTranscodeFile(file)
-          ) {
+          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
             // TODO: If !isTranscodingEnabled && canTranscodeFile(), tell user to enable transcoding.
 
             // If transcoding is not enabled, just upload the file normally without any transcoding.
@@ -303,7 +293,6 @@ function useMediaUploadQueue() {
     finishUploading,
     startTranscoding,
     finishTranscoding,
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
