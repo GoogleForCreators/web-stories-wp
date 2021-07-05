@@ -30,7 +30,7 @@ import metadata from './block';
 import { BLOCK_TYPE_LATEST_STORIES, GRID_VIEW_TYPE } from './constants';
 import transforms from './transforms';
 
-const { name, category, attributes } = metadata;
+const { name, category, attributes, supports } = metadata;
 
 const settings = {
   title: __('Web Stories', 'web-stories'),
@@ -55,9 +55,7 @@ const settings = {
       numberOfColumns: 2,
     },
   },
-  supports: {
-    align: ['wide', 'full', 'left', 'right', 'center'],
-  },
+  supports,
   deprecated,
   edit,
   save,
