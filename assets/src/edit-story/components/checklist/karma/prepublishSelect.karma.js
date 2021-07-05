@@ -45,9 +45,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   const openChecklist = async () => {
     const { toggleButton } = fixture.editor.checklist;
-    expect(
-      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
