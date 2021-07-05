@@ -102,7 +102,7 @@ class Register_Widget implements Service, Registerable {
 	 */
 	public function body_class( array $classes ) {
 		if ( is_admin() && defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
-			$classes[] = 'iframe-embed';
+			$classes[] = 'ws-legacy-widget-preview';
 		}
 
 		return $classes;
