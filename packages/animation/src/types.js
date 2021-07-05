@@ -64,3 +64,22 @@ export const StoryElementPropType = PropTypes.shape({
   opacity: PropTypes.number,
   lockAspectRatio: PropTypes.bool,
 });
+
+/**
+ * Element object
+ *
+ * @typedef {Element} Element A story element
+ * @property {string} id  A unique uuid for the element
+ * @property {string} type The type of the element, e.g. video, gif, image
+ * @property {number} x The x position of the element, its top left corner
+ * @property {number} y The y position of the element, its top left corner
+ * @property {number} width The width of the element
+ * @property {number} height The height of the element
+ * @property {Object} flip If the element has been flipped vertical/horizontal
+ * @property {number} rotationAngle The element's rotation angle
+ * @property {Object} mask The type of mask applied to the element
+ * @property {Object} link The url, icon and description of a link applied to element
+ * @property {number} opacity The opacity of the element
+ * @property {boolean} lockAspectRatio Whether the element's aspect ratio is locked
+ * @property {Resource} resource The element's resource object
+ */

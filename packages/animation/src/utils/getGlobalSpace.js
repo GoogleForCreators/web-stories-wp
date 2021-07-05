@@ -15,7 +15,7 @@
  */
 
 /**
- * @typedef {import('../types').StoryElementPropType} Element
+ * @typedef {import('../types').Element} Element
  */
 
 /**
