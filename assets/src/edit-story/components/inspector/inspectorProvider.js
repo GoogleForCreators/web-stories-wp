@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useResizeEffect } from '@web-stories-wp/design-system';

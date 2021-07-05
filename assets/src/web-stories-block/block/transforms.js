@@ -22,7 +22,9 @@ import { createBlock } from '@wordpress/blocks';
  * Internal dependencies
  */
 import { BLOCK_TYPE_LATEST_STORIES, BLOCK_TYPE_URL } from './constants';
-import { attributes } from './block';
+import metadata from './block';
+
+const { attributes } = metadata;
 
 const transforms = {
   from: [

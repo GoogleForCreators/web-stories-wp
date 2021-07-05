@@ -107,7 +107,8 @@ export const Background = styled.div(
     display: flex;
     border-radius: ${theme.borders.radius.small};
 
-    img {
+    img,
+    video {
       width: 100%;
       height: 100%;
       object-fit: cover;

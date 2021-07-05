@@ -24,7 +24,7 @@ import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 export const MIN_STORY_PAGES = 4;
 export const MAX_STORY_PAGES = 30;
 export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
-export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
+export const MAX_STORY_TITLE_LENGTH_CHARS = 70;
 const POSTER_DIMENSION_WIDTH_PX = 640;
 const POSTER_DIMENSION_HEIGHT_PX = 853;
 export const ASPECT_RATIO_LEFT = 3;
@@ -405,7 +405,7 @@ export const MESSAGES = {
     },
     STORY_TITLE_TOO_LONG: {
       MAIN_TEXT: sprintf(
-        /* translators: %d: minimum number of story characters. */
+        /* translators: %d: maximum number of story characters. */
         _n(
           'Shorten title to fewer than %d character',
           'Shorten title to fewer than %d characters',

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies

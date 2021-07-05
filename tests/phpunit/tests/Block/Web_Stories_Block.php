@@ -26,16 +26,17 @@ use Google\Web_Stories\Tests\Test_Case;
  */
 class Web_Stories_Block extends Test_Case {
 	public function tearDown() {
-		unregister_block_type( \Google\Web_Stories\Block\Web_Stories_Block::BLOCK_NAME );
+		unregister_block_type( 'web-stories/embed' );
 
 		parent::tearDown();
 	}
 
 	/**
 	 * @covers ::register
+	 * @covers ::register_block_type
 	 */
 	public function test_registers_block_type() {
-		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( \Google\Web_Stories\Block\Web_Stories_Block::BLOCK_NAME ) );
+		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
 	}
 
 	/**
