@@ -24,7 +24,7 @@ import { useMemo } from 'react';
 import { useStory } from '../../../app/story';
 
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 import { DESIGN_COPY, MAX_STORY_PAGES, MIN_STORY_PAGES } from '../constants';
 
 export function storyPagesCount(story) {

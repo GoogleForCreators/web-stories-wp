@@ -38,7 +38,7 @@ import {
   THUMBNAIL_DIMENSIONS,
 } from '../../thumbnail';
 import PagePreview from '../../carousel/pagepreview';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {

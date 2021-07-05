@@ -19,13 +19,13 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
-import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import useMediaUploadQueue from './utils/useMediaUploadQueue';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
@@ -156,7 +156,7 @@ function useUploadMedia({
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error } of failures) {
+    for (const { id, onUploadError, error, resource } of failures) {
       if (onUploadError) {
         onUploadError({ id });
       }
@@ -170,6 +170,12 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
+        thumbnail: resource && {
+          src: ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src,
+          alt: resource?.alt,
+        },
         dismissable: true,
       });
     }

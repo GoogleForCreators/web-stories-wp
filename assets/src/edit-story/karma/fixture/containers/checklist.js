@@ -31,11 +31,11 @@ export class Checklist extends Container {
   }
 
   get toggleButton() {
-    return this.getByRole('button', { name: /^Checklist$/ });
+    return this.getByRole('button', { name: /^Checklist/ });
   }
 
   get issues() {
-    return this.queryByRole('tablist', {
+    return this.getByRole('tablist', {
       name: /^Potential Story issues by category$/,
     });
   }
@@ -66,9 +66,5 @@ export class Checklist extends Container {
 
   get accessibilityPanel() {
     return this.queryByRole('tabpanel', { name: /^Accessibility/ });
-  }
-
-  get thing() {
-    return this.getByRole('thing');
   }
 }

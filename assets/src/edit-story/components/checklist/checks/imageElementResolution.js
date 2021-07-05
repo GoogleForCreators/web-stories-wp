@@ -19,11 +19,11 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY } from '../constants';
@@ -34,7 +34,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function mediaElementResolution(element) {
   switch (element.type) {
@@ -96,7 +96,9 @@ const ImageElementResolution = () => {
         }
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
         thumbnailCount={failingElements.length}

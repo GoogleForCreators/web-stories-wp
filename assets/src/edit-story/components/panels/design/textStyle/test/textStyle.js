@@ -128,8 +128,9 @@ Wrapper.propTypes = {
     PropTypes.node,
   ]),
 };
-
-describe('Panels/TextStyle', () => {
+// TODO https://github.com/google/web-stories-wp/issues/7875
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('Panels/TextStyle', () => {
   let textElement;
   let controls;
 

@@ -17,9 +17,15 @@
 /**
  * External dependencies
  */
-import { deleteWidgets, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import {
+  deleteWidgets,
+  visitAdminPage,
+  withPlugin,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget', () => {
+  withPlugin('classic-widgets');
+
   beforeEach(async () => {
     await deleteWidgets();
   });

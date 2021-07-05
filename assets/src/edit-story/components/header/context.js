@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createContext } from 'react';
+import { createContext } from '@web-stories-wp/design-system';
 
 const HeaderContext = createContext({});
 

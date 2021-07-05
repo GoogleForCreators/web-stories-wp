@@ -16,15 +16,19 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { Icons, noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
 import { ToggleButton } from '../../toggleButton';
+import { useCategoryCount } from '../countContext';
+import { useCheckpoint } from '../checkpointContext';
+import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
 
 const MainIcon = styled(Icons.Checkbox)`
   height: 32px;
@@ -32,12 +36,18 @@ const MainIcon = styled(Icons.Checkbox)`
   display: block;
 `;
 
-function Toggle({
-  isOpen = false,
-  popupId = '',
-  onClick = () => {},
-  notificationCount = 0,
-}) {
+function Toggle({ isOpen = false, popupId = '', onClick = noop }) {
+  const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
+
+  const notificationCount = useMemo(
+    () => (checkpoint === PPC_CHECKPOINT_STATE.ALL ? priorityCount : 0),
+    [checkpoint, priorityCount]
+  );
+
   return (
     <ToggleButton
       aria-owns={popupId}
@@ -59,6 +69,7 @@ function Toggle({
             )
           : __('Checklist', 'web-stories')
       }
+      notificationCount={notificationCount}
     />
   );
 }
@@ -67,7 +78,6 @@ Toggle.propTypes = {
   isOpen: PropTypes.bool,
   popupId: PropTypes.string,
   onClick: PropTypes.func,
-  notificationCount: PropTypes.number,
 };
 
 export { Toggle };

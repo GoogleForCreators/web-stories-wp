@@ -17,17 +17,17 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
 import { useStory } from '../../../app';
 import { PRIORITY_COPY } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
@@ -67,7 +67,9 @@ const StoryPosterPortraitSize = () => {
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
       />

@@ -15,12 +15,13 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
+ * Internal dependencies
+ */
 import VideoOutput from '../output';
 
 describe('Video output', () => {

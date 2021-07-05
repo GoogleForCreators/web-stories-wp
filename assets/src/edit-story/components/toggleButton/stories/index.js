@@ -20,10 +20,11 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
+import { Icons } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
 import { ToggleButton } from '..';
 
 export default {

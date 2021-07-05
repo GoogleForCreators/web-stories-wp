@@ -21,11 +21,10 @@ import { Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-
+import { Headline, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Headline, Text, THEME_CONSTANTS } from '../../../design-system';
 import ShortcutLabel from './shortcutLabel';
 
 const Header = styled(Headline).attrs({

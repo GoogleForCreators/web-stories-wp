@@ -21,11 +21,10 @@ import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, _x } from '@web-stories-wp/i18n';
-
+import { NumericInput } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { NumericInput } from '../../../../../design-system';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, inputContainerStyleOverride } from '../../shared';

@@ -19,9 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_VARIANTS,
@@ -29,12 +26,14 @@ import {
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
-} from '../../../design-system';
-import { NAVIGATION_WIDTH } from '../helpCenter/navigator/constants';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
-  width: ${NAVIGATION_WIDTH};
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 Tablist.propTypes = {
@@ -126,9 +125,9 @@ export const PanelWrapper = styled.div`
         }
       }
 
-      & > ${TabPanel} {
+      * > ${TabPanel} {
         height: 560px;
-        padding: 0 16px 16px;
+        padding: 0 0 16px 16px;
         visibility: visible;
       }
     `};
@@ -173,6 +172,7 @@ export const TabPanel = styled.div`
   padding: 0;
   visibility: hidden;
   overflow-y: scroll;
+  overflow-x: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
   transition: 250ms ease-in;
 

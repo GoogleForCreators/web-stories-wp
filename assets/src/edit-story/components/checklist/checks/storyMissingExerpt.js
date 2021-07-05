@@ -25,14 +25,14 @@ import { states, useHighlights } from '../../../app/highlights';
 import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function storyMissingExcerpt(story) {
   return !story.excerpt?.length;
 }
 
 const StoryMissingExcerpt = () => {
-  const story = useStory(({ state }) => state);
+  const { story } = useStory(({ state }) => state);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
