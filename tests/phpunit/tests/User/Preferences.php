@@ -24,8 +24,18 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
  */
 class Preferences extends \WP_UnitTestCase {
+	/**
+	 * Admin user for test.
+	 *
+	 * @var int
+	 */
 	protected static $admin_id;
 
+	/**
+	 * Author user for test.
+	 *
+	 * @var int
+	 */
 	protected static $author_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {

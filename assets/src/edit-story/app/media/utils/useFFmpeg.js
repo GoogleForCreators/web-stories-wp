@@ -51,10 +51,9 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
 /**
  * @typedef FFmpegData
- * @property {boolean} isFeatureEnabled Whether the feature is enabled.
- * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
  * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
+ * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
  * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
  */
@@ -66,7 +65,11 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  * @return {FFmpegData} Functions and vars related to FFmpeg usage.
  */
 function useFFmpeg() {
-  const { ffmpegCoreUrl, allowedTranscodableMimeTypes } = useConfig();
+  const {
+    ffmpegCoreUrl,
+    allowedTranscodableMimeTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
   const {
     state: { currentUser },
   } = useCurrentUser();
@@ -77,7 +80,7 @@ function useFFmpeg() {
    *
    * @type {boolean} Whether the feature flag is enabled.
    */
-  const isFeatureEnabled = Boolean(window?.crossOriginIsolated);
+  const isCrossOriginIsolationEnabled = Boolean(window?.crossOriginIsolated);
 
   async function getFFmpegInstance(file) {
     const { createFFmpeg, fetchFile } = await import(
@@ -231,12 +234,23 @@ function useFFmpeg() {
    *
    * @type {boolean}
    */
-  const isTranscodingEnabled = Boolean(
+  const isUserSettingEnabled = Boolean(
     currentUser.meta?.web_stories_media_optimization
   );
 
+  /**
+   * Whether transcoding as a whole is supported.
+   *
+   * Considers user opt-in, cross-site isolation, and upload permissions.
+   *
+   * @type {boolean}
+   */
+  const isTranscodingEnabled =
+    hasUploadMediaAction &&
+    isUserSettingEnabled &&
+    isCrossOriginIsolationEnabled;
+
   return {
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     isFileTooLarge,

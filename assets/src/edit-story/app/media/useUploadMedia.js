@@ -65,12 +65,8 @@ function useUploadMedia({
     },
     actions: { addItem, removeItem },
   } = useMediaUploadQueue();
-  const {
-    isFeatureEnabled,
-    isTranscodingEnabled,
-    canTranscodeFile,
-    isFileTooLarge,
-  } = useFFmpeg();
+  const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
+    useFFmpeg();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.
@@ -215,8 +211,7 @@ function useUploadMedia({
           // We don't want to display placeholders / progress bars for items that
           // aren't supported anyway.
 
-          const canTranscode =
-            isFeatureEnabled && isTranscodingEnabled && canTranscodeFile(file);
+          const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
@@ -255,7 +250,6 @@ function useUploadMedia({
       validateFileForUpload,
       addItem,
       canTranscodeFile,
-      isFeatureEnabled,
       isTranscodingEnabled,
       isFileTooLarge,
     ]
