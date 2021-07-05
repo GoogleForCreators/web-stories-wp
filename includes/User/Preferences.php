@@ -112,9 +112,16 @@ class Preferences extends Service_Base {
 	/**
 	 * Auth callback.
 	 *
+	 * @since 1.4.0
+	 *
+	 * @param bool   $allowed Unused.
+	 * @param string $meta_key Unused.
+	 * @param int    $user_id User id of user meta.
+	 * @param int    $current_user_id Current user id.
+	 *
 	 * @return bool
 	 */
-	public function can_edit_current_user() {
-		return current_user_can( 'edit_user', get_current_user_id() );
+	public function can_edit_current_user( $allowed, $meta_key, $user_id, $current_user_id ) {
+		return user_can( $current_user_id, 'edit_user', $user_id );
 	}
 }
