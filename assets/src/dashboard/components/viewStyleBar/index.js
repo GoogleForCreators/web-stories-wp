@@ -19,11 +19,15 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {
+  Icons,
+  themeHelpers,
+  TOOLTIP_PLACEMENT,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons, themeHelpers, TOOLTIP_PLACEMENT } from '../../../design-system';
 import { VIEW_STYLE, VIEW_STYLE_LABELS } from '../../constants';
 import { Tooltip } from '../tooltip';
 

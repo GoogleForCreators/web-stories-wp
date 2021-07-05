@@ -28,7 +28,7 @@ Array [
         Keep under 10 words
       </li>
       <li>
-        Don't exceed 40 characters
+        Don't exceed 70 characters
       </li>
     </ul>,
     "highlight": "STORY_TITLE",

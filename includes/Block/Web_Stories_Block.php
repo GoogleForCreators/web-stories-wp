@@ -48,13 +48,6 @@ class Web_Stories_Block extends Embed_Base {
 	const SCRIPT_HANDLE = 'web-stories-block';
 
 	/**
-	 * Block name.
-	 *
-	 * @var string
-	 */
-	const BLOCK_NAME = 'web-stories/embed';
-
-	/**
 	 * Current block's block attributes.
 	 *
 	 * @var array Block Attributes.
@@ -87,10 +80,22 @@ class Web_Stories_Block extends Embed_Base {
 			$this->get_script_settings()
 		);
 
+		$this->register_block_type();
+	}
+
+	/**
+	 * Registers a block type from metadata stored in the `block.json` file.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return void
+	 */
+	protected function register_block_type() {
+		$base_path = $this->assets->get_base_path( 'blocks/embed/block.json' );
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
-		register_block_type(
-			self::BLOCK_NAME,
+		register_block_type_from_metadata(
+			$base_path,
 			[
 				'attributes'      => [
 					'blockType'        => [

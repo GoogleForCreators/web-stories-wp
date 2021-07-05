@@ -21,17 +21,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   NumericInput,
   Icons,
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';

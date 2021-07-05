@@ -21,13 +21,13 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import { THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { InlineLink, TextInputHelperText } from '../../components';
 import { AD_NETWORK_TYPE } from '../../../../../constants';
-import { THEME_CONSTANTS, DropDown } from '../../../../../../design-system';
 
 export const TEXT = {
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),

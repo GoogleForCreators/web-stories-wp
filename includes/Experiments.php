@@ -220,6 +220,17 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @embarks
+			 * Issue: 8113
+			 * Creation date: 2021-06-28
+			 */
+			[
+				'name'        => 'enableBulkVideoOptimization',
+				'label'       => __( 'Enable bulk video optimization', 'web-stories' ),
+				'description' => __( 'Enables an option to optimize multiple videos at once in v2 of prepublish checklist.', 'web-stories' ),
+				'group'       => 'editor',
+			], 
+			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 7965
 			 * Creation date: 2021-06-18
@@ -362,17 +373,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'SVG upload', 'web-stories' ),
 				'description' => __( 'Enable SVG upload', 'web-stories' ),
 				'group'       => 'general',
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #7480
-			 * Creation date: 2021-05-28
-			 */
-			[
-				'name'        => 'enableMediaPickerVideoOptimization',
-				'label'       => __( 'Video optimization in media picker', 'web-stories' ),
-				'description' => __( 'Optimize already uploaded videos in media picker.', 'web-stories' ),
-				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey

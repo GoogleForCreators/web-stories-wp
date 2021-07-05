@@ -33,7 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function videoElementMissingCaptions(element) {
   return element.type === 'video' && !element.tracks?.length;

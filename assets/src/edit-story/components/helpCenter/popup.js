@@ -18,11 +18,10 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
+import { BEZIER } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../design-system';
 import { ScheduledTransition } from './scheduledTransition';
 
 const DURATION = 300;
@@ -55,13 +54,19 @@ const Controller = styled.div`
   ${({ state }) => transitionStyles[state]}
 `;
 
-export function Popup({ isOpen, popupId, children, ariaLabel }) {
+export function Popup({
+  isOpen,
+  popupId,
+  children,
+  ariaLabel,
+  shouldKeepMounted,
+}) {
   return (
     <ScheduledTransition
       in={isOpen}
       timeout={DURATION}
-      mountOnEnter
-      unmountOnExit
+      mountOnEnter={!shouldKeepMounted}
+      unmountOnExit={!shouldKeepMounted}
     >
       {(state) => (
         <Controller
@@ -81,4 +86,5 @@ Popup.propTypes = {
   children: PropTypes.node.isRequired,
   popupId: PropTypes.string,
   ariaLabel: PropTypes.string,
+  shouldKeepMounted: PropTypes.bool,
 };

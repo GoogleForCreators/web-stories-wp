@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils';
 
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../../../design-system/testUtils/renderWithProviders';
 import { Toggle } from '..';
 
 describe('help center toggle <Toggle />', () => {

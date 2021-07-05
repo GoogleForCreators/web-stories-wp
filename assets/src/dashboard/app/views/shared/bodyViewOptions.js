@@ -22,16 +22,16 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   Text,
   THEME_CONSTANTS,
   DropDown,
   Link,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { StandardViewContentGutter, ViewStyleBar } from '../../../components';
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 import TelemetryBanner from './telemetryBanner';

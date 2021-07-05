@@ -16,76 +16,61 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { Icons, noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  BUTTON_SIZES,
-  Icons,
-  Button as dsButton,
-  BEZIER,
-} from '../../../../design-system';
+import { ToggleButton } from '../../toggleButton';
+import { useCategoryCount } from '../countContext';
+import { useCheckpoint } from '../checkpointContext';
+import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
 
-const Button = styled(dsButton)`
-  height: 36px;
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding: 8px;
-  color: ${({ theme }) => theme.colors.fg.primary};
-
-  ${({ isOpen, theme }) =>
-    isOpen &&
-    css`
-      border-color: ${theme.colors.bg.secondary};
-      background-color: ${theme.colors.bg.secondary};
-    `}
-`;
-
-const Label = styled.span`
-  display: block;
-  line-height: 20px;
-  text-align: left;
-`;
-
-const Chevron = styled(Icons.ChevronUpSmall)`
-  display: block;
-  margin: -6px 0 -6px 8px;
-  width: 32px;
+const MainIcon = styled(Icons.Checkbox)`
   height: 32px;
-  transform-origin: 50% 50%;
-  transform: rotate(${({ $isOpen }) => ($isOpen ? 0 : 180)}deg);
-  transition: transform 300ms ${BEZIER.default};
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    ${({ hasNotifications }) =>
-      hasNotifications &&
-      css`
-        display: none;
-      `}
-  }
+  width: auto;
+  display: block;
 `;
 
-function Toggle({ isOpen = false, popupId = '', onClick = () => {} }) {
+function Toggle({ isOpen = false, popupId = '', onClick = noop }) {
+  const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
+
+  const notificationCount = useMemo(
+    () => (checkpoint === PPC_CHECKPOINT_STATE.ALL ? priorityCount : 0),
+    [checkpoint, priorityCount]
+  );
+
   return (
-    <Button
-      aria-haspopup
-      aria-pressed={isOpen}
-      aria-expanded={isOpen}
+    <ToggleButton
       aria-owns={popupId}
       onClick={onClick}
       isOpen={isOpen}
-      type={BUTTON_TYPES.TERTIARY}
-      variant={BUTTON_VARIANTS.RECTANGLE}
-      size={BUTTON_SIZES.MEDIUM}
-    >
-      <Label>{__('Checklist', 'web-stories')}</Label>
-      <Chevron $isOpen={isOpen} />
-    </Button>
+      MainIcon={MainIcon}
+      label={__('Checklist', 'web-stories')}
+      aria-label={
+        notificationCount > 0
+          ? sprintf(
+              /* translators: %s:  number of unaddressed issues. */
+              _n(
+                'Checklist: %s unaddressed issue',
+                'Checklist: %s unaddressed issues',
+                notificationCount,
+                'web-stories'
+              ),
+              notificationCount
+            )
+          : __('Checklist', 'web-stories')
+      }
+      notificationCount={notificationCount}
+    />
   );
 }
 

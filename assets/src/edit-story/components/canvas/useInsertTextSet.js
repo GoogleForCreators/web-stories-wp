@@ -23,11 +23,11 @@ import {
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
+import { useBatchingCallback } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useBatchingCallback } from '../../../design-system';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
 import useInsertElement from './useInsertElement';

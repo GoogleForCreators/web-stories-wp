@@ -18,10 +18,11 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
-import { themeHelpers, Text, THEME_CONSTANTS } from '../../../../design-system';
+import {
+  themeHelpers,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 const Panel = styled.div`
   padding: 24px 0 16px 0;

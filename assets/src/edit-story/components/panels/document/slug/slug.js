@@ -20,6 +20,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Input,
+  Link,
+  ThemeGlobals,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -29,12 +35,6 @@ import cleanForSlug from '../../../../utils/cleanForSlug';
 import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import {
-  Input,
-  Link,
-  ThemeGlobals,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 import { inputContainerStyleOverride } from '../../shared';
 
 export const MIN_MAX = {

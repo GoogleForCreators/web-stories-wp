@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
+import { LockToggle, NumericInput } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -35,7 +35,6 @@ import {
   focusStyle,
 } from '../../shared';
 import { SimplePanel } from '../../panel';
-import { LockToggle, NumericInput } from '../../../../../design-system';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
 const TOGGLE_WIDTH = 32;

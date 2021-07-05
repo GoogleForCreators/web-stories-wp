@@ -20,7 +20,7 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Input } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -29,7 +29,6 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { Input } from '../../../../../design-system';
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({

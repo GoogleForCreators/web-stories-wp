@@ -33,6 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { useRegisterCheck } from '../countContext';
 
 export function videoElementMissingPoster(element) {
   return element.type === 'video' && !element.resource?.poster;
@@ -53,8 +54,11 @@ const VideoElementMissingPoster = () => {
   );
   const { footer, title } = PRIORITY_COPY.videoMissingPoster;
 
+  const isRendered = failingElements.length > 0;
+  useRegisterCheck('VideoElementMissingPoster', isRendered);
+
   return (
-    failingElements.length > 0 && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

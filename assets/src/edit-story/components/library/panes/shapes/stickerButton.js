@@ -18,15 +18,15 @@
  */
 import PropTypes from 'prop-types';
 import STICKERS from '@web-stories-wp/stickers';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import useLibrary from '../../useLibrary';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 

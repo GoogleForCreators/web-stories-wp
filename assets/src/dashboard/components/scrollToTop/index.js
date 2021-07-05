@@ -21,12 +21,12 @@ import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
+import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useLayoutContext } from '../layout';
-import { Button, BUTTON_VARIANTS, Icons } from '../../../design-system';
 
 const StyledButton = styled(Button)(
   ({ isVisible, theme }) => css`

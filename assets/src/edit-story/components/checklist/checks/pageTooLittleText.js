@@ -41,6 +41,7 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
+import { useRegisterCheck } from '../countContext';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
@@ -61,9 +62,11 @@ const PageTooLittleText = () => {
     [setHighlights]
   );
   const { footer, title } = DESIGN_COPY.tooLittlePageText;
+  const isRendered = failingPages.length > 0;
+  useRegisterCheck('PageTooLittleText', isRendered);
 
   return (
-    failingPages.length && (
+    isRendered && (
       <ChecklistCard
         title={title}
         cardType={

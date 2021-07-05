@@ -23,12 +23,14 @@ import {
   generatePatternStyles,
   PatternPropType,
 } from '@web-stories-wp/patterns';
-
+import {
+  THEME_CONSTANTS,
+  BUTTON_TRANSITION_TIMING,
+  Text,
+} from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../design-system/theme';
-import { BUTTON_TRANSITION_TIMING, Text } from '../../../../design-system';
 import { focusStyle } from '../../panels/shared';
 
 const fillCss = css`

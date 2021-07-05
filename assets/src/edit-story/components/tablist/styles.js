@@ -19,9 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_VARIANTS,
@@ -29,48 +26,20 @@ import {
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
-  width: 308px;
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 Tablist.propTypes = {
   // label to describe purpose of tabs
   'aria-label': PropTypes.string.isRequired,
 };
-
-export const PanelWrapper = styled.div`
-  width: 100%;
-  background: ${({ theme }) => theme.colors.bg.primary};
-
-  ${({ isExpanded, theme }) =>
-    isExpanded &&
-    css`
-      & > ${TabButton} {
-        ${PanelText} {
-          opacity: 1;
-        }
-
-        &,
-        :hover,
-        :focus {
-          background-color: ${theme.colors.bg.primary};
-        }
-
-        svg {
-          transform: rotate(0);
-        }
-      }
-
-      & > ${TabPanel} {
-        height: 560px;
-        padding: 16px;
-        visibility: visible;
-      }
-    `};
-`;
 
 export const PanelText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -88,9 +57,7 @@ export const TabButton = styled(Button).attrs({
   height: 60px;
   width: 100%;
   padding: 16px;
-  margin-bottom: 1px;
   border-radius: 0;
-  box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
 
   &,
   :hover,
@@ -118,6 +85,50 @@ export const TabButton = styled(Button).attrs({
 
       ${Badge} {
         background-color: ${({ theme }) => theme.colors.fg.negative};
+      }
+    `};
+`;
+
+export const PanelWrapper = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.colors.bg.primary};
+
+  :not(:last-child) ${TabButton} {
+    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+    margin-bottom: 1px;
+
+    ${themeHelpers.focusableOutlineCSS};
+  }
+
+  ${({ isExpanded, theme }) =>
+    isExpanded &&
+    css`
+      & > ${TabButton} {
+        :not(:last-child) {
+          box-shadow: none;
+        }
+
+        ${themeHelpers.focusableOutlineCSS};
+
+        ${PanelText} {
+          opacity: 1;
+        }
+
+        &,
+        :hover,
+        :focus {
+          background-color: ${theme.colors.bg.primary};
+        }
+
+        svg {
+          transform: rotate(0);
+        }
+      }
+
+      * > ${TabPanel} {
+        height: 560px;
+        padding: 0 0 16px 16px;
+        visibility: visible;
       }
     `};
 `;
@@ -161,6 +172,7 @@ export const TabPanel = styled.div`
   padding: 0;
   visibility: hidden;
   overflow-y: scroll;
+  overflow-x: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
   transition: 250ms ease-in;
 

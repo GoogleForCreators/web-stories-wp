@@ -26,6 +26,11 @@ import { useDebouncedCallback } from 'use-debounce';
  */
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import {
+  NumericInput,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -34,11 +39,6 @@ import clamp from '../../../../utils/clamp';
 import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';
-import {
-  NumericInput,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 import { inputContainerStyleOverride } from '../../shared';
 
 const SwitchRow = styled.div`

@@ -22,11 +22,10 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
-
+import { Menu, PLACEMENT, Popup } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Menu, PLACEMENT, Popup } from '../../../../../../design-system';
 import { More } from '../../../../button';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';

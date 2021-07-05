@@ -24,13 +24,13 @@ import { useDebouncedCallback } from 'use-debounce';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
 import { rgba } from 'polished';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import Popup from '../../components/popup';
-import { Icons } from '../../../design-system';
 import { useConfig } from '../../app/config';
 
 const PLAY_BUTTON_SIZE = 82;
