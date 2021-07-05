@@ -1,6 +1,15 @@
 {
   "name": "web-stories/embed",
+  "title": "Web Stories",
+  "description": "Embed Web Stories.",
   "category": "embed",
+  "keywords": [
+    "embed",
+    "web stories",
+    "story",
+    "stories"
+  ],
+  "textdomain": "web-stories",
   "attributes": {
     "blockType": {
       "type": "string"
@@ -70,5 +79,8 @@
       "type": "object",
       "default": {}
     }
+  },
+  "supports": {
+    "align": ["wide", "full", "left", "right", "center"]
   }
 }
