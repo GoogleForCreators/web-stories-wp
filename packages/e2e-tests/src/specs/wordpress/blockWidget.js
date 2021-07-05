@@ -22,18 +22,13 @@ import {
   visitAdminPage,
   activatePlugin,
   deactivatePlugin,
-  checkVersion,
   visitBlockWidgetScreen,
   insertWidget,
+  minWPVersionRequired,
 } from '@web-stories-wp/e2e-test-utils';
 
-// TODO, Once 5.8 is released, update check for 'latest'.
-const maybe = checkVersion(process.env?.WP_VERSION, '5.8')
-  ? describe
-  : describe.skip;
-
-/* eslint-disable jest/require-top-level-describe, jest/consistent-test-it */
-maybe('Web Stories Widget Block', () => {
+describe('Web Stories Widget Block', () => {
+  minWPVersionRequired('5.8');
   beforeEach(async () => {
     await deleteWidgets();
   });
@@ -131,4 +126,3 @@ maybe('Web Stories Widget Block', () => {
     await expect(page).toMatch('Test Block Widget');
   });
 });
-/* eslint-enable jest/require-top-level-describe, jest/consistent-test-it */
