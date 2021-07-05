@@ -26,6 +26,7 @@ import {
   createResource,
   getFileName,
   getImageDimensions,
+  createFileReader,
 } from '@web-stories-wp/media';
 
 /**
@@ -48,7 +49,9 @@ const getImageResource = async (file) => {
   const fileName = getFileName(file);
   const mimeType = file.type;
 
-  const src = createBlob(new window.Blob([file], { type: mimeType }));
+  const reader = await createFileReader(file);
+
+  const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
 
   return createLocalResource({
@@ -74,7 +77,9 @@ const getVideoResource = async (file) => {
   let length = 0;
   let lengthFormatted = '';
 
-  const src = createBlob(new Blob(file, { type: mimeType }));
+  const reader = await createFileReader(file);
+
+  const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
   const videoEl = document.createElement('video');
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
