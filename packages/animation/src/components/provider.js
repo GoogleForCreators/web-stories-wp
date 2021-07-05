@@ -38,7 +38,7 @@ if (!('KeyframeEffect' in window)) {
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../../assets/src/edit-story/types';
+import { StoryElementPropType } from '../types';
 import { clamp } from '../utils/range';
 import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
@@ -252,7 +252,7 @@ function Provider({
 
 Provider.propTypes = {
   animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
-  elements: PropTypes.arrayOf(StoryPropTypes.element),
+  elements: PropTypes.arrayOf(StoryElementPropType),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
   selectedElementIds: PropTypes.arrayOf(PropTypes.string),

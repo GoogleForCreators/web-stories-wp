@@ -15,7 +15,7 @@
  */
 
 /**
- * @typedef {import('../../../../assets/src/edit-story/types').Element} Element
+ * @typedef {import('../types').StoryElementPropType} Element
  */
 
 /**

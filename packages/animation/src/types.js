@@ -39,3 +39,28 @@ export const AnimationFormPropTypes = PropTypes.shape({
   ...ZoomEffectInputPropTypes,
   ...BasicAnimationInputPropTypes,
 });
+
+// TODO, load this from original source, once made into a package.
+export const StoryElementPropType = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  flip: PropTypes.shape({
+    vertical: PropTypes.bool,
+    horizontal: PropTypes.bool,
+  }),
+  rotationAngle: PropTypes.number.isRequired,
+  mask: PropTypes.shape({
+    type: PropTypes.string.isRequired,
+  }),
+  link: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    desc: PropTypes.string,
+    icon: PropTypes.string,
+  }),
+  opacity: PropTypes.number,
+  lockAspectRatio: PropTypes.bool,
+});
