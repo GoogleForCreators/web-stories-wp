@@ -21,33 +21,37 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { ISSUE_TYPES } from './constants';
-import ElementLinkTappableRegionTooSmall from './checks/elementLinkTappableRegionTooSmall';
-import ImageElementMissingAlt from './checks/imageElementMissingAlt';
-import { PageBackgroundTextLowContrast } from './checks/pageBackgroundLowTextContrast';
-import TextElementFontSizeTooSmall from './checks/textElementFontSizeTooSmall';
-import VideoElementMissingCaptions from './checks/videoElementMissingCaptions';
-import VideoElementMissingDescription from './checks/videoElementMissingDescription';
-import {
-  ChecklistCategoryProvider,
-  useCategoryCount,
-} from './checkCountContext';
-import { PanelText, StyledTablistPanel } from './styles';
+import { ISSUE_TYPES } from '../constants';
+import ElementLinkTappableRegionTooSmall from '../checks/elementLinkTappableRegionTooSmall';
+import ImageElementMissingAlt from '../checks/imageElementMissingAlt';
+import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextContrast';
+import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
+import VideoElementMissingCaptions from '../checks/videoElementMissingCaptions';
+import VideoElementMissingDescription from '../checks/videoElementMissingDescription';
+import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
+import { PanelText, StyledTablistPanel } from '../styles';
+import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 
-export function AccessibilityChecks({ isOpen, onClick, title }) {
-  const count = useCategoryCount(ISSUE_TYPES.ACCESSIBILITY);
-
+export function AccessibilityChecks({
+  badgeCount = 0,
+  maxHeight,
+  isOpen,
+  onClick,
+  title,
+}) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <StyledTablistPanel
-        badgeCount={count}
+        badgeCount={badgeCount}
         isExpanded={isOpen}
         onClick={onClick}
+        maxHeight={maxHeight}
         title={title}
       >
         <PanelText>
           {__('Make your Web Story accessible.', 'web-stories')}
         </PanelText>
+        <VideoOptimizationToggle />
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
@@ -59,7 +63,9 @@ export function AccessibilityChecks({ isOpen, onClick, title }) {
   );
 }
 AccessibilityChecks.propTypes = {
+  badgeCount: PropTypes.number,
   isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };

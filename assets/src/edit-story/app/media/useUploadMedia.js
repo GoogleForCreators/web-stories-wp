@@ -152,7 +152,7 @@ function useUploadMedia({
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error } of failures) {
+    for (const { id, onUploadError, error, resource } of failures) {
       if (onUploadError) {
         onUploadError({ id });
       }
@@ -166,6 +166,12 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
+        thumbnail: resource && {
+          src: ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src,
+          alt: resource?.alt,
+        },
         dismissable: true,
       });
     }

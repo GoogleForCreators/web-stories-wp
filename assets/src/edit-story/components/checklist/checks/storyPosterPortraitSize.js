@@ -27,7 +27,7 @@ import { PRIORITY_COPY } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;

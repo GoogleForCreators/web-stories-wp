@@ -43,6 +43,13 @@ const ChecklistProvider = ({ children }) => {
     setIsOpen(false);
   }, []);
 
+  const open = useCallback(() => {
+    trackEvent('checklist_toggled', {
+      status: 'open',
+    });
+    setIsOpen(true);
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       state: {
@@ -51,9 +58,10 @@ const ChecklistProvider = ({ children }) => {
       actions: {
         toggle,
         close,
+        open,
       },
     }),
-    [close, isOpen, toggle]
+    [close, isOpen, open, toggle]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

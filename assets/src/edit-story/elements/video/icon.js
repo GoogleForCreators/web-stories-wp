@@ -19,21 +19,27 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import VideoImage from '../media/videoImage';
 import VisibleImage from '../media/visibleImage';
 
 function VideoLayerContent({
   element: {
-    resource: { poster: defaultPoster, alt = __('Video', 'web-stories') },
+    resource: { poster: defaultPoster, alt = __('Video', 'web-stories'), src },
     poster,
   },
+  showVideoPreviewAsBackup,
 }) {
   const iconImage = poster?.length ? poster : defaultPoster;
-  if (!iconImage) {
+
+  if (!iconImage && showVideoPreviewAsBackup) {
+    return <VideoImage src={src} alt={alt} />;
+  } else if (!iconImage) {
     return <Icons.Video width={28} height={28} title={alt} />;
   }
 
@@ -42,6 +48,7 @@ function VideoLayerContent({
 
 VideoLayerContent.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  showVideoPreviewAsBackup: PropTypes.bool,
 };
 
 export default VideoLayerContent;

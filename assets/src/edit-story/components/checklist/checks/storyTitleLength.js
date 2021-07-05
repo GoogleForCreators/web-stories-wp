@@ -26,7 +26,7 @@ import { useStory } from '../../../app/story';
 import { useHighlights, states } from '../../../app/highlights';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY, MAX_STORY_TITLE_LENGTH_CHARS } from '../constants';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function storyTitleLength(story) {
   return story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS;

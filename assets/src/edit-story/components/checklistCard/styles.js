@@ -29,13 +29,14 @@ import {
 /**
  * Internal dependencies
  */
+import { CARD_WIDTH } from '../helpCenter/navigator/constants';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 
 const { focusableOutlineCSS } = themeHelpers;
 
 export const Wrapper = styled.div`
-  width: 272px;
+  width: ${CARD_WIDTH}px;
   display: flex;
   border-radius: 4px;
   background: ${({ theme }) => theme.colors.bg.secondary};
@@ -70,7 +71,7 @@ export const Title = styled.div`
     text-align: left;
     cursor: pointer;
     border-radius: ${({ theme }) => theme.borders.radius.small};
-    ${focusableOutlineCSS}
+    ${focusableOutlineCSS};
   }
 `;
 
