@@ -114,10 +114,10 @@ class Preferences extends Service_Base {
 	 *
 	 * @since 1.4.0
 	 *
-	 * @param bool   $allowed Unused.
-	 * @param string $meta_key Unused.
-	 * @param int    $user_id User id of user meta.
-	 * @param int    $current_user_id Current user id.
+	 * @param bool   $allowed Unused. Whether the user can add the object meta.
+	 * @param string $meta_key Unused. The meta key.
+	 * @param int    $user_id ID of the user being edited.
+	 * @param int    $current_user_id The currently editing user's ID.
 	 *
 	 * @return bool
 	 */
