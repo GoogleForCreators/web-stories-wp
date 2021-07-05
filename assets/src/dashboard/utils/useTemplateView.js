@@ -19,7 +19,6 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { clamp } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
@@ -29,6 +28,7 @@ import {
   VIEW_STYLE,
 } from '../constants';
 import { PageSizePropType } from '../types';
+import clamp from '../../utils/clamp';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useTemplateView({ totalPages }) {

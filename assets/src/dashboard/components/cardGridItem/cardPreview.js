@@ -28,7 +28,7 @@ import {
   ThemeGlobals,
   useFocusOut,
 } from '@web-stories-wp/design-system';
-import { clamp, STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
@@ -40,6 +40,7 @@ import {
 import { resolveRoute } from '../../app/router';
 import { DEFAULT_STORY_PAGE_ADVANCE_DURATION } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
+import clamp from '../../utils/clamp';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
