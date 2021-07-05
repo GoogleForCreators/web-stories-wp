@@ -52,7 +52,6 @@ function useMediaUploadQueue() {
     actions: { uploadFile },
   } = useUploader();
   const {
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
@@ -119,11 +118,7 @@ function useMediaUploadQueue() {
             return;
           }
 
-          if (
-            !isFeatureEnabled ||
-            !isTranscodingEnabled ||
-            !canTranscodeFile(file)
-          ) {
+          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
             return;
           }
 
@@ -152,7 +147,6 @@ function useMediaUploadQueue() {
     updateItems();
   }, [
     state.queue,
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     getFirstFrameOfVideo,
@@ -231,7 +225,6 @@ function useMediaUploadQueue() {
           // Convert animated GIFs to videos if possible.
           if (
             isGifOptimizationEnabled &&
-            isFeatureEnabled &&
             isTranscodingEnabled &&
             resource.mimeType === 'image/gif' &&
             isAnimatedGif(await file.arrayBuffer())
@@ -261,11 +254,7 @@ function useMediaUploadQueue() {
           // Transcode/Optimize videos before upload.
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-          if (
-            isFeatureEnabled &&
-            isTranscodingEnabled &&
-            canTranscodeFile(file)
-          ) {
+          if (isTranscodingEnabled && canTranscodeFile(file)) {
             startTranscoding({ id });
 
             try {
@@ -330,7 +319,6 @@ function useMediaUploadQueue() {
     processPoster,
     startTranscoding,
     finishTranscoding,
-    isFeatureEnabled,
     isTranscodingEnabled,
     getFirstFrameOfVideo,
     canTranscodeFile,

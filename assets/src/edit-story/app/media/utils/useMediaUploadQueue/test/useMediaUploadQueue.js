@@ -28,7 +28,6 @@ import useFFmpeg from '../../useFFmpeg';
 jest.mock('../../useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    isFeatureEnabled: true,
     isTranscodingEnabled: true,
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),

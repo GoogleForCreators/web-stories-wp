@@ -24,12 +24,22 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\User\Preferences
  */
 class Preferences extends \WP_UnitTestCase {
-	protected static $user_id;
+	/**
+	 * Admin user for test.
+	 *
+	 * @var int
+	 */
+	protected static $admin_id;
 
+	/**
+	 * Author user for test.
+	 *
+	 * @var int
+	 */
 	protected static $author_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
-		self::$user_id = $factory->user->create(
+		self::$admin_id = $factory->user->create(
 			[
 				'role' => 'administrator',
 			]
@@ -43,7 +53,7 @@ class Preferences extends \WP_UnitTestCase {
 	}
 
 	public static function wpTearDownAfterClass() {
-		self::delete_user( self::$user_id );
+		self::delete_user( self::$admin_id );
 		self::delete_user( self::$author_id );
 	}
 
@@ -65,12 +75,12 @@ class Preferences extends \WP_UnitTestCase {
 	 * @covers ::can_edit_current_user
 	 */
 	public function test_add_optin_field_to_rest_api() {
-		wp_set_current_user( self::$user_id );
+		wp_set_current_user( self::$admin_id );
 
-		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
-		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/users/%d', self::$user_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/web-stories/v1/users/%d', self::$admin_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
@@ -139,6 +149,41 @@ class Preferences extends \WP_UnitTestCase {
 		$this->assertTrue( $data['meta'][ \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY ] );
 		$this->assertArrayHasKey( 'hello', $data['meta'][ \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY ] );
 		$this->assertEqualSets( [ 'hello' => 'world' ], $data['meta'][ \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY ] );
+	}
+
+	/**
+	 * @covers ::register
+	 * @covers ::can_edit_current_user
+	 */
+	public function test_permission_check_for_authors() {
+		wp_set_current_user( self::$author_id );
+
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/' . self::$admin_id );
+		$request->set_body_params(
+			[
+				'meta' => [
+					\Google\Web_Stories\User\Preferences::OPTIN_META_KEY              => true,
+					\Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY => true,
+					\Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY         => [
+						'hello' => 'world',
+					],
+				],
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		if ( is_a( $response, 'WP_REST_Response' ) ) {
+			$response = $response->as_error();
+		}
+
+		$this->assertWPError( $response, 'rest_cannot_edit' );
+		$data = $response->get_error_data();
+		$this->assertArrayHasKey( 'status', $data );
+		$this->assertEquals( 403, $data['status'] );
+
 	}
 
 	/**
