@@ -33,7 +33,7 @@ import {
   MEDIA_TRANSCODED_MIME_TYPE,
   MEDIA_TRANSCODED_FILE_TYPE,
   MEDIA_POSTER_IMAGE_MIME_TYPE,
-  MEDIA_POSTER_IMAGE_EXT,
+  MEDIA_POSTER_IMAGE_FILE_TYPE,
 } from '../../../constants';
 import getPosterName from './getPosterName';
 
@@ -139,7 +139,7 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_EXT;
+        const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
         const originalFileName = getFileName(file);
         const outputFileName = getPosterName(originalFileName);
 
