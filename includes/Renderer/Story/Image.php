@@ -52,7 +52,6 @@ class Image {
 	 */
 	public function __construct( Story $story ) {
 		$this->story = $story;
-		add_filter( 'web_stories_render_image', 'wp_filter_content_tags' );
 	}
 
 	/**
@@ -99,14 +98,6 @@ class Image {
 
 		$output = (string) ob_get_clean();
 
-		/**
-		 * Filters render of image.
-		 *
-		 * @since 1.9.0
-		 *
-		 * @param string $output String to output.
-		 * @param Story $story Story Object for context.
-		 */
-		return apply_filters( 'web_stories_render_image', $output, $this->story );
+		return wp_filter_content_tags( $output, 'web_stories_render_image' );
 	}
 }

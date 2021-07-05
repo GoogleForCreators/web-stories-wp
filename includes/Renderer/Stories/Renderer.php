@@ -258,9 +258,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$this->stories = array_filter( array_map( [ $this, 'prepare_stories' ], $this->query->get_stories() ) );
 
 		add_action( 'wp_footer', [ $this, 'render_stories_lightbox' ] );
-
-		$view_type = $this->get_view_type();
-		add_filter( "web_stories_{$view_type}_renderer_poster", 'wp_filter_content_tags' );
 	}
 
 	/**
@@ -543,6 +540,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$story = $this->current();
 
 		$poster_url = $story->get_poster_portrait();
+		
 		ob_start();
 		if ( ! $poster_url ) {
 
@@ -591,17 +589,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$output = (string) ob_get_clean();
 		$view_type = $this->get_view_type();
 
-		/**
-		 * Filters render of poster.
-		 *
-		 * The dynamic portion of the hook `$this->get_view_type()` refers to the story view type.
-		 *
-		 * @since 1.9.0
-		 *
-		 * @param string $output String to output.
-		 * @param Story $story Story Object for context.
-		 */
-		$output = apply_filters( "web_stories_{$view_type}_renderer_poster", $output, $story );
+		$output = wp_filter_content_tags( $output, "web_stories_{$view_type}_renderer_poster" );
 
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
