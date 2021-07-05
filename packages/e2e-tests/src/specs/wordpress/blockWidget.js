@@ -35,10 +35,10 @@ const maybe = checkVersion(process.env?.WP_VERSION, '5.8')
 /* eslint-disable jest/require-top-level-describe, jest/consistent-test-it */
 maybe('Web Stories Widget Block', () => {
   beforeEach(async () => {
-    await deleteWidgets(true);
+    await deleteWidgets();
   });
   afterAll(async () => {
-    await deleteWidgets(true);
+    await deleteWidgets();
   });
 
   it('should insert a new web stories block', async () => {
