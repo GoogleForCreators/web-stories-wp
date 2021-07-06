@@ -81,5 +81,5 @@ export const StoryElementPropType = PropTypes.shape({
  * @property {Object} link The url, icon and description of a link applied to element
  * @property {number} opacity The opacity of the element
  * @property {boolean} lockAspectRatio Whether the element's aspect ratio is locked
- * @property {Resource} resource The element's resource object
+ * @property {Object} resource The element's resource object
  */
