@@ -21,13 +21,10 @@ import {
   createNewStory,
   publishStory,
   triggerHighPriorityChecklistSection,
-  withExperimentalFeatures,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
-  withExperimentalFeatures(['enableChecklistCompanion']);
-
   it('should show the checklist', async () => {
     await createNewStory();
     await expect(page).toClick('button[aria-label="Checklist"]');
