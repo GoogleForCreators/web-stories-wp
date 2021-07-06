@@ -82,7 +82,11 @@ const TablistPanel = ({
         </Badge>
       </TabButton>
       <Scrollable maxHeight={maxHeight}>
-        <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
+        <TabPanel
+          aria-labelledby={`${title}-${panelId}`}
+          role="tabpanel"
+          tabindex={0}
+        >
           {children}
         </TabPanel>
       </Scrollable>
