@@ -24,6 +24,7 @@ import {
   withPlugin,
   createNewPost,
   setPostContent,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
@@ -39,6 +40,10 @@ const EMBED_BLOCK_CONTENT = `
 `;
 
 describe('Web Stories Block', () => {
+  // Firefox has issues playing media (MP4 videos) in the story being embedded here.
+  // Consider using a different story for testing.
+  skipSuiteOnFirefox();
+
   let removeErrorMessage;
   let removeError404Message;
 
