@@ -140,6 +140,7 @@ export function Checklist() {
               popupId={POPUP_ID}
             />
             <Tablist
+              id="pre-publish-checklist"
               data-isexpanded={isOpen}
               aria-label={__(
                 'Potential Story issues by category',
