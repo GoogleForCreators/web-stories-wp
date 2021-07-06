@@ -29,7 +29,6 @@ import toggleVideoOptimization from './toggleVideoOptimization';
 export default function withUser(username, password) {
   const currentUser = getCurrentUser();
 
-  /* eslint-disable jest/require-top-level-describe */
   beforeAll(async () => {
     await setCurrentUser(username, password);
 
@@ -38,5 +37,4 @@ export default function withUser(username, password) {
   });
 
   afterAll(() => setCurrentUser(currentUser.username, currentUser.password));
-  /* eslint-enable jest/require-top-level-describe */
 }

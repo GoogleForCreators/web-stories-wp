@@ -25,7 +25,6 @@ import deactivateRTL from './deactivateRTL';
  * for the duration of the test.
  */
 export default function withRTL() {
-  /* eslint-disable jest/require-top-level-describe */
   beforeAll(async () => {
     await activateRTL();
   });
@@ -33,5 +32,4 @@ export default function withRTL() {
   afterAll(async () => {
     await deactivateRTL();
   });
-  /* eslint-enable jest/require-top-level-describe */
 }
