@@ -23,7 +23,6 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useStoryAnimationContext } from '../components';
-import CustomCSS from './utils/styles';
 import Boilerplate from './utils/ampBoilerplate';
 
 export const AMP_STORY_ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
@@ -32,7 +31,6 @@ export function AMPStoryWrapper({ children }) {
   return (
     <div style={{ width: '100%', height: '640px' }}>
       <Boilerplate />
-      <CustomCSS />
       <amp-story
         standalone
         title="My Story"
