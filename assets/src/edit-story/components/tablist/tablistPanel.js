@@ -41,13 +41,15 @@ const TablistPanel = ({
   badgeCount = 0,
   children,
   className,
+  id,
   isExpanded,
   onClick,
   maxHeight,
   status = PANEL_STATES.NORMAL,
   title,
 }) => {
-  const panelId = useMemo(uuidv4, []);
+  const backupId = useMemo(uuidv4, []);
+  const panelId = id || backupId;
 
   return (
     <PanelWrapper className={className} isExpanded={isExpanded}>
@@ -99,6 +101,7 @@ TablistPanel.propTypes = {
   badgeCount: PropTypes.number,
   children: PropTypes.node,
   className: PropTypes.string,
+  id: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   maxHeight: PropTypes.string,

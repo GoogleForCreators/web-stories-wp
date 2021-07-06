@@ -81,7 +81,7 @@ const ChecklistCard = ({
         <Title as={titleProps?.onClick ? 'button' : 'div'} {...titleProps}>
           <Headline
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
-            as="h4"
+            as="h2"
           >
             {title}
           </Headline>
