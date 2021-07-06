@@ -64,19 +64,14 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 			$canonical_url = get_permalink();
 		}
 
-		$rel_canonical       = null;
-		$rel_canonical_query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );
-
-		if ( ! $rel_canonical_query instanceof DOMNodeList || 0 === $rel_canonical_query->length ) {
-			return;
-		}
+		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );
 
 		/**
 		 * DOMElement
 		 *
 		 * @var DOMElement $rel_canonical
 		 */
-		$rel_canonical = $rel_canonical_query->item( 0 );
+		$rel_canonical = $query instanceof DOMNodeList ? $query->item( 0 ) : null;
 
 		if ( ! $rel_canonical instanceof DOMElement ) {
 			$rel_canonical = $this->dom->createElement( Tag::LINK );
