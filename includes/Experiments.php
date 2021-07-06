@@ -229,7 +229,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Enable bulk video optimization', 'web-stories' ),
 				'description' => __( 'Enables an option to optimize multiple videos at once in v2 of prepublish checklist.', 'web-stories' ),
 				'group'       => 'editor',
-			], 
+			],
 			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 7965
@@ -381,8 +381,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableGifOptimization',
-				'label'       => __( 'Convert gifs to videos', 'web-stories' ),
-				'description' => __( 'Enable the convertion of gifs to videos', 'web-stories' ),
+				'label'       => __( 'GIF optimization', 'web-stories' ),
+				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
