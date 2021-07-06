@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-//eslint-disable-next-line jest/no-export
 export function skipSuiteOnFirefox() {
   if (process.env.PUPPETEER_PRODUCT === 'firefox') {
-    //eslint-disable-next-line jest/require-top-level-describe, jest/no-focused-tests
     test.only('does not work on Firefox', () => {});
   }
 }

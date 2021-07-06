@@ -378,6 +378,14 @@
       }
     },
     {
+      "files": ["packages/e2e-test-utils/src/**/*.js"],
+      "rules": {
+        "jest/no-export": "off",
+        "jest/no-focused-tests": "off",
+        "jest/require-top-level-describe": "off"
+      }
+    },
+    {
       "files": [
         "packages/commander/**/*.js",
         "packages/fonts/src/cli.js",
