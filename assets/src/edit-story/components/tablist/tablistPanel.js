@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
@@ -33,14 +32,10 @@ import {
   IconContainer,
   PanelText,
   PanelWrapper,
+  ScrollableContent,
   TabButton,
   TabPanel,
 } from './styles';
-
-const Scrollable = styled.div`
-  max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
-  overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'auto')};
-`;
 
 const TablistPanel = ({
   badgeCount = 0,
@@ -81,15 +76,11 @@ const TablistPanel = ({
           <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
-      <Scrollable maxHeight={maxHeight}>
-        <TabPanel
-          aria-labelledby={`${title}-${panelId}`}
-          role="tabpanel"
-          tabindex={0}
-        >
+      <ScrollableContent maxHeight={maxHeight}>
+        <TabPanel role="tabpanel" aria-labelledby={`${title}-${panelId}`}>
           {children}
         </TabPanel>
-      </Scrollable>
+      </ScrollableContent>
     </PanelWrapper>
   );
 };
