@@ -25,6 +25,7 @@ import {
   visitBlockWidgetScreen,
   insertWidget,
   minWPVersionRequired,
+  focusSelectedBlock,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget Block', () => {
@@ -38,16 +39,16 @@ describe('Web Stories Widget Block', () => {
 
   it('should insert a new web stories block', async () => {
     await visitBlockWidgetScreen();
+
     await expect(page).toClick('button[aria-label="Add block"]');
     await page.type('.block-editor-inserter__search-input', 'Web Stories');
     await expect(page).toClick('button span', { text: 'Web Stories' });
+    await focusSelectedBlock();
 
     await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
     await expect(page).toMatchElement(
       '[data-testid="ws-block-configuration-panel"]'
     );
-
-    await expect(page).toClick('[data-testid="ws-block-configuration-panel"]');
 
     await expect(page).toClick('div.components-card__body', {
       text: 'Story URL',
