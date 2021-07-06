@@ -155,6 +155,41 @@ class Preferences extends \WP_UnitTestCase {
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
+	public function test_permission_check_for_authors() {
+		wp_set_current_user( self::$author_id );
+
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, false );
+		add_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/users/' . self::$admin_id );
+		$request->set_body_params(
+			[
+				'meta' => [
+					\Google\Web_Stories\User\Preferences::OPTIN_META_KEY              => true,
+					\Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY => true,
+					\Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY         => [
+						'hello' => 'world',
+					],
+				],
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		if ( is_a( $response, 'WP_REST_Response' ) ) {
+			$response = $response->as_error();
+		}
+
+		$this->assertWPError( $response, 'rest_cannot_edit' );
+		$data = $response->get_error_data();
+		$this->assertArrayHasKey( 'status', $data );
+		$this->assertEquals( 403, $data['status'] );
+
+	}
+
+	/**
+	 * @covers ::register
+	 * @covers ::can_edit_current_user
+	 */
 	public function test_enables_author_user_to_invalid_type() {
 		wp_set_current_user( self::$author_id );
 
