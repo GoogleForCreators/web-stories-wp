@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import reshapeStoryObject from '../../serializers/stories';
+import reshapeStoryObject from '../stories';
 
 describe('reshapeStoryObject', () => {
   it('should return null if the ID is missing', () => {
