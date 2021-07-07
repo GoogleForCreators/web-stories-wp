@@ -22,6 +22,7 @@ import {
   visitAdminPage,
   withPlugin,
   insertWidget,
+  activatePlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget', () => {
@@ -29,6 +30,7 @@ describe('Web Stories Widget', () => {
 
   beforeEach(async () => {
     await deleteWidgets();
+    await activatePlugin('classic-widgets');
   });
 
   describe('Widgets Screen', () => {
