@@ -27,7 +27,10 @@ import {
 describe('Web Stories Widget', () => {
   withPlugin('classic-widgets');
 
-  beforeEach(async () => {
+  beforeAll(async () => {
+    await deleteWidgets();
+  });
+  afterEach(async () => {
     await deleteWidgets();
   });
 
