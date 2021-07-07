@@ -126,11 +126,8 @@ trait Sanitization_Utils {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 
-		// Without a publisher logo, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'publisher-logo-src' ) ) {
-			$document->html->removeAttribute( 'amp' );
+			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 	}
 
@@ -187,11 +184,8 @@ trait Sanitization_Utils {
 			$story_element->setAttribute( $attr, esc_url_raw( $url ) );
 		}
 
-		// Without a poster, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
-			$document->html->removeAttribute( 'amp' );
+			$story_element->setAttribute( 'poster-portrait-src', '' );
 		}
 	}
 
