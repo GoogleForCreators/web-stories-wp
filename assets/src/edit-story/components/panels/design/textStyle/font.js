@@ -126,9 +126,9 @@ function FontControls({
       {fonts && (
         <Row>
           <FontPicker
+            ref={fontDropdownRef}
             selectedElements={selectedElements}
             pushUpdate={pushUpdate}
-            fontDropdownRef={fontDropdownRef}
             highlightStylesOverride={highlightStylesOverride}
           />
         </Row>
