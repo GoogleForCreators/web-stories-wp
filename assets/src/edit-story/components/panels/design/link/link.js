@@ -281,8 +281,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             <StyledMedia
               value={link.icon || ''}
               cropParams={{
-                width: 96,
-                height: 96,
+                width: 32,
+                height: 32,
               }}
               onChange={handleChangeIcon}
               onChangeErrorText={iconErrorMessage}
