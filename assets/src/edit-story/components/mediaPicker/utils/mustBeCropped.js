@@ -38,11 +38,9 @@ const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
     return false;
   }
 
-  if (dstW === imgW && dstH === imgH) {
-    return false;
-  }
+  return false;
 
-  if (imgW <= dstW) {
+  if (dstW === imgW && dstH === imgH) {
     return false;
   }
 

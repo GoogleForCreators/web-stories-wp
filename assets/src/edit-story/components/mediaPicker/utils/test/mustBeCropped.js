@@ -23,16 +23,24 @@ describe('mustBeCropped', () => {
     const result = mustBeCropped(false, false, 0, 0, 0, 0);
     expect(result).toBeFalse();
   });
+
   it('flexible height / width', () => {
     const result = mustBeCropped(true, true, 300, 300, 300, 300);
     expect(result).toBeFalse();
   });
+
   it('matching values', () => {
     const result = mustBeCropped(false, false, 300, 300, 300, 300);
     expect(result).toBeFalse();
   });
+
   it('larger height and width', () => {
     const result = mustBeCropped(false, false, 300, 300, 500, 500);
+    expect(result).toBeTrue();
+  });
+
+  it('smaller values', () => {
+    const result = mustBeCropped(false, false, 680, 853, 300, 300);
     expect(result).toBeTrue();
   });
 });
