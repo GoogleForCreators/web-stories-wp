@@ -180,7 +180,7 @@ export const TabPanel = styled.div`
   overflow-y: hidden;
   overflow-x: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
-  transition: height 250ms ease-in;
+  transition: all 300ms ease-in;
 
   ${themeHelpers.scrollbarCSS};
 `;
