@@ -217,7 +217,14 @@ export default function useMediaPicker({
         onSelect(attachment);
       });
 
-      fileFrame.once('skippedcrop', onSelect);
+      fileFrame.once('skippedcrop', () => {
+        const mediaPickerEl = fileFrame
+          .state()
+          .get('selection')
+          .first()
+          .toJSON();
+        onSelect(mediaPickerEl);
+      });
 
       fileFrame.once('select', () => {
         const mediaPickerEl = fileFrame
