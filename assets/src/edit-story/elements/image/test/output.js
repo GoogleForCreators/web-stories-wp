@@ -34,8 +34,8 @@ describe('Image output', () => {
       origRatio: 16 / 9,
       x: 50,
       y: 100,
-      height: 1080,
-      width: 1920,
+      height: 231.75,
+      width: 412,
       rotationAngle: 0,
       resource: {
         id: 123,
@@ -68,7 +68,7 @@ describe('Image output', () => {
     await expect(<ImageOutput {...baseProps} />).toBeValidAMPStoryElement();
   });
 
-  it('should produce an AMP img with a srcset', async () => {
+  it('should produce an AMP img with a srcset/sizes', async () => {
     const output = <ImageOutput {...baseProps} />;
     const outputStr = renderToStaticMarkup(output);
     await expect(output).toBeValidAMPStoryElement();
@@ -81,15 +81,25 @@ describe('Image output', () => {
     await expect(outputStr).toStrictEqual(
       expect.stringMatching('src="https://example.com/image.png"')
     );
+    // Generated sizes attribute should match: "(min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>".
+    // The image size is 412px wide, which is full page width. 45vh is the page width of stories in desktop mode.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(/sizes="\(min-width: 1024px\) 45vh, 100vw"/)
+    );
+    // The "disable-inline-width" attribute should accompany the "sizes" attribute.
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('disable-inline-width="true"')
+    );
   });
 
-  it('should produce an AMP img with no srcset if the resource has no `sizes`', async () => {
+  it('should produce an AMP img with no srcset/sizes if the resource has no `sizes`', async () => {
     const basePropsNoSrcset = { ...baseProps };
     basePropsNoSrcset.element.resource.sizes = {};
     const output = <ImageOutput {...basePropsNoSrcset} />;
     const outputStr = renderToStaticMarkup(output);
     await expect(output).toBeValidAMPStoryElement();
     await expect(outputStr).toStrictEqual(expect.not.stringMatching('srcSet='));
+    await expect(outputStr).toStrictEqual(expect.not.stringMatching('sizes='));
     await expect(outputStr).toStrictEqual(
       expect.stringMatching('src="https://example.com/image.png"')
     );
