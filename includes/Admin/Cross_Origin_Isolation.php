@@ -310,6 +310,11 @@ class Cross_Origin_Isolation extends Service_Base {
 			return false;
 		}
 
+		// Cross-origin isolation is not needed if users can't upload files anyway.
+		if ( ! user_can( $user_id, 'upload_files' ) ) {
+			return false;
+		}
+
 		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 
 		return rest_sanitize_boolean( $check );

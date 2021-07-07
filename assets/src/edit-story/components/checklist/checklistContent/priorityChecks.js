@@ -22,7 +22,6 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app';
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
@@ -56,13 +55,7 @@ export function PriorityChecks({
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
 
-  const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-
-  const isVideoOptimizationSettingEnabled =
-    isFeatureEnabled && isTranscodingEnabled && hasUploadMediaAction;
+  const { isTranscodingEnabled } = useFFmpeg();
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
@@ -86,7 +79,7 @@ export function PriorityChecks({
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
         <VideoElementMissingPoster />
-        {isVideoOptimizationSettingEnabled && <VideoOptimization />}
+        {isTranscodingEnabled && <VideoOptimization />}
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );

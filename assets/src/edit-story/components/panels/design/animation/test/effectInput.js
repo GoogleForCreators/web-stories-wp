@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { FIELD_TYPES } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../../../testUtils';
 import EffectInput from '../effectInput';
-import { FIELD_TYPES } from '../../../../../../animation';
 
 describe('<EffectInput />', () => {
   const testFieldKey = 'testField';

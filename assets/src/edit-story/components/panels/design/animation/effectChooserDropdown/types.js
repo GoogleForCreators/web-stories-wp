@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { DIRECTION, SCALE_DIRECTION } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { DIRECTION, SCALE_DIRECTION } from '../../../../../../animation';
 import { GRID_SIZING } from './dropdownConstants';
 
 const ANIMATION_OPTION_PROP_TYPE = {
