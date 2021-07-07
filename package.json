@@ -36,6 +36,7 @@
     "@ap.cx/hues": "^2.4.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
     "@web-stories-wp/activation-notice": "*",
+    "@web-stories-wp/animation": "*",
     "@web-stories-wp/date": "*",
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/fonts": "*",

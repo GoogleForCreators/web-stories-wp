@@ -26,13 +26,14 @@ import {
   DropDown,
   ThemeGlobals,
 } from '@web-stories-wp/design-system';
-
+import {
+  FIELD_TYPES,
+  GeneralAnimationPropTypes,
+  AnimationFormPropTypes,
+} from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../../../../animation';
-import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
-import { AnimationFormPropTypes } from '../../../../../animation/types';
 import { inputContainerStyleOverride } from '../../shared';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
