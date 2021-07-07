@@ -36,41 +36,6 @@ describe('Web Stories Widget Block', () => {
     await deleteWidgets();
   });
 
-  it('should insert a new web stories block', async () => {
-    await visitBlockWidgetScreen();
-    await expect(page).toClick('button[aria-label="Add block"]');
-    await page.type('.block-editor-inserter__search-input', 'Web Stories');
-    await expect(page).toClick('button span', { text: 'Web Stories' });
-
-    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await expect(page).toMatchElement(
-      '[data-testid="ws-block-configuration-panel"]'
-    );
-
-    await expect(page).toClick('[data-testid="ws-block-configuration-panel"]');
-
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Story URL',
-    });
-
-    await expect(page).toMatchElement('input[aria-label="Story URL"]');
-
-    await page.type(
-      'input[aria-label="Story URL"]',
-      'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
-    );
-    await expect(page).toClick('button', { text: 'Embed' });
-
-    await expect(page).not.toMatch(
-      'Sorry, this content could not be embedded.'
-    );
-
-    // Wait a little longer for embed REST API request to come back.
-    await page.waitForSelector('amp-story-player');
-    await expect(page).toMatchElement('amp-story-player');
-    await expect(page).toMatch('Embed Settings');
-  });
-
   it('should insert a legacy web stories widget', async () => {
     await activatePlugin('classic-widgets');
 
@@ -124,5 +89,40 @@ describe('Web Stories Widget Block', () => {
     );
     await expect(page).toClick('button', { text: 'Web Stories' });
     await expect(page).toMatch('Test Block Widget');
+  });
+
+  it('should insert a new web stories block', async () => {
+    await visitBlockWidgetScreen();
+    await expect(page).toClick('button[aria-label="Add block"]');
+    await page.type('.block-editor-inserter__search-input', 'Web Stories');
+    await expect(page).toClick('button span', { text: 'Web Stories' });
+
+    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
+    await expect(page).toMatchElement(
+      '[data-testid="ws-block-configuration-panel"]'
+    );
+
+    await expect(page).toClick('[data-testid="ws-block-configuration-panel"]');
+
+    await expect(page).toClick('div.components-card__body', {
+      text: 'Story URL',
+    });
+
+    await expect(page).toMatchElement('input[aria-label="Story URL"]');
+
+    await page.type(
+      'input[aria-label="Story URL"]',
+      'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
+    );
+    await expect(page).toClick('button', { text: 'Embed' });
+
+    await expect(page).not.toMatch(
+      'Sorry, this content could not be embedded.'
+    );
+
+    // Wait a little longer for embed REST API request to come back.
+    await page.waitForSelector('amp-story-player');
+    await expect(page).toMatchElement('amp-story-player');
+    await expect(page).toMatch('Embed Settings');
   });
 });
