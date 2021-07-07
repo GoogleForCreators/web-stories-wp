@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Location', 'sticker name', 'web-stories');
+const title = _x('Yellow Location Pin', 'sticker name', 'web-stories');
 
-const TravelLocation = ({ style }) => (
+const YellowLocationPin = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 32 38"
@@ -36,12 +36,12 @@ const TravelLocation = ({ style }) => (
   </svg>
 );
 
-TravelLocation.propTypes = {
+YellowLocationPin.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 32 / 38,
-  svg: TravelLocation,
+  svg: YellowLocationPin,
   title,
 };

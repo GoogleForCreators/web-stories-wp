@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { default as travelList } from './list';
-import { default as travelLocation } from './location';
+import { default as yellowLocationPin } from './yellowLocationPin';
 import { default as travelToolTip } from './tooltip';
 
-export { travelList, travelLocation, travelToolTip };
+export { travelList, yellowLocationPin, travelToolTip };
