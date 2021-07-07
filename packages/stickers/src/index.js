@@ -27,7 +27,7 @@ import * as wellbeingSleepStickers from './sleep';
 import * as guideTobakingBreadStickers from './baking-bread-guide';
 import * as sangriaArtichokeStickers from './sangria-artichoke';
 import * as crispyChickenThighStickers from './kitchen-stories';
-import * as almondosFilmsStickers from './women-in-almondos-films';
+import * as almondosFilmsStickers from './almodos-films';
 import * as bestPizzaInNYCStickers from './best-pizza-in-nyc';
 import * as twelveHoursInBarcelonaStickers from './12-hours-in-barcelona';
 import * as bestFitnessAppsStickers from './best-fitness-apps';

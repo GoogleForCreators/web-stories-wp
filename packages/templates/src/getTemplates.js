@@ -77,6 +77,7 @@ async function getTemplates(imageBaseUrl) {
     'ways-to-eat-avocado',
     'kitchen-stories',
     'album-releases',
+    'almodos-films',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
