@@ -298,9 +298,7 @@ describe('Checklist integration', () => {
     });
   });
 
-  // TODO #8211: Fix accessibility concerns in the checklist so this passes.
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xdescribe('checklist should have no aXe accessibility violations', () => {
+  describe('checklist should have no aXe accessibility violations', () => {
     it('should pass accessibility tests with with a closed checklist', async () => {
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
