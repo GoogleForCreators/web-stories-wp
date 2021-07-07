@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
-  Text,
+  Headline,
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
@@ -41,9 +41,9 @@ Tablist.propTypes = {
   'aria-label': PropTypes.string.isRequired,
 };
 
-export const PanelText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-  isBold: true,
+export const PanelText = styled(Headline).attrs({
+  as: 'h3',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   transition: background-color 300ms ease-in;
 `;

@@ -53,12 +53,6 @@ const TablistPanel = ({
     <PanelWrapper className={className} isExpanded={isExpanded}>
       <TabButton
         aria-controls={panelId}
-        aria-label={sprintf(
-          /* translators: %d: number of issues, %s: title */
-          _n('%1$d %2$s issue', '%1$d %2$s issues', badgeCount, 'web-stories'),
-          badgeCount,
-          title
-        )}
         aria-selected={isExpanded}
         onClick={onClick}
         role="tab"
@@ -68,7 +62,20 @@ const TablistPanel = ({
           <IconContainer>
             <Icons.ChevronDownSmall />
           </IconContainer>
-          <PanelText id={`${title}-${panelId}`} aria-hidden>
+          <PanelText
+            id={`${title}-${panelId}`}
+            aria-label={sprintf(
+              /* translators: %d: number of issues, %s: title */
+              _n(
+                '%1$d %2$s issue',
+                '%1$d %2$s issues',
+                badgeCount,
+                'web-stories'
+              ),
+              badgeCount,
+              title
+            )}
+          >
             {title}
           </PanelText>
         </ButtonText>
