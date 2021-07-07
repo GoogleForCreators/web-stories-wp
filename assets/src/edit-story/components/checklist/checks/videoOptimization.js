@@ -185,7 +185,6 @@ export const BulkVideoOptimization = () => {
   const isRendered = unoptimizedVideos.length > 0;
   useRegisterCheck('VideoOptimization', isRendered);
 
-  // todo copy should count the number of videos
   let optimizeButtonCopy =
     unoptimizedVideos.length === 1
       ? __('Optimize video', 'web-stories')
@@ -233,7 +232,7 @@ export const BulkVideoOptimization = () => {
         thumbnailCount={unoptimizedVideos.length}
         thumbnail={unoptimizedVideos.map((element) => (
           <Thumbnail
-            key={element.id}
+            key={element.resource.id}
             onClick={handleClickThumbnail(element)}
             isLoading={element.resource.isTranscoding}
             type={THUMBNAIL_TYPES.VIDEO}
