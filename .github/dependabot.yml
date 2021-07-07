@@ -18,7 +18,7 @@ updates:
       - JavaScript
     ignore:
       # Blocked by https://github.com/google/web-stories-wp/pull/5792.
-      - dependency-name: webpack-cli
+      - dependency-name: webpack
         versions:
           - '>= 5'
 

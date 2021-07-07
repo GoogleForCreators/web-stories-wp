@@ -20,14 +20,12 @@
 import PropTypes from 'prop-types';
 import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
 import { ResourcePropTypes } from '@web-stories-wp/media';
-
+import { AnimationProps } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
-
 export const BorderPropTypes = PropTypes.shape({
   color: HexPropType.isRequired,
   left: PropTypes.number,
