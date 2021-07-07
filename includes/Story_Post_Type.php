@@ -254,7 +254,7 @@ class Story_Post_Type extends Service_Base {
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
-			'locked'    =>
+			'locked'    => ( 1 === $bulk_counts['locked'] ) ? __( 'Story not updated, somebody is editing it.', 'web-stories' ) :
 				/* translators: %s: Number of stories. */
 				_n( '%s story not updated, somebody is editing it.', '%s stories not updated, somebody is editing them.', $bulk_counts['locked'], 'web-stories' ),
 			/* translators: %s: Number of stories. */
