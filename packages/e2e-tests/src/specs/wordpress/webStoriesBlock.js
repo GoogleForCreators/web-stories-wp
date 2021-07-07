@@ -38,9 +38,7 @@ const EMBED_BLOCK_CONTENT = `
 <!-- /wp:web-stories/embed -->
 `;
 
-// TODO Fix https://github.com/google/web-stories-wp/issues/8160
-// eslint-disable-next-line jest/no-disabled-tests
-describe.skip('Web Stories Block', () => {
+describe('Web Stories Block', () => {
   let stopRequestInterception;
   let removeErrorMessage;
   let removeError404Message;
