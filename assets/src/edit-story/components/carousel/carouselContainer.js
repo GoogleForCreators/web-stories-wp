@@ -25,6 +25,7 @@ import { useResizeEffect } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { ChecklistProvider } from '../checklist';
+import { KeyboardShortcutsMenuProvider } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
 import CarouselLayout from './carouselLayout';
 import CarouselProvider from './carouselProvider';
 import { VERY_WIDE_WORKSPACE_LIMIT, VERY_WIDE_MARGIN } from './constants';
@@ -50,11 +51,13 @@ function CarouselContainer() {
   return (
     <CarouselProvider availableSpace={width}>
       <ChecklistProvider>
-        <Outer ref={ref}>
-          <Inner marginRight={margin}>
-            <CarouselLayout />
-          </Inner>
-        </Outer>
+        <KeyboardShortcutsMenuProvider>
+          <Outer ref={ref}>
+            <Inner marginRight={margin}>
+              <CarouselLayout />
+            </Inner>
+          </Outer>
+        </KeyboardShortcutsMenuProvider>
       </ChecklistProvider>
     </CarouselProvider>
   );

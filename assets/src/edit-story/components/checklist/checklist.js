@@ -148,21 +148,21 @@ export function Checklist() {
             >
               <PriorityChecks
                 badgeCount={priorityBadgeCount}
-                isOpen={openPanel === ISSUE_TYPES.PRIORITY}
+                isOpen={isOpen && openPanel === ISSUE_TYPES.PRIORITY}
                 onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
                 maxHeight={maxPanelHeight}
                 title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
               />
               <DesignChecks
                 badgeCount={designBadgeCount}
-                isOpen={openPanel === ISSUE_TYPES.DESIGN}
+                isOpen={isOpen && openPanel === ISSUE_TYPES.DESIGN}
                 onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
                 maxHeight={maxPanelHeight}
                 title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
               />
               <AccessibilityChecks
                 badgeCount={accessibilityBadgeCount}
-                isOpen={openPanel === ISSUE_TYPES.ACCESSIBILITY}
+                isOpen={isOpen && openPanel === ISSUE_TYPES.ACCESSIBILITY}
                 onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
                 maxHeight={maxPanelHeight}
                 title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}

@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { UnitsProvider } from '@web-stories-wp/units';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
 import { StoryPropType } from '../../types';
 import { getPagePreviewHeights } from '../../utils';
 import { PreviewPage } from '../../../edit-story/components/previewPage';

@@ -28,15 +28,6 @@ export const ELEMENT_TYPE = {
   BACKGROUND: 'background',
 };
 
-export const ELEMENT_TYPE_COPY = {
-  [ELEMENT_TYPE.IMAGE]: __('image', 'web-stories'),
-  [ELEMENT_TYPE.SHAPE]: __('shape', 'web-stories'),
-  [ELEMENT_TYPE.TEXT]: __('text', 'web-stories'),
-  [ELEMENT_TYPE.VIDEO]: __('video', 'web-stories'),
-  [ELEMENT_TYPE.GIF]: __('gif', 'web-stories'),
-  [ELEMENT_TYPE.BACKGROUND]: __('background', 'web-stories'),
-};
-
 export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add link', 'web-stories'),
@@ -56,12 +47,6 @@ export const RESET_PROPERTIES = {
   ANIMATION: 'animation',
   OVERLAY: 'overlay',
   STYLES: 'styles',
-};
-
-export const RESET_LIST_COPY = {
-  [RESET_PROPERTIES.ANIMATION]: __('animations', 'web-stories'),
-  [RESET_PROPERTIES.OVERLAY]: __('filters', 'web-stories'),
-  [RESET_PROPERTIES.STYLES]: __('styles', 'web-stories'),
 };
 
 export const RESET_DEFAULTS = {

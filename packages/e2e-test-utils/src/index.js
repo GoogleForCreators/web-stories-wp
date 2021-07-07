@@ -38,7 +38,6 @@ export { default as uploadPublisherLogo } from './uploadPublisherLogo';
 export { default as toggleVideoOptimization } from './toggleVideoOptimization';
 export { default as deleteMedia } from './deleteMedia';
 export { default as deleteWidgets } from './deleteWidgets';
-export { default as insertBlock } from './insertBlock';
 export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
 export { default as visitAdminPage } from './visitAdminPage';
@@ -51,4 +50,5 @@ export {
   setPostContent,
   enablePageDialogAccept,
   setBrowserViewport,
+  insertBlock,
 } from '@wordpress/e2e-test-utils';

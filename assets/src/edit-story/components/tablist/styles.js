@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
-  Text,
+  Headline,
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
@@ -41,9 +41,9 @@ Tablist.propTypes = {
   'aria-label': PropTypes.string.isRequired,
 };
 
-export const PanelText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-  isBold: true,
+export const PanelText = styled(Headline).attrs({
+  as: 'h3',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   transition: background-color 300ms ease-in;
 `;
@@ -93,9 +93,9 @@ export const PanelWrapper = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.colors.bg.primary};
 
-  :not(:last-child) ${TabButton} {
-    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
-    margin-bottom: 1px;
+  &:not(:first-child) > ${TabButton} {
+    box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+    margin-top: 1px;
 
     ${themeHelpers.focusableOutlineCSS};
   }
@@ -128,6 +128,7 @@ export const PanelWrapper = styled.div`
       * > ${TabPanel} {
         height: 560px;
         padding: 0 0 16px 16px;
+        overflow-y: scroll;
         visibility: visible;
       }
     `};
@@ -167,14 +168,19 @@ export const Badge = styled.div`
   }
 `;
 
+export const ScrollableContent = styled.div`
+  max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
+  overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'hidden')};
+`;
+
 export const TabPanel = styled.div`
   height: 0;
   padding: 0;
   visibility: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   overflow-x: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
-  transition: 250ms ease-in;
+  transition: all 300ms ease-in;
 
   ${themeHelpers.scrollbarCSS};
 `;

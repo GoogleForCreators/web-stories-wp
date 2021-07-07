@@ -147,7 +147,7 @@ class Media extends Service_Base {
 			[
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
-				'description'       => __( 'Attachment id of optimized video id.', 'web-stories' ),
+				'description'       => __( 'ID of optimized video.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
