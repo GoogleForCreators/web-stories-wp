@@ -186,10 +186,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
   }, [media, mediaType, searchTerm, generateMissingPosters]);
 
+  const isGeneratingPosterImages = Boolean(
+    stateRef.current?.processing?.length
+  );
+
   return {
     state: {
       ...reducerState,
-      isUploading,
+      isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
     },
     actions: {
