@@ -45,10 +45,7 @@ async function waitForInserterCloseAndContentFocus() {
  */
 async function insertBlock(searchTerm) {
   await searchForBlock(searchTerm);
-  const insertButton = await page.waitForXPath(
-    `//button//span[contains(text(), '${searchTerm}')]`
-  );
-  await insertButton.click();
+  await expect(page).toClick('button span', { text: searchTerm });
   await focusSelectedBlock();
   // We should wait until the inserter closes and the focus moves to the content.
   await waitForInserterCloseAndContentFocus();
