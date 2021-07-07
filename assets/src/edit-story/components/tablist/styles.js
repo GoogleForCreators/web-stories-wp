@@ -93,9 +93,9 @@ export const PanelWrapper = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.colors.bg.primary};
 
-  :not(:last-child) ${TabButton} {
-    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
-    margin-bottom: 1px;
+  &:not(:first-child) > ${TabButton} {
+    box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+    margin-top: 1px;
 
     ${themeHelpers.focusableOutlineCSS};
   }

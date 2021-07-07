@@ -45,6 +45,10 @@ export const getTabPanelMaxHeight = (buttonCount) => {
 export const StyledTablistPanel = styled(TablistPanel)`
   height: ${({ badgeCount }) => (badgeCount === 0 ? 0 : 'auto')};
   visibility: ${({ badgeCount }) => (badgeCount === 0 ? 'hidden' : 'visible')};
+
+  button {
+    display: ${({ badgeCount }) => (badgeCount === 0 ? 'none' : 'auto')};
+  }
 `;
 
 export const PanelText = styled(Text).attrs({
