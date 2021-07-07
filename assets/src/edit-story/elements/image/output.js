@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { calculateSrcSet } from '@web-stories-wp/media';
+import { calculateSrcSet, isBlobURL } from "@web-stories-wp/media";
 /**
  * Internal dependencies
  */
@@ -35,7 +35,7 @@ function ImageOutput({ element, box }) {
 
   const props = {
     layout: 'fill',
-    src: resource.src,
+    src: !isBlobURL(resource.src) ? resource.src : null,
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };
 
