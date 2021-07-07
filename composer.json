@@ -31,7 +31,7 @@
     "php-stubs/wordpress-stubs": "^5.7",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
-    "roave/security-advisories": "dev-master",
+    "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^0.2.1"

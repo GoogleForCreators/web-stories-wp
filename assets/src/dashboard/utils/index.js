@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export { default as clamp } from './clamp';
 export { default as titleFormatted } from './titleFormatted';
 export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
