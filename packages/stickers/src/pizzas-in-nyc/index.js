@@ -16,24 +16,24 @@
 /**
  * Internal dependencies
  */
-import { default as travelTomatoes } from './tomatoes';
-import { default as travelPepper } from './pepper';
-import { default as travelOnion } from './onion';
-import { default as travelLeaves } from './leaves';
-import { default as travelDirections } from './directions';
-import { default as travelCheese } from './cheese';
-import { default as travelBrush01 } from './brush01';
-import { default as travelBrush02 } from './brush02';
-import { default as travelBrush03 } from './brush03';
+import { default as nycTomatoes } from './tomatoes';
+import { default as nycChili } from './chili';
+import { default as nycOnion } from './onion';
+import { default as nycVeggies } from './veggies';
+import { default as nycArrowRight } from './arrowRight';
+import { default as nycCheese } from './cheese';
+import { default as nycThickBrush } from './thickBrushStroke';
+import { default as nycMediumBrush } from './mediumBrushStroke';
+import { default as nycTiltedBrush } from './tiltedBrushStroke';
 
 export {
-  travelTomatoes,
-  travelPepper,
-  travelOnion,
-  travelLeaves,
-  travelDirections,
-  travelCheese,
-  travelBrush01,
-  travelBrush02,
-  travelBrush03,
+  nycTomatoes,
+  nycChili,
+  nycOnion,
+  nycVeggies,
+  nycArrowRight,
+  nycCheese,
+  nycThickBrush,
+  nycMediumBrush,
+  nycTiltedBrush,
 };

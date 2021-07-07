@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Brush 02', 'sticker name', 'web-stories');
+const title = _x('Medium Brush Stroke', 'sticker name', 'web-stories');
 
-const TravelBrush02 = ({ style }) => (
+const nycMediumBrush = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 56 28"
@@ -36,12 +36,12 @@ const TravelBrush02 = ({ style }) => (
   </svg>
 );
 
-TravelBrush02.propTypes = {
+nycMediumBrush.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 56 / 28,
-  svg: TravelBrush02,
+  svg: nycMediumBrush,
   title,
 };

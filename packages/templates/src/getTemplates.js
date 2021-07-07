@@ -78,6 +78,7 @@ async function getTemplates(imageBaseUrl) {
     'kitchen-stories',
     'album-releases',
     'almodos-films',
+    'pizzas-in-nyc',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
