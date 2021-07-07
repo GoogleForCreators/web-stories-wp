@@ -41,7 +41,7 @@ function isBorderRadiusDefault(element) {
  * @param {Array.<Object>} selectedElementAnimations array of animations currently applied to the selected element
  * @return {Array.<string>} array of properties to reset on element
  */
-export const getResetProperties = (
+const getResetProperties = (
   selectedElement,
   selectedElementAnimations = []
 ) => {
@@ -67,3 +67,5 @@ export const getResetProperties = (
   }
   return resetProperties;
 };
+
+export default getResetProperties;

@@ -14,4 +14,19 @@
  * limitations under the License.
  */
 
-export { default as getResetProperties } from './getResetProperties';
+/**
+ * External dependencies
+ */
+import { _x } from '@web-stories-wp/i18n';
+
+export const FONT_WEIGHT_NAMES = {
+  100: _x('Thin', 'font weight', 'web-stories'),
+  200: _x('Extra-light', 'font weight', 'web-stories'),
+  300: _x('Light', 'font weight', 'web-stories'),
+  400: _x('Regular', 'font weight', 'web-stories'),
+  500: _x('Medium', 'font weight', 'web-stories'),
+  600: _x('Semi-bold', 'font weight', 'web-stories'),
+  700: _x('Bold', 'font weight', 'web-stories'),
+  800: _x('Extra-bold', 'font weight', 'web-stories'),
+  900: _x('Black', 'font weight', 'web-stories'),
+};

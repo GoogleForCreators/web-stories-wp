@@ -66,7 +66,7 @@ function TemplateList({
         name: page.title,
       });
       showSnackbar({
-        message: __('Page template added.', 'web-stories'),
+        message: __('Page Template added.', 'web-stories'),
         dismissable: true,
       });
     },

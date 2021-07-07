@@ -162,7 +162,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$schema = parent::get_item_schema();
 
 		$schema['properties']['story_data'] = [
-			'description' => __( 'Story data stored as a JSON object. Stored in post_content_filtered field.', 'web-stories' ),
+			'description' => __( 'Story data', 'web-stories' ),
 			'type'        => 'object',
 			'context'     => [ 'view', 'edit' ],
 			'default'     => [],
