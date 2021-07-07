@@ -28,7 +28,7 @@ import {
   VIEW_STYLE,
 } from '../constants';
 import { PageSizePropType } from '../types';
-import clamp from '../../utils/clamp';
+import clamp from './clamp';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useTemplateView({ totalPages }) {
