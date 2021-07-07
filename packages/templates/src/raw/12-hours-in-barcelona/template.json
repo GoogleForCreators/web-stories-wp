@@ -452,7 +452,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "5b062014-b126-44a0-920b-5378359d60b9"
-      }
+      },
+      "pageTemplateType": "cover"
     },
     {
       "elements": [
@@ -1102,7 +1103,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "34d2009a-af78-44f3-9a2c-90351a0d93d8"
-      }
+      },
+      "pageTemplateType": "list"
     },
     {
       "elements": [
@@ -1878,7 +1880,8 @@
           "duration": 1600,
           "delay": 200
         }
-      ]
+      ],
+      "pageTemplateType": "list"
     },
     {
       "elements": [
@@ -2412,7 +2415,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "1da06749-7c4f-4f85-9197-4e207659e74b"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -2941,7 +2945,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "2c3f3035-aea0-460c-aba0-7ab8d2521135"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -3481,7 +3486,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "fa1d3671-ae25-449c-aa6d-7d8aef8a2db6"
-      }
+      },
+      "pageTemplateType": "editorial"
     },
     {
       "elements": [
@@ -4008,7 +4014,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "e65879b8-1394-4055-b1e8-f22a4bf63447"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -4543,7 +4550,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "2946e472-ae6e-4317-9661-913b0493e7b9"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -5069,7 +5077,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "9ee6c38a-c279-47cd-a6a4-8aa32340aa2b"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -5416,7 +5425,8 @@
         "isDefaultBackground": true,
         "type": "shape",
         "id": "a9562766-122d-4f05-b2db-8bb10b1647e4"
-      }
+      },
+      "pageTemplateType": ""
     },
     {
       "elements": [
@@ -6248,7 +6258,8 @@
           "duration": 2000,
           "delay": 300
         }
-      ]
+      ],
+      "pageTemplateType": "list"
     }
   ]
 }

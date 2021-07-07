@@ -80,6 +80,7 @@ async function getTemplates(imageBaseUrl) {
     'almodos-films',
     'pizzas-in-nyc',
     '12-hours-in-barcelona',
+    'ultimate-comparison',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
