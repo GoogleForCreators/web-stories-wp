@@ -26,7 +26,7 @@ import { noop } from '../../../utils/noop';
 import { NavigationWrapper } from '../../helpCenter/navigator';
 import { TopNavigation } from '../../helpCenter/navigator/topNavigation';
 import { Popup } from '../../helpCenter/popup';
-import { EmptyContent } from '../emptyContent';
+import { EmptyContent } from '../checklistContent';
 
 export default {
   title: 'Stories Editor/Components/Checklist',

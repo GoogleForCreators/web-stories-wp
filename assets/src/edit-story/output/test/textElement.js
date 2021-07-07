@@ -21,11 +21,10 @@ jest.mock('flagged');
 import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from 'react-dom/server';
 import PropTypes from 'prop-types';
-
+import { StoryAnimation } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../../animation';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import OutputElement from '../element';
 import { DEFAULT_TEXT } from './_utils/constants';

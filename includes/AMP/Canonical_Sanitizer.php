@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\AMP;
 
+use DOMNodeList;
 use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Tag;
@@ -35,13 +36,15 @@ use DOMElement;
  * Canonical sanitizer class.
  *
  * Ensures link[rel=canonical] exists on the page,
- * as some plugins might have removed it in the meantime.
+ * as some plugins might have removed it in the meantime
+ * or the user might be viewing a draft.
  *
  * Only needed when the AMP plugin is not active, as the plugin
  * handles that already.
  *
  * @see \AMP_Theme_Support::ensure_required_markup()
- * @see https://github.com/google/web-stories-wp/issues/4193
+ * @link https://github.com/google/web-stories-wp/issues/4193
+ * @link https://github.com/google/web-stories-wp/pull/8169
  *
  * @since 1.1.0
  */
@@ -54,28 +57,34 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	 * @return void
 	 */
 	public function sanitize() {
-		$links         = [];
-		$link_elements = $this->dom->head->getElementsByTagName( Tag::LINK );
+		// This fallback to get_permalink() ensures that there's a canonical link
+		// even when previewing drafts.
+		$canonical_url = wp_get_canonical_url();
+		if ( ! $canonical_url ) {
+			$canonical_url = get_permalink();
+		}
+
+		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );
 
 		/**
-		 * Link element.
+		 * DOMElement
 		 *
-		 * @var DOMElement $link
+		 * @var DOMElement $rel_canonical
 		 */
-		foreach ( $link_elements as $link ) {
-			if ( $link->hasAttribute( Attribute::REL ) ) {
-				$links[ $link->getAttribute( Attribute::REL ) ][] = $link;
+		$rel_canonical = $query instanceof DOMNodeList ? $query->item( 0 ) : null;
+
+		if ( ! $rel_canonical instanceof DOMElement ) {
+			$rel_canonical = $this->dom->createElement( Tag::LINK );
+
+			if ( $rel_canonical instanceof DOMElement ) {
+				$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
+				$this->dom->head->appendChild( $rel_canonical );
 			}
 		}
 
-		// Ensure rel=canonical link.
-		if ( empty( $links['canonical'] ) ) {
-			$rel_canonical = $this->dom->createElement( Tag::LINK );
-			if ( $rel_canonical ) {
-				$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
-				$rel_canonical->setAttribute( Attribute::HREF, (string) wp_get_canonical_url() );
-				$this->dom->head->appendChild( $rel_canonical );
-			}
+		// Ensure link[rel=canonical] has a non-empty href attribute.
+		if ( empty( $rel_canonical->getAttribute( Attribute::HREF ) ) ) {
+			$rel_canonical->setAttribute( Attribute::HREF, (string) $canonical_url );
 		}
 	}
 }

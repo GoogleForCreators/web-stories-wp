@@ -69,14 +69,14 @@ const AutoVideoOptimization = ({
       </DescriptionText>
       <ToggleGroup>
         <StyledToggle
-          id="automatic-video-optimization-toggle"
+          id="auto-video-optimization-toggle"
           aria-label={__('Enable automatic video optimization', 'web-stories')}
           checked={areVideosAutoOptimized || false}
           onChange={onAutoOptimizeVideoClick}
         />
         <DescriptionText
           forwardedAs="label"
-          htmlFor="automatic-video-optimization-toggle"
+          htmlFor="auto-video-optimization-toggle"
         >
           <TranslateWithMarkup
             mapping={{

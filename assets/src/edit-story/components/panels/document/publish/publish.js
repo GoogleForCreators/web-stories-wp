@@ -230,12 +230,12 @@ function PublishPanel() {
                 title={__('Select as publisher logo', 'web-stories')}
                 buttonInsertText={__('Select as publisher logo', 'web-stories')}
                 type={allowedImageMimeTypes}
-                ariaLabel={__('Publisher logo', 'web-stories')}
+                ariaLabel={__('Publisher Logo', 'web-stories')}
                 variant={MEDIA_VARIANTS.CIRCLE}
               />
             </MediaWrapper>
             <LabelWrapper>
-              <Label>{__('Publisher logo', 'web-stories')}</Label>
+              <Label>{__('Publisher Logo', 'web-stories')}</Label>
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>

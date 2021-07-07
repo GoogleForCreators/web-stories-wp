@@ -17,26 +17,27 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
+import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  Tooltip,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import { useCheckpoint } from '../../checklist/checkpointContext';
+import { PPC_CHECKPOINT_STATE } from '../../checklist/constants';
 import {
   ChecklistIcon,
   usePrepublishChecklist,
-  PPC_CHECKPOINT_STATE,
 } from '../../inspector/prepublish';
-
-import Tooltip from '../../tooltip';
 
 const Button = styled(DefaultButton)`
   padding: 4px 6px;
@@ -48,7 +49,17 @@ const Button = styled(DefaultButton)`
 `;
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
+  const isEnabledChecklistCompanion = useFeature('enableChecklistCompanion');
+
   const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
+
+  // TODO #7978 - Remove Old Checklist
+  const checkpointForIcon = isEnabledChecklistCompanion
+    ? checkpoint
+    : currentCheckpoint;
 
   const button = (
     <Button
@@ -59,7 +70,7 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       {...buttonProps}
     >
       {text}
-      <ChecklistIcon checkpoint={currentCheckpoint} />
+      <ChecklistIcon checkpoint={checkpointForIcon} />
     </Button>
   );
 

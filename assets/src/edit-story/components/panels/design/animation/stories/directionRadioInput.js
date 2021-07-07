@@ -18,15 +18,15 @@
  */
 import { useState } from 'react';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   DIRECTION,
   ROTATION,
   SCALE_DIRECTION,
-} from '../../../../../../animation';
+} from '@web-stories-wp/animation';
+
+/**
+ * Internal dependencies
+ */
 import { DirectionRadioInput } from '../directionRadioInput';
 
 export default {

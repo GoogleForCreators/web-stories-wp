@@ -47,6 +47,7 @@ function SwitchToDraft() {
     isUploading: state.state.isUploading,
   }));
 
+  // TODO #7978 - Remove Old Checklist
   const { resetReviewDialog } = usePrepublishChecklist();
 
   const handleUnPublish = useCallback(() => {

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-export { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from './multipleValue';
+export * from './fonts';
+export * from './media';
+export * from './multipleValue';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;
@@ -88,5 +90,3 @@ export const FOCUSABLE_SELECTORS = [
   'textarea',
   '[tabindex]:not([tabindex="-1"])',
 ];
-
-export * from './media';

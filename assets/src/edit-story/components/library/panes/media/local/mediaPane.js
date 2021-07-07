@@ -158,10 +158,10 @@ function MediaPane(props) {
     },
   } = useConfig();
 
-  const { isFeatureEnabled, isTranscodingEnabled } = useFFmpeg();
+  const { isTranscodingEnabled } = useFFmpeg();
 
   const allowedMimeTypes = useMemo(() => {
-    if (isFeatureEnabled && isTranscodingEnabled) {
+    if (isTranscodingEnabled) {
       return [
         ...allowedTranscodableMimeTypes,
         ...allowedImageMimeTypes,
@@ -172,7 +172,6 @@ function MediaPane(props) {
   }, [
     allowedImageMimeTypes,
     allowedVideoMimeTypes,
-    isFeatureEnabled,
     isTranscodingEnabled,
     allowedTranscodableMimeTypes,
   ]);
@@ -202,7 +201,6 @@ function MediaPane(props) {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
       if (
-        isFeatureEnabled &&
         isTranscodingEnabled &&
         transcodableMimeTypes.includes(resource.mimeType)
       ) {
@@ -324,8 +322,8 @@ function MediaPane(props) {
                 {sprintf(
                   /* translators: %d: number of results. */
                   _n(
-                    '%d result found',
-                    '%d results found',
+                    '%s result found.',
+                    '%s results found.',
                     totalItems,
                     'web-stories'
                   ),
@@ -349,8 +347,8 @@ function MediaPane(props) {
         {isMediaLoaded && !media.length ? (
           <MediaGalleryMessage>
             {isSearching
-              ? __('No results found', 'web-stories')
-              : __('No media found', 'web-stories')}
+              ? __('No results found.', 'web-stories')
+              : __('No media found.', 'web-stories')}
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery

@@ -29,7 +29,7 @@ export default {
   tags: [
     _x('Delicious', 'template keyword', 'web-stories'),
     _x('Baker', 'template keyword', 'web-stories'),
-    _x('Cook', 'template keyword', 'web-stories'),
+    _x('Cooking', 'template keyword', 'web-stories'),
   ],
   colors: [
     { label: _x('Yellow', 'color', 'web-stories'), color: '#fff933' },

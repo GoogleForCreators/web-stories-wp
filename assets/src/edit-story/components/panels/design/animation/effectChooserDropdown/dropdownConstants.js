@@ -18,16 +18,16 @@
  * External dependencies
  */
 import { __, _x, sprintf } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
   SCALE_DIRECTION,
-} from '../../../../../../animation';
+} from '@web-stories-wp/animation';
+
+/**
+ * Internal dependencies
+ */
 import {
   DropAnimation,
   FadeInAnimation,

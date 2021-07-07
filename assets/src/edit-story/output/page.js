@@ -21,10 +21,10 @@ import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+import { getTotalDuration, StoryAnimation } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
-import { getTotalDuration, StoryAnimation } from '../../animation';
 import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
 import OutputElement from './element';

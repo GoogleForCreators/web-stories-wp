@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
- * Internal dependencies
+ * External dependencies
  */
 import {
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
   SCALE_DIRECTION,
-} from '../../../../../../../animation';
+} from '@web-stories-wp/animation';
 
 const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
   // we don't want to have a disbaled direction initially selected either.

@@ -107,7 +107,7 @@ export function Footer() {
           rel="noreferrer"
           onClick={onDocsClick}
         >
-          {__('Read start guide', 'web-stories')}
+          {__('Read Start Guide', 'web-stories')}
         </Link>
         <Link
           href={SUPPORT_URL}
@@ -115,7 +115,7 @@ export function Footer() {
           rel="noreferrer"
           onClick={onSupportClick}
         >
-          {__('Visit support forum', 'web-stories')}
+          {__('Visit Support Forums', 'web-stories')}
         </Link>
         <Link
           href={YOUTUBE_URL}
@@ -123,7 +123,7 @@ export function Footer() {
           rel="noreferrer"
           onClick={onYouTubeClick}
         >
-          {__('Storytime YouTube series', 'web-stories')}
+          {__('Storytime YouTube Series', 'web-stories')}
         </Link>
       </Links>
     </Panel>

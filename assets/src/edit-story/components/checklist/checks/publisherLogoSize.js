@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { List } from '@web-stories-wp/design-system';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY, PUBLISHER_LOGO_DIMENSION } from '../constants';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function publisherLogoSize(story) {
   return (
@@ -59,7 +59,9 @@ const PublisherLogoSize = () => {
         }}
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
       />

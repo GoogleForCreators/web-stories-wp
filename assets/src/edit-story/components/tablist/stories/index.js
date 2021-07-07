@@ -35,7 +35,7 @@ import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 import { DefaultCtaButton } from '../../checklistCard/defaultCtaButton';
 import { DefaultFooterText } from '../../checklistCard/defaultFooterText';
 import { Tablist } from '../styles';
-import TablistPanel from '../panel';
+import TablistPanel from '../tablistPanel';
 import { CheckboxCta } from '../../checklistCard/checkboxCta';
 import { ChecklistCard } from '../../checklistCard';
 import { PANEL_STATES } from '../constants';
