@@ -55,8 +55,12 @@ describe('Handling .mov files', () => {
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
-    await page.waitForSelector('[data-testid="videoElement"]');
-    await expect(page).toMatchElement('[data-testid="videoElement"]');
+    await page.waitForSelector('[data-testid="videoElement"]', {
+      visible: false,
+    });
+    await expect(page).toMatchElement('[data-testid="videoElement"]', {
+      visible: false,
+    });
   });
 
   describe('Inserting .mov from dialog', () => {
