@@ -21,6 +21,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { useInsertElement } from '../../canvas';
 
 describe('Checklist integration', () => {
   let fixture;
@@ -34,6 +35,12 @@ describe('Checklist integration', () => {
   afterEach(() => {
     fixture.restore();
   });
+
+  const emptyContent = () => {
+    return fixture.screen.queryByText(
+      /You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it./
+    );
+  };
 
   const addPages = async (count) => {
     let clickCount = 1;
@@ -53,6 +60,27 @@ describe('Checklist integration', () => {
     await fixture.events.click(toggleButton);
     // wait for animation
     await fixture.events.sleep(500);
+  };
+
+  /**
+   * Inserts an image without assistive text. This will trigger
+   * an a11y issue in the checklist.
+   */
+  const addAccessibilityIssue = async () => {
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    await fixture.act(() =>
+      insertElement('image', {
+        x: 0,
+        y: 0,
+        width: 640 / 2,
+        height: 529 / 2,
+        resource: {
+          type: 'image',
+          mimeType: 'image/jpg',
+          src: 'http://localhost:9876/__static__/earth.jpg',
+        },
+      })
+    );
   };
 
   const openChecklistWithKeyboard = async () => {
@@ -110,11 +138,12 @@ describe('Checklist integration', () => {
 
       expect(fixture.editor.checklist.designPanel).toBeDefined();
     });
-    // TODO #8085 - a11y section not available in blank page state, no issues present.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should open the accessibility section', async () => {
+
+    it('should open the accessibility section', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
       await addPages(2);
+      await addAccessibilityIssue();
+      await openChecklist();
 
       await fixture.events.click(fixture.editor.checklist.accessibilityTab);
       expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
@@ -179,19 +208,113 @@ describe('Checklist integration', () => {
       expect(fixture.editor.checklist.designPanel).toBeDefined();
       expect(fixture.editor.checklist.accessibilityPanel).toBeNull();
 
-      // TODO #8085 - a11y section not available in blank page state, no issues present
+      // add accessibility section
+      await addAccessibilityIssue();
       // tab to accessibility section
-      // while (
-      //   fixture.editor.checklist.accessibilityTab !== document.activeElement
-      // ) {
-      //   // eslint-disable-next-line no-await-in-loop
-      //   await fixture.events.keyboard.press('tab');
-      // }
+      while (
+        fixture.editor.checklist.accessibilityTab !== document.activeElement
+      ) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('tab');
+      }
 
-      // await fixture.events.keyboard.press('Enter');
-      // expect(fixture.editor.checklist.priorityPanel).toBeNull();
-      // expect(fixture.editor.checklist.designPanel).toBeNull();
-      // expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
+      await fixture.events.keyboard.press('Enter');
+      expect(fixture.editor.checklist.priorityPanel).toBeNull();
+      expect(fixture.editor.checklist.designPanel).toBeNull();
+      expect(fixture.editor.checklist.accessibilityPanel).toBeDefined();
+    });
+  });
+
+  describe('checkpoints', () => {
+    it('empty story should begin in the empty state', async () => {
+      await openChecklist();
+
+      const { priorityPanel, designPanel, accessibilityPanel } =
+        fixture.editor.checklist;
+
+      expect(await emptyContent()).toBeDefined();
+      expect(priorityPanel).toBeNull();
+      expect(designPanel).toBeNull();
+      expect(accessibilityPanel).toBeNull();
+    });
+
+    it('should expand the design panel after adding 2 pages', async () => {
+      await addPages(1);
+      await openChecklist();
+
+      const {
+        expandedDesignTab,
+        priorityPanel,
+        designPanel,
+        accessibilityPanel,
+      } = fixture.editor.checklist;
+
+      expect(await emptyContent()).toBeNull();
+      expect(priorityPanel).toBeNull();
+      expect(designPanel).toBeDefined();
+      expect(accessibilityPanel).toBeNull();
+
+      expect(expandedDesignTab).toBeDefined();
+    });
+
+    it('should add the accessibility panel after adding 2 pages if there is an a11y problem. This will not open the panel.', async () => {
+      await addPages(1);
+      await openChecklist();
+
+      await addAccessibilityIssue();
+
+      const {
+        priorityPanel,
+        designPanel,
+        accessibilityPanel,
+        expandedDesignTab,
+      } = fixture.editor.checklist;
+
+      expect(await emptyContent()).toBeNull();
+      expect(priorityPanel).toBeNull();
+      expect(designPanel).toBeDefined();
+      expect(accessibilityPanel).toBeDefined();
+
+      expect(expandedDesignTab).toBeDefined();
+    });
+
+    it('should expand the priority panel after adding 5 pages', async () => {
+      await addPages(4);
+      await openChecklist();
+
+      const {
+        expandedPriorityTab,
+        priorityPanel,
+        designPanel,
+        accessibilityPanel,
+      } = fixture.editor.checklist;
+
+      expect(await emptyContent()).toBeNull();
+      expect(priorityPanel).toBeDefined();
+      expect(designPanel).toBeDefined();
+      expect(accessibilityPanel).toBeNull();
+
+      expect(expandedPriorityTab).toBeDefined();
+    });
+  });
+
+  describe('checklist should have no aXe accessibility violations', () => {
+    it('should pass accessibility tests with with a closed checklist', async () => {
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
+    });
+
+    it('should pass accessibility tests with an open empty checklist', async () => {
+      await openChecklist();
+
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
+    });
+
+    it('should pass accessibility tests with a open non-empty checklist', async () => {
+      await addPages(4);
+
+      await openChecklist();
+
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
   });
 });
