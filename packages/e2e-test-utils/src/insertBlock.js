@@ -38,9 +38,6 @@ async function waitForInserterCloseAndContentFocus() {
  * Opens the inserter, searches for the given term, then selects the first
  * result that appears. It then waits briefly for the block list to update.
  *
- * Avoids using waitForInserterCloseAndContentFocus() from `@wordpress/e2e-test-utils`
- * because the selector it relies on does not exist in older versions of Gutenberg.
- *
  * @param {string} searchTerm The text to search the inserter for.
  */
 async function insertBlock(searchTerm) {
