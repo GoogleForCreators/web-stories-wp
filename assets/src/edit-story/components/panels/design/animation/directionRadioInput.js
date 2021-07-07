@@ -29,16 +29,15 @@ import {
   Icons,
   Tooltip,
 } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
 import {
   DIRECTION,
   ROTATION,
   SCALE_DIRECTION,
   SCALE_DIRECTION_MAP,
-} from '../../../../../animation';
+} from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
 import { useConfig } from '../../../../app/config';
 import useRadioNavigation from '../../../form/shared/useRadioNavigation';
 

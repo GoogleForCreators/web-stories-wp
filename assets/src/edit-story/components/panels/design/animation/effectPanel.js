@@ -20,20 +20,18 @@
 import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   ANIMATION_EFFECTS,
   ANIMATION_PARTS,
   BACKGROUND_ANIMATION_EFFECTS,
   FIELD_TYPES,
-} from '../../../../../animation';
-import {
   getAnimationEffectProps,
   AnimationProps,
-} from '../../../../../animation/parts';
+} from '@web-stories-wp/animation';
+
+/**
+ * Internal dependencies
+ */
 import EffectInput from './effectInput';
 
 export function getEffectName(type) {

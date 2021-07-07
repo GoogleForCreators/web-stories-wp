@@ -18,6 +18,7 @@ To add a new template to the editor:
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
     - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
     - Make sure videos are 720p.
+    - Make sure caption files are also committed along with the videos, when available.
 4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (see [details](#get-the-story-json)).
 5. [Both] Verify that new template shows up in the template library and looks as expected.
 
@@ -117,7 +118,11 @@ Another way to get the story JSON is by inspecting the network request that save
 Once you have the story JSON, several code changes are needed to add it to the list of default templates in the editor.
 
 1. In [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw), create a new directory `<template_name>` for your template. Now add your template's story JSON in a new file e.g. `<template_name>/template.json`.
-      - In the JSON, first change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`.
+   - Make following changes to the template JSON,
+      - First change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__` as the base, which then will be replaced by the CDN url.
+      - Ensure to also change poster image URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`.
+      - Change `posterId` and `id` for all elements of type image and video to `0`, these are the WP media ids that are not used in core templates.
+      - Make sure that the images and videos have appropriate title and alt text set for better accessibility.
 
 2. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, etc.
 

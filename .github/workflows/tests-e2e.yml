@@ -52,7 +52,7 @@ jobs:
             snapshots: true
 
           - browser: 'chrome'
-            wp: '5.8-RC1'
+            wp: '5.8-RC2'
             experimental: true
             snapshots: false
 
