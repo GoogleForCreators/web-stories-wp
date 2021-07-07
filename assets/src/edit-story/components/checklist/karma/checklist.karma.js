@@ -199,10 +199,7 @@ describe('Checklist integration', () => {
       await openChecklistWithKeyboard();
 
       // tab to priority section
-      while (fixture.editor.checklist.priorityTab !== document.activeElement) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.keyboard.press('tab');
-      }
+      await fixture.events.keyboard.press('tab');
 
       await fixture.events.keyboard.press('Enter');
       expect(fixture.editor.checklist.priorityPanel).toBeDefined();
@@ -210,10 +207,7 @@ describe('Checklist integration', () => {
       expect(fixture.editor.checklist.accessibilityPanel).toBeNull();
 
       // tab to design section
-      while (fixture.editor.checklist.designTab !== document.activeElement) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.keyboard.press('tab');
-      }
+      await fixture.events.keyboard.press('tab');
 
       await fixture.events.keyboard.press('Enter');
       expect(fixture.editor.checklist.priorityPanel).toBeNull();
@@ -223,11 +217,14 @@ describe('Checklist integration', () => {
       // add accessibility section
       await addAccessibilityIssue();
       // tab to accessibility section
+      let tabCount = 1;
       while (
+        tabCount < 4 &&
         fixture.editor.checklist.accessibilityTab !== document.activeElement
       ) {
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('tab');
+        tabCount++;
       }
 
       await fixture.events.keyboard.press('Enter');
