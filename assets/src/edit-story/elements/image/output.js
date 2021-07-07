@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { calculateSrcSet, isBlobURL } from "@web-stories-wp/media";
+import { calculateSrcSet, isBlobURL } from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
