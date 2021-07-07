@@ -21,10 +21,16 @@ import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
   publishStory,
+  skipSuiteOnFirefox,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
+  // The browser window size for Firefox is different from the Chrome one during tests,
+  // causing the Meta Boxes button to be off-screen, so Firefox can't "see" it,
+  // making the test fail.
+  skipSuiteOnFirefox();
+
   describe('Unavailable', () => {
     it('should not display button to toggle meta boxes', async () => {
       await createNewStory();
