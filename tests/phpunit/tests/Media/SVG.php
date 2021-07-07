@@ -180,7 +180,7 @@ class SVG extends Test_Case {
 	/**
 	 * @covers ::wp_generate_attachment_metadata
 	 */
-	public function test_wp_generate_attachment_metadata_invalud() {
+	public function test_wp_generate_attachment_metadata_invalid() {
 		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -215,6 +215,26 @@ class SVG extends Test_Case {
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'insecure_svg_file', $_results->get_error_code() );
 		$this->assertSame( 'Sorry, this file couldn\'t be sanitized so for security reasons wasn\'t uploaded.', $_results->get_error_message() );
+	}
+
+	/**
+	 * @covers ::get_svg_size
+	 * @covers ::get_svg_data
+	 * @covers ::get_xml
+	 */
+	public function test_get_svg_size_from_viewbox() {
+		$svg      = $this->get_svg_object();
+		$_results = $this->call_private_method( $svg, 'get_svg_size', [ __DIR__ . '/../../data/why.svg' ] );
+
+		$this->assertEqualSetsWithIndex(
+			[
+				'width'  => 100,
+				'height' => 100,
+			],
+			$_results
+		);
+		$this->assertIsInt( $_results['width'] );
+		$this->assertIsInt( $_results['height'] );
 	}
 
 	/**
