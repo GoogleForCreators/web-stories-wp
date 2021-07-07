@@ -15,7 +15,7 @@
  */
 async function insertWidget(name) {
   await expect(page).toMatch(name);
-  await expect(page).toClick('h3', { text: name });
+  await expect(page).toClick('button', { text: 'Add widget: ' + name });
   await expect(page).toClick('button', { text: 'Add Widget' });
 }
 export default insertWidget;
