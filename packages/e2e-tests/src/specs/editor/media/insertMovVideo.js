@@ -55,11 +55,6 @@ describe('Handling .mov files', () => {
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Sounds good/,
-    });
-
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
