@@ -32,18 +32,6 @@ describe('Keyboard Shortcuts Menu', () => {
   const openDelay = 100;
   const closeDelay = 300;
 
-  const getKeyboardShortcutsMenu = () => {
-    return fixture.screen.queryByRole('list', {
-      name: /^Keyboard Shortcuts$/,
-    });
-  };
-
-  const getKeyboardShortcutsToggle = () => {
-    return fixture.editor.getByRole('button', {
-      name: /^Keyboard Shortcuts$/,
-    });
-  };
-
   beforeEach(async () => {
     fixture = new Fixture();
 
@@ -56,34 +44,35 @@ describe('Keyboard Shortcuts Menu', () => {
 
   describe('CUJ: User can interact with menu using mouse: Click toggle button to open, click close button to close menu', () => {
     it('should be able to open menu by clicking on keyboard shortcut button', async () => {
-      const hiddenMenu = getKeyboardShortcutsMenu();
+      const { keyboardShortcutsToggle } = fixture.editor.carousel;
+
       // Menu should be closed
-      expect(hiddenMenu).toBeNull();
+      await expect(
+        fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+      ).toBeNull();
 
-      const menuToggle = getKeyboardShortcutsToggle();
-
-      await fixture.events.click(menuToggle);
+      await fixture.events.click(keyboardShortcutsToggle);
       await fixture.events.sleep(openDelay);
 
-      const openMenu = getKeyboardShortcutsMenu();
-
-      expect(openMenu).toBeTruthy();
+      await expect(
+        fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+      ).toBeTruthy();
 
       await fixture.snapshot('shortcuts dialog open');
     });
 
     describe('when menu is open', () => {
       beforeEach(async () => {
-        const menuToggle = getKeyboardShortcutsToggle();
+        const { keyboardShortcutsToggle } = fixture.editor.carousel;
 
-        await fixture.events.click(menuToggle);
+        await fixture.events.click(keyboardShortcutsToggle);
       });
 
       it('should be able to close menu by clicking on close button', async () => {
-        const openMenu = getKeyboardShortcutsMenu();
-        expect(openMenu).toBeTruthy();
+        const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+        expect(keyboardShortcutsMenu).toBeTruthy();
 
-        const menu = within(openMenu);
+        const menu = within(keyboardShortcutsMenu);
         const closeButton = menu.getByRole('button', {
           name: /^Close Menu$/,
         });
@@ -91,69 +80,70 @@ describe('Keyboard Shortcuts Menu', () => {
         // Give time for menu to close
         await fixture.events.sleep(closeDelay);
 
-        const closedMenu = getKeyboardShortcutsMenu();
-
-        expect(closedMenu).toBeNull();
+        expect(
+          fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+        ).toBeNull();
       });
 
       it('should be able to close menu by clicking outside the menu', async () => {
-        const openMenu = getKeyboardShortcutsMenu();
-        expect(openMenu).toBeTruthy();
+        const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+        expect(keyboardShortcutsMenu).toBeTruthy();
 
         // Click outside menu
-        await fixture.events.mouse.clickOn(openMenu, -10, -10);
+        await fixture.events.mouse.clickOn(keyboardShortcutsMenu, -10, -10);
         // Give time for menu to close
         await fixture.events.sleep(closeDelay);
 
-        const closedMenu = getKeyboardShortcutsMenu();
-
-        expect(closedMenu).toBeNull();
+        expect(
+          fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+        ).toBeNull();
       });
 
       it('should not close menu when clicking inside the menu', async () => {
-        const openMenu = getKeyboardShortcutsMenu();
-        expect(openMenu).toBeTruthy();
+        const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+        expect(keyboardShortcutsMenu).toBeTruthy();
 
         // Click inside menu
-        await fixture.events.mouse.clickOn(openMenu, 10, 10);
+        await fixture.events.mouse.clickOn(keyboardShortcutsMenu, 10, 10);
 
-        const menu = within(openMenu);
+        const menu = within(keyboardShortcutsMenu);
         const menuItem = await menu.queryAllByRole('listitem')[0];
         // Click on element inside menu
         await fixture.events.click(menuItem);
         // Give time for menu to process clicks
         await fixture.events.sleep(closeDelay);
 
-        const stillOpenMenu = getKeyboardShortcutsMenu();
-
         // Menu should still be open
-        expect(stillOpenMenu).toBeTruthy();
+        expect(
+          fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+        ).toBeTruthy();
       });
     });
   });
 
   describe('CUJ: User can interact with menu using keyboard: Tab to menu, enter to open, esc to close', () => {
     it('should be able to toggle menu open with Enter key', async () => {
-      const hiddenMenu = getKeyboardShortcutsMenu();
+      const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+
       // Menu should be closed
-      expect(hiddenMenu).toBeNull();
+      expect(keyboardShortcutsMenu).toBeNull();
 
-      const menuToggle = getKeyboardShortcutsToggle();
+      const { keyboardShortcutsToggle } = fixture.editor.carousel;
 
-      await fixture.events.focus(menuToggle);
+      await fixture.events.focus(keyboardShortcutsToggle);
       await fixture.events.keyboard.press('Enter');
       await fixture.events.sleep(openDelay);
 
-      const openMenu = getKeyboardShortcutsMenu();
-
-      expect(openMenu).toBeTruthy();
+      expect(
+        fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+      ).toBeTruthy();
     });
 
     describe('when menu is open', () => {
       beforeEach(async () => {
-        const menuToggle = getKeyboardShortcutsToggle();
+        const { keyboardShortcutsToggle } = fixture.editor.carousel;
 
-        await fixture.events.focus(menuToggle);
+        await fixture.events.focus(keyboardShortcutsToggle);
         // Tab back and forth to trigger app to think we're a keyboard user
         await fixture.events.keyboard.press('tab');
         await fixture.events.keyboard.shortcut('shift+tab');
@@ -162,23 +152,23 @@ describe('Keyboard Shortcuts Menu', () => {
       });
 
       it('should be able to close open menu using Esc key', async () => {
-        const openMenu = getKeyboardShortcutsMenu();
-        expect(openMenu).toBeTruthy();
+        const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+        expect(keyboardShortcutsMenu).toBeTruthy();
 
         await fixture.events.keyboard.press('Escape');
         // Give time for menu to close
         await fixture.events.sleep(closeDelay);
 
-        const closedMenu = getKeyboardShortcutsMenu();
-
-        expect(closedMenu).toBeNull();
+        expect(
+          fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+        ).toBeNull();
       });
 
       it('should place focus on close button when menu opens', () => {
-        const openMenu = getKeyboardShortcutsMenu();
-        expect(openMenu).toBeTruthy();
+        const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+        expect(keyboardShortcutsMenu).toBeTruthy();
 
-        const menu = within(openMenu);
+        const menu = within(keyboardShortcutsMenu);
         const closeButton = menu.getByRole('button', {
           name: /^Close Menu$/,
         });
@@ -187,10 +177,10 @@ describe('Keyboard Shortcuts Menu', () => {
       });
 
       it('should be able to close menu with close button', async () => {
-        const openMenu = getKeyboardShortcutsMenu();
-        expect(openMenu).toBeTruthy();
+        const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
+        expect(keyboardShortcutsMenu).toBeTruthy();
 
-        const menu = within(openMenu);
+        const menu = within(keyboardShortcutsMenu);
         const closeButton = menu.getByRole('button', {
           name: /^Close Menu$/,
         });
@@ -200,9 +190,9 @@ describe('Keyboard Shortcuts Menu', () => {
         // Give time for menu to close
         await fixture.events.sleep(closeDelay);
 
-        const closedMenu = getKeyboardShortcutsMenu();
-
-        expect(closedMenu).toBeNull();
+        expect(
+          fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+        ).toBeNull();
       });
     });
   });
