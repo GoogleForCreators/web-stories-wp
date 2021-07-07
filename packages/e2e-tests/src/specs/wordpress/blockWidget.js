@@ -75,6 +75,7 @@ describe('Web Stories Widget Block', () => {
     await activatePlugin('classic-widgets');
 
     await visitAdminPage('widgets.php');
+    await expect(page).toMatch('Available Widgets');
 
     await insertWidget('Web Stories');
     await expect(page).toMatchElement(
