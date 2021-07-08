@@ -23,7 +23,6 @@ import { fetchRemoteFile, isAnimatedGif } from '@web-stories-wp/media';
  * Internal dependencies
  */
 import useStory from '../../story/useStory';
-import useUpdateElementDimensions from './useUpdateElementDimensions';
 
 function useProcessMedia({
   uploadMedia,
@@ -31,8 +30,6 @@ function useProcessMedia({
   updateMedia,
   deleteMediaElement,
 }) {
-  const { updateElementDimensions } = useUpdateElementDimensions();
-
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -106,7 +103,6 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
-
         if (
           ['video', 'gif'].includes(resource.type) &&
           !resource.local &&
@@ -118,10 +114,6 @@ function useProcessMedia({
 
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateElementDimensions({
-          id: oldResource.id,
-          resource: oldResourceWithId,
-        });
         updateExistingElements({
           oldResource: oldResourceWithId,
         });
@@ -152,7 +144,6 @@ function useProcessMedia({
       updateOldObject,
       deleteMediaElement,
       updateExistingElements,
-      updateElementDimensions,
     ]
   );
 
@@ -176,10 +167,6 @@ function useProcessMedia({
 
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateElementDimensions({
-          id: oldResource.id,
-          resource: oldResourceWithId,
-        });
         updateExistingElements({
           oldResource: oldResourceWithId,
         });
@@ -214,7 +201,6 @@ function useProcessMedia({
       updateOldObject,
       deleteMediaElement,
       updateExistingElements,
-      updateElementDimensions,
     ]
   );
 
