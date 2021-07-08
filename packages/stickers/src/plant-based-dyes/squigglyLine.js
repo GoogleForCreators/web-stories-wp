@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Curly Line', 'sticker name', 'web-stories');
+const title = _x('Squiggly Line', 'sticker name', 'web-stories');
 
-function MakerLine01({ style }) {
+function SquigglyLine({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function MakerLine01({ style }) {
   );
 }
 
-MakerLine01.propTypes = {
+SquigglyLine.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 54 / 20,
-  svg: MakerLine01,
+  svg: SquigglyLine,
   title,
 };

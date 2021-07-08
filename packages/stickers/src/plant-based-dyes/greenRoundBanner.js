@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Base 03', 'sticker name', 'web-stories');
+const title = _x('Green Round Banner', 'sticker name', 'web-stories');
 
-function Base03({ style }) {
+function GreenRoundBanner({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function Base03({ style }) {
   );
 }
 
-Base03.propTypes = {
+GreenRoundBanner.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 56 / 50,
-  svg: Base03,
+  svg: GreenRoundBanner,
   title,
 };

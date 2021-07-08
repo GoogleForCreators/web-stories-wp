@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Dots 01', 'sticker name', 'web-stories');
+const title = _x('Yellow Dots', 'sticker name', 'web-stories');
 
-function MakerDots({ style }) {
+function YellowDots({ style }) {
   return (
     <svg
       style={style}
@@ -116,12 +116,12 @@ function MakerDots({ style }) {
   );
 }
 
-MakerDots.propTypes = {
+YellowDots.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 62 / 40,
-  svg: MakerDots,
+  svg: YellowDots,
   title,
 };

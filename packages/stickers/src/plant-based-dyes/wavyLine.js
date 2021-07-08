@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Wave Line', 'sticker name', 'web-stories');
+const title = _x('Wavy Line', 'sticker name', 'web-stories');
 
-function MakerLine02({ style }) {
+function WavyLine({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function MakerLine02({ style }) {
   );
 }
 
-MakerLine02.propTypes = {
+WavyLine.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 52 / 4,
-  svg: MakerLine02,
+  svg: WavyLine,
   title,
 };

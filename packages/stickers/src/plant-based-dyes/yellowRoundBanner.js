@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Section Dots 01', 'sticker name', 'web-stories');
+const title = _x('Yellow Round Banner', 'sticker name', 'web-stories');
 
-function MakerSectionDots01({ style }) {
+function YellowRoundBanner({ style }) {
   return (
     <svg
       style={style}
@@ -114,18 +114,18 @@ function MakerSectionDots01({ style }) {
       />
       <path
         d="M19.8092 6.81142C17.7314 7.42931 16.0902 9.1172 15.1566 11.0613C14.2231 13.0054 13.937 15.2358 13.922 17.4059C13.9069 20.1487 14.3436 22.9368 15.5331 25.4083C17.5356 29.5677 21.5106 32.4914 25.7567 34.3149C30.2888 36.259 35.5587 37.0728 40.1209 35.2191C43.0118 34.0436 45.436 31.8283 47.1525 29.206C49.3809 25.7851 50.4348 21.5653 49.8025 17.5416C49.1701 13.5178 46.7309 9.73508 43.1925 7.73072C41.2953 6.66072 39.1573 6.08805 37.0041 5.72636C31.0717 4.6865 25.5459 5.03312 19.8092 6.81142Z"
-        fill="#4A6747"
+        fill="#F9E46C"
       />
     </svg>
   );
 }
 
-MakerSectionDots01.propTypes = {
+YellowRoundBanner.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 58 / 40,
-  svg: MakerSectionDots01,
+  svg: YellowRoundBanner,
   title,
 };

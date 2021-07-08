@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Leaf 02', 'sticker name', 'web-stories');
+const title = _x('Green Leaf Shape', 'sticker name', 'web-stories');
 
-function MakerLeaf02({ style }) {
+function GreenLeafShape({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function MakerLeaf02({ style }) {
   );
 }
 
-MakerLeaf02.propTypes = {
+GreenLeafShape.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 50 / 50,
-  svg: MakerLeaf02,
+  svg: GreenLeafShape,
   title,
 };

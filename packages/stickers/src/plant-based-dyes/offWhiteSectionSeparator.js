@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Base 01', 'sticker name', 'web-stories');
+const title = _x('Off-white Section Separator', 'sticker name', 'web-stories');
 
-function Base01({ style }) {
+function OffWhiteSectionSeparator({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function Base01({ style }) {
   );
 }
 
-Base01.propTypes = {
+OffWhiteSectionSeparator.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 62 / 30,
-  svg: Base01,
+  svg: OffWhiteSectionSeparator,
   title,
 };

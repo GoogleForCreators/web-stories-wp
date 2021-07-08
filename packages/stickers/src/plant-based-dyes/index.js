@@ -16,32 +16,32 @@
 /**
  * Internal dependencies
  */
-import { default as base01 } from './base01';
-import { default as base02 } from './base02';
-import { default as base03 } from './base03';
-import { default as makerDots } from './dots01';
-import { default as makerLeaf01 } from './leaf01';
-import { default as makerLeaf02 } from './leaf02';
-import { default as makerLeaf03 } from './leaf03';
-import { default as makerLine01 } from './line01';
-import { default as makerLine02 } from './line02';
+import { default as makerYellowLeaf } from './yellowLeaf';
+import { default as makerGreenLeafShape } from './greenLeafShape';
+import { default as makerGreenLeaf } from './greenLeaf';
+import { default as makerYellowDots } from './yellowDots';
+import { default as makerBannerWithDots } from './bannerWithDots';
+import { default as makerRoundedBannerWithDots } from './roundedBannerWithDots';
 import { default as makerPlant } from './plant';
-import { default as makerSectionDots01 } from './sectionDots01';
-import { default as makerSectionDots02 } from './sectionDots02';
-import { default as makerTitleDots } from './titleDots';
+import { default as makerOffWhiteSectionSeparator } from './offWhiteSectionSeparator';
+import { default as makerOffWhiteBanner } from './offWhiteBanner';
+import { default as makerGreenRoundBanner } from './greenRoundBanner';
+import { default as makerYellowRoundBanner } from './yellowRoundBanner';
+import { default as makerSquigglyLine } from './squigglyLine';
+import { default as makerWavyLine } from './wavyLine';
 
 export {
-  base01,
-  base02,
-  base03,
-  makerDots,
-  makerLeaf01,
-  makerLeaf02,
-  makerLeaf03,
-  makerLine01,
-  makerLine02,
+  makerYellowLeaf,
+  makerGreenLeafShape,
+  makerGreenLeaf,
+  makerYellowDots,
+  makerBannerWithDots,
   makerPlant,
-  makerSectionDots01,
-  makerSectionDots02,
-  makerTitleDots,
+  makerOffWhiteSectionSeparator,
+  makerOffWhiteBanner,
+  makerGreenRoundBanner,
+  makerSquigglyLine,
+  makerWavyLine,
+  makerRoundedBannerWithDots,
+  makerYellowRoundBanner,
 };

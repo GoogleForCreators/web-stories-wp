@@ -83,6 +83,7 @@ async function getTemplates(imageBaseUrl) {
     'ultimate-comparison',
     'fitness-apps-ranked',
     'street-style-on-the-go',
+    'plant-based-dyes',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

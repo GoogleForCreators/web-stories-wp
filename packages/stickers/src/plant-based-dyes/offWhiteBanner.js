@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Base 02', 'sticker name', 'web-stories');
+const title = _x('Off-white Banner', 'sticker name', 'web-stories');
 
-function Base02({ style }) {
+function OffWhiteBanner({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function Base02({ style }) {
   );
 }
 
-Base02.propTypes = {
+OffWhiteBanner.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 51 / 12,
-  svg: Base02,
+  svg: OffWhiteBanner,
   title,
 };
