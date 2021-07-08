@@ -16,6 +16,6 @@
 /**
  * Internal dependencies
  */
-import { default as homeWorkoutShape } from './shape';
+import { default as homeWorkoutSectionSeparator } from './blackSectionSeparator';
 
-export { homeWorkoutShape };
+export { homeWorkoutSectionSeparator };

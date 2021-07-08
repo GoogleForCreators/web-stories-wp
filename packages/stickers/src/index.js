@@ -34,7 +34,7 @@ import * as bestFitnessAppsStickers from './fitness-apps-ranked';
 import * as streetStyleOnTheGoStickers from './street-style-on-the-go';
 import * as plantBasedDyesStickers from './plant-based-dyes';
 import * as indoorGardenOasisStickers from './indoor-garden-oasis';
-import * as killBellyFatStickers from './kill-belly-fat';
+import * as killBellyFatStickers from './belly-fat-workout';
 
 export default {
   ...beautyStickers,

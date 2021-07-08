@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Curved Slab', 'sticker name', 'web-stories');
+const title = _x('Black Section Separator', 'sticker name', 'web-stories');
 
-function HomeWorkoutShape({ style }) {
+function BlackSectionSeparator({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function HomeWorkoutShape({ style }) {
   );
 }
 
-HomeWorkoutShape.propTypes = {
+BlackSectionSeparator.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 58 / 40,
-  svg: HomeWorkoutShape,
+  svg: BlackSectionSeparator,
   title,
 };
