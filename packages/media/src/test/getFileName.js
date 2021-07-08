@@ -32,8 +32,11 @@ describe('getFileName', () => {
     expect(getFileName({ name: 'my-video' })).toStrictEqual('my-video');
   });
 
-  it('should empty name', () => {
+  it('should return an empty string if missing name', () => {
     expect(getFileName({ name: '' })).toStrictEqual('');
+  });
+
+  it('should default to an empty name', () => {
     expect(getFileName({})).toStrictEqual('');
   });
 });
