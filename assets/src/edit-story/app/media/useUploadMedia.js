@@ -84,7 +84,7 @@ function useUploadMedia({
 
     if (isTranscoding && isDialogDismissed) {
       showSnackbar({
-        message: __('Video optimization in progress.', 'web-stories'),
+        message: __('Video optimization in progress', 'web-stories'),
         dismissable: true,
       });
     }

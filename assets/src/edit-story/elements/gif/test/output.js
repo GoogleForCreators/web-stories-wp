@@ -90,6 +90,25 @@ describe('Gif Output', () => {
     await expect(outputStr).toMatchSnapshot();
   });
 
+  it('should remove blob URLs', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        resource: {
+          ...baseProps.element.resource,
+          output: {
+            ...baseProps.element.resource.output,
+            src: 'blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a',
+          },
+        },
+      },
+    };
+    const output = <GifOutput {...props} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).not.toStrictEqual(expect.stringMatching('blob:'));
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       await expect(<GifOutput {...baseProps} />).toBeValidAMPStoryElement();

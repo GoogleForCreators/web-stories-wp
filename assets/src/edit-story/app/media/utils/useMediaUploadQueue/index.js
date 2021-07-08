@@ -336,9 +336,7 @@ function useMediaUploadQueue() {
         pending: state.queue.filter((item) => item.state === 'PENDING'),
         processed: state.queue.filter((item) => item.state === 'UPLOADED'),
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
-        isUploading: state.queue.some((item) =>
-          ['PENDING', 'UPLOADING', 'TRANSCODING'].includes(item.state)
-        ),
+        isUploading: state.queue.length !== 0,
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
       },
       actions: {
