@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import * as metadataErrors from './metadata';
 
-export default {
-  story: [
-    metadataErrors.storyPosterAttached,
-    metadataErrors.storyTitle,
-    metadataErrors.storyPosterPortraitSize,
-    metadataErrors.storyPosterAspectRatio,
-    metadataErrors.publisherLogoSize,
-  ],
-};
+/**
+ * The high priority section of the checklist will show once
+ * the story reaches 5 pages
+ */
+export default async function triggerHighPriorityChecklistSection() {
+  await expect(page).toClick('button[aria-label="Add New Page"]');
+  await expect(page).toClick('button[aria-label="Add New Page"]');
+  await expect(page).toClick('button[aria-label="Add New Page"]');
+  await expect(page).toClick('button[aria-label="Add New Page"]');
+}

@@ -17,17 +17,16 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import { MESSAGES } from '../../../app/prepublish/constants';
 import { useStory } from '../../../app';
 import { useInsertElement } from '../../canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { TEXT as PPC_PANEL_TEXT } from '../prepublish/constants';
+import { ACCESSIBILITY_COPY, DESIGN_COPY, PRIORITY_COPY } from '../constants';
 
 describe('Pre-publish checklist select offending elements onClick', () => {
   let fixture;
@@ -35,6 +34,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ enableChecklistCompanion: true });
     await fixture.render();
     insertElement = await fixture.renderHook(() => useInsertElement());
   });
@@ -43,110 +43,34 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     fixture.restore();
   });
 
-  async function openPrepublishPanel() {
-    const { checklistTab } = fixture.editor.inspector;
-    await fixture.events.click(checklistTab);
-    await waitFor(() => fixture.editor.inspector.checklistPanel);
+  const openChecklist = async () => {
+    const { toggleButton } = fixture.editor.checklist;
+    await fixture.events.click(toggleButton);
+    // wait for animation
     await fixture.events.sleep(500);
-  }
+  };
+
+  const addPages = async (count) => {
+    let clickCount = 1;
+    while (clickCount <= count) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      // eslint-disable-next-line no-await-in-loop, no-loop-func
+      await waitFor(() => {
+        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+      });
+      clickCount++;
+    }
+  };
 
   async function clickOnCanvas() {
     const canvas = fixture.querySelector('[data-testid="fullbleed"]');
     await fixture.events.click(canvas);
   }
 
-  async function addNewPage() {
-    const addNewPageButton = fixture.screen.getByRole('button', {
-      name: /Add New Page/,
-    });
-    await fixture.events.click(addNewPageButton, { clickCount: 1 });
-  }
-
-  async function enableRecommendedMessagesWith2Pages() {
-    await addNewPage();
-    await openPrepublishPanel();
-    await waitFor(() => fixture.editor.inspector.checklistPanel.recommended);
-    await fixture.events.sleep(500);
-  }
-
-  async function enableHighPriorityMessagesWith5Pages() {
-    await addNewPage();
-    await addNewPage();
-    await addNewPage();
-    await addNewPage();
-    await addNewPage();
-    await openPrepublishPanel();
-    await waitFor(() => fixture.editor.inspector.checklistPanel.highPriority);
-    await fixture.events.sleep(500);
-  }
-
-  describe('Prepublish checklist tab', () => {
-    it('should begin with empty message on a new story', async () => {
-      await openPrepublishPanel();
-
-      const recommendedPanel =
-        fixture.editor.inspector.checklistPanel.recommended;
-      const highPriorityPanel =
-        fixture.editor.inspector.checklistPanel.highPriority;
-
-      expect(recommendedPanel).toBeNull();
-      expect(highPriorityPanel).toBeNull();
-
-      const emptyMessage = fixture.screen.getByText(
-        PPC_PANEL_TEXT.UNAVAILABLE_BODY
-      );
-
-      expect(emptyMessage).toBeTruthy();
-    });
-
-    it('should show the recommended panel once the story reaches two pages', async () => {
-      await openPrepublishPanel();
-
-      const recommendedPanel =
-        fixture.editor.inspector.checklistPanel.recommended;
-      const highPriorityPanel =
-        fixture.editor.inspector.checklistPanel.highPriority;
-
-      expect(recommendedPanel).toBeNull();
-      expect(highPriorityPanel).toBeNull();
-
-      await enableRecommendedMessagesWith2Pages();
-
-      const recommendedIssue = fixture.screen.getByText(
-        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
-      );
-
-      expect(recommendedIssue).not.toBeNull();
-
-      expect(recommendedPanel).toBeDefined();
-      expect(highPriorityPanel).toBeNull();
-    });
-
-    it('should show the high priority panel once the story reaches five pages', async () => {
-      await openPrepublishPanel();
-
-      const recommendedPanel =
-        fixture.editor.inspector.checklistPanel.recommended;
-      const highPriorityPanel =
-        fixture.editor.inspector.checklistPanel.highPriority;
-
-      expect(recommendedPanel).toBeNull();
-      expect(highPriorityPanel).toBeNull();
-
-      await enableHighPriorityMessagesWith5Pages();
-      const recommendedIssue = fixture.screen.getByText(
-        MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT
-      );
-      const highPriorityIssue = fixture.screen.getByText(
-        MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
-      );
-
-      expect(recommendedIssue).toBeDefined();
-      expect(highPriorityIssue).toBeDefined();
-    });
-
+  describe('Checklist interactions', () => {
     it('should select the offending text elements', async () => {
-      await enableRecommendedMessagesWith2Pages();
+      await addPages(1);
       // four paragraphs will cause the "too much text on page" error
       const doInsert = () =>
         insertElement('text', {
@@ -163,20 +87,24 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const element2 = await fixture.act(doInsert);
       const element3 = await fixture.act(doInsert);
       const element4 = await fixture.act(doInsert);
-      await openPrepublishPanel();
+      await openChecklist();
 
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.recommended
-      );
+      expect(fixture.editor.checklist.designPanel).toBeDefined();
 
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
 
-      const tooMuchTextOnPage = fixture.screen.getByText(
-        MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT
+      const tooMuchTextOnTitle = fixture.screen.getByText(
+        DESIGN_COPY.tooMuchPageText.title
       );
-      await fixture.events.click(tooMuchTextOnPage);
-      await fixture.events.sleep(1000);
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        tooMuchTextOnTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(4);
       expect(
@@ -185,7 +113,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should select the element when the font size is too small', async () => {
-      await enableRecommendedMessagesWith2Pages();
+      await addPages(1);
 
       const insertSmallFont = () =>
         insertElement('text', {
@@ -210,21 +138,26 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       const smallFontElement = await fixture.act(insertSmallFont);
       const normalFontElement = await fixture.act(insertNormalFont);
 
-      await openPrepublishPanel();
+      await openChecklist();
 
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.recommended
-      );
+      await fixture.events.click(fixture.editor.checklist.accessibilityTab);
 
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
       expect(storyContext.state.selectedElementIds[0]).toEqual(
         normalFontElement.id
       );
-      const fontTooSmallRow = fixture.screen.getByText(
-        MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.MAIN_TEXT
+      const fontTooSmallTitle = fixture.screen.getByText(
+        ACCESSIBILITY_COPY.fontSizeTooSmall.title
       );
-      await fixture.events.click(fontTooSmallRow);
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        fontTooSmallTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.click(fontTooSmallTitle);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -245,8 +178,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           height: 40,
         })
       );
-      await openPrepublishPanel();
-
       await clickOnCanvas();
       let storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds.length).toEqual(1);
@@ -254,14 +185,19 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         tooSmallLinkElement.id
       );
 
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.recommended
-      );
+      await openChecklist();
+      await fixture.events.click(fixture.editor.checklist.accessibilityTab);
 
-      const linkTooSmallRow = fixture.screen.getByText(
-        MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
+      const linkTooSmallTitle = fixture.screen.getByText(
+        ACCESSIBILITY_COPY.linkTappableRegionTooSmall.title
       );
-      await fixture.events.click(linkTooSmallRow);
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        linkTooSmallTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
       await fixture.events.sleep(500);
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).toEqual(
@@ -270,7 +206,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should select the element with the keyboard', async () => {
-      await enableHighPriorityMessagesWith5Pages();
+      await addPages(4);
       const tooSmallLinkElement = await fixture.act(() =>
         insertElement('text', {
           id: 'elementid',
@@ -292,21 +228,18 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         tooSmallLinkElement.id
       );
 
-      await openPrepublishPanel();
+      await openChecklist();
 
       await fixture.events.keyboard.press('tab');
-      // Navigate to recommended panel
-      await fixture.events.keyboard.press('tab');
-      // Expand panel (Karma's not respecting this happening automatically)
+      // Collapse priority panel which is expanded by default
       await fixture.events.keyboard.press('Enter');
-      // There are three issues in the recommended section, we want the last one.
       await fixture.events.keyboard.press('tab');
+      // Navigate to accessibility panel
       await fixture.events.keyboard.press('tab');
+      // Expand panel
+      await fixture.events.keyboard.press('Enter');
       await fixture.events.keyboard.press('tab');
 
-      expect(document.activeElement).toHaveTextContent(
-        MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT
-      );
       await fixture.events.keyboard.press('Enter');
 
       storyContext = await fixture.renderHook(() => useStory());
@@ -333,16 +266,20 @@ describe('Pre-publish checklist select offending elements onClick', () => {
         });
       });
 
-      await enableRecommendedMessagesWith2Pages();
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.recommended
+      await addPages(2);
+      await openChecklist();
+      await fixture.events.click(fixture.editor.checklist.accessibilityTab);
+      const imageMissingAltTextTitle = fixture.screen.getByText(
+        ACCESSIBILITY_COPY.imagesMissingAltText.title
       );
-
-      const imageMissingAltTextRow = fixture.screen.getByText(
-        MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        imageMissingAltTextTitle.parentElement.parentElement
       );
-      await fixture.events.click(imageMissingAltTextRow);
-
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.sleep(500);
       expect(
         fixture.editor.inspector.designPanel.node.contains(
           document.activeElement
@@ -354,7 +291,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     });
 
     it('should open the document inspector panel and focus the media button', async () => {
-      await enableHighPriorityMessagesWith5Pages();
+      await addPages(4);
       await fixture.events.click(fixture.editor.library.media.item(0));
 
       let storyContext = await fixture.renderHook(() => useStory());
@@ -364,12 +301,10 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElementIds[0]).not.toEqual(elementId);
 
-      await openPrepublishPanel();
-      await fixture.events.click(
-        fixture.editor.inspector.checklistPanel.highPriority
-      );
+      await openChecklist();
+      // high priority should auto expand
       const noPosterImage = fixture.screen.getByText(
-        MESSAGES.CRITICAL_METADATA.MISSING_POSTER.MAIN_TEXT
+        PRIORITY_COPY.storyMissingPoster.title
       );
       await fixture.events.click(noPosterImage);
       await waitFor(() => {
@@ -383,84 +318,82 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       expect(mediaButton.contains(document.activeElement)).toBeTrue();
       await fixture.snapshot('document tab opened by checklist panel');
     });
-  });
 
-  it('should open the design panel accessibility section and focus the video poster button when using mouse', async () => {
-    await fixture.act(() => {
-      insertElement('video', {
-        x: 0,
-        y: 0,
-        width: 640 / 2,
-        height: 529 / 2,
-        resource: {
-          width: 640,
-          height: 529,
-          type: 'video',
-          src: 'http://localhost:9876/__static__/earth.mp4',
-        },
+    it('should open the design panel accessibility section and focus the video poster button when using mouse', async () => {
+      await fixture.act(() => {
+        insertElement('video', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            width: 640,
+            height: 529,
+            type: 'video',
+            src: 'http://localhost:9876/__static__/earth.mp4',
+          },
+        });
       });
+
+      await addPages(5);
+      await openChecklist();
+      // high priority should auto expand
+      const videoMissingPosterTitle = fixture.screen.getByText(
+        PRIORITY_COPY.videoMissingPoster.title
+      );
+
+      expect(videoMissingPosterTitle).toBeDefined();
+      // Use title to get to thumbnail in card
+      const { getByRole } = within(
+        videoMissingPosterTitle.parentElement.parentElement
+      );
+      const thumbnail = getByRole('button');
+      expect(thumbnail).toBeDefined();
+      await fixture.events.click(thumbnail);
+      await fixture.events.sleep(500);
+
+      const mediaButton = await fixture.editor.inspector.designPanel
+        .videoAccessibility.posterMenuButton;
+      expect(mediaButton.contains(document.activeElement)).toBeTrue();
+
+      await fixture.snapshot(
+        'design tab opened accessibility and focused on video poster button by checklist panel'
+      );
     });
 
-    await enableHighPriorityMessagesWith5Pages();
-
-    await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.highPriority
-    );
-
-    const videoMissingPosterRow = fixture.screen.getByText(
-      MESSAGES.MEDIA.VIDEO_MISSING_POSTER.MAIN_TEXT
-    );
-
-    expect(videoMissingPosterRow).toBeDefined();
-
-    await fixture.events.click(videoMissingPosterRow);
-
-    const mediaButton = await fixture.editor.inspector.designPanel
-      .videoAccessibility.posterMenuButton;
-    expect(mediaButton.contains(document.activeElement)).toBeTrue();
-
-    await fixture.snapshot(
-      'design tab opened accessibility and focused on video poster button by checklist panel'
-    );
-  });
-
-  it('should open the design panel accessibility section and focus the video poster button when using keyboard', async () => {
-    await fixture.act(() => {
-      insertElement('video', {
-        x: 0,
-        y: 0,
-        width: 640 / 2,
-        height: 529 / 2,
-        resource: {
-          width: 640,
-          height: 529,
-          type: 'video',
-          src: 'http://localhost:9876/__static__/earth.mp4',
-        },
+    it('should open the design panel accessibility section and focus the video poster button when using keyboard', async () => {
+      await fixture.act(() => {
+        insertElement('video', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            width: 640,
+            height: 529,
+            type: 'video',
+            src: 'http://localhost:9876/__static__/earth.mp4',
+          },
+        });
       });
+
+      await addPages(4);
+      await openChecklist();
+      // high priority should auto expand
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
+
+      const mediaButton = await fixture.editor.inspector.designPanel
+        .videoAccessibility.posterMenuButton;
+      expect(mediaButton.contains(document.activeElement)).toBeTrue();
+
+      await fixture.snapshot(
+        'design tab opened accessibility and focused on video poster button by checklist panel'
+      );
     });
-
-    await enableHighPriorityMessagesWith5Pages();
-
-    await fixture.events.click(
-      fixture.editor.inspector.checklistPanel.highPriority
-    );
-
-    const videoMissingPosterRow = fixture.screen.getByText(
-      MESSAGES.MEDIA.VIDEO_MISSING_POSTER.MAIN_TEXT
-    );
-
-    expect(videoMissingPosterRow).toBeDefined();
-
-    await fixture.events.focus(videoMissingPosterRow);
-    await fixture.events.keyboard.press('Enter');
-
-    const mediaButton = await fixture.editor.inspector.designPanel
-      .videoAccessibility.posterMenuButton;
-    expect(mediaButton.contains(document.activeElement)).toBeTrue();
-
-    await fixture.snapshot(
-      'design tab opened accessibility and focused on video poster button by checklist panel'
-    );
   });
 });
