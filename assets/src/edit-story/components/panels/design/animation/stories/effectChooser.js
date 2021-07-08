@@ -19,10 +19,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-/**
- * Internal dependencies
- */
-import { SCALE_DIRECTION, DIRECTION } from '../../../../../../animation';
+import { SCALE_DIRECTION, DIRECTION } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies

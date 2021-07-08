@@ -137,13 +137,13 @@ describe('useRightClickMenu', () => {
           },
         },
         {
-          label: 'Duplicate page',
+          label: 'Duplicate Page',
           onClick: expect.any(Function),
           onMouseDown: expect.any(Function),
           separator: 'top',
         },
         {
-          label: 'Delete page',
+          label: 'Delete Page',
           onClick: expect.any(Function),
           onMouseDown: expect.any(Function),
           disabled: expect.any(Boolean),
@@ -157,7 +157,7 @@ describe('useRightClickMenu', () => {
       });
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete page')
+        result.current.menuItems.find((item) => item.label === 'Delete Page')
           .disabled
       ).toBe(true);
 
@@ -166,7 +166,7 @@ describe('useRightClickMenu', () => {
       rerender();
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete page')
+        result.current.menuItems.find((item) => item.label === 'Delete Page')
           .disabled
       ).toBe(false);
     });

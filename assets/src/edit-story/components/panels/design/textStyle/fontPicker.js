@@ -34,12 +34,10 @@ import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getClosestFontWeight from './getClosestFontWeight';
 
-function FontPicker({
-  selectedElements,
-  pushUpdate,
-  fontDropdownRef,
-  highlightStylesOverride,
-}) {
+const FontPicker = forwardRef(function FontPicker(
+  { selectedElements, pushUpdate, highlightStylesOverride },
+  ref
+) {
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -135,10 +133,10 @@ function FontPicker({
     );
   };
 
-  const renderer = ({ option, ...rest }, ref) => {
+  const renderer = ({ option, ...rest }, _ref) => {
     return (
       <Option
-        ref={ref}
+        ref={_ref}
         {...rest}
         fontFamily={
           option.service.includes('google')
@@ -156,7 +154,7 @@ function FontPicker({
 
   return (
     <AdvancedDropDown
-      ref={fontDropdownRef}
+      ref={ref}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
       aria-label={__('Font family', 'web-stories')}
@@ -178,12 +176,11 @@ function FontPicker({
       dropDownLabel={__('Font', 'web-stories')}
     />
   );
-}
+});
 
 FontPicker.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
-  fontDropdownRef: PropTypes.object,
   highlightStylesOverride: PropTypes.array,
 };
 

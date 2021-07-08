@@ -56,7 +56,11 @@ function useUploadWithPreview() {
     ({ id, resource }) => {
       updateElementDimensions({ id, resource });
 
-      if (resource.type === 'video' && !resource.local && !resource.posterId) {
+      if (
+        ['video', 'gif'].includes(resource.type) &&
+        !resource.local &&
+        !resource.posterId
+      ) {
         uploadVideoPoster(resource.id, resource.src);
       }
     },

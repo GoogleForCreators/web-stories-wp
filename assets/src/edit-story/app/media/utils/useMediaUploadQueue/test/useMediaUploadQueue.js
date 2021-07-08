@@ -28,7 +28,6 @@ import useFFmpeg from '../../useFFmpeg';
 jest.mock('../../useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    isFeatureEnabled: true,
     isTranscodingEnabled: true,
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),
@@ -107,7 +106,15 @@ describe('useMediaUploadQueue', () => {
 
     await waitForNextUpdate();
 
+    expect(result.current.state.isUploading).toBeTrue();
+    expect(result.current.state.processed).toHaveLength(1);
+
+    const { id } = result.current.state.processed[0];
+
+    act(() => result.current.actions.removeItem({ id }));
+
     expect(result.current.state.isUploading).toBeFalse();
+    expect(result.current.state.processed).toHaveLength(0);
   });
 
   it('allows removing items from the queue', async () => {

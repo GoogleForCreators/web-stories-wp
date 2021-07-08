@@ -54,9 +54,10 @@ const VideoElementResolution = () => {
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
         elementId,
+        pageId,
       }),
     [setHighlights]
   );
@@ -81,7 +82,7 @@ const VideoElementResolution = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.VIDEO}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}
