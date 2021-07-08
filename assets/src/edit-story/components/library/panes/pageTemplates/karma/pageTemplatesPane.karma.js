@@ -156,6 +156,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
@@ -170,6 +171,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
     it('should allow deleting a saved template', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
@@ -204,6 +206,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
     it('should allow applying a template', async () => {
       // Add an element and verify the template is added now.
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
@@ -232,6 +235,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
     it('should allow manipulating custom templates using keyboard', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');

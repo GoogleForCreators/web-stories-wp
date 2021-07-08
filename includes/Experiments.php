@@ -398,6 +398,17 @@ class Experiments extends Service_Base {
 				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
 			],
+			/**
+			 * Author: @miina
+			 * Issue #7986
+			 * Creation date: 2021-08-08
+			 */
+			[
+				'name'        => 'enableSmartTextColor',
+				'label'       => __( 'Smart text color', 'web-stories' ),
+				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
