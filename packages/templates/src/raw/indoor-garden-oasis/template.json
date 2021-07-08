@@ -497,7 +497,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenArrow"
+            "type": "homeGardenLightYellowArrow"
           },
           "id": "21028a0a-0f9e-41e2-894c-9fa0c5d271d4"
         }
@@ -2323,7 +2323,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenLight01"
+            "type": "homeGardenGreenSun"
           },
           "id": "c7dafcd4-aaa3-47d1-bdc4-fef044506328"
         },
@@ -2365,7 +2365,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenLight02"
+            "type": "homeGardenGreenSunLight"
           },
           "id": "f0e7f4f3-7999-4c9e-883d-7a66668798c6"
         },
@@ -3053,7 +3053,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenLength"
+            "type": "homeGardenLengthComparison"
           },
           "id": "82209229-9d69-49e1-9ecf-740615f522fe"
         },
@@ -3074,7 +3074,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenScissor01"
+            "type": "homeGardenScissor"
           },
           "id": "4489f34e-3f21-420f-b572-09f7da562a27"
         },
@@ -3095,7 +3095,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenScissor02"
+            "type": "homeGardenCurvedScissor"
           },
           "id": "a2ce4245-ec6a-4a92-98d7-ff3428fced51"
         },
@@ -3755,7 +3755,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenWater"
+            "type": "homeGardenWaterDroplet"
           },
           "id": "2ef4fdde-c9b4-475d-b4e6-682df6d9401e"
         },
@@ -3776,7 +3776,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenLightning"
+            "type": "homeGardenGreenLightning"
           },
           "id": "4e258291-7312-43a4-9564-f42814187f4a"
         },
@@ -3797,7 +3797,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenBag"
+            "type": "homeGardenGreenBag"
           },
           "id": "8e4792a4-f44d-42a2-a4f1-21c050a2eb43"
         },
@@ -4151,7 +4151,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "homeGardenArrow"
+            "type": "homeGardenLightYellowArrow"
           },
           "basedOn": "21028a0a-0f9e-41e2-894c-9fa0c5d271d4",
           "id": "ec6aa0ad-a013-445e-ae02-a19d4fde7f41",

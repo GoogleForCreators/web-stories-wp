@@ -19,8 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Leaf Length', 'sticker name', 'web-stories');
-function HomeGardenLength({ style }) {
+const title = _x('Length Comparison', 'sticker name', 'web-stories');
+
+function LengthComparison({ style }) {
   return (
     <svg
       style={style}
@@ -39,12 +40,12 @@ function HomeGardenLength({ style }) {
   );
 }
 
-HomeGardenLength.propTypes = {
+LengthComparison.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 44 / 60,
-  svg: HomeGardenLength,
+  svg: LengthComparison,
   title,
 };

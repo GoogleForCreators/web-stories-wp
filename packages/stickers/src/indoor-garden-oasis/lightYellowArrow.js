@@ -19,8 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Arrow', 'sticker name', 'web-stories');
-function HomeGardenArrow({ style }) {
+const title = _x('Light Yellow Arrow', 'sticker name', 'web-stories');
+
+function YellowArrow({ style }) {
   return (
     <svg
       style={style}
@@ -45,12 +46,12 @@ function HomeGardenArrow({ style }) {
   );
 }
 
-HomeGardenArrow.propTypes = {
+YellowArrow.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 52 / 22,
-  svg: HomeGardenArrow,
+  svg: YellowArrow,
   title,
 };

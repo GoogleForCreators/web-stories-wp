@@ -20,7 +20,8 @@ import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 const title = _x('Scissors', 'sticker name', 'web-stories');
-function HomeGardenScissor01({ style }) {
+
+function Scissor({ style }) {
   return (
     <svg
       style={style}
@@ -45,12 +46,12 @@ function HomeGardenScissor01({ style }) {
   );
 }
 
-HomeGardenScissor01.propTypes = {
+Scissor.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 32 / 50,
-  svg: HomeGardenScissor01,
+  svg: Scissor,
   title,
 };

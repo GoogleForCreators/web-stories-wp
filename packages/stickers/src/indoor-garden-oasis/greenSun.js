@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Light', 'sticker name', 'web-stories');
+const title = _x('Green Sun', 'sticker name', 'web-stories');
 
-function HomeGardenLight01({ style }) {
+function GreenSun({ style }) {
   return (
     <svg
       style={style}
@@ -94,12 +94,12 @@ function HomeGardenLight01({ style }) {
   );
 }
 
-HomeGardenLight01.propTypes = {
+GreenSun.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 54 / 54,
-  svg: HomeGardenLight01,
+  svg: GreenSun,
   title,
 };

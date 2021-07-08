@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Water Droplet', 'sticker name', 'web-stories');
 
-function HomeGardenWater({ style }) {
+function WaterDroplet({ style }) {
   return (
     <svg
       style={style}
@@ -46,12 +46,12 @@ function HomeGardenWater({ style }) {
   );
 }
 
-HomeGardenWater.propTypes = {
+WaterDroplet.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 37 / 50,
-  svg: HomeGardenWater,
+  svg: WaterDroplet,
   title,
 };

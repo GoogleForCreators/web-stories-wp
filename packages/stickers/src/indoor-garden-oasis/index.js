@@ -16,30 +16,30 @@
 /**
  * Internal dependencies
  */
-import { default as homeGardenArrow } from './arrow';
-import { default as homeGardenBag } from './bag';
-import { default as homeGardenBulb } from './bulb';
+import { default as homeGardenLightYellowArrow } from './lightYellowArrow';
 import { default as homeGardenFloral } from './floral';
-import { default as homeGardenLength } from './length';
-import { default as homeGardenLight01 } from './light01';
-import { default as homeGardenLight02 } from './light02';
-import { default as homeGardenLightning } from './lightning';
-import { default as homeGardenLine01 } from './line01';
-import { default as homeGardenScissor01 } from './scissor01';
-import { default as homeGardenScissor02 } from './scissor02';
-import { default as homeGardenWater } from './water';
+import { default as homeGardenGreenCurvedLine } from './greenCurvedLine';
+import { default as homeGardenLengthComparison } from './lengthComparison';
+import { default as homeGardenGreenSun } from './greenSun';
+import { default as homeGardenGreenBulb } from './greenBulb';
+import { default as homeGardenScissor } from './scissor';
+import { default as homeGardenCurvedScissor } from './curvedScissor';
+import { default as homeGardenWaterDroplet } from './waterDroplet';
+import { default as homeGardenGreenLightning } from './greenLightning';
+import { default as homeGardenGreenBag } from './greenBag';
+import { default as homeGardenGreenSunLight } from './greenSunLight';
 
 export {
-  homeGardenArrow,
-  homeGardenBag,
-  homeGardenBulb,
+  homeGardenLightYellowArrow,
   homeGardenFloral,
-  homeGardenLength,
-  homeGardenLight01,
-  homeGardenLight02,
-  homeGardenLightning,
-  homeGardenLine01,
-  homeGardenScissor01,
-  homeGardenScissor02,
-  homeGardenWater,
+  homeGardenGreenCurvedLine,
+  homeGardenLengthComparison,
+  homeGardenGreenSun,
+  homeGardenGreenBulb,
+  homeGardenScissor,
+  homeGardenCurvedScissor,
+  homeGardenWaterDroplet,
+  homeGardenGreenLightning,
+  homeGardenGreenBag,
+  homeGardenGreenSunLight,
 };
