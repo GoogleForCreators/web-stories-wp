@@ -13,36 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
 import visitAdminPage from './visitAdminPage';
-import activatePlugin from './activatePlugin';
-import deactivatePlugin from './deactivatePlugin';
 
-async function deleteWidgets() {
-  await activatePlugin('classic-widgets');
-
-  // Remove all widgets
+/**
+ * Visit block based widget screen, found in WordPress 5.8+ and dismiss welcome message.
+ *
+ * @return {Promise<void>}
+ */
+async function visitBlockWidgetScreen() {
   await visitAdminPage('widgets.php');
-  await page.evaluate(() => {
-    const widgets = document.querySelectorAll(
-      '#widgets-right .widget .widget-action'
-    );
-    for (const widget of widgets) {
-      widget.click();
-    }
 
-    const widgetsDelete = document.querySelectorAll(
-      '#widgets-right .widget .widget-control-remove'
+  // Disable welcome guide if it is enabled.
+  const isWelcomeGuideActive = await page.evaluate(() =>
+    wp.data
+      .select('core/edit-widgets')
+      .__unstableIsFeatureActive('welcomeGuide')
+  );
+  if (isWelcomeGuideActive) {
+    await page.evaluate(() =>
+      wp.data
+        .dispatch('core/edit-widgets')
+        .__unstableToggleFeature('welcomeGuide')
     );
-    for (const widgetDelete of widgetsDelete) {
-      widgetDelete.click();
-    }
-  });
-
-  await deactivatePlugin('classic-widgets');
+  }
 }
-
-export default deleteWidgets;
+export default visitBlockWidgetScreen;
