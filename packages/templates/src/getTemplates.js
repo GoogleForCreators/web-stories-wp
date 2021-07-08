@@ -84,6 +84,7 @@ async function getTemplates(imageBaseUrl) {
     'fitness-apps-ranked',
     'street-style-on-the-go',
     'plant-based-dyes',
+    'indoor-garden-oasis',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
