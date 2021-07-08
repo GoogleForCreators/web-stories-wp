@@ -211,6 +211,12 @@ export default function useMediaPicker({
       });
 
       fileFrame.once('cropped', (attachment) => {
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(attachment?.mime)) {
+          showSnackbar({ message: onSelectErrorMessage });
+
+          return;
+        }
         if (attachment?.id) {
           updateMedia(attachment.id, { media_source: 'editor' });
         }
@@ -223,6 +229,13 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
+
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
+          showSnackbar({ message: onSelectErrorMessage });
+
+          return;
+        }
         onSelect(mediaPickerEl);
       });
 

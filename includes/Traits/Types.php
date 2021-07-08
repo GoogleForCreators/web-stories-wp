@@ -151,7 +151,7 @@ trait Types {
 		 */
 		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
 
-		return array_intersect( $allowed_mime_type, $image_mime_type );
+		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
 	}
 
 	/**
