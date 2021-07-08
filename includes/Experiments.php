@@ -386,6 +386,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'GIF optimization', 'web-stories' ),
 				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
