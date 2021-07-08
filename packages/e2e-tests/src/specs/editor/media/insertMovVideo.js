@@ -39,8 +39,9 @@ describe('Handling .mov files', () => {
     }
   });
 
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should insert .mov', async () => {
+  // Flakey test, see https://github.com/google/web-stories-wp/issues/8232.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should insert .mov', async () => {
     await createNewStory();
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
