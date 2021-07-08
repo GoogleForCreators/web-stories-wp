@@ -139,25 +139,6 @@ class HTML {
 	}
 
 	/**
-	 * Filters the AMP plugin's sanitizers.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
-	 */
-	public function add_amp_content_sanitizers( $sanitizers ) {
-		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => $this->get_poster_images(),
-		];
-
-		return $sanitizers;
-	}
-
-	/**
 	 * Get story meta images.
 	 *
 	 * @since 1.0.0
