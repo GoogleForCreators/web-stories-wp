@@ -285,7 +285,7 @@ class SVG extends Test_Case {
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_xml_svg', $_results->get_error_code() );
-		$this->assertSame( 'Invalid xml in SVG.', $_results->get_error_message() );
+		$this->assertSame( 'Invalid XML in SVG.', $_results->get_error_message() );
 	}
 
 	/**

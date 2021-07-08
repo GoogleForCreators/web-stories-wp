@@ -136,7 +136,7 @@ function PaginatedMediaGallery({
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
       <MediaGalleryMessage>
-        {__('No media found', 'web-stories')}
+        {__('No media found.', 'web-stories')}
       </MediaGalleryMessage>
     ) : (
       <div style={{ marginBottom: 15 }}>

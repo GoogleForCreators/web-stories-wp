@@ -18,14 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useState, useRef, useMemo } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
-import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
 import loadStylesheet from '../../utils/loadStylesheet';
+import { FONT_WEIGHT_NAMES } from '../../constants';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
@@ -58,19 +58,7 @@ function FontProvider({ children }) {
 
   const getFontWeight = useCallback(
     (name) => {
-      const fontWeightNames = {
-        100: __('Thin', 'web-stories'),
-        200: __('Extra-light', 'web-stories'),
-        300: __('Light', 'web-stories'),
-        400: __('Regular', 'web-stories'),
-        500: __('Medium', 'web-stories'),
-        600: __('Semi-bold', 'web-stories'),
-        700: __('Bold', 'web-stories'),
-        800: __('Extra-bold', 'web-stories'),
-        900: __('Black', 'web-stories'),
-      };
-
-      const defaultFontWeights = [{ name: fontWeightNames[400], value: 400 }];
+      const defaultFontWeights = [{ name: FONT_WEIGHT_NAMES[400], value: 400 }];
 
       const currentFont = getFontByName(name);
       let fontWeights = defaultFontWeights;
@@ -78,7 +66,7 @@ function FontProvider({ children }) {
         const { weights } = currentFont;
         if (weights) {
           fontWeights = weights.map((weight) => ({
-            name: fontWeightNames[weight],
+            name: FONT_WEIGHT_NAMES[weight],
             value: weight,
           }));
         }
@@ -91,9 +79,7 @@ function FontProvider({ children }) {
   const getFontFallback = useCallback(
     (name) => {
       const currentFont = getFontByName(name);
-      const fontFallback =
-        currentFont && currentFont.fallbacks ? currentFont.fallbacks : [];
-      return fontFallback;
+      return currentFont?.fallbacks ? currentFont.fallbacks : [];
     },
     [getFontByName]
   );

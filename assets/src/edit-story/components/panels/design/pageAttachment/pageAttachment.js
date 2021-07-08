@@ -157,7 +157,7 @@ function PageAttachmentPanel() {
             onBlur={handleBlur}
             value={_ctaText}
             aria-label={__('Page Attachment CTA text', 'web-stories')}
-            suffix={isDefault ? __('default', 'web-stories') : null}
+            suffix={isDefault ? __('Default', 'web-stories') : null}
           />
         </Row>
       )}

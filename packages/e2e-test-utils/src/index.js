@@ -45,6 +45,7 @@ export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
 export { default as createNewPost } from './createNewPost';
+export { default as triggerHighPriorityChecklistSection } from './triggerHighPriorityChecklistSection';
 export * from './conditions';
 export {
   getEditedPostContent,

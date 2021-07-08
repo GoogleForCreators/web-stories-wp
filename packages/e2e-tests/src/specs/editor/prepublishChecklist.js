@@ -17,17 +17,21 @@
 /**
  * External dependencies
  */
-import { createNewStory, publishStory } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  publishStory,
+  triggerHighPriorityChecklistSection,
+} from '@web-stories-wp/e2e-test-utils';
 import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist', () => {
   it('should show the checklist', async () => {
     await createNewStory();
-    await expect(page).toClick('li', { text: 'Checklist' });
-    await expect(page).not.toMatchElement(
-      '#inspector-tab-prepublish[hidden=""]'
+    await expect(page).toClick('button[aria-label="Checklist"]');
+    await triggerHighPriorityChecklistSection();
+    await expect(page).toMatchElement(
+      '#pre-publish-checklist[data-isexpanded="true"]'
     );
-    await expect(page).toMatchElement('#inspector-tab-prepublish');
   });
 
   it('should show that there is no poster attached to the story', async () => {
@@ -40,11 +44,12 @@ describe('Pre-Publish Checklist', () => {
     await page.reload();
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await expect(page).toClick('li', { text: 'Checklist' });
-    await expect(page).not.toMatchElement(
-      '#inspector-tab-prepublish[hidden=""]'
+    await expect(page).toClick(
+      'button[aria-label="Checklist: 3 unaddressed issues"]'
     );
-    await expect(page).toMatchElement('#inspector-tab-prepublish');
+    await expect(page).toMatchElement(
+      '#pre-publish-checklist[data-isexpanded="true"]'
+    );
     await expect(page).toMatch('Add poster image');
     await percySnapshot(page, 'Prepublish checklist');
   });

@@ -118,7 +118,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
         .then((addedTemplate) => {
           updateList?.(addedTemplate);
           showSnackbar({
-            message: __('Page template saved.', 'web-stories'),
+            message: __('Page Template saved.', 'web-stories'),
             dismissable: true,
           });
         })
