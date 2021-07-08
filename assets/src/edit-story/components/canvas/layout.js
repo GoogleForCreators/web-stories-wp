@@ -288,19 +288,19 @@ function useLayoutParamsCssVars() {
     scrollTop,
   } = useLayout(
     ({
-       state: {
-         pageWidth,
-         pageHeight,
-         pagePadding,
-         viewportWidth,
-         viewportHeight,
-         hasPageNavigation,
-         hasVerticalOverflow,
-         hasHorizontalOverflow,
-         scrollLeft,
-         scrollTop,
-       },
-     }) => ({
+      state: {
+        pageWidth,
+        pageHeight,
+        pagePadding,
+        viewportWidth,
+        viewportHeight,
+        hasPageNavigation,
+        hasVerticalOverflow,
+        hasHorizontalOverflow,
+        scrollLeft,
+        scrollTop,
+      },
+    }) => ({
       pageWidth,
       pageHeight,
       pagePadding,
@@ -354,14 +354,14 @@ const PageArea = forwardRef(function PageArea(
     scrollTop,
   } = useLayout(
     ({
-       state: {
-         hasVerticalOverflow,
-         hasHorizontalOverflow,
-         zoomSetting,
-         scrollLeft,
-         scrollTop,
-       },
-     }) => ({
+      state: {
+        hasVerticalOverflow,
+        hasHorizontalOverflow,
+        zoomSetting,
+        scrollLeft,
+        scrollTop,
+      },
+    }) => ({
       hasVerticalOverflow,
       hasHorizontalOverflow,
       zoomSetting,

@@ -113,6 +113,7 @@ export default ({ onChange }) => {
       fullbleedContainer,
       onChange,
       eyedropperPixelData,
+      zoomSetting,
       setIsEyedropperActive,
       setEyedropperCallback,
       setEyedropperImg,
