@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { sprintf, _n, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 
 /**
@@ -172,27 +172,41 @@ export const BulkVideoOptimization = () => {
 
   const { footer, title } = PRIORITY_COPY.videoNotOptimized;
 
+  const currentlyUploading = useMemo(
+    () =>
+      Object.values(state).filter((value) => value === actionTypes.uploading),
+    [state]
+  );
   const isTranscoding = useMemo(
     () =>
-      Object.values(state).includes(actionTypes.uploading) ||
+      currentlyUploading.length > 0 ||
       unoptimizedVideos.some((video) => video.resource?.isTranscoding),
-    [state, unoptimizedVideos]
+    [currentlyUploading, unoptimizedVideos]
   );
 
   const isRendered = unoptimizedVideos.length > 0;
   useRegisterCheck('VideoOptimization', isRendered);
 
-  // todo copy should count the number of videos
   let optimizeButtonCopy =
     unoptimizedVideos.length === 1
       ? __('Optimize video', 'web-stories')
       : __('Optimize all videos', 'web-stories');
 
   if (isTranscoding) {
-    optimizeButtonCopy =
-      unoptimizedVideos.length === 1
-        ? __('Optimizing video', 'web-stories')
-        : __('Optimizing videos', 'web-stories');
+    const numTranscoding =
+      currentlyUploading.length +
+      unoptimizedVideos.filter((video) => video.resource?.isTranscoding).length;
+    optimizeButtonCopy = sprintf(
+      /* translators: 1: number of videos currently transcoding. 2: total number of videos in list. */
+      _n(
+        'Optimizing %1$d of %2$d',
+        'Optimizing %1$d of %2$d',
+        numTranscoding,
+        'web-stories'
+      ),
+      numTranscoding,
+      unoptimizedVideos.length
+    );
   }
 
   return (
@@ -220,7 +234,7 @@ export const BulkVideoOptimization = () => {
         thumbnailCount={unoptimizedVideos.length}
         thumbnail={unoptimizedVideos.map((element) => (
           <Thumbnail
-            key={element.id}
+            key={element.resource.id}
             onClick={handleClickThumbnail(element)}
             isLoading={element.resource.isTranscoding}
             type={THUMBNAIL_TYPES.VIDEO}

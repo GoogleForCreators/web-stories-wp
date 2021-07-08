@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { sprintf, _n } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
@@ -33,37 +32,29 @@ import {
   IconContainer,
   PanelText,
   PanelWrapper,
+  ScrollableContent,
   TabButton,
   TabPanel,
 } from './styles';
-
-const Scrollable = styled.div`
-  max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
-  overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'auto')};
-`;
 
 const TablistPanel = ({
   badgeCount = 0,
   children,
   className,
+  id,
   isExpanded,
   onClick,
   maxHeight,
   status = PANEL_STATES.NORMAL,
   title,
 }) => {
-  const panelId = useMemo(uuidv4, []);
+  const backupId = useMemo(uuidv4, []);
+  const panelId = id || backupId;
 
   return (
     <PanelWrapper className={className} isExpanded={isExpanded}>
       <TabButton
         aria-controls={panelId}
-        aria-label={sprintf(
-          /* translators: %d: number of issues, %s: title */
-          _n('%1$d %2$s issue', '%1$d %2$s issues', badgeCount, 'web-stories'),
-          badgeCount,
-          title
-        )}
         aria-selected={isExpanded}
         onClick={onClick}
         role="tab"
@@ -73,7 +64,20 @@ const TablistPanel = ({
           <IconContainer>
             <Icons.ChevronDownSmall />
           </IconContainer>
-          <PanelText id={`${title}-${panelId}`} aria-hidden>
+          <PanelText
+            id={`${title}-${panelId}`}
+            aria-label={sprintf(
+              /* translators: 1: number of issues. 2: type of issue, for example "High Priority". */
+              _n(
+                '%1$d %2$s issue',
+                '%1$d %2$s issues',
+                badgeCount,
+                'web-stories'
+              ),
+              badgeCount,
+              title
+            )}
+          >
             {title}
           </PanelText>
         </ButtonText>
@@ -81,11 +85,15 @@ const TablistPanel = ({
           <PanelText aria-hidden>{badgeCount}</PanelText>
         </Badge>
       </TabButton>
-      <Scrollable maxHeight={maxHeight}>
-        <TabPanel aria-labelledby={`${title}-${panelId}`} role="tabpanel">
+      <ScrollableContent maxHeight={maxHeight}>
+        <TabPanel
+          id={panelId}
+          aria-labelledby={`${title}-${panelId}`}
+          role="tabpanel"
+        >
           {children}
         </TabPanel>
-      </Scrollable>
+      </ScrollableContent>
     </PanelWrapper>
   );
 };
@@ -93,6 +101,7 @@ TablistPanel.propTypes = {
   badgeCount: PropTypes.number,
   children: PropTypes.node,
   className: PropTypes.string,
+  id: PropTypes.string,
   isExpanded: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   maxHeight: PropTypes.string,

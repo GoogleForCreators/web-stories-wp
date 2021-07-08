@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import { useReducer, useEffect, useState, useMemo, useRef } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { clamp } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../animation';
 import { useCurrentUser } from '../currentUser';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import {

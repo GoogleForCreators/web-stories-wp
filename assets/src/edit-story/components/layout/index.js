@@ -39,7 +39,6 @@ import {
 } from '../../constants';
 import withOverlay from '../overlay/withOverlay';
 import { CanvasProvider } from '../../app/canvas';
-import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 import { ChecklistCheckpointProvider } from '../checklist';
@@ -89,23 +88,21 @@ function Layout() {
   return (
     <>
       <LayoutProvider>
-        <PrepublishChecklistProvider>
-          <ChecklistCheckpointProvider>
-            <HighlightsProvider>
-              <Editor zIndex={3}>
-                <CanvasProvider>
-                  <Area area="lib">
-                    <Library />
-                  </Area>
-                  <Workspace />
-                </CanvasProvider>
-                <MetaBoxesArea>
-                  <MetaBoxes />
-                </MetaBoxesArea>
-              </Editor>
-            </HighlightsProvider>
-          </ChecklistCheckpointProvider>
-        </PrepublishChecklistProvider>
+        <ChecklistCheckpointProvider>
+          <HighlightsProvider>
+            <Editor zIndex={3}>
+              <CanvasProvider>
+                <Area area="lib">
+                  <Library />
+                </Area>
+                <Workspace />
+              </CanvasProvider>
+              <MetaBoxesArea>
+                <MetaBoxes />
+              </MetaBoxesArea>
+            </Editor>
+          </HighlightsProvider>
+        </ChecklistCheckpointProvider>
       </LayoutProvider>
       <Snackbar.Container {...snackbarState} />
     </>

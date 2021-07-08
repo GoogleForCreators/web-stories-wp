@@ -235,8 +235,8 @@ class SVG extends Service_Base {
 		}
 
 		return [
-			'width'    => $size['width'],
-			'height'   => $size['height'],
+			'width'    => (int) $size['width'],
+			'height'   => (int) $size['height'],
 			'file'     => _wp_relative_upload_path( $file ),
 			'filesize' => (int) filesize( $file ),
 			'sizes'    => [],
@@ -293,7 +293,7 @@ class SVG extends Service_Base {
 		$xml = $this->get_xml( $svg );
 
 		if ( false === $xml ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$width  = (int) $xml->getAttribute( 'width' );
@@ -315,7 +315,7 @@ class SVG extends Service_Base {
 			return new WP_Error( 'invalid_svg_size', __( 'Unable to generate SVG image size.', 'web-stories' ) );
 		}
 
-		return compact( 'width', 'height' );
+		return array_map( 'absint', compact( 'width', 'height' ) );
 	}
 
 	/**
@@ -333,7 +333,7 @@ class SVG extends Service_Base {
 		$clean     = $sanitizer->sanitize( $dirty );
 
 		if ( empty( $clean ) ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$errors = $sanitizer->getXmlIssues();

@@ -24,6 +24,7 @@ import {
 } from '@testing-library/react';
 import Modal from 'react-modal';
 import MockDate from 'mockdate';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -34,8 +35,8 @@ import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
 import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
-import PrepublishContext from '../../inspector/prepublish/context';
 import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
+import { CheckpointContext } from '../../checklist';
 
 function setupButtons({
   story: extraStoryProps,
@@ -43,12 +44,12 @@ function setupButtons({
   media: extraMediaProps,
   config: extraConfigProps,
   history: extraHistoryProps,
-  prepublish: extraPrepublishChecklistProps,
+  checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
   const focusChecklistTab = jest.fn();
-  const resetReviewDialog = jest.fn();
+  const onReviewDialogRequest = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -80,26 +81,30 @@ function setupButtons({
   };
 
   const prepublishChecklistContextValue = {
-    // value: {
-    shouldReviewDialogBeSeen: false,
-    focusChecklistTab,
-    resetReviewDialog,
-    ...extraPrepublishChecklistProps,
-    // },
+    state: {
+      shouldReviewDialogBeSeen: false,
+      ...extraChecklistProps,
+    },
+    actions: {
+      onReviewDialogRequest,
+    },
   };
-
   renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <StoryTriggersProvider story={storyContextValue}>
-            <PrepublishContext.Provider value={prepublishChecklistContextValue}>
-              <MediaContext.Provider value={mediaContextValue}>
-                <Buttons />
-              </MediaContext.Provider>
-            </PrepublishContext.Provider>
-          </StoryTriggersProvider>
-        </StoryContext.Provider>
+        <FlagsProvider features={{ enableChecklistCompanion: true }}>
+          <StoryContext.Provider value={storyContextValue}>
+            <StoryTriggersProvider story={storyContextValue}>
+              <CheckpointContext.Provider
+                value={prepublishChecklistContextValue}
+              >
+                <MediaContext.Provider value={mediaContextValue}>
+                  <Buttons />
+                </MediaContext.Provider>
+              </CheckpointContext.Provider>
+            </StoryTriggersProvider>
+          </StoryContext.Provider>
+        </FlagsProvider>
       </ConfigContext.Provider>
     </HistoryContext.Provider>
   );
@@ -264,7 +269,7 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
-      prepublish: {
+      checklist: {
         shouldReviewDialogBeSeen: true,
       },
     });
@@ -291,7 +296,7 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
-      prepublish: {
+      checklist: {
         shouldReviewDialogBeSeen: true,
       },
     });
