@@ -37,13 +37,13 @@ function VideoOutput({ element, box }) {
 
   const sourceProps = {
     type: resource.mimeType,
-    src: !isBlobURL(resource.src) ? resource.src : null,
+    src: !isBlobURL(resource.src) ? resource.src : '',
   };
 
   const videoProps = {
     autoPlay: 'autoplay',
-    poster: !isBlobURL(poster) ? poster : null,
-    artwork: !isBlobURL(poster) ? poster : null,
+    poster: !isBlobURL(poster) ? poster : '',
+    artwork: !isBlobURL(poster) ? poster : '',
     title: alt,
     alt,
     layout: 'fill',

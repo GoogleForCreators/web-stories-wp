@@ -37,7 +37,7 @@ function ImageOutput({ element, box }) {
 
   const props = {
     layout: 'fill',
-    src: !isBlobURL(resource.src) ? resource.src : null,
+    src: !isBlobURL(resource.src) ? resource.src : '',
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };
 

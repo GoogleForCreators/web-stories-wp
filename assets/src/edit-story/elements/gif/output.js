@@ -28,7 +28,7 @@ import MediaOutput from '../media/output';
 function GifOutput({ element, box }) {
   const { resource } = element;
 
-  const src = !isBlobURL(resource.output.src) ? resource.output.src : null;
+  const src = !isBlobURL(resource.output.src) ? resource.output.src : '';
   const poster = !isBlobURL(resource.output.poster)
     ? resource.poster
     : '';
