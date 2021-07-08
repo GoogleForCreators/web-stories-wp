@@ -170,7 +170,7 @@ describe('Media3pPane', () => {
   it('should render <Media3pPane /> with no media', () => {
     renderWithTheme(<Media3pPane isActive />);
 
-    expect(screen.queryByText('No media found')).not.toBeInTheDocument();
+    expect(screen.queryByText('No media found.')).not.toBeInTheDocument();
     expect(getComputedStyle(screen.queryByText('Trending')).display).toBe(
       'none'
     );
@@ -181,7 +181,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoading = false;
     renderWithTheme(<Media3pPane isActive />);
 
-    expect(screen.queryByText('No media found')).toBeInTheDocument();
+    expect(screen.queryByText('No media found.')).toBeInTheDocument();
     expect(getComputedStyle(screen.queryByText('Trending')).display).toBe(
       'none'
     );

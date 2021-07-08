@@ -32,12 +32,11 @@ import {
 /**
  * Internal dependencies
  */
-import { useCheckpoint } from '../../checklist/checkpointContext';
-import { PPC_CHECKPOINT_STATE } from '../../checklist/constants';
 import {
+  useCheckpoint,
+  PPC_CHECKPOINT_STATE,
   ChecklistIcon,
-  usePrepublishChecklist,
-} from '../../inspector/prepublish';
+} from '../../checklist';
 
 const Button = styled(DefaultButton)`
   padding: 4px 6px;
@@ -51,26 +50,19 @@ const Button = styled(DefaultButton)`
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
   const isEnabledChecklistCompanion = useFeature('enableChecklistCompanion');
 
-  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
   const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
     checkpoint,
   }));
-
-  // TODO #7978 - Remove Old Checklist
-  const checkpointForIcon = isEnabledChecklistCompanion
-    ? checkpoint
-    : currentCheckpoint;
 
   const button = (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
-      onPointerEnter={refreshChecklist}
       {...buttonProps}
     >
       {text}
-      <ChecklistIcon checkpoint={checkpointForIcon} />
+      {isEnabledChecklistCompanion && <ChecklistIcon checkpoint={checkpoint} />}
     </Button>
   );
 
@@ -86,10 +78,12 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
     [PPC_CHECKPOINT_STATE.UNAVAILABLE]: null,
   };
 
-  return (
-    <Tooltip title={TOOLTIP_TEXT[currentCheckpoint]} hasTail>
+  return isEnabledChecklistCompanion ? (
+    <Tooltip title={TOOLTIP_TEXT[checkpoint]} hasTail>
       {button}
     </Tooltip>
+  ) : (
+    button
   );
 }
 

@@ -18,6 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -46,6 +48,9 @@ export default function WithMask({
   previewMode = false,
   ...rest
 }) {
+  // This component is used twice - random id appended to make sure
+  // id is unique for the Mask.
+  const randomId = useMemo(uuidv4, []);
   const mask = getElementMask(element);
   const { flip, isBackground } = element;
 
@@ -78,7 +83,7 @@ export default function WithMask({
 
   const maskId = `mask-${mask.type}-${element.id}-display${
     previewMode ? '-preview' : ''
-  }`;
+  }-${randomId}`;
 
   return (
     <div

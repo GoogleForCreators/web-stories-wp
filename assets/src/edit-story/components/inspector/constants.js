@@ -15,4 +15,3 @@
  */
 export const DESIGN = 'design';
 export const DOCUMENT = 'document';
-export const PREPUBLISH = 'prepublish';

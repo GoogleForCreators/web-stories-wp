@@ -22,8 +22,8 @@ export const RIGHT_CLICK_MENU_LABELS = {
   COPY: __('Copy', 'web-stories'),
   PASTE: __('Paste', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
-  DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
-  DELETE_PAGE: __('Delete page', 'web-stories'),
+  DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
+  DELETE_PAGE: __('Delete Page', 'web-stories'),
 };
 
 export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {

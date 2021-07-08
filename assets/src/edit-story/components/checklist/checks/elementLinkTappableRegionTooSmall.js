@@ -60,9 +60,10 @@ const ElementLinkTappableRegionTooSmall = () => {
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
         elementId,
+        pageId,
       }),
     [setHighlights]
   );
@@ -87,7 +88,7 @@ const ElementLinkTappableRegionTooSmall = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.TEXT}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending link', 'web-stories')}

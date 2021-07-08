@@ -147,7 +147,7 @@ class Media extends Service_Base {
 			[
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
-				'description'       => __( 'Attachment id of optimized video id.', 'web-stories' ),
+				'description'       => __( 'ID of optimized video.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
@@ -207,7 +207,7 @@ class Media extends Service_Base {
 			[
 				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
 			],
 		];
@@ -329,6 +329,8 @@ class Media extends Service_Base {
 						'poster-generation',
 						'video-optimization',
 						'source-video',
+						'source-image',
+						'gif-conversion',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],

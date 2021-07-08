@@ -173,7 +173,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChangeIcon = useCallback(
     (image) => {
-      handleChange({ icon: image?.sizes?.medium?.url || image?.url }, true);
+      handleChange({ icon: image?.sizes?.full?.url || image?.url }, true);
     },
     [handleChange]
   );
@@ -280,6 +280,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <StyledMedia
               value={link.icon || ''}
+              cropParams={{
+                width: 32,
+                height: 32,
+              }}
               onChange={handleChangeIcon}
               onChangeErrorText={iconErrorMessage}
               title={__('Select as link icon', 'web-stories')}

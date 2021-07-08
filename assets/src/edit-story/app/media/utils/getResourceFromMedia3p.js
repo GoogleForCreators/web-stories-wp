@@ -307,22 +307,24 @@ function getVideoResourceFromMedia3p(m) {
 function getGifResourceFromMedia3p(m) {
   const { imageUrls, videoUrls, previewUrl } = getGifUrls(m);
   return createResource({
+    id: m.name,
+    posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
     src: imageUrls.full.source_url,
     width: imageUrls.full.width,
     height: imageUrls.full.height,
+    poster: previewUrl,
     title: m.description,
     alt: m.name,
     local: false,
     isPlaceholder: false,
+    isOptimized: true,
     sizes: imageUrls,
     output: {
       mimeType: videoUrls.mp4.full.mime_type,
-      sizes: videoUrls,
       src: videoUrls.mp4.full.source_url,
-      poster: previewUrl,
     },
     attribution: getAttributionFromMedia3p(m),
   });

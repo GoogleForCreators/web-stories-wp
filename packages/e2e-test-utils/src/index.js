@@ -48,6 +48,7 @@ export { default as createNewPost } from './createNewPost';
 export { default as minWPVersionRequired } from './minWPVersionRequired';
 export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
 export { default as insertWidget } from './insertWidget';
+export { default as triggerHighPriorityChecklistSection } from './triggerHighPriorityChecklistSection';
 export {
   getEditedPostContent,
   setPostContent,
