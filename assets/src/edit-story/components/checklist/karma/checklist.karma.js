@@ -91,6 +91,18 @@ describe('Checklist integration', () => {
     await fixture.events.sleep(500);
   };
 
+  describe('initial state', () => {
+    it('should begin with empty message on a new story', async () => {
+      await openChecklist();
+
+      const emptyMessage = fixture.screen.getByText(
+        'You are all set for now. Return to this checklist as you build your Web Story for tips on how to improve it.'
+      );
+
+      expect(emptyMessage).toBeTruthy();
+    });
+  });
+
   describe('open and close', () => {
     it('should toggle the checklist', async () => {
       const { toggleButton } = fixture.editor.checklist;
@@ -187,10 +199,7 @@ describe('Checklist integration', () => {
       await openChecklistWithKeyboard();
 
       // tab to priority section
-      while (fixture.editor.checklist.priorityTab !== document.activeElement) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.keyboard.press('tab');
-      }
+      await fixture.events.keyboard.press('tab');
 
       await fixture.events.keyboard.press('Enter');
       expect(fixture.editor.checklist.priorityPanel).toBeDefined();
@@ -198,10 +207,7 @@ describe('Checklist integration', () => {
       expect(fixture.editor.checklist.accessibilityPanel).toBeNull();
 
       // tab to design section
-      while (fixture.editor.checklist.designTab !== document.activeElement) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.keyboard.press('tab');
-      }
+      await fixture.events.keyboard.press('tab');
 
       await fixture.events.keyboard.press('Enter');
       expect(fixture.editor.checklist.priorityPanel).toBeNull();
@@ -211,11 +217,14 @@ describe('Checklist integration', () => {
       // add accessibility section
       await addAccessibilityIssue();
       // tab to accessibility section
+      let tabCount = 1;
       while (
+        tabCount < 4 &&
         fixture.editor.checklist.accessibilityTab !== document.activeElement
       ) {
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('tab');
+        tabCount++;
       }
 
       await fixture.events.keyboard.press('Enter');
@@ -316,5 +325,24 @@ describe('Checklist integration', () => {
 
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
+  });
+
+  it('should open the checklist after following "review checklist" button in dialog on publishing story', async () => {
+    fixture.events.click(fixture.editor.titleBar.publish);
+    // Ensure the debounced callback has taken effect.
+    await fixture.events.sleep(800);
+
+    const reviewButton = await fixture.screen.getByRole('button', {
+      name: /^Review Checklist$/,
+    });
+    await fixture.events.click(reviewButton);
+    // This is the initial load of the checklist tab so we need to wait for it to load
+    // before we can see tabs.
+    await fixture.events.sleep(300);
+
+    expect(
+      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+    ).toBe('true');
+    expect(fixture.editor.checklist.priorityPanel).toBeDefined();
   });
 });

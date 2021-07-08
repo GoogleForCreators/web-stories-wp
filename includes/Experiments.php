@@ -240,6 +240,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Checklist companion', 'web-stories' ),
 				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @samwhale

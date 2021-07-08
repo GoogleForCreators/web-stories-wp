@@ -66,9 +66,10 @@ const PageTooMuchText = () => {
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (pageId) =>
+    ({ pageId, elements }) =>
       setHighlights({
         pageId,
+        elements,
       }),
     [setHighlights]
   );
@@ -99,7 +100,14 @@ const PageTooMuchText = () => {
             {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
-                onClick={() => handleClick(page.id)}
+                onClick={() =>
+                  handleClick({
+                    pageId: page.id,
+                    elements: page.elements.filter(
+                      ({ type }) => type === 'text'
+                    ),
+                  })
+                }
                 type={THUMBNAIL_TYPES.PAGE}
                 displayBackground={
                   <PagePreview

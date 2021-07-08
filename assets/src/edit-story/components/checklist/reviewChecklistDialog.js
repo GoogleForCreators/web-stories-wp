@@ -23,7 +23,7 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import Dialog from '../../../dialog';
+import Dialog from '../dialog';
 
 const TEXT = {
   TITLE: __('Review checklist before publishing.', 'web-stories'),
