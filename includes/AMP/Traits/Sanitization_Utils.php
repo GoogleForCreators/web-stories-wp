@@ -126,16 +126,15 @@ trait Sanitization_Utils {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 
-		// Without a publisher logo, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'publisher-logo-src' ) ) {
-			$document->html->removeAttribute( 'amp' );
+			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 	}
 
 	/**
-	 * Replaces the placeholder of publisher logo in the content.
+	 * Replaces the placeholder of publisher in the content.
+	 *
+	 * Ensures the `publisher` attribute exists if missing.
 	 *
 	 * @since 1.7.0
 	 *
@@ -155,15 +154,8 @@ trait Sanitization_Utils {
 			return;
 		}
 
-		if ( $publisher ) {
+		if ( $publisher || ! $story_element->hasAttribute( 'publisher' ) ) {
 			$story_element->setAttribute( 'publisher', $publisher );
-		}
-
-		// Without a publisher, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
-		if ( ! $story_element->getAttribute( 'publisher' ) ) {
-			$document->html->removeAttribute( 'amp' );
 		}
 	}
 
@@ -192,11 +184,8 @@ trait Sanitization_Utils {
 			$story_element->setAttribute( $attr, esc_url_raw( $url ) );
 		}
 
-		// Without a poster, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
-			$document->html->removeAttribute( 'amp' );
+			$story_element->setAttribute( 'poster-portrait-src', '' );
 		}
 	}
 

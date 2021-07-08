@@ -17,4 +17,5 @@
 export {
   ChecklistCheckpointProvider,
   useCheckpoint,
+  CheckpointContext,
 } from './checkpointContext';

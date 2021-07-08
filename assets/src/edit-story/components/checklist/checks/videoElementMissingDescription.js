@@ -48,8 +48,9 @@ const VideoElementMissingDescription = () => {
   const elements = filterStoryElements(story, videoElementMissingDescription);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
+        pageId,
         elementId,
         highlight: states.ASSISTIVE_TEXT,
       }),
@@ -75,7 +76,7 @@ const VideoElementMissingDescription = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.VIDEO}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending video', 'web-stories')}

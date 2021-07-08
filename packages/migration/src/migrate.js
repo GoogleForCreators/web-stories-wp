@@ -46,6 +46,7 @@ import singleAnimationTarget from './migrations/v0025_singleAnimationTarget';
 import backgroundOverlayToOverlay from './migrations/v0026_backgroundOverlayToOverlay';
 import videoDuration from './migrations/v0027_videoDuration';
 import mark3pVideoAsOptimized from './migrations/v0028_mark3pVideoAsOptimized';
+import unifyGifResources from './migrations/v0029_unifyGifResources';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -76,6 +77,7 @@ const MIGRATIONS = {
   26: [backgroundOverlayToOverlay],
   27: [videoDuration],
   28: [mark3pVideoAsOptimized],
+  29: [unifyGifResources],
 };
 
 export const DATA_VERSION = Math.max.apply(

@@ -78,7 +78,7 @@ describe('Gif Output', () => {
 
   it('should include poster image if available', async () => {
     const newProps = { ...baseProps };
-    newProps.element.resource.output.poster =
+    newProps.element.resource.poster =
       'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png';
     const output = <GifOutput {...newProps} />;
     const outputStr = renderToStaticMarkup(output);
@@ -116,7 +116,7 @@ describe('Gif Output', () => {
 
     it('should produce valid AMP output with poster', async () => {
       const newProps = { ...baseProps };
-      newProps.element.resource.output.poster =
+      newProps.element.resource.poster =
         'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png';
       await expect(<GifOutput {...newProps} />).toBeValidAMPStoryElement();
     });

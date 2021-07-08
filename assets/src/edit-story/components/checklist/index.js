@@ -18,6 +18,7 @@ export { ChecklistProvider, useChecklist } from './checklistContext';
 export {
   ChecklistCheckpointProvider,
   useCheckpoint,
+  CheckpointContext,
 } from './checkpointContext';
 export {
   ChecklistCountProvider,
@@ -28,3 +29,6 @@ export {
 } from './countContext';
 
 export { Checklist } from './checklist';
+export { default as ReviewChecklistDialog } from './reviewChecklistDialog';
+export { default as ChecklistIcon } from './checklistIcon';
+export { PPC_CHECKPOINT_STATE } from './constants';

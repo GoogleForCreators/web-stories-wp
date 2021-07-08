@@ -32,7 +32,7 @@ import {
   Tooltip,
 } from '@web-stories-wp/design-system';
 import { useLocalMedia, useStory } from '../../../app';
-import { VIDEO_SIZE_THRESHOLD } from '../../../app/media/utils/useFFmpeg';
+import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';
 import { PRIORITY_COPY } from '../constants';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import {
@@ -42,8 +42,8 @@ import {
 } from '../../checklistCard';
 import { filterStoryElements } from '../utils/filterStoryElements';
 import { useHighlights } from '../../../app/highlights';
-import { useRegisterCheck } from '../countContext';
 import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
+import { useRegisterCheck } from '../countContext';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
@@ -65,7 +65,9 @@ export function videoElementsNotOptimized(element = {}) {
   const videoArea =
     (element.resource?.height ?? 0) * (element.resource?.width ?? 0);
   const isLargeVideo =
-    videoArea >= VIDEO_SIZE_THRESHOLD.WIDTH * VIDEO_SIZE_THRESHOLD.HEIGHT;
+    videoArea >=
+    MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH *
+      MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT;
   return isLargeVideo;
 }
 

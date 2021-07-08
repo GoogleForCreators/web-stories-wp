@@ -229,6 +229,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Bulk video optimization', 'web-stories' ),
 				'description' => __( 'Enable option to optimize multiple videos at once in the new pre-publish checklist', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -240,6 +241,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Checklist companion', 'web-stories' ),
 				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @samwhale
@@ -373,6 +375,17 @@ class Experiments extends Service_Base {
 				'label'       => __( 'SVG upload', 'web-stories' ),
 				'description' => __( 'Enable SVG upload', 'web-stories' ),
 				'group'       => 'general',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #7232
+			 * Creation date: 2021-07-14
+			 */
+			[
+				'name'        => 'enableGifOptimization',
+				'label'       => __( 'GIF optimization', 'web-stories' ),
+				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @spacedmonkey

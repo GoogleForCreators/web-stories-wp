@@ -27,11 +27,7 @@ import { useFeature } from 'flagged';
  */
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useCheckpoint } from '../../checklist/checkpointContext';
-import {
-  usePrepublishChecklist,
-  ReviewChecklistDialog,
-} from '../../inspector/prepublish';
+import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 const TRANSITION_DURATION = 300;
@@ -52,12 +48,6 @@ function Publish() {
     isUploading: state.state.isUploading,
   }));
 
-  // TODO #7978 - Remove Old Checklist
-  const {
-    shouldReviewDialogBeSeen: DEPRECATED_shouldReviewDialogBeSeen,
-    focusChecklistTab,
-  } = usePrepublishChecklist();
-
   const { shouldReviewDialogBeSeen, onReviewDialogRequest } = useCheckpoint(
     ({
       actions: { onReviewDialogRequest },
@@ -71,11 +61,6 @@ function Publish() {
   const openChecklist = useCallback(() => {
     onReviewDialogRequest();
   }, [onReviewDialogRequest]);
-
-  // TODO #7978 - Remove Old Checklist
-  const TEMP_shouldReviewDialogBeSeen = isEnabledChecklistCompanion
-    ? shouldReviewDialogBeSeen
-    : DEPRECATED_shouldReviewDialogBeSeen;
 
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
@@ -105,22 +90,13 @@ function Publish() {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
-    if (TEMP_shouldReviewDialogBeSeen) {
+    if (isEnabledChecklistCompanion && shouldReviewDialogBeSeen) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [TEMP_shouldReviewDialogBeSeen, publish]);
-
-  // TODO #7978 - Remove Old Checklist
-  const DEPRECATED_handleReviewChecklist = useCallback(() => {
-    setShowDialog(false);
-    // Focus Checklist Tab
-    // Disable reason: If component unmounts, nothing bad can happen
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    setTimeout(() => focusChecklistTab(), TRANSITION_DURATION);
-  }, [focusChecklistTab]);
+  }, [isEnabledChecklistCompanion, shouldReviewDialogBeSeen, publish]);
 
   const handleReviewChecklist = useCallback(() => {
     setShowDialog(false);
@@ -146,12 +122,7 @@ function Publish() {
       <ReviewChecklistDialog
         isOpen={showDialog}
         onIgnore={publish}
-        // TODO #7978 - Remove Old Checklist
-        onReview={
-          isEnabledChecklistCompanion
-            ? handleReviewChecklist
-            : DEPRECATED_handleReviewChecklist
-        }
+        onReview={handleReviewChecklist}
         onClose={handleClose}
       />
     </>

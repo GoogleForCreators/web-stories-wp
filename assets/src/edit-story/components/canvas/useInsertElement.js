@@ -59,7 +59,7 @@ function useInsertElement() {
       const { type, src, id, posterId, local } = resource;
 
       // Generate video poster if one not set.
-      if (type === 'video' && id && !posterId && !local) {
+      if (['video', 'gif'].includes(type) && id && !posterId && !local) {
         uploadVideoPoster(id, src);
       }
     },

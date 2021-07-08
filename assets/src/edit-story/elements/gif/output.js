@@ -28,11 +28,10 @@ import MediaOutput from '../media/output';
 function GifOutput({ element, box }) {
   const { resource } = element;
 
-  // TODO: Update after https://github.com/google/web-stories-wp/pull/7528
   const src = !isBlobURL(resource.output.src) ? resource.output.src : null;
   const poster = !isBlobURL(resource.output.poster)
-    ? resource.output.poster
-    : null;
+    ? resource.poster
+    : '';
 
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
