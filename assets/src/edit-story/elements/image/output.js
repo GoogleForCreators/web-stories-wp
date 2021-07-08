@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
+import { calculateSrcSet, isBlobURL } from '@web-stories-wp/media';
 import { PAGE_WIDTH } from '@web-stories-wp/units';
-import { calculateSrcSet } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -37,7 +37,7 @@ function ImageOutput({ element, box }) {
 
   const props = {
     layout: 'fill',
-    src: resource.src,
+    src: !isBlobURL(resource.src) ? resource.src : '',
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };
 

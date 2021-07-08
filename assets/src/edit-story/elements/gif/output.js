@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { isBlobURL } from '@web-stories-wp/media';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -23,6 +28,9 @@ import MediaOutput from '../media/output';
 function GifOutput({ element, box }) {
   const { resource } = element;
 
+  const src = !isBlobURL(resource.output.src) ? resource.output.src : '';
+  const poster = !isBlobURL(resource.poster) ? resource.poster : '';
+
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
       <amp-video
@@ -30,12 +38,12 @@ function GifOutput({ element, box }) {
         autoplay="autoplay"
         loop="loop"
         noaudio="noaudio"
-        poster={resource.poster || ''}
+        poster={poster || ''}
         layout="fill"
         title={element.title ?? resource.title}
         alt={element.alt ?? resource.alt}
       >
-        <source type={resource.output.mimeType} src={resource.output.src} />
+        <source type={resource.output.mimeType} src={src} />
       </amp-video>
     </MediaOutput>
   );

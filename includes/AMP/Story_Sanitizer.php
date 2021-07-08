@@ -53,5 +53,6 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 		$this->add_publisher( $this->dom, $this->args['publisher'] );
 		$this->add_poster_images( $this->dom, $this->args['poster_images'] );
 		$this->deduplicate_inline_styles( $this->dom );
+		$this->remove_blob_urls( $this->dom );
 	}
 }
