@@ -21,7 +21,7 @@
  * @param {string} file.name File name.
  * @return {string} File name without extension.
  */
-const getFileName = ({ name }) =>
+const getFileName = ({ name = '' }) =>
   name.includes('.') ? name.split('.').slice(0, -1).join('.') : name;
 
 export default getFileName;

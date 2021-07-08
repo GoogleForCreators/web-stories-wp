@@ -24,7 +24,16 @@ describe('getFileName', () => {
     expect(getFileName({ name: 'my-video.mp4' })).toStrictEqual('my-video');
   });
 
+  it('should remove the file extension with period in name', () => {
+    expect(getFileName({ name: 'my.video.mp4' })).toStrictEqual('my.video');
+  });
+
   it('should support files without extension', () => {
     expect(getFileName({ name: 'my-video' })).toStrictEqual('my-video');
+  });
+
+  it('should empty name', () => {
+    expect(getFileName({ name: '' })).toStrictEqual('');
+    expect(getFileName({})).toStrictEqual('');
   });
 });
