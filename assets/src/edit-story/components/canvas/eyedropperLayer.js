@@ -78,11 +78,12 @@ const Circle = styled.div`
   height: ${MAGNIFIER_SIZE}px;
 `;
 
+// Initially hide the magnifier.
 const Magnifier = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateY(-2000px); // Initially hide the magnifier.
+  transform: translateY(-2000px);
   pointer-events: none;
 `;
 
