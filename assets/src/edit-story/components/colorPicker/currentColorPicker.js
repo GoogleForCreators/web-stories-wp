@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -136,6 +137,8 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
+  const enableEyedropper = useFeature('enableEyedropper');
+
   const { initEyedropper } = useEyedropper({
     onChange,
   });
@@ -189,16 +192,18 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       </Body>
       <Footer>
         <HexValue>
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            aria-label={__('Pick a color from canvas', 'web-stories')}
-            onClick={initEyedropper()}
-            onPointerEnter={initEyedropper(false)}
-          >
-            <Icons.Pipette />
-          </Button>
+          {enableEyedropper && (
+            <Button
+              variant={BUTTON_VARIANTS.SQUARE}
+              type={BUTTON_TYPES.QUATERNARY}
+              size={BUTTON_SIZES.SMALL}
+              aria-label={__('Pick a color from canvas', 'web-stories')}
+              onClick={initEyedropper()}
+              onPointerEnter={initEyedropper(false)}
+            >
+              <Icons.Pipette />
+            </Button>
+          )}
           <Space />
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}

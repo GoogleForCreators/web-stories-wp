@@ -374,6 +374,17 @@ class Experiments extends Service_Base {
 				'description' => __( 'Enable post locking', 'web-stories' ),
 				'group'       => 'general',
 			],
+			/**
+			 * Author: @merapi
+			 * Issue: #262
+			 * Creation date: 2021-07-08
+			 */
+			[
+				'name'        => 'enableEyedropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

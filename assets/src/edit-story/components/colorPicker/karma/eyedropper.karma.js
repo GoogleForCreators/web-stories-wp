@@ -36,7 +36,11 @@ describe('Eyedropper', () => {
     fixture.restore();
   });
 
-  it('should get color from the image to page background', async () => {
+  // Disable reason: the test hasn't been fully implemented yet with images that can differ locally.
+  // NB! Needs to be implemented before removing the feature flag.
+  // See: https://github.com/google/web-stories-wp/pull/7961
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should get color from the image to page background', async () => {
     // Insert image that will be the color source
     const image = fixture.editor.library.media.item(1);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
