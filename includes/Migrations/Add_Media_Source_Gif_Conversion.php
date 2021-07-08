@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Add_Media_Source_Source_Video
+ * Class Add_Media_Source_Gif_Conversion
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -28,11 +28,11 @@
 namespace Google\Web_Stories\Migrations;
 
 /**
- * Class Add_Media_Source_Source_Video
+ * Class Add_Media_Source_Gif_Conversion
  *
  * @package Google\Web_Stories\Migrations
  */
-class Add_Media_Source_Source_Video extends Add_Media_Source {
+class Add_Media_Source_Gif_Conversion extends Add_Media_Source {
 	/**
 	 * Term name.
 	 *
@@ -41,6 +41,6 @@ class Add_Media_Source_Source_Video extends Add_Media_Source {
 	 * @return string
 	 */
 	protected function get_term() {
-		return 'source-video';
+		return 'gif-conversion';
 	}
 }

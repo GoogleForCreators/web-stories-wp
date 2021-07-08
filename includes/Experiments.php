@@ -378,6 +378,17 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @spacedmonkey
+			 * Issue: #7232
+			 * Creation date: 2021-07-14
+			 */
+			[
+				'name'        => 'enableGifOptimization',
+				'label'       => __( 'GIF optimization', 'web-stories' ),
+				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
 			 * Issue: #3126
 			 * Creation date: 2021-02-02
 			 */

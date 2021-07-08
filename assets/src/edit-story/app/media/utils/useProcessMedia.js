@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { fetchRemoteFile } from '@web-stories-wp/media';
+import { fetchRemoteFile, isAnimatedGif } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -25,13 +25,14 @@ import { fetchRemoteFile } from '@web-stories-wp/media';
 import useStory from '../../story/useStory';
 import useUpdateElementDimensions from './useUpdateElementDimensions';
 
-function useProcessVideo({
+function useProcessMedia({
   uploadMedia,
   uploadVideoPoster,
   updateMedia,
   deleteMediaElement,
 }) {
   const { updateElementDimensions } = useUpdateElementDimensions();
+
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
@@ -73,10 +74,10 @@ function useProcessVideo({
     [updateElementsByResourceId]
   );
 
-  const updateOldVideo = useCallback(
-    (oldId, newId) => {
+  const updateOldObject = useCallback(
+    (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
-        media_source: 'source-video',
+        media_source: mediaSource,
         meta: {
           web_stories_optimized_id: newId,
         },
@@ -103,10 +104,10 @@ function useProcessVideo({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldVideo(oldResource.id, resource.id);
+        updateOldObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
 
-        if (resource.type === 'video' && !resource.local) {
+        if (['video', 'gif'].includes(resource.type) && !resource.local) {
           uploadVideoPoster(resource.id, resource.src);
         }
       };
@@ -144,7 +145,65 @@ function useProcessVideo({
       copyResourceData,
       uploadMedia,
       uploadVideoPoster,
-      updateOldVideo,
+      updateOldObject,
+      deleteMediaElement,
+      updateExistingElements,
+      updateElementDimensions,
+    ]
+  );
+
+  const optimizeGif = useCallback(
+    ({ resource: oldResource }) => {
+      const { src: url, mimeType } = oldResource;
+
+      const onUploadSuccess = ({ resource }) => {
+        copyResourceData({ oldResource, resource });
+        updateOldObject(oldResource.id, resource.id, 'source-image');
+        deleteMediaElement({ id: oldResource.id });
+
+        if (['video', 'gif'].includes(resource.type) && !resource.local) {
+          uploadVideoPoster(resource.id, resource.src);
+        }
+      };
+
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateElementDimensions({
+          id: oldResource.id,
+          resource: oldResourceWithId,
+        });
+        updateExistingElements({
+          oldResource: oldResourceWithId,
+        });
+      };
+
+      const process = async () => {
+        let file = false;
+        try {
+          file = await fetchRemoteFile(url, mimeType);
+        } catch (e) {
+          // Ignore for now.
+          return;
+        }
+
+        const buffer = await file.arrayBuffer();
+        if (!isAnimatedGif(buffer)) {
+          return;
+        }
+
+        await uploadMedia([file], {
+          onUploadSuccess,
+          onUploadProgress,
+          additionalData: { alt: oldResource.alt, title: oldResource.title },
+        });
+      };
+      return process();
+    },
+    [
+      copyResourceData,
+      uploadMedia,
+      uploadVideoPoster,
+      updateOldObject,
       deleteMediaElement,
       updateExistingElements,
       updateElementDimensions,
@@ -153,7 +212,8 @@ function useProcessVideo({
 
   return {
     optimizeVideo,
+    optimizeGif,
   };
 }
 
-export default useProcessVideo;
+export default useProcessMedia;

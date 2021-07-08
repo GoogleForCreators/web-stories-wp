@@ -18,8 +18,10 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import { useCallback, useMemo } from 'react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { getFileName } from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
@@ -27,15 +29,13 @@ import { useConfig } from '../../config';
 import { useCurrentUser } from '../../currentUser';
 import {
   MEDIA_TRANSCODING_MAX_FILE_SIZE,
+  MEDIA_VIDEO_DIMENSIONS_THRESHOLD,
+  MEDIA_TRANSCODED_MIME_TYPE,
+  MEDIA_TRANSCODED_FILE_TYPE,
   MEDIA_POSTER_IMAGE_MIME_TYPE,
-  MEDIA_POSTER_IMAGE_EXT,
+  MEDIA_POSTER_IMAGE_FILE_TYPE,
 } from '../../../constants';
 import getPosterName from './getPosterName';
-
-export const VIDEO_SIZE_THRESHOLD = {
-  HEIGHT: 720,
-  WIDTH: 1280,
-};
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -49,6 +49,30 @@ const isDevelopment = process.env.NODE_ENV === 'development';
  */
 const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
 
+const FFMPEG_SHARED_CONFIG = [
+  // Use H.264 video codec.
+  '-vcodec',
+  'libx264',
+  // Scale down to 720p as recommended by Storytime.
+  // See https://trac.ffmpeg.org/wiki/Scaling
+  // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
+  '-vf',
+  `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
+  // Reduce to 24fps as recommended by Storytime.
+  // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
+  '-r',
+  '24',
+  // move some information to the beginning of your file.
+  '-movflags',
+  '+faststart',
+  // Simpler color profile
+  '-pix_fmt',
+  'yuv420p',
+  // As the name says...
+  '-preset',
+  'fast', // 'veryfast' seems to cause crashes.
+];
+
 /**
  * @typedef FFmpegData
  * @property {boolean} isTranscodingEnabled Whether transcoding is enabled.
@@ -56,6 +80,7 @@ const isFileTooLarge = ({ size }) => size >= MEDIA_TRANSCODING_MAX_FILE_SIZE;
  * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
  * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
+ * @property {(file: File) => Promise<File>} convertGifToVideo Convert GIF to MP4.
  */
 
 /**
@@ -82,21 +107,24 @@ function useFFmpeg() {
    */
   const isCrossOriginIsolationEnabled = Boolean(window?.crossOriginIsolated);
 
-  async function getFFmpegInstance(file) {
-    const { createFFmpeg, fetchFile } = await import(
-      /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
-    );
+  const getFFmpegInstance = useCallback(
+    async (file) => {
+      const { createFFmpeg, fetchFile } = await import(
+        /* webpackChunkName: "chunk-ffmpeg" */ '@ffmpeg/ffmpeg'
+      );
 
-    const ffmpeg = createFFmpeg({
-      corePath: ffmpegCoreUrl,
-      log: isDevelopment,
-    });
-    await ffmpeg.load();
+      const ffmpeg = createFFmpeg({
+        corePath: ffmpegCoreUrl,
+        log: isDevelopment,
+      });
+      await ffmpeg.load();
 
-    ffmpeg.FS('writeFile', file.name, await fetchFile(file));
+      ffmpeg.FS('writeFile', file.name, await fetchFile(file));
 
-    return ffmpeg;
-  }
+      return ffmpeg;
+    },
+    [ffmpegCoreUrl]
+  );
 
   /**
    * Extract a video's first frame using FFmpeg.
@@ -106,58 +134,61 @@ function useFFmpeg() {
    * @param {File} file Original video file object.
    * @return {Promise<File>} File object for the video frame.
    */
-  async function getFirstFrameOfVideo(file) {
-    //eslint-disable-next-line @wordpress/no-unused-vars-before-return
-    const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
+  const getFirstFrameOfVideo = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
 
-    try {
-      const ffmpeg = await getFFmpegInstance(file);
+      try {
+        const ffmpeg = await getFFmpegInstance(file);
 
-      const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_EXT;
-      const originalFileName = getFileName(file);
-      const outputFileName = getPosterName(originalFileName);
+        const tempFileName = uuidv4() + '.' + MEDIA_POSTER_IMAGE_FILE_TYPE;
+        const originalFileName = getFileName(file);
+        const outputFileName = getPosterName(originalFileName);
 
-      await ffmpeg.run(
-        // Desired position.
-        // Using as an input option (before -i) saves us some time by seeking to position.
-        '-ss',
-        '00:00:01.000',
-        // Input filename.
-        '-i',
-        file.name,
-        // Stop writing to the stream after 1 frame.
-        '-frames:v',
-        '1',
-        // Scale down to 720p as recommended by Storytime.
-        // See https://trac.ffmpeg.org/wiki/Scaling
-        // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-        '-vf',
-        `scale='min(${VIDEO_SIZE_THRESHOLD.HEIGHT},iw)':'min(${VIDEO_SIZE_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-        // Simpler color profile
-        '-pix_fmt',
-        'yuv420p',
-        // As the name says...
-        '-preset',
-        'fast', // 'veryfast' seems to cause crashes.
-        // Output filename. MUST be different from input filename.
-        tempFileName
-      );
+        await ffmpeg.run(
+          // Desired position.
+          // Using as an input option (before -i) saves us some time by seeking to position.
+          '-ss',
+          '00:00:01.000',
+          // Input filename.
+          '-i',
+          file.name,
+          // Stop writing to the stream after 1 frame.
+          '-frames:v',
+          '1',
+          // Scale down to 720p as recommended by Storytime.
+          // See https://trac.ffmpeg.org/wiki/Scaling
+          // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
+          '-vf',
+          `scale='min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.HEIGHT},iw)':'min(${MEDIA_VIDEO_DIMENSIONS_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
+          // Simpler color profile
+          '-pix_fmt',
+          'yuv420p',
+          // As the name says...
+          '-preset',
+          'fast', // 'veryfast' seems to cause crashes.
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
 
-      const data = ffmpeg.FS('readFile', tempFileName);
-      return new File(
-        [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
-        outputFileName,
-        {
-          type: MEDIA_POSTER_IMAGE_MIME_TYPE,
-        }
-      );
-    } catch (err) {
-      trackError('video_poster_generation_ffmpeg', err.message);
-      throw err;
-    } finally {
-      trackTiming();
-    }
-  }
+        const data = ffmpeg.FS('readFile', tempFileName);
+        return new File(
+          [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
+          outputFileName,
+          {
+            type: MEDIA_POSTER_IMAGE_MIME_TYPE,
+          }
+        );
+      } catch (err) {
+        trackError('video_poster_generation_ffmpeg', err.message);
+        throw err;
+      } finally {
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
 
   /**
    * Transcode a video using FFmpeg.
@@ -165,60 +196,89 @@ function useFFmpeg() {
    * @param {File} file Original video file object.
    * @return {Promise<File>} Transcoded video file object.
    */
-  async function transcodeVideo(file) {
-    //eslint-disable-next-line @wordpress/no-unused-vars-before-return
-    const trackTiming = getTimeTracker('load_video_transcoding');
+  const transcodeVideo = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_video_transcoding');
 
-    try {
-      const ffmpeg = await getFFmpegInstance(file);
+      try {
+        const ffmpeg = await getFFmpegInstance(file);
 
-      const tempFileName = uuidv4() + '.mp4';
-      const outputFileName = getFileName(file) + '.mp4';
+        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName =
+          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
 
-      await ffmpeg.run(
-        // Input filename.
-        '-i',
-        file.name,
-        // Use H.264 video codec.
-        '-vcodec',
-        'libx264',
-        // Scale down to 720p as recommended by Storytime.
-        // See https://trac.ffmpeg.org/wiki/Scaling
-        // Adds 1px pad to width/height if they're not divisible by 2, which FFmpeg will complain about.
-        '-vf',
-        `scale='min(${VIDEO_SIZE_THRESHOLD.HEIGHT},iw)':'min(${VIDEO_SIZE_THRESHOLD.WIDTH},ih)':'force_original_aspect_ratio=decrease',pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'`,
-        // Reduce to 24fps as recommended by Storytime.
-        // See https://trac.ffmpeg.org/wiki/ChangingFrameRate
-        '-r',
-        '24',
-        // move some information to the beginning of your file.
-        '-movflags',
-        '+faststart',
-        // Simpler color profile
-        '-pix_fmt',
-        'yuv420p',
-        // As the name says...
-        '-preset',
-        'fast', // 'veryfast' seems to cause crashes.
-        // Output filename. MUST be different from input filename.
-        tempFileName
-      );
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          ...FFMPEG_SHARED_CONFIG,
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
 
-      const data = ffmpeg.FS('readFile', tempFileName);
-      return new File(
-        [new Blob([data.buffer], { type: 'video/mp4' })],
-        outputFileName,
-        {
-          type: 'video/mp4',
-        }
-      );
-    } catch (err) {
-      trackError('video_transcoding', err.message);
-      throw err;
-    } finally {
-      trackTiming();
-    }
-  }
+        const data = ffmpeg.FS('readFile', tempFileName);
+        return new File(
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
+          outputFileName,
+          {
+            type: MEDIA_TRANSCODED_MIME_TYPE,
+          }
+        );
+      } catch (err) {
+        trackError('video_transcoding', err.message);
+        throw err;
+      } finally {
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
+   * Converts an animated GIF to a video using FFmpeg.
+   *
+   * @param {File} file Original GIF file object.
+   * @return {Promise<File>} Converted video file object.
+   */
+  const convertGifToVideo = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_gif_conversion');
+
+      try {
+        const ffmpeg = await getFFmpegInstance(file);
+
+        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName =
+          getFileName(file) + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          ...FFMPEG_SHARED_CONFIG,
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+        return new File(
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
+          outputFileName,
+          {
+            type: MEDIA_TRANSCODED_MIME_TYPE,
+          }
+        );
+      } catch (err) {
+        trackError('gif_conversion', err.message);
+        throw err;
+      } finally {
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
 
   /**
    * Determines whether the given file can be transcoded.
@@ -226,8 +286,10 @@ function useFFmpeg() {
    * @param {File} file File object.
    * @return {boolean} Whether transcoding is likely possible.
    */
-  const canTranscodeFile = (file) =>
-    allowedTranscodableMimeTypes.includes(file.type);
+  const canTranscodeFile = useCallback(
+    (file) => allowedTranscodableMimeTypes.includes(file.type),
+    [allowedTranscodableMimeTypes]
+  );
 
   /**
    * Whether user opted in to video optimization.
@@ -250,13 +312,23 @@ function useFFmpeg() {
     isUserSettingEnabled &&
     isCrossOriginIsolationEnabled;
 
-  return {
-    isTranscodingEnabled,
-    canTranscodeFile,
-    isFileTooLarge,
-    transcodeVideo,
-    getFirstFrameOfVideo,
-  };
+  return useMemo(
+    () => ({
+      isTranscodingEnabled,
+      canTranscodeFile,
+      isFileTooLarge,
+      transcodeVideo,
+      getFirstFrameOfVideo,
+      convertGifToVideo,
+    }),
+    [
+      isTranscodingEnabled,
+      canTranscodeFile,
+      transcodeVideo,
+      getFirstFrameOfVideo,
+      convertGifToVideo,
+    ]
+  );
 }
 
 export default useFFmpeg;

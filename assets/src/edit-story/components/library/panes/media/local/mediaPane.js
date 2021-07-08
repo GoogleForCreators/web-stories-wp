@@ -109,6 +109,7 @@ function MediaPane(props) {
     uploadVideoPoster,
     totalItems,
     optimizeVideo,
+    optimizeGif,
   } = useLocalMedia(
     ({
       state: {
@@ -127,6 +128,7 @@ function MediaPane(props) {
         setSearchTerm,
         uploadVideoPoster,
         optimizeVideo,
+        optimizeGif,
       },
     }) => {
       return {
@@ -143,11 +145,13 @@ function MediaPane(props) {
         setSearchTerm,
         uploadVideoPoster,
         optimizeVideo,
+        optimizeGif,
       };
     }
   );
 
   const { showSnackbar } = useSnackbar();
+  const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const {
     allowedTranscodableMimeTypes,
@@ -200,13 +204,15 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
-      if (
-        isTranscodingEnabled &&
-        transcodableMimeTypes.includes(resource.mimeType)
-      ) {
-        optimizeVideo({ resource });
-      }
+      if (isTranscodingEnabled) {
+        if (transcodableMimeTypes.includes(resource.mimeType)) {
+          optimizeVideo({ resource });
+        }
 
+        if (isGifOptimizationEnabled && resource.mimeType === 'image/gif') {
+          optimizeGif({ resource });
+        }
+      }
       // WordPress media picker event, sizes.medium.url is the smallest image
       insertMediaElement(
         resource,
@@ -216,7 +222,8 @@ function MediaPane(props) {
       if (
         !resource.posterId &&
         !resource.local &&
-        allowedVideoMimeTypes.includes(resource.mimeType)
+        (allowedVideoMimeTypes.includes(resource.mimeType) ||
+          resource.type === 'gif')
       ) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.

@@ -23,13 +23,19 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../story/context';
-import useProcessVideo from '../useProcessVideo';
+import useProcessMedia from '../useProcessMedia';
 
 const fetchRemoteFileMock = (url, mimeType) => {
-  if (url === 'http://www.google.com/test.jpg') {
+  if (url === 'http://www.google.com/foo.mov') {
     return new File(['foo'], 'foo.mov', {
       type: mimeType,
     });
+  }
+
+  if (url === 'http://www.google.com/foo.gif') {
+    return {
+      arrayBuffer: jest.fn(),
+    };
   }
 
   return Promise.reject(new Error('Invalid file'));
@@ -37,6 +43,9 @@ const fetchRemoteFileMock = (url, mimeType) => {
 jest.mock('@web-stories-wp/media', () => {
   return {
     fetchRemoteFile: fetchRemoteFileMock,
+    isAnimatedGif: () => {
+      return true;
+    },
   };
 });
 
@@ -46,14 +55,20 @@ const uploadMedia = (
   { onUploadSuccess, onUploadStart, onUploadError }
 ) => {
   const resource = {
-    src: 'http://www.google.com/test.jpg',
+    src: 'http://www.google.com/foo.gif',
     id: 2,
     local: false,
-    type: 'video',
+    type: 'gif',
   };
-  onUploadSuccess({ resource });
-  onUploadStart({ resource });
-  onUploadError({ resource });
+  if (onUploadSuccess) {
+    onUploadSuccess({ resource });
+  }
+  if (onUploadStart) {
+    onUploadStart({ resource });
+  }
+  if (onUploadError) {
+    onUploadError({ resource });
+  }
 };
 
 function setup() {
@@ -72,7 +87,7 @@ function setup() {
 
   const { result } = renderHook(
     () =>
-      useProcessVideo({
+      useProcessMedia({
         uploadMedia,
         uploadVideoPoster,
         updateMedia,
@@ -81,33 +96,34 @@ function setup() {
     { wrapper }
   );
 
-  const { optimizeVideo } = result.current;
+  const { optimizeVideo, optimizeGif } = result.current;
   return {
     optimizeVideo,
+    optimizeGif,
     uploadVideoPoster,
     updateMedia,
     deleteMediaElement,
   };
 }
 
-describe('useProcessVideo', () => {
-  it('should process file', async () => {
+describe('useProcessMedia', () => {
+  it('should process video file', async () => {
     const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
     act(() => {
       optimizeVideo({
         resource: {
-          src: 'http://www.google.com/test.jpg',
+          src: 'http://www.google.com/foo.mov',
           id: 123,
           alt: 'alt',
           title: 'title',
-          mimeType: 'image/jpg',
+          mimeType: 'video/quicktime',
         },
       });
     });
     await waitFor(() => {
       expect(uploadVideoPoster).toHaveBeenCalledWith(
         2,
-        'http://www.google.com/test.jpg'
+        'http://www.google.com/foo.gif'
       );
       expect(updateMedia).toHaveBeenCalledWith(123, {
         media_source: 'source-video',
@@ -118,7 +134,34 @@ describe('useProcessVideo', () => {
     });
   });
 
-  it('should fail gracefully', async () => {
+  it('should process gif file', async () => {
+    const { optimizeGif, uploadVideoPoster, updateMedia } = setup();
+    act(() => {
+      optimizeGif({
+        resource: {
+          src: 'http://www.google.com/foo.gif',
+          id: 123,
+          alt: 'alt',
+          title: 'title',
+          mimeType: 'image/gif',
+        },
+      });
+    });
+    await waitFor(() => {
+      expect(uploadVideoPoster).toHaveBeenCalledWith(
+        2,
+        'http://www.google.com/foo.gif'
+      );
+      expect(updateMedia).toHaveBeenCalledWith(123, {
+        media_source: 'source-image',
+        meta: {
+          web_stories_optimized_id: 2,
+        },
+      });
+    });
+  });
+
+  it('should fail video processing gracefully', async () => {
     const {
       optimizeVideo,
       uploadVideoPoster,
@@ -127,6 +170,27 @@ describe('useProcessVideo', () => {
     } = setup();
     act(() => {
       optimizeVideo({
+        resource: {
+          src: 'http://www.google.com/invalid.jpg',
+          id: 123,
+          alt: 'alt',
+          title: 'title',
+          mimeType: 'image/jpg',
+        },
+      });
+    });
+    await waitFor(() => {
+      expect(uploadVideoPoster).not.toHaveBeenCalled();
+      expect(updateMedia).not.toHaveBeenCalled();
+      expect(deleteMediaElement).not.toHaveBeenCalled();
+    });
+  });
+
+  it('should fail gif processing gracefully', async () => {
+    const { optimizeGif, uploadVideoPoster, updateMedia, deleteMediaElement } =
+      setup();
+    act(() => {
+      optimizeGif({
         resource: {
           src: 'http://www.google.com/invalid.jpg',
           id: 123,

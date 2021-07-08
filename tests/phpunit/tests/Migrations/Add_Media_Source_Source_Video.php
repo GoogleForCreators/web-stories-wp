@@ -27,10 +27,13 @@ use Google\Web_Stories\Tests\Test_Case;
 class Add_Media_Source_Source_Video extends Test_Case {
 	/**
 	 * @covers ::migrate
+	 * @covers ::get_term
+	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
 	public function test_migrate() {
 		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Source_Video();
 		$object->migrate();
+		$term = $this->call_private_method( $object, 'get_term' );
 
 		$terms = get_terms(
 			[
@@ -40,6 +43,6 @@ class Add_Media_Source_Source_Video extends Test_Case {
 		);
 
 		$slugs = wp_list_pluck( $terms, 'slug' );
-		$this->assertContains( 'source-video', $slugs );
+		$this->assertContains( $term, $slugs );
 	}
 }

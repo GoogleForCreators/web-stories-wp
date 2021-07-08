@@ -32,7 +32,7 @@ namespace Google\Web_Stories\Migrations;
  *
  * @package Google\Web_Stories\Migrations
  */
-class Add_Media_Source_Source_Video extends Add_Media_Source {
+class Add_Media_Source_Source_Image extends Add_Media_Source {
 	/**
 	 * Term name.
 	 *
@@ -41,6 +41,6 @@ class Add_Media_Source_Source_Video extends Add_Media_Source {
 	 * @return string
 	 */
 	protected function get_term() {
-		return 'source-video';
+		return 'source-image';
 	}
 }
