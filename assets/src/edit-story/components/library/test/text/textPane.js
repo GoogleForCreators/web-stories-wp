@@ -79,6 +79,7 @@ describe('TextPane', () => {
         features={{
           showTextSets: false,
           showTextAndShapesSearchInput: false,
+          enableSmartTextColor: true,
         }}
       >
         <FontContext.Provider value={fontContextValues}>
