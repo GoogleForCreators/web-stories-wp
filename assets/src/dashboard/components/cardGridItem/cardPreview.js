@@ -132,40 +132,41 @@ const CardPreviewContainer = ({
   containerAction = () => {},
 }) => {
   const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
-  const [pageIndex, setPageIndex] = useState(0);
+  // const [pageIndex, setPageIndex] = useState(0);
   const containElem = useRef(null);
-  const storyPages = story?.pages || [];
+  // const storyPages = story?.pages || [];
 
-  useFocusOut(containElem, () => dispatch(CARD_ACTION.DEACTIVATE), []);
+  // useFocusOut(containElem, () => dispatch(CARD_ACTION.DEACTIVATE), []);
 
-  useEffect(() => {
-    if (CARD_STATE.IDLE === cardState) {
-      setPageIndex(0);
-    }
-  }, [cardState]);
+  // useEffect(() => {
+  //   if (CARD_STATE.IDLE === cardState) {
+  //     setPageIndex(0);
+  //   }
+  // }, [cardState]);
 
-  useEffect(() => {
-    let intervalId;
-    if (CARD_STATE.ACTIVE === cardState) {
-      /**
-       * The interval duration should eventually get pulled off the story schema's
-       * auto advance duration and if no duration provided, use a default.
-       *
-       * Can also incorporate onWAAPIFinish here to make sure the page
-       * doesn't switch before the animations finishes.
-       */
-      intervalId = setInterval(
-        () => setPageIndex((v) => clamp(v + 1, [0, storyPages.length - 1])),
-        DEFAULT_STORY_PAGE_ADVANCE_DURATION
-      );
-    }
+  // useEffect(() => {
+  //   let intervalId;
+  //   if (CARD_STATE.ACTIVE === cardState) {
+  //     /**
+  //      * The interval duration should eventually get pulled off the story schema's
+  //      * auto advance duration and if no duration provided, use a default.
+  //      *
+  //      * Can also incorporate onWAAPIFinish here to make sure the page
+  //      * doesn't switch before the animations finishes.
+  //      */
+  //     intervalId = setInterval(
+  //       () => setPageIndex((v) => clamp(v + 1, [0, storyPages.length - 1])),
+  //       DEFAULT_STORY_PAGE_ADVANCE_DURATION
+  //     );
+  //   }
 
-    return () => intervalId && clearInterval(intervalId);
-  }, [storyPages.length, cardState]);
+  //   return () => intervalId && clearInterval(intervalId);
+  // }, [storyPages.length, cardState]);
 
   return (
     <>
-      <PreviewPane cardSize={pageSize}>
+      <img src={story.featuredMediaUrl} alt="heyyyy" />
+      {/* <PreviewPane cardSize={pageSize}>
         <PreviewErrorBoundary>
           <PreviewPage
             pageSize={pageSize}
@@ -178,7 +179,7 @@ const CardPreviewContainer = ({
           />
         </PreviewErrorBoundary>
         {children}
-      </PreviewPane>
+      </PreviewPane> */}
       {/*
         Disable Reason: As the UI stands for the dashboard grid item view we have nested functionality
         that is embedded in the grid and requires the user hover or focus a card in order to see options
