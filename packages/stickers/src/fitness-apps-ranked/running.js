@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Runner', 'sticker name', 'web-stories');
+const title = _x('Running', 'sticker name', 'web-stories');
 
 function TechnologyRunningFigure({ style }) {
   return (

@@ -21,7 +21,7 @@ import { default as technologyPieChart } from './piechart';
 import { default as technologyRunningFigure } from './running';
 import { default as technologyShoe } from './shoe';
 import { default as technologySwimmer } from './swimmer';
-import { default as technologyWeight } from './weight';
+import { default as technologyDumbbells } from './dumbbells';
 
 export {
   technologyMuscle,
@@ -29,5 +29,5 @@ export {
   technologyRunningFigure,
   technologyShoe,
   technologySwimmer,
-  technologyWeight,
+  technologyDumbbells,
 };

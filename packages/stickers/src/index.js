@@ -30,7 +30,7 @@ import * as crispyChickenThighStickers from './kitchen-stories';
 import * as almondosFilmsStickers from './almodos-films';
 import * as bestPizzaInNYCStickers from './pizzas-in-nyc';
 import * as twelveHoursInBarcelonaStickers from './12-hours-in-barcelona';
-import * as bestFitnessAppsStickers from './best-fitness-apps';
+import * as bestFitnessAppsStickers from './fitness-apps-ranked';
 import * as streetStyleOnTheGoStickers from './street-style-on-the-go';
 import * as plantBasedDyesStickers from './plant-based-dyes';
 import * as indoorGardenOasisStickers from './indoor-garden-oasis';

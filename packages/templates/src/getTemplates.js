@@ -81,6 +81,7 @@ async function getTemplates(imageBaseUrl) {
     'pizzas-in-nyc',
     '12-hours-in-barcelona',
     'ultimate-comparison',
+    'fitness-apps-ranked',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
