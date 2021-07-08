@@ -156,7 +156,7 @@ const transforms = {
             circle_size: circleSize,
             image_alignment: imageAlignment,
             number_of_columns: numOfColumns,
-            number_of_columns: numOfStories,
+            number_of_stories: numOfStories,
             view_type: viewType,
             show_title,
             show_author,
