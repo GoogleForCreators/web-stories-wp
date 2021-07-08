@@ -224,7 +224,7 @@
             "id": 0,
             "title": "sliced avocado on brown wooden chopping board",
             "alt": "sliced avocado on brown wooden chopping board",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [37, 32, 25]
@@ -369,7 +369,7 @@
             "id": 0,
             "title": "woman holding leafed plant",
             "alt": "woman holding leafed plant",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [154, 118, 90]
@@ -1130,7 +1130,7 @@
             "id": 0,
             "title": "sliced avocado on plate",
             "alt": "sliced avocado on plate",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [177, 175, 167]
@@ -1498,7 +1498,7 @@
             "id": 0,
             "title": "Person in Brown Long Sleeve Shirt Holding White Paper",
             "alt": "Person in Brown Long Sleeve Shirt Holding White Paper",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [184, 181, 173]
@@ -1883,7 +1883,7 @@
             "id": 0,
             "title": "Top view of halved tasty avocado with seed placed on white marble table",
             "alt": "Top view of halved tasty avocado with seed placed on white marble table",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [217, 211, 200]
@@ -2269,7 +2269,7 @@
             "id": 0,
             "title": "Woman in White and Red Floral Shirt Holding Stainless Steel Bowl and Whisk",
             "alt": "Woman in White and Red Floral Shirt Holding Stainless Steel Bowl and Whisk",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [177, 148, 118]
@@ -2655,7 +2655,7 @@
             "id": 0,
             "title": "vegetable grind in mortar and pestle",
             "alt": "vegetable grind in mortar and pestle",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [87, 96, 92]
@@ -3067,7 +3067,7 @@
             "id": 0,
             "title": "Stainless Steel Cookware on Stove",
             "alt": "Stainless Steel Cookware on Stove",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [207, 177, 158]
@@ -3453,7 +3453,7 @@
             "id": 0,
             "title": "Gray Textile Closeup Photo",
             "alt": "Gray Textile Closeup Photo",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [231, 204, 196]
@@ -3839,7 +3839,7 @@
             "id": 0,
             "title": "White and Pink Striped Textile",
             "alt": "White and Pink Striped Textile",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [159, 155, 152]
@@ -4168,7 +4168,7 @@
             "id": 0,
             "title": "Photo of Woman Wearing Pink Dress",
             "alt": "Photo of Woman Wearing Pink Dress",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [235, 197, 180]
@@ -4702,7 +4702,7 @@
             "id": 0,
             "title": "Photography of a Woman Holding Green Leaves",
             "alt": "Photography of a Woman Holding Green Leaves",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [214, 201, 189]
@@ -4744,7 +4744,7 @@
             "id": 0,
             "title": "cookware set on floating shelves",
             "alt": "cookware set on floating shelves",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [51, 86, 104]

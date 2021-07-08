@@ -55,7 +55,7 @@
             "id": 0,
             "title": "woman in white shirt and black pants standing on sidewalk during daytime",
             "alt": "woman in white shirt and black pants standing on sidewalk during daytime",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [52, 64, 67]
@@ -411,7 +411,7 @@
             "id": 0,
             "title": "man and woman standing in front of building wearing jackets",
             "alt": "man and woman standing in front of building wearing jackets",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [33, 47, 63]
@@ -594,7 +594,7 @@
             "id": 0,
             "title": "woman wearing green top standing near Flatiron building",
             "alt": "woman wearing green top standing near Flatiron building",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [78, 76, 71]
@@ -927,7 +927,7 @@
             "id": 0,
             "title": "man in white long sleeve shirt and black pants standing on road during daytime",
             "alt": "man in white long sleeve shirt and black pants standing on road during daytime",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [157, 139, 127]
@@ -1351,7 +1351,7 @@
             "id": 0,
             "title": "woman in blue and white polka dot shirt and white skirt",
             "alt": "woman in blue and white polka dot shirt and white skirt",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [206, 204, 211]
@@ -1393,7 +1393,7 @@
             "id": 0,
             "title": "two women in teal romper pants",
             "alt": "two women in teal romper pants",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [193, 182, 185]
@@ -1953,7 +1953,7 @@
             "id": 0,
             "title": "man and woman walking on street",
             "alt": "man and woman walking on street",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [187, 197, 190]
@@ -2286,7 +2286,7 @@
             "id": 0,
             "title": "woman in red and white sweater wearing pink knit cap",
             "alt": "woman in red and white sweater wearing pink knit cap",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [22, 55, 65]
@@ -2681,7 +2681,7 @@
             "id": 0,
             "title": "man walking on the street while carrying bag",
             "alt": "man walking on the street while carrying bag",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [38, 57, 61]
@@ -3040,7 +3040,7 @@
             "id": 0,
             "title": "woman looking at Eiffel Tower",
             "alt": "woman looking at Eiffel Tower",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [187, 197, 218]
@@ -3373,7 +3373,7 @@
             "id": 0,
             "title": "woman in black leather jacket standing on sidewalk during daytime",
             "alt": "woman in black leather jacket standing on sidewalk during daytime",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [128, 127, 126]
@@ -3768,7 +3768,7 @@
             "id": 0,
             "title": "woman sitting on brown concrete surface wearing brown boots beside brown leather handbag",
             "alt": "woman sitting on brown concrete surface wearing brown boots beside brown leather handbag",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [83, 68, 65]
@@ -4337,7 +4337,7 @@
             "id": 0,
             "title": "woman standing in the middle of the road",
             "alt": "woman standing in the middle of the road",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [47, 49, 46]
@@ -4448,7 +4448,7 @@
             "id": 0,
             "title": "woman wearing white spaghetti strap jumpsuit",
             "alt": "woman wearing white spaghetti strap jumpsuit",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [172, 185, 187]
@@ -4559,7 +4559,7 @@
             "id": 0,
             "title": "woman wearing green top standing near Flatiron building",
             "alt": "woman wearing green top standing near Flatiron building",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [208, 205, 206]

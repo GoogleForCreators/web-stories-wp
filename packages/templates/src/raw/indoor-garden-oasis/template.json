@@ -246,7 +246,7 @@
             "id": 0,
             "title": "Green Indoor Plants",
             "alt": "Green Indoor Plants",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [37, 35, 19]
@@ -571,7 +571,7 @@
             "id": 0,
             "title": "Green Plants on Brown Clay Pot",
             "alt": "Green Plants on Brown Clay Pot",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [218, 218, 217]
@@ -1026,7 +1026,7 @@
             "id": 0,
             "title": "Top View Photo of Gardening Tools",
             "alt": "Top View Photo of Gardening Tools",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [61, 54, 44]
@@ -1382,7 +1382,7 @@
             "id": 0,
             "title": "Person Arranging Pot Plant",
             "alt": "Person Arranging Pot Plant",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [186, 177, 159]
@@ -1775,7 +1775,7 @@
             "id": 0,
             "title": "Photo of Plants On White Pot",
             "alt": "Photo of Plants On White Pot",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [221, 222, 227]
@@ -2505,7 +2505,7 @@
             "id": 0,
             "title": "black pruning shears beside green gloves",
             "alt": "black pruning shears beside green gloves",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [212, 212, 199]
@@ -3207,7 +3207,7 @@
             "id": 0,
             "title": "Photo of Green Leafed Plant in Bottle With Water",
             "alt": "Photo of Green Leafed Plant in Bottle With Water",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [226, 232, 245]
@@ -3918,7 +3918,7 @@
             "id": 0,
             "title": "Photo of Plants On White Pot",
             "alt": "Photo of Plants On White Pot",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [222, 222, 228]
@@ -3960,7 +3960,7 @@
             "id": 0,
             "title": "shallow focus photography of potted plants",
             "alt": "shallow focus photography of potted plants",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [190, 177, 164]
@@ -4336,7 +4336,7 @@
             "id": 0,
             "title": "green vegetable",
             "alt": "green vegetable",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [27, 68, 63]
@@ -4489,7 +4489,7 @@
             "id": 0,
             "title": "Person Holding Green Plant in Brown Pot",
             "alt": "Person Holding Green Plant in Brown Pot",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [94, 72, 51]
@@ -4643,7 +4643,7 @@
             "id": 0,
             "title": "plant in gray pot",
             "alt": "plant in gray pot",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [231, 230, 232]

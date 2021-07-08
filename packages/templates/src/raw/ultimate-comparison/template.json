@@ -45,7 +45,7 @@
             "id": 0,
             "title": "man in white dress shirt holding smartphone",
             "alt": "man in white dress shirt holding smartphone",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           },
@@ -463,7 +463,7 @@
             "id": 0,
             "title": "man in black hoodie wearing black headphones",
             "alt": "man in black hoodie wearing black headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           },
@@ -693,7 +693,7 @@
             "id": 0,
             "title": "black wireless headset",
             "alt": "black wireless headset",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [211, 219, 219]
@@ -1265,7 +1265,7 @@
             "id": 0,
             "title": "Man in Black Sweater Wearing Black Headphones",
             "alt": "Man in Black Sweater Wearing Black Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [43, 45, 51]
@@ -1310,7 +1310,7 @@
             "id": 0,
             "title": "Man Wearing Black Headphones",
             "alt": "Man Wearing Black Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [202, 198, 194]
@@ -2253,7 +2253,7 @@
             "id": 0,
             "title": "black and silver headphones on white surface",
             "alt": "black and silver headphones on white surface",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [211, 219, 219]
@@ -2825,7 +2825,7 @@
             "id": 0,
             "title": "Woman Looking Up While Wearing Headphones",
             "alt": "Woman Looking Up While Wearing Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           }
@@ -2869,7 +2869,7 @@
             "id": 0,
             "title": "Man in Black Shirt Wearing Black Headphones",
             "alt": "Man in Black Shirt Wearing Black Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [69, 69, 51]
@@ -3813,7 +3813,7 @@
             "id": 0,
             "title": "gray and black wireless headphones on desk",
             "alt": "gray and black wireless headphones on desk",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [45, 47, 50]
@@ -4369,7 +4369,7 @@
             "id": 0,
             "title": "Man in Blue Crew Neck T-shirt Wearing Headphones",
             "alt": "Man in Blue Crew Neck T-shirt Wearing Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           },
@@ -4412,7 +4412,7 @@
             "id": 0,
             "title": "man in black jacket wearing black headphones",
             "alt": "man in black jacket wearing black headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           },
@@ -5403,7 +5403,7 @@
             "id": 0,
             "title": "White Cordless Headphone",
             "alt": "White Cordless Headphone",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [235, 234, 234]
@@ -5959,7 +5959,7 @@
             "id": 0,
             "title": "Man Wearing White Headphones",
             "alt": "Man Wearing White Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           },
@@ -6002,7 +6002,7 @@
             "id": 0,
             "title": "Woman in Gray Sweatshirt Wearing Headphone",
             "alt": "Woman in Gray Sweatshirt Wearing Headphone",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           },
@@ -6947,7 +6947,7 @@
             "id": 0,
             "title": "black wireless headset",
             "alt": "black wireless headset",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "provider": "local",
@@ -6992,7 +6992,7 @@
             "id": 0,
             "title": "Man Holding Smartphone",
             "alt": "Man Holding Smartphone",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           }
@@ -7409,7 +7409,7 @@
             "id": 0,
             "title": "black and silver headphones on white surface",
             "alt": "black and silver headphones on white surface",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "provider": "local",
@@ -7438,7 +7438,7 @@
             "id": 0,
             "title": "Woman Wearing Black Headphones",
             "alt": "Woman Wearing Black Headphones",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [220, 213, 208]
@@ -7954,7 +7954,7 @@
             "id": 0,
             "title": "black wireless headset",
             "alt": "black wireless headset",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "provider": "local",
@@ -8000,7 +8000,7 @@
             "id": 0,
             "title": "black and silver headphones on white surface",
             "alt": "black and silver headphones on white surface",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "provider": "local",
@@ -10019,7 +10019,7 @@
             "id": 0,
             "title": "Joyful millennial woman in headphones listening to music in park",
             "alt": "Joyful millennial woman in headphones listening to music in park",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false
           }
@@ -10205,7 +10205,7 @@
             "id": 0,
             "title": "Macbook Pro",
             "alt": "Macbook Pro",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [23, 23, 23]
@@ -10392,7 +10392,7 @@
             "id": 0,
             "title": "Person Wearing White Silicone Strap Black Smart Watch",
             "alt": "Person Wearing White Silicone Strap Black Smart Watch",
-            "sizes": {},
+            "sizes": [],
             "local": false,
             "isOptimized": false,
             "baseColor": [107, 101, 90]
