@@ -71,7 +71,7 @@ class Embed_Controller extends Test_REST_TestCase {
 		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
-		$story_content  = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
+		$story_content  = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -145,7 +145,7 @@ class Embed_Controller extends Test_REST_TestCase {
 				'response' => [
 					'code' => 200,
 				],
-				'body'     => file_get_contents( __DIR__ . '/../../data/stories_in_amp.html' ),
+				'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/stories_in_amp.html' ),
 			];
 		}
 

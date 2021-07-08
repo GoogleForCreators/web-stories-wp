@@ -126,7 +126,7 @@ class Link_Controller extends Test_REST_TestCase {
 				'response' => [
 					'code' => 200,
 				],
-				'body'     => file_get_contents( __DIR__ . '/../../data/characters.example.com.html' ),
+				'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/characters.example.com.html' ),
 			];
 		}
 
@@ -135,7 +135,7 @@ class Link_Controller extends Test_REST_TestCase {
 				'response' => [
 					'code' => 200,
 				],
-				'body'     => file_get_contents( __DIR__ . '/../../data/example.com.html' ),
+				'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/example.com.html' ),
 			];
 		}
 
@@ -144,7 +144,7 @@ class Link_Controller extends Test_REST_TestCase {
 				'response' => [
 					'code' => 200,
 				],
-				'body'     => file_get_contents( __DIR__ . '/../../data/amp.dev.html' ),
+				'body'     => file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/amp.dev.html' ),
 			];
 		}
 
