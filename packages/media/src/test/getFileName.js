@@ -15,13 +15,16 @@
  */
 
 /**
- * Returns file basename without extension.
- *
- * @param {File} file File object.
- * @param {string} file.name File name.
- * @return {string} File name without extension.
+ * Internal dependencies
  */
-const getFileName = ({ name }) =>
-  name.includes('.') ? name.split('.').slice(0, -1).join('.') : name;
+import getFileName from '../getFileName';
 
-export default getFileName;
+describe('getFileName', () => {
+  it('should remove the file extension', () => {
+    expect(getFileName({ name: 'my-video.mp4' })).toStrictEqual('my-video');
+  });
+
+  it('should support files without extension', () => {
+    expect(getFileName({ name: 'my-video' })).toStrictEqual('my-video');
+  });
+});
