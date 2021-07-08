@@ -52,7 +52,7 @@ export const TabButtonWrapper = styled.div`
   position: relative;
   height: 60px;
   width: 100%;
-  padding: 4px 4px;
+  padding: 5px 4px;
 
   &,
   :hover,
@@ -69,7 +69,7 @@ export const TabButton = styled(Button).attrs({
   display: flex;
   justify-content: space-between;
   width: calc(100% - 8px);
-  height: calc(100% - 8px);
+  height: calc(100% - 10px);
   padding: 16px;
   border-radius: 0;
 
