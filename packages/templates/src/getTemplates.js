@@ -82,6 +82,7 @@ async function getTemplates(imageBaseUrl) {
     '12-hours-in-barcelona',
     'ultimate-comparison',
     'fitness-apps-ranked',
+    'street-style-on-the-go',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
