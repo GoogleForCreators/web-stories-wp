@@ -179,7 +179,7 @@ const StoriesInspectorControls = (props) => {
                 <StyledToggle
                   key={`${field}__control`}
                   label={label}
-                  checked={fieldState[`show_${field}`]}
+                  checked={fieldState[`show_${field}`] || false}
                   onChange={() => handleToggleControl(field)}
                   help={
                     'archive_link' === field &&

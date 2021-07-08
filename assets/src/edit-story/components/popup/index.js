@@ -42,11 +42,13 @@ const Container = styled.div.attrs(
     fillHeight,
     placement,
     isRTL,
+    invisible,
   }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
+      ...(invisible ? { visibility: `hidden` } : {}),
     },
   })
 )`
@@ -67,6 +69,7 @@ function Popup({
   placement = Placement.BOTTOM,
   spacing,
   isOpen,
+  invisible,
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = () => {},
@@ -131,6 +134,7 @@ function Popup({
           placement={placement}
           isRTL={isRTL}
           $offset={popupState.offset}
+          invisible={invisible}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

@@ -15,6 +15,10 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { createBlock } from '@wordpress/blocks';
+/**
  * Internal dependencies
  */
 import { BLOCK_TYPE_LATEST_STORIES, BLOCK_TYPE_URL } from './constants';
@@ -133,6 +137,69 @@ const transforms = {
             };
           },
         },
+      },
+    },
+    {
+      type: 'block',
+      blocks: ['core/legacy-widget'],
+      isMatch: ({ idBase, instance }) => {
+        if (!instance?.raw) {
+          // Can't transform if raw instance is not shown in REST API.
+          return false;
+        }
+        return idBase === 'web_stories_widget';
+      },
+      transform: ({ instance }) => {
+        const {
+          raw: {
+            archive_link_label: archiveLinkLabel,
+            circle_size: circleSize,
+            image_alignment: imageAlignment,
+            number_of_columns: numOfColumns,
+            number_of_stories: numOfStories,
+            view_type: viewType,
+            show_title,
+            show_author,
+            show_date,
+            show_excerpt,
+            show_archive_link,
+            sharp_corners: show_sharp_corners,
+            show_image_alignment,
+            title,
+            orderby = '',
+            order = '',
+          },
+        } = instance;
+
+        const transformedBlock = createBlock('web-stories/embed', {
+          blockType: 'latest-stories',
+          viewType,
+          fieldState: {
+            show_title,
+            show_author,
+            show_date,
+            show_excerpt,
+            show_archive_link,
+            show_sharp_corners,
+            show_image_alignment,
+          },
+          archiveLinkLabel,
+          circleSize,
+          numOfColumns,
+          imageAlignment,
+          numOfStories,
+          orderby: orderby.replace('post_', ''),
+          order: order.toLowerCase(),
+        });
+        if (!title) {
+          return transformedBlock;
+        }
+        return [
+          createBlock('core/heading', {
+            content: title,
+          }),
+          transformedBlock,
+        ];
       },
     },
   ],
