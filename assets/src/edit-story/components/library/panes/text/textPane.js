@@ -53,7 +53,7 @@ function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextAndShapesSearchInput } = useFeatures();
+  const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
 
   const insertPreset = useInsertPreset();
   const { generateCanvasFromPage } = usePageAsCanvas();
@@ -93,7 +93,7 @@ function TextPane(props) {
 
       <Section
         title={__('Presets', 'web-stories')}
-        onPointerOver={() => generateCanvasFromPage()}
+        onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
       >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (

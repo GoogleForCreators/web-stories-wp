@@ -23,6 +23,7 @@ import { useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { Icons } from '@web-stories-wp/design-system';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -88,6 +89,8 @@ function TextIcon(props) {
     insertElement: state.actions.insertElement,
   }));
 
+  const enableSmartTextColor = useFeature('enableSmartTextColor');
+
   const [isHoveringQuick, setIsHoveringQuick] = useState(false);
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
@@ -121,7 +124,11 @@ function TextIcon(props) {
 
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    calculateAccessibleTextColors(DEFAULT_PRESET, setAutoColor);
+    if (enableSmartTextColor) {
+      calculateAccessibleTextColors(DEFAULT_PRESET, setAutoColor);
+    } else {
+      insertElement('text', DEFAULT_PRESET);
+    }
     trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
@@ -142,7 +149,9 @@ function TextIcon(props) {
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
         onPointerOver={() => {
-          generateCanvasFromPage();
+          if (enableSmartTextColor) {
+            generateCanvasFromPage();
+          }
           setIsHoveringQuick(true);
         }}
       >

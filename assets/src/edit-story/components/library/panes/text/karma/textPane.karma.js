@@ -153,6 +153,10 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   };
 
   describe('Easier/smarter text color', () => {
+    beforeEach(() => {
+      fixture.setFlags({ enableSmartTextColor: true });
+    });
+
     it('should add text color based on background', async () => {
       await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
