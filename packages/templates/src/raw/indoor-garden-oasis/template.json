@@ -1299,12 +1299,7 @@
         }
       ],
       "backgroundOverlay": "none",
-      "animations": [
-        {
-          "delete": true,
-          "targets": ["4508a287-6291-481e-8165-e648fd8d2505"]
-        }
-      ],
+      "animations": [],
       "backgroundColor": {
         "color": {
           "r": 255,
@@ -2432,10 +2427,6 @@
           "flyInDir": "leftToRight",
           "duration": 1600,
           "delay": 400
-        },
-        {
-          "delete": true,
-          "targets": ["b58a82c3-ef3c-4cb7-a8b4-685c5d630465"]
         }
       ],
       "pageTemplateType": "list"

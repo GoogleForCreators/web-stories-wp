@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('List', 'sticker name', 'web-stories');
 
-const TravelList = ({ style }) => (
+const List = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 30 38"
@@ -38,12 +38,12 @@ const TravelList = ({ style }) => (
   </svg>
 );
 
-TravelList.propTypes = {
+List.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 30 / 38,
-  svg: TravelList,
+  svg: List,
   title,
 };

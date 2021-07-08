@@ -604,10 +604,6 @@
           "zoomDirection": "scaleIn",
           "duration": 5000,
           "delay": 0
-        },
-        {
-          "delete": true,
-          "targets": ["46f08b51-2ddd-4408-a6c7-ce72b673dc85"]
         }
       ],
       "pageTemplateType": ""
@@ -5226,10 +5222,6 @@
       ],
       "backgroundOverlay": "none",
       "animations": [
-        {
-          "delete": true,
-          "targets": ["2569e09d-f521-4cbf-a47c-505771c26fe9"]
-        },
         {
           "id": "abe047e7-931e-4a8a-bf1d-7d14fda9e605",
           "type": "effect-fade-in",

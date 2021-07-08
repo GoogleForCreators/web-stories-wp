@@ -1081,12 +1081,7 @@
       },
       "type": "page",
       "id": "bb652455-d882-47c5-acf8-b0c438511638",
-      "animations": [
-        {
-          "delete": true,
-          "targets": ["1398d39a-7410-4cf4-8539-26dfdb37deeb"]
-        }
-      ],
+      "animations": [],
       "pageTemplateType": "editorial"
     },
     {

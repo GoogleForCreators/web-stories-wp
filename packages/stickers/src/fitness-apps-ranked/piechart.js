@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Pie Chart', 'sticker name', 'web-stories');
 
-function TechnologyPieChart({ style }) {
+function PieChart({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function TechnologyPieChart({ style }) {
   );
 }
 
-TechnologyPieChart.propTypes = {
+PieChart.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 50 / 50,
-  svg: TechnologyPieChart,
+  svg: PieChart,
   title,
 };

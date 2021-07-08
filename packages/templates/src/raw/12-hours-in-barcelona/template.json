@@ -43,8 +43,8 @@
             "height": 476,
             "posterId": 0,
             "id": 0,
-            "title": "Person Surfing With High-rise Building Background",
-            "alt": "Person Surfing With High-rise Building Background",
+            "title": "Person surfing with high-rise building in background",
+            "alt": "Person surfing with high-rise building in background",
             "sizes": [],
             "local": false,
             "isOptimized": false,
@@ -3445,10 +3445,6 @@
           "targets": ["3f2955a6-dabe-4871-9a51-e9d4a8d08a15"],
           "duration": 1600,
           "delay": 800
-        },
-        {
-          "delete": true,
-          "targets": ["2eb9913f-adb8-49c6-b6cd-f68efc8373b3"]
         }
       ],
       "backgroundColor": {
@@ -5674,8 +5670,8 @@
             "width": 121,
             "height": 160,
             "id": 0,
-            "title": "Polaroids frames",
-            "alt": "Polaroids frames",
+            "title": "Polaroids photo frames",
+            "alt": "Polaroids photo frames",
             "sizes": [],
             "local": false,
             "isOptimized": false
@@ -6080,8 +6076,8 @@
             "width": 121,
             "height": 160,
             "id": 0,
-            "title": "Polaroids frames",
-            "alt": "Polaroids frames",
+            "title": "Polaroids photo frames",
+            "alt": "Polaroids photo frames",
             "sizes": [],
             "local": false,
             "isOptimized": false
@@ -6229,10 +6225,6 @@
           "flyInDir": "leftToRight",
           "duration": 2000,
           "delay": 0
-        },
-        {
-          "delete": true,
-          "targets": ["295b719f-2a5c-4d13-9ae1-3396804c5b20"]
         },
         {
           "id": "03762cd1-1dca-4ecc-bfc9-1ce209ca3199",

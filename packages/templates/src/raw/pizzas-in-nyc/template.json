@@ -306,7 +306,7 @@
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/pizzas-in-nyc/page2_bg.mp4",
             "width": 720,
             "height": 1283,
-            "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/pizzas-in-nyc/page2_bg-poster.jpeg",
+            "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/pizzas-in-nyc/page2_bg-poster.jpg",
             "posterId": 0,
             "id": 0,
             "length": 18,
@@ -1441,10 +1441,6 @@
           "duration": 4000,
           "delay": 0,
           "targets": ["96134eee-b383-4fde-869f-53c57ce6c307"]
-        },
-        {
-          "delete": true,
-          "targets": ["7f1c95fe-7584-450a-a89a-369d21de63e2"]
         }
       ],
       "pageTemplateType": ""

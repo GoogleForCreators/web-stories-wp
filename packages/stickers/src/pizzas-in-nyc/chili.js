@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Chili', 'sticker name', 'web-stories');
 
-const nycChili = ({ style }) => (
+const Chili = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 46 50"
@@ -96,12 +96,12 @@ const nycChili = ({ style }) => (
   </svg>
 );
 
-nycChili.propTypes = {
+Chili.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 46 / 50,
-  svg: nycChili,
+  svg: Chili,
   title,
 };

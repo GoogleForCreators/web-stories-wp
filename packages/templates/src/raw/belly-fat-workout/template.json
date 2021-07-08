@@ -624,7 +624,7 @@
             "alt": "Footage Of A Young Sportswoman Working Out With A Skipping Rope In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [194, 192, 192]
           },
           "controls": false,
@@ -973,7 +973,7 @@
             "alt": "Footage Of A Young Sportswoman Doing Sit Ups While Working Out In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [41, 50, 65]
           },
           "controls": false,
@@ -1323,7 +1323,7 @@
             "alt": "Footage Of A Young Sportswoman Working Out With Battle Ropes In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [53, 59, 70]
           },
           "controls": false,
@@ -1673,7 +1673,7 @@
             "alt": "Footage Of A Young Sportswoman Working Out With Kettle Bells In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [40, 48, 54]
           },
           "controls": false,
@@ -2023,7 +2023,7 @@
             "alt": "Footage Of A Young Sportswoman Doing Push Ups While Working Out In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [54, 58, 70]
           },
           "controls": false,
@@ -2373,7 +2373,7 @@
             "alt": "Footage Of A Young Sportswoman Working Out With A Kettle Bell In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [33, 43, 50]
           },
           "controls": false,
@@ -2723,7 +2723,7 @@
             "alt": "Footage Of A Young Sportswoman Working Out With A Weight Plate In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [41, 43, 50]
           },
           "controls": false,
@@ -3064,7 +3064,7 @@
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/belly-fat-workout/page10_bgvideo.mp4",
             "width": 330,
             "height": 185,
-            "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/belly-fat-workout/page10_bgvideo.mp4",
+            "poster": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/belly-fat-workout/page10_bgvideo-poster.jpg",
             "posterId": 0,
             "id": 0,
             "length": 8,
@@ -3073,7 +3073,7 @@
             "alt": "Footage Of A Young Sportswoman Taking A Break While Working Out In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [40, 51, 58]
           },
           "controls": false,
@@ -3165,7 +3165,7 @@
             "alt": "Footage Of An Unrecognizable Young Sportswoman Applying Talcum Powder To Her Hands In A Gym",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
             "baseColor": [216, 221, 226]
           },
           "controls": false,

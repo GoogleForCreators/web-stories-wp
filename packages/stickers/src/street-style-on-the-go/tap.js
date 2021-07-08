@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Tap', 'sticker name', 'web-stories');
 
-function FashionTap({ style }) {
+function Tap({ style }) {
   return (
     <svg
       style={style}
@@ -36,12 +36,12 @@ function FashionTap({ style }) {
   );
 }
 
-FashionTap.propTypes = {
+Tap.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 50 / 50,
-  svg: FashionTap,
+  svg: Tap,
   title,
 };

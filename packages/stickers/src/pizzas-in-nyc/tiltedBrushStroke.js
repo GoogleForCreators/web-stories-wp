@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Tilted Brush Stroke', 'sticker name', 'web-stories');
 
-const nycTiltedBrush = ({ style }) => (
+const TiltedBrush = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 48 38"
@@ -36,12 +36,12 @@ const nycTiltedBrush = ({ style }) => (
   </svg>
 );
 
-nycTiltedBrush.propTypes = {
+TiltedBrush.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 48 / 38,
-  svg: nycTiltedBrush,
+  svg: TiltedBrush,
   title,
 };

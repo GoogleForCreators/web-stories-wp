@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Tooltip', 'sticker name', 'web-stories');
 
-const TravelToolTip = ({ style }) => (
+const ToolTip = ({ style }) => (
   <svg
     style={style}
     xmlns="http://www.w3.org/2000/svg"
@@ -36,12 +36,12 @@ const TravelToolTip = ({ style }) => (
   </svg>
 );
 
-TravelToolTip.propTypes = {
+ToolTip.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 80 / 33.6,
-  svg: TravelToolTip,
+  svg: ToolTip,
   title,
 };

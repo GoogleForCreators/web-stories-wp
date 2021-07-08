@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Muscle', 'sticker name', 'web-stories');
 
-function TechnologyMuscle({ style }) {
+function Muscle({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function TechnologyMuscle({ style }) {
   );
 }
 
-TechnologyMuscle.propTypes = {
+Muscle.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 58 / 50,
-  svg: TechnologyMuscle,
+  svg: Muscle,
   title,
 };

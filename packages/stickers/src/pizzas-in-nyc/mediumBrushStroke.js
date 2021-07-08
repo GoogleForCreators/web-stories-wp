@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 
 const title = _x('Medium Brush Stroke', 'sticker name', 'web-stories');
 
-const nycMediumBrush = ({ style }) => (
+const MediumBrush = ({ style }) => (
   <svg
     style={style}
     viewBox="0 0 56 28"
@@ -36,12 +36,12 @@ const nycMediumBrush = ({ style }) => (
   </svg>
 );
 
-nycMediumBrush.propTypes = {
+MediumBrush.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 56 / 28,
-  svg: nycMediumBrush,
+  svg: MediumBrush,
   title,
 };
