@@ -81,6 +81,7 @@ export const HelpCenter = () => {
             ariaLabel={__('Help Center', 'web-stories')}
           >
             <Navigator
+              isOpen={state.isOpen}
               onNext={actions.goToNext}
               onPrev={actions.goToPrev}
               onAllTips={actions.goToMenu}

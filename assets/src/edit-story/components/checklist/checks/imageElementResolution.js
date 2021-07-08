@@ -19,7 +19,7 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { List } from '@web-stories-wp/design-system';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function mediaElementResolution(element) {
   switch (element.type) {
@@ -74,8 +74,9 @@ const ImageElementResolution = () => {
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
+        pageId,
         elementId,
       }),
     [setHighlights]
@@ -96,7 +97,9 @@ const ImageElementResolution = () => {
         }
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
         thumbnailCount={failingElements.length}
@@ -105,7 +108,7 @@ const ImageElementResolution = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending image', 'web-stories')}

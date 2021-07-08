@@ -20,15 +20,14 @@
 import styled from 'styled-components';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { _x } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
-} from '../../../animation';
+} from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
 import { useStory, useCanvas } from '../../app';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';

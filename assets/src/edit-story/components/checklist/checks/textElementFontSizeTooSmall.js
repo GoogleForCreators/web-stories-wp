@@ -33,7 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function textElementFontSizeTooSmall(element) {
   return (
@@ -48,9 +48,10 @@ const TextElementFontSizeTooSmall = () => {
   const elements = filterStoryElements(story, textElementFontSizeTooSmall);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
         elementId,
+        pageId,
       }),
     [setHighlights]
   );
@@ -74,7 +75,7 @@ const TextElementFontSizeTooSmall = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.TEXT}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending text element', 'web-stories')}

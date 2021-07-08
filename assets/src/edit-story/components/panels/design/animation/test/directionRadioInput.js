@@ -20,11 +20,11 @@
 import { useState } from 'react';
 import { fireEvent, screen } from '@testing-library/react';
 import PropTypes from 'prop-types';
+import { DIRECTION, SCALE_DIRECTION } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
-import { DIRECTION, SCALE_DIRECTION } from '../../../../../../animation';
 import { renderWithTheme } from '../../../../../testUtils';
 import { DirectionRadioInput } from '../directionRadioInput';
 

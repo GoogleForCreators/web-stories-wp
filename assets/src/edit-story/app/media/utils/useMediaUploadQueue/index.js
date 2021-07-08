@@ -17,16 +17,18 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import {
   trackError,
   trackEvent,
   getTimeTracker,
 } from '@web-stories-wp/tracking';
+import { useFeature } from 'flagged';
 import {
   createBlob,
-  getImageDimensions,
   getFileName,
+  getImageDimensions,
+  isAnimatedGif,
 } from '@web-stories-wp/media';
 
 /**
@@ -39,7 +41,6 @@ import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromAttachment from '../getResourceFromAttachment';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
-import getPosterName from '../getPosterName';
 import * as reducer from './reducer';
 
 const initialState = {
@@ -51,12 +52,14 @@ function useMediaUploadQueue() {
     actions: { uploadFile },
   } = useUploader();
   const {
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
     getFirstFrameOfVideo,
+    convertGifToVideo,
   } = useFFmpeg();
+
+  const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -115,11 +118,7 @@ function useMediaUploadQueue() {
             return;
           }
 
-          if (
-            !isFeatureEnabled ||
-            !isTranscodingEnabled ||
-            !canTranscodeFile(file)
-          ) {
+          if (!isTranscodingEnabled || !canTranscodeFile(file)) {
             return;
           }
 
@@ -148,111 +147,141 @@ function useMediaUploadQueue() {
     updateItems();
   }, [
     state.queue,
-    isFeatureEnabled,
     isTranscodingEnabled,
     canTranscodeFile,
     getFirstFrameOfVideo,
     replacePlaceholderResource,
   ]);
 
+  const processPoster = useCallback(
+    async ({ newResource, posterFileName, newPosterFile, resource, id }) => {
+      try {
+        const { poster, posterId } = await uploadVideoPoster(
+          newResource.id,
+          posterFileName,
+          newPosterFile
+        );
+
+        let newResourceWithPoster = {
+          ...newResource,
+          poster: poster || newResource.poster || resource.poster,
+          posterId,
+        };
+
+        if (resource.mimeType === 'image/gif') {
+          newResourceWithPoster = {
+            ...newResourceWithPoster,
+            output: {
+              ...newResourceWithPoster.output,
+              poster: poster || newResource.poster || resource.poster,
+            },
+          };
+        }
+
+        finishUploading({
+          id,
+          resource: newResourceWithPoster,
+        });
+      } catch (error) {
+        finishUploading({
+          id,
+          resource: newResource,
+        });
+      }
+    },
+    [finishUploading, uploadVideoPoster]
+  );
+
   // Upload files to server, optionally first transcoding them.
   useEffect(() => {
     async function uploadItems() {
       await Promise.all(
+        /**
+         * Uploads a single pending item.
+         *
+         * @param {Object} item Queue item.
+         * @param {File} item.file File object.
+         * @return {Promise<void>}
+         */
         state.queue.map(async (item) => {
           const {
             id,
             file,
             state: itemState,
             resource,
-            additionalData,
+            additionalData = {},
             posterFile,
           } = item;
           if ('PENDING' !== itemState) {
             return;
           }
 
-          const originalFileName = getFileName(file);
-          const fileName = getPosterName(originalFileName);
+          const posterFileName = getFileName(file) + '-poster.jpeg';
+
           let newResource;
+          let newFile = file;
+          let newPosterFile = posterFile;
 
+          // Convert animated GIFs to videos if possible.
           if (
-            !isFeatureEnabled ||
-            !isTranscodingEnabled ||
-            !canTranscodeFile(file)
+            isGifOptimizationEnabled &&
+            isTranscodingEnabled &&
+            resource.mimeType === 'image/gif' &&
+            isAnimatedGif(await file.arrayBuffer())
           ) {
-            // TODO: If !isTranscodingEnabled && canTranscodeFile(), tell user to enable transcoding.
-
-            // If transcoding is not enabled, just upload the file normally without any transcoding.
-
-            startUploading({ id });
-
-            trackEvent('upload_media', {
-              file_size: file.size,
-              file_type: file.type,
-            });
-
-            const trackTiming = getTimeTracker('load_upload_media');
+            startTranscoding({ id });
 
             try {
-              const attachment = await uploadFile(file, additionalData);
-
-              // The newly uploaded file won't have a poster yet.
-              // However, we'll likely still have one on file.
-              // Add it back so we're never without one.
-              // The final poster will be uploaded later by uploadVideoPoster().
-              newResource = getResourceFromAttachment(attachment);
+              newFile = await convertGifToVideo(file);
+              finishTranscoding({ id, file: newFile });
+              additionalData.media_source = 'gif-conversion';
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
 
               trackError('upload_media', error?.message);
-            } finally {
-              trackTiming();
+
+              return;
             }
 
-            if (newResource.id) {
-              try {
-                const { poster, posterId } = await uploadVideoPoster(
-                  newResource.id,
-                  fileName,
-                  posterFile
-                );
-                const newResourceWithPoster = {
-                  ...newResource,
-                  poster: poster || newResource.poster || resource.poster,
-                  posterId,
-                };
-
-                finishUploading({
-                  id,
-                  resource: newResourceWithPoster,
-                });
-              } catch (error) {
-                finishUploading({
-                  id,
-                  resource: newResource,
-                });
-              }
+            try {
+              newPosterFile = await getFirstFrameOfVideo(newFile);
+            } catch (error) {
+              // Do nothing here.
             }
-
-            return;
           }
 
+          // Transcode/Optimize videos before upload.
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-          startTranscoding({ id });
+          if (isTranscodingEnabled && canTranscodeFile(file)) {
+            startTranscoding({ id });
+
+            try {
+              newFile = await transcodeVideo(file);
+              finishTranscoding({ id, file: newFile });
+              additionalData.media_source = 'video-optimization';
+            } catch (error) {
+              // Cancel uploading if there were any errors.
+              cancelUploading({ id, error });
+
+              trackError('upload_media', error?.message);
+
+              return;
+            }
+          }
+
+          startUploading({ id });
+
+          trackEvent('upload_media', {
+            file_size: newFile.size,
+            file_type: newFile.type,
+          });
+
+          const trackTiming = getTimeTracker('load_upload_media');
 
           try {
-            const newFile = await transcodeVideo(file);
-            finishTranscoding({ id, file: newFile });
-
-            startUploading({ id });
-
-            const attachment = await uploadFile(newFile, {
-              media_source: 'video-optimization',
-              ...additionalData,
-            });
+            const attachment = await uploadFile(newFile, additionalData);
 
             // The newly uploaded file won't have a poster yet.
             // However, we'll likely still have one on file.
@@ -264,31 +293,18 @@ function useMediaUploadQueue() {
             cancelUploading({ id, error });
 
             trackError('upload_media', error?.message);
+          } finally {
+            trackTiming();
           }
 
           if (newResource.id) {
-            try {
-              const { poster, posterId } = await uploadVideoPoster(
-                newResource.id,
-                fileName,
-                posterFile
-              );
-              const newResourceWithPoster = {
-                ...newResource,
-                poster: poster || newResource.poster || resource.poster,
-                posterId,
-              };
-
-              finishUploading({
-                id,
-                resource: newResourceWithPoster,
-              });
-            } catch (error) {
-              finishUploading({
-                id,
-                resource: newResource,
-              });
-            }
+            await processPoster({
+              newResource,
+              posterFileName,
+              newPosterFile,
+              resource,
+              id,
+            });
           }
         })
       );
@@ -300,14 +316,15 @@ function useMediaUploadQueue() {
     cancelUploading,
     uploadFile,
     startUploading,
-    finishUploading,
+    processPoster,
     startTranscoding,
     finishTranscoding,
-    isFeatureEnabled,
     isTranscodingEnabled,
+    getFirstFrameOfVideo,
     canTranscodeFile,
     transcodeVideo,
-    uploadVideoPoster,
+    convertGifToVideo,
+    isGifOptimizationEnabled,
   ]);
 
   return useMemo(

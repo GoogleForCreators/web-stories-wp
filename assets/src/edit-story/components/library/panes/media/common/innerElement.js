@@ -129,9 +129,8 @@ function InnerElement({
 
   let media;
   const thumbnailURL = getSmallestUrlForWidth(width, resource);
-  const { lengthFormatted, poster, mimeType, output } = resource;
-  const posterSrc = type === ContentType.GIF ? output.poster : poster;
-  const displayPoster = posterSrc ?? newVideoPosterRef.current;
+  const { lengthFormatted, poster, mimeType } = resource;
+  const displayPoster = poster ?? newVideoPosterRef.current;
 
   const commonProps = {
     width: width,
@@ -177,22 +176,12 @@ function InnerElement({
         {/* eslint-disable-next-line styled-components-a11y/media-has-caption -- No captions because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
-            <>
+            resource.output.src && (
               <source
-                src={getSmallestUrlForWidth(width, {
-                  ...resource,
-                  sizes: resource.output.sizes.mp4,
-                })}
-                type="video/mp4"
+                src={resource.output.src}
+                type={resource.output.mimeType}
               />
-              <source
-                src={getSmallestUrlForWidth(width, {
-                  ...resource,
-                  sizes: resource.output.sizes.webm,
-                })}
-                type="video/webm"
-              />
-            </>
+            )
           ) : (
             <source
               src={getSmallestUrlForWidth(width, resource)}
@@ -204,7 +193,7 @@ function InnerElement({
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
           <HiddenPosterImage
             ref={hiddenPoster}
-            src={posterSrc}
+            src={poster}
             {...commonImageProps}
           />
         )}
@@ -215,7 +204,7 @@ function InnerElement({
         )}
       </>
     );
-    cloneProps.src = posterSrc;
+    cloneProps.src = poster;
   }
   if (!media) {
     throw new Error('Invalid media element type.');
@@ -259,7 +248,7 @@ function InnerElement({
           },
         }}
         onClick={onClick(
-          type === ContentType.IMAGE ? thumbnailURL : posterSrc,
+          type === ContentType.IMAGE ? thumbnailURL : poster,
           mediaBaseColor.current
         )}
         cloneElement={CloneImg}

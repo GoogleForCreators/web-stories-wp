@@ -24,7 +24,14 @@ import { getDefinitionForType } from '../../../elements';
 
 export const LayerThumbnail = ({ page }) => {
   const { LayerIcon } = getDefinitionForType(page?.type);
-  return <LayerIcon element={page} />;
+
+  const props = { element: page };
+
+  if (page?.type === 'video') {
+    props.showVideoPreviewAsBackup = true;
+  }
+
+  return <LayerIcon {...props} />;
 };
 
 LayerThumbnail.propTypes = {

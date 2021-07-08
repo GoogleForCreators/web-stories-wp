@@ -85,6 +85,34 @@ describe('raw template files', () => {
     }
   );
 
+  // @see https://github.com/google/web-stories-wp/pull/7944#pullrequestreview-686071526
+  it.each(templates)(
+    '%s template images and video ids should default to 0',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      const typesToCheck = ['image', 'video'];
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (!typesToCheck.includes(element?.type)) {
+            continue;
+          }
+
+          expect(element?.resource?.id).toBe(0);
+
+          if ('video' !== element?.type) {
+            continue;
+          }
+
+          expect(element?.resource?.posterId).toBe(0);
+        }
+      }
+    }
+  );
+
   // @see https://github.com/google/web-stories-wp/pull/5889
   it.each(templates)(
     '%s template should contain pageTemplateType',

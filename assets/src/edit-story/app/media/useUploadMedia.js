@@ -65,12 +65,8 @@ function useUploadMedia({
     },
     actions: { addItem, removeItem },
   } = useMediaUploadQueue();
-  const {
-    isFeatureEnabled,
-    isTranscodingEnabled,
-    canTranscodeFile,
-    isFileTooLarge,
-  } = useFFmpeg();
+  const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
+    useFFmpeg();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.
@@ -156,7 +152,7 @@ function useUploadMedia({
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error } of failures) {
+    for (const { id, onUploadError, error, resource } of failures) {
       if (onUploadError) {
         onUploadError({ id });
       }
@@ -170,6 +166,12 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
+        thumbnail: resource && {
+          src: ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src,
+          alt: resource?.alt,
+        },
         dismissable: true,
       });
     }
@@ -209,8 +211,7 @@ function useUploadMedia({
           // We don't want to display placeholders / progress bars for items that
           // aren't supported anyway.
 
-          const canTranscode =
-            isFeatureEnabled && isTranscodingEnabled && canTranscodeFile(file);
+          const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
@@ -249,7 +250,6 @@ function useUploadMedia({
       validateFileForUpload,
       addItem,
       canTranscodeFile,
-      isFeatureEnabled,
       isTranscodingEnabled,
       isFileTooLarge,
     ]

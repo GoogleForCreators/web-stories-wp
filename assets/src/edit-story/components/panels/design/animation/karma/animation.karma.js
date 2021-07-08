@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { waitFor } from '@testing-library/react';
 
 /**
@@ -24,7 +25,6 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app';
-import { STORY_ANIMATION_STATE } from '../../../../../../animation';
 
 describe('Animation Panel', function () {
   let fixture;

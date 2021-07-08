@@ -30,13 +30,12 @@ import {
   useFocusOut,
   Icons,
 } from '@web-stories-wp/design-system';
-
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
-import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { focusStyle } from '../../../panels/shared';
 
 const PageTemplateWrapper = styled.div`

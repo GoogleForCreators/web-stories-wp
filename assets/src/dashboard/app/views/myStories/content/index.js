@@ -119,7 +119,7 @@ function Content({
                       as="a"
                       href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
                     >
-                      {__('Explore templates', 'web-stories')}
+                      {__('Explore Templates', 'web-stories')}
                     </Button>
                   )}
                 </EmptyContentMessage>

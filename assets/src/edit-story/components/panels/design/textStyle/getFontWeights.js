@@ -15,21 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-
-const fontWeightNames = {
-  100: __('Thin', 'web-stories'),
-  200: __('Extra-light', 'web-stories'),
-  300: __('Light', 'web-stories'),
-  400: __('Regular', 'web-stories'),
-  500: __('Medium', 'web-stories'),
-  600: __('Semi-bold', 'web-stories'),
-  700: __('Bold', 'web-stories'),
-  800: __('Extra-bold', 'web-stories'),
-  900: __('Black', 'web-stories'),
-};
+import { FONT_WEIGHT_NAMES } from '../../../../constants';
 
 /**
  * Returns a list of human-readable font weights.
@@ -39,14 +27,14 @@ const fontWeightNames = {
  * @return {Array<Object<{name: string, value: string}>>}} Font weights list.
  */
 function getFontWeights(font) {
-  const defaultFontWeights = [{ label: fontWeightNames[400], value: '400' }];
+  const defaultFontWeights = [{ label: FONT_WEIGHT_NAMES[400], value: '400' }];
 
   if (!font?.weights) {
     return defaultFontWeights;
   }
 
   return font.weights.map((weight) => ({
-    label: fontWeightNames[weight],
+    label: FONT_WEIGHT_NAMES[weight],
     value: weight.toString(),
   }));
 }

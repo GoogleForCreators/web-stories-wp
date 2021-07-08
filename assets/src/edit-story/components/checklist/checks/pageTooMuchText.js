@@ -18,7 +18,7 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { List } from '@web-stories-wp/design-system';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -66,9 +66,10 @@ const PageTooMuchText = () => {
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (pageId) =>
+    ({ pageId, elements }) =>
       setHighlights({
         pageId,
+        elements,
       }),
     [setHighlights]
   );
@@ -88,7 +89,9 @@ const PageTooMuchText = () => {
         }
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
         thumbnailCount={failingPages.length}
@@ -97,7 +100,14 @@ const PageTooMuchText = () => {
             {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
-                onClick={() => handleClick(page.id)}
+                onClick={() =>
+                  handleClick({
+                    pageId: page.id,
+                    elements: page.elements.filter(
+                      ({ type }) => type === 'text'
+                    ),
+                  })
+                }
                 type={THUMBNAIL_TYPES.PAGE}
                 displayBackground={
                   <PagePreview

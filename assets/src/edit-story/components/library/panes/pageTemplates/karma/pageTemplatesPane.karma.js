@@ -162,7 +162,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
       );
       await fixture.events.sleep(200);
       const message = await fixture.screen.getByRole('alert');
-      expect(message.textContent).toBe('Page template saved.');
+      expect(message.textContent).toBe('Page Template saved.');
 
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
@@ -242,7 +242,7 @@ describe('CUJ: Page Templates: Creator can Apply a Page Template', () => {
 
       await fixture.events.sleep(200);
       const message = await fixture.screen.getByRole('alert');
-      expect(message.textContent).toBe('Page template saved.');
+      expect(message.textContent).toBe('Page Template saved.');
 
       expect(
         fixture.editor.library.pageTemplatesPane.pageTemplates.length

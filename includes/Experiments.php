@@ -220,15 +220,28 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @embarks
+			 * Issue: 8113
+			 * Creation date: 2021-06-28
+			 */
+			[
+				'name'        => 'enableBulkVideoOptimization',
+				'label'       => __( 'Bulk video optimization', 'web-stories' ),
+				'description' => __( 'Enable option to optimize multiple videos at once in the new pre-publish checklist', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 7965
 			 * Creation date: 2021-06-18
 			 */
 			[
 				'name'        => 'enableChecklistCompanion',
-				'label'       => __( 'Enable Checklist Companion', 'web-stories' ),
-				'description' => __( 'Enables v2 of prepublish checklist as a popup in the editor.', 'web-stories' ),
+				'label'       => __( 'Checklist companion', 'web-stories' ),
+				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @samwhale
@@ -237,8 +250,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableRightClickMenus',
-				'label'       => __( 'Enable Right Click Menus', 'web-stories' ),
-				'description' => __( 'Adds a contextual shortcut menu when right clicking in the editor.', 'web-stories' ),
+				'label'       => __( 'Right click menus', 'web-stories' ),
+				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -248,8 +261,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableQuickActionMenus',
-				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
-				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
+				'label'       => __( 'Quick action menus', 'web-stories' ),
+				'description' => __( 'Enable a contextual shortcut menu to side of canvas in editor', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -260,8 +273,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableStickers',
-				'label'       => __( 'Enable Stickers', 'web-stories' ),
-				'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
+				'label'       => __( 'Stickers', 'web-stories' ),
+				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -271,8 +284,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableExperimentalAnimationEffects',
-				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
-				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
+				'label'       => __( 'Experimental animations', 'web-stories' ),
+				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -304,7 +317,7 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableInProgressTemplateActions',
-				'label'       => __( 'Template Actions', 'web-stories' ),
+				'label'       => __( 'Template actions', 'web-stories' ),
 				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
@@ -326,7 +339,7 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Library Search', 'web-stories' ),
+				'label'       => __( 'Library search', 'web-stories' ),
 				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
 				'group'       => 'editor',
 			],
@@ -349,7 +362,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'incrementalSearchDebounceMedia',
 				'label'       => __( 'Incremental Search', 'web-stories' ),
-				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
+				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -365,13 +378,24 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @spacedmonkey
+			 * Issue: #7232
+			 * Creation date: 2021-07-14
+			 */
+			[
+				'name'        => 'enableGifOptimization',
+				'label'       => __( 'GIF optimization', 'web-stories' ),
+				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
 			 * Issue: #3126
 			 * Creation date: 2021-02-02
 			 */
 			[
 				'name'        => 'enablePostLocking',
-				'label'       => __( 'Post locking', 'web-stories' ),
-				'description' => __( 'Enable post locking', 'web-stories' ),
+				'label'       => __( 'Story locking', 'web-stories' ),
+				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
 			],
 		];

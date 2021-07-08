@@ -39,9 +39,9 @@ import {
 } from '../../constants';
 import withOverlay from '../overlay/withOverlay';
 import { CanvasProvider } from '../../app/canvas';
-import { PrepublishChecklistProvider } from '../inspector/prepublish';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
+import { ChecklistCheckpointProvider } from '../checklist';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -88,7 +88,7 @@ function Layout() {
   return (
     <>
       <LayoutProvider>
-        <PrepublishChecklistProvider>
+        <ChecklistCheckpointProvider>
           <HighlightsProvider>
             <Editor zIndex={3}>
               <CanvasProvider>
@@ -102,7 +102,7 @@ function Layout() {
               </MetaBoxesArea>
             </Editor>
           </HighlightsProvider>
-        </PrepublishChecklistProvider>
+        </ChecklistCheckpointProvider>
       </LayoutProvider>
       <Snackbar.Container {...snackbarState} />
     </>

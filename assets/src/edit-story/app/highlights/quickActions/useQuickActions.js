@@ -29,7 +29,7 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
-import { getResetProperties, getSnackbarClearCopy } from './utils';
+import { getResetProperties } from './utils';
 import {
   ELEMENT_TYPE,
   ACTION_TEXT,
@@ -152,12 +152,11 @@ const useQuickActions = () => {
   const handleElementReset = useCallback(
     ({ elementId, resetProperties, elementType }) => {
       handleResetProperties(elementType, elementId, resetProperties);
-      const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
-        message,
+        message: __('Element properties have been reset', 'web-stories'),
         onAction: undo,
       });
     },
