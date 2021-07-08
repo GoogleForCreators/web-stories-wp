@@ -107,7 +107,11 @@ function useProcessMedia({
         updateOldObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
 
-        if (['video', 'gif'].includes(resource.type) && !resource.local) {
+        if (
+          ['video', 'gif'].includes(resource.type) &&
+          !resource.local &&
+          !resource.posterId
+        ) {
           uploadVideoPoster(resource.id, resource.src);
         }
       };
@@ -161,7 +165,11 @@ function useProcessMedia({
         updateOldObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
 
-        if (['video', 'gif'].includes(resource.type) && !resource.local) {
+        if (
+          ['video', 'gif'].includes(resource.type) &&
+          !resource.local &&
+          !resource.posterId
+        ) {
           uploadVideoPoster(resource.id, resource.src);
         }
       };
