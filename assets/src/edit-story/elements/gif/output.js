@@ -29,9 +29,7 @@ function GifOutput({ element, box }) {
   const { resource } = element;
 
   const src = !isBlobURL(resource.output.src) ? resource.output.src : '';
-  const poster = !isBlobURL(resource.output.poster)
-    ? resource.poster
-    : '';
+  const poster = !isBlobURL(resource.poster) ? resource.poster : '';
 
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
