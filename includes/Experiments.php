@@ -409,6 +409,17 @@ class Experiments extends Service_Base {
 				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @merapi
+			 * Issue: #262
+			 * Creation date: 2021-07-08
+			 */
+			[
+				'name'        => 'enableEyedropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

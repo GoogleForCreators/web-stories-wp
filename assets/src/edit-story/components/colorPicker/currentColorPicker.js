@@ -23,12 +23,21 @@ import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import {
+  Icons,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+} from '@web-stories-wp/design-system';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
+import useEyedropper from './eyedropper';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
@@ -37,6 +46,10 @@ const CONTROLS_HEIGHT = 28;
 const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 64;
 const HEX_WIDTH = 80;
+
+const Space = styled.span`
+  margin-left: 8px;
+`;
 
 const Container = styled.div`
   user-select: none;
@@ -124,6 +137,12 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
     [rgb, onChange]
   );
 
+  const enableEyedropper = useFeature('enableEyedropper');
+
+  const { initEyedropper } = useEyedropper({
+    onChange,
+  });
+
   return (
     <Container>
       <Body showOpacity={showOpacity}>
@@ -173,6 +192,19 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       </Body>
       <Footer>
         <HexValue>
+          {enableEyedropper && (
+            <Button
+              variant={BUTTON_VARIANTS.SQUARE}
+              type={BUTTON_TYPES.QUATERNARY}
+              size={BUTTON_SIZES.SMALL}
+              aria-label={__('Pick a color from canvas', 'web-stories')}
+              onClick={initEyedropper()}
+              onPointerEnter={initEyedropper(false)}
+            >
+              <Icons.Pipette />
+            </Button>
+          )}
+          <Space />
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}
             value={hexValue}
