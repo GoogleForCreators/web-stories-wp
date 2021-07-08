@@ -253,4 +253,69 @@ trait Sanitization_Utils {
 			}
 		}
 	}
+
+	/**
+	 * Determines whether a URL is a `blob:` URL.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $url URL.
+	 * @return bool Whether it's a blob URL.
+	 */
+	private function is_blob_url( string $url ) {
+		return 0 === strpos( $url, 'blob:' );
+	}
+
+	/**
+	 * Remove `blob:` URLs from videos and images that might have slipped through.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function remove_blob_urls( &$document ) {
+		/**
+		 * List of <amp-video> elements.
+		 *
+		 * @var DOMElement[] $videos Video elements.
+		 */
+		$videos = $document->body->getElementsByTagName( 'amp-video' );
+
+		foreach ( $videos as $video ) {
+			if ( $this->is_blob_url( $video->getAttribute( 'poster' ) ) ) {
+				$video->setAttribute( 'poster', '' );
+			}
+
+			if ( $this->is_blob_url( $video->getAttribute( 'artwork' ) ) ) {
+				$video->setAttribute( 'artwork', '' );
+			}
+
+			/**
+			 * List of <source> child elements.
+			 *
+			 * @var DOMElement[] $video_sources Video source elements.
+			 */
+			$video_sources = $video->getElementsByTagName( 'source' );
+
+			foreach ( $video_sources as $source ) {
+				if ( $this->is_blob_url( $source->getAttribute( 'src' ) ) ) {
+					$source->setAttribute( 'src', '' );
+				}
+			}
+		}
+
+		/**
+		 * List of <amp-img> elements.
+		 *
+		 * @var DOMElement[] $videos Image elements.
+		 */
+		$images = $document->body->getElementsByTagName( 'amp-img' );
+
+		foreach ( $images as $image ) {
+			if ( $this->is_blob_url( $image->getAttribute( 'src' ) ) ) {
+				$image->setAttribute( 'src', '' );
+			}
+		}
+	}
 }

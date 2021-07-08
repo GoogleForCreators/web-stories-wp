@@ -95,4 +95,23 @@ describe('Video output', () => {
       expect.stringMatching('alt text')
     );
   });
+
+  it('should remove blob URLs', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        resource: {
+          ...baseProps.element.resource,
+          src: 'blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a',
+          poster:
+            'blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a',
+        },
+      },
+    };
+    const output = <VideoOutput {...props} />;
+    await expect(output).not.toBeValidAMPStoryElement();
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).not.toStrictEqual(expect.stringMatching('blob:'));
+  });
 });
