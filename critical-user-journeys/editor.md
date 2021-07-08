@@ -1,12 +1,12 @@
 | **CUJ**                                                           | **Action**                                       | **Completion**              |
 | ----------------------------------------------------------------- | ------------------------------------------------ | --------------------------- |
-| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **0.00%** *(0 / 12)*     |
-|                                                                   | Apply a link to multi-selection                  | 🚨 **0.00%** *(0 / 1)*      |
+| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **33.33%** *(4 / 12)*    |
+|                                                                   | Apply a link to multi-selection                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Edit brand icon                                  | 🚨 **0.00%** *(0 / 2)*      |
 |                                                                   | Edit description                                 | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | Link with Page Attachment                        | 🚨 **0.00%** *(0 / 2)*      |
+|                                                                   | Link with Page Attachment                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 19)*     |
+|                                                                   | *[total]*                                        | 🚨 **36.84%** *(7 / 19)*    |
 | Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
@@ -36,9 +36,9 @@
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🏆 **100.00%** *(3 / 3)*    |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Select an individual word to edit                | 🛴 **80.00%** *(8 / 10)*    |
+|                                                                   | Select an individual word to edit                | 🏔️ **90.00%** *(9 / 10)*   |
 |                                                                   | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🛴 **82.35%** *(14 / 17)*   |
+|                                                                   | *[total]*                                        | 🛴 **88.24%** *(15 / 17)*   |
 | Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
@@ -60,8 +60,8 @@
 |                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
-| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*      |
+| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **70.33%** *(294 / 418)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.64%** *(312 / 418)* |
