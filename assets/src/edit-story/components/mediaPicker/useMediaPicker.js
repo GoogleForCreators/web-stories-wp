@@ -223,7 +223,6 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
-
         onSelect(mediaPickerEl);
       });
 
