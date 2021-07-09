@@ -119,7 +119,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function activate( $network_wide ) {
+	public function activate( bool $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
@@ -139,7 +139,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide ) {
+	public function deactivate( bool $network_wide ) {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
