@@ -32,10 +32,9 @@ import {
   CardGrid,
   CardGridItem,
   CardTitle,
-  CardPreviewContainer,
+  StoryCardPreview,
   ActionLabel,
   StoryMenu,
-  FocusableGridItem,
 } from '../../../components';
 import {
   StoriesPropType,
@@ -98,7 +97,9 @@ const StoryGridView = ({
       !activeGridItemIdRef.current
     ) {
       const newFocusId = returnStoryFocusId?.value;
-      itemRefs.current?.[newFocusId]?.children?.[0]?.focus();
+      // TODO this is broken
+      itemRefs.current?.[newFocusId]?.focus();
+      setActiveGridItemId(newFocusId);
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
@@ -106,7 +107,6 @@ const StoryGridView = ({
   useEffect(() => {
     if (activeGridItemId) {
       activeGridItemIdRef.current = activeGridItemId;
-      itemRefs.current?.[activeGridItemId]?.children[2].focus();
     }
   }, [activeGridItemId]);
 
@@ -170,34 +170,33 @@ const StoryGridView = ({
             <CardGridItem
               key={story.id}
               data-testid={`story-grid-item-${story.id}`}
-              role="listitem"
               ref={(el) => {
                 itemRefs.current[story.id] = el;
               }}
+              onFocus={() => {
+                setActiveGridItemId(story.id);
+              }}
+              title={sprintf(
+                /* translators: %s: story title.*/
+                __('Details about %s', 'web-stories'),
+                story.title
+              )}
             >
-              <FocusableGridItem
-                onFocus={() => setActiveGridItemId(story.id)}
-                isSelected={isActive}
-                tabIndex={tabIndex}
-                title={sprintf(
-                  /* translators: %s: story title.*/
-                  __('Press Enter to explore details about %s', 'web-stories'),
-                  story.title
-                )}
-              />
-              <CardPreviewContainer
+              <StoryCardPreview
                 ariaLabel={sprintf(
                   /* translators: %s: story title. */
                   __('Preview of %s', 'web-stories'),
                   story.title
                 )}
+                itemActive={isActive}
                 tabIndex={tabIndex}
                 pageSize={pageSize}
-                story={story}
+                storyImage={story.featuredMediaUrl}
                 bottomAction={{
                   targetAction: story.bottomTargetAction,
                   label: bottomActionLabel,
                 }}
+                // handleFocus={() => setActiveGridItemId(story.id)}
               />
               <DetailRow>
                 <CardTitle

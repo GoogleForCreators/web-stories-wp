@@ -19,6 +19,7 @@ export { default as CardGrid } from './cardGrid';
 export {
   ActionLabel,
   CardPreviewContainer,
+  StoryCardPreview,
   CardTitle,
   FocusableGridItem,
   default as CardGridItem,
