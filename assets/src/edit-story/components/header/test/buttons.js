@@ -58,6 +58,7 @@ function setupButtons({
         status: 'draft',
         storyId: 123,
         date: null,
+        editLink: 'https://example.com/wp-admin/post.php?post=123&action=edit',
         previewLink:
           'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
         ...extraStoryProps,
