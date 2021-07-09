@@ -113,17 +113,14 @@ const FontPicker = forwardRef(function FontPicker(
     ]
   );
 
-  const fontMap = useMemo(
-    () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
-        (lookup, option) => ({
-          ...lookup,
-          [option.id]: option,
-        }),
-        {}
-      ),
-    [fonts, recentFonts, curatedFonts]
-  );
+  const fontMap = useMemo(() => {
+    const map = new Map();
+    // curatedFonts and recentFonts are subsets of fonts.
+    fonts.forEach((f) => {
+      map.set(f.id, f);
+    });
+    return map;
+  }, [fonts]);
 
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
