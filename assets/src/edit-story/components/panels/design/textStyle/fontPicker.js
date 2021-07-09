@@ -125,7 +125,7 @@ const FontPicker = forwardRef(function FontPicker(
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
       observedFonts.filter(
-        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
+        (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
       )
     );
   };
