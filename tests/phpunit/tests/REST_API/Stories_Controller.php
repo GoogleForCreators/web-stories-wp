@@ -208,6 +208,29 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$view_link = get_preview_post_link( $story );
 		$this->assertSame( $view_link, $data['preview_link'] );
+		$this->assertArrayHasKey( 'edit_link', $data );
+		$edit_link = get_edit_post_link( $story, 'rest-api' );
+		$this->assertSame( $edit_link, $data['edit_link'] );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 */
+	public function test_get_item_no_user() {
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'publish',
+				'post_author' => self::$user_id,
+			]
+		);
+		wp_set_current_user( 0 );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$this->assertArrayNotHasKey( 'edit_link', $data );
+		$this->assertArrayNotHasKey( 'preview_link', $data );
 	}
 
 

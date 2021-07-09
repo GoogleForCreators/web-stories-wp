@@ -115,6 +115,13 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['preview_link'] = $view_link;
 		}
 
+		if ( in_array( 'edit_link', $fields, true ) ) {
+			$edit_link = get_edit_post_link( $post, 'rest-api' );
+			if ( $edit_link ) {
+				$data['edit_link'] = $edit_link;
+			}
+		}
+
 		$data  = $this->filter_response_by_context( $data, $context );
 		$links = $response->get_links();
 
@@ -204,6 +211,14 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$schema['properties']['preview_link'] = [
 			'description' => __( 'Preview Link.', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
+		];
+
+		$schema['properties']['edit_link'] = [
+			'description' => __( 'Edit Link.', 'web-stories' ),
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',

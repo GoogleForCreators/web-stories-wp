@@ -31,6 +31,7 @@ export default function reshapeStoryObject(editStoryURL) {
       modified_gmt,
       link,
       preview_link: previewLink,
+      edit_link: editStoryLink,
       story_data: storyData,
       _embedded: {
         author = [{ name: '' }],
@@ -68,8 +69,8 @@ export default function reshapeStoryObject(editStoryURL) {
         avatar: lockUser[0].avatar_urls['24'] || null,
       },
       centerTargetAction: '',
-      bottomTargetAction: `${editStoryURL}&post=${id}`,
-      editStoryLink: `${editStoryURL}&post=${id}`,
+      bottomTargetAction: editStoryLink,
+      editStoryLink,
       previewLink,
       link,
       originalStoryData,
