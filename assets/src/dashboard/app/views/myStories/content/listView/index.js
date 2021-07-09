@@ -38,8 +38,7 @@ import {
   StoriesPropType,
   RenameStoryPropType,
   StoryMenuPropType,
-  PageSizePropType,
-} from '../../../types';
+} from '../../../../../types';
 import {
   Table,
   TableAuthorHeaderCell,
@@ -56,7 +55,7 @@ import {
   StoryMenu,
   MoreVerticalButton,
   InlineInputForm,
-} from '../../../components';
+} from '../../../../../components';
 import {
   ORDER_BY_SORT,
   SORT_DIRECTION,
@@ -64,13 +63,9 @@ import {
   STORY_STATUS,
   STORY_PREVIEW_WIDTH,
   VIEWPORT_BREAKPOINT,
-} from '../../../constants';
-import {
-  PreviewPage,
-  PreviewErrorBoundary,
-} from '../../../../edit-story/components/previewPage';
-import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
-import { titleFormatted } from '../../../utils';
+} from '../../../../../constants';
+import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
+import { titleFormatted } from '../../../../../utils';
 
 const { focusableOutlineCSS } = themeHelpers;
 
@@ -78,14 +73,12 @@ const ListView = styled.div`
   width: 100%;
 `;
 
-const PreviewContainer = styled.div`
+const PreviewImage = styled.img`
   display: inline-block;
-  position: relative;
-  overflow: hidden;
   width: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL]}px;
   height: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL] /
   FULLBLEED_RATIO}px;
-  vertical-align: middle;
+  object-fit: contain;
   border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
@@ -172,7 +165,6 @@ export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
   hideStoryList,
-  pageSize,
   renameStory,
   sortDirection,
   stories,
@@ -347,11 +339,10 @@ export default function StoryListView({
                 data-testid={`story-list-item-${story.id}`}
               >
                 <TablePreviewCell>
-                  <PreviewContainer>
-                    <PreviewErrorBoundary>
-                      <PreviewPage page={story.pages[0]} pageSize={pageSize} />
-                    </PreviewErrorBoundary>
-                  </PreviewContainer>
+                  <PreviewImage
+                    src={story.featuredMediaUrl}
+                    alt={__('Story poster', 'web-stories')}
+                  />
                 </TablePreviewCell>
                 <TableCell>
                   <TitleTableCellContainer>
@@ -381,7 +372,7 @@ export default function StoryListView({
                         <StoryMenu
                           onMoreButtonSelected={storyMenu.handleMenuToggle}
                           contextMenuId={storyMenu.contextMenuId}
-                          story={story}
+                          storyId={story.id}
                           menuItems={generateStoryMenu({
                             menuItemActions: storyMenu.menuItemActions,
                             menuItems: storyMenu.menuItems,
@@ -446,7 +437,6 @@ StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
   hideStoryList: PropTypes.bool,
-  pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,
