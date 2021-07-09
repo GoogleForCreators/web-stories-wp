@@ -357,7 +357,7 @@ class SVG extends Service_Base {
 	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
 	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
 	 */
-	public function wp_check_filetype_and_ext( array $wp_check_filetype_and_ext, string $file, string $filename, array $mimes, $real_mime ): array {
+	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ) {
 		if ( 'image/svg' === $real_mime ) {
 			$wp_check_filetype_and_ext = [
 				'ext'             => self::EXT,
