@@ -39,6 +39,8 @@ use WP_REST_Response;
 
 /**
  * Stories_Controller class.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
 	use Publisher;
