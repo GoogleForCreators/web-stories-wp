@@ -30,7 +30,6 @@ import {
 /**
  * Internal dependencies
  */
-import { StoryPropType } from '../../types';
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 
 export const MoreVerticalButton = styled.button`
@@ -74,13 +73,13 @@ MenuContainer.propTypes = {
 export default function StoryMenu({
   contextMenuId,
   onMoreButtonSelected,
-  story,
+  storyId,
   verticalAlign,
   menuItems,
   itemActive,
   tabIndex,
 }) {
-  const isPopoverMenuOpen = contextMenuId === story.id;
+  const isPopoverMenuOpen = contextMenuId === storyId;
 
   const handleDismiss = useCallback(
     () => onMoreButtonSelected(-1),
@@ -94,7 +93,7 @@ export default function StoryMenu({
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
         aria-label={__('More Options', 'web-stories')}
-        onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
+        onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : storyId)}
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
@@ -110,7 +109,7 @@ export default function StoryMenu({
 StoryMenu.propTypes = {
   itemActive: PropTypes.bool,
   tabIndex: PropTypes.number,
-  story: StoryPropType,
+  storyId: PropTypes.number,
   onMoreButtonSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,

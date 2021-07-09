@@ -44,7 +44,8 @@ import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
-import { StoryGridView, StoryListView } from '../../../shared';
+import { StoryListView } from '../../../shared';
+import StoryGridView from '../storyGridView';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
