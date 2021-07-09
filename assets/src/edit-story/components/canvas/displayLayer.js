@@ -83,17 +83,13 @@ function DisplayPage({
   useEffect(() => resetAnimationState, [resetAnimationState, page]);
 
   return page
-    ? page.elements.map(({ id, ...rest }) => {
+    ? page.elements.map((element) => {
+        const { id } = element;
         if (editingElement === id) {
           return null;
         }
         return (
-          <DisplayElement
-            key={id}
-            element={{ id, ...rest }}
-            page={page}
-            isAnimatable
-          />
+          <DisplayElement key={id} element={element} page={page} isAnimatable />
         );
       })
     : null;

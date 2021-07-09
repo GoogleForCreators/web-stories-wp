@@ -87,11 +87,11 @@ function PagePreview({ page, ...props }) {
       <TransformProvider>
         <Page {...props}>
           <PreviewWrapper background={backgroundColor}>
-            {page.elements.map(({ id, ...rest }) => (
+            {page.elements.map((element) => (
               <DisplayElement
-                key={id}
+                key={element.id}
                 previewMode
-                element={{ id, ...rest }}
+                element={element}
                 page={page}
               />
             ))}

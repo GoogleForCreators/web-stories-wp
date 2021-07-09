@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { useUnits } from '@web-stories-wp/units';
@@ -238,4 +238,4 @@ DisplayElement.propTypes = {
   isAnimatable: PropTypes.bool,
 };
 
-export default DisplayElement;
+export default memo(DisplayElement);
