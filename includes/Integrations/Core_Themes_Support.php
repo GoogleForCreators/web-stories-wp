@@ -27,9 +27,8 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Admin\Customizer;
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Renderer\Stories\Renderer;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\{Assets,Service_Base};
 use function Google\Web_Stories\render_theme_stories;
 
 /**
@@ -157,7 +156,7 @@ class Core_Themes_Support extends Service_Base {
 	 * @since 1.6.0
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'after_setup_theme';
 	}
 }

@@ -28,9 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Infrastructure\Conditional;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\{Conditional,Registerable,Service};
 use WP_Styles;
 
 /**
@@ -48,7 +46,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 *
 	 * @return string
 	 */
-	public function get_handle() {
+	public function get_handle(): string {
 		return 'web-stories-fonts';
 	}
 
@@ -59,7 +57,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
-	public static function is_needed() {
+	public static function is_needed(): bool {
 		return is_admin() && ! wp_doing_ajax();
 	}
 

@@ -26,8 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\{Registerable,Service};
 use WP_Styles;
 use WP_Scripts;
 
@@ -42,10 +41,8 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * Script / style handle.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @return string
 	 */
-	public function get_handle() {
+	public function get_handle(): string {
 		return 'standalone-amp-story-player';
 	}
 

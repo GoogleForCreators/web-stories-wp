@@ -53,7 +53,7 @@ class PluginRowMeta extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 

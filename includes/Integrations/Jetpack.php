@@ -27,8 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Media\Media;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\{Service_Base,Story_Post_Type};
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_REST_Response;
@@ -89,7 +88,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Modified list of post types.
 	 */
-	public function add_to_jetpack_sitemap( $post_types ) {
+	public function add_to_jetpack_sitemap( array $post_types ): array {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
@@ -101,10 +100,8 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
-	 *
-	 * @return array
 	 */
-	public function add_videopress( array $mime_types ) {
+	public function add_videopress( array $mime_types ): array {
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
@@ -120,7 +117,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ) {
+	public function filter_ajax_query_attachments_args( array $args ): array {
 		if ( ! isset( $args['post_mime_type'] ) ) {
 			return $args;
 		}
@@ -154,10 +151,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post $attachment Attachment object.
-	 *
-	 * @return array
 	 */
-	public function filter_admin_ajax_response( array $response, WP_Post $attachment ) {
+	public function filter_admin_ajax_response( array $response, WP_Post $attachment ): array {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
 			return $response;
 		}
@@ -181,7 +176,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function filter_api_response( WP_REST_Response $response, WP_Post $post ) {
+	public function filter_api_response( WP_REST_Response $response, WP_Post $post ): \WP_REST_Response {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
 			return $response;
 		}
@@ -205,10 +200,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array  $data           Source data to be modified.
 	 * @param string $videopress_key VideoPress array key.
-	 *
-	 * @return array
 	 */
-	protected function add_extra_data( array $data, $videopress_key ) {
+	protected function add_extra_data( array $data, string $videopress_key ): array {
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
 
@@ -235,10 +228,8 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
-	 *
-	 * @return string
 	 */
-	protected function format_milliseconds( $milliseconds ) {
+	protected function format_milliseconds( int $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );
 
 		if ( $seconds >= 1 ) {
@@ -263,7 +254,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function add_term( $mid, $object_id, $meta_key ) {
+	public function add_term( int $mid, int $object_id, string $meta_key ) {
 		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {
 			return;
 		}
@@ -283,7 +274,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return bool Whether the current request is an AMP request.
 	 */
-	public function force_amp_request( $is_amp_request ) {
+	public function force_amp_request( bool $is_amp_request ): bool {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return $is_amp_request;
 		}

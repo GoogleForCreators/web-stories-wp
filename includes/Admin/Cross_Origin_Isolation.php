@@ -69,7 +69,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'current_screen';
 	}
 
@@ -80,7 +80,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 11;
 	}
 
@@ -120,7 +120,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function replace_in_dom( $html ) {
+	protected function replace_in_dom( string $html ): string {
 		$document = Document::fromHtml( $html );
 
 		if ( ! $document ) {
@@ -175,7 +175,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function style_loader_tag( $tag, $handle, $href ) {
+	public function style_loader_tag( string $tag, string $handle, string $href ): string {
 		return $this->add_attribute( $tag, 'href', $href );
 	}
 
@@ -190,7 +190,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
+	public function script_loader_tag( string $tag, string $handle, string $src ): string {
 		return $this->add_attribute( $tag, 'src', $src );
 	}
 
@@ -209,10 +209,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *                            fallback of 'mystery'.
 	 * @param string $alt         Alternative text to use in the avatar image tag. Default empty.
 	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
-	 *
-	 * @return string
 	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ) {
+	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ): string {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 
@@ -224,10 +222,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @param string $html HTML string.
 	 * @param string $attribute Attribute to check for.
 	 * @param string $url URL.
-	 *
-	 * @return string
 	 */
-	protected function add_attribute( $html, $attribute, $url ) {
+	protected function add_attribute( string $html, string $attribute, string $url ): string {
 		$site_url = site_url();
 		$url      = esc_url( $url );
 
@@ -288,10 +284,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @param string $string       String to search.
 	 * @param string $start_string String to search with.
-	 *
-	 * @return bool
 	 */
-	private function starts_with( $string, $start_string ) {
+	private function starts_with( string $string, string $start_string ): bool {
 		$len = strlen( $start_string );
 
 		return ( substr( $string, 0, $len ) === $start_string );

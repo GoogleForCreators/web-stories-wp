@@ -75,7 +75,7 @@ trait Document_Parser {
 	 *
 	 * @return DOMXPath|false
 	 */
-	protected function html_to_xpath( $html ) {
+	protected function html_to_xpath( string $html ) {
 		$document = Document::fromHtml( $html );
 		if ( ! $document ) {
 			return false;

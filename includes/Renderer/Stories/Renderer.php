@@ -28,12 +28,8 @@ namespace Google\Web_Stories\Renderer\Stories;
 
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
-use Google\Web_Stories\Services;
-use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\{AMP_Story_Player_Assets,Services,Story_Query,Story_Post_Type,Assets};
 use Google\Web_Stories\Traits\Amp;
-use Google\Web_Stories\Assets;
 use Iterator;
 use WP_Post;
 
@@ -176,10 +172,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Array of rendering arguments.
-	 *
-	 * @return string
 	 */
-	public function render( array $args = [] ) {
+	public function render( array $args = [] ): string {
 		++self::$instances;
 		$this->instance_id = self::$instances;
 
@@ -325,7 +319,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	protected function is_view_type( $view_type ) {
+	protected function is_view_type( string $view_type ): bool {
 
 		return ( ! empty( $this->attributes['view_type'] ) && $view_type === $this->attributes['view_type'] );
 	}
@@ -337,7 +331,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_view_type() {
+	protected function get_view_type(): string {
 
 		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
 	}
@@ -378,7 +372,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_view_classes() {
+	protected function get_view_classes(): string {
 		$view_classes   = [];
 		$view_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 
@@ -407,10 +401,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * Gets the classes for renderer container.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return string
 	 */
-	protected function get_container_classes() {
+	protected function get_container_classes(): string {
 
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
@@ -435,7 +427,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_single_story_classes() {
+	protected function get_single_story_classes(): string {
 
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
@@ -464,7 +456,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string Style string.
 	 */
-	protected function get_container_styles() {
+	protected function get_container_styles(): string {
 		$story_styles  = $this->is_view_type( 'circles' ) ? sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) : '';
 		$story_styles .= $this->is_view_type( 'carousel' ) ? sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
 
@@ -566,7 +558,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"
 					>
 					</amp-img>
-				<?php } else { ?>
+<?php } else { ?>
 					<img
 						src="<?php echo esc_url( $poster_url ); ?>"
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"
@@ -648,7 +640,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 * @since 1.5.0
 	 */
-	protected function generate_lightbox_html( $story ) {
+	protected function generate_lightbox_html( Story $story ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
 
@@ -668,7 +660,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 * @since 1.5.0
 	 */
-	protected function generate_amp_lightbox_html_amp( $story ) {
+	protected function generate_amp_lightbox_html_amp( Story $story ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
 		$lightbox_state = 'lightbox' . $story->get_id() . $this->instance_id;

@@ -45,7 +45,7 @@ trait Post_Type {
 	 *
 	 * @return string Rest base.
 	 */
-	protected function get_post_type_rest_base( $slug ) {
+	protected function get_post_type_rest_base( string $slug ) {
 		$post_type_obj = get_post_type_object( $slug );
 		$rest_base     = $slug;
 		if ( $post_type_obj instanceof WP_Post_Type ) {
@@ -65,7 +65,7 @@ trait Post_Type {
 	 *
 	 * @return bool
 	 */
-	protected function get_post_type_cap( $slug, $cap ) {
+	protected function get_post_type_cap( string $slug, string $cap ) {
 		$capability_name = $this->get_post_type_cap_name( $slug, $cap );
 		$capability      = false;
 		if ( $capability_name ) {
@@ -85,7 +85,7 @@ trait Post_Type {
 	 *
 	 * @return string|false
 	 */
-	protected function get_post_type_cap_name( $slug, $cap ) {
+	protected function get_post_type_cap_name( string $slug, string $cap ) {
 		$post_type_obj   = get_post_type_object( $slug );
 		$capability_name = false;
 
@@ -110,7 +110,7 @@ trait Post_Type {
 	 *
 	 * @return string
 	 */
-	protected function get_post_type_label( $slug, $label ) {
+	protected function get_post_type_label( string $slug, string $label ) {
 		$post_type_obj = get_post_type_object( $slug );
 		$name          = '';
 
@@ -134,7 +134,7 @@ trait Post_Type {
 	 *
 	 * @return WP_REST_Posts_Controller|WP_REST_Controller
 	 */
-	protected function get_post_type_parent_controller( $slug ) {
+	protected function get_post_type_parent_controller( string $slug ) {
 		$post_type_obj     = get_post_type_object( $slug );
 		$parent_controller = null;
 

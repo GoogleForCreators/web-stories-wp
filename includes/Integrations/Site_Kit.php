@@ -26,9 +26,7 @@
 
 namespace Google\Web_Stories\Integrations;
 
-use Google\Web_Stories\Analytics;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\{Analytics,Service_Base,Story_Post_Type};
 
 /**
  * Class Site_Kit.
@@ -72,7 +70,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return bool Whether Site Kit is active.
 	 */
-	protected function is_plugin_active() {
+	protected function is_plugin_active(): bool {
 		return defined( 'GOOGLESITEKIT_VERSION' );
 	}
 
@@ -84,7 +82,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
-	protected function is_adsense_module_active() {
+	protected function is_adsense_module_active(): bool {
 		$adsense_module_active       = in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
 		$adsense_options             = get_option( 'googlesitekit_adsense_settings' );
 		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
@@ -101,7 +99,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
-	protected function is_analytics_module_active() {
+	protected function is_analytics_module_active(): bool {
 		$analytics_module_active = in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
 		$analytics_options       = get_option( 'googlesitekit_analytics_settings' );
 		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
@@ -118,15 +116,15 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return array Modified configuration options.
 	 */
-	public function filter_site_kit_gtag_opt( $gtag_opt ) {
+	public function filter_site_kit_gtag_opt( array $gtag_opt ): array {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return $gtag_opt;
 		}
 
 		$default_config             = $this->analytics->get_default_configuration( $gtag_opt['vars']['gtag_id'] );
-		$default_config['triggers'] = isset( $default_config['triggers'] ) ? $default_config['triggers'] : [];
+		$default_config['triggers'] = $default_config['triggers'] ?? [];
 
-		$gtag_opt['triggers'] = isset( $gtag_opt['triggers'] ) ? $gtag_opt['triggers'] : [];
+		$gtag_opt['triggers'] = $gtag_opt['triggers'] ?? [];
 		$gtag_opt['triggers'] = array_merge(
 			$default_config['triggers'],
 			$gtag_opt['triggers']
@@ -148,7 +146,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return array List of active module slugs.
 	 */
-	protected function get_site_kit_active_modules_option() {
+	protected function get_site_kit_active_modules_option(): array {
 		if ( ! $this->is_plugin_active() ) {
 			return [];
 		}
@@ -175,7 +173,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return array Plugin status.
 	 */
-	public function get_plugin_status() {
+	public function get_plugin_status(): array {
 		$is_installed        = array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
 		$is_active           = $this->is_plugin_active();
 		$is_analytics_active = $this->is_analytics_module_active();

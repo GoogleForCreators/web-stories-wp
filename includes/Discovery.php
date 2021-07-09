@@ -28,8 +28,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\{Post_Type,Publisher};
 use Google\Web_Stories\Media\Media;
 
 use WP_Post;
@@ -38,8 +37,7 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery extends Service_Base {
-	use Publisher;
-	use Post_Type;
+	use Publisher, Post_Type;
 	/**
 	 * Initialize discovery functionality.
 	 *
@@ -140,7 +138,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
-	protected function get_schemaorg_metadata() {
+	protected function get_schemaorg_metadata(): array {
 		$publisher = $this->get_publisher_data();
 
 		$metadata = [
@@ -235,7 +233,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_open_graph_metadata() {
+	protected function get_open_graph_metadata(): array {
 		$metadata = [
 			'og:locale'    => get_bloginfo( 'language' ),
 			'og:site_name' => get_bloginfo( 'name' ),
@@ -309,7 +307,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_twitter_metadata() {
+	protected function get_twitter_metadata(): array {
 		$metadata = [
 			'twitter:card' => 'summary_large_image',
 		];
@@ -387,7 +385,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array|false
 	 */
-	protected function get_poster( $post, $size = 'full' ) {
+	protected function get_poster( $post, string $size = 'full' ) {
 		if ( ! has_post_thumbnail( $post ) ) {
 			return false;
 		}

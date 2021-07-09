@@ -37,9 +37,9 @@ trait Layout {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return mixed|void
+	 * @return array
 	 */
-	protected function get_layouts() {
+	protected function get_layouts() : array {
 		return [
 			'carousel' => __( 'Box Carousel', 'web-stories' ),
 			'circles'  => __( 'Circle Carousel', 'web-stories' ),

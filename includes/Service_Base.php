@@ -28,9 +28,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\{Delayed,Registerable,Service};
 
 /**
  * Class Service
@@ -43,7 +41,7 @@ abstract class Service_Base implements Service, Delayed, Registerable {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'init';
 	}
 
@@ -54,7 +52,7 @@ abstract class Service_Base implements Service, Delayed, Registerable {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 10;
 	}
 }

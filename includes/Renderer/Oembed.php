@@ -27,8 +27,7 @@
 
 namespace Google\Web_Stories\Renderer;
 
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\{Service_Base,Story_Post_Type};
 use WP_Post;
 
 /**
@@ -144,7 +143,7 @@ class Oembed extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_embed_height_width( $old_width ) {
+	protected function get_embed_height_width( $old_width ): array {
 		/** This filter is documented in wp-includes/embed.php */
 		$min_max_width = apply_filters(
 			'oembed_min_max_width',

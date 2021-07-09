@@ -28,8 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\{Story_Post_Type,Service_Base};
 
 /**
  * Updates the plugin action links for the plugin.
@@ -54,7 +53,7 @@ class PluginActionLinks extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 
@@ -64,10 +63,8 @@ class PluginActionLinks extends Service_Base {
 	 * @since 1.6.0
 	 *
 	 * @param  array $links Plugin action links.
-	 *
-	 * @return array
 	 */
-	public function action_links( $links ) {
+	public function action_links( array $links ): array {
 		$slug    = sprintf( 'edit.php?post_type=%s&page=stories-dashboard#/editor-settings', Story_Post_Type::POST_TYPE_SLUG );
 		$url     = get_admin_url( null, $slug );
 		$links[] = sprintf(

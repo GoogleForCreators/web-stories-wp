@@ -26,18 +26,8 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Decoder;
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Locale;
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Page_Template_Post_Type;
-use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Types;
-use Google\Web_Stories\Traits\Post_Type;
+use Google\Web_Stories\{Decoder,Experiments,Locale,Assets,Service_Base,Story_Post_Type,Page_Template_Post_Type,Tracking};
+use Google\Web_Stories\Traits\{Publisher,Screen,Types,Post_Type};
 use WP_Post;
 
 /**
@@ -46,10 +36,7 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base {
-	use Publisher;
-	use Types;
-	use Screen;
-	use Post_Type;
+	use Publisher,Types,Screen,Post_Type;
 
 	/**
 	 * Web Stories editor script handle.
@@ -230,18 +217,16 @@ class Editor extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @return array
 	 */
-	public function get_editor_settings() {
+	public function get_editor_settings(): array {
 		$post                     = get_post();
-		$story_id                 = ( $post ) ? $post->ID : null;
+		$story_id                 = ( $post ) ? (int) $post->ID : null;
 		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$has_publish_action       = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'publish_posts' );
 		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
 
-		if ( $story_id ) {
+		if ( $story_id && is_int( $story_id ) ) {
 			$this->setup_lock( $story_id );
 		}
 
@@ -353,7 +338,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function setup_lock( $story_id ) {
+	protected function setup_lock( int $story_id ) {
 		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
 			return;
 		}

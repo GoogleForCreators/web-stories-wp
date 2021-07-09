@@ -28,10 +28,8 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Traits\Screen;
-use Google\Web_Stories\Traits\Stories_Script_Data;
+use Google\Web_Stories\{Service_Base,Assets};
+use Google\Web_Stories\Traits\{Screen,Stories_Script_Data};
 
 /**
  * Class TinyMCE
@@ -39,8 +37,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * @package Google\Web_Stories
  */
 class TinyMCE extends Service_Base {
-	use Stories_Script_Data;
-	use Screen;
+	use Stories_Script_Data, Screen;
 
 	/**
 	 * Web Stories tinymce script handle.
@@ -95,7 +92,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_enqueue_scripts';
 	}
 
@@ -108,7 +105,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function tinymce_web_stories_button( array $buttons ) {
+	public function tinymce_web_stories_button( array $buttons ): array {
 		$buttons[] = 'web_stories';
 
 		return $buttons;
@@ -123,7 +120,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function web_stories_mce_plugin( array $plugins ) {
+	public function web_stories_mce_plugin( array $plugins ): array {
 
 		$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/tinymce-button.js';
 

@@ -30,8 +30,7 @@ use DOMDocument;
 use DOMElement;
 use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Experiments;
+use Google\Web_Stories\{Service_Base,Experiments};
 
 /**
  * Class SVG
@@ -123,10 +122,8 @@ class SVG extends Service_Base {
 	 * Helper function to check if svg uploads are already enabled.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return bool
 	 */
-	private function svg_already_enabled() {
+	private function svg_already_enabled(): bool {
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
@@ -140,9 +137,9 @@ class SVG extends Service_Base {
 	 *
 	 * @param array $mime_types Mime types keyed by the file extension regex corresponding to those types.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public function upload_mimes_add_svg( array $mime_types ) {
+	public function upload_mimes_add_svg( array $mime_types ): array {
 		// allow SVG file upload.
 		$mime_types['svg']  = self::MIME_TYPE;
 		$mime_types['svgz'] = self::MIME_TYPE;
@@ -157,10 +154,8 @@ class SVG extends Service_Base {
 	 *
 	 * @param string[] $mime_types     Mime types keyed by the file extension regex
 	 *                                 corresponding to those types.
-	 *
-	 * @return array
 	 */
-	public function mime_types_add_svg( array $mime_types ) {
+	public function mime_types_add_svg( array $mime_types ): array {
 		// allow SVG files.
 		$mime_types['svg'] = self::MIME_TYPE;
 
@@ -173,10 +168,8 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
-	 *
-	 * @return array
 	 */
-	public function web_stories_allowed_mime_types( array $mime_types ) {
+	public function web_stories_allowed_mime_types( array $mime_types ): array {
 		$mime_types['image'][] = self::MIME_TYPE;
 
 		return $mime_types;
@@ -213,7 +206,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function wp_generate_attachment_metadata( $metadata, $attachment_id, $context ) {
+	public function wp_generate_attachment_metadata( array $metadata, int $attachment_id, string $context ): array {
 		if ( 'create' !== $context ) {
 			return $metadata;
 		}
@@ -258,7 +251,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return string[]
 	 */
-	public function wp_handle_upload( $upload ) {
+	public function wp_handle_upload( array $upload ): array {
 		if ( self::MIME_TYPE !== $upload['type'] ) {
 			return $upload;
 		}
@@ -288,7 +281,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function get_svg_size( $file ) {
+	protected function get_svg_size( string $file ) {
 		$svg = $this->get_svg_data( $file );
 		$xml = $this->get_xml( $svg );
 
@@ -327,7 +320,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return true|WP_Error
 	 */
-	protected function sanitize( $file ) {
+	protected function sanitize( string $file ) {
 		$dirty     = $this->get_svg_data( $file );
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
@@ -363,10 +356,8 @@ class SVG extends Service_Base {
 	 *                                               $file being in a tmp directory).
 	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
 	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
-	 *
-	 * @return array
 	 */
-	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ) {
+	public function wp_check_filetype_and_ext( array $wp_check_filetype_and_ext, string $file, string $filename, array $mimes, $real_mime ): array {
 		if ( 'image/svg' === $real_mime ) {
 			$wp_check_filetype_and_ext = [
 				'ext'             => self::EXT,
@@ -387,7 +378,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return DOMElement|false
 	 */
-	protected function get_xml( $svg ) {
+	protected function get_xml( string $svg ) {
 		$dom                      = new DOMDocument();
 		$dom->preserveWhiteSpace  = false;
 		$dom->strictErrorChecking = false;
@@ -419,7 +410,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return string File contents.
 	 */
-	protected function get_svg_data( $file ) {
+	protected function get_svg_data( string $file ): string {
 		$key = md5( $file );
 		if ( ! isset( $this->svgs[ $key ] ) ) {
 			if ( is_readable( $file ) ) {

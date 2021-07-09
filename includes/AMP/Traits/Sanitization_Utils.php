@@ -107,7 +107,7 @@ trait Sanitization_Utils {
 	 * @param string                $placeholder    Placeholder publisher logo.
 	 * @return void
 	 */
-	private function add_publisher_logo( &$document, $publisher_logo, $placeholder ) {
+	private function add_publisher_logo( &$document, string $publisher_logo, string $placeholder ) {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -142,7 +142,7 @@ trait Sanitization_Utils {
 	 * @param string                $publisher Publisher logo.
 	 * @return void
 	 */
-	private function add_publisher( &$document, $publisher ) {
+	private function add_publisher( &$document, string $publisher ) {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -168,7 +168,7 @@ trait Sanitization_Utils {
 	 * @param string[]              $poster_images List of poster images, keyed by type.
 	 * @return void
 	 */
-	private function add_poster_images( &$document, $poster_images ) {
+	private function add_poster_images( &$document, array $poster_images ) {
 		/**
 		 * The <amp-story> element.
 		 *

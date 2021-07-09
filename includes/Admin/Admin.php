@@ -28,8 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\{Story_Post_Type,Service_Base};
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Traits\Screen;
@@ -61,7 +60,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 
@@ -202,6 +201,6 @@ class Admin extends Service_Base {
 
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
-		return isset( $post->post_title ) ? $post->post_title : '';
+		return $post->post_title ?? '';
 	}
 }

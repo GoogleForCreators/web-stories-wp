@@ -26,8 +26,7 @@
 
 namespace Google\Web_Stories\Renderer;
 
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\{Service_Base,Story_Post_Type};
 
 /**
  * Class Single
@@ -58,7 +57,7 @@ class Single extends Service_Base {
 	 *
 	 * @return string Template.
 	 */
-	public function filter_template_include( $template ) {
+	public function filter_template_include( $template ): string {
 		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) && ! is_embed() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
 		}

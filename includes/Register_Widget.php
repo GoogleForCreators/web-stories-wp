@@ -26,8 +26,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\{Registerable,Service};
 use Google\Web_Stories\Widgets\Stories;
 
 /**

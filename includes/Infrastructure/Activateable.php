@@ -39,5 +39,5 @@ interface Activateable {
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function activate( $network_wide );
+	public function activate( bool $network_wide );
 }

@@ -114,7 +114,7 @@ class Story {
 	 *
 	 * @return bool
 	 */
-	public function load_from_post( $_post ) {
+	public function load_from_post( $_post ): bool {
 		$post = get_post( $_post );
 
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
@@ -143,16 +143,18 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_title() {
+	public function get_title(): string {
 		return $this->title;
 	}
 
 	/**
 	 * Getter for excerpt attribute.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
-	public function get_excerpt() {
+	public function get_excerpt(): string {
 		return $this->excerpt;
 	}
 
@@ -163,7 +165,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_url() {
+	public function get_url(): string {
 		return $this->url;
 	}
 
@@ -174,7 +176,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_markup() {
+	public function get_markup(): string {
 		return $this->markup;
 	}
 
@@ -185,34 +187,40 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_poster_portrait() {
+	public function get_poster_portrait(): string {
 		return $this->poster_portrait;
 	}
 
 	/**
 	 * Get the story ID.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return int
 	 */
-	public function get_id() {
+	public function get_id(): int {
 		return $this->id;
 	}
 
 	/**
 	 * Get author of the story.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
-	public function get_author() {
+	public function get_author(): string {
 		return $this->author;
 	}
 
 	/**
 	 * Date for the story.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
-	public function get_date() {
+	public function get_date(): string {
 		return $this->date;
 	}
 

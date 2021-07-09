@@ -29,8 +29,7 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Experiments;
+use Google\Web_Stories\{Service_Base,Experiments};
 use Google\Web_Stories\Infrastructure\Conditional;
 
 /**
@@ -66,7 +65,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
-	public static function is_needed() {
+	public static function is_needed(): bool {
 		return is_admin() && ! wp_doing_ajax();
 	}
 
@@ -77,7 +76,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'wp_loaded';
 	}
 
@@ -103,7 +102,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return array The debugging information, with added information for Web stories.
 	 */
-	public function add_debug_information( array $debugging_information ) {
+	public function add_debug_information( array $debugging_information ): array {
 		$enabled_experiments = [];
 		foreach ( $this->experiments->get_experiments() as $experiment ) {
 			$enabled = $this->experiments->is_experiment_enabled( $experiment['name'] );
@@ -177,7 +176,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return string
 	 */
-	protected function get_formatted_output( $value ) {
+	protected function get_formatted_output( $value ): string {
 		return $value ? __( 'Enabled', 'web-stories' ) : __( 'Disabled', 'web-stories' );
 	}
 
@@ -189,7 +188,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @param array $core_extensions The existing extensions from Core.
 	 * @return array The extensions, including those for Web Stories.
 	 */
-	public function add_extensions( array $core_extensions ) {
+	public function add_extensions( array $core_extensions ): array {
 		$extensions = [
 			'json'     => [
 				'extension' => 'json',
@@ -234,7 +233,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return array Modified test result.
 	 */
-	public function modify_test_result( $test_result ) {
+	public function modify_test_result( array $test_result ): array {
 		// Set the `https_status` test status to critical if its current status is recommended, along with adding to the
 		// description for why its required for Web Stories.
 		if ( isset( $test_result['test'], $test_result['status'], $test_result['description'] ) && 'https_status' === $test_result['test'] && 'recommended' === $test_result['status'] ) {

@@ -26,9 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Infrastructure\Delayed;
-use Google\Web_Stories\Infrastructure\Registerable;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\{Delayed,Registerable,Service};
 use WP_REST_Users_Controller;
 
 /**
@@ -65,7 +63,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'rest_api_init';
 	}
 
@@ -76,7 +74,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 100;
 	}
 }

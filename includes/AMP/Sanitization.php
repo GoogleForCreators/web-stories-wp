@@ -26,18 +26,9 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
-use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
-use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
-use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
-use Google\Web_Stories_Dependencies\AmpProject\Amp;
-use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\{AMP_Allowed_Tags_Generated,AMP_Content_Sanitizer,AMP_DOM_Utils,AMP_Layout_Sanitizer,AMP_Script_Sanitizer,AMP_Style_Sanitizer,AMP_Tag_And_Attribute_Sanitizer};
+use Google\Web_Stories_Dependencies\AmpProject\{Amp,Attribute,Extension,Tag};
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories_Dependencies\AmpProject\Extension;
-use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
 
 /**
@@ -82,7 +73,7 @@ class Sanitization {
 	 *
 	 * @return void
 	 */
-	protected function ensure_required_markup( $document, $scripts ) {
+	protected function ensure_required_markup( $document, array $scripts ) {
 		// Gather all links.
 		$links = [
 			Attribute::REL_PRECONNECT => [
@@ -300,7 +291,7 @@ class Sanitization {
 	 *
 	 * @return array List of extensions and their URLs.
 	 */
-	protected function get_extension_sources() {
+	protected function get_extension_sources(): array {
 		$specs = [];
 		// Register all AMP components as defined in the spec.
 		foreach ( AMP_Allowed_Tags_Generated::get_extension_specs() as $extension_name => $extension_spec ) {
@@ -338,7 +329,7 @@ class Sanitization {
 	 *
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
-	protected function is_amp_dev_mode() {
+	protected function is_amp_dev_mode(): bool {
 		// For the few sites that forcibly show the admin bar even when the user is logged out, only enable dev
 		// mode if the user is actually logged in. This prevents the dev mode from being served to crawlers
 		// when they index the AMP version.
@@ -375,7 +366,7 @@ class Sanitization {
 	 *
 	 * @return array Sanitizers.
 	 */
-	protected function get_sanitizers() {
+	protected function get_sanitizers(): array {
 		$sanitizers = [
 			AMP_Script_Sanitizer::class            => [],
 			AMP_Style_Sanitizer::class             => [
@@ -468,7 +459,7 @@ class Sanitization {
 	 *
 	 * @return bool Whether the validation error should be sanitized.
 	 */
-	public function validation_error_callback( array $error, array $data = [] ) {
+	public function validation_error_callback( array $error, array $data = [] ): bool {
 		/**
 		 * Filters whether the validation error should be sanitized.
 		 *

@@ -39,5 +39,5 @@ interface Deactivateable {
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function deactivate( $network_wide );
+	public function deactivate( bool $network_wide );
 }

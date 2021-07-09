@@ -26,8 +26,7 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\{Service_Base,Story_Post_Type};
 use Google\Web_Stories\Traits\Screen;
 
 /**
@@ -118,7 +117,7 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * @return string Meta box URL.
 	 */
-	public function get_meta_box_url( $story_id ) {
+	public function get_meta_box_url( int $story_id ): string {
 		$meta_box_url = admin_url( 'post.php' );
 		$meta_box_url = add_query_arg(
 			[
@@ -144,7 +143,7 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * @return array List of meta boxes per location.
 	 */
-	public function get_meta_boxes_per_location() {
+	public function get_meta_boxes_per_location(): array {
 		global $wp_meta_boxes;
 
 		$screen = $this->get_current_screen();
