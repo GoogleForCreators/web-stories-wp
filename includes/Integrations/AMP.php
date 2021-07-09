@@ -198,7 +198,7 @@ class AMP extends Service_Base {
 	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
 	 * @return bool Whether AMP-to-AMP is excluded.
 	 */
-	public function filter_amp_to_amp_linking_element_excluded( bool $excluded, string $url, array $rel, DOMElement $element ): bool {
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
 		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}

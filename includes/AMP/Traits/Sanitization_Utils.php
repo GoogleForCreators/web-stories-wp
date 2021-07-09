@@ -107,7 +107,7 @@ trait Sanitization_Utils {
 	 * @param string                $placeholder    Placeholder publisher logo.
 	 * @return void
 	 */
-	private function add_publisher_logo( &$document, string $publisher_logo, string $placeholder ) {
+	private function add_publisher_logo( &$document, $publisher_logo, $placeholder ) {
 		/**
 		 * The <amp-story> element.
 		 *

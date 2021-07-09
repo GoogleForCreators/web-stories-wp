@@ -143,7 +143,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_title(): string {
+	public function get_title() {
 		return $this->title;
 	}
 
@@ -154,7 +154,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_excerpt(): string {
+	public function get_excerpt() {
 		return $this->excerpt;
 	}
 
@@ -165,7 +165,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_url(): string {
+	public function get_url() {
 		return $this->url;
 	}
 
@@ -176,7 +176,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_markup(): string {
+	public function get_markup() {
 		return $this->markup;
 	}
 
@@ -187,7 +187,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_poster_portrait(): string {
+	public function get_poster_portrait() {
 		return $this->poster_portrait;
 	}
 
@@ -198,7 +198,7 @@ class Story {
 	 *
 	 * @return int
 	 */
-	public function get_id(): int {
+	public function get_id() {
 		return $this->id;
 	}
 
@@ -209,7 +209,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_author(): string {
+	public function get_author() {
 		return $this->author;
 	}
 
@@ -220,7 +220,7 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_date(): string {
+	public function get_date() {
 		return $this->date;
 	}
 
