@@ -329,15 +329,6 @@ class Dashboard extends Service_Base {
 			)
 		);
 
-		$edit_story_url = admin_url(
-			add_query_arg(
-				[
-					'action' => 'edit',
-				],
-				'post.php'
-			)
-		);
-
 		$classic_wp_list_url = admin_url(
 			add_query_arg(
 				[
@@ -363,7 +354,6 @@ class Dashboard extends Service_Base {
 				'userId'                => get_current_user_id(),
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
-				'editStoryURL'          => $edit_story_url,
 				'wpListURL'             => $classic_wp_list_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),

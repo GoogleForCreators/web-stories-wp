@@ -98,9 +98,7 @@ describe('ApiProvider', () => {
     const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
-        <ConfigProvider
-          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-        >
+        <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
@@ -175,9 +173,7 @@ describe('ApiProvider', () => {
     const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
-        <ConfigProvider
-          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-        >
+        <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
@@ -273,9 +269,7 @@ describe('ApiProvider', () => {
     const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
-        <ConfigProvider
-          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-        >
+        <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
         </ConfigProvider>
       ),
@@ -438,9 +432,7 @@ describe('ApiProvider', () => {
     const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
-        <ConfigProvider
-          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-        >
+        <ConfigProvider config={{ api: { stories: 'stories' } }}>
           <ApiProvider {...props} />
         </ConfigProvider>
       ),

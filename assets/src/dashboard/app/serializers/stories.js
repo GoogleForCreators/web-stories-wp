@@ -19,7 +19,7 @@
  */
 import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
 
-export default function reshapeStoryObject(editStoryURL) {
+export default function reshapeStoryObject() {
   return function (originalStoryData) {
     const {
       id,
