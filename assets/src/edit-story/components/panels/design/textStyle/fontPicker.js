@@ -113,22 +113,19 @@ const FontPicker = forwardRef(function FontPicker(
     ]
   );
 
-  const fontMap = useMemo(
-    () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
-        (lookup, option) => ({
-          ...lookup,
-          [option.id]: option,
-        }),
-        {}
-      ),
-    [fonts, recentFonts, curatedFonts]
-  );
+  const fontMap = useMemo(() => {
+    const map = new Map();
+    // curatedFonts and recentFonts are subsets of fonts.
+    fonts.forEach((f) => {
+      map.set(f.id, f);
+    });
+    return map;
+  }, [fonts]);
 
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
       observedFonts.filter(
-        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
+        (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
       )
     );
   };
