@@ -97,10 +97,86 @@ const replaceResourcesWithDummy = (state) => {
   return [newState, videosToReload];
 };
 
+const coreTemplateResourcePlaceholder =
+  '____WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/%%templateName%%/';
+
+const getResourceFileName = (src) => {
+  // If empty source return empty.
+  if (!src.length) {
+    return src;
+  }
+
+  const matchedPaths = src.match(/\/([^/?#]+)[^/]*$/);
+
+  // If file path found, return it with the placeholder for easy replacements.
+  if (matchedPaths.length > 1) {
+    return `${coreTemplateResourcePlaceholder}${matchedPaths[1]}`;
+  }
+
+  // If file path not found return original URL.
+  return src;
+};
+
+/**
+ * Prepare story JSON to export as core template by resetting few properties
+ * which are not used and adding handy placeholder strings for easy replacement
+ * of template names.
+ *
+ * Sets following properties,
+ * current: null,
+ * selection: [],
+ * story: {},
+ *
+ * Resource ids and posterIds are reset to 0 and replaces the resource URL with
+ * replaceable path.
+ *
+ * @see https://github.com/google/web-stories-wp/issues/7227
+ * @param {*} state Current story.
+ * @return {*} Updated state for Core Template.
+ */
+const prepareCoreTemplate = (state) => {
+  const newState = {
+    ...state,
+    current: null,
+    selection: [],
+    story: {},
+    pages: state.pages.map((page) => ({
+      ...page,
+      elements: page.elements.map((element) => {
+        const newElement = { ...element };
+        if ('resource' in element) {
+          newElement.resource = { ...element.resource };
+          if (element.type === 'video') {
+            newElement.resource.id = 0;
+            newElement.resource.posterId = 0;
+            newElement.resource.src = getResourceFileName(
+              newElement.resource.src
+            );
+            newElement.resource.poster = getResourceFileName(
+              newElement.resource.poster
+            );
+          }
+          if (element.type === 'image') {
+            newElement.resource.id = 0;
+            newElement.resource.sizes = [];
+            newElement.resource.src = getResourceFileName(
+              newElement.resource.src
+            );
+          }
+        }
+        return newElement;
+      }),
+    })),
+  };
+
+  return newState;
+};
+
 function DevTools() {
   const [isVisible, setIsVisible] = useState(false);
   const [isBase64, setIsBase64] = useState(false);
   const [isDummyResources, setIsDummyResources] = useState(false);
+  const [isCoreTemplate, setIsCoreTemplate] = useState(false);
   const { showSnackbar } = useSnackbar();
   const textareaRef = useRef();
   const {
@@ -122,9 +198,12 @@ function DevTools() {
   };
   const storyData = isDummyResources
     ? replaceResourcesWithDummy(reducerStateSlice)[0]
+    : isCoreTemplate
+    ? prepareCoreTemplate(reducerStateSlice)
     : reducerStateSlice;
 
   const toggleDummyResources = () => setIsDummyResources((v) => !v);
+  const toggleCoreTemplate = () => setIsCoreTemplate((v) => !v);
   const toggleBase64 = () => setIsBase64((v) => !v);
   const toggleVisible = () => setIsVisible((v) => !v);
   const copyToClipboard = () => {
@@ -186,6 +265,14 @@ function DevTools() {
               onChange={toggleDummyResources}
             />
             {'Dummy resources'}
+          </Label>
+          <Label title="Export as Core Template">
+            <input
+              type="checkbox"
+              checked={isCoreTemplate}
+              onChange={toggleCoreTemplate}
+            />
+            {'Core Template'}
           </Label>
         </div>
         <div>
