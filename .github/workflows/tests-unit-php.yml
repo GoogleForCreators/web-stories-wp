@@ -131,7 +131,7 @@ jobs:
           composer require --dev --ignore-platform-reqs --no-interaction --no-scripts --update-with-all-dependencies phpunit/phpunit:^7.5
           git apply patches/composer.patch
           composer dump-autoload --no-interaction
-        if: ${{ matrix.php == '8.0' }} || ${{ matrix.php == '7.4' }}
+        if: ${{ matrix.php == '8.0' || matrix.php == '7.4' }}
 
       - name: Set up problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
