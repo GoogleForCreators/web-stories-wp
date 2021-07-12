@@ -85,7 +85,8 @@ function rewrite_flush() {
  *
  * @return void
  */
-function activate( bool $network_wide = false ) {
+function activate( $network_wide = false ) {
+	$network_wide = (bool) $network_wide;
 	// Ensures capabilities are properly set up as that class is not a service.
 	setup_new_site();
 
@@ -163,7 +164,8 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  *
  * @return void
  */
-function deactivate( bool $network_wide ) {
+function deactivate( $network_wide = false ) {
+	$network_wide = (bool) $network_wide;
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 
 	// This will also flush rewrite rules.
