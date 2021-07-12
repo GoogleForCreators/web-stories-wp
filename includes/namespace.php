@@ -81,7 +81,7 @@ function rewrite_flush() {
  *
  * @since 1.0.0
  *
- * @param bool $network_wide Whether to activate network-wide.
+ * @param bool|null $network_wide Whether to activate network-wide.
  *
  * @return void
  */
@@ -162,7 +162,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  *
  * @since 1.0.0
  *
- * @param bool $network_wide Whether to deactivate network-wide.
+ * @param bool|null $network_wide Whether to deactivate network-wide.
  *
  * @return void
  */
