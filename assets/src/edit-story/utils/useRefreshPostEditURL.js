@@ -28,11 +28,11 @@ import { useCallback } from 'react';
  */
 function useRefreshPostEditURL(postId, postEditURL) {
   const refreshPostEditURL = useCallback(() => {
-    window.history.replaceState(
-      { id: postId },
-      'Post ' + postId,
-      postEditURL + window.location.hash
-    );
+    const newUrl = new URL(postEditURL);
+    newUrl.hash = window.location.hash;
+    // Remove the schema and host and just return path, params and hash.
+    const postEditPath = newUrl.toString().replace(newUrl.origin, '');
+    window.history.replaceState({ id: postId }, 'Post ' + postId, postEditPath);
   }, [postId, postEditURL]);
   return refreshPostEditURL;
 }
