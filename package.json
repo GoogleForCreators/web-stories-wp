@@ -120,7 +120,7 @@
     "@storybook/addon-knobs": "^6.3.0",
     "@storybook/addon-storysource": "^6.3.0",
     "@storybook/addon-viewport": "^6.3.0",
-    "@storybook/client-api": "^6.3.0",
+    "@storybook/client-api": "^6.3.4",
     "@storybook/client-logger": "^6.3.0",
     "@storybook/react": "^6.3.0",
     "@svgr/webpack": "^5.5.0",
