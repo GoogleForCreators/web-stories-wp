@@ -28,18 +28,19 @@ import { useCallback } from 'react';
  */
 function useRefreshPostEditURL(postId, postEditURL) {
   const refreshPostEditURL = useCallback(() => {
-    let postEditPath;
-    const hash = window.location.hash;
     try {
       const newUrl = new URL(postEditURL);
-      newUrl.hash = hash;
+      newUrl.hash = window.location.hash;
       // Remove the schema and host and just return path, params and hash.
-      postEditPath = newUrl.toString().replace(newUrl.origin, '');
+      const postEditPath = newUrl.toString().replace(newUrl.origin, '');
+      window.history.replaceState(
+        { id: postId },
+        'Post ' + postId,
+        postEditPath
+      );
     } catch (error) {
-      // If try fails, fallback to using window location origin.
-      postEditPath = postEditURL.replace(window.location.origin, '') + hash;
+      // Do nothing for now.
     }
-    window.history.replaceState({ id: postId }, 'Post ' + postId, postEditPath);
   }, [postId, postEditURL]);
   return refreshPostEditURL;
 }
