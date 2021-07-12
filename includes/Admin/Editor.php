@@ -226,7 +226,7 @@ class Editor extends Service_Base {
 		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
 
-		if ( $story_id && is_int( $story_id ) ) {
+		if ( $story_id ) {
 			$this->setup_lock( $story_id );
 		}
 
