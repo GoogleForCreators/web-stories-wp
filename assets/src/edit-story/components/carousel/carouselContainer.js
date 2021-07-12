@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useMemo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
@@ -63,4 +63,5 @@ function CarouselContainer() {
   );
 }
 
-export default CarouselContainer;
+// Don't rerender the carousel container needlessly e.g. on element selection.
+export default memo(CarouselContainer);

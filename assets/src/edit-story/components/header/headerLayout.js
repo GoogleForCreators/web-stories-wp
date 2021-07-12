@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { memo } from 'react';
 
 /**
  * Internal dependencies
@@ -61,4 +62,5 @@ function HeaderLayout() {
   );
 }
 
-export default HeaderLayout;
+// Don't rerender the header needlessly e.g. on element selection.
+export default memo(HeaderLayout);
