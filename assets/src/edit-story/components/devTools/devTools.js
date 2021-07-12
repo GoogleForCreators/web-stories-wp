@@ -97,7 +97,7 @@ const replaceResourcesWithDummy = (state) => {
   return [newState, videosToReload];
 };
 
-const coreTemplateResourcePlaceholder =
+const templateResourcePlaceholder =
   '____WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/%%templateName%%/';
 
 const getResourceFileName = (src) => {
@@ -110,7 +110,7 @@ const getResourceFileName = (src) => {
 
   // If file path found, return it with the placeholder for easy replacements.
   if (matchedPaths.length > 1) {
-    return `${coreTemplateResourcePlaceholder}${matchedPaths[1]}`;
+    return `${templateResourcePlaceholder}${matchedPaths[1]}`;
   }
 
   // If file path not found return original URL.
@@ -118,7 +118,7 @@ const getResourceFileName = (src) => {
 };
 
 /**
- * Prepare story JSON to export as core template by resetting few properties
+ * Prepare story JSON to export as template by resetting few properties
  * which are not used and adding handy placeholder strings for easy replacement
  * of template names.
  *

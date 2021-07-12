@@ -102,9 +102,9 @@ To get the JSON representation of a story in the editor:
 1. In the editor, open the story.
 2. Press `Command+Shift+Option+J` (Mac) or `Control+Shift+Alt+J` (Windows/Linux) in the editor.
 3. A dialog will appear where you can copy/paste story JSON.
-4. Check the `Core Template` checkbox that is present at the top of the dialog.
+4. Check the `Template` checkbox that is present at the top of the dialog.
 
-   <img width="554" alt="Screenshot 2021-07-11 at 2 40 16 PM" src="https://user-images.githubusercontent.com/6906779/125189481-efe82c80-e255-11eb-93dd-ca875d514f54.png">
+   <img width="554" alt="Screenshot of the dev tools with the Templates checkbox" src="https://user-images.githubusercontent.com/6906779/125189481-efe82c80-e255-11eb-93dd-ca875d514f54.png">
 
 
 #### Alternative
@@ -129,11 +129,11 @@ Once you have the story JSON, several code changes are needed to add it to the l
         - `story: {}`
       - First change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__` as the base, which then will be replaced by the CDN url.
       - Ensure to also change poster image URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`.
-      - Change `posterId` and `id` for all elements of type image and video to `0`, these are the WP media ids that are not used in core templates.
+      - Change `posterId` and `id` for all elements of type image and video to `0`, these are the WP media ids that are not used in templates.
       - Make sure that the images and videos have appropriate title and alt text set for better accessibility.
 
    - If the story JSON is copied from the devTools dialog as mentioned  in [Get The Story JSON](#get-the-story-json), the JSON will have some of the changes already present.
-     - The 'Core Template' checkbox does following:
+     - The 'Template' checkbox does following:
        - Resets extraneous properties.
        - Replaces resource URLs with replaceable CDN constant and `static-site` asset path.
        - Resets `sizes` property for images to `[]`.
