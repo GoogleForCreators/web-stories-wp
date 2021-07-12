@@ -126,7 +126,12 @@ function usePageAsCanvas() {
   );
 
   const calculateAccessibleTextColors = useCallback(
-    (atts, callback) => {
+    (atts, callback, isInserting = true) => {
+      // If we're calculating the color without actually inserting the element and in zoomed mode, skip.
+      // No point calculating the color from zoomed in mode, it would be useless.
+      if (!isInserting && zoomSetting !== ZOOM_SETTING.FIT) {
+        callback(null);
+      }
       const contrastCalculation = (canvas) => {
         try {
           const ctx = canvas.getContext('2d');
@@ -159,11 +164,17 @@ function usePageAsCanvas() {
       ) {
         contrastCalculation(pageCanvasData.canvas);
       } else {
-        generateCanvasFromPage(contrastCalculation, true /* reset zoom */);
+        generateCanvasFromPage(contrastCalculation, isInserting);
       }
       return null;
     },
-    [currentPage, generateCanvasFromPage, pageCanvasData, hasPageHashChanged]
+    [
+      currentPage,
+      generateCanvasFromPage,
+      pageCanvasData,
+      hasPageHashChanged,
+      zoomSetting,
+    ]
   );
 
   return {
