@@ -15,6 +15,7 @@
   height: 100%;
   opacity: 0;
   transform: translate(0, -100vh);
+  display: none;
 }
 
 /* amp-lightbox needs to have z-index to render on top of other elements in the page. */
@@ -26,6 +27,7 @@
 .web-stories-list__lightbox.show {
   transform: translate(0, 0);
   opacity: 1;
+  display: block;
 }
 
 .web-stories-list__lightbox amp-story-player {

@@ -123,8 +123,7 @@ class TinyMCE extends Service_Base {
 	 * @return array
 	 */
 	public function web_stories_mce_plugin( array $plugins ): array {
-
-		$plugins['web_stories'] = trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'assets/js/tinymce-button.js';
+		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
 
 		return $plugins;
 	}
