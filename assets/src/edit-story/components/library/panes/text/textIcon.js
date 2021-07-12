@@ -133,7 +133,9 @@ function TextIcon(props) {
   };
   const { isActive } = props;
   return (
-    <TextIconContainer>
+    <TextIconContainer
+      onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
+    >
       <IconWrapper>
         <AnimatedTextIcon
           id="text-tab-icon"
@@ -148,12 +150,7 @@ function TextIcon(props) {
         tabIndex={isActive ? 0 : -1}
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
-        onPointerOver={() => {
-          if (enableSmartTextColor) {
-            generateCanvasFromPage();
-          }
-          setIsHoveringQuick(true);
-        }}
+        onPointerOver={() => setIsHoveringQuick(true)}
       >
         <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>
