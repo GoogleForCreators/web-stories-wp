@@ -63,5 +63,5 @@ function CarouselContainer() {
   );
 }
 
-// Don't rerender the carousel container needlessly e.g. on element selection.
+// Don't rerender the carousel container needlessly e.g. on element selection change.
 export default memo(CarouselContainer);

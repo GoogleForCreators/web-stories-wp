@@ -238,4 +238,6 @@ DisplayElement.propTypes = {
   isAnimatable: PropTypes.bool,
 };
 
+// Don't rerender the display element needlessly (e.g. element selection change)
+// if the element or other props haven't changed.
 export default memo(DisplayElement);

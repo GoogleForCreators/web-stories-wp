@@ -177,5 +177,5 @@ function PageMenu() {
   );
 }
 
-// Don't rerender the page menu needlessly e.g. on element selection.
+// Don't rerender the page menu needlessly e.g. on element selection change.
 export default memo(PageMenu);

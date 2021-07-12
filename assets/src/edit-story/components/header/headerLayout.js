@@ -62,5 +62,5 @@ function HeaderLayout() {
   );
 }
 
-// Don't rerender the header needlessly e.g. on element selection.
+// Don't rerender the header needlessly e.g. on element selection change.
 export default memo(HeaderLayout);
