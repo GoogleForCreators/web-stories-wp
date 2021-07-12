@@ -27,7 +27,8 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Media\Media;
-use Google\Web_Stories\{Service_Base,Story_Post_Type};
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_REST_Response;

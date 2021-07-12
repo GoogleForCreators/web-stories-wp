@@ -28,7 +28,9 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Infrastructure\{Conditional,Registerable,Service};
+use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use WP_Styles;
 
 /**

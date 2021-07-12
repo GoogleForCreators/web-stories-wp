@@ -26,8 +26,10 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\{Story_Query,Service_Base};
-use Google\Web_Stories\Traits\{Layout,Theme_Support};
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Traits\Theme_Support;
+use Google\Web_Stories\Traits\Layout;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 use WP_Error;

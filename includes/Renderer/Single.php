@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories\Renderer;
 
-use Google\Web_Stories\{Service_Base,Story_Post_Type};
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Single

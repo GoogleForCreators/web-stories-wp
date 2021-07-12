@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\{Decoder,Services};
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Services;
 use stdClass;
 use WP_Error;
 use WP_Post;

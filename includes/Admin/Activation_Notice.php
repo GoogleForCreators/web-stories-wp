@@ -26,8 +26,11 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\{Assets,Story_Post_Type, Tracking};
-use Google\Web_Stories\Infrastructure\{Registerable,Service as ServiceInterface};
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tracking;
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 
 /**
  * Class Activation_Notice.

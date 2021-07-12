@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Infrastructure\{Registerable,Service as ServiceInterface};
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
 
 /**
  * Class Activation_Flag.

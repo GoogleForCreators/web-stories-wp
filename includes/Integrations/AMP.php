@@ -29,8 +29,10 @@ namespace Google\Web_Stories\Integrations;
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Traits\{Publisher,Screen};
-use Google\Web_Stories\{Service_Base,Story_Post_Type};
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_Screen;
 

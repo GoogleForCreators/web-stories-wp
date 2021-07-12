@@ -28,9 +28,18 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Locale;
+use Google\Web_Stories\Tracking;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Template_Post_Type;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\{Decoder,Experiments,Locale,Tracking,Story_Post_Type,Template_Post_Type,Service_Base,Assets};
-use Google\Web_Stories\Traits\{Post_Type,Screen,Types};
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Traits\Post_Type;
+use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Traits\Types;
 
 /**
  * Dashboard class.

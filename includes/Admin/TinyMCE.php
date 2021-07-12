@@ -28,8 +28,10 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\{Service_Base,Assets};
-use Google\Web_Stories\Traits\{Screen,Stories_Script_Data};
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Traits\Stories_Script_Data;
 
 /**
  * Class TinyMCE

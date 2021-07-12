@@ -30,7 +30,8 @@ use DOMDocument;
 use DOMElement;
 use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
-use Google\Web_Stories\{Service_Base,Experiments};
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Class SVG

@@ -26,9 +26,20 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\{Decoder,Experiments,Locale,Assets,Service_Base,Story_Post_Type,Page_Template_Post_Type,Tracking};
-use Google\Web_Stories\Traits\{Publisher,Screen,Types,Post_Type};
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Locale;
+use Google\Web_Stories\Assets;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Page_Template_Post_Type;
+use Google\Web_Stories\Tracking;
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Traits\Types;
+use Google\Web_Stories\Traits\Post_Type;
 use WP_Post;
+
 
 /**
  * Class Editor

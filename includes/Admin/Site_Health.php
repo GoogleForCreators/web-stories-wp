@@ -29,7 +29,8 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\{Service_Base,Experiments};
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Infrastructure\Conditional;
 
 /**

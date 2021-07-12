@@ -26,9 +26,18 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories_Dependencies\{AMP_Allowed_Tags_Generated,AMP_Content_Sanitizer,AMP_DOM_Utils,AMP_Layout_Sanitizer,AMP_Script_Sanitizer,AMP_Style_Sanitizer,AMP_Tag_And_Attribute_Sanitizer};
-use Google\Web_Stories_Dependencies\AmpProject\{Amp,Attribute,Extension,Tag};
+use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
+use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
+use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
+use Google\Web_Stories_Dependencies\AmpProject\Amp;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Extension;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
 
 /**

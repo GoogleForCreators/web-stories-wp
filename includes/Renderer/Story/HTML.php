@@ -30,7 +30,9 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
-use Google\Web_Stories\AMP\{Story_Sanitizer,Optimization,Sanitization};
+use Google\Web_Stories\AMP\Story_Sanitizer;
+use Google\Web_Stories\AMP\Optimization;
+use Google\Web_Stories\AMP\Sanitization;
 
 /**
  * Class HTML

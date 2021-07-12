@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\{Injector,Service};
+use Google\Web_Stories\Infrastructure\Injector;
+use Google\Web_Stories\Infrastructure\Service;
 
 /**
  * Class Database_Upgrader

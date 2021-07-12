@@ -26,7 +26,9 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\{Demo_Content, Settings, Story_Post_Type};
+use Google\Web_Stories\Demo_Content;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
