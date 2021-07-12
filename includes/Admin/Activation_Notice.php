@@ -172,7 +172,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 				'newStoryURL'  => $new_story_url,
 				'dashboardURL' => $dashboard_url,
 			],
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 	}
 
