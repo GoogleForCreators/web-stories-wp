@@ -115,6 +115,15 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['preview_link'] = $view_link;
 		}
 
+		if ( in_array( 'confirm_link', $fields, true ) ) {
+			$data['confirm_link'] = add_query_arg(
+				[
+					'from-web-story' => $post->ID,
+				],
+				admin_url( 'post-new.php' ) 
+			);
+		}
+
 		$data  = $this->filter_response_by_context( $data, $context );
 		$links = $response->get_links();
 
@@ -204,6 +213,14 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$schema['properties']['preview_link'] = [
 			'description' => __( 'Preview Link.', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
+		];
+
+		$schema['properties']['confirm_link'] = [
+			'description' => __( 'Confirm Link.', 'web-stories' ),
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',
