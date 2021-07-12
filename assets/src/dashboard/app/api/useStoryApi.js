@@ -181,7 +181,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
-          payload: reshapeStoryObject()(response),
+          payload: reshapeStoryObject(response),
         });
       } catch (err) {
         dispatch({
@@ -329,7 +329,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         });
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
-          payload: reshapeStoryObject()(response),
+          payload: reshapeStoryObject(response),
         });
       } catch (err) {
         dispatch({

@@ -132,7 +132,7 @@ function storyReducer(state, action) {
           return acc;
         }
         fetchedStoriesById.push(current.id);
-        acc[current.id] = reshapeStoryObject()(current);
+        acc[current.id] = reshapeStoryObject(current);
         return acc;
       }, {});
 
