@@ -19,20 +19,16 @@
 |                                                                   | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
 |                                                                   | *[total]*                                        | 🛴 **81.82%** *(18 / 22)*   |
-| Creator Can Style Text                                            | Apply B                                          | 🛴 **80.00%** *(16 / 20)*   |
+| Creator Can Style Text                                            | Apply B                                          | 🛴 **70.00%** *(14 / 20)*   |
 |                                                                   | Apply I                                          | 🛴 **54.55%** *(6 / 11)*    |
 |                                                                   | Apply U                                          | 🛴 **50.00%** *(5 / 10)*    |
 |                                                                   | Apply Uppercase                                  | 🏆 **100.00%** *(3 / 3)*    |
-|                                                                   | Select weight                                    | 🏆 **100.00%** *(9 / 9)*    |
+|                                                                   | Select weight                                    | 🛴 **77.78%** *(7 / 9)*     |
 |                                                                   | Set kerning                                      | 🚨 **40.00%** *(2 / 5)*     |
 |                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set text color                                   | 🚨 **40.00%** *(2 / 5)*     |
 |                                                                   | Use font picker                                  | 🏆 **100.00%** *(14 / 14)*  |
-|                                                                   | *[total]*                                        | 🛴 **86.84%** *(33 / 38)*   |
-| Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | *[total]*                                        | 🛴 **81.58%** *(31 / 38)*   |
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🏆 **100.00%** *(3 / 3)*    |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
@@ -51,8 +47,6 @@
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-| Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +71,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.64%** *(312 / 418)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.41%** *(294 / 406)* |
