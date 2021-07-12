@@ -126,7 +126,7 @@ function usePageAsCanvas() {
   );
 
   const calculateAccessibleTextColors = useCallback(
-    (atts, callback, isInserting = true) => {
+    (atts, callback, isInserting = true, skipCanvasGeneration = false) => {
       // If we're calculating the color without actually inserting the element and in zoomed mode, skip.
       // No point calculating the color from zoomed in mode, it would be useless.
       if (!isInserting && zoomSetting !== ZOOM_SETTING.FIT) {
@@ -158,9 +158,12 @@ function usePageAsCanvas() {
           callback({ color: null });
         }
       };
+      // If we have data and nothing has changed or we can skip the canvas update, just calculate the contrast.
+      // Skipping is used when preset are placed under each other consecutively, the same image can be used then.
       if (
         pageCanvasData &&
-        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
+        (!hasPageHashChanged(currentPage, pageCanvasData.currentPage) ||
+          skipCanvasGeneration)
       ) {
         contrastCalculation(pageCanvasData.canvas);
       } else {

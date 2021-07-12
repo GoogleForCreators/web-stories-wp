@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import { Text } from '@web-stories-wp/design-system';
 import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';
@@ -32,6 +32,7 @@ import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
 import { focusStyle } from '../../panels/shared';
 import usePageAsCanvas from '../../../utils/usePageAsCanvas';
+import useLibrary from '../useLibrary';
 
 const Preview = styled.button`
   display: flex;
@@ -71,6 +72,10 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     state: { versionNumber },
   } = useHistory();
 
+  const { pageCanvasData } = useLibrary((state) => ({
+    pageCanvasData: state.state.pageCanvasData,
+  }));
+
   const { calculateAccessibleTextColors } = usePageAsCanvas();
   const enableSmartTextColor = useFeature('enableSmartTextColor');
 
@@ -87,28 +92,39 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   }, [font, fontWeight, content, maybeEnqueueFontStyle]);
 
   // Gets the position and the color already when hovering to use it directly when inserting.
-  const getInsertionProps = useCallback(() => {
-    // If nothing changed meanwhile, don't make new calculations.
-    if (presetDataRef.current.versionNumber === versionNumber) {
+  useLayoutEffect(() => {
+    if (!pageCanvasData || !enableSmartTextColor) {
+      return;
+    }
+    // If nothing changed meanwhile and we already have color data, don't make new calculations.
+    if (
+      presetDataRef.current.versionNumber === versionNumber &&
+      presetDataRef.current.autoColor
+    ) {
       return;
     }
     presetDataRef.current.versionNumber = versionNumber;
     const atts = getPosition(element);
     presetDataRef.current.positionAtts = atts;
-    if (enableSmartTextColor) {
-      calculateAccessibleTextColors(
-        { ...element, ...atts },
-        (autoColor) => {
-          presetDataRef.current.autoColor = autoColor;
-        },
-        false /* isInserting */
-      );
+
+    // If the element is positioned under the previous element (not default position),
+    // no new image generation needed.
+    if (atts.y !== element.y) {
+      presetDataRef.current.skipCanvasGeneration = true;
     }
+    calculateAccessibleTextColors(
+      { ...element, ...atts },
+      (autoColor) => {
+        presetDataRef.current.autoColor = autoColor;
+      },
+      false /* isInserting */
+    );
   }, [
     calculateAccessibleTextColors,
     element,
     getPosition,
     enableSmartTextColor,
+    pageCanvasData,
     versionNumber,
   ]);
 
@@ -117,8 +133,11 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     const isPositioned = Boolean(presetDataRef.current?.positionAtts);
     insertPreset(
       { ...element, ...presetDataRef.current?.positionAtts },
-      isPositioned,
-      presetDataRef.current?.autoColor
+      {
+        isPositioned,
+        accessibleColors: presetDataRef.current?.autoColor,
+        skipCanvasGeneration: presetDataRef.current?.skipCanvasGeneration,
+      }
     );
     // Reset after insertion.
     presetDataRef.current = {};
@@ -126,7 +145,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
   }, [insertPreset, element, title]);
 
   return (
-    <Preview onClick={onClick} onPointerEnter={getInsertionProps}>
+    <Preview onClick={onClick}>
       <PreviewText font={font} fontSize={fontSize} fontWeight={fontWeight}>
         {title}
       </PreviewText>
