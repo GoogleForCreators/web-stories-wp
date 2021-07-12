@@ -228,6 +228,8 @@ class Editor extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
+	 * @return array
 	 */
 	public function get_editor_settings(): array {
 		$post                     = get_post();

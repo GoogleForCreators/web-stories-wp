@@ -123,6 +123,8 @@ class SVG extends Service_Base {
 	 * Helper function to check if svg uploads are already enabled.
 	 *
 	 * @since 1.3.0
+	 *
+	 * @return bool
 	 */
 	private function svg_already_enabled(): bool {
 		$allowed_mime_types = get_allowed_mime_types();
@@ -155,6 +157,8 @@ class SVG extends Service_Base {
 	 *
 	 * @param string[] $mime_types     Mime types keyed by the file extension regex
 	 *                                 corresponding to those types.
+	 *
+	 * @return array
 	 */
 	public function mime_types_add_svg( array $mime_types ): array {
 		// allow SVG files.
@@ -169,6 +173,8 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
+	 *
+	 * @return array
 	 */
 	public function web_stories_allowed_mime_types( array $mime_types ): array {
 		$mime_types['image'][] = self::MIME_TYPE;
@@ -187,7 +193,7 @@ class SVG extends Service_Base {
 	 */
 	public function filter_list_of_allowed_filetypes( $value ) {
 		$filetypes = explode( ' ', $value );
-		if ( ! in_array( self::EXT, $filetypes, true ) ) {
+		if ( is_array( $filetypes ) && ! in_array( self::EXT, $filetypes, true ) ) {
 			$filetypes[] = self::EXT;
 			$value       = implode( ' ', $filetypes );
 		}

@@ -405,6 +405,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * Gets the classes for renderer container.
 	 *
 	 * @since 1.5.0
+	 *
+	 * @return string
 	 */
 	protected function get_container_classes(): string {
 

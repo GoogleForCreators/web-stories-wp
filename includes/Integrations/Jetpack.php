@@ -101,6 +101,8 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
+	 *
+	 * @return array
 	 */
 	public function add_videopress( array $mime_types ): array {
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
@@ -152,6 +154,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post $attachment Attachment object.
+	 *
+	 * @return array
 	 */
 	public function filter_admin_ajax_response( array $response, WP_Post $attachment ): array {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
@@ -201,6 +205,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array  $data           Source data to be modified.
 	 * @param string $videopress_key VideoPress array key.
+	 *
+	 * @return array
 	 */
 	protected function add_extra_data( array $data, string $videopress_key ): array {
 		// Make video as optimized.
@@ -229,6 +235,8 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
+	 *
+	 * @return string
 	 */
 	protected function format_milliseconds( int $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );

@@ -532,6 +532,8 @@ class Customizer extends Service_Base {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 *
+	 * @return string
 	 */
 	public function render_stories(): string {
 		$options = get_option( self::STORY_OPTION );

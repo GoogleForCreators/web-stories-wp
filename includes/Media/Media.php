@@ -498,6 +498,8 @@ class Media extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param int $thumbnail_id Attachment ID.
+	 *
+	 * @return array
 	 */
 	public function get_thumbnail_data( int $thumbnail_id ): array {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
@@ -538,6 +540,8 @@ class Media extends Service_Base {
 	 * @since 1.2.1
 	 *
 	 * @param int $post_id Attachment ID.
+	 *
+	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
 		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );

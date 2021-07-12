@@ -209,6 +209,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *                            fallback of 'mystery'.
 	 * @param string $alt         Alternative text to use in the avatar image tag. Default empty.
 	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+	 *
+	 * @return string
 	 */
 	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ): string {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
@@ -222,6 +224,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @param string $html HTML string.
 	 * @param string $attribute Attribute to check for.
 	 * @param string $url URL.
+	 *
+	 * @return string
 	 */
 	protected function add_attribute( string $html, string $attribute, string $url ): string {
 		$site_url = site_url();
@@ -284,6 +288,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @param string $string       String to search.
 	 * @param string $start_string String to search with.
+	 *
+	 * @return bool
 	 */
 	private function starts_with( string $string, string $start_string ): bool {
 		$len = strlen( $start_string );
