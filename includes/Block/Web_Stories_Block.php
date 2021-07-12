@@ -195,7 +195,7 @@ class Web_Stories_Block extends Embed_Base {
 		);
 
 		$settings = [
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 			'config'     => [
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
 				'editStoryURL'    => $edit_story_url,
