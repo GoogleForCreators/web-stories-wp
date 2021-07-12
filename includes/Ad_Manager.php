@@ -56,6 +56,8 @@ class Ad_Manager extends Service_Base {
 	 * Returns if Google manager is enabled.
 	 *
 	 * @since 1.3.0
+	 *
+	 * @return bool
 	 */
 	private function is_enabled(): bool {
 		return ( 'admanager' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );

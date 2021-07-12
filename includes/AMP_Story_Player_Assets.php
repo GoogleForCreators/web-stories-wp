@@ -42,6 +42,8 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * Script / style handle.
 	 *
 	 * @since 1.8.0
+	 *
+	 * @return string
 	 */
 	public function get_handle(): string {
 		return 'standalone-amp-story-player';

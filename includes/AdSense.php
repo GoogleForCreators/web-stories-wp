@@ -67,6 +67,8 @@ class AdSense extends Service_Base {
 	 * Returns if Google AdSense is enabled.
 	 *
 	 * @since 1.3.0
+	 *
+	 * @return bool
 	 */
 	private function is_enabled(): bool {
 		return ( 'adsense' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
