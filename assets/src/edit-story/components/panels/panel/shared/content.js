@@ -42,13 +42,9 @@ function Content({ children, ...rest }) {
     height: resizeable ? `${height}px` : 'auto',
   };
 
-  return (
-    <Container
-      style={formStyle}
-      {...rest}
-      id={panelContentId}
-      hidden={isCollapsed}
-    >
+  // Don't render panel content/children when collapsed.
+  return isCollapsed ? null : (
+    <Container style={formStyle} {...rest} id={panelContentId}>
       {children}
     </Container>
   );
