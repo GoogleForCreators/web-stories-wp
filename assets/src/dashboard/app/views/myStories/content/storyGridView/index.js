@@ -81,9 +81,9 @@ const StoryGridView = ({
       !activeGridItemIdRef.current
     ) {
       const newFocusId = returnStoryFocusId?.value;
-      // TODO this is broken
-      itemRefs.current?.[newFocusId]?.focus();
       setActiveGridItemId(newFocusId);
+      // grab the menu button and refocus
+      itemRefs.current?.[newFocusId]?.lastChild?.lastChild?.firstChild?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
