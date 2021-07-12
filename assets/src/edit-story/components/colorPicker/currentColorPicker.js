@@ -47,10 +47,6 @@ const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 64;
 const HEX_WIDTH = 80;
 
-const Space = styled.span`
-  margin-left: 8px;
-`;
-
 const Container = styled.div`
   user-select: none;
   padding: 0 ${CONTAINER_PADDING}px;
@@ -101,6 +97,15 @@ const Footer = styled.div`
   grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / 64px 1fr ${OPACITY_WIDTH}px;
   grid-gap: 10px;
   margin-bottom: 16px;
+`;
+
+const EyedropperButton = styled(Button)`
+  border: none;
+`;
+
+const Eyedropper = styled.div`
+  grid-area: eyedropper;
+  display: flex;
 `;
 
 const HexValue = styled.div`
@@ -191,9 +196,9 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         )}
       </Body>
       <Footer>
-        <HexValue>
-          {enableEyedropper && (
-            <Button
+        {enableEyedropper && (
+          <Eyedropper>
+            <EyedropperButton
               variant={BUTTON_VARIANTS.SQUARE}
               type={BUTTON_TYPES.QUATERNARY}
               size={BUTTON_SIZES.SMALL}
@@ -202,9 +207,10 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
               onPointerEnter={initEyedropper(false)}
             >
               <Icons.Pipette />
-            </Button>
-          )}
-          <Space />
+            </EyedropperButton>
+          </Eyedropper>
+        )}
+        <HexValue>
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}
             value={hexValue}
