@@ -19,6 +19,7 @@
  */
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
+import stickers from '@web-stories-wp/stickers';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -159,6 +160,29 @@ describe('raw template files', () => {
           }
 
           expect(element?.resource?.isOptimized).toBeTrue();
+        }
+      }
+    }
+  );
+
+  it.each(templates)(
+    '%s template should contain only valid stickers',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'sticker' || !element?.sticker?.type) {
+            continue;
+          }
+
+          expect(stickers).toStrictEqual(
+            expect.objectContaining({
+              [element?.sticker?.type]: expect.any(Object),
+            })
+          );
         }
       }
     }

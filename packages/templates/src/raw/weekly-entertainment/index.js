@@ -35,7 +35,7 @@ export default {
     { label: _x('Black', 'color', 'web-stories'), color: '#000' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
     { label: _x('Pink', 'color', 'web-stories'), color: '#ff00d6' },
-    { label: _x('Grey', 'color', 'web-stories'), color: '#525252' },
+    { label: _x('Gray', 'color', 'web-stories'), color: '#525252' },
   ],
   description: __(
     'Cover the world of entertainment with this template that comes with an edgy, interesting look. Works well as foundation for celebrity, movie, TV and music coverage, insights and inspiration.',
