@@ -156,7 +156,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "homeGardenLine01" },
+          "sticker": { "type": "homeGardenGreenCurvedLine" },
           "id": "36ffb7eb-0030-4891-8a40-872d80d06bcc",
           "type": "sticker"
         },
@@ -746,7 +746,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "homeGardenLine01" },
+          "sticker": { "type": "homeGardenGreenCurvedLine" },
           "basedOn": "82ee8ece-6e93-4d34-bc74-19c7e48b091d",
           "id": "5d34b15e-1c4b-4571-8bf7-7ba08eabd846",
           "x": 142,
@@ -1871,7 +1871,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "homeGardenBulb" },
+          "sticker": { "type": "homeGardenGreenBulb" },
           "id": "0ada4bf7-ba5a-4e04-83dc-2fe6076c5686"
         },
         {
@@ -1903,7 +1903,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "homeGardenLine01" },
+          "sticker": { "type": "homeGardenGreenCurvedLine" },
           "id": "039c0046-dd34-442c-a084-abe00e14d682"
         }
       ],
@@ -2497,7 +2497,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "homeGardenLine01" },
+          "sticker": { "type": "homeGardenGreenCurvedLine" },
           "id": "0c1e671d-e9f9-4f3c-a41b-8ead9eeef381"
         }
       ],
@@ -3067,7 +3067,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "homeGardenLine01" },
+          "sticker": { "type": "homeGardenGreenCurvedLine" },
           "id": "23bb0d9d-539a-47cd-b186-78239d694f40"
         }
       ],
