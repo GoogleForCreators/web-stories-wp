@@ -101,7 +101,8 @@ const standard = {
 };
 
 const gradient = {
-  loading: `linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%)`,
+  loading: 'linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%)',
+  placeholder: 'linear-gradient(180deg, #fff0, #000c)',
 };
 
 const opacity = {

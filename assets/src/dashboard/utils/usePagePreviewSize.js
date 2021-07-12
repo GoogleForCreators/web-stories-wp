@@ -44,6 +44,7 @@ import {
  * This means things like the unitsProvider and displayElements that we import to the Dashboard from the editor
  * It's maintaining a 2:3 aspect ratio.
  * When fullbleed is visible (as it is for our reqs) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
+ * 3. This is a height based on 3:4 ratio which is what poster images need.
  *
  * @param {number} width  width of page to base ratios on
  * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}
@@ -51,8 +52,8 @@ import {
 export const getPagePreviewHeights = (width) => {
   const fullBleedHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
   const storyHeight = Math.round((width / PAGE_RATIO) * 100) / 100;
-
-  return { fullBleedHeight, storyHeight };
+  const posterHeight = Math.round(((width / (3 / 4)) * 100) / 100);
+  return { fullBleedHeight, storyHeight, posterHeight };
 };
 
 const getCurrentBp = (availableContainerSpace) =>
@@ -74,8 +75,14 @@ const sizeFromWidth = (
   { bp, respectSetWidth, availableContainerSpace }
 ) => {
   if (respectSetWidth) {
-    const { fullBleedHeight, storyHeight } = getPagePreviewHeights(width);
-    return { width, height: storyHeight, containerHeight: fullBleedHeight };
+    const { fullBleedHeight, storyHeight, posterHeight } =
+      getPagePreviewHeights(width);
+    return {
+      width,
+      height: storyHeight,
+      containerHeight: fullBleedHeight,
+      posterHeight,
+    };
   }
 
   if (bp === VIEWPORT_BREAKPOINT.DESKTOP) {
@@ -90,12 +97,14 @@ const sizeFromWidth = (
   const addToWidthValue = remainingSpace / itemsInRow;
 
   const trueWidth = width + addToWidthValue;
-  const { fullBleedHeight, storyHeight } = getPagePreviewHeights(trueWidth);
+  const { fullBleedHeight, storyHeight, posterHeight } =
+    getPagePreviewHeights(trueWidth);
 
   return {
     width: trueWidth,
     height: storyHeight,
     containerHeight: fullBleedHeight,
+    posterHeight,
   };
 };
 

@@ -39,6 +39,12 @@ import {
   StoryPropType,
 } from '../../../../../types';
 
+const CustomCardGridItem = styled(CardGridItem)`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: ${({ pageSize }) => `${pageSize.posterHeight}px auto`};
+`;
+
 export const DetailRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -80,9 +86,8 @@ const StoryGridItem = ({
       ? story?.modified_gmt
       : story?.created_gmt
   );
-
   return (
-    <CardGridItem
+    <CustomCardGridItem
       data-testid={`story-grid-item-${story.id}`}
       ref={(el) => {
         itemRefs.current[story.id] = el;
@@ -93,12 +98,12 @@ const StoryGridItem = ({
         __('Details about %s', 'web-stories'),
         story.title
       )}
+      pageSize={pageSize}
     >
       <StoryCardPreview
-        itemActive={isActive}
         tabIndex={tabIndex}
-        pageSize={pageSize}
         storyImage={story.featuredMediaUrl}
+        storyTitle={story.title}
         bottomAction={{
           targetAction: story.bottomTargetAction,
           label: bottomActionLabel,
@@ -126,7 +131,7 @@ const StoryGridItem = ({
           menuItems={generatedMenuItems}
         />
       </DetailRow>
-    </CardGridItem>
+    </CustomCardGridItem>
   );
 };
 

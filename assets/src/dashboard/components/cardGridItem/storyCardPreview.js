@@ -31,26 +31,31 @@ import {
  * Internal dependencies
  */
 import { resolveRoute } from '../../app/router';
-import { PageSizePropType } from '../../types';
 import { ActionLabel } from './types';
 
-// TODO: fallback for no image
 const CardWrapper = styled.div`
-  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
-  width: ${({ cardSize }) => `${cardSize.width}px`};
-  background-image: ${({ $bgImg }) => `url(${$bgImg})`};
-  background-size: contain;
+  height: 100%;
+  width: 100%;
+  position: relative;
+`;
+
+const Poster = styled.img`
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: ${({ theme }) => theme.colors.gradient.placeholder};
+  object-fit: fill;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
 
 const EditControls = styled.div`
-  height: 100%;
   width: 100%;
+  position: absolute;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 0;
+  justify-content: center;
+  bottom: 0;
+  margin: 20px 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   opacity: 0;
 
@@ -59,17 +64,6 @@ const EditControls = styled.div`
       ${themeHelpers.focusCSS(theme.colors.border.focus)};
     }
   `};
-`;
-
-const ActionContainer = styled.div`
-  padding: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
-const EmptyActionContainer = styled(ActionContainer)`
-  padding: 40px;
 `;
 
 const getActionAttributes = (targetAction) =>
@@ -83,64 +77,34 @@ const getActionAttributes = (targetAction) =>
 
 const StoryCardPreview = ({
   tabIndex,
-  centerAction,
   bottomAction,
-  topAction,
-  pageSize,
   storyImage,
+  storyTitle,
 }) => {
   return (
-    <CardWrapper $bgImg={storyImage} cardSize={pageSize}>
-      <EditControls
-        className="card_buttons"
-        data-testid="card-action-container"
-      >
-        {!topAction && <EmptyActionContainer />}
-        {topAction?.label && (
-          <ActionContainer>
-            <Button
-              tabIndex={tabIndex}
-              data-testid="card-top-action"
-              type={BUTTON_TYPES.SECONDARY}
-              {...getActionAttributes(topAction.targetAction)}
-              aria-label={topAction.ariaLabel}
-            >
-              {topAction.label}
-            </Button>
-          </ActionContainer>
-        )}
-
-        {centerAction?.label && (
-          <ActionContainer>
-            <Button
-              tabIndex={tabIndex}
-              data-testid="card-center-action"
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              {...getActionAttributes(centerAction.targetAction)}
-              aria-label={centerAction.ariaLabel}
-            >
-              {centerAction.label}
-            </Button>
-          </ActionContainer>
-        )}
-        {bottomAction?.label ? (
-          <ActionContainer>
-            <Button
-              {...getActionAttributes(bottomAction.targetAction)}
-              tabIndex={tabIndex}
-              aria-label={bottomAction.ariaLabel}
-              isDisabled={!bottomAction.targetAction}
-              type={BUTTON_TYPES.PRIMARY}
-              size={BUTTON_SIZES.SMALL}
-            >
-              {bottomAction.label}
-            </Button>
-          </ActionContainer>
-        ) : (
-          <EmptyActionContainer />
-        )}
-      </EditControls>
+    <CardWrapper>
+      <Poster
+        src={storyImage}
+        alt={storyTitle}
+        as={!storyImage ? 'div' : 'img'}
+      />
+      {bottomAction?.label && (
+        <EditControls
+          className="card_buttons"
+          data-testid="card-action-container"
+        >
+          <Button
+            {...getActionAttributes(bottomAction.targetAction)}
+            tabIndex={tabIndex}
+            aria-label={bottomAction.ariaLabel}
+            isDisabled={!bottomAction.targetAction}
+            type={BUTTON_TYPES.PRIMARY}
+            size={BUTTON_SIZES.SMALL}
+          >
+            {bottomAction.label}
+          </Button>
+        </EditControls>
+      )}
     </CardWrapper>
   );
 };
@@ -153,12 +117,11 @@ const ActionButtonPropType = PropTypes.shape({
 });
 
 StoryCardPreview.propTypes = {
-  centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType,
   topAction: ActionButtonPropType,
-  pageSize: PageSizePropType.isRequired,
   tabIndex: PropTypes.number,
   storyImage: PropTypes.string,
+  storyTitle: PropTypes.string,
 };
 
 export default StoryCardPreview;
