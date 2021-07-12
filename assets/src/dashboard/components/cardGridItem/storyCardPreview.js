@@ -89,10 +89,7 @@ const StoryCardPreview = ({
         as={!storyImage ? 'div' : 'img'}
       />
       {bottomAction?.label && (
-        <EditControls
-          className="card_buttons"
-          data-testid="card-action-container"
-        >
+        <EditControls className="card_buttons">
           <Button
             {...getActionAttributes(bottomAction.targetAction)}
             tabIndex={tabIndex}

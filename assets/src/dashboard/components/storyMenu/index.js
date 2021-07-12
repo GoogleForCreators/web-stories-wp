@@ -87,8 +87,12 @@ export default function StoryMenu({
   );
 
   return (
-    <MenuContainer verticalAlign={verticalAlign}>
+    <MenuContainer
+      verticalAlign={verticalAlign}
+      data-testid={`story-context-menu-${storyId}`}
+    >
       <MoreVerticalButton
+        data-testid={`story-context-button-${storyId}`}
         tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
