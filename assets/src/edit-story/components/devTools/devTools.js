@@ -132,9 +132,9 @@ const getResourceFileName = (src) => {
  *
  * @see https://github.com/google/web-stories-wp/issues/7227
  * @param {*} state Current story.
- * @return {*} Updated state for Core Template.
+ * @return {*} Updated state for Template.
  */
-const prepareCoreTemplate = (state) => {
+const prepareTemplate = (state) => {
   const newState = {
     ...state,
     current: null,
@@ -176,7 +176,7 @@ function DevTools() {
   const [isVisible, setIsVisible] = useState(false);
   const [isBase64, setIsBase64] = useState(false);
   const [isDummyResources, setIsDummyResources] = useState(false);
-  const [isCoreTemplate, setIsCoreTemplate] = useState(false);
+  const [isTemplate, setIsTemplate] = useState(false);
   const { showSnackbar } = useSnackbar();
   const textareaRef = useRef();
   const {
@@ -198,12 +198,12 @@ function DevTools() {
   };
   const storyData = isDummyResources
     ? replaceResourcesWithDummy(reducerStateSlice)[0]
-    : isCoreTemplate
-    ? prepareCoreTemplate(reducerStateSlice)
+    : isTemplate
+    ? prepareTemplate(reducerStateSlice)
     : reducerStateSlice;
 
   const toggleDummyResources = () => setIsDummyResources((v) => !v);
-  const toggleCoreTemplate = () => setIsCoreTemplate((v) => !v);
+  const toggleTemplate = () => setIsTemplate((v) => !v);
   const toggleBase64 = () => setIsBase64((v) => !v);
   const toggleVisible = () => setIsVisible((v) => !v);
   const copyToClipboard = () => {
@@ -266,13 +266,13 @@ function DevTools() {
             />
             {'Dummy resources'}
           </Label>
-          <Label title="Export as Core Template">
+          <Label title="Export as Template">
             <input
               type="checkbox"
-              checked={isCoreTemplate}
-              onChange={toggleCoreTemplate}
+              checked={isTemplate}
+              onChange={toggleTemplate}
             />
-            {'Core Template'}
+            {'Template'}
           </Label>
         </div>
         <div>
