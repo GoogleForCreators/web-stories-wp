@@ -220,7 +220,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		];
 
 		$schema['properties']['edit_link'] = [
-			'description' => __( 'Edit Link.', 'web-stories' ),
+			'description' => _x( 'Edit Link', 'compound noun', 'web-stories' ),
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',
