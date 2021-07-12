@@ -82,10 +82,13 @@ const Text = styled(DefaultText)`
 `;
 
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
-  const {
-    state: { currentPage },
-    actions: { clearBackgroundElement, updateCurrentPageProperties },
-  } = useStory();
+  const { currentPage, clearBackgroundElement, updateCurrentPageProperties } = useStory(
+    ({ state, actions }) => ({
+      currentPage: state.currentPage,
+      clearBackgroundElement: actions.clearBackgroundElement,
+      updateCurrentPageProperties: actions.updateCurrentPageProperties,
+    })
+  );
 
   const updateBackgroundColor = useCallback(
     (value) => {
