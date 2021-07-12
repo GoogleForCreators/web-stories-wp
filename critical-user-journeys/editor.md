@@ -8,11 +8,11 @@
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | *[total]*                                        | 🚨 **36.84%** *(7 / 19)*    |
 | Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | Can edit/delete media                            | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
-|                                                                   | *[total]*                                        | 🚨 **33.33%** *(2 / 6)*     |
+|                                                                   | *[total]*                                        | 🚨 **16.67%** *(1 / 6)*     |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🏆 **100.00%** *(10 / 10)*  |
 |                                                                   | Enter edit mode                                  | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | Remove background media                          | 🏆 **100.00%** *(1 / 1)*    |
@@ -60,8 +60,8 @@
 |                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
-| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
+| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*      |
 | Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.64%** *(312 / 418)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **73.68%** *(308 / 418)* |
