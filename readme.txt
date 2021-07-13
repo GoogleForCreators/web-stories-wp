@@ -113,13 +113,13 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** July 13, 2021.
 
-* New feature: automated optimization of animated GIFs
-* New feature: Completely overhauled pre-publish checklist and improved checks.
-* New feature: Optimize existing videos inserted via the WordPress media library.
-* New feature: Added image cropping when choosing publisher logo and poster image in the editor.
-* Added 9 brand new templates for creators to choose from.
-* Bumped minimum version requirements to PHP 7.0+ and WordPress 5.5+
-* Ensured compatibility with WordPress 5.8.
+* New feature: animated GIFs are now automatically optimized as videos.
+* New feature: freshly redesigned checklist (now located next to the help center).
+* New feature: optimize existing videos in the WordPress media library.
+* New feature: crop publisher logo and poster images directly in the editor.
+* New feature: 9 new templates for creators to choose from.
+* Minimum requirements are now PHP 7.0+ and WordPress 5.5+.
+* Compatibility with WordPress 5.8.
 
 = 1.8.1 =
 
@@ -239,7 +239,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.9.0 =
 
-New templates, revamped pre-publish checklist, enhanced media optimization, bug fixes and performance improvements.
+New templates, redesigned checklist, logo & poster image cropping, broader media optimization, bug fixes and performance improvements.
 
 = 1.8.1 =
 
