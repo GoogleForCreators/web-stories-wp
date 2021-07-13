@@ -14,8 +14,33 @@
   }
 
   /* Fix for menu toggle overlap. */
-  .web-stories-theme-header-section .web-stories-list--customizer {
+  .web-stories-theme-header-section .web-stories-list {
     margin-top: 72px;
+  }
+
+  .web-stories-theme-header-section .web-stories-list.is-view-type-circles {
+    margin-top: 72px;
+    padding-top: 0;
+  }
+
+  .web-stories-theme-header-section
+    .web-stories-list.is-carousel.has-archive-link {
+    margin-top: 24px;
+    padding-top: 72px;
+  }
+
+  /* Fix for menu toggle overlap on AMP. */
+  html[amp] .web-stories-theme-header-section .web-stories-list.is-carousel {
+    margin-top: 0;
+    padding-top: 72px; /* same as above */
+  }
+
+  html[amp]
+    .web-stories-theme-header-section
+    .web-stories-list.is-carousel.has-archive-link {
+    padding-top: calc(
+      72px + 24px
+    ); /* default margin from common.css plus above offset */
   }
 
   /* Carousel arrows were visible over primary navigation menu on mobile. */

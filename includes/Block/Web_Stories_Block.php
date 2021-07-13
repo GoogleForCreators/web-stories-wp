@@ -186,7 +186,7 @@ class Web_Stories_Block extends Embed_Base {
 		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 			'config'     => [
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
 				'archiveURL'      => get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),

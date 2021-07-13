@@ -27,10 +27,7 @@ import { clamp } from '@web-stories-wp/animation';
  */
 import { useCurrentUser } from '../currentUser';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
-import {
-  BASE_NAVIGATION_FLOW,
-  TRANSITION_DURATION,
-} from '../../components/helpCenter/constants';
+import { BASE_NAVIGATION_FLOW } from '../../components/helpCenter/constants';
 import Context from './context';
 import {
   composeEffects,
@@ -253,30 +250,20 @@ function HelpCenterProvider({ children }) {
   const isInitialHydrationUpdate = useRef(false);
   useEffect(() => {
     if (!persistenceKey && !isHydrated) {
-      return () => {};
+      return;
     }
 
     // We don't want to persist when the update is from
     // the initial hydrate call
     if (!isInitialHydrationUpdate.current) {
       isInitialHydrationUpdate.current = true;
-      return () => {};
+      return;
     }
-    // The call to `updateCurrentUser` causes the entire app to rerender
-    // which causes noticable jank in our transition. This is just
-    // a short term fix to not have that render occur during
-    // the transition.
-    const id = setTimeout(
-      () =>
-        updateCurrentUser({
-          meta: {
-            web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
-          },
-        }).catch(actions.persistingReadTipsError),
-      // duration of menu transition which takes the longest
-      TRANSITION_DURATION * 1.2
-    );
-    return () => clearTimeout(id);
+    updateCurrentUser({
+      meta: {
+        web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
+      },
+    }).catch(actions.persistingReadTipsError);
   }, [actions, updateCurrentUser, persistenceKey, isHydrated]);
 
   // Components wrapped in a Transition no longer receive

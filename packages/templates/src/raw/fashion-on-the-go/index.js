@@ -34,7 +34,7 @@ export default {
     { label: _x('Cream', 'color', 'web-stories'), color: '#ffece3' },
     { label: _x('Orange', 'color', 'web-stories'), color: '#ff3000' },
     { label: _x('Black', 'color', 'web-stories'), color: '#212121' },
-    { label: _x('Grey', 'color', 'web-stories'), color: '#858280' },
+    { label: _x('Gray', 'color', 'web-stories'), color: '#858280' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
   ],
   description: __(

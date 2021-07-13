@@ -27,7 +27,7 @@ const completeTemplateObject = {
   colors: [
     { label: 'Cream', color: '#fff933' },
     { label: 'Orange', color: '#ff922e' },
-    { label: 'Grey', color: '#676461' },
+    { label: 'Gray', color: '#676461' },
     { label: 'Black', color: '#2a2928' },
     { label: 'White', color: '#fff' },
   ],
