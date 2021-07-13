@@ -123,8 +123,8 @@ class Stories_Controller extends Stories_Base_Controller {
 			if ( $edit_link ) {
 				$data['edit_link'] = $edit_link;
 			}
-    }
-    
+		}
+	
 		if ( in_array( 'embed_post_link', $fields, true ) && current_user_can( 'edit_posts' ) ) {
 			$data['embed_post_link'] = add_query_arg( [ 'from-web-story' => $post->ID ], admin_url( 'post-new.php' ) );
 		}
@@ -231,7 +231,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			'format'      => 'uri',
 			'default'     => '',
 		];
-    
+	
 		$schema['properties']['embed_post_link'] = [
 			'description' => __( 'Embed Post Edit Link.', 'web-stories' ),
 			'type'        => 'string',
