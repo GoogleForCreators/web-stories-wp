@@ -128,7 +128,7 @@ function usePageAsCanvas() {
   const calculateAccessibleTextColors = useCallback(
     (atts, callback, isInserting = true, skipCanvasGeneration = false) => {
       // If we're calculating the color without actually inserting the element and in zoomed mode, skip.
-      // No point calculating the color from zoomed in mode, it would be useless.
+      // We'll always insert the element in FIT mode, calculating it in other modes would be useless.
       if (!isInserting && zoomSetting !== ZOOM_SETTING.FIT) {
         callback(null);
       }

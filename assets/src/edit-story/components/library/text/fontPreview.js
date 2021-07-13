@@ -91,7 +91,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     ]);
   }, [font, fontWeight, content, maybeEnqueueFontStyle]);
 
-  // Gets the position and the color already when hovering to use it directly when inserting.
+  // Gets the position and the color already once the canvas information is available, to use it directly when inserting.
   useLayoutEffect(() => {
     if (!pageCanvasData || !enableSmartTextColor) {
       return;
