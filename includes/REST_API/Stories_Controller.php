@@ -115,12 +115,12 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['preview_link'] = $view_link;
 		}
 
-		if ( in_array( 'confirm_link', $fields, true ) ) {
-			$data['confirm_link'] = add_query_arg(
+		if ( in_array( 'embed_post_link', $fields, true ) ) {
+			$data['embed_post_link'] = add_query_arg(
 				[
 					'from-web-story' => $post->ID,
 				],
-				admin_url( 'post-new.php' ) 
+				admin_url( 'post-new.php' )
 			);
 		}
 
@@ -219,8 +219,8 @@ class Stories_Controller extends Stories_Base_Controller {
 			'default'     => '',
 		];
 
-		$schema['properties']['confirm_link'] = [
-			'description' => __( 'Confirm Link.', 'web-stories' ),
+		$schema['properties']['embed_post_link'] = [
+			'description' => __( 'Embed Post Edit Link.', 'web-stories' ),
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',

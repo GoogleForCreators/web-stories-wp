@@ -70,15 +70,15 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status, confirmLink, link, isFreshlyPublished } = useStory(
+  const { status, embedPostLink, link, isFreshlyPublished } = useStory(
     ({
       state: {
-        story: { status, confirmLink, link },
+        story: { status, embedPostLink, link },
         meta: { isFreshlyPublished },
       },
     }) => ({
       status,
-      confirmLink,
+      embedPostLink,
       link,
       isFreshlyPublished,
     })
@@ -110,7 +110,7 @@ function Buttons() {
       <PostPublishDialog
         isOpen={showDialog}
         onClose={() => setShowDialog(false)}
-        confirmURL={confirmLink}
+        confirmURL={embedPostLink}
         storyURL={link}
       />
     </>
