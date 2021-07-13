@@ -83,7 +83,9 @@ const StoryGridView = ({
       const newFocusId = returnStoryFocusId?.value;
       setActiveGridItemId(newFocusId);
       // grab the menu button and refocus
-      itemRefs.current?.[newFocusId]?.lastChild?.lastChild?.firstChild?.focus();
+      itemRefs.current?.[newFocusId]
+        ?.querySelector('.context-menu-button')
+        ?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);
 

@@ -98,6 +98,7 @@ export default function StoryMenu({
         isVisible={itemActive}
         aria-label={__('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : storyId)}
+        className="context-menu-button"
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
