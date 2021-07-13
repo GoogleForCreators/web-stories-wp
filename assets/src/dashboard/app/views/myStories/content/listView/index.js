@@ -21,8 +21,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   Headline,
   Icons,
@@ -75,9 +74,9 @@ const ListView = styled.div`
 
 const PreviewImage = styled.img`
   display: inline-block;
+  background: ${({ theme }) => theme.colors.gradient.placeholder};
   width: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL]}px;
-  height: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL] /
-  FULLBLEED_RATIO}px;
+  height: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL] / (3 / 4)}px;
   object-fit: contain;
   border-radius: ${({ theme }) => theme.borders.radius.small};
 `;
@@ -340,8 +339,15 @@ export default function StoryListView({
               >
                 <TablePreviewCell>
                   <PreviewImage
+                    as={!story.featuredMediaUrl ? 'div' : 'img'}
                     src={story.featuredMediaUrl}
-                    alt={__('Story poster', 'web-stories')}
+                    alt={sprintf(
+                      /* translators: %s: Story title. */
+                      __('%s Poster image', 'web-stories'),
+                      story.title.length > 0
+                        ? story.title
+                        : __('(no title)', 'web-stories')
+                    )}
                   />
                 </TablePreviewCell>
                 <TableCell>

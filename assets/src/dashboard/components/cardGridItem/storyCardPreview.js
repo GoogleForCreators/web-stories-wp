@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   themeHelpers,
   Button,
@@ -85,7 +86,11 @@ const StoryCardPreview = ({
     <CardWrapper>
       <Poster
         src={storyImage}
-        alt={storyTitle}
+        alt={sprintf(
+          /* translators: %s: Story title. */
+          __('%s Poster image', 'web-stories'),
+          storyTitle.length > 0 ? storyTitle : __('(no title)', 'web-stories')
+        )}
         as={!storyImage ? 'div' : 'img'}
       />
       {bottomAction?.label && (
