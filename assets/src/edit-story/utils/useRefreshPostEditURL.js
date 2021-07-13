@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback } from 'react';
+import { sprintf, __ } from '@web-stories-wp/i18n';
 
 /**
  * Update page URL in browser.
@@ -31,12 +32,14 @@ function useRefreshPostEditURL(postId, postEditURL) {
     try {
       const newUrl = new URL(postEditURL);
       newUrl.hash = window.location.hash;
-      // Remove the schema and host and just return path, params and hash.
-      const postEditPath = newUrl.toString().replace(newUrl.origin, '');
       window.history.replaceState(
         { id: postId },
-        'Post ' + postId,
-        postEditPath
+        sprintf(
+          /* translators: %d: current story id. */
+          __('Post %d', 'web-stories'),
+          postId
+        ),
+        newUrl.toString()
       );
     } catch (error) {
       // Do nothing for now.
