@@ -469,7 +469,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return boolean Returns true if the given option is enabled otherwise false.
 	 */
-	private function is_option_enabled( $option_name ) {
+	private function is_option_enabled( $option_name ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
 		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
 	}
@@ -483,7 +483,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	private function is_view_type( $view_type ) {
+	private function is_view_type( $view_type ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
 		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
 	}
@@ -498,7 +498,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return WP_Error
 	 */
-	public function validate_number_of_stories( $validity, $value ) {
+	public function validate_number_of_stories( $validity, $value ): \WP_Error {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 20 ) {
@@ -517,7 +517,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return WP_Error
 	 */
-	public function validate_number_of_columns( $validity, $value ) {
+	public function validate_number_of_columns( $validity, $value ): \WP_Error {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {
@@ -533,10 +533,8 @@ class Customizer extends Service_Base {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 *
-	 * @return string
 	 */
-	public function render_stories() {
+	public function render_stories(): string {
 		$options = get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
@@ -546,7 +544,7 @@ class Customizer extends Service_Base {
 		$theme_support = $this->get_stories_theme_support()['customizer'];
 
 		$story_attributes = [
-			'view_type'          => isset( $options['view_type'] ) ? $options['view_type'] : $theme_support['view_type']['default'],
+			'view_type'          => $options['view_type'] ?? $theme_support['view_type']['default'],
 			'show_title'         => isset( $options['show_title'] ) ? (bool) $options['show_title'] : $theme_support['title']['default'],
 			'show_excerpt'       => isset( $options['show_excerpt'] ) ? (bool) $options['show_excerpt'] : $theme_support['excerpt']['default'],
 			'show_author'        => isset( $options['show_author'] ) ? (bool) $options['show_author'] : $theme_support['author']['default'],

@@ -133,7 +133,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return array Script settings.
 	 */
-	protected function get_script_settings() {
+	protected function get_script_settings(): array {
 		$new_story_url = admin_url(
 			add_query_arg(
 				[
@@ -212,7 +212,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return bool Whether we're on the Plugins page.
 	 */
-	protected function is_plugins_page( $hook_suffix ) {
+	protected function is_plugins_page( $hook_suffix ): bool {
 		return ( ! empty( $hook_suffix ) && 'plugins.php' === $hook_suffix );
 	}
 }

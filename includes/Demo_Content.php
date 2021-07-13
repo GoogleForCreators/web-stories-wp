@@ -37,7 +37,7 @@ class Demo_Content {
 	 *
 	 * @return string
 	 */
-	public function get_title() {
+	public function get_title(): string {
 		return __( 'Tips to make the most of Web Stories', 'web-stories' );
 	}
 
@@ -46,7 +46,7 @@ class Demo_Content {
 	 *
 	 * @return string
 	 */
-	public function get_content() {
+	public function get_content(): string {
 		$content = $this->load_demo_content_from_file();
 		$content = $this->localize_texts( $content );
 		$content = $this->update_assets_urls( $content );
@@ -66,7 +66,7 @@ class Demo_Content {
 	 *
 	 * @return string Modified content.
 	 */
-	private function update_assets_urls( $content ) {
+	private function update_assets_urls( $content ): string {
 		$content = str_replace(
 			'https://replaceme.com/',
 			trailingslashit( WEBSTORIES_CDN_URL ),
@@ -83,7 +83,7 @@ class Demo_Content {
 	 *
 	 * @return string Localized text.
 	 */
-	private function localize_texts( $content ) {
+	private function localize_texts( $content ): string {
 		$replacements = [
 			// Page 1.
 			'L10N_PLACEHOLDER_1_1' => /* translators: demo content used in the "Get Started" story */
@@ -169,7 +169,7 @@ class Demo_Content {
 	 *
 	 * @return string
 	 */
-	private function load_demo_content_from_file() {
+	private function load_demo_content_from_file(): string {
 		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';
 
 		if ( ! is_readable( $file ) ) {

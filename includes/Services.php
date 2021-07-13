@@ -48,8 +48,6 @@ final class Services {
 	 * @since 1.6.0
 	 *
 	 * @param string $service Service ID to retrieve.
-	 *
-	 * @return Service
 	 */
 	public static function get( $service ) {
 		return self::get_container()->get( $service );
@@ -63,7 +61,7 @@ final class Services {
 	 * @param string $service Service ID to retrieve.
 	 * @return bool
 	 */
-	public static function has( $service ) {
+	public static function has( $service ): bool {
 		return self::get_container()->has( $service );
 	}
 

@@ -202,7 +202,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array  Tax query arg.
 	 */
-	private function get_exclude_tax_query( array $args ) {
+	private function get_exclude_tax_query( array $args ): array {
 		$tax_query = [
 			[
 				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
@@ -241,7 +241,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ) {
+	public function filter_ajax_query_attachments_args( array $args ): array {
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
@@ -284,7 +284,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_rest_generated_media_attachments( array $args, WP_REST_Request $request ) {
+	public function filter_rest_generated_media_attachments( array $args, WP_REST_Request $request ): array {
 		if ( '/web-stories/v1/media' !== $request->get_route() ) {
 			return $args;
 		}
@@ -417,7 +417,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_callback_featured_media_src( $prepared ) {
+	public function get_callback_featured_media_src( $prepared ): array {
 		$id    = $prepared['featured_media'];
 		$image = [];
 		if ( $id ) {
@@ -437,7 +437,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array $response;
 	 */
-	public function wp_prepare_attachment_for_js( $response, $attachment ) {
+	public function wp_prepare_attachment_for_js( $response, $attachment ): array {
 		if ( 'video' === $response['type'] ) {
 			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
 			$image        = '';
@@ -503,7 +503,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_thumbnail_data( $thumbnail_id ) {
+	public function get_thumbnail_data( $thumbnail_id ): array {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
 		$generated                     = $this->is_poster( $thumbnail_id );
@@ -545,7 +545,7 @@ class Media extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	protected function is_poster( $post_id ) {
+	protected function is_poster( $post_id ): bool {
 		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );

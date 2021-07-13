@@ -61,7 +61,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 
@@ -77,7 +77,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return string $class List of Classes.
 	 */
-	public function admin_body_class( $class ) {
+	public function admin_body_class( $class ): string {
 		$screen = $this->get_current_screen();
 		if ( ! $screen ) {
 			return $class;
@@ -112,7 +112,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content, $post ) {
+	public function prefill_post_content( $content, $post ): string {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -202,6 +202,6 @@ class Admin extends Service_Base {
 
 		// Not using get_the_title() because we need the raw title.
 		// Otherwise it runs through wptexturize() and the like, which we want to avoid.
-		return isset( $post->post_title ) ? $post->post_title : '';
+		return $post->post_title ?? '';
 	}
 }

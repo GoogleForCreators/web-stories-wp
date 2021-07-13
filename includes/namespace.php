@@ -221,7 +221,7 @@ add_action( 'init', __NAMESPACE__ . '\includes' );
  *
  * @return array Modified reduce accumulator.
  */
-function rest_preload_api_request( $memo, $path ) {
+function rest_preload_api_request( $memo, $path ): array {
 	// array_reduce() doesn't support passing an array in PHP 5.2,
 	// so we need to make sure we start with one.
 	if ( ! is_array( $memo ) ) {
@@ -252,7 +252,7 @@ function rest_preload_api_request( $memo, $path ) {
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
 		parse_str( $path_parts['query'], $query_params );
-		$embed = isset( $query_params['_embed'] ) ? $query_params['_embed'] : false;
+		$embed = $query_params['_embed'] ?? false;
 		$request->set_query_params( $query_params );
 	}
 
@@ -284,7 +284,7 @@ function rest_preload_api_request( $memo, $path ) {
  *
  * @return Plugin
  */
-function get_plugin_instance() {
+function get_plugin_instance(): \Google\Web_Stories\Plugin {
 	global $web_stories;
 
 	if ( null === $web_stories ) {

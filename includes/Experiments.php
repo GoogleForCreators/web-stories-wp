@@ -65,7 +65,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 7;
 	}
 
@@ -200,7 +200,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of experiment groups
 	 */
-	public function get_experiment_groups() {
+	public function get_experiment_groups(): array {
 		return [
 			'general'   => __( 'General', 'web-stories' ),
 			'dashboard' => __( 'Dashboard', 'web-stories' ),
@@ -217,7 +217,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of experiments by group.
 	 */
-	public function get_experiments() {
+	public function get_experiments(): array {
 		return [
 			/**
 			 * Author: @embarks
@@ -444,7 +444,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array Experiment statuses with name as key and status as value.
 	 */
-	public function get_experiment_statuses( $group ) {
+	public function get_experiment_statuses( $group ): array {
 		$experiments = wp_list_filter( $this->get_experiments(), [ 'group' => $group ] );
 
 		if ( empty( $experiments ) ) {
@@ -468,7 +468,7 @@ class Experiments extends Service_Base {
 	 * @param string $name Experiment name.
 	 * @return array|null Experiment if found, null otherwise.
 	 */
-	protected function get_experiment( $name ) {
+	protected function get_experiment( $name ): ?array {
 		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
 		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
 	}
@@ -482,7 +482,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return bool Whether the experiment is enabled.
 	 */
-	public function is_experiment_enabled( $name ) {
+	public function is_experiment_enabled( $name ): bool {
 		$experiment = $this->get_experiment( $name );
 
 		if ( ! $experiment ) {
@@ -504,7 +504,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of all enabled experiments.
 	 */
-	public function get_enabled_experiments() {
+	public function get_enabled_experiments(): ?array {
 		$experiments = array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]

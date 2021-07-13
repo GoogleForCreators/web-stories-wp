@@ -114,7 +114,7 @@ class Story {
 	 *
 	 * @return bool
 	 */
-	public function load_from_post( $_post ) {
+	public function load_from_post( $_post ): bool {
 		$post = get_post( $_post );
 
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
@@ -143,8 +143,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_title() {
-		return $this->title;
+	public function get_title(): string {
+		return (string) $this->title;
 	}
 
 	/**
@@ -152,8 +152,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_excerpt() {
-		return $this->excerpt;
+	public function get_excerpt(): string {
+		return (string) $this->excerpt;
 	}
 
 	/**
@@ -163,8 +163,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_url() {
-		return $this->url;
+	public function get_url(): string {
+		return (string) $this->url;
 	}
 
 	/**
@@ -174,8 +174,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_markup() {
-		return $this->markup;
+	public function get_markup(): string {
+		return (string) $this->markup;
 	}
 
 	/**
@@ -185,8 +185,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_poster_portrait() {
-		return $this->poster_portrait;
+	public function get_poster_portrait(): string {
+		return (string) $this->poster_portrait;
 	}
 
 	/**
@@ -194,8 +194,8 @@ class Story {
 	 *
 	 * @return int
 	 */
-	public function get_id() {
-		return $this->id;
+	public function get_id(): int {
+		return (int) $this->id;
 	}
 
 	/**
@@ -203,8 +203,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_author() {
-		return $this->author;
+	public function get_author(): string {
+		return (string) $this->author;
 	}
 
 	/**
@@ -212,8 +212,8 @@ class Story {
 	 *
 	 * @return string
 	 */
-	public function get_date() {
-		return $this->date;
+	public function get_date(): string {
+		return (string) $this->date;
 	}
 
 }

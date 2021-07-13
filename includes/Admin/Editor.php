@@ -146,7 +146,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return bool Whether the editor has been replaced.
 	 */
-	public function replace_editor( $replace, $post ) {
+	public function replace_editor( $replace, $post ): bool {
 		if ( Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
@@ -175,7 +175,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return bool Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ): bool {
 		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
 			return false;
 		}
@@ -230,10 +230,8 @@ class Editor extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-	 *
-	 * @return array
 	 */
-	public function get_editor_settings() {
+	public function get_editor_settings(): array {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );

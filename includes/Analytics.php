@@ -48,7 +48,7 @@ class Analytics extends Service_Base {
 	 *
 	 * @return string Tracking ID.
 	 */
-	public function get_tracking_id() {
+	public function get_tracking_id(): string {
 		return (string) get_option( Settings::SETTING_NAME_TRACKING_ID );
 	}
 
@@ -64,7 +64,7 @@ class Analytics extends Service_Base {
 	 * @param string $tracking_id Tracking ID.
 	 * @return array <amp-analytics> configuration.
 	 */
-	public function get_default_configuration( $tracking_id ) {
+	public function get_default_configuration( $tracking_id ): array {
 		$config = [
 			'vars'     => [
 				'gtag_id' => $tracking_id,
@@ -214,6 +214,6 @@ class Analytics extends Service_Base {
 				<?php echo wp_json_encode( $this->get_default_configuration( $tracking_id ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</script>
 		</amp-analytics>
-		<?php
+<?php
 	}
 }

@@ -95,7 +95,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_enqueue_scripts';
 	}
 
@@ -108,7 +108,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function tinymce_web_stories_button( array $buttons ) {
+	public function tinymce_web_stories_button( array $buttons ): array {
 		$buttons[] = 'web_stories';
 
 		return $buttons;
@@ -123,7 +123,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function web_stories_mce_plugin( array $plugins ) {
+	public function web_stories_mce_plugin( array $plugins ): array {
 		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
 
 		return $plugins;
@@ -158,7 +158,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return string $tag The `<script>` tag for the enqueued script.
 	 */
-	public function script_loader_tag( $tag, $handle, $src ) {
+	public function script_loader_tag( $tag, $handle, $src ): string {
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
 			$tag = (string) preg_replace( '#<script src=\'\'(.*?)>(.*?)</script>#is', '', $tag );
