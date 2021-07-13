@@ -36,7 +36,7 @@ import storyReducer, {
 } from '../../../dashboard/app/reducer/stories';
 import { ERRORS } from '../../../dashboard/app/textContent';
 
-const useStoryApi = ({ editStoryURL, storyApi }) => {
+const useStoryApi = ({ storyApi }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
 
   const fetchStories = useCallback(
@@ -94,7 +94,6 @@ const useStoryApi = ({ editStoryURL, storyApi }) => {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
           payload: {
-            editStoryURL,
             stories: response.body,
             totalPages,
             totalStoriesByStatus: {
@@ -124,7 +123,7 @@ const useStoryApi = ({ editStoryURL, storyApi }) => {
         });
       }
     },
-    [storyApi, editStoryURL]
+    [storyApi]
   );
 
   const api = useMemo(
