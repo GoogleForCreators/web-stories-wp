@@ -114,6 +114,7 @@ const formattedStoriesArray = [
       type: 'web-story',
       link: 'http://localhost:8899/web-stories/orange-shapes',
       preview_link: 'http://localhost:8899/web-stories/orange-shapes',
+      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=167',
       title: {
         raw: 'ORANGE SHAPES',
         rendered: 'ORANGE SHAPES',
@@ -405,6 +406,7 @@ const formattedStoriesArray = [
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=165',
       preview_link: 'http://localhost:8899/?post_type=web-story&p=165',
+      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=165',
       title: {
         raw: 'GREEN SHAPES',
         rendered: 'GREEN SHAPES',
@@ -843,6 +845,7 @@ const formattedStoriesArray = [
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=163',
       preview_link: 'http://localhost:8899/?post_type=web-story&p=163',
+      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=163',
       title: {
         raw: 'RED SHAPES',
         rendered: 'RED SHAPES',
@@ -1338,6 +1341,7 @@ const formattedStoriesArray = [
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=161',
       preview_link: 'http://localhost:8899/?post_type=web-story&p=161',
+      edit_link: 'https://www.story-link.com/wp-admin/post.php?id=161',
       title: {
         raw: 'BLUE SHAPES',
         rendered: 'BLUE SHAPES',

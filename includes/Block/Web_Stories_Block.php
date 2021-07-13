@@ -184,20 +184,10 @@ class Web_Stories_Block extends Embed_Base {
 	private function get_script_settings(): array {
 		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 
-		$edit_story_url = admin_url(
-			add_query_arg(
-				[
-					'action' => 'edit',
-				],
-				'post.php'
-			)
-		);
-
 		$settings = [
 			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 			'config'     => [
 				'maxNumOfStories' => self::MAX_NUM_OF_STORIES,
-				'editStoryURL'    => $edit_story_url,
 				'archiveURL'      => get_post_type_archive_link( Story_Post_Type::POST_TYPE_SLUG ),
 				'api'             => [
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
