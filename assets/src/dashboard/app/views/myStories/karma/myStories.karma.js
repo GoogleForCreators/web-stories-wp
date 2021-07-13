@@ -82,7 +82,7 @@ describe('Grid view', () => {
       expect(expectedStory).toEqual(document.activeElement);
     }
 
-    // // we should have focused the indicated story in the grid
+    // we should have focused the indicated story in the grid
     expect(selectedStory).toEqual(document.activeElement);
 
     await fixture.events.keyboard.press('Enter');
