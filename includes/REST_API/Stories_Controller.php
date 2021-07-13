@@ -39,6 +39,8 @@ use WP_REST_Response;
 
 /**
  * Stories_Controller class.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
 	use Publisher;
@@ -116,12 +118,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		if ( in_array( 'embed_post_link', $fields, true ) && current_user_can( 'edit_posts' ) ) {
-			$data['embed_post_link'] = add_query_arg(
-				[
-					'from-web-story' => $post->ID,
-				],
-				admin_url( 'post-new.php' )
-			);
+			$data['embed_post_link'] = add_query_arg( [ 'from-web-story' => $post->ID ], admin_url( 'post-new.php' ) );
 		}
 
 		$data  = $this->filter_response_by_context( $data, $context );

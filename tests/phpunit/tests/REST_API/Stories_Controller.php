@@ -209,8 +209,8 @@ class Stories_Controller extends Test_REST_TestCase {
 		$view_link = get_preview_post_link( $story );
 		$this->assertSame( $view_link, $data['preview_link'] );
 
-		$this->assertArrayHasKey( 'confirm_link', $data );
-		$this->assertContains( (string) $story, $data['confirm_link'] );
+		$this->assertArrayHasKey( 'embed_post_link', $data );
+		$this->assertContains( (string) $story, $data['embed_post_link'] );
 	}
 
 
