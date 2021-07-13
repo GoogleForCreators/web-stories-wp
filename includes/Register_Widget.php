@@ -85,7 +85,7 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @return array
 	 */
-	public function hide_widget( array $widget_types ) : array {
+	public function hide_widget( array $widget_types ) {
 		$widget_types[] = $this->stories->id_base;
 
 		return $widget_types;
@@ -100,7 +100,7 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @return array
 	 */
-	public function body_class( array $classes ) : array {
+	public function body_class( array $classes ) {
 		if ( is_admin() && defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
 			$classes[] = 'ws-legacy-widget-preview';
 		}

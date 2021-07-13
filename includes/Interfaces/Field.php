@@ -24,7 +24,7 @@ interface Field {
 	 *
 	 * @return bool
 	 */
-	public function show() : bool;
+	public function show();
 
 	/**
 	 * Label for current field.
@@ -33,7 +33,7 @@ interface Field {
 	 *
 	 * @return string
 	 */
-	public function label() : string;
+	public function label();
 
 	/**
 	 * Whether the field is hidden.
@@ -42,5 +42,5 @@ interface Field {
 	 *
 	 * @return bool
 	 */
-	public function hidden() : bool;
+	public function hidden();
 }

@@ -12,7 +12,7 @@ class DummyServiceBasedPlugin extends ServiceBasedPlugin {
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
-	protected function get_service_classes() : array {
+	protected function get_service_classes() {
 		return [
 			'service_a' => DummyService::class,
 			'service_b' => DummyService::class,

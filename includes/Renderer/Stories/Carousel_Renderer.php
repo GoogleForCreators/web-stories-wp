@@ -102,7 +102,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @return string Rendered stories output.
 	 */
-	public function render( array $args = [] ) : string {
+	public function render( array $args = [] ) {
 		if ( ! $this->valid() ) {
 			return '';
 		}

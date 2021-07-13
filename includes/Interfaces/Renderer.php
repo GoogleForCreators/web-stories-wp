@@ -56,7 +56,7 @@ interface Renderer {
 	 *
 	 * @return string Rendering markup.
 	 */
-	public function render( array $args = [] ) : string;
+	public function render( array $args = [] );
 
 	/**
 	 * Render a single story markup.

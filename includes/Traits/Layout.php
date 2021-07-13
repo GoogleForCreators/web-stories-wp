@@ -39,7 +39,7 @@ trait Layout {
 	 *
 	 * @return array
 	 */
-	protected function get_layouts() : array {
+	protected function get_layouts() {
 		return [
 			'carousel' => __( 'Box Carousel', 'web-stories' ),
 			'circles'  => __( 'Circle Carousel', 'web-stories' ),
