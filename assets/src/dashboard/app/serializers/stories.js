@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { migrate, DATA_VERSION } from '@web-stories-wp/migration';
-
 export default function reshapeStoryObject(originalStoryData) {
   const {
     id,
@@ -43,11 +38,6 @@ export default function reshapeStoryObject(originalStoryData) {
     return null;
   }
 
-  const updatedStoryData = {
-    ...migrate(storyData, storyData.version),
-    version: DATA_VERSION,
-  };
-
   return {
     id,
     status,
@@ -56,7 +46,6 @@ export default function reshapeStoryObject(originalStoryData) {
     created_gmt: `${date_gmt}Z`,
     modified,
     modified_gmt: `${modified_gmt}Z`,
-    pages: updatedStoryData.pages,
     author: author[0].name,
     locked: lock[0]?.locked,
     lockUser: {
@@ -64,7 +53,6 @@ export default function reshapeStoryObject(originalStoryData) {
       name: lockUser[0].name,
       avatar: lockUser[0].avatar_urls['24'] || null,
     },
-    centerTargetAction: '',
     bottomTargetAction: editStoryLink,
     featuredMediaUrl,
     editStoryLink,
