@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as icon } from '../images/icon.svg';
+import { ReactComponent as BlockIcon } from '../images/icon.svg';
 import deprecated from './deprecated';
 import save from './save';
 import edit from './edit';
@@ -36,7 +36,7 @@ const settings = {
   title: __('Web Stories', 'web-stories'),
   description: __('Embed stories using various layout options.', 'web-stories'),
   category,
-  icon,
+  icon: <BlockIcon />,
   keywords,
   attributes,
   example: {
@@ -53,4 +53,4 @@ const settings = {
   transforms,
 };
 
-export { metadata, name, icon, settings };
+export { metadata, name, settings };

@@ -35,7 +35,7 @@ import useSettingsApi from './useSettingsApi';
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, editStoryURL, cdnURL, encodeMarkup } = useConfig();
+  const { api, cdnURL, encodeMarkup } = useConfig();
 
   const { currentUser, api: usersApi } = useUsersApi(dataAdapter, {
     currentUserApi: api.currentUser,
@@ -48,7 +48,6 @@ export default function ApiProvider({ children }) {
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
-    editStoryURL,
     storyApi: api.stories,
     encodeMarkup,
   });

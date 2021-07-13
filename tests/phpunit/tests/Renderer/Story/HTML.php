@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Story;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -135,7 +136,7 @@ class HTML extends Test_Case {
 
 		$story = new Story();
 		$story->load_from_post( $post );
-		$renderer    = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer    = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
 		$logo        = $renderer->get_publisher_logo();
 		$name        = $renderer->get_publisher_name();
@@ -269,7 +270,7 @@ class HTML extends Test_Case {
 		$link_https = set_url_scheme( $link, 'https' );
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link_https );
@@ -286,7 +287,7 @@ class HTML extends Test_Case {
 		$link             = 'https://www.google.com';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
@@ -308,7 +309,7 @@ class HTML extends Test_Case {
 		);
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
@@ -325,7 +326,7 @@ class HTML extends Test_Case {
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
@@ -341,7 +342,7 @@ class HTML extends Test_Case {
 		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-social-share layout="nodisplay"><script type="application/json">{"shareProviders":[{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-social-share></amp-story></body></html>';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
@@ -358,7 +359,7 @@ class HTML extends Test_Case {
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
@@ -378,7 +379,7 @@ class HTML extends Test_Case {
 	protected function setup_renderer( $post ) {
 		$story = new Story();
 		$story->load_from_post( $post );
-		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );
+		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story, new Experiments() );
 		return $renderer->render();
 	}
 }
