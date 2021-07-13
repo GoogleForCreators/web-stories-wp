@@ -26,7 +26,7 @@ import SimplePanel from '../simplePanel';
 import { renderWithTheme } from '../../../../testUtils';
 
 describe('Panels/Panel/SimplePanel', () => {
-  it('should render <SimplePanel />', () => {
+  it('should render <SimplePanel /> (collapsed)', () => {
     renderWithTheme(
       <SimplePanel name="simple-panel" title="Simple Panel">
         <div>{'Simple Panel Content'}</div>
@@ -34,9 +34,28 @@ describe('Panels/Panel/SimplePanel', () => {
     );
 
     const titleElement = screen.getByText('Simple Panel');
-    const contentElement = screen.getByText('Simple Panel Content');
-
     expect(titleElement).toBeInTheDocument();
+
+    // <PanelContent> is not rendered when the panel itself is collapsed.
+    const contentElement = screen.queryByText('Simple Panel Content');
+    expect(contentElement).not.toBeInTheDocument();
+  });
+
+  it('should render <SimplePanel /> (expanded)', () => {
+    renderWithTheme(
+      <SimplePanel
+        name="simple-panel"
+        title="Simple Panel"
+        collapsedByDefault={false}
+      >
+        <div>{'Simple Panel Content'}</div>
+      </SimplePanel>
+    );
+
+    const titleElement = screen.getByText('Simple Panel');
+    expect(titleElement).toBeInTheDocument();
+
+    const contentElement = screen.getByText('Simple Panel Content');
     expect(contentElement).toBeInTheDocument();
   });
 
