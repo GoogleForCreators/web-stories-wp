@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { UnitsProvider } from '@web-stories-wp/units';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Headline, THEME_CONSTANTS } from '../../../../../../design-system';
-import { UnitsProvider } from '../../../../../../edit-story/units';
 import {
   PageSizePropType,
   TemplatesPropType,

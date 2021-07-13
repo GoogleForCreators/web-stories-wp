@@ -48,6 +48,7 @@ describe('Saved Styles: Color Picker', () => {
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Add Colors from Color Picker', () => {
     it('should allow adding local and global colors from the color picker', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const { fontColor } = fixture.editor.inspector.designPanel.textStyle;
       fontColor.button.scrollIntoView();
       await fixture.events.click(fontColor.button);
@@ -68,6 +69,7 @@ describe('Saved Styles: Color Picker', () => {
 
     it('should allow applying local colors', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const { fontColor } = fixture.editor.inspector.designPanel.textStyle;
       fontColor.button.scrollIntoView();
 
@@ -81,6 +83,7 @@ describe('Saved Styles: Color Picker', () => {
       await fixture.events.click(fontColor.picker.saveColor);
 
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       fontColor.button.scrollIntoView();
       await fixture.events.click(fontColor.button);
       await waitFor(() => fontColor.picker);
@@ -94,6 +97,7 @@ describe('Saved Styles: Color Picker', () => {
 
     it('should allow applying global colors', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const { fontColor } = fixture.editor.inspector.designPanel.textStyle;
       fontColor.button.scrollIntoView();
 
@@ -112,6 +116,7 @@ describe('Saved Styles: Color Picker', () => {
       await fixture.events.click(fontColor.picker.saveColor);
 
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
       fontColor.button.scrollIntoView();
       await fixture.events.click(fontColor.button);
       await waitFor(() => fontColor.picker);

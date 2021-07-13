@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
-
+import { useGridViewKeys, useFocusOut } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -48,7 +48,6 @@ import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { useGridViewKeys, useFocusOut } from '../../../../design-system';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
@@ -189,7 +188,7 @@ const StoryGridView = ({
               <CardPreviewContainer
                 ariaLabel={sprintf(
                   /* translators: %s: story title. */
-                  __('preview of %s', 'web-stories'),
+                  __('Preview of %s', 'web-stories'),
                   story.title
                 )}
                 tabIndex={tabIndex}

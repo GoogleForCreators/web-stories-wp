@@ -21,7 +21,15 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
+import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  Headline,
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -54,7 +62,6 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  FULLBLEED_RATIO,
   STORY_PREVIEW_WIDTH,
   VIEWPORT_BREAKPOINT,
 } from '../../../constants';
@@ -64,13 +71,8 @@ import {
 } from '../../../../edit-story/components/previewPage';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 import { titleFormatted } from '../../../utils';
-import {
-  Headline,
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-} from '../../../../design-system';
-import { focusableOutlineCSS } from '../../../../design-system/theme/helpers';
+
+const { focusableOutlineCSS } = themeHelpers;
 
 const ListView = styled.div`
   width: 100%;

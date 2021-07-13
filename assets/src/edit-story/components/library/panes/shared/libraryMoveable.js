@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
-
+import { editorToDataX, editorToDataY } from '@web-stories-wp/units';
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { editorToDataX, editorToDataY } from '../../../../units';
 import { ZOOM_SETTING } from '../../../../constants';
 import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
@@ -34,21 +34,14 @@ import { useInsertTextSet } from '../../../canvas';
 import areEventsDragging from '../../../../utils/areEventsDragging';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
-import { useKeyDownEffect } from '../../../../../design-system';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 
 const TargetBox = styled.div`
   position: absolute;
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  ${({ isDragging }) =>
-    !isDragging &&
-    `
-      max-width: 100%;
-      max-height: 100%;
-    `};
+  width: 100%;
+  height: 100%;
   top: 0;
   z-index: 1;
   cursor: pointer;
@@ -62,7 +55,6 @@ function LibraryMoveable({
   onClick,
   cloneElement,
   cloneProps,
-  previewSize,
   elements = [],
   active = false,
 }) {
@@ -215,14 +207,8 @@ function LibraryMoveable({
     // Assign new size to targetbox so that it would match the clone, for snapping.
     targetBoxRef.current.style.width = `${cloneProps.width}px`;
     targetBoxRef.current.style.height = `${cloneProps.height}px`;
-    let x1 = targetBox.left - offsetX;
-    let y1 = targetBox.top - offsetY;
-    // In case of shapes, the clone is larger than the preview
-    // so we position it to center.
-    if ('shape' === type) {
-      x1 = x1 - (cloneProps.width - targetBox.width) / 2;
-      y1 = y1 - (cloneProps.height - targetBox.height) / 2;
-    }
+    const x1 = targetBox.left - offsetX;
+    const y1 = targetBox.top - offsetY;
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
     // Update moveable to take the new size of the target for snapping.
@@ -284,17 +270,12 @@ function LibraryMoveable({
     snappingOffsetX,
   });
 
-  const targetSize = previewSize ?? cloneProps;
-  const { width, height } = targetSize;
   return (
     <>
       <TargetBox
         ref={targetBoxRef}
-        width={width}
-        height={height}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
-        isDragging={isDragging || hover}
       />
       {(isDragging || active || hover) && (
         <>
@@ -334,7 +315,6 @@ LibraryMoveable.propTypes = {
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
   active: PropTypes.bool,
-  previewSize: PropTypes.object,
   elements: PropTypes.array,
 };
 

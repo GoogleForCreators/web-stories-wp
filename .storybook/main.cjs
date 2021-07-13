@@ -18,16 +18,15 @@ module.exports = {
   stories: [
     './stories/**/*.js',
     '../assets/src/dashboard/**/stories/*.@(js|mdx)',
-    '../assets/src/design-system/**/stories/*.@(js|mdx)',
     '../assets/src/edit-story/**/stories/*.@(js|mdx)',
-    '../assets/src/animation/**/stories/*.@(js|mdx)',
     '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
+    '../packages/design-system/src/**/stories/*.@(js|mdx)',
   ],
   addons: [
     '@storybook/addon-a11y/register',
     '@storybook/addon-actions',
     '@storybook/addon-docs',
-    '@storybook/addon-knobs/register',
+    '@storybook/addon-knobs',
     '@storybook/addon-storysource/register',
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',

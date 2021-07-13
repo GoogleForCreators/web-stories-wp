@@ -20,7 +20,8 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -28,8 +29,6 @@ import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { generatePresetStyle } from '../utils';
 import stripHTML from '../../../../../utils/stripHTML';
 import { useStory } from '../../../../../app/story';
-import generatePatternStyles from '../../../../../utils/generatePatternStyles';
-import { Icons } from '../../../../../../design-system';
 import { focusStyle } from '../../../shared';
 
 const REMOVE_ICON_SIZE = 32;

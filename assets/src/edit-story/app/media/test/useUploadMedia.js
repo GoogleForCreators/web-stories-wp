@@ -58,7 +58,8 @@ jest.mock('../utils/useMediaUploadQueue', () => ({
 
 const mockShowSnackbar = jest.fn();
 
-jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: jest.fn(() => ({
     showSnackbar: mockShowSnackbar,
   })),
@@ -78,7 +79,6 @@ jest.mock('../../../app/media/utils');
 jest.mock('../utils/useFFmpeg', () => ({
   __esModule: true,
   default: jest.fn(() => ({
-    isFeatureEnabled: true,
     isTranscodingEnabled: true,
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),

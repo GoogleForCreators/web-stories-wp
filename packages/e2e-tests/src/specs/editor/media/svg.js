@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -70,7 +71,7 @@ describe('SVG', () => {
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-    await expect(page).toClick('[aria-label="Publisher logo"]');
+    await expect(page).toClick('[aria-label="Publisher Logo"]');
 
     await page.waitForSelector(MODAL, {
       visible: true,

@@ -9,6 +9,8 @@ namespace PHPSTORM_META {
 		map( [
 			'activation_flag'              => \Google\Web_Stories\Admin\Activation_Flag::class,
 			'activation_notice'            => \Google\Web_Stories\Admin\Activation_Notice::class,
+			'admin.google_fonts'           => \Google\Web_Stories\Admin\Google_Fonts::class,
+			'amp_story_player_assets'      => \Google\Web_Stories\AMP_Story_Player_Assets::class,
 			'adsense'                      => \Google\Web_Stories\AdSense::class,
 			'ad_manager'                   => \Google\Web_Stories\Ad_Manager::class,
 			'admin'                        => \Google\Web_Stories\Admin\Admin::class,
@@ -19,10 +21,8 @@ namespace PHPSTORM_META {
 			'database_upgrader'            => \Google\Web_Stories\Database_Upgrader::class,
 			'discovery'                    => \Google\Web_Stories\Discovery::class,
 			'editor'                       => \Google\Web_Stories\Admin\Editor::class,
-			'embed_base'                   => \Google\Web_Stories\Embed_Base::class,
 			'embed_shortcode'              => \Google\Web_Stories\Shortcode\Embed_Shortcode::class,
 			'experiments'                  => \Google\Web_Stories\Experiments::class,
-			'video_captions'               => \Google\Web_Stories\Media\Video_Captions::class,
 			'integrations.amp'             => \Google\Web_Stories\Integrations\AMP::class,
 			'integrations.jetpack'         => \Google\Web_Stories\Integrations\Jetpack::class,
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,
@@ -30,6 +30,7 @@ namespace PHPSTORM_META {
 			'integrations.themes_support'  => \Google\Web_Stories\Integrations\Core_Themes_Support::class,
 			'kses'                         => \Google\Web_Stories\KSES::class,
 			'media'                        => \Google\Web_Stories\Media\Media::class,
+			'page_template_post_type'      => \Google\Web_Stories\Page_Template_Post_Type::class,
 			'plugin_row_meta'              => \Google\Web_Stories\Admin\PluginRowMeta::class,
 			'plugin_action_links'          => \Google\Web_Stories\Admin\PluginActionLinks::class,
 			'meta_boxes'                   => \Google\Web_Stories\Admin\Meta_Boxes::class,
@@ -59,6 +60,7 @@ namespace PHPSTORM_META {
 			'rest.template_lock'           => \Google\Web_Stories\REST_API\Template_Lock_Controller::class,
 			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
+			'video_captions'               => \Google\Web_Stories\Media\Video_Captions::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )
 	);

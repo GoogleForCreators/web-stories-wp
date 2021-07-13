@@ -19,20 +19,19 @@
  */
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { useStory, useLocalMedia } from '../../../app';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { useStory, useLocalMedia } from '../../../app';
 import Tooltip from '../../tooltip';
-import { usePrepublishChecklist } from '../../inspector/prepublish';
 
 function SwitchToDraft() {
   const { isSaving, saveStory } = useStory(
@@ -47,12 +46,9 @@ function SwitchToDraft() {
     isUploading: state.state.isUploading,
   }));
 
-  const { resetReviewDialog } = usePrepublishChecklist();
-
   const handleUnPublish = useCallback(() => {
     saveStory({ status: 'draft' });
-    resetReviewDialog();
-  }, [resetReviewDialog, saveStory]);
+  }, [saveStory]);
 
   const label = __('Switch to Draft', 'web-stories');
   return (

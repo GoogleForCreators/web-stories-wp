@@ -25,6 +25,8 @@ import { Library } from './library';
 import { Inspector } from './inspector';
 import { Header } from './header';
 import { HelpCenter } from './helpCenter';
+import { Checklist } from './checklist';
+import { KeyboardShortcuts } from './keyboardShortcuts';
 
 /**
  * The complete editor container, including library, canvas, inspector, etc.
@@ -89,6 +91,22 @@ export class Editor extends Container {
       this.getByRole('region', { name: 'Page Carousel' }),
       'helpCenter',
       HelpCenter
+    );
+  }
+
+  get checklist() {
+    return this._get(
+      this.getByRole('region', { name: 'Checklist' }),
+      'checklist',
+      Checklist
+    );
+  }
+
+  get keyboardShortcuts() {
+    return this._get(
+      this.getByRole('region', { name: 'Page Carousel' }),
+      'keyboardShortcuts',
+      KeyboardShortcuts
     );
   }
 }

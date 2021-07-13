@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
@@ -44,6 +49,7 @@ describe('Alignment Panel', () => {
     beforeEach(async () => {
       // Add first text element
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
 
       // It will correctly be selected now
     });

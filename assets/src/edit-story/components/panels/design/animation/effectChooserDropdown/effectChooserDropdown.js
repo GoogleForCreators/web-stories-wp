@@ -20,13 +20,13 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeatures } from 'flagged';
+import { css } from 'styled-components';
+import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useFeatures } from 'flagged';
-import { DropDown, PLACEMENT } from '../../../../../../design-system';
-
 import { focusStyle } from '../../../shared';
 import {
   backgroundEffectOptions,
@@ -52,6 +52,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     selectedEffectType,
     disabledTypeOptionsMap,
     direction,
+    selectButtonStylesOverride,
   },
   ref
 ) {
@@ -118,7 +119,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     (event, value) => {
       event.preventDefault();
       if (value === NO_ANIMATION) {
-        onNoEffectSelected();
+        Boolean(selectedValue) && onNoEffectSelected();
         return;
       }
 
@@ -139,11 +140,22 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
     },
     [
       animationOptionsObject,
-      onAnimationSelected,
-      onNoEffectSelected,
       disabledTypeOptionsMap,
+      onAnimationSelected,
+      selectedValue,
+      onNoEffectSelected,
     ]
   );
+
+  const innerStyleOverrides =
+    selectedValue && selectedValue !== NO_ANIMATION
+      ? styleOverrideForSelectButton
+      : focusStyle;
+  const buttonStyleOverride = css`
+    ${innerStyleOverrides}
+    ${typeof selectButtonStylesOverride !== 'undefined' &&
+    selectButtonStylesOverride}
+  `;
 
   return (
     <DropDown
@@ -157,11 +169,7 @@ const EffectChooserDropdown = forwardRef(function EffectChooserDropdown(
       onMenuItemClick={handleSelect}
       placement={expandedPlacement}
       isKeepMenuOpenOnSelection
-      selectButtonStylesOverride={
-        selectedValue && selectedValue !== NO_ANIMATION
-          ? styleOverrideForSelectButton
-          : focusStyle
-      }
+      selectButtonStylesOverride={buttonStyleOverride}
     />
   );
 });
@@ -178,6 +186,10 @@ EffectChooserDropdown.propTypes = {
       options: PropTypes.arrayOf(PropTypes.string),
     })
   ),
+  selectButtonStylesOverride: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]),
 };
 
 export default EffectChooserDropdown;

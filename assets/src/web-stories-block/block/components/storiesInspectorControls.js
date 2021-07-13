@@ -142,11 +142,13 @@ const StoriesInspectorControls = (props) => {
     });
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values on viewType change.
 
-  const ArchiveLink = () => (
-    <a target="__blank" href={archiveURL}>
-      {__('View archive page', 'web-stories')}
-    </a>
-  );
+  const ArchiveLink = () => {
+    return archiveURL ? (
+      <a target="__blank" href={archiveURL}>
+        {__('View archive page', 'web-stories')}
+      </a>
+    ) : null;
+  };
 
   const handleToggleControl = (field) => {
     setAttributes({
@@ -177,7 +179,7 @@ const StoriesInspectorControls = (props) => {
                 <StyledToggle
                   key={`${field}__control`}
                   label={label}
-                  checked={fieldState[`show_${field}`]}
+                  checked={fieldState[`show_${field}`] || false}
                   onChange={() => handleToggleControl(field)}
                   help={
                     'archive_link' === field &&

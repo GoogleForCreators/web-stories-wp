@@ -16,19 +16,21 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from 'react';
+import { __ } from '@web-stories-wp/i18n';
+import { useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
+import { ThemeGlobals } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { ThemeGlobals } from '../../../design-system';
+import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
 import { Navigator } from './navigator';
 import { Companion } from './companion';
-import { POPUP_ID } from './constants';
+import { POPUP_ID, KEYS } from './constants';
 import { Toggle } from './toggle';
 import { Popup } from './popup';
 import { forceFocusCompanion } from './utils';
@@ -54,13 +56,32 @@ export const HelpCenter = () => {
     }
   }, [state.isOpen]);
 
+  useStoryTriggerListener(
+    STORY_EVENTS.onReplaceBackgroundMedia,
+    useCallback(() => {
+      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+    }, [actions])
+  );
+
+  useStoryTriggerListener(
+    STORY_EVENTS.onReplaceForegroundMedia,
+    useCallback(() => {
+      actions.openToUnreadTip(KEYS.CROP_SELECTED_ELEMENTS);
+    }, [actions])
+  );
+
   return (
     <DirectionAware>
       <>
         <ThemeGlobals.Styles />
         <Wrapper ref={ref}>
-          <Popup popupId={POPUP_ID} isOpen={state.isOpen}>
+          <Popup
+            popupId={POPUP_ID}
+            isOpen={state.isOpen}
+            ariaLabel={__('Help Center', 'web-stories')}
+          >
             <Navigator
+              isOpen={state.isOpen}
               onNext={actions.goToNext}
               onPrev={actions.goToPrev}
               onAllTips={actions.goToMenu}

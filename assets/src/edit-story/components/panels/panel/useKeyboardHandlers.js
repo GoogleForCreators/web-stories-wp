@@ -17,10 +17,7 @@
 /**
  * External dependencies
  */
-/**
- * Internal dependencies
- */
-import { useKeyEffect } from '../../../../design-system';
+import { useKeyEffect } from '@web-stories-wp/design-system';
 
 const DELTA_CHANGE = 20; // change in pixels when pressing arrow keys
 

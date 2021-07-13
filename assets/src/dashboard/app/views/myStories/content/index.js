@@ -19,18 +19,18 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
+import { UnitsProvider } from '@web-stories-wp/units';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Headline,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
-import { UnitsProvider } from '../../../../../edit-story/units';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { resolveRoute } from '../../../router';
 import { APP_ROUTES } from '../../../../constants';
@@ -119,7 +119,7 @@ function Content({
                       as="a"
                       href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
                     >
-                      {__('Explore templates', 'web-stories')}
+                      {__('Explore Templates', 'web-stories')}
                     </Button>
                   )}
                 </EmptyContentMessage>

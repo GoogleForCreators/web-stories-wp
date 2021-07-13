@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\AMP\Integration;
 
+use AMP_Base_Sanitizer;
 use Google\Web_Stories\AMP\Traits\Sanitization_Utils;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * AMP Story sanitizer.
@@ -38,7 +38,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  *
  * @since 1.1.0
  */
-class AMP_Story_Sanitizer extends \AMP_Base_Sanitizer {
+class AMP_Story_Sanitizer extends AMP_Base_Sanitizer {
 	use Sanitization_Utils;
 
 	/**
@@ -54,5 +54,7 @@ class AMP_Story_Sanitizer extends \AMP_Base_Sanitizer {
 		$this->add_publisher_logo( $this->dom, $this->args['publisher_logo'], $this->args['publisher_logo_placeholder'] );
 		$this->add_publisher( $this->dom, $this->args['publisher'] );
 		$this->add_poster_images( $this->dom, $this->args['poster_images'] );
+		$this->deduplicate_inline_styles( $this->dom );
+		$this->remove_blob_urls( $this->dom );
 	}
 }

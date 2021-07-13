@@ -19,15 +19,15 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import usePreventWindowUnload from '../../utils/usePreventWindowUnload';
 import { useUploader } from '../uploader';
-import { useSnackbar } from '../../../design-system';
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
-import { useMediaUploadQueue } from './utils';
+import useMediaUploadQueue from './utils/useMediaUploadQueue';
 import getResourceFromLocalFile from './utils/getResourceFromLocalFile';
 import useFFmpeg from './utils/useFFmpeg';
 
@@ -65,12 +65,8 @@ function useUploadMedia({
     },
     actions: { addItem, removeItem },
   } = useMediaUploadQueue();
-  const {
-    isFeatureEnabled,
-    isTranscodingEnabled,
-    canTranscodeFile,
-    isFileTooLarge,
-  } = useFFmpeg();
+  const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
+    useFFmpeg();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.
@@ -88,7 +84,7 @@ function useUploadMedia({
 
     if (isTranscoding && isDialogDismissed) {
       showSnackbar({
-        message: __('Video optimization in progress.', 'web-stories'),
+        message: __('Video optimization in progress', 'web-stories'),
         dismissable: true,
       });
     }
@@ -156,7 +152,7 @@ function useUploadMedia({
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error } of failures) {
+    for (const { id, onUploadError, error, resource } of failures) {
       if (onUploadError) {
         onUploadError({ id });
       }
@@ -170,6 +166,12 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
+        thumbnail: resource && {
+          src: ['video', 'gif'].includes(resource.type)
+            ? resource.poster
+            : resource.src,
+          alt: resource?.alt,
+        },
         dismissable: true,
       });
     }
@@ -209,8 +211,7 @@ function useUploadMedia({
           // We don't want to display placeholders / progress bars for items that
           // aren't supported anyway.
 
-          const canTranscode =
-            isFeatureEnabled && isTranscodingEnabled && canTranscodeFile(file);
+          const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
@@ -230,7 +231,7 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          const resource = await getResourceFromLocalFile(file);
+          const { resource, posterFile } = await getResourceFromLocalFile(file);
           addItem({
             file,
             resource,
@@ -239,6 +240,7 @@ function useUploadMedia({
             onUploadError,
             onUploadSuccess,
             additionalData,
+            posterFile,
           });
         })
       );
@@ -248,7 +250,6 @@ function useUploadMedia({
       validateFileForUpload,
       addItem,
       canTranscodeFile,
-      isFeatureEnabled,
       isTranscodingEnabled,
       isFileTooLarge,
     ]

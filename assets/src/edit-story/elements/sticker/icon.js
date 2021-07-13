@@ -18,11 +18,11 @@
  * External dependencies
  */
 import stickers from '@web-stories-wp/stickers';
+
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { noop } from '../../../design-system';
 
 const style = {
   display: 'block',
@@ -30,9 +30,11 @@ const style = {
   width: 'auto',
 };
 
+const Noop = () => null;
+
 function StickerLayerContent({ element }) {
   const { sticker } = element;
-  const Sticker = stickers[sticker.type]?.svg || noop;
+  const Sticker = stickers[sticker.type]?.svg || Noop;
 
   return <Sticker style={style} />;
 }

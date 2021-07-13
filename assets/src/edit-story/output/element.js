@@ -15,26 +15,37 @@
  */
 
 /**
+ * External dependencies
+ */
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { getBox } from '@web-stories-wp/units';
+import { StoryAnimation } from '@web-stories-wp/animation';
+
+/**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../animation';
 import WithLink from '../components/elementLink/output';
 import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
-import { getBox } from '../units/dimensions';
 import {
   getBorderPositionCSS,
   getBorderRadius,
   getBorderStyle,
   shouldDisplayBorder,
 } from '../utils/elementBorder';
-import generatePatternStyles from '../utils/generatePatternStyles';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {
-  const { id, opacity, type, border, backgroundColor, backgroundTextMode } =
-    element;
+  const {
+    id,
+    opacity,
+    type,
+    border,
+    backgroundColor,
+    backgroundTextMode,
+    overlay,
+  } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -85,6 +96,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
+            zIndex: 0,
             ...getBorderRadius(element),
             ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
               ? bgStyles
@@ -107,6 +119,12 @@ function OutputElement({ element }) {
           </WithLink>
         </WithMask>
       </StoryAnimation.AMPWrapper>
+      {overlay && (
+        <div
+          className="element-overlay-area"
+          style={generatePatternStyles(overlay)}
+        />
+      )}
     </div>
   );
 }

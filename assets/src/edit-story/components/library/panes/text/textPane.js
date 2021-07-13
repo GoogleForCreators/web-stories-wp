@@ -29,6 +29,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -59,9 +60,10 @@ function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextAndShapesSearchInput } = useFeatures();
+  const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
 
   const insertPreset = useInsertPreset();
+  const { generateCanvasFromPage } = usePageAsCanvas();
 
   const onClick = useCallback(
     (title, element) => {
@@ -96,7 +98,10 @@ function TextPane(props) {
         />
       )}
 
-      <Section title={__('Presets', 'web-stories')}>
+      <Section
+        title={__('Presets', 'web-stories')}
+        onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
+      >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (
             <FontPreview

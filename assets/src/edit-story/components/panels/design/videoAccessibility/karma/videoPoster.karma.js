@@ -47,24 +47,40 @@ describe('Video Accessibility Panel', () => {
       await fixture.events.click(fixture.editor.library.media.item(5)); // item 5 is a video
       vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
 
-      // Create fake media browser
-      window.wp = {
-        ...window.wp,
-        media: () => ({
-          state: () => ({
-            get: () => ({
-              first: () => ({
-                toJSON: () => ({
-                  url: 'http://dummy:url/',
-                  mime: 'image/jpeg',
-                }),
+      const media = () => ({
+        state: () => ({
+          get: () => ({
+            first: () => ({
+              toJSON: () => ({
+                url: 'http://dummy:url/',
+                mime: 'image/jpeg',
+                width: 640,
+                height: 480,
               }),
             }),
           }),
-          on: (type, callback) => callback(),
-          once: (type, callback) => callback(),
-          open: () => {},
         }),
+        on: (type, callback) => callback(),
+        once: (type, callback) => callback(),
+        open: () => {},
+        close: () => {},
+        setState: () => {},
+      });
+
+      class Library {}
+
+      class CustomizeImageCropper {}
+
+      media.controller = {
+        CustomizeImageCropper,
+        Library,
+      };
+      media.query = () => {};
+
+      // Create fake media browser
+      window.wp = {
+        ...window.wp,
+        media,
       };
     });
 

@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { Icons } from '../../../../../../design-system';
+import { Icons } from '@web-stories-wp/design-system';
 
 function Media3pIcon() {
   return <Icons.Picture aria-label={__('Explore Media', 'web-stories')} />;

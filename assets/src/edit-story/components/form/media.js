@@ -21,12 +21,15 @@ import PropTypes from 'prop-types';
 import { useCallback, forwardRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import {
+  MediaInput as Input,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useMediaPicker } from '../mediaPicker';
-import { MediaInput as Input, themeHelpers } from '../../../design-system';
 import { MULTIPLE_VALUE } from '../../constants';
 
 const StyledInput = styled(Input)`
@@ -51,6 +54,7 @@ function MediaInput(
     title = __('Choose an image', 'web-stories'),
     type = 'image',
     value,
+    cropParams,
     ...rest
   },
   forwardedRef
@@ -61,6 +65,7 @@ function MediaInput(
     onSelect: onChange,
     onSelectErrorMessage: onChangeErrorText,
     type,
+    cropParams,
   });
 
   // Options available for the media input menu.
@@ -120,6 +125,7 @@ MediaInput.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
+  cropParams: PropTypes.object,
   title: PropTypes.string,
   value: PropTypes.string,
 };

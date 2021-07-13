@@ -26,12 +26,32 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Widgets\Stories;
 
 /**
  * Class RegisterWidget
  */
-class Register_Widget extends Service_Base {
+class Register_Widget implements Service, Registerable {
+	/**
+	 * Stories instance.
+	 *
+	 * @var Stories Stories instance.
+	 */
+	private $stories;
+
+	/**
+	 * Register_Widget constructor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param Stories $stories Stories instance.
+	 */
+	public function __construct( Stories $stories ) {
+		$this->stories = $stories;
+	}
+
 	/**
 	 * Register Widgets.
 	 *
@@ -40,17 +60,51 @@ class Register_Widget extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		register_widget( Stories::class );
+		add_action( 'widgets_init', [ $this, 'register_widget' ] );
+		add_filter( 'widget_types_to_hide_from_legacy_widget_block', [ $this, 'hide_widget' ] );
+		add_filter( 'body_class', [ $this, 'body_class' ] );
 	}
 
 	/**
-	 * Get the action to use for registering the service.
+	 * Register widget.
 	 *
-	 * @since 1.6.0
+	 * @since 1.9.0
 	 *
-	 * @return string Registration action to use.
+	 * @return void
 	 */
-	public static function get_registration_action() {
-		return 'widgets_init';
+	public function register_widget() {
+		register_widget( $this->stories );
+	}
+
+	/**
+	 * Hide widget stories from legacy widget list.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param array $widget_types An array of excluded widget-type IDs.
+	 *
+	 * @return array
+	 */
+	public function hide_widget( array $widget_types ) {
+		$widget_types[] = $this->stories->id_base;
+
+		return $widget_types;
+	}
+
+	/**
+	 * Filters the list of CSS body class names for embedded iframes to add a class.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string[] $classes An array of body class names.
+	 *
+	 * @return array
+	 */
+	public function body_class( array $classes ) {
+		if ( is_admin() && defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+			$classes[] = 'ws-legacy-widget-preview';
+		}
+
+		return $classes;
 	}
 }

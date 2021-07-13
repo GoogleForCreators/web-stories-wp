@@ -17,13 +17,13 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
 import useInsertElement from '../../../../canvas/useInsertElement';
-import createSolidFromString from '../../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 describe('Link Panel', () => {
@@ -74,6 +74,7 @@ describe('Link Panel', () => {
   describe('CUJ: Creator Can Add A Link: Apply a link to any element', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       linkPanel = fixture.editor.inspector.designPanel.link;
     });
 
@@ -334,6 +335,7 @@ describe('Link Panel', () => {
   describe('CUJ: Creator Can Add A Link: Remove applied link', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');

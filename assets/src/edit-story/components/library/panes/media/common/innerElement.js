@@ -19,18 +19,19 @@
 import styled, { css } from 'styled-components';
 import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-
+import {
+  getSmallestUrlForWidth,
+  resourceList,
+  ResourcePropTypes,
+} from '@web-stories-wp/media';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
-import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
-import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 
 const styledTiles = css`
   width: 100%;
@@ -128,9 +129,8 @@ function InnerElement({
 
   let media;
   const thumbnailURL = getSmallestUrlForWidth(width, resource);
-  const { lengthFormatted, poster, mimeType, output } = resource;
-  const posterSrc = type === ContentType.GIF ? output.poster : poster;
-  const displayPoster = posterSrc ?? newVideoPosterRef.current;
+  const { lengthFormatted, poster, mimeType } = resource;
+  const displayPoster = poster ?? newVideoPosterRef.current;
 
   const commonProps = {
     width: width,
@@ -161,7 +161,7 @@ function InnerElement({
     'aria-label': alt,
     loop: type === ContentType.GIF,
     muted: true,
-    preload: 'none',
+    preload: 'metadata',
     poster: displayPoster,
     showWithoutDelay: Boolean(newVideoPosterRef.current),
   };
@@ -176,22 +176,12 @@ function InnerElement({
         {/* eslint-disable-next-line styled-components-a11y/media-has-caption -- No captions because video is muted. */}
         <Video key={src} {...videoProps} ref={mediaElement}>
           {type === ContentType.GIF ? (
-            <>
+            resource.output.src && (
               <source
-                src={getSmallestUrlForWidth(width, {
-                  ...resource,
-                  sizes: resource.output.sizes.mp4,
-                })}
-                type="video/mp4"
+                src={resource.output.src}
+                type={resource.output.mimeType}
               />
-              <source
-                src={getSmallestUrlForWidth(width, {
-                  ...resource,
-                  sizes: resource.output.sizes.webm,
-                })}
-                type="video/webm"
-              />
-            </>
+            )
           ) : (
             <source
               src={getSmallestUrlForWidth(width, resource)}
@@ -203,7 +193,7 @@ function InnerElement({
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
           <HiddenPosterImage
             ref={hiddenPoster}
-            src={posterSrc}
+            src={poster}
             {...commonImageProps}
           />
         )}
@@ -214,7 +204,7 @@ function InnerElement({
         )}
       </>
     );
-    cloneProps.src = posterSrc;
+    cloneProps.src = poster;
   }
   if (!media) {
     throw new Error('Invalid media element type.');
@@ -258,7 +248,7 @@ function InnerElement({
           },
         }}
         onClick={onClick(
-          type === ContentType.IMAGE ? thumbnailURL : posterSrc,
+          type === ContentType.IMAGE ? thumbnailURL : poster,
           mediaBaseColor.current
         )}
         cloneElement={CloneImg}
@@ -271,7 +261,7 @@ function InnerElement({
 InnerElement.propTypes = {
   type: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  resource: StoryPropTypes.imageResource,
+  resource: ResourcePropTypes.imageResource,
   alt: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,

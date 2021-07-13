@@ -56,6 +56,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           style_presets: globalStoryStyles,
           password,
           preview_link: previewLink,
+          embed_post_link: embedPostLink,
           _embedded: embedded = {},
         } = post;
 
@@ -151,6 +152,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           publisherLogoUrl,
           password,
           previewLink,
+          embedPostLink,
           currentStoryStyles: {
             colors: storyData?.currentStoryStyles?.colors
               ? getUniquePresets(storyData.currentStoryStyles.colors)

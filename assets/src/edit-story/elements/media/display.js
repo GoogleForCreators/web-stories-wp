@@ -19,22 +19,26 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { getMediaSizePositionProps } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import { useRef } from 'react';
+import { useUnits } from '@web-stories-wp/units';
 import StoryPropTypes from '../../types';
-import { elementFillContent, elementWithBorder } from '../shared';
+import {
+  elementFillContent,
+  elementWithBorder,
+  elementWithBackgroundColor,
+} from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
-import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
-import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   ${elementFillContent}
@@ -42,6 +46,11 @@ const Element = styled.div.attrs({ className: 'story-media-display-element' })`
   color: transparent;
   overflow: hidden;
   ${elementWithBorder}
+`;
+
+const Overlay = styled.div`
+  ${elementFillContent}
+  ${elementWithBackgroundColor}
 `;
 
 function MediaDisplay({
@@ -61,6 +70,7 @@ function MediaDisplay({
     borderRadius,
     width,
     height,
+    overlay,
   } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
@@ -112,6 +122,7 @@ function MediaDisplay({
       showPlaceholder={showPlaceholder}
     >
       {children}
+      {overlay && <Overlay backgroundColor={overlay} />}
     </Element>
   );
 }

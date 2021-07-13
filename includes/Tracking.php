@@ -71,14 +71,23 @@ class Tracking extends Service_Base {
 	private $site_kit;
 
 	/**
+	 * Assets instance.
+	 *
+	 * @var Assets Assets instance.
+	 */
+	private $assets;
+
+	/**
 	 * Tracking constructor.
 	 *
 	 * @since 1.4.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 * @param Site_Kit    $site_kit Site_Kit instance.
+	 * @param Assets      $assets Assets instance.
 	 */
-	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit, Assets $assets ) {
+		$this->assets      = $assets;
 		$this->experiments = $experiments;
 		$this->site_kit    = $site_kit;
 	}
@@ -94,7 +103,7 @@ class Tracking extends Service_Base {
 	 */
 	public function register() {
 		// By not passing an actual script src we can print only the inline script.
-		wp_register_script(
+		$this->assets->register_script(
 			self::SCRIPT_HANDLE,
 			false,
 			[],

@@ -310,12 +310,13 @@ class Cross_Origin_Isolation extends Service_Base {
 			return false;
 		}
 
-		// Backwards compatible, default values added in WP 5.5.
-		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
-		if ( empty( $check ) ) {
-			return true;
+		// Cross-origin isolation is not needed if users can't upload files anyway.
+		if ( ! user_can( $user_id, 'upload_files' ) ) {
+			return false;
 		}
 
-		return rest_sanitize_boolean( $check[0] );
+		$check = get_user_meta( $user_id, Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
+
+		return rest_sanitize_boolean( $check );
 	}
 }

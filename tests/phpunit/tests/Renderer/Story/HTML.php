@@ -159,7 +159,7 @@ class HTML extends Test_Case {
 
 		$this->assertContains( 'publisher-logo-src=""', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
-		$this->assertNotContains( 'amp=', $rendered );
+		$this->assertContains( 'amp=', $rendered );
 	}
 
 	/**
@@ -181,8 +181,6 @@ class HTML extends Test_Case {
 		$rendered = $this->setup_renderer( $post );
 
 		$this->assertContains( 'poster-portrait-src=', $rendered );
-		$this->assertContains( 'poster-square-src=', $rendered );
-		$this->assertContains( 'poster-landscape-src=', $rendered );
 	}
 
 	/**
@@ -222,8 +220,6 @@ class HTML extends Test_Case {
 		$rendered = $this->setup_renderer( $post );
 
 		$this->assertContains( 'poster-portrait-src=""', $rendered );
-		$this->assertContains( 'poster-square-src=""', $rendered );
-		$this->assertContains( 'poster-landscape-src=""', $rendered );
 	}
 
 	/**
@@ -239,7 +235,7 @@ class HTML extends Test_Case {
 
 		$rendered = $this->setup_renderer( $post );
 
-		$this->assertNotContains( 'amp=', $rendered );
+		$this->assertContains( 'amp=', $rendered );
 	}
 
 	/**

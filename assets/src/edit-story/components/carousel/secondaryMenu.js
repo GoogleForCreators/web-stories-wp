@@ -18,12 +18,22 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
+import { useHelpCenter } from '../../app';
+import {
+  Checklist,
+  ChecklistCountProvider,
+  useChecklist,
+  useCheckpoint,
+} from '../checklist';
+import { useKeyboardShortcutsMenu } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,11 +64,90 @@ const Space = styled.span`
 `;
 
 function SecondaryMenu() {
+  const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
+    ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
+      close,
+      isHelpCenterOpen,
+    })
+  );
+
+  const {
+    close: closeChecklist,
+    open: openChecklist,
+    isChecklistOpen,
+  } = useChecklist(
+    ({ actions: { close, open }, state: { isOpen: isChecklistOpen } }) => ({
+      close,
+      open,
+      isChecklistOpen,
+    })
+  );
+
+  const { close: closeKeyboardShortcutsMenu, isKeyboardShortcutsMenuOpen } =
+    useKeyboardShortcutsMenu(
+      ({
+        actions: { close },
+        state: { isOpen: isKeyboardShortcutsMenuOpen },
+      }) => ({
+        close,
+        isKeyboardShortcutsMenuOpen,
+      })
+    );
+
+  const { onResetReviewDialogRequest, reviewDialogRequested } = useCheckpoint(
+    ({
+      actions: { onResetReviewDialogRequest },
+      state: { reviewDialogRequested },
+    }) => ({
+      reviewDialogRequested,
+      onResetReviewDialogRequest,
+    })
+  );
+
+  // Only one popup is open at a time
+  // we want to close an open popup if a new one is opened.
+  useEffect(() => {
+    if (isChecklistOpen) {
+      closeHelpCenter();
+      closeKeyboardShortcutsMenu();
+    }
+  }, [closeHelpCenter, closeKeyboardShortcutsMenu, isChecklistOpen]);
+
+  useEffect(() => {
+    if (isHelpCenterOpen) {
+      closeChecklist();
+      closeKeyboardShortcutsMenu();
+    }
+  }, [closeChecklist, closeKeyboardShortcutsMenu, isHelpCenterOpen]);
+
+  useEffect(() => {
+    if (isKeyboardShortcutsMenuOpen) {
+      closeChecklist();
+      closeHelpCenter();
+    }
+  }, [closeChecklist, closeHelpCenter, isKeyboardShortcutsMenuOpen]);
+
+  useEffect(() => {
+    if (reviewDialogRequested) {
+      onResetReviewDialogRequest();
+      openChecklist();
+    }
+  }, [reviewDialogRequested, onResetReviewDialogRequest, openChecklist]);
+
+  const enableChecklistCompanion = useFeature('enableChecklistCompanion');
   return (
     <Wrapper>
       <MenuItems>
         <HelpCenter />
         <Space />
+        {enableChecklistCompanion && (
+          <>
+            <ChecklistCountProvider>
+              <Checklist />
+            </ChecklistCountProvider>
+            <Space />
+          </>
+        )}
         <Box>
           <KeyboardShortcutsMenu />
         </Box>

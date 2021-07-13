@@ -220,15 +220,51 @@ class Experiments extends Service_Base {
 	public function get_experiments() {
 		return [
 			/**
+			 * Author: @embarks
+			 * Issue: 8113
+			 * Creation date: 2021-06-28
+			 */
+			[
+				'name'        => 'enableBulkVideoOptimization',
+				'label'       => __( 'Bulk video optimization', 'web-stories' ),
+				'description' => __( 'Enable option to optimize multiple videos at once in the new pre-publish checklist', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @littlemilkstudio
+			 * Issue: 7965
+			 * Creation date: 2021-06-18
+			 */
+			[
+				'name'        => 'enableChecklistCompanion',
+				'label'       => __( 'Checklist companion', 'web-stories' ),
+				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @samwhale
+			 * Issue: 6153
+			 * Creation date: 2021-06-07
+			 */
+			[
+				'name'        => 'enableRightClickMenus',
+				'label'       => __( 'Right click menus', 'web-stories' ),
+				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: 6148
 			 * Creation date: 2021-05-11
 			 */
 			[
 				'name'        => 'enableQuickActionMenus',
-				'label'       => __( 'Enable Quick Action Menus', 'web-stories' ),
-				'description' => __( 'Adds a contextual shortcut menu to side of canvas in editor.', 'web-stories' ),
+				'label'       => __( 'Quick action menus', 'web-stories' ),
+				'description' => __( 'Enable a contextual shortcut menu to side of canvas in editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -237,8 +273,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableStickers',
-				'label'       => __( 'Enable Stickers', 'web-stories' ),
-				'description' => __( 'Appends sticker buttons to the bottom of the shapes panel in library.', 'web-stories' ),
+				'label'       => __( 'Stickers', 'web-stories' ),
+				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -248,8 +284,8 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableExperimentalAnimationEffects',
-				'label'       => __( 'Experimental Animation Effects', 'web-stories' ),
-				'description' => __( 'Enables any animation effects that are currently experimental', 'web-stories' ),
+				'label'       => __( 'Experimental animations', 'web-stories' ),
+				'description' => __( 'Enable any animation effects that are currently experimental', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -281,7 +317,7 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enableInProgressTemplateActions',
-				'label'       => __( 'Template Actions', 'web-stories' ),
+				'label'       => __( 'Template actions', 'web-stories' ),
 				'description' => __( 'Enable in-progress template actions', 'web-stories' ),
 				'group'       => 'dashboard',
 			],
@@ -303,7 +339,7 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Library Search', 'web-stories' ),
+				'label'       => __( 'Library search', 'web-stories' ),
 				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
 				'group'       => 'editor',
 			],
@@ -326,7 +362,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'incrementalSearchDebounceMedia',
 				'label'       => __( 'Incremental Search', 'web-stories' ),
-				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
+				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -341,26 +377,14 @@ class Experiments extends Service_Base {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #3134
-			 * Creation date: 2020-10-28
-			 */
-			[
-				'name'        => 'customMetaBoxes',
-				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
-				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @spacedmonkey
-			 * Issue: #6943
-			 * Creation date: 2021-04-07
+			 * Issue: #7232
+			 * Creation date: 2021-07-14
 			 */
 			[
-				'name'        => 'enablePrePublishVideoOptimization',
-				'label'       => __( 'Video optimization pre-publish checklist', 'web-stories' ),
-				'description' => __( 'Optimize already uploaded videos.', 'web-stories' ),
+				'name'        => 'enableGifOptimization',
+				'label'       => __( 'GIF optimization', 'web-stories' ),
+				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -371,21 +395,31 @@ class Experiments extends Service_Base {
 			 */
 			[
 				'name'        => 'enablePostLocking',
-				'label'       => __( 'Post locking', 'web-stories' ),
-				'description' => __( 'Enable post locking', 'web-stories' ),
+				'label'       => __( 'Story locking', 'web-stories' ),
+				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
 			],
 			/**
 			 * Author: @miina
-			 * Issue: #7055
-			 * Creation date: 2021-04-09
+			 * Issue #7986
+			 * Creation date: 2021-08-08
 			 */
 			[
-				'name'        => 'customPageTemplates',
-				'label'       => __( 'Custom Page Templates', 'web-stories' ),
-				'description' => __( 'Enable adding custom page templates', 'web-stories' ),
+				'name'        => 'enableSmartTextColor',
+				'label'       => __( 'Smart text color', 'web-stories' ),
+				'description' => __( 'Enable text insertion with smart color ensuring good contrast with the background', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
+			],
+			/**
+			 * Author: @merapi
+			 * Issue: #262
+			 * Creation date: 2021-07-08
+			 */
+			[
+				'name'        => 'enableEyedropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

@@ -17,15 +17,15 @@
  * External dependencies
  */
 import { useState } from 'react';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_TYPES,
   SnackbarProvider,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { ApiContext } from '../../../api/apiProvider';
 import useApiAlerts from '../../../api/useApiAlerts';
 

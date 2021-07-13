@@ -40,19 +40,20 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
   {
     type: 'image',
     mimeType: 'image/jpeg',
+    output: undefined,
     creationDate: '2020-09-01T05:33:54',
     src: 'http://wp.local/wp-content/uploads/2020/09/IMAGE.jpg',
     width: 1080,
     height: 2220,
     poster: undefined,
-    posterId: 0,
+    posterId: undefined,
     id: 274,
     length: undefined,
     lengthFormatted: undefined,
     title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
-    isPlaceholder: undefined,
+    isPlaceholder: false,
     isOptimized: false,
     sizes: {
       medium: {
@@ -110,22 +111,6 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
         mime_type: 'image/jpeg',
         source_url:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x853.jpg',
-      },
-      'web-stories-poster-landscape': {
-        file: 'IMAGE-853x640.jpg',
-        width: 853,
-        height: 640,
-        mime_type: 'image/jpeg',
-        source_url:
-          'http://wp.local/wp-content/uploads/2020/09/IMAGE-853x640.jpg',
-      },
-      'web-stories-poster-square': {
-        file: 'IMAGE-640x640.jpg',
-        width: 640,
-        height: 640,
-        mime_type: 'image/jpeg',
-        source_url:
-          'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x640.jpg',
       },
       'web-stories-publisher-logo': {
         file: 'IMAGE-96x96.jpg',

@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\Integrations;
 
-use AmpProject\Optimizer;
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
@@ -67,7 +66,6 @@ class AMP extends Service_Base {
 		add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
 		add_filter( 'amp_skip_post', [ $this, 'filter_amp_skip_post' ], 10, 2 );
-		add_filter( 'amp_optimizer_config', [ $this, 'filter_amp_optimizer_config' ] );
 
 		// This filter is actually used in this plugin's `Sanitization` class.
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
@@ -138,9 +136,7 @@ class AMP extends Service_Base {
 			'publisher'                  => $this->get_publisher_name(),
 			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 			'poster_images'              => [
-				'poster-portrait-src'  => $story->get_poster_portrait(),
-				'poster-square-src'    => $story->get_poster_square(),
-				'poster-landscape-src' => $story->get_poster_landscape(),
+				'poster-portrait-src' => $story->get_poster_portrait(),
 			],
 		];
 
@@ -242,24 +238,6 @@ class AMP extends Service_Base {
 		}
 
 		return $skipped;
-	}
-
-	/**
-	 * Temporarily disable ESM transformation since STAMP preview mode (#development=1) is unavailable in amp-story-1.0.mjs.
-	 *
-	 * @since 1.7.2
-	 *
-	 * @link https://github.com/ampproject/amphtml/issues/34364
-	 *
-	 * @param array $configuration The AMP Optimizer configuration.
-	 *
-	 * @return array The modified configuration.
-	 */
-	public function filter_amp_optimizer_config( $configuration ) {
-		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			$configuration[ Optimizer\Transformer\RewriteAmpUrls::class ][ Optimizer\Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED ] = false;
-		}
-		return $configuration;
 	}
 
 	/**

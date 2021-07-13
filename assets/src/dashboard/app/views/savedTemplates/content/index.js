@@ -22,17 +22,16 @@ import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
-import { TransformProvider } from '../../../../../edit-story/components/transform';
-import { UnitsProvider } from '../../../../../edit-story/units';
+import { UnitsProvider } from '@web-stories-wp/units';
 import {
   Headline,
   LoadingSpinner,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   Layout,
   LoadingContainer,

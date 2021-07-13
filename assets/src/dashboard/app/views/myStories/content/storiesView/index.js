@@ -22,15 +22,15 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-/**
- * Internal dependencies
- */
 import {
   LoadingSpinner,
   useSnackbar,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
 import {
@@ -160,17 +160,11 @@ function StoriesView({
       global.navigator.clipboard.writeText(story.link);
 
       showSnackbar({
-        message:
-          story.title.length > 0
-            ? sprintf(
-                /* translators: %s: story title. */
-                __('%s has been copied to your clipboard.', 'web-stories'),
-                story.title
-              )
-            : __(
-                '(no title) has been copied to your clipboard.',
-                'web-stories'
-              ),
+        message: sprintf(
+          /* translators: %s: story title. */
+          __('%s has been copied to your clipboard.', 'web-stories'),
+          story.title.length > 0 ? story.title : __('(no title)', 'web-stories')
+        ),
         dismissable: true,
       });
       setFocusedStory({ id: story.id });

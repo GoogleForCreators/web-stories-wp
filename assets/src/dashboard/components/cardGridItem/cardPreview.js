@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   Button,
@@ -31,15 +27,20 @@ import {
   BUTTON_SIZES,
   ThemeGlobals,
   useFocusOut,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+
+/**
+ * Internal dependencies
+ */
 import {
   PreviewErrorBoundary,
   PreviewPage,
 } from '../../../edit-story/components/previewPage';
-import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import { DEFAULT_STORY_PAGE_ADVANCE_DURATION } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
+import clamp from '../../utils/clamp';
 import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
@@ -179,8 +180,10 @@ const CardPreviewContainer = ({
         {children}
       </PreviewPane>
       {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
+        Disable Reason: As the UI stands for the dashboard grid item view we have nested functionality
+        that is embedded in the grid and requires the user hover or focus a card in order to see options
+        since keyboard users can't hover we have to also harness focus and active to get consistent behavior
+        the click events on this div show or hide options for each grid item.
         */}
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
       <EditControls

@@ -20,11 +20,13 @@
 import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { useCanvas } from '../../app';
+import { RightClickMenuProvider } from '../../app/rightClickMenu';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -33,9 +35,13 @@ import SelectionCanvas from './selectionCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
+import EyedropperLayer from './eyedropperLayer';
 
+// data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
+// See https://github.com/google/web-stories-wp/issues/7745.
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
+  'data-fix-caret': true,
 })`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   width: 100%;
@@ -48,6 +54,8 @@ function CanvasLayout() {
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
+
+  const enableEyedropper = useFeature('enableEyedropper');
 
   const backgroundRef = useRef(null);
 
@@ -67,20 +75,23 @@ function CanvasLayout() {
   // with Moveable and left-right direction, for this subtree, we are not using any plugin.
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
-    <StyleSheetManager stylisPlugins={[]}>
-      <Background ref={setBackgroundRef} style={layoutParamsCss}>
-        <CanvasUploadDropTarget>
-          <CanvasElementDropzone>
-            <SelectionCanvas>
-              <DisplayLayer />
-              <FramesLayer />
-              <NavLayer />
-            </SelectionCanvas>
-            <EditLayer />
-          </CanvasElementDropzone>
-        </CanvasUploadDropTarget>
-      </Background>
-    </StyleSheetManager>
+    <RightClickMenuProvider>
+      <StyleSheetManager stylisPlugins={[]}>
+        <Background ref={setBackgroundRef} style={layoutParamsCss}>
+          <CanvasUploadDropTarget>
+            <CanvasElementDropzone>
+              <SelectionCanvas>
+                <DisplayLayer />
+                <FramesLayer />
+                <NavLayer />
+              </SelectionCanvas>
+              <EditLayer />
+              {enableEyedropper && <EyedropperLayer />}
+            </CanvasElementDropzone>
+          </CanvasUploadDropTarget>
+        </Background>
+      </StyleSheetManager>
+    </RightClickMenuProvider>
   );
 }
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-import { useDebouncedCallback } from 'use-debounce/lib';
+import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 
@@ -64,7 +64,7 @@ function Header({ filter, search, sort, templates, view }) {
     [scrollToTop, sort]
   );
 
-  const [debouncedSearchChange] = useDebouncedCallback(async (value) => {
+  const debouncedSearchChange = useDebouncedCallback(async (value) => {
     await trackEvent('search', {
       search_type: 'saved_templates',
       search_term: value,

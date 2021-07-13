@@ -21,16 +21,16 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
 import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   ToggleButton,
   Icons,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Tooltip from '../../tooltip';
 import { focusStyle } from './styles';
 
@@ -49,11 +49,18 @@ const StyledToggleButton = styled(ToggleButton)`
 `;
 
 /**
+ * @callback ChangeCallback
+ * @param {Object} flip Flip value.
+ * @param {boolean} flip.horizontal Horizontal value.
+ * @param {boolean} flip.vertical Vertical value.
+ */
+
+/**
  * Get flip controls for flipping elements horizontally and vertically.
  *
  * @param {Object} props Component props.
  * @param {Object} props.value Element's flip object.
- * @param {function(boolean)} props.onChange Callback to flip element.
+ * @param {ChangeCallback} props.onChange Callback to flip element.
  * @return {*} Rendered component.
  */
 function FlipControls({ value, onChange }) {

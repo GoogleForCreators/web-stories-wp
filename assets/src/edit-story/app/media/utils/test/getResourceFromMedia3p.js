@@ -78,7 +78,7 @@ describe('getResourceFromMedia3p', () => {
       alt: 'media/coverr:g9re0sRUYA',
       local: false,
       isPlaceholder: false,
-      isOptimized: false,
+      isOptimized: true,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -159,7 +159,7 @@ describe('getResourceFromMedia3p', () => {
       alt: 'media/coverr:g9re0sRUYA',
       local: false,
       isPlaceholder: false,
-      isOptimized: false,
+      isOptimized: true,
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
@@ -330,7 +330,7 @@ describe('getResourceFromMedia3p', () => {
     };
 
     const expectedStoryEditorResource = {
-      id: undefined,
+      id: 'media/tenor:3468838096637910112',
       length: undefined,
       lengthFormatted: undefined,
       type: 'gif',
@@ -343,9 +343,10 @@ describe('getResourceFromMedia3p', () => {
       alt: 'media/tenor:3468838096637910112',
       local: false,
       isPlaceholder: false,
-      isOptimized: false,
-      poster: undefined,
-      posterId: undefined,
+      isOptimized: true,
+      poster:
+        'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
+      posterId: 'media/tenor:3468838096637910112',
       sizes: {
         full: {
           file: 'media/tenor:3468838096637910112',
@@ -374,46 +375,6 @@ describe('getResourceFromMedia3p', () => {
       },
       output: {
         mimeType: 'video/mp4',
-        poster:
-          'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
-        sizes: {
-          mp4: {
-            full: {
-              file: 'media/tenor:3468838096637910112',
-              height: 640,
-              mime_type: 'video/mp4',
-              source_url:
-                'https://c.tenor.com/MCPJ3sVx3GAAAAPo/happy-national-cat-day-peace.mp4',
-              width: 640,
-            },
-            preview: {
-              file: 'media/tenor:3468838096637910112',
-              height: 86,
-              mime_type: 'video/mp4',
-              source_url:
-                'https://c.tenor.com/MCPJ3sVx3GAAAAP2/happy-national-cat-day-peace.mp4',
-              width: 86,
-            },
-          },
-          webm: {
-            full: {
-              file: 'media/tenor:3468838096637910112',
-              height: 640,
-              mime_type: 'image/webm',
-              source_url:
-                'https://c.tenor.com/MCPJ3sVx3GAAAAPs/happy-national-cat-day-peace.webm',
-              width: 640,
-            },
-            preview: {
-              file: 'media/tenor:3468838096637910112',
-              height: 86,
-              mime_type: 'image/webm',
-              source_url:
-                'https://c.tenor.com/MCPJ3sVx3GAAAAP4/happy-national-cat-day-peace.webm',
-              width: 86,
-            },
-          },
-        },
         src: 'https://c.tenor.com/MCPJ3sVx3GAAAAPo/happy-national-cat-day-peace.mp4',
       },
       attribution: {

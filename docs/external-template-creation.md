@@ -18,6 +18,7 @@ To add a new template to the editor:
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
     - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
     - Make sure videos are 720p.
+    - Make sure caption files are also committed along with the videos, when available.
 4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (see [details](#get-the-story-json)).
 5. [Both] Verify that new template shows up in the template library and looks as expected.
 
@@ -30,7 +31,7 @@ To add a new template to the editor:
 
 ### Adding SVGs to the codebase as stickers
 
-To add new stickers to the codebase, obtain the raw svg file, and view it in your code editor. Paste the contents of the raw svg file into a react component in `packages/stickers/src/<sticker_name>.js`.
+To add new stickers to the codebase, obtain the raw svg file, and view it in your code editor. Paste the contents of the raw svg file into a react component in `packages/stickers/src/<template_name>/<sticker_name>.js`.
 
 Remove extraneous attributes on the base `svg` component and make sure your component takes a `style` property that it applies to the base svg element. Also make sure to remove any explicit `height` and `width` attributes and see that they only are applied to the viewbox. Lastly, be sure to add a title for accessibility. By the end, your component should look something like this:
 
@@ -62,7 +63,7 @@ export default {
 };
 ```
 
-The last step of this process is navigating to `packages/stickers/src/index.js` and adding your new sticker to the default export object:
+Create a new `index.js` file under your `<template_name>` directory and add your new sticker to the export object:
 
 ```js
 //...
@@ -74,11 +75,23 @@ export default {
 };
 ```
 
+The last step of this process is navigating to `packages/stickers/src/index.js` and adding your new stickers to the default export object:
+
+```js
+//...
+/* eslint-disable-next-line import/no-unresolved */
+import * as myStickers from './<template_name>';
+export default {
+  //...
+  ...myStickers,
+};
+```
+
 Once you've completed this step, your new sticker should now appear with the other stickers appended to the bottom of the shapes panel if the `enableStickers` feature flag is enabled.
 
 ### Inserting stickers (SVGs) into a story
 
-To add stickers to your template story, go to the `Experiments` page (in the left-hand sidebar under the `Stories` section) and check the `Enable Stickers` checkbox. 
+To add stickers to your template story, go to the `Experiments` page (in the left-hand sidebar under the `Stories` section) and check the `Enable Stickers` checkbox.
 
 Once turned on, all available stickers in the codebase should be available for selection under our base shapes in the shapes library panel.
 
@@ -89,6 +102,10 @@ To get the JSON representation of a story in the editor:
 1. In the editor, open the story.
 2. Press `Command+Shift+Option+J` (Mac) or `Control+Shift+Alt+J` (Windows/Linux) in the editor.
 3. A dialog will appear where you can copy/paste story JSON.
+4. Check the `Template` checkbox that is present at the top of the dialog.
+
+   <img width="554" alt="Screenshot of the dev tools with the Templates checkbox" src="https://user-images.githubusercontent.com/6906779/125189481-efe82c80-e255-11eb-93dd-ca875d514f54.png">
+
 
 #### Alternative
 
@@ -96,18 +113,69 @@ Another way to get the story JSON is by inspecting the network request that save
 
 1. In the editor, open the story.
 2. Open `Chrome DevTools > Network`.
-3. In the editor, click the "Save draft" button. 
-4. You should see a POST XHR with JSON in the request payload. In that payload JSON, find and right-click the `story_data` field and click `Copy value`. 
+3. In the editor, click the "Save draft" button.
+4. You should see a POST XHR with JSON in the request payload. In that payload JSON, find and right-click the `story_data` field and click `Copy value`.
 5. The story JSON should now be copied to your clipboard and ready to paste into a new file.
 
 ### Adding story JSON to the codebase as a new template
 
 Once you have the story JSON, several code changes are needed to add it to the list of default templates in the editor.
 
-1. In [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw), commit your template's story JSON as a new file e.g. `<template_name>.json`.
-    - In the JSON, first change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`. See an [example](https://github.com/google/web-stories-wp/blob/da23d65cbca76c604350464f0538115d280a7a06/packages/templates/src/raw/diy.json#L151).
-2. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function. 
-3. In [`packages/template/src/index.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/index.js), add a new JS object corresponding to the new template with properties `id`, `title`, `tags`, `colors`, etc.
+1. In [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw), create a new directory `<template_name>` for your template. Now add your template's story JSON in a new file e.g. `<template_name>/template.json`.
+   - Make following changes to the template JSON,
+      - Reset following extraneous properties,
+        - `current: null`
+        - `selection: []`
+        - `story: {}`
+      - First change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__` as the base, which then will be replaced by the CDN url.
+      - Ensure to also change poster image URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`.
+      - Change `posterId` and `id` for all elements of type image and video to `0`, these are the WP media ids that are not used in templates.
+      - Make sure that the images and videos have appropriate title and alt text set for better accessibility.
+
+   - If the story JSON is copied from the devTools dialog as mentioned  in [Get The Story JSON](#get-the-story-json), the JSON will have some of the changes already present.
+     - The 'Template' checkbox does following:
+       - Resets extraneous properties.
+       - Replaces resource URLs with replaceable CDN constant and `static-site` asset path.
+       - Resets `sizes` property for images to `[]`.
+       - Resets all `id` and `posterId` to 0 for image and video type resources.
+
+      NOTE: Check all resource URLs and properties are set properly before commiting the template.
+
+
+2. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, etc.
+
+   ```js
+    //...
+    /**
+     * External dependencies
+     */
+    import { __, _x } from '@web-stories-wp/i18n';
+
+    /**
+     * Internal dependencies
+     */
+    /* eslint-disable-next-line import/no-unresolved */
+    import { default as template } from './template';
+
+    export default {
+      title: _x('Your Template Title', 'template name', 'web-stories'),
+      tags: [
+        _x('Tags', 'template keyword', 'web-stories'),
+      ],
+      // Array of color objects with name and hex values.
+      colors: [
+        { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
+      ],
+      description: __(
+        'A short text describing your story template.',
+       'web-stories'
+      ),
+      ...template,
+      vertical: _x('Vertical name', 'template vertical', 'web-stories'),
+    };
+   ```
+
+3. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function.
 4. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
 5. Create a single pull request with all of the changes in steps 1-3.
 
@@ -120,7 +188,7 @@ First and foremost, shapes aren't complete svgs, just a single normalized path (
 Since we must have a single path, we can't utilize any other aspects of the svg spec. This means all shapes must be converted to a single path in the svg editing software of your choosing. For the purposes here, we will outline the steps in illustrator because it's what we've used thus far, but these svg operations should be applicable to other programs as well.
 
 - Open svg file in illustrator
-- Select shape 
+- Select shape
 - (If there's any stroke) Click on `Object -> Path -> Outline Stroke`
 - Make sure your shape is selected and click `Object -> Compound Path -> Make`
 - Open your code editor to any scratch pad svg file (will just be using this file for copy and pasting, won't save it at all)
@@ -226,7 +294,7 @@ That's it! After you recompile your application you should now see your new shap
 
 ### Filenames for images and videos
 
-WordPress has a naming convention where if you upload an image with the same name multiple times, it adds a `-x` suffix. 
+WordPress has a naming convention where if you upload an image with the same name multiple times, it adds a `-x` suffix.
 
 **i.e**
 if I upload `some_image.png` 3 times to the WordPress media upload in the story editor, it will store those images as:

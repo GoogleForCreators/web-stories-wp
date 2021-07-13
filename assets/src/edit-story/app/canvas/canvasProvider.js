@@ -20,13 +20,14 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SAT from 'sat';
+import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { useLayout } from '../layout';
 import { useStory } from '../story';
-import { UnitsProvider } from '../../units';
+
 import useCanvasCopyPaste from './useCanvasCopyPaste';
 import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
@@ -42,6 +43,10 @@ function CanvasProvider({ children }) {
   const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
+  const [eyedropperImg, setEyedropperImg] = useState(null);
+  const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
+  const [isEyedropperActive, setIsEyedropperActive] = useState(null);
+  const [eyedropperCallback, setEyedropperCallback] = useState(null);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -171,6 +176,10 @@ function CanvasProvider({ children }) {
         displayLinkGuidelines,
         pageAttachmentContainer,
         designSpaceGuideline,
+        isEyedropperActive,
+        eyedropperCallback,
+        eyedropperImg,
+        eyedropperPixelData,
       },
       actions: {
         setPageContainer,
@@ -186,6 +195,10 @@ function CanvasProvider({ children }) {
         setPageAttachmentContainer,
         setCanvasContainer,
         setDesignSpaceGuideline,
+        setIsEyedropperActive,
+        setEyedropperCallback,
+        setEyedropperImg,
+        setEyedropperPixelData,
       },
     }),
     [
@@ -212,6 +225,14 @@ function CanvasProvider({ children }) {
       setCanvasContainer,
       designSpaceGuideline,
       setDesignSpaceGuideline,
+      isEyedropperActive,
+      setIsEyedropperActive,
+      eyedropperCallback,
+      setEyedropperCallback,
+      eyedropperImg,
+      setEyedropperImg,
+      eyedropperPixelData,
+      setEyedropperPixelData,
     ]
   );
   return (

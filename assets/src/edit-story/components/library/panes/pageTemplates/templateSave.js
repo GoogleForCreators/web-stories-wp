@@ -22,16 +22,16 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
 import {
   BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
   useSnackbar,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import { focusStyle } from '../../../panels/shared';
@@ -118,7 +118,7 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
         .then((addedTemplate) => {
           updateList?.(addedTemplate);
           showSnackbar({
-            message: __('Page template saved.', 'web-stories'),
+            message: __('Page Template saved.', 'web-stories'),
             dismissable: true,
           });
         })

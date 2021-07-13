@@ -16,22 +16,44 @@
 /**
  * Internal dependencies
  */
-import * as beautyStickers from './beauty';
-import * as cookingStickers from './cooking';
-import * as diyStickers from './diy';
-import * as entertainmentStickers from './entertainment';
-import * as fashionStickers from './fashion';
-import * as fitnessStickers from './fitness';
-import * as travelStickers from './travel';
-import * as wellbeingStickers from './wellbeing';
+import * as beautyStickers from './fresh-and-bright';
+import * as cookingStickers from './food-and-stuff';
+import * as doersGetMoreDoneStickers from './doers-get-more-done';
+import * as weeklyEntertainmentStickers from './weekly-entertainment';
+import * as fashionOnTheGoStickers from './fashion-on-the-go';
+import * as noDaysOffStickers from './no-days-off';
+import * as experienceThailandStickers from './experience-thailand';
+import * as wellbeingSleepStickers from './sleep';
+import * as guideTobakingBreadStickers from './baking-bread-guide';
+import * as sangriaArtichokeStickers from './sangria-artichoke';
+import * as crispyChickenThighStickers from './kitchen-stories';
+import * as almondosFilmsStickers from './almodos-films';
+import * as bestPizzaInNYCStickers from './pizzas-in-nyc';
+import * as twelveHoursInBarcelonaStickers from './12-hours-in-barcelona';
+import * as bestFitnessAppsStickers from './fitness-apps-ranked';
+import * as streetStyleOnTheGoStickers from './street-style-on-the-go';
+import * as plantBasedDyesStickers from './plant-based-dyes';
+import * as indoorGardenOasisStickers from './indoor-garden-oasis';
+import * as killBellyFatStickers from './belly-fat-workout';
 
 export default {
   ...beautyStickers,
   ...cookingStickers,
-  ...diyStickers,
-  ...entertainmentStickers,
-  ...fashionStickers,
-  ...fitnessStickers,
-  ...travelStickers,
-  ...wellbeingStickers,
+  ...doersGetMoreDoneStickers,
+  ...weeklyEntertainmentStickers,
+  ...fashionOnTheGoStickers,
+  ...noDaysOffStickers,
+  ...experienceThailandStickers,
+  ...wellbeingSleepStickers,
+  ...guideTobakingBreadStickers,
+  ...sangriaArtichokeStickers,
+  ...crispyChickenThighStickers,
+  ...almondosFilmsStickers,
+  ...bestPizzaInNYCStickers,
+  ...twelveHoursInBarcelonaStickers,
+  ...bestFitnessAppsStickers,
+  ...streetStyleOnTheGoStickers,
+  ...plantBasedDyesStickers,
+  ...indoorGardenOasisStickers,
+  ...killBellyFatStickers,
 };

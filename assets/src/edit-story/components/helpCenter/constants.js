@@ -19,6 +19,11 @@
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { FOCUSABLE_SELECTORS } from '../../constants';
+
 export const KEYS = {
   ADD_BACKGROUND_MEDIA: 'addBackgroundMedia',
   CROP_SELECTED_ELEMENTS: 'cropSelectedElements',
@@ -87,7 +92,7 @@ export const TIPS = {
     ],
   },
   [KEYS.ADD_LINKS]: {
-    title: __('Add links to Story elements', 'web-stories'),
+    title: __('Add links to story elements', 'web-stories'),
     figureSrc: 'images/help-center/add_link_module_6',
     description: [
       __(
@@ -112,7 +117,7 @@ export const TIPS = {
     we get an animation. Once we have the animation then these
     attributes should be removed. */
     figureSrcImg: 'images/help-center/story_embed_module_1',
-    figureAlt: __('Embed web story graphic', 'web-stories'),
+    figureAlt: __('Graphic showing embed functionality', 'web-stories'),
     description: [
       __(
         'When you create a new post in WordPress, you can embed any of your Stories. <a>Learn more</a>',
@@ -146,15 +151,6 @@ export const Z_INDEX = {
 };
 
 export const BASE_NAVIGATION_FLOW = Object.keys(TIPS);
-
-export const FOCUSABLE_SELECTORS = [
-  'button',
-  '[href]',
-  'input',
-  'select',
-  'textarea',
-  '[tabindex]:not([tabindex="-1"])',
-];
 
 export const POPUP_ID = 'help_center_companion';
 export const FOCUSABLE_POPUP_CHILDREN_SELECTOR = FOCUSABLE_SELECTORS.map(

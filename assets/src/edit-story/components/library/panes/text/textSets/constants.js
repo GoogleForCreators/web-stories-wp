@@ -17,21 +17,23 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
+import { PAGE_RATIO } from '@web-stories-wp/units';
+
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { TEXT_SET_SIZE } from '../../../../../constants';
 
 export const CATEGORIES = {
-  contact: __('Contact', 'web-stories'),
-  editorial: __('Editorial', 'web-stories'),
-  list: __('List', 'web-stories'),
-  cover: __('Cover', 'web-stories'),
-  section_header: __('Header', 'web-stories'),
-  step: __('Steps', 'web-stories'),
-  table: __('Table', 'web-stories'),
-  quote: __('Quote', 'web-stories'),
+  contact: _x('Contact', 'text set category', 'web-stories'),
+  editorial: _x('Editorial', 'text set category', 'web-stories'),
+  list: _x('List', 'text set category', 'web-stories'),
+  cover: _x('Cover', 'text set category', 'web-stories'),
+  section_header: _x('Header', 'text set category', 'web-stories'),
+  step: _x('Steps', 'text set category', 'web-stories'),
+  table: _x('Table', 'text set category', 'web-stories'),
+  quote: _x('Quote', 'text set category', 'web-stories'),
 };
 
 export const PANE_TEXT = {

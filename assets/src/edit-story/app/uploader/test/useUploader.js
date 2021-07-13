@@ -27,7 +27,8 @@ import useUploader from '../useUploader';
 
 const mockShowSnackbar = jest.fn();
 
-jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
@@ -35,10 +36,42 @@ function setup(args) {
   const configValue = {
     api: {},
     allowedMimeTypes: {
-      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-      video: ['video/mp4'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4'],
+    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
+    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
+    allowedImageMimeTypes: [
+      'image/png',
+      'image/jpeg',
+      'image/jpg',
+      'image/gif',
+    ],
+    allowedTranscodableMimeTypes: [
+      'video/3gpp',
+      'video/3gpp2',
+      'video/MP2T',
+      'video/mp4',
+      'video/mpeg',
+      'video/ogg',
+      'video/quicktime',
+      'video/webm',
+      'video/x-flv',
+      'video/x-h261',
+      'video/x-h263',
+      'video/x-m4v',
+      'video/x-matroska',
+      'video/x-mjpeg',
+      'video/x-ms-asf',
+      'video/x-msvideo',
+      'video/x-nut',
+    ],
     maxUpload: 104857600,
     capabilities: {
       hasUploadMediaAction: true,
@@ -80,7 +113,7 @@ describe('useUploader', () => {
       });
 
       await expect(() => validateFileForUpload({})).toThrow(
-        'Sorry, you are unable to upload files.'
+        'Sorry, you are not allowed to upload files.'
       );
     });
 
@@ -103,7 +136,9 @@ describe('useUploader', () => {
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
-      ).toThrow('Please choose only png, jpeg, jpg, gif, or mp4 to upload.');
+      ).toThrow(
+        'Please choose only png, jpeg, jpg, gif, mp4, webp, or webm to upload.'
+      );
     });
 
     it('formats the error message correctly if there is only one file type supported', async () => {

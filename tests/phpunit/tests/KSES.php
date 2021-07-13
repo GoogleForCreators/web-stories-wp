@@ -373,45 +373,49 @@ class KSES extends Test_Case {
 
 	public function data_test_filter_kses_allowed_html() {
 		return [
-			'Video Element'        => [
+			'Video Element'                    => [
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
 			],
-			'Masking'              => [
+			'Masking'                          => [
 				'<svg width="0" height="0"><defs><clippath id="mask-foo" transform="scale(1 1)" clippathunits="objectBoundingBox"><path d="M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z"></path></clippath></defs></svg></div>',
 				'<svg width="0" height="0"><defs><clippath id="mask-foo" transform="scale(1 1)" clippathunits="objectBoundingBox"><path d="M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z"></path></clippath></defs></svg></div>',
 			],
-			'ARIA Roles'           => [
+			'ARIA Roles'                       => [
 				'<div aria-describedby="foo"></div><div aria-details="bar"></div><div aria-label="Hello World"></div><div aria-labelledby="foo bar baz"></div><div aria-hidden="true"></div>',
 				'<div aria-describedby="foo"></div><div aria-details="bar"></div><div aria-label="Hello World"></div><div aria-labelledby="foo bar baz"></div><div aria-hidden="true"></div>',
 			],
-			'Global Attributes'    => [
+			'Global Attributes'                => [
 				'<div class="foo" id="bar" style="color: pink" role="main" title="Test"></div>',
 				'<div class="foo" id="bar" style="color: pink" role="main" title="Test"></div>',
 			],
-			'Img Attributes'       => [
+			'Img Attributes'                   => [
 				'<img src="http://www.example.com/test.jpg" alt="Example" height="200" width="500" />',
 				'<img src="http://www.example.com/test.jpg" alt="Example" height="200" width="500" />',
 			],
-			'Data Attributes'      => [
+			'Data Attributes'                  => [
 				'<a href="https://example.com" data-vars-tooltip-click-id="link1" data-vars-tooltip-href="example.com"></a>',
 				'<a href="https://example.com" data-vars-tooltip-click-id="link1" data-vars-tooltip-href="example.com"></a>',
 			],
-			'AMP Layout'           => [
+			'AMP Layout'                       => [
 				'<amp-img layout="fill" src="https://example.com/image.png" />',
 				'<amp-img layout="fill" src="https://example.com/image.png" />',
 			],
-			'AMP Animations'       => [
+			'AMP Animations'                   => [
 				'<p id="foo" animate-in="fly-in-left" animate-in-delay="0.3s" animate-in-duration="0.5s" animate-in-layout="nodisplay">Hello World</p><p id="bar" animate-in="fade-in" animate-in-after="foo">Hello World</p>',
 				'<p id="foo" animate-in="fly-in-left" animate-in-delay="0.3s" animate-in-duration="0.5s" animate-in-layout="nodisplay">Hello World</p><p id="bar" animate-in="fade-in" animate-in-after="foo">Hello World</p>',
 			],
-			'AMP Story Animations' => [
+			'AMP Story Animations'             => [
 				'<amp-story-animation layout="nodisplay" trigger="visibility"><script type="application/json">[{"selector":"#anim-9d7bb1a9-8839-4629-b26c-d1863e675c36","keyframes":{"transform":["translate3d(-110.30303%, 0px, 0)","none"]},"fill":"forwards","duration":600,"delay":0,"easing":"cubic-bezier(0.4, 0.4, 0.0, 1)"}]</script></amp-story-animation>',
 				'<amp-story-animation layout="nodisplay" trigger="visibility"><script type="application/json">[{"selector":"#anim-9d7bb1a9-8839-4629-b26c-d1863e675c36","keyframes":{"transform":["translate3d(-110.30303%, 0px, 0)","none"]},"fill":"forwards","duration":600,"delay":0,"easing":"cubic-bezier(0.4, 0.4, 0.0, 1)"}]</script></amp-story-animation>',
 			],
-			'Page Attachment'      => [
+			'Page Attachment'                  => [
 				'<amp-story-page-attachment layout="nodisplay" href="https://www.example.com" data-cta-text="Read more" data-title="My title" theme="dark"></amp-story-page-attachment>',
 				'<amp-story-page-attachment layout="nodisplay" href="https://www.example.com" data-cta-text="Read more" data-title="My title" theme="dark"></amp-story-page-attachment>',
+			],
+			'Images with disable-inline-width' => [
+				'<amp-img layout="fill" src="https://example.com/image.jpg" alt="example" srcset="https://example.com/image.jpg 900w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-640x853.jpg 640w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w" sizes="(min-width: 1024px) 14vh, 32vw" disable-inline-width="true"></amp-img>',
+				'<amp-img layout="fill" src="https://example.com/image.jpg" alt="example" srcset="https://example.com/image.jpg 900w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-640x853.jpg 640w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w" sizes="(min-width: 1024px) 14vh, 32vw" disable-inline-width="true"></amp-img>',
 			],
 		];
 	}

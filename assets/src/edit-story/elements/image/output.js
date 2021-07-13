@@ -15,11 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import { calculateSrcSet, isBlobURL } from '@web-stories-wp/media';
+import { PAGE_WIDTH } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
-import { calculateSrcSet } from '../media/util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
@@ -32,13 +37,27 @@ function ImageOutput({ element, box }) {
 
   const props = {
     layout: 'fill',
-    src: resource.src,
+    src: !isBlobURL(resource.src) ? resource.src : '',
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };
 
   const srcSet = calculateSrcSet(element.resource);
   if (srcSet) {
     props.srcSet = srcSet;
+
+    // If `srcset` exists but `sizes` doesn't, amp-img will generate a sizes attribute
+    // with best-guess values that can result in poor image selection.
+    const imageWidthPercent = element.width / PAGE_WIDTH;
+    const mobileWidth = Math.round(imageWidthPercent * 100) + 'vw';
+    // Width of a story page in desktop mode is 45vh.
+    const desktopWidth = Math.round(imageWidthPercent * 45) + 'vh';
+    // 1024px is the minimum width for STAMP desktop mode.
+    props.sizes = `(min-width: 1024px) ${desktopWidth}, ${mobileWidth}`;
+
+    // Prevent inline `width` style from being inserted by AMP (due to presence of `sizes` attribute),
+    // which avoids an undesirable interaction between AMP and the Optimizer's SSR transforms.
+    // See https://github.com/google/web-stories-wp/pull/8099#issuecomment-870987667.
+    props['disable-inline-width'] = true;
   }
 
   return (

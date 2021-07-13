@@ -21,15 +21,15 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackError } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useAPI } from '../../../../../app/api';
 import { useLocalMedia } from '../../../../../app/media';
 import { useStory } from '../../../../../app/story';
@@ -41,7 +41,7 @@ import Dialog from '../../../../dialog';
  * @param {Object} props Component props.
  * @param {number} props.mediaId Selected media element's ID.
  * @param {string} props.type Selected media element's type.
- * @param {function()} props.onClose Callback to toggle dialog display on close.
+ * @param {Function} props.onClose Callback to toggle dialog display on close.
  * @return {null|*} The dialog element.
  */
 function DeleteDialog({ mediaId, type, onClose }) {

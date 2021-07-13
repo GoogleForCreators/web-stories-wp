@@ -15,16 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  createNewPost,
-  setPostContent,
-} from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import {
@@ -32,8 +22,11 @@ import {
   publishPost,
   withDisabledToolbarOnFrontend,
   insertBlock,
+  withPlugin,
+  createNewPost,
+  setPostContent,
 } from '@web-stories-wp/e2e-test-utils';
-
+import percySnapshot from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
@@ -109,14 +102,32 @@ describe('Web Stories Block', () => {
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
   });
+
+  it('should insert a new web stories block and select story', async () => {
+    await createNewPost({
+      showWelcomeGuide: false,
+    });
+    await insertBlock('Web Stories');
+
+    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
+    await expect(page).toClick('div.components-card__body', {
+      text: 'Selected Stories',
+    });
+    await expect(page).toClick('div.components-card__body', {
+      text: 'Box Carousel',
+    });
+    await expect(page).toClick('button', { text: 'Select Stories' });
+    await page.waitForSelector('.components-modal__screen-overlay');
+    await expect(page).toMatchElement('.components-modal__screen-overlay');
+    await percySnapshot(page, 'Story select modal');
+  });
   // Disable for https://github.com/google/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
     withDisabledToolbarOnFrontend();
+    withPlugin('amp');
 
     it('should produce valid AMP when using the AMP plugin', async () => {
-      await activatePlugin('amp');
-
       await createNewPost({
         showWelcomeGuide: false,
       });
@@ -140,8 +151,6 @@ describe('Web Stories Block', () => {
       await expect(page).toMatchElement('amp-story-player');
 
       await expect(page).toBeValidAMP();
-
-      await deactivatePlugin('amp');
     });
   });
 });

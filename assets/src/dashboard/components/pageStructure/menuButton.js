@@ -20,6 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
+import { themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import { __ } from '@web-stories-wp/i18n';
 import { MIN_DASHBOARD_WIDTH } from '../../constants';
 import { Menu as MenuSvg } from '../../icons';
 import { useNavContext } from '../navProvider';
-import { themeHelpers } from '../../../design-system';
 
 const MenuIcon = styled(MenuSvg).attrs({ width: 24, height: 24 })`
   display: block;

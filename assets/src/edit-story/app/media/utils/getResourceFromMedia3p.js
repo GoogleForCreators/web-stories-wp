@@ -15,10 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createResource } from '@web-stories-wp/media';
+/**
  * Internal dependencies
  */
 import { PROVIDERS } from '../media3p/providerConfiguration';
-import createResource from './createResource';
 
 /**
  * Author object.
@@ -295,6 +298,7 @@ function getVideoResourceFromMedia3p(m) {
     alt: m.name,
     local: false,
     isPlaceholder: false,
+    isOptimized: true,
     sizes: videoUrls,
     attribution: getAttributionFromMedia3p(m),
   });
@@ -303,22 +307,24 @@ function getVideoResourceFromMedia3p(m) {
 function getGifResourceFromMedia3p(m) {
   const { imageUrls, videoUrls, previewUrl } = getGifUrls(m);
   return createResource({
+    id: m.name,
+    posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
     src: imageUrls.full.source_url,
     width: imageUrls.full.width,
     height: imageUrls.full.height,
+    poster: previewUrl,
     title: m.description,
     alt: m.name,
     local: false,
     isPlaceholder: false,
+    isOptimized: true,
     sizes: imageUrls,
     output: {
       mimeType: videoUrls.mp4.full.mime_type,
-      sizes: videoUrls,
       src: videoUrls.mp4.full.source_url,
-      poster: previewUrl,
     },
     attribution: getAttributionFromMedia3p(m),
   });
@@ -328,7 +334,7 @@ function getGifResourceFromMedia3p(m) {
  * Generates a resource object from a Media3P object from the API.
  *
  * @param {Media3pMedia} m A Media3P Media object.
- * @return {import('./createResource.js').Resource} Resource object.
+ * @return {import('@web-stories-wp/media').Resource} Resource object.
  */
 export default function getResourceFromMedia3p(m) {
   switch (m.type.toLowerCase()) {

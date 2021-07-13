@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+
+/**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 import theme from '../../theme';
 
 function isHexColorString(s) {
@@ -50,7 +54,8 @@ function CustomStyles() {
     <style
       amp-custom=""
       dangerouslySetInnerHTML={{
-        __html: `
+        __html:
+          `
               amp-story-page {
                 background-color: ${pageBackgroundColor};
               }
@@ -66,6 +71,20 @@ function CustomStyles() {
                   }
                 }
               }
+          ` +
+          /*
+            The following rule is for Safari only.
+            In Safari, the font size is rounded up, causing overflow, this hack undoes this.
+            See https://github.com/google/web-stories-wp/issues/6323
+           */
+          `
+              @media not all and (min-resolution:.001dpcm) {
+                @media {
+                  p.text-wrapper > span {
+                    font-size: calc(100% - 0.5px);
+                  }
+                }
+              }
 
               .page-fullbleed-area,
               .page-background-overlay-area {
@@ -75,6 +94,14 @@ function CustomStyles() {
                 left: 0;
                 height: calc(${safeToFullRatio} * 100%);
                 top: calc((1 - ${safeToFullRatio}) * 100% / 2);
+              }
+
+              .element-overlay-area {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
               }
 
               .page-safe-area {
@@ -101,6 +128,13 @@ function CustomStyles() {
                 right: 0;
                 bottom: 0;
                 margin: 0;
+              }
+
+              @media (prefers-reduced-motion: no-preference) {
+                .animation-wrapper {
+                  opacity: var(--initial-opacity);
+                  transform: var(--initial-transform);
+                }
               }
               `,
       }}

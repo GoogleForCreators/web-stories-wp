@@ -20,6 +20,11 @@
 import { useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import {
+  MEDIA_VARIANTS,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,8 +35,6 @@ import { useFocusHighlight, states, styles } from '../../../../app/highlights';
 import { Row, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { Panel, PanelTitle, PanelContent } from '../../panel';
-import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
-import { Text, THEME_CONSTANTS } from '../../../../../design-system';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -135,7 +138,7 @@ function PublishPanel() {
       updateStory({
         properties: {
           publisherLogo: image.id,
-          publisherLogoUrl: image.sizes?.thumbnail?.url || image.url,
+          publisherLogoUrl: image.sizes?.full?.url || image.url,
         },
       });
     },
@@ -193,6 +196,10 @@ function PublishPanel() {
                 ref={posterButtonRef}
                 width={54}
                 height={96}
+                cropParams={{
+                  width: 640,
+                  height: 853,
+                }}
                 value={featuredMedia?.url}
                 onChange={handleChangePoster}
                 title={__('Select as poster image', 'web-stories')}
@@ -212,6 +219,10 @@ function PublishPanel() {
               <StyledMedia
                 width={72}
                 height={72}
+                cropParams={{
+                  width: 96,
+                  height: 96,
+                }}
                 ref={publisherLogoRef}
                 value={publisherLogoUrl}
                 onChange={handleChangePublisherLogo}
@@ -219,12 +230,12 @@ function PublishPanel() {
                 title={__('Select as publisher logo', 'web-stories')}
                 buttonInsertText={__('Select as publisher logo', 'web-stories')}
                 type={allowedImageMimeTypes}
-                ariaLabel={__('Publisher logo', 'web-stories')}
+                ariaLabel={__('Publisher Logo', 'web-stories')}
                 variant={MEDIA_VARIANTS.CIRCLE}
               />
             </MediaWrapper>
             <LabelWrapper>
-              <Label>{__('Publisher logo', 'web-stories')}</Label>
+              <Label>{__('Publisher Logo', 'web-stories')}</Label>
               <Required />
             </LabelWrapper>
           </MediaInputWrapper>

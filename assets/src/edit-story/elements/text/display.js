@@ -20,12 +20,12 @@
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-
+import { createSolid } from '@web-stories-wp/patterns';
+import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
 import { useFont } from '../../app';
-import { useUnits } from '../../units';
 import {
   elementFillContent,
   elementWithFont,
@@ -41,7 +41,6 @@ import {
   getHTMLFormatters,
   getHTMLInfo,
 } from '../../components/richText/htmlManipulation';
-import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
 import {
   getResponsiveBorder,
@@ -98,9 +97,11 @@ const ForegroundSpan = styled(Span)`
   background: none;
 `;
 
-// Using attributes to avoid creation of hundreds of classes by styled components.
+// Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const FillElement = styled.p.attrs(
   ({
+    theme,
+    previewMode,
     fontStyle,
     fontSize,
     fontWeight,
@@ -110,28 +111,32 @@ const FillElement = styled.p.attrs(
     lineHeight,
     textAlign,
     dataToEditorY,
-  }) => ({
-    style: {
-      fontStyle,
-      fontSize: `${fontSize}px`,
-      fontWeight,
-      fontFamily: generateFontFamily(font),
-      margin: `${-dataToEditorY(marginOffset / 2)}px 0`,
-      padding: padding || 0,
-      lineHeight,
-      textAlign,
-    },
-  })
+  }) => {
+    return previewMode
+      ? {
+          style: {
+            zIndex: 1,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word',
+            letterSpacing: 'normal',
+            color: theme.colors.standard.black,
+            fontStyle,
+            fontSize: `${fontSize}px`,
+            fontWeight,
+            fontFamily: generateFontFamily(font),
+            margin: `${-dataToEditorY(marginOffset / 2)}px 0`,
+            padding: padding || 0,
+            lineHeight,
+            textAlign,
+          },
+        }
+      : {};
+  }
 )`
   margin: 0;
-  position: absolute;
-  z-index: 1;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  letter-spacing: normal;
-  color: ${({ theme }) => theme.colors.standard.black};
   ${elementFillContent}
+  ${({ previewMode }) => !previewMode && elementWithFont}
+  ${({ previewMode }) => !previewMode && elementWithTextParagraphStyle}
 `;
 
 const Background = styled.div`
@@ -311,8 +316,7 @@ function TextDisplay({
         dangerouslySetInnerHTML={{
           __html: content,
         }}
-        marginOffset={marginOffset}
-        dataToEditorY={dataToEditorY}
+        previewMode={previewMode}
         {...props}
       />
     </Background>

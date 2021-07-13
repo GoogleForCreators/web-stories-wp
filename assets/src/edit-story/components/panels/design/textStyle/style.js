@@ -21,17 +21,17 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   NumericInput,
   Icons,
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useFont } from '../../../../app/font';
 import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
@@ -60,7 +60,7 @@ const StyledNumericInput = styled(NumericInput)`
 `;
 
 const Space = styled.div`
-  flex: 0 0 10px;
+  flex: 0 0 3px;
 `;
 
 const StyledToggle = styled(ToggleButton)`
@@ -85,11 +85,19 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const lineHeight = getCommonValue(selectedElements, 'lineHeight');
 
   const {
-    textInfo: { isBold, isItalic, isUnderline, letterSpacing, fontWeight },
+    textInfo: {
+      isBold,
+      isItalic,
+      isUnderline,
+      isUppercase,
+      letterSpacing,
+      fontWeight,
+    },
     handlers: {
       handleClickBold,
       handleClickItalic,
       handleClickUnderline,
+      handleClickUppercase,
       handleSetLetterSpacing,
     },
   } = useRichTextFormatting(selectedElements, pushUpdate);
@@ -118,6 +126,7 @@ function StylePanel({ selectedElements, pushUpdate }) {
   const isTrulyBold = isBold === true;
   const isTrulyItalic = isItalic === true;
   const isTrulyUnderline = isUnderline === true;
+  const isTrulyUppercase = isUppercase === true;
 
   return (
     <>
@@ -215,6 +224,13 @@ function StylePanel({ selectedElements, pushUpdate }) {
           aria-label={__('Underline', 'web-stories')}
         >
           <Icons.LetterUUnderline />
+        </Toggle>
+        <Toggle
+          isToggled={isTrulyUppercase}
+          onClick={() => handleClickUppercase(!isTrulyUppercase)}
+          aria-label={__('Uppercase', 'web-stories')}
+        >
+          <Icons.LetterTUppercase />
         </Toggle>
       </Row>
     </>

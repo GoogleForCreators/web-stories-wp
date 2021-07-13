@@ -28,12 +28,12 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,
@@ -101,11 +101,7 @@ function PaginatedMediaGallery({
   }, [searchTerm, selectedCategoryId]);
 
   // After scroll or resize, see if we need the load the next page.
-  const [handleScrollOrResize] = useDebouncedCallback(
-    loadNextPageIfNeeded,
-    500,
-    [loadNextPageIfNeeded]
-  );
+  const handleScrollOrResize = useDebouncedCallback(loadNextPageIfNeeded, 500);
 
   // After loading a next page, see if we need to load another,
   // ie. when the page of results isn't full.
@@ -140,7 +136,7 @@ function PaginatedMediaGallery({
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
       <MediaGalleryMessage>
-        {__('No media found', 'web-stories')}
+        {__('No media found.', 'web-stories')}
       </MediaGalleryMessage>
     ) : (
       <div style={{ marginBottom: 15 }}>

@@ -36,7 +36,8 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\PreloadHeroImage;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ServerSideRendering;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\TransformedIdentifier;
@@ -116,8 +117,8 @@ class Optimization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see AMP_Theme_Support::get_optimizer_configuration()
-	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L2257-L2315
+	 * @see AmpWPConfiguration::apply_filters()
+	 * @link https://github.com/ampproject/amp-wp/blob/51266bf237184eae06e0d972cf423fa7bef61648/src/Optimizer/AmpWPConfiguration.php#L33-L99
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
@@ -139,7 +140,8 @@ class Optimization {
 				$transformers,
 				[
 					AmpRuntimeCss::class,
-					PreloadHeroImage::class,
+					OptimizeHeroImages::class,
+					OptimizeAmpBind::class,
 					RewriteAmpUrls::class,
 					ServerSideRendering::class,
 					TransformedIdentifier::class,
@@ -149,11 +151,6 @@ class Optimization {
 
 		$configuration = [
 			Configuration::KEY_TRANSFORMERS => $transformers,
-			// Temporarily disable ESM transformation since STAMP preview mode (#development=1)
-			// is unavailable in amp-story-1.0.mjs (https://github.com/ampproject/amphtml/issues/34364).
-			RewriteAmpUrls::class           => [
-				Configuration\RewriteAmpUrlsConfiguration::ESM_MODULES_ENABLED => false,
-			],
 		];
 
 		/**

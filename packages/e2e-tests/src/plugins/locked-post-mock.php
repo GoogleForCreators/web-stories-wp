@@ -21,28 +21,28 @@ function filter_meta( $value, $object_id, $meta_key ) {
 		return $value;
 	}
 
-	$user    = get_user_by( 'login', USERNAME );
+	$user = get_user_by( 'login', USERNAME );
 	if ( ! $user ) {
 		return $value;
 	}
 	$user_id = $user->ID;
 	$now     = time();
-	$lock    = "$now:$user_id";
 
-	return $lock;
+	return "$now:$user_id";
 }
 add_filter( 'get_post_metadata', __NAMESPACE__ . '\filter_meta', 10, 3 );
-
 
 function activate() {
 	$user = get_user_by( 'login', USERNAME );
 	if ( ! $user ) {
-		wp_insert_user( [
-			'user_login' => USERNAME,
-			'role'       => 'author',
-			'user_email' => 'lock@example.com',
-			'user_pass'  => 'fsfdsfds'
-		] );
+		wp_insert_user(
+			[
+				'user_login' => USERNAME,
+				'role'       => 'author',
+				'user_email' => 'lock@example.com',
+				'user_pass'  => 'fsfdsfds',
+			]
+		);
 	}
 }
 

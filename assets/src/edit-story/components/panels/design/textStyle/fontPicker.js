@@ -34,7 +34,10 @@ import { getCommonValue } from '../../shared';
 import useRichTextFormatting from './useRichTextFormatting';
 import getClosestFontWeight from './getClosestFontWeight';
 
-function FontPicker({ selectedElements, pushUpdate }) {
+const FontPicker = forwardRef(function FontPicker(
+  { selectedElements, pushUpdate, highlightStylesOverride },
+  ref
+) {
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -110,30 +113,27 @@ function FontPicker({ selectedElements, pushUpdate }) {
     ]
   );
 
-  const fontMap = useMemo(
-    () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
-        (lookup, option) => ({
-          ...lookup,
-          [option.id]: option,
-        }),
-        {}
-      ),
-    [fonts, recentFonts, curatedFonts]
-  );
+  const fontMap = useMemo(() => {
+    const map = new Map();
+    // curatedFonts and recentFonts are subsets of fonts.
+    fonts.forEach((f) => {
+      map.set(f.id, f);
+    });
+    return map;
+  }, [fonts]);
 
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
       observedFonts.filter(
-        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
+        (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
       )
     );
   };
 
-  const renderer = ({ option, ...rest }, ref) => {
+  const renderer = ({ option, ...rest }, _ref) => {
     return (
       <Option
-        ref={ref}
+        ref={_ref}
         {...rest}
         fontFamily={
           option.service.includes('google')
@@ -151,6 +151,8 @@ function FontPicker({ selectedElements, pushUpdate }) {
 
   return (
     <AdvancedDropDown
+      ref={ref}
+      highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
       aria-label={__('Font family', 'web-stories')}
       options={fonts}
@@ -171,11 +173,12 @@ function FontPicker({ selectedElements, pushUpdate }) {
       dropDownLabel={__('Font', 'web-stories')}
     />
   );
-}
+});
 
 FontPicker.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
+  highlightStylesOverride: PropTypes.array,
 };
 
 export default FontPicker;

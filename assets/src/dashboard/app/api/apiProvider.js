@@ -19,12 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { createContext } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { createContext } from '../../../design-system';
 import dataAdapter from './wpAdapter';
 import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';

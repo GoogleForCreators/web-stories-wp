@@ -15,9 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { createSolid } from '@web-stories-wp/patterns';
+/**
  * Internal dependencies
  */
-import createSolid from '../../../../utils/createSolid';
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> as it loads', () => {

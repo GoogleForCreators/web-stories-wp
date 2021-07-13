@@ -22,9 +22,9 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app/story';
+import useStory from '../../app/story/useStory';
 import { useLocalMedia } from '../../app/media';
-import { DANGER_ZONE_HEIGHT, PAGE_HEIGHT, PAGE_WIDTH } from '../../constants';
+import useUpdateElementDimensions from '../../app/media/utils/useUpdateElementDimensions';
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
@@ -33,70 +33,38 @@ function useUploadWithPreview() {
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
   const insertElement = useInsertElement();
-  const { updateElementsByResourceId, deleteElementsByResourceId } = useStory(
-    (state) => ({
-      updateElementsByResourceId: state.actions.updateElementsByResourceId,
-      deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
-    })
-  );
+  const { updateElementDimensions } = useUpdateElementDimensions();
+  const { deleteElementsByResourceId } = useStory((state) => ({
+    deleteElementsByResourceId: state.actions.deleteElementsByResourceId,
+  }));
 
   const onUploadStart = useCallback(
     ({ resource }) => {
-      insertElement(resource.type, {
-        resource,
-        x: resource.isPlaceholder ? -DANGER_ZONE_HEIGHT : undefined,
-        y: resource.isPlaceholder ? 0 : undefined,
-      });
+      insertElement(resource.type, { resource });
     },
     [insertElement]
   );
 
-  const updateElement = useCallback(
-    ({ id, resource }) => {
-      updateElementsByResourceId({
-        id,
-        properties: (el) => {
-          const hasChangedDimensions =
-            el.resource.width !== resource.width ||
-            el.resource.height !== resource.height;
-
-          if (!hasChangedDimensions) {
-            return {
-              type: resource.type,
-              resource,
-            };
-          }
-
-          return {
-            resource,
-            type: resource.type,
-            width: resource.width,
-            height: resource.height,
-            x: PAGE_WIDTH / 2 - resource.width / 2,
-            y: PAGE_HEIGHT / 2 - resource.height / 2,
-          };
-        },
-      });
-    },
-    [updateElementsByResourceId]
-  );
-
   const onUploadProgress = useCallback(
     ({ id, resource }) => {
-      updateElement({ id, resource });
+      updateElementDimensions({ id, resource });
     },
-    [updateElement]
+    [updateElementDimensions]
   );
 
   const onUploadSuccess = useCallback(
     ({ id, resource }) => {
-      updateElement({ id, resource });
+      updateElementDimensions({ id, resource });
 
-      if (resource.type === 'video' && !resource.local) {
+      if (
+        ['video', 'gif'].includes(resource.type) &&
+        !resource.local &&
+        !resource.posterId
+      ) {
         uploadVideoPoster(resource.id, resource.src);
       }
     },
-    [updateElement, uploadVideoPoster]
+    [updateElementDimensions, uploadVideoPoster]
   );
 
   const onUploadError = useCallback(

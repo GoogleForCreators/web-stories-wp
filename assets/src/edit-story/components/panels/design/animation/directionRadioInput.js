@@ -21,18 +21,6 @@ import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, _x } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import {
-  DIRECTION,
-  ROTATION,
-  SCALE_DIRECTION,
-  SCALE_DIRECTION_MAP,
-} from '../../../../../animation';
-import { useConfig } from '../../../../app/config';
-import useRadioNavigation from '../../../form/shared/useRadioNavigation';
 import {
   Button,
   BUTTON_SIZES,
@@ -40,7 +28,18 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Tooltip,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+import {
+  DIRECTION,
+  ROTATION,
+  SCALE_DIRECTION,
+  SCALE_DIRECTION_MAP,
+} from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../../../app/config';
+import useRadioNavigation from '../../../form/shared/useRadioNavigation';
 
 const StyledButton = styled(Button)`
   z-index: 0;

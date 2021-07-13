@@ -14,5 +14,4 @@
  * limitations under the License.
  */
 
-export { getResetProperties } from './getResetProperties';
-export { getSnackbarClearCopy } from './getSnackbarClearCopy';
+export { default as getResetProperties } from './getResetProperties';

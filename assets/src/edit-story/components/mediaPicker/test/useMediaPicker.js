@@ -18,15 +18,15 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-
+import { SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import ConfigContext from '../../../app/config/context';
 import useMediaPicker from '../useMediaPicker';
-import { SnackbarContext } from '../../../../design-system';
 
-jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => {
     return {
       showSnackbar: jest.fn(),
@@ -34,7 +34,7 @@ jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
   },
 }));
 
-function setup(args) {
+function setup({ args, cropParams }) {
   const configValue = {
     capabilities: {
       hasUploadMediaAction: true,
@@ -51,7 +51,7 @@ function setup(args) {
   const onClose = jest.fn();
   const onPermissionError = jest.fn();
   const { result } = renderHook(
-    () => useMediaPicker({ onSelect, onClose, onPermissionError }),
+    () => useMediaPicker({ onSelect, onClose, onPermissionError, cropParams }),
     {
       wrapper,
     }
@@ -65,8 +65,30 @@ function setup(args) {
 describe('useMediaPicker', () => {
   it('user unable to upload', () => {
     const { openMediaPicker, onPermissionError } = setup({
-      capabilities: {
-        hasUploadMediaAction: false,
+      args: {
+        capabilities: {
+          hasUploadMediaAction: false,
+        },
+      },
+    });
+    act(() => {
+      openMediaPicker(new Event('click'));
+    });
+    expect(onPermissionError).toHaveBeenCalledTimes(1);
+  });
+
+  it('user unable to upload with cropped', () => {
+    const { openMediaPicker, onPermissionError } = setup({
+      args: {
+        capabilities: {
+          hasUploadMediaAction: false,
+        },
+      },
+      cropParams: {
+        height: 500,
+        width: 500,
+        flex_width: false,
+        flex_height: false,
       },
     });
     act(() => {

@@ -20,18 +20,18 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { ColorStopPropType } from '../../types';
+import { ColorStopPropType } from '@web-stories-wp/patterns';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import Tooltip from '../tooltip';
 import GradientLine from './gradientLine';
 

@@ -19,7 +19,7 @@
  */
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useContext } from 'use-context-selector';
+import { useContext } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies

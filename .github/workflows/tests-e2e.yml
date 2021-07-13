@@ -30,28 +30,35 @@ on:
       - synchronize
       - ready_for_review
 
+# Cancels all previous workflow runs for pull requests that have not completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name for pull requests
+  # or the commit hash for any other events.
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
         include:
           - browser: 'chrome'
             wp: 'latest'
-            coverage: true
+            snapshots: true
           - browser: 'chrome'
-            wp: '5.3.6'
-            coverage: false
+            wp: '5.8-RC2'
+            experimental: true
+            snapshots: false
+          - browser: 'chrome'
+            wp: '5.5'
+            snapshots: false
 
     steps:
-      - name: Cancel previous
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -64,22 +71,10 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.2.0
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-        env:
-          cache-name: cache-node-modules
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          cache: npm
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -106,7 +101,7 @@ jobs:
         run: |
           npm ci
           npm install puppeteer
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
+          composer install --prefer-dist --no-progress --no-interaction
         env:
           CI: true
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
@@ -128,11 +123,14 @@ jobs:
         run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
-        if: ( matrix.coverage ) && ( github.event.pull_request.draft == false )
+          WP_VERSION: ${{ matrix.wp }}
+        if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
         run: npm run test:e2e
-        if: ( ! matrix.coverage ) || ( github.event.pull_request.draft == true )
+        env:
+          WP_VERSION: ${{ matrix.wp }}
+        if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
         run: npm run env:stop

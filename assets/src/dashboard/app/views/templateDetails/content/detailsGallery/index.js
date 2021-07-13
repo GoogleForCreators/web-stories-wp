@@ -20,10 +20,6 @@ import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { sprintf, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -34,7 +30,11 @@ import {
   Icons,
   Text,
   THEME_CONSTANTS,
-} from '../../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { CardGallery, ColorList } from '../../../../../components';
 import { TemplatePropType } from '../../../../../types';
 import { Column, ColumnContainer, DetailContainer } from '../../components';
@@ -131,7 +131,7 @@ function DetailsGallery({
   const byLine = template
     ? sprintf(
         /* translators: byline. %s: author name. */
-        __('by %s', 'web-stories'),
+        __('By %s', 'web-stories'),
         template.createdBy
       )
     : null;

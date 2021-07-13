@@ -20,19 +20,20 @@
 import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-/**
- * Internal dependencies
- */
-import { useStory, useLocalMedia } from '../../../app';
-import escapeHTML from '../../../utils/escapeHTML';
-import PreviewErrorDialog from '../previewErrorDialog';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { useStory, useLocalMedia } from '../../../app';
+import escapeHTML from '../../../utils/escapeHTML';
+import PreviewErrorDialog from '../previewErrorDialog';
 import Tooltip from '../../tooltip';
 
 const PREVIEW_TARGET = 'story-preview';

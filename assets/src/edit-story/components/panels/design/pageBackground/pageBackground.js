@@ -21,6 +21,15 @@ import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Text as DefaultText,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,15 +39,6 @@ import { useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import getColorPickerActions from '../../shared/getColorPickerActions';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Icons,
-  Text as DefaultText,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 import { getDefinitionForType } from '../../../../elements';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
@@ -127,7 +127,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       css={highlight?.showEffect && styles.FLASH}
       name="pageBackground"
       title={__('Page background', 'web-stories')}
-      isPersistable={false}
+      isPersistable={!highlight}
     >
       {isDefaultBackground && (
         <Row>

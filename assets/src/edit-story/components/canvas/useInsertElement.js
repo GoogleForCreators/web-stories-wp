@@ -19,12 +19,12 @@
  */
 import { useCallback } from 'react';
 import STICKERS from '@web-stories-wp/stickers';
+import { dataPixels } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import { createNewElement, getDefinitionForType } from '../../elements';
-import { dataPixels } from '../../units';
 import { useLocalMedia } from '../../app/media';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
@@ -59,7 +59,7 @@ function useInsertElement() {
       const { type, src, id, posterId, local } = resource;
 
       // Generate video poster if one not set.
-      if (type === 'video' && id && !posterId && !local) {
+      if (['video', 'gif'].includes(type) && id && !posterId && !local) {
         uploadVideoPoster(id, src);
       }
     },

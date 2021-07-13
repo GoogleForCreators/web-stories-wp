@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { select, text } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -42,6 +42,12 @@ export const _default = () => {
       publisherId={text('publisher Id')}
       adSenseSlotId={text('ad sense slot id')}
       adManagerSlotId={text('ad manager slot id')}
+      siteKitStatus={{
+        installed: boolean('installed', false),
+        active: boolean('siteKitActive', false),
+        adsenseActive: boolean('adsenseActive', false),
+        adsenseLink: text('adsenseLink', ''),
+      }}
     />
   );
 };

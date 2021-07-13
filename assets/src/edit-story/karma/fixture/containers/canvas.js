@@ -19,6 +19,7 @@
  */
 import { Container } from './container';
 import { QuickActionMenu } from './quickActionMenu';
+import { RightClickMenu } from './rightClickMenu';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers,
@@ -63,9 +64,19 @@ export class Canvas extends Container {
 
   get quickActionMenu() {
     return this._get(
-      this.getByRole('dialog'),
+      this.getByRole('menu'),
       'quickActionMenu',
       QuickActionMenu
+    );
+  }
+
+  get rightClickMenu() {
+    return this._get(
+      this.getByRole('group', {
+        name: 'Context Menu for the selected element',
+      }),
+      'rightClickMenu',
+      RightClickMenu
     );
   }
 }

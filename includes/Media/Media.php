@@ -52,34 +52,6 @@ class Media extends Service_Base {
 	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
 	/**
-	 * The image size for the poster-landscape-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_LANDSCAPE_IMAGE_SIZE = 'web-stories-poster-landscape';
-
-	/**
-	 * The image dimensions for the poster-landscape-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_LANDSCAPE_IMAGE_DIMENSIONS = [ 853, 640 ];
-
-	/**
-	 * The image size for the poster-square-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_SQUARE_IMAGE_SIZE = 'web-stories-poster-square';
-
-	/**
-	 * The image dimensions for the poster-square-src.
-	 *
-	 * @var string
-	 */
-	const POSTER_SQUARE_IMAGE_DIMENSIONS = [ 640, 640 ];
-
-	/**
 	 * Name of size used in media library.
 	 *
 	 * @var string
@@ -175,7 +147,7 @@ class Media extends Service_Base {
 			[
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
-				'description'       => __( 'Attachment id of optimized video id.', 'web-stories' ),
+				'description'       => __( 'ID of optimized video.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
@@ -190,22 +162,6 @@ class Media extends Service_Base {
 			self::POSTER_PORTRAIT_IMAGE_SIZE,
 			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[0],
 			self::POSTER_PORTRAIT_IMAGE_DIMENSIONS[1],
-			true
-		);
-
-		// Used for amp-story[poster-landscape-src]: The story poster in landscape format (4x3 aspect ratio).
-		add_image_size(
-			self::POSTER_LANDSCAPE_IMAGE_SIZE,
-			self::POSTER_LANDSCAPE_IMAGE_DIMENSIONS[0],
-			self::POSTER_LANDSCAPE_IMAGE_DIMENSIONS[1],
-			true
-		);
-
-		// Used for amp-story[poster-square-src]: The story poster in square format (1x1 aspect ratio).
-		add_image_size(
-			self::POSTER_SQUARE_IMAGE_SIZE,
-			self::POSTER_SQUARE_IMAGE_DIMENSIONS[0],
-			self::POSTER_SQUARE_IMAGE_DIMENSIONS[1],
 			true
 		);
 
@@ -251,7 +207,7 @@ class Media extends Service_Base {
 			[
 				'taxonomy' => self::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
 			],
 		];
@@ -373,6 +329,8 @@ class Media extends Service_Base {
 						'poster-generation',
 						'video-optimization',
 						'source-video',
+						'source-image',
+						'gif-conversion',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
@@ -491,6 +449,47 @@ class Media extends Service_Base {
 		}
 
 		$response['media_source'] = $this->get_callback_media_source( $response );
+
+		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
+		$response['media_details'] = wp_get_attachment_metadata( $attachment->ID );
+
+		// Ensure empty details is an empty object.
+		if ( empty( $response['media_details'] ) ) {
+			$response['media_details'] = [];
+		} elseif ( ! empty( $response['media_details']['sizes'] ) ) {
+			foreach ( $response['media_details']['sizes'] as $size => &$size_data ) {
+
+				if ( isset( $size_data['mime-type'] ) ) {
+					$size_data['mime_type'] = $size_data['mime-type'];
+					unset( $size_data['mime-type'] );
+				}
+
+				// Use the same method image_downsize() does.
+				$image = wp_get_attachment_image_src( $attachment->ID, $size );
+				if ( ! $image ) {
+					continue;
+				}
+
+				list ( $image_src )      = $image;
+				$size_data['source_url'] = $image_src;
+			}
+
+			$full_src                      = wp_get_attachment_image_src( $attachment->ID, 'full' );
+			list ( $src, $width, $height ) = $full_src;
+
+			if ( ! empty( $full_src ) ) {
+				$response['media_details']['sizes']['full'] = [
+					'file'       => wp_basename( $src ),
+					'width'      => $width,
+					'height'     => $height,
+					'mime_type'  => $attachment->post_mime_type,
+					'source_url' => $src,
+				];
+			}
+		} else {
+			$response['media_details']['sizes'] = [];
+		}
+
 
 		return $response;
 	}

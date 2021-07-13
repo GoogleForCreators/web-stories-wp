@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { readdirSync, readFileSync } from 'fs';
-import { resolve, basename } from 'path';
+import { resolve } from 'path';
+import stickers from '@web-stories-wp/stickers';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -30,7 +31,10 @@ describe('raw template files', () => {
     '%s template should not contain invisible characters',
     (template) => {
       const templateContent = readFileSync(
-        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
+        resolve(
+          process.cwd(),
+          `packages/templates/src/raw/${template}/template.json`
+        ),
         'utf8'
       );
 
@@ -42,13 +46,10 @@ describe('raw template files', () => {
   // @see https://github.com/google/web-stories-wp/pull/6159
   it.each(templates)(
     '%s template should contain replaceable URLs',
-    (template) => {
-      const templateName = basename(template, '.json');
-      const templateContent = readFileSync(
-        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
-        'utf8'
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
       );
-      const templateData = JSON.parse(templateContent);
 
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
@@ -57,8 +58,57 @@ describe('raw template files', () => {
           }
 
           expect(element?.resource?.src).toStartWith(
-            `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${templateName}`
+            `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${template}`
           );
+        }
+      }
+    }
+  );
+
+  it.each(templates)(
+    '%s template should contain replaceable poster URLs',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'video' || !element?.resource?.poster) {
+            continue;
+          }
+
+          expect(element?.resource?.poster).toStartWith(
+            `__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/${template}`
+          );
+        }
+      }
+    }
+  );
+
+  // @see https://github.com/google/web-stories-wp/pull/7944#pullrequestreview-686071526
+  it.each(templates)(
+    '%s template images and video ids should default to 0',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      const typesToCheck = ['image', 'video'];
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (!typesToCheck.includes(element?.type)) {
+            continue;
+          }
+
+          expect(element?.resource?.id).toBe(0);
+
+          if ('video' !== element?.type) {
+            continue;
+          }
+
+          expect(element?.resource?.posterId).toBe(0);
         }
       }
     }
@@ -67,12 +117,10 @@ describe('raw template files', () => {
   // @see https://github.com/google/web-stories-wp/pull/5889
   it.each(templates)(
     '%s template should contain pageTemplateType',
-    (template) => {
-      const templateContent = readFileSync(
-        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
-        'utf8'
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
       );
-      const templateData = JSON.parse(templateContent);
 
       for (const page of templateData.pages) {
         expect(page).toStrictEqual(
@@ -86,17 +134,57 @@ describe('raw template files', () => {
 
   // @see https://github.com/google/web-stories-wp/issues/7227
   it.each(templates)(
-    '%s template should not contain extraneaous properties',
-    (template) => {
-      const templateContent = readFileSync(
-        resolve(process.cwd(), `packages/templates/src/raw/${template}`),
-        'utf8'
+    '%s template should not contain extraneous properties',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
       );
-      const templateData = JSON.parse(templateContent);
 
       expect(templateData.current).toBeNull();
       expect(templateData.selection).toStrictEqual([]);
       expect(templateData.story.globalStoryStyles).toBeUndefined();
+    }
+  );
+
+  it.each(templates)(
+    '%s template should only contain videos marked as optimized',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'video' || !element?.resource?.src) {
+            continue;
+          }
+
+          expect(element?.resource?.isOptimized).toBeTrue();
+        }
+      }
+    }
+  );
+
+  it.each(templates)(
+    '%s template should contain only valid stickers',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'sticker' || !element?.sticker?.type) {
+            continue;
+          }
+
+          expect(stickers).toStrictEqual(
+            expect.objectContaining({
+              [element?.sticker?.type]: expect.any(Object),
+            })
+          );
+        }
+      }
     }
   );
 });

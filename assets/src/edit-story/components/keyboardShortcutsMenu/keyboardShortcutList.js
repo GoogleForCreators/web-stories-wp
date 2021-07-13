@@ -17,36 +17,67 @@
 /**
  * External dependencies
  */
-import { __, _x } from '@web-stories-wp/i18n';
-
+import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '../../../design-system';
 import { SPECIAL_KEYS } from './constants';
 
 const isMacOs = isPlatformMacOS();
 const cmdOrCtrl = isMacOs ? SPECIAL_KEYS.COMMAND : SPECIAL_KEYS.CONTROL;
 const optionOrAlt = isMacOs ? SPECIAL_KEYS.OPTION : SPECIAL_KEYS.ALT;
 
+const LargeKey = (props) => <kbd className="large-key" {...props} />;
+
 const shortcuts = {
   header: {
     label: __('Keyboard Shortcuts', 'web-stories'),
-    shortcut: [cmdOrCtrl, '/'],
+    shortcut: (
+      <kbd>
+        <kbd aria-label={cmdOrCtrl.title} className="large-key">
+          {cmdOrCtrl.symbol}
+        </kbd>
+        <kbd>{'/'}</kbd>
+      </kbd>
+    ),
   },
-
   landmarks: [
     {
       label: __('Element', 'web-stories'),
-      shortcut: [cmdOrCtrl, optionOrAlt, '1'],
+      shortcut: (
+        <kbd>
+          <kbd aria-label={cmdOrCtrl.title} className="large-key">
+            {cmdOrCtrl.symbol}
+          </kbd>
+          <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+          <kbd>{'1'}</kbd>
+        </kbd>
+      ),
     },
     {
       label: __('Workspace', 'web-stories'),
-      shortcut: [cmdOrCtrl, optionOrAlt, '2'],
+      shortcut: (
+        <kbd>
+          <kbd aria-label={cmdOrCtrl.title} className="large-key">
+            {cmdOrCtrl.symbol}
+          </kbd>
+          <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+          <kbd>{'2'}</kbd>
+        </kbd>
+      ),
     },
     {
       label: __('Design panels', 'web-stories'),
-      shortcut: [cmdOrCtrl, optionOrAlt, '3'],
+      shortcut: (
+        <kbd>
+          <kbd aria-label={cmdOrCtrl.title} className="large-key">
+            {cmdOrCtrl.symbol}
+          </kbd>
+          <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+          <kbd>{'3'}</kbd>
+        </kbd>
+      ),
     },
   ],
   sections: [
@@ -55,15 +86,39 @@ const shortcuts = {
       commands: [
         {
           label: __('Undo', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'Z'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'Z'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Redo', 'web-stories'),
-          shortcut: [cmdOrCtrl, SPECIAL_KEYS.SHIFT, 'Z'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd aria-label={SPECIAL_KEYS.SHIFT.title}>
+                {SPECIAL_KEYS.SHIFT.symbol}
+              </kbd>
+              <kbd>{'Z'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Save', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'S'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'S'}</kbd>
+            </kbd>
+          ),
         },
       ],
     },
@@ -74,19 +129,47 @@ const shortcuts = {
           // Not yet implemented
           disabled: true,
           label: __('Insert/edit link', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'K'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'K'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Bold', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'B'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'B'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Italic', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'I'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'I'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Underline', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'U'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'U'}</kbd>
+            </kbd>
+          ),
         },
       ],
     },
@@ -95,73 +178,218 @@ const shortcuts = {
       commands: [
         {
           label: __('Copy', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'C'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'C'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Cut', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'X'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'X'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Duplicate', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'D'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'D'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Paste', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'V'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'V'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Select all', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'A'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'A'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Select multiple', 'web-stories'),
-          shortcut: [
-            SPECIAL_KEYS.SHIFT,
-            { label: __('+ click', 'web-stories') },
-          ],
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  kbd: <kbd />,
+                  shift: SPECIAL_KEYS.SHIFT.symbol,
+                }}
+              >
+                {sprintf(
+                  /* translators: %s: Shift key. */
+                  __('%s <span>+ click</span>', 'web-stories'),
+                  sprintf(
+                    '<kbd aria-label="%s"><shift /></kbd>',
+                    SPECIAL_KEYS.SHIFT.title
+                  )
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
         },
         {
           label: __('Move forward or back', 'web-stories'),
-          shortcut: [
-            cmdOrCtrl,
-            SPECIAL_KEYS.UP,
-            { label: __('or', 'web-stories') },
-            SPECIAL_KEYS.DOWN,
-          ],
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  kbd: <kbd />,
+                  lkbd: <LargeKey />,
+                  cmdOrCtrlSymbol: cmdOrCtrl.symbol,
+                  upSymbol: SPECIAL_KEYS.UP.symbol,
+                  downSymbol: SPECIAL_KEYS.UP.symbol,
+                }}
+              >
+                {sprintf(
+                  /* translators: 1: Cmd/Ctrl key. 2: Up key. 3: Down key. */
+                  __('%1$s %2$s <span>or</span> %3$s', 'web-stories'),
+                  sprintf(
+                    '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
+                    cmdOrCtrl.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><upSymbol /></kbd>',
+                    SPECIAL_KEYS.UP.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><downSymbol /></kbd>',
+                    SPECIAL_KEYS.DOWN.title
+                  )
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
         },
         {
           label: __('Move to front or back', 'web-stories'),
-          shortcut: [
-            cmdOrCtrl,
-            SPECIAL_KEYS.SHIFT,
-            SPECIAL_KEYS.UP,
-            { label: __('or', 'web-stories') },
-            SPECIAL_KEYS.DOWN,
-          ],
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  kbd: <kbd />,
+                  lkbd: <LargeKey />,
+                  cmdOrCtrlSymbol: cmdOrCtrl.symbol,
+                  shiftSymbol: SPECIAL_KEYS.SHIFT.symbol,
+                  upSymbol: SPECIAL_KEYS.UP.symbol,
+                  downSymbol: SPECIAL_KEYS.DOWN.symbol,
+                }}
+              >
+                {sprintf(
+                  /* translators: 1: Cmd/Ctrl key. 2: Shift key. 3: Up key. 4: Down key. */
+                  __('%1$s %2$s %3$s <span>or</span> %4$s', 'web-stories'),
+                  sprintf(
+                    '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
+                    cmdOrCtrl.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><shiftSymbol /></kbd>',
+                    SPECIAL_KEYS.SHIFT.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><upSymbol /></kbd>',
+                    SPECIAL_KEYS.UP.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><downSymbol /></kbd>',
+                    SPECIAL_KEYS.DOWN.title
+                  )
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
         },
         {
           label: __('Enter crop/edit mode', 'web-stories'),
-          shortcut: [
-            SPECIAL_KEYS.ENTER,
-            { label: __('or double-click', 'web-stories') },
-          ],
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  kbd: <kbd />,
+                  enterSymbol: SPECIAL_KEYS.ENTER.symbol,
+                }}
+              >
+                {sprintf(
+                  /* translators: %s: Enter key. */
+                  __('%s <span>or double-click</span>', 'web-stories'),
+                  sprintf(
+                    '<kbd aria-label="%s"><enterSymbol /></kbd>',
+                    SPECIAL_KEYS.ENTER.title
+                  )
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
         },
         {
           label: __('Delete', 'web-stories'),
-          shortcut: [SPECIAL_KEYS.DELETE],
+          shortcut: (
+            <kbd>
+              <kbd className="large-key" aria-label={SPECIAL_KEYS.DELETE.title}>
+                {SPECIAL_KEYS.DELETE.symbol}
+              </kbd>
+            </kbd>
+          ),
         },
         {
           // Not yet implemented
           disabled: true,
           label: __('Insert/edit link', 'web-stories'),
-          shortcut: [cmdOrCtrl, 'K'],
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'A'}</kbd>
+            </kbd>
+          ),
         },
         {
           label: __('Disable snapping', 'web-stories'),
-          shortcut: [
-            { label: _x('Hold', 'verb, i.e. hold down a key', 'web-stories') },
-            cmdOrCtrl,
-          ],
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  kbd: <LargeKey />,
+                  cmdOrCtrlSymbol: cmdOrCtrl.symbol,
+                }}
+              >
+                {sprintf(
+                  /* translators: %s: Cmd/Ctrl key. */
+                  __('<span>Hold</span> %s', 'web-stories'),
+                  sprintf(
+                    '<kbd aria-label="%s"><cmdOrCtrlSymbol /></kbd>',
+                    cmdOrCtrl.title
+                  )
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
         },
       ],
     },

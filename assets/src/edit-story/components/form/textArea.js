@@ -19,11 +19,11 @@
  */
 import { useCallback, forwardRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { TextArea as StyledTextArea } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { TextArea as StyledTextArea } from '../../../design-system';
 import { inputContainerStyleOverride } from '../panels/shared';
 
 const TextArea = forwardRef(

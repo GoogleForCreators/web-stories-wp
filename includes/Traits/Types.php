@@ -151,6 +151,35 @@ trait Types {
 		 */
 		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
 
-		return array_intersect( $allowed_mime_type, $image_mime_type );
+		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
+	}
+
+	/**
+	 * Returns a list of transcodable mime types.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return array List of allowed transcodable mime types.
+	 */
+	public function get_allowed_transcodable_mime_types() {
+		return [
+			'video/3gpp',
+			'video/3gpp2',
+			'video/MP2T',
+			'video/mp4',
+			'video/mpeg',
+			'video/ogg',
+			'video/quicktime',
+			'video/webm',
+			'video/x-flv',
+			'video/x-h261',
+			'video/x-h263',
+			'video/x-m4v',
+			'video/x-matroska',
+			'video/x-mjpeg',
+			'video/x-ms-asf',
+			'video/x-msvideo',
+			'video/x-nut',
+		];
 	}
 }

@@ -17,17 +17,13 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __, _x } from '@web-stories-wp/i18n';
+import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import {
-  PAGE_HEIGHT,
-  FONT_WEIGHT,
-  BACKGROUND_TEXT_MODE,
-} from '../../../../constants';
-import { dataFontEm } from '../../../../units';
+import { FONT_WEIGHT, BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 // Measured in editor. As small as you can make
@@ -69,14 +65,16 @@ const DEFAULT_PRESET = {
   width: DEFAULT_WIDTH.DEFAULT,
   textAlign: 'center',
   borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+  padding: DEFAULT_TEXT_PADDING,
 };
 
 const PRESETS = [
   {
-    title: __('Title 1', 'web-stories'),
+    title: _x('Title 1', 'text preset title', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
         'Title 1',
+        'text preset content',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.BOLD,
@@ -92,10 +90,11 @@ const PRESETS = [
     },
   },
   {
-    title: __('Title 2', 'web-stories'),
+    title: _x('Title 2', 'text preset title', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
         'Title 2',
+        'text preset content',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.BOLD,
@@ -111,10 +110,11 @@ const PRESETS = [
     },
   },
   {
-    title: __('Title 3', 'web-stories'),
+    title: _x('Title 3', 'text preset title', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
         'Title 3',
+        'text preset content',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.BOLD,
@@ -130,10 +130,11 @@ const PRESETS = [
     },
   },
   {
-    title: __('Paragraph', 'web-stories'),
+    title: _x('Paragraph', 'text preset title', 'web-stories'),
     element: {
-      content: __(
+      content: _x(
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        'text preset content',
         'web-stories'
       ),
       fontWeight: FONT_WEIGHT.NORMAL,
@@ -149,10 +150,11 @@ const PRESETS = [
     },
   },
   {
-    title: __('Caption', 'web-stories'),
+    title: _x('Caption', 'text preset title', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${_x(
         'Caption',
+        'text preset content',
         'web-stories'
       )}</span>`,
       fontWeight: FONT_WEIGHT.NORMAL,
@@ -168,9 +170,9 @@ const PRESETS = [
     },
   },
   {
-    title: __('LABEL', 'web-stories'),
+    title: _x('Label', 'text preset title', 'web-stories').toUpperCase(),
     element: {
-      content: __('LABEL', 'web-stories'),
+      content: _x('Label', 'text preset content', 'web-stories').toUpperCase(),
       fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(0.888),
       lineHeight: 1.2,

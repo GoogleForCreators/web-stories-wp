@@ -17,16 +17,16 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, forwardRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { DropDownSelect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import Popup from '../../popup';
-import DropDownSelect from '../../../../design-system/components/dropDown/select';
 import { focusStyle } from '../../panels/shared';
 import OptionsContainer from './container';
 import List from './list';
@@ -58,24 +58,28 @@ const Container = styled.div`
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
  * @return {*} Render.
  */
-function DropDown({
-  onChange,
-  disabled = false,
-  selectedId,
-  options,
-  hasSearch = false,
-  getOptionsByQuery,
-  onObserve,
-  primaryOptions,
-  primaryLabel,
-  priorityOptions,
-  priorityLabel,
-  searchResultsLabel,
-  renderer,
-  isInline = false,
-  dropDownLabel = '',
-  ...rest
-}) {
+const DropDown = forwardRef(function DropDown(
+  {
+    onChange,
+    disabled = false,
+    selectedId,
+    options,
+    hasSearch = false,
+    getOptionsByQuery,
+    onObserve,
+    primaryOptions,
+    primaryLabel,
+    priorityOptions,
+    priorityLabel,
+    searchResultsLabel,
+    renderer,
+    isInline = false,
+    dropDownLabel = '',
+    highlightStylesOverride,
+    ...rest
+  },
+  ref
+) {
   if (!options && !getOptionsByQuery) {
     throw new Error(
       'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
@@ -85,42 +89,31 @@ function DropDown({
   if (!hasSearch) {
     primaryOptions = options;
   }
-  const ref = useRef();
+  const localRef = useRef();
+  const dropdownRef = ref || localRef;
 
   const [isOpen, setIsOpen] = useState(false);
 
   const closeDropDown = useCallback(() => {
     setIsOpen(false);
     // Restore focus
-    if (ref.current) {
-      ref.current.focus();
+    if (dropdownRef.current) {
+      dropdownRef.current.focus();
     }
-  }, []);
+  }, [dropdownRef]);
+
   const toggleDropDown = useCallback(() => setIsOpen((val) => !val), []);
   // Must be debounced to account for clicking the select box again
   // (closing in useFocusOut and then opening again in onClick)
-  const [debouncedCloseDropDown] = useDebouncedCallback(closeDropDown, 100);
+  const debouncedCloseDropDown = useDebouncedCallback(closeDropDown, 100);
 
   const handleSelect = useCallback(
     (option) => {
       onChange(option);
       setIsOpen(false);
-      ref.current.focus();
+      dropdownRef.current.focus();
     },
-    [onChange]
-  );
-
-  const handleKeyPress = useCallback(
-    ({ key }) => {
-      if (
-        !isOpen &&
-        key === 'ArrowDown' &&
-        document.activeElement === ref.current
-      ) {
-        setIsOpen(true);
-      }
-    },
-    [isOpen]
+    [onChange, dropdownRef]
   );
 
   const list = (
@@ -161,34 +154,27 @@ function DropDown({
   const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   // In case of isInline, the list is displayed with 'absolute' positioning instead of using a separate popup.
   return (
-    <>
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
-      {/* eslint-disable-next-line styled-components-a11y/no-static-element-interactions */}
-      <Container onKeyDown={handleKeyPress}>
-        <DropDownSelect
-          aria-pressed={isOpen}
-          aria-haspopup
-          aria-expanded={isOpen}
-          ref={ref}
-          activeItemLabel={selectedOption?.name}
-          dropDownLabel={dropDownLabel}
-          onSelectClick={toggleDropDown}
-          selectButtonStylesOverride={focusStyle}
-          {...rest}
-        />
-        {isOpen && !disabled && isInline && list}
-        {!disabled && !isInline && (
-          <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
-            {list}
-          </Popup>
-        )}
-      </Container>
-    </>
+    <Container>
+      <DropDownSelect
+        aria-pressed={isOpen}
+        aria-haspopup
+        aria-expanded={isOpen}
+        ref={dropdownRef}
+        activeItemLabel={selectedOption?.name}
+        dropDownLabel={dropDownLabel}
+        onSelectClick={toggleDropDown}
+        selectButtonStylesOverride={highlightStylesOverride || focusStyle}
+        {...rest}
+      />
+      {isOpen && !disabled && isInline && list}
+      {!disabled && !isInline && (
+        <Popup anchor={dropdownRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+          {list}
+        </Popup>
+      )}
+    </Container>
   );
-}
+});
 
 DropDown.propTypes = {
   selectedId: PropTypes.any,
@@ -198,6 +184,7 @@ DropDown.propTypes = {
   options: PropTypes.array,
   hasSearch: PropTypes.bool,
   getOptionsByQuery: PropTypes.func,
+  highlightStylesOverride: PropTypes.array,
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,
   primaryLabel: PropTypes.string,

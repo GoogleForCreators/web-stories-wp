@@ -21,6 +21,11 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import {
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -37,11 +42,6 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
-import {
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  THEME_CONSTANTS,
-} from '../../../../../design-system';
 
 export const TEXT = {
   CONTEXT: __(
@@ -79,7 +79,7 @@ function GoogleAnalyticsSettings({
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
 
-  const { analyticsActive, installed, link } = siteKitStatus;
+  const { analyticsActive, installed, analyticsLink } = siteKitStatus;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -125,7 +125,7 @@ function GoogleAnalyticsSettings({
 
   const siteKitDisplayText = useMemo(() => {
     if (analyticsActive) {
-      return TEXT.SITE_KIT_IN_USE;
+      return null;
     }
 
     return (
@@ -133,11 +133,10 @@ function GoogleAnalyticsSettings({
         mapping={{
           a: (
             <InlineLink
-              href={link}
+              href={analyticsLink}
               rel="noreferrer"
               target="_blank"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              as="a"
               onClick={onSiteKitClick}
             />
           ),
@@ -146,7 +145,7 @@ function GoogleAnalyticsSettings({
         {installed ? TEXT.SITE_KIT_INSTALLED : TEXT.SITE_KIT_NOT_INSTALLED}
       </TranslateWithMarkup>
     );
-  }, [analyticsActive, installed, link, onSiteKitClick]);
+  }, [analyticsActive, installed, analyticsLink, onSiteKitClick]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -158,63 +157,75 @@ function GoogleAnalyticsSettings({
           {siteKitDisplayText}
         </SettingSubheading>
       </div>
-      <div>
-        <InlineForm>
-          <VisuallyHiddenLabel htmlFor="gaTrackingId">
-            {TEXT.ARIA_LABEL}
-          </VisuallyHiddenLabel>
-          <SettingsTextInput
-            aria-label={TEXT.ARIA_LABEL}
-            id="gaTrackingId"
-            value={analyticsId}
-            onChange={handleUpdateId}
-            onKeyDown={handleOnKeyDown}
-            placeholder={TEXT.PLACEHOLDER}
-            hasError={Boolean(inputError)}
-            hint={inputError}
-            disabled={analyticsActive}
-          />
-          <SaveButton
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            disabled={disableSaveButton}
-            onClick={handleOnSave}
+      {analyticsActive ? (
+        <div>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
-            {TEXT.SUBMIT_BUTTON}
-          </SaveButton>
-        </InlineForm>
-        <TextInputHelperText
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-        >
-          <TranslateWithMarkup
-            mapping={{
-              a: (
-                <InlineLink
-                  href={TEXT.CONTEXT_LINK}
-                  rel="noreferrer"
-                  target="_blank"
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  as="a"
-                  onClick={onContextClick}
-                />
-              ),
-            }}
+            {TEXT.SITE_KIT_IN_USE}
+          </TextInputHelperText>
+        </div>
+      ) : (
+        <div>
+          <InlineForm>
+            <VisuallyHiddenLabel htmlFor="gaTrackingId">
+              {TEXT.ARIA_LABEL}
+            </VisuallyHiddenLabel>
+            <SettingsTextInput
+              aria-label={TEXT.ARIA_LABEL}
+              id="gaTrackingId"
+              value={analyticsId}
+              onChange={handleUpdateId}
+              onKeyDown={handleOnKeyDown}
+              placeholder={TEXT.PLACEHOLDER}
+              hasError={Boolean(inputError)}
+              hint={inputError}
+              disabled={analyticsActive}
+            />
+            <SaveButton
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              disabled={disableSaveButton}
+              onClick={handleOnSave}
+            >
+              {TEXT.SUBMIT_BUTTON}
+            </SaveButton>
+          </InlineForm>
+          <TextInputHelperText
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
-            {TEXT.CONTEXT}
-          </TranslateWithMarkup>
-        </TextInputHelperText>
-      </div>
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <InlineLink
+                    href={TEXT.CONTEXT_LINK}
+                    rel="noreferrer"
+                    target="_blank"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    as="a"
+                    onClick={onContextClick}
+                  />
+                ),
+              }}
+            >
+              {TEXT.CONTEXT}
+            </TranslateWithMarkup>
+          </TextInputHelperText>
+        </div>
+      )}
     </SettingForm>
   );
 }
+
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
   siteKitStatus: PropTypes.shape({
     installed: PropTypes.bool,
     active: PropTypes.bool,
+    adsenseActive: PropTypes.bool,
     analyticsActive: PropTypes.bool,
-    link: PropTypes.string,
+    analyticsLink: PropTypes.string,
   }),
 };
 

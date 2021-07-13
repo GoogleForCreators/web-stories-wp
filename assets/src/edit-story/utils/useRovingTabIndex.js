@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { useConfig } from '../app/config';
-import { useKeyDownEffect } from '../../design-system';
 
 /**
  * A point in 2D space.
@@ -136,9 +135,7 @@ export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
   /**
    * Returns a callback for the keydown event raised by a MediaElement.
    *
-   * @param {Object} obj Parameters object
-   * @param {boolean} obj.isRTL Whether the document is RTL.
-   * @return {function({event: Event, target: Object})} The onKeyDown handler wrapper.
+   * @param {Event} event Keydown event.
    */
   const onKeyDown = useCallback(
     ({ key, target }) => {

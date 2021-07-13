@@ -18,16 +18,15 @@
  */
 import { useEffect, useMemo, useState, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useResizeEffect } from '../../design-system';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
-  FULLBLEED_RATIO,
   MIN_DASHBOARD_WIDTH,
-  PAGE_RATIO,
   WPBODY_ID,
   VIEWPORT_BREAKPOINT,
   STORY_PREVIEW_WIDTH,
@@ -126,7 +125,7 @@ export default function usePagePreviewSize(options = {}) {
     )
   );
 
-  const [debounceSetViewportWidth] = useDebouncedCallback((width) => {
+  const debounceSetViewportWidth = useDebouncedCallback((width) => {
     setViewportWidth(width);
   }, 500);
 

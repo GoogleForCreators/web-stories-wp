@@ -21,23 +21,25 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useCallback, forwardRef } from 'react';
+import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
+import {
+  BUTTON_TRANSITION_TIMING,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import {
-  BUTTON_TRANSITION_TIMING,
-  ThemeGlobals,
-} from '../../../../../../design-system';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
-import { dataToEditorX, dataToEditorY } from '../../../../../units';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { focusStyle } from '../../../../panels/shared';
 import TextSetElements from './textSetElements';
 
-const TextSetItem = styled.div`
+const TextSetItem = styled.button`
+  border: 0;
+  background: none;
   position: absolute;
   top: 0;
   height: ${TEXT_SET_SIZE}px;
@@ -93,8 +95,8 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   }, [elements, insertTextSet]);
 
   const handleKeyboardPageClick = useCallback(
-    ({ key }) => {
-      if (key === 'Enter') {
+    ({ code }) => {
+      if (code === 'Enter' || code === 'Space') {
         onClick();
       }
     },
@@ -105,51 +107,35 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
-    <>
-      {/*
-        TODO: Investigate
-        See https://github.com/google/web-stories-wp/issues/6671
-        */}
-      {/* eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions */}
-      <TextSetItem
-        role="listitem"
-        // TODO: Investigate
-        // See https://github.com/google/web-stories-wp/issues/6671
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
-        tabIndex={0}
-        translateX={translateX}
-        translateY={translateY}
-        ref={ref}
-        onKeyUp={handleKeyboardPageClick}
-        {...rest}
-      >
-        <TextSetElements isForDisplay elements={elements} />
-        <LibraryMoveable
-          type={'textSet'}
-          elements={elements}
-          elementProps={{}}
-          onClick={onClick}
-          previewSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE,
-          }}
-          cloneElement={DragContainer}
-          cloneProps={{
-            width: dragWidth,
-            height: dragHeight,
-            children: (
-              <TextSetElements
-                elements={elements}
-                pageSize={{
-                  width: pageWidth,
-                  height: pageHeight,
-                }}
-              />
-            ),
-          }}
-        />
-      </TextSetItem>
-    </>
+    <TextSetItem
+      translateX={translateX}
+      translateY={translateY}
+      ref={ref}
+      onKeyUp={handleKeyboardPageClick}
+      {...rest}
+    >
+      <TextSetElements isForDisplay elements={elements} />
+      <LibraryMoveable
+        type={'textSet'}
+        elements={elements}
+        elementProps={{}}
+        onClick={onClick}
+        cloneElement={DragContainer}
+        cloneProps={{
+          width: dragWidth,
+          height: dragHeight,
+          children: (
+            <TextSetElements
+              elements={elements}
+              pageSize={{
+                width: pageWidth,
+                height: pageHeight,
+              }}
+            />
+          ),
+        }}
+      />
+    </TextSetItem>
   );
 }
 

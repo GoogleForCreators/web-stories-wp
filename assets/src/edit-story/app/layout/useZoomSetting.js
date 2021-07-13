@@ -18,15 +18,12 @@
  * External dependencies
  */
 import { useMemo } from 'react';
-
+import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@web-stories-wp/units';
+import { themeHelpers } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system';
 import {
-  PAGE_WIDTH,
-  PAGE_RATIO,
-  FULLBLEED_RATIO,
   ZOOM_SETTING,
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,
@@ -39,6 +36,7 @@ const ZOOM_PADDING_NONE = 12;
 
 const INITIAL_STATE = {
   zoomSetting: ZOOM_SETTING.FIT,
+  zoomLevel: null,
   workspaceSize: {
     width: null,
     height: null,
@@ -58,6 +56,11 @@ const reducer = {
       top: 0,
     },
   }),
+  setZoomLevel: (state, { payload }) => ({
+    ...state,
+    zoomLevel: payload,
+    zoomSetting: ZOOM_SETTING.FIXED,
+  }),
   setScrollOffset: (state, { payload }) => ({
     ...state,
     scrollOffset: payload,
@@ -68,7 +71,7 @@ const reducer = {
   }),
 };
 
-function calculateViewportProperties(workspaceSize, zoomSetting) {
+function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
   // Calculate page size based on zoom setting
   let maxPageWidth;
   const workspaceRatio = workspaceSize.width / workspaceSize.height;
@@ -103,15 +106,12 @@ function calculateViewportProperties(workspaceSize, zoomSetting) {
       }
       break;
     }
-    case ZOOM_SETTING.SINGLE: {
-      maxPageWidth = PAGE_WIDTH;
-      break;
-    }
-    case ZOOM_SETTING.DOUBLE: {
-      maxPageWidth = 2 * PAGE_WIDTH;
-      break;
-    }
     default:
+      // If no predefined setting was found, check for the zoom level value.
+      if (isNaN(zoomLevel)) {
+        break;
+      }
+      maxPageWidth = zoomLevel * PAGE_WIDTH;
       break;
   }
   // Floor page width to nearest multiple of PAGE_WIDTH_FACTOR
@@ -154,17 +154,38 @@ function calculateViewportProperties(workspaceSize, zoomSetting) {
 
 function useZoomSetting() {
   const [state, actions] = useReduction(INITIAL_STATE, reducer);
-  const { zoomSetting, workspaceSize, scrollOffset } = state;
+  const {
+    zoomSetting,
+    zoomLevel: _zoomLevel,
+    workspaceSize,
+    scrollOffset,
+  } = state;
 
   const viewportProperties = useMemo(
-    () => calculateViewportProperties(workspaceSize, zoomSetting),
-    [workspaceSize, zoomSetting]
+    () => calculateViewportProperties(workspaceSize, zoomSetting, _zoomLevel),
+    [workspaceSize, zoomSetting, _zoomLevel]
   );
+
+  const { pageWidth } = viewportProperties;
+
+  const zoomLevel = useMemo(() => {
+    const maxPageWidth = Math.ceil(
+      (pageWidth / PAGE_WIDTH_FACTOR) * PAGE_WIDTH_FACTOR
+    );
+    switch (zoomSetting) {
+      case ZOOM_SETTING.FILL:
+      case ZOOM_SETTING.FIT:
+        return maxPageWidth / PAGE_WIDTH;
+      default:
+        return _zoomLevel;
+    }
+  }, [_zoomLevel, pageWidth, zoomSetting]);
 
   return {
     state: {
       ...viewportProperties,
       zoomSetting,
+      zoomLevel,
       workspaceWidth: workspaceSize.width,
       workspaceHeight: workspaceSize.height,
       scrollLeft: scrollOffset.left,

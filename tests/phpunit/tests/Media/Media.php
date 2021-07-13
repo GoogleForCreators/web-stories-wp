@@ -34,8 +34,6 @@ class Media extends Test_Case {
 		$media->register();
 
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_LANDSCAPE_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_SQUARE_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
 		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
 
@@ -120,6 +118,7 @@ class Media extends Test_Case {
 			[
 				'id'   => $poster_attachment_id,
 				'type' => 'image',
+				'url'  => wp_get_attachment_url( $poster_attachment_id ),
 			],
 			get_post( $poster_attachment_id )
 		);
@@ -127,18 +126,22 @@ class Media extends Test_Case {
 			[
 				'id'   => $video_attachment_id,
 				'type' => 'video',
+				'url'  => wp_get_attachment_url( $video_attachment_id ),
 			],
 			get_post( $video_attachment_id )
 		);
 
 		$this->assertEqualSets(
 			[
-				'type'         => 'image',
-				'media_source' => '',
-				'id'           => $poster_attachment_id,
+				'type'          => 'image',
+				'media_source'  => '',
+				'id'            => $poster_attachment_id,
+				'url'           => wp_get_attachment_url( $poster_attachment_id ),
+				'media_details' => [],
 			],
 			$image
 		);
+
 		$this->assertArrayHasKey( 'media_source', $image );
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
@@ -314,7 +317,7 @@ class Media extends Test_Case {
 				[
 					'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
 				],
 			],
@@ -336,7 +339,7 @@ class Media extends Test_Case {
 				[
 					'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
 				],
 				[
@@ -426,7 +429,7 @@ class Media extends Test_Case {
 			[
 				'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 				'operator' => 'NOT IN',
 			],
 			[
@@ -485,7 +488,7 @@ class Media extends Test_Case {
 				[
 					'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
 					'operator' => 'NOT IN',
 				],
 			],

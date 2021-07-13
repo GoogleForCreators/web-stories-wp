@@ -19,12 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons, Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import ColorAdd from './colorAdd';
 
 const InlineIcon = styled(Icons.Plus)`
@@ -59,9 +59,13 @@ function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
             i: <InlineIcon />,
           }}
         >
-          {__(
-            'Click on the <i></i> icon to save a color to the Current story or for All stories.',
-            'web-stories'
+          {sprintf(
+            /* translators: %s: "plus" icon. */
+            __(
+              'Click on the %s icon to save a color to the Current story or for All stories.',
+              'web-stories'
+            ),
+            '<i></i>'
           )}
         </TranslateWithMarkup>
       </Note>

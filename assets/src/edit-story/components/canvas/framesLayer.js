@@ -20,19 +20,22 @@
 import styled from 'styled-components';
 import { memo, useRef, useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { PAGE_WIDTH } from '@web-stories-wp/units';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../animation';
-import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
+import { DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useCanvas, useLayout, useTransform } from '../../app';
 import useCanvasKeys from '../../app/canvas/useCanvasKeys';
+import { useRightClickMenu } from '../../app/rightClickMenu';
 import PageMenu from './pagemenu';
 import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
+import RightClickMenu from './rightClickMenu';
 
 const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
@@ -63,6 +66,7 @@ function FramesLayer() {
       setDesignSpaceGuideline,
     })
   );
+  const { rightClickAreaRef } = useRightClickMenu();
 
   const { isAnythingTransforming } = useTransform((state) => ({
     isAnythingTransforming: state.state.isAnythingTransforming,
@@ -95,7 +99,7 @@ function FramesLayer() {
       aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
-        <FramesPageArea onScroll={onScroll}>
+        <FramesPageArea ref={rightClickAreaRef} onScroll={onScroll}>
           {currentPage &&
             currentPage.elements.map(({ id, ...rest }) => {
               return <FrameElement key={id} element={{ id, ...rest }} />;
@@ -106,6 +110,7 @@ function FramesLayer() {
           />
         </FramesPageArea>
       )}
+      <RightClickMenu />
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.
