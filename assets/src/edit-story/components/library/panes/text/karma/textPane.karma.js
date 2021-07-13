@@ -47,17 +47,33 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     fixture.restore();
   });
 
+  async function addPreset(name) {
+    // Imitate the movement of real use to trigger the background processes while the user is moving the mouse.
+    await fixture.events.mouse.moveRel(
+      fixture.editor.library.text.preset(name),
+      10,
+      10,
+      { steps: 2 }
+    );
+    await fixture.events.click(fixture.editor.library.text.preset(name));
+  }
+
   it('should add text presets below each other if added consecutively', async () => {
     await fixture.editor.library.textTab.click();
+    await fixture.events.mouse.moveRel(
+      fixture.editor.library.text.preset('Title 1'),
+      10,
+      10
+    );
 
     await waitFor(
       () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
       { timeout: TIMEOUT_INTERVAL / 3 }
     );
 
-    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-    await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await addPreset('Title 1');
+    await addPreset('Title 3');
+    await addPreset('Paragraph');
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
 
     await fixture.snapshot('consecutively added different text presets');
@@ -111,6 +127,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     };
 
     await fixture.editor.library.textTab.click();
+    await fixture.events.mouse.moveRel(
+      fixture.editor.library.text.preset('Title 1'),
+      10,
+      10
+    );
 
     await waitFor(
       () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
@@ -120,29 +141,29 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     );
 
     // Stagger all different text presets.
-    await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await addPreset('Title 1');
     await verifyDefaultPosition('Title 1', 'Title 1');
 
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await addPreset('Paragraph');
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
+    await addPreset('Title 2');
     await verifyStaggeredPosition('Title 2');
 
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await addPreset('Paragraph');
     await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
     // Title 3 should be positioned in the default position again.
-    await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
+    await addPreset('Title 3');
     await verifyStaggeredPosition('Title 3');
 
-    await fixture.events.click(fixture.editor.library.text.preset('Caption'));
+    await addPreset('Caption');
     await verifyStaggeredPosition('Caption');
 
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await addPreset('Paragraph');
     await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
 
-    await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+    await addPreset('LABEL');
     await verifyStaggeredPosition('LABEL');
 
     await fixture.snapshot('staggered all text presets');
