@@ -89,7 +89,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Modified list of post types.
 	 */
-	public function add_to_jetpack_sitemap( $post_types ): array {
+	public function add_to_jetpack_sitemap( array $post_types ): array {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
@@ -154,6 +154,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
 	 * @param WP_Post $attachment Attachment object.
+	 *
+	 * @return array
 	 */
 	public function filter_admin_ajax_response( array $response, WP_Post $attachment ): array {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
@@ -179,7 +181,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function filter_api_response( WP_REST_Response $response, WP_Post $post ): \WP_REST_Response {
+	public function filter_api_response( WP_REST_Response $response, WP_Post $post ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
 			return $response;
 		}
@@ -203,6 +205,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param array  $data           Source data to be modified.
 	 * @param string $videopress_key VideoPress array key.
+	 *
+	 * @return array
 	 */
 	protected function add_extra_data( array $data, $videopress_key ): array {
 		// Make video as optimized.
@@ -281,7 +285,7 @@ class Jetpack extends Service_Base {
 	 */
 	public function force_amp_request( $is_amp_request ): bool {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			return $is_amp_request;
+			return (bool) $is_amp_request;
 		}
 		return true;
 	}
