@@ -109,8 +109,8 @@ export const Error = styled(CenterMutedText)`
 
 export const UploadedContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 96px);
-  grid-auto-rows: 96px;
+  grid-template-columns: repeat(auto-fill, 100px);
+  grid-auto-rows: 100px;
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   padding-bottom: 20px;
@@ -150,7 +150,10 @@ export const GridItemButton = styled.button`
   ${themeHelpers.focusableOutlineCSS};
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.img.attrs({
+  height: '96px',
+  width: '96px',
+})`
   object-fit: cover;
   width: 100%;
   height: 100%;
