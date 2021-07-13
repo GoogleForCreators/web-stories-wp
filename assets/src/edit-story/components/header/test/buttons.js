@@ -59,6 +59,8 @@ function setupButtons({
         storyId: 123,
         date: null,
         editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+        embedPostLink:
+          'https://example.com/wp-admin/post-new.php?from-web-story=123',
         previewLink:
           'http://localhost?preview_id=1679&preview_nonce=b5ea827939&preview=true',
         ...extraStoryProps,

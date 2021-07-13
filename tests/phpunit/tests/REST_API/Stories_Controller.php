@@ -211,6 +211,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'edit_link', $data );
 		$edit_link = get_edit_post_link( $story, 'rest-api' );
 		$this->assertSame( $edit_link, $data['edit_link'] );
+    $this->assertArrayHasKey( 'embed_post_link', $data );
 	}
 
 	/**
@@ -231,6 +232,8 @@ class Stories_Controller extends Test_REST_TestCase {
 		$data     = $response->get_data();
 		$this->assertArrayNotHasKey( 'edit_link', $data );
 		$this->assertArrayNotHasKey( 'preview_link', $data );
+		$this->assertArrayHasKey( 'embed_post_link', $data );
+		$this->assertContains( (string) $story, $data['embed_post_link'] );
 	}
 
 

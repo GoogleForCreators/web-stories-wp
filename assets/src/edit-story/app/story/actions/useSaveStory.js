@@ -80,6 +80,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             featuredMediaUrl: post.featured_media_url,
             previewLink: post.preview_link,
             editLink: post.edit_link,
+            embedPostLink: post.embed_post_link,
           };
           updateStory({ properties });
 
