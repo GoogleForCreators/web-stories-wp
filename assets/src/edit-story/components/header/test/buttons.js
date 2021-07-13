@@ -58,6 +58,8 @@ function setupButtons({
         status: 'draft',
         storyId: 123,
         date: null,
+        embedPostLink:
+          'https://example.com/wp-admin/post-new.php?from-web-story=123',
         previewLink:
           'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
         ...extraStoryProps,
