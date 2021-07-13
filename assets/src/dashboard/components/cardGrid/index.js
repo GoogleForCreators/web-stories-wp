@@ -34,7 +34,7 @@ const DashboardGrid = styled.div`
   grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
   grid-row-gap: ${GRID_SPACING.ROW_GAP}px;
   grid-template-columns: ${({ columnWidth }) => `
-    repeat(auto-fill, minmax(0, ${columnWidth}px))`};
+    repeat(auto-fill, ${columnWidth}px)`};
   grid-template-rows: ${({ columnHeight }) =>
     `minmax(${columnHeight}px, auto)`};
   scroll-margin-top: 30vh;
