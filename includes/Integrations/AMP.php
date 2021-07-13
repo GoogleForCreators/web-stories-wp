@@ -44,8 +44,7 @@ use WP_Screen;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class AMP extends Service_Base {
-	use Publisher;
-	use Screen;
+	use Publisher, Screen;
 
 	/**
 	 * Slug of the AMP validated URL post type.

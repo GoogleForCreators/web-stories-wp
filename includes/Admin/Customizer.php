@@ -42,8 +42,7 @@ use WP_Error;
  * @package Google\Web_Stories
  */
 class Customizer extends Service_Base {
-	use Theme_Support;
-	use Layout;
+	use Theme_Support, Layout;
 
 	/**
 	 * Customizer section slug.

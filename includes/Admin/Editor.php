@@ -46,10 +46,7 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base {
-	use Publisher;
-	use Types;
-	use Screen;
-	use Post_Type;
+	use Publisher, Types, Screen, Post_Type;
 
 	/**
 	 * Web Stories editor script handle.

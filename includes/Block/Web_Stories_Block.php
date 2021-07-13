@@ -37,8 +37,7 @@ use Google\Web_Stories\Traits\Stories_Script_Data;
  * Latest Stories block class.
  */
 class Web_Stories_Block extends Embed_Base {
-	use Stories_Script_Data;
-	use Post_Type;
+	use Stories_Script_Data, Post_Type;
 
 	/**
 	 * Script handle.

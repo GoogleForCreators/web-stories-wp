@@ -38,8 +38,7 @@ use WP_Post;
  * Discovery class.
  */
 class Discovery extends Service_Base {
-	use Publisher;
-	use Post_Type;
+	use Publisher, Post_Type;
 	/**
 	 * Initialize discovery functionality.
 	 *
