@@ -19,7 +19,7 @@
  */
 import { createGlobalStyle, css } from 'styled-components';
 
-import(/* webpackChunkName: "focus-visible" */ 'focus-visible').catch(
+import(/* webpackChunkName: "chunk-focus-visible" */ 'focus-visible').catch(
   () => undefined
 );
 

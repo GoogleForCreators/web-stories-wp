@@ -37,7 +37,7 @@ import TextSetsPane from './textSets/textSetsPane';
 
 if (!('ResizeObserver' in window)) {
   import(
-    /* webpackChunkName: "resize-observer-polyfill" */ 'resize-observer-polyfill'
+    /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
   )
     .then((module) => (window.ResizeObserver = module.ResizeObserver))
     .catch(() => undefined);
