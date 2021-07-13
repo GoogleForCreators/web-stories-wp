@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Dot Line', 'sticker name', 'web-stories');
+const title = _x('Curved Dotted Line', 'sticker name', 'web-stories');
 
-function DotLine({ style }) {
+function CurvedDottedLine({ style }) {
   return (
     <svg
       style={style}
@@ -40,12 +40,12 @@ function DotLine({ style }) {
   );
 }
 
-DotLine.propTypes = {
+CurvedDottedLine.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 43 / 51,
-  svg: DotLine,
+  svg: CurvedDottedLine,
   title,
 };

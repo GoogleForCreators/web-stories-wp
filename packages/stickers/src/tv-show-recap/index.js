@@ -16,8 +16,8 @@
 /**
  * Internal dependencies
  */
-import { default as dotLine } from './dotline';
-import { default as dotRectangle } from './dotRectangle';
-import { default as infographic } from './infographic';
+import { default as curvedDottedLine } from './curvedDottedLine';
+import { default as dottedDiamond } from './dottedDiamond';
+import { default as discPieChart } from './discPieChart';
 
-export { dotLine, dotRectangle, infographic };
+export { curvedDottedLine, dottedDiamond, discPieChart };

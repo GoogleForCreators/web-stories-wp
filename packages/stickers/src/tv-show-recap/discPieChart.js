@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Infographic', 'sticker name', 'web-stories');
+const title = _x('Disc Pie Chart', 'sticker name', 'web-stories');
 
-function Infographic({ style }) {
+function DiscPieChart({ style }) {
   return (
     <svg
       style={style}
@@ -59,12 +59,12 @@ function Infographic({ style }) {
   );
 }
 
-Infographic.propTypes = {
+DiscPieChart.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 50 / 50,
-  svg: Infographic,
+  svg: DiscPieChart,
   title,
 };

@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Dot Rectangle', 'sticker name', 'web-stories');
+const title = _x('Dotted Diamond', 'sticker name', 'web-stories');
 
-function DotRectangle({ style }) {
+function DottedDiamond({ style }) {
   return (
     <svg
       style={style}
@@ -40,12 +40,12 @@ function DotRectangle({ style }) {
   );
 }
 
-DotRectangle.propTypes = {
+DottedDiamond.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 58 / 58,
-  svg: DotRectangle,
+  svg: DottedDiamond,
   title,
 };

@@ -35,7 +35,7 @@ import * as streetStyleOnTheGoStickers from './street-style-on-the-go';
 import * as plantBasedDyesStickers from './plant-based-dyes';
 import * as indoorGardenOasisStickers from './indoor-garden-oasis';
 import * as killBellyFatStickers from './belly-fat-workout';
-import * as crownSeasonsRecappedStickers from './crown-seasons-recapped';
+import * as crownSeasonsRecappedStickers from './tv-show-recap';
 import * as honeymooningInItalyStickers from './honeymooning-in-italy';
 import * as stayAtAceHotelKyotoStickers from './stay-at-ace-hotel-kyoto';
 import * as videoCallsSavedTheDayStickers from './how-video-calls-saved-the-day';
