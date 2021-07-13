@@ -91,7 +91,13 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
   );
 
   useEffect(() => {
-    updateTabIndexes();
+    // Wait one tick for the calendar to be available.
+    const timeout = setTimeout(() => {
+      updateTabIndexes();
+    });
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [updateTabIndexes]);
 
   return (
