@@ -48,10 +48,10 @@ export function pageTooLittleText(page) {
 }
 
 const PageTooLittleText = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
-    () => filterStoryPages(story, pageTooLittleText),
-    [story]
+    () => filterStoryPages(pages, pageTooLittleText),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(

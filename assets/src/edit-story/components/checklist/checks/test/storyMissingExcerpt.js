@@ -20,29 +20,21 @@ import { storyMissingExcerpt } from '../storyMissingExerpt';
 
 describe('storyMissingExcerpt', () => {
   it('should return true if story is missing excerpt', () => {
-    const story = {
-      id: 'storyid',
-    };
-    const test = storyMissingExcerpt(story);
+    const excerpt = undefined;
+    const test = storyMissingExcerpt(excerpt);
     expect(test).toBe(true);
   });
 
   it('should return true if story has empty excerpt', () => {
-    const story = {
-      id: 'storyid',
-      excerpt: '',
-    };
-    const test = storyMissingExcerpt(story);
+    const excerpt = '';
+    const test = storyMissingExcerpt(excerpt);
 
     expect(test).toBe(true);
   });
 
   it('should return true if story has excerpt', () => {
-    const story = {
-      id: 'storyid',
-      excerpt: 'This is an excerpt',
-    };
-    const test = storyMissingExcerpt(story);
+    const excerpt = 'This is an excerpt';
+    const test = storyMissingExcerpt(excerpt);
     expect(test).toBe(false);
   });
 });

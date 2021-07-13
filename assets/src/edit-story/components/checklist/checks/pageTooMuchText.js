@@ -59,10 +59,10 @@ export function pageTooMuchText(page) {
 }
 
 const PageTooMuchText = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
-    () => filterStoryPages(story, pageTooMuchText),
-    [story]
+    () => filterStoryPages(pages, pageTooMuchText),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
