@@ -78,6 +78,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
             previewLink: post.preview_link,
+            embedPostLink: post.embed_post_link,
           };
           updateStory({ properties });
 
