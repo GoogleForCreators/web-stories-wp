@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
@@ -55,14 +57,23 @@ class HTML {
 	protected $document;
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
 	 * HTML constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story $story Story object.
+	 * @param Story       $story Story object.
+	 * @param Experiments $experiments Experiments instance.
 	 */
-	public function __construct( Story $story ) {
-		$this->story = $story;
+	public function __construct( Story $story, Experiments $experiments ) {
+		$this->story       = $story;
+		$this->experiments = $experiments;
 	}
 
 	/**
@@ -128,11 +139,14 @@ class HTML {
 	 * @return array Sanitizers.
 	 */
 	public function add_web_stories_amp_content_sanitizers( $sanitizers ) {
+		$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+
 		$sanitizers[ Story_Sanitizer::class ] = [
 			'publisher_logo'             => $this->get_publisher_logo(),
 			'publisher'                  => $this->get_publisher_name(),
 			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
 			'poster_images'              => $this->get_poster_images(),
+			'video_cache'                => $video_cache_enabled,
 		];
 
 		return $sanitizers;

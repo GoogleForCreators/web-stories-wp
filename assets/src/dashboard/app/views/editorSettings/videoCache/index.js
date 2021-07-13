@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import propTypes from 'prop-types';
-import { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { useCallback, useMemo } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
+import { useFeature } from 'flagged';
 import { Checkbox, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
@@ -33,39 +34,43 @@ import {
   CheckboxLabelText,
 } from '../components';
 
-export default function MediaOptimizationSettings({
-  selected,
-  onCheckboxSelected,
-  disabled,
+export default function VideoCacheSettings({
+  isEnabled = false,
+  updateSettings,
 }) {
-  const mediaOptimizationId = useMemo(
-    () => `media-optimization-${uuidv4()}`,
-    []
+  const videoCacheId = useMemo(() => `video-cache-${uuidv4()}`, []);
+
+  const onChange = useCallback(
+    () => updateSettings({ videoCache: !isEnabled }),
+    [updateSettings, isEnabled]
   );
+
+  const isFeatureEnabled = useFeature('videoCache');
+
+  if (!isFeatureEnabled) {
+    return null;
+  }
 
   return (
     <SettingForm>
       <div>
-        <SettingHeading>
-          {__('Video Optimization', 'web-stories')}
-        </SettingHeading>
+        <SettingHeading>{__('Video Cache', 'web-stories')}</SettingHeading>
       </div>
       <div>
-        <CheckboxLabel forwardedAs="label" htmlFor={mediaOptimizationId}>
+        <CheckboxLabel forwardedAs="label" htmlFor={videoCacheId}>
           <Checkbox
-            id={mediaOptimizationId}
-            data-testid="media-optimization-settings-checkbox"
-            disabled={disabled}
-            onChange={onCheckboxSelected}
-            checked={Boolean(selected)}
+            id={videoCacheId}
+            data-testid="video-cache-settings-checkbox"
+            onChange={onChange}
+            checked={Boolean(isEnabled)}
           />
           <CheckboxLabelText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            aria-checked={Boolean(selected)}
+            aria-checked={Boolean(isEnabled)}
             forwardedAs="span"
           >
             {__(
-              'Automatically optimize videos used in Web Stories. We recommend enabling this feature. Video files that are too large or have an unsupported format (like .mov) will otherwise not display properly.',
+              'Reduce hosting costs and improve user experience by serving videos from the Google cache.',
               'web-stories'
             )}
           </CheckboxLabelText>
@@ -75,8 +80,11 @@ export default function MediaOptimizationSettings({
   );
 }
 
-MediaOptimizationSettings.propTypes = {
-  disabled: propTypes.bool.isRequired,
-  selected: propTypes.bool.isRequired,
-  onCheckboxSelected: propTypes.func.isRequired,
+VideoCacheSettings.propTypes = {
+  isEnabled: PropTypes.bool.isRequired,
+  updateSettings: PropTypes.func.isRequired,
+};
+
+VideoCacheSettings.defaultProps = {
+  isEnabled: false,
 };
