@@ -184,7 +184,7 @@ class AMP extends Service_Base {
 	 * @param array     $error Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
-	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
+	public function filter_amp_validation_error_sanitized( $sanitized, $error ) {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
 			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&

@@ -221,7 +221,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|float|int|string|void|null
 	 */
-	public function key(): int {
+	public function key() {
 		return $this->position;
 	}
 
@@ -232,7 +232,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|void
 	 */
-	public function valid(): bool {
+	public function valid() {
 		return isset( $this->stories[ $this->position ] );
 	}
 

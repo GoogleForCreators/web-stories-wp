@@ -122,7 +122,7 @@ class Optimization {
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
-	private static function get_optimizer_configuration(): \Google\Web_Stories_Dependencies\AmpProject\Optimizer\DefaultConfiguration {
+	private static function get_optimizer_configuration() {
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
 		/**

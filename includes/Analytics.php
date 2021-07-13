@@ -214,6 +214,6 @@ class Analytics extends Service_Base {
 				<?php echo wp_json_encode( $this->get_default_configuration( $tracking_id ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</script>
 		</amp-analytics>
-<?php
+		<?php
 	}
 }

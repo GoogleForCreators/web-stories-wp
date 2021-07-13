@@ -140,7 +140,7 @@ class SVG extends Service_Base {
 	 *
 	 * @param array $mime_types Mime types keyed by the file extension regex corresponding to those types.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function upload_mimes_add_svg( array $mime_types ): array {
 		// allow SVG file upload.

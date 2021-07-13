@@ -468,7 +468,7 @@ class Experiments extends Service_Base {
 	 * @param string $name Experiment name.
 	 * @return array|null Experiment if found, null otherwise.
 	 */
-	protected function get_experiment( $name ): ?array {
+	protected function get_experiment( $name ) {
 		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
 		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
 	}
@@ -504,7 +504,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of all enabled experiments.
 	 */
-	public function get_enabled_experiments(): ?array {
+	public function get_enabled_experiments() {
 		$experiments = array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]
