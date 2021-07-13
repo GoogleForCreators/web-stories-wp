@@ -231,7 +231,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_editor_settings(): array {
+	public function get_editor_settings() {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? (int) $post->ID : null;
 		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );

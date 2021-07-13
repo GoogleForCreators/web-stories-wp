@@ -89,7 +89,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Modified list of post types.
 	 */
-	public function add_to_jetpack_sitemap( array $post_types ): array {
+	public function add_to_jetpack_sitemap( array $post_types ) {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
@@ -104,7 +104,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function add_videopress( array $mime_types ): array {
+	public function add_videopress( array $mime_types ) {
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
@@ -120,7 +120,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ): array {
+	public function filter_ajax_query_attachments_args( array $args ) {
 		if ( ! isset( $args['post_mime_type'] ) ) {
 			return $args;
 		}
@@ -157,7 +157,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function filter_admin_ajax_response( array $response, WP_Post $attachment ): array {
+	public function filter_admin_ajax_response( array $response, WP_Post $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
 			return $response;
 		}
@@ -181,7 +181,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return WP_REST_Response
 	 */
-	public function filter_api_response( WP_REST_Response $response, WP_Post $post ): \WP_REST_Response {
+	public function filter_api_response( WP_REST_Response $response, WP_Post $post ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
 			return $response;
 		}
@@ -208,7 +208,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function add_extra_data( array $data, string $videopress_key ): array {
+	protected function add_extra_data( array $data, string $videopress_key ) {
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
 
@@ -238,7 +238,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function format_milliseconds( int $milliseconds ): string {
+	protected function format_milliseconds( int $milliseconds ) {
 		$seconds = floor( $milliseconds / 1000 );
 
 		if ( $seconds >= 1 ) {
@@ -283,7 +283,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return bool Whether the current request is an AMP request.
 	 */
-	public function force_amp_request( bool $is_amp_request ): bool {
+	public function force_amp_request( bool $is_amp_request ) {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return $is_amp_request;
 		}

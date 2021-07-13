@@ -300,7 +300,7 @@ class Sanitization {
 	 *
 	 * @return array List of extensions and their URLs.
 	 */
-	protected function get_extension_sources(): array {
+	protected function get_extension_sources() {
 		$specs = [];
 		// Register all AMP components as defined in the spec.
 		foreach ( AMP_Allowed_Tags_Generated::get_extension_specs() as $extension_name => $extension_spec ) {
@@ -338,7 +338,7 @@ class Sanitization {
 	 *
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
-	protected function is_amp_dev_mode(): bool {
+	protected function is_amp_dev_mode() {
 		// For the few sites that forcibly show the admin bar even when the user is logged out, only enable dev
 		// mode if the user is actually logged in. This prevents the dev mode from being served to crawlers
 		// when they index the AMP version.
@@ -375,7 +375,7 @@ class Sanitization {
 	 *
 	 * @return array Sanitizers.
 	 */
-	protected function get_sanitizers(): array {
+	protected function get_sanitizers() {
 		$sanitizers = [
 			AMP_Script_Sanitizer::class            => [],
 			AMP_Style_Sanitizer::class             => [
@@ -468,7 +468,7 @@ class Sanitization {
 	 *
 	 * @return bool Whether the validation error should be sanitized.
 	 */
-	public function validation_error_callback( array $error, array $data = [] ): bool {
+	public function validation_error_callback( array $error, array $data = [] ) {
 		/**
 		 * Filters whether the validation error should be sanitized.
 		 *

@@ -72,7 +72,7 @@ class HTML {
 	 *
 	 * @return string The complete HTML markup for the story.
 	 */
-	public function render(): string {
+	public function render() {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
@@ -127,7 +127,7 @@ class HTML {
 	 * @param array $sanitizers Sanitizers.
 	 * @return array Sanitizers.
 	 */
-	public function add_web_stories_amp_content_sanitizers( array $sanitizers ): array {
+	public function add_web_stories_amp_content_sanitizers( array $sanitizers ) {
 		$sanitizers[ Story_Sanitizer::class ] = [
 			'publisher_logo'             => $this->get_publisher_logo(),
 			'publisher'                  => $this->get_publisher_name(),
@@ -145,7 +145,7 @@ class HTML {
 	 *
 	 * @return string[] Images.
 	 */
-	protected function get_poster_images(): array {
+	protected function get_poster_images() {
 		return [
 			'poster-portrait-src' => $this->story->get_poster_portrait(),
 		];
@@ -158,7 +158,7 @@ class HTML {
 	 *
 	 * @return string Filtered content.
 	 */
-	protected function get_html_head_markup(): string {
+	protected function get_html_head_markup() {
 		ob_start();
 		?>
 		<meta name="amp-story-generator-name" content="Web Stories for WordPress" />
@@ -182,7 +182,7 @@ class HTML {
 	 *
 	 * @return string Filtered content.
 	 */
-	protected function replace_html_head( string $content ): string {
+	protected function replace_html_head( string $content ) {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
@@ -210,7 +210,7 @@ class HTML {
 	 *
 	 *  @return string
 	 */
-	protected function replace_url_scheme( string $content ): string {
+	protected function replace_url_scheme( string $content ) {
 		if ( is_ssl() ) {
 			$search  = home_url( '', 'http' );
 			$replace = home_url( '', 'https' );
@@ -230,7 +230,7 @@ class HTML {
 	 *
 	 * @return string
 	 */
-	protected function print_analytics( string $content ): string {
+	protected function print_analytics( string $content ) {
 		ob_start();
 
 		/**
@@ -256,7 +256,7 @@ class HTML {
 	 *
 	 * @return string
 	 */
-	protected function print_social_share( string $content ): string {
+	protected function print_social_share( string $content ) {
 		$share_providers = [
 			[
 				'provider' => 'twitter',

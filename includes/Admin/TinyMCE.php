@@ -94,7 +94,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'admin_enqueue_scripts';
 	}
 
@@ -107,7 +107,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function tinymce_web_stories_button( array $buttons ): array {
+	public function tinymce_web_stories_button( array $buttons ) {
 		$buttons[] = 'web_stories';
 
 		return $buttons;
@@ -122,7 +122,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function web_stories_mce_plugin( array $plugins ): array {
+	public function web_stories_mce_plugin( array $plugins ) {
 		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
 
 		return $plugins;

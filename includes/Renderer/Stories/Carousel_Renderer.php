@@ -83,7 +83,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @return array
 	 */
-	protected function get_carousel_settings(): array {
+	protected function get_carousel_settings() {
 		return [
 			'config' => [
 				'isRTL' => is_rtl(),

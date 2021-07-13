@@ -68,7 +68,7 @@ class BaseField implements Field {
 	 *
 	 * @return string
 	 */
-	public function label(): string {
+	public function label() {
 		return $this->label;
 	}
 
@@ -77,7 +77,7 @@ class BaseField implements Field {
 	 *
 	 * @return bool
 	 */
-	public function show(): bool {
+	public function show() {
 		return $this->show;
 	}
 
@@ -86,7 +86,7 @@ class BaseField implements Field {
 	 *
 	 * @return bool
 	 */
-	public function hidden(): bool {
+	public function hidden() {
 		return $this->hidden;
 	}
 }

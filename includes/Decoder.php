@@ -41,7 +41,7 @@ class Decoder {
 	 *
 	 * @return bool Whether decoding is supported.
 	 */
-	public function supports_decoding(): bool {
+	public function supports_decoding() {
 		/**
 		 * Filter whether the encoding requests.
 		 *
@@ -60,7 +60,7 @@ class Decoder {
 	 * @param string $string String to decode.
 	 * @return string Decoded string.
 	 */
-	public function base64_decode( string $string ): string {
+	public function base64_decode( string $string ) {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 

@@ -79,7 +79,7 @@ class AMP extends Service_Base {
 	 *
 	 * @return array Filtered options.
 	 */
-	public function filter_amp_options( array $options ): array {
+	public function filter_amp_options( array $options ) {
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$options['theme_support']          = 'standard';
 			$options['supported_post_types'][] = Story_Post_Type::POST_TYPE_SLUG;
@@ -100,7 +100,7 @@ class AMP extends Service_Base {
 	 *
 	 * @return array Supportable post types.
 	 */
-	public function filter_supportable_post_types( array $post_types ): array {
+	public function filter_supportable_post_types( array $post_types ) {
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$post_types = array_merge( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
 		} else {
@@ -118,7 +118,7 @@ class AMP extends Service_Base {
 	 * @param array $sanitizers Sanitizers.
 	 * @return array Sanitizers.
 	 */
-	public function add_amp_content_sanitizers( array $sanitizers ): array {
+	public function add_amp_content_sanitizers( array $sanitizers ) {
 		if ( ! is_singular( 'web-story' ) ) {
 			return $sanitizers;
 		}
@@ -224,7 +224,7 @@ class AMP extends Service_Base {
 	 *
 	 * @return bool Whether post should be skipped from AMP.
 	 */
-	public function filter_amp_skip_post( bool $skipped, int $post ): bool {
+	public function filter_amp_skip_post( bool $skipped, int $post ) {
 		// This is the opposite to the `AMP__VERSION >= WEBSTORIES_AMP_VERSION` check in the HTML renderer.
 		if (
 			'web-story' === get_post_type( $post )

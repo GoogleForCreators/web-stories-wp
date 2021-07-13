@@ -43,7 +43,7 @@ abstract class Service_Base implements Service, Delayed, Registerable {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'init';
 	}
 
@@ -54,7 +54,7 @@ abstract class Service_Base implements Service, Delayed, Registerable {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority(): int {
+	public static function get_registration_action_priority() {
 		return 10;
 	}
 }

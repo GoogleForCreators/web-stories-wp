@@ -54,7 +54,7 @@ class PluginActionLinks extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'admin_init';
 	}
 
@@ -67,7 +67,7 @@ class PluginActionLinks extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function action_links( array $links ): array {
+	public function action_links( array $links ) {
 		$slug    = sprintf( 'edit.php?post_type=%s&page=stories-dashboard#/editor-settings', Story_Post_Type::POST_TYPE_SLUG );
 		$url     = get_admin_url( null, $slug );
 		$links[] = sprintf(

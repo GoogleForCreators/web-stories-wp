@@ -40,7 +40,7 @@ class Add_Media_Source_Gif_Conversion extends Add_Media_Source {
 	 *
 	 * @return string
 	 */
-	protected function get_term(): string {
+	protected function get_term() {
 		return 'gif-conversion';
 	}
 }

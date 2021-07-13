@@ -146,7 +146,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return string Base64-encoded SVG icon.
 	 */
-	protected function get_post_type_icon(): string {
+	protected function get_post_type_icon() {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
 	}
 
@@ -160,7 +160,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Array of query params.
 	 */
-	public function filter_rest_collection_params( array $query_params, $post_type ): array {
+	public function filter_rest_collection_params( array $query_params, $post_type ) {
 		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
 			return $query_params;
 		}
@@ -182,7 +182,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Array of allowed fields.
 	 */
-	public function filter_revision_fields( array $fields, array $story ): array {
+	public function filter_revision_fields( array $fields, array $story ) {
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -203,7 +203,7 @@ class Story_Post_Type extends Service_Base {
 	 * @param WP_Query $query The WP_Query object.
 	 * @return bool Whether to pass-through or not.
 	 */
-	public function redirect_post_type_archive_urls( $bypass, $query ): bool {
+	public function redirect_post_type_archive_urls( $bypass, $query ) {
 		global $wp_rewrite;
 
 		// If a plugin has already utilized the pre_handle_404 function, return without action to avoid conflicts.
@@ -250,7 +250,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Bulk counts.
 	 */
-	public function bulk_post_updated_messages( array $bulk_messages, array $bulk_counts ): array {
+	public function bulk_post_updated_messages( array $bulk_messages, array $bulk_counts ) {
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
@@ -275,7 +275,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @param array $data Array of data to save.
 	 */
-	public function change_default_title( array $data ): array {
+	public function change_default_title( array $data ) {
 		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}

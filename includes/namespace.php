@@ -225,7 +225,7 @@ add_action( 'init', __NAMESPACE__ . '\includes' );
  *
  * @return array Modified reduce accumulator.
  */
-function rest_preload_api_request( array $memo, $path ): array {
+function rest_preload_api_request( array $memo, $path ) {
 	// array_reduce() doesn't support passing an array in PHP 5.2,
 	// so we need to make sure we start with one.
 	if ( ! is_array( $memo ) ) {

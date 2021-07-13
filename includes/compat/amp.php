@@ -37,7 +37,7 @@ if ( ! function_exists( '\is_amp_endpoint' ) ) {
 	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
-	function is_amp_endpoint(): bool {
+	function is_amp_endpoint() {
 		return is_singular( Story_Post_Type::POST_TYPE_SLUG );
 	}
 }
@@ -53,7 +53,7 @@ if ( ! function_exists( '\amp_is_request' ) ) {
 	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
-	function amp_is_request(): bool {
+	function amp_is_request() {
 		return is_amp_endpoint();
 	}
 }

@@ -124,7 +124,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'admin_init';
 	}
 
@@ -135,7 +135,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @return array Tracking settings.
 	 */
-	public function get_settings(): array {
+	public function get_settings() {
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
@@ -155,7 +155,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @return array User properties.
 	 */
-	private function get_user_properties(): array {
+	private function get_user_properties() {
 		$role        = ! empty( wp_get_current_user()->roles ) ? wp_get_current_user()->roles[0] : '';
 		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
 
@@ -182,7 +182,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @return bool True if tracking enabled, and False if not.
 	 */
-	public function is_active(): bool {
+	public function is_active() {
 		return (bool) get_user_meta( get_current_user_id(), Preferences::OPTIN_META_KEY, true );
 	}
 }

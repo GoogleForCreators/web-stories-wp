@@ -144,7 +144,7 @@ class Oembed extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_embed_height_width( $old_width ): array {
+	protected function get_embed_height_width( $old_width ) {
 		/** This filter is documented in wp-includes/embed.php */
 		$min_max_width = apply_filters(
 			'oembed_min_max_width',

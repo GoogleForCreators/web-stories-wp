@@ -64,7 +64,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority(): int {
+	public static function get_registration_action_priority() {
 		return 11;
 	}
 
@@ -85,7 +85,7 @@ class KSES extends Service_Base {
 	 *                                   originally passed to wp_insert_post().
 	 * @return array Filtered post data.
 	 */
-	public function filter_insert_post_data( array $data, array $postarr, array $unsanitized_postarr ): array {
+	public function filter_insert_post_data( array $data, array $postarr, array $unsanitized_postarr ) {
 		if (
 			( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) && !
 			(
@@ -129,7 +129,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return array Filtered list of CSS attributes.
 	 */
-	public function filter_safe_style_css( array $attr ): array {
+	public function filter_safe_style_css( array $attr ) {
 		$additional = [
 			'display',
 			'opacity',
@@ -639,7 +639,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return array An array of values resulted from merging the arguments together.
 	 */
-	protected function array_merge_recursive_distinct( array ...$arrays ): array {
+	protected function array_merge_recursive_distinct( array ...$arrays ) {
 		if ( count( $arrays ) < 2 ) {
 			if ( [] === $arrays ) {
 				return $arrays;
@@ -674,7 +674,7 @@ class KSES extends Service_Base {
 	 * @param array $value An array of attributes.
 	 * @return array The array of attributes with global attributes added.
 	 */
-	protected function add_global_attributes( array $value ): array {
+	protected function add_global_attributes( array $value ) {
 		$global_attributes = [
 			'aria-describedby'    => true,
 			'aria-details'        => true,
@@ -707,7 +707,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_before_kses( string $post_content ): string {
+	public function filter_content_save_pre_before_kses( string $post_content ) {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
 			static function ( $matches ) {
@@ -726,7 +726,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_after_kses( string $post_content ): string {
+	public function filter_content_save_pre_after_kses( string $post_content ) {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
 			function ( $matches ) {

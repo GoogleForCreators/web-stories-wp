@@ -49,7 +49,7 @@ function render_stories( array $attrs = [], array $query_args = [] ) {
  *
  * @return array
  */
-function get_stories( array $attrs = [], array $query_args = [] ): array {
+function get_stories( array $attrs = [], array $query_args = [] ) {
 	$stories_obj = new Story_Query( $attrs, $query_args );
 
 	return $stories_obj->get_stories();

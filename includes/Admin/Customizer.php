@@ -468,7 +468,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return boolean Returns true if the given option is enabled otherwise false.
 	 */
-	private function is_option_enabled( string $option_name ): bool {
+	private function is_option_enabled( string $option_name ) {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
 		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
 	}
@@ -482,7 +482,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	private function is_view_type( string $view_type ): bool {
+	private function is_view_type( string $view_type ) {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
 		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
 	}
@@ -497,7 +497,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return WP_Error
 	 */
-	public function validate_number_of_stories( WP_Error $validity, int $value ): WP_Error {
+	public function validate_number_of_stories( WP_Error $validity, int $value ) {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 20 ) {
@@ -516,7 +516,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return WP_Error
 	 */
-	public function validate_number_of_columns( WP_Error $validity, int $value ): WP_Error {
+	public function validate_number_of_columns( WP_Error $validity, int $value ) {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {
@@ -535,7 +535,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function render_stories(): string {
+	public function render_stories() {
 		$options = get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {

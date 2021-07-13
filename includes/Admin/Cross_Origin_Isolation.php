@@ -69,7 +69,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'current_screen';
 	}
 
@@ -80,7 +80,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority(): int {
+	public static function get_registration_action_priority() {
 		return 11;
 	}
 
@@ -120,7 +120,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function replace_in_dom( string $html ): string {
+	protected function replace_in_dom( string $html ) {
 		$document = Document::fromHtml( $html );
 
 		if ( ! $document ) {
@@ -175,7 +175,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function style_loader_tag( string $tag, string $handle, string $href ): string {
+	public function style_loader_tag( string $tag, string $handle, string $href ) {
 		return $this->add_attribute( $tag, 'href', $href );
 	}
 
@@ -190,7 +190,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function script_loader_tag( string $tag, string $handle, string $src ): string {
+	public function script_loader_tag( string $tag, string $handle, string $src ) {
 		return $this->add_attribute( $tag, 'src', $src );
 	}
 
@@ -212,7 +212,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ): string {
+	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ) {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 
@@ -227,7 +227,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function add_attribute( string $html, string $attribute, string $url ): string {
+	protected function add_attribute( string $html, string $attribute, string $url ) {
 		$site_url = site_url();
 		$url      = esc_url( $url );
 
@@ -291,7 +291,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	private function starts_with( string $string, string $start_string ): bool {
+	private function starts_with( string $string, string $start_string ) {
 		$len = strlen( $start_string );
 
 		return ( substr( $string, 0, $len ) === $start_string );

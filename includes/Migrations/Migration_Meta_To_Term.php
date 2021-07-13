@@ -80,7 +80,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	protected function get_term_name(): string {
+	protected function get_term_name() {
 		return 'poster-generation';
 	}
 }

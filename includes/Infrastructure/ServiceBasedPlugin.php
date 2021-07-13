@@ -252,7 +252,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *                           salvageable.
 	 * @return string[] Validated array of service mappings.
 	 */
-	protected function validate_services( $services, array $fallback ): array {
+	protected function validate_services( $services, array $fallback ) {
 		// If we don't have an array, something went wrong with filtering.
 		// Just use the fallback value in this case.
 		if ( ! is_array( $services ) ) {
@@ -289,7 +289,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param string $fqcn FQCN to use as base to generate an identifer.
 	 * @return string Identifier to use for the provided FQCN.
 	 */
-	protected function get_identifier_from_fqcn( string $fqcn ): string {
+	protected function get_identifier_from_fqcn( string $fqcn ) {
 		// Retrieve the short name from the FQCN first.
 		$short_name = substr( $fqcn, strrpos( $fqcn, '\\' ) + 1 );
 
@@ -506,7 +506,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
-	protected function get_service_classes(): array {
+	protected function get_service_classes() {
 		return [];
 	}
 
@@ -520,7 +520,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return array<string> Associative array of fully qualified class names.
 	 */
-	protected function get_bindings(): array {
+	protected function get_bindings() {
 		return [];
 	}
 
@@ -535,7 +535,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return array<array> Associative array of arrays mapping argument names
 	 *                      to argument values.
 	 */
-	protected function get_arguments(): array {
+	protected function get_arguments() {
 		return [];
 	}
 
@@ -552,7 +552,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */
-	protected function get_shared_instances(): array {
+	protected function get_shared_instances() {
 		return [];
 	}
 
@@ -566,7 +566,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return array<callable> Associative array of callables.
 	 */
-	protected function get_delegations(): array {
+	protected function get_delegations() {
 		return [];
 	}
 

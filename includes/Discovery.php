@@ -139,7 +139,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array $metadata All schema.org metadata for the post.
 	 */
-	protected function get_schemaorg_metadata(): array {
+	protected function get_schemaorg_metadata() {
 		$publisher = $this->get_publisher_data();
 
 		$metadata = [
@@ -234,7 +234,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_open_graph_metadata(): array {
+	protected function get_open_graph_metadata() {
 		$metadata = [
 			'og:locale'    => get_bloginfo( 'language' ),
 			'og:site_name' => get_bloginfo( 'name' ),
@@ -308,7 +308,7 @@ class Discovery extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_twitter_metadata(): array {
+	protected function get_twitter_metadata() {
 		$metadata = [
 			'twitter:card' => 'summary_large_image',
 		];

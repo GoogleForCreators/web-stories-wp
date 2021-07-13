@@ -177,7 +177,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @param array $args Array of rendering arguments.
 	 */
-	public function render( array $args = [] ): string {
+	public function render( array $args = [] ) {
 		++self::$instances;
 		$this->instance_id = self::$instances;
 
@@ -323,7 +323,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	protected function is_view_type( string $view_type ): bool {
+	protected function is_view_type( string $view_type ) {
 
 		return ( ! empty( $this->attributes['view_type'] ) && $view_type === $this->attributes['view_type'] );
 	}
@@ -335,7 +335,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_view_type(): string {
+	protected function get_view_type() {
 
 		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
 	}
@@ -376,7 +376,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_view_classes(): string {
+	protected function get_view_classes() {
 		$view_classes   = [];
 		$view_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 
@@ -408,7 +408,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_container_classes(): string {
+	protected function get_container_classes() {
 
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
@@ -433,7 +433,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_single_story_classes(): string {
+	protected function get_single_story_classes() {
 
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
@@ -462,7 +462,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string Style string.
 	 */
-	protected function get_container_styles(): string {
+	protected function get_container_styles() {
 		$story_styles  = $this->is_view_type( 'circles' ) ? sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) : '';
 		$story_styles .= $this->is_view_type( 'carousel' ) ? sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
 

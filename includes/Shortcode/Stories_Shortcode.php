@@ -66,7 +66,7 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @return string Story markup.
 	 */
-	public function render_stories( array $attrs ): string {
+	public function render_stories( array $attrs ) {
 		$attributes = shortcode_atts(
 			[
 				'view'               => 'circles',
@@ -103,7 +103,7 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @return array Attributes to pass to Story_Query class.
 	 */
-	private function prepare_story_attrs( array $attributes ): array {
+	private function prepare_story_attrs( array $attributes ) {
 		return [
 			'view_type'          => (string) $attributes['view'],
 			'number_of_columns'  => (int) $attributes['number_of_columns'],
@@ -129,7 +129,7 @@ class Stories_Shortcode extends Service_Base {
 	 *
 	 * @return array Array of story arguments to pass to Story_Query.
 	 */
-	private function prepare_story_args( array $attributes ): array {
+	private function prepare_story_args( array $attributes ) {
 		return [
 			// Show 100 stories at most to avoid 500 errors.
 			'posts_per_page' => min( (int) $attributes['number_of_stories'], 100 ), // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page

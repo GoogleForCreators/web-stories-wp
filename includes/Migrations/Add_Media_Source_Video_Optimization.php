@@ -40,7 +40,7 @@ class Add_Media_Source_Video_Optimization extends Add_Media_Source {
 	 *
 	 * @return string
 	 */
-	protected function get_term(): string {
+	protected function get_term() {
 		return 'video-optimization';
 	}
 }

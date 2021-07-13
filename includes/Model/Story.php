@@ -114,7 +114,7 @@ class Story {
 	 *
 	 * @return bool
 	 */
-	public function load_from_post( $_post ): bool {
+	public function load_from_post( $_post ) {
 		$post = get_post( $_post );
 
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {

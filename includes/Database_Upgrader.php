@@ -111,7 +111,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'admin_init';
 	}
 
@@ -122,7 +122,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority(): int {
+	public static function get_registration_action_priority() {
 		return 5;
 	}
 

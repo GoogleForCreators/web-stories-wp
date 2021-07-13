@@ -72,7 +72,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return bool Whether Site Kit is active.
 	 */
-	protected function is_plugin_active(): bool {
+	protected function is_plugin_active() {
 		return defined( 'GOOGLESITEKIT_VERSION' );
 	}
 
@@ -84,7 +84,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
-	protected function is_adsense_module_active(): bool {
+	protected function is_adsense_module_active() {
 		$adsense_module_active       = in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
 		$adsense_options             = get_option( 'googlesitekit_adsense_settings' );
 		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
@@ -101,7 +101,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
-	protected function is_analytics_module_active(): bool {
+	protected function is_analytics_module_active() {
 		$analytics_module_active = in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
 		$analytics_options       = get_option( 'googlesitekit_analytics_settings' );
 		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
@@ -118,7 +118,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return array Modified configuration options.
 	 */
-	public function filter_site_kit_gtag_opt( array $gtag_opt ): array {
+	public function filter_site_kit_gtag_opt( array $gtag_opt ) {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return $gtag_opt;
 		}
@@ -148,7 +148,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return array List of active module slugs.
 	 */
-	protected function get_site_kit_active_modules_option(): array {
+	protected function get_site_kit_active_modules_option() {
 		if ( ! $this->is_plugin_active() ) {
 			return [];
 		}
@@ -175,7 +175,7 @@ class Site_Kit extends Service_Base {
 	 *
 	 * @return array Plugin status.
 	 */
-	public function get_plugin_status(): array {
+	public function get_plugin_status() {
 		$is_installed        = array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
 		$is_active           = $this->is_plugin_active();
 		$is_analytics_active = $this->is_analytics_module_active();

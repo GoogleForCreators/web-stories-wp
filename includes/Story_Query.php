@@ -105,7 +105,7 @@ class Story_Query {
 	 *
 	 * @return WP_Post[] List of Story posts.
 	 */
-	public function get_stories(): array {
+	public function get_stories() {
 		$stories_query = new WP_Query();
 
 		/**
@@ -152,7 +152,7 @@ class Story_Query {
 	 *
 	 * @return string
 	 */
-	public function render(): string {
+	public function render() {
 		$this->renderer = $this->get_renderer();
 
 		return $this->renderer->render();
@@ -165,7 +165,7 @@ class Story_Query {
 	 *
 	 * @return array An array of story attributes.
 	 */
-	public function get_story_attributes(): array {
+	public function get_story_attributes() {
 		$default_attributes = [
 			'view_type'          => 'circles',
 			'number_of_columns'  => 2,

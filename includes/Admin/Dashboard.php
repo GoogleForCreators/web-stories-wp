@@ -316,7 +316,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_dashboard_settings(): array {
+	public function get_dashboard_settings() {
 		$rest_base     = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$new_story_url = admin_url(
 			add_query_arg(

@@ -48,7 +48,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 *
 	 * @return string
 	 */
-	public function get_handle(): string {
+	public function get_handle() {
 		return 'web-stories-fonts';
 	}
 
@@ -59,7 +59,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
-	public static function is_needed(): bool {
+	public static function is_needed() {
 		return is_admin() && ! wp_doing_ajax();
 	}
 

@@ -42,7 +42,7 @@ class Add_VideoPress_Poster_Generation_Media_Source extends Migration_Meta_To_Te
 	 *
 	 * @return string
 	 */
-	protected function get_post_meta_key(): string {
+	protected function get_post_meta_key() {
 		return Jetpack::VIDEOPRESS_POSTER_META_KEY;
 	}
 }

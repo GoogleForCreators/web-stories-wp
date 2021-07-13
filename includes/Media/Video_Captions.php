@@ -51,7 +51,7 @@ class Video_Captions extends Service_Base {
 	 * @param string $value List of allowed file types.
 	 * @return string List of allowed file types.
 	 */
-	public function filter_list_of_allowed_filetypes( $value ): string {
+	public function filter_list_of_allowed_filetypes( $value ) {
 		$filetypes = explode( ' ', $value );
 		if ( ! in_array( 'vtt', $filetypes, true ) ) {
 			$filetypes[] = 'vtt';

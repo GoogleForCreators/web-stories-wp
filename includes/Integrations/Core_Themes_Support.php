@@ -157,7 +157,7 @@ class Core_Themes_Support extends Service_Base {
 	 * @since 1.6.0
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action(): string {
+	public static function get_registration_action() {
 		return 'after_setup_theme';
 	}
 }

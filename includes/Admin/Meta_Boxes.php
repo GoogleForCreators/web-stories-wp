@@ -118,7 +118,7 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * @return string Meta box URL.
 	 */
-	public function get_meta_box_url( int $story_id ): string {
+	public function get_meta_box_url( int $story_id ) {
 		$meta_box_url = admin_url( 'post.php' );
 		$meta_box_url = add_query_arg(
 			[
@@ -144,7 +144,7 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * @return array List of meta boxes per location.
 	 */
-	public function get_meta_boxes_per_location(): array {
+	public function get_meta_boxes_per_location() {
 		global $wp_meta_boxes;
 
 		$screen = $this->get_current_screen();

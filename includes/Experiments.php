@@ -65,7 +65,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority(): int {
+	public static function get_registration_action_priority() {
 		return 7;
 	}
 
@@ -200,7 +200,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of experiment groups
 	 */
-	public function get_experiment_groups(): array {
+	public function get_experiment_groups() {
 		return [
 			'general'   => __( 'General', 'web-stories' ),
 			'dashboard' => __( 'Dashboard', 'web-stories' ),
@@ -217,7 +217,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of experiments by group.
 	 */
-	public function get_experiments(): array {
+	public function get_experiments() {
 		return [
 			/**
 			 * Author: @embarks
@@ -433,7 +433,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array Experiment statuses with name as key and status as value.
 	 */
-	public function get_experiment_statuses( string $group ): array {
+	public function get_experiment_statuses( string $group ) {
 		$experiments = wp_list_filter( $this->get_experiments(), [ 'group' => $group ] );
 
 		if ( empty( $experiments ) ) {
@@ -471,7 +471,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return bool Whether the experiment is enabled.
 	 */
-	public function is_experiment_enabled( string $name ): bool {
+	public function is_experiment_enabled( string $name ) {
 		$experiment = $this->get_experiment( $name );
 
 		if ( ! $experiment ) {
@@ -493,7 +493,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of all enabled experiments.
 	 */
-	public function get_enabled_experiments(): array {
+	public function get_enabled_experiments() {
 		$experiments = array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]

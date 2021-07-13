@@ -92,7 +92,7 @@ class Embed {
 	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render( array $args = [] ): string {
+	public function render( array $args = [] ) {
 		$defaults = [
 			'align'  => 'none',
 			'class'  => 'wp-block-web-stories-embed',

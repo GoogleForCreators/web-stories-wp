@@ -105,7 +105,7 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority(): int {
+	public static function get_registration_action_priority() {
 		return 11;
 	}
 
@@ -139,7 +139,7 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function default_attrs(): array {
+	protected function default_attrs() {
 		$attrs = [
 			'align'  => 'none',
 			'height' => 600,
@@ -168,7 +168,7 @@ abstract class Embed_Base extends Service_Base {
 	 *
 	 * @return string Rendered embed output.
 	 */
-	public function render( array $attributes ): string {
+	public function render( array $attributes ) {
 		// The only mandatory attribute.
 		if ( empty( $attributes['url'] ) ) {
 			return '';
