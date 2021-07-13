@@ -115,7 +115,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['preview_link'] = $view_link;
 		}
 
-		if ( in_array( 'embed_post_link', $fields, true ) ) {
+		if ( in_array( 'embed_post_link', $fields, true ) && current_user_can( 'edit_posts' ) ) {
 			$data['embed_post_link'] = add_query_arg(
 				[
 					'from-web-story' => $post->ID,
