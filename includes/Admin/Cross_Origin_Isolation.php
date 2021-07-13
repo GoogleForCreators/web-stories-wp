@@ -117,6 +117,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @since 1.6.0
 	 *
 	 * @param string $html HTML document as string.
+	 *
+	 * @return string
 	 */
 	protected function replace_in_dom( $html ): string {
 		$document = Document::fromHtml( $html );
@@ -170,6 +172,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @param string $tag    The link tag for the enqueued style.
 	 * @param string $handle The style's registered handle.
 	 * @param string $href   The stylesheet's source URL.
+	 *
+	 * @return string
 	 */
 	public function style_loader_tag( $tag, $handle, $href ): string {
 		return $this->add_attribute( $tag, 'href', $href );
@@ -183,6 +187,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @param string $tag    The `<script>` tag for the enqueued script.
 	 * @param string $handle The script's registered handle.
 	 * @param string $src    The script's source URL.
+	 *
+	 * @return string
 	 */
 	public function script_loader_tag( $tag, $handle, $src ): string {
 		return $this->add_attribute( $tag, 'src', $src );
@@ -203,6 +209,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *                            fallback of 'mystery'.
 	 * @param string $alt         Alternative text to use in the avatar image tag. Default empty.
 	 * @param array  $args        Arguments passed to get_avatar_data(), after processing.
+	 *
+	 * @return string
 	 */
 	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ): string {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
@@ -216,6 +224,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @param string $html HTML string.
 	 * @param string $attribute Attribute to check for.
 	 * @param string $url URL.
+	 *
+	 * @return string
 	 */
 	protected function add_attribute( $html, $attribute, $url ): string {
 		$site_url = site_url();
@@ -278,6 +288,8 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @param string $string       String to search.
 	 * @param string $start_string String to search with.
+	 *
+	 * @return bool
 	 */
 	private function starts_with( $string, $start_string ): bool {
 		$len = strlen( $start_string );

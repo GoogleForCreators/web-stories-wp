@@ -96,7 +96,7 @@ class Optimization {
 	 *
 	 * @return TransformationEngine Optimizer transformation engine to use.
 	 */
-	private function get_optimizer(): \Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine {
+	private function get_optimizer() {
 		$configuration = self::get_optimizer_configuration();
 
 		$fallback_remote_request_pipeline = new FallbackRemoteGetRequest(

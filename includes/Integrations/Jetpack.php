@@ -231,6 +231,8 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
+	 *
+	 * @return string
 	 */
 	protected function format_milliseconds( $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );

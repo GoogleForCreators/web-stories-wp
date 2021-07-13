@@ -497,7 +497,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return WP_Error
 	 */
-	public function validate_number_of_stories( $validity, $value ): \WP_Error {
+	public function validate_number_of_stories( $validity, $value ) {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 20 ) {
@@ -516,7 +516,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return WP_Error
 	 */
-	public function validate_number_of_columns( $validity, $value ): \WP_Error {
+	public function validate_number_of_columns( $validity, $value ) {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {
@@ -532,6 +532,8 @@ class Customizer extends Service_Base {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 *
+	 * @return string
 	 */
 	public function render_stories(): string {
 		$options = get_option( self::STORY_OPTION );

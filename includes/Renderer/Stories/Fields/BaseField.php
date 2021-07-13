@@ -83,6 +83,8 @@ class BaseField implements Field {
 
 	/**
 	 * Whether the field is hidden.
+	 *
+	 * @return bool
 	 */
 	public function hidden(): bool {
 		return (bool) $this->hidden;

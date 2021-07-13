@@ -284,7 +284,7 @@ function rest_preload_api_request( $memo, $path ): array {
  *
  * @return Plugin
  */
-function get_plugin_instance(): \Google\Web_Stories\Plugin {
+function get_plugin_instance() {
 	global $web_stories;
 
 	if ( null === $web_stories ) {
