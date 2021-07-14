@@ -24,14 +24,6 @@ import { BEZIER } from '@web-stories-wp/design-system';
  */
 import { TRANSITION_DURATION } from '../constants';
 
-if (!('ResizeObserver' in window)) {
-  import(
-    /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
-  )
-    .then((module) => (window.ResizeObserver = module.ResizeObserver))
-    .catch(() => undefined);
-}
-
 /**
  * Removes inner Element from the layout flow without disrupting
  * visual layout. Adds transition for height of outer Element
@@ -70,25 +62,3 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   return () => cancelAnimationFrame(id);
 }
 
-/**
- * Adds a resize observer and observes the inner element. Applies all
- * changes of height from the inner element to the outer element.
- *
- * @param {HTMLElement} innerEl - element we're reading changes of height from
- * @param {HTMLElement} outerEl - element we're applying height to
- * @return {Function} cleanup method
- */
-export function syncOuterHeightWithInner(innerEl, outerEl) {
-  if (!innerEl) {
-    return () => {};
-  }
-  const observer = new ResizeObserver((entries) => {
-    const measureEl = entries?.[0];
-    if (!measureEl || !outerEl) {
-      return;
-    }
-    outerEl.style.height = `${measureEl.contentRect.height}px`;
-  });
-  observer.observe(innerEl);
-  return () => observer.unobserve(innerEl);
-}
