@@ -61,4 +61,3 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
   });
   return () => cancelAnimationFrame(id);
 }
-

@@ -66,9 +66,13 @@ function TextPane(props) {
     [insertPreset]
   );
 
-  useResizeEffect(paneRef, () => {
-    forceUpdate(Date.now());
-  }, []);
+  useResizeEffect(
+    paneRef,
+    () => {
+      forceUpdate(Date.now());
+    },
+    []
+  );
 
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
