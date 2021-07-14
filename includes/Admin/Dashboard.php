@@ -148,7 +148,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
-	public function get_hook_suffix( string $key ) {
+	public function get_hook_suffix( $key ) {
 		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
 			return false;
 		}
@@ -289,7 +289,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function enqueue_assets( string $hook_suffix ) {
+	public function enqueue_assets( $hook_suffix ) {
 		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}
