@@ -62,6 +62,11 @@
       }
     },
     "enable-patching": true,
+    "patches": {
+      "phpunit/phpunit-mock-objects": {
+        "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
+      }
+    },
     "exclude-from-files": [
       "ampproject/amp-wp/includes/bootstrap.php"
     ]
