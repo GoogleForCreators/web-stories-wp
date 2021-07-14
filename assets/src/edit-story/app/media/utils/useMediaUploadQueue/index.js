@@ -157,7 +157,7 @@ function useMediaUploadQueue() {
     async ({ newResource, posterFileName, newPosterFile, resource, id }) => {
       try {
         const { poster, posterId } = await uploadVideoPoster(
-          newResource.id,
+          newResource?.id,
           posterFileName,
           newPosterFile
         );
@@ -297,7 +297,7 @@ function useMediaUploadQueue() {
             trackTiming();
           }
 
-          if (newResource.id) {
+          if (newResource?.id) {
             await processPoster({
               newResource,
               posterFileName,
