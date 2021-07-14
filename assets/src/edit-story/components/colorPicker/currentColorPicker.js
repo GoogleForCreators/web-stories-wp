@@ -17,10 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
@@ -249,4 +248,32 @@ CurrentColorPicker.defaultProps = {
   showOpacity: true,
 };
 
-export default CustomPicker(CurrentColorPicker);
+const DynamicImportWrapper = () => {
+  return (...args) => {
+    function DynamicFetcher(props) {
+      const isMounted = useRef(false);
+      const [Picker, setPicker] = useState(null);
+
+      useEffect(() => {
+        isMounted.current = true;
+        import(/* webpackChunkName: "chunk-react-color" */ 'react-color').then(
+          ({ CustomPicker }) => {
+            if (isMounted.current) {
+              setPicker({ component: CustomPicker(...args) });
+            }
+          }
+        );
+
+        return () => {
+          isMounted.current = false;
+        };
+      }, []);
+
+      return Picker ? <Picker.component {...props} /> : null;
+    }
+    return DynamicFetcher;
+  };
+};
+
+const DynamicHOC = DynamicImportWrapper();
+export default DynamicHOC(CurrentColorPicker);
