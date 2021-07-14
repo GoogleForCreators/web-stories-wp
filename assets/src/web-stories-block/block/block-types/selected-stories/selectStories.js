@@ -13,136 +13,111 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
-import { UnitsProvider } from '@web-stories-wp/units';
-import { Search, DropDown } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { useCallback, useMemo } from '@wordpress/element';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from '@wordpress/element';
+import {
+  ComboboxControl,
+  SelectControl,
+  Spinner,
+  Button,
+} from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
-import { PageSizePropType } from '../../../../dashboard/types';
-import {
-  SearchPropTypes,
-  SortPropTypes,
-  PagePropTypes,
-} from '../../../../dashboard/utils/useStoryView';
-import {
-  TEXT_INPUT_DEBOUNCE,
-  DROPDOWN_TYPES,
-  STORY_SORT_MENU_ITEMS,
-} from '../../../../dashboard/constants';
-import { InfiniteScroller } from '../../../../dashboard/components';
-import FontProvider from '../../../../dashboard/app/font/fontProvider';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import { StoryGridItem } from './components/cardGridItem';
-import ItemOverlay from './components/itemOverlay';
 import StoryPreview from './storyPreview';
 
-const StoryFilter = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  padding: 10px 0;
-  margin-top: -12px;
-  display: flex;
-  justify-content: flex-end;
-  background-color: #fff;
+const SORT_OPTIONS = [
+  {
+    label: __('Name', 'web-stories'),
+    value: 'name',
+  },
+  {
+    label: __('Date Created', 'web-stories'),
+    value: 'date',
+  },
+  {
+    label: __('Last Modified', 'web-stories'), // default
+    value: 'modified',
+  },
+  {
+    label: __('Created By', 'web-stories'),
+    value: 'author',
+  },
+];
 
-  #typeahead-search,
-  #typeahead-author-search {
-    min-height: 18px;
-    border: 0;
-    background: transparent;
-
-    &:focus {
-      outline: none !important;
-      box-shadow: none !important;
-    }
-  }
-`;
-
-const GRID_SPACING = {
-  COLUMN_GAP: 24,
-  ROW_GAP: 32,
-};
-
-const StoryGrid = styled.div(
-  ({ columnWidth }) => `
-  display: grid;
-  overflow: auto !important;
-  width: 100%;
-  height: calc(100% - 95px) !important;
-  padding: 10px 5px;
-  grid-column-gap: ${GRID_SPACING.COLUMN_GAP}px;
-  grid-row-gap: 80px;
-  grid-template-columns: repeat(auto-fill, ${columnWidth - 5}px);
-  grid-template-rows: auto !important;
-  scroll-margin-top: 30vh;
-  margin-top: 2px; // this is for keyboard focus
-`
-);
-
-const SearchContainer = styled.div`
-  display: grid;
-  grid-template-columns: 57% 15% 15% 10%;
-  grid-column-gap: 1%;
-  vertical-align: baseline;
-  position: relative;
-  height: 29px;
-  width: 100%;
-`;
-
-const SearchStoryInner = styled.div`
-  grid-column: 2;
-`;
-
-const DropdownContainer = styled.div``;
-
-// Overrides WP input styles with some increased specificity.
-const StyledSearch = styled(Search)(
-  ({ theme }) => css`
-    input {
-      box-shadow: none;
-      border: 1px solid ${theme.colors.border.defaultNormal};
-      padding: 8px 20px 8px 40px;
-      border-radius: ${theme.borders.radius.small};
-      color: ${theme.colors.fg.primary};
-    }
-  `
-);
+const {
+  config: { maxNumOfStories },
+} = window.webStoriesBlockSettings;
 
 function SelectStories({
+  stories = [],
   selectedStories = [],
-  orderedStories = [],
-  pageSize,
-  search,
-  sort,
-  addItemToSelectedStories,
-  authors,
-  removeItemFromSelectedStories,
-  allPagesFetched,
+  setSelectedStories,
+  hasAllStories,
   isLoading,
-  page,
-  setAuthorKeyword,
-  currentAuthor,
-  setCurrentAuthor,
+  fetchStories,
 }) {
-  const debouncedTypeaheadChange = useDebouncedCallback((value) => {
-    search.setKeyword(value);
-  }, TEXT_INPUT_DEBOUNCE);
+  const [currentAuthor, setCurrentAuthor] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [authorKeyword, setAuthorKeyword] = useState('');
+  const [order, setOrder] = useState('desc');
+  const [orderBy, setOrderBy] = useState('modified');
+  const nextPage = useRef(1);
 
-  const debouncedTypeaheadAuthorChange = useDebouncedCallback((value) => {
+  const authors = useSelect(
+    (select) => {
+      // Not using `getUsers()` because it requires `list_users` capability.
+      return select(coreStore).getAuthors({
+        search: authorKeyword,
+      });
+    },
+    [authorKeyword]
+  );
+
+  const fetchSelectedStories = useCallback(() => {
+    fetchStories({
+      author: currentAuthor?.id,
+      search: searchKeyword,
+      order,
+      orderBy,
+      page: nextPage.current,
+    });
+  }, [searchKeyword, currentAuthor, fetchStories, order, orderBy]);
+
+  useEffect(() => {
+    nextPage.current = 1;
+    fetchSelectedStories();
+  }, [searchKeyword, currentAuthor, order, orderBy, fetchSelectedStories]);
+
+  const onLoadMoreClick = useCallback(() => {
+    nextPage.current++;
+    fetchSelectedStories();
+  }, [fetchSelectedStories]);
+
+  const debouncedTypeaheadChange = useDebounce((value) => {
+    setSearchKeyword(value);
+  }, 300);
+
+  const debouncedTypeaheadAuthorChange = useDebounce((value) => {
     // Set the user input as the current search keyword.
     setAuthorKeyword(value);
 
@@ -160,30 +135,34 @@ function SelectStories({
         name: '',
       });
     }
-  }, TEXT_INPUT_DEBOUNCE);
+  }, 300);
 
-  const debouncedAuthorChange = useDebouncedCallback((evt, newOption) => {
-    // On selecting author from the dropdown, '<Search />' component sets the newOption from the
-    // suggestions array, which in our case is author ID. Check the newOption is a number.
-    if (newOption.value) {
-      setCurrentAuthor(
-        authors.filter((author) => author.id === parseInt(newOption.value))
-      );
-    }
+  const handleAuthorChange = useCallback(
+    (newOption) => {
+      // On selecting author from the dropdown, '<Search />' component sets the newOption from the
+      // suggestions array, which in our case is author ID. Check the newOption is a number.
+      if (newOption) {
+        setCurrentAuthor(
+          authors.filter((author) => author.id === parseInt(newOption))
+        );
+      }
 
-    if ('' === newOption.value) {
-      setCurrentAuthor({
-        id: 0,
-        name: '',
-      });
-    }
-  }, TEXT_INPUT_DEBOUNCE);
+      if ('' === newOption) {
+        setCurrentAuthor({
+          id: 0,
+          name: '',
+        });
+      }
+    },
+    [authors, setCurrentAuthor]
+  );
 
   const onSortChange = useCallback(
     (newSort) => {
-      sort.set(newSort);
+      setOrderBy(newSort);
+      setOrder(['title', 'author'].includes(newSort) ? 'asc' : 'desc');
     },
-    [sort]
+    [setOrder, setOrderBy]
   );
 
   const authorSearchOptions = useMemo(() => {
@@ -196,55 +175,75 @@ function SelectStories({
   }, [authors]);
 
   const storiesSearchOptions = useMemo(() => {
-    return orderedStories
-      .filter(({ title }) => Boolean(title?.trim().length))
+    return stories
+      .filter(({ title }) => Boolean(title?.rendered?.trim()?.length))
       .map(({ id, title }) => ({
-        label: title,
+        label: title.rendered,
         value: id.toString(),
       }));
-  }, [orderedStories]);
+  }, [stories]);
+
+  const selectedStoryIds = useMemo(
+    () => selectedStories.map((story) => story.id),
+    [selectedStories]
+  );
+
+  const addSelectedStory = useCallback(
+    (newStory) => {
+      if (selectedStories.length >= maxNumOfStories) {
+        return;
+      }
+
+      if (selectedStoryIds.includes(newStory.id)) {
+        return;
+      }
+
+      setSelectedStories([...selectedStories, newStory]);
+    },
+    [setSelectedStories, selectedStories, selectedStoryIds]
+  );
+
+  const removeSelectedStory = useCallback(
+    (story) => {
+      setSelectedStories(
+        selectedStories.filter((_story) => _story.id !== story.id)
+      );
+    },
+    [selectedStories, setSelectedStories]
+  );
 
   return (
     <>
-      <StoryFilter data-testid="story-filter">
-        <SearchContainer>
-          <SearchStoryInner>
-            <StyledSearch
-              ariaInputLabel={__('Search Stories', 'web-stories')}
-              placeholder={__('Search Stories', 'web-stories')}
-              emptyText={__('No stories available', 'web-stories')}
-              selectedValue={{ label: search.keyword, value: search.keyword }}
+      <div className="web-stories-story-picker-filter">
+        <div className="web-stories-story-picker-filter__search-container">
+          <div className="web-stories-story-picker-filter__search-inner">
+            <ComboboxControl
+              label={__('Search Stories', 'web-stories')}
               options={storiesSearchOptions}
-              handleSearchValueChange={debouncedTypeaheadChange}
-              popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
+              onFilterValueChange={debouncedTypeaheadChange}
+              allowReset={false}
+              value={searchKeyword}
             />
-          </SearchStoryInner>
-          <StyledSearch
-            ariaInputLabel={__('Search by Author', 'web-stories')}
-            placeholder={__('Search by Author', 'web-stories')}
-            emptyText={__('No authors available', 'web-stories')}
-            selectedValue={{
-              label: currentAuthor.name,
-              value: currentAuthor.name,
-            }}
+          </div>
+          <ComboboxControl
+            label={__('Search by Author', 'web-stories')}
             options={authorSearchOptions}
-            handleSearchValueChange={debouncedTypeaheadAuthorChange}
-            onMenuItemClick={debouncedAuthorChange}
-            popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
+            onFilterValueChange={debouncedTypeaheadAuthorChange}
+            onChange={handleAuthorChange}
+            allowReset={false}
+            value={currentAuthor}
           />
-          <DropdownContainer>
-            <DropDown
-              ariaLabel={__('Choose sort option for display', 'web-stories')}
-              options={STORY_SORT_MENU_ITEMS}
-              type={DROPDOWN_TYPES.MENU}
-              selectedValue={sort.value}
-              onMenuItemClick={(_, newSort) => onSortChange(newSort)}
-              popupZIndex={100001} // '.components-modal__screen-overlay adds z-index 100000.
+          <div>
+            <SelectControl
+              label={__('Sort', 'web-stories')}
+              options={SORT_OPTIONS}
+              value={orderBy}
+              onChange={onSortChange}
             />
-          </DropdownContainer>
-        </SearchContainer>
-      </StoryFilter>
-      {!orderedStories.length && search.keyword && (
+          </div>
+        </div>
+      </div>
+      {!stories.length && searchKeyword && (
         <p>
           {sprintf(
             /* translators: %s: search term. */
@@ -252,80 +251,62 @@ function SelectStories({
               `Sorry, we couldn't find any results matching "%s"`,
               'web-stories'
             ),
-            search.keyword
+            searchKeyword
           )}
         </p>
       )}
-      {!orderedStories.length && !search.keyword && (
+      {!stories.length && !searchKeyword && (
         <p>{__(`Sorry, we couldn't find any results`, 'web-stories')}</p>
       )}
-      {orderedStories.length >= 1 && (
-        <FontProvider>
-          <TransformProvider>
-            <UnitsProvider
-              pageSize={{
-                width: pageSize.width,
-                height: pageSize.height,
-              }}
-            >
-              <StoryGrid
-                role="list"
-                columnWidth={pageSize.width}
-                ariaLabel={__('Viewing stories', 'web-stories')}
-                columnHeight={pageSize.containerHeight}
-              >
-                {orderedStories.map((story) => {
-                  const isSelected = selectedStories.includes(story.id);
+      {stories.length >= 1 && (
+        <div
+          role="list"
+          aria-label={__('Viewing Stories', 'web-stories')}
+          className="web-stories-story-picker-filter__grid"
+        >
+          {stories.map((story) => {
+            const isSelected = selectedStoryIds.includes(story.id);
 
-                  return (
-                    <StoryGridItem
-                      key={story.id}
-                      role="listitem"
-                      data-testid={`story-grid-item-${story.id}`}
-                    >
-                      <StoryPreview story={story} pageSize={pageSize} />
-                      <ItemOverlay
-                        isSelected={isSelected}
-                        pageSize={pageSize}
-                        storyId={story.id}
-                        addItemToSelectedStories={addItemToSelectedStories}
-                        removeItemFromSelectedStories={
-                          removeItemFromSelectedStories
-                        }
-                      />
-                    </StoryGridItem>
-                  );
-                })}
-              </StoryGrid>
-              <InfiniteScroller
-                canLoadMore={!allPagesFetched}
-                isLoading={isLoading}
-                allDataLoadedMessage={__('No more stories', 'web-stories')}
-                onLoadMore={page.requestNextPage}
-              />
-            </UnitsProvider>
-          </TransformProvider>
-        </FontProvider>
+            return (
+              <div
+                key={story.id}
+                role="listitem"
+                className="web-stories-story-picker-filter__grid_item"
+              >
+                <StoryPreview
+                  story={story}
+                  isSelected={isSelected}
+                  addSelectedStory={addSelectedStory}
+                  removeSelectedStory={removeSelectedStory}
+                />
+              </div>
+            );
+          })}
+        </div>
       )}
+      <div className="web-stories-story-picker-filter__Load_more">
+        {isLoading && <Spinner />}
+        {!hasAllStories && (
+          <Button
+            variant="primary"
+            className="is-primary"
+            onClick={onLoadMoreClick}
+          >
+            {__('Load More', 'web-stories')}
+          </Button>
+        )}
+      </div>
     </>
   );
 }
 
 SelectStories.propTypes = {
+  stories: PropTypes.array,
   selectedStories: PropTypes.array,
-  orderedStories: PropTypes.array,
-  pageSize: PageSizePropType,
-  search: SearchPropTypes,
-  currentAuthor: PropTypes.string,
-  setCurrentAuthor: PropTypes.func,
-  sort: SortPropTypes,
-  addItemToSelectedStories: PropTypes.func,
-  authors: PropTypes.array,
-  removeItemFromSelectedStories: PropTypes.func,
-  allPagesFetched: PropTypes.bool,
+  setSelectedStories: PropTypes.func,
+  hasAllStories: PropTypes.bool,
   isLoading: PropTypes.bool,
-  page: PagePropTypes,
-  setAuthorKeyword: PropTypes.func,
+  fetchStories: PropTypes.func,
 };
 
 export default SelectStories;

@@ -17,262 +17,137 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { Button, Modal } from '@wordpress/components';
-import { useState, useEffect, useMemo, useCallback } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
+import apiFetch from '@wordpress/api-fetch';
+import { useDispatch } from '@wordpress/data';
+import { addQueryArgs } from '@wordpress/url';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
  */
-import useApi from '../../api/useApi';
-import { VIEW_STYLE, STORY_STATUSES } from '../../constants';
-import { useStoryView } from '../../../../dashboard/utils';
-import { ScrollToTop, Layout } from '../../../../dashboard/components';
 import SelectStories from './selectStories';
 import SortStories from './sortStories';
 import LoaderContainer from './components/loaderContainer';
 
-const StoryPickerModal = styled(Modal)`
-  width: calc(100% - 16px - 16px);
-  height: calc(100% - 60px - 60px);
-  position: relative;
-  overflow: hidden;
-`;
-
-const ModalContent = styled.div`
-  position: relative;
-  height: calc(100% - 93px);
-  margin: -24px -24px 0;
-  padding: 0;
-  overflow-y: scroll;
-`;
-
-const ModalContentInner = styled.div`
-  padding: 12px 24px 24px;
-`;
-
-const ModalFooter = styled.div`
-  position: fixed;
-  bottom: 0;
-  z-index: 2;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f3f3f3;
-  border-top: 1px solid #ddd;
-  margin: 0 -24px;
-  padding: 10px 24px;
-
-  .components-button {
-    margin-left: 8px;
-  }
-`;
-
-const ModalFooterLeft = styled.div`
-  min-width: 1px;
-`;
-
-const LimitIndicator = styled.span(
-  ({ reachedMaximum }) => `
-  font-weight: 600;
-  color: ${reachedMaximum ? '#EB5757' : 'inherit'};
-`
-);
-
-const ModalFooterRight = styled.div``;
+const {
+  config: {
+    maxNumOfStories,
+    api: { stories: storiesApi },
+  },
+} = window.webStoriesBlockSettings;
 
 function StoryPicker({
   selectedStories,
   setSelectedStories,
-  selectedStoriesObject,
-  setSelectedStoriesObject,
   closeStoryPicker,
   isSortingStories,
   setIsSortingStories,
 }) {
-  const [isFetchingForTheFirstTime, setIsFetchingForTheFirstTime] =
-    useState(true);
-  const [currentAuthor, setCurrentAuthor] = useState([]);
-  const [authorKeyword, setAuthorKeyword] = useState('');
+  const { createErrorNotice } = useDispatch(noticesStore);
 
-  const {
-    config: { maxNumOfStories },
-  } = window.webStoriesBlockSettings;
+  const [localSelectedStories, setLocalSelectedStories] =
+    useState(selectedStories);
 
-  const {
-    state: {
-      stories: {
-        stories,
-        storiesOrderById,
-        totalPages,
-        allPagesFetched,
-        isLoading,
-      },
-      authorSuggestions,
+  const [isFetchingForFirstTime, setIsFetchingForFirstTime] = useState(true);
+
+  const [loadingState, setLoadingState] = useState('idle');
+  const [stories, setStories] = useState([]);
+  const [hasAllStories, setHasAllStories] = useState([]);
+
+  const saveChanges = useCallback(() => {
+    closeStoryPicker();
+    setSelectedStories(localSelectedStories);
+  }, [closeStoryPicker, setSelectedStories, localSelectedStories]);
+
+  const fetchStories = useCallback(
+    async ({
+      orderby = 'modified',
+      order = 'desc',
+      search = undefined,
+      author = undefined,
+      page = 1,
+    } = {}) => {
+      const query = {
+        _embed: 'author',
+        context: 'edit',
+        _web_stories_envelope: true,
+        search,
+        author,
+        page,
+        per_page: 10,
+        orderby,
+        order,
+        status: 'publish',
+      };
+
+      try {
+        setLoadingState('loading');
+        const response = await apiFetch({
+          path: addQueryArgs(storiesApi, query),
+        });
+
+        const totalPages = Number(response?.headers?.['X-WP-TotalPages']);
+
+        setHasAllStories(page === totalPages);
+        setStories(response.body);
+      } catch (err) {
+        setLoadingState('error');
+        createErrorNotice(__('Unable to load stories', 'web-stories'), {
+          type: 'snackbar',
+        });
+      } finally {
+        setLoadingState('idle');
+        setIsFetchingForFirstTime(false);
+      }
     },
-    actions: { fetchStories, fetchAuthors },
-  } = useApi();
-
-  const { filter, page, search, sort, view } = useStoryView({
-    filters: STORY_STATUSES,
-    totalPages,
-  });
-
-  const fetchWebStories = useCallback(async () => {
-    const query = {
-      page: page.value,
-      searchTerm: search.keyword,
-      sortDirection: view.style === VIEW_STYLE.LIST && sort.direction,
-      sortOption: sort.value,
-    };
-
-    if (currentAuthor.length) {
-      query.author = parseInt(currentAuthor.pop().id);
-    }
-
-    await fetchStories(query);
-    setIsFetchingForTheFirstTime(false);
-  }, [
-    page.value,
-    search.keyword,
-    view.style,
-    sort,
-    currentAuthor,
-    fetchStories,
-    setIsFetchingForTheFirstTime,
-  ]);
-
-  const fetchStoryAuthors = useCallback(async () => {
-    const query = {
-      searchTerm: authorKeyword,
-    };
-
-    await fetchAuthors(query);
-  }, [authorKeyword, fetchAuthors]);
-
-  const orderedStories = useMemo(() => {
-    return storiesOrderById
-      .map((storyId) => {
-        return stories[storyId];
-      })
-      .filter(Boolean);
-  }, [stories, storiesOrderById]);
+    [createErrorNotice]
+  );
 
   useEffect(() => {
-    if (isSortingStories) {
-      setIsFetchingForTheFirstTime(false);
-      return;
+    if (isFetchingForFirstTime) {
+      fetchStories();
     }
-
-    fetchWebStories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isSortingStories,
-    filter.value,
-    page.value,
-    search.keyword,
-    currentAuthor,
-    sort.direction,
-    sort.value,
-  ]);
-
-  useEffect(() => {
-    fetchStoryAuthors();
-  }, [authorKeyword, fetchStoryAuthors]);
-
-  const addItemToSelectedStories = (storyId) => {
-    if (selectedStories.length >= maxNumOfStories) {
-      return;
-    }
-
-    if (!selectedStories.includes(storyId)) {
-      setSelectedStories([...selectedStories, storyId]);
-      setSelectedStoriesObject([
-        ...selectedStoriesObject,
-        {
-          ...orderedStories.find((story) => story.id === storyId)
-            .originalStoryData,
-        },
-      ]);
-    }
-  };
-
-  const removeItemFromSelectedStories = (storyId) => {
-    setSelectedStories(selectedStories.filter((id) => storyId !== id));
-    setSelectedStoriesObject(
-      selectedStoriesObject.filter((story) => storyId !== story.id)
-    );
-  };
+  }, [isFetchingForFirstTime, fetchStories]);
 
   return (
-    <StoryPickerModal
+    <Modal
       title={__('Web Stories', 'web-stories')}
       onRequestClose={closeStoryPicker}
       shouldCloseOnClickOutside={false}
+      className="web-stories-story-picker-modal"
     >
-      <ModalContent>
-        {isFetchingForTheFirstTime ? (
+      <div className="web-stories-story-picker-modal__content">
+        {isFetchingForFirstTime ? (
           <LoaderContainer>
-            {__('Fetching stories', 'web-stories')}
+            {__('Loading Stories…', 'web-stories')}
           </LoaderContainer>
+        ) : isSortingStories ? (
+          <SortStories
+            selectedStories={localSelectedStories}
+            setSelectedStories={setLocalSelectedStories}
+          />
         ) : (
-          <Layout.Provider>
-            <Layout.Scrollable>
-              <ModalContentInner>
-                {isSortingStories ? (
-                  <SortStories
-                    selectedStories={selectedStories}
-                    setSelectedStories={setSelectedStories}
-                    orderedStories={orderedStories}
-                    pageSize={view.pageSize}
-                    setSelectedStoriesObject={setSelectedStoriesObject}
-                    selectedStoriesObject={selectedStoriesObject}
-                    addItemToSelectedStories={addItemToSelectedStories}
-                    removeItemFromSelectedStories={
-                      removeItemFromSelectedStories
-                    }
-                  />
-                ) : (
-                  <SelectStories
-                    selectedStories={selectedStories}
-                    orderedStories={orderedStories}
-                    pageSize={view.pageSize}
-                    search={search}
-                    sort={sort}
-                    addItemToSelectedStories={addItemToSelectedStories}
-                    authors={authorSuggestions}
-                    removeItemFromSelectedStories={
-                      removeItemFromSelectedStories
-                    }
-                    allPagesFetched={allPagesFetched}
-                    isLoading={isLoading}
-                    page={page}
-                    authorKeyword={authorKeyword}
-                    setAuthorKeyword={setAuthorKeyword}
-                    currentAuthor={currentAuthor}
-                    setCurrentAuthor={setCurrentAuthor}
-                  />
-                )}
-              </ModalContentInner>
-            </Layout.Scrollable>
-            <Layout.Fixed>
-              <ScrollToTop />
-            </Layout.Fixed>
-          </Layout.Provider>
+          <SelectStories
+            stories={stories}
+            selectedStories={localSelectedStories}
+            setSelectedStories={setLocalSelectedStories}
+            hasAllStories={hasAllStories}
+            fetchStories={fetchStories}
+            isLoading={loadingState === 'loading'}
+          />
         )}
-      </ModalContent>
-      <ModalFooter>
-        <ModalFooterLeft>
-          {!isSortingStories && !isFetchingForTheFirstTime && (
-            <LimitIndicator
-              reachedMaximum={selectedStories.length >= maxNumOfStories}
-            >
+      </div>
+      <div className="web-stories-story-picker-modal__footer">
+        <div className="web-stories-story-picker-modal__footer--left">
+          {!isSortingStories && !isFetchingForFirstTime && (
+            <p>
               {sprintf(
                 /* translators: %1$d: Number of selected stories, %2$d: Maximum allowed stories */
                 _n(
@@ -284,13 +159,13 @@ function StoryPicker({
                 selectedStories.length,
                 maxNumOfStories
               )}
-            </LimitIndicator>
+            </p>
           )}
-        </ModalFooterLeft>
-        <ModalFooterRight>
+        </div>
+        <div className="web-stories-story-picker-modal__footer--right">
           {isSortingStories ? (
             <Button onClick={() => setIsSortingStories(false)}>
-              {__('Select More Stories', 'web-stories')}
+              {__('Select Stories', 'web-stories')}
             </Button>
           ) : (
             <Button
@@ -303,21 +178,19 @@ function StoryPicker({
           <Button
             isPrimary
             disabled={!selectedStories.length}
-            onClick={closeStoryPicker}
+            onClick={saveChanges}
           >
-            {__('Insert Stories', 'web-stories')}
+            {__('Update', 'web-stories')}
           </Button>
-        </ModalFooterRight>
-      </ModalFooter>
-    </StoryPickerModal>
+        </div>
+      </div>
+    </Modal>
   );
 }
 
 StoryPicker.propTypes = {
   selectedStories: PropTypes.array,
   setSelectedStories: PropTypes.func,
-  selectedStoriesObject: PropTypes.array,
-  setSelectedStoriesObject: PropTypes.func,
   closeStoryPicker: PropTypes.func,
   isSortingStories: PropTypes.bool,
   setIsSortingStories: PropTypes.func,

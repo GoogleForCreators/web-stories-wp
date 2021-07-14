@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -27,6 +26,7 @@ import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -44,6 +44,12 @@ const LATEST_STORIES_QUERY = {
   _embed: 'author',
 };
 
+const {
+  config: {
+    api: { stories: storiesApi },
+  },
+} = window.webStoriesBlockSettings;
+
 /**
  * LatestStoriesEdit component
  *
@@ -52,15 +58,9 @@ const LATEST_STORIES_QUERY = {
  * @param {Function} root0.setAttributes Callable function for saving attribute values.
  * @return {*} JSX markup for the editor.
  */
-const LatestStoriesEdit = ({ attributes, setAttributes }) => {
+function LatestStoriesEdit({ attributes, setAttributes }) {
   const { numOfStories, order, orderby, archiveLinkLabel, authors } =
     attributes;
-
-  const {
-    config: {
-      api: { stories: storiesApi },
-    },
-  } = window.webStoriesBlockSettings;
 
   const [fetchedStories, setFetchedStories] = useState([]);
   const [isFetchingStories, setIsFetchingStories] = useState([]);
@@ -87,7 +87,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
     }
   };
 
-  const debouncedFetchStories = useDebouncedCallback(
+  const debouncedFetchStories = useDebounce(
     fetchStories,
     FETCH_STORIES_DEBOUNCE
   );
@@ -127,7 +127,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
       )}
     </>
   );
-};
+}
 
 LatestStoriesEdit.propTypes = {
   attributes: PropTypes.shape({

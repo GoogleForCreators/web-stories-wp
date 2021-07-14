@@ -18,101 +18,111 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Button, Placeholder } from '@wordpress/components';
-import { BlockIcon } from '@wordpress/block-editor';
-import { useState } from '@wordpress/element';
+import { Button, ToolbarButton, Placeholder } from '@wordpress/components';
+import { BlockControls, BlockIcon } from '@wordpress/block-editor';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import StoryPicker from './storyPicker';
 
-const SelectStoriesPlaceholder = styled(Placeholder)`
-  &.is-appender {
-    min-height: 0;
-    margin-top: 20px;
-
-    &.not-editing {
-      display: none;
-    }
-  }
-`;
-
 const EmbedPlaceholder = ({
   icon,
   label,
   selectedStories,
   setSelectedStories,
-  selectedStoriesObject,
-  setSelectedStoriesObject,
-  isEditing,
 }) => {
   const [isStoryPickerOpen, setIsStoryPickerOpen] = useState(false);
   const [isSortingStories, setIsSortingStories] = useState(false);
 
   const openStoryPicker = () => setIsStoryPickerOpen(true);
-  const closeStoryPicker = () => {
+  const closeStoryPicker = useCallback(() => {
     setIsStoryPickerOpen(false);
     setIsSortingStories(false);
-  };
+  }, []);
 
-  let placeholderIcon = <BlockIcon icon={icon} showColors />;
-  let placeholderLabel = label;
-  let instruction = __(
-    'Select the web stories you want to display on your site.',
-    'web-stories'
-  );
-  let placeholderClassName = 'wp-block-web-stories-embed';
-
-  const openStoryRearrangeWindow = () => {
+  const openStoryRearrangeWindow = useCallback(() => {
     setIsSortingStories(true);
     openStoryPicker();
-  };
-
-  if (selectedStoriesObject.length) {
-    placeholderIcon = false;
-    placeholderLabel = false;
-    instruction = false;
-    placeholderClassName = 'wp-block-web-stories-embed is-appender';
-
-    if (!isEditing) {
-      placeholderClassName += ' not-editing';
-    }
-  }
+  }, []);
 
   return (
-    <SelectStoriesPlaceholder
-      icon={placeholderIcon}
-      label={placeholderLabel}
-      className={placeholderClassName}
-      instructions={instruction}
-    >
-      <Button isPrimary onClick={openStoryPicker}>
-        {__('Select Stories', 'web-stories')}
-      </Button>
-      {selectedStoriesObject.length > 1 && (
-        <Button isSecondary onClick={openStoryRearrangeWindow}>
-          {__('Rearrange Stories', 'web-stories')}
-        </Button>
+    <>
+      {/*
+        Using ToolbarButton if available is mandatory as other usage is deprecated
+        for accessibility reasons and causes console warnings.
+        See https://github.com/WordPress/gutenberg/pull/23316
+        See https://developer.wordpress.org/block-editor/components/toolbar-button/#inside-blockcontrols
+        */}
+      <BlockControls group="other">
+        {Boolean(selectedStories?.length) &&
+          (ToolbarButton ? (
+            <>
+              <ToolbarButton
+                aria-expanded={isStoryPickerOpen}
+                aria-haspopup="true"
+                onClick={openStoryPicker}
+              >
+                {__('Select', 'web-stories')}
+              </ToolbarButton>
+              <ToolbarButton
+                aria-expanded={isStoryPickerOpen}
+                aria-haspopup="true"
+                onClick={openStoryRearrangeWindow}
+              >
+                {__('Rearrange', 'web-stories')}
+              </ToolbarButton>
+            </>
+          ) : (
+            <>
+              <Button
+                className="components-toolbar__control"
+                title={__('Select', 'web-stories')}
+                aria-expanded={isStoryPickerOpen}
+                aria-haspopup="true"
+                onClick={openStoryPicker}
+              />
+              <Button
+                className="components-toolbar__control"
+                title={__('Rearrange', 'web-stories')}
+                aria-expanded={openStoryRearrangeWindow}
+                aria-haspopup="true"
+                onClick={openStoryRearrangeWindow}
+              />
+            </>
+          ))}
+      </BlockControls>
+      {selectedStories.length === 0 && (
+        <Placeholder
+          icon={<BlockIcon icon={icon} showColors />}
+          label={label}
+          className="wp-block-web-stories-embed"
+          instructions={__(
+            'Select the web stories you want to display on your site.',
+            'web-stories'
+          )}
+        >
+          <Button isPrimary onClick={openStoryPicker}>
+            {__('Select Stories', 'web-stories')}
+          </Button>
+        </Placeholder>
       )}
       {isStoryPickerOpen && (
         <StoryPicker
+          closeStoryPicker={closeStoryPicker}
           selectedStories={selectedStories}
           setSelectedStories={setSelectedStories}
-          closeStoryPicker={closeStoryPicker}
-          selectedStoriesObject={selectedStoriesObject}
-          setSelectedStoriesObject={setSelectedStoriesObject}
           isSortingStories={isSortingStories}
           setIsSortingStories={setIsSortingStories}
         />
       )}
-    </SelectStoriesPlaceholder>
+    </>
   );
 };
 
@@ -121,9 +131,6 @@ EmbedPlaceholder.propTypes = {
   label: PropTypes.string,
   selectedStories: PropTypes.array,
   setSelectedStories: PropTypes.func,
-  selectedStoriesObject: PropTypes.array,
-  setSelectedStoriesObject: PropTypes.func,
-  isEditing: PropTypes.bool,
 };
 
 export default EmbedPlaceholder;

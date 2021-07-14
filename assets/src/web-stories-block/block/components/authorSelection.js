@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -27,6 +26,7 @@ import { useState, useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -131,7 +131,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
       });
   };
 
-  const debouncedOnInputChange = useDebouncedCallback(
+  const debouncedOnInputChange = useDebounce(
     onInputChange,
     FETCH_AUTHORS_DEBOUNCE
   );

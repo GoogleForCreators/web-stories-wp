@@ -37,6 +37,10 @@ import {
 } from '../constants';
 import StoryCard from './storyCard';
 
+const {
+  config: { archiveURL },
+} = window.webStoriesBlockSettings;
+
 function StoriesPreview(props) {
   const {
     attributes: {
@@ -50,10 +54,6 @@ function StoriesPreview(props) {
     viewAllLabel,
     stories,
   } = props;
-
-  const {
-    config: { archiveURL },
-  } = window.webStoriesBlockSettings;
 
   const carouselContainer = useRef(null);
   const carouselNext = useRef(null);

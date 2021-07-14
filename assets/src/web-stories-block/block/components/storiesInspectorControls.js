@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -45,18 +44,6 @@ import {
 } from '../constants';
 import AuthorSelection from './authorSelection';
 
-const StyledTextArea = styled(TextControl)`
-  width: 80%;
-  margin-left: auto;
-`;
-
-const StyledToggle = styled(ToggleControl)`
-  .components-base-control__help {
-    width: 80%;
-    margin-left: auto;
-  }
-`;
-
 /**
  * StoriesInspectorControls props.
  *
@@ -75,6 +62,10 @@ const StyledToggle = styled(ToggleControl)`
  * @property {Array} authors An array of authors objects which are currently selected.
  * @property {Function} setAttributes Callable function for saving attribute values.
  */
+
+const {
+  config: { fieldStates, archiveURL },
+} = window.webStoriesBlockSettings;
 
 /**
  * LatestStoriesBlockControls component. Used for rendering block controls of the block.
@@ -99,10 +90,6 @@ const StoriesInspectorControls = (props) => {
     setAttributes,
     showFilters = true,
   } = props;
-
-  const {
-    config: { fieldStates, archiveURL },
-  } = window.webStoriesBlockSettings;
 
   const firstUpdate = useRef(true);
 
@@ -178,7 +165,7 @@ const StoriesInspectorControls = (props) => {
               'image_alignment' !== field
             ) {
               return (
-                <StyledToggle
+                <ToggleControl
                   key={`${field}__control`}
                   label={label}
                   checked={fieldState[`show_${field}`] || false}
@@ -194,13 +181,14 @@ const StoriesInspectorControls = (props) => {
             return false;
           })}
         {fieldState['show_archive_link'] && (
-          <StyledTextArea
+          <TextControl
             label={__('Archive Link Label', 'web-stories')}
             value={archiveLinkLabel}
             placeholder={__('View All Stories', 'web-stories')}
             onChange={(newLabel) =>
               setAttributes({ archiveLinkLabel: newLabel })
             }
+            className="web-stories-settings-archive-link"
           />
         )}
       </PanelBody>

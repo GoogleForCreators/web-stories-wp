@@ -17,49 +17,38 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { Notice, Placeholder } from '@wordpress/components';
+import { __, sprintf } from '@wordpress/i18n';
+import { Placeholder } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
  */
 import LoaderContainer from './components/loaderContainer';
 
-const LoadingPlaceholder = styled(Placeholder)`
-  &.is-appender {
-    min-height: 0;
-    margin-top: 20px;
-  }
-`;
-
-const ErrorNotice = styled(Notice)`
-  width: 100%;
-`;
+const {
+  config: {
+    api: { stories: storiesApi },
+  },
+} = window.webStoriesBlockSettings;
 
 function FetchSelectedStories({
   icon,
   label,
-  selectedStories,
-  setSelectedStoriesObject,
-  setIsFetchingSelectedStories,
+  selectedStoryIds = [],
+  setSelectedStories,
+  setIsFetching,
 }) {
-  const {
-    config: {
-      api: { stories: storiesApi },
-    },
-  } = window.webStoriesBlockSettings;
-
-  const [errorMsg, setErrorMsg] = useState('');
-  const placeholderIcon = <BlockIcon icon={icon} showColors />;
+  const { createErrorNotice } = useDispatch(noticesStore);
 
   const fetchStories = async () => {
     try {
@@ -67,23 +56,27 @@ function FetchSelectedStories({
         path: addQueryArgs(storiesApi, {
           _embed: 'author',
           context: 'edit',
-          include: selectedStories,
+          include: selectedStoryIds,
+          orderby: selectedStoryIds.length > 0 ? 'include' : undefined,
         }),
       });
 
       if (response.length) {
-        setSelectedStoriesObject(
-          response.sort((a, b) => {
-            return (
-              selectedStories.indexOf(a.id) - selectedStories.indexOf(b.id)
-            );
-          })
-        );
+        setSelectedStories(response);
       }
-
-      setIsFetchingSelectedStories(false);
     } catch (error) {
-      error?.message && setErrorMsg(error.message);
+      createErrorNotice(
+        sprintf(
+          /* translators: %s: error message. */
+          __('Unable to load stories. %s', 'web-stories'),
+          error?.message || ''
+        ),
+        {
+          type: 'snackbar',
+        }
+      );
+    } finally {
+      setIsFetching(false);
     }
   };
 
@@ -93,31 +86,23 @@ function FetchSelectedStories({
   }, []);
 
   return (
-    <LoadingPlaceholder
-      icon={placeholderIcon}
+    <Placeholder
+      icon={<BlockIcon icon={icon} showColors />}
       label={label}
-      className="wp-block-web-stories-embed is-appender not-editing"
+      className="wp-block-web-stories-embed"
       instructions={false}
     >
-      {!errorMsg ? (
-        <LoaderContainer>
-          {__('Fetching selected stories', 'web-stories')}
-        </LoaderContainer>
-      ) : (
-        <ErrorNotice status="error" isDismissible={false}>
-          {errorMsg}
-        </ErrorNotice>
-      )}
-    </LoadingPlaceholder>
+      <LoaderContainer>{__('Loading Stories…', 'web-stories')}</LoaderContainer>
+    </Placeholder>
   );
 }
 
 FetchSelectedStories.propTypes = {
   icon: PropTypes.func,
   label: PropTypes.string,
-  selectedStories: PropTypes.array,
-  setSelectedStoriesObject: PropTypes.func,
-  setIsFetchingSelectedStories: PropTypes.func,
+  selectedStoryIds: PropTypes.array,
+  setSelectedStories: PropTypes.func,
+  setIsFetching: PropTypes.func,
 };
 
 export default FetchSelectedStories;

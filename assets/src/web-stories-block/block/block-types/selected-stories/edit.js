@@ -18,39 +18,32 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { ThemeProvider } from 'styled-components';
-import {
-  theme as externalDesignSystemTheme,
-  lightMode,
-} from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
-import StoriesBlockApiProvider from '../../api/apiProvider';
 import StoriesPreview from '../../components/storiesPreview';
 import EmbedPlaceholder from './embedPlaceholder';
 import FetchSelectedStories from './fetchSelectedStories';
 
-const SelectedStoriesEdit = ({
+function SelectedStoriesEdit({
   icon,
   attributes,
   setAttributes,
   isSelected: isEditing,
-}) => {
+}) {
   const { stories = [], archiveLinkLabel } = attributes;
 
-  const [selectedStories, setSelectedStories] = useState(stories);
-  const [selectedStoriesObject, setSelectedStoriesObject] = useState([]);
-  const [isFetchingSelectedStories, setIsFetchingSelectedStories] =
-    useState(false);
+  const [selectedStoryIds, setSelectedStoryIds] = useState(stories);
+  const [selectedStories, _setSelectedStories] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
 
   const label = __('Web Stories', 'web-stories');
 
@@ -58,34 +51,36 @@ const SelectedStoriesEdit = ({
     ? archiveLinkLabel
     : __('View All Stories', 'web-stories');
 
-  const activeTheme = {
-    ...externalDesignSystemTheme,
-    colors: lightMode,
-  };
+  useEffect(() => {
+    if (attributes.stories.toString() !== selectedStoryIds.toString()) {
+      setAttributes({
+        stories: selectedStoryIds,
+      });
+    }
+  }, [attributes.stories, setAttributes, selectedStoryIds]);
 
   useEffect(() => {
-    setAttributes({
-      stories: selectedStories,
-    });
-
-    if (selectedStories.length && !selectedStoriesObject.length) {
-      setIsFetchingSelectedStories(true);
+    if (selectedStoryIds.length && !selectedStories.length) {
+      setIsFetching(true);
     }
-  }, [
-    setAttributes,
-    selectedStories,
-    selectedStoriesObject,
-    setIsFetchingSelectedStories,
-  ]);
+  }, [selectedStoryIds, selectedStories, setIsFetching]);
 
-  if (isFetchingSelectedStories) {
+  const setSelectedStories = useCallback(
+    (newStories) => {
+      _setSelectedStories(newStories);
+      setSelectedStoryIds(newStories.map((story) => story.id));
+    },
+    [_setSelectedStories]
+  );
+
+  if (isFetching) {
     return (
       <FetchSelectedStories
         icon={icon}
         label={label}
-        selectedStories={selectedStories}
-        setSelectedStoriesObject={setSelectedStoriesObject}
-        setIsFetchingSelectedStories={setIsFetchingSelectedStories}
+        selectedStoryIds={selectedStoryIds}
+        setSelectedStories={setSelectedStories}
+        setIsFetching={setIsFetching}
       />
     );
   }
@@ -97,29 +92,23 @@ const SelectedStoriesEdit = ({
         setAttributes={setAttributes}
         showFilters={false}
       />
-      {Boolean(selectedStoriesObject?.length) && (
+      {Boolean(selectedStories?.length) && (
         <StoriesPreview
           attributes={attributes}
-          stories={selectedStoriesObject}
+          stories={selectedStories}
           viewAllLabel={viewAllLabel}
         />
       )}
-      <ThemeProvider theme={activeTheme}>
-        <StoriesBlockApiProvider>
-          <EmbedPlaceholder
-            icon={icon}
-            label={label}
-            selectedStories={selectedStories}
-            setSelectedStories={setSelectedStories}
-            selectedStoriesObject={selectedStoriesObject}
-            setSelectedStoriesObject={setSelectedStoriesObject}
-            isEditing={isEditing}
-          />
-        </StoriesBlockApiProvider>
-      </ThemeProvider>
+      <EmbedPlaceholder
+        icon={icon}
+        label={label}
+        selectedStories={selectedStories}
+        setSelectedStories={setSelectedStories}
+        isEditing={isEditing}
+      />
     </>
   );
-};
+}
 
 SelectedStoriesEdit.propTypes = {
   icon: PropTypes.func,

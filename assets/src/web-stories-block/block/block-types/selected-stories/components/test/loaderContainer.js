@@ -40,9 +40,9 @@ describe('LoaderContainer', () => {
   it('should render provided children with spinner component', () => {
     render(
       <LoaderContainer>
-        <div>{__('Loading stories…', 'web-stories')}</div>
+        <div>{__('Loading Stories…', 'web-stories')}</div>
       </LoaderContainer>
     );
-    expect(screen.getByText('Loading stories…')).toBeInTheDocument();
+    expect(screen.getByText('Loading Stories…')).toBeInTheDocument();
   });
 });

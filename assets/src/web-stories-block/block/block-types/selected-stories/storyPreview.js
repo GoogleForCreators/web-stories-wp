@@ -13,90 +13,97 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 import { dateI18n, __experimentalGetSettings } from '@wordpress/date';
+import { useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import {
-  CardPreviewContainer,
-  CardTitle,
-} from '../../../../dashboard/components';
-import { StoryPropType, PageSizePropType } from '../../../../dashboard/types';
+import ItemOverlay from './components/itemOverlay';
 
-const StoryPreviewCover = styled.div(
-  ({ coverImage, pageSize, theme }) => `
-  background-image: url(${coverImage});
-  position: relative;
-  height: ${pageSize.containerHeight}px;
-  width: 100%;
-  overflow: hidden;
-  z-index: -1;
-  background-size: cover;
-  background-position: center;
-  border-radius: ${theme.borders.radius.small};
-  border: 1px solid ${theme.colors.border.defaultNormal};
-`
-);
+const noop = () => {};
 
-const DetailRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-function StoryPreview({ story, pageSize }) {
+function StoryPreview({
+  story,
+  isSelected,
+  addSelectedStory = noop,
+  removeSelectedStory = noop,
+}) {
   // @todo Keep an eye on this experimental API, make necessary changes when this gets updated in core.
   const dateFormat = __experimentalGetSettings().formats.date;
+  const displayDate = dateI18n(dateFormat, story.created);
+  const displayDateText = useMemo(() => {
+    if (!displayDate) {
+      return null;
+    }
 
-  return story.originalStoryData.featured_media_url ? (
-    <>
-      <StoryPreviewCover
-        ariaLabel={sprintf(
-          /* translators: %s: story title. */
-          __('Preview of %s', 'web-stories'),
-          story.title
-        )}
-        coverImage={story.originalStoryData.featured_media_url}
-        pageSize={pageSize}
-      />
-      <DetailRow>
-        <CardTitle
-          tabIndex={-1}
-          title={story.title}
-          titleLink={story.editStoryLink}
-          status={story?.status}
-          id={story.id}
-          secondaryTitle={story.author}
-          displayDate={dateI18n(dateFormat, story.created)}
+    switch (story.status) {
+      case 'publish':
+        return sprintf(
+          /* translators: %s: published date */
+          __('Published %s', 'web-stories'),
+          displayDate
+        );
+
+      case 'future':
+        return sprintf(
+          /* translators: %s: future publish date */
+          __('Scheduled %s', 'web-stories'),
+          displayDate
+        );
+
+      default:
+        return sprintf(
+          /* translators: %s: last modified date */
+          __('Modified %s', 'web-stories'),
+          displayDate
+        );
+    }
+  }, [story.status, displayDate]);
+
+  return (
+    <div className="web-stories-story-preview-card">
+      <div className="web-stories-story-preview-card__poster">
+        <ItemOverlay
+          isSelected={isSelected}
+          story={story}
+          addSelectedStory={addSelectedStory}
+          removeSelectedStory={removeSelectedStory}
         />
-      </DetailRow>
-    </>
-  ) : (
-    <CardPreviewContainer
-      ariaLabel={sprintf(
-        /* translators: %s: story title. */
-        __('Preview of %s', 'web-stories'),
-        story.title
-      )}
-      pageSize={pageSize}
-      story={story}
-    />
+        {story.featured_media_url && (
+          <img src={story.featured_media_url} alt="" width={640} height={853} />
+        )}
+      </div>
+      <div className="web-stories-story-preview-card__label">
+        <div className="web-stories-story-preview-card__title">
+          {story.title.rendered === ''
+            ? __('Untitled', 'web-stories')
+            : story.title.rendered}
+        </div>
+        {story._embedded?.author?.[0]?.name && (
+          <div>{story._embedded?.author?.[0]?.name}</div>
+        )}
+        <div>{displayDateText}</div>
+      </div>
+    </div>
   );
 }
 
 StoryPreview.propTypes = {
-  story: StoryPropType,
-  pageSize: PageSizePropType,
+  story: PropTypes.object.isRequired,
+  isSelected: PropTypes.bool,
+  addSelectedStory: PropTypes.func,
+  removeSelectedStory: PropTypes.func,
 };
 
 export default StoryPreview;

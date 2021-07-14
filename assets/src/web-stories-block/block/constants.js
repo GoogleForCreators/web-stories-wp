@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import {
   EMBED_STORY_BLOCK_ICON,
-  LATESTS_STORIES_BLOCK_ICON,
+  LATEST_STORIES_BLOCK_ICON,
   CAROUSEL_VIEW_TYPE_ICON,
   SELECTED_STORIES_BLOCK_ICON,
   CIRCLES_VIEW_TYPE_ICON,
@@ -47,7 +47,7 @@ export const BLOCK_TYPES = [
     id: BLOCK_TYPE_LATEST_STORIES,
     label: __('Latest Stories', 'web-stories'),
     description: __('Embed latest web stories.', 'web-stories'),
-    icon: LATESTS_STORIES_BLOCK_ICON,
+    icon: LATEST_STORIES_BLOCK_ICON,
   },
   {
     id: BLOCK_TYPE_SELECTED_STORIES,

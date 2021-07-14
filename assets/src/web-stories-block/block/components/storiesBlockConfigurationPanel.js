@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 const FallbackComponent = ({ children, ...additionalProps }) => (
   <div {...additionalProps}>{children}</div>
@@ -34,60 +34,11 @@ FallbackComponent.propTypes = {
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import * as Components from '@wordpress/components';
+import { Placeholder, Icon, Button } from '@wordpress/components';
 import { BlockIcon } from '@wordpress/block-editor';
 
-// Note: Card, CardBody, CardMedia are only available in Gutenberg 7.0 or later,
-// so they do not exist in WP 5.3.
-const {
-  Card = FallbackComponent,
-  CardBody = FallbackComponent,
-  CardMedia = FallbackComponent,
-  Placeholder,
-  Icon,
-} = Components;
-
-const TypeGrid = styled.div`
-  width: 100%;
-  display: grid;
-  gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-  grid-template-columns: ${({ $columnCount }) =>
-    `repeat(${$columnCount}, 1fr)`};
-
-  & * {
-    cursor: pointer;
-  }
-`;
-
-const TypeCard = styled(Card)`
-  border: none !important;
-`;
-
-const TypeMedia = styled(CardMedia)`
-  display: flex;
-  align-items: center;
-  color: #347bb5;
-  justify-content: center;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  padding-top: 14px;
-  padding-bottom: 14px;
-  height: 80px;
-  background-color: white;
-`;
-
-const TypeCardBody = styled(CardBody)`
-  text-align: center;
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 140%;
-  padding: 16px 12px;
-`;
-
 function BlockConfigurationPanel({
-  instruction,
-  columnCount,
+  instructions,
   icon,
   setAttributes,
   selectionOptions,
@@ -99,28 +50,40 @@ function BlockConfigurationPanel({
     <Placeholder
       icon={<BlockIcon icon={icon} showColors />}
       label={label}
-      instructions={instruction}
-      data-testid="ws-block-configuration-panel"
+      instructions={instructions}
+      className="web-stories-block-configuration-panel"
     >
-      <TypeGrid $columnCount={columnCount}>
+      {/*
+       * Disable reason: The `list` ARIA role is redundant but
+       * Safari+VoiceOver won't announce the list otherwise.
+       */
+      /* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+      <ul
+        className="web-stories-block-configuration-panel__options"
+        role="list"
+        aria-label={__('Block Types', 'web-stories')}
+      >
         {selectionOptions.map((option) => (
-          <TypeCard
-            className="components-card"
-            key={option.id}
-            onClick={() => {
-              setAttributes({ [selectionType]: option.id });
-            }}
-          >
-            <TypeMedia className="components-card__media">
+          <li key={option.id}>
+            <Button
+              variant="secondary"
+              className="is-secondary"
+              onClick={() => {
+                setAttributes({ [selectionType]: option.id });
+              }}
+            >
               {'viewType' === selectionType && <Icon icon={option.panelIcon} />}
               {'blockType' === selectionType && <Icon icon={option.icon} />}
-            </TypeMedia>
-            <TypeCardBody className="components-card__body">
+            </Button>
+            <span
+              className="web-stories-block-configuration-panel__label"
+              role="presentation"
+            >
               {option.label}
-            </TypeCardBody>
-          </TypeCard>
+            </span>
+          </li>
         ))}
-      </TypeGrid>
+      </ul>
     </Placeholder>
   );
 }
@@ -128,8 +91,7 @@ function BlockConfigurationPanel({
 BlockConfigurationPanel.propTypes = {
   selectionType: PropTypes.string,
   selectionOptions: PropTypes.array,
-  instruction: PropTypes.string,
-  columnCount: PropTypes.number,
+  instructions: PropTypes.string,
   icon: PropTypes.func,
   setAttributes: PropTypes.func.isRequired,
 };

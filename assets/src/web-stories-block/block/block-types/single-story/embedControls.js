@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import * as Components from '@wordpress/components';
+import * as components from '@wordpress/components';
 import {
   BlockControls,
   InspectorControls,
@@ -47,7 +47,7 @@ const {
   PanelRow,
   ToolbarGroup = FallbackComponent,
   ToolbarButton,
-} = Components;
+} = components;
 
 const EmbedControls = (props) => {
   const {

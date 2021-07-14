@@ -163,7 +163,7 @@ function StoriesView({
         message: sprintf(
           /* translators: %s: story title. */
           __('%s has been copied to your clipboard.', 'web-stories'),
-          story.title.length > 0 ? story.title : __('(no title)', 'web-stories')
+          story.title.length > 0 ? story.title : __('Untitled', 'web-stories')
         ),
         dismissable: true,
       });
