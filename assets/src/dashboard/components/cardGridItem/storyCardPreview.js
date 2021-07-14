@@ -40,7 +40,7 @@ const CardWrapper = styled.div`
   position: relative;
 `;
 
-const Poster = styled.img`
+const Poster = styled.div`
   display: block;
   height: 100%;
   width: 100%;
@@ -85,13 +85,19 @@ const StoryCardPreview = ({
   return (
     <CardWrapper>
       <Poster
-        src={storyImage}
-        alt={sprintf(
-          /* translators: %s: Story title. */
-          __('%s Poster image', 'web-stories'),
-          storyTitle.length > 0 ? storyTitle : __('(no title)', 'web-stories')
-        )}
-        as={!storyImage ? 'div' : 'img'}
+        {...(storyImage
+          ? {
+              src: storyImage,
+              alt: sprintf(
+                /* translators: %s: Story title. */
+                __('%s Poster image', 'web-stories'),
+                storyTitle.length > 0
+                  ? storyTitle
+                  : __('(no title)', 'web-stories')
+              ),
+              as: 'img',
+            }
+          : { as: 'div' })}
       />
       {bottomAction?.label && (
         <EditControls className="card_buttons">
