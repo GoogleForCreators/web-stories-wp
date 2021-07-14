@@ -36,6 +36,11 @@ import useAutoSave from './actions/useAutoSave';
 import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
 import { StoryTriggersProvider } from './storyTriggers';
 
+/**
+ * Shared reference to an empty array for cases where it is important to avoid
+ * returning a new array reference on every invocation, as in a connected or
+ * other pure component which performs `shouldComponentUpdate` check on props.
+ */
 const EMPTY_ARRAY = [];
 
 function StoryProvider({ storyId, children }) {
