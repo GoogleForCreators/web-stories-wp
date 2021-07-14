@@ -158,6 +158,8 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
 /**
  * Handles plugin deactivation.
  *
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ *
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to deactivate network-wide.
