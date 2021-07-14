@@ -17,10 +17,7 @@
 /**
  * External dependencies
  */
-import ColorThief from 'colorthief';
 import { trackError } from '@web-stories-wp/tracking';
-
-const thief = new ColorThief();
 
 const STYLES = {
   boxSizing: 'border-box',
@@ -65,7 +62,12 @@ function getDefaultOnloadCallback(nodeKey, resolve, reject) {
   return () => {
     try {
       const node = document.body[nodeKey];
-      resolve(thief.getColor(node.firstElementChild));
+      import(
+        /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+      ).then(({ default: ColorThief }) => {
+        const thief = new ColorThief();
+        resolve(thief.getColor(node.firstElementChild));
+      });
     } catch (err) {
       trackError('image_base_color', err.message);
       reject(err);

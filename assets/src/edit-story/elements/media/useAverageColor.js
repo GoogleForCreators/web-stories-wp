@@ -17,10 +17,7 @@
 /**
  * External dependencies
  */
-import ColorThief from 'colorthief';
 import { useRef, useEffect, useLayoutEffect } from 'react';
-
-const thief = new ColorThief();
 
 function useAverageColor(ref, onAverageColor) {
   const callback = useRef(onAverageColor);
@@ -31,7 +28,12 @@ function useAverageColor(ref, onAverageColor) {
   useLayoutEffect(() => {
     function checkAverageColor() {
       try {
-        callback.current(thief.getColor(ref.current));
+        import(
+          /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+        ).then(({ default: ColorThief }) => {
+          const thief = new ColorThief();
+          callback.current(thief.getColor(ref.current));
+        });
       } catch (e) {
         // ColorThief fails for all-white images
         //
