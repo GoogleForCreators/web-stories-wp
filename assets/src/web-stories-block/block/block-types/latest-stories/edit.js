@@ -35,7 +35,6 @@ import StoriesInspectorControls from '../../components/storiesInspectorControls'
 import StoriesLoading from '../../components/storiesLoading';
 import { FETCH_STORIES_DEBOUNCE } from '../../constants';
 import StoriesPreview from '../../components/storiesPreview';
-import { useConfig } from '../../config';
 
 /**
  * Module constants
@@ -57,7 +56,11 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
   const { numOfStories, order, orderby, archiveLinkLabel, authors } =
     attributes;
 
-  const { api } = useConfig();
+  const {
+    config: {
+      api: { stories: storiesApi },
+    },
+  } = window.webStoriesBlockSettings;
 
   const [fetchedStories, setFetchedStories] = useState([]);
   const [isFetchingStories, setIsFetchingStories] = useState([]);
@@ -71,7 +74,7 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
     try {
       setIsFetchingStories(true);
       const stories = await apiFetch({
-        path: addQueryArgs(api.stories, LATEST_STORIES_QUERY),
+        path: addQueryArgs(storiesApi, LATEST_STORIES_QUERY),
       });
 
       if (Array.isArray(stories)) {

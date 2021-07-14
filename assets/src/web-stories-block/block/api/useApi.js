@@ -15,14 +15,15 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { identity, useContextSelector } from '@web-stories-wp/design-system';
+import { useContext } from '@wordpress/element';
+
 /**
  * Internal dependencies
  */
 import { StoriesBlockApiContext } from './apiProvider';
 
-export default function useApi(selector = identity) {
-  return useContextSelector(StoriesBlockApiContext, selector);
+export default function useApi() {
+  return useContext(StoriesBlockApiContext);
 }

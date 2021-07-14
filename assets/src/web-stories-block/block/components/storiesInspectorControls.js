@@ -38,7 +38,6 @@ import { useEffect, useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
 import {
   CIRCLES_VIEW_TYPE,
   GRID_VIEW_TYPE,
@@ -101,7 +100,10 @@ const StoriesInspectorControls = (props) => {
     showFilters = true,
   } = props;
 
-  const { fieldStates, archiveURL } = useConfig();
+  const {
+    config: { fieldStates, archiveURL },
+  } = window.webStoriesBlockSettings;
+
   const firstUpdate = useRef(true);
 
   useEffect(() => {

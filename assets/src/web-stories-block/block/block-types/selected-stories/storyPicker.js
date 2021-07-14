@@ -33,7 +33,6 @@ import useApi from '../../api/useApi';
 import { VIEW_STYLE, STORY_STATUSES } from '../../constants';
 import { useStoryView } from '../../../../dashboard/utils';
 import { ScrollToTop, Layout } from '../../../../dashboard/components';
-import { useConfig } from '../../config';
 import SelectStories from './selectStories';
 import SortStories from './sortStories';
 import LoaderContainer from './components/loaderContainer';
@@ -101,44 +100,24 @@ function StoryPicker({
     useState(true);
   const [currentAuthor, setCurrentAuthor] = useState([]);
   const [authorKeyword, setAuthorKeyword] = useState('');
-  const { maxNumOfStories } = useConfig();
 
   const {
-    fetchStories,
-    stories,
-    storiesOrderById,
-    totalPages,
-    allPagesFetched,
-    isLoading,
-    fetchAuthors,
-    authorSuggestions,
-  } = useApi(
-    ({
-      actions: {
-        storyApi: { fetchStories },
-        usersApi: { fetchAuthors },
+    config: { maxNumOfStories },
+  } = window.webStoriesBlockSettings;
+
+  const {
+    state: {
+      stories: {
+        stories,
+        storiesOrderById,
+        totalPages,
+        allPagesFetched,
+        isLoading,
       },
-      state: {
-        stories: {
-          stories,
-          storiesOrderById,
-          totalPages,
-          allPagesFetched,
-          isLoading,
-        },
-        authorSuggestions,
-      },
-    }) => ({
-      fetchStories,
-      stories,
-      storiesOrderById,
-      totalPages,
-      allPagesFetched,
-      isLoading,
-      fetchAuthors,
       authorSuggestions,
-    })
-  );
+    },
+    actions: { fetchStories, fetchAuthors },
+  } = useApi();
 
   const { filter, page, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,

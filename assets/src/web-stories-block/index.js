@@ -28,9 +28,8 @@ import { registerBlockType } from '@wordpress/blocks';
  * Internal dependencies
  */
 import { name, settings } from './block';
-import { webStoriesBlockSettings } from './block/globals';
 
-__webpack_public_path__ = webStoriesBlockSettings.publicPath;
+__webpack_public_path__ = window.webStoriesBlockSettings.publicPath;
 
 registerBlockType(name, settings);
 

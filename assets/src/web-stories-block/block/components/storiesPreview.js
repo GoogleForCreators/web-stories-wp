@@ -30,7 +30,6 @@ import { useEffect, useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
 import {
   CAROUSEL_VIEW_TYPE,
   CIRCLES_VIEW_TYPE,
@@ -52,7 +51,9 @@ function StoriesPreview(props) {
     stories,
   } = props;
 
-  const { archiveURL } = useConfig();
+  const {
+    config: { archiveURL },
+  } = window.webStoriesBlockSettings;
 
   const carouselContainer = useRef(null);
   const carouselNext = useRef(null);
