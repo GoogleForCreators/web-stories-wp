@@ -29,6 +29,7 @@ describe('Eyedropper', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ enableEyedropper: true });
     await fixture.render();
   });
 
@@ -36,11 +37,7 @@ describe('Eyedropper', () => {
     fixture.restore();
   });
 
-  // Disable reason: the test hasn't been fully implemented yet with images that can differ locally.
-  // NB! Needs to be implemented before removing the feature flag.
-  // See: https://github.com/google/web-stories-wp/pull/7961
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should get color from the image to page background', async () => {
+  it('should get color from the image to page background', async () => {
     // Insert image that will be the color source
     const image = fixture.editor.library.media.item(1);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
@@ -61,7 +58,6 @@ describe('Eyedropper', () => {
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
-    await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
       timeout: 4000,
     });
