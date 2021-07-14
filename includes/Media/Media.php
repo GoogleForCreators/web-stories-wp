@@ -503,7 +503,7 @@ class Media extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_thumbnail_data( $thumbnail_id ): array {
+	public function get_thumbnail_data( int $thumbnail_id ): array {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
 		$generated                     = $this->is_poster( $thumbnail_id );
@@ -522,7 +522,7 @@ class Media extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function delete_video_poster( $attachment_id ) {
+	public function delete_video_poster( int $attachment_id ) {
 		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
 
 		if ( empty( $post_id ) ) {
@@ -545,7 +545,7 @@ class Media extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	protected function is_poster( $post_id ): bool {
+	protected function is_poster( int $post_id ): bool {
 		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );

@@ -120,7 +120,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function replace_in_dom( $html ): string {
+	protected function replace_in_dom( string $html ): string {
 		$document = Document::fromHtml( $html );
 
 		if ( ! $document ) {
@@ -212,7 +212,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, $args ): string {
+	public function get_avatar( $avatar, $id_or_email, $size, $default, $alt, array $args ): string {
 		return $this->add_attribute( $avatar, 'src', $args['url'] );
 	}
 
@@ -227,7 +227,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function add_attribute( $html, $attribute, $url ): string {
+	protected function add_attribute( string $html, string $attribute, string $url ): string {
 		$site_url = site_url();
 		$url      = esc_url( $url );
 
@@ -291,7 +291,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	private function starts_with( $string, $start_string ): bool {
+	private function starts_with( string $string, string $start_string ): bool {
 		$len = strlen( $start_string );
 
 		return ( substr( $string, 0, $len ) === $start_string );

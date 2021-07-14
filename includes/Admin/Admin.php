@@ -179,7 +179,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return string Pre-filled post title if applicable, or the default title otherwise.
 	 */
-	public function prefill_post_title( $title ) {
+	public function prefill_post_title( $title ): string {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $title;
 		}

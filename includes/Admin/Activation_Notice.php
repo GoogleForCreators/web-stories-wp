@@ -102,7 +102,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return void
 	 */
-	public function enqueue_assets( $hook_suffix ) {
+	public function enqueue_assets( string $hook_suffix ) {
 		if ( ! $this->is_plugins_page( $hook_suffix ) || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
 			return;
 		}
@@ -212,7 +212,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return bool Whether we're on the Plugins page.
 	 */
-	protected function is_plugins_page( $hook_suffix ): bool {
+	protected function is_plugins_page( string $hook_suffix ): bool {
 		return ( ! empty( $hook_suffix ) && 'plugins.php' === $hook_suffix );
 	}
 }

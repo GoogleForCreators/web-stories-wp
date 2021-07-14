@@ -468,7 +468,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return boolean Returns true if the given option is enabled otherwise false.
 	 */
-	private function is_option_enabled( $option_name ): bool {
+	private function is_option_enabled( string $option_name ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
 		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
 	}
@@ -482,7 +482,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	private function is_view_type( $view_type ): bool {
+	private function is_view_type( string $view_type ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
 		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
 	}

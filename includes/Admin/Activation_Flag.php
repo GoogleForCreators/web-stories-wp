@@ -58,7 +58,7 @@ class Activation_Flag implements ServiceInterface, Registerable {
 	 *
 	 * @return bool
 	 */
-	public function set_activation_flag( $network_wide = false ): bool {
+	public function set_activation_flag( bool $network_wide = false ): bool {
 		if ( $network_wide ) {
 			return update_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, '1' );
 		}
@@ -77,7 +77,7 @@ class Activation_Flag implements ServiceInterface, Registerable {
 	 *
 	 * @return bool True if just activated, false otherwise.
 	 */
-	public function get_activation_flag( $network_wide = false ): bool {
+	public function get_activation_flag( bool $network_wide = false ): bool {
 		if ( $network_wide ) {
 			return (bool) get_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE, false );
 		}
@@ -96,7 +96,7 @@ class Activation_Flag implements ServiceInterface, Registerable {
 	 *
 	 * @return bool True if flag deletion is successful, false otherwise.
 	 */
-	public function delete_activation_flag( $network_wide = false ): bool {
+	public function delete_activation_flag( bool $network_wide = false ): bool {
 		if ( $network_wide ) {
 			return delete_site_option( self::OPTION_SHOW_ACTIVATION_NOTICE );
 		}

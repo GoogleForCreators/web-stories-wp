@@ -234,7 +234,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return array Modified test result.
 	 */
-	public function modify_test_result( $test_result ): array {
+	public function modify_test_result( array $test_result ): array {
 		// Set the `https_status` test status to critical if its current status is recommended, along with adding to the
 		// description for why its required for Web Stories.
 		if ( isset( $test_result['test'], $test_result['status'], $test_result['description'] ) && 'https_status' === $test_result['test'] && 'recommended' === $test_result['status'] ) {

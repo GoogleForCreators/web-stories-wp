@@ -288,7 +288,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function get_svg_size( $file ) {
+	protected function get_svg_size( string $file ) {
 		$svg = $this->get_svg_data( $file );
 		$xml = $this->get_xml( $svg );
 
@@ -327,7 +327,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return true|WP_Error
 	 */
-	protected function sanitize( $file ) {
+	protected function sanitize( string $file ) {
 		$dirty     = $this->get_svg_data( $file );
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
@@ -387,7 +387,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return DOMElement|false
 	 */
-	protected function get_xml( $svg ) {
+	protected function get_xml( string $svg ) {
 		$dom                      = new DOMDocument();
 		$dom->preserveWhiteSpace  = false;
 		$dom->strictErrorChecking = false;
@@ -419,7 +419,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return string File contents.
 	 */
-	protected function get_svg_data( $file ): string {
+	protected function get_svg_data( string $file ): string {
 		$key = md5( $file );
 		if ( ! isset( $this->svgs[ $key ] ) ) {
 			if ( is_readable( $file ) ) {

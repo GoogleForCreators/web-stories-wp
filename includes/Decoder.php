@@ -60,7 +60,7 @@ class Decoder {
 	 * @param string $string String to decode.
 	 * @return string Decoded string.
 	 */
-	public function base64_decode( $string ): string {
+	public function base64_decode( string $string ): string {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 

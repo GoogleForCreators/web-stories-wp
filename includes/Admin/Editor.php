@@ -350,7 +350,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function setup_lock( $story_id ) {
+	protected function setup_lock( int $story_id ) {
 		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
 			return;
 		}

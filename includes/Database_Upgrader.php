@@ -137,7 +137,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function run_upgrade_routine( $class, $version, $current_version ) {
+	protected function run_upgrade_routine( string $class, string $version, string $current_version ) {
 		if ( version_compare( $current_version, $version, '<' ) ) {
 			if ( ! method_exists( $this->injector, 'make' ) ) {
 				return;
@@ -156,7 +156,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function finish_up( $previous_version ) {
+	protected function finish_up( string $previous_version ) {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
 	}

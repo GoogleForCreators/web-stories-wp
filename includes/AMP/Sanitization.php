@@ -82,7 +82,7 @@ class Sanitization {
 	 *
 	 * @return void
 	 */
-	protected function ensure_required_markup( $document, $scripts ) {
+	protected function ensure_required_markup( $document, array $scripts ) {
 		// Gather all links.
 		$links = [
 			Attribute::REL_PRECONNECT => [
