@@ -17,11 +17,12 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -34,14 +35,6 @@ import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
-
-if (!('ResizeObserver' in window)) {
-  import(
-    /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
-  )
-    .then((module) => (window.ResizeObserver = module.ResizeObserver))
-    .catch(() => undefined);
-}
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -73,18 +66,8 @@ function TextPane(props) {
     [insertPreset]
   );
 
-  useEffect(() => {
-    const ro = new ResizeObserver(() => {
-      // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
-      // https://stackoverflow.com/a/58701523/13078978
-      window.requestAnimationFrame(() => {
-        forceUpdate(Date.now());
-      });
-    });
-
-    ro.observe(paneRef.current);
-
-    return () => ro.disconnect();
+  useResizeEffect(paneRef, () => {
+    forceUpdate(Date.now());
   }, []);
 
   return (
