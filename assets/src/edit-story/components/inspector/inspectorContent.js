@@ -48,7 +48,7 @@ function Inspector() {
           key={id}
           hidden={id !== tab}
         >
-          <Pane />
+          {id === tab && <Pane />}
         </InspectorPane>
       ))}
     </InspectorPanes>
