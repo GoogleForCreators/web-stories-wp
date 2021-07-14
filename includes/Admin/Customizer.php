@@ -449,7 +449,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return array An array of view type choices.
 	 */
-	private function get_view_type_choices( array $view_type ) {
+	private function get_view_type_choices( array $view_type ) : array {
 		$view_type_choices = $this->get_layouts();
 
 		if ( empty( $view_type ) ) {
