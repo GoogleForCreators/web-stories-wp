@@ -65,6 +65,9 @@ export default ({ onChange }) => {
         if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
           return;
         }
+        if (resetZoom) {
+          setIsEyedropperActive(true);
+        }
         const prepareEyedropper = () =>
           new Promise((resolve) => {
             // Wait one tick for the zoom to settle in.
@@ -105,9 +108,6 @@ export default ({ onChange }) => {
           setEyedropperImg(null);
           setEyedropperPixelData(null);
         });
-        if (resetZoom) {
-          setIsEyedropperActive(true);
-        }
       },
     [
       fullbleedContainer,

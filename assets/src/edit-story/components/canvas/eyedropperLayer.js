@@ -23,6 +23,11 @@ import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 
 /**
+ * WordPress dependencies
+ */
+import { Spinner } from '@wordpress/components';
+
+/**
  * Internal dependencies
  */
 import {
@@ -87,6 +92,20 @@ const Magnifier = styled.div`
   pointer-events: none;
 `;
 
+const Center = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  background: ${({ theme }) => theme.colors.opacity.black64};
+  cursor: not-allowed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 function EyedropperLayer() {
   const {
     fullbleedContainer,
@@ -145,6 +164,17 @@ function EyedropperLayer() {
 
   useGlobalKeyDownEffect('esc', closeEyedropper);
 
+  if (isEyedropperActive && !img) {
+    return (
+      <>
+        {/* Disable reason: No keyboard navigation for Eyedropper. */}
+        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+        <Center onClick={closeEyedropper}>
+          <Spinner />
+        </Center>
+      </>
+    );
+  }
   if (!isEyedropperActive || !img) {
     return null;
   }
