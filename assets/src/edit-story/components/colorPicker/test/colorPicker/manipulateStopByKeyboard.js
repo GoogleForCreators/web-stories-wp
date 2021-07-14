@@ -41,13 +41,15 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     // Send key to gradient line itself, not a stop
     fireEvent.keyDown(getGradientLine(), { key: 'Delete', which: 46 });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 0, g: 255, b: 0 }, position: 0.5 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 0, g: 255, b: 0 }, position: 0.5 },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+      })
+    );
 
     // Expect next stop to have focus now, so that any
     // future key presses will still be correctly handled
@@ -71,13 +73,15 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     fireEvent.click(getGradientStopAt(50));
     fireEvent.keyDown(getGradientStopAt(50), { key: 'Backspace', which: 8 });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+      })
+    );
 
     // Expect last stop to have focus now, so that any
     // future key presses will still be correctly handled
@@ -103,7 +107,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     // Move first stop left (does nothing)
     fireEvent.keyDown(firstStop, { key: 'ArrowLeft', which: 37 });
 
-    expect(onChange).not.toHaveBeenCalled();
+    await waitFor(() => expect(onChange).not.toHaveBeenCalled());
 
     // Move first stop right 10 times
     Array(10)
@@ -128,7 +132,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     });
   });
 
-  it('should reorder stops when moving with arrow keys past another stop', () => {
+  it('should reorder stops when moving with arrow keys past another stop', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -148,17 +152,19 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       which: 39,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 0, b: 255 }, position: 0.99 },
-        { color: { r: 0, g: 255, b: 0 }, position: 0.995 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 0, g: 0, b: 255 }, position: 0.99 },
+          { color: { r: 0, g: 255, b: 0 }, position: 0.995 },
+        ],
+      })
+    );
   });
 
-  it('should add a stop before first stop if selected and not at 0 when pressing enter', () => {
+  it('should add a stop before first stop if selected and not at 0 when pressing enter', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -177,17 +183,19 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       which: 13,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 255, g: 0, b: 0 }, position: 0.2 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 255, g: 0, b: 0 }, position: 0.2 },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+      })
+    );
   });
 
-  it('should add a stop after last stop if selected and not at 100 when pressing enter', () => {
+  it('should add a stop after last stop if selected and not at 100 when pressing enter', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -206,17 +214,19 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       which: 13,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 0, b: 255 }, position: 0.8 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 0, g: 0, b: 255 }, position: 0.8 },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+      })
+    );
   });
 
-  it('should add a stop half-way after the current stop if not last when pressing enter', () => {
+  it('should add a stop half-way after the current stop if not last when pressing enter', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -236,21 +246,23 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       which: 13,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 255, b: 0 }, position: 0.2 },
-        {
-          color: { r: 0, g: expect.any(Number), b: expect.any(Number) },
-          position: 0.6,
-        },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 0, g: 255, b: 0 }, position: 0.2 },
+          {
+            color: { r: 0, g: expect.any(Number), b: expect.any(Number) },
+            position: 0.6,
+          },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+      })
+    );
   });
 
-  it('should add a stop half-way before the current stop if last at 100 when pressing enter', () => {
+  it('should add a stop half-way before the current stop if last at 100 when pressing enter', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -270,17 +282,19 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
       which: 13,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 255, b: 0 }, position: 0.2 },
-        {
-          color: { r: 0, g: expect.any(Number), b: expect.any(Number) },
-          position: 0.6,
-        },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 0, g: 255, b: 0 }, position: 0.2 },
+          {
+            color: { r: 0, g: expect.any(Number), b: expect.any(Number) },
+            position: 0.6,
+          },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+      })
+    );
   });
 });

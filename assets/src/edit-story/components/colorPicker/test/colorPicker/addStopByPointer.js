@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { arrange, firePointerEvent } from './_utils';
@@ -22,7 +27,7 @@ import { arrange, firePointerEvent } from './_utils';
 const OFFSET20 = 34.5;
 
 describe('<ColorPicker /> when adding a stop with a pointer device', () => {
-  it('should show temp stop when hovering and add a stop when clicking', () => {
+  it('should show temp stop when hovering and add a stop when clicking', async () => {
     const { getGradientLine, getGradientStops, getTempGradientStop, onChange } =
       arrange({
         color: {
@@ -36,7 +41,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
       });
 
     // Initially 2 stops should be visible
-    expect(getGradientStops()).toHaveLength(2);
+    await waitFor(() => expect(getGradientStops()).toHaveLength(2));
 
     // No temp stop visible initially
     expect(getTempGradientStop()).not.toBeInTheDocument();
@@ -84,7 +89,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     });
   });
 
-  it('should remove temp stop when pointer leaves the gradient line', () => {
+  it('should remove temp stop when pointer leaves the gradient line', async () => {
     const { getGradientLine, getTempGradientStop } = arrange({
       color: {
         type: 'linear',
@@ -97,7 +102,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     });
 
     // No temp stop visible initially
-    expect(getTempGradientStop()).not.toBeInTheDocument();
+    await waitFor(() => expect(getTempGradientStop()).not.toBeInTheDocument());
 
     // Hover gradient line at 20% mark
     firePointerEvent.pointerMove(getGradientLine(), {
@@ -114,7 +119,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     expect(getTempGradientStop()).not.toBeInTheDocument();
   });
 
-  it('should not add temp stop when hovering existing stop', () => {
+  it('should not add temp stop when hovering existing stop', async () => {
     const { getGradientStopAt, getTempGradientStop } = arrange({
       color: {
         type: 'linear',
@@ -127,7 +132,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     });
 
     // No temp stop visible initially
-    expect(getTempGradientStop()).not.toBeInTheDocument();
+    await waitFor(() => expect(getTempGradientStop()).not.toBeInTheDocument());
 
     // Hover first stop (and give a fake offset)
     firePointerEvent.pointerMove(getGradientStopAt(0), {
@@ -138,7 +143,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     expect(getTempGradientStop()).not.toBeInTheDocument();
   });
 
-  it('should not add a new stop when clicking existing stop', () => {
+  it('should not add a new stop when clicking existing stop', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -155,10 +160,10 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
       clientX: OFFSET20,
     });
 
-    expect(onChange).not.toHaveBeenCalled();
+    await waitFor(() => expect(onChange).not.toHaveBeenCalled());
   });
 
-  it('should not remove temp stop when pointer leaves existing gradient stop', () => {
+  it('should not remove temp stop when pointer leaves existing gradient stop', async () => {
     const { getGradientLine, getTempGradientStop, getGradientStopAt } = arrange(
       {
         color: {
@@ -173,7 +178,7 @@ describe('<ColorPicker /> when adding a stop with a pointer device', () => {
     );
 
     // No temp stop visible initially
-    expect(getTempGradientStop()).not.toBeInTheDocument();
+    await waitFor(() => expect(getTempGradientStop()).not.toBeInTheDocument());
 
     // Hover gradient line at 20% mark
     firePointerEvent.pointerMove(getGradientLine(), {

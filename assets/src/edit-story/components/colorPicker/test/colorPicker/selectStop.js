@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act } from '@testing-library/react';
+import {act, waitFor} from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import { act } from '@testing-library/react';
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> when selecting a stop', () => {
-  it('should have stop highlighted when focused', () => {
+  it('should have stop highlighted when focused', async () => {
     const { getGradientStopAt } = arrange({
       color: {
         type: 'linear',
@@ -44,7 +44,7 @@ describe('<ColorPicker /> when selecting a stop', () => {
     // Focus and selection to have moved to first stop
     const firstStop = getGradientStopAt(0);
     act(() => firstStop.focus());
-    expect(firstStop).toHaveFocus();
+    await waitFor(() => expect(firstStop).toHaveFocus());
 
     // Now focus second stop and verify this is now highlighted
     const secondStop = getGradientStopAt(40);
