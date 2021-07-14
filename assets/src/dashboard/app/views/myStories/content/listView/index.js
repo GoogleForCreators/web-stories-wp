@@ -72,7 +72,7 @@ const ListView = styled.div`
   width: 100%;
 `;
 
-const PreviewImage = styled.img`
+const PreviewImage = styled.div`
   display: inline-block;
   background: ${({ theme }) => theme.colors.gradient.placeholder};
   width: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL]}px;
@@ -339,15 +339,19 @@ export default function StoryListView({
               >
                 <TablePreviewCell>
                   <PreviewImage
-                    as={!story.featuredMediaUrl ? 'div' : 'img'}
-                    src={story.featuredMediaUrl}
-                    alt={sprintf(
-                      /* translators: %s: Story title. */
-                      __('%s Poster image', 'web-stories'),
-                      story.title.length > 0
-                        ? story.title
-                        : __('(no title)', 'web-stories')
-                    )}
+                    {...(story.featuredMediaUrl
+                      ? {
+                          src: story.featuredMediaUrl,
+                          alt: sprintf(
+                            /* translators: %s: Story title. */
+                            __('%s Poster image', 'web-stories'),
+                            story.title.length > 0
+                              ? story.title
+                              : __('(no title)', 'web-stories')
+                          ),
+                          as: 'img',
+                        }
+                      : { as: 'div' })}
                   />
                 </TablePreviewCell>
                 <TableCell>
