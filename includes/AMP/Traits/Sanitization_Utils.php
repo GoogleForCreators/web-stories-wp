@@ -255,6 +255,32 @@ trait Sanitization_Utils {
 	}
 
 	/**
+	 * Enables using video cache by adding the necessary attribute to `<amp-video>`
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
+	 * @return void
+	 */
+	private function add_video_cache( &$document, $video_cache_enabled ) {
+		if ( ! $video_cache_enabled ) {
+			return;
+		}
+
+		$videos = $document->body->getElementsByTagName( 'amp-video' );
+
+		/**
+		 * The <amp-video> element
+		 *
+		 * @var DOMElement $video The <amp-video> element
+		 */
+		foreach ( $videos as $video ) {
+			$video->setAttribute( 'cache', 'google' );
+		}
+	}
+
+	/**
 	 * Determines whether a URL is a `blob:` URL.
 	 *
 	 * @since 1.9.0

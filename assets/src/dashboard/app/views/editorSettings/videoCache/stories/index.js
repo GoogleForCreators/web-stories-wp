@@ -15,16 +15,29 @@
  */
 
 /**
- * @typedef {import('../../../types').Page} Page
+ * External dependencies
  */
+import { action } from '@storybook/addon-actions';
+import { boolean } from '@storybook/addon-knobs';
+import { FlagsProvider } from 'flagged';
 
 /**
- * Filters through story pages with array.filter
- *
- * @param {Array<Page>} pages The story to filter
- * @param {Function} filter The page being checked for guidelines
- * @return {Array<Page>} An array of pages that
+ * Internal dependencies
  */
-export function filterStoryPages(pages, filter) {
-  return (pages || []).filter(filter);
-}
+import VideoCacheSettings from '..';
+
+export default {
+  title: 'Dashboard/Views/EditorSettings/VideoCache',
+  component: VideoCacheSettings,
+};
+
+export const _default = () => {
+  return (
+    <FlagsProvider features={{ videoCache: true }}>
+      <VideoCacheSettings
+        isEnabled={boolean('isEnabled', true)}
+        updateSettings={action('updateSettings fired')}
+      />
+    </FlagsProvider>
+  );
+};

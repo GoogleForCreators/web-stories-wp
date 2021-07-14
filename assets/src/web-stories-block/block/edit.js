@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as icon } from '../images/icon.svg';
+import { ReactComponent as BlockIcon } from '../images/icon.svg';
 import StoryEmbedEdit from './block-types/story-embed-block/edit';
 import { ConfigProvider } from './config';
 import StoriesBlockControls from './components/storiesBlockControls';
@@ -51,7 +51,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   if (!blockType) {
     return (
       <BlockConfigurationPanel
-        icon={icon}
+        icon={<BlockIcon />}
         setAttributes={setAttributes}
         instruction={__(
           'Embed a collection of your latest stories, select your own or enter an URL',
@@ -67,7 +67,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   if (blockType !== BLOCK_TYPE_URL && !viewType) {
     return (
       <BlockConfigurationPanel
-        icon={icon}
+        icon={<BlockIcon />}
         setAttributes={setAttributes}
         instruction={__('Select a layout style', 'web-stories')}
         columnCount={4}
@@ -94,7 +94,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
 
       {blockType === BLOCK_TYPE_SELECTED_STORIES && (
         <SelectedStoriesEdit
-          icon={icon}
+          icon={<BlockIcon />}
           attributes={attributes}
           setAttributes={setAttributes}
           isSelected={isSelected}
@@ -103,7 +103,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
 
       {blockType === BLOCK_TYPE_URL && (
         <StoryEmbedEdit
-          icon={icon}
+          icon={<BlockIcon />}
           attributes={attributes}
           setAttributes={setAttributes}
           className={className}

@@ -105,8 +105,10 @@ export const BulkVideoOptimization = () => {
   const isBulkVideoOptimizationEnabled = useFeature(
     'enableBulkVideoOptimization'
   );
-  const unoptimizedElements = useStory(({ state: storyState }) =>
-    filterStoryElements(storyState, videoElementsNotOptimized)
+  const pages = useStory(({ state: storyState }) => storyState?.pages);
+  const unoptimizedElements = useMemo(
+    () => filterStoryElements(pages, videoElementsNotOptimized),
+    [pages]
   );
   const unoptimizedVideos = unoptimizedElements.filter(
     (element, index, array) =>

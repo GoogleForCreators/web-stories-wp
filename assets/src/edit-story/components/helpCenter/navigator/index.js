@@ -18,7 +18,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { themeHelpers } from '@web-stories-wp/design-system';
 
@@ -71,7 +71,7 @@ const ContentInner = styled.div`
   position: relative;
 `;
 
-export function Navigator({
+function Navigator({
   children,
   isOpen,
   onClose,
@@ -134,3 +134,5 @@ Navigator.propTypes = {
   isNextDisabled: PropTypes.bool,
   isPrevDisabled: PropTypes.bool,
 };
+
+export default memo(Navigator);
