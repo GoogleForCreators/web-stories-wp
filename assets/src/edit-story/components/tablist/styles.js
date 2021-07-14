@@ -80,6 +80,12 @@ export const TabButton = styled(Button).attrs({
     background-color: ${({ theme }) => theme.colors.bg.secondary};
   }
 
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
+
   ${PanelText} {
     opacity: 0.8;
   }
@@ -105,8 +111,6 @@ export const PanelWrapper = styled.div`
   &:not(:first-child) > ${TabButton} {
     box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
     margin-top: 1px;
-
-    ${themeHelpers.focusableOutlineCSS};
   }
 
   ${({ isExpanded, theme }) =>
