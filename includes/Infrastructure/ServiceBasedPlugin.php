@@ -102,19 +102,13 @@ abstract class ServiceBasedPlugin implements Plugin {
 		 * optional and provide default implementations for easy regular usage.
 		 */
 
-		$this->enable_filters = null !== $enable_filters
-			? $enable_filters
-			: static::ENABLE_FILTERS_DEFAULT;
+		$this->enable_filters = $enable_filters ?? static::ENABLE_FILTERS_DEFAULT;
 
-		$this->injector = null !== $injector
-			? $injector
-			: new Injector\SimpleInjector();
+		$this->injector = $injector ?? new Injector\SimpleInjector();
 
 		$this->injector = $this->configure_injector( $this->injector );
 
-		$this->service_container = null !== $service_container
-			? $service_container
-			: new ServiceContainer\SimpleServiceContainer();
+		$this->service_container = $service_container ?? new ServiceContainer\SimpleServiceContainer();
 	}
 
 	/**
@@ -258,7 +252,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *                           salvageable.
 	 * @return string[] Validated array of service mappings.
 	 */
-	protected function validate_services( $services, $fallback ) {
+	protected function validate_services( $services, $fallback ): array {
 		// If we don't have an array, something went wrong with filtering.
 		// Just use the fallback value in this case.
 		if ( ! is_array( $services ) ) {
@@ -295,7 +289,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param string $fqcn FQCN to use as base to generate an identifer.
 	 * @return string Identifier to use for the provided FQCN.
 	 */
-	protected function get_identifier_from_fqcn( $fqcn ) {
+	protected function get_identifier_from_fqcn( $fqcn ): string {
 		// Retrieve the short name from the FQCN first.
 		$short_name = substr( $fqcn, strrpos( $fqcn, '\\' ) + 1 );
 
@@ -512,7 +506,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
-	protected function get_service_classes() {
+	protected function get_service_classes(): array {
 		return [];
 	}
 
@@ -526,7 +520,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return array<string> Associative array of fully qualified class names.
 	 */
-	protected function get_bindings() {
+	protected function get_bindings(): array {
 		return [];
 	}
 
@@ -541,7 +535,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return array<array> Associative array of arrays mapping argument names
 	 *                      to argument values.
 	 */
-	protected function get_arguments() {
+	protected function get_arguments(): array {
 		return [];
 	}
 
@@ -558,7 +552,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */
-	protected function get_shared_instances() {
+	protected function get_shared_instances(): array {
 		return [];
 	}
 
@@ -572,7 +566,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return array<callable> Associative array of callables.
 	 */
-	protected function get_delegations() {
+	protected function get_delegations(): array {
 		return [];
 	}
 

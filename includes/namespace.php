@@ -86,6 +86,7 @@ function rewrite_flush() {
  * @return void
  */
 function activate( $network_wide = false ) {
+	$network_wide = (bool) $network_wide;
 	// Ensures capabilities are properly set up as that class is not a service.
 	setup_new_site();
 
@@ -157,13 +158,16 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
 /**
  * Handles plugin deactivation.
  *
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ *
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to deactivate network-wide.
  *
  * @return void
  */
-function deactivate( $network_wide ) {
+function deactivate( $network_wide = false ) {
+	$network_wide = (bool) $network_wide;
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 
 	// This will also flush rewrite rules.
@@ -221,7 +225,7 @@ add_action( 'init', __NAMESPACE__ . '\includes' );
  *
  * @return array Modified reduce accumulator.
  */
-function rest_preload_api_request( $memo, $path ) {
+function rest_preload_api_request( $memo, $path ): array {
 	// array_reduce() doesn't support passing an array in PHP 5.2,
 	// so we need to make sure we start with one.
 	if ( ! is_array( $memo ) ) {
@@ -252,7 +256,7 @@ function rest_preload_api_request( $memo, $path ) {
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
 		parse_str( $path_parts['query'], $query_params );
-		$embed = isset( $query_params['_embed'] ) ? $query_params['_embed'] : false;
+		$embed = $query_params['_embed'] ?? false;
 		$request->set_query_params( $query_params );
 	}
 
