@@ -26,6 +26,7 @@ import {
   useLayoutEffect,
   useState,
   lazy,
+  Suspense,
 } from 'react';
 import {
   Text,
@@ -127,13 +128,16 @@ function EditablePreview({ label, value, width, format, onChange }) {
 
   return (
     <Wrapper ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
-      <EditableInput
-        value={value}
-        ref={editableRef}
-        onChange={onChange}
-        onChangeComplete={disableEditing}
-        style={inputStyles}
-      />
+      <Suspense fallback={null}>
+        <EditableInput
+          value={value}
+          ref={editableRef}
+          onChange={onChange}
+          onChangeComplete={disableEditing}
+          style={inputStyles}
+          label={label}
+        />
+      </Suspense>
     </Wrapper>
   );
 }
