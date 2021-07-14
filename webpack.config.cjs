@@ -257,7 +257,7 @@ const editorAndDashboard = {
     ...sharedConfig.optimization,
     splitChunks: {
       ...sharedConfig.optimization.splitChunks,
-      chunks: 'all'
+      chunks: 'all',
     },
   },
 };
