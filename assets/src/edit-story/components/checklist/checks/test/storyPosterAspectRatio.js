@@ -21,29 +21,28 @@ import { storyPosterAspectRatio } from '../storyPosterAspectRatio';
 
 describe('storyPosterAspectRatio', () => {
   it("should return true if the story's poster image has the wrong ratio", () => {
-    const testStory = {
-      id: 456,
-      featuredMedia: { height: 960, width: 960, url: 'featured-media.com/img' },
+    const testFeaturedMedia = {
+      height: 960,
+      width: 960,
+      url: 'featured-media.com/img',
     };
     const testHappy = storyPosterAspectRatio({
-      id: 345,
-      featuredMedia: {
-        url: 'featured-media.com/img',
-        height: 960,
-        width: 720,
-      },
+      url: 'featured-media.com/img',
+      height: 960,
+      width: 720,
     });
-    const test = storyPosterAspectRatio(testStory);
+    const test = storyPosterAspectRatio(testFeaturedMedia);
     expect(testHappy).toBe(false);
     expect(test).toBe(true);
   });
   it('should return false for a story with the correct poster image size.', () => {
-    const testStory = {
-      id: 456,
-      featuredMedia: { height: 853, width: 640, url: 'featured-media.com/img' },
+    const testFeaturedMedia = {
+      height: 853,
+      width: 640,
+      url: 'featured-media.com/img',
     };
 
-    const test = storyPosterAspectRatio(testStory);
+    const test = storyPosterAspectRatio(testFeaturedMedia);
     expect(test).toBe(false);
   });
 });

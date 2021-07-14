@@ -20,35 +20,23 @@
 import { publisherLogoSize } from '../publisherLogoSize';
 
 describe('publisherLogoSize', () => {
-  it("should return an error-type guidance message if the story's publisher logo is too small", () => {
-    const testHeightStory = {
-      id: 123,
-      publisherLogo: {
-        height: 1,
-        width: 96,
-      },
+  it("should return true if the story's publisher logo is too small", () => {
+    const testHeightPublisherLogo = {
+      height: 1,
+      width: 96,
     };
-    const testWidthStory = {
-      id: 345,
-      publisherLogo: {
-        width: 1,
-        height: 96,
-      },
+    const testWidthPublisherLogo = {
+      width: 1,
+      height: 96,
     };
-    const testStory = {
-      id: 456,
-      publisherLogo: { height: 1, width: 1 },
-    };
+    const testPublisherLogo = { height: 1, width: 1 };
     const testHappy = publisherLogoSize({
-      id: 345,
-      publisherLogo: {
-        height: 96,
-        width: 96,
-      },
+      height: 96,
+      width: 96,
     });
-    const testHeight = publisherLogoSize(testHeightStory);
-    const testWidth = publisherLogoSize(testWidthStory);
-    const test = publisherLogoSize(testStory);
+    const testHeight = publisherLogoSize(testHeightPublisherLogo);
+    const testWidth = publisherLogoSize(testWidthPublisherLogo);
+    const test = publisherLogoSize(testPublisherLogo);
     expect(testHappy).toBe(false);
     expect(testHeight).toBe(true);
     expect(testWidth).toBe(true);
