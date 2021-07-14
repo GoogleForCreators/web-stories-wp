@@ -1,0 +1,168 @@
+diff --git a/node_modules/html-to-image/.DS_Store b/node_modules/html-to-image/.DS_Store
+new file mode 100644
+index 0000000..e1057f2
+Binary files /dev/null and b/node_modules/html-to-image/.DS_Store differ
+diff --git a/node_modules/html-to-image/dist/html-to-image.js b/node_modules/html-to-image/dist/html-to-image.js
+index 9e908f8..0efad58 100644
+--- a/node_modules/html-to-image/dist/html-to-image.js
++++ b/node_modules/html-to-image/dist/html-to-image.js
+@@ -1,2 +1,2 @@
+-!function(t){"function"==typeof define&&define.amd?define(t):t()}((function(){"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.getWebFontEmbedCss=exports.toBlob=exports.toJpeg=exports.toPng=exports.toPixelData=exports.toCanvas=exports.toSvgDataURL=exports.toSvg=void 0;var t=require("tslib"),e=require("./cloneNode"),n=require("./embedImages"),r=require("./embedWebFonts"),i=require("./createSvgDataURL"),o=require("./applyStyleWithOptions"),a=require("./util");function u(t,e){return void 0===e&&(e={}),{width:e.width||a.getNodeWidth(t),height:e.height||a.getNodeHeight(t)}}function d(a,d){return void 0===d&&(d={}),t.__awaiter(this,void 0,void 0,(function(){var h,s,c;return t.__generator(this,(function(t){return h=u(a,d),s=h.width,c=h.height,[2,e.cloneNode(a,d.filter,!0).then((function(t){return r.embedWebFonts(t,d)})).then((function(t){return n.embedImages(t,d)})).then((function(t){return o.applyStyleWithOptions(t,d)})).then((function(t){return i.createSvgDataURL(t,s,c)}))]}))}))}function h(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,d(e,n).then(a.createImage).then(a.delay(100)).then((function(t){var r=document.createElement("canvas"),i=r.getContext("2d"),o=n.pixelRatio||a.getPixelRatio(),d=u(e,n),h=d.width,s=d.height,c=n.canvasWidth||h,g=n.canvasHeight||s;return r.width=c*o,r.height=g*o,r.style.width=""+c,r.style.height=""+g,n.backgroundColor&&(i.fillStyle=n.backgroundColor,i.fillRect(0,0,r.width,r.height)),i.drawImage(t,0,0,r.width,r.height),r}))]}))}))}exports.toSvg=d,exports.toSvgDataURL=d,exports.toCanvas=h,exports.toPixelData=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){var r,i,o;return t.__generator(this,(function(t){return r=u(e,n),i=r.width,o=r.height,[2,h(e,n).then((function(t){return t.getContext("2d").getImageData(0,0,i,o).data}))]}))}))},exports.toPng=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,h(e,n).then((function(t){return t.toDataURL()}))]}))}))},exports.toJpeg=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,h(e,n).then((function(t){return t.toDataURL("image/jpeg",n.quality||1)}))]}))}))},exports.toBlob=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,h(e,n).then(a.canvasToBlob)]}))}))},exports.getWebFontEmbedCss=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,r.getWebFontCss(e,n)]}))}))}}));
++alert('dist');!function(t){"function"==typeof define&&define.amd?define(t):t()}((function(){"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.getWebFontEmbedCss=exports.toBlob=exports.toJpeg=exports.toPng=exports.toPixelData=exports.toCanvas=exports.toSvgDataURL=exports.toSvg=void 0;var t=require("tslib"),e=require("./cloneNode"),n=require("./embedImages"),r=require("./embedWebFonts"),i=require("./createSvgDataURL"),o=require("./applyStyleWithOptions"),a=require("./util");function u(t,e){return void 0===e&&(e={}),{width:e.width||a.getNodeWidth(t),height:e.height||a.getNodeHeight(t)}}function d(a,d){return void 0===d&&(d={}),t.__awaiter(this,void 0,void 0,(function(){var h,s,c;return t.__generator(this,(function(t){return h=u(a,d),s=h.width,c=h.height,[2,e.cloneNode(a,d.filter,!0).then((function(t){return r.embedWebFonts(t,d)})).then((function(t){return n.embedImages(t,d)})).then((function(t){return o.applyStyleWithOptions(t,d)})).then((function(t){return i.createSvgDataURL(t,s,c)}))]}))}))}function h(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,d(e,n).then(a.createImage).then(a.delay(100)).then((function(t){var r=document.createElement("canvas"),i=r.getContext("2d"),o=n.pixelRatio||a.getPixelRatio(),d=u(e,n),h=d.width,s=d.height,c=n.canvasWidth||h,g=n.canvasHeight||s;return r.width=c*o,r.height=g*o,r.style.width=""+c,r.style.height=""+g,n.backgroundColor&&(i.fillStyle=n.backgroundColor,i.fillRect(0,0,r.width,r.height)),i.drawImage(t,0,0,r.width,r.height),r}))]}))}))}exports.toSvg=d,exports.toSvgDataURL=d,exports.toCanvas=h,exports.toPixelData=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){var r,i,o;return t.__generator(this,(function(t){return r=u(e,n),i=r.width,o=r.height,[2,h(e,n).then((function(t){return t.getContext("2d").getImageData(0,0,i,o).data}))]}))}))},exports.toPng=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,h(e,n).then((function(t){return t.toDataURL()}))]}))}))},exports.toJpeg=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,h(e,n).then((function(t){return t.toDataURL("image/jpeg",n.quality||1)}))]}))}))},exports.toBlob=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,h(e,n).then(a.canvasToBlob)]}))}))},exports.getWebFontEmbedCss=function(e,n){return void 0===n&&(n={}),t.__awaiter(this,void 0,void 0,(function(){return t.__generator(this,(function(t){return[2,r.getWebFontCss(e,n)]}))}))}}));
+ //# sourceMappingURL=html-to-image.js.map
+diff --git a/node_modules/html-to-image/es/.DS_Store b/node_modules/html-to-image/es/.DS_Store
+new file mode 100644
+index 0000000..5008ddf
+Binary files /dev/null and b/node_modules/html-to-image/es/.DS_Store differ
+diff --git a/node_modules/html-to-image/es/cloneNode.d.ts b/node_modules/html-to-image/es/cloneNode.d.ts
+index 2087764..85099a3 100644
+--- a/node_modules/html-to-image/es/cloneNode.d.ts
++++ b/node_modules/html-to-image/es/cloneNode.d.ts
+@@ -1 +1,2 @@
+-export declare function cloneNode(nativeNode: HTMLElement, filter?: Function, isRoot?: boolean): Promise<HTMLElement | null>;
++import { Options } from './index';
++export declare function cloneNode(nativeNode: HTMLElement, options: Options, isRoot?: boolean): Promise<HTMLElement | null>;
+diff --git a/node_modules/html-to-image/es/cloneNode.js b/node_modules/html-to-image/es/cloneNode.js
+index cf675d4..81a7263 100644
+--- a/node_modules/html-to-image/es/cloneNode.js
++++ b/node_modules/html-to-image/es/cloneNode.js
+@@ -8,8 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
+     });
+ };
+ import { clonePseudoElements } from './clonePseudoElements';
+-import { createImage, toArray } from './util';
+-function cloneSingleNode(node) {
++import { getBlobFromURL } from './getBlobFromURL';
++import { createImage, toArray, toDataURL, getMimeType } from './util';
++function cloneSingleNode(node, options) {
+     return __awaiter(this, void 0, void 0, function* () {
+         if (node instanceof HTMLCanvasElement) {
+             const dataURL = node.toDataURL();
+@@ -18,6 +19,12 @@ function cloneSingleNode(node) {
+             }
+             return createImage(dataURL);
+         }
++        if (node instanceof HTMLVideoElement) {
++            return Promise.resolve(node.poster)
++                .then((url) => getBlobFromURL(url, options))
++                .then((data) => toDataURL(data.blob, getMimeType(node.poster) || data.contentType))
++                .then(dataURL => createImage(dataURL));
++        }
+         // if (node.tagName && node.tagName.toLowerCase() === 'svg') {
+         //   return Promise.resolve(node as SVGElement)
+         //     .then((svg) => svgToDataURL(svg))
+@@ -26,7 +33,7 @@ function cloneSingleNode(node) {
+         return Promise.resolve(node.cloneNode(false));
+     });
+ }
+-function cloneChildren(nativeNode, clonedNode, filter) {
++function cloneChildren(nativeNode, clonedNode, options) {
+     var _a;
+     return __awaiter(this, void 0, void 0, function* () {
+         const children = toArray(((_a = nativeNode.shadowRoot) !== null && _a !== void 0 ? _a : nativeNode).childNodes);
+@@ -35,7 +42,7 @@ function cloneChildren(nativeNode, clonedNode, filter) {
+         }
+         return children
+             .reduce((done, child) => done
+-            .then(() => cloneNode(child, filter))
++            .then(() => cloneNode(child, options))
+             .then((clonedChild) => {
+             if (clonedChild) {
+                 clonedNode.appendChild(clonedChild);
+@@ -78,14 +85,14 @@ function cloneInputValue(nativeNode, clonedNode) {
+         clonedNode.setAttribute('value', nativeNode.value);
+     }
+ }
+-export function cloneNode(nativeNode, filter, isRoot) {
++export function cloneNode(nativeNode, options, isRoot) {
+     return __awaiter(this, void 0, void 0, function* () {
+-        if (!isRoot && filter && !filter(nativeNode)) {
++        if (!isRoot && options.filter && !options.filter(nativeNode)) {
+             return Promise.resolve(null);
+         }
+         return Promise.resolve(nativeNode)
+-            .then(cloneSingleNode)
+-            .then((clonedNode) => cloneChildren(nativeNode, clonedNode, filter))
++            .then((clonedNode) => cloneSingleNode(clonedNode, options))
++            .then((clonedNode) => cloneChildren(nativeNode, clonedNode, options))
+             .then((clonedNode) => decorate(nativeNode, clonedNode));
+     });
+ }
+diff --git a/node_modules/html-to-image/es/cloneNode.js.map b/node_modules/html-to-image/es/cloneNode.js.map
+index 09082b0..ac74439 100644
+--- a/node_modules/html-to-image/es/cloneNode.js.map
++++ b/node_modules/html-to-image/es/cloneNode.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"cloneNode.js","sourceRoot":"","sources":["../src/cloneNode.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"cloneNode.js","sourceRoot":"","sources":["../src/cloneNode.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/node_modules/html-to-image/es/embedImages.js b/node_modules/html-to-image/es/embedImages.js
+index 37ddb7e..35e1bd6 100644
+--- a/node_modules/html-to-image/es/embedImages.js
++++ b/node_modules/html-to-image/es/embedImages.js
+@@ -40,12 +40,14 @@ function embedImageNode(clonedNode, options) {
+     if (!(clonedNode instanceof HTMLImageElement) || isDataUrl(clonedNode.src)) {
+         return Promise.resolve(clonedNode);
+     }
+-    return Promise.resolve(clonedNode.src)
++    const src = clonedNode.src;
++    return Promise.resolve(src)
+         .then((url) => getBlobFromURL(url, options))
+-        .then((data) => toDataURL(data.blob, getMimeType(clonedNode.src) || data.contentType))
++        .then((data) => toDataURL(data.blob, getMimeType(src) || data.contentType))
+         .then((dataURL) => new Promise((resolve, reject) => {
+         clonedNode.onload = resolve;
+         clonedNode.onerror = reject;
++        clonedNode.srcset = '';
+         clonedNode.src = dataURL;
+     }))
+         .then(() => clonedNode, () => clonedNode);
+diff --git a/node_modules/html-to-image/es/embedImages.js.map b/node_modules/html-to-image/es/embedImages.js.map
+index 4c45fef..d33e87f 100644
+--- a/node_modules/html-to-image/es/embedImages.js.map
++++ b/node_modules/html-to-image/es/embedImages.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"embedImages.js","sourceRoot":"","sources":["../src/embedImages.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"embedImages.js","sourceRoot":"","sources":["../src/embedImages.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/node_modules/html-to-image/es/index.js b/node_modules/html-to-image/es/index.js
+index ddb8dda..21900a0 100644
+--- a/node_modules/html-to-image/es/index.js
++++ b/node_modules/html-to-image/es/index.js
+@@ -13,6 +13,7 @@ import { embedWebFonts, getWebFontCss } from './embedWebFonts';
+ import { createSvgDataURL } from './createSvgDataURL';
+ import { applyStyleWithOptions } from './applyStyleWithOptions';
+ import { delay, createImage, canvasToBlob, getNodeWidth, getNodeHeight, getPixelRatio, } from './util';
++console.log('ts');
+ function getImageSize(domNode, options = {}) {
+     const width = options.width || getNodeWidth(domNode);
+     const height = options.height || getNodeHeight(domNode);
+@@ -21,7 +22,7 @@ function getImageSize(domNode, options = {}) {
+ export function toSvg(domNode, options = {}) {
+     return __awaiter(this, void 0, void 0, function* () {
+         const { width, height } = getImageSize(domNode, options);
+-        return cloneNode(domNode, options.filter, true)
++        return cloneNode(domNode, options, true)
+             .then((clonedNode) => embedWebFonts(clonedNode, options))
+             .then((clonedNode) => embedImages(clonedNode, options))
+             .then((clonedNode) => applyStyleWithOptions(clonedNode, options))
+diff --git a/node_modules/html-to-image/es/index.js.map b/node_modules/html-to-image/es/index.js.map
+index a368d78..39e8c8c 100644
+--- a/node_modules/html-to-image/es/index.js.map
++++ b/node_modules/html-to-image/es/index.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
++{"version":3,"file":"index.js","sourceRoot":"","sources":["../src/index.ts"],"names":[],"mappings":"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"}
+\ No newline at end of file
+diff --git a/node_modules/html-to-image/lib/index.js b/node_modules/html-to-image/lib/index.js
+index b18a4be..3ffa079 100644
+--- a/node_modules/html-to-image/lib/index.js
++++ b/node_modules/html-to-image/lib/index.js
+@@ -1,3 +1,4 @@
++alert('lib');
+ "use strict";
+ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
