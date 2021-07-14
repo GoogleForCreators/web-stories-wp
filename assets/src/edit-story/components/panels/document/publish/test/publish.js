@@ -124,7 +124,9 @@ describe('PublishPanel', () => {
 
     fireEvent.click(element);
     await waitFor(() =>
-      expect(screen.getByRole('button', { name: 'January 2020' })).toBeDefined()
+      expect(
+        screen.getByRole('button', { name: 'January 2020' })
+      ).toBeInTheDocument()
     );
   });
 

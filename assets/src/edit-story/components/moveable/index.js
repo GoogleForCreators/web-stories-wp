@@ -28,7 +28,7 @@ const DEFAULT_Z_INDEX = 10;
 
 const Moveable = lazy(() =>
   import(
-    /* webpackPrefetch: true */ /* webpackChunkName: "chunk-react-moveable" */ 'react-moveable'
+    /* webpackPrefetch: true, webpackChunkName: "chunk-react-moveable" */ 'react-moveable'
   )
 );
 function MoveableWithRef({ ...moveableProps }, ref) {
