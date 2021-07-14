@@ -66,6 +66,7 @@ function Element({
   margin,
   onInsert,
   providerType,
+  hasUploadMediaAction,
 }) {
   const {
     id: resourceId,
@@ -209,7 +210,7 @@ function Element({
         {local && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
-        {providerType === 'local' && (
+        {providerType === 'local' && hasUploadMediaAction && (
           <DropDownMenu
             resource={resource}
             display={active}
@@ -232,6 +233,7 @@ Element.propTypes = {
   margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
+  hasUploadMediaAction: PropTypes.bool,
 };
 
 /**
@@ -269,10 +271,12 @@ MediaElement.propTypes = {
   margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
+  hasUploadMediaAction: PropTypes.bool,
 };
 
 MediaElement.defaultProps = {
   providerType: 'local',
+  hasUploadMediaAction: false,
 };
 
 export default memo(MediaElement);
