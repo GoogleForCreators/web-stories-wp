@@ -86,6 +86,7 @@ export default function useSettingsApi(
       publisherLogoToMakeDefault,
       videoCache,
     }) => {
+      dispatch({ type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_REQUESTED });
       try {
         const query = {};
         if (googleAnalyticsId !== undefined) {

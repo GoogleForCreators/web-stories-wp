@@ -19,30 +19,36 @@
  */
 import { useEffect } from 'react';
 import { useSnackbar } from '@web-stories-wp/design-system';
-
+import { useDebouncedCallback } from 'use-debounce';
 /**
  * Internal dependencies
  */
+import { SUCCESS } from '../textContent';
 import useApi from './useApi';
 
 function useApiAlerts() {
-  const { storyError, templateError, settingsError, mediaError } = useApi(
-    ({
-      state: {
-        stories: { error: storyError },
-        templates: { error: templateError },
-        settings: { error: settingsError },
-        media: { error: mediaError },
-      },
-    }) => ({
-      storyError,
-      templateError,
-      settingsError,
-      mediaError,
-    })
-  );
+  const { storyError, templateError, settingsError, mediaError, settingSaved } =
+    useApi(
+      ({
+        state: {
+          stories: { error: storyError },
+          templates: { error: templateError },
+          settings: { error: settingsError, settingSaved },
+          media: { error: mediaError },
+        },
+      }) => ({
+        storyError,
+        templateError,
+        settingsError,
+        mediaError,
+        settingSaved,
+      })
+    );
   const { showSnackbar } = useSnackbar();
 
+  const debouncedShowSnackbar = useDebouncedCallback((message) => {
+    return showSnackbar({ message, dismissable: true });
+  }, 200);
   // if there is an API error, display a snackbar
   useEffect(() => {
     if (storyError?.id) {
@@ -70,6 +76,12 @@ function useApiAlerts() {
       });
     }
   }, [settingsError, showSnackbar]);
+
+  useEffect(() => {
+    if (settingSaved) {
+      debouncedShowSnackbar(SUCCESS.SETTINGS.UPDATED);
+    }
+  }, [debouncedShowSnackbar, settingSaved]);
 
   useEffect(() => {
     if (mediaError?.id) {

@@ -22,6 +22,7 @@ import { AD_NETWORK_TYPE } from '../../constants';
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
   UPDATE_SETTINGS_FAILURE: 'update_settings_failure',
+  UPDATE_SETTINGS_REQUESTED: 'update_settings_requested',
   FETCH_SETTINGS_SUCCESS: 'fetch_settings_success',
   FETCH_SETTINGS_FAILURE: 'fetch_settings_failure',
 };
@@ -36,10 +37,18 @@ export const defaultSettingsState = {
   adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
   videoCache: false,
+  settingSaved: false,
 };
 
 function settingsReducer(state, action) {
   switch (action.type) {
+    case ACTION_TYPES.UPDATE_SETTINGS_REQUESTED: {
+      return {
+        ...state,
+        settingSaved: false,
+      };
+    }
+
     case ACTION_TYPES.UPDATE_SETTINGS_FAILURE:
     case ACTION_TYPES.FETCH_SETTINGS_FAILURE: {
       return {
@@ -48,12 +57,32 @@ function settingsReducer(state, action) {
       };
     }
 
-    case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS:
     case ACTION_TYPES.FETCH_SETTINGS_SUCCESS: {
       return {
         ...state,
         activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
+        googleAnalyticsId: action.payload.googleAnalyticsId,
+        adSensePublisherId: action.payload.adSensePublisherId,
+        adSenseSlotId: action.payload.adSenseSlotId,
+        adManagerSlotId: action.payload.adManagerSlotId,
+        adNetwork: action.payload.adNetwork,
+        publisherLogoIds: [
+          ...new Set([
+            action.payload.activePublisherLogoId,
+            ...action.payload.publisherLogoIds,
+          ]),
+        ],
+        videoCache: action.payload.videoCache,
+      };
+    }
+
+    case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS: {
+      return {
+        ...state,
+        activePublisherLogoId: action.payload.activePublisherLogoId,
+        error: {},
+        settingSaved: true,
         googleAnalyticsId: action.payload.googleAnalyticsId,
         adSensePublisherId: action.payload.adSensePublisherId,
         adSenseSlotId: action.payload.adSenseSlotId,
