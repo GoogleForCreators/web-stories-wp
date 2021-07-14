@@ -255,18 +255,6 @@ class Experiments extends Service_Base {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: 6148
-			 * Creation date: 2021-05-11
-			 */
-			[
-				'name'        => 'enableQuickActionMenus',
-				'label'       => __( 'Quick action menus', 'web-stories' ),
-				'description' => __( 'Enable a contextual shortcut menu to side of canvas in editor', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 6708
 			 * Creation date: 2021-03-23
