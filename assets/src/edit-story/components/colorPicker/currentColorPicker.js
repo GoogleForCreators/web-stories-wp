@@ -17,12 +17,34 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  lazy,
+  Suspense,
+} from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
+
+const Saturation = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.Saturation }))
+);
+const Hue = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.Hue }))
+);
+const Alpha = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.Alpha }))
+);
 
 /**
  * Internal dependencies
@@ -150,49 +172,51 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   return (
     <Container>
       <Body showOpacity={showOpacity}>
-        <SaturationWrapper>
-          <Saturation
-            radius="8px"
-            pointer={() => (
-              <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
-            )}
-            hsl={hsl}
-            hsv={hsv}
-            onChange={onChange}
-          />
-        </SaturationWrapper>
-        <HueWrapper>
-          <Hue
-            direction="horizontal"
-            height={`${CONTROLS_HEIGHT}px`}
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => (
-              <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
-            )}
-            hsl={hsl}
-            onChange={onChange}
-          />
-        </HueWrapper>
-        {showOpacity && (
-          <AlphaWrapper>
-            <Alpha
+        <Suspense fallback={null}>
+          <SaturationWrapper>
+            <Saturation
+              radius="8px"
+              pointer={() => (
+                <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
+              )}
+              hsl={hsl}
+              hsv={hsv}
+              onChange={onChange}
+            />
+          </SaturationWrapper>
+          <HueWrapper>
+            <Hue
               direction="horizontal"
               height={`${CONTROLS_HEIGHT}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
               pointer={() => (
-                <Pointer
-                  offsetX={-12}
-                  offsetY={1}
-                  currentColor={rgb}
-                  withAlpha
-                />
+                <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
               )}
-              rgb={rgb}
               hsl={hsl}
               onChange={onChange}
             />
-          </AlphaWrapper>
-        )}
+          </HueWrapper>
+          {showOpacity && (
+            <AlphaWrapper>
+              <Alpha
+                direction="horizontal"
+                height={`${CONTROLS_HEIGHT}px`}
+                radius={`${CONTROLS_BORDER_RADIUS}px`}
+                pointer={() => (
+                  <Pointer
+                    offsetX={-12}
+                    offsetY={1}
+                    currentColor={rgb}
+                    withAlpha
+                  />
+                )}
+                rgb={rgb}
+                hsl={hsl}
+                onChange={onChange}
+              />
+            </AlphaWrapper>
+          )}
+        </Suspense>
       </Body>
       <Footer>
         {enableEyedropper && (

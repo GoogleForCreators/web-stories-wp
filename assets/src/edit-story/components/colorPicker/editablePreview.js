@@ -19,13 +19,25 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { EditableInput } from 'react-color/lib/components/common';
-import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useLayoutEffect,
+  useState,
+  lazy,
+} from 'react';
 import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
+
+const EditableInput = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.EditableInput }))
+);
 
 /**
  * Internal dependencies
