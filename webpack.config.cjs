@@ -257,11 +257,7 @@ const editorAndDashboard = {
     ...sharedConfig.optimization,
     splitChunks: {
       ...sharedConfig.optimization.splitChunks,
-      chunks(chunk) {
-        // Don't create extra chunk for this Safari-only polyfill.
-        // See https://github.com/google/web-stories-wp/pull/7742
-        return chunk.name !== 'chunk-resize-observer-polyfill';
-      },
+      chunks: 'all'
     },
   },
 };
