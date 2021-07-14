@@ -20,37 +20,29 @@ import { storyPosterPortraitSize } from '../storyPosterPortraitSize';
 
 describe('storyPosterPortraitSize', () => {
   it("should return true if the story's poster image is too small", () => {
-    const testHeightStory = {
-      id: 123,
-      featuredMedia: {
-        url: 'featured-media.com/img',
-        height: 1,
-        width: 640,
-      },
+    const testHeightFeaturedMedia = {
+      url: 'featured-media.com/img',
+      height: 1,
+      width: 640,
     };
-    const testWidthStory = {
-      id: 345,
-      featuredMedia: {
-        url: 'featured-media.com/img',
-        width: 1,
-        height: 853,
-      },
+    const testWidthFeaturedMedia = {
+      url: 'featured-media.com/img',
+      width: 1,
+      height: 853,
     };
-    const testStory = {
-      id: 456,
-      featuredMedia: { height: 1, width: 1, url: 'featured-media.com/img' },
+    const testFeaturedMedia = {
+      height: 1,
+      width: 1,
+      url: 'featured-media.com/img',
     };
     const testHappy = storyPosterPortraitSize({
-      id: 345,
-      featuredMedia: {
-        url: 'featured-media.com/img',
-        height: 853,
-        width: 640,
-      },
+      url: 'featured-media.com/img',
+      height: 853,
+      width: 640,
     });
-    const testHeight = storyPosterPortraitSize(testHeightStory);
-    const testWidth = storyPosterPortraitSize(testWidthStory);
-    const test = storyPosterPortraitSize(testStory);
+    const testHeight = storyPosterPortraitSize(testHeightFeaturedMedia);
+    const testWidth = storyPosterPortraitSize(testWidthFeaturedMedia);
+    const test = storyPosterPortraitSize(testFeaturedMedia);
     expect(testHappy).toBe(false);
     expect(testHeight).toBe(true);
     expect(testWidth).toBe(true);

@@ -22,12 +22,11 @@ describe('filterStoryElements', () => {
   it('returns array of passing elements with pageId property appended', () => {
     expect(
       filterStoryElements(
-        {
-          pages: [
-            { id: 1, elements: [{ id: 'a' }, { id: 'b' }, { id: 'c' }] },
-            { id: 2, elements: [{ id: 'd' }, { id: 'e' }] },
-          ],
-        },
+        [
+          { id: 1, elements: [{ id: 'a' }, { id: 'b' }, { id: 'c' }] },
+          { id: 2, elements: [{ id: 'd' }, { id: 'e' }] },
+        ],
+
         (element) => ['b', 'c', 'd'].includes(element.id)
       )
     ).toStrictEqual([
@@ -39,12 +38,7 @@ describe('filterStoryElements', () => {
 
   it('returns an empty array if story has no elements', () => {
     expect(
-      filterStoryElements(
-        {
-          pages: [{ id: 1 }, { id: 2 }],
-        },
-        () => true
-      )
+      filterStoryElements([{ id: 1 }, { id: 2 }], () => true)
     ).toStrictEqual([]);
   });
 });

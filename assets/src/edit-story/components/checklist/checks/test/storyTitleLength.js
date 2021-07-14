@@ -21,16 +21,12 @@ import { storyTitleLength } from '../storyTitleLength';
 
 describe('storyTitleLength', () => {
   it('should return true if the story title is longer than 40 characters', () => {
-    const testStory = {
-      id: 123,
-      title:
-        'If you want to make an apple pie from scratch, you must first create the universe.',
-    };
-    const testFalse = storyTitleLength({
-      id: 345,
-      title: 'Once, there was a man from Nantucket...',
-    });
-    const test = storyTitleLength(testStory);
+    const testTitle =
+      'If you want to make an apple pie from scratch, you must first create the universe.';
+    const testFalse = storyTitleLength(
+      'Once, there was a man from Nantucket...'
+    );
+    const test = storyTitleLength(testTitle);
     expect(test).toBe(true);
     expect(testFalse).toBe(false);
   });

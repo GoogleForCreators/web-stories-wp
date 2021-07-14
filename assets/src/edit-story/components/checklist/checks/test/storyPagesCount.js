@@ -19,22 +19,10 @@
 import { storyPagesCount } from '../storyPagesCount';
 
 describe('storyPagesCount', () => {
-  it('should return guidance if story has less than 4 pages or more than 30 pages', () => {
-    const storyTooShort = storyPagesCount({
-      id: 123,
-      title: 'Publishers HATE her!',
-      pages: new Array(3),
-    });
-    const storyTooLong = storyPagesCount({
-      id: 456,
-      title: 'Carrot Cake Recipe',
-      pages: new Array(31),
-    });
-    const testUndefined = storyPagesCount({
-      id: 567,
-      title: "World's best banana bread",
-      pages: new Array(20),
-    });
+  it('should return true if story has less than 4 pages or more than 30 pages', () => {
+    const storyTooShort = storyPagesCount(3);
+    const storyTooLong = storyPagesCount(31);
+    const testUndefined = storyPagesCount(20);
 
     expect(storyTooShort).toBe(true);
 

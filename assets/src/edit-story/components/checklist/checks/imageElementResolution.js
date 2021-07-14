@@ -67,10 +67,10 @@ function gifElementResolution(element) {
 }
 
 const ImageElementResolution = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingElements = useMemo(
-    () => filterStoryElements(story, mediaElementResolution),
-    [story]
+    () => filterStoryElements(pages, mediaElementResolution),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
