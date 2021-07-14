@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import {fireEvent, waitFor} from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import { createSolid } from '@web-stories-wp/patterns';
+
 /**
  * Internal dependencies
  */

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, screen, act } from '@testing-library/react';
+import { waitFor, fireEvent, act } from '@testing-library/react';
 import { createSolid } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
