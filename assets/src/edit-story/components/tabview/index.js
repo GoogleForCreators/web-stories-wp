@@ -182,42 +182,51 @@ function TabView({
   const { isRTL } = useConfig();
 
   const ref = useRef();
+  const focused = useRef();
   const internalTabRefs = useRef({}); // fallback if tabRefs aren't passed in
 
-  const tabChanged = useCallback(
+  const focusChanged = useCallback(
     (id) => {
       if (tabRefs[id]?.current) {
         tabRefs[id].current?.focus();
       } else if (internalTabRefs?.current[id]) {
         internalTabRefs.current[id]?.focus();
       }
+      focused.current = id;
+    },
+    [tabRefs]
+  );
+
+  const selectTab = useCallback(
+    (id) => {
+      focusChanged(id);
       onTabChange(id);
     },
-    [tabRefs, onTabChange]
+    [focusChanged, onTabChange]
   );
 
   useGlobalKeyDownEffect(
     { key: shortcut, editable: true },
-    () => tabChanged(tab),
-    [tabChanged, tab]
+    () => selectTab(tab),
+    [selectTab, tab]
   );
 
-  const selectTabByIndex = useCallback(
+  const focusTabByIndex = useCallback(
     (index) => {
       // Index wraps, so -1 is last element
       const nextTab = tabs[(index + tabs.length) % tabs.length];
-      tabChanged(nextTab.id);
+      focusChanged(nextTab.id);
     },
-    [tabs, tabChanged]
+    [tabs, focusChanged]
   );
 
   const handleNavigation = useCallback(
     (direction) => {
       const directionWithRTL = isRTL ? -direction : direction;
-      const currentIndex = tabs.findIndex(({ id }) => id === tab);
-      selectTabByIndex(currentIndex + directionWithRTL);
+      const currentIndex = tabs.findIndex(({ id }) => id === focused.current);
+      focusTabByIndex(currentIndex + directionWithRTL);
     },
-    [isRTL, tab, tabs, selectTabByIndex]
+    [isRTL, tabs, focusTabByIndex]
   );
 
   // Left-right keys navigate to next tab
@@ -228,8 +237,13 @@ function TabView({
   useKeyDownEffect(ref, ['up', 'down'], () => {}, []);
 
   // Home/end keys navigate to first/last tab regardless of direction
-  useKeyDownEffect(ref, 'home', () => selectTabByIndex(0), [selectTabByIndex]);
-  useKeyDownEffect(ref, 'end', () => selectTabByIndex(-1), [selectTabByIndex]);
+  useKeyDownEffect(ref, 'home', () => focusTabByIndex(0), [focusTabByIndex]);
+  useKeyDownEffect(ref, 'end', () => focusTabByIndex(-1), [focusTabByIndex]);
+
+  // Enter/space to select currently focused tab.
+  useKeyDownEffect(ref, ['enter', 'space'], () => selectTab(focused.current), [
+    selectTab,
+  ]);
 
   return (
     <Tabs aria-label={label} ref={ref} {...rest}>
@@ -247,7 +261,10 @@ function TabView({
           isActive={tab === id}
           aria-controls={getAriaControlsId ? getAriaControlsId(id) : null}
           aria-selected={tab === id}
-          onClick={() => tabChanged(id)}
+          onClick={() => selectTab(id)}
+          onFocus={() => {
+            focused.current = tab;
+          }}
           {...tabRest}
         >
           {Boolean(title) && <TabText>{title}</TabText>}
