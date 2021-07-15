@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -24,15 +20,8 @@ import styled from 'styled-components';
 import PagePreview from '../../carousel/pagepreview';
 import { THUMBNAIL_TYPES, THUMBNAIL_DIMENSIONS } from '..';
 
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-`;
-
 const LayerIconImageOutput = (
-  <Image
+  <img
     src="http://placekitten.com/200/300"
     alt="a cute little kitten"
     height="20"
@@ -41,7 +30,7 @@ const LayerIconImageOutput = (
 );
 
 const LayerIconVideoOutput = (
-  <Image
+  <img
     src="https://storage.coverr.co/p/rhOM3iuhDqxedD7lKLpPO34yN2lhf5Kk"
     alt="media/coverr:hWGAKF358u"
     width="28"

@@ -107,6 +107,18 @@ export const Background = styled.div(
     display: flex;
     border-radius: ${theme.borders.radius.small};
 
+    /*
+    Only reach one level deep so that images and videos
+    in stories are not affected.
+    */
+    & > img,
+    & > video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: ${theme.borders.radius.small};
+    }
+
     & > div {
       display: flex;
       height: 100%;
