@@ -90,6 +90,7 @@ async function getTemplates(imageBaseUrl) {
     'pride-month-watchlist',
     'honeymooning-in-italy',
     'ace-hotel-kyoto-review',
+    'how-video-calls-saved-the-day',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

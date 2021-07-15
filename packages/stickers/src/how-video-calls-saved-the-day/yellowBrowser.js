@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Browser', 'sticker name', 'web-stories');
+const title = _x('Yellow Browser', 'sticker name', 'web-stories');
 
-function BrowserIcon({ style }) {
+function YellowBrowserIcon({ style }) {
   return (
     <svg
       style={style}
@@ -82,12 +82,12 @@ function BrowserIcon({ style }) {
   );
 }
 
-BrowserIcon.propTypes = {
+YellowBrowserIcon.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 52 / 37,
-  svg: BrowserIcon,
+  svg: YellowBrowserIcon,
   title,
 };

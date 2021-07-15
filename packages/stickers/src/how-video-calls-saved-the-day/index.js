@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { default as videoCallsBrowserIcon } from './browser';
-import { default as videoCallsTooltip } from './tooltip';
+import { default as videoCallsBrowserIcon } from './yellowBrowser';
+import { default as videoCallsTooltip } from './chatBox';
 
 export { videoCallsBrowserIcon, videoCallsTooltip };

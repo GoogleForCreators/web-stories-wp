@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Tooltip', 'sticker name', 'web-stories');
+const title = _x('Chat Box', 'sticker name', 'web-stories');
 
-function Tooltip({ style }) {
+function Chatbox({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function Tooltip({ style }) {
   );
 }
 
-Tooltip.propTypes = {
+Chatbox.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 44 / 20,
-  svg: Tooltip,
+  svg: Chatbox,
   title,
 };
