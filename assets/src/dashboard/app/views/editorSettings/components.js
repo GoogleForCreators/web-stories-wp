@@ -109,8 +109,8 @@ export const Error = styled(CenterMutedText)`
 
 export const UploadedContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px);
-  grid-auto-rows: 100px;
+  grid-template-columns: repeat(auto-fill, 102px);
+  grid-auto-rows: 102px;
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   padding-bottom: 20px;
