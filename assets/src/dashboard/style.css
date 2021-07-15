@@ -60,7 +60,7 @@ body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
   text-align: center;
   color: #131516;
   margin: 0;
-  padding-top: 15vh;
+  padding-top: 50px;
   font-size: 36px;
 }
 
@@ -119,7 +119,7 @@ body.web-story_page_stories-dashboard
   top: 0;
   right: 0;
   bottom: 0;
-  margin: 16% auto auto;
+  margin: 140px auto auto;
   width: 0.4em;
   height: 0.4em;
   border-radius: 50%;
