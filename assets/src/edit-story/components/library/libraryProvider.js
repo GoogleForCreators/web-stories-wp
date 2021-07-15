@@ -31,7 +31,6 @@ import { useHighlights } from '../../app/highlights';
 import Context from './context';
 import {
   ELEMS,
-  LAZY_TABS,
   MEDIA,
   MEDIA3P,
   PAGE_TEMPLATES,
@@ -40,9 +39,7 @@ import {
 } from './constants';
 
 const LIBRARY_TAB_IDS = new Set(
-  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT]
-    .map((tab) => tab.id)
-    .concat(LAZY_TABS)
+  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT].map((tab) => tab.id)
 );
 
 function LibraryProvider({ children }) {
