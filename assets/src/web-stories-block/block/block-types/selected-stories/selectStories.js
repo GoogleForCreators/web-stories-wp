@@ -286,7 +286,7 @@ function SelectStories({
       )}
       <div className="web-stories-story-picker-filter__Load_more">
         {isLoading && <Spinner />}
-        {!hasAllStories && (
+        {!hasAllStories && stories.length > 0 && (
           <Button
             variant="primary"
             className="is-primary"

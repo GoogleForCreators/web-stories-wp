@@ -104,6 +104,11 @@ const StoriesInspectorControls = (props) => {
       }
     });
 
+    // Prevent unnecessary changes if `defaultState` is empty.
+    if (!Object.keys(defaultState).length) {
+      return;
+    }
+
     setAttributes({
       fieldState: {
         ...fieldState,
@@ -119,15 +124,14 @@ const StoriesInspectorControls = (props) => {
       return;
     }
 
-    // Set default field state on load.
-    const defaultViewState = {};
+    const defaultState = {};
     Object.entries(fieldStates[viewType]).map(([field, fieldObj]) => {
       const { show } = fieldObj;
-      defaultViewState[`show_${field}`] = show;
+      defaultState[`show_${field}`] = show;
     });
 
     setAttributes({
-      fieldState: defaultViewState,
+      fieldState: defaultState,
     });
   }, [viewType]); // eslint-disable-line react-hooks/exhaustive-deps -- We only want to set the values on viewType change.
 
