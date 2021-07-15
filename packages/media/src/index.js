@@ -35,3 +35,4 @@ export { default as getTypeFromMime } from './getTypeFromMime';
 export { default as preloadImage } from './preloadImage';
 export { default as resourceList } from './resourceList';
 export { default as isAnimatedGif } from './isAnimatedGif';
+export { default as hasVideoGotAudio } from './hasVideoGotAudio';

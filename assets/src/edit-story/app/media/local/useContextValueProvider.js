@@ -29,6 +29,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import getResourceFromAttachment from '../utils/getResourceFromAttachment';
+import useVideoIsMuted from '../utils/useVideoIsMuted';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -119,6 +120,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateVideoIsMuted } = useVideoIsMuted({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
@@ -161,6 +166,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const { optimizeVideo, optimizeGif } = useProcessMedia({
     uploadVideoPoster,
+    updateVideoIsMuted,
     uploadMedia,
     updateMedia,
     deleteMediaElement,
@@ -204,6 +210,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
+      updateVideoIsMuted,
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,

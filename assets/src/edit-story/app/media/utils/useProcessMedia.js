@@ -27,6 +27,7 @@ import useStory from '../../story/useStory';
 function useProcessMedia({
   uploadMedia,
   uploadVideoPoster,
+  updateVideoIsMuted,
   updateMedia,
   deleteMediaElement,
 }) {
@@ -103,6 +104,9 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
+        if ('video' === resource.type && !resource.local) {
+          updateVideoIsMuted(resource.id, resource.src);
+        }
         if (
           ['video', 'gif'].includes(resource.type) &&
           !resource.local &&
@@ -141,6 +145,7 @@ function useProcessMedia({
       copyResourceData,
       uploadMedia,
       uploadVideoPoster,
+      updateVideoIsMuted,
       updateOldObject,
       deleteMediaElement,
       updateExistingElements,

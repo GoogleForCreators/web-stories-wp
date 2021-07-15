@@ -107,6 +107,7 @@ function MediaPane(props) {
     setMediaType,
     setSearchTerm,
     uploadVideoPoster,
+    updateVideoIsMuted,
     totalItems,
     optimizeVideo,
     optimizeGif,
@@ -127,6 +128,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        updateVideoIsMuted,
         optimizeVideo,
         optimizeGif,
       },
@@ -144,6 +146,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        updateVideoIsMuted,
         optimizeVideo,
         optimizeGif,
       };
@@ -218,6 +221,12 @@ function MediaPane(props) {
         resource,
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
+      if (
+        !resource.local &&
+        allowedVideoMimeTypes.includes(resource.mimeType)
+      ) {
+        updateVideoIsMuted(resource.id, resource.src);
+      }
 
       if (
         !resource.posterId &&
