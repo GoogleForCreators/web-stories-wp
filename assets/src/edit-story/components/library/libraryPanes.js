@@ -55,7 +55,7 @@ function LibraryPanes() {
     };
 
     if (!isActive) {
-      return <Pane {...paneProps} />;
+      return <Pane key={id} {...paneProps} />;
     }
 
     switch (id) {
