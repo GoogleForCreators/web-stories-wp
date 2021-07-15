@@ -18,7 +18,7 @@
  */
 import { styles, useHighlights } from '../../app/highlights';
 import useLibrary from './useLibrary';
-import { getTabId } from './panes/shared';
+import { Pane, getTabId } from './panes/shared';
 import {
   MEDIA,
   MEDIA3P,
@@ -47,11 +47,16 @@ function LibraryPanes() {
   const textHighlights = highlighted[TEXT.id];
 
   return tabs.map(({ id }) => {
+    const isActive = id === tab;
     const paneProps = {
       key: id,
-      isActive: id === tab,
+      isActive,
       'aria-labelledby': getTabId(id),
     };
+
+    if (!isActive) {
+      return <Pane {...paneProps} />;
+    }
 
     switch (id) {
       case MEDIA.id:
