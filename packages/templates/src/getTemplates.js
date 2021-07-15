@@ -89,6 +89,7 @@ async function getTemplates(imageBaseUrl) {
     'tv-show-recap',
     'pride-month-watchlist',
     'honeymooning-in-italy',
+    'ace-hotel-kyoto-review',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

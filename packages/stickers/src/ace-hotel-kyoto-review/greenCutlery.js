@@ -22,9 +22,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Food', 'sticker name', 'web-stories');
+const title = _x('Green Cutlery', 'sticker name', 'web-stories');
 
-function Food({ style }) {
+function GreenCutlery({ style }) {
   return (
     <svg
       style={style}
@@ -46,12 +46,12 @@ function Food({ style }) {
   );
 }
 
-Food.propTypes = {
+GreenCutlery.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 50 / 50,
-  svg: Food,
+  svg: GreenCutlery,
   title,
 };

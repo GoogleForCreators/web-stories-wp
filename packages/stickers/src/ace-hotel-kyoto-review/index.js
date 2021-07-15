@@ -16,8 +16,8 @@
 /**
  * Internal dependencies
  */
-import { default as coffee } from './coffee';
-import { default as food } from './food';
-import { default as shoppingBag } from './shop';
+import { default as greenCup } from './greenCup';
+import { default as greenCutlery } from './greenCutlery';
+import { default as greenHandBag } from './greenHandBag';
 
-export { coffee, food, shoppingBag };
+export { greenCup, greenCutlery, greenHandBag };
