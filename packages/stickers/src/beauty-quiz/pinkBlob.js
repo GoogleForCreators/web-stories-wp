@@ -19,31 +19,31 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Green Blob', 'sticker name', 'web-stories');
+const title = _x('Pink Blob', 'sticker name', 'web-stories');
 
-function Blob01({ style }) {
+function PinkBlob({ style }) {
   return (
     <svg
       style={style}
-      viewBox="0 0 56 40"
+      viewBox="0 0 49 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>{title}</title>
       <path
-        d="M18.6648 0.413819C28.4376 -0.281989 39.8526 -0.359574 46.08 2.27109C53.3085 5.32466 54.6329 11.6826 55.3965 19.5262C56.818 34.1272 52.0334 30.0514 36.162 36.2538C20.2906 42.4563 2.48594 41.9093 1.06444 27.3084C-0.357053 12.7075 -1.59013 2.81963 18.6648 0.413819Z"
-        fill="#397165"
+        d="M16.0652 0.528706C24.6408 -0.081876 34.6577 -0.149955 40.1223 2.15848C46.4654 4.83803 47.6275 10.4172 48.2976 17.3001C49.545 30.1126 45.3465 26.536 31.4192 31.9788C17.4918 37.4215 1.86799 36.9415 0.620611 24.129C-0.62677 11.3166 -1.70881 2.63983 16.0652 0.528706Z"
+        fill="#F8DFDC"
       />
     </svg>
   );
 }
 
-Blob01.propTypes = {
+PinkBlob.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  aspectRatio: 56 / 40,
-  svg: Blob01,
+  aspectRatio: 49 / 36,
+  svg: PinkBlob,
   title,
 };

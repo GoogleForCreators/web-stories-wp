@@ -92,6 +92,7 @@ async function getTemplates(imageBaseUrl) {
     'ace-hotel-kyoto-review',
     'how-video-calls-saved-the-day',
     'laptop-buying-guide',
+    'beauty-quiz',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

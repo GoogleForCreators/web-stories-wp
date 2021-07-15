@@ -16,8 +16,8 @@
 /**
  * Internal dependencies
  */
-import { default as bestSkingBlob01 } from './blob-01';
-import { default as bestSkingBlob02 } from './blob-02';
-import { default as bestSkingBlob03 } from './blob-03';
+import { default as beautyQuizGreenBlob } from './greenBlob';
+import { default as beautyQuizTiltedGreenBlob } from './tiltedGreenBlob';
+import { default as beautyQuizPinkBlob } from './pinkBlob';
 
-export { bestSkingBlob01, bestSkingBlob02, bestSkingBlob03 };
+export { beautyQuizGreenBlob, beautyQuizTiltedGreenBlob, beautyQuizPinkBlob };

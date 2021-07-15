@@ -16,34 +16,37 @@
 /**
  * External dependencies
  */
+/**
+ * External dependencies
+ */
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Blob', 'sticker name', 'web-stories');
+const title = _x('Tilted Green Blob', 'sticker name', 'web-stories');
 
-function Blob03({ style }) {
+function TiltedGreenBlob({ style }) {
   return (
     <svg
       style={style}
-      viewBox="0 0 49 36"
+      viewBox="0 0 56 49"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>{title}</title>
       <path
-        d="M16.0652 0.528706C24.6408 -0.081876 34.6577 -0.149955 40.1223 2.15848C46.4654 4.83803 47.6275 10.4172 48.2976 17.3001C49.545 30.1126 45.3465 26.536 31.4192 31.9788C17.4918 37.4215 1.86799 36.9415 0.620611 24.129C-0.62677 11.3166 -1.70881 2.63983 16.0652 0.528706Z"
-        fill="#F8DFDC"
+        d="M11.1754 3.67825C19.4854 1.13738 29.5191 -0.998853 36.1829 0.859482C43.9179 3.01657 47.9165 9.97117 52.0818 18.707C59.8356 34.9688 53.8011 31.2168 42.5634 41.0813C31.3258 50.9459 15.3782 53.5223 7.62443 37.2605C-0.129372 20.9987 -5.61884 10.0346 11.1754 3.67825Z"
+        fill="#397165"
       />
     </svg>
   );
 }
 
-Blob03.propTypes = {
+TiltedGreenBlob.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
-  aspectRatio: 49 / 36,
-  svg: Blob03,
+  aspectRatio: 56 / 49,
+  svg: TiltedGreenBlob,
   title,
 };
