@@ -41,54 +41,68 @@ describe('LibraryTabs integration', () => {
     fixture.restore();
   });
 
-  describe('keyboad navigation', () => {
+  describe('keyboard navigation', () => {
     beforeEach(async () => {
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
       const textTab = fixture.container.querySelector('#library-tab-media');
       await fixture.events.focus(textTab);
     });
 
-    function getExpandedPanes() {
-      return Array.from(
-        libraryLayout.querySelectorAll('[aria-expanded="true"]')
+    async function expectActivePaneToBe(paneId) {
+      const expandedPane = libraryLayout.querySelector(
+        '[aria-expanded="true"]'
       );
+      const expectedPane = fixture.container.querySelector(
+        `#library-pane-${paneId}`
+      );
+      expect(expandedPane).toEqual(expectedPane);
+      await fixture.waitOnScreen(expectedPane);
+    }
+
+    function expectFocusedTabToBe(tabId) {
+      const focusedTab = libraryLayout.querySelector('[role="tab"]:focus');
+      const expectedTab = fixture.container.querySelector(
+        `#library-tab-${tabId}`
+      );
+      expect(focusedTab).toEqual(expectedTab);
     }
 
     it('should be on the media tab', async () => {
-      const mediaPane = fixture.container.querySelector('#library-pane-media');
-      expect(getExpandedPanes()).toEqual([mediaPane]);
-      await fixture.waitOnScreen(mediaPane);
-      await fixture.snapshot();
+      await expectActivePaneToBe('media');
     });
 
-    it('should switch tabs on left and right keys', async () => {
-      // Next: media3p pane.
+    it('should focus tabs on navigation keys and change tabs with space/enter', async () => {
+      // When pressing right key from media, expect media3p to have focus but pane unchanged
       await fixture.events.keyboard.press('ArrowRight');
-      // @todo: what's the best way to confirm switching of a tab?
-      const textPane = fixture.container.querySelector('#library-pane-media3p');
-      expect(getExpandedPanes()).toEqual([textPane]);
-      await fixture.waitOnScreen(textPane);
-      await fixture.snapshot('on text pane');
+      expectFocusedTabToBe('media3p');
+      await expectActivePaneToBe('media');
 
-      // Next: text pane.
-      await fixture.events.keyboard.press('ArrowRight');
-      const shapesPane = fixture.container.querySelector('#library-pane-text');
-      expect(getExpandedPanes()).toEqual([shapesPane]);
-      await fixture.waitOnScreen(shapesPane);
-      await fixture.snapshot('on text pane');
+      // Then press "enter" and expect media3p to be active pane
+      await fixture.events.keyboard.press('Enter');
+      await expectActivePaneToBe('media3p');
 
-      // Back: media3p pane.
+      // Press "end" to move focus to the last tab, "templates"
+      await fixture.events.keyboard.press('End');
+      expectFocusedTabToBe('pageTemplates');
+      await expectActivePaneToBe('media3p');
+
+      // Then press "space" to make templates active
+      await fixture.events.keyboard.press('Space');
+      await expectActivePaneToBe('pageTemplates');
+
+      // Then press "left" to focus shapes tab
       await fixture.events.keyboard.press('ArrowLeft');
-      expect(getExpandedPanes()).toEqual([textPane]);
-      await fixture.waitOnScreen(
-        fixture.container.querySelector('#library-pane-media3p')
-      );
+      expectFocusedTabToBe('shapes');
+      await expectActivePaneToBe('pageTemplates');
 
-      // Back: media pane.
-      await fixture.events.keyboard.press('ArrowLeft');
-      const mediaPane = fixture.container.querySelector('#library-pane-media');
-      expect(getExpandedPanes()).toEqual([mediaPane]);
-      await fixture.waitOnScreen(mediaPane);
+      // Then press "home" to focus media tab
+      await fixture.events.keyboard.press('Home');
+      expectFocusedTabToBe('media');
+      await expectActivePaneToBe('pageTemplates');
+
+      // Then press "enter" and expect media to be active pane
+      await fixture.events.keyboard.press('Enter');
+      await expectActivePaneToBe('media');
     });
 
     it('should return focus to current tab when pressing mod+alt+1', async () => {
