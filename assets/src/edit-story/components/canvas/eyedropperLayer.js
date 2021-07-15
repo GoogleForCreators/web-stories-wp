@@ -21,19 +21,15 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-
-/**
- * WordPress dependencies
- */
-import { Spinner } from '@wordpress/components';
-
-/**
- * Internal dependencies
- */
 import {
   useFocusOut,
   useGlobalKeyDownEffect,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import CircularProgress from '../circularProgress';
 import { useCanvas, useLayout } from '../../app';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
@@ -170,7 +166,7 @@ function EyedropperLayer() {
         {/* Disable reason: No keyboard navigation for Eyedropper. */}
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <Center onClick={closeEyedropper}>
-          <Spinner />
+          <CircularProgress />
         </Center>
       </>
     );
