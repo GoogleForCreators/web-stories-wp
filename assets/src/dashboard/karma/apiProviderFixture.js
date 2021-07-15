@@ -164,6 +164,7 @@ function fetchMediaById(newIds, currentState) {
 function getSettingsState() {
   return {
     error: {},
+    settingSaved: false,
     googleAnalyticsId: '',
     publisherLogoIds: [],
     activePublisherLogoId: fillerPublisherLogoIds[0],
@@ -195,6 +196,8 @@ function updateSettings(updates, currentState) {
     publisherLogoIdToRemove,
     publisherLogoToMakeDefault,
   } = updates;
+  currentState.settingSaved = true;
+
   if (googleAnalyticsId !== undefined) {
     return {
       ...currentState,

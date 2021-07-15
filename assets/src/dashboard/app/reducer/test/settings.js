@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { AD_NETWORK_TYPE } from '../../../constants';
 import { ERRORS } from '../../textContent';
 import settingsReducer, { ACTION_TYPES } from '../settings';
 
@@ -24,8 +25,14 @@ describe('settingsReducer', () => {
   const initialState = {
     activePublisherLogoId: null,
     error: {},
-    googleAnalyticsId: null,
+    googleAnalyticsId: '',
+    adSensePublisherId: '',
+    adSenseSlotId: '',
+    adManagerSlotId: '',
+    adNetwork: AD_NETWORK_TYPE.NONE,
     publisherLogoIds: [],
+    videoCache: false,
+    settingSaved: false,
   };
 
   const MOCK_ERROR_ID = Date.now();
@@ -60,7 +67,7 @@ describe('settingsReducer', () => {
       },
     });
     expect(result).toMatchObject({
-      googleAnalyticsId: null,
+      googleAnalyticsId: '',
       error: {
         message: ERRORS.LOAD_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
@@ -78,7 +85,7 @@ describe('settingsReducer', () => {
       },
     });
     expect(result).toMatchObject({
-      googleAnalyticsId: null,
+      googleAnalyticsId: '',
       error: {
         message: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
@@ -89,7 +96,7 @@ describe('settingsReducer', () => {
 
   it(`should update settings state when ${ACTION_TYPES.UPDATE_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
-      type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
+      type: ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
       payload: {
         googleAnalyticsId: 'fakeId12345NEW',
         activePublisherLogoId: 5,
@@ -98,6 +105,7 @@ describe('settingsReducer', () => {
     });
     expect(result).toMatchObject({
       error: {},
+      settingSaved: true,
       googleAnalyticsId: 'fakeId12345NEW',
       activePublisherLogoId: 5,
       publisherLogoIds: [5, 6, 7, 8],
