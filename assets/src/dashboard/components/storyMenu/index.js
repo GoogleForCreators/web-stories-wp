@@ -32,6 +32,8 @@ import {
  */
 import { MoreVertical as MoreVerticalSvg } from '../../icons';
 
+export const CONTEXT_MENU_BUTTON_CLASS = 'context-menu-button';
+
 export const MoreVerticalButton = styled.button`
   display: flex;
   background: transparent;
@@ -98,7 +100,7 @@ export default function StoryMenu({
         isVisible={itemActive}
         aria-label={__('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : storyId)}
-        className="context-menu-button"
+        className={CONTEXT_MENU_BUTTON_CLASS}
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>

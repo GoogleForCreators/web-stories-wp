@@ -27,7 +27,11 @@ import { useGridViewKeys, useFocusOut } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { CardGrid, ActionLabel } from '../../../../../components';
+import {
+  CardGrid,
+  ActionLabel,
+  CONTEXT_MENU_BUTTON_CLASS,
+} from '../../../../../components';
 import {
   StoriesPropType,
   StoryMenuPropType,
@@ -84,7 +88,7 @@ const StoryGridView = ({
       setActiveGridItemId(newFocusId);
       // grab the menu button and refocus
       itemRefs.current?.[newFocusId]
-        ?.querySelector('.context-menu-button')
+        ?.querySelector(CONTEXT_MENU_BUTTON_CLASS)
         ?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);

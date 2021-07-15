@@ -40,7 +40,11 @@ export {
 } from './pageStructure';
 export { default as NavProvider, useNavContext } from './navProvider';
 export { default as ScrollToTop } from './scrollToTop';
-export { default as StoryMenu, MoreVerticalButton } from './storyMenu';
+export {
+  default as StoryMenu,
+  MoreVerticalButton,
+  CONTEXT_MENU_BUTTON_CLASS,
+} from './storyMenu';
 export {
   Table,
   TableBody,

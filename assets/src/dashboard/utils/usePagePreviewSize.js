@@ -35,16 +35,16 @@ import {
 } from '../constants';
 
 /**
- * Here we need to calculate two heights for every pagePreview in use.
- * 1. The height that is 9:16 aspect ratio, this is the default FULLBLEED_RATIO
+ * Here we need to calculate three heights for every pagePreview in use.
+ * 1. fullbleedHeight - The height that is 9:16 aspect ratio, this is the default FULLBLEED_RATIO
  * This height is used anywhere we need the height of the container holding a pagePreview.
  * It is the true boundary for overflow.
  * It is the 'fullBleedHeight'
- * 2. The height for the actual story, used in our shared components with edit-story
+ * 2. storyHeight - The height for the actual story (in the dashboard the only actual stories rendered are the templates), used in our shared components with edit-story
  * This means things like the unitsProvider and displayElements that we import to the Dashboard from the editor
  * It's maintaining a 2:3 aspect ratio.
- * When fullbleed is visible (as it is for our reqs) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
- * 3. This is a height based on 3:4 ratio which is what poster images need.
+ * When fullbleed is visible (as it is for templates) we use the 2:3 aspect ratio w/ overflow to allow the fullBleed height to be visible
+ * 3. posterHeight - This is a height based on 3:4 ratio which is what poster images need, this is used on 'my stories' view.
  *
  * @param {number} width  width of page to base ratios on
  * @return {Object}       heights to use in pagePreviews { fullBleedHeight: Number, storyHeight: Number}

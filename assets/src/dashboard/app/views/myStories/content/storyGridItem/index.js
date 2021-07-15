@@ -139,7 +139,12 @@ StoryGridItem.propTypes = {
   bottomActionLabel: PropTypes.string,
   handleFocus: PropTypes.func,
   isActive: PropTypes.bool,
-  itemRefs: PropTypes.shape({}),
+  itemRefs: PropTypes.shape({
+    current: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    ]),
+  }),
   pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   storyMenu: StoryMenuPropType,
