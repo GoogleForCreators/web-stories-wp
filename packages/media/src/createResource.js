@@ -130,6 +130,7 @@ function createResource({
   local = false,
   isPlaceholder = false,
   isOptimized = false,
+  isMuted = false,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -151,6 +152,7 @@ function createResource({
     local,
     isPlaceholder,
     isOptimized,
+    isMuted,
   };
 }
 

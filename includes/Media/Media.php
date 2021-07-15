@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Query;
 use WP_REST_Request;
@@ -36,7 +37,7 @@ use WP_REST_Request;
  * Class Media
  */
 class Media extends Service_Base {
-	use Screen;
+	use Screen, Types;
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -107,6 +108,14 @@ class Media extends Service_Base {
 	 */
 	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
 
+
+	/**
+	 * Is muted.
+	 *
+	 * @var string
+	 */
+	const IS_MUTED_POST_META_KEY = 'web_story_is_muted';
+
 	/**
 	 * Init.
 	 *
@@ -136,6 +145,20 @@ class Media extends Service_Base {
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::IS_MUTED_POST_META_KEY,
+			[
+				'type'              => 'boolean',
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'description'       => __( 'Is muted', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => false,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
 			]
@@ -193,6 +216,7 @@ class Media extends Service_Base {
 		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
 		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
+		add_filter( 'default_post_metadata', [ $this, 'filter_default_value_is_muted' ], 15, 4 );
 	}
 
 	/**
@@ -446,6 +470,9 @@ class Media extends Service_Base {
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
+
+			$is_muted             = get_post_meta( $attachment->ID, self::IS_MUTED_POST_META_KEY, true );
+			$response['is_muted'] = rest_sanitize_boolean( $is_muted );
 		}
 
 		$response['media_source'] = $this->get_callback_media_source( $response );
@@ -554,5 +581,44 @@ class Media extends Service_Base {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Filter the default value of is muted, to check to see if the video has audio track.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param mixed  $value     The value to return, either a single metadata value or an array
+	 *                          of values depending on the value of `$single`.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key  Metadata key.
+	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
+	 *
+	 * @return bool|bool[]
+	 */
+	public function filter_default_value_is_muted( $value, $object_id, $meta_key, $single ) {
+		if ( self::IS_MUTED_POST_META_KEY !== $meta_key ) {
+			return $value;
+		}
+		$mime_types = $this->get_allowed_mime_types();
+		if ( ! is_array( $mime_types ) || ! isset( $mime_types['video'] ) ) {
+			return $value;
+		}
+
+		$video_mime_types  = $mime_types['video'];
+		$current_mime_type = get_post_mime_type( $object_id );
+
+		if ( ! in_array( $current_mime_type, $video_mime_types, true ) ) {
+			return $value;
+		}
+
+		$meta_data = wp_get_attachment_metadata( $object_id );
+		if ( ! $meta_data ) {
+			return $value;
+		}
+
+		$is_muted = ! isset( $meta_data['audio'] );
+
+		return ( $single ) ? $is_muted : [ $is_muted ];
 	}
 }

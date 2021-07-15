@@ -146,6 +146,7 @@ class Media extends Test_Case {
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayHasKey( 'media_source', $video );
+		$this->assertArrayHasKey( 'is_muted', $video );
 	}
 
 	/**
@@ -501,5 +502,42 @@ class Media extends Test_Case {
 		);
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::filter_default_value_is_muted
+	 */
+	public function filter_default_value_is_muted() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+		wp_generate_attachment_metadata( $video_attachment_id, get_attached_file( $video_attachment_id ) );
+
+		$meta = get_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
+		$this->assertFalse( $meta );
+	}
+
+	/**
+	 * @covers ::filter_default_value_is_muted
+	 */
+	public function filter_default_value_is_muted_no_sound() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => __DIR__ . '/../../data/video-no-sound.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video - no sounds',
+			]
+		);
+		wp_generate_attachment_metadata( $video_attachment_id, get_attached_file( $video_attachment_id ) );
+
+		$meta = get_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
+		$this->assertTrue( $meta );
+
 	}
 }
