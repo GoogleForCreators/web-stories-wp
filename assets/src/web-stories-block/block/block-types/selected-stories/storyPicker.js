@@ -96,7 +96,9 @@ function StoryPicker({
         const totalPages = Number(response?.headers?.['X-WP-TotalPages']);
 
         setHasAllStories(page === totalPages);
-        setStories(response.body);
+        setStories((existingStories) =>
+          page === 1 ? response.body : [...existingStories, ...response.body]
+        );
       } catch (err) {
         setLoadingState('error');
         createErrorNotice(__('Unable to load stories', 'web-stories'), {
@@ -170,14 +172,14 @@ function StoryPicker({
           ) : (
             <Button
               onClick={() => setIsSortingStories(true)}
-              disabled={selectedStories.length <= 1}
+              disabled={localSelectedStories.length < 2}
             >
               {__('Rearrange Stories', 'web-stories')}
             </Button>
           )}
           <Button
             isPrimary
-            disabled={!selectedStories.length}
+            disabled={!localSelectedStories.length}
             onClick={saveChanges}
           >
             {__('Update', 'web-stories')}

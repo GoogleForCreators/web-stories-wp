@@ -123,10 +123,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
       });
   };
 
-  const debouncedOnInputChange = useDebounce(
-    onInputChange,
-    500
-  );
+  const debouncedOnInputChange = useDebounce(onInputChange, 500);
 
   return (
     <Autocomplete

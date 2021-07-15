@@ -83,20 +83,27 @@ function SelectStories({
   const [orderBy, setOrderBy] = useState('modified');
   const nextPage = useRef(1);
 
-  const authors = useSelect(
+  const { authors, isLoadingAuthors } = useSelect(
     (select) => {
-      // Not using `getUsers()` because it requires `list_users` capability.
-      return select(coreStore).getAuthors({
+      const query = {
         search: authorKeyword,
-      });
+      };
+
+      const { isResolving, getAuthors } = select(coreStore);
+
+      return {
+        // Not using `getUsers()` because it requires `list_users` capability.
+        authors: getAuthors(query),
+        isLoadingAuthors: isResolving('core', 'getAuthors', [query]),
+      };
     },
     [authorKeyword]
   );
 
   const fetchSelectedStories = useCallback(() => {
     fetchStories({
-      author: currentAuthor?.id,
-      search: searchKeyword,
+      author: currentAuthor?.id || undefined,
+      search: searchKeyword || undefined,
       order,
       orderBy,
       page: nextPage.current,
@@ -118,40 +125,23 @@ function SelectStories({
   }, 300);
 
   const debouncedTypeaheadAuthorChange = useDebounce((value) => {
-    // Set the user input as the current search keyword.
     setAuthorKeyword(value);
 
-    // On selecting author from the dropdown, '<Search />' component sets the value from the
-    // suggestions array, which in our case is author ID. Check the value is a number.
-    if (value.length > 0 && !isNaN(value)) {
-      setCurrentAuthor(
-        authors.filter((author) => author.id === parseInt(value))
-      );
-    }
-
     if ('' === value) {
-      setCurrentAuthor({
-        id: 0,
-        name: '',
-      });
+      setCurrentAuthor(null);
+    } else {
+      setCurrentAuthor(authors.find((author) => author.id === Number(value)));
     }
   }, 300);
 
   const handleAuthorChange = useCallback(
-    (newOption) => {
+    (value) => {
       // On selecting author from the dropdown, '<Search />' component sets the newOption from the
       // suggestions array, which in our case is author ID. Check the newOption is a number.
-      if (newOption) {
-        setCurrentAuthor(
-          authors.filter((author) => author.id === parseInt(newOption))
-        );
-      }
-
-      if ('' === newOption) {
-        setCurrentAuthor({
-          id: 0,
-          name: '',
-        });
+      if ('' === value) {
+        setCurrentAuthor(null);
+      } else {
+        setCurrentAuthor(authors.find((author) => author.id === Number(value)));
       }
     },
     [authors, setCurrentAuthor]
@@ -170,7 +160,7 @@ function SelectStories({
       .filter(({ name }) => Boolean(name?.trim().length))
       .map(({ id, name }) => ({
         label: name,
-        value: id.toString(),
+        value: id,
       }));
   }, [authors]);
 
@@ -179,7 +169,7 @@ function SelectStories({
       .filter(({ title }) => Boolean(title?.rendered?.trim()?.length))
       .map(({ id, title }) => ({
         label: title.rendered,
-        value: id.toString(),
+        value: id,
       }));
   }, [stories]);
 
@@ -221,6 +211,7 @@ function SelectStories({
               label={__('Search Stories', 'web-stories')}
               options={storiesSearchOptions}
               onFilterValueChange={debouncedTypeaheadChange}
+              onChange={debouncedTypeaheadChange}
               allowReset={false}
               value={searchKeyword}
             />
@@ -231,7 +222,8 @@ function SelectStories({
             onFilterValueChange={debouncedTypeaheadAuthorChange}
             onChange={handleAuthorChange}
             allowReset={false}
-            value={currentAuthor}
+            value={currentAuthor?.id}
+            isLoading={isLoadingAuthors}
           />
           <div>
             <SelectControl
@@ -284,9 +276,9 @@ function SelectStories({
           })}
         </div>
       )}
-      <div className="web-stories-story-picker-filter__Load_more">
+      <div className="web-stories-story-picker-filter__load_more">
         {isLoading && <Spinner />}
-        {!hasAllStories && stories.length > 0 && (
+        {!hasAllStories && stories.length > 0 && !isLoading && (
           <Button
             variant="primary"
             className="is-primary"

@@ -202,10 +202,6 @@
   justify-content: center;
 }
 
-.web-stories-story-picker-filter__load_more .components-spinner + .button {
-  margin-left: 10px;
-}
-
 /* Story Preview Cards */
 
 .web-stories-story-preview-card__poster {
