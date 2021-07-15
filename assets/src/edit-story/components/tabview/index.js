@@ -241,9 +241,18 @@ function TabView({
   useKeyDownEffect(ref, 'end', () => focusTabByIndex(-1), [focusTabByIndex]);
 
   // Enter/space to select currently focused tab.
-  useKeyDownEffect(ref, ['enter', 'space'], () => selectTab(focused.current), [
-    selectTab,
-  ]);
+  useKeyDownEffect(
+    ref,
+    { key: ['enter', 'space'], allowDefault: true },
+    (evt) => {
+      if (evt.target.getAttribute('role') === 'tab') {
+        selectTab(focused.current);
+        evt.preventDefault();
+      }
+    },
+    [selectTab],
+    {}
+  );
 
   return (
     <Tabs aria-label={label} ref={ref} {...rest}>
