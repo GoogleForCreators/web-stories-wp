@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
@@ -33,16 +33,7 @@ import { useDebounce } from '@wordpress/compose';
  */
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
-import { FETCH_STORIES_DEBOUNCE } from '../../constants';
 import StoriesPreview from '../../components/storiesPreview';
-
-/**
- * Module constants
- */
-const LATEST_STORIES_QUERY = {
-  per_page: 20,
-  _embed: 'author',
-};
 
 const {
   config: {
@@ -70,11 +61,17 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
    *
    * @return {void}
    */
-  const fetchStories = async () => {
+  const fetchStories = useCallback(async (query) => {
     try {
       setIsFetchingStories(true);
       const stories = await apiFetch({
-        path: addQueryArgs(storiesApi, LATEST_STORIES_QUERY),
+        path: addQueryArgs(storiesApi, {
+          per_page: 20,
+          _embed: 'author',
+          orderby: query.orderby || 'modified',
+          order: query.order || 'desc',
+          author: query.author || undefined,
+        }),
       });
 
       if (Array.isArray(stories)) {
@@ -85,19 +82,16 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
     } finally {
       setIsFetchingStories(false);
     }
-  };
+  }, []);
 
-  const debouncedFetchStories = useDebounce(
-    fetchStories,
-    FETCH_STORIES_DEBOUNCE
-  );
+  const debouncedFetchStories = useDebounce(fetchStories, 1000);
 
   useEffect(() => {
-    LATEST_STORIES_QUERY.order = order || 'desc';
-    LATEST_STORIES_QUERY.orderby = orderby || 'date';
-    LATEST_STORIES_QUERY.author = authors;
-
-    debouncedFetchStories();
+    debouncedFetchStories({
+      order: order || 'desc',
+      orderby: orderby || 'date',
+      author: authors,
+    });
   }, [authors, numOfStories, order, orderby, debouncedFetchStories]);
 
   const viewAllLabel = archiveLinkLabel

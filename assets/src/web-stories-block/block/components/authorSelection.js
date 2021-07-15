@@ -31,15 +31,7 @@ import { useDebounce } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
-import { FETCH_AUTHORS_DEBOUNCE } from '../constants';
 import Autocomplete from './autocomplete';
-
-/**
- * Module Constants
- */
-const USERS_LIST_QUERY = {
-  per_page: 100,
-};
 
 /**
  * AuthorSelection props.
@@ -67,7 +59,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
 
     apiFetch({
       path: addQueryArgs('/wp/v2/users', {
-        ...USERS_LIST_QUERY,
+        per_page: 100,
         include: authorIds.join(','),
       }),
     })
@@ -117,7 +109,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
    */
   const onInputChange = (search) => {
     apiFetch({
-      path: addQueryArgs('/wp/v2/users', { ...USERS_LIST_QUERY, search }),
+      path: addQueryArgs('/wp/v2/users', { per_page: 100, search }),
     })
       .then((users) => {
         if ('undefined' !== typeof users && Array.isArray(users)) {
@@ -133,7 +125,7 @@ const AuthorSelection = ({ authors: authorIds, setAttributes }) => {
 
   const debouncedOnInputChange = useDebounce(
     onInputChange,
-    FETCH_AUTHORS_DEBOUNCE
+    500
   );
 
   return (
