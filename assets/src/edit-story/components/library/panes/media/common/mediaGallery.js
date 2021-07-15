@@ -40,15 +40,10 @@ const PHOTO_MARGIN = 4;
  * @param {Array.<Object>} props.resources List of resources to display.
  * @param {InsertionCallback} props.onInsert Called when element is selected.
  * @param {string} props.providerType Provider of gallery's elements.
- * @param {bool} props.hasUploadMediaAction Current user can upload media.
+ * @param {boolean} props.canEditMedia Current user can upload media.
  * @return {*} The gallery element.
  */
-function MediaGallery({
-  resources,
-  onInsert,
-  providerType,
-  hasUploadMediaAction,
-}) {
+function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
   const photos = resources.map((resource) => ({
     src: resource.src,
     width: resource.width,
@@ -66,10 +61,10 @@ function MediaGallery({
         height={photo.height}
         onInsert={onInsert}
         providerType={providerType}
-        hasUploadMediaAction={hasUploadMediaAction}
+        canEditMedia={canEditMedia}
       />
     ),
-    [providerType, onInsert, resources]
+    [providerType, onInsert, resources, canEditMedia]
   );
 
   return (
@@ -90,11 +85,11 @@ MediaGallery.propTypes = {
   resources: PropTypes.arrayOf(PropTypes.object).isRequired,
   onInsert: PropTypes.func.isRequired,
   providerType: PropTypes.string.isRequired,
-  hasUploadMediaAction: PropTypes.bool,
+  canEditMedia: PropTypes.bool,
 };
 
 MediaGallery.defaultProps = {
-  hasUploadMediaAction: false,
+  canEditMedia: false,
 };
 
 export default MediaGallery;

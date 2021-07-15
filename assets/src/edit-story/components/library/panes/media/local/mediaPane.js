@@ -361,7 +361,7 @@ function MediaPane(props) {
         ) : (
           <PaginatedMediaGallery
             providerType="local"
-            hasUploadMediaAction={hasUploadMediaAction}
+            canEditMedia={hasUploadMediaAction}
             resources={media}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}
