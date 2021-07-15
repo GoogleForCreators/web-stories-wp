@@ -45,7 +45,7 @@ function SelectedStoriesEdit({
   const [selectedStories, _setSelectedStories] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
 
-  const label = __('Web Stories', 'web-stories');
+  const label = __('Selected Stories', 'web-stories');
 
   const viewAllLabel = archiveLinkLabel
     ? archiveLinkLabel

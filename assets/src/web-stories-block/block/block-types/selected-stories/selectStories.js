@@ -69,9 +69,74 @@ const {
 } = window.webStoriesBlockSettings;
 
 // ComboboxControl does not yet exist in WordPress 5.5.
-// TODO: Remove once WordPress 5.5 is no longer required.
-const AuthorSearch = ComboboxControl || SelectControl;
-const KeywordSearch = ComboboxControl || TextControl;
+// TODO: Remove these once WordPress 5.5 is no longer required.
+
+function AuthorSearch({
+  label,
+  options,
+  onFilterValueChange,
+  onChange,
+  value,
+}) {
+  if (ComboboxControl) {
+    return (
+      <ComboboxControl
+        label={label}
+        options={options}
+        onFilterValueChange={onFilterValueChange}
+        onChange={onChange}
+        value={value}
+      />
+    );
+  }
+
+  return (
+    <SelectControl
+      label={label}
+      options={options}
+      onChange={onChange}
+      value={value}
+    />
+  );
+}
+
+AuthorSearch.propTypes = {
+  label: PropTypes.string,
+  options: PropTypes.array,
+  value: PropTypes.number,
+  onFilterValueChange: PropTypes.func,
+  onChange: PropTypes.func,
+};
+
+function KeywordSearch({
+  label,
+  options,
+  onFilterValueChange,
+  onChange,
+  value,
+}) {
+  if (ComboboxControl) {
+    return (
+      <ComboboxControl
+        label={label}
+        options={options}
+        onFilterValueChange={onFilterValueChange}
+        onChange={onChange}
+        value={value}
+      />
+    );
+  }
+
+  return <TextControl label={label} value={value} onChange={onChange} />;
+}
+
+KeywordSearch.propTypes = {
+  label: PropTypes.string,
+  options: PropTypes.array,
+  value: PropTypes.string,
+  onFilterValueChange: PropTypes.func,
+  onChange: PropTypes.func,
+};
 
 function SelectStories({
   stories = [],

@@ -119,7 +119,7 @@ function StoryPicker({
 
   return (
     <Modal
-      title={__('Web Stories', 'web-stories')}
+      title={__('Selected Stories', 'web-stories')}
       onRequestClose={closeStoryPicker}
       shouldCloseOnClickOutside={false}
       className="web-stories-story-picker-modal"
