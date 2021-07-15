@@ -31,22 +31,24 @@ export function storyPagesCount(numPages) {
   const hasTooFewPages = numPages < MIN_STORY_PAGES;
   const hasTooManyPages = numPages > MAX_STORY_PAGES;
 
-  return hasTooFewPages || hasTooManyPages;
+  return { hasTooFewPages, hasTooManyPages };
 }
 
 const StoryPagesCount = () => {
-  const numPages = useStory(({ state }) => state?.story?.pages?.length);
+  const numPages = useStory(({ state }) => state?.pages?.length);
 
-  const badPageCount = useMemo(() => storyPagesCount(numPages), [numPages]);
+  const { hasTooFewPages, hasTooManyPages } = useMemo(
+    () => storyPagesCount(numPages),
+    [numPages]
+  );
 
   const { storyTooShort, storyTooLong } = DESIGN_COPY;
-  const copySource = badPageCount
-    ? numPages < MIN_STORY_PAGES
-      ? storyTooShort
-      : storyTooLong
-    : {};
+  const copySource =
+    (hasTooFewPages && storyTooShort) ||
+    (hasTooManyPages && storyTooLong) ||
+    {};
 
-  const isRendered = badPageCount.length > 0;
+  const isRendered = hasTooFewPages || hasTooManyPages;
   useRegisterCheck('StoryPagesCount', isRendered);
 
   return (
