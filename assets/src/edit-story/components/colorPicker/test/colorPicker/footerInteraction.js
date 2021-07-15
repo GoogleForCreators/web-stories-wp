@@ -69,6 +69,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     fireEvent.click(initialButton);
 
     // When clicked, it's an input
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
     const input = getEditableAlphaElement();
     expect(input).toHaveValue('40');
     await waitFor(() => expect(input).toHaveFocus());
@@ -99,6 +100,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     fireEvent.click(initialButton);
 
     // When clicked, it's an input
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
     const input = getEditableAlphaElement();
     await waitFor(() => expect(input).toHaveFocus());
     fireEvent.change(input, { target: { value: 'ten' } });

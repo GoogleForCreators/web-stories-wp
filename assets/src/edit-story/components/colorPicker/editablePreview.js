@@ -105,11 +105,16 @@ function EditablePreview({ label, value, width, format, onChange }) {
   };
 
   useLayoutEffect(() => {
-    if (isEditing && editableRef.current) {
-      editableRef.current.input.focus();
-      editableRef.current.input.select();
-      editableRef.current.input.setAttribute('aria-label', label);
-    }
+    // Wait one tick to ensure the input has been loaded.
+    const timeout = setTimeout(() => {
+      if (isEditing && editableRef.current) {
+        editableRef.current.input.focus();
+        editableRef.current.input.select();
+        editableRef.current.input.setAttribute('aria-label', label);
+      }
+    });
+
+    return () => clearTimeout(timeout);
   }, [isEditing, label]);
 
   if (!isEditing) {
@@ -135,7 +140,6 @@ function EditablePreview({ label, value, width, format, onChange }) {
           onChange={onChange}
           onChangeComplete={disableEditing}
           style={inputStyles}
-          label={label}
         />
       </Suspense>
     </Wrapper>
