@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { useStory } from '../../../app';
 
 describe('Eyedropper', () => {
   let fixture;
@@ -36,6 +37,17 @@ describe('Eyedropper', () => {
   afterEach(() => {
     fixture.restore();
   });
+
+  const getElements = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.currentPage.elements;
+  };
+
+  function getCanvasElementWrapperById(id) {
+    return fixture.querySelector(
+      `[data-testid="safezone"] [data-element-id="${id}"]`
+    );
+  }
 
   it('should get color from the image to page background', async () => {
     // Insert image that will be the color source
@@ -61,11 +73,16 @@ describe('Eyedropper', () => {
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
       timeout: 4000,
     });
-    const fullbleed = fixture.querySelector('[data-testid="fullbleed"]');
-    const rect = fullbleed.getBoundingClientRect();
-    await fixture.events.mouse.click(rect.left + 61, rect.top + 61);
+    const imageOnCanvas = (await getElements(fixture))[1];
+    const imageOnCanvasRect = (
+      await getCanvasElementWrapperById(imageOnCanvas.id)
+    ).getBoundingClientRect();
+    await fixture.events.mouse.click(
+      imageOnCanvasRect.right - 2,
+      imageOnCanvasRect.top + 8
+    );
 
     await fixture.snapshot('BG color from image');
-    expect(bgPanel.backgroundColor.hex.value).toBe('C2A387');
+    expect(bgPanel.backgroundColor.hex.value).toBe('DBB198');
   });
 });
