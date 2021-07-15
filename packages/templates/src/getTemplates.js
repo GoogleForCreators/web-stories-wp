@@ -88,6 +88,7 @@ async function getTemplates(imageBaseUrl) {
     'belly-fat-workout',
     'tv-show-recap',
     'pride-month-watchlist',
+    'honeymooning-in-italy',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
