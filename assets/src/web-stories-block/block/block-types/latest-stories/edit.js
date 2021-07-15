@@ -26,14 +26,17 @@ import { useCallback, useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
-import { useDebounce } from '@wordpress/compose';
+import { Button, Placeholder } from '@wordpress/components';
+import { BlockIcon } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
+import { ReactComponent as WebStoriesLogo } from '../../../images/icon.svg';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
 import StoriesPreview from '../../components/storiesPreview';
+import useDebounce from '../../hooks/useDebounce';
 
 const {
   config: {
@@ -118,6 +121,21 @@ function LatestStoriesEdit({ attributes, setAttributes }) {
           stories={storiesToDisplay}
           viewAllLabel={viewAllLabel}
         />
+      )}
+      {!isFetchingStories && !storiesToDisplay?.length && (
+        <Placeholder
+          icon={<BlockIcon icon={<WebStoriesLogo />} showColors />}
+          label={__('Latest Stories', 'web-stories')}
+          className="wp-block-web-stories-embed"
+          instructions={__('No stories found.', 'web-stories')}
+        >
+          <Button
+            href={addQueryArgs('post-new.php', { post_type: 'web-story' })}
+            isLink
+          >
+            {__('Create New Story', 'web-stories')}
+          </Button>
+        </Placeholder>
       )}
     </>
   );

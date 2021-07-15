@@ -19,17 +19,6 @@
  */
 import PropTypes from 'prop-types';
 
-const FallbackComponent = ({ children, ...additionalProps }) => (
-  <div {...additionalProps}>{children}</div>
-);
-
-FallbackComponent.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
-
 /**
  * WordPress dependencies
  */
@@ -67,7 +56,7 @@ function BlockConfigurationPanel({
           <li key={option.id}>
             <Button
               variant="secondary"
-              className="is-secondary"
+              isSecondary
               onClick={() => {
                 setAttributes({ [selectionType]: option.id });
               }}
@@ -80,7 +69,7 @@ function BlockConfigurationPanel({
               )}
             </Button>
             <span
-              className="web-stories-block-configuration-panel__label"
+              className="web-stories-block-configuration-panel__label components-placeholder__instructions"
               role="presentation"
             >
               {option.label}
@@ -96,7 +85,7 @@ BlockConfigurationPanel.propTypes = {
   selectionType: PropTypes.string,
   selectionOptions: PropTypes.array,
   instructions: PropTypes.string,
-  icon: PropTypes.func,
+  icon: PropTypes.node,
   setAttributes: PropTypes.func.isRequired,
 };
 

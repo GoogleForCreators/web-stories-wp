@@ -127,7 +127,7 @@ const EmbedPlaceholder = ({
 };
 
 EmbedPlaceholder.propTypes = {
-  icon: PropTypes.func,
+  icon: PropTypes.node,
   label: PropTypes.string,
   selectedStories: PropTypes.array,
   setSelectedStories: PropTypes.func,

@@ -100,6 +100,7 @@
   margin: 0;
   padding: 20px 0;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .web-stories-story-picker-modal__footer {

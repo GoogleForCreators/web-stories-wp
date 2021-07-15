@@ -35,14 +35,14 @@ import {
   SelectControl,
   Spinner,
   Button,
+  TextControl,
 } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
-import { useDebounce } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
+import useDebounce from '../../hooks/useDebounce';
 import StoryPreview from './storyPreview';
 
 const SORT_OPTIONS = [
@@ -68,6 +68,11 @@ const {
   config: { maxNumOfStories },
 } = window.webStoriesBlockSettings;
 
+// ComboboxControl does not yet exist in WordPress 5.5.
+// TODO: Remove once WordPress 5.5 is no longer required.
+const AuthorSearch = ComboboxControl || SelectControl;
+const KeywordSearch = ComboboxControl || TextControl;
+
 function SelectStories({
   stories = [],
   selectedStories = [],
@@ -83,18 +88,17 @@ function SelectStories({
   const [orderBy, setOrderBy] = useState('modified');
   const nextPage = useRef(1);
 
-  const { authors, isLoadingAuthors } = useSelect(
+  const { authors } = useSelect(
     (select) => {
       const query = {
         search: authorKeyword,
       };
 
-      const { isResolving, getAuthors } = select(coreStore);
+      const { getAuthors } = select('core');
 
       return {
         // Not using `getUsers()` because it requires `list_users` capability.
         authors: getAuthors(query),
-        isLoadingAuthors: isResolving('core', 'getAuthors', [query]),
       };
     },
     [authorKeyword]
@@ -207,23 +211,20 @@ function SelectStories({
       <div className="web-stories-story-picker-filter">
         <div className="web-stories-story-picker-filter__search-container">
           <div className="web-stories-story-picker-filter__search-inner">
-            <ComboboxControl
+            <KeywordSearch
               label={__('Search Stories', 'web-stories')}
               options={storiesSearchOptions}
               onFilterValueChange={debouncedTypeaheadChange}
               onChange={debouncedTypeaheadChange}
-              allowReset={false}
               value={searchKeyword}
             />
           </div>
-          <ComboboxControl
+          <AuthorSearch
             label={__('Search by Author', 'web-stories')}
             options={authorSearchOptions}
             onFilterValueChange={debouncedTypeaheadAuthorChange}
             onChange={handleAuthorChange}
-            allowReset={false}
             value={currentAuthor?.id}
-            isLoading={isLoadingAuthors}
           />
           <div>
             <SelectControl

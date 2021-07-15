@@ -28,7 +28,6 @@ import { useEffect } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 import { useDispatch } from '@wordpress/data';
-import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Internal dependencies
@@ -48,7 +47,7 @@ function FetchSelectedStories({
   setSelectedStories,
   setIsFetching,
 }) {
-  const { createErrorNotice } = useDispatch(noticesStore);
+  const { createErrorNotice } = useDispatch('core/notices');
 
   const fetchStories = async () => {
     try {
@@ -98,7 +97,7 @@ function FetchSelectedStories({
 }
 
 FetchSelectedStories.propTypes = {
-  icon: PropTypes.func,
+  icon: PropTypes.node,
   label: PropTypes.string,
   selectedStoryIds: PropTypes.array,
   setSelectedStories: PropTypes.func,

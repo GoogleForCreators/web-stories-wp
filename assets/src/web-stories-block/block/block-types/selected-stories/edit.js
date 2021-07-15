@@ -111,7 +111,7 @@ function SelectedStoriesEdit({
 }
 
 SelectedStoriesEdit.propTypes = {
-  icon: PropTypes.func,
+  icon: PropTypes.node,
   attributes: PropTypes.shape({
     blockType: PropTypes.string,
     stories: PropTypes.array,

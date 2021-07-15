@@ -270,9 +270,7 @@ const webStoriesScripts = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
+    new DependencyExtractionWebpackPlugin(),
     new WebpackBar({
       name: 'WP Frontend Scripts',
       color: '#EEE070',
@@ -308,9 +306,7 @@ const webStoriesBlock = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
+    new DependencyExtractionWebpackPlugin(),
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',
@@ -343,7 +339,7 @@ const widgetScript = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({}),
+    new DependencyExtractionWebpackPlugin(),
     new WebpackBar({
       name: 'WP Widget Script',
       color: '#F757A5',
