@@ -91,6 +91,7 @@ async function getTemplates(imageBaseUrl) {
     'honeymooning-in-italy',
     'ace-hotel-kyoto-review',
     'how-video-calls-saved-the-day',
+    'laptop-buying-guide',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Laptop', 'sticker name', 'web-stories');
+const title = _x('Laptop 3/4 ', 'sticker name', 'web-stories');
 
-function TechnologyLaptop02({ style }) {
+function LaptopRatingsThreeFouth({ style }) {
   return (
     <svg
       style={style}
@@ -72,12 +72,12 @@ function TechnologyLaptop02({ style }) {
   );
 }
 
-TechnologyLaptop02.propTypes = {
+LaptopRatingsThreeFouth.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 42 / 26,
-  svg: TechnologyLaptop02,
+  svg: LaptopRatingsThreeFouth,
   title,
 };

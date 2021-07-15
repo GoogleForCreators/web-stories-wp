@@ -38,7 +38,7 @@ import * as killBellyFatStickers from './belly-fat-workout';
 import * as crownSeasonsRecappedStickers from './tv-show-recap';
 import * as stayAtAceHotelKyotoStickers from './ace-hotel-kyoto-review';
 import * as videoCallsSavedTheDayStickers from './how-video-calls-saved-the-day';
-import * as pickTheRightLaptopStickers from './pick-the-right-laptop';
+import * as pickTheRightLaptopStickers from './laptop-buying-guide';
 import * as quizForYourBestSkinStickers from './quiz-for-your-best-skin';
 import * as atHomeOfficeStickers from './diy-budget-friendly-home-office';
 

@@ -16,14 +16,14 @@
 /**
  * Internal dependencies
  */
-import { default as technologyLaptop01 } from './laptop-01';
-import { default as technologyLaptop02 } from './laptop-02';
-import { default as technologyLaptop03 } from './laptop-03';
-import { default as technologyLaptop04 } from './laptop-04';
+import { default as laptopRatingsFull } from './laptopFull';
+import { default as laptopRatingsThreeFourth } from './laptopThreeFourth';
+import { default as laptopRatingsHalf } from './laptopHalf';
+import { default as laptopOff } from './laptopOff';
 
 export {
-  technologyLaptop01,
-  technologyLaptop02,
-  technologyLaptop03,
-  technologyLaptop04,
+  laptopRatingsFull,
+  laptopRatingsThreeFourth,
+  laptopRatingsHalf,
+  laptopOff,
 };
