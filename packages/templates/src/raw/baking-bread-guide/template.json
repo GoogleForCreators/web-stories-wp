@@ -514,7 +514,8 @@
             "alt": "page03_bg_video",
             "sizes": [],
             "local": false,
-            "isOptimized": true
+            "isOptimized": true,
+            "isMuted": true
           },
           "tracks": [],
           "overlay": {

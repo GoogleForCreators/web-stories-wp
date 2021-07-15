@@ -490,6 +490,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [194, 192, 192]
           },
           "controls": false,
@@ -778,6 +779,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [41, 50, 65]
           },
           "controls": false,
@@ -1067,6 +1069,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [53, 59, 70]
           },
           "controls": false,
@@ -1356,6 +1359,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [40, 48, 54]
           },
           "controls": false,
@@ -1645,6 +1649,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [54, 58, 70]
           },
           "controls": false,
@@ -1934,6 +1939,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [33, 43, 50]
           },
           "controls": false,
@@ -2223,6 +2229,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [41, 43, 50]
           },
           "controls": false,
@@ -2512,6 +2519,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [40, 51, 58]
           },
           "controls": false,
@@ -2584,6 +2592,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [216, 221, 226]
           },
           "controls": false,
