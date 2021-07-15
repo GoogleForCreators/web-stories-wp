@@ -10,10 +10,10 @@ set -e
 cd "$(dirname "$0")/../.."
 
 # Check whether Node and NVM are installed
-#. "$(dirname "$0")/install-node-nvm.sh"
-#
-## Check whether Composer installed
-#. "$(dirname "$0")/install-composer.sh"
+. "$(dirname "$0")/install-node-nvm.sh"
+
+# Check whether Composer installed
+. "$(dirname "$0")/install-composer.sh"
 
 # Check whether Docker is installed and running
 . "$(dirname "$0")/launch-containers.sh"
