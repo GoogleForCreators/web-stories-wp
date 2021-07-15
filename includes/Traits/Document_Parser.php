@@ -47,7 +47,7 @@ trait Document_Parser {
 	 *
 	 * @return string|false Attribute content on success, false otherwise.
 	 */
-	protected function get_dom_attribute_content( $query, $attribute ) {
+	protected function get_dom_attribute_content( $query, string $attribute ) {
 		if ( ! $query instanceof DOMNodeList || 0 === $query->length ) {
 			return false;
 		}
@@ -75,7 +75,7 @@ trait Document_Parser {
 	 *
 	 * @return DOMXPath|false
 	 */
-	protected function html_to_xpath( $html ) {
+	protected function html_to_xpath( string $html ) {
 		$document = Document::fromHtml( $html );
 		if ( ! $document ) {
 			return false;

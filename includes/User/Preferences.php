@@ -121,7 +121,7 @@ class Preferences extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	public function can_edit_current_user( $allowed, $meta_key, $user_id, $current_user_id ) {
+	public function can_edit_current_user( $allowed, $meta_key, $user_id, $current_user_id ): bool {
 		return user_can( $current_user_id, 'edit_user', $user_id );
 	}
 }

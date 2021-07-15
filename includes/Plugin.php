@@ -133,7 +133,7 @@ class Plugin extends ServiceBasedPlugin {
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
-	protected function get_service_classes() {
+	protected function get_service_classes(): array {
 		return self::SERVICES;
 	}
 
@@ -153,7 +153,7 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @return array<string> Associative array of fully qualified class names.
 	 */
-	protected function get_bindings() {
+	protected function get_bindings(): array {
 		return [];
 	}
 
@@ -171,7 +171,7 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */
-	protected function get_shared_instances() {
+	protected function get_shared_instances(): array {
 		return [
 			Assets::class,
 			Experiments::class,
@@ -199,7 +199,7 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @return array<callable> Associative array of callables.
 	 */
-	protected function get_delegations() {
+	protected function get_delegations(): array {
 		return [
 			Injector::class => static function () {
 				return Services::get( 'injector' );
