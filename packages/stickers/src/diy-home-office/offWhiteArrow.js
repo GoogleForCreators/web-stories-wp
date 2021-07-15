@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Arrow', 'sticker name', 'web-stories');
+const title = _x('Off-White Arrow', 'sticker name', 'web-stories');
 
-function Arrow({ style }) {
+function OffWhiteArrow({ style }) {
   return (
     <svg
       style={style}
@@ -38,12 +38,12 @@ function Arrow({ style }) {
   );
 }
 
-Arrow.propTypes = {
+OffWhiteArrow.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 51 / 8,
-  svg: Arrow,
+  svg: OffWhiteArrow,
   title,
 };

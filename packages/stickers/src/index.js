@@ -40,7 +40,7 @@ import * as stayAtAceHotelKyotoStickers from './ace-hotel-kyoto-review';
 import * as videoCallsSavedTheDayStickers from './how-video-calls-saved-the-day';
 import * as pickTheRightLaptopStickers from './laptop-buying-guide';
 import * as quizForYourBestSkinStickers from './beauty-quiz';
-import * as atHomeOfficeStickers from './diy-budget-friendly-home-office';
+import * as atHomeOfficeStickers from './diy-home-office';
 
 export default {
   ...beautyStickers,

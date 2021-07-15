@@ -16,6 +16,6 @@
 /**
  * Internal dependencies
  */
-import { default as atHomeOfficeArrow } from './arrow';
+import { default as atHomeOfficeArrow } from './offWhiteArrow';
 
 export { atHomeOfficeArrow };

@@ -93,6 +93,7 @@ async function getTemplates(imageBaseUrl) {
     'how-video-calls-saved-the-day',
     'laptop-buying-guide',
     'beauty-quiz',
+    'diy-home-office',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
