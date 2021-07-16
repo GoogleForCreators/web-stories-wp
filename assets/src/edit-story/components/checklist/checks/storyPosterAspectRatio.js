@@ -27,6 +27,8 @@ import {
   PRIORITY_COPY,
   ASPECT_RATIO_LEFT,
   ASPECT_RATIO_RIGHT,
+  FEATURED_MEDIA_RESOURCE_MIN_HEIGHT,
+  FEATURED_MEDIA_RESOURCE_MIN_WIDTH,
 } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
@@ -37,7 +39,9 @@ export function storyPosterAspectRatio(featuredMedia) {
   if (
     hasNoFeaturedMedia({ featuredMedia }) ||
     !featuredMedia?.width ||
-    !featuredMedia?.height
+    !featuredMedia?.height ||
+    featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
+    featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
   ) {
     return false;
   }

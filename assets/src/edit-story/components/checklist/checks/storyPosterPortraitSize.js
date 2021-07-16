@@ -23,20 +23,20 @@ import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { PRIORITY_COPY } from '../constants';
+import {
+  PRIORITY_COPY,
+  FEATURED_MEDIA_RESOURCE_MIN_HEIGHT,
+  FEATURED_MEDIA_RESOURCE_MIN_WIDTH,
+} from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
-const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
-const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
-
 export function storyPosterPortraitSize(featuredMedia) {
   if (hasNoFeaturedMedia({ featuredMedia })) {
     return false;
   }
-
   return (
     featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
     featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
