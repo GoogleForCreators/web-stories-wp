@@ -62,9 +62,7 @@ function Title() {
     }) => ({ title, slug, updateStory })
   );
   const { setTitleInput, titleInput } = useHeader();
-  const highlight = useFocusHighlight(states.STORY_TITLE, {
-    current: titleInput,
-  });
+  const highlight = useFocusHighlight(states.STORY_TITLE, titleInput);
 
   const { storyId } = useConfig();
 

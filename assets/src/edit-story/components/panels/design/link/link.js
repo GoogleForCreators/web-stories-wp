@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
@@ -80,8 +80,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     currentPage: state.state.currentPage,
   }));
 
-  const linkRef = useRef(null);
-  const highlight = useFocusHighlight(states.LINK, linkRef);
+  const [linkInput, setLinkInput] = useState(null);
+  const highlight = useFocusHighlight(states.LINK, linkInput);
 
   const { getElementsInAttachmentArea } = useElementsWithLinks();
   const hasElementsInAttachmentArea =
@@ -225,7 +225,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       isPersistable={!highlight}
     >
       <LinkInput
-        ref={linkRef}
+        ref={setLinkInput}
         onChange={(value) =>
           !displayLinkGuidelines &&
           handleChange({ url: value }, !value /* submit */)

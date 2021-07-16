@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -41,8 +41,8 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
-  const colorInputRef = useRef();
-  const highlight = useFocusHighlight(states.STYLE, colorInputRef);
+  const [colorInput, setColorInput] = useState(null);
+  const highlight = useFocusHighlight(states.STYLE, colorInput);
 
   return (
     <SimplePanel
@@ -53,7 +53,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
     >
       <Row>
         <Color
-          ref={colorInputRef}
+          ref={setColorInput}
           hasGradient
           value={backgroundColor}
           isMultiple={backgroundColor === ''}

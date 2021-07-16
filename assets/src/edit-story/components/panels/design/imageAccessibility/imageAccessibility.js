@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { useRef } from 'react';
+import { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -44,9 +44,10 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
-  const ref = useRef(null);
+
   // When the panel needs to be focused from somewhere else (e.g. the prepublish checklist).
-  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
+  const [textArea, setTextArea] = useState(null);
+  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, textArea);
 
   return (
     <SimplePanel
@@ -57,7 +58,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     >
       <Row>
         <TextArea
-          ref={ref}
+          ref={setTextArea}
           placeholder={
             alt === MULTIPLE_VALUE
               ? MULTIPLE_DISPLAY_VALUE

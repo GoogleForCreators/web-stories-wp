@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
@@ -150,8 +150,8 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
-  const buttonRef = useRef();
-  const highlight = useFocusHighlight(states.CAPTIONS, buttonRef);
+  const [button, setButton] = useState(null);
+  const highlight = useFocusHighlight(states.CAPTIONS, button);
 
   return (
     <SimplePanel
@@ -202,7 +202,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           <Row expand>
             <UploadButton
               css={highlight?.showEffect && styles.OUTLINE}
-              ref={buttonRef}
+              ref={setButton}
               onClick={UploadCaption}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}

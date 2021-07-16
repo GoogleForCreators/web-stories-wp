@@ -29,57 +29,54 @@ import Context from './context';
  */
 
 /**
- * Given a state key and a focusable ref, return the highlight context state
- * and have the following effects on the element which owns the ref:
+ * Given a state key and a focusable element, return the highlight context state
+ * and have the following effects on the element:
  * - on focus out, clear the highlight state
  * - on keydown, click, cancel any visual effects
  *
  * @param {string} stateKey the key of the highlight state to select from the context
- * @param {{ current: { focus: Function }}} ref reference to a focusable input or button
+ * @param {HTMLElement} element focusable input or button
  * @return {Highlight} current highlight state
  */
-function useFocusHighlight(stateKey, ref) {
+function useFocusHighlight(stateKey, element) {
   const context = useContextSelector(Context, (state) => ({
     [stateKey]: state[stateKey],
     onFocusOut: state.onFocusOut,
     cancelEffect: state.cancelEffect,
   }));
-
-  const current = ref?.current;
   const highlight = context[stateKey];
   const { onFocusOut, cancelEffect } = context;
 
   const cancelEffectOnChange = useCallback(() => {
+    if (!element) {
+      return undefined;
+    }
     const events = ['click', 'keydown'];
     const listener = () => {
       cancelEffect(stateKey);
     };
     if (highlight?.focus && highlight?.showEffect) {
       events.forEach((eventName) => {
-        ref?.current?.addEventListener(eventName, listener);
+        element?.addEventListener(eventName, listener);
       });
     }
 
     return () => {
       events.forEach((eventName) => {
-        ref?.current?.removeEventListener(eventName, listener);
+        element?.removeEventListener(eventName, listener);
       });
     };
-  }, [stateKey, ref, highlight, cancelEffect]);
+  }, [stateKey, element, highlight, cancelEffect]);
 
   // when the user begins interacting with the focus element, stop the effect
   useEffect(cancelEffectOnChange, [cancelEffectOnChange]);
 
   useEffect(() => {
-    // timeout allows a state update tick
-    // needed for when components are being rendered by switching tabs and selecting elements
-    setTimeout(() => {
-      // if the effect has been canceled, do not re-focus
-      highlight?.focus && highlight?.showEffect && current?.focus();
-    });
-  }, [highlight, current]);
+    highlight?.focus && highlight?.showEffect && element?.focus();
+  }, [element, highlight]);
 
-  useFocusOut(ref, onFocusOut);
+  const pseudoRef = { current: element };
+  useFocusOut(pseudoRef, onFocusOut, [element]);
 
   return highlight;
 }

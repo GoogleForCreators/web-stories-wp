@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -106,8 +106,8 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
 
-  const inputRef = useRef(null);
-  const highlight = useFocusHighlight(states.PAGE_BACKGROUND, inputRef);
+  const [input, setInput] = useState(null);
+  const highlight = useFocusHighlight(states.PAGE_BACKGROUND, input);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
@@ -132,7 +132,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       {isDefaultBackground && (
         <Row>
           <Color
-            ref={inputRef}
+            ref={setInput}
             hasGradient
             value={backgroundColor}
             onChange={updateBackgroundColor}

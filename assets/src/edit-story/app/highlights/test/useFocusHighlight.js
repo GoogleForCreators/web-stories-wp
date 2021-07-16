@@ -24,7 +24,7 @@ import userEvent from '@testing-library/user-event';
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
+import { useState } from 'react';
 import { useContextSelector, useFocusOut } from '@web-stories-wp/design-system';
 import useFocusHighlight from '../useFocusHighlight';
 
@@ -48,16 +48,14 @@ describe('useFocusHighlight()', () => {
     const mockFocus = jest.fn();
     const mockAddEventListener = jest.fn();
     const mockRemoveEventListener = jest.fn();
-    const mockRef = {
-      current: {
-        focus: mockFocus,
-        addEventListener: mockAddEventListener,
-        removeEventListener: mockRemoveEventListener,
-      },
+    const mockElement = {
+      focus: mockFocus,
+      addEventListener: mockAddEventListener,
+      removeEventListener: mockRemoveEventListener,
     };
-    const { result } = renderHook(() => useFocusHighlight(key, mockRef));
+    const { result } = renderHook(() => useFocusHighlight(key, mockElement));
     expect(result.current.focus).toBe(true);
-    expect(useFocusOut).toHaveBeenCalledWith(mockRef, onFocusOut);
+    expect(useFocusOut).toHaveBeenCalledWith(mockElement, onFocusOut);
 
     // the event listeners should only be added when the effect is shown
     expect(mockAddEventListener.mock.calls[0][0]).toStrictEqual('click');
@@ -79,9 +77,9 @@ describe('useFocusHighlight()', () => {
     }));
 
     const Wrapper = () => {
-      const mockRef = useRef();
-      useFocusHighlight(key, mockRef);
-      return <input data-testid="focusable-input" ref={mockRef} />;
+      const [mockElement, setMockElement] = useState(null);
+      useFocusHighlight(key, mockElement);
+      return <input data-testid="focusable-input" ref={setMockElement} />;
     };
 
     render(<Wrapper />);
@@ -100,9 +98,9 @@ describe('useFocusHighlight()', () => {
     }));
 
     const Wrapper = () => {
-      const mockRef = useRef();
-      useFocusHighlight(key, mockRef);
-      return <input data-testid="focusable-input" ref={mockRef} />;
+      const [mockElement, setMockElement] = useState(null);
+      useFocusHighlight(key, mockElement);
+      return <input data-testid="focusable-input" ref={setMockElement} />;
     };
 
     render(<Wrapper />);
