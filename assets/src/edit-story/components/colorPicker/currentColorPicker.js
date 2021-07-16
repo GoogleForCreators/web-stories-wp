@@ -56,6 +56,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
+import CircularProgress from '../circularProgress';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 import useEyedropper from './eyedropper';
@@ -75,6 +76,13 @@ const Container = styled.div`
 
 const Body = styled.div`
   padding-bottom: 0;
+`;
+
+const BodyFallback = styled.div`
+  height: ${BODY_HEIGHT + 3 * CONTROLS_HEIGHT + 4 * CONTAINER_PADDING}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SaturationWrapper = styled.div`
@@ -293,7 +301,13 @@ const DynamicImportWrapper = () => {
         };
       }, []);
 
-      return Picker ? <Picker.component {...props} /> : null;
+      return Picker ? (
+        <Picker.component {...props} />
+      ) : (
+        <BodyFallback>
+          <CircularProgress />
+        </BodyFallback>
+      );
     }
     return DynamicFetcher;
   };
