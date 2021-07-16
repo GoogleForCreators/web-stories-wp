@@ -19,6 +19,7 @@
  */
 import { useCallback } from 'react';
 import { hasVideoGotAudio } from '@web-stories-wp/media';
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -39,6 +40,8 @@ function useVideoIsMuted({ updateMediaElement }) {
     [updateElementsByResourceId]
   );
 
+  const isMuteVideoEnabled = useFeature('enableMuteVideo');
+
   const updateVideoIsMuted = useCallback(
     /**
      *
@@ -47,6 +50,9 @@ function useVideoIsMuted({ updateMediaElement }) {
      * @return {Promise<void>}
      */
     async (id, src) => {
+      if (!isMuteVideoEnabled) {
+        return;
+      }
       try {
         const hasAudio = await hasVideoGotAudio(src);
 
