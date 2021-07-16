@@ -154,7 +154,6 @@ class Output_Buffer extends Test_Case {
 
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
-	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images() {
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
@@ -177,7 +176,6 @@ class Output_Buffer extends Test_Case {
 
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 * @covers ::get_poster_images
 	 */
 	public function test_add_poster_images_overrides_existing_poster() {
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
