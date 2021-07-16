@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
+import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -27,15 +27,12 @@ import { action } from '@storybook/addon-actions';
 import {
   formattedStoriesArray,
   STORYBOOK_PAGE_SIZE,
-} from '../../../../storybookUtils';
-import {
-  STORY_ITEM_CENTER_ACTION_LABELS,
-  STORY_CONTEXT_MENU_ITEMS,
-} from '../../../../constants';
-import StoryGridView from '../storyGridView';
+} from '../../../../../../storybookUtils';
+import { STORY_CONTEXT_MENU_ITEMS } from '../../../../../../constants';
+import StoryGridView from '..';
 
 export default {
-  title: 'Dashboard/Views/Shared/StoryGridView',
+  title: 'Dashboard/Views/MyStories/Content/GridView',
   component: StoryGridView,
 };
 
@@ -43,7 +40,6 @@ export const _default = () => {
   return (
     <StoryGridView
       stories={formattedStoriesArray}
-      centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
       bottomActionLabel={text('bottomActionLabel', 'MY CTA')}
       storyMenu={{
         handleMenuToggle: action('handleMenuToggle'),
@@ -51,8 +47,6 @@ export const _default = () => {
         menuItems: STORY_CONTEXT_MENU_ITEMS,
         handleMenuItemSelected: action('handleMenuItemSelected'),
       }}
-      isTemplate={boolean('isTemplate')}
-      isSavedTemplate={boolean('isSavedTemplate')}
       pageSize={STORYBOOK_PAGE_SIZE}
     />
   );
