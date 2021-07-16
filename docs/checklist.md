@@ -29,45 +29,47 @@ Comes in three sections. You need varying degrees of access depending on where y
 
 ## Roles
 
-There are six possible roles that a user may be:
+There are six possible roles. These roles include the following permissions
 
-- Super Admin
-- Administrator
-- Editor
-- Author
-- Contributor
-- Subscriber
+|Role|Permissions|
+|--|--|
+|Super Admin|All permissions|
+|Administrator|All permissions|
+|Editor|All permissions|
+|Author|- `edit_web-stories`<br/>- `edit_published_web-stories` <br/>- `delete_web-stories`<br/>- `delete_published_web-stories`<br/>- `publish_web-stories`|
+|Contributor|- `edit_web-stories`<br/>- `delete_web-stories`|
+|Subscriber|No permissions|
 
-Depending on the role, the user may or may not be able to fix specific checklist items. Due to this constraint, some of the checklist items will be hidden based on the user's role.
+Depending on the role, the user may or may not be able to fix specific checklist items. The checklist card will be hidden if the user is unable to fix the issue.
 
-**NOTE**: `Contributor`s are only able to edit _non-published_ stories. Once a story is published, many cards will be hidden from `contributor`s as well.
+**NOTE**: `Contributor`s are only able to edit _non-published_ stories. Once a story is published, many cards will be hidden from users with the `contributor` role.
 
 This is outlined in the table below:
 
-|Story issue|Users that will be shown the checklist card|Users that will be shown the checklist card when the story has been published|
+|Story issue/card|Role(s) necessary to fix the issue|Role(s) necessary to fix issue once story has been published|
 |--|--|--|
-|Story missing title|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Story title too long|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Story missing excerpt|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Story has no poster image attached|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Increase poster image's size|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Increase poster images's aspect ratio|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Increase publisher logo size|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Video missing poster image|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Video not optimized|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Story has too many pages|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Story has too few pages|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Page has too much text|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Page has too little text|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Page has too many links|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Video element resolution too low|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Media element resolution too low|Super Admin, Administrator, Editor, Author|Super Admin, Administrator, Editor, Author|
-|Contrast too low between text and background color|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Text font size too small|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Video element missing description|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Video element missing captions|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Element link tappable region too small|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
-|Image element missing alt|Super Admin, Administrator, Editor, Author, Contributor|Super Admin, Administrator, Editor, Author|
+|Story missing title|`edit_web-stories`|`edit_published_web-stories`|
+|Story title too long|`edit_web-stories`|`edit_published_web-stories`|
+|Story missing excerpt|`edit_web-stories`|`edit_published_web-stories`|
+|Story has no poster image attached|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Increase poster image's size|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Increase poster images's aspect ratio|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Increase publisher logo size|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Video missing poster image|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Video not optimized|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Story has too many pages|`edit_web-stories`|`edit_published_web-stories`|
+|Story has too few pages|`edit_web-stories`|`edit_published_web-stories`|
+|Page has too much text|`edit_web-stories`|`edit_published_web-stories`|
+|Page has too little text|`edit_web-stories`|`edit_published_web-stories`|
+|Page has too many links|`edit_web-stories`|`edit_published_web-stories`|
+|Video element resolution too low|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Media element resolution too low|`upload_files` and `edit_web-stories`|`upload_files` and `edit_published_web-stories`|
+|Contrast too low between text and background color|`edit_web-stories`|`edit_published_web-stories`|
+|Text font size too small|`edit_web-stories`|`edit_published_web-stories`|
+|Video element missing description|`edit_web-stories`|`edit_published_web-stories`|
+|Video element missing captions|`edit_web-stories`|`edit_published_web-stories`|
+|Element link tappable region too small|`edit_web-stories`|`edit_published_web-stories`|
+|Image element missing alt|`edit_web-stories`|`edit_published_web-stories`|
 
 ## Future  Improvements
 
