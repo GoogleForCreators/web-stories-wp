@@ -60,18 +60,18 @@ export function getMediaBaseColor(resource, onBaseColor) {
 
 function getDefaultOnloadCallback(nodeKey, resolve, reject) {
   return () => {
-    try {
-      const node = document.body[nodeKey];
-      import(
-        /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
-      ).then(({ default: ColorThief }) => {
+    import(
+      /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+    )
+      .then(({ default: ColorThief }) => {
+        const node = document.body[nodeKey];
         const thief = new ColorThief();
         resolve(thief.getColor(node.firstElementChild));
+      })
+      .catch((err) => {
+        trackError('image_base_color', err.message);
+        reject(err);
       });
-    } catch (err) {
-      trackError('image_base_color', err.message);
-      reject(err);
-    }
   };
 }
 
