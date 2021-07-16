@@ -29,7 +29,6 @@ describe('Checklist integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableChecklistCompanion: true });
     await fixture.render();
   });
 
@@ -354,7 +353,6 @@ describe('Checklist integration', () => {
 
     beforeEach(async () => {
       fixture = new Fixture();
-      fixture.setFlags({ enableChecklistCompanion: true });
       fixture.setConfig({ capabilities: { hasUploadMediaAction } });
       await fixture.render();
 
@@ -439,17 +437,10 @@ describe('Checklist integration', () => {
       // open the document panel
       await fixture.events.click(fixture.editor.inspector.documentTab);
 
-      // open the menu
+      // open the menu - mock will add picture automatically
       await fixture.events.click(
         fixture.editor.inspector.documentPanel.posterMenuButton
       );
-
-      // // and click on edit
-      // await fixture.events.click(
-      //   fixture.editor.inspector.documentPanel.posterMenuEdit
-      // );
-
-      await fixture.events.sleep(1000);
     };
 
     /**
