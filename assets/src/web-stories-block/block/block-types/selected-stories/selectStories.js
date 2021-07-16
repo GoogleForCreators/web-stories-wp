@@ -86,6 +86,7 @@ function AuthorSearch({
         onFilterValueChange={onFilterValueChange}
         onChange={onChange}
         value={value}
+        className="web-stories-story-picker-filter__combobox"
       />
     );
   }
@@ -123,6 +124,7 @@ function KeywordSearch({
         onFilterValueChange={onFilterValueChange}
         onChange={onChange}
         value={value}
+        className="web-stories-story-picker-filter__combobox"
       />
     );
   }
