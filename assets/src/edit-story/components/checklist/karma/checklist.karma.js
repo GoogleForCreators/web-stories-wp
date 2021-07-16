@@ -29,6 +29,7 @@ describe('Checklist integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ enableChecklistCompanion: true });
     await fixture.render();
   });
 
@@ -353,6 +354,8 @@ describe('Checklist integration', () => {
 
     beforeEach(async () => {
       fixture = new Fixture();
+      fixture.setFlags({ enableChecklistCompanion: true });
+
       fixture.setConfig({ capabilities: { hasUploadMediaAction } });
       await fixture.render();
 
