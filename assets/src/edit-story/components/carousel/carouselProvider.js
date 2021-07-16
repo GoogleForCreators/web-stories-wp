@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useMemo, useState } from 'react';
+import { useCallback, useRef, useMemo, useState, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -43,6 +43,12 @@ function CarouselProvider({ availableSpace, children }) {
   const numPages = pages.length;
 
   const pageIds = useMemo(() => pages.map(({ id }) => id), [pages]);
+
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
+  useEffect(() => {
+    requestIdleCallback(() => setShowSkeleton(false), { timeout: 5000 });
+  }, []);
 
   const {
     pageThumbWidth,
@@ -97,6 +103,7 @@ function CarouselProvider({ availableSpace, children }) {
       currentPageId,
       canScrollBack,
       canScrollForward,
+      showSkeleton,
     },
     actions: {
       scrollBack,
