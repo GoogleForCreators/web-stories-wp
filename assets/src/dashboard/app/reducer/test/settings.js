@@ -17,24 +17,13 @@
 /**
  * Internal dependencies
  */
-import { AD_NETWORK_TYPE } from '../../../constants';
 import { ERRORS } from '../../textContent';
-import settingsReducer, { ACTION_TYPES } from '../settings';
+import settingsReducer, {
+  ACTION_TYPES,
+  defaultSettingsState as initialState,
+} from '../settings';
 
 describe('settingsReducer', () => {
-  const initialState = {
-    activePublisherLogoId: null,
-    error: {},
-    googleAnalyticsId: '',
-    adSensePublisherId: '',
-    adSenseSlotId: '',
-    adManagerSlotId: '',
-    adNetwork: AD_NETWORK_TYPE.NONE,
-    publisherLogoIds: [],
-    videoCache: false,
-    settingSaved: false,
-  };
-
   const MOCK_ERROR_ID = Date.now();
 
   beforeAll(() => {
@@ -105,10 +94,19 @@ describe('settingsReducer', () => {
     });
     expect(result).toMatchObject({
       error: {},
-      settingSaved: true,
       googleAnalyticsId: 'fakeId12345NEW',
       activePublisherLogoId: 5,
       publisherLogoIds: [5, 6, 7, 8],
+    });
+  });
+
+  it(`should update settingSaved boolean when ${ACTION_TYPES.SETTING_SAVED} is called`, () => {
+    const result = settingsReducer(initialState, {
+      type: ACTION_TYPES.SETTING_SAVED,
+      payload: true,
+    });
+    expect(result).toMatchObject({
+      settingSaved: true,
     });
   });
 });

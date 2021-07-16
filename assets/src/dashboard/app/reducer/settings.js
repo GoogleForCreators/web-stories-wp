@@ -22,7 +22,7 @@ import { AD_NETWORK_TYPE } from '../../constants';
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
   UPDATE_SETTINGS_FAILURE: 'update_settings_failure',
-  UPDATE_SETTINGS_REQUESTED: 'update_settings_requested',
+  SETTING_SAVED: 'setting_saved',
   FETCH_SETTINGS_SUCCESS: 'fetch_settings_success',
   FETCH_SETTINGS_FAILURE: 'fetch_settings_failure',
 };
@@ -42,10 +42,10 @@ export const defaultSettingsState = {
 
 function settingsReducer(state, action) {
   switch (action.type) {
-    case ACTION_TYPES.UPDATE_SETTINGS_REQUESTED: {
+    case ACTION_TYPES.SETTING_SAVED: {
       return {
         ...state,
-        settingSaved: false,
+        settingSaved: action.payload,
       };
     }
 
@@ -57,32 +57,12 @@ function settingsReducer(state, action) {
       };
     }
 
-    case ACTION_TYPES.FETCH_SETTINGS_SUCCESS: {
-      return {
-        ...state,
-        activePublisherLogoId: action.payload.activePublisherLogoId,
-        error: {},
-        googleAnalyticsId: action.payload.googleAnalyticsId,
-        adSensePublisherId: action.payload.adSensePublisherId,
-        adSenseSlotId: action.payload.adSenseSlotId,
-        adManagerSlotId: action.payload.adManagerSlotId,
-        adNetwork: action.payload.adNetwork,
-        publisherLogoIds: [
-          ...new Set([
-            action.payload.activePublisherLogoId,
-            ...action.payload.publisherLogoIds,
-          ]),
-        ],
-        videoCache: action.payload.videoCache,
-      };
-    }
-
+    case ACTION_TYPES.FETCH_SETTINGS_SUCCESS:
     case ACTION_TYPES.UPDATE_SETTINGS_SUCCESS: {
       return {
         ...state,
         activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
-        settingSaved: true,
         googleAnalyticsId: action.payload.googleAnalyticsId,
         adSensePublisherId: action.payload.adSensePublisherId,
         adSenseSlotId: action.payload.adSenseSlotId,

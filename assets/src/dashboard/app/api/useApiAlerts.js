@@ -52,30 +52,21 @@ function useApiAlerts() {
   // if there is an API error, display a snackbar
   useEffect(() => {
     if (storyError?.id) {
-      showSnackbar({
-        message: storyError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(storyError.message);
     }
-  }, [storyError, showSnackbar]);
+  }, [storyError, debouncedShowSnackbar]);
 
   useEffect(() => {
     if (templateError?.id) {
-      showSnackbar({
-        message: templateError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(templateError.message);
     }
-  }, [templateError, showSnackbar]);
+  }, [templateError, debouncedShowSnackbar]);
 
   useEffect(() => {
     if (settingsError?.id) {
-      showSnackbar({
-        message: settingsError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(settingsError.message);
     }
-  }, [settingsError, showSnackbar]);
+  }, [settingsError, debouncedShowSnackbar]);
 
   useEffect(() => {
     if (settingSaved) {
@@ -85,11 +76,8 @@ function useApiAlerts() {
 
   useEffect(() => {
     if (mediaError?.id) {
-      showSnackbar({
-        message: mediaError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(mediaError.message);
     }
-  }, [mediaError, showSnackbar]);
+  }, [mediaError, debouncedShowSnackbar]);
 }
 export default useApiAlerts;
