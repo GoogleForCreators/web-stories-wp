@@ -74,7 +74,6 @@ export function PriorityChecks({
         <StoryTitleLength />
         <StoryMissingExcerpt />
         <StoryPosterAttached />
-        {/* TODO: #8129 this overlaps alot with aspect ratio, do we need both? */}
         <StoryPosterPortraitSize />
         <StoryPosterAspectRatio />
         <PublisherLogoSize />
