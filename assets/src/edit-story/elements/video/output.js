@@ -34,6 +34,7 @@ function VideoOutput({ element, box }) {
 
   const poster = defaultForUndefined(element.poster, resource.poster);
   const alt = defaultForUndefined(element.alt, resource.alt);
+  const isMuted = defaultForUndefined(element.isMuted, resource.isMuted);
 
   const sourceProps = {
     type: resource.mimeType,
@@ -48,6 +49,7 @@ function VideoOutput({ element, box }) {
     alt,
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
+    noaudio: isMuted ? 'noaudio' : undefined,
   };
 
   return (
