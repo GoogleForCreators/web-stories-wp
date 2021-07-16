@@ -80,7 +80,6 @@ export const ACCESSIBILITY_COPY = {
   },
   imagesMissingAltText: {
     title: __('Add assistive text to images', 'web-stories'),
-    // TODO: add `Learn more` link here to the footer?
     footer: __(
       'Optimize accessibility and indexability with meaningful text to better assist users.',
       'web-stories'
