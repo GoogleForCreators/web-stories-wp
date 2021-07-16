@@ -151,8 +151,8 @@ export const GridItemButton = styled.button`
 `;
 
 export const Logo = styled.img.attrs({
-  height: '96px',
-  width: '96px',
+  height: 96,
+  width: 96,
 })`
   object-fit: cover;
   width: 100%;
