@@ -36,7 +36,7 @@ export default {
     { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
     { label: _x('Green', 'color', 'web-stories'), color: '#4b5c54' },
     { label: _x('Yellow', 'color', 'web-stories'), color: '#FDF5DC' },
-    { label: _x('Grey', 'color', 'web-stories'), color: '#858280' },
+    { label: _x('Gray', 'color', 'web-stories'), color: '#858280' },
     { label: _x('Light Grey', 'color', 'web-stories'), color: '#d8d8d8' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
   ],

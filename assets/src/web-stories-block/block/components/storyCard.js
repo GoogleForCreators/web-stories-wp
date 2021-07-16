@@ -72,7 +72,7 @@ function StoryCard({
             <div className="story-content-overlay__author">
               {sprintf(
                 /* translators: byline. %s: author name. */
-                __('by %s', 'web-stories'),
+                __('By %s', 'web-stories'),
                 author
               )}
             </div>

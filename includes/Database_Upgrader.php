@@ -56,22 +56,24 @@ class Database_Upgrader extends Service_Base {
 	 * @var array
 	 */
 	const ROUTINES = [
-		'1.0.0' => Migrations\Update_1::class,
-		'2.0.0' => Migrations\Replace_Conic_Style_Presets::class,
-		'2.0.1' => Migrations\Add_Media_Source_Editor::class,
-		'2.0.2' => Migrations\Remove_Broken_Text_Styles::class,
-		'2.0.3' => Migrations\Unify_Color_Presets::class,
-		'2.0.4' => Migrations\Update_Publisher_Logos::class,
-		'3.0.0' => Migrations\Add_Stories_Caps::class,
-		'3.0.1' => Migrations\Rewrite_Flush::class,
-		'3.0.2' => Migrations\Rewrite_Flush::class,
-		'3.0.3' => Migrations\Yoast_Reindex_Stories::class,
-		'3.0.4' => Migrations\Add_Poster_Generation_Media_Source::class,
-		'3.0.5' => Migrations\Remove_Unneeded_Attachment_Meta::class,
-		'3.0.6' => Migrations\Add_Media_Source_Video_Optimization::class,
-		'3.0.7' => Migrations\Add_Media_Source_Source_Video::class,
-		'3.0.8' => Migrations\Rewrite_Flush::class,
-		'3.0.9' => Migrations\Add_VideoPress_Poster_Generation_Media_Source::class,
+		'1.0.0'  => Migrations\Update_1::class,
+		'2.0.0'  => Migrations\Replace_Conic_Style_Presets::class,
+		'2.0.1'  => Migrations\Add_Media_Source_Editor::class,
+		'2.0.2'  => Migrations\Remove_Broken_Text_Styles::class,
+		'2.0.3'  => Migrations\Unify_Color_Presets::class,
+		'2.0.4'  => Migrations\Update_Publisher_Logos::class,
+		'3.0.0'  => Migrations\Add_Stories_Caps::class,
+		'3.0.1'  => Migrations\Rewrite_Flush::class,
+		'3.0.2'  => Migrations\Rewrite_Flush::class,
+		'3.0.3'  => Migrations\Yoast_Reindex_Stories::class,
+		'3.0.4'  => Migrations\Add_Poster_Generation_Media_Source::class,
+		'3.0.5'  => Migrations\Remove_Unneeded_Attachment_Meta::class,
+		'3.0.6'  => Migrations\Add_Media_Source_Video_Optimization::class,
+		'3.0.7'  => Migrations\Add_Media_Source_Source_Video::class,
+		'3.0.8'  => Migrations\Rewrite_Flush::class,
+		'3.0.9'  => Migrations\Add_VideoPress_Poster_Generation_Media_Source::class,
+		'3.0.10' => Migrations\Add_Media_Source_Gif_Conversion::class,
+		'3.0.11' => Migrations\Add_Media_Source_Source_Image::class,
 	];
 
 	/**
@@ -109,7 +111,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 
@@ -120,7 +122,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 5;
 	}
 
@@ -135,7 +137,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function run_upgrade_routine( $class, $version, $current_version ) {
+	protected function run_upgrade_routine( string $class, string $version, string $current_version ) {
 		if ( version_compare( $current_version, $version, '<' ) ) {
 			if ( ! method_exists( $this->injector, 'make' ) ) {
 				return;
@@ -154,7 +156,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function finish_up( $previous_version ) {
+	protected function finish_up( string $previous_version ) {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
 	}

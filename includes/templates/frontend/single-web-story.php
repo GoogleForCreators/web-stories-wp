@@ -10,6 +10,7 @@
 
 use Google\Web_Stories\Renderer\Story\HTML;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Services;
 
 /**
  * Copyright 2020 Google LLC
@@ -34,6 +35,6 @@ $current_post = get_post();
 if ( $current_post instanceof WP_Post ) {
 	$story = new Story();
 	$story->load_from_post( $current_post );
-	$renderer = new HTML( $story );
+	$renderer = new HTML( $story, Services::get( 'experiments' ) );
 	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

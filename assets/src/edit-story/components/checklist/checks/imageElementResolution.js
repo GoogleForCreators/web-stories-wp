@@ -67,15 +67,16 @@ function gifElementResolution(element) {
 }
 
 const ImageElementResolution = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingElements = useMemo(
-    () => filterStoryElements(story, mediaElementResolution),
-    [story]
+    () => filterStoryElements(pages, mediaElementResolution),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
+        pageId,
         elementId,
       }),
     [setHighlights]
@@ -107,7 +108,7 @@ const ImageElementResolution = () => {
             {getVisibleThumbnails(failingElements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending image', 'web-stories')}

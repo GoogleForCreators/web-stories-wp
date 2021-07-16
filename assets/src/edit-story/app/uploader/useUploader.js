@@ -76,7 +76,7 @@ function useUploader() {
       // Bail early if user doesn't have upload capabilities.
       if (!hasUploadMediaAction) {
         const message = __(
-          'Sorry, you are unable to upload files.',
+          'Sorry, you are not allowed to upload files.',
           'web-stories'
         );
         throw createError('PermissionError', file.name, message);

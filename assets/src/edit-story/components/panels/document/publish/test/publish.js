@@ -98,7 +98,7 @@ describe('PublishPanel', () => {
   it('should render PublishPanel', async () => {
     arrange();
     const publishPanel = screen.getByText('Publishing');
-    const publisherLogo = screen.getByText('Publisher logo');
+    const publisherLogo = screen.getByText('Publisher Logo');
 
     await waitFor(() => expect(publishPanel).toBeDefined());
     await waitFor(() => expect(publisherLogo).toBeDefined());

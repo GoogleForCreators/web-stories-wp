@@ -78,7 +78,7 @@ describe('Gif Output', () => {
 
   it('should include poster image if available', async () => {
     const newProps = { ...baseProps };
-    newProps.element.resource.output.poster =
+    newProps.element.resource.poster =
       'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png';
     const output = <GifOutput {...newProps} />;
     const outputStr = renderToStaticMarkup(output);
@@ -90,6 +90,25 @@ describe('Gif Output', () => {
     await expect(outputStr).toMatchSnapshot();
   });
 
+  it('should remove blob URLs', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        resource: {
+          ...baseProps.element.resource,
+          output: {
+            ...baseProps.element.resource.output,
+            src: 'blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a',
+          },
+        },
+      },
+    };
+    const output = <GifOutput {...props} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).not.toStrictEqual(expect.stringMatching('blob:'));
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       await expect(<GifOutput {...baseProps} />).toBeValidAMPStoryElement();
@@ -97,7 +116,7 @@ describe('Gif Output', () => {
 
     it('should produce valid AMP output with poster', async () => {
       const newProps = { ...baseProps };
-      newProps.element.resource.output.poster =
+      newProps.element.resource.poster =
         'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png';
       await expect(<GifOutput {...newProps} />).toBeValidAMPStoryElement();
     });

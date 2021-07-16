@@ -77,7 +77,7 @@ comment:
 
 # See https://docs.codecov.io/docs/ignoring-paths
 ignore:
-  - bin/commander.js
+  - bin/normalize-path.js
   - scoper.inc.php
   - web-stories.php
   - uninstall.php

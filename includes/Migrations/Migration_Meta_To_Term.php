@@ -70,9 +70,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	protected function get_post_meta_key() {
-		return '';
-	}
+	abstract protected function get_post_meta_key();
 
 	/**
 	 * Get name of term to be used in migration.
@@ -82,7 +80,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	protected function get_term_name() {
+	protected function get_term_name(): string {
 		return 'poster-generation';
 	}
 }

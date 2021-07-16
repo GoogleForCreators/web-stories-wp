@@ -19,7 +19,6 @@ module.exports = {
     './stories/**/*.js',
     '../assets/src/dashboard/**/stories/*.@(js|mdx)',
     '../assets/src/edit-story/**/stories/*.@(js|mdx)',
-    '../assets/src/animation/**/stories/*.@(js|mdx)',
     '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
     '../packages/design-system/src/**/stories/*.@(js|mdx)',
   ],
@@ -58,6 +57,7 @@ module.exports = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {
@@ -84,6 +84,7 @@ module.exports = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {

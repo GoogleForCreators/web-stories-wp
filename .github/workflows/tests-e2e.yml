@@ -51,7 +51,7 @@ jobs:
             wp: 'latest'
             snapshots: true
           - browser: 'chrome'
-            wp: '5.8-RC1'
+            wp: '5.8-RC3'
             experimental: true
             snapshots: false
           - browser: 'chrome'
@@ -73,20 +73,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v2.2.0
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-        env:
-          cache-name: cache-node-modules
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          cache: npm
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -135,10 +123,13 @@ jobs:
         run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
+          WP_VERSION: ${{ matrix.wp }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
         run: npm run test:e2e
+        env:
+          WP_VERSION: ${{ matrix.wp }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment

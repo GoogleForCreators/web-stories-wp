@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import {
@@ -95,11 +95,6 @@ const Collapse = styled.button`
   color: ${({ theme, isCollapsed }) =>
     isCollapsed ? theme.colors.fg.secondary : theme.colors.fg.primary};
   height: 32px;
-  ${({ hasBadge }) =>
-    hasBadge &&
-    css`
-      width: 100%;
-    `}
   display: flex; /* removes implicit line-height padding from child element */
   padding: 0 4px 0 0;
   align-items: center;
@@ -141,7 +136,6 @@ Toggle.propTypes = {
 function Title({
   ariaLabel,
   children,
-  hasBadge,
   isPrimary,
   isSecondary,
   secondaryAction,
@@ -227,7 +221,6 @@ function Title({
         aria-expanded={!isCollapsed}
         aria-controls={panelContentId}
         isCollapsed={isCollapsed}
-        hasBadge={hasBadge}
       >
         <IconWrapper>{canCollapse && toggleIcon}</IconWrapper>
         <Heading
@@ -246,7 +239,6 @@ function Title({
 Title.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node,
-  hasBadge: PropTypes.bool,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,
   isResizable: PropTypes.bool,

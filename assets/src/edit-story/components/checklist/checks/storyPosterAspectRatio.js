@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
@@ -33,18 +33,18 @@ import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
-export function storyPosterAspectRatio(story) {
+export function storyPosterAspectRatio(featuredMedia) {
   if (
-    hasNoFeaturedMedia(story) ||
-    !story.featuredMedia?.width ||
-    !story.featuredMedia?.height
+    hasNoFeaturedMedia({ featuredMedia }) ||
+    !featuredMedia?.width ||
+    !featuredMedia?.height
   ) {
     return false;
   }
 
   const hasCorrectAspectRatio =
     Math.abs(
-      story.featuredMedia.width / story.featuredMedia.height -
+      featuredMedia.width / featuredMedia.height -
         ASPECT_RATIO_LEFT / ASPECT_RATIO_RIGHT
     ) <= 0.001;
 
@@ -52,7 +52,7 @@ export function storyPosterAspectRatio(story) {
 }
 
 const StoryPosterAspectRatio = () => {
-  const { story } = useStory(({ state }) => state);
+  const featuredMedia = useStory(({ state }) => state?.story?.featuredMedia);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
@@ -63,7 +63,10 @@ const StoryPosterAspectRatio = () => {
   );
   const { footer, title } = PRIORITY_COPY.storyPosterWrongRatio;
 
-  const isRendered = storyPosterAspectRatio(story);
+  const isRendered = useMemo(
+    () => storyPosterAspectRatio(featuredMedia),
+    [featuredMedia]
+  );
   useRegisterCheck('StoryPosterAspectRatio', isRendered);
   return (
     isRendered && (

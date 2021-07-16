@@ -102,7 +102,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return void
 	 */
-	public function enqueue_assets( $hook_suffix ) {
+	public function enqueue_assets( string $hook_suffix ) {
 		if ( ! $this->is_plugins_page( $hook_suffix ) || ! $this->activation_flag->get_activation_flag( is_network_admin() ) ) {
 			return;
 		}
@@ -133,7 +133,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return array Script settings.
 	 */
-	protected function get_script_settings() {
+	protected function get_script_settings(): array {
 		$new_story_url = admin_url(
 			add_query_arg(
 				[
@@ -172,7 +172,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 				'newStoryURL'  => $new_story_url,
 				'dashboardURL' => $dashboard_url,
 			],
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 	}
 
@@ -212,7 +212,7 @@ class Activation_Notice implements ServiceInterface, Registerable {
 	 *
 	 * @return bool Whether we're on the Plugins page.
 	 */
-	protected function is_plugins_page( $hook_suffix ) {
+	protected function is_plugins_page( $hook_suffix ): bool {
 		return ( ! empty( $hook_suffix ) && 'plugins.php' === $hook_suffix );
 	}
 }

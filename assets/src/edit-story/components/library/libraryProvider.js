@@ -52,6 +52,8 @@ function LibraryProvider({ children }) {
   const [savedTemplates, setSavedTemplates] = useState(null);
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
+  const [pageCanvasData, setPageCanvasData] = useState(null);
+  const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
   const renderedTabs = useRef({});
   const insertElement = useInsertElement();
@@ -118,19 +120,23 @@ function LibraryProvider({ children }) {
   const state = useMemo(
     () => ({
       state: {
+        pageCanvasData,
         tab,
         tabRefs,
         textSets,
         savedTemplates,
         nextTemplatesToFetch,
+        pageCanvasPromise,
       },
       actions: {
+        setPageCanvasData,
         setTab,
         insertElement,
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
         setNextTemplatesToFetch,
+        setPageCanvasPromise,
       },
       data: {
         tabs: tabs,
@@ -147,6 +153,9 @@ function LibraryProvider({ children }) {
       tabs,
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
+      pageCanvasData,
+      pageCanvasPromise,
+      setPageCanvasPromise,
     ]
   );
   const getTextSets = useCallback(async () => {

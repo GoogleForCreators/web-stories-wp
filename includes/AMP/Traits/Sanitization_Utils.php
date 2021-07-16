@@ -126,16 +126,15 @@ trait Sanitization_Utils {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 
-		// Without a publisher logo, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'publisher-logo-src' ) ) {
-			$document->html->removeAttribute( 'amp' );
+			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 	}
 
 	/**
-	 * Replaces the placeholder of publisher logo in the content.
+	 * Replaces the placeholder of publisher in the content.
+	 *
+	 * Ensures the `publisher` attribute exists if missing.
 	 *
 	 * @since 1.7.0
 	 *
@@ -155,15 +154,8 @@ trait Sanitization_Utils {
 			return;
 		}
 
-		if ( $publisher ) {
+		if ( $publisher || ! $story_element->hasAttribute( 'publisher' ) ) {
 			$story_element->setAttribute( 'publisher', $publisher );
-		}
-
-		// Without a publisher, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
-		if ( ! $story_element->getAttribute( 'publisher' ) ) {
-			$document->html->removeAttribute( 'amp' );
 		}
 	}
 
@@ -192,11 +184,8 @@ trait Sanitization_Utils {
 			$story_element->setAttribute( $attr, esc_url_raw( $url ) );
 		}
 
-		// Without a poster, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
-			$document->html->removeAttribute( 'amp' );
+			$story_element->setAttribute( 'poster-portrait-src', '' );
 		}
 	}
 
@@ -261,6 +250,97 @@ trait Sanitization_Utils {
 					$class_name .= ' ' . $styled_element->getAttribute( 'class' );
 				}
 				$styled_element->setAttribute( 'class', $class_name );
+			}
+		}
+	}
+
+	/**
+	 * Enables using video cache by adding the necessary attribute to `<amp-video>`
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
+	 * @return void
+	 */
+	private function add_video_cache( &$document, $video_cache_enabled ) {
+		if ( ! $video_cache_enabled ) {
+			return;
+		}
+
+		$videos = $document->body->getElementsByTagName( 'amp-video' );
+
+		/**
+		 * The <amp-video> element
+		 *
+		 * @var DOMElement $video The <amp-video> element
+		 */
+		foreach ( $videos as $video ) {
+			$video->setAttribute( 'cache', 'google' );
+		}
+	}
+
+	/**
+	 * Determines whether a URL is a `blob:` URL.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param string $url URL.
+	 * @return bool Whether it's a blob URL.
+	 */
+	private function is_blob_url( string $url ) {
+		return 0 === strpos( $url, 'blob:' );
+	}
+
+	/**
+	 * Remove `blob:` URLs from videos and images that might have slipped through.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function remove_blob_urls( &$document ) {
+		/**
+		 * List of <amp-video> elements.
+		 *
+		 * @var DOMElement[] $videos Video elements.
+		 */
+		$videos = $document->body->getElementsByTagName( 'amp-video' );
+
+		foreach ( $videos as $video ) {
+			if ( $this->is_blob_url( $video->getAttribute( 'poster' ) ) ) {
+				$video->setAttribute( 'poster', '' );
+			}
+
+			if ( $this->is_blob_url( $video->getAttribute( 'artwork' ) ) ) {
+				$video->setAttribute( 'artwork', '' );
+			}
+
+			/**
+			 * List of <source> child elements.
+			 *
+			 * @var DOMElement[] $video_sources Video source elements.
+			 */
+			$video_sources = $video->getElementsByTagName( 'source' );
+
+			foreach ( $video_sources as $source ) {
+				if ( $this->is_blob_url( $source->getAttribute( 'src' ) ) ) {
+					$source->setAttribute( 'src', '' );
+				}
+			}
+		}
+
+		/**
+		 * List of <amp-img> elements.
+		 *
+		 * @var DOMElement[] $videos Image elements.
+		 */
+		$images = $document->body->getElementsByTagName( 'amp-img' );
+
+		foreach ( $images as $image ) {
+			if ( $this->is_blob_url( $image->getAttribute( 'src' ) ) ) {
+				$image->setAttribute( 'src', '' );
 			}
 		}
 	}

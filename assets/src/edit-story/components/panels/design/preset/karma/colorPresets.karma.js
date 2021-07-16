@@ -51,6 +51,7 @@ describe('Panel: Color Presets', () => {
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Add Colors', () => {
     it('should display color presets panel for a text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const addButton =
         fixture.editor.inspector.designPanel.colorPreset.global.add;
       expect(addButton).toBeTruthy();
@@ -83,6 +84,7 @@ describe('Panel: Color Presets', () => {
 
     it('should allow applying global colors', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.colorPreset.global.add
       );
@@ -99,6 +101,7 @@ describe('Panel: Color Presets', () => {
 
     it('should allow applying local colors', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.colorPreset.local.add
       );
@@ -118,6 +121,7 @@ describe('Panel: Color Presets', () => {
     it('should allow deleting local and global color presets', async () => {
       // Add text element and a color preset.
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.colorPreset.global.add
       );

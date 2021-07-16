@@ -72,7 +72,7 @@ const PageSeparator = styled(ReorderableSeparator)`
   }
 `;
 
-const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
+const ReorderablePage = styled(ReorderableItem)`
   display: flex;
   z-index: 1;
   margin-right: ${({ margin }) => margin}px;

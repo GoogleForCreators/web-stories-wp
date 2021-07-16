@@ -139,7 +139,7 @@ describe('StoryCard', () => {
           <div
             class="story-content-overlay__author"
           >
-            by Admin
+            By Admin
           </div>
           <time
             class="story-content-overlay__date"

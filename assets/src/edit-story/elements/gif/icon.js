@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { getSmallestUrlForWidth } from '@web-stories-wp/media';
-/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -26,12 +22,10 @@ import VisibleImage from '../media/visibleImage';
 
 function GifLayerIcon({
   element: {
-    resource,
-    resource: { alt },
+    resource: { poster, alt },
   },
 }) {
-  const src = getSmallestUrlForWidth(0, resource);
-  return <VisibleImage src={src} alt={alt} height="20" />;
+  return <VisibleImage src={poster} alt={alt} height="20" />;
 }
 
 GifLayerIcon.propTypes = {

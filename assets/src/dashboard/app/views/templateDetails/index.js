@@ -23,10 +23,9 @@ import { useSnackbar } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout } from '../../../components';
-import { usePagePreviewSize } from '../../../utils';
+import { usePagePreviewSize, clamp } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';

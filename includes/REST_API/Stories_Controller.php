@@ -39,6 +39,8 @@ use WP_REST_Response;
 
 /**
  * Stories_Controller class.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
 	use Publisher;
@@ -53,6 +55,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.0.0
@@ -113,6 +116,17 @@ class Stories_Controller extends Stories_Base_Controller {
 			}
 
 			$data['preview_link'] = $view_link;
+		}
+
+		if ( in_array( 'edit_link', $fields, true ) ) {
+			$edit_link = get_edit_post_link( $post, 'rest-api' );
+			if ( $edit_link ) {
+				$data['edit_link'] = $edit_link;
+			}
+		}
+
+		if ( in_array( 'embed_post_link', $fields, true ) && current_user_can( 'edit_posts' ) ) {
+			$data['embed_post_link'] = add_query_arg( [ 'from-web-story' => $post->ID ], admin_url( 'post-new.php' ) );
 		}
 
 		$data  = $this->filter_response_by_context( $data, $context );
@@ -204,6 +218,22 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$schema['properties']['preview_link'] = [
 			'description' => __( 'Preview Link.', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
+		];
+
+		$schema['properties']['edit_link'] = [
+			'description' => _x( 'Edit Link', 'compound noun', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
+		];
+
+		$schema['properties']['embed_post_link'] = [
+			'description' => __( 'Embed Post Edit Link.', 'web-stories' ),
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',

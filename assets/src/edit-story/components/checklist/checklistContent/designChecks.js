@@ -21,32 +21,30 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ISSUE_TYPES, PANEL_VISIBILITY_BY_STATE } from '../constants';
+import { ISSUE_TYPES } from '../constants';
 import PageTooManyLinks from '../checks/pageTooManyLinks';
 import PageTooMuchText from '../checks/pageTooMuchText';
 import PageTooLittleText from '../checks/pageTooLittleText';
 import VideoElementResolution from '../checks/videoElementResolution';
 import ImageElementResolution from '../checks/imageElementResolution';
 import StoryPagesCount from '../checks/storyPagesCount';
-import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
+import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
-import { useCheckpoint } from '../checkpointContext';
 
-export function DesignChecks({ isOpen, onClick, title }) {
-  const count = useCategoryCount(ISSUE_TYPES.DESIGN);
-  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
-    checkpoint,
-  }));
-
-  const isCheckpointMet = PANEL_VISIBILITY_BY_STATE[checkpoint].includes(
-    ISSUE_TYPES.DESIGN
-  );
+export function DesignChecks({
+  badgeCount = 0,
+  isOpen,
+  maxHeight,
+  onClick,
+  title,
+}) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <StyledTablistPanel
-        badgeCount={isCheckpointMet ? count : 0}
+        badgeCount={badgeCount}
         isExpanded={isOpen}
         onClick={onClick}
+        maxHeight={maxHeight}
         title={title}
       >
         <PanelText>
@@ -63,7 +61,9 @@ export function DesignChecks({ isOpen, onClick, title }) {
   );
 }
 DesignChecks.propTypes = {
+  badgeCount: PropTypes.number,
   isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };

@@ -25,6 +25,7 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
 } from '@web-stories-wp/media';
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies
  */
@@ -33,7 +34,6 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import useUnmount from '../../utils/useUnmount';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import EditCropMoveable from './editCropMoveable';

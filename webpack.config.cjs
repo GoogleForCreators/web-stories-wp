@@ -100,6 +100,7 @@ const sharedConfig = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {
@@ -125,6 +126,7 @@ const sharedConfig = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {

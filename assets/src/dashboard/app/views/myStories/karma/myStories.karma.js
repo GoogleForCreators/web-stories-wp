@@ -23,7 +23,6 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
-import stripHTML from '../../../../../edit-story/utils/stripHTML';
 import Fixture from '../../../../karma/fixture';
 import {
   PRIMARY_PATHS,
@@ -282,11 +281,9 @@ describe('Grid view', () => {
 
       await fixture.events.click(draftsTabButton);
 
-      const labelTextContent = stripHTML(
-        STORY_VIEWING_LABELS[STORY_STATUS.DRAFT](numDrafts)
-      );
       const viewDraftsText = fixture.screen.getByText(
-        (_, node) => node.textContent === labelTextContent
+        (_, node) =>
+          node.innerHTML === STORY_VIEWING_LABELS[STORY_STATUS.DRAFT](numDrafts)
       );
 
       expect(viewDraftsText).toBeTruthy();
@@ -312,11 +309,10 @@ describe('Grid view', () => {
 
       await fixture.events.click(publishedTabButton);
 
-      const labelTextContent = stripHTML(
-        STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numPublished)
-      );
       const viewPublishedText = fixture.screen.getByText(
-        (_, node) => node.textContent === labelTextContent
+        (_, node) =>
+          node.innerHTML ===
+          STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numPublished)
       );
       expect(viewPublishedText).toBeTruthy();
 
