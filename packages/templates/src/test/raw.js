@@ -179,7 +179,7 @@ describe('raw template files', () => {
           }
 
           expect(element?.resource?.isMuted).not.toBeUndefined();
-          expect(typeof element?.resource?.isMuted === 'boolean').toBeTrue();
+          expect(element?.resource?.isMuted).toBeBoolean();
         }
       }
     }
