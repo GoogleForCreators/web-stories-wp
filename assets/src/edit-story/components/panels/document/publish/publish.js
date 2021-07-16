@@ -207,7 +207,7 @@ function PublishPanel() {
                 type={allowedImageMimeTypes}
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
-                resource={featuredMedia}
+                imgProps={featuredMedia}
               />
             </MediaWrapper>
             <LabelWrapper>
