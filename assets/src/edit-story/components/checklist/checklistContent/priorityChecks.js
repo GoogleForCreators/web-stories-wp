@@ -37,6 +37,7 @@ import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
+import { useConfig } from '../../../app';
 
 export function PriorityChecks({
   badgeCount = 0,
@@ -45,6 +46,7 @@ export function PriorityChecks({
   onClick,
   title,
 }) {
+  const { capabilities: { hasUploadMediaAction } = {} } = useConfig();
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
   const { updateHighPriorityCount } = useCheckpoint(
     ({ actions: { updateHighPriorityCount } }) => ({
@@ -73,13 +75,13 @@ export function PriorityChecks({
         <StoryMissingTitle />
         <StoryTitleLength />
         <StoryMissingExcerpt />
-        <StoryPosterAttached />
-        {/* TODO: #8129 this overlaps alot with aspect ratio, do we need both? */}
-        <StoryPosterPortraitSize />
-        <StoryPosterAspectRatio />
-        <PublisherLogoSize />
-        <VideoElementMissingPoster />
-        {isTranscodingEnabled && <VideoOptimization />}
+        {hasUploadMediaAction && <StoryPosterAttached />}
+        {/* TODO: #8129 this overlaps a lot with aspect ratio, do we need both? */}
+        {hasUploadMediaAction && <StoryPosterPortraitSize />}
+        {hasUploadMediaAction && <StoryPosterAspectRatio />}
+        {hasUploadMediaAction && <PublisherLogoSize />}
+        {hasUploadMediaAction && <VideoElementMissingPoster />}
+        {isTranscodingEnabled && hasUploadMediaAction && <VideoOptimization />}
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );

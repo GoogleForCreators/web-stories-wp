@@ -30,6 +30,7 @@ import ImageElementResolution from '../checks/imageElementResolution';
 import StoryPagesCount from '../checks/storyPagesCount';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
+import { useConfig } from '../../../app';
 
 export function DesignChecks({
   badgeCount = 0,
@@ -38,6 +39,8 @@ export function DesignChecks({
   onClick,
   title,
 }) {
+  const { capabilities: { hasUploadMediaAction } = {} } = useConfig();
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
       <StyledTablistPanel
@@ -54,8 +57,8 @@ export function DesignChecks({
         <PageTooMuchText />
         <PageTooLittleText />
         <PageTooManyLinks />
-        <VideoElementResolution />
-        <ImageElementResolution />
+        {hasUploadMediaAction && <VideoElementResolution />}
+        {hasUploadMediaAction && <ImageElementResolution />}
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );

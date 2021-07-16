@@ -22,6 +22,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { useInsertElement } from '../../canvas';
+import { ACCESSIBILITY_COPY, DESIGN_COPY, PRIORITY_COPY } from '../constants';
 
 describe('Checklist integration', () => {
   let fixture;
@@ -344,5 +345,188 @@ describe('Checklist integration', () => {
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
     ).toBe('true');
     expect(fixture.editor.checklist.priorityPanel).toBeDefined();
+  });
+});
+
+[true, false].forEach((hasUploadMediaAction) => {
+  describe('Checklist integration - hasUploadMediaAction=false', () => {
+    let fixture;
+
+    beforeEach(async () => {
+      fixture = new Fixture();
+      fixture.setFlags({ enableChecklistCompanion: true });
+      fixture.setConfig({ capabilities: { hasUploadMediaAction } });
+      await fixture.render();
+    });
+
+    afterEach(() => {
+      fixture.restore();
+    });
+
+    const addPages = async (count) => {
+      let clickCount = 1;
+      while (clickCount <= count) {
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+        // eslint-disable-next-line no-await-in-loop, no-loop-func
+        await waitFor(() => {
+          expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+        });
+        clickCount++;
+      }
+    };
+
+    const openChecklist = async () => {
+      const { toggleButton } = fixture.editor.checklist;
+      await fixture.events.click(toggleButton);
+      // wait for animation
+      await fixture.events.sleep(500);
+    };
+
+    /**
+     * Inserts an image that has
+     * - width less than the minimum allowed image width (2 times element width)
+     * - height less than the minimum allowed image height (2 times element height)
+     *
+     * This will trigger an a11y issue in the checklist.
+     */
+    const addImageWithIssues = async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('image', {
+          x: 0,
+          y: 0,
+          width: 640 / 2,
+          height: 529 / 2,
+          resource: {
+            type: 'image',
+            mimeType: 'image/jpg',
+            src: 'http://localhost:9876/__static__/earth.jpg',
+            sizes: {
+              full: {
+                width: 300,
+                height: 400,
+              },
+            },
+          },
+        })
+      );
+    };
+
+    /**
+     * Inserts a video that has
+     * - no poster image
+     * - width less than the minimum allowed video width
+     * - height less than the minimum allowed video height
+     *
+     * This will trigger an a11y issue in the checklist.
+     */
+    const addVideoWithIssues = async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      await fixture.act(() =>
+        insertElement('video', {
+          resource: {
+            type: 'video',
+            mimeType: 'video/webm',
+            creationDate: '2021-05-21T00:09:18',
+            src: 'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
+            width: 560,
+            height: 320,
+            // no poster image
+            poster: null,
+            posterId: null,
+            id: 10,
+            length: 6,
+            lengthFormatted: '0:06',
+            title: 'small-video',
+            alt: 'small-video',
+            sizes: {
+              full: {
+                // resolution too low
+                height: 220,
+                width: 320,
+              },
+            },
+            local: false,
+            isOptimized: false,
+            baseColor: [115, 71, 39],
+          },
+          controls: false,
+          loop: false,
+          autoPlay: true,
+          tracks: [],
+          type: 'video',
+          x: 66,
+          y: 229,
+          width: 280,
+          height: 160,
+          id: '6e7f5de8-7793-4aef-8835-c1d32477b4e0',
+        })
+      );
+    };
+
+    it(`should${
+      hasUploadMediaAction ? '' : ' not'
+    } show cards that require the \`hasUploadMediaAction\` permission when hasUploadMediaAction=\`${hasUploadMediaAction}\``, async () => {
+      // add issues to checklist that need to be resolved by uploading media
+      await addImageWithIssues();
+      await addVideoWithIssues();
+
+      // show all checkpoints
+      await addPages(4);
+      await openChecklist();
+
+      const priorityIssuesRequiringMediaUploadPermissions = [
+        PRIORITY_COPY.storyMissingPoster.title,
+        // TODO: add poster image in karma test to trigger these issues
+        // PRIORITY_COPY.posterTooSmall.title,
+        // PRIORITY_COPY.storyPosterWrongRatio.title,
+        PRIORITY_COPY.videoMissingPoster.title,
+      ];
+
+      const designIssuesRequiringMediaUploadPermissions = [
+        DESIGN_COPY.videoResolutionTooLow.title,
+        DESIGN_COPY.lowImageResolution.title,
+      ];
+
+      const accessibilityIssuesRequiringMediaUploadPermissions = [
+        ACCESSIBILITY_COPY.videoMissingCaptions.title,
+      ];
+
+      priorityIssuesRequiringMediaUploadPermissions.map(async (title) => {
+        const card = await fixture.screen.queryByText(title);
+
+        if (hasUploadMediaAction) {
+          expect(card).not.toBeNull();
+        } else {
+          expect(card).toBeNull();
+        }
+      });
+
+      // open design tab
+      await fixture.events.click(fixture.editor.checklist.designTab);
+
+      designIssuesRequiringMediaUploadPermissions.map(async (title) => {
+        const card = await fixture.screen.queryByText(title);
+
+        if (hasUploadMediaAction) {
+          expect(card).not.toBeNull();
+        } else {
+          expect(card).toBeNull();
+        }
+      });
+
+      if (hasUploadMediaAction) {
+        // open accessibility tab
+        await fixture.events.click(fixture.editor.checklist.accessibilityTab);
+
+        accessibilityIssuesRequiringMediaUploadPermissions.map(async (title) =>
+          expect(await fixture.screen.queryByText(title)).not.toBeNull()
+        );
+      } else {
+        // Should have no accessibility issues
+        expect(fixture.editor.checklist.accessibilityTab).toBeNull();
+      }
+    });
   });
 });

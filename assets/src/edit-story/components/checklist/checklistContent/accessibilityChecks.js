@@ -31,6 +31,7 @@ import VideoElementMissingDescription from '../checks/videoElementMissingDescrip
 import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
+import { useConfig } from '../../../app';
 
 export function AccessibilityChecks({
   badgeCount = 0,
@@ -39,6 +40,8 @@ export function AccessibilityChecks({
   onClick,
   title,
 }) {
+  const { capabilities: { hasUploadMediaAction } = {} } = useConfig();
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <StyledTablistPanel
@@ -55,7 +58,7 @@ export function AccessibilityChecks({
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
-        <VideoElementMissingCaptions />
+        {hasUploadMediaAction && <VideoElementMissingCaptions />}
         <ElementLinkTappableRegionTooSmall />
         <ImageElementMissingAlt />
       </StyledTablistPanel>
