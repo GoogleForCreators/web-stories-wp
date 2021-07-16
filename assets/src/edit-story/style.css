@@ -54,6 +54,7 @@ body.js.edit-story #web-stories-editor .loading-message {
   margin: 0;
   padding-top: 50px;
   font-size: 36px;
+  font-family: 'Google Sans', sans-serif;
 }
 
 @keyframes spin-progress {
