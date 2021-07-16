@@ -121,6 +121,7 @@ function PublishTime() {
           activeItemLabel={displayLabel}
           selectButtonStylesOverride={focusStyle}
           onPointerEnter={() => loadCalendar()}
+          onFocus={() => loadCalendar()}
         />
       </Row>
       <Popup
