@@ -102,6 +102,10 @@ const Center = styled.div`
   align-items: center;
 `;
 
+const CanvasImage = styled.img`
+  width: 100%;
+`;
+
 function EyedropperLayer() {
   const {
     fullbleedContainer,
@@ -271,7 +275,7 @@ function EyedropperLayer() {
         {/* Disable reason: No pixel-by-pixel keyboard navigation. */}
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
-          <img ref={imgRef} src={img} alt="" />
+          <CanvasImage ref={imgRef} src={img} alt="" />
           <Magnifier ref={magnifierInfo}>
             <Circle>
               <canvas
