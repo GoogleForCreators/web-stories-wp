@@ -54,7 +54,7 @@ This is outlined in the table below:
 |Contrast too low between text and background color|`edit_web-stories`|
 |Text font size too small|`edit_web-stories`|
 |Video element missing description|`edit_web-stories`|
-|Video element missing captions|`hasUploadMediaAction`|
+|Video element missing captions|`hasUploadMediaAction` and `edit_web-stories`|
 |Element link tappable region too small|`edit_web-stories`|
 |Image element missing alt|`edit_web-stories`|
 
