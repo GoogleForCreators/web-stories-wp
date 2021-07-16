@@ -31,7 +31,7 @@ import {
 /**
  * Internal dependencies
  */
-import { forceFocusCompanionToggle } from '../utils';
+import { forceFocusCompanionToggle } from './utils';
 import { NavBar, NavButton } from './components';
 
 const TopNavButtons = styled.div`

@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { CARD_WIDTH } from '../helpCenter/navigator/constants';
+import { CARD_WIDTH } from '../secondaryPopup';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 

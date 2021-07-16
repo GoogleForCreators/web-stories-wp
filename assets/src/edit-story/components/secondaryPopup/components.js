@@ -22,7 +22,7 @@ import { Button, themeHelpers } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../panels/shared';
+import { focusStyle } from '../panels/shared';
 import { NAVIGATION_HEIGHT } from './constants';
 
 export const NavBar = styled.div`
