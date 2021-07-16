@@ -66,7 +66,7 @@ class Generic_Renderer extends Renderer {
 	 *
 	 * @return string Rendered stories output.
 	 */
-	public function render( array $args = [] ) {
+	public function render( array $args = [] ) : string {
 		if ( ! $this->valid() ) {
 			return '';
 		}

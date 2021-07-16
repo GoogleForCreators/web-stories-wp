@@ -159,6 +159,11 @@ function useUploadMedia({
       deleteMediaElement({ id });
       removeItem({ id });
 
+      const thumbnailSrc =
+        resource && ['video', 'gif'].includes(resource.type)
+          ? resource.poster
+          : resource.src;
+
       showSnackbar({
         message:
           error?.message ||
@@ -166,10 +171,8 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
-        thumbnail: resource && {
-          src: ['video', 'gif'].includes(resource.type)
-            ? resource.poster
-            : resource.src,
+        thumbnail: thumbnailSrc && {
+          src: thumbnailSrc,
           alt: resource?.alt,
         },
         dismissable: true,

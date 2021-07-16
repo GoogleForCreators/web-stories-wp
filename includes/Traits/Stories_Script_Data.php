@@ -44,7 +44,7 @@ trait Stories_Script_Data {
 	 *
 	 * @return array
 	 */
-	private function get_script_data() {
+	private function get_script_data() : array {
 		$views      = $this->get_layouts();
 		$view_types = [];
 
@@ -73,7 +73,7 @@ trait Stories_Script_Data {
 	 *
 	 * @return array
 	 */
-	protected function fields_states() {
+	protected function fields_states() : array {
 		$views = $this->get_layouts();
 
 		$fields = [

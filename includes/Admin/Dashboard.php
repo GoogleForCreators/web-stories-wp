@@ -45,9 +45,7 @@ use Google\Web_Stories\Traits\Types;
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types;
-	use Screen;
-	use Post_Type;
+	use Types, Screen, Post_Type;
 
 	/**
 	 * Script handle.
@@ -318,7 +316,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_dashboard_settings() {
+	public function get_dashboard_settings(): array {
 		$rest_base     = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$new_story_url = admin_url(
 			add_query_arg(
