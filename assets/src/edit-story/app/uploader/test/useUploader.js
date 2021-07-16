@@ -141,6 +141,38 @@ describe('useUploader', () => {
       );
     });
 
+    it('throws an error if file too large to transcode', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload(
+          { size: 2147483649, type: 'video/mp4' },
+          true,
+          true
+        )
+      ).toThrow(
+        'Your file is too large (2048 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
+      );
+    });
+
+    it('throws an error if file too large to transcode or upload', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload(
+          { size: 2147483649, type: 'video/mp4' },
+          false,
+          true
+        )
+      ).toThrow(
+        'Your file is 2048MB and the upload limit is 100MB. Please resize and try again!'
+      );
+    });
+
     it('formats the error message correctly if there is only one file type supported', async () => {
       const {
         actions: { validateFileForUpload },
