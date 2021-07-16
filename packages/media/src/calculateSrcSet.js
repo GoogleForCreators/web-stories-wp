@@ -33,13 +33,13 @@ function calculateSrcSet(resource) {
 
   return (
     Object.values(resource.sizes)
-      .sort((s1, s2) => s2.width - s1.width)
+      .sort((s1, s2) => Number(s2.width) - Number(s1.width))
       .filter((s) => aspectRatiosApproximatelyMatch(s, resource))
       // Remove duplicates. Given it's already ordered in descending width order, we can be
       // more efficient and just check the last item in each reduction.
       .reduce(
         (unique, s) =>
-          unique.length && unique[unique.length - 1].width === s.width
+          unique.length && Number(unique[unique.length - 1].width) === Number(s.width)
             ? unique
             : [...unique, s],
         []
