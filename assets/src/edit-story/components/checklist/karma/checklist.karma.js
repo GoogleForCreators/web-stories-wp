@@ -357,6 +357,51 @@ describe('Checklist integration', () => {
       fixture.setFlags({ enableChecklistCompanion: true });
       fixture.setConfig({ capabilities: { hasUploadMediaAction } });
       await fixture.render();
+
+      // mock the wordpress media explorer
+      const media = () => ({
+        state: () => ({
+          get: () => ({
+            first: () => ({
+              toJSON: () => ({
+                id: 10,
+                url: 'http://localhost:9876/__static__/earth.jpg',
+                mime: 'image/jpeg',
+                width: 400,
+                height: 480,
+              }),
+            }),
+          }),
+        }),
+        on: (_type, callback) => callback(),
+        once: (_type, callback) =>
+          callback({
+            id: 10,
+            url: 'http://localhost:9876/__static__/earth.jpg',
+            mime: 'image/jpeg',
+            width: 400,
+            height: 480,
+          }),
+        open: () => {},
+        close: () => {},
+        setState: () => {},
+      });
+
+      class Library {}
+
+      class CustomizeImageCropper {}
+
+      media.controller = {
+        CustomizeImageCropper,
+        Library,
+      };
+      media.query = () => {};
+
+      // Create fake media browser
+      window.wp = {
+        ...window.wp,
+        media,
+      };
     });
 
     afterEach(() => {
@@ -381,6 +426,30 @@ describe('Checklist integration', () => {
       await fixture.events.click(toggleButton);
       // wait for animation
       await fixture.events.sleep(500);
+    };
+
+    /**
+     * Add poster image to story that has
+     * - width less than the minimum allowed poster image width
+     * - height less than the minimum allowed poster image height
+     *
+     * This will trigger an a11y issue in the checklist.
+     */
+    const addPosterImageWithIssues = async () => {
+      // open the document panel
+      await fixture.events.click(fixture.editor.inspector.documentTab);
+
+      // open the menu
+      await fixture.events.click(
+        fixture.editor.inspector.documentPanel.posterMenuButton
+      );
+
+      // // and click on edit
+      // await fixture.events.click(
+      //   fixture.editor.inspector.documentPanel.posterMenuEdit
+      // );
+
+      await fixture.events.sleep(1000);
     };
 
     /**
@@ -465,6 +534,22 @@ describe('Checklist integration', () => {
       );
     };
 
+    /**
+     * Find card from title in checklist. Check existence based
+     * on user's `hasUploadMediaAction` configuration
+     *
+     * @param {string} title Title of card
+     */
+    const checkIfCardExists = async (title) => {
+      const card = await fixture.screen.queryByText(title);
+
+      if (hasUploadMediaAction) {
+        expect(card).not.toBeNull();
+      } else {
+        expect(card).toBeNull();
+      }
+    };
+
     it(`should${
       hasUploadMediaAction ? '' : ' not'
     } show cards that require the \`hasUploadMediaAction\` permission when hasUploadMediaAction=\`${hasUploadMediaAction}\``, async () => {
@@ -478,10 +563,13 @@ describe('Checklist integration', () => {
 
       const priorityIssuesRequiringMediaUploadPermissions = [
         PRIORITY_COPY.storyMissingPoster.title,
-        // TODO: add poster image in karma test to trigger these issues
-        // PRIORITY_COPY.posterTooSmall.title,
-        // PRIORITY_COPY.storyPosterWrongRatio.title,
         PRIORITY_COPY.videoMissingPoster.title,
+      ];
+
+      // issues that show if there is a poster image
+      const posterIssuesRequiringMediaUploadPermissions = [
+        PRIORITY_COPY.posterTooSmall.title,
+        PRIORITY_COPY.storyPosterWrongRatio.title,
       ];
 
       const designIssuesRequiringMediaUploadPermissions = [
@@ -493,40 +581,20 @@ describe('Checklist integration', () => {
         ACCESSIBILITY_COPY.videoMissingCaptions.title,
       ];
 
-      priorityIssuesRequiringMediaUploadPermissions.map(async (title) => {
-        const card = await fixture.screen.queryByText(title);
+      priorityIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
 
-        if (hasUploadMediaAction) {
-          expect(card).not.toBeNull();
-        } else {
-          expect(card).toBeNull();
-        }
-      });
+      // add poster image to see new problems
+      await addPosterImageWithIssues();
+      posterIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
 
       // open design tab
       await fixture.events.click(fixture.editor.checklist.designTab);
 
-      designIssuesRequiringMediaUploadPermissions.map(async (title) => {
-        const card = await fixture.screen.queryByText(title);
+      designIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
 
-        if (hasUploadMediaAction) {
-          expect(card).not.toBeNull();
-        } else {
-          expect(card).toBeNull();
-        }
-      });
-
-      if (hasUploadMediaAction) {
-        // open accessibility tab
-        await fixture.events.click(fixture.editor.checklist.accessibilityTab);
-
-        accessibilityIssuesRequiringMediaUploadPermissions.map(async (title) =>
-          expect(await fixture.screen.queryByText(title)).not.toBeNull()
-        );
-      } else {
-        // Should have no accessibility issues
-        expect(fixture.editor.checklist.accessibilityTab).toBeNull();
-      }
+      accessibilityIssuesRequiringMediaUploadPermissions.forEach(
+        checkIfCardExists
+      );
     });
   });
 });
