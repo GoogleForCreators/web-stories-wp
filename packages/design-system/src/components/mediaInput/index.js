@@ -164,6 +164,7 @@ export const MediaInput = forwardRef(function Media(
     onMenuOption,
     openMediaPicker,
     menuProps = {},
+    resource = {},
     ...rest
   },
   ref
@@ -184,7 +185,13 @@ export const MediaInput = forwardRef(function Media(
     <StyledMedia className={className} {...rest}>
       <ImageWrapper variant={variant}>
         {value ? (
-          <Img src={value} alt={alt} crossOrigin="anonymous" />
+          <Img
+            src={value}
+            alt={alt}
+            crossOrigin="anonymous"
+            width={resource?.width || null}
+            height={resource?.height || null}
+          />
         ) : (
           <DefaultImageWrapper>
             <DefaultImage />
@@ -244,4 +251,5 @@ MediaInput.propTypes = {
   onMenuOption: PropTypes.func,
   openMediaPicker: PropTypes.func.isRequired,
   menuProps: PropTypes.object,
+  resource: PropTypes.object,
 };

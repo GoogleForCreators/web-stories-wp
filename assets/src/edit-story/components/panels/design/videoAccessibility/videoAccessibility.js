@@ -135,6 +135,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           type={allowedImageMimeTypes}
           ariaLabel={__('Video poster', 'web-stories')}
           menuOptions={['edit', 'reset']}
+          resource={cropParams /* Just width / height are relevant */}
         />
         <InputsWrapper>
           <TextArea
