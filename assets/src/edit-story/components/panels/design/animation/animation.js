@@ -80,7 +80,7 @@ function AnimationPanel({
   const playUpdatedAnimation = useRef(false);
 
   const [dropdown, setDropdown] = useState(null);
-  const [highlight] = useFocusHighlight(states.ANIMATION, dropdown);
+  const highlight = useFocusHighlight(states.ANIMATION, dropdown);
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
