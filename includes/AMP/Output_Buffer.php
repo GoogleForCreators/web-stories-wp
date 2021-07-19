@@ -83,12 +83,6 @@ class Output_Buffer extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		// If the AMP plugin is installed and available in a version >= than ours,
-		// all sanitization and optimization should be delegated to the AMP plugin.
-		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
-			return;
-		}
-
 		/*
 		 * Start output buffering at very low priority for sake of plugins and themes that use template_redirect
 		 * instead of template_include.
@@ -97,6 +91,19 @@ class Output_Buffer extends Service_Base {
 		add_action( 'template_redirect', [ $this, 'start_output_buffering' ], $priority );
 
 		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed(): bool {
+		// If the AMP plugin is installed and available in a version >= than ours,
+		// all sanitization and optimization should be delegated to the AMP plugin.
+		return ! ( defined( '\AMP__VERSION' ) || version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
 	}
 
 	/**
