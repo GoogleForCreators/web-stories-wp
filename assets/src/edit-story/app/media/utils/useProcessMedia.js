@@ -88,7 +88,7 @@ function useProcessMedia({
     (newId) => {
       updateMedia(newId, {
         meta: {
-          web_stories_is_muted: true,
+          web_story_is_muted: true,
         },
       });
     },
