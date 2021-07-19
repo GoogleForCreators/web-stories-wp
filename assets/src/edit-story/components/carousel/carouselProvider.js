@@ -24,6 +24,10 @@ import { useCallback, useRef, useMemo, useState, useEffect } from 'react';
  * Internal dependencies
  */
 import { useStory } from '../../app';
+import {
+  requestIdleCallback,
+  cancelIdleCallback,
+} from '../../utils/idleCallback';
 import CarouselContext from './carouselContext';
 import useCarouselSizing from './useCarouselSizing';
 import useCarouselScroll from './useCarouselScroll';
@@ -47,7 +51,10 @@ function CarouselProvider({ availableSpace, children }) {
   const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
-    requestIdleCallback(() => setShowSkeleton(false), { timeout: 5000 });
+    const id = requestIdleCallback(() => setShowSkeleton(false), {
+      timeout: 5000,
+    });
+    return () => cancelIdleCallback(id);
   }, []);
 
   const {
