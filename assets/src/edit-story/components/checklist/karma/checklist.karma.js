@@ -351,6 +351,26 @@ describe('Checklist integration', () => {
 describe('Checklist integration - Card visibility', () => {
   let fixture;
 
+  const priorityIssuesRequiringMediaUploadPermissions = [
+    PRIORITY_COPY.storyMissingPoster.title,
+    PRIORITY_COPY.videoMissingPoster.title,
+  ];
+
+  // issues that show if there is a poster image
+  const posterIssuesRequiringMediaUploadPermissions = [
+    PRIORITY_COPY.posterTooSmall.title,
+    PRIORITY_COPY.storyPosterWrongRatio.title,
+  ];
+
+  const designIssuesRequiringMediaUploadPermissions = [
+    DESIGN_COPY.videoResolutionTooLow.title,
+    DESIGN_COPY.lowImageResolution.title,
+  ];
+
+  const accessibilityIssuesRequiringMediaUploadPermissions = [
+    ACCESSIBILITY_COPY.videoMissingCaptions.title,
+  ];
+
   beforeEach(() => {
     // mock the wordpress media explorer
     const media = () => ({
@@ -396,10 +416,6 @@ describe('Checklist integration - Card visibility', () => {
       ...window.wp,
       media,
     };
-  });
-
-  afterEach(() => {
-    fixture.restore();
   });
 
   const addPages = async (count) => {
@@ -530,6 +546,21 @@ describe('Checklist integration - Card visibility', () => {
       await fixture.render();
     });
 
+    afterEach(() => {
+      fixture.restore();
+    });
+
+    /**
+     * Check if a card is visible in the application.
+     *
+     * @param {string} title Title of the card
+     */
+    const checkIfCardExists = async (title) => {
+      const card = await fixture.screen.queryByText(title);
+
+      expect(card).not.toBeNull();
+    };
+
     it(`should show cards that require the \`hasUploadMediaAction\` permission`, async () => {
       // add issues to checklist that need to be resolved by uploading media
       await addImageWithIssues();
@@ -538,32 +569,6 @@ describe('Checklist integration - Card visibility', () => {
       // show all checkpoints
       await addPages(4);
       await openChecklist();
-
-      const priorityIssuesRequiringMediaUploadPermissions = [
-        PRIORITY_COPY.storyMissingPoster.title,
-        PRIORITY_COPY.videoMissingPoster.title,
-      ];
-
-      // issues that show if there is a poster image
-      const posterIssuesRequiringMediaUploadPermissions = [
-        PRIORITY_COPY.posterTooSmall.title,
-        PRIORITY_COPY.storyPosterWrongRatio.title,
-      ];
-
-      const designIssuesRequiringMediaUploadPermissions = [
-        DESIGN_COPY.videoResolutionTooLow.title,
-        DESIGN_COPY.lowImageResolution.title,
-      ];
-
-      const accessibilityIssuesRequiringMediaUploadPermissions = [
-        ACCESSIBILITY_COPY.videoMissingCaptions.title,
-      ];
-
-      const checkIfCardExists = async (title) => {
-        const card = await fixture.screen.queryByText(title);
-
-        expect(card).not.toBeNull();
-      };
 
       priorityIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
 
@@ -591,6 +596,21 @@ describe('Checklist integration - Card visibility', () => {
       await fixture.render();
     });
 
+    afterEach(() => {
+      fixture.restore();
+    });
+
+    /**
+     * Check if a card is not visible in the application.
+     *
+     * @param {string} title Title of the card
+     */
+    const checkIfCardDoesNotExist = async (title) => {
+      const card = await fixture.screen.queryByText(title);
+
+      expect(card).toBeNull();
+    };
+
     it(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
       // add issues to checklist that need to be resolved by uploading media
       await addImageWithIssues();
@@ -599,32 +619,6 @@ describe('Checklist integration - Card visibility', () => {
       // show all checkpoints
       await addPages(4);
       await openChecklist();
-
-      const priorityIssuesRequiringMediaUploadPermissions = [
-        PRIORITY_COPY.storyMissingPoster.title,
-        PRIORITY_COPY.videoMissingPoster.title,
-      ];
-
-      // issues that show if there is a poster image
-      const posterIssuesRequiringMediaUploadPermissions = [
-        PRIORITY_COPY.posterTooSmall.title,
-        PRIORITY_COPY.storyPosterWrongRatio.title,
-      ];
-
-      const designIssuesRequiringMediaUploadPermissions = [
-        DESIGN_COPY.videoResolutionTooLow.title,
-        DESIGN_COPY.lowImageResolution.title,
-      ];
-
-      const accessibilityIssuesRequiringMediaUploadPermissions = [
-        ACCESSIBILITY_COPY.videoMissingCaptions.title,
-      ];
-
-      const checkIfCardDoesNotExist = async (title) => {
-        const card = await fixture.screen.queryByText(title);
-
-        expect(card).toBeNull();
-      };
 
       priorityIssuesRequiringMediaUploadPermissions.forEach(
         checkIfCardDoesNotExist
