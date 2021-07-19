@@ -25,6 +25,8 @@ import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useStory } from '../../../app';
 import {
   PRIORITY_COPY,
+  ASPECT_RATIO_LEFT,
+  ASPECT_RATIO_RIGHT,
   FEATURED_MEDIA_RESOURCE_MIN_HEIGHT,
   FEATURED_MEDIA_RESOURCE_MIN_WIDTH,
 } from '../constants';
@@ -33,17 +35,26 @@ import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
-export function storyPosterPortraitSize(featuredMedia) {
+export function storyPosterSize(featuredMedia) {
   if (hasNoFeaturedMedia({ featuredMedia })) {
     return false;
   }
-  return (
+  if (
     featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
     featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
-  );
+  ) {
+    return true;
+  }
+  const hasCorrectAspectRatio =
+    Math.abs(
+      featuredMedia.width / featuredMedia.height -
+        ASPECT_RATIO_LEFT / ASPECT_RATIO_RIGHT
+    ) <= 0.001;
+
+  return !hasCorrectAspectRatio;
 }
 
-const StoryPosterPortraitSize = () => {
+const StoryPosterSize = () => {
   const featuredMedia = useStory(({ state }) => state?.story?.featuredMedia);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -53,14 +64,13 @@ const StoryPosterPortraitSize = () => {
       }),
     [setHighlights]
   );
-  const { footer, title } = PRIORITY_COPY.posterTooSmall;
+  const { footer, title } = PRIORITY_COPY.storyPosterSize;
 
   const isRendered = useMemo(
-    () => storyPosterPortraitSize(featuredMedia),
+    () => storyPosterSize(featuredMedia),
     [featuredMedia]
   );
-  useRegisterCheck('StoryPosterPortraitSize', isRendered);
-
+  useRegisterCheck('StoryPosterSize', isRendered);
   return (
     isRendered && (
       <ChecklistCard
@@ -80,4 +90,4 @@ const StoryPosterPortraitSize = () => {
   );
 };
 
-export default StoryPosterPortraitSize;
+export default StoryPosterSize;

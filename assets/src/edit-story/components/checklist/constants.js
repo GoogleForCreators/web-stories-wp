@@ -433,7 +433,7 @@ export const PRIORITY_COPY = {
       </>
     ),
   },
-  storyPosterWrongRatio: {
+  storyPosterSize: {
     title: sprintf(
       /* translators: %s: image dimensions.  */
       __('Correct poster image aspect ratio to %s', 'web-stories'),
