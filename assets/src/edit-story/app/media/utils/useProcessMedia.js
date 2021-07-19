@@ -188,9 +188,7 @@ function useProcessMedia({
           if (!resource.posterId) {
             uploadVideoPoster(resource.id, resource.src);
           }
-          if (!resource.isMuted) {
-            markVideoAsMuted(resource.id);
-          }
+          markVideoAsMuted(resource.id);
         }
       };
 
