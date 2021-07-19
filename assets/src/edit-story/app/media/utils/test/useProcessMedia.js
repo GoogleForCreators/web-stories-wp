@@ -84,6 +84,7 @@ function setup() {
   const uploadVideoPoster = jest.fn();
   const updateMedia = jest.fn();
   const deleteMediaElement = jest.fn();
+  const updateVideoIsMuted = jest.fn();
 
   const { result } = renderHook(
     () =>
@@ -92,6 +93,7 @@ function setup() {
         uploadVideoPoster,
         updateMedia,
         deleteMediaElement,
+        updateVideoIsMuted,
       }),
     { wrapper }
   );
