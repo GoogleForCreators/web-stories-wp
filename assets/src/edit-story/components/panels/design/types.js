@@ -26,6 +26,7 @@ const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
 const PAGE_ATTACHMENT = 'pageAttachment';
 const PAGE_BACKGROUND = 'pageBackground';
+const PAGE_BACKGROUND_AUDIO = 'pageBackgroundAudio';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
 const TEXT_BOX = 'textBox';
@@ -38,6 +39,7 @@ const PanelTypes = {
   ELEMENT_ALIGNMENT,
   PAGE_BACKGROUND,
   PAGE_ATTACHMENT,
+  PAGE_BACKGROUND_AUDIO,
   SIZE_POSITION,
   COLOR_PRESETS,
   STYLE_PRESETS,

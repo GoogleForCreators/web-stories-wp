@@ -92,7 +92,8 @@ trait Types {
 				'image/jpg',
 				'image/gif',
 			],
-			'audio' => [], // todo: support audio uploads.
+			// TODO: Update once audio elements are supported.
+			'audio' => [],
 			'video' => [
 				'video/mp4',
 				'video/webm',
@@ -152,6 +153,24 @@ trait Types {
 		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
 
 		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
+	}
+
+	/**
+	 * Returns a list of audio mime types.
+	 *
+	 * Used for the allowlist when adding background audio.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array List of allowed mime types.
+	 */
+	public function get_allowed_audio_mime_types(): array {
+		return [
+			'audio/mpeg',
+			'audio/aac',
+			'audio/wav',
+			'audio/ogg',
+		];
 	}
 
 	/**

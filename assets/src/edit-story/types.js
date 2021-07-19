@@ -26,6 +26,7 @@ import { AnimationProps } from '@web-stories-wp/animation';
  */
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
+
 export const BorderPropTypes = PropTypes.shape({
   color: HexPropType.isRequired,
   left: PropTypes.number,
@@ -71,6 +72,7 @@ StoryPropTypes.story = PropTypes.shape({
   currentStoryStyles: PropTypes.object,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
+  backgroundAudio: PropTypes.string,
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -101,6 +103,7 @@ StoryPropTypes.page = PropTypes.shape({
   animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
+  backgroundAudio: PropTypes.string,
 });
 
 const StoryLayerPropTypes = {

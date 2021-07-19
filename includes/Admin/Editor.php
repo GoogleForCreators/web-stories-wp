@@ -273,7 +273,8 @@ class Editor extends Service_Base {
 		$show_locked_dialog       = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce                    = wp_create_nonce( 'wp_rest' );
 		$mime_types               = $this->get_allowed_mime_types();
-		$mime_image_types         = $this->get_allowed_image_mime_types();
+		$image_mime_types         = $this->get_allowed_image_mime_types();
+		$audio_mime_types         = $this->get_allowed_audio_mime_types();
 		$page_templates_rest_base = $this->get_post_type_rest_base( Page_Template_Post_Type::POST_TYPE_SLUG );
 
 		$settings = [
@@ -284,8 +285,10 @@ class Editor extends Service_Base {
 				'locale'                       => $this->locale->get_locale_settings(),
 				'allowedFileTypes'             => $this->get_allowed_file_types(),
 				'allowedTranscodableMimeTypes' => $this->get_allowed_transcodable_mime_types(),
-				'allowedImageFileTypes'        => $this->get_file_type_exts( $mime_image_types ),
-				'allowedImageMimeTypes'        => $mime_image_types,
+				'allowedImageFileTypes'        => $this->get_file_type_exts( $image_mime_types ),
+				'allowedImageMimeTypes'        => $image_mime_types,
+				'allowedAudioFileTypes'        => $this->get_file_type_exts( $audio_mime_types ),
+				'allowedAudioMimeTypes'        => $audio_mime_types,
 				'allowedMimeTypes'             => $mime_types,
 				'postType'                     => Story_Post_Type::POST_TYPE_SLUG,
 				'storyId'                      => $story_id,

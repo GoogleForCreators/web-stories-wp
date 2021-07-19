@@ -37,6 +37,7 @@ function OutputStory({
     title,
     autoAdvance,
     defaultPageDuration,
+    backgroundAudio,
   },
   pages,
   metadata: { publisher },
@@ -77,6 +78,7 @@ function OutputStory({
           publisher-logo-src={publisher.logo}
           title={title}
           poster-portrait-src={featuredMediaUrl}
+          background-audio={backgroundAudio ?? undefined}
         >
           {pages.map((page) => (
             <OutputPage
