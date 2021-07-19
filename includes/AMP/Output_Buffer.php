@@ -262,7 +262,7 @@ class Output_Buffer extends Service_Base {
 	 * @return array Sanitizers.
 	 */
 	public function add_web_stories_amp_content_sanitizers( $sanitizers ): array {
-		if ( ! is_singular( 'web-story' ) ) {
+		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return $sanitizers;
 		}
 
