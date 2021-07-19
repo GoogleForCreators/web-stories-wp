@@ -22,6 +22,8 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\HTML;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\AMP\Sanitization;
+use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
@@ -45,7 +47,7 @@ class Output_Buffer extends Test_Case {
 	}
 
 	protected function prepare_response( $post ): string {
-		$instance = new \Google\Web_Stories\AMP\Output_Buffer( new Experiments() );
+		$instance = new \Google\Web_Stories\AMP\Output_Buffer( new Experiments(), new Sanitization(), new Optimization() );
 		$story    = new Story();
 		$story->load_from_post( $post );
 
@@ -53,8 +55,7 @@ class Output_Buffer extends Test_Case {
 	}
 
 	/**
-	 * @covers ::sanitize_document
-	 * @covers ::optimize_document
+	 * @covers ::prepare_response
 	 */
 	public function test_sanitizes_and_optimizes_markup() {
 		$post = self::factory()->post->create_and_get(

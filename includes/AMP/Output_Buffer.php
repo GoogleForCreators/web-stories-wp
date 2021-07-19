@@ -65,14 +65,32 @@ class Output_Buffer extends Service_Base {
 	private $experiments;
 
 	/**
+	 * Sanitization instance.
+	 *
+	 * @var Sanitization Sanitization instance.
+	 */
+	private $sanitization;
+
+	/**
+	 * Optimization instance.
+	 *
+	 * @var Optimization Optimization instance.
+	 */
+	private $optimization;
+
+	/**
 	 * HTML constructor.
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param Experiments $experiments Experiments instance.
+	 * @param Experiments  $experiments  Experiments instance.
+	 * @param Sanitization $sanitization Sanitization instance.
+	 * @param Optimization $optimization Optimization instance.
 	 */
-	public function __construct( Experiments $experiments ) {
-		$this->experiments = $experiments;
+	public function __construct( Experiments $experiments, Sanitization $sanitization, Optimization $optimization ) {
+		$this->experiments  = $experiments;
+		$this->sanitization = $sanitization;
+		$this->optimization = $optimization;
 	}
 
 	/**
@@ -214,8 +232,8 @@ class Output_Buffer extends Service_Base {
 			}
 		}
 
-		$this->sanitize_document( $dom );
-		$this->optimize_document( $dom );
+		$this->sanitization->sanitize_document( $dom );
+		$this->optimization->optimize_document( $dom );
 
 		return $dom->saveHTML();
 	}
@@ -233,34 +251,6 @@ class Output_Buffer extends Service_Base {
 	 */
 	private function render_error_page( Throwable $throwable ): string {
 		return esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' );
-	}
-
-	/**
-	 * Sanitizes a document to be valid AMP.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param Document $document Document instance.
-	 *
-	 * @return void
-	 */
-	protected function sanitize_document( Document $document ) {
-		$sanitization = new Sanitization();
-		$sanitization->sanitize_document( $document );
-	}
-
-	/**
-	 * Optimizes AMP document.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param Document $document Document instance.
-	 *
-	 * @return void
-	 */
-	protected function optimize_document( Document $document ) {
-		$optimization = new Optimization();
-		$optimization->optimize_document( $document );
 	}
 
 	/**
