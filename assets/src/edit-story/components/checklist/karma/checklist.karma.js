@@ -348,205 +348,189 @@ describe('Checklist integration', () => {
   });
 });
 
-[true, false].forEach((hasUploadMediaAction) => {
-  describe('Checklist integration - hasUploadMediaAction=false', () => {
-    let fixture;
+describe('Checklist integration - Card visibility', () => {
+  let fixture;
 
+  beforeEach(() => {
+    // mock the wordpress media explorer
+    const media = () => ({
+      state: () => ({
+        get: () => ({
+          first: () => ({
+            toJSON: () => ({
+              id: 10,
+              url: 'http://localhost:9876/__static__/earth.jpg',
+              mime: 'image/jpeg',
+              width: 400,
+              height: 480,
+            }),
+          }),
+        }),
+      }),
+      on: (_type, callback) => callback(),
+      once: (_type, callback) =>
+        callback({
+          id: 10,
+          url: 'http://localhost:9876/__static__/earth.jpg',
+          mime: 'image/jpeg',
+          width: 400,
+          height: 480,
+        }),
+      open: () => {},
+      close: () => {},
+      setState: () => {},
+    });
+
+    class Library {}
+
+    class CustomizeImageCropper {}
+
+    media.controller = {
+      CustomizeImageCropper,
+      Library,
+    };
+    media.query = () => {};
+
+    // Create fake media browser
+    window.wp = {
+      ...window.wp,
+      media,
+    };
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  const addPages = async (count) => {
+    let clickCount = 1;
+    while (clickCount <= count) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+      // eslint-disable-next-line no-await-in-loop, no-loop-func
+      await waitFor(() => {
+        expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
+      });
+      clickCount++;
+    }
+  };
+
+  const openChecklist = async () => {
+    const { toggleButton } = fixture.editor.checklist;
+    await fixture.events.click(toggleButton);
+    // wait for animation
+    await fixture.events.sleep(500);
+  };
+
+  /**
+   * Add poster image to story that has
+   * - width less than the minimum allowed poster image width
+   * - height less than the minimum allowed poster image height
+   *
+   * This will trigger an a11y issue in the checklist.
+   */
+  const addPosterImageWithIssues = async () => {
+    // open the document panel
+    await fixture.events.click(fixture.editor.inspector.documentTab);
+
+    // open the menu - mock will add picture automatically
+    await fixture.events.click(
+      fixture.editor.inspector.documentPanel.posterMenuButton
+    );
+  };
+
+  /**
+   * Inserts an image that has
+   * - width less than the minimum allowed image width (2 times element width)
+   * - height less than the minimum allowed image height (2 times element height)
+   *
+   * This will trigger an a11y issue in the checklist.
+   */
+  const addImageWithIssues = async () => {
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    await fixture.act(() =>
+      insertElement('image', {
+        x: 0,
+        y: 0,
+        width: 640 / 2,
+        height: 529 / 2,
+        resource: {
+          type: 'image',
+          mimeType: 'image/jpg',
+          src: 'http://localhost:9876/__static__/earth.jpg',
+          sizes: {
+            full: {
+              width: 300,
+              height: 400,
+            },
+          },
+        },
+      })
+    );
+  };
+
+  /**
+   * Inserts a video that has
+   * - no poster image
+   * - width less than the minimum allowed video width
+   * - height less than the minimum allowed video height
+   *
+   * This will trigger an a11y issue in the checklist.
+   */
+  const addVideoWithIssues = async () => {
+    const insertElement = await fixture.renderHook(() => useInsertElement());
+    await fixture.act(() =>
+      insertElement('video', {
+        resource: {
+          type: 'video',
+          mimeType: 'video/webm',
+          creationDate: '2021-05-21T00:09:18',
+          src: 'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
+          width: 560,
+          height: 320,
+          // no poster image
+          poster: null,
+          posterId: null,
+          id: 10,
+          length: 6,
+          lengthFormatted: '0:06',
+          title: 'small-video',
+          alt: 'small-video',
+          sizes: {
+            full: {
+              // resolution too low
+              height: 220,
+              width: 320,
+            },
+          },
+          local: false,
+          isOptimized: false,
+          baseColor: [115, 71, 39],
+        },
+        controls: false,
+        loop: false,
+        autoPlay: true,
+        tracks: [],
+        type: 'video',
+        x: 66,
+        y: 229,
+        width: 280,
+        height: 160,
+        id: '6e7f5de8-7793-4aef-8835-c1d32477b4e0',
+      })
+    );
+  };
+
+  describe('hasUploadMediaAction=true', () => {
     beforeEach(async () => {
       fixture = new Fixture();
       fixture.setFlags({ enableChecklistCompanion: true });
 
-      fixture.setConfig({ capabilities: { hasUploadMediaAction } });
+      fixture.setConfig({ capabilities: { hasUploadMediaAction: true } });
       await fixture.render();
-
-      // mock the wordpress media explorer
-      const media = () => ({
-        state: () => ({
-          get: () => ({
-            first: () => ({
-              toJSON: () => ({
-                id: 10,
-                url: 'http://localhost:9876/__static__/earth.jpg',
-                mime: 'image/jpeg',
-                width: 400,
-                height: 480,
-              }),
-            }),
-          }),
-        }),
-        on: (_type, callback) => callback(),
-        once: (_type, callback) =>
-          callback({
-            id: 10,
-            url: 'http://localhost:9876/__static__/earth.jpg',
-            mime: 'image/jpeg',
-            width: 400,
-            height: 480,
-          }),
-        open: () => {},
-        close: () => {},
-        setState: () => {},
-      });
-
-      class Library {}
-
-      class CustomizeImageCropper {}
-
-      media.controller = {
-        CustomizeImageCropper,
-        Library,
-      };
-      media.query = () => {};
-
-      // Create fake media browser
-      window.wp = {
-        ...window.wp,
-        media,
-      };
     });
 
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    const addPages = async (count) => {
-      let clickCount = 1;
-      while (clickCount <= count) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
-        // eslint-disable-next-line no-await-in-loop, no-loop-func
-        await waitFor(() => {
-          expect(fixture.editor.carousel.pages.length).toBe(clickCount + 1);
-        });
-        clickCount++;
-      }
-    };
-
-    const openChecklist = async () => {
-      const { toggleButton } = fixture.editor.checklist;
-      await fixture.events.click(toggleButton);
-      // wait for animation
-      await fixture.events.sleep(500);
-    };
-
-    /**
-     * Add poster image to story that has
-     * - width less than the minimum allowed poster image width
-     * - height less than the minimum allowed poster image height
-     *
-     * This will trigger an a11y issue in the checklist.
-     */
-    const addPosterImageWithIssues = async () => {
-      // open the document panel
-      await fixture.events.click(fixture.editor.inspector.documentTab);
-
-      // open the menu - mock will add picture automatically
-      await fixture.events.click(
-        fixture.editor.inspector.documentPanel.posterMenuButton
-      );
-    };
-
-    /**
-     * Inserts an image that has
-     * - width less than the minimum allowed image width (2 times element width)
-     * - height less than the minimum allowed image height (2 times element height)
-     *
-     * This will trigger an a11y issue in the checklist.
-     */
-    const addImageWithIssues = async () => {
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-      await fixture.act(() =>
-        insertElement('image', {
-          x: 0,
-          y: 0,
-          width: 640 / 2,
-          height: 529 / 2,
-          resource: {
-            type: 'image',
-            mimeType: 'image/jpg',
-            src: 'http://localhost:9876/__static__/earth.jpg',
-            sizes: {
-              full: {
-                width: 300,
-                height: 400,
-              },
-            },
-          },
-        })
-      );
-    };
-
-    /**
-     * Inserts a video that has
-     * - no poster image
-     * - width less than the minimum allowed video width
-     * - height less than the minimum allowed video height
-     *
-     * This will trigger an a11y issue in the checklist.
-     */
-    const addVideoWithIssues = async () => {
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-      await fixture.act(() =>
-        insertElement('video', {
-          resource: {
-            type: 'video',
-            mimeType: 'video/webm',
-            creationDate: '2021-05-21T00:09:18',
-            src: 'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
-            width: 560,
-            height: 320,
-            // no poster image
-            poster: null,
-            posterId: null,
-            id: 10,
-            length: 6,
-            lengthFormatted: '0:06',
-            title: 'small-video',
-            alt: 'small-video',
-            sizes: {
-              full: {
-                // resolution too low
-                height: 220,
-                width: 320,
-              },
-            },
-            local: false,
-            isOptimized: false,
-            baseColor: [115, 71, 39],
-          },
-          controls: false,
-          loop: false,
-          autoPlay: true,
-          tracks: [],
-          type: 'video',
-          x: 66,
-          y: 229,
-          width: 280,
-          height: 160,
-          id: '6e7f5de8-7793-4aef-8835-c1d32477b4e0',
-        })
-      );
-    };
-
-    /**
-     * Find card from title in checklist. Check existence based
-     * on user's `hasUploadMediaAction` configuration
-     *
-     * @param {string} title Title of card
-     */
-    const checkIfCardExists = async (title) => {
-      const card = await fixture.screen.queryByText(title);
-
-      if (hasUploadMediaAction) {
-        expect(card).not.toBeNull();
-      } else {
-        expect(card).toBeNull();
-      }
-    };
-
-    it(`should${
-      hasUploadMediaAction ? '' : ' not'
-    } show cards that require the \`hasUploadMediaAction\` permission when hasUploadMediaAction=\`${hasUploadMediaAction}\``, async () => {
+    it(`should show cards that require the \`hasUploadMediaAction\` permission`, async () => {
       // add issues to checklist that need to be resolved by uploading media
       await addImageWithIssues();
       await addVideoWithIssues();
@@ -575,6 +559,12 @@ describe('Checklist integration', () => {
         ACCESSIBILITY_COPY.videoMissingCaptions.title,
       ];
 
+      const checkIfCardExists = async (title) => {
+        const card = await fixture.screen.queryByText(title);
+
+        expect(card).not.toBeNull();
+      };
+
       priorityIssuesRequiringMediaUploadPermissions.forEach(checkIfCardExists);
 
       // add poster image to see new problems
@@ -588,6 +578,73 @@ describe('Checklist integration', () => {
 
       accessibilityIssuesRequiringMediaUploadPermissions.forEach(
         checkIfCardExists
+      );
+    });
+  });
+
+  describe('hasUploadMediaAction=false', () => {
+    beforeEach(async () => {
+      fixture = new Fixture();
+      fixture.setFlags({ enableChecklistCompanion: true });
+
+      fixture.setConfig({ capabilities: { hasUploadMediaAction: false } });
+      await fixture.render();
+    });
+
+    it(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
+      // add issues to checklist that need to be resolved by uploading media
+      await addImageWithIssues();
+      await addVideoWithIssues();
+
+      // show all checkpoints
+      await addPages(4);
+      await openChecklist();
+
+      const priorityIssuesRequiringMediaUploadPermissions = [
+        PRIORITY_COPY.storyMissingPoster.title,
+        PRIORITY_COPY.videoMissingPoster.title,
+      ];
+
+      // issues that show if there is a poster image
+      const posterIssuesRequiringMediaUploadPermissions = [
+        PRIORITY_COPY.posterTooSmall.title,
+        PRIORITY_COPY.storyPosterWrongRatio.title,
+      ];
+
+      const designIssuesRequiringMediaUploadPermissions = [
+        DESIGN_COPY.videoResolutionTooLow.title,
+        DESIGN_COPY.lowImageResolution.title,
+      ];
+
+      const accessibilityIssuesRequiringMediaUploadPermissions = [
+        ACCESSIBILITY_COPY.videoMissingCaptions.title,
+      ];
+
+      const checkIfCardDoesNotExist = async (title) => {
+        const card = await fixture.screen.queryByText(title);
+
+        expect(card).toBeNull();
+      };
+
+      priorityIssuesRequiringMediaUploadPermissions.forEach(
+        checkIfCardDoesNotExist
+      );
+
+      // add poster image to see new problems
+      await addPosterImageWithIssues();
+      posterIssuesRequiringMediaUploadPermissions.forEach(
+        checkIfCardDoesNotExist
+      );
+
+      // open design tab
+      await fixture.events.click(fixture.editor.checklist.designTab);
+
+      designIssuesRequiringMediaUploadPermissions.forEach(
+        checkIfCardDoesNotExist
+      );
+
+      accessibilityIssuesRequiringMediaUploadPermissions.forEach(
+        checkIfCardDoesNotExist
       );
     });
   });

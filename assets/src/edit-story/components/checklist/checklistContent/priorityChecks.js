@@ -81,7 +81,8 @@ export function PriorityChecks({
         {hasUploadMediaAction && <StoryPosterAspectRatio />}
         {hasUploadMediaAction && <PublisherLogoSize />}
         {hasUploadMediaAction && <VideoElementMissingPoster />}
-        {isTranscodingEnabled && hasUploadMediaAction && <VideoOptimization />}
+        {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
+        {isTranscodingEnabled && <VideoOptimization />}
       </StyledTablistPanel>
     </ChecklistCategoryProvider>
   );

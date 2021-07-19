@@ -35,28 +35,15 @@ This is outlined in the table below:
 
 |Story issue/card|Role(s) necessary to resolve the issue|
 |--|--|
-|Story missing title|`edit_web-stories`|
-|Story title too long|`edit_web-stories`|
-|Story missing excerpt|`edit_web-stories`|
-|Story has no poster image attached|`hasUploadMediaAction` and `edit_web-stories`|
-|Increase poster image's size|`hasUploadMediaAction` and `edit_web-stories`|
-|Increase poster images's aspect ratio|`hasUploadMediaAction` and `edit_web-stories`|
-|Increase publisher logo size|`hasUploadMediaAction` and `edit_web-stories`|
-|Video missing poster image|`hasUploadMediaAction` and `edit_web-stories`|
-|Video not optimized|`hasUploadMediaAction` and `edit_web-stories`|
-|Story has too many pages|`edit_web-stories`|
-|Story has too few pages|`edit_web-stories`|
-|Page has too much text|`edit_web-stories`|
-|Page has too little text|`edit_web-stories`|
-|Page has too many links|`edit_web-stories`|
-|Video element resolution too low|`hasUploadMediaAction` and `edit_web-stories`|
-|Media element resolution too low|`hasUploadMediaAction` and `edit_web-stories`|
-|Contrast too low between text and background color|`edit_web-stories`|
-|Text font size too small|`edit_web-stories`|
-|Video element missing description|`edit_web-stories`|
-|Video element missing captions|`hasUploadMediaAction` and `edit_web-stories`|
-|Element link tappable region too small|`edit_web-stories`|
-|Image element missing alt|`edit_web-stories`|
+|Story has no poster image attached|`hasUploadMediaAction`|
+|Increase poster image's size|`hasUploadMediaAction`|
+|Increase poster images's aspect ratio|`hasUploadMediaAction`|
+|Increase publisher logo size|`hasUploadMediaAction`|
+|Video missing poster image|`hasUploadMediaAction`|
+|Video not optimized|`hasUploadMediaAction`|
+|Video element resolution too low|`hasUploadMediaAction`|
+|Media element resolution too low|`hasUploadMediaAction`|
+|Video element missing captions|`hasUploadMediaAction`|
 
 ## Future  Improvements
 
