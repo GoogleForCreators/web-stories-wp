@@ -88,10 +88,17 @@
 /* Story Picker */
 
 .web-stories-story-picker-modal {
-  width: calc(100% - 16px - 16px);
-  height: calc(100% - 60px - 60px);
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  .web-stories-story-picker-modal {
+    width: calc(100% - 16px - 16px);
+    height: calc(100% - 60px - 60px);
+  }
 }
 
 .web-stories-story-picker-modal__content {
@@ -113,6 +120,7 @@
   align-items: center;
   margin: 0;
   padding: 10px 0;
+  background: #fff;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -124,9 +132,18 @@
   min-width: 1px;
 }
 
+.web-stories-story-picker-modal__footer--right {
+  display: flex;
+  flex-direction: row;
+}
+
+@media screen and (min-width: 768px) {
+  .web-stories-story-picker-modal__footer--right {
+    display: block;
+  }
+}
+
 .web-stories-story-picker-filter {
-  position: sticky;
-  top: 0;
   z-index: 2;
   padding: 0;
   margin-top: -12px;
@@ -134,13 +151,32 @@
   justify-content: flex-end;
 }
 
+@media screen and (min-height: 768px) and (min-width: 768px) {
+  .web-stories-story-picker-filter {
+    position: sticky;
+    top: 0;
+  }
+}
+
 .web-stories-story-picker-filter__search-container {
-  display: grid;
-  grid-template-columns: 57% 15% 15% 10%;
-  grid-column-gap: 1%;
-  vertical-align: baseline;
+  display: block;
   position: relative;
   width: 100%;
+  background: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .web-stories-story-picker-filter__search-container {
+    display: grid;
+    grid-template-columns: 0 32% 32% 32%;
+    grid-column-gap: 1%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .web-stories-story-picker-filter__search-container {
+    grid-template-columns: 57% 15% 15% 10%;
+  }
 }
 
 /* SelectControl label needs some margin so all three inputs are nicely aligned. */
@@ -180,13 +216,24 @@
   display: grid;
   overflow: auto;
   width: 100%;
-  height: calc(100% - 125px);
   padding: 15px 20px 0;
   grid-column-gap: 24px;
   grid-row-gap: 80px;
   grid-auto-rows: minmax(min-content, max-content);
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   scroll-margin-top: 30vh;
+}
+
+@media screen and (min-height: 768px) and (min-width: 768px) {
+  .web-stories-story-picker-filter__grid {
+    height: calc(100% - 125px);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .web-stories-story-picker-filter__grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
 
 .web-stories-story-picker-filter__grid .droppable {
