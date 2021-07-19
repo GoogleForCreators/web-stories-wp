@@ -22,6 +22,11 @@
  */
 function normalizeResourceSizes(sizes) {
   const normalizedSizes = {};
+
+  if (!sizes) {
+    return normalizedSizes;
+  }
+
   for (const size of Object.keys(sizes)) {
     const data = sizes[size];
     normalizedSizes[size] = {
