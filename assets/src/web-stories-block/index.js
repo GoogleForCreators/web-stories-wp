@@ -15,6 +15,14 @@
  */
 
 /**
+ * Internal dependencies
+ */
+// The __webpack_public_path__ assignment will be done after the imports.
+// That's why the public path assignment is in its own dedicated module and imported here at the very top.
+// See https://webpack.js.org/guides/public-path/#on-the-fly
+import './publicPath';
+
+/**
  * External dependencies
  */
 import { initializeTracking } from '@web-stories-wp/tracking';
@@ -28,9 +36,6 @@ import { registerBlockType } from '@wordpress/blocks';
  * Internal dependencies
  */
 import { name, settings } from './block';
-import { webStoriesBlockSettings } from './block/globals';
-
-__webpack_public_path__ = webStoriesBlockSettings.publicPath;
 
 registerBlockType(name, settings);
 

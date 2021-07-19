@@ -220,18 +220,6 @@ class Experiments extends Service_Base {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @embarks
-			 * Issue: 8113
-			 * Creation date: 2021-06-28
-			 */
-			[
-				'name'        => 'enableBulkVideoOptimization',
-				'label'       => __( 'Bulk video optimization', 'web-stories' ),
-				'description' => __( 'Enable option to optimize multiple videos at once in the new pre-publish checklist', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @littlemilkstudio
 			 * Issue: 7965
 			 * Creation date: 2021-06-18

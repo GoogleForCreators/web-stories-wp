@@ -70,7 +70,7 @@ export default ({ onChange }) => {
             // Wait one tick for the zoom to settle in.
             setTimeout(() => {
               import(
-                /* webpackChunkName: "html-to-image" */ 'html-to-image'
+                /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
               ).then((htmlToImage) => {
                 htmlToImage
                   .toCanvas(fullbleedContainer, {

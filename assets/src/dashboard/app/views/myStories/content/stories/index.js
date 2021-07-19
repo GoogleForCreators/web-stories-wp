@@ -77,9 +77,18 @@ const storyActions = {
   updateStory: action('update story clicked'),
 };
 
-const longerListOfStories = formattedStoriesArray
-  .concat(formattedStoriesArray)
-  .concat(formattedStoriesArray);
+// Prevents storybook from shouting a bunch of console warnings about duplicate ids
+function forceUniqueIds(stories) {
+  return stories.map((story, index) => {
+    const id = Math.floor(Math.random() * 500 * index);
+    return { ...story, id };
+  });
+}
+const longerListOfStories = forceUniqueIds(
+  formattedStoriesArray
+    .concat(formattedStoriesArray)
+    .concat(formattedStoriesArray)
+);
 
 const defaultProps = {
   allPagesFetched: false,

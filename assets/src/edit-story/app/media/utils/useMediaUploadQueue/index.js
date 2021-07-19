@@ -297,7 +297,7 @@ function useMediaUploadQueue() {
             trackTiming();
           }
 
-          if (newResource.id) {
+          if (newResource?.id) {
             await processPoster({
               newResource,
               posterFileName,
