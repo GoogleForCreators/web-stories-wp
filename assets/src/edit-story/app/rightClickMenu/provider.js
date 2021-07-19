@@ -58,6 +58,7 @@ function RightClickMenuProvider({ children }) {
 
   const {
     addPage,
+    arrangeElement,
     currentPage,
     deleteCurrentPage,
     pages,
@@ -66,9 +67,15 @@ function RightClickMenuProvider({ children }) {
   } = useStory(
     ({
       state: { currentPage, pages, selectedElements },
-      actions: { addPage, deleteCurrentPage, replaceCurrentPage },
+      actions: {
+        addPage,
+        arrangeElement,
+        deleteCurrentPage,
+        replaceCurrentPage,
+      },
     }) => ({
       addPage,
+      arrangeElement,
       currentPage,
       deleteCurrentPage,
       pages,
@@ -84,6 +91,8 @@ function RightClickMenuProvider({ children }) {
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
+
+  const selectedElement = selectedElements?.[0];
 
   /**
    * Open the menu at the position from the click event.
@@ -113,8 +122,8 @@ function RightClickMenuProvider({ children }) {
   /**
    * Prevent right click menu from removing focus from the canvas.
    */
-  const handleMouseDown = useCallback((ev) => {
-    ev.stopPropagation();
+  const handleMouseDown = useCallback((evt) => {
+    evt.stopPropagation();
   }, []);
 
   /**
@@ -148,7 +157,60 @@ function RightClickMenuProvider({ children }) {
     deleteCurrentPage();
   }, [deleteCurrentPage]);
 
-  const selectedElement = selectedElements?.[0];
+  const currentPosition = currentPage?.elements.findIndex(
+    (element) => element.id === selectedElement?.id
+  );
+  const canElementMoveBackwards = currentPosition > 1;
+  const canElementMoveForwards =
+    currentPosition < currentPage?.elements.length - 1;
+
+  /**
+   * Send element one layer backwards, if possible.
+   */
+  const handleSendBackward = useCallback(() => {
+    const newPosition =
+      currentPosition === 1 ? currentPosition : currentPosition - 1;
+
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
+  }, [arrangeElement, currentPosition, selectedElement?.id]);
+
+  /**
+   * Send element all the way back, if possible.
+   */
+  const handleSendToBack = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: 1,
+    });
+  }, [arrangeElement, selectedElement?.id]);
+
+  /**
+   * Bring element one layer forwards, if possible.
+   */
+  const handleBringForward = useCallback(() => {
+    const newPosition =
+      currentPosition >= currentPage.elements.length - 1
+        ? currentPosition
+        : currentPosition + 1;
+
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
+  }, [arrangeElement, currentPage, currentPosition, selectedElement?.id]);
+
+  /**
+   * Send element all the way to the front, if possible.
+   */
+  const handleBringToFront = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: currentPage.elements.length - 1,
+    });
+  }, [arrangeElement, currentPage, selectedElement?.id]);
 
   const menuItemProps = useMemo(
     () => ({
@@ -206,7 +268,9 @@ function RightClickMenuProvider({ children }) {
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_OPEN_BRACKET
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_OPEN_BRACKET,
         },
-        onClick: noop,
+        disabled: !canElementMoveBackwards,
+        onClick: handleSendBackward,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
@@ -216,7 +280,9 @@ function RightClickMenuProvider({ children }) {
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_OPEN_BRACKET
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_OPEN_BRACKET,
         },
-        onClick: noop,
+        disabled: !canElementMoveBackwards,
+        onClick: handleSendToBack,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
@@ -226,7 +292,9 @@ function RightClickMenuProvider({ children }) {
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_CLOSE_BRACKET
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_CLOSE_BRACKET,
         },
-        onClick: noop,
+        disabled: !canElementMoveForwards,
+        onClick: handleBringForward,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
@@ -236,19 +304,32 @@ function RightClickMenuProvider({ children }) {
             ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_CLOSE_BRACKET
             : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_CLOSE_BRACKET,
         },
-        onClick: noop,
+        disabled: !canElementMoveForwards,
+        onClick: handleBringToFront,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         separator: 'top',
         onClick: noop,
+        ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
         onClick: noop,
+        ...menuItemProps,
       },
     ],
-    [defaultItems]
+    [
+      canElementMoveBackwards,
+      canElementMoveForwards,
+      defaultItems,
+      handleBringForward,
+      handleBringToFront,
+      handleSendBackward,
+      handleSendToBack,
+      menuItemProps,
+    ]
   );
 
   const pageItems = useMemo(
