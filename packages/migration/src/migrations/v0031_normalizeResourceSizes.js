@@ -34,13 +34,7 @@ function updateElement(element) {
     element.resource.height = Number(element.resource.height);
 
     if (element.resource.sizes) {
-      for (const size in element.resource.sizes) {
-        if (
-          !Object.prototype.hasOwnProperty.call(element.resource.sizes, size)
-        ) {
-          continue;
-        }
-
+      for (const size of Object.keys(element.resource.sizes)) {
         // Disable reason: not acting on untrusted user input.
         /* eslint-disable security/detect-object-injection */
         const data = element.resource.sizes[size];

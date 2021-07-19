@@ -22,11 +22,7 @@
  */
 function normalizeResourceSizes(sizes) {
   const normalizedSizes = {};
-  for (const size in sizes) {
-    if (!Object.prototype.hasOwnProperty.call(sizes, size)) {
-      continue;
-    }
-
+  for (const size of Object.keys(sizes)) {
     const data = sizes[size];
     normalizedSizes[size] = {
       ...data,
