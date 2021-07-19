@@ -45,7 +45,6 @@ function hasVideoGotAudio(src) {
       'seeked',
       () => {
         const videoHasAudio = hasAudio(video);
-        console.log(videoHasAudio);
         resolve(videoHasAudio);
       },
       { once: true }

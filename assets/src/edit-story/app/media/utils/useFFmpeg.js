@@ -236,6 +236,53 @@ function useFFmpeg() {
   );
 
   /**
+   * Transcode and mute a video using FFmpeg.
+   *
+   * @param {File} file Original video file object.
+   * @return {Promise<File>} Transcoded video file object.
+   */
+  const transcodeMuteVideo = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_mute_video_transcoding');
+
+      try {
+        const ffmpeg = await getFFmpegInstance(file);
+
+        const tempFileName = uuidv4() + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName =
+          getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          ...FFMPEG_SHARED_CONFIG,
+          // Mute audio from video.
+          '-an',
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+        return new File(
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
+          outputFileName,
+          {
+            type: MEDIA_TRANSCODED_MIME_TYPE,
+          }
+        );
+      } catch (err) {
+        trackError('mute_video_transcoding', err.message);
+        throw err;
+      } finally {
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Converts an animated GIF to a video using FFmpeg.
    *
    * @param {File} file Original GIF file object.
@@ -318,6 +365,7 @@ function useFFmpeg() {
       canTranscodeFile,
       isFileTooLarge,
       transcodeVideo,
+      transcodeMuteVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
     }),
@@ -325,6 +373,7 @@ function useFFmpeg() {
       isTranscodingEnabled,
       canTranscodeFile,
       transcodeVideo,
+      transcodeMuteVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
     ]

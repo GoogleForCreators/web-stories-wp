@@ -32,7 +32,7 @@ import {
   BUTTON_VARIANTS,
 } from '@web-stories-wp/design-system';
 import { useFeature } from 'flagged';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -41,6 +41,7 @@ import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
+import { useLocalMedia } from '../../../../app';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -65,14 +66,35 @@ const StyledCheckbox = styled(Checkbox)`
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const { isTranscodingEnabled } = useFFmpeg();
+  const { optimizeVideoMuted } = useLocalMedia((state) => ({
+    optimizeVideoMuted: state.actions.optimizeVideoMuted,
+  }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted } = resource;
+  const { isMuted, isTranscoding, local } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
   const handleHandleMuteVideo = useCallback(() => {
-    console.log(resource, selectedElements);
-  }, [resource, selectedElements]);
+    optimizeVideoMuted({ resource });
+  }, [resource, optimizeVideoMuted]);
+
+  const canMuted = useMemo(() => {
+    return (
+      isMuteVideoEnabled &&
+      isTranscodingEnabled &&
+      !local &&
+      !isMuted &&
+      !isTranscoding &&
+      isSingleElement
+    );
+  }, [
+    isMuteVideoEnabled,
+    isTranscodingEnabled,
+    local,
+    isMuted,
+    isTranscoding,
+    isSingleElement,
+  ]);
 
   const checkboxId = `cb-${uuidv4()}`;
   return (
@@ -80,21 +102,18 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       name="videoOptions"
       title={__('Video Settings', 'web-stories')}
     >
-      {isMuteVideoEnabled &&
-        isTranscodingEnabled &&
-        !isMuted &&
-        isSingleElement && (
-          <Row>
-            <StyledButton
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={handleHandleMuteVideo}
-            >
-              {__('Muted video', 'web-stories')}
-            </StyledButton>
-          </Row>
-        )}
+      {canMuted && (
+        <Row>
+          <StyledButton
+            variant={BUTTON_VARIANTS.RECTANGLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={handleHandleMuteVideo}
+          >
+            {__('Muted video', 'web-stories')}
+          </StyledButton>
+        </Row>
+      )}
       <Row spaceBetween={false}>
         <StyledCheckbox
           id={checkboxId}

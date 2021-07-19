@@ -70,7 +70,7 @@ function useUploadWithPreview() {
         uploadVideoPoster(resource.id, resource.src);
       }
     },
-    [updateElementDimensions, uploadVideoPoster,updateVideoIsMuted]
+    [updateElementDimensions, uploadVideoPoster, updateVideoIsMuted]
   );
 
   const onUploadError = useCallback(

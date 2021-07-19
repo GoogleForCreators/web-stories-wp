@@ -191,6 +191,7 @@ function useUploadMedia({
      * @param {Function} args.onUploadError Callback for when upload fails.
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
+     * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
      * @return {void}
      */
     async (
@@ -201,6 +202,7 @@ function useUploadMedia({
         onUploadError,
         onUploadSuccess,
         additionalData,
+        muteVideo,
       } = {}
     ) => {
       // If there are no files passed, don't try to upload.
@@ -244,6 +246,7 @@ function useUploadMedia({
             onUploadSuccess,
             additionalData,
             posterFile,
+            muteVideo,
           });
         })
       );

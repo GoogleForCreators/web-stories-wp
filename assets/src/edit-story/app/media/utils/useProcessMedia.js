@@ -152,6 +152,82 @@ function useProcessMedia({
     ]
   );
 
+  const optimizeVideoMuted = useCallback(
+    ({ resource: oldResource }) => {
+      const { src: url, mimeType } = oldResource;
+
+      const onUploadStart = () => {
+        updateExistingElements({
+          oldResource: {
+            ...oldResource,
+            isMuted: true,
+            isTranscoding: true,
+            isOptimized: true,
+          },
+        });
+      };
+
+      const onUploadError = () => {
+        updateExistingElements({
+          oldResource: { ...oldResource, isTranscoding: false },
+        });
+      };
+
+      const onUploadSuccess = ({ resource }) => {
+        copyResourceData({ oldResource, resource });
+        if (
+          ['video', 'gif'].includes(resource.type) &&
+          !resource.local &&
+          !resource.posterId
+        ) {
+          uploadVideoPoster(resource.id, resource.src);
+        }
+        updateMedia(resource.id, {
+          meta: {
+            web_stories_is_muted: true,
+          },
+        });
+      };
+
+      const onUploadProgress = ({ resource }) => {
+        const oldResourceWithId = { ...resource, id: oldResource.id };
+        updateExistingElements({
+          oldResource: oldResourceWithId,
+        });
+      };
+
+      const process = async () => {
+        let file = false;
+        try {
+          file = await fetchRemoteFile(url, mimeType);
+        } catch (e) {
+          // Ignore for now.
+          return;
+        }
+        await uploadMedia([file], {
+          onUploadSuccess,
+          onUploadStart,
+          onUploadError,
+          onUploadProgress,
+          additionalData: {
+            alt: oldResource.alt,
+            title: oldResource.title,
+            post: oldResource.id,
+          },
+          muteVideo: true,
+        });
+      };
+      return process();
+    },
+    [
+      copyResourceData,
+      uploadMedia,
+      uploadVideoPoster,
+      updateVideoIsMuted,
+      updateExistingElements,
+    ]
+  );
+
   const optimizeGif = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
@@ -212,6 +288,7 @@ function useProcessMedia({
   return {
     optimizeVideo,
     optimizeGif,
+    optimizeVideoMuted,
   };
 }
 

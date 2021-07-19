@@ -55,6 +55,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
+    transcodeMuteVideo,
     getFirstFrameOfVideo,
     convertGifToVideo,
   } = useFFmpeg();
@@ -211,6 +212,7 @@ function useMediaUploadQueue() {
             resource,
             additionalData = {},
             posterFile,
+            muteVideo,
           } = item;
           if ('PENDING' !== itemState) {
             return;
@@ -258,7 +260,12 @@ function useMediaUploadQueue() {
             startTranscoding({ id });
 
             try {
-              newFile = await transcodeVideo(file);
+              if (muteVideo) {
+                newFile = await transcodeMuteVideo(file);
+              } else {
+                newFile = await transcodeVideo(file);
+              }
+
               finishTranscoding({ id, file: newFile });
               additionalData.media_source = 'video-optimization';
             } catch (error) {
@@ -323,6 +330,7 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     canTranscodeFile,
     transcodeVideo,
+    transcodeMuteVideo,
     convertGifToVideo,
     isGifOptimizationEnabled,
   ]);

@@ -79,7 +79,7 @@ function useVideoIsMuted({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement]
+    [setProperties, updateMedia, updateMediaElement, isMuteVideoEnabled]
   );
 
   return {
