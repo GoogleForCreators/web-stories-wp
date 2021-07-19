@@ -67,6 +67,7 @@ export const _default = () => {
           onEditCancel={() => {}}
           onEditComplete={() => {}}
           tabIndex={0}
+          id="8787"
         />
       </CardGridItem>
     </CardGrid>
@@ -100,6 +101,7 @@ export const _publishedStory = () => {
           onEditCancel={() => {}}
           onEditComplete={() => {}}
           tabIndex={0}
+          id="99999"
         />
       </CardGridItem>
     </CardGrid>
