@@ -148,49 +148,13 @@ describe('useUploader', () => {
 
       await expect(() =>
         validateFileForUpload(
-          { size: 2147483649, type: 'video/mp4' },
+          { size: 1024 * 1024 * 1024 * 2, type: 'video/mp4' },
           true,
           true
         )
       ).toThrow(
         'Your file is too large (2048 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
       );
-    });
-
-    it('throws an error if file too large to transcode or upload', async () => {
-      const {
-        actions: { validateFileForUpload },
-      } = setup({});
-
-      await expect(() =>
-        validateFileForUpload(
-          { size: 2147483649, type: 'video/mp4' },
-          false,
-          true
-        )
-      ).toThrow(
-        'Your file is 2048MB and the upload limit is 100MB. Please resize and try again!'
-      );
-    });
-
-    it('formats the error message correctly if there is only one file type supported', async () => {
-      const {
-        actions: { validateFileForUpload },
-      } = setup({ allowedFileTypes: ['mp4'] });
-
-      await expect(() =>
-        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
-      ).toThrow('Please choose only mp4 to upload.');
-    });
-
-    it('formats the error message correctly if no file types are supported', async () => {
-      const {
-        actions: { validateFileForUpload },
-      } = setup({ allowedFileTypes: [] });
-
-      await expect(() =>
-        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
-      ).toThrow('No file types are currently supported.');
     });
 
     it('throws an error if file is too large for transcoding', async () => {
@@ -212,6 +176,70 @@ describe('useUploader', () => {
       ).toThrow(
         'Your file is too large (3072 MB) and cannot be processed. Please try again with a file that is smaller than 2048 MB.'
       );
+    });
+
+    it('does not throw an error if file is too large to upload but can be transcoded', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload(
+          { size: 1024 * 1024 * 150, type: 'video/mp4' },
+          true,
+          false
+        )
+      ).not.toThrow();
+    });
+
+    it('throws an error if file is too large to transcode or upload', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload(
+          { size: 1024 * 1024 * 1024 * 2, type: 'video/mp4' },
+          false,
+          true
+        )
+      ).toThrow(
+        'Your file is 2048MB and the upload limit is 100MB. Please resize and try again!'
+      );
+    });
+
+    it('does not throw an error if file is not too large to upload', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({});
+
+      await expect(() =>
+        validateFileForUpload(
+          { size: 1024 * 1024 * 50, type: 'video/mp4' },
+          false,
+          false
+        )
+      ).not.toThrow();
+    });
+
+    it('formats the error message correctly if there is only one file type supported', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({ allowedFileTypes: ['mp4'] });
+
+      await expect(() =>
+        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+      ).toThrow('Please choose only mp4 to upload.');
+    });
+
+    it('formats the error message correctly if no file types are supported', async () => {
+      const {
+        actions: { validateFileForUpload },
+      } = setup({ allowedFileTypes: [] });
+
+      await expect(() =>
+        validateFileForUpload({ size: 20000, type: 'video/quicktime' })
+      ).toThrow('No file types are currently supported.');
     });
   });
 
