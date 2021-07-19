@@ -36,7 +36,11 @@ import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
 export function videoElementMissingCaptions(element) {
-  return element.type === 'video' && !element.tracks?.length;
+  return (
+    element.type === 'video' &&
+    !element?.resource?.isMuted &&
+    !element.tracks?.length
+  );
 }
 
 const VideoElementMissingCaptions = () => {
