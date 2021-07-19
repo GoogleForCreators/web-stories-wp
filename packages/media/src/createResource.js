@@ -59,6 +59,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
  * @property {boolean} isOptimized Whether the resource has already been optimized.
+ * @property {boolean} isMuted Whether the resource has already been muted.
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */
@@ -130,6 +131,7 @@ function createResource({
   local = false,
   isPlaceholder = false,
   isOptimized = false,
+  isMuted = false,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -151,6 +153,7 @@ function createResource({
     local,
     isPlaceholder,
     isOptimized,
+    isMuted,
   };
 }
 
