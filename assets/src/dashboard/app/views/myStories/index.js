@@ -23,7 +23,7 @@ import { useEffect, useMemo } from 'react';
  * Internal dependencies
  */
 import { ScrollToTop, Layout } from '../../../components';
-import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
+import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
 import useApi from '../../api/useApi';
@@ -87,7 +87,7 @@ function MyStories() {
     fetchStories({
       page: page.value,
       searchTerm: search.keyword,
-      sortDirection: view.style === VIEW_STYLE.LIST && sort.direction,
+      sortDirection: sort.direction,
       sortOption: sort.value,
       status: filter.value,
     });
@@ -98,7 +98,6 @@ function MyStories() {
     search.keyword,
     sort.direction,
     sort.value,
-    view.style,
   ]);
 
   const orderedStories = useMemo(() => {
