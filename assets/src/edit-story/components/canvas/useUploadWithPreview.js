@@ -58,16 +58,13 @@ function useUploadWithPreview() {
   const onUploadSuccess = useCallback(
     ({ id, resource }) => {
       updateElementDimensions({ id, resource });
-      if ('video' === resource.type && !resource.local) {
-        updateVideoIsMuted(resource.id, resource.src);
-      }
-
-      if (
-        ['video', 'gif'].includes(resource.type) &&
-        !resource.local &&
-        !resource.posterId
-      ) {
-        uploadVideoPoster(resource.id, resource.src);
+      if (['video', 'gif'].includes(resource.type) && !resource.local) {
+        if (!resource.isMuted) {
+          updateVideoIsMuted(resource.id, resource.src);
+        }
+        if (!resource.posterId) {
+          uploadVideoPoster(resource.id, resource.src);
+        }
       }
     },
     [updateElementDimensions, uploadVideoPoster, updateVideoIsMuted]

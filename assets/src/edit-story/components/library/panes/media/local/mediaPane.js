@@ -222,22 +222,20 @@ function MediaPane(props) {
         resource,
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
-      if (
-        !resource.local &&
-        allowedVideoMimeTypes.includes(resource.mimeType)
-      ) {
-        updateVideoIsMuted(resource.id, resource.src);
-      }
 
       if (
-        !resource.posterId &&
         !resource.local &&
         (allowedVideoMimeTypes.includes(resource.mimeType) ||
           resource.type === 'gif')
       ) {
-        // Upload video poster and update media element afterwards, so that the
-        // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, mediaPickerEl.url);
+        if (!resource.posterId) {
+          // Upload video poster and update media element afterwards, so that the
+          // poster will correctly show up in places like the Accessibility panel.
+          uploadVideoPoster(resource.id, mediaPickerEl.url);
+        }
+        if (!resource.isMuted) {
+          updateVideoIsMuted(resource.id, resource.src);
+        }
       }
     } catch (e) {
       showSnackbar({

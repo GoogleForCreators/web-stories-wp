@@ -84,6 +84,17 @@ function useProcessMedia({
     [updateMedia]
   );
 
+  const markVideoAsMuted = useCallback(
+    (newId) => {
+      updateMedia(newId, {
+        meta: {
+          web_stories_is_muted: true,
+        },
+      });
+    },
+    [updateMedia]
+  );
+
   const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
@@ -104,15 +115,13 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
-        if ('video' === resource.type && !resource.local) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
-          uploadVideoPoster(resource.id, resource.src);
+        if (['video', 'gif'].includes(resource.type) && !resource.local) {
+          if (!resource.posterId) {
+            uploadVideoPoster(resource.id, resource.src);
+          }
+          if (!resource.isMuted) {
+            updateVideoIsMuted(resource.id, resource.src);
+          }
         }
       };
 
@@ -175,18 +184,14 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
-          uploadVideoPoster(resource.id, resource.src);
+        if (['video', 'gif'].includes(resource.type) && !resource.local) {
+          if (!resource.posterId) {
+            uploadVideoPoster(resource.id, resource.src);
+          }
+          if (!resource.isMuted) {
+            markVideoAsMuted(resource.id);
+          }
         }
-        updateMedia(resource.id, {
-          meta: {
-            web_stories_is_muted: true,
-          },
-        });
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -223,8 +228,8 @@ function useProcessMedia({
       copyResourceData,
       uploadMedia,
       uploadVideoPoster,
-      updateVideoIsMuted,
       updateExistingElements,
+      markVideoAsMuted,
     ]
   );
 
@@ -244,6 +249,8 @@ function useProcessMedia({
         ) {
           uploadVideoPoster(resource.id, resource.src);
         }
+
+        markVideoAsMuted(resource.id);
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -282,6 +289,7 @@ function useProcessMedia({
       updateOldObject,
       deleteMediaElement,
       updateExistingElements,
+      markVideoAsMuted,
     ]
   );
 
