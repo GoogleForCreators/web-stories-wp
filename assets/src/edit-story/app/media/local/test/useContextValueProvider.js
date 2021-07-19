@@ -54,6 +54,7 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     alt: 'IMAGE',
     local: false,
     isPlaceholder: false,
+    isMuted: false,
     isOptimized: false,
     sizes: {
       medium: {
