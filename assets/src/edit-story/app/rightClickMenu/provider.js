@@ -262,6 +262,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         separator: 'top',
+        // TODO: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: {
           display: isMacOs ? '⌥ ⌘ [' : '⌥ ctrl [',
           title: isMacOs
@@ -274,6 +275,7 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+        // TODO: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: {
           display: isMacOs ? '⌘ [' : 'ctrl [',
           title: isMacOs
@@ -286,6 +288,7 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+        // TODO: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: {
           display: isMacOs ? '⌘ ]' : 'ctrl ]',
           title: isMacOs
@@ -298,6 +301,7 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        // TODO: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: {
           display: isMacOs ? '⌥ ⌘ ]' : '⌥ ctrl ]',
           title: isMacOs
