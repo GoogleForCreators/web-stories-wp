@@ -471,8 +471,9 @@ class Media extends Service_Base {
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
 
-			$is_muted             = get_post_meta( $attachment->ID, self::IS_MUTED_POST_META_KEY, true );
-			$response['is_muted'] = rest_sanitize_boolean( $is_muted );
+			$is_muted = get_post_meta( $attachment->ID, self::IS_MUTED_POST_META_KEY, true );
+
+			$response['meta']['web_story_is_muted'] = rest_sanitize_boolean( $is_muted );
 		}
 
 		$response['media_source'] = $this->get_callback_media_source( $response );

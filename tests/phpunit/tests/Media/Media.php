@@ -146,7 +146,8 @@ class Media extends Test_Case {
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayHasKey( 'media_source', $video );
-		$this->assertArrayHasKey( 'is_muted', $video );
+		$this->assertArrayHasKey( 'meta', $video );
+		$this->assertArrayHasKey( 'web_story_is_muted', $video['meta'] );
 	}
 
 	/**
