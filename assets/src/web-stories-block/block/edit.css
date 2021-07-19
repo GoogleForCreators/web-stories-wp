@@ -37,9 +37,10 @@
   .web-stories-block-configuration-panel__options {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: flex-start;
   flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
   margin: 16px 0;
   padding: 0;
   list-style: none;
@@ -51,16 +52,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 0 10px;
+  margin: 8px 20px 0 0;
 }
 
 .web-stories-block-configuration-panel
   .web-stories-block-configuration-panel__options
   .components-button {
-  height: 88px;
-  width: 88px;
+  height: 70px;
+  width: 70px;
   justify-content: center;
-  margin: 10px 0 0 0;
+  margin: 0;
+  padding: 0;
 }
 
 .web-stories-block-configuration-panel
