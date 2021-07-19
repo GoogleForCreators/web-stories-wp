@@ -64,6 +64,7 @@ function RightClickMenuProvider({ children }) {
     pages,
     replaceCurrentPage,
     selectedElements,
+    setBackgroundElement,
   } = useStory(
     ({
       state: { currentPage, pages, selectedElements },
@@ -72,6 +73,7 @@ function RightClickMenuProvider({ children }) {
         arrangeElement,
         deleteCurrentPage,
         replaceCurrentPage,
+        setBackgroundElement,
       },
     }) => ({
       addPage,
@@ -81,6 +83,7 @@ function RightClickMenuProvider({ children }) {
       pages,
       replaceCurrentPage,
       selectedElements,
+      setBackgroundElement,
     })
   );
 
@@ -93,6 +96,12 @@ function RightClickMenuProvider({ children }) {
   );
 
   const selectedElement = selectedElements?.[0];
+  const currentPosition = currentPage?.elements.findIndex(
+    (element) => element.id === selectedElement?.id
+  );
+  const canElementMoveBackwards = currentPosition > 1;
+  const canElementMoveForwards =
+    currentPosition < currentPage?.elements.length - 1;
 
   /**
    * Open the menu at the position from the click event.
@@ -157,13 +166,6 @@ function RightClickMenuProvider({ children }) {
     deleteCurrentPage();
   }, [deleteCurrentPage]);
 
-  const currentPosition = currentPage?.elements.findIndex(
-    (element) => element.id === selectedElement?.id
-  );
-  const canElementMoveBackwards = currentPosition > 1;
-  const canElementMoveForwards =
-    currentPosition < currentPage?.elements.length - 1;
-
   /**
    * Send element one layer backwards, if possible.
    */
@@ -218,6 +220,13 @@ function RightClickMenuProvider({ children }) {
     }),
     [handleMouseDown]
   );
+
+  /**
+   * Set currently selected element as the page's background.
+   */
+  const handleSetPageBackground = useCallback(() => {
+    setBackgroundElement({ elementId: selectedElement.id });
+  }, [setBackgroundElement, selectedElement?.id]);
 
   const defaultItems = useMemo(
     () => [
@@ -315,7 +324,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         separator: 'top',
-        onClick: noop,
+        onClick: handleSetPageBackground,
         ...menuItemProps,
       },
       {
@@ -332,6 +341,7 @@ function RightClickMenuProvider({ children }) {
       handleBringToFront,
       handleSendBackward,
       handleSendToBack,
+      handleSetPageBackground,
       menuItemProps,
     ]
   );
