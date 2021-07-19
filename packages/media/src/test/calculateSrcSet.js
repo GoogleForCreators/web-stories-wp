@@ -117,7 +117,7 @@ describe('calculateSrcSet', () => {
     expect(srcSet).toBe('large-url 400w');
   });
 
-  it('should debug', () => {
+  it('should convert strings when checking for duplicates', () => {
     const resource = {
       src: 'image.jpg',
       width: 1000,

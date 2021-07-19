@@ -39,7 +39,8 @@ function calculateSrcSet(resource) {
       // more efficient and just check the last item in each reduction.
       .reduce(
         (unique, s) =>
-          unique.length && Number(unique[unique.length - 1].width) === Number(s.width)
+          unique.length &&
+          Number(unique[unique.length - 1].width) === Number(s.width)
             ? unique
             : [...unique, s],
         []
