@@ -29,6 +29,7 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
 import { useStory } from '..';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { duplicatePage } from '../../elements';
+import { noop } from '../../utils/noop';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUT_LABELS,
@@ -193,6 +194,63 @@ function RightClickMenuProvider({ children }) {
     [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
   );
 
+  const foregroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
+        separator: 'top',
+        shortcut: {
+          display: isMacOs ? '⌥ ⌘ [' : '⌥ ctrl [',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_OPEN_BRACKET
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_OPEN_BRACKET,
+        },
+        onClick: noop,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+        shortcut: {
+          display: isMacOs ? '⌘ [' : 'ctrl [',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_OPEN_BRACKET
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_OPEN_BRACKET,
+        },
+        onClick: noop,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+        shortcut: {
+          display: isMacOs ? '⌘ ]' : 'ctrl ]',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_CLOSE_BRACKET
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_CLOSE_BRACKET,
+        },
+        onClick: noop,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        shortcut: {
+          display: isMacOs ? '⌥ ⌘ ]' : '⌥ ctrl ]',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_CLOSE_BRACKET
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_CLOSE_BRACKET,
+        },
+        onClick: noop,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
+        separator: 'top',
+        onClick: noop,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
+        onClick: noop,
+      },
+    ],
+    [defaultItems]
+  );
+
   const pageItems = useMemo(
     () => [
       ...defaultItems,
@@ -215,13 +273,14 @@ function RightClickMenuProvider({ children }) {
   const menuItems = useMemo(() => {
     switch (selectedElement?.type) {
       case ELEMENT_TYPE.IMAGE:
+      case ELEMENT_TYPE.VIDEO:
+        return foregroundMediaItems;
       case ELEMENT_TYPE.SHAPE:
       case ELEMENT_TYPE.TEXT:
-      case ELEMENT_TYPE.VIDEO:
       default:
         return pageItems;
     }
-  }, [pageItems, selectedElement?.type]);
+  }, [foregroundMediaItems, pageItems, selectedElement?.type]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set

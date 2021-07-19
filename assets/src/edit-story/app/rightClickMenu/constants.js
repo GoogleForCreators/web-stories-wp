@@ -19,11 +19,17 @@
 import { _x, __ } from '@web-stories-wp/i18n';
 
 export const RIGHT_CLICK_MENU_LABELS = {
+  BRING_FORWARD: __('Bring forward', 'web-stories'),
+  BRING_TO_FRONT: __('Bring to front', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
-  PASTE: __('Paste', 'web-stories'),
+  DELETE_PAGE: __('Delete page', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
-  DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
-  DELETE_PAGE: __('Delete Page', 'web-stories'),
+  DUPLICATE_PAGE: __('Duplicate page', 'web-stories'),
+  PASTE: __('Paste', 'web-stories'),
+  SCALE_AND_CROP_IMAGE: __('Scale & crop image', 'web-stories'),
+  SEND_BACKWARD: __('Send backward', 'web-stories'),
+  SEND_TO_BACK: __('Send to back', 'web-stories'),
+  SET_AS_PAGE_BACKGROUND: __('Set as page background', 'web-stories'),
 };
 
 export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
@@ -48,6 +54,46 @@ export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
     'web-stories'
   ),
   DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+  COMMAND_OPEN_BRACKET: _x(
+    'Command Open Bracket',
+    'The keyboard keys "Command" and "Open Bracket"',
+    'web-stories'
+  ),
+  CONTROL_OPEN_BRACKET: _x(
+    'Control Open Bracket',
+    'The keyboard keys "Control" and "Open Bracket"',
+    'web-stories'
+  ),
+  OPTION_COMMAND_OPEN_BRACKET: _x(
+    'Option Command Open Bracket',
+    'The keyboard keys "Option", "Command", and "Open Bracket"',
+    'web-stories'
+  ),
+  OPTION_CONTROL_OPEN_BRACKET: _x(
+    'Option Control Open Bracket',
+    'The keyboard keys "Option", "Control", and "Open Bracket"',
+    'web-stories'
+  ),
+  COMMAND_CLOSE_BRACKET: _x(
+    'Command Close Bracket',
+    'The keyboard keys "Command" and "Close Bracket"',
+    'web-stories'
+  ),
+  CONTROL_CLOSE_BRACKET: _x(
+    'Control Close Bracket',
+    'The keyboard keys "Control" and "Close Bracket"',
+    'web-stories'
+  ),
+  OPTION_COMMAND_CLOSE_BRACKET: _x(
+    'Option Command Close Bracket',
+    'The keyboard keys "Option", "Command", and "Close Bracket"',
+    'web-stories'
+  ),
+  OPTION_CONTROL_CLOSE_BRACKET: _x(
+    'Option Control Close Bracket',
+    'The keyboard keys "Option", "Control", and "Close Bracket"',
+    'web-stories'
+  ),
 };
 
 export const RIGHT_CLICK_SNACKBAR_TEXT = {
