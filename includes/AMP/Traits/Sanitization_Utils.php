@@ -334,7 +334,7 @@ trait Sanitization_Utils {
 		/**
 		 * List of <amp-img> elements.
 		 *
-		 * @var DOMElement[] $videos Image elements.
+		 * @var DOMElement[] $images Image elements.
 		 */
 		$images = $document->body->getElementsByTagName( 'amp-img' );
 
@@ -357,7 +357,7 @@ trait Sanitization_Utils {
 		/**
 		 * List of <amp-img> elements.
 		 *
-		 * @var DOMElement[] $videos Image elements.
+		 * @var DOMElement[] $images Image elements.
 		 */
 		$images = $document->body->getElementsByTagName( 'amp-img' );
 
