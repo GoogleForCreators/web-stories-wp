@@ -19,19 +19,27 @@
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Input, useFocusOut } from '@web-stories-wp/design-system';
 
 const StyledInput = styled(Input)`
   div {
     height: auto;
   }
+  ${({ $isInverted, theme }) =>
+    $isInverted &&
+    css`
+      input {
+        color: ${theme.colors.inverted.fg.primary};
+      }
+    `}
 `;
 
 const InlineInputForm = ({
   noAutoFocus,
   error,
   id,
+  isInverted,
   label,
   onEditCancel,
   onEditComplete,
@@ -90,6 +98,7 @@ const InlineInputForm = ({
         placeholder={placeholder}
         hasError={Boolean(error)}
         hint={error}
+        $isInverted={isInverted}
       />
     </div>
   );
@@ -98,6 +107,7 @@ const InlineInputForm = ({
 InlineInputForm.propTypes = {
   error: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  isInverted: PropTypes.bool,
   label: PropTypes.string.isRequired,
   noAutoFocus: PropTypes.bool,
   onEditCancel: PropTypes.func.isRequired,

@@ -20,16 +20,11 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
-import styled from 'styled-components';
+import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  CardGridItem,
-  CardTitle,
-  StoryCardPreview,
-  StoryMenu,
-} from '../../../../../components';
+import { StoryMenu } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { STORY_STATUS } from '../../../../../constants';
 import {
@@ -38,21 +33,18 @@ import {
   StoryMenuPropType,
   StoryPropType,
 } from '../../../../../types';
-
-const CustomCardGridItem = styled(CardGridItem)`
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: ${({ pageSize }) => `${pageSize.posterHeight}px auto`};
-`;
-
-export const DetailRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
+import { titleFormatted } from '../../../../../utils';
+import {
+  CardWrapper,
+  Container,
+  CustomCardGridItem,
+  Gradient,
+  Poster,
+  Scrim,
+} from './components';
+import StoryDisplayContent from './storyDisplayContent';
 
 const StoryGridItem = ({
-  bottomActionLabel,
   handleFocus,
   isActive,
   itemRefs = {},
@@ -86,57 +78,81 @@ const StoryGridItem = ({
       ? story?.modified_gmt
       : story?.created_gmt
   );
+
+  const formattedTitle = titleFormatted(story.title);
+
+  const memoizedStoryMenu = useMemo(
+    () => (
+      <StoryMenu
+        itemActive={isActive}
+        tabIndex={tabIndex}
+        onMoreButtonSelected={storyMenu.handleMenuToggle}
+        contextMenuId={storyMenu.contextMenuId}
+        storyId={story.id}
+        isInverted
+        menuItems={generatedMenuItems}
+        menuStyleOverrides={css`
+          /* force menu position to bottom corner */
+          margin: 0 0 0 auto;
+        `}
+      />
+    ),
+    [isActive, tabIndex, storyMenu, story.id, generatedMenuItems]
+  );
+
   return (
     <CustomCardGridItem
       data-testid={`story-grid-item-${story.id}`}
+      onFocus={handleFocus}
+      $posterHeight={pageSize.posterHeight}
       ref={(el) => {
         itemRefs.current[story.id] = el;
       }}
-      onFocus={handleFocus}
       title={sprintf(
         /* translators: %s: story title.*/
         __('Details about %s', 'web-stories'),
-        story.title
+        formattedTitle
       )}
-      pageSize={pageSize}
     >
-      <StoryCardPreview
-        tabIndex={tabIndex}
-        storyImage={story.featuredMediaUrl}
-        storyTitle={story.title}
-        bottomAction={{
-          targetAction: story.bottomTargetAction,
-          label: bottomActionLabel,
-        }}
-      />
-      <DetailRow>
-        <CardTitle
-          tabIndex={tabIndex}
-          title={story.title}
-          titleLink={story.editStoryLink}
-          status={story?.status}
-          locked={story?.locked}
-          lockUser={story?.lockUser}
-          id={story.id}
-          displayDate={storyDate}
-          {...titleRenameProps}
-        />
-
-        <StoryMenu
-          itemActive={isActive}
-          tabIndex={tabIndex}
-          onMoreButtonSelected={storyMenu.handleMenuToggle}
-          contextMenuId={storyMenu.contextMenuId}
-          storyId={story.id}
-          menuItems={generatedMenuItems}
-        />
-      </DetailRow>
+      <Container>
+        <CardWrapper>
+          {story.featuredMediaUrl ? (
+            <Poster
+              alt={sprintf(
+                /* translators: %s: Story title. */
+                __('%s Poster image', 'web-stories'),
+                formattedTitle
+              )}
+              as="img"
+              src={story.featuredMediaUrl}
+            />
+          ) : (
+            <Poster />
+          )}
+          <Gradient />
+          <Scrim>
+            <StoryDisplayContent
+              author={story.author}
+              contextMenu={memoizedStoryMenu}
+              displayDate={storyDate}
+              formattedTitle={formattedTitle}
+              id={story.id}
+              lockUser={story?.lockUser}
+              locked={story?.locked || true}
+              status={story?.status}
+              tabIndex={tabIndex}
+              title={story.title}
+              titleLink={story.editStoryLink}
+              {...titleRenameProps}
+            />
+          </Scrim>
+        </CardWrapper>
+      </Container>
     </CustomCardGridItem>
   );
 };
 
 StoryGridItem.propTypes = {
-  bottomActionLabel: PropTypes.string,
   handleFocus: PropTypes.func,
   isActive: PropTypes.bool,
   itemRefs: PropTypes.shape({

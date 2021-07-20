@@ -41,8 +41,10 @@ export const MoreVerticalButton = styled.button`
   opacity: ${({ menuOpen, isVisible }) => (menuOpen || isVisible ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.interactiveFg.brandNormal};
-
+  color: ${({ theme, $isInverted }) =>
+    $isInverted
+      ? theme.colors.inverted.fg.primary
+      : theme.colors.interactiveFg.brandNormal};
   & > svg {
     width: 4px;
     max-height: 100%;
@@ -51,7 +53,11 @@ export const MoreVerticalButton = styled.button`
   border: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
 
-  ${themeHelpers.focusableOutlineCSS};
+  ${({ theme, $isInverted }) =>
+    themeHelpers.focusableOutlineCSS(
+      false,
+      $isInverted ? theme.colors.standard.black : false
+    )};
 `;
 
 MoreVerticalButton.propTypes = {
@@ -62,6 +68,7 @@ const MenuContainer = styled.div`
   position: relative;
   align-self: ${({ verticalAlign = 'flex-start' }) => verticalAlign};
   text-align: right;
+  ${({ $menuStyleOverrides }) => $menuStyleOverrides}
 
   & > div {
     margin: 0; /* 0 out margin that is needed by default on other instances of popover menus */
@@ -80,6 +87,8 @@ export default function StoryMenu({
   menuItems,
   itemActive,
   tabIndex,
+  menuStyleOverrides,
+  isInverted,
 }) {
   const isPopoverMenuOpen = contextMenuId === storyId;
 
@@ -92,6 +101,7 @@ export default function StoryMenu({
     <MenuContainer
       verticalAlign={verticalAlign}
       data-testid={`story-context-menu-${storyId}`}
+      $menuStyleOverrides={menuStyleOverrides}
     >
       <MoreVerticalButton
         data-testid={`story-context-button-${storyId}`}
@@ -101,6 +111,7 @@ export default function StoryMenu({
         aria-label={__('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : storyId)}
         className={CONTEXT_MENU_BUTTON_CLASS}
+        $isInverted={isInverted}
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
@@ -114,11 +125,13 @@ export default function StoryMenu({
 }
 
 StoryMenu.propTypes = {
+  isInverted: PropTypes.bool,
   itemActive: PropTypes.bool,
   tabIndex: PropTypes.number,
   storyId: PropTypes.number,
   onMoreButtonSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  menuStyleOverrides: PropTypes.array,
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };
