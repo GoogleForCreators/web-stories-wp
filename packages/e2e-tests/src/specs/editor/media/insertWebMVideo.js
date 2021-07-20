@@ -29,7 +29,6 @@ describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('small-video.webm', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
@@ -46,7 +45,6 @@ describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media library', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
@@ -68,7 +66,6 @@ describe('Inserting WebM Video', () => {
 
     await insertStoryTitle('Publishing with video');
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('small-video.webm');
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
