@@ -68,21 +68,9 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
-    expect(
-      (
-        await page.waitForResponse((response) =>
-          response.url().includes('web-stories/v1/media')
-        )
-      ).ok()
-    ).toBeTrue();
-    expect(
-      (
-        await page.waitForResponse((response) =>
-          response.url().endsWith('-poster.jpeg')
-        )
-      ).ok()
-    ).toBeTrue();
+    // Wait for poster image to appear.
+    await page.waitForSelector('[alt="Preview poster image"]');
+    await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
 
   it('should insert an video by clicking on media library and preview on FE', async () => {
@@ -103,21 +91,10 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
-    expect(
-      (
-        await page.waitForResponse((response) =>
-          response.url().includes('web-stories/v1/media')
-        )
-      ).ok()
-    ).toBeTrue();
-    expect(
-      (
-        await page.waitForResponse((response) =>
-          response.url().endsWith('-poster.jpeg')
-        )
-      ).ok()
-    ).toBeTrue();
+    // Wait for poster image to appear.
+    await page.waitForSelector('[alt="Preview poster image"]');
+    await expect(page).toMatchElement('[alt="Preview poster image"]');
+
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
