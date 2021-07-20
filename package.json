@@ -161,7 +161,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-styled-components-a11y": "^0.0.34",
-    "eslint-plugin-testing-library": "^4.9.0",
+    "eslint-plugin-testing-library": "^4.10.0",
     "glob": "^7.1.7",
     "html-webpack-plugin": "^4.5.2",
     "husky": "^4.3.7",
