@@ -257,7 +257,8 @@ function useFFmpeg() {
           // Input filename.
           '-i',
           file.name,
-          ...FFMPEG_SHARED_CONFIG,
+          '-vcodec',
+          'copy',
           // Mute audio from video.
           '-an',
           // Output filename. MUST be different from input filename.

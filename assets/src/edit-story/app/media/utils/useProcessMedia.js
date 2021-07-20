@@ -84,17 +84,6 @@ function useProcessMedia({
     [updateMedia]
   );
 
-  const markVideoAsMuted = useCallback(
-    (newId) => {
-      updateMedia(newId, {
-        meta: {
-          web_story_is_muted: true,
-        },
-      });
-    },
-    [updateMedia]
-  );
-
   const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType } = oldResource;
@@ -163,7 +152,7 @@ function useProcessMedia({
 
   const optimizeVideoMuted = useCallback(
     ({ resource: oldResource }) => {
-      const { src: url, mimeType } = oldResource;
+      const { src: url, mimeType, poster } = oldResource;
 
       const onUploadStart = () => {
         updateExistingElements({
@@ -184,11 +173,12 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        if (['video', 'gif'].includes(resource.type) && !resource.local) {
-          if (!resource.posterId) {
-            uploadVideoPoster(resource.id, resource.src);
-          }
-          markVideoAsMuted(resource.id);
+        if (
+          ['video', 'gif'].includes(resource.type) &&
+          !resource.local &&
+          !resource.posterId
+        ) {
+          uploadVideoPoster(resource.id, resource.src, oldResource.id);
         }
       };
 
@@ -201,11 +191,19 @@ function useProcessMedia({
 
       const process = async () => {
         let file = false;
+        let posterfile = false;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
           // Ignore for now.
           return;
+        }
+        if (poster) {
+          try {
+            posterfile = await fetchRemoteFile(url, 'image/jpeg');
+          } catch (e) {
+            // Ignore for now.
+          }
         }
         await uploadMedia([file], {
           onUploadSuccess,
@@ -218,17 +216,16 @@ function useProcessMedia({
             post: oldResource.id,
           },
           muteVideo: true,
+          resource: {
+            ...oldResource,
+            isMuted: true,
+          },
+          posterfile,
         });
       };
       return process();
     },
-    [
-      copyResourceData,
-      uploadMedia,
-      uploadVideoPoster,
-      updateExistingElements,
-      markVideoAsMuted,
-    ]
+    [copyResourceData, uploadMedia, uploadVideoPoster, updateExistingElements]
   );
 
   const optimizeGif = useCallback(
@@ -247,8 +244,6 @@ function useProcessMedia({
         ) {
           uploadVideoPoster(resource.id, resource.src);
         }
-
-        markVideoAsMuted(resource.id);
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -287,7 +282,6 @@ function useProcessMedia({
       updateOldObject,
       deleteMediaElement,
       updateExistingElements,
-      markVideoAsMuted,
     ]
   );
 

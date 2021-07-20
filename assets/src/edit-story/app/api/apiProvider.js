@@ -219,6 +219,17 @@ function APIProvider({ children }) {
     [media]
   );
 
+  const createFormData = useCallback((formData, key, data) => {
+    if (data === Object(data) || Array.isArray(data)) {
+      // eslint-disable-next-line guard-for-in
+      for (const i in data) {
+        createFormData(formData, key + '[' + i + ']', data[i]);
+      }
+    } else {
+      formData.append(key, data);
+    }
+  }, []);
+
   /**
    * Upload file to via REST API.
    *
@@ -231,9 +242,9 @@ function APIProvider({ children }) {
       // Create upload payload
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
-      Object.entries(additionalData).forEach(([key, value]) =>
-        data.append(key, value)
-      );
+      Object.entries(additionalData).forEach(([key, value]) => {
+        createFormData(data, key, value);
+      });
 
       // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
       return apiFetch({
@@ -242,7 +253,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [media]
+    [createFormData, media]
   );
 
   /**
