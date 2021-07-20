@@ -27,20 +27,20 @@ function useAverageColor(ref, onAverageColor) {
 
   useLayoutEffect(() => {
     function checkAverageColor() {
-      try {
-        import(
-          /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
-        ).then(({ default: ColorThief }) => {
+      import(
+        /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+      )
+        .then(({ default: ColorThief }) => {
           const thief = new ColorThief();
           callback.current(thief.getColor(ref.current));
+        })
+        .catch(() => {
+          // ColorThief fails for all-white images
+          //
+          // It's a "feature":
+          // https://github.com/lokesh/color-thief/pull/49
+          callback.current([255, 255, 255]);
         });
-      } catch (e) {
-        // ColorThief fails for all-white images
-        //
-        // It's a "feature":
-        // https://github.com/lokesh/color-thief/pull/49
-        callback.current([255, 255, 255]);
-      }
     }
 
     const element = ref.current;

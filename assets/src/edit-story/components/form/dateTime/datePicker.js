@@ -23,12 +23,25 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@web-stories-wp/i18n';
 
+/**
+ * Internal dependencies
+ */
+import CircularProgress from '../../circularProgress';
+
 const Calendar = lazy(() =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
 );
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
+`;
+
+const FallbackCalendar = styled.div`
+  height: 256px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 function DatePicker({ currentDate, onChange, onViewChange }) {
@@ -101,7 +114,13 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
   }, [updateTabIndexes]);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <FallbackCalendar>
+          <CircularProgress />
+        </FallbackCalendar>
+      }
+    >
       <CalendarWrapper ref={nodeRef}>
         <Calendar
           value={value}
