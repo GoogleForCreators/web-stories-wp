@@ -36,11 +36,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # TODO: Switch to WP-CLI stable (wp-cli.phar) once 2.5.0 is out.
       - name: Install WP-CLI
         run: |
-          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli-nightly.phar
-          mv wp-cli-nightly.phar wp-cli.phar
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
           chmod +x wp-cli.phar
           mkdir -p bin
           mv wp-cli.phar bin/wp
@@ -48,6 +46,12 @@ jobs:
 
       - name: WP-CLI Info
         run: wp cli info
+
+      - name: Install latest version of i18n-command
+        run: wp package install git@github.com:wp-cli/i18n-command.git
+
+      - name: List packages
+        run: wp package list
 
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
