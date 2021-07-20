@@ -95,9 +95,9 @@ function useFFmpeg() {
     allowedTranscodableMimeTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const {
-    state: { currentUser },
-  } = useCurrentUser();
+  const { currentUser } = useCurrentUser(({ state }) => ({
+    currentUser: state.currentUser,
+  }));
 
   /**
    * Whether the video optimization feature is enabled.
