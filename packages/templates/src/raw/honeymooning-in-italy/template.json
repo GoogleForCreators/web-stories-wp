@@ -50,7 +50,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "id": "f2201a06-f489-4521-8b8f-07b57ad7161f"
         },
@@ -73,7 +73,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           }
         },
         {
@@ -376,7 +376,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "f0e871c2-3cda-404d-9180-ed53d6150c8f",
@@ -402,7 +402,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           }
         },
         {
@@ -779,7 +779,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "599eee86-ae04-4824-8b5d-268454107eb8",
@@ -805,7 +805,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker"
         },
@@ -1089,7 +1089,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "id": "1fee32e4-057c-421c-93dc-a31cccf741fb",
           "type": "sticker"
@@ -1112,7 +1112,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker"
         },
@@ -1401,7 +1401,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "29c6278f-7aee-4cae-99ff-cde88f9569c7",
@@ -1427,7 +1427,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker"
         },
@@ -1708,7 +1708,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "basedOn": "f2201a06-f489-4521-8b8f-07b57ad7161f",
           "id": "d580b6fc-47d0-4f59-8130-d87ea334a95d",
@@ -1734,7 +1734,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker"
         },
@@ -2618,7 +2618,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "id": "8d557a70-608c-4322-a840-bbc774586389",
           "type": "sticker"
@@ -2641,7 +2641,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker"
         },
@@ -2929,7 +2929,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker",
           "basedOn": "1fee32e4-057c-421c-93dc-a31cccf741fb",
@@ -2951,7 +2951,7 @@
           "focalX": 50,
           "focalY": 50,
           "sticker": {
-            "type": "ornament"
+            "type": "floralPattern"
           },
           "type": "sticker",
           "basedOn": "a704e766-b7b4-40f2-a8e8-b98423de89b0",

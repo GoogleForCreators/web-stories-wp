@@ -16,6 +16,6 @@
 /**
  * Internal dependencies
  */
-import { default as ornament } from './ornament';
+import { default as floralPattern } from './floralPattern';
 
-export { ornament };
+export { floralPattern };

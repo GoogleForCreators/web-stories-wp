@@ -19,9 +19,9 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Ornament', 'sticker name', 'web-stories');
+const title = _x('Floral Pattern', 'sticker name', 'web-stories');
 
-function Ornament({ style }) {
+function FloralPattern({ style }) {
   return (
     <svg
       style={style}
@@ -166,12 +166,12 @@ function Ornament({ style }) {
   );
 }
 
-Ornament.propTypes = {
+FloralPattern.propTypes = {
   style: PropTypes.object,
 };
 
 export default {
   aspectRatio: 52 / 50,
-  svg: Ornament,
+  svg: FloralPattern,
   title,
 };
