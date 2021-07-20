@@ -61,13 +61,28 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
+    // TODO: figure out why this second click is needed.
+    // The first click does not appear to do anything, it just plays the video in the media library.
+    await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to appear.
-    await page.waitForSelector('[alt="Preview poster image"]');
-    await expect(page).toMatchElement('[alt="Preview poster image"]');
+    // Wait for poster image to be generated.
+    expect(
+      (
+        await page.waitForResponse((response) =>
+          response.url().includes('web-stories/v1/media')
+        )
+      ).ok()
+    ).toBeTrue();
+    expect(
+      (
+        await page.waitForResponse((response) =>
+          response.url().endsWith('-poster.jpeg')
+        )
+      ).ok()
+    ).toBeTrue();
   });
 
   it('should insert an video by clicking on media library and preview on FE', async () => {
@@ -81,13 +96,28 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
+    // TODO: figure out why this second click is needed.
+    // The first click does not appear to do anything, it just plays the video in the media library.
+    await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     // Wait for poster image to be generated.
-    await page.waitForSelector('[alt="Preview poster image"]');
-    await expect(page).toMatchElement('[alt="Preview poster image"]');
+    expect(
+      (
+        await page.waitForResponse((response) =>
+          response.url().includes('web-stories/v1/media')
+        )
+      ).ok()
+    ).toBeTrue();
+    expect(
+      (
+        await page.waitForResponse((response) =>
+          response.url().endsWith('-poster.jpeg')
+        )
+      ).ok()
+    ).toBeTrue();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
