@@ -72,8 +72,6 @@ class Cross_Origin_Isolation extends Test_Case {
 
 		$coi->register();
 
-		$this->assertSame( 10, has_action( 'admin_footer-post.php', [ $coi, 'admin_footer' ] ) );
-		$this->assertSame( 10, has_action( 'admin_footer-post-new.php', [ $coi, 'admin_footer' ] ) );
 		$this->assertSame( 10, has_action( 'load-post.php', [ $coi, 'admin_header' ] ) );
 		$this->assertSame( 10, has_action( 'load-post-new.php', [ $coi, 'admin_header' ] ) );
 

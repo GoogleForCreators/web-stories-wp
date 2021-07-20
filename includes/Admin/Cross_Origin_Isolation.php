@@ -31,8 +31,6 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-
 
 /**
  * Class Cross_Origin_Isolation
@@ -52,8 +50,6 @@ class Cross_Origin_Isolation extends Service_Base {
 			return;
 		}
 
-		add_action( 'admin_footer-post.php', [ $this, 'admin_footer' ] );
-		add_action( 'admin_footer-post-new.php', [ $this, 'admin_footer' ] );
 		add_action( 'load-post.php', [ $this, 'admin_header' ] );
 		add_action( 'load-post-new.php', [ $this, 'admin_header' ] );
 		add_filter( 'style_loader_tag', [ $this, 'style_loader_tag' ], 10, 3 );
@@ -95,20 +91,7 @@ class Cross_Origin_Isolation extends Service_Base {
 		header( 'Cross-Origin-Opener-Policy: same-origin' );
 		header( 'Cross-Origin-Embedder-Policy: require-corp' );
 
-		ob_start();
-	}
-
-	/**
-	 * Do string replacement and output.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return void
-	 */
-	public function admin_footer() {
-		$html = (string) ob_get_clean();
-
-		echo $this->replace_in_dom( $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		ob_start( [ $this, 'replace_in_dom' ] );
 	}
 
 	/**
@@ -118,40 +101,36 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @param string $html HTML document as string.
 	 *
-	 * @return string
+	 * @return string Processed HTML document.
 	 */
 	protected function replace_in_dom( string $html ): string {
-		$document = Document::fromHtml( $html );
-
-		if ( ! $document ) {
-			return $html;
-		}
-
-		$map = [
-			'link'   => 'href',
-			'img'    => 'src',
-			'iframe' => 'src',
-			'script' => 'src',
+		$tags = [
+			'link',
+			'img',
+			'iframe',
+			'script',
 		];
 
+		$tags      = implode( '|', $tags );
+		$matches   = [];
 		$processed = [];
 
-		foreach ( $map as $tag => $attribute ) {
-			$tags = $document->getElementsByTagName( $tag );
-			foreach ( $tags as $node ) {
-				$value = $node->getAttribute( $attribute );
-				if ( ! $value ) {
+		if ( preg_match_all( '#<(?P<tag>' . $tags . ')[^<]*?(?:>[\s\S]*?</(?P=tag)>|\s*/>)#', $html, $matches ) ) {
+			foreach ( $matches[0] as $match ) {
+				if ( false !== strpos( $match, 'crossorigin=' ) ) {
 					continue;
 				}
+
+				$match_value = [];
+				if ( ! preg_match( '/(src|href)=("([^"]+)"|\'([^\']+)\')/', $match, $match_value ) ) {
+					continue;
+				}
+
+				$attribute = $match_value[1];
+				$value     = $match_value[4] ?? $match_value[3];
 
 				// If already processed tag, attribute and value before, skip.
 				if ( isset( $processed[ $attribute ] ) && in_array( $value, $processed[ $attribute ], true ) ) {
-					continue;
-				}
-
-				// Check to see if tag already has attirbute.
-				$cross_origin = $node->getAttribute( 'crossorigin' );
-				if ( $cross_origin ) {
 					continue;
 				}
 
