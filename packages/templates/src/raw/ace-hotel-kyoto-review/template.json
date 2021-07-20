@@ -551,7 +551,7 @@
         },
         {
           "x": 220,
-          "y": 322,
+          "y": 323,
           "id": "63b7aeb9-0761-44f4-8412-ea1911828986",
           "basedOn": "ea6badf3-5d35-4903-8593-e7154b48d5a4",
           "opacity": 100,
@@ -3432,8 +3432,8 @@
             "bottomRight": 2,
             "bottomLeft": 2
           },
-          "width": 180,
-          "height": 46,
+          "width": 199,
+          "height": 47,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4056,7 +4056,7 @@
             "locked": true,
             "hasHiddenPadding": false
           },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.02em; text-transform: uppercase\">List Of Best Things To DO In The Area</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.02em; text-transform: uppercase\">List Of Best Things To DO In The Area:</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -4066,7 +4066,7 @@
             "bottomLeft": 2
           },
           "width": 215,
-          "height": 47,
+          "height": 45,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
