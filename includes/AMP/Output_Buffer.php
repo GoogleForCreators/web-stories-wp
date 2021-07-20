@@ -107,7 +107,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	public static function is_needed(): bool {
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
-		return ! ( defined( '\AMP__VERSION' ) || version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
+		return ! defined( '\AMP__VERSION' ) || ( defined( '\AMP__VERSION' ) && version_compare( \AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
 	}
 
 	/**
