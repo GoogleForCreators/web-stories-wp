@@ -31,6 +31,7 @@ export class RightClickMenu extends Container {
     super(node, path);
   }
 
+  // default actions
   get copy() {
     return this.queryByRole('button', {
       name: `Copy, or use ${commandOrControl} C on a keyboard`,
@@ -49,6 +50,44 @@ export class RightClickMenu extends Container {
     });
   }
 
+  // foreground media actions
+  get sendBackward() {
+    return this.getByRole('button', {
+      name: 'Send backward, or use Option Command Open Bracket on a keyboard',
+    });
+  }
+
+  get sendToBack() {
+    return this.getByRole('button', {
+      name: 'Send to back, or use Command Open Bracket on a keyboard',
+    });
+  }
+
+  get bringForward() {
+    return this.getByRole('button', {
+      name: 'Bring forward, or use Command Close Bracket on a keyboard',
+    });
+  }
+
+  get bringToFront() {
+    return this.getByRole('button', {
+      name: 'Bring to front, or use Option Command Close Bracket on a keyboard',
+    });
+  }
+
+  get setAsPageBackground() {
+    return this.getByRole('button', {
+      name: 'Set as page background',
+    });
+  }
+
+  get scaleAndCropImage() {
+    return this.getByRole('button', {
+      name: 'Scale & crop image',
+    });
+  }
+
+  // page actions
   get duplicatePage() {
     return this.queryByRole('button', {
       name: 'Duplicate Page',
