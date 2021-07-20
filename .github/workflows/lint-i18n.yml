@@ -100,6 +100,7 @@ jobs:
       # See https://github.com/wp-cli/i18n-command/issues/154
       - name: Generate POT file
         run: |
+          wp i18n make-pot build/web-stories build/web-stories.pot
           OUTPUT=$((wp i18n make-pot build/web-stories build/web-stories.pot) 2>&1 >/dev/null)
 
           HAS_ERROR=false
