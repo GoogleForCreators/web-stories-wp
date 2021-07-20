@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { createContext } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -28,21 +29,19 @@ import { useMemo } from '@wordpress/element';
  * Internal dependencies
  */
 import { useConfig } from '../config';
-import { createContext } from '../../../design-system';
 import useStoryApi from './useStoryApi';
 import useUsersApi from './useUserApi';
 
 export const StoriesBlockApiContext = createContext({ state: {}, actions: {} });
 
 export default function StoriesBlockApiProvider({ children }) {
-  const { api, editStoryURL } = useConfig();
+  const { api } = useConfig();
 
   const { api: usersApi, authorSuggestions } = useUsersApi({
     usersApi: api.users,
   });
 
   const { stories, api: storyApi } = useStoryApi({
-    editStoryURL,
     storyApi: api.stories,
   });
 

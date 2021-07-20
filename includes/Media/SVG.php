@@ -126,7 +126,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	private function svg_already_enabled() {
+	private function svg_already_enabled(): bool {
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
@@ -140,9 +140,9 @@ class SVG extends Service_Base {
 	 *
 	 * @param array $mime_types Mime types keyed by the file extension regex corresponding to those types.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public function upload_mimes_add_svg( array $mime_types ) {
+	public function upload_mimes_add_svg( array $mime_types ): array {
 		// allow SVG file upload.
 		$mime_types['svg']  = self::MIME_TYPE;
 		$mime_types['svgz'] = self::MIME_TYPE;
@@ -160,7 +160,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function mime_types_add_svg( array $mime_types ) {
+	public function mime_types_add_svg( array $mime_types ): array {
 		// allow SVG files.
 		$mime_types['svg'] = self::MIME_TYPE;
 
@@ -176,7 +176,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function web_stories_allowed_mime_types( array $mime_types ) {
+	public function web_stories_allowed_mime_types( array $mime_types ): array {
 		$mime_types['image'][] = self::MIME_TYPE;
 
 		return $mime_types;
@@ -191,7 +191,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return string List of allowed file types.
 	 */
-	public function filter_list_of_allowed_filetypes( $value ) {
+	public function filter_list_of_allowed_filetypes( $value ): string {
 		$filetypes = explode( ' ', $value );
 		if ( ! in_array( self::EXT, $filetypes, true ) ) {
 			$filetypes[] = self::EXT;
@@ -213,7 +213,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function wp_generate_attachment_metadata( $metadata, $attachment_id, $context ) {
+	public function wp_generate_attachment_metadata( $metadata, $attachment_id, $context ): array {
 		if ( 'create' !== $context ) {
 			return $metadata;
 		}
@@ -235,8 +235,8 @@ class SVG extends Service_Base {
 		}
 
 		return [
-			'width'    => $size['width'],
-			'height'   => $size['height'],
+			'width'    => (int) $size['width'],
+			'height'   => (int) $size['height'],
 			'file'     => _wp_relative_upload_path( $file ),
 			'filesize' => (int) filesize( $file ),
 			'sizes'    => [],
@@ -258,7 +258,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return string[]
 	 */
-	public function wp_handle_upload( $upload ) {
+	public function wp_handle_upload( $upload ): array {
 		if ( self::MIME_TYPE !== $upload['type'] ) {
 			return $upload;
 		}
@@ -288,12 +288,12 @@ class SVG extends Service_Base {
 	 *
 	 * @return array|WP_Error
 	 */
-	protected function get_svg_size( $file ) {
+	protected function get_svg_size( string $file ) {
 		$svg = $this->get_svg_data( $file );
 		$xml = $this->get_xml( $svg );
 
 		if ( false === $xml ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$width  = (int) $xml->getAttribute( 'width' );
@@ -315,7 +315,7 @@ class SVG extends Service_Base {
 			return new WP_Error( 'invalid_svg_size', __( 'Unable to generate SVG image size.', 'web-stories' ) );
 		}
 
-		return compact( 'width', 'height' );
+		return array_map( 'absint', compact( 'width', 'height' ) );
 	}
 
 	/**
@@ -327,13 +327,13 @@ class SVG extends Service_Base {
 	 *
 	 * @return true|WP_Error
 	 */
-	protected function sanitize( $file ) {
+	protected function sanitize( string $file ) {
 		$dirty     = $this->get_svg_data( $file );
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
 
 		if ( empty( $clean ) ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$errors = $sanitizer->getXmlIssues();
@@ -366,7 +366,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ) {
+	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
 		if ( 'image/svg' === $real_mime ) {
 			$wp_check_filetype_and_ext = [
 				'ext'             => self::EXT,
@@ -387,7 +387,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return DOMElement|false
 	 */
-	protected function get_xml( $svg ) {
+	protected function get_xml( string $svg ) {
 		$dom                      = new DOMDocument();
 		$dom->preserveWhiteSpace  = false;
 		$dom->strictErrorChecking = false;
@@ -419,7 +419,7 @@ class SVG extends Service_Base {
 	 *
 	 * @return string File contents.
 	 */
-	protected function get_svg_data( $file ) {
+	protected function get_svg_data( string $file ): string {
 		$key = md5( $file );
 		if ( ! isset( $this->svgs[ $key ] ) ) {
 			if ( is_readable( $file ) ) {

@@ -20,12 +20,13 @@
 import { useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 import { __, _x, sprintf } from '@web-stories-wp/i18n';
+import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { ZOOM_SETTING } from '../../../constants';
 import { useLayout } from '../../../app/layout';
-import { DropDown, PLACEMENT } from '../../../../design-system';
 
 const selectButtonCSS = css`
   height: 36px;
@@ -76,9 +77,11 @@ function ZoomSelector() {
     if (option) {
       return option.label;
     }
+
+    // eslint-disable-next-line @wordpress/valid-sprintf -- False positive.
     return sprintf(
-      /* translators: 1: zoom level percentage value. */
-      _x('%1$d%%', 'zoom level', 'web-stories'),
+      /* translators: %d: zoom level percentage value. */
+      _x('%d%%', 'zoom level', 'web-stories'),
       Math.round(zoomLevel * 100)
     );
   }, [zoomSetting, zoomLevel]);

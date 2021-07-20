@@ -19,28 +19,22 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect, useMemo } from 'react';
-import { useDebouncedCallback } from 'use-debounce/lib';
 import { __ } from '@web-stories-wp/i18n';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useResizeEffect } from '../../../design-system';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
-
 import { useHighlights } from '../../app/highlights';
-import { DOCUMENT, DESIGN, PREPUBLISH } from './constants';
-import PrepublishInspector, {
-  usePrepublishChecklist,
-  ChecklistIcon,
-} from './prepublish';
+import { DOCUMENT, DESIGN } from './constants';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
 
-const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN, PREPUBLISH]);
+const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN]);
 function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
@@ -49,11 +43,6 @@ function InspectorProvider({ children }) {
     selectedElementIds: state.selectedElementIds,
     currentPage: state.currentPage,
   }));
-
-  const { currentCheckpoint, isChecklistReviewRequested, refreshChecklist } =
-    usePrepublishChecklist();
-
-  const refreshChecklistDebounced = useDebouncedCallback(refreshChecklist, 500);
 
   const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
 
@@ -73,41 +62,17 @@ function InspectorProvider({ children }) {
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
-  const firstPublishAttemptRef = useRef(false);
 
   const designPaneRef = useRef(null);
   const documentPaneRef = useRef(null);
-  const prepublishPaneRef = useRef(null);
 
   const tabRefs = useMemo(
     () => ({
       [DESIGN]: designPaneRef,
       [DOCUMENT]: documentPaneRef,
-      [PREPUBLISH]: prepublishPaneRef,
     }),
     []
   );
-
-  useEffect(() => {
-    // If a user wants to review their checklist before publishing
-    // a story that has high priority checklist items in it
-    // we need to go to the checklist tab and focus it.
-    // Because of how context is wrapped around the header
-    // we need to do this by watching the isChecklistReviewRequested value
-    // from the prepublishChecklistProvider.
-    if (isChecklistReviewRequested && !firstPublishAttemptRef.current) {
-      setTab(PREPUBLISH);
-      // Focus prepublish which is the last item in the panel title list
-      inspectorRef.current?.firstChild?.lastChild?.focus();
-      firstPublishAttemptRef.current = isChecklistReviewRequested;
-    }
-    // If a published story that gets reverted to a draft and
-    // it has high priority checklist items in it we should update
-    // this ref so that the checklist panel focuses again.
-    else if (!isChecklistReviewRequested && firstPublishAttemptRef.current) {
-      firstPublishAttemptRef.current = false;
-    }
-  }, [isChecklistReviewRequested]);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
@@ -122,13 +87,6 @@ function InspectorProvider({ children }) {
   );
 
   useEffect(() => {
-    tabRef.current = tab;
-    if (tab === PREPUBLISH) {
-      refreshChecklistDebounced();
-    }
-  }, [tab, refreshChecklistDebounced, refreshChecklist]);
-
-  useEffect(() => {
     if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
       setTab(DESIGN);
     }
@@ -139,11 +97,6 @@ function InspectorProvider({ children }) {
       setTab(DESIGN);
     }
   }, [currentPage]);
-
-  const ChecklistTabIcon = useCallback(
-    () => <ChecklistIcon checkpoint={currentCheckpoint} className="alert" />,
-    [currentCheckpoint]
-  );
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
@@ -189,13 +142,6 @@ function InspectorProvider({ children }) {
           id: DOCUMENT,
           title: __('Document', 'web-stories'),
           Pane: DocumentInspector,
-        },
-
-        {
-          icon: ChecklistTabIcon,
-          id: PREPUBLISH,
-          title: __('Checklist', 'web-stories'),
-          Pane: PrepublishInspector,
         },
       ],
     },

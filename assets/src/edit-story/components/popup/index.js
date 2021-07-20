@@ -26,12 +26,12 @@ import {
   useState,
   useRef,
 } from 'react';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import { useResizeEffect } from '../../../design-system';
 import { getTransforms, getOffset } from './utils';
 import { Placement } from './constants';
 
@@ -42,11 +42,13 @@ const Container = styled.div.attrs(
     fillHeight,
     placement,
     isRTL,
+    invisible,
   }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
+      ...(invisible ? { visibility: `hidden` } : {}),
     },
   })
 )`
@@ -67,6 +69,7 @@ function Popup({
   placement = Placement.BOTTOM,
   spacing,
   isOpen,
+  invisible,
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = () => {},
@@ -131,6 +134,7 @@ function Popup({
           placement={placement}
           isRTL={isRTL}
           $offset={popupState.offset}
+          invisible={invisible}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

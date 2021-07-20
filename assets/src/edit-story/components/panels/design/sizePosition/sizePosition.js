@@ -26,10 +26,6 @@ import {
   calcRotatedObjectPositionAndSize,
   dataPixels,
 } from '@web-stories-wp/units';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   LockToggle,
@@ -38,7 +34,11 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { getDefinitionForType } from '../../../../elements';
 import { SimplePanel } from '../../panel';

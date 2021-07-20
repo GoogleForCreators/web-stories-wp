@@ -18,11 +18,11 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { List } from '../../../../design-system';
 import { useStory } from '../../../app/story';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MAX_PAGE_CHARACTER_COUNT } from '../constants';
@@ -42,7 +42,7 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -59,16 +59,17 @@ export function pageTooMuchText(page) {
 }
 
 const PageTooMuchText = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
-    () => filterStoryPages(story, pageTooMuchText),
-    [story]
+    () => filterStoryPages(pages, pageTooMuchText),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (pageId) =>
+    ({ pageId, elements }) =>
       setHighlights({
         pageId,
+        elements,
       }),
     [setHighlights]
   );
@@ -88,7 +89,9 @@ const PageTooMuchText = () => {
         }
         footer={
           <ChecklistCardStyles.CardListWrapper>
-            <List>{footer}</List>
+            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+              {footer}
+            </List>
           </ChecklistCardStyles.CardListWrapper>
         }
         thumbnailCount={failingPages.length}
@@ -97,7 +100,14 @@ const PageTooMuchText = () => {
             {getVisibleThumbnails(failingPages).map((page) => (
               <Thumbnail
                 key={page.id}
-                onClick={() => handleClick(page.id)}
+                onClick={() =>
+                  handleClick({
+                    pageId: page.id,
+                    elements: page.elements.filter(
+                      ({ type }) => type === 'text'
+                    ),
+                  })
+                }
                 type={THUMBNAIL_TYPES.PAGE}
                 displayBackground={
                   <PagePreview

@@ -19,12 +19,25 @@
  */
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { states, useHighlights } from '..';
-import { useSnackbar, PLACEMENT } from '../../../../design-system';
+import updateProperties from '../../../components/inspector/design/updateProperties';
+import { useHistory } from '../../history';
+import { useConfig } from '../../config';
+import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
+import { getResetProperties } from './utils';
 import {
+  ELEMENT_TYPE,
+  ACTION_TEXT,
+  RESET_PROPERTIES,
+  RESET_DEFAULTS,
+} from './constants';
+
+const {
   Bucket,
   CircleSpeed,
   Eraser,
@@ -34,20 +47,9 @@ import {
   Media,
   PictureSwap,
   Captions,
-} from '../../../../design-system/icons';
-import updateProperties from '../../../components/inspector/design/updateProperties';
-import { useHistory } from '../../history';
-import { useConfig } from '../../config';
-import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
-import { getResetProperties, getSnackbarClearCopy } from './utils';
-import {
-  ELEMENT_TYPE,
-  ACTION_TEXT,
-  RESET_PROPERTIES,
-  RESET_DEFAULTS,
-} from './constants';
+} = Icons;
 
-/** @typedef {import('../../../../design-system/components').MenuItemProps} MenuItemProps */
+/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick
@@ -150,12 +152,11 @@ const useQuickActions = () => {
   const handleElementReset = useCallback(
     ({ elementId, resetProperties, elementType }) => {
       handleResetProperties(elementType, elementId, resetProperties);
-      const message = getSnackbarClearCopy(resetProperties, elementType);
 
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
-        message,
+        message: __('Element properties have been reset', 'web-stories'),
         onAction: undo,
       });
     },

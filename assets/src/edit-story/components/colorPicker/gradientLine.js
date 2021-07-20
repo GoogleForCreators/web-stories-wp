@@ -25,10 +25,11 @@ import {
   ColorStopPropType,
   generatePatternStyles,
 } from '@web-stories-wp/patterns';
+import { themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../../design-system/theme';
 import Pointer from './pointer';
 import GradientStop from './gradientStop';
 import useKeyMoveStop from './useKeyMoveStop';
@@ -124,11 +125,14 @@ function GradientLine({
       ))}
       {tempPointerPosition && (
         <TempPointer
-          aria-label={sprintf(
-            /* translators: %d: stop percentage */
-            __('Temporary gradient stop at %1$d%%', 'web-stories'),
-            Math.round(100 * (tempPointerPosition / LINE_LENGTH))
-          )}
+          aria-label={
+            /* eslint-disable-next-line @wordpress/valid-sprintf -- False positive. */
+            sprintf(
+              /* translators: %d: stop percentage */
+              __('Temporary gradient stop at %d%%', 'web-stories'),
+              Math.round(100 * (tempPointerPosition / LINE_LENGTH))
+            )
+          }
           x={tempPointerPosition}
         />
       )}

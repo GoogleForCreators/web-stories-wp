@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,7 +37,7 @@ jest.mock('@ffmpeg/ffmpeg', () => {
   };
 });
 
-function arrange({ isFeatureEnabled, userSettingEnabled }) {
+function arrange({ userSettingEnabled, hasUploadMediaAction }) {
   const currentUser = {
     meta: {
       web_stories_media_optimization: userSettingEnabled,
@@ -64,66 +63,51 @@ function arrange({ isFeatureEnabled, userSettingEnabled }) {
       'video/x-msvideo',
       'video/x-nut',
     ],
+    capabilities: {
+      hasUploadMediaAction,
+    },
   };
 
   return renderHook(() => useFFmpeg(), {
     // eslint-disable-next-line react/display-name, react/prop-types
     wrapper: ({ children }) => (
-      <FlagsProvider
-        features={{
-          videoOptimization: isFeatureEnabled,
-        }}
-      >
-        <ConfigProvider config={configState}>
-          <CurrentUserContext.Provider value={{ state: { currentUser } }}>
-            {children}
-          </CurrentUserContext.Provider>
-        </ConfigProvider>
-      </FlagsProvider>
+      <ConfigProvider config={configState}>
+        <CurrentUserContext.Provider value={{ state: { currentUser } }}>
+          {children}
+        </CurrentUserContext.Provider>
+      </ConfigProvider>
     ),
   });
 }
 
 describe('useFFmpeg', () => {
-  describe('isFeatureEnabled', () => {
+  describe('isTranscodingEnabled', () => {
     afterEach(() => {
       delete window.crossOriginIsolated;
     });
 
-    it('should return true if feature is enabled but has no cross-origin isolation', () => {
-      const { result } = arrange({
-        isFeatureEnabled: true,
-      });
-      expect(result.current.isFeatureEnabled).toBeFalse();
-    });
-
-    it('should return true if feature is enabled and has cross-origin isolation', () => {
-      window.crossOriginIsolated = true;
-      const { result } = arrange({
-        isFeatureEnabled: true,
-      });
-      expect(result.current.isFeatureEnabled).toBeTrue();
-    });
-
-    it('should return false if feature is disabled', () => {
-      const { result } = arrange({
-        isFeatureEnabled: false,
-      });
-      expect(result.current.isFeatureEnabled).toBeFalse();
-    });
-  });
-
-  describe('isTranscodingEnabled', () => {
-    it('should return true if user has enabled setting', () => {
+    it('should return false if there is no cross-origin isolation', () => {
       const { result } = arrange({
         userSettingEnabled: true,
+        hasUploadMediaAction: true,
+      });
+      expect(result.current.isTranscodingEnabled).toBeFalse();
+    });
+
+    it('should return true if cross-origin isolation is setup', () => {
+      window.crossOriginIsolated = true;
+      const { result } = arrange({
+        userSettingEnabled: true,
+        hasUploadMediaAction: true,
       });
       expect(result.current.isTranscodingEnabled).toBeTrue();
     });
 
-    it('should return false if user disabled the setting', () => {
+    it('should return false if user has no upload permissions', () => {
+      window.crossOriginIsolated = true;
       const { result } = arrange({
-        userSettingEnabled: false,
+        hasUploadMediaAction: false,
+        userSettingEnabled: true,
       });
       expect(result.current.isTranscodingEnabled).toBeFalse();
     });

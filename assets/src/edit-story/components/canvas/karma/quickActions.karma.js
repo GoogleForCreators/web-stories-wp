@@ -36,7 +36,6 @@ describe('Quick Actions integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableQuickActionMenus: true });
     await fixture.render();
   });
 

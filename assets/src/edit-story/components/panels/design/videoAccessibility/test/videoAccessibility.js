@@ -43,6 +43,9 @@ function arrange(selectedElements) {
       'image/jpg',
       'image/gif',
     ],
+    capabilities: {
+      hasUploadMediaAction: true,
+    },
   };
 
   const wrapper = ({ children }) => (

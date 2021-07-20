@@ -18,15 +18,37 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../design-system';
 import { TablistPanel } from '../tablist';
+import { NAVIGATION_HEIGHT } from '../helpCenter/navigator/constants';
+
+export const DISTANCE_FROM_TOP = 60 + 32; // toolbar height + input height
+export const DISTANCE_FROM_BOTTOM = 69;
+const BUTTON_HEIGHT = 60;
+export const getTabPanelMaxHeight = (buttonCount) => {
+  if (!buttonCount) {
+    return undefined;
+  }
+
+  return `100vh - ${
+    NAVIGATION_HEIGHT +
+    buttonCount * BUTTON_HEIGHT +
+    DISTANCE_FROM_TOP +
+    DISTANCE_FROM_BOTTOM
+  }px`;
+};
 
 export const StyledTablistPanel = styled(TablistPanel)`
   height: ${({ badgeCount }) => (badgeCount === 0 ? 0 : 'auto')};
   visibility: ${({ badgeCount }) => (badgeCount === 0 ? 'hidden' : 'visible')};
+
+  button {
+    display: ${({ badgeCount }) => (badgeCount === 0 ? 'none' : 'auto')};
+  }
 `;
 
 export const PanelText = styled(Text).attrs({

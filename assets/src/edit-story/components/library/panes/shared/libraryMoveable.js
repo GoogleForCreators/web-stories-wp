@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@web-stories-wp/units';
-
+import { useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -34,7 +34,6 @@ import { useInsertTextSet } from '../../../canvas';
 import areEventsDragging from '../../../../utils/areEventsDragging';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
-import { useKeyDownEffect } from '../../../../../design-system';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';

@@ -21,10 +21,6 @@ import PropTypes from 'prop-types';
 import { useState, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -33,10 +29,13 @@ import {
   themeHelpers,
   useFocusOut,
   Icons,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
 import { PageSizePropType } from '../../../../types';
 import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
-import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { focusStyle } from '../../../panels/shared';
 
 const PageTemplateWrapper = styled.div`

@@ -19,15 +19,18 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-/**
- * Internal dependencies
- */
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  Headline,
   Icons,
-} from '../../../../design-system';
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { forceFocusCompanionToggle } from '../utils';
 import { NavBar, NavButton } from './components';
 
@@ -35,8 +38,12 @@ const TopNavButtons = styled.div`
   padding-right: 15px;
 `;
 
-const Label = styled.div`
+const Label = styled(Headline).attrs({
+  as: 'h2',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
+})`
   padding-left: 24px;
+  font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
 
 export function TopNavigation({ onClose, label, popupId }) {

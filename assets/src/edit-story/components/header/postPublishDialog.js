@@ -21,12 +21,11 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-
-import { Link, Text, THEME_CONSTANTS } from '../../../design-system';
 import Dialog from '../dialog';
 
 function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
@@ -38,6 +37,8 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
     trackClick(evt, 'view_story');
   }, []);
 
+  const primaryText = confirmURL ? __('Add to new post', 'web-stories') : '';
+
   return (
     <Dialog
       isOpen={isOpen}
@@ -45,7 +46,7 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
       // Same as item_published post type label.
       title={__('Story published.', 'web-stories')}
       secondaryText={__('Dismiss', 'web-stories')}
-      primaryText={__('Add to new post', 'web-stories')}
+      primaryText={primaryText}
       onPrimary={onAddToPostClick}
       primaryRest={{ href: confirmURL }}
     >
@@ -69,12 +70,14 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
           )}
         </TranslateWithMarkup>
       </Text>
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {
-          /* translators: 'it' refers to a web story. */
-          __('Would you like to include it on a new post?', 'web-stories')
-        }
-      </Text>
+      {confirmURL && (
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {
+            /* translators: 'it' refers to a web story. */
+            __('Would you like to include it on a new post?', 'web-stories')
+          }
+        </Text>
+      )}
     </Dialog>
   );
 }
@@ -82,7 +85,7 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
 PostPublishDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  confirmURL: PropTypes.string.isRequired,
+  confirmURL: PropTypes.string,
   storyURL: PropTypes.string,
 };
 

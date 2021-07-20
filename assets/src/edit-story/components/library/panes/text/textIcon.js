@@ -19,15 +19,20 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { Icons } from '@web-stories-wp/design-system';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
-import { Icons } from '../../../../../design-system';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
+import { getHTMLFormatters } from '../../../richText/htmlManipulation';
 import { DEFAULT_PRESET } from './textPresets';
 
 const AnimatedTextIcon = styled(({ isSecondary, ...rest }) => (
@@ -80,16 +85,50 @@ const TextIconContainer = styled.div`
 `;
 
 function TextIcon(props) {
-  const {
-    actions: { insertElement },
-  } = useLibrary();
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
+
+  const enableSmartTextColor = useFeature('enableSmartTextColor');
 
   const [isHoveringQuick, setIsHoveringQuick] = useState(false);
   const [isFocusingQuick, setIsFocusingQuick] = useState(false);
 
+  const [autoColor, setAutoColor] = useState(null);
+  const { calculateAccessibleTextColors, generateCanvasFromPage } =
+    usePageAsCanvas();
+
+  const htmlFormatters = getHTMLFormatters();
+  const { setColor } = htmlFormatters;
+
+  useEffect(() => {
+    if (autoColor) {
+      // Add all the necessary props in case of color / highlight.
+      const { content } = DEFAULT_PRESET;
+      const { color, backgroundColor } = autoColor;
+      const highlightProps = backgroundColor
+        ? {
+            backgroundColor: { color: backgroundColor },
+            backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
+            padding: applyHiddenPadding(DEFAULT_PRESET),
+          }
+        : null;
+      insertElement('text', {
+        ...DEFAULT_PRESET,
+        content: color ? setColor(content, { color }) : content,
+        ...highlightProps,
+      });
+      setAutoColor(null);
+    }
+  }, [autoColor, insertElement, setColor]);
+
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    insertElement('text', DEFAULT_PRESET);
+    if (enableSmartTextColor) {
+      calculateAccessibleTextColors(DEFAULT_PRESET, setAutoColor);
+    } else {
+      insertElement('text', DEFAULT_PRESET);
+    }
     trackEvent('library_text_quick_action');
   };
   const { isActive } = props;
@@ -109,7 +148,12 @@ function TextIcon(props) {
         tabIndex={isActive ? 0 : -1}
         onFocus={() => setIsFocusingQuick(true)}
         onBlur={() => setIsFocusingQuick(false)}
-        onPointerOver={() => setIsHoveringQuick(true)}
+        onPointerOver={() => {
+          if (enableSmartTextColor) {
+            generateCanvasFromPage();
+          }
+          setIsHoveringQuick(true);
+        }}
       >
         <AnimatedTextAddIcon isPrimary={isHoveringQuick || isFocusingQuick} />
       </QuickAction>

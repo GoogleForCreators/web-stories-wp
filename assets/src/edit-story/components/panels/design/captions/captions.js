@@ -22,16 +22,6 @@ import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { Row, usePresubmitHandler } from '../../../form';
-import { useMediaPicker } from '../../../mediaPicker';
-import { SimplePanel } from '../../panel';
-import { focusStyle, getCommonValue } from '../../shared';
-import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import {
   Button,
   BUTTON_SIZES,
@@ -42,7 +32,17 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
+import { Row, usePresubmitHandler } from '../../../form';
+import { useMediaPicker } from '../../../mediaPicker';
+import { SimplePanel } from '../../panel';
+import { focusStyle, getCommonValue } from '../../shared';
+import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import Tooltip from '../../../tooltip';
 
 const InputRow = styled.div`

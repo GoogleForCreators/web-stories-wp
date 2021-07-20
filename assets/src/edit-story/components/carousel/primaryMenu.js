@@ -21,10 +21,6 @@ import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   Icons,
@@ -33,7 +29,11 @@ import {
   BUTTON_SIZES,
   PLACEMENT,
   Modal,
-} from '../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { useMetaBoxes } from '../../integrations/wordpress/metaBoxes';
 import Tooltip from '../tooltip';
 import GridView from './gridview';

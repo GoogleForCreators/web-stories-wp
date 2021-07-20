@@ -54,23 +54,23 @@ jobs:
             exit 1
           fi
 
-#      - name: Ensure RC exists for stable release
-#        if: ${{ ! contains(github.event.inputs.version, 'rc') }}
-#        run: |
-#          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
-#          BRANCH=release/$VERSION_WITHOUT_SUFFIX
-#
-#          if [[ -z $(git ls-remote origin $BRANCH) ]]; then
-#            echo "No release branch exists for this planned stable release"
-#            exit 1
-#          fi
-#
-#          git checkout --track origin/$BRANCH
-#
-#          if ! git describe --abbrev=0 --tags --match "$TAG_NAME-rc.*" &>/dev/null; then
-#            echo "No RC exists for this planned stable release"
-#            exit 1
-#          fi
+      #      - name: Ensure RC exists for stable release
+      #        if: ${{ ! contains(github.event.inputs.version, 'rc') }}
+      #        run: |
+      #          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
+      #          BRANCH=release/$VERSION_WITHOUT_SUFFIX
+      #
+      #          if [[ -z $(git ls-remote origin $BRANCH) ]]; then
+      #            echo "No release branch exists for this planned stable release"
+      #            exit 1
+      #          fi
+      #
+      #          git checkout --track origin/$BRANCH
+      #
+      #          if ! git describe --abbrev=0 --tags --match "$TAG_NAME-rc.*" &>/dev/null; then
+      #            echo "No RC exists for this planned stable release"
+      #            exit 1
+      #          fi
 
       - name: Ensure readme.txt contains changelog
         run: |
@@ -199,22 +199,10 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.2.0
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-        env:
-          cache-name: cache-node-modules
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -300,22 +288,10 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.2.0
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-        env:
-          cache-name: cache-node-modules
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          cache: npm
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -509,7 +485,7 @@ jobs:
     name: Post-release version bump
     needs: [create-release]
     runs-on: ubuntu-latest
-    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -522,22 +498,10 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v2.2.0
         with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: Cache node modules
-        uses: pat-s/always-upload-cache@v2.1.5
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-        env:
-          cache-name: cache-node-modules
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          cache: npm
 
       - name: Install dependencies
         run: npm ci

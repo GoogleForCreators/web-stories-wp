@@ -60,7 +60,7 @@ class Feed extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function embed_image( $content ) {
+	public function embed_image( $content ): string {
 		$post = get_post();
 
 		if ( $post instanceof WP_Post && Story_Post_Type::POST_TYPE_SLUG === $post->post_type ) {

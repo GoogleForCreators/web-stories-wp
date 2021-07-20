@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-export { default as TablistPanel } from './panel';
+export { default as TablistPanel } from './tablistPanel';
 export { PANEL_STATES } from './constants';
 export { Tablist } from './styles';

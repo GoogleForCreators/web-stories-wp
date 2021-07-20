@@ -20,19 +20,20 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import { __ } from '@web-stories-wp/i18n';
-import { FIELD_TYPES } from '../../../../../animation';
-import { GeneralAnimationPropTypes } from '../../../../../animation/outputs';
-import { AnimationFormPropTypes } from '../../../../../animation/types';
 import {
   NumericInput,
   DropDown,
   ThemeGlobals,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+import {
+  FIELD_TYPES,
+  GeneralAnimationPropTypes,
+  AnimationFormPropTypes,
+} from '@web-stories-wp/animation';
+/**
+ * Internal dependencies
+ */
 import { inputContainerStyleOverride } from '../../shared';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';

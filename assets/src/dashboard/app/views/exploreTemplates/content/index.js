@@ -17,18 +17,10 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
-
-/**
- * External dependencies
- */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import { UnitsProvider } from '@web-stories-wp/units';
-
-/**
- * Internal dependencies
- */
 import {
   Button,
   BUTTON_SIZES,
@@ -36,8 +28,12 @@ import {
   Headline,
   LoadingSpinner,
   THEME_CONSTANTS,
-} from '../../../../../design-system';
-import { useConfig } from '../../../../../edit-story/app';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../../config';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   InfiniteScroller,
@@ -114,7 +110,7 @@ function Content({
             as="a"
             href={newStoryURL}
           >
-            {__('Create a new Story', 'web-stories')}
+            {__('Create New Story', 'web-stories')}
           </Button>
         )}
       </EmptyContentMessage>

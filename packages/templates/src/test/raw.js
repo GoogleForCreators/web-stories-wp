@@ -19,6 +19,7 @@
  */
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
+import stickers from '@web-stories-wp/stickers';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -85,6 +86,34 @@ describe('raw template files', () => {
     }
   );
 
+  // @see https://github.com/google/web-stories-wp/pull/7944#pullrequestreview-686071526
+  it.each(templates)(
+    '%s template images and video ids should default to 0',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      const typesToCheck = ['image', 'video'];
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (!typesToCheck.includes(element?.type)) {
+            continue;
+          }
+
+          expect(element?.resource?.id).toBe(0);
+
+          if ('video' !== element?.type) {
+            continue;
+          }
+
+          expect(element?.resource?.posterId).toBe(0);
+        }
+      }
+    }
+  );
+
   // @see https://github.com/google/web-stories-wp/pull/5889
   it.each(templates)(
     '%s template should contain pageTemplateType',
@@ -131,6 +160,29 @@ describe('raw template files', () => {
           }
 
           expect(element?.resource?.isOptimized).toBeTrue();
+        }
+      }
+    }
+  );
+
+  it.each(templates)(
+    '%s template should contain only valid stickers',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'sticker' || !element?.sticker?.type) {
+            continue;
+          }
+
+          expect(stickers).toStrictEqual(
+            expect.objectContaining({
+              [element?.sticker?.type]: expect.any(Object),
+            })
+          );
         }
       }
     }

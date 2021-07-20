@@ -21,16 +21,12 @@ import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useCallback } from 'react';
 import { trackClick } from '@web-stories-wp/tracking';
-
-/**
- * Internal dependencies
- */
 import {
   themeHelpers,
   Link as DsLink,
   THEME_CONSTANTS,
   Text,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;
@@ -111,7 +107,7 @@ export function Footer() {
           rel="noreferrer"
           onClick={onDocsClick}
         >
-          {__('Read start guide', 'web-stories')}
+          {__('Read Start Guide', 'web-stories')}
         </Link>
         <Link
           href={SUPPORT_URL}
@@ -119,7 +115,7 @@ export function Footer() {
           rel="noreferrer"
           onClick={onSupportClick}
         >
-          {__('Visit support forum', 'web-stories')}
+          {__('Visit Support Forums', 'web-stories')}
         </Link>
         <Link
           href={YOUTUBE_URL}
@@ -127,7 +123,7 @@ export function Footer() {
           rel="noreferrer"
           onClick={onYouTubeClick}
         >
-          {__('Storytime YouTube series', 'web-stories')}
+          {__('Storytime YouTube Series', 'web-stories')}
         </Link>
       </Links>
     </Panel>

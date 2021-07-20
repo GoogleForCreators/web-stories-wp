@@ -77,6 +77,15 @@ async function getTemplates(imageBaseUrl) {
     'ways-to-eat-avocado',
     'kitchen-stories',
     'album-releases',
+    'almodos-films',
+    'pizzas-in-nyc',
+    '12-hours-in-barcelona',
+    'ultimate-comparison',
+    'fitness-apps-ranked',
+    'street-style-on-the-go',
+    'plant-based-dyes',
+    'indoor-garden-oasis',
+    'belly-fat-workout',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

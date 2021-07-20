@@ -41,17 +41,17 @@ import {
   filterStoryPages,
   getVisibleThumbnails,
 } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
 }
 
 const PageTooLittleText = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
-    () => filterStoryPages(story, pageTooLittleText),
-    [story]
+    () => filterStoryPages(pages, pageTooLittleText),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(

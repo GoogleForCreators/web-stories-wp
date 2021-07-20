@@ -30,14 +30,26 @@ class Cross_Origin_Isolation extends Test_Case {
 	 */
 	protected static $admin_id;
 
+	/**
+	 * Contributor user for test.
+	 *
+	 * @var int
+	 */
+	protected static $contributor_id;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
+		);
+
+		self::$contributor_id = $factory->user->create(
+			[ 'role' => 'contributor' ]
 		);
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$admin_id );
+		self::delete_user( self::$contributor_id );
 	}
 
 	public function setUp() {
@@ -87,6 +99,17 @@ class Cross_Origin_Isolation extends Test_Case {
 	/**
 	 * @covers ::is_needed
 	 */
+	public function test_is_needed_default_user_meta_value() {
+		wp_set_current_user( self::$admin_id );
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		$object = $this->get_coi_object();
+		$result = $this->call_private_method( $object, 'is_needed' );
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 */
 	public function test_is_needed_no_user() {
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
@@ -99,6 +122,17 @@ class Cross_Origin_Isolation extends Test_Case {
 	public function test_is_needed_opt_out() {
 		wp_set_current_user( self::$admin_id );
 		update_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		$object = $this->get_coi_object();
+		$result = $this->call_private_method( $object, 'is_needed' );
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 */
+	public function test_is_needed_no_upload_caps() {
+		wp_set_current_user( self::$contributor_id );
+		update_user_meta( self::$contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
 		$this->assertFalse( $result );

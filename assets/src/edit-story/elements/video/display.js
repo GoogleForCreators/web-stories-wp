@@ -78,6 +78,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
 
   videoProps.crossOrigin = 'anonymous';
 
+  const muted = Boolean(resource?.isMuted);
+
   return (
     <MediaDisplay
       element={element}
@@ -104,6 +106,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           {...videoProps}
           preload="metadata"
           loop={loop}
+          muted={muted}
           ref={ref}
           data-testid="videoElement"
           data-leaf-element="true"

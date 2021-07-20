@@ -18,11 +18,10 @@
  * External dependencies
  */
 import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
-
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { isPlatformMacOS } from '../../../design-system';
 import { SPECIAL_KEYS } from './constants';
 
 const isMacOs = isPlatformMacOS();
@@ -244,11 +243,11 @@ const shortcuts = {
               >
                 {sprintf(
                   /* translators: %s: Shift key. */
-                  __(
-                    '<kbd aria-label="%s"><shift /></kbd><span> + click</span>',
-                    'web-stories'
-                  ),
-                  SPECIAL_KEYS.SHIFT.title
+                  __('%s <span>+ click</span>', 'web-stories'),
+                  sprintf(
+                    '<kbd aria-label="%s"><shift /></kbd>',
+                    SPECIAL_KEYS.SHIFT.title
+                  )
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -269,13 +268,19 @@ const shortcuts = {
               >
                 {sprintf(
                   /* translators: 1: Cmd/Ctrl key. 2: Up key. 3: Down key. */
-                  __(
-                    '<lkbd aria-label="%1$s"><cmdOrCtrlSymbol /></lkbd><kbd aria-label="%2$s"><upSymbol /></kbd><span> or </span><kbd aria-label="%3$s"><downSymbol /></kbd>',
-                    'web-stories'
+                  __('%1$s %2$s <span>or</span> %3$s', 'web-stories'),
+                  sprintf(
+                    '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
+                    cmdOrCtrl.title
                   ),
-                  cmdOrCtrl.title,
-                  SPECIAL_KEYS.UP.title,
-                  SPECIAL_KEYS.DOWN.title
+                  sprintf(
+                    '<kbd aria-label="%s"><upSymbol /></kbd>',
+                    SPECIAL_KEYS.UP.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><downSymbol /></kbd>',
+                    SPECIAL_KEYS.DOWN.title
+                  )
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -297,14 +302,23 @@ const shortcuts = {
               >
                 {sprintf(
                   /* translators: 1: Cmd/Ctrl key. 2: Shift key. 3: Up key. 4: Down key. */
-                  __(
-                    '<lkbd aria-label="%1$s"><cmdOrCtrlSymbol /></lkbd><kbd aria-label="%2$s"><shiftSymbol /></kbd><kbd aria-label="%3$s"><upSymbol /></kbd><span> or </span><kbd aria-label="%4$s"><downSymbol /></kbd>',
-                    'web-stories'
+                  __('%1$s %2$s %3$s <span>or</span> %4$s', 'web-stories'),
+                  sprintf(
+                    '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
+                    cmdOrCtrl.title
                   ),
-                  cmdOrCtrl.title,
-                  SPECIAL_KEYS.SHIFT.title,
-                  SPECIAL_KEYS.UP.title,
-                  SPECIAL_KEYS.DOWN.title
+                  sprintf(
+                    '<kbd aria-label="%s"><shiftSymbol /></kbd>',
+                    SPECIAL_KEYS.SHIFT.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><upSymbol /></kbd>',
+                    SPECIAL_KEYS.UP.title
+                  ),
+                  sprintf(
+                    '<kbd aria-label="%s"><downSymbol /></kbd>',
+                    SPECIAL_KEYS.DOWN.title
+                  )
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -322,11 +336,11 @@ const shortcuts = {
               >
                 {sprintf(
                   /* translators: %s: Enter key. */
-                  __(
-                    '<kbd aria-label="%s"><enterSymbol /></kbd><span> or double-click</span>',
-                    'web-stories'
-                  ),
-                  SPECIAL_KEYS.ENTER.title
+                  __('%s <span>or double-click</span>', 'web-stories'),
+                  sprintf(
+                    '<kbd aria-label="%s"><enterSymbol /></kbd>',
+                    SPECIAL_KEYS.ENTER.title
+                  )
                 )}
               </TranslateWithMarkup>
             </kbd>
@@ -361,17 +375,17 @@ const shortcuts = {
             <kbd>
               <TranslateWithMarkup
                 mapping={{
-                  lkbd: <LargeKey />,
+                  kbd: <LargeKey />,
                   cmdOrCtrlSymbol: cmdOrCtrl.symbol,
                 }}
               >
                 {sprintf(
                   /* translators: %s: Cmd/Ctrl key. */
-                  __(
-                    '<span>Hold </span><lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
-                    'web-stories'
-                  ),
-                  cmdOrCtrl.title
+                  __('<span>Hold</span> %s', 'web-stories'),
+                  sprintf(
+                    '<kbd aria-label="%s"><cmdOrCtrlSymbol /></kbd>',
+                    cmdOrCtrl.title
+                  )
                 )}
               </TranslateWithMarkup>
             </kbd>

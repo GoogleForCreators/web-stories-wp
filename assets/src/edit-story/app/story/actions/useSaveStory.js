@@ -21,6 +21,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from 'react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker } from '@web-stories-wp/tracking';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import objectPick from '../../../utils/objectPick';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useSnackbar } from '../../../../design-system';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
 
@@ -56,7 +56,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isFreshlyPublished, setIsFreshlyPublished] = useState(false);
 
-  const refreshPostEditURL = useRefreshPostEditURL(storyId);
+  const { editLink } = story;
+  const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
   const saveStory = useCallback(
     (props) => {
@@ -78,6 +79,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
             previewLink: post.preview_link,
+            editLink: post.edit_link,
+            embedPostLink: post.embed_post_link,
           };
           updateStory({ properties });
 

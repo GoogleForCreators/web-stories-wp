@@ -48,6 +48,12 @@ global.IntersectionObserver = class IntersectionObserver {
   disconnect() {}
 };
 
+global.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+
 // eslint-disable-next-line jest/prefer-spy-on
 global.matchMedia = jest.fn().mockImplementation((query) => ({
   matches: false,

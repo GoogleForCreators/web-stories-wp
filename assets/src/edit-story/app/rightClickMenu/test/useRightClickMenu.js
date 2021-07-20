@@ -17,12 +17,12 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
+import { isPlatformMacOS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useRightClickMenu, RightClickMenuProvider } from '..';
-import { isPlatformMacOS } from '../../../../design-system';
 import { useStory } from '../../story';
 
 // TODO: #6154 remove when the `enableRightClickMenus` experiment is removed
@@ -34,8 +34,8 @@ jest.mock('../../story', () => ({
   useStory: jest.fn(),
 }));
 
-jest.mock('../../../../design-system', () => ({
-  ...jest.requireActual('../../../../design-system'),
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   isPlatformMacOS: jest.fn(),
 }));
 
@@ -137,13 +137,13 @@ describe('useRightClickMenu', () => {
           },
         },
         {
-          label: 'Duplicate page',
+          label: 'Duplicate Page',
           onClick: expect.any(Function),
           onMouseDown: expect.any(Function),
           separator: 'top',
         },
         {
-          label: 'Delete page',
+          label: 'Delete Page',
           onClick: expect.any(Function),
           onMouseDown: expect.any(Function),
           disabled: expect.any(Boolean),
@@ -157,7 +157,7 @@ describe('useRightClickMenu', () => {
       });
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete page')
+        result.current.menuItems.find((item) => item.label === 'Delete Page')
           .disabled
       ).toBe(true);
 
@@ -166,7 +166,7 @@ describe('useRightClickMenu', () => {
       rerender();
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete page')
+        result.current.menuItems.find((item) => item.label === 'Delete Page')
           .disabled
       ).toBe(false);
     });

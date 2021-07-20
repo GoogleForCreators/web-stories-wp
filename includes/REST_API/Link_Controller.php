@@ -43,8 +43,7 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends REST_Controller {
-	use Document_Parser;
-	use Post_Type;
+	use Document_Parser, Post_Type;
 	/**
 	 * Constructor.
 	 */

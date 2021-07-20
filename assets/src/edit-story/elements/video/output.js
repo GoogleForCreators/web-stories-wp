@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { isBlobURL } from '@web-stories-wp/media';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -26,20 +31,25 @@ function defaultForUndefined(value, def) {
 
 function VideoOutput({ element, box }) {
   const { resource, loop, tracks } = element;
+  const { isMuted, mimeType, src } = resource;
+
+  const poster = defaultForUndefined(element.poster, resource.poster);
+  const alt = defaultForUndefined(element.alt, resource.alt);
 
   const sourceProps = {
-    type: resource.mimeType,
-    src: resource.src,
+    type: mimeType,
+    src: !isBlobURL(src) ? src : '',
   };
 
   const videoProps = {
     autoPlay: 'autoplay',
-    poster: defaultForUndefined(element.poster, resource.poster),
-    artwork: defaultForUndefined(element.poster, resource.poster),
-    title: defaultForUndefined(element.alt, resource.alt),
-    alt: defaultForUndefined(element.alt, resource.alt),
+    poster: !isBlobURL(poster) ? poster : '',
+    artwork: !isBlobURL(poster) ? poster : '',
+    title: alt,
+    alt,
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
+    noaudio: isMuted ? 'noaudio' : undefined,
   };
 
   return (
@@ -47,12 +57,12 @@ function VideoOutput({ element, box }) {
       <amp-video {...videoProps} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
         {tracks &&
-          tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+          tracks.map(({ srclang, label, kind, track, id: key }, i) => (
             <track
               srcLang={srclang}
               label={label}
               kind={kind}
-              src={src}
+              src={track}
               key={key}
               default={i === 0}
             />

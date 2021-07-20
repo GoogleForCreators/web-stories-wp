@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -33,7 +33,7 @@ import {
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
@@ -53,16 +53,17 @@ export function elementLinkTappableRegionTooSmall(element) {
 }
 
 const ElementLinkTappableRegionTooSmall = () => {
-  const story = useStory(({ state }) => state);
-  const elements = filterStoryElements(
-    story,
-    elementLinkTappableRegionTooSmall
+  const pages = useStory(({ state }) => state?.pages);
+  const elements = useMemo(
+    () => filterStoryElements(pages, elementLinkTappableRegionTooSmall),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
-    (elementId) =>
+    (elementId, pageId) =>
       setHighlights({
         elementId,
+        pageId,
       }),
     [setHighlights]
   );
@@ -87,7 +88,7 @@ const ElementLinkTappableRegionTooSmall = () => {
             {getVisibleThumbnails(elements).map((element) => (
               <Thumbnail
                 key={element.id}
-                onClick={() => handleClick(element.id)}
+                onClick={() => handleClick(element.id, element.pageId)}
                 type={THUMBNAIL_TYPES.TEXT}
                 displayBackground={<LayerThumbnail page={element} />}
                 aria-label={__('Go to offending link', 'web-stories')}

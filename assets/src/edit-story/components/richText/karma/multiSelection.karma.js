@@ -234,7 +234,7 @@ describe('Styling multiple text fields', () => {
       expect(bold.checked).toBe(false);
       expect(fontWeight.value).toBe('Regular');
 
-      // Assumeboth  texts' content to now be formatting-free
+      // Assume both texts' content to now be formatting-free
       expect(getTextContent(0)).toBe('Fill in some text');
       expect(getTextContent(1)).toBe('Number #2');
 

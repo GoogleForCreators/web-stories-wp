@@ -28,12 +28,12 @@ import {
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import { Text, THEME_CONSTANTS } from '../../../../../../design-system';
 import MediaGallery from './mediaGallery';
 import {
   MediaGalleryContainer,
@@ -60,6 +60,7 @@ function PaginatedMediaGallery({
   hasMore,
   onInsert,
   setNextPage,
+  canEditMedia,
 }) {
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
@@ -136,12 +137,13 @@ function PaginatedMediaGallery({
   const mediaGallery =
     isMediaLoaded && resources.length === 0 ? (
       <MediaGalleryMessage>
-        {__('No media found', 'web-stories')}
+        {__('No media found.', 'web-stories')}
       </MediaGalleryMessage>
     ) : (
       <div style={{ marginBottom: 15 }}>
         <MediaGallery
           providerType={providerType}
+          canEditMedia={canEditMedia}
           resources={resources}
           onInsert={onInsert}
         />
@@ -199,6 +201,11 @@ PaginatedMediaGallery.propTypes = {
   setNextPage: PropTypes.func.isRequired,
   searchTerm: PropTypes.string,
   selectedCategoryId: PropTypes.string,
+  canEditMedia: PropTypes.bool,
+};
+
+PaginatedMediaGallery.defaultProps = {
+  canEditMedia: false,
 };
 
 export default PaginatedMediaGallery;

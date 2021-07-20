@@ -22,7 +22,6 @@ import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
-
 /**
  * Internal dependencies
  */
@@ -38,11 +37,10 @@ import storyReducer, {
   defaultStoriesState,
   ACTION_TYPES as STORY_ACTION_TYPES,
 } from '../reducer/stories';
-import { addQueryArgs } from '../../../design-system';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
 
-const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
+const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
   const isInitialFetch = useRef(true);
   const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -128,7 +126,6 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           dispatch({
             type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
             payload: {
-              editStoryURL,
               stories: cleanStories,
               totalPages,
               totalStoriesByStatus: {
@@ -157,7 +154,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, editStoryURL, initialFetchListeners]
+    [storyApi, dataAdapter, initialFetchListeners]
   );
 
   const updateStory = useCallback(
@@ -184,7 +181,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
 
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
-          payload: reshapeStoryObject(editStoryURL)(response),
+          payload: reshapeStoryObject(response),
         });
       } catch (err) {
         dispatch({
@@ -198,7 +195,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter]
   );
 
   const trashStory = useCallback(
@@ -269,9 +266,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
         });
 
-        window.location = addQueryArgs(editStoryURL, {
-          post: response.id,
-        });
+        window.location = response.edit_link;
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
@@ -287,7 +282,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         });
       }
     },
-    [dataAdapter, editStoryURL, storyApi, flags]
+    [dataAdapter, storyApi, flags]
   );
 
   const duplicateStory = useCallback(
@@ -334,7 +329,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         });
         dispatch({
           type: STORY_ACTION_TYPES.DUPLICATE_STORY,
-          payload: reshapeStoryObject(editStoryURL)(response),
+          payload: reshapeStoryObject(response),
         });
       } catch (err) {
         dispatch({
@@ -348,7 +343,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, editStoryURL, encodeMarkup]
+    [storyApi, dataAdapter, encodeMarkup]
   );
 
   const addInitialFetchListener = useCallback(

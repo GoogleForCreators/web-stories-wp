@@ -21,12 +21,12 @@ import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 import { __ } from '@web-stories-wp/i18n';
+import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useLayoutContext } from '../layout';
-import { Button, BUTTON_VARIANTS, Icons } from '../../../design-system';
 
 const StyledButton = styled(Button)(
   ({ isVisible, theme }) => css`
@@ -78,8 +78,8 @@ const ScrollToTop = () => {
 
   return (
     <StyledButton
-      aria-hidden={isVisible}
-      aria-label={__('scroll back to top', 'web-stories')}
+      aria-hidden={!isVisible}
+      aria-label={__('Scroll back to top', 'web-stories')}
       data-testid="scroll-to-top-button"
       isVisible={isVisible}
       onClick={scrollToTop}

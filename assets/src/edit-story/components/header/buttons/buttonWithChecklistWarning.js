@@ -17,33 +17,26 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-/**
- * External dependencies
- */
+import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
+import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '../../../../design-system';
-import {
-  ChecklistIcon,
-  usePrepublishChecklist,
-  PPC_CHECKPOINT_STATE,
-} from '../../inspector/prepublish';
+  Tooltip,
+} from '@web-stories-wp/design-system';
 
-import Tooltip from '../../tooltip';
+/**
+ * Internal dependencies
+ */
+import {
+  useCheckpoint,
+  PPC_CHECKPOINT_STATE,
+  ChecklistIcon,
+} from '../../checklist';
 
 const Button = styled(DefaultButton)`
   padding: 4px 6px;
@@ -55,18 +48,21 @@ const Button = styled(DefaultButton)`
 `;
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
-  const { refreshChecklist, currentCheckpoint } = usePrepublishChecklist();
+  const isEnabledChecklistCompanion = useFeature('enableChecklistCompanion');
+
+  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
+    checkpoint,
+  }));
 
   const button = (
     <Button
       variant={BUTTON_VARIANTS.RECTANGLE}
       type={BUTTON_TYPES.PRIMARY}
       size={BUTTON_SIZES.SMALL}
-      onPointerEnter={refreshChecklist}
       {...buttonProps}
     >
       {text}
-      <ChecklistIcon checkpoint={currentCheckpoint} />
+      {isEnabledChecklistCompanion && <ChecklistIcon checkpoint={checkpoint} />}
     </Button>
   );
 
@@ -82,10 +78,12 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
     [PPC_CHECKPOINT_STATE.UNAVAILABLE]: null,
   };
 
-  return (
-    <Tooltip title={TOOLTIP_TEXT[currentCheckpoint]} hasTail>
+  return isEnabledChecklistCompanion ? (
+    <Tooltip title={TOOLTIP_TEXT[checkpoint]} hasTail>
       {button}
     </Tooltip>
+  ) : (
+    button
   );
 }
 

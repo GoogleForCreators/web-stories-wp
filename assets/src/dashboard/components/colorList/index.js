@@ -29,6 +29,9 @@ const borderLookup = (color) => ({
   '#fff': `border: solid 1px ${color}`,
   '#ffffff': `border: solid 1px ${color}`,
   white: `border: solid 1px ${color}`,
+  '#fef9f1': `border: solid 1px ${color}`,
+  '#fff8f2': `border: solid 1px ${color}`,
+  '#f9f9f9': `border: solid 1px ${color}`,
 });
 
 const ColorContainer = styled.div`

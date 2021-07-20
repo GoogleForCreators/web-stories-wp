@@ -22,16 +22,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback } from 'use-debounce';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
 import {
   Input,
   Text,
   THEME_CONSTANTS,
+  MEDIA_VARIANTS,
   useBatchingCallback,
-} from '../../../../../design-system';
+} from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+
 import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
@@ -43,7 +45,6 @@ import {
   inputContainerStyleOverride,
   useCommonObjectValue,
 } from '../../shared';
-import { MEDIA_VARIANTS } from '../../../../../design-system/components/mediaInput/constants';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 const IconInfo = styled.div`
@@ -172,7 +173,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const handleChangeIcon = useCallback(
     (image) => {
-      handleChange({ icon: image?.sizes?.medium?.url || image?.url }, true);
+      handleChange({ icon: image?.sizes?.full?.url || image?.url }, true);
     },
     [handleChange]
   );
@@ -279,6 +280,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <StyledMedia
               value={link.icon || ''}
+              cropParams={{
+                width: 32,
+                height: 32,
+              }}
               onChange={handleChangeIcon}
               onChangeErrorText={iconErrorMessage}
               title={__('Select as link icon', 'web-stories')}

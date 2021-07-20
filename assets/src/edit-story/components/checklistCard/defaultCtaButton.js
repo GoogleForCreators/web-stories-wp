@@ -18,11 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../../design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+} from '@web-stories-wp/design-system';
 
 export const DefaultCtaButton = ({ children, ...rest }) => (
   <Button size={BUTTON_SIZES.SMALL} type={BUTTON_TYPES.SECONDARY} {...rest}>

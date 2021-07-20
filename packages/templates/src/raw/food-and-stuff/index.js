@@ -29,12 +29,12 @@ export default {
   tags: [
     _x('Delicious', 'template keyword', 'web-stories'),
     _x('Baker', 'template keyword', 'web-stories'),
-    _x('Cook', 'template keyword', 'web-stories'),
+    _x('Cooking', 'template keyword', 'web-stories'),
   ],
   colors: [
     { label: _x('Yellow', 'color', 'web-stories'), color: '#fff933' },
     { label: _x('Orange', 'color', 'web-stories'), color: '#ff922e' },
-    { label: _x('Grey', 'color', 'web-stories'), color: '#676461' },
+    { label: _x('Gray', 'color', 'web-stories'), color: '#676461' },
     { label: _x('Blue', 'color', 'web-stories'), color: '#3a566e' },
     { label: _x('Cream', 'color', 'web-stories'), color: '#fff9ee' },
   ],

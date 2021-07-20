@@ -22,10 +22,11 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { Icons, themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { Icons, themeHelpers } from '../../../design-system';
 import { LINE_LENGTH, LINE_WIDTH, GRADIENT_STOP_SIZE } from './constants';
 
 const POINTER_MARGIN = 10;
@@ -100,11 +101,14 @@ function GradientStopWithRef(
       position={position}
       onFocus={() => onSelect(index)}
       onClick={() => onSelect(index)}
-      aria-label={sprintf(
-        /* translators: %d: stop percentage */
-        __('Gradient stop at %1$d%%', 'web-stories'),
-        Math.round(100 - position * 100)
-      )}
+      aria-label={
+        /* eslint-disable-next-line @wordpress/valid-sprintf -- False positive. */
+        sprintf(
+          /* translators: %d: stop percentage */
+          __('Gradient stop at %d%%', 'web-stories'),
+          Math.round(100 - position * 100)
+        )
+      }
     >
       <IconWrapper isSelected={isSelected}>
         <Icons.TailedRectangle />

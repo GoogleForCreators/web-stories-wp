@@ -27,7 +27,8 @@ import useUploader from '../useUploader';
 
 const mockShowSnackbar = jest.fn();
 
-jest.mock('../../../../design-system/contexts/snackbar/useSnackbar', () => ({
+jest.mock('@web-stories-wp/design-system', () => ({
+  ...jest.requireActual('@web-stories-wp/design-system'),
   useSnackbar: () => ({ showSnackbar: mockShowSnackbar }),
 }));
 
@@ -112,7 +113,7 @@ describe('useUploader', () => {
       });
 
       await expect(() => validateFileForUpload({})).toThrow(
-        'Sorry, you are unable to upload files.'
+        'Sorry, you are not allowed to upload files.'
       );
     });
 

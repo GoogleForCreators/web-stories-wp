@@ -7,16 +7,16 @@
   },
   "type": "module",
   "devDependencies": {
-    "@percy/cli": "^1.0.0-beta.55",
+    "@percy/cli": "^1.0.0-beta.58",
     "@percy/puppeteer": "^2.0.0",
     "@web-stories-wp/e2e-test-utils": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@wordpress/jest-console": "^4.0.5",
     "@wordpress/jest-puppeteer-axe": "^3.0.5",
-    "babel-jest": "^27.0.5",
+    "babel-jest": "^27.0.6",
     "expect-puppeteer": "^5.0.4",
     "jest-extended": "^0.11.5",
     "jest-puppeteer": "^5.0.4",
-    "puppeteer": "^10.0.0"
+    "puppeteer": "^10.1.0"
   }
 }

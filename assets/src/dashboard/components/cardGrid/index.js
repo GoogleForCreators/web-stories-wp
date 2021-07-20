@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { forwardRef } from 'react';
+import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../types';
-import { ThemeGlobals, themeHelpers } from '../../../design-system';
 import { GRID_SPACING } from '../../constants';
 
 const DashboardGrid = styled.div`
@@ -51,7 +51,7 @@ DashboardGrid.propTypes = {
 };
 
 const CardGrid = forwardRef(function CardGrid(
-  { ariaLabel, children, pageSize },
+  { ariaLabel, children, pageSize, isPosterHeight },
   ref
 ) {
   return (
@@ -65,7 +65,9 @@ const CardGrid = forwardRef(function CardGrid(
       tabIndex={0}
       aria-label={ariaLabel}
       columnWidth={pageSize.width}
-      columnHeight={pageSize.containerHeight}
+      columnHeight={
+        isPosterHeight ? pageSize.posterHeight : pageSize.containerHeight
+      }
     >
       {children}
     </DashboardGrid>
@@ -76,6 +78,7 @@ CardGrid.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node.isRequired,
   pageSize: PageSizePropType.isRequired,
+  isPosterHeight: PropTypes.bool,
 };
 
 export default CardGrid;

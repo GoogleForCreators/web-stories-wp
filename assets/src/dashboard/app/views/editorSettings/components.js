@@ -18,11 +18,6 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-
-/**
- * Internal dependencies
- */
-import { StandardViewContentGutter } from '../../../components';
 import {
   Button,
   Headline,
@@ -31,7 +26,11 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '../../../../design-system';
+} from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { StandardViewContentGutter } from '../../../components';
 
 export const Wrapper = styled.div``;
 
@@ -110,8 +109,8 @@ export const Error = styled(CenterMutedText)`
 
 export const UploadedContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 56px);
-  grid-auto-rows: 56px;
+  grid-template-columns: repeat(auto-fill, 102px);
+  grid-auto-rows: 102px;
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   padding-bottom: 20px;
@@ -151,7 +150,10 @@ export const GridItemButton = styled.button`
   ${themeHelpers.focusableOutlineCSS};
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.img.attrs({
+  height: 96,
+  width: 96,
+})`
   object-fit: cover;
   width: 100%;
   height: 100%;

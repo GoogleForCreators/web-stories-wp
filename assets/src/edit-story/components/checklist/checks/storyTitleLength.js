@@ -26,14 +26,14 @@ import { useStory } from '../../../app/story';
 import { useHighlights, states } from '../../../app/highlights';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY, MAX_STORY_TITLE_LENGTH_CHARS } from '../constants';
-import { useRegisterCheck } from '../checkCountContext';
+import { useRegisterCheck } from '../countContext';
 
-export function storyTitleLength(story) {
-  return story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS;
+export function storyTitleLength(title) {
+  return title?.length > MAX_STORY_TITLE_LENGTH_CHARS;
 }
 
 const StoryTitleLength = () => {
-  const { story } = useStory(({ state }) => state);
+  const storyTitle = useStory(({ state }) => state?.story?.title);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
@@ -43,7 +43,7 @@ const StoryTitleLength = () => {
     [setHighlights]
   );
 
-  const isRendered = storyTitleLength(story);
+  const isRendered = storyTitleLength(storyTitle);
   useRegisterCheck('StoryTitleLength', isRendered);
 
   const { title, footer } = PRIORITY_COPY.storyTitleTooLong;

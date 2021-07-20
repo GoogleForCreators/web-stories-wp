@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import ResizeObserver from 'resize-observer-polyfill';
+import { BEZIER } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { BEZIER } from '../../../../design-system';
 import { TRANSITION_DURATION } from '../constants';
 
 /**
@@ -60,27 +60,4 @@ export function removeInnerElementFromLayoutFlow(innerEl, outerEl) {
     });
   });
   return () => cancelAnimationFrame(id);
-}
-
-/**
- * Adds a resize observer and observes the inner element. Applies all
- * changes of height from the inner element to the outer element.
- *
- * @param {HTMLElement} innerEl - element we're reading changes of height from
- * @param {HTMLElement} outerEl - element we're applying height to
- * @return {Function} cleanup method
- */
-export function syncOuterHeightWithInner(innerEl, outerEl) {
-  if (!innerEl) {
-    return () => {};
-  }
-  const observer = new ResizeObserver((entries) => {
-    const measureEl = entries?.[0];
-    if (!measureEl || !outerEl) {
-      return;
-    }
-    outerEl.style.height = `${measureEl.contentRect.height}px`;
-  });
-  observer.observe(innerEl);
-  return () => observer.unobserve(innerEl);
 }

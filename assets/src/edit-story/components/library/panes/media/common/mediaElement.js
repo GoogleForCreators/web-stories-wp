@@ -22,13 +22,12 @@ import PropTypes from 'prop-types';
 import { useEffect, useCallback, memo, useState, useRef } from 'react';
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
-
+import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import { LoadingBar, useKeyDownEffect } from '../../../../../../design-system';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
@@ -67,6 +66,7 @@ function Element({
   margin,
   onInsert,
   providerType,
+  canEditMedia,
 }) {
   const {
     id: resourceId,
@@ -210,7 +210,7 @@ function Element({
         {local && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
-        {providerType === 'local' && (
+        {providerType === 'local' && canEditMedia && (
           <DropDownMenu
             resource={resource}
             display={active}
@@ -233,6 +233,7 @@ Element.propTypes = {
   margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
+  canEditMedia: PropTypes.bool,
 };
 
 /**
@@ -270,10 +271,12 @@ MediaElement.propTypes = {
   margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
+  canEditMedia: PropTypes.bool,
 };
 
 MediaElement.defaultProps = {
   providerType: 'local',
+  canEditMedia: false,
 };
 
 export default memo(MediaElement);

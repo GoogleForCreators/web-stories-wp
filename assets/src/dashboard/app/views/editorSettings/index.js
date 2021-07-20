@@ -19,11 +19,11 @@
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '../../../../design-system';
 import useApi from '../../api/useApi';
 import { Dialog, Layout } from '../../../components';
 import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
@@ -37,6 +37,7 @@ import AdManagement from './adManagement';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
 import MediaOptimizationSettings from './mediaOptimization';
+import VideoCacheSettings from './videoCache';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
@@ -56,6 +57,7 @@ function EditorSettings() {
     mediaById,
     newlyCreatedMediaIds,
     publisherLogoIds,
+    videoCache,
   } = useApi(
     ({
       actions: {
@@ -71,6 +73,7 @@ function EditorSettings() {
           adNetwork,
           publisherLogoIds,
           activePublisherLogoId,
+          videoCache,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
       },
@@ -89,6 +92,7 @@ function EditorSettings() {
       mediaById,
       newlyCreatedMediaIds,
       publisherLogoIds,
+      videoCache,
     })
   );
 
@@ -372,6 +376,12 @@ function EditorSettings() {
                 disabled={disableMediaOptimization}
                 onCheckboxSelected={toggleWebStoriesMediaOptimization}
                 selected={mediaOptimization}
+              />
+            )}
+            {canManageSettings && (
+              <VideoCacheSettings
+                isEnabled={videoCache}
+                updateSettings={updateSettings}
               />
             )}
             {canManageSettings && (
