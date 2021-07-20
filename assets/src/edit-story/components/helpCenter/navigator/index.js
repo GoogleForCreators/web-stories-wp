@@ -20,7 +20,7 @@ import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { memo, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers, useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -33,10 +33,7 @@ import {
 import { BottomNavigation } from './bottomNavigation';
 import { NAVIGATION_WIDTH } from './constants';
 import { TopNavigation } from './topNavigation';
-import {
-  removeInnerElementFromLayoutFlow,
-  syncOuterHeightWithInner,
-} from './utils';
+import { removeInnerElementFromLayoutFlow } from './utils';
 
 export const NavigationWrapper = styled.div`
   position: absolute;
@@ -93,9 +90,14 @@ function Navigator({
   );
 
   // Listen to changes in inner content height and apply
-  // them to the layout container to animate to those updates
-  useEffect(
-    () => syncOuterHeightWithInner(innerRef.current, layoutRef.current),
+  // them to the layout container to animate to those updates.
+  useResizeEffect(
+    innerRef,
+    ({ height }) => {
+      if (layoutRef.current) {
+        layoutRef.current.style.height = `${height}px`;
+      }
+    },
     []
   );
 

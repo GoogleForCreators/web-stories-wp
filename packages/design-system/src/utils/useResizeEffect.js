@@ -17,12 +17,15 @@
 /**
  * External dependencies
  */
-import ResizeObserver from 'resize-observer-polyfill';
-
-/**
- * External dependencies
- */
 import { useEffect } from 'react';
+
+if (!('ResizeObserver' in window)) {
+  import(
+    /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
+  )
+    .then((module) => (window.ResizeObserver = module.ResizeObserver))
+    .catch(() => undefined);
+}
 
 /**
  * @callback ResizeHandler
