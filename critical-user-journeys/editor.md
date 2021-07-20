@@ -60,8 +60,8 @@
 |                                                                   | Selection integration                            | 🏆 **100.00%** *(7 / 7)*    |
 |                                                                   | Set height and width                             | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🚨 **43.33%** *(13 / 30)*   |
-| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*      |
+| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Creator can View and Modify Document                              | Author                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can transform an element                                  | Snap to place                                    | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.16%** *(310 / 418)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.64%** *(312 / 418)* |
