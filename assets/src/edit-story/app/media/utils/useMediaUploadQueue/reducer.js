@@ -34,7 +34,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Function} action.payload.onUploadSuccess Callback for when upload succeeds.
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
- * @param {boolean} action.payload.muteVideo Should the video being transcoded, should also be muted.
+ * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
  * @return {Object} New state
  */
 export function addItem(
