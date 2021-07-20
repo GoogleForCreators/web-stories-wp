@@ -104,13 +104,15 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
-        if (['video', 'gif'].includes(resource.type) && !resource.local) {
-          if (!resource.posterId) {
-            uploadVideoPoster(resource.id, resource.src);
-          }
-          if (!resource.isMuted) {
-            updateVideoIsMuted(resource.id, resource.src);
-          }
+        if (
+          ['video', 'gif'].includes(resource.type) &&
+          !resource.local &&
+          !resource.posterId
+        ) {
+          uploadVideoPoster(resource.id, resource.src);
+        }
+        if ('video' === resource.type && !resource.local && !resource.isMuted) {
+          updateVideoIsMuted(resource.id, resource.src);
         }
       };
 
