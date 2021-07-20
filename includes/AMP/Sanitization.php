@@ -26,6 +26,11 @@
 
 namespace Google\Web_Stories\AMP;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
@@ -39,6 +44,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
 use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
+use WP_Post;
 
 /**
  * Sanitization class.
@@ -50,6 +56,26 @@ use DOMElement;
  * @see \AMP_Theme_Support
  */
 class Sanitization {
+	use Publisher;
+
+	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Sanitization constructor.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
 	/**
 	 * Sanitizes a document.
 	 *
@@ -392,6 +418,25 @@ class Sanitization {
 			Canonical_Sanitizer::class             => [],
 			AMP_Tag_And_Attribute_Sanitizer::class => [],
 		];
+
+		$post = get_queried_object();
+
+		if ( $post instanceof WP_Post && Story_Post_Type::POST_TYPE_SLUG === $post->post_type ) {
+			$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
+
+			$story = new Story();
+			$story->load_from_post( $post );
+
+			$sanitizers[ Story_Sanitizer::class ] = [
+				'publisher_logo'             => $this->get_publisher_logo(),
+				'publisher'                  => $this->get_publisher_name(),
+				'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+				'poster_images'              => [
+					'poster-portrait-src' => $story->get_poster_portrait(),
+				],
+				'video_cache'                => $video_cache_enabled,
+			];
+		}
 
 		/**
 		 * Filters the content sanitizers.

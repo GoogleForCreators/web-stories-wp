@@ -28,15 +28,11 @@ namespace Google\Web_Stories\AMP;
 
 use DOMElement;
 use Exception;
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Throwable;
-use WP_Post;
 
 /**
  * Output buffer class.
@@ -58,13 +54,6 @@ class Output_Buffer extends Service_Base {
 	protected $is_output_buffering = false;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * Sanitization instance.
 	 *
 	 * @var Sanitization Sanitization instance.
@@ -79,16 +68,14 @@ class Output_Buffer extends Service_Base {
 	private $optimization;
 
 	/**
-	 * HTML constructor.
+	 * Output_Buffer constructor.
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param Experiments  $experiments  Experiments instance.
 	 * @param Sanitization $sanitization Sanitization instance.
 	 * @param Optimization $optimization Optimization instance.
 	 */
-	public function __construct( Experiments $experiments, Sanitization $sanitization, Optimization $optimization ) {
-		$this->experiments  = $experiments;
+	public function __construct( Sanitization $sanitization, Optimization $optimization ) {
 		$this->sanitization = $sanitization;
 		$this->optimization = $optimization;
 	}
@@ -107,8 +94,6 @@ class Output_Buffer extends Service_Base {
 		 */
 		$priority = defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX; // phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
 		add_action( 'template_redirect', [ $this, 'start_output_buffering' ], $priority );
-
-		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
 	}
 
 	/**
@@ -251,42 +236,5 @@ class Output_Buffer extends Service_Base {
 	 */
 	private function render_error_page( Throwable $throwable ): string {
 		return esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' );
-	}
-
-	/**
-	 * Filters the Web Stories AMP sanitizers.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
-	 */
-	public function add_web_stories_amp_content_sanitizers( $sanitizers ): array {
-		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			return $sanitizers;
-		}
-
-		$post = get_queried_object();
-
-		if ( ! ( $post instanceof WP_Post ) ) {
-			return $sanitizers;
-		}
-
-		$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
-
-		$story = new Story();
-		$story->load_from_post( $post );
-
-		$sanitizers[ Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => [
-				'poster-portrait-src' => $story->get_poster_portrait(),
-			],
-			'video_cache'                => $video_cache_enabled,
-		];
-
-		return $sanitizers;
 	}
 }
