@@ -33,6 +33,10 @@
 
 /* Block Placeholder (choose between latest / selected / single */
 
+.web-stories-block-configuration-panel .components-placeholder__instructions {
+  margin: 0;
+}
+
 .web-stories-block-configuration-panel
   .web-stories-block-configuration-panel__options {
   display: flex;
@@ -41,7 +45,7 @@
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
-  margin: 16px 0;
+  margin: 16px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -61,7 +65,7 @@
   height: 70px;
   width: 70px;
   justify-content: center;
-  margin: 0;
+  margin: 0 0 12px;
   padding: 0;
 }
 

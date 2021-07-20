@@ -60,14 +60,14 @@ function BlockConfigurationPanel({
               onClick={() => {
                 setAttributes({ [selectionType]: option.id });
               }}
-            >
-              {'viewType' === selectionType && (
-                <Icon icon={option.panelIcon} title={option.label} />
-              )}
-              {'blockType' === selectionType && (
-                <Icon icon={option.icon} title={option.label} />
-              )}
-            </Button>
+              icon={
+                <Icon
+                  icon={option.panelIcon || option.icon}
+                  title={option.label}
+                />
+              }
+              label={option.description || option.label}
+            />
             <span
               className="web-stories-block-configuration-panel__label components-placeholder__instructions"
               role="presentation"
