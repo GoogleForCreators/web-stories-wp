@@ -160,6 +160,7 @@ function MediaPane(props) {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const { isTranscodingEnabled } = useFFmpeg();
@@ -360,6 +361,7 @@ function MediaPane(props) {
         ) : (
           <PaginatedMediaGallery
             providerType="local"
+            canEditMedia={hasUploadMediaAction}
             resources={media}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}

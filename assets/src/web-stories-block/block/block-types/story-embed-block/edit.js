@@ -33,7 +33,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { ReactComponent as icon } from '../../../images/icon.svg';
+import { ReactComponent as BlockIcon } from '../../../images/icon.svg';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
@@ -174,7 +174,7 @@ function StoryEmbedEdit({
   if (showPlaceholder) {
     return (
       <EmbedPlaceholder
-        icon={icon}
+        icon={<BlockIcon />}
         label={label}
         value={localURL}
         onSubmit={onSubmit}

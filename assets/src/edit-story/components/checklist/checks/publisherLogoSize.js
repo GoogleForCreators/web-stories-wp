@@ -28,15 +28,15 @@ import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY, PUBLISHER_LOGO_DIMENSION } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
-export function publisherLogoSize(story) {
+export function publisherLogoSize(publisherLogo) {
   return (
-    story.publisherLogo?.height < PUBLISHER_LOGO_DIMENSION ||
-    story.publisherLogo?.width < PUBLISHER_LOGO_DIMENSION
+    publisherLogo?.height < PUBLISHER_LOGO_DIMENSION ||
+    publisherLogo?.width < PUBLISHER_LOGO_DIMENSION
   );
 }
 
 const PublisherLogoSize = () => {
-  const { story } = useStory(({ state }) => state);
+  const publisherLogo = useStory(({ state }) => state?.story?.publisherLogo);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
@@ -46,7 +46,7 @@ const PublisherLogoSize = () => {
     [setHighlights]
   );
 
-  const isRendered = publisherLogoSize(story);
+  const isRendered = publisherLogoSize(publisherLogo);
   useRegisterCheck('PublisherLogoSize', isRendered);
 
   const { footer, title } = PRIORITY_COPY.logoTooSmall;

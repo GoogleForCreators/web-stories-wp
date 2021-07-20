@@ -255,6 +255,32 @@ trait Sanitization_Utils {
 	}
 
 	/**
+	 * Enables using video cache by adding the necessary attribute to `<amp-video>`
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
+	 * @return void
+	 */
+	private function add_video_cache( &$document, $video_cache_enabled ) {
+		if ( ! $video_cache_enabled ) {
+			return;
+		}
+
+		$videos = $document->body->getElementsByTagName( 'amp-video' );
+
+		/**
+		 * The <amp-video> element
+		 *
+		 * @var DOMElement $video The <amp-video> element
+		 */
+		foreach ( $videos as $video ) {
+			$video->setAttribute( 'cache', 'google' );
+		}
+	}
+
+	/**
 	 * Determines whether a URL is a `blob:` URL.
 	 *
 	 * @since 1.9.0
@@ -262,7 +288,7 @@ trait Sanitization_Utils {
 	 * @param string $url URL.
 	 * @return bool Whether it's a blob URL.
 	 */
-	private function is_blob_url( string $url ) {
+	private function is_blob_url( string $url ): bool {
 		return 0 === strpos( $url, 'blob:' );
 	}
 
@@ -308,7 +334,7 @@ trait Sanitization_Utils {
 		/**
 		 * List of <amp-img> elements.
 		 *
-		 * @var DOMElement[] $videos Image elements.
+		 * @var DOMElement[] $images Image elements.
 		 */
 		$images = $document->body->getElementsByTagName( 'amp-img' );
 
@@ -316,6 +342,43 @@ trait Sanitization_Utils {
 			if ( $this->is_blob_url( $image->getAttribute( 'src' ) ) ) {
 				$image->setAttribute( 'src', '' );
 			}
+		}
+	}
+
+	/**
+	 * Sanitize amp-img[srcset] attributes to remove duplicates.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	private function sanitize_srcset( &$document ) {
+		/**
+		 * List of <amp-img> elements.
+		 *
+		 * @var DOMElement[] $images Image elements.
+		 */
+		$images = $document->body->getElementsByTagName( 'amp-img' );
+
+		foreach ( $images as $image ) {
+			$srcset = $image->getAttribute( 'srcset' );
+			if ( ! $srcset ) {
+				continue;
+			}
+
+			$entries_by_widths = [];
+
+			$entries = explode( ',', $srcset );
+
+			foreach ( $entries as $entry ) {
+				$entry_data = explode( ' ', $entry );
+				if ( ! isset( $entries_by_widths[ $entry_data[1] ] ) ) {
+					$entries_by_widths[ $entry_data[1] ] = $entry;
+				}
+			}
+
+			$image->setAttribute( 'srcset', implode( ', ', $entries_by_widths ) );
 		}
 	}
 }

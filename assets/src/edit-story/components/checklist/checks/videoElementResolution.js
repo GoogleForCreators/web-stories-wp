@@ -47,10 +47,10 @@ export function videoElementResolution(element) {
 }
 
 const VideoElementResolution = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingElements = useMemo(
-    () => filterStoryElements(story, videoElementResolution),
-    [story]
+    () => filterStoryElements(pages, videoElementResolution),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(

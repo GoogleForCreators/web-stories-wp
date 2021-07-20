@@ -32,7 +32,7 @@ class Story_Sanitizer extends Test_Case {
 	 * @param array $sanitizer_args
 	 * @return string Sanitized HTML.
 	 */
-	protected function sanitize_and_get( $source, $sanitizer_args ) {
+	protected function sanitize_and_get( $source, $sanitizer_args ): string {
 		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
 		$dom->documentElement->setAttribute( 'amp', '' );
 
@@ -77,6 +77,7 @@ class Story_Sanitizer extends Test_Case {
 			'publisher_logo'             => 'https://example.com/publisher_logo.png',
 			'publisher_logo_placeholder' => 'https://example.com/placeholder_logo.png',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -84,7 +85,7 @@ class Story_Sanitizer extends Test_Case {
 		$this->assertEquals( $expected, $actual );
 	}
 
-	public function get_poster_image_data() {
+	public function get_poster_image_data(): array {
 		return [
 			'poster_image_exists'  => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
@@ -115,6 +116,7 @@ class Story_Sanitizer extends Test_Case {
 			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -122,7 +124,7 @@ class Story_Sanitizer extends Test_Case {
 		$this->assertEquals( $expected, $actual );
 	}
 
-	public function get_publisher_data() {
+	public function get_publisher_data(): array {
 		return [
 			'publisher_exists'        => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
@@ -132,6 +134,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => 'New publisher',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'no_publisher'            => [
@@ -142,6 +145,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => 'New publisher',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'missing_publisher'       => [
@@ -152,6 +156,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => '',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'empty_publisher'         => [
@@ -162,6 +167,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => '',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'double_quotes_publisher' => [
@@ -172,6 +178,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => '"double quotes"',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'single_quotes_publisher' => [
@@ -182,6 +189,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => "'single quotes'",
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'not_english_publisher'   => [
@@ -192,6 +200,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => 'PRÓXIMA',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 			'html_publisher'          => [
@@ -202,6 +211,7 @@ class Story_Sanitizer extends Test_Case {
 					'publisher'                  => 'this > that < that <randomhtml />',
 					'publisher_logo_placeholder' => '',
 					'poster_images'              => [],
+					'video_cache'                => false,
 				],
 			],
 		];
@@ -233,6 +243,7 @@ class Story_Sanitizer extends Test_Case {
 			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -251,6 +262,7 @@ class Story_Sanitizer extends Test_Case {
 			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -270,6 +282,7 @@ class Story_Sanitizer extends Test_Case {
 			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -289,12 +302,51 @@ class Story_Sanitizer extends Test_Case {
 			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertContains( '<style>._a7988c6{color: blue;}._91f054f{color: blue; background: white;}._f479d19{color: red;}</style>', $actual );
 		$this->assertNotContains( 'style="', $actual );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_video_cache
+	 */
+	public function test_add_video_cache_disabled() {
+		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="https://example.com/poster.jpg" layout="responsive"><source type="video/mp4" src="https://example.com/video.mp4" /></amp-video></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher'                  => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+			'video_cache'                => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertNotContains( 'cache="google"', $actual );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_video_cache
+	 */
+	public function test_add_video_cache_enabled() {
+		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="https://example.com/poster.jpg" layout="responsive"><source type="video/mp4" src="https://example.com/video.mp4" /></amp-video></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher'                  => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+			'video_cache'                => true,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertContains( 'cache="google"', $actual );
 	}
 
 	/**
@@ -308,10 +360,30 @@ class Story_Sanitizer extends Test_Case {
 			'publisher'                  => '',
 			'publisher_logo_placeholder' => '',
 			'poster_images'              => [],
+			'video_cache'                => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertNotContains( 'blob:', $actual );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_srcset
+	 */
+	public function test_sanitize_srcset() {
+		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image.jpg 1000w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-225x300.jpg 225w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher'                  => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+			'video_cache'                => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertContains( 'srcset="https://example.com/image.jpg 1000w, https://example.com/image-768x1024.jpg 768w, https://example.com/image-225x300.jpg 225w, https://example.com/image-150x200.jpg 150w"', $actual );
 	}
 }

@@ -485,7 +485,7 @@ jobs:
     name: Post-release version bump
     needs: [create-release]
     runs-on: ubuntu-latest
-    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2

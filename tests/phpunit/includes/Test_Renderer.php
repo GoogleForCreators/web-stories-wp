@@ -40,6 +40,6 @@ class Test_Renderer extends Renderer {
 	 *
 	 * @return void
 	 */
-	public function render( array $args = [] ) {}
+	public function render( array $args = [] ) : string {}
 
 }
