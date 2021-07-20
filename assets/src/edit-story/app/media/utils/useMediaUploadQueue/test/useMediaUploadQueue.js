@@ -32,6 +32,9 @@ jest.mock('../../useFFmpeg', () => ({
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),
     transcodeVideo: jest.fn(),
+    transcodeMuteVideo: jest.fn(),
+    getFirstFrameOfVideo: jest.fn(),
+    convertGifToVideo: jest.fn(),
   })),
 }));
 
@@ -52,6 +55,9 @@ const mockAttachment = {
     raw: 'Description',
   },
   featured_media_src: {},
+  meta: {
+    web_story_is_muted: false,
+  },
 };
 
 const mockUploadFile = jest
