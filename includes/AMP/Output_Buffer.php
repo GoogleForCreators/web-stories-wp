@@ -191,22 +191,6 @@ class Output_Buffer extends Service_Base implements Conditional {
 			return $this->render_error_page( new Exception() );
 		}
 
-		// Make sure scripts from the body get moved to the head.
-		// TODO: Move to its own sanitizer?
-
-		/**
-		 * Scripts in <body>.
-		 *
-		 * @var DOMElement[] $scripts List of scripts.
-		 */
-		$scripts = $dom->xpath->query( '//body//script[ @custom-element or @custom-template or @src = "https://cdn.ampproject.org/v0.js" ]' );
-
-		foreach ( $scripts as $script ) {
-			if ( $script->parentNode ) {
-				$dom->head->appendChild( $script->parentNode->removeChild( $script ) );
-			}
-		}
-
 		$this->sanitization->sanitize_document( $dom );
 		$this->optimization->optimize_document( $dom );
 
