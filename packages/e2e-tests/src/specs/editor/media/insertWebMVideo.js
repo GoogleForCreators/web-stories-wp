@@ -95,7 +95,6 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
-
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('amp-video');
