@@ -254,19 +254,15 @@ class Link_Controller extends REST_Controller {
 	 */
 	public function prepare_item_for_response( $link, $request ) {
 		$fields = $this->get_fields_for_response( $request );
-		// Base fields for every post.
+		$schema = $this->get_item_schema();
+
 		$data = [];
 
-		if ( rest_is_field_included( 'title', $fields ) ) {
-			$data['title'] = $link['title'];
-		}
-
-		if ( rest_is_field_included( 'image', $fields ) ) {
-			$data['image'] = $link['image'];
-		}
-
-		if ( rest_is_field_included( 'description', $fields ) ) {
-			$data['description'] = $link['description'];
+		$check_fields = array_keys( $link );
+		foreach ( $check_fields as $check_field ) {
+			if ( rest_is_field_included( $check_field, $fields ) ) {
+				$data[ $check_field ] = rest_sanitize_value_from_schema( $link[ $check_field ], $schema['properties'][ $check_field ] );
+			}
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';

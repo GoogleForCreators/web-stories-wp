@@ -119,11 +119,12 @@ class Status_Check_Controller extends REST_Controller {
 	 */
 	public function prepare_item_for_response( $status, $request ) {
 		$fields = $this->get_fields_for_response( $request );
-		// Base fields for every post.
+		$schema = $this->get_item_schema();
+
 		$data = [];
 
 		if ( rest_is_field_included( 'success', $fields ) ) {
-			$data['success'] = $status['success'];
+			$data['success'] = rest_sanitize_value_from_schema( $status['success'], $schema['properties']['success'] );
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';

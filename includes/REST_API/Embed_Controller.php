@@ -343,16 +343,16 @@ class Embed_Controller extends REST_Controller {
 	 */
 	public function prepare_item_for_response( $embed, $request ) {
 		$fields = $this->get_fields_for_response( $request );
-		// Base fields for every post.
+		$schema = $this->get_item_schema();
+
 		$data = [];
 
 		if ( is_array( $embed ) ) {
-			if ( rest_is_field_included( 'title', $fields ) ) {
-				$data['title'] = $embed['title'];
-			}
-
-			if ( rest_is_field_included( 'poster', $fields ) ) {
-				$data['poster'] = $embed['poster'];
+			$check_fields = array_keys( $embed );
+			foreach ( $check_fields as $check_field ) {
+				if ( rest_is_field_included( $check_field, $fields ) ) {
+					$data[ $check_field ] = rest_sanitize_value_from_schema( $embed[ $check_field ], $schema['properties'][ $check_field ] );
+				}
 			}
 		}
 
