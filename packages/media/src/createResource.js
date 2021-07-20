@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import getTypeFromMime from './getTypeFromMime';
+import normalizeResourceSizes from './normalizeResourceSizes';
 
 /**
  * Author object
@@ -138,8 +139,8 @@ function createResource({
     mimeType,
     creationDate,
     src,
-    width,
-    height,
+    width: Number(width),
+    height: Number(height),
     poster,
     posterId,
     id,
@@ -147,7 +148,7 @@ function createResource({
     lengthFormatted,
     title,
     alt,
-    sizes,
+    sizes: normalizeResourceSizes(sizes),
     attribution,
     output,
     local,
