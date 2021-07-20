@@ -27,11 +27,11 @@ import { default as template } from './template';
 export default {
   title: _x('Honeymooning in Italy', 'template name', 'web-stories'),
   tags: [
-    _x('Entertainment', 'template keyword', 'web-stories'),
-    _x('Music', 'template keyword', 'web-stories'),
-    _x('Album', 'template keyword', 'web-stories'),
-    _x('Trending', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
+    _x('Travel', 'template keyword', 'web-stories'),
+    _x('Outdoor', 'template keyword', 'web-stories'),
+    _x('Floral', 'template keyword', 'web-stories'),
+    _x('Collage', 'template keyword', 'web-stories'),
+    _x('Brown', 'template keyword', 'web-stories'),
   ],
   colors: [
     { label: _x('Night Green', 'color', 'web-stories'), color: '#232c27' },
