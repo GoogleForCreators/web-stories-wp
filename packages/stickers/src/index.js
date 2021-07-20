@@ -36,6 +36,7 @@ import * as plantBasedDyesStickers from './plant-based-dyes';
 import * as indoorGardenOasisStickers from './indoor-garden-oasis';
 import * as killBellyFatStickers from './belly-fat-workout';
 import * as crownSeasonsRecappedStickers from './tv-show-recap';
+import * as honeymooningInItalyStickers from './honeymooning-in-italy';
 import * as stayAtAceHotelKyotoStickers from './ace-hotel-kyoto-review';
 import * as videoCallsSavedTheDayStickers from './how-video-calls-saved-the-day';
 import * as pickTheRightLaptopStickers from './laptop-buying-guide';
@@ -63,6 +64,7 @@ export default {
   ...indoorGardenOasisStickers,
   ...killBellyFatStickers,
   ...crownSeasonsRecappedStickers,
+  ...honeymooningInItalyStickers,
   ...stayAtAceHotelKyotoStickers,
   ...videoCallsSavedTheDayStickers,
   ...pickTheRightLaptopStickers,
