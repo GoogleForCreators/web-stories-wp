@@ -156,7 +156,7 @@ class Media extends Service_Base {
 			[
 				'type'              => 'boolean',
 				'sanitize_callback' => 'rest_sanitize_boolean',
-				'description'       => __( 'Is muted', 'web-stories' ),
+				'description'       => __( 'Whether the video is muted', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => false,
 				'single'            => true,
