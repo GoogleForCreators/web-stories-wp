@@ -29,7 +29,7 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
 import { useStory } from '..';
 import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { duplicatePage } from '../../elements';
-import { noop } from '../../utils/noop';
+import { useCanvas } from '../canvas';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUT_LABELS,
@@ -56,6 +56,9 @@ const isMacOs = isPlatformMacOS();
 function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
+  const { setEditingElement } = useCanvas(({ actions }) => ({
+    setEditingElement: actions.setEditingElement,
+  }));
   const {
     addPage,
     arrangeElement,
@@ -214,6 +217,16 @@ function RightClickMenuProvider({ children }) {
     });
   }, [arrangeElement, currentPage, selectedElement?.id]);
 
+  /**
+   * Set element as the element being 'edited'.
+   */
+  const handleOpenScaleAndCrop = useCallback(
+    (evt) => {
+      setEditingElement(selectedElement?.id, evt);
+    },
+    [selectedElement?.id, setEditingElement]
+  );
+
   const menuItemProps = useMemo(
     () => ({
       onMouseDown: handleMouseDown,
@@ -329,7 +342,7 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
-        onClick: noop,
+        onClick: handleOpenScaleAndCrop,
         ...menuItemProps,
       },
     ],
@@ -339,6 +352,7 @@ function RightClickMenuProvider({ children }) {
       defaultItems,
       handleBringForward,
       handleBringToFront,
+      handleOpenScaleAndCrop,
       handleSendBackward,
       handleSendToBack,
       handleSetPageBackground,
