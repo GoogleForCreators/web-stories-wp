@@ -370,6 +370,8 @@ class Embed_Controller extends REST_Controller {
 	/**
 	 * Retrieves the link's schema, conforming to JSON Schema.
 	 *
+	 * @since 1.10.0
+	 *
 	 * @return array Item schema data.
 	 */
 	public function get_item_schema() {

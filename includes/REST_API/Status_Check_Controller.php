@@ -155,7 +155,7 @@ class Status_Check_Controller extends REST_Controller {
 			'type'       => 'object',
 			'properties' => [
 				'success' => [
-					'description' => __( 'Boolean if status was success', 'web-stories' ),
+					'description' => __( 'Whether check was successful', 'web-stories' ),
 					'type'        => 'boolean',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
