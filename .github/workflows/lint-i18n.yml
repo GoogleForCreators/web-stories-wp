@@ -39,7 +39,6 @@ jobs:
       - name: Install WP-CLI
         run: |
           curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-          mv wp-cli.phar wp-cli.phar
           chmod +x wp-cli.phar
           mkdir -p bin
           mv wp-cli.phar bin/wp
