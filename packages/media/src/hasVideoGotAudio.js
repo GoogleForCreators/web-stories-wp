@@ -18,7 +18,7 @@ function hasAudio(video) {
   return (
     video.mozHasAudio ||
     Boolean(video.webkitAudioDecodedByteCount) ||
-    Boolean(video.audioTracks && video.audioTracks.length)
+    Boolean(video.audioTracks?.length)
   );
 }
 function hasVideoGotAudio(src) {
