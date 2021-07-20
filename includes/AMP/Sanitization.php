@@ -33,6 +33,7 @@ use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
 use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Dev_Mode_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
 use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
@@ -468,7 +469,7 @@ class Sanitization {
 
 			$sanitizers = array_merge(
 				[
-					\AMP_Dev_Mode_Sanitizer::class => [
+					AMP_Dev_Mode_Sanitizer::class => [
 						'element_xpaths' => $dev_mode_xpaths,
 					],
 				],
