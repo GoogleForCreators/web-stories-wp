@@ -48,7 +48,9 @@ const mockEvent = {
 
 const defaultStoryContext = {
   addPage: jest.fn(),
-  currentPage: {},
+  currentPage: {
+    elements: [],
+  },
   deleteCurrentPage: jest.fn(),
   pages: [{}],
   replaceCurrentPage: jest.fn(),
@@ -137,13 +139,13 @@ describe('useRightClickMenu', () => {
           },
         },
         {
-          label: 'Duplicate Page',
+          label: 'Duplicate page',
           onClick: expect.any(Function),
           onMouseDown: expect.any(Function),
           separator: 'top',
         },
         {
-          label: 'Delete Page',
+          label: 'Delete page',
           onClick: expect.any(Function),
           onMouseDown: expect.any(Function),
           disabled: expect.any(Boolean),
@@ -157,7 +159,7 @@ describe('useRightClickMenu', () => {
       });
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete Page')
+        result.current.menuItems.find((item) => item.label === 'Delete page')
           .disabled
       ).toBe(true);
 
@@ -166,7 +168,7 @@ describe('useRightClickMenu', () => {
       rerender();
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete Page')
+        result.current.menuItems.find((item) => item.label === 'Delete page')
           .disabled
       ).toBe(false);
     });
