@@ -197,7 +197,6 @@ class Output_Buffer extends Service_Base implements Conditional {
 		return $dom->saveHTML();
 	}
 
-
 	/**
 	 * Render error page.
 	 *

@@ -398,7 +398,7 @@ class Sanitization extends Test_Case {
 	}
 
 	/**
-	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_modetest_get_sanitizers_with_dev_mode
+	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing() {
