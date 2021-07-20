@@ -47,7 +47,7 @@ class Output_Buffer extends Test_Case {
 	}
 
 	protected function prepare_response( $post ): string {
-		$instance = new \Google\Web_Stories\AMP\Output_Buffer( new Experiments(), new Sanitization(), new Optimization() );
+		$instance = new \Google\Web_Stories\AMP\Output_Buffer( new Sanitization( new Experiments() ), new Optimization() );
 		$story    = new Story();
 		$story->load_from_post( $post );
 
