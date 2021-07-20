@@ -28,6 +28,7 @@ namespace Google\Web_Stories\AMP;
 
 use DOMElement;
 use Exception;
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
@@ -43,7 +44,7 @@ use Throwable;
  *
  * @see \AMP_Theme_Support
  */
-class Output_Buffer extends Service_Base {
+class Output_Buffer extends Service_Base implements Conditional {
 	use Publisher;
 
 	/**
@@ -121,17 +122,6 @@ class Output_Buffer extends Service_Base {
 	public function start_output_buffering() {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			return;
-		}
-
-		/*
-		 * Disable the New Relic Browser agent on AMP responses.
-		 * This prevents the New Relic from causing invalid AMP responses due the NREUM script it injects after the meta charset:
-		 * https://docs.newrelic.com/docs/browser/new-relic-browser/troubleshooting/google-amp-validator-fails-due-3rd-party-script
-		 * Sites with New Relic will need to specially configure New Relic for AMP:
-		 * https://docs.newrelic.com/docs/browser/new-relic-browser/installation/monitor-amp-pages-new-relic-browser
-		 */
-		if ( function_exists( 'newrelic_disable_autorum' ) ) {
-			newrelic_disable_autorum();
 		}
 
 		ob_start( [ $this, 'finish_output_buffering' ] );
