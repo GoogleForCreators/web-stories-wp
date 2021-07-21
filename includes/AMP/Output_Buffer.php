@@ -28,6 +28,7 @@ namespace Google\Web_Stories\AMP;
 
 use DOMElement;
 use Exception;
+use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
@@ -210,7 +211,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 		$dom = Document::fromHtml( $response );
 
 		if ( ! $dom instanceof Document ) {
-			return $this->render_error_page( new Exception() );
+			return $this->render_error_page( SanitizationException::from_document_parse_error() );
 		}
 
 		$this->sanitization->sanitize_document( $dom );
