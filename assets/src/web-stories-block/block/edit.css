@@ -107,6 +107,10 @@
   }
 }
 
+.web-stories-story-picker-modal .components-modal__header {
+  margin-bottom: 0;
+}
+
 .web-stories-story-picker-modal__content {
   position: relative;
   height: calc(100% - 110px);
@@ -193,6 +197,13 @@
   margin-bottom: 7px;
 }
 
+.web-stories-story-picker-filter
+  .web-stories-story-picker-filter__search-container
+  .components-base-control
+  .components-select-control__input {
+  height: 34px;
+}
+
 .web-stories-story-picker-filter__search-inner {
   grid-column: 2;
 }
@@ -222,7 +233,7 @@
   display: grid;
   overflow: auto;
   width: 100%;
-  padding: 15px 20px 0;
+  padding: 30px 20px 0;
   grid-column-gap: 24px;
   grid-row-gap: 80px;
   grid-auto-rows: minmax(min-content, max-content);
