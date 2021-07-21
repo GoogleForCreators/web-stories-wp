@@ -36,9 +36,7 @@ describe('Web Stories Widget Block', () => {
     await deleteWidgets();
   });
 
-  // Disable for https://github.com/google/web-stories-wp/issues/8402
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert a new web stories block', async () => {
+  it('should insert a new web stories block', async () => {
     await visitBlockWidgetScreen();
     await expect(page).toClick('button[aria-label="Add block"]');
     await page.type('.block-editor-inserter__search-input', 'Web Stories');
