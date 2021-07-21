@@ -55,7 +55,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
-    transcodeMuteVideo,
+    stripAudioFromVideo,
     getFirstFrameOfVideo,
     convertGifToVideo,
   } = useFFmpeg();
@@ -282,7 +282,7 @@ function useMediaUploadQueue() {
           if (isTranscodingEnabled && canTranscodeFile(file) && muteVideo) {
             startMuting({ id });
             try {
-              newFile = await transcodeMuteVideo(file);
+              newFile = await stripAudioFromVideo(file);
               additionalData.meta = {
                 web_story_is_muted: true,
               };
@@ -349,7 +349,7 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     canTranscodeFile,
     transcodeVideo,
-    transcodeMuteVideo,
+    stripAudioFromVideo,
     convertGifToVideo,
     isGifOptimizationEnabled,
     startMuting,

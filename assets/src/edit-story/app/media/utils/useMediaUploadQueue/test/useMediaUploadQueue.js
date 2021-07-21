@@ -32,7 +32,7 @@ jest.mock('../../useFFmpeg', () => ({
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),
     transcodeVideo: jest.fn(),
-    transcodeMuteVideo: jest.fn(),
+    stripAudioFromVideo: jest.fn(),
     getFirstFrameOfVideo: jest.fn(),
     convertGifToVideo: jest.fn(),
   })),

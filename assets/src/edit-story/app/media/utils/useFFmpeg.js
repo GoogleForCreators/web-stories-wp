@@ -236,12 +236,12 @@ function useFFmpeg() {
   );
 
   /**
-   * Transcode and mute a video using FFmpeg.
+   * Strip audio from video using FFmpeg.
    *
    * @param {File} file Original video file object.
    * @return {Promise<File>} Transcoded video file object.
    */
-  const transcodeMuteVideo = useCallback(
+  const stripAudioFromVideo = useCallback(
     async (file) => {
       //eslint-disable-next-line @wordpress/no-unused-vars-before-return
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
@@ -366,7 +366,7 @@ function useFFmpeg() {
       canTranscodeFile,
       isFileTooLarge,
       transcodeVideo,
-      transcodeMuteVideo,
+      stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
     }),
@@ -374,7 +374,7 @@ function useFFmpeg() {
       isTranscodingEnabled,
       canTranscodeFile,
       transcodeVideo,
-      transcodeMuteVideo,
+      stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
     ]
