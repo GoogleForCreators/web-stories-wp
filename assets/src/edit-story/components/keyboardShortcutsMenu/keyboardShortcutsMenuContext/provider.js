@@ -42,11 +42,13 @@ const KeyboardShortcutsMenuProvider = ({ children }) => {
   );
 
   const close = useCallback(() => {
-    trackEvent('shortcuts_menu_toggled', {
-      status: 'closed',
-    });
-    setIsOpen(false);
-  }, []);
+    if (isOpen) {
+      trackEvent('shortcuts_menu_toggled', {
+        status: 'closed',
+      });
+      setIsOpen(false);
+    }
+  }, [isOpen]);
 
   const contextValue = useMemo(
     () => ({

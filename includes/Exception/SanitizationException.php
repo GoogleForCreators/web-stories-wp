@@ -1,11 +1,11 @@
 <?php
 /**
- * Exception InvalidStopwatchEvent.
+ * Exception SanitizationException.
  *
  * @package   Google\Web_Stories
- * @copyright 2019 Alain Schlesser
- * @license   MIT
- * @link      https://www.mwpd.io/
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
  */
 
 /**
@@ -26,34 +26,26 @@
 
 namespace Google\Web_Stories\Exception;
 
-use InvalidArgumentException;
+use RuntimeException;
 
 /**
- * Exception thrown when an invalid stopwatch name was requested.
+ * Exception thrown when AMP sanitization errors.
  *
- * @since 1.6.0
+ * @since 1.10.0
  * @internal
  */
-final class InvalidStopwatchEvent
-	extends InvalidArgumentException
+final class SanitizationException
+	extends RuntimeException
 	implements WebStoriesException {
 
 	/**
-	 * Create a new instance of the exception for a stopwatch event name that is
-	 * not recognized but requested to be stopped.
+	 * Create a new instance of the exception for a document that cannot be parsed.
 	 *
-	 * @since 1.6.0
-	 *
-	 * @param string $name Name of the event that was requested to be stopped.
+	 * @since 1.10.0
 	 *
 	 * @return self
 	 */
-	public static function from_name_to_stop( $name ) {
-		$message = \sprintf(
-			'The stopwatch event "%s" is not recognized and cannot be stopped.',
-			$name
-		);
-
-		return new self( $message );
+	public static function from_document_parse_error(): self {
+		return new self( 'The markup could not be parsed into a DOMDocument.' );
 	}
 }

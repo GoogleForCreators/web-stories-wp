@@ -103,7 +103,68 @@ class Status_Check_Controller extends REST_Controller {
 			'success' => true,
 		];
 
-		return rest_ensure_response( $data );
+		$response = $this->prepare_item_for_response( $data, $request );
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Prepares a status data output for response.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param array           $status    Status array.
+	 * @param WP_REST_Request $request Request object.
+	 * @return WP_REST_Response|WP_Error Response object.
+	 */
+	public function prepare_item_for_response( $status, $request ) {
+		$fields = $this->get_fields_for_response( $request );
+		$schema = $this->get_item_schema();
+
+		$data = [];
+
+		if ( rest_is_field_included( 'success', $fields ) ) {
+			$data['success'] = rest_sanitize_value_from_schema( $status['success'], $schema['properties']['success'] );
+		}
+
+		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$data    = $this->add_additional_fields_to_object( $data, $request );
+		$data    = $this->filter_response_by_context( $data, $context );
+
+		// Wrap the data in a response object.
+		$response = rest_ensure_response( $data );
+
+		return $response;
+	}
+
+	/**
+	 * Retrieves the status schema, conforming to JSON Schema.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array Item schema as an array.
+	 */
+	public function get_item_schema() {
+		if ( $this->schema ) {
+			return $this->add_additional_fields_schema( $this->schema );
+		}
+
+		$schema = [
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => 'status',
+			'type'       => 'object',
+			'properties' => [
+				'success' => [
+					'description' => __( 'Whether check was successful', 'web-stories' ),
+					'type'        => 'boolean',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+			],
+		];
+
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
 	}
 
 	/**

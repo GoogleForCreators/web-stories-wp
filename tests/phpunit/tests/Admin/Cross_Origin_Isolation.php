@@ -227,7 +227,7 @@ class Cross_Origin_Isolation extends Test_Case {
 	 * @covers ::replace_in_dom
 	 */
 	public function test_replace_in_dom() {
-		$html   = file_get_contents( __DIR__ . '/../../data/cross_origin_content.html' );
+		$html   = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/cross_origin_content.html' );
 		$html   = str_replace( '--SITE_URL--', site_url(), $html );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'replace_in_dom', [ $html ] );
