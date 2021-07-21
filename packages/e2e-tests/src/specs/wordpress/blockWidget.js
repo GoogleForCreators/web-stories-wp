@@ -28,7 +28,7 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget Block', () => {
-  minWPVersionRequired('5.8');
+  minWPVersionRequired('latest');
   beforeEach(async () => {
     await deleteWidgets();
   });
