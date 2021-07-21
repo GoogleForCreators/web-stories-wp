@@ -136,9 +136,9 @@ const StoryDisplayContent = ({
       )}
       <CardDetailsGrid>
         <CardDetailsColumn>
-          <DetailCopy>
-            {status === STORY_STATUS.DRAFT && __('Draft', 'web-stories')}
-          </DetailCopy>
+          {status === STORY_STATUS.DRAFT && (
+            <DetailCopy isBold>{__('Draft', 'web-stories')}</DetailCopy>
+          )}
           {author && <DetailCopy>{author}</DetailCopy>}
           <DetailCopy className="dashboard-grid-item-date">
             {displayDateText}
