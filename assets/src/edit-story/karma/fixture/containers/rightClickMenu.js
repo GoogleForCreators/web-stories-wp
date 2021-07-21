@@ -25,6 +25,7 @@ import { Container } from './container';
 const isMacOs = isPlatformMacOS();
 
 const commandOrControl = isMacOs ? 'Command' : 'Control';
+
 export class RightClickMenu extends Container {
   constructor(node, path) {
     super(node, path);
