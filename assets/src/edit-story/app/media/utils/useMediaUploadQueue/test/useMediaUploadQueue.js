@@ -91,6 +91,7 @@ describe('useMediaUploadQueue', () => {
         progress: [],
         isUploading: false,
         isTranscoding: false,
+        isMuting: false,
       })
     );
   });
@@ -153,6 +154,7 @@ describe('useMediaUploadQueue', () => {
         progress: [],
         isUploading: false,
         isTranscoding: false,
+        isMuting: false,
       })
     );
   });
