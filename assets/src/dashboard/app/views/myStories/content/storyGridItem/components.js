@@ -128,13 +128,14 @@ export const Title = styled(Headline).attrs(() => ({
   as: 'a',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 }))`
-  position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;
-  padding-right: 0.2em;
+  display: box;
+  -webkit-line-clamp: 3;
+  box-orient: vertical;
   &:hover {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
