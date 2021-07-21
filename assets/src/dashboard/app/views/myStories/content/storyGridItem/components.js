@@ -24,7 +24,7 @@ import {
   Text,
 } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -123,23 +123,24 @@ export const CardDetailsColumn = styled.div`
 `;
 
 // Story Title
-// TODO clamp title to set amount of lines and show ellipsis
-const textClamp = css`
-  display: box;
-  -webkit-line-clamp: 3;
-  box-orient: vertical;
-`;
+// Overriding stylelint for the sake of line clamping the title to be 3 lines.
+// This is supported by all major browsers except IE 11.
+// If it fails, max-height will catch so that really long titles
+// don't leave their designated space, just no ellipsis.
 export const Title = styled(Headline).attrs(() => ({
   as: 'a',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 }))`
   overflow: hidden;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;
-  ${textClamp};
-
+  max-height: calc(1.2em * 3);
+  /* stylelint-disable-next-line */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  /* stylelint-disable-next-line */
+  -webkit-box-orient: vertical;
   &:hover {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
