@@ -29,7 +29,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import getResourceFromAttachment from '../utils/getResourceFromAttachment';
-import useVideoIsMuted from '../utils/useVideoIsMuted';
+import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -120,7 +120,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
-  const { updateVideoIsMuted } = useVideoIsMuted({
+  const { updateVideoIsMuted } = useDetectVideoHasAudio({
     updateMediaElement,
   });
 
