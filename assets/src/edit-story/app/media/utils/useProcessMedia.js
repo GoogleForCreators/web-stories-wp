@@ -207,7 +207,7 @@ function useProcessMedia({
 
       const process = async () => {
         let file = false;
-        let posterfile = false;
+        let posterFile = false;
         try {
           file = await fetchRemoteFile(url, mimeType);
         } catch (e) {
@@ -216,7 +216,7 @@ function useProcessMedia({
         }
         if (poster) {
           try {
-            posterfile = await fetchRemoteFile(url, 'image/jpeg');
+            posterFile = await fetchRemoteFile(url, 'image/jpeg');
           } catch (e) {
             // Ignore for now.
           }
@@ -239,7 +239,7 @@ function useProcessMedia({
             ...oldResource,
             isMuted: true,
           },
-          posterfile,
+          posterFile,
         });
       };
       return process();
