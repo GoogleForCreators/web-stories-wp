@@ -93,6 +93,20 @@ const StoryGridItem = ({
   const memoizedStoryMenu = useMemo(
     () => (
       <StoryMenu
+        menuLabel={
+          isLocked
+            ? sprintf(
+                /* translators: %1$s: story title %2$s: user story is locked by.*/
+                __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
+                formattedTitle,
+                story?.lockUser.name
+              )
+            : sprintf(
+                /* translators: %s: story title.*/
+                __('Context menu for %s', 'web-stories'),
+                formattedTitle
+              )
+        }
         itemActive={isActive}
         tabIndex={tabIndex}
         onMoreButtonSelected={storyMenu.handleMenuToggle}
@@ -106,7 +120,16 @@ const StoryGridItem = ({
         `}
       />
     ),
-    [isActive, tabIndex, storyMenu, story.id, generatedMenuItems]
+    [
+      isLocked,
+      formattedTitle,
+      isActive,
+      tabIndex,
+      storyMenu,
+      story.id,
+      story?.lockUser,
+      generatedMenuItems,
+    ]
   );
 
   return (

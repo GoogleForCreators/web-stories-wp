@@ -88,6 +88,7 @@ export default function StoryMenu({
   itemActive,
   tabIndex,
   menuStyleOverrides,
+  menuLabel,
   isInverted,
 }) {
   const isPopoverMenuOpen = contextMenuId === storyId;
@@ -108,7 +109,7 @@ export default function StoryMenu({
         tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
-        aria-label={__('More Options', 'web-stories')}
+        aria-label={menuLabel || __('More Options', 'web-stories')}
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : storyId)}
         className={CONTEXT_MENU_BUTTON_CLASS}
         $isInverted={isInverted}
@@ -132,6 +133,7 @@ StoryMenu.propTypes = {
   onMoreButtonSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  menuLabel: PropTypes.string,
   menuStyleOverrides: PropTypes.array,
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };
