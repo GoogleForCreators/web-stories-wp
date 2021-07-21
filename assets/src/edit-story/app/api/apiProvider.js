@@ -242,9 +242,9 @@ function APIProvider({ children }) {
       // Create upload payload
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
-      Object.entries(additionalData).forEach(([key, value]) => {
-        createFormData(data, key, value);
-      });
+      Object.entries(additionalData).forEach(([key, value]) =>
+        createFormData(data, key, value)
+      );
 
       // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
       return apiFetch({
@@ -351,7 +351,9 @@ function APIProvider({ children }) {
         story.author ? ['post_author', story.author.id] : false,
       ].filter(Boolean);
 
-      additionalData.forEach(([key, value]) => formData.append(key, value));
+      Object.entries(additionalData).forEach(([key, value]) =>
+        createFormData(formData, key, value)
+      );
 
       return apiFetch({
         url: metaBoxes,
@@ -360,7 +362,7 @@ function APIProvider({ children }) {
         parse: false,
       });
     },
-    [metaBoxes]
+    [createFormData, metaBoxes]
   );
 
   /**
