@@ -120,6 +120,7 @@ function delete_stories_post_meta() {
 	delete_post_meta_by_key( Media::POSTER_ID_POST_META_KEY );
 	delete_post_meta_by_key( Media::OPTIMIZED_ID_POST_META_KEY );
 	delete_post_meta_by_key( Media::MUTED_ID_POST_META_KEY );
+	delete_post_meta_by_key( Media::IS_MUTED_POST_META_KEY );
 }
 
 /**
