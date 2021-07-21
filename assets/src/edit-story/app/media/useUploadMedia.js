@@ -193,7 +193,7 @@ function useUploadMedia({
      * @param {Object} args.additionalData Object of additionalData.
      * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
      * @param {import('@web-stories-wp/media').Resource} args.resource Resource object.
-     * @param {File} args.posterFile File object.
+     * @param {Blob} args.posterFile Blob object of poster.
      * @return {void}
      */
     async (
@@ -240,7 +240,7 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          if (!resource && !posterFile) {
+          if (!resource || !posterFile) {
             const { resource: newResource, posterFile: newPosterFile } =
               await getResourceFromLocalFile(file);
             posterFile = newPosterFile;

@@ -23,6 +23,7 @@ export { default as getFileName } from './getFileName';
 export { default as formatDuration } from './formatDuration';
 export { default as createFileReader } from './createFileReader';
 export { default as fetchRemoteFile } from './fetchRemoteFile';
+export { default as fetchRemoteBlob } from './fetchRemoteBlob';
 export { default as getFileNameFromUrl } from './getFileNameFromUrl';
 export { default as getFileNameWithExt } from './getFileNameWithExt';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';

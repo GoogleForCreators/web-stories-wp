@@ -17,7 +17,11 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { fetchRemoteFile, isAnimatedGif } from '@web-stories-wp/media';
+import {
+  fetchRemoteBlob,
+  fetchRemoteFile,
+  isAnimatedGif,
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -216,7 +220,7 @@ function useProcessMedia({
         }
         if (poster) {
           try {
-            posterFile = await fetchRemoteFile(url, 'image/jpeg');
+            posterFile = await fetchRemoteBlob(poster);
           } catch (e) {
             // Ignore for now.
           }
