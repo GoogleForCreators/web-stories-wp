@@ -99,6 +99,13 @@ export const StyledStoryDisplayContent = styled.div`
 export const Row = styled.div`
   width: 100%;
   display: flex;
+  align-items: flex-end;
+`;
+export const LockedRow = styled(Row)`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  justify-content: flex-end;
   align-items: center;
 `;
 
@@ -116,17 +123,18 @@ export const CardDetailsColumn = styled.div`
 `;
 
 // Story Title
+// TODO clamp title to set amount of lines and show ellipsis
 export const Title = styled(Headline).attrs(() => ({
   as: 'a',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 }))`
+  position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;
-  display: box;
-  -webkit-line-clamp: 3;
-  box-orient: vertical;
+  padding-right: 0.2em;
   &:hover {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
@@ -145,12 +153,10 @@ export const DetailCopy = styled(Text).attrs(() => ({
 export const LockAvatar = styled.img`
   height: 40px;
   width: 40px;
-`;
-
-export const AvatarTooltip = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border: ${({ theme }) =>
+    `2px solid ${theme.colors.interactiveBg.brandNormal}`};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  z-index: 3;
 `;
 
 export const LockIcon = styled(Icons.LockClosed)`
@@ -158,6 +164,5 @@ export const LockIcon = styled(Icons.LockClosed)`
   display: inline;
   height: 36px;
   width: 36px;
-  margin: 0 -8px -9px -9px;
-  align-self: center;
+  margin: -4px -4px -4px -10px;
 `;

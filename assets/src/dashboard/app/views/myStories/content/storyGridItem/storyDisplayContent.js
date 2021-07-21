@@ -36,7 +36,7 @@ import {
   Title,
   DetailCopy,
   LockAvatar,
-  AvatarTooltip,
+  LockedRow,
   LockIcon,
 } from './components';
 
@@ -85,34 +85,26 @@ const StoryDisplayContent = ({
   }, [status, displayDate]);
 
   const storyLockedTitle = isLocked && (
-    <Row>
+    <LockedRow>
       <Tooltip
         position={TOOLTIP_PLACEMENT.BOTTOM_START}
         title={
-          lockUser.avatar && (
-            <AvatarTooltip>
-              <LockAvatar
-                src={lockUser.avatar}
-                alt={lockUser.name}
-                height={24}
-                width={24}
-              />
-              {lockUser?.name}
-            </AvatarTooltip>
+          lockUser.name &&
+          sprintf(
+            /* translators: %s: user name */
+            __('%s is currently editing this story', 'web-stories'),
+            lockUser.name
           )
         }
       >
-        <LockIcon />
-        <DetailCopy>
-          {lockUser.name &&
-            sprintf(
-              /* translators: %s: user name */
-              __('%s is currently editing', 'web-stories'),
-              lockUser.name
-            )}
-        </DetailCopy>
+        <LockAvatar
+          src={lockUser.avatar}
+          alt={lockUser.name}
+          height={24}
+          width={24}
+        />
       </Tooltip>
-    </Row>
+    </LockedRow>
   );
   return (
     <StyledStoryDisplayContent>
@@ -128,6 +120,7 @@ const StoryDisplayContent = ({
         />
       ) : (
         <Row>
+          {isLocked && <LockIcon />}
           <Title
             href={titleLink}
             tabIndex={tabIndex}
