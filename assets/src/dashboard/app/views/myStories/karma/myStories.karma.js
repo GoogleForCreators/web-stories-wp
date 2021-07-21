@@ -138,7 +138,7 @@ describe('Grid view', () => {
     const { getByRole, getByText } = within(firstStory);
 
     const moreOptionsButton = getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -172,7 +172,7 @@ describe('Grid view', () => {
     let utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -203,7 +203,7 @@ describe('Grid view', () => {
     const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -233,7 +233,7 @@ describe('Grid view', () => {
     const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
