@@ -121,7 +121,7 @@ class Media extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const IS_MUTED_POST_META_KEY = 'web_story_is_muted';
+	const IS_MUTED_POST_META_KEY = 'web_stories_is_muted';
 
 	/**
 	 * Init.

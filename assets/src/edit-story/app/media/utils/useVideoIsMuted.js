@@ -72,7 +72,7 @@ function useVideoIsMuted({ updateMediaElement }) {
 
         await updateMedia(id, {
           meta: {
-            web_story_is_muted: !hasAudio,
+            web_stories_is_muted: !hasAudio,
           },
         });
       } catch (error) {

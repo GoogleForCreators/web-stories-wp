@@ -56,7 +56,7 @@ const mockAttachment = {
   },
   featured_media_src: {},
   meta: {
-    web_story_is_muted: false,
+    web_stories_is_muted: false,
   },
 };
 
