@@ -13,12 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { storyPosterPortraitSize } from '../storyPosterPortraitSize';
+import { storyPosterSize } from '../storyPosterSize';
 
-describe('storyPosterPortraitSize', () => {
+describe('storyPosterSize', () => {
+  it("should return true if the story's poster image has the wrong ratio", () => {
+    const testFeaturedMedia = {
+      height: 960,
+      width: 960,
+      url: 'featured-media.com/img',
+    };
+    const testHappy = storyPosterSize({
+      url: 'featured-media.com/img',
+      height: 960,
+      width: 720,
+    });
+    const test = storyPosterSize(testFeaturedMedia);
+    expect(testHappy).toBe(false);
+    expect(test).toBe(true);
+  });
+  it('should return false for a story with the correct poster image size.', () => {
+    const testFeaturedMedia = {
+      height: 853,
+      width: 640,
+      url: 'featured-media.com/img',
+    };
+
+    const test = storyPosterSize(testFeaturedMedia);
+    expect(test).toBe(false);
+  });
   it("should return true if the story's poster image is too small", () => {
     const testHeightFeaturedMedia = {
       url: 'featured-media.com/img',
@@ -35,14 +61,14 @@ describe('storyPosterPortraitSize', () => {
       width: 1,
       url: 'featured-media.com/img',
     };
-    const testHappy = storyPosterPortraitSize({
+    const testHappy = storyPosterSize({
       url: 'featured-media.com/img',
       height: 853,
       width: 640,
     });
-    const testHeight = storyPosterPortraitSize(testHeightFeaturedMedia);
-    const testWidth = storyPosterPortraitSize(testWidthFeaturedMedia);
-    const test = storyPosterPortraitSize(testFeaturedMedia);
+    const testHeight = storyPosterSize(testHeightFeaturedMedia);
+    const testWidth = storyPosterSize(testWidthFeaturedMedia);
+    const test = storyPosterSize(testFeaturedMedia);
     expect(testHappy).toBe(false);
     expect(testHeight).toBe(true);
     expect(testWidth).toBe(true);
