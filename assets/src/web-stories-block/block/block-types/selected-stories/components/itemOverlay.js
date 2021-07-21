@@ -13,110 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
-import { Icon } from '@wordpress/components';
-
-/**
- * Internal dependencies
- */
-import { PageSizePropType } from '../../../../../dashboard/types';
-
-const StyledOverlay = styled.a(
-  ({ pageSize }) => `
-  display: block;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: ${pageSize.containerHeight}px;
-
-  &:focus {
-    box-shadow: 0 0 3px 3px #5b9dd9, 0 0 2px 1px rgba(30, 140, 190, 0.8);
-  }
-
-  &.item-selected {
-
-    .item-selected-icon {
-      position: absolute;
-      top: -7px;
-      right: -7px;
-      z-index: 1;
-
-      span, svg {
-        background-color: #ccc;
-        box-shadow: 0 0 0 1px #fff, 0 0 0 2px rgba(0, 0, 0, 0.15);
-        cursor: pointer;
-        color: #000;
-        padding: 3px;
-      }
-
-      span::before {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-
-      svg {
-        stroke: #000;
-        stroke-width: 2px;
-      }
-
-      .item-selected-icon-minus {
-        display: none;
-      }
-
-      &:hover {
-        .item-selected-icon-minus {
-          display: block;
-        }
-
-        .item-selected-icon-check {
-          display: none;
-        }
-      }
-    }
-
-    &:focus {
-
-      .item-selected-icon {
-
-        span {
-          color: #fff;
-        }
-
-        svg {
-          background-color: #0073aa;
-          stroke: #fff;
-        }
-      }
-    }
-  }
-`
-);
+import { Icon, VisuallyHidden } from '@wordpress/components';
+import { useCallback } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
 function ItemOverlay({
   isSelected,
-  pageSize,
-  storyId,
-  addItemToSelectedStories,
-  removeItemFromSelectedStories,
+  story,
+  addSelectedStory,
+  removeSelectedStory,
 }) {
+  const onClickOverlay = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (isSelected) {
+        return;
+      }
+
+      addSelectedStory(story);
+    },
+    [addSelectedStory, story, isSelected]
+  );
+
+  const onClickIcon = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      if (isSelected) {
+        removeSelectedStory(story);
+      } else {
+        addSelectedStory(story);
+      }
+    },
+    [removeSelectedStory, addSelectedStory, story, isSelected]
+  );
+
   return (
-    <StyledOverlay
-      className={isSelected ? 'item-selected' : ''}
-      pageSize={pageSize}
-      href={`#select-story-${storyId}`}
-      onClick={(event) => {
-        event.preventDefault();
-        addItemToSelectedStories(storyId);
-      }}
+    <button
+      type="button"
+      className={
+        isSelected
+          ? 'web-stories-story-preview-card__overlay item-selected'
+          : 'web-stories-story-preview-card__overlay'
+      }
+      onClick={onClickOverlay}
     >
       {isSelected && (
         <div className="item-selected-icon">
@@ -124,23 +74,20 @@ function ItemOverlay({
           <Icon
             className="item-selected-icon-minus"
             icon="minus"
-            onClick={(event) => {
-              event.preventDefault();
-              removeItemFromSelectedStories(storyId);
-            }}
+            onClick={onClickIcon}
           />
+          <VisuallyHidden>{__('Deselect', 'web-stories')}</VisuallyHidden>
         </div>
       )}
-    </StyledOverlay>
+    </button>
   );
 }
 
 ItemOverlay.propTypes = {
   isSelected: PropTypes.bool,
-  pageSize: PageSizePropType,
-  storyId: PropTypes.number,
-  addItemToSelectedStories: PropTypes.func,
-  removeItemFromSelectedStories: PropTypes.func,
+  story: PropTypes.object.isRequired,
+  addSelectedStory: PropTypes.func,
+  removeSelectedStory: PropTypes.func,
 };
 
 export default ItemOverlay;

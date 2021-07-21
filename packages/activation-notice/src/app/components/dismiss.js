@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Renders a Dismiss button as required/used by WordPress.

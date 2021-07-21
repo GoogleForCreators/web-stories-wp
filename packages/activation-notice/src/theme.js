@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { useContext } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { useContext } from '@wordpress/element';
 
 export const GlobalStyle = createGlobalStyle`
   #web-stories-plugin-activation-notice {

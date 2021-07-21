@@ -28,6 +28,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -164,7 +165,7 @@ function StoriesView({
         message: sprintf(
           /* translators: %s: story title. */
           __('%s has been copied to your clipboard.', 'web-stories'),
-          story.title.length > 0 ? story.title : __('(no title)', 'web-stories')
+          titleFormatted(story.title)
         ),
         dismissable: true,
       });
