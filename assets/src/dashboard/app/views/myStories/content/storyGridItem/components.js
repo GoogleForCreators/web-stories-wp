@@ -100,6 +100,7 @@ export const Row = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
+  flex-wrap: wrap;
 `;
 export const LockedRow = styled(Row)`
   position: absolute;
