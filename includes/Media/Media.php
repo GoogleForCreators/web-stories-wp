@@ -131,6 +131,33 @@ class Media extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
+		$this->register_taxonomy();
+		$this->register_meta();
+		$this->add_image_sizes();
+
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
+
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
+
+		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
+
+		// Hide video posters from Media grid view.
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
+		// Hide video posters from Media list view.
+		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
+		// Hide video posters from web-stories/v1/media REST API requests.
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
+		add_filter( 'default_post_metadata', [ $this, 'filter_default_value_is_muted' ], 15, 4 );
+	}
+
+	/**
+	 * Register taxonomy for attachment post type.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function register_taxonomy() {
 		register_taxonomy(
 			self::STORY_MEDIA_TAXONOMY,
 			'attachment',
@@ -140,6 +167,29 @@ class Media extends Service_Base {
 				'rewrite'      => false,
 				'hierarchical' => false,
 				'show_in_rest' => true,
+			]
+		);
+	}
+
+	/**
+	 * Register meta for attachment post type.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function register_meta() {
+		register_meta(
+			'post',
+			self::IS_MUTED_POST_META_KEY,
+			[
+				'type'              => 'boolean',
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'description'       => __( 'Whether the video is muted', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => false,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
 			]
 		);
 
@@ -152,20 +202,6 @@ class Media extends Service_Base {
 				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
-			]
-		);
-
-		register_meta(
-			'post',
-			self::IS_MUTED_POST_META_KEY,
-			[
-				'type'              => 'boolean',
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'description'       => __( 'Whether the video is muted', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => false,
 				'single'            => true,
 				'object_subtype'    => 'attachment',
 			]
@@ -198,9 +234,18 @@ class Media extends Service_Base {
 				'object_subtype'    => 'attachment',
 			]
 		);
+	}
 
-		// Image sizes as per https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
-
+	/**
+	 * Add image sizes.
+	 *
+	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function add_image_sizes() {
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
 		add_image_size(
 			self::POSTER_PORTRAIT_IMAGE_SIZE,
@@ -224,20 +269,6 @@ class Media extends Service_Base {
 			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[1],
 			false
 		);
-
-		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
-
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
-
-		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
-
-		// Hide video posters from Media grid view.
-		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
-		// Hide video posters from Media list view.
-		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
-		// Hide video posters from web-stories/v1/media REST API requests.
-		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
-		add_filter( 'default_post_metadata', [ $this, 'filter_default_value_is_muted' ], 15, 4 );
 	}
 
 	/**

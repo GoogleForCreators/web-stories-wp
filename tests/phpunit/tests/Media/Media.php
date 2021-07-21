@@ -33,15 +33,12 @@ class Media extends Test_Case {
 		$media = new \Google\Web_Stories\Media\Media();
 		$media->register();
 
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
-		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
-
 		$this->assertSame( 10, has_action( 'rest_api_init', [ $media, 'rest_api_init' ] ) );
 		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $media, 'wp_prepare_attachment_for_js' ] ) );
 		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
 		$this->assertSame( 10, has_filter( 'ajax_query_attachments_args', [ $media, 'filter_ajax_query_attachments_args' ] ) );
 		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_generated_media_attachments' ] ) );
+		$this->assertSame( 15, has_filter( 'default_post_metadata', [ $media, 'filter_default_value_is_muted' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -53,6 +50,44 @@ class Media extends Test_Case {
 			)
 		);
 	}
+
+	/**
+	 * @covers ::add_image_sizes
+	 */
+	public function test_add_image_sizes() {
+		$media = new \Google\Web_Stories\Media\Media();
+		$this->call_private_method( $media, 'add_image_sizes' );
+
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
+	}
+
+
+	/**
+	 * @covers ::register_meta
+	 */
+	public function test_register_meta() {
+		$media = new \Google\Web_Stories\Media\Media();
+		$this->call_private_method( $media, 'register_meta' );
+
+		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::MUTED_ID_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );
+		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, 'attachment' ) );
+		$this->assertFalse( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'attachment' ) );
+	}
+
+	/**
+	 * @covers ::register_taxonomy
+	 */
+	public function test_register_taxonomy() {
+		$media = new \Google\Web_Stories\Media\Media();
+		$this->call_private_method( $media, 'register_taxonomy' );
+
+		$this->assertTrue( taxonomy_exists( \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY ) );
+	}
+
 	/**
 	 * @covers ::rest_api_init
 	 */
@@ -147,7 +182,7 @@ class Media extends Test_Case {
 		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayHasKey( 'media_source', $video );
 		$this->assertArrayHasKey( 'meta', $video );
-		$this->assertArrayHasKey( 'web_story_is_muted', $video['meta'] );
+		$this->assertArrayHasKey( \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, $video['meta'] );
 	}
 
 	/**
