@@ -56,7 +56,7 @@ export const Poster = styled.div`
   height: 100%;
   width: 100%;
   object-fit: fill;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.gradient.placeholder};
 `;
 
@@ -66,7 +66,7 @@ export const Gradient = styled.div`
   bottom: 0;
   height: 67%;
   width: 100%;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.gradient.posterOverlay};
 `;
 
@@ -81,7 +81,7 @@ export const Scrim = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   padding: 8px;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.opacity.black3};
 `;
 
