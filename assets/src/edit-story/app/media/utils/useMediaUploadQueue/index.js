@@ -261,39 +261,38 @@ function useMediaUploadQueue() {
           // Transcode/Optimize videos before upload.
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-          if (isTranscodingEnabled && canTranscodeFile(file) && !muteVideo) {
-            startTranscoding({ id });
+          if (isTranscodingEnabled && canTranscodeFile(file)) {
+            if (!muteVideo) {
+              startTranscoding({ id });
 
-            try {
-              newFile = await transcodeVideo(file);
-              additionalData.media_source = 'video-optimization';
+              try {
+                newFile = await transcodeVideo(file);
+                finishTranscoding({ id, file: newFile });
+                additionalData.media_source = 'video-optimization';
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
 
-              finishTranscoding({ id, file: newFile });
-            } catch (error) {
-              // Cancel uploading if there were any errors.
-              cancelUploading({ id, error });
+                trackError('upload_media', error?.message);
 
-              trackError('upload_media', error?.message);
+                return;
+              }
+            } else {
+              startMuting({ id });
+              try {
+                newFile = await stripAudioFromVideo(file);
+                finishMuting({ id, file: newFile });
+                additionalData.meta = {
+                  web_story_is_muted: true,
+                };
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
 
-              return;
-            }
-          }
+                trackError('upload_media', error?.message);
 
-          if (isTranscodingEnabled && canTranscodeFile(file) && muteVideo) {
-            startMuting({ id });
-            try {
-              newFile = await stripAudioFromVideo(file);
-              additionalData.meta = {
-                web_story_is_muted: true,
-              };
-              finishMuting({ id, file: newFile });
-            } catch (error) {
-              // Cancel uploading if there were any errors.
-              cancelUploading({ id, error });
-
-              trackError('upload_media', error?.message);
-
-              return;
+                return;
+              }
             }
           }
 
