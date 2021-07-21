@@ -24,7 +24,7 @@ import {
   Text,
 } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -124,6 +124,11 @@ export const CardDetailsColumn = styled.div`
 
 // Story Title
 // TODO clamp title to set amount of lines and show ellipsis
+const textClamp = css`
+  display: box;
+  -webkit-line-clamp: 3;
+  box-orient: vertical;
+`;
 export const Title = styled(Headline).attrs(() => ({
   as: 'a',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
@@ -133,10 +138,8 @@ export const Title = styled(Headline).attrs(() => ({
   /* white-space: nowrap; */
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;
-  /* watch what happens! */
-  display: box;
-  -webkit-line-clamp: 3;
-  box-orient: vertical;
+  ${textClamp};
+
   &:hover {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
