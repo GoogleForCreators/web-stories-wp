@@ -90,13 +90,13 @@ export class RightClickMenu extends Container {
   // page actions
   get duplicatePage() {
     return this.queryByRole('button', {
-      name: 'Duplicate Page',
+      name: 'Duplicate page',
     });
   }
 
   get deletePage() {
     return this.queryByRole('button', {
-      name: 'Delete Page',
+      name: 'Delete page',
     });
   }
 }

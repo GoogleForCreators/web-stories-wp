@@ -262,7 +262,6 @@ describe('Right Click Menu integration', () => {
 
   describe('right click menu: page/background', () => {
     it("should duplicate the current page when clicking 'Duplicate page'", async () => {
-      // insert elements
       await addEarthImage();
       await addText();
 
