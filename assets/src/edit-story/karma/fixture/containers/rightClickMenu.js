@@ -53,25 +53,25 @@ export class RightClickMenu extends Container {
   // foreground media actions
   get sendBackward() {
     return this.getByRole('button', {
-      name: 'Send backward, or use Option Command Open Bracket on a keyboard',
+      name: `Send backward, or use Option ${commandOrControl} Open Bracket on a keyboard`,
     });
   }
 
   get sendToBack() {
     return this.getByRole('button', {
-      name: 'Send to back, or use Command Open Bracket on a keyboard',
+      name: `Send to back, or use ${commandOrControl} Open Bracket on a keyboard`,
     });
   }
 
   get bringForward() {
     return this.getByRole('button', {
-      name: 'Bring forward, or use Command Close Bracket on a keyboard',
+      name: `Bring forward, or use ${commandOrControl} Close Bracket on a keyboard`,
     });
   }
 
   get bringToFront() {
     return this.getByRole('button', {
-      name: 'Bring to front, or use Option Command Close Bracket on a keyboard',
+      name: `Bring to front, or use Option ${commandOrControl} Close Bracket on a keyboard`,
     });
   }
 
