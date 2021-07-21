@@ -161,15 +161,14 @@ function useProcessMedia({
           oldResource: {
             ...oldResource,
             isMuted: true,
-            isTranscoding: true,
-            isOptimized: true,
+            isMuting: true,
           },
         });
       };
 
       const onUploadError = () => {
         updateExistingElements({
-          oldResource: { ...oldResource, isTranscoding: false },
+          oldResource: { ...oldResource, isMuting: false },
         });
       };
 
