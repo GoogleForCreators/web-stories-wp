@@ -25,7 +25,7 @@ import checkVersion from './checkVersion';
  * @param {string} minVersion Minimum require WordPress version.
  */
 function minWPVersionRequired(minVersion) {
-  if ('latest' === process.env?.WP_VERSION && 'latest' === minVersion) {
+  if ('latest' === process.env?.WP_VERSION) {
     return;
   }
   if (!checkVersion(process.env?.WP_VERSION, minVersion)) {
