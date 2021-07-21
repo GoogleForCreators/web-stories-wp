@@ -18,6 +18,7 @@
  */
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
+import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { css } from 'styled-components';
@@ -34,6 +35,7 @@ import {
   StoryPropType,
 } from '../../../../../types';
 import { titleFormatted } from '../../../../../utils';
+import { useConfig } from '../../../../config';
 import {
   CardWrapper,
   Container,
@@ -53,6 +55,8 @@ const StoryGridItem = ({
   story,
   storyMenu,
 }) => {
+  const { enablePostLocking } = useFeatures();
+  const { userId } = useConfig();
   const tabIndex = isActive ? 0 : -1;
   const titleRenameProps = renameStory
     ? {
@@ -63,14 +67,19 @@ const StoryGridItem = ({
       }
     : {};
 
+  const isLocked = useMemo(() => {
+    return enablePostLocking && story?.locked && userId !== story?.lockUser.id;
+  }, [enablePostLocking, story, userId]);
+
   const generatedMenuItems = useMemo(
     () =>
       generateStoryMenu({
         menuItemActions: storyMenu.menuItemActions,
         menuItems: storyMenu.menuItems,
         story,
+        isLocked,
       }),
-    [storyMenu, story]
+    [storyMenu, story, isLocked]
   );
 
   const storyDate = getRelativeDisplayDate(
@@ -137,8 +146,8 @@ const StoryGridItem = ({
               displayDate={storyDate}
               formattedTitle={formattedTitle}
               id={story.id}
+              isLocked={isLocked}
               lockUser={story?.lockUser}
-              locked={story?.locked}
               status={story?.status}
               tabIndex={tabIndex}
               title={story.title}

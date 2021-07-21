@@ -19,7 +19,6 @@
  */
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { Tooltip, TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
 
@@ -27,7 +26,6 @@ import { Tooltip, TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../../../../constants';
-import { useConfig } from '../../../../config';
 import { InlineInputForm } from '../../../../../components';
 import { DashboardStatusesPropType } from '../../../../../types';
 import {
@@ -49,8 +47,8 @@ const StoryDisplayContent = ({
   editMode,
   formattedTitle,
   id,
+  isLocked,
   lockUser = {},
-  locked = false,
   onEditComplete,
   onEditCancel,
   status,
@@ -58,9 +56,6 @@ const StoryDisplayContent = ({
   title,
   titleLink,
 }) => {
-  const { enablePostLocking } = useFeatures();
-  const { userId } = useConfig();
-
   const displayDateText = useMemo(() => {
     if (!displayDate) {
       return null;
@@ -89,41 +84,39 @@ const StoryDisplayContent = ({
     }
   }, [status, displayDate]);
 
-  const showLockIcon = useMemo(() => {
-    return enablePostLocking && locked && userId !== lockUser.id;
-  }, [enablePostLocking, lockUser, locked, userId]);
-
-  const storyLockedTitle = showLockIcon && (
-    <Tooltip
-      position={TOOLTIP_PLACEMENT.BOTTOM_START}
-      title={
-        lockUser.avatar && (
-          <AvatarTooltip>
-            <LockAvatar
-              src={lockUser.avatar}
-              alt={lockUser.name}
-              height={24}
-              width={24}
-            />
-            {lockUser?.name}
-          </AvatarTooltip>
-        )
-      }
-    >
-      <LockIcon />
-      <DetailCopy>
-        {lockUser.name &&
-          sprintf(
-            /* translators: %s: user name */
-            __('%s is currently editing', 'web-stories'),
-            lockUser.name
-          )}
-      </DetailCopy>
-    </Tooltip>
+  const storyLockedTitle = isLocked && (
+    <Row>
+      <Tooltip
+        position={TOOLTIP_PLACEMENT.BOTTOM_START}
+        title={
+          lockUser.avatar && (
+            <AvatarTooltip>
+              <LockAvatar
+                src={lockUser.avatar}
+                alt={lockUser.name}
+                height={24}
+                width={24}
+              />
+              {lockUser?.name}
+            </AvatarTooltip>
+          )
+        }
+      >
+        <LockIcon />
+        <DetailCopy>
+          {lockUser.name &&
+            sprintf(
+              /* translators: %s: user name */
+              __('%s is currently editing', 'web-stories'),
+              lockUser.name
+            )}
+        </DetailCopy>
+      </Tooltip>
+    </Row>
   );
   return (
     <StyledStoryDisplayContent>
-      {showLockIcon && <Row>{storyLockedTitle}</Row>}
+      {storyLockedTitle}
       {editMode ? (
         <InlineInputForm
           onEditComplete={onEditComplete}
@@ -171,8 +164,8 @@ StoryDisplayContent.propTypes = {
   editMode: PropTypes.bool,
   formattedTitle: PropTypes.string.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  isLocked: PropTypes.bool,
   lockUser: PropTypes.object,
-  locked: PropTypes.bool,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
   tabIndex: PropTypes.number,
