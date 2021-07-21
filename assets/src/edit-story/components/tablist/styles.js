@@ -48,14 +48,28 @@ export const PanelText = styled(Headline).attrs({
   transition: background-color 300ms ease-in;
 `;
 
+export const TabButtonWrapper = styled.div`
+  position: relative;
+  height: 60px;
+  width: 100%;
+  padding: 5px 4px;
+
+  &,
+  :hover,
+  :focus-within,
+  .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    background-color: ${({ theme }) => theme.colors.bg.secondary};
+  }
+`;
+
 export const TabButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.PLAIN,
 })`
-  position: relative;
+  position: absolute;
   display: flex;
   justify-content: space-between;
-  height: 60px;
-  width: 100%;
+  width: calc(100% - 8px);
+  height: calc(100% - 10px);
   padding: 16px;
   border-radius: 0;
 
@@ -66,10 +80,11 @@ export const TabButton = styled(Button).attrs({
     background-color: ${({ theme }) => theme.colors.bg.secondary};
   }
 
-  :focus,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
-    z-index: 2;
-  }
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 
   ${PanelText} {
     opacity: 0.8;
@@ -96,14 +111,12 @@ export const PanelWrapper = styled.div`
   &:not(:first-child) > ${TabButton} {
     box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
     margin-top: 1px;
-
-    ${themeHelpers.focusableOutlineCSS};
   }
 
   ${({ isExpanded, theme }) =>
     isExpanded &&
     css`
-      & > ${TabButton} {
+      & ${TabButton}, & ${TabButtonWrapper} {
         :not(:last-child) {
           box-shadow: none;
         }
@@ -125,7 +138,7 @@ export const PanelWrapper = styled.div`
         }
       }
 
-      * > ${TabPanel} {
+      * ${TabPanel} {
         height: 560px;
         padding: 0 0 16px 16px;
         overflow-y: scroll;
