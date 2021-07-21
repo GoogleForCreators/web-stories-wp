@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useEffect, useRef, useState } from 'react';
+import { useCallback, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { shallowEqual } from 'react-pure-render';
@@ -79,8 +79,10 @@ function AnimationPanel({
 }) {
   const playUpdatedAnimation = useRef(false);
 
-  const [dropdown, setDropdown] = useState(null);
-  const highlight = useFocusHighlight(states.ANIMATION, dropdown);
+  // <EffectChooserDropdown> uses a forward ref, so we can't use a callback ref
+  // to pass an element to useFocusHighlight().
+  const dropdownRef = useRef(null);
+  const highlight = useFocusHighlight(states.ANIMATION, dropdownRef?.current);
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
@@ -245,7 +247,7 @@ function AnimationPanel({
       <GroupWrapper hasAnimation={selectedEffectTitle}>
         <StyledRow>
           <EffectChooserDropdown
-            ref={setDropdown}
+            ref={dropdownRef}
             onAnimationSelected={handleAddOrUpdateElementEffect}
             onNoEffectSelected={handleRemoveEffect}
             isBackgroundEffects={isBackground}
