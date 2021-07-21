@@ -345,7 +345,7 @@ function useFFmpeg() {
    * @type {boolean}
    */
   const isUserSettingEnabled = Boolean(
-    currentUser.meta?.web_stories_media_optimization
+    currentUser?.meta?.web_stories_media_optimization
   );
 
   /**
