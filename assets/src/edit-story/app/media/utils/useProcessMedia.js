@@ -152,7 +152,7 @@ function useProcessMedia({
     ]
   );
 
-  const optimizeVideoMuted = useCallback(
+  const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
       const { src: url, mimeType, poster } = oldResource;
 
@@ -290,7 +290,7 @@ function useProcessMedia({
   return {
     optimizeVideo,
     optimizeGif,
-    optimizeVideoMuted,
+    muteExistingVideo,
   };
 }
 

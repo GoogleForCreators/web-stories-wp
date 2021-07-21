@@ -66,8 +66,8 @@ const StyledCheckbox = styled(Checkbox)`
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const { isTranscodingEnabled } = useFFmpeg();
-  const { optimizeVideoMuted } = useLocalMedia((state) => ({
-    optimizeVideoMuted: state.actions.optimizeVideoMuted,
+  const { muteExistingVideo } = useLocalMedia((state) => ({
+    muteExistingVideo: state.actions.muteExistingVideo,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
   const { isMuted, isTranscoding, isMuting, local } = resource;
@@ -75,8 +75,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isSingleElement = selectedElements.length === 1;
 
   const handleHandleMuteVideo = useCallback(() => {
-    optimizeVideoMuted({ resource });
-  }, [resource, optimizeVideoMuted]);
+    muteExistingVideo({ resource });
+  }, [resource, muteExistingVideo]);
 
   const canMuted = useMemo(() => {
     return (

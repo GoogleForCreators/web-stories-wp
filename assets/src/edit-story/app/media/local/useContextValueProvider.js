@@ -164,7 +164,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
-  const { optimizeVideo, optimizeGif, optimizeVideoMuted } = useProcessMedia({
+  const { optimizeVideo, optimizeGif, muteExistingVideo } = useProcessMedia({
     uploadVideoPoster,
     updateVideoIsMuted,
     uploadMedia,
@@ -215,7 +215,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       updateMediaElement,
       optimizeVideo,
       optimizeGif,
-      optimizeVideoMuted,
+      muteExistingVideo,
     },
   };
 }
