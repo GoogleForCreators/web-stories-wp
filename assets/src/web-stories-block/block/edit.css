@@ -220,6 +220,7 @@
   position: absolute;
   top: 28px;
   border: 1px solid #757575;
+  background: #fff;
 }
 
 .web-stories-story-picker-filter__combobox
