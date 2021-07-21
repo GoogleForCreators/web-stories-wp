@@ -216,6 +216,62 @@ export function finishTranscoding(state, { payload: { id, file } }) {
 }
 
 /**
+ * Starts mute a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function startMuting(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: 'MUTING',
+            resource: {
+              ...item.resource,
+              isMuting: true,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Finishes muting a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @param {File} action.payload.file New file object.
+ * @return {Object} New state
+ */
+export function finishMuting(state, { payload: { id, file } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            file,
+            state: 'MUTED',
+            resource: {
+              ...item.resource,
+              isMuting: false,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
  * Replaces an item's placeholder resource.
  *
  * If the item's resource is not a placeholder, does nothing.

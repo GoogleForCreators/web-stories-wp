@@ -70,7 +70,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     optimizeVideoMuted: state.actions.optimizeVideoMuted,
   }));
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, isTranscoding, local } = resource;
+  const { isMuted, isTranscoding, isMuting, local } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
@@ -80,12 +80,13 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const canMuted = useMemo(() => {
     return (
-      isMuteVideoEnabled &&
-      isTranscodingEnabled &&
-      !local &&
-      !isMuted &&
-      !isTranscoding &&
-      isSingleElement
+      (isMuteVideoEnabled &&
+        isTranscodingEnabled &&
+        !local &&
+        !isMuted &&
+        !isTranscoding &&
+        isSingleElement) ||
+      isMuting
     );
   }, [
     isMuteVideoEnabled,
@@ -94,6 +95,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isMuted,
     isTranscoding,
     isSingleElement,
+    isMuting,
   ]);
 
   const checkboxId = `cb-${uuidv4()}`;
@@ -105,6 +107,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       {canMuted && (
         <Row>
           <StyledButton
+            disabled={isMuting}
             variant={BUTTON_VARIANTS.RECTANGLE}
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}

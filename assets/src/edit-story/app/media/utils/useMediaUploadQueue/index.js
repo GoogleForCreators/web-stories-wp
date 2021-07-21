@@ -71,7 +71,9 @@ function useMediaUploadQueue() {
     finishUploading,
     cancelUploading,
     startTranscoding,
+    startMuting,
     finishTranscoding,
+    finishMuting,
     replacePlaceholderResource,
   } = actions;
 
@@ -259,21 +261,32 @@ function useMediaUploadQueue() {
           // Transcode/Optimize videos before upload.
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-          if (isTranscodingEnabled && canTranscodeFile(file)) {
+          if (isTranscodingEnabled && canTranscodeFile(file) && !muteVideo) {
             startTranscoding({ id });
 
             try {
-              if (muteVideo) {
-                newFile = await transcodeMuteVideo(file);
-                additionalData.meta = {
-                  web_story_is_muted: true,
-                };
-              } else {
-                newFile = await transcodeVideo(file);
-                additionalData.media_source = 'video-optimization';
-              }
+              newFile = await transcodeVideo(file);
+              additionalData.media_source = 'video-optimization';
 
               finishTranscoding({ id, file: newFile });
+            } catch (error) {
+              // Cancel uploading if there were any errors.
+              cancelUploading({ id, error });
+
+              trackError('upload_media', error?.message);
+
+              return;
+            }
+          }
+
+          if (isTranscodingEnabled && canTranscodeFile(file) && muteVideo) {
+            startMuting({ id });
+            try {
+              newFile = await transcodeMuteVideo(file);
+              additionalData.meta = {
+                web_story_is_muted: true,
+              };
+              finishMuting({ id, file: newFile });
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -339,6 +352,8 @@ function useMediaUploadQueue() {
     transcodeMuteVideo,
     convertGifToVideo,
     isGifOptimizationEnabled,
+    startMuting,
+    finishMuting,
   ]);
 
   return useMemo(
@@ -352,6 +367,7 @@ function useMediaUploadQueue() {
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
         isUploading: state.queue.length !== 0,
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
+        isMuting: state.queue.some((item) => item.state === 'MUTING'),
       },
       actions: {
         addItem: actions.addItem,
