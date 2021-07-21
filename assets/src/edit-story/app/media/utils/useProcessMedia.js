@@ -72,12 +72,23 @@ function useProcessMedia({
     [updateElementsByResourceId]
   );
 
-  const updateOldObject = useCallback(
+  const updateOldTranscodedObject = useCallback(
     (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
         media_source: mediaSource,
         meta: {
           web_stories_optimized_id: newId,
+        },
+      });
+    },
+    [updateMedia]
+  );
+
+  const updateOldMutedObject = useCallback(
+    (oldId, newId) => {
+      updateMedia(oldId, {
+        meta: {
+          web_stories_muted_id: newId,
         },
       });
     },
@@ -102,7 +113,7 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldObject(oldResource.id, resource.id, 'source-video');
+        updateOldTranscodedObject(oldResource.id, resource.id, 'source-video');
         deleteMediaElement({ id: oldResource.id });
         if (
           ['video', 'gif'].includes(resource.type) &&
@@ -146,7 +157,7 @@ function useProcessMedia({
       uploadMedia,
       uploadVideoPoster,
       updateVideoIsMuted,
-      updateOldObject,
+      updateOldTranscodedObject,
       deleteMediaElement,
       updateExistingElements,
     ]
@@ -174,12 +185,13 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
+        updateOldMutedObject(oldResource.id, resource.id);
         if (
           ['video', 'gif'].includes(resource.type) &&
           !resource.local &&
           !resource.posterId
         ) {
-          uploadVideoPoster(resource.id, resource.src, oldResource.id);
+          uploadVideoPoster(resource.id, resource.src);
         }
       };
 
@@ -214,7 +226,6 @@ function useProcessMedia({
           additionalData: {
             alt: oldResource.alt,
             title: oldResource.title,
-            post: oldResource.id,
           },
           muteVideo: true,
           resource: {
@@ -226,7 +237,13 @@ function useProcessMedia({
       };
       return process();
     },
-    [copyResourceData, uploadMedia, uploadVideoPoster, updateExistingElements]
+    [
+      copyResourceData,
+      uploadMedia,
+      uploadVideoPoster,
+      updateExistingElements,
+      updateOldMutedObject,
+    ]
   );
 
   const optimizeGif = useCallback(
@@ -235,7 +252,7 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        updateOldObject(oldResource.id, resource.id, 'source-image');
+        updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
 
         if (
@@ -280,7 +297,7 @@ function useProcessMedia({
       copyResourceData,
       uploadMedia,
       uploadVideoPoster,
-      updateOldObject,
+      updateOldTranscodedObject,
       deleteMediaElement,
       updateExistingElements,
     ]

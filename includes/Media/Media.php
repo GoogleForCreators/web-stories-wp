@@ -102,6 +102,13 @@ class Media extends Service_Base {
 	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
 
 	/**
+	 * The muted video id post meta key.
+	 *
+	 * @var string
+	 */
+	const MUTED_ID_POST_META_KEY = 'web_stories_muted_id';
+
+	/**
 	 * Key for media post type.
 	 *
 	 * @var string
@@ -171,6 +178,20 @@ class Media extends Service_Base {
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
 				'description'       => __( 'ID of optimized video.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+
+		register_meta(
+			'post',
+			self::MUTED_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'ID of muted video.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,

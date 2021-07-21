@@ -99,6 +99,9 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   ]);
 
   const checkboxId = `cb-${uuidv4()}`;
+  const buttonText = isMuting
+    ? __('Muting video', 'web-stories')
+    : __('Mute video', 'web-stories');
   return (
     <SimplePanel
       name="videoOptions"
@@ -113,7 +116,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
             size={BUTTON_SIZES.SMALL}
             onClick={handleHandleMuteVideo}
           >
-            {__('Muted video', 'web-stories')}
+            {buttonText}
           </StyledButton>
         </Row>
       )}
