@@ -147,7 +147,10 @@ function useProcessMedia({
           onUploadStart,
           onUploadError,
           onUploadProgress,
-          additionalData: { alt: oldResource.alt, title: oldResource.title },
+          additionalData: {
+            alt: oldResource.alt,
+            title: oldResource.title,
+          },
         });
       };
       return process();
@@ -218,6 +221,7 @@ function useProcessMedia({
             // Ignore for now.
           }
         }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
@@ -226,6 +230,9 @@ function useProcessMedia({
           additionalData: {
             alt: oldResource.alt,
             title: oldResource.title,
+            media_source: oldResource?.isOptimized
+              ? 'video-optimization'
+              : 'editor',
           },
           muteVideo: true,
           resource: {
