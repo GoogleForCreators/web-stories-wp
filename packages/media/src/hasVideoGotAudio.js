@@ -25,9 +25,6 @@ function hasVideoGotAudio(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
-  // Since  we want to get the actual frames, we need to make sure to preload the whole video
-  // and not just metadata.
-  // See https://github.com/google/web-stories-wp/issues/2922.
   video.preload = 'auto';
 
   return new Promise((resolve, reject) => {
@@ -41,14 +38,9 @@ function hasVideoGotAudio(src) {
       { once: true } // Important because 'canplay' can be fired hundreds of times.
     );
 
-    video.addEventListener(
-      'seeked',
-      () => {
-        const videoHasAudio = hasAudio(video);
-        resolve(videoHasAudio);
-      },
-      { once: true }
-    );
+    video.addEventListener('seeked', () => resolve(hasAudio(video)), {
+      once: true,
+    });
 
     video.src = src;
   });
