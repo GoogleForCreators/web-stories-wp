@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useRef, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -97,10 +97,12 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const [input, setInput] = useState(null);
   const highlightInput = useFocusHighlight(states.ASSISTIVE_TEXT, input);
 
-  const [mediaPicker, setMediaPicker] = useState(null);
+  // <StyledMedia> uses a forward ref, so we can't use a callback ref
+  // to pass an element to useFocusHighlight().
+  const mediaRef = useRef();
   const highlightMediaPicker = useFocusHighlight(
     states.VIDEO_A11Y_POSTER,
-    mediaPicker
+    mediaRef?.current
   );
 
   let cropParams = null;
@@ -125,7 +127,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     >
       <Row>
         <StyledMedia
-          ref={setMediaPicker}
+          ref={mediaRef}
           value={poster}
           cropParams={cropParams}
           onChange={handleChangePoster}
