@@ -93,8 +93,30 @@ class Output_Buffer extends Service_Base implements Conditional {
 		 * Start output buffering at very low priority for sake of plugins and themes that use template_redirect
 		 * instead of template_include.
 		 */
-		$priority = defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX; // phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		add_action( 'template_redirect', [ $this, 'start_output_buffering' ], $priority );
+		$this->start_output_buffering();
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action(): string {
+		return 'template_redirect';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
+		return defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
 	}
 
 	/**

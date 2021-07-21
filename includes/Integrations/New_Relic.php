@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 
 /**
  * New Relic integration class.
@@ -43,9 +44,32 @@ class New_Relic extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function register() {
+		$this->disable_autorum();
+	}
+
+	/**
+	 * Get the action to use for registering the service.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return string Registration action to use.
+	 */
+	public static function get_registration_action(): string {
+		return 'template_redirect';
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
 		// Run at the same time as the output buffering.
-		$priority = defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX; // phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		add_action( 'template_redirect', [ $this, 'disable_autorum' ], $priority );
+
+		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
+		return defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
 	}
 
 	/**
@@ -56,7 +80,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed(): bool {
-		return function_exists( 'newrelic_disable_autorum' );
+		return function_exists( '\newrelic_disable_autorum' );
 	}
 
 	/**
@@ -74,6 +98,10 @@ class New_Relic extends Service_Base implements Conditional {
 	 * @return void
 	 */
 	public function disable_autorum() {
-		newrelic_disable_autorum();
+		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+			return;
+		}
+
+		\newrelic_disable_autorum();
 	}
 }

@@ -25,14 +25,12 @@ use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
  */
 class New_Relic extends Test_Case {
 	/**
-	 * @covers ::register
+	 * @covers ::is_needed
 	 */
-	public function test_register() {
+	public function test_is_needed() {
 		$new_relic = new New_Relic_Integration();
-		$new_relic->register();
+		$result    = $this->call_private_method( $new_relic, 'is_needed' );
 
-		$this->assertSame( PHP_INT_MIN, has_filter( 'template_redirect', [ $new_relic, 'disable_autorum' ] ) );
-
-		remove_all_filters( 'new_Relic_sitemap_post_types' );
+		$this->assertSame( function_exists( 'newrelic_disable_autorum' ), $result );
 	}
 }
