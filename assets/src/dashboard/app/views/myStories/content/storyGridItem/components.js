@@ -30,7 +30,6 @@ import styled from 'styled-components';
  */
 import { CardGridItem } from '../../../../../components';
 
-// Each grid item contains its own grid - maybe not anymore?
 export const CustomCardGridItem = styled(CardGridItem)`
   display: grid;
   grid-template-columns: 100%;
@@ -86,7 +85,7 @@ export const Scrim = styled.div`
   background: ${({ theme }) => theme.colors.opacity.black3};
 `;
 
-// components that create the content to display on top of a poster
+// Components that create the content to display on top of a poster
 // Set guidance for how content should display on top of a poster
 export const StyledStoryDisplayContent = styled.div`
   padding: 12px 4px 0 4px;

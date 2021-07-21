@@ -67,9 +67,10 @@ const StoryGridItem = ({
       }
     : {};
 
-  const isLocked = useMemo(() => {
-    return enablePostLocking && story?.locked && userId !== story?.lockUser.id;
-  }, [enablePostLocking, story, userId]);
+  const isLocked = useMemo(
+    () => enablePostLocking && story?.locked && userId !== story?.lockUser.id,
+    [enablePostLocking, story, userId]
+  );
 
   const generatedMenuItems = useMemo(
     () =>
