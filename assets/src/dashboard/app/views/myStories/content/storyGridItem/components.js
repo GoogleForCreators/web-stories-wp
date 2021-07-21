@@ -133,6 +133,7 @@ export const Title = styled(Headline).attrs(() => ({
   /* white-space: nowrap; */
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;
+  /* watch what happens! */
   display: box;
   -webkit-line-clamp: 3;
   box-orient: vertical;
