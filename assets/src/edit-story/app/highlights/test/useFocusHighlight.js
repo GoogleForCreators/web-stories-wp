@@ -25,26 +25,47 @@ import userEvent from '@testing-library/user-event';
  * Internal dependencies
  */
 import { useState } from 'react';
-import { useContextSelector, useFocusOut } from '@web-stories-wp/design-system';
 import useFocusHighlight from '../useFocusHighlight';
+import HighlightContext from '../context';
 
-jest.mock('@web-stories-wp/design-system');
+// Only mock useFocusOut().
+// https://jestjs.io/docs/jest-object#jestrequireactualmodulename
+jest.mock('@web-stories-wp/design-system', () => {
+  const original = jest.requireActual('@web-stories-wp/design-system');
+  return {
+    __esModule: true,
+    ...original,
+    useFocusOut: jest.fn(),
+  };
+});
+
+// eslint-disable-next-line import/order
+import { useFocusOut } from '@web-stories-wp/design-system';
 
 describe('useFocusHighlight()', () => {
-  jest.useFakeTimers();
-  beforeEach(jest.clearAllMocks);
+  const key = 'statekey';
+  let cancelEffect;
+  let onFocusOut;
+  let wrapper;
 
-  it('should deal with focus-in/focus-out for the provided ref', () => {
-    const key = 'statekey';
-    const cancelEffect = jest.fn();
-    const onFocusOut = jest.fn();
+  beforeEach(() => {
+    cancelEffect = jest.fn();
+    onFocusOut = jest.fn();
 
-    useContextSelector.mockImplementationOnce(() => ({
+    const contextValue = {
       cancelEffect,
       onFocusOut,
       [key]: { focus: true, showEffect: true },
-    }));
+    };
+    const provider = ({ children }) => (
+      <HighlightContext.Provider value={contextValue}>
+        {children}
+      </HighlightContext.Provider>
+    );
+    wrapper = provider;
+  });
 
+  it('should deal with focus-in/focus-out for the provided ref', () => {
     const mockFocus = jest.fn();
     const mockAddEventListener = jest.fn();
     const mockRemoveEventListener = jest.fn();
@@ -53,62 +74,54 @@ describe('useFocusHighlight()', () => {
       addEventListener: mockAddEventListener,
       removeEventListener: mockRemoveEventListener,
     };
-    const { result } = renderHook(() => useFocusHighlight(key, mockElement));
+
+    const { result } = renderHook(() => useFocusHighlight(key, mockElement), {
+      wrapper,
+    });
     expect(result.current.focus).toBe(true);
-    expect(useFocusOut).toHaveBeenCalledWith(mockElement, onFocusOut);
+    expect(useFocusOut).toHaveBeenCalledWith(
+      expect.objectContaining({ current: mockElement }),
+      onFocusOut,
+      expect.arrayContaining([mockElement])
+    );
 
     // the event listeners should only be added when the effect is shown
     expect(mockAddEventListener.mock.calls[0][0]).toStrictEqual('click');
     expect(mockAddEventListener.mock.calls[1][0]).toStrictEqual('keydown');
     expect(mockRemoveEventListener).not.toHaveBeenCalled();
-    expect(mockFocus).not.toHaveBeenCalled();
-
-    jest.runOnlyPendingTimers();
     expect(mockFocus).toHaveBeenCalledWith();
   });
 
   it('should cancel the effect when the element is manipulated', () => {
-    const key = 'statekey';
-    const cancelEffect = jest.fn();
-
-    useContextSelector.mockImplementationOnce(() => ({
-      cancelEffect,
-      [key]: { focus: true, showEffect: true },
-    }));
-
-    const Wrapper = () => {
+    const HighlightableInput = () => {
       const [mockElement, setMockElement] = useState(null);
       useFocusHighlight(key, mockElement);
       return <input data-testid="focusable-input" ref={setMockElement} />;
     };
 
-    render(<Wrapper />);
+    render(<HighlightableInput />, { wrapper });
+
     const input = screen.getByTestId('focusable-input');
     fireEvent.click(input);
+
     expect(cancelEffect).toHaveBeenCalledWith(key);
   });
 
   it('should not re-focus when tabbing out', () => {
-    const key = 'statekey';
-    const cancelEffect = jest.fn();
-
-    useContextSelector.mockImplementationOnce(() => ({
-      cancelEffect,
-      [key]: { focus: true, showEffect: true },
-    }));
-
-    const Wrapper = () => {
+    const HighlightableInput = () => {
       const [mockElement, setMockElement] = useState(null);
       useFocusHighlight(key, mockElement);
       return <input data-testid="focusable-input" ref={setMockElement} />;
     };
 
-    render(<Wrapper />);
+    render(<HighlightableInput />, { wrapper });
 
-    screen.getByTestId('focusable-input').focus();
-    expect(screen.getByTestId('focusable-input')).toHaveFocus();
+    const input = screen.getByTestId('focusable-input');
+    input.focus();
+    expect(input).toHaveFocus();
+
     userEvent.tab();
     expect(cancelEffect).toHaveBeenCalledWith(key);
-    expect(screen.getByTestId('focusable-input')).not.toHaveFocus();
+    expect(input).not.toHaveFocus();
   });
 });
