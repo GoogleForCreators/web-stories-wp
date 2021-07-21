@@ -27,21 +27,24 @@ import {
   PRIORITY_COPY,
   ASPECT_RATIO_LEFT,
   ASPECT_RATIO_RIGHT,
+  FEATURED_MEDIA_RESOURCE_MIN_HEIGHT,
+  FEATURED_MEDIA_RESOURCE_MIN_WIDTH,
 } from '../constants';
 import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
-export function storyPosterAspectRatio(featuredMedia) {
-  if (
-    hasNoFeaturedMedia({ featuredMedia }) ||
-    !featuredMedia?.width ||
-    !featuredMedia?.height
-  ) {
+export function storyPosterSize(featuredMedia) {
+  if (hasNoFeaturedMedia({ featuredMedia })) {
     return false;
   }
-
+  if (
+    featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
+    featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
+  ) {
+    return true;
+  }
   const hasCorrectAspectRatio =
     Math.abs(
       featuredMedia.width / featuredMedia.height -
@@ -51,7 +54,7 @@ export function storyPosterAspectRatio(featuredMedia) {
   return !hasCorrectAspectRatio;
 }
 
-const StoryPosterAspectRatio = () => {
+const StoryPosterSize = () => {
   const featuredMedia = useStory(({ state }) => state?.story?.featuredMedia);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -61,13 +64,13 @@ const StoryPosterAspectRatio = () => {
       }),
     [setHighlights]
   );
-  const { footer, title } = PRIORITY_COPY.storyPosterWrongRatio;
+  const { footer, title } = PRIORITY_COPY.storyPosterSize;
 
   const isRendered = useMemo(
-    () => storyPosterAspectRatio(featuredMedia),
+    () => storyPosterSize(featuredMedia),
     [featuredMedia]
   );
-  useRegisterCheck('StoryPosterAspectRatio', isRendered);
+  useRegisterCheck('StoryPosterSize', isRendered);
   return (
     isRendered && (
       <ChecklistCard
@@ -87,4 +90,4 @@ const StoryPosterAspectRatio = () => {
   );
 };
 
-export default StoryPosterAspectRatio;
+export default StoryPosterSize;

@@ -57,6 +57,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Constructor.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param string $post_type Post type.
 	 */
 	public function __construct( $post_type ) {
@@ -71,6 +73,8 @@ abstract class Lock_Controller extends REST_Controller {
 
 	/**
 	 * Registers the routes for the objects of the controller.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @see register_rest_route()
 	 *
@@ -115,6 +119,8 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Get post lock
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success.
 	 */
@@ -126,6 +132,8 @@ abstract class Lock_Controller extends REST_Controller {
 
 	/**
 	 * Update post lock
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success.
@@ -143,6 +151,8 @@ abstract class Lock_Controller extends REST_Controller {
 
 	/**
 	 * Delete post lock
+	 *
+	 * @since 1.6.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response Response object on success.
@@ -232,15 +242,22 @@ abstract class Lock_Controller extends REST_Controller {
 	/**
 	 * Prepares a single lock output for response.
 	 *
+	 * @since 1.6.0
+	 *
 	 * @param array|false     $lock Lock value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $lock, $request ) {
-		$nonce = wp_create_nonce( 'wp_rest' );
-		$data  = [
+		$fields = $this->get_fields_for_response( $request );
+		$schema = $this->get_item_schema();
+
+		$nonce     = wp_create_nonce( 'wp_rest' );
+		$lock_data = [
 			'locked' => false,
+			'time'   => '',
+			'user'   => 0,
 			'nonce'  => $nonce,
 		];
 
@@ -249,7 +266,7 @@ abstract class Lock_Controller extends REST_Controller {
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
 
 			if ( $lock['time'] && $lock['time'] > time() - $time_window ) {
-				$data = [
+				$lock_data = [
 					'locked' => true,
 					'time'   => $lock['time'],
 					'user'   => (int) $lock['user'],
@@ -257,6 +274,15 @@ abstract class Lock_Controller extends REST_Controller {
 				];
 			}
 		}
+
+		$data         = [];
+		$check_fields = array_keys( $lock_data );
+		foreach ( $check_fields as $check_field ) {
+			if ( rest_is_field_included( $check_field, $fields ) ) {
+				$data[ $check_field ] = rest_sanitize_value_from_schema( $lock_data[ $check_field ], $schema['properties'][ $check_field ] );
+			}
+		}
+
 		// Wrap the data in a response object.
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
@@ -313,6 +339,8 @@ abstract class Lock_Controller extends REST_Controller {
 
 	/**
 	 * Retrieves the post's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.6.0
 	 *
 	 * @return array Item schema data.
 	 */

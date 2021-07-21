@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
@@ -39,7 +40,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
  *
  * @package Google\Web_Stories
  */
-class Cross_Origin_Isolation extends Service_Base {
+class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	use Screen;
 
 	/**
@@ -48,7 +49,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->is_needed() || ! $this->is_edit_screen() ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -304,7 +305,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	protected function is_needed() {
+	public static function is_needed(): bool {
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
 			return false;
