@@ -65,12 +65,8 @@ function useUploadMedia({
     },
     actions: { addItem, removeItem },
   } = useMediaUploadQueue();
-  const {
-    isFeatureEnabled,
-    isTranscodingEnabled,
-    canTranscodeFile,
-    isFileTooLarge,
-  } = useFFmpeg();
+  const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
+    useFFmpeg();
 
   /**
    * @type {import('react').MutableRefObject<Array<Object<*>>>} mediaRef Ref for current media items.
@@ -88,7 +84,7 @@ function useUploadMedia({
 
     if (isTranscoding && isDialogDismissed) {
       showSnackbar({
-        message: __('Video optimization in progress.', 'web-stories'),
+        message: __('Video optimization in progress', 'web-stories'),
         dismissable: true,
       });
     }
@@ -156,12 +152,17 @@ function useUploadMedia({
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error } of failures) {
+    for (const { id, onUploadError, error, resource } of failures) {
       if (onUploadError) {
         onUploadError({ id });
       }
       deleteMediaElement({ id });
       removeItem({ id });
+
+      const thumbnailSrc =
+        resource && ['video', 'gif'].includes(resource.type)
+          ? resource.poster
+          : resource.src;
 
       showSnackbar({
         message:
@@ -170,6 +171,10 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
+        thumbnail: thumbnailSrc && {
+          src: thumbnailSrc,
+          alt: resource?.alt,
+        },
         dismissable: true,
       });
     }
@@ -209,8 +214,7 @@ function useUploadMedia({
           // We don't want to display placeholders / progress bars for items that
           // aren't supported anyway.
 
-          const canTranscode =
-            isFeatureEnabled && isTranscodingEnabled && canTranscodeFile(file);
+          const canTranscode = isTranscodingEnabled && canTranscodeFile(file);
           const isTooLarge = canTranscode && isFileTooLarge(file);
 
           try {
@@ -249,7 +253,6 @@ function useUploadMedia({
       validateFileForUpload,
       addItem,
       canTranscodeFile,
-      isFeatureEnabled,
       isTranscodingEnabled,
       isFileTooLarge,
     ]

@@ -24,6 +24,7 @@ import {
 } from '@testing-library/react';
 import Modal from 'react-modal';
 import MockDate from 'mockdate';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -34,8 +35,8 @@ import MediaContext from '../../../app/media/context';
 import HistoryContext from '../../../app/history/context';
 import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
-import PrepublishContext from '../../inspector/prepublish/context';
 import { StoryTriggersProvider } from '../../../app/story/storyTriggers';
+import { CheckpointContext } from '../../checklist';
 
 function setupButtons({
   story: extraStoryProps,
@@ -43,12 +44,12 @@ function setupButtons({
   media: extraMediaProps,
   config: extraConfigProps,
   history: extraHistoryProps,
-  prepublish: extraPrepublishChecklistProps,
+  checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
   const focusChecklistTab = jest.fn();
-  const resetReviewDialog = jest.fn();
+  const onReviewDialogRequest = jest.fn();
 
   const storyContextValue = {
     state: {
@@ -57,8 +58,11 @@ function setupButtons({
         status: 'draft',
         storyId: 123,
         date: null,
+        editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+        embedPostLink:
+          'https://example.com/wp-admin/post-new.php?from-web-story=123',
         previewLink:
-          'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+          'http://localhost?preview_id=1679&preview_nonce=b5ea827939&preview=true',
         ...extraStoryProps,
       },
     },
@@ -80,26 +84,30 @@ function setupButtons({
   };
 
   const prepublishChecklistContextValue = {
-    // value: {
-    shouldReviewDialogBeSeen: false,
-    focusChecklistTab,
-    resetReviewDialog,
-    ...extraPrepublishChecklistProps,
-    // },
+    state: {
+      shouldReviewDialogBeSeen: false,
+      ...extraChecklistProps,
+    },
+    actions: {
+      onReviewDialogRequest,
+    },
   };
-
   renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <StoryTriggersProvider story={storyContextValue}>
-            <PrepublishContext.Provider value={prepublishChecklistContextValue}>
-              <MediaContext.Provider value={mediaContextValue}>
-                <Buttons />
-              </MediaContext.Provider>
-            </PrepublishContext.Provider>
-          </StoryTriggersProvider>
-        </StoryContext.Provider>
+        <FlagsProvider features={{ enableChecklistCompanion: true }}>
+          <StoryContext.Provider value={storyContextValue}>
+            <StoryTriggersProvider story={storyContextValue}>
+              <CheckpointContext.Provider
+                value={prepublishChecklistContextValue}
+              >
+                <MediaContext.Provider value={mediaContextValue}>
+                  <Buttons />
+                </MediaContext.Provider>
+              </CheckpointContext.Provider>
+            </StoryTriggersProvider>
+          </StoryContext.Provider>
+        </FlagsProvider>
       </ConfigContext.Provider>
     </HistoryContext.Provider>
   );
@@ -264,7 +272,7 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
-      prepublish: {
+      checklist: {
         shouldReviewDialogBeSeen: true,
       },
     });
@@ -291,7 +299,7 @@ describe('buttons', () => {
         title: '',
         status: 'draft',
       },
-      prepublish: {
+      checklist: {
         shouldReviewDialogBeSeen: true,
       },
     });
@@ -349,7 +357,7 @@ describe('buttons', () => {
   it('should open draft preview when clicking on Preview via about:blank', () => {
     const { saveStory } = setupButtons({
       story: {
-        previewLink: 'https://example.com/?preview=true',
+        previewLink: 'http://localhost/?preview=true',
       },
     });
     const previewButton = screen.getByRole('button', { name: 'Preview' });
@@ -373,7 +381,7 @@ describe('buttons', () => {
     expect(saveStory).toHaveBeenCalledWith();
     expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
     expect(previewPopup.location.replace).toHaveBeenCalledWith(
-      'https://example.com/?preview=true#development=1'
+      'http://localhost/?preview=true#development=1'
     );
 
     windowSpy.mockRestore();
@@ -382,7 +390,7 @@ describe('buttons', () => {
   it('should open preview for a published story when clicking on Preview via about:blank', () => {
     const { autoSave } = setupButtons({
       story: {
-        link: 'https://example.com',
+        link: 'http://localhost',
         status: 'publish',
       },
     });
@@ -403,7 +411,7 @@ describe('buttons', () => {
 
     expect(autoSave).toHaveBeenCalledWith();
     expect(previewPopup.location.replace).toHaveBeenCalledWith(
-      'https://example.com/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
+      'http://localhost/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
     );
 
     windowSpy.mockRestore();

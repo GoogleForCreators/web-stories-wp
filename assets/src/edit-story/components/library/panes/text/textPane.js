@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import ResizeObserver from 'resize-observer-polyfill';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -30,6 +30,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -52,9 +53,10 @@ function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextAndShapesSearchInput } = useFeatures();
+  const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
 
   const insertPreset = useInsertPreset();
+  const { generateCanvasFromPage } = usePageAsCanvas();
 
   const onClick = useCallback(
     (title, element) => {
@@ -64,19 +66,13 @@ function TextPane(props) {
     [insertPreset]
   );
 
-  useEffect(() => {
-    const ro = new ResizeObserver(() => {
-      // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
-      // https://stackoverflow.com/a/58701523/13078978
-      window.requestAnimationFrame(() => {
-        forceUpdate(Date.now());
-      });
-    });
-
-    ro.observe(paneRef.current);
-
-    return () => ro.disconnect();
-  }, []);
+  useResizeEffect(
+    paneRef,
+    () => {
+      forceUpdate(Date.now());
+    },
+    []
+  );
 
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
@@ -89,7 +85,10 @@ function TextPane(props) {
         />
       )}
 
-      <Section title={__('Presets', 'web-stories')}>
+      <Section
+        title={__('Presets', 'web-stories')}
+        onPointerOver={() => enableSmartTextColor && generateCanvasFromPage()}
+      >
         <GridContainer>
           {PRESETS.map(({ title, element }) => (
             <FontPreview

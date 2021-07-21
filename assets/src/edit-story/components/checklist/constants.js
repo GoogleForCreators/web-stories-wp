@@ -41,8 +41,8 @@ export const MAX_LINKS_PER_PAGE = 3;
 const MAX_VIDEO_RESOLUTION = 720;
 const MIN_VIDEO_RESOLUTION = 480;
 const MIN_VIDEO_FPS = 24;
-const POSTER_DIMENSION_WIDTH_PX = 640;
-const POSTER_DIMENSION_HEIGHT_PX = 853;
+export const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
+export const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 export const PUBLISHER_LOGO_DIMENSION = 96;
 const PUBLISHER_LOGO_RATIO = 1;
 
@@ -341,7 +341,7 @@ export const PRIORITY_COPY = {
           {sprintf(
             /* translators: %s: image dimensions.  */
             __("Use an image that's at least %s", 'web-stories'),
-            `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
+            `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
           )}
         </li>
         <li>
@@ -412,7 +412,7 @@ export const PRIORITY_COPY = {
     title: sprintf(
       /* translators: %s: image dimensions.  */
       __('Increase poster image size to at least %s', 'web-stories'),
-      `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
+      `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
     ),
     footer: (
       <>
@@ -420,7 +420,7 @@ export const PRIORITY_COPY = {
           {sprintf(
             /* translators: %s: image dimensions.  */
             __("Use an image that's at least %s", 'web-stories'),
-            `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
+            `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
           )}
         </li>
         <li>
@@ -433,11 +433,11 @@ export const PRIORITY_COPY = {
       </>
     ),
   },
-  storyPosterWrongRatio: {
+  storyPosterSize: {
     title: sprintf(
       /* translators: %s: image dimensions.  */
       __('Correct poster image aspect ratio to %s', 'web-stories'),
-      `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
+      `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
     ),
     footer: (
       <>
@@ -445,7 +445,7 @@ export const PRIORITY_COPY = {
           {sprintf(
             /* translators: %s: image dimensions.  */
             __("Use an image that's at least %s", 'web-stories'),
-            `${POSTER_DIMENSION_WIDTH_PX}x${POSTER_DIMENSION_HEIGHT_PX}px`
+            `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
           )}
         </li>
         <li>
@@ -484,4 +484,10 @@ export const PANEL_VISIBILITY_BY_STATE = {
     ISSUE_TYPES.DESIGN,
   ],
   [PPC_CHECKPOINT_STATE.ALL]: Object.values(ISSUE_TYPES),
+};
+
+export const PANEL_EXPANSION_BY_CHECKPOINT = {
+  [PPC_CHECKPOINT_STATE.UNAVAILABLE]: null,
+  [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: ISSUE_TYPES.DESIGN,
+  [PPC_CHECKPOINT_STATE.ALL]: ISSUE_TYPES.PRIORITY,
 };

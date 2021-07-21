@@ -43,8 +43,7 @@ use WP_REST_Server;
  * Class Link_Controller
  */
 class Link_Controller extends REST_Controller {
-	use Document_Parser;
-	use Post_Type;
+	use Document_Parser, Post_Type;
 	/**
 	 * Constructor.
 	 */
@@ -55,6 +54,8 @@ class Link_Controller extends REST_Controller {
 
 	/**
 	 * Registers routes for links.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @see register_rest_route()
 	 *
@@ -115,7 +116,9 @@ class Link_Controller extends REST_Controller {
 
 		$data = get_transient( $cache_key );
 		if ( ! empty( $data ) ) {
-			return rest_ensure_response( json_decode( $data, true ) );
+			$response = $this->prepare_item_for_response( json_decode( $data, true ), $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		$data = [
@@ -149,7 +152,9 @@ class Link_Controller extends REST_Controller {
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			// Not saving to cache since the error might be temporary.
-			return rest_ensure_response( $data );
+			$response = $this->prepare_item_for_response( $data, $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		$html = wp_remote_retrieve_body( $response );
@@ -162,14 +167,18 @@ class Link_Controller extends REST_Controller {
 
 		if ( ! $html ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			return rest_ensure_response( $data );
+			$response = $this->prepare_item_for_response( $data, $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		$xpath = $this->html_to_xpath( $html );
 
 		if ( ! $xpath ) {
 			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			return rest_ensure_response( $data );
+			$response = $this->prepare_item_for_response( $data, $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		// Link title.
@@ -225,9 +234,86 @@ class Link_Controller extends REST_Controller {
 			'description' => $description ?: '',
 		];
 
+		$response = $this->prepare_item_for_response( $data, $request );
+
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
-		return rest_ensure_response( $data );
+		return rest_ensure_response( $response );
+	}
+
+
+	/**
+	 * Prepares a single lock output for response.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param array           $link Link value, default to false is not set.
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object.
+	 */
+	public function prepare_item_for_response( $link, $request ) {
+		$fields = $this->get_fields_for_response( $request );
+		$schema = $this->get_item_schema();
+
+		$data = [];
+
+		$check_fields = array_keys( $link );
+		foreach ( $check_fields as $check_field ) {
+			if ( rest_is_field_included( $check_field, $fields ) ) {
+				$data[ $check_field ] = rest_sanitize_value_from_schema( $link[ $check_field ], $schema['properties'][ $check_field ] );
+			}
+		}
+
+		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$data    = $this->add_additional_fields_to_object( $data, $request );
+		$data    = $this->filter_response_by_context( $data, $context );
+
+		// Wrap the data in a response object.
+		$response = rest_ensure_response( $data );
+
+		return $response;
+	}
+
+	/**
+	 * Retrieves the link's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array Item schema data.
+	 */
+	public function get_item_schema() {
+		if ( $this->schema ) {
+			return $this->add_additional_fields_schema( $this->schema );
+		}
+
+		$schema = [
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => 'link',
+			'type'       => 'object',
+			'properties' => [
+				'title'       => [
+					'description' => __( 'Link\'s title', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'image'       => [
+					'description' => __( 'Link\'s image', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'description' => [
+					'description' => __( 'Link\'s description', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+			],
+		];
+
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
 	}
 
 	/**

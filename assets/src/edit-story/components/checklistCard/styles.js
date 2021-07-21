@@ -71,7 +71,11 @@ export const Title = styled.div`
     text-align: left;
     cursor: pointer;
     border-radius: ${({ theme }) => theme.borders.radius.small};
-    ${focusableOutlineCSS};
+    ${({ theme }) =>
+      focusableOutlineCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
 `;
 

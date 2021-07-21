@@ -40,19 +40,21 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
   {
     type: 'image',
     mimeType: 'image/jpeg',
+    output: undefined,
     creationDate: '2020-09-01T05:33:54',
     src: 'http://wp.local/wp-content/uploads/2020/09/IMAGE.jpg',
     width: 1080,
     height: 2220,
     poster: undefined,
-    posterId: 0,
+    posterId: undefined,
     id: 274,
     length: undefined,
     lengthFormatted: undefined,
     title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
-    isPlaceholder: undefined,
+    isPlaceholder: false,
+    isMuted: false,
     isOptimized: false,
     sizes: {
       medium: {

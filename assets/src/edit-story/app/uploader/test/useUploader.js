@@ -113,7 +113,7 @@ describe('useUploader', () => {
       });
 
       await expect(() => validateFileForUpload({})).toThrow(
-        'Sorry, you are unable to upload files.'
+        'Sorry, you are not allowed to upload files.'
       );
     });
 

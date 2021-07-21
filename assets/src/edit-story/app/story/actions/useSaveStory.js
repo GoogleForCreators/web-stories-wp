@@ -56,7 +56,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isFreshlyPublished, setIsFreshlyPublished] = useState(false);
 
-  const refreshPostEditURL = useRefreshPostEditURL(storyId);
+  const { editLink } = story;
+  const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
   const saveStory = useCallback(
     (props) => {
@@ -78,6 +79,8 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             ...objectPick(post, ['status', 'slug', 'link']),
             featuredMediaUrl: post.featured_media_url,
             previewLink: post.preview_link,
+            editLink: post.edit_link,
+            embedPostLink: post.embed_post_link,
           };
           updateStory({ properties });
 

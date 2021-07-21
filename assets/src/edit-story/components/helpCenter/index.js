@@ -28,8 +28,8 @@ import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
-import { Navigator } from './navigator';
-import { Companion } from './companion';
+import Navigator from './navigator';
+import Companion from './companion';
 import { POPUP_ID, KEYS } from './constants';
 import { Toggle } from './toggle';
 import { Popup } from './popup';
@@ -81,6 +81,7 @@ export const HelpCenter = () => {
             ariaLabel={__('Help Center', 'web-stories')}
           >
             <Navigator
+              isOpen={state.isOpen}
               onNext={actions.goToNext}
               onPrev={actions.goToPrev}
               onAllTips={actions.goToMenu}

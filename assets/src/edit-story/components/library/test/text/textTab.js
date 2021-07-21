@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
@@ -35,14 +35,18 @@ jest.mock('../../useLibrary');
 describe('TextTab', () => {
   const insertElement = jest.fn();
   beforeAll(() => {
-    useLibrary.mockImplementation(() => ({
-      actions: {
-        insertElement: insertElement,
-      },
-    }));
+    useLibrary.mockImplementation((selector) =>
+      selector({
+        state: {},
+        actions: {
+          insertElement: insertElement,
+          setPageCanvasPromise: jest.fn(),
+        },
+      })
+    );
   });
 
-  it('should insert text with default text style on shortcut click', () => {
+  it('should insert text with default text style on shortcut click', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -68,7 +72,9 @@ describe('TextTab', () => {
       fireEvent.click(screen.getByLabelText('Add new text element'));
     });
 
-    expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
+    await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET)
+    );
   });
 });

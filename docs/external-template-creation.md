@@ -18,6 +18,7 @@ To add a new template to the editor:
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
     - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
     - Make sure videos are 720p.
+    - Make sure caption files are also committed along with the videos, when available.
 4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (see [details](#get-the-story-json)).
 5. [Both] Verify that new template shows up in the template library and looks as expected.
 
@@ -101,6 +102,10 @@ To get the JSON representation of a story in the editor:
 1. In the editor, open the story.
 2. Press `Command+Shift+Option+J` (Mac) or `Control+Shift+Alt+J` (Windows/Linux) in the editor.
 3. A dialog will appear where you can copy/paste story JSON.
+4. Check the `Template` checkbox that is present at the top of the dialog.
+
+   <img width="554" alt="Screenshot of the dev tools with the Templates checkbox" src="https://user-images.githubusercontent.com/6906779/125189481-efe82c80-e255-11eb-93dd-ca875d514f54.png">
+
 
 #### Alternative
 
@@ -117,7 +122,25 @@ Another way to get the story JSON is by inspecting the network request that save
 Once you have the story JSON, several code changes are needed to add it to the list of default templates in the editor.
 
 1. In [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw), create a new directory `<template_name>` for your template. Now add your template's story JSON in a new file e.g. `<template_name>/template.json`.
-      - In the JSON, first change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`.
+   - Make following changes to the template JSON,
+      - Reset following extraneous properties,
+        - `current: null`
+        - `selection: []`
+        - `story: {}`
+      - First change all image & video URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__` as the base, which then will be replaced by the CDN url.
+      - Ensure to also change poster image URLs to use `__WEB_STORIES_TEMPLATE_BASE_URL__`.
+      - Change `posterId` and `id` for all elements of type image and video to `0`, these are the WP media ids that are not used in templates.
+      - Make sure that the images and videos have appropriate title and alt text set for better accessibility.
+
+   - If the story JSON is copied from the devTools dialog as mentioned  in [Get The Story JSON](#get-the-story-json), the JSON will have some of the changes already present.
+     - The 'Template' checkbox does following:
+       - Resets extraneous properties.
+       - Replaces resource URLs with replaceable CDN constant and `static-site` asset path.
+       - Resets `sizes` property for images to `[]`.
+       - Resets all `id` and `posterId` to 0 for image and video type resources.
+
+      NOTE: Check all resource URLs and properties are set properly before commiting the template.
+
 
 2. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, etc.
 

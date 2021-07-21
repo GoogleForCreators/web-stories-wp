@@ -72,8 +72,8 @@ class Autosaves_Controller extends Test_REST_TestCase {
 
 		$this->kses_int();
 
-		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$story = self::factory()->post->create(
 			[

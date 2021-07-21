@@ -123,6 +123,8 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * Used to override the create_item() callback.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @see register_rest_route()
 	 *
 	 * @return void
@@ -176,12 +178,12 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 		$data     = $response->get_data();
 		$schema   = $this->get_item_schema();
 
-		if ( in_array( 'story_data', $fields, true ) ) {
+		if ( rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		if ( in_array( 'featured_media_url', $fields, true ) ) {
+		if ( rest_is_field_included( 'featured_media_url', $fields ) ) {
 			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}

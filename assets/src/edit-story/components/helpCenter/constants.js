@@ -92,7 +92,7 @@ export const TIPS = {
     ],
   },
   [KEYS.ADD_LINKS]: {
-    title: __('Add links to Story elements', 'web-stories'),
+    title: __('Add links to story elements', 'web-stories'),
     figureSrc: 'images/help-center/add_link_module_6',
     description: [
       __(
@@ -117,7 +117,7 @@ export const TIPS = {
     we get an animation. Once we have the animation then these
     attributes should be removed. */
     figureSrcImg: 'images/help-center/story_embed_module_1',
-    figureAlt: __('Embed web story graphic', 'web-stories'),
+    figureAlt: __('Graphic showing embed functionality', 'web-stories'),
     description: [
       __(
         'When you create a new post in WordPress, you can embed any of your Stories. <a>Learn more</a>',

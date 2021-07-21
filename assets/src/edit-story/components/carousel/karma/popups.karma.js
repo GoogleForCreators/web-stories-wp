@@ -19,7 +19,7 @@
  */
 import { Fixture } from '../../../karma';
 
-describe('Popup Menus - Help Center and Checklist', () => {
+describe('Popup Menus - Help Center, KeyboardShortcuts, and Checklist', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -32,19 +32,17 @@ describe('Popup Menus - Help Center and Checklist', () => {
     fixture.restore();
   });
 
-  it('should start with both popups closed', () => {
-    const { helpCenterToggle, checklistToggle } = fixture.editor.carousel;
+  it('should start with all popups closed', () => {
+    const { helpCenterToggle, checklistToggle, keyboardShortcutsToggle } =
+      fixture.editor.carousel;
 
     expect(helpCenterToggle).toBeDefined();
     expect(checklistToggle).toBeDefined();
-
-    expect(
-      fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
+    expect(keyboardShortcutsToggle).toBeDefined();
     expect(fixture.editor.helpCenter.quickTips).toBeNull();
   });
 
-  it('should collapse helpCenter when checklist is expanded', async () => {
+  it('should collapse helpCenter and keyboard shortcuts when checklist is expanded', async () => {
     const { helpCenterToggle, checklistToggle } = fixture.editor.carousel;
     await fixture.events.click(helpCenterToggle);
 
@@ -58,6 +56,7 @@ describe('Popup Menus - Help Center and Checklist', () => {
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
     ).toBe('true');
     expect(fixture.editor.helpCenter.quickTips).toBeNull();
+    expect(fixture.editor.keyboardShortcuts.keyboardShortcutsMenu).toBeNull();
   });
 
   it('should collapse checklist when helpCenter is expanded', async () => {
@@ -77,8 +76,25 @@ describe('Popup Menus - Help Center and Checklist', () => {
     await fixture.events.sleep(500);
 
     expect(quickTips).toBeDefined();
+  });
+
+  it('should collapse checklist and helpCenter when keyboard shortcuts menu is expanded', async () => {
+    const { checklistToggle, keyboardShortcutsToggle } =
+      fixture.editor.carousel;
+
+    await fixture.events.click(checklistToggle);
+
     expect(
       fixture.editor.checklist.issues.getAttribute('data-isexpanded')
-    ).toBe('false');
+    ).toBe('true');
+    expect(fixture.editor.helpCenter.quickTips).toBeNull();
+
+    await fixture.events.click(keyboardShortcutsToggle);
+
+    const { keyboardShortcutsMenu } = await fixture.editor.keyboardShortcuts;
+
+    await fixture.events.sleep(500);
+
+    expect(keyboardShortcutsMenu).toBeDefined();
   });
 });

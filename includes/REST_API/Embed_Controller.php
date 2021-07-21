@@ -43,8 +43,7 @@ use WP_REST_Server;
  * Class Embed_Controller
  */
 class Embed_Controller extends REST_Controller {
-	use Document_Parser;
-	use Post_Type;
+	use Document_Parser, Post_Type;
 	/**
 	 * Constructor.
 	 */
@@ -117,12 +116,17 @@ class Embed_Controller extends REST_Controller {
 				return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 			}
 
-			return rest_ensure_response( json_decode( $data, true ) );
+			$embed    = json_decode( $data, true );
+			$response = $this->prepare_item_for_response( $embed, $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		$data = $this->get_data_from_post( $url );
 		if ( $data ) {
-			return rest_ensure_response( $data );
+			$response = $this->prepare_item_for_response( $data, $request );
+
+			return rest_ensure_response( $response );
 		}
 
 		$args = [
@@ -161,9 +165,11 @@ class Embed_Controller extends REST_Controller {
 			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
+		$response = $this->prepare_item_for_response( $data, $request );
+
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
 
-		return rest_ensure_response( $data );
+		return rest_ensure_response( $response );
 	}
 
 	/**
@@ -325,6 +331,77 @@ class Embed_Controller extends REST_Controller {
 		];
 	}
 
+	/**
+	 * Prepares a single embed output for response.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param array|false     $embed Embed value, default to false is not set.
+	 * @param WP_REST_Request $request Request object.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object.
+	 */
+	public function prepare_item_for_response( $embed, $request ) {
+		$fields = $this->get_fields_for_response( $request );
+		$schema = $this->get_item_schema();
+
+		$data = [];
+
+		if ( is_array( $embed ) ) {
+			$check_fields = array_keys( $embed );
+			foreach ( $check_fields as $check_field ) {
+				if ( rest_is_field_included( $check_field, $fields ) ) {
+					$data[ $check_field ] = rest_sanitize_value_from_schema( $embed[ $check_field ], $schema['properties'][ $check_field ] );
+				}
+			}
+		}
+
+		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+		$data    = $this->add_additional_fields_to_object( $data, $request );
+		$data    = $this->filter_response_by_context( $data, $context );
+
+		// Wrap the data in a response object.
+		$response = rest_ensure_response( $data );
+
+		return $response;
+	}
+
+
+	/**
+	 * Retrieves the link's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array Item schema data.
+	 */
+	public function get_item_schema() {
+		if ( $this->schema ) {
+			return $this->add_additional_fields_schema( $this->schema );
+		}
+
+		$schema = [
+			'$schema'    => 'http://json-schema.org/draft-04/schema#',
+			'title'      => 'embed',
+			'type'       => 'object',
+			'properties' => [
+				'title'  => [
+					'description' => __( 'Embed\'s title', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'poster' => [
+					'description' => __( 'Embed\'s image', 'web-stories' ),
+					'type'        => 'string',
+					'format'      => 'uri',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+			],
+		];
+
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
+	}
 
 	/**
 	 * Checks if current user can process links.

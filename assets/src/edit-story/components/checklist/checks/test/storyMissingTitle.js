@@ -20,21 +20,12 @@
 import { storyMissingTitle } from '../storyMissingTitle';
 
 describe('storyMissingTitle', () => {
-  it('should return true message if the story is missing its title', () => {
-    const testEmptyStringStory = {
-      id: 890,
-      status: 'draft',
-      title: '',
-    };
-    const testUndefinedTitleStory = {
-      id: 890,
-      status: 'draft',
-    };
+  it('should return true if the story is missing its title', () => {
+    const testEmptyStringTitle = '';
+    const testUndefinedTitleStory = undefined;
     const testUndefined = storyMissingTitle(testUndefinedTitleStory);
-    const testEmptyString = storyMissingTitle(testEmptyStringStory);
-    const testHappy = storyMissingTitle({
-      title: 'The Allegory of the Cave',
-    });
+    const testEmptyString = storyMissingTitle(testEmptyStringTitle);
+    const testHappy = storyMissingTitle('The Allegory of the Cave');
     expect(testHappy).toBe(false);
     expect(testEmptyString).toBe(true);
     expect(testUndefined).toBe(true);

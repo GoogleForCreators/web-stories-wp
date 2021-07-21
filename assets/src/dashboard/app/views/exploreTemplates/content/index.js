@@ -17,13 +17,9 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
-
-/**
- * External dependencies
- */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
+import { __, sprintf } from '@web-stories-wp/i18n';
 import { UnitsProvider } from '@web-stories-wp/units';
 import {
   Button,
@@ -37,7 +33,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../../edit-story/app';
+import { useConfig } from '../../../config';
 import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   InfiniteScroller,
@@ -114,7 +110,7 @@ function Content({
             as="a"
             href={newStoryURL}
           >
-            {__('Create a new Story', 'web-stories')}
+            {__('Create New Story', 'web-stories')}
           </Button>
         )}
       </EmptyContentMessage>

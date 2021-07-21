@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
-  Text,
+  Headline,
   ThemeGlobals,
   themeHelpers,
   THEME_CONSTANTS,
@@ -31,11 +31,9 @@ import {
 /**
  * Internal dependencies
  */
-import { NAVIGATION_WIDTH } from '../helpCenter/navigator/constants';
 import { PANEL_STATES } from './constants';
 
 export const Tablist = styled.div.attrs({ role: 'tablist' })`
-  width: ${NAVIGATION_WIDTH};
   background: ${({ theme }) => theme.colors.bg.primary};
 `;
 Tablist.propTypes = {
@@ -43,21 +41,35 @@ Tablist.propTypes = {
   'aria-label': PropTypes.string.isRequired,
 };
 
-export const PanelText = styled(Text).attrs({
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-  isBold: true,
+export const PanelText = styled(Headline).attrs({
+  as: 'h3',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL,
 })`
   transition: background-color 300ms ease-in;
+`;
+
+export const TabButtonWrapper = styled.div`
+  position: relative;
+  height: 60px;
+  width: 100%;
+  padding: 5px 4px;
+
+  &,
+  :hover,
+  :focus-within,
+  .${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
+    background-color: ${({ theme }) => theme.colors.bg.secondary};
+  }
 `;
 
 export const TabButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.PLAIN,
 })`
-  position: relative;
+  position: absolute;
   display: flex;
   justify-content: space-between;
-  height: 60px;
-  width: 100%;
+  width: calc(100% - 8px);
+  height: calc(100% - 10px);
   padding: 16px;
   border-radius: 0;
 
@@ -68,10 +80,11 @@ export const TabButton = styled(Button).attrs({
     background-color: ${({ theme }) => theme.colors.bg.secondary};
   }
 
-  :focus,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
-    z-index: 2;
-  }
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.secondary
+    )};
 
   ${PanelText} {
     opacity: 0.8;
@@ -95,17 +108,15 @@ export const PanelWrapper = styled.div`
   width: 100%;
   background: ${({ theme }) => theme.colors.bg.primary};
 
-  :not(:last-child) ${TabButton} {
-    box-shadow: 0px 1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
-    margin-bottom: 1px;
-
-    ${themeHelpers.focusableOutlineCSS};
+  &:not(:first-child) > ${TabButton} {
+    box-shadow: 0px -1px 0 0 ${({ theme }) => theme.colors.divider.tertiary};
+    margin-top: 1px;
   }
 
   ${({ isExpanded, theme }) =>
     isExpanded &&
     css`
-      & > ${TabButton} {
+      & ${TabButton}, & ${TabButtonWrapper} {
         :not(:last-child) {
           box-shadow: none;
         }
@@ -127,9 +138,10 @@ export const PanelWrapper = styled.div`
         }
       }
 
-      & > ${TabPanel} {
+      * ${TabPanel} {
         height: 560px;
-        padding: 0 16px 16px;
+        padding: 0 0 16px 16px;
+        overflow-y: scroll;
         visibility: visible;
       }
     `};
@@ -169,13 +181,19 @@ export const Badge = styled.div`
   }
 `;
 
+export const ScrollableContent = styled.div`
+  max-height: ${({ maxHeight }) => (maxHeight ? `calc(${maxHeight})` : 'none')};
+  overflow-y: ${({ maxHeight }) => (maxHeight ? 'scroll' : 'hidden')};
+`;
+
 export const TabPanel = styled.div`
   height: 0;
   padding: 0;
   visibility: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
+  overflow-x: hidden;
   background: ${({ theme }) => theme.colors.bg.primary};
-  transition: 250ms ease-in;
+  transition: all 300ms ease-in;
 
   ${themeHelpers.scrollbarCSS};
 `;

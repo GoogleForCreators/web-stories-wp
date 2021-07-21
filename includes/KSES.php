@@ -64,7 +64,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 11;
 	}
 
@@ -85,7 +85,7 @@ class KSES extends Service_Base {
 	 *                                   originally passed to wp_insert_post().
 	 * @return array Filtered post data.
 	 */
-	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
+	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ): array {
 		if (
 			( Story_Post_Type::POST_TYPE_SLUG !== $data['post_type'] ) && !
 			(
@@ -129,7 +129,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return array Filtered list of CSS attributes.
 	 */
-	public function filter_safe_style_css( $attr ) {
+	public function filter_safe_style_css( $attr ): array {
 		$additional = [
 			'display',
 			'opacity',
@@ -534,6 +534,7 @@ class KSES extends Service_Base {
 				'data-amp-bind-attribution' => true,
 				'data-amp-bind-src'         => true,
 				'data-amp-bind-srcset'      => true,
+				'disable-inline-width'      => true,
 				'lightbox'                  => true,
 				'lightbox-thumbnail-id'     => true,
 				'media'                     => true,
@@ -541,6 +542,7 @@ class KSES extends Service_Base {
 				'object-fit'                => true,
 				'object-position'           => true,
 				'placeholder'               => true,
+				'sizes'                     => true,
 				'src'                       => true,
 				'srcset'                    => true,
 			],
@@ -637,7 +639,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return array An array of values resulted from merging the arguments together.
 	 */
-	protected function array_merge_recursive_distinct( array ...$arrays ) {
+	protected function array_merge_recursive_distinct( array ...$arrays ): array {
 		if ( count( $arrays ) < 2 ) {
 			if ( [] === $arrays ) {
 				return $arrays;
@@ -672,7 +674,7 @@ class KSES extends Service_Base {
 	 * @param array $value An array of attributes.
 	 * @return array The array of attributes with global attributes added.
 	 */
-	protected function add_global_attributes( $value ) {
+	protected function add_global_attributes( $value ): array {
 		$global_attributes = [
 			'aria-describedby'    => true,
 			'aria-details'        => true,
@@ -705,7 +707,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_before_kses( $post_content ) {
+	public function filter_content_save_pre_before_kses( $post_content ): string {
 		return (string) preg_replace_callback(
 			'|(?P<before><\w+(?:-\w+)*\s[^>]*?)style=\\\"(?P<styles>[^"]*)\\\"(?P<after>([^>]+?)*>)|', // Extra slashes appear here because $post_content is pre-slashed..
 			static function ( $matches ) {
@@ -724,7 +726,7 @@ class KSES extends Service_Base {
 	 *
 	 * @return string Filtered post content.
 	 */
-	public function filter_content_save_pre_after_kses( $post_content ) {
+	public function filter_content_save_pre_after_kses( $post_content ): string {
 		return (string) preg_replace_callback(
 			'/ data-temp-style=\\\"(?P<styles>[^"]*)\\\"/',
 			function ( $matches ) {

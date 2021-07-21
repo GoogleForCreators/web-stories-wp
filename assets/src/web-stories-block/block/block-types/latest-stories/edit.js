@@ -18,32 +18,31 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
  */
-import { useEffect, useState } from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
+import { Button, Placeholder } from '@wordpress/components';
+import { BlockIcon } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
+import { ReactComponent as WebStoriesLogo } from '../../../images/icon.svg';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
-import { FETCH_STORIES_DEBOUNCE } from '../../constants';
 import StoriesPreview from '../../components/storiesPreview';
-import { useConfig } from '../../config';
+import useDebounce from '../../hooks/useDebounce';
 
-/**
- * Module constants
- */
-const LATEST_STORIES_QUERY = {
-  per_page: 20,
-  _embed: 'author',
-};
+const {
+  config: {
+    api: { stories: storiesApi },
+  },
+} = window.webStoriesBlockSettings;
 
 /**
  * LatestStoriesEdit component
@@ -53,11 +52,9 @@ const LATEST_STORIES_QUERY = {
  * @param {Function} root0.setAttributes Callable function for saving attribute values.
  * @return {*} JSX markup for the editor.
  */
-const LatestStoriesEdit = ({ attributes, setAttributes }) => {
+function LatestStoriesEdit({ attributes, setAttributes }) {
   const { numOfStories, order, orderby, archiveLinkLabel, authors } =
     attributes;
-
-  const { api } = useConfig();
 
   const [fetchedStories, setFetchedStories] = useState([]);
   const [isFetchingStories, setIsFetchingStories] = useState([]);
@@ -67,11 +64,17 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
    *
    * @return {void}
    */
-  const fetchStories = async () => {
+  const fetchStories = useCallback(async (query) => {
     try {
       setIsFetchingStories(true);
       const stories = await apiFetch({
-        path: addQueryArgs(api.stories, LATEST_STORIES_QUERY),
+        path: addQueryArgs(storiesApi, {
+          per_page: 20,
+          _embed: 'author',
+          orderby: query.orderby || 'modified',
+          order: query.order || 'desc',
+          author: query.author || undefined,
+        }),
       });
 
       if (Array.isArray(stories)) {
@@ -82,19 +85,16 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
     } finally {
       setIsFetchingStories(false);
     }
-  };
+  }, []);
 
-  const debouncedFetchStories = useDebouncedCallback(
-    fetchStories,
-    FETCH_STORIES_DEBOUNCE
-  );
+  const debouncedFetchStories = useDebounce(fetchStories, 1000);
 
   useEffect(() => {
-    LATEST_STORIES_QUERY.order = order || 'desc';
-    LATEST_STORIES_QUERY.orderby = orderby || 'date';
-    LATEST_STORIES_QUERY.author = authors;
-
-    debouncedFetchStories();
+    debouncedFetchStories({
+      order: order || 'desc',
+      orderby: orderby || 'date',
+      author: authors,
+    });
   }, [authors, numOfStories, order, orderby, debouncedFetchStories]);
 
   const viewAllLabel = archiveLinkLabel
@@ -122,9 +122,24 @@ const LatestStoriesEdit = ({ attributes, setAttributes }) => {
           viewAllLabel={viewAllLabel}
         />
       )}
+      {!isFetchingStories && !storiesToDisplay?.length && (
+        <Placeholder
+          icon={<BlockIcon icon={<WebStoriesLogo />} showColors />}
+          label={__('Latest Stories', 'web-stories')}
+          className="wp-block-web-stories-embed"
+          instructions={__('No stories found.', 'web-stories')}
+        >
+          <Button
+            href={addQueryArgs('post-new.php', { post_type: 'web-story' })}
+            isLink
+          >
+            {__('Create New Story', 'web-stories')}
+          </Button>
+        </Placeholder>
+      )}
     </>
   );
-};
+}
 
 LatestStoriesEdit.propTypes = {
   attributes: PropTypes.shape({

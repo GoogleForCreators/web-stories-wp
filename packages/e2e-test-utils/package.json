@@ -12,6 +12,6 @@
   "main": "./src/index.js",
   "dependencies": {
     "@wordpress/e2e-test-utils": "^5.3.0",
-    "@wordpress/url": "^3.1.0"
+    "@wordpress/url": "^3.2.0"
   }
 }

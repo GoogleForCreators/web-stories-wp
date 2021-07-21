@@ -54,6 +54,7 @@ function MediaInput(
     title = __('Choose an image', 'web-stories'),
     type = 'image',
     value,
+    cropParams,
     ...rest
   },
   forwardedRef
@@ -64,6 +65,7 @@ function MediaInput(
     onSelect: onChange,
     onSelectErrorMessage: onChangeErrorText,
     type,
+    cropParams,
   });
 
   // Options available for the media input menu.
@@ -123,6 +125,7 @@ MediaInput.propTypes = {
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
+  cropParams: PropTypes.object,
   title: PropTypes.string,
   value: PropTypes.string,
 };

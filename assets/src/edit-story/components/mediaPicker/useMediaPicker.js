@@ -17,15 +17,24 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
+import { calculateImageSelectOptions, mustBeCropped } from './utils';
+
+const defaultCropParams = {
+  height: 0,
+  width: 0,
+  flex_width: false,
+  flex_height: false,
+};
 
 /**
  * Custom hook to open the WordPress media modal.
@@ -39,6 +48,7 @@ import { useAPI } from '../../app/api';
  * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
  * @param {string|string[]} props.type Media type(s).
  * @param {boolean} props.multiple Whether multi-selection should be allowed.
+ * @param {Object} props.cropParams Object params for cropped images.
  * @return {Function} Callback to open the media picker.
  */
 export default function useMediaPicker({
@@ -50,6 +60,7 @@ export default function useMediaPicker({
   onPermissionError,
   type = '',
   multiple = false,
+  cropParams,
 }) {
   const {
     actions: { updateMedia },
@@ -80,7 +91,7 @@ export default function useMediaPicker({
     }
   }, [updateMedia]);
 
-  const openMediaPicker = useCallback(
+  const openMediaDialog = useCallback(
     (evt) => {
       trackEvent('open_media_modal');
 
@@ -152,5 +163,130 @@ export default function useMediaPicker({
     ]
   );
 
-  return openMediaPicker;
+  const openCropper = useCallback(
+    (evt) => {
+      trackEvent('open_media_crop_modal');
+      // If a user does not have the rights to upload to the media library, do not show the media picker.
+      if (!hasUploadMediaAction) {
+        if (onPermissionError) {
+          onPermissionError();
+        }
+        evt.preventDefault();
+        return;
+      }
+
+      const params = {
+        ...defaultCropParams,
+        ...cropParams,
+      };
+
+      const control = {
+        id: 'control-id',
+        params,
+        mustBeCropped,
+      };
+
+      const button = {
+        text: buttonInsertText,
+        close: false,
+      };
+
+      // Create the media frame.
+      const fileFrame = window.wp.media({
+        button,
+        states: [
+          new wp.media.controller.Library({
+            title,
+            library: wp.media.query({ type }),
+            button,
+            multiple,
+            suggestedWidth: params.width,
+            suggestedHeight: params.height,
+          }),
+          new wp.media.controller.CustomizeImageCropper({
+            imgSelectOptions: calculateImageSelectOptions,
+            control,
+          }),
+        ],
+      });
+
+      fileFrame.once('cropped', (attachment) => {
+        if (attachment?.id) {
+          updateMedia(attachment.id, { media_source: 'editor' });
+        }
+        onSelect(attachment);
+      });
+
+      fileFrame.once('skippedcrop', () => {
+        const mediaPickerEl = fileFrame
+          .state()
+          .get('selection')
+          .first()
+          .toJSON();
+        onSelect(mediaPickerEl);
+      });
+
+      fileFrame.once('select', () => {
+        const mediaPickerEl = fileFrame
+          .state()
+          .get('selection')
+          .first()
+          .toJSON();
+
+        // Only allow user to select a mime type from allowed list.
+        if (Array.isArray(type) && !type.includes(mediaPickerEl.mime)) {
+          fileFrame.close();
+          showSnackbar({ message: onSelectErrorMessage });
+
+          return;
+        }
+
+        if (
+          control.params.width === mediaPickerEl.width &&
+          control.params.height === mediaPickerEl.height &&
+          !control.params.flex_width &&
+          !control.params.flex_height
+        ) {
+          onSelect(mediaPickerEl);
+          fileFrame.close();
+        } else {
+          fileFrame.setState('cropper');
+        }
+      });
+
+      if (onClose) {
+        fileFrame.once('close', onClose);
+      }
+
+      fileFrame.once('content:activate:browse', () => {
+        // Force-refresh media modal contents every time
+        // to avoid stale data.
+        fileFrame.content?.get()?.collection?._requery(true);
+        fileFrame.content?.get()?.options?.selection?.reset();
+      });
+
+      // Finally, open the modal
+      fileFrame.open();
+
+      evt.preventDefault();
+    },
+    [
+      hasUploadMediaAction,
+      cropParams,
+      buttonInsertText,
+      title,
+      type,
+      multiple,
+      onSelect,
+      onClose,
+      onPermissionError,
+      updateMedia,
+      showSnackbar,
+      onSelectErrorMessage,
+    ]
+  );
+
+  return useMemo(() => {
+    return cropParams ? openCropper : openMediaDialog;
+  }, [cropParams, openCropper, openMediaDialog]);
 }

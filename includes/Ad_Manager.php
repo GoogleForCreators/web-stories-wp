@@ -48,7 +48,7 @@ class Ad_Manager extends Service_Base {
 	 *
 	 * @return string Slot ID.
 	 */
-	private function get_slot_id() {
+	private function get_slot_id(): string {
 		return (string) get_option( Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
 	}
 
@@ -59,7 +59,7 @@ class Ad_Manager extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	private function is_enabled() {
+	private function is_enabled(): bool {
 		return ( 'admanager' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 

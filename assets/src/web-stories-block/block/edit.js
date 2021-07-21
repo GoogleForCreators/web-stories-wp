@@ -27,9 +27,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as icon } from '../images/icon.svg';
-import StoryEmbedEdit from './block-types/story-embed-block/edit';
-import { ConfigProvider } from './config';
+import { ReactComponent as BlockIcon } from '../images/icon.svg';
+import SingleStoryEmbed from './block-types/single-story/edit';
 import StoriesBlockControls from './components/storiesBlockControls';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';
 import LatestStoriesEdit from './block-types/latest-stories/edit';
@@ -41,9 +40,6 @@ import {
   BLOCK_TYPES,
   VIEW_TYPES,
 } from './constants';
-import { webStoriesBlockSettings } from './globals';
-
-const { config } = webStoriesBlockSettings;
 
 function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   const { blockType, viewType } = attributes;
@@ -51,13 +47,12 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   if (!blockType) {
     return (
       <BlockConfigurationPanel
-        icon={icon}
+        icon={<BlockIcon />}
         setAttributes={setAttributes}
-        instruction={__(
+        instructions={__(
           'Embed a collection of your latest stories, select your own or enter an URL',
           'web-stories'
         )}
-        columnCount={3}
         selectionOptions={BLOCK_TYPES}
         selectionType={'blockType'}
       />
@@ -67,10 +62,9 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   if (blockType !== BLOCK_TYPE_URL && !viewType) {
     return (
       <BlockConfigurationPanel
-        icon={icon}
+        icon={<BlockIcon />}
         setAttributes={setAttributes}
-        instruction={__('Select a layout style', 'web-stories')}
-        columnCount={4}
+        instructions={__('Select a layout style', 'web-stories')}
         selectionOptions={VIEW_TYPES}
         selectionType={'viewType'}
       />
@@ -78,7 +72,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   }
 
   return (
-    <ConfigProvider config={config}>
+    <>
       <StoriesBlockControls
         blockType={blockType}
         viewType={viewType}
@@ -94,7 +88,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
 
       {blockType === BLOCK_TYPE_SELECTED_STORIES && (
         <SelectedStoriesEdit
-          icon={icon}
+          icon={<BlockIcon />}
           attributes={attributes}
           setAttributes={setAttributes}
           isSelected={isSelected}
@@ -102,15 +96,15 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       )}
 
       {blockType === BLOCK_TYPE_URL && (
-        <StoryEmbedEdit
-          icon={icon}
+        <SingleStoryEmbed
+          icon={<BlockIcon />}
           attributes={attributes}
           setAttributes={setAttributes}
           className={className}
           isSelected={isSelected}
         />
       )}
-    </ConfigProvider>
+    </>
   );
 }
 

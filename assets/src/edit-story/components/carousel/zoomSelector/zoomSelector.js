@@ -77,9 +77,11 @@ function ZoomSelector() {
     if (option) {
       return option.label;
     }
+
+    // eslint-disable-next-line @wordpress/valid-sprintf -- False positive.
     return sprintf(
-      /* translators: 1: zoom level percentage value. */
-      _x('%1$d%%', 'zoom level', 'web-stories'),
+      /* translators: %d: zoom level percentage value. */
+      _x('%d%%', 'zoom level', 'web-stories'),
       Math.round(zoomLevel * 100)
     );
   }, [zoomSetting, zoomLevel]);

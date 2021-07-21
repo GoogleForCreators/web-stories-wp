@@ -45,9 +45,7 @@ use Google\Web_Stories\Traits\Types;
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types;
-	use Screen;
-	use Post_Type;
+	use Types, Screen, Post_Type;
 
 	/**
 	 * Script handle.
@@ -318,7 +316,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_dashboard_settings() {
+	public function get_dashboard_settings(): array {
 		$rest_base     = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$new_story_url = admin_url(
 			add_query_arg(
@@ -326,15 +324,6 @@ class Dashboard extends Service_Base {
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 				],
 				'post-new.php'
-			)
-		);
-
-		$edit_story_url = admin_url(
-			add_query_arg(
-				[
-					'action' => 'edit',
-				],
-				'post.php'
 			)
 		);
 
@@ -363,7 +352,6 @@ class Dashboard extends Service_Base {
 				'userId'                => get_current_user_id(),
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
-				'editStoryURL'          => $edit_story_url,
 				'wpListURL'             => $classic_wp_list_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
@@ -391,7 +379,7 @@ class Dashboard extends Service_Base {
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 
 		/**

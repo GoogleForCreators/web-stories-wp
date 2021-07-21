@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
@@ -48,6 +53,7 @@ describe('Size & Position Panel', () => {
   describe('CUJ: Creator can Transform an Element: Set height and width', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       panel = fixture.editor.inspector.designPanel.sizePosition;
     });
 

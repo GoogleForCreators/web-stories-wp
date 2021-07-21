@@ -39,6 +39,8 @@ use WP_REST_Response;
 
 /**
  * Stories_Controller class.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
 	use Publisher;
@@ -53,6 +55,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.0.0
@@ -79,21 +82,21 @@ class Stories_Controller extends Stories_Base_Controller {
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
 
-		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
+		if ( rest_is_field_included( 'publisher_logo_url', $fields ) ) {
 			$data['publisher_logo_url'] = $this->get_publisher_logo();
 		}
 
-		if ( in_array( 'style_presets', $fields, true ) ) {
+		if ( rest_is_field_included( 'style_presets', $fields ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
-		if ( in_array( 'featured_media_url', $fields, true ) ) {
+		if ( rest_is_field_included( 'featured_media_url', $fields ) ) {
 			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
-		if ( in_array( 'preview_link', $fields, true ) ) {
+		if ( rest_is_field_included( 'preview_link', $fields ) ) {
 			// Based on https://github.com/WordPress/wordpress-develop/blob/8153c8ba020c4aec0b9d94243cd39c689a0730f7/src/wp-admin/includes/post.php#L1445-L1457.
 			if ( 'draft' === $post->post_status || empty( $post->post_name ) ) {
 				$view_link = get_preview_post_link( $post );
@@ -113,6 +116,17 @@ class Stories_Controller extends Stories_Base_Controller {
 			}
 
 			$data['preview_link'] = $view_link;
+		}
+
+		if ( rest_is_field_included( 'edit_link', $fields ) ) {
+			$edit_link = get_edit_post_link( $post, 'rest-api' );
+			if ( $edit_link ) {
+				$data['edit_link'] = $edit_link;
+			}
+		}
+
+		if ( rest_is_field_included( 'embed_post_link', $fields ) && current_user_can( 'edit_posts' ) ) {
+			$data['embed_post_link'] = add_query_arg( [ 'from-web-story' => $post->ID ], admin_url( 'post-new.php' ) );
 		}
 
 		$data  = $this->filter_response_by_context( $data, $context );
@@ -204,6 +218,22 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$schema['properties']['preview_link'] = [
 			'description' => __( 'Preview Link.', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
+		];
+
+		$schema['properties']['edit_link'] = [
+			'description' => _x( 'Edit Link', 'compound noun', 'web-stories' ),
+			'type'        => 'string',
+			'context'     => [ 'edit' ],
+			'format'      => 'uri',
+			'default'     => '',
+		];
+
+		$schema['properties']['embed_post_link'] = [
+			'description' => __( 'Embed Post Edit Link.', 'web-stories' ),
 			'type'        => 'string',
 			'context'     => [ 'edit' ],
 			'format'      => 'uri',

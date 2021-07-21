@@ -27,7 +27,13 @@ import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
 import { useHelpCenter } from '../../app';
-import { Checklist, useChecklist, useCheckpoint } from '../checklist';
+import {
+  Checklist,
+  ChecklistCountProvider,
+  useChecklist,
+  useCheckpoint,
+} from '../checklist';
+import { useKeyboardShortcutsMenu } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -77,6 +83,17 @@ function SecondaryMenu() {
     })
   );
 
+  const { close: closeKeyboardShortcutsMenu, isKeyboardShortcutsMenuOpen } =
+    useKeyboardShortcutsMenu(
+      ({
+        actions: { close },
+        state: { isOpen: isKeyboardShortcutsMenuOpen },
+      }) => ({
+        close,
+        isKeyboardShortcutsMenuOpen,
+      })
+    );
+
   const { onResetReviewDialogRequest, reviewDialogRequested } = useCheckpoint(
     ({
       actions: { onResetReviewDialogRequest },
@@ -92,14 +109,23 @@ function SecondaryMenu() {
   useEffect(() => {
     if (isChecklistOpen) {
       closeHelpCenter();
+      closeKeyboardShortcutsMenu();
     }
-  }, [closeHelpCenter, isChecklistOpen]);
+  }, [closeHelpCenter, closeKeyboardShortcutsMenu, isChecklistOpen]);
 
   useEffect(() => {
     if (isHelpCenterOpen) {
       closeChecklist();
+      closeKeyboardShortcutsMenu();
     }
-  }, [closeChecklist, isHelpCenterOpen]);
+  }, [closeChecklist, closeKeyboardShortcutsMenu, isHelpCenterOpen]);
+
+  useEffect(() => {
+    if (isKeyboardShortcutsMenuOpen) {
+      closeChecklist();
+      closeHelpCenter();
+    }
+  }, [closeChecklist, closeHelpCenter, isKeyboardShortcutsMenuOpen]);
 
   useEffect(() => {
     if (reviewDialogRequested) {
@@ -116,7 +142,9 @@ function SecondaryMenu() {
         <Space />
         {enableChecklistCompanion && (
           <>
-            <Checklist />
+            <ChecklistCountProvider>
+              <Checklist />
+            </ChecklistCountProvider>
             <Space />
           </>
         )}

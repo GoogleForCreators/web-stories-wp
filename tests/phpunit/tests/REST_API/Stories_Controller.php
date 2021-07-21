@@ -208,6 +208,32 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$view_link = get_preview_post_link( $story );
 		$this->assertSame( $view_link, $data['preview_link'] );
+		$this->assertArrayHasKey( 'edit_link', $data );
+		$edit_link = get_edit_post_link( $story, 'rest-api' );
+		$this->assertSame( $edit_link, $data['edit_link'] );
+		$this->assertArrayHasKey( 'embed_post_link', $data );
+		$this->assertContains( (string) $story, $data['embed_post_link'] );
+	}
+
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 */
+	public function test_get_item_no_user() {
+		$story = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'publish',
+				'post_author' => self::$user_id,
+			]
+		);
+		wp_set_current_user( 0 );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$this->assertArrayNotHasKey( 'edit_link', $data );
+		$this->assertArrayNotHasKey( 'preview_link', $data );
+		$this->assertArrayNotHasKey( 'embed_post_link', $data );
 	}
 
 
@@ -389,8 +415,8 @@ class Stories_Controller extends Test_REST_TestCase {
 
 		$this->kses_int();
 
-		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
 		$request->set_body_params(
@@ -416,8 +442,8 @@ class Stories_Controller extends Test_REST_TestCase {
 		wp_set_current_user( self::$author_id );
 		$this->kses_int();
 
-		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$story = self::factory()->post->create(
 			[
@@ -447,8 +473,8 @@ class Stories_Controller extends Test_REST_TestCase {
 		wp_set_current_user( self::$user_id );
 		$this->kses_int();
 
-		$unsanitized_content    = file_get_contents( __DIR__ . '/../../data/story_post_content.html' );
-		$unsanitized_story_data = json_decode( file_get_contents( __DIR__ . '/../../data/story_post_content_filtered.json' ), true );
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = json_decode( file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content_filtered.json' ), true );
 
 		$story = self::factory()->post->create(
 			[
@@ -459,7 +485,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0, false );
 		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, [], false );
 
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
 
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story/' . $story );
 		$request->set_body_params(

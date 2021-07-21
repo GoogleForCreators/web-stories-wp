@@ -27,7 +27,7 @@ import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';
 import StoryContext from '../../../app/story/context';
 
-const renderMediaElement = (resource, providerType) => {
+const renderMediaElement = (resource, providerType, canEditMedia = true) => {
   const canvasContext = {
     state: {
       pageSize: {
@@ -60,6 +60,7 @@ const renderMediaElement = (resource, providerType) => {
           providerType={providerType}
           width={150}
           height={150}
+          canEditMedia={canEditMedia}
         />
       </CanvasContext.Provider>
     </StoryContext.Provider>
@@ -113,6 +114,31 @@ describe('MediaElement', () => {
     Simulate.focus(element);
 
     expect(getByAriaLabel('More')).toBeInTheDocument();
+  });
+
+  it("should render dropdown menu's more icon users without permission", () => {
+    const resource = {
+      id: 456,
+      src: 'http://video-url.com',
+      type: 'video',
+      mimeType: 'video/mp4',
+      width: 100,
+      height: 100,
+      local: false, // Already uploaded
+      alt: 'video :)',
+    };
+
+    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+      resource,
+      'local',
+      false
+    );
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
+
+    const element = getByAriaLabel('video :)');
+    Simulate.focus(element);
+
+    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
   });
 
   it("should not render dropdown menu's more icon for not uploaded image", () => {

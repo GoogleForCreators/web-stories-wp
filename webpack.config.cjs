@@ -104,6 +104,7 @@ const sharedConfig = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {
@@ -129,6 +130,7 @@ const sharedConfig = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {
@@ -172,6 +174,7 @@ const sharedConfig = {
       WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(false),
       WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(false),
     }),
+    new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
@@ -233,7 +236,9 @@ const editorAndDashboard = {
     'stories-dashboard': './assets/src/dashboard/index.js',
   },
   plugins: [
-    ...sharedConfig.plugins,
+    ...sharedConfig.plugins.filter(
+      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+    ),
     new DependencyExtractionWebpackPlugin({
       requestToExternal,
     }),
@@ -272,9 +277,6 @@ const webStoriesScripts = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
     new WebpackBar({
       name: 'WP Frontend Scripts',
       color: '#EEE070',
@@ -310,9 +312,7 @@ const webStoriesBlock = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
+
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',
@@ -345,7 +345,6 @@ const widgetScript = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({}),
     new WebpackBar({
       name: 'WP Widget Script',
       color: '#F757A5',
@@ -360,7 +359,6 @@ const storiesMCEButton = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({}),
     new WebpackBar({
       name: 'WP TinyMCE Button',
       color: '#4deaa2',

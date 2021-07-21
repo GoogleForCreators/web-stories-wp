@@ -126,7 +126,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$data     = $response->get_data();
 		$schema   = $this->get_item_schema();
 
-		if ( in_array( 'story_data', $fields, true ) ) {
+		if ( rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
@@ -162,7 +162,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$schema = parent::get_item_schema();
 
 		$schema['properties']['story_data'] = [
-			'description' => __( 'Story data stored as a JSON object. Stored in post_content_filtered field.', 'web-stories' ),
+			'description' => __( 'Story data', 'web-stories' ),
 			'type'        => 'object',
 			'context'     => [ 'view', 'edit' ],
 			'default'     => [],

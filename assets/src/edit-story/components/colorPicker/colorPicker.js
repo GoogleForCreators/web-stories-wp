@@ -62,6 +62,7 @@ const Container = styled.div`
 const Body = styled.div``;
 
 function ColorPicker({
+  isEyedropperActive,
   color,
   hasGradient,
   hasOpacity,
@@ -117,9 +118,15 @@ function ColorPicker({
     }
   }, [color, load]);
 
+  const closeIfNotEyedropping = () => {
+    if (!isEyedropperActive) {
+      onClose();
+    }
+  };
+
   // Detect focus out of color picker (clicks or focuses outside)
   const containerRef = useRef();
-  useFocusOut(containerRef, onClose);
+  useFocusOut(containerRef, closeIfNotEyedropping, [isEyedropperActive]);
 
   // Re-establish focus when actively exiting by button or key press
   const previousFocus = useRef(document.activeElement);
@@ -196,6 +203,7 @@ ColorPicker.propTypes = {
   onClose: PropTypes.func,
   hasGradient: PropTypes.bool,
   hasOpacity: PropTypes.bool,
+  isEyedropperActive: PropTypes.bool,
   color: PatternPropType,
   renderFooter: PropTypes.func,
   changedStyle: PropTypes.string,

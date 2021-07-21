@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -45,9 +50,10 @@ describe('RTL support', () => {
   describe('CUJ: Creator can Select an Element: Transforming element', () => {
     it('should allow dragging element in RTL mode', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       const elements = await getSelectedElements();
       const originX = elements[0].x;
-      const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       const box = frame.getBoundingClientRect();
       await fixture.events.mouse.seq(({ move, moveBy, down, up }) => [
         move(box.left + 10, box.top + 10),
@@ -66,6 +72,7 @@ describe('RTL support', () => {
 
     it('should allow resizing element in RTL mode', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const elements = await getSelectedElements();
       const originWidth = elements[0].width;
       const resizeW = fixture
