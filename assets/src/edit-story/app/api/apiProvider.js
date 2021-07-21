@@ -21,18 +21,18 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
-
+import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
+import { flatternFormData } from './utils';
 import removeImagesFromPageTemplates from './removeImagesFromPageTemplates';
 
 function APIProvider({ children }) {
@@ -219,17 +219,6 @@ function APIProvider({ children }) {
     [media]
   );
 
-  const createFormData = useCallback((formData, key, data) => {
-    if (data === Object(data) || Array.isArray(data)) {
-      // eslint-disable-next-line guard-for-in
-      for (const i in data) {
-        createFormData(formData, key + '[' + i + ']', data[i]);
-      }
-    } else {
-      formData.append(key, data);
-    }
-  }, []);
-
   /**
    * Upload file to via REST API.
    *
@@ -243,7 +232,7 @@ function APIProvider({ children }) {
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
       Object.entries(additionalData).forEach(([key, value]) =>
-        createFormData(data, key, value)
+        flatternFormData(data, key, value)
       );
 
       // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
@@ -253,7 +242,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [createFormData, media]
+    [media]
   );
 
   /**
@@ -352,7 +341,7 @@ function APIProvider({ children }) {
       ].filter(Boolean);
 
       Object.entries(additionalData).forEach(([key, value]) =>
-        createFormData(formData, key, value)
+        flatternFormData(formData, key, value)
       );
 
       return apiFetch({
@@ -362,7 +351,7 @@ function APIProvider({ children }) {
         parse: false,
       });
     },
-    [createFormData, metaBoxes]
+    [metaBoxes]
   );
 
   /**
