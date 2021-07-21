@@ -26,7 +26,7 @@ import { useFeature } from 'flagged';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 
-function useVideoIsMuted({ updateMediaElement }) {
+function useDetectVideoHasAudio({ updateMediaElement }) {
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -87,4 +87,4 @@ function useVideoIsMuted({ updateMediaElement }) {
   };
 }
 
-export default useVideoIsMuted;
+export default useDetectVideoHasAudio;
