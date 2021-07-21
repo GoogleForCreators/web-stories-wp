@@ -216,7 +216,7 @@ export function finishTranscoding(state, { payload: { id, file } }) {
 }
 
 /**
- * Starts mute a file.
+ * Starts muting a file.
  *
  * @param {Object} state Current state.
  * @param {Object} action Action object.
