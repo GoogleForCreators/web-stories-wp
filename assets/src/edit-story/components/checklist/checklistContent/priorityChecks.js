@@ -27,6 +27,7 @@ import { useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
+import StoryHasAmpErrors from '../checks/storyHasAmpErrors';
 import StoryMissingExcerpt from '../checks/storyMissingExerpt';
 import StoryMissingTitle from '../checks/storyMissingTitle';
 import StoryPosterSize from '../checks/storyPosterSize';
@@ -106,6 +107,7 @@ export function PriorityChecks(props) {
         <PublisherLogoSize />
         <VideoElementMissingPoster />
         {isTranscodingEnabled && <VideoOptimization />}
+        <StoryHasAmpErrors />
       </PriorityPanel>
     </ChecklistCategoryProvider>
   );

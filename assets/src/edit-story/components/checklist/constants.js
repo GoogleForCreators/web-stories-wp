@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
@@ -62,6 +63,10 @@ export const CATEGORY_LABELS = {
   [ISSUE_TYPES.PRIORITY]: __('Priority', 'web-stories'),
 };
 
+// Event Tracking
+const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');
+
+// Checklist Copy
 export const ACCESSIBILITY_COPY = {
   fontSizeTooSmall: {
     title: sprintf(
@@ -471,6 +476,33 @@ export const PRIORITY_COPY = {
   },
   storyMissingPublisherName: {
     title: __('Add Site Title', 'web-stories'),
+  },
+  ampValidation: {
+    title: __('Web Story validation', 'web-stories'),
+    footer: (
+      <TranslateWithMarkup
+        mapping={{
+          a: (
+            //eslint-disable-next-line jsx-a11y/anchor-has-content
+            <a
+              href={__('https://search.google.com/test/amp', 'web-stories')}
+              rel="noreferrer"
+              target="_blank"
+              aria-label={__(
+                'Learn more by visiting Google AMP Test',
+                'web-stories'
+              )}
+              onClick={onAmpErrorClick}
+            />
+          ),
+        }}
+      >
+        {__(
+          'Your story contains errors that make it ineligible to appear in dedicated places on Google Search and Discover. For more insight on how to resolve these errors, visit <a>Google AMP Test</a>.',
+          'web-stories'
+        )}
+      </TranslateWithMarkup>
+    ),
   },
 };
 
