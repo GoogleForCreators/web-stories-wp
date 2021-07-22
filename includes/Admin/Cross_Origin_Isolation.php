@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\User\Preferences;
@@ -37,7 +38,7 @@ use Google\Web_Stories\User\Preferences;
  *
  * @package Google\Web_Stories
  */
-class Cross_Origin_Isolation extends Service_Base {
+class Cross_Origin_Isolation extends Service_Base implements Conditional {
 	use Screen;
 
 	/**
@@ -46,7 +47,7 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		if ( ! $this->is_needed() || ! $this->is_edit_screen() ) {
+		if ( ! $this->is_edit_screen() ) {
 			return;
 		}
 
@@ -104,11 +105,15 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @return string Processed HTML document.
 	 */
 	protected function replace_in_dom( string $html ): string {
+		$site_url = site_url();
+
+		// See https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin.
 		$tags = [
-			'link',
+			'audio',
 			'img',
-			'iframe',
+			'link',
 			'script',
+			'video',
 		];
 
 		$tags      = implode( '|', $tags );
@@ -116,8 +121,11 @@ class Cross_Origin_Isolation extends Service_Base {
 		$processed = [];
 
 		if ( preg_match_all( '#<(?P<tag>' . $tags . ')[^<]*?(?:>[\s\S]*?</(?P=tag)>|\s*/>)#', $html, $matches ) ) {
-			foreach ( $matches[0] as $match ) {
-				if ( false !== strpos( $match, 'crossorigin=' ) ) {
+
+			foreach ( $matches[0] as $index => $match ) {
+				$tag = $matches['tag'][ $index ];
+
+				if ( false !== strpos( $match, ' crossorigin=' ) ) {
 					continue;
 				}
 
@@ -128,15 +136,23 @@ class Cross_Origin_Isolation extends Service_Base {
 
 				$attribute = $match_value[1];
 				$value     = $match_value[4] ?? $match_value[3];
+				$cache_key = ( 'video' === $tag || 'audio' === $tag ) ? $tag : $attribute;
 
-				// If already processed tag, attribute and value before, skip.
-				if ( isset( $processed[ $attribute ] ) && in_array( $value, $processed[ $attribute ], true ) ) {
+				// If already processed tag/attribute and value before, skip.
+				if ( isset( $processed[ $cache_key ] ) && in_array( $value, $processed[ $cache_key ], true ) ) {
 					continue;
 				}
 
-				$processed[ $attribute ][] = $value;
+				$processed[ $cache_key ][] = $value;
 
-				$html = $this->add_attribute( $html, $attribute, $value );
+				// The only tags that can have <source> children.
+				if ( 'video' === $tag || 'audio' === $tag ) {
+					if ( ! $this->starts_with( $value, $site_url ) && ! $this->starts_with( $value, '/' ) ) {
+						$html = str_replace( $match, str_replace( '<' . $tag, '<' . $tag . ' crossorigin="anonymous"', $match ), $html );
+					}
+				} else {
+					$html = $this->add_attribute( $html, $attribute, $value );
+				}
 			}
 		}
 
@@ -271,19 +287,17 @@ class Cross_Origin_Isolation extends Service_Base {
 	 * @return bool
 	 */
 	private function starts_with( string $string, string $start_string ): bool {
-		$len = strlen( $start_string );
-
-		return ( substr( $string, 0, $len ) === $start_string );
+		return 0 === strpos( $string, $start_string );
 	}
 
 	/**
-	 * Check to see if class is needed.
+	 * Check whether the conditional object is currently needed.
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return bool
+	 * @return bool Whether the conditional object is needed.
 	 */
-	protected function is_needed() {
+	public static function is_needed(): bool {
 		$user_id = get_current_user_id();
 		if ( ! $user_id ) {
 			return false;
