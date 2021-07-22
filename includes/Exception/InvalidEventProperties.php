@@ -48,7 +48,7 @@ final class InvalidEventProperties
 	 *
 	 * @return self
 	 */
-	public static function from_invalid_type( $properties ) {
+	public static function from_invalid_type( $properties ): self {
 		$type = is_object( $properties )
 			? get_class( $properties )
 			: gettype( $properties );
@@ -71,7 +71,7 @@ final class InvalidEventProperties
 	 *
 	 * @return self
 	 */
-	public static function from_invalid_element_key_type( $property ) {
+	public static function from_invalid_element_key_type( $property ): self {
 		$type = is_object( $property )
 			? get_class( $property )
 			: gettype( $property );
@@ -92,7 +92,7 @@ final class InvalidEventProperties
 	 *
 	 * @return self
 	 */
-	public static function from_invalid_element_value_type( $property ) {
+	public static function from_invalid_element_value_type( $property ): self {
 		$type = is_object( $property )
 			? get_class( $property )
 			: gettype( $property );
