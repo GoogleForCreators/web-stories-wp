@@ -227,6 +227,28 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
+	 * Override scheme to remove permalink_template and generated_slug.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array Item schema as an array.
+	 */
+	public function get_item_schema() {
+		if ( $this->schema ) {
+			return $this->add_additional_fields_schema( $this->schema );
+		}
+
+		$schema = parent::get_item_schema();
+
+		unset( $schema['properties']['permalink_template'] );
+		unset( $schema['properties']['generated_slug'] );
+
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
+	}
+
+	/**
 	 * Retrieves the supported media types.
 	 *
 	 * Media types are considered the MIME type category.

@@ -208,4 +208,19 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
 	}
+
+	/**
+	 * @covers ::get_item_schema
+	 */
+	public function test_get_item_schema() {
+		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/media' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertNotEmpty( $data );
+
+		$properties = $data['schema']['properties'];
+		$this->assertArrayNotHasKey( 'permalink_template', $properties );
+		$this->assertArrayNotHasKey( 'generated_slug', $properties );
+	}
 }
