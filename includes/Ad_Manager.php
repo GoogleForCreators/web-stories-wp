@@ -85,25 +85,20 @@ class Ad_Manager extends Service_Base {
 			],
 		];
 
-		$ad_attributes = [];
-		$ad_attributes[ 'type' ] = 'doubleclick';
-		$ad_attributes[ 'data-slot' ] = $slot;
-
-		$application_json['ad-attributes'] = $ad_attributes;
-		
 		/**
 		 * Filters Google Ad Manager configuration passed to `<amp-story-auto-ads>`.
 		 *
 		 * @since 1.10.0
 		 *
 		 * @param array $settings Ad Manager configuration.
+		 * @param string $slot Google Ad_Manager slot ID.
 		 */
-		$configuration = apply_filters( 'web_stories_ad_manager_configuration', $configuration );
+		$configuration = apply_filters( 'web_stories_ad_manager_configuration', $configuration, $slot );
 
 		?>
 		<amp-story-auto-ads>
 			<script type="application/json">
-				<?php echo wp_json_encode( $application_json, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT ); ?>
+				<?php echo wp_json_encode( $configuration, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE ); ?>
 			</script>
 		</amp-story-auto-ads>
 		<?php
