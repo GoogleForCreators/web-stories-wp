@@ -17,12 +17,17 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 jest.mock('../../../../edit-story/components/previewPage/previewPage');
+jest.mock('@web-stories-wp/design-system', () => ({
+  __esModule: true,
+  ...jest.requireActual('@web-stories-wp/design-system'),
+  useResizeEffect: jest.fn((ref, cb) => cb({ width: 100 })),
+}));
 import { PreviewPage } from '../../../../edit-story/components/previewPage';
 import { renderWithProviders } from '../../../testUtils';
 import CardGallery from '..';
@@ -36,24 +41,28 @@ const createMockTemplate = (pages) => ({
 describe('CardGallery', () => {
   PreviewPage.mockImplementation(({ page }) => <div data-testid={page.name} />);
 
-  it('should render CardGallery', () => {
+  it('should render CardGallery', async () => {
     const template = createMockTemplate([
       { id: 'id-1', name: 'test-child' },
       { id: 'id-2', name: 'test-child' },
       { id: 'id-3', name: 'test-child' },
       { id: 'id-4', name: 'test-child' },
     ]);
-
-    renderWithProviders(
-      <CardGallery story={template} galleryLabel="Test Gallery" />
-    );
-
-    // totalCards = childrenCount + activeCardCount (there is only 1 active card at a time)
-    const totalCards = 5;
-    expect(screen.getAllByTestId('test-child')).toHaveLength(totalCards);
+    act(() => {
+      renderWithProviders(
+        <CardGallery story={template} galleryLabel="Test Gallery" />
+      );
+    });
+    // We don't render the page until we have measurements of the area we're rendering
+    // this accounts for that behavior.
+    await waitFor(() => {
+      // totalCards = childrenCount + activeCardCount (there is only 1 active card at a time)
+      const totalCards = 5;
+      expect(screen.getAllByTestId('test-child')).toHaveLength(totalCards);
+    });
   });
 
-  it('should set first child as active child', () => {
+  it('should set first child as active child', async () => {
     const template = createMockTemplate([
       { id: 'id-1', name: 'active-child' },
       { id: 'id-2', name: 'non-active-child' },
@@ -61,15 +70,19 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'non-active-child' },
     ]);
 
-    renderWithProviders(
-      <CardGallery story={template} galleryLabel="Test Gallery" />
-    );
+    act(() => {
+      renderWithProviders(
+        <CardGallery story={template} galleryLabel="Test Gallery" />
+      );
+    });
 
-    // The active child should always appear twice
-    expect(screen.getAllByTestId('active-child')).toHaveLength(2);
+    await waitFor(() => {
+      // The active child should always appear twice
+      expect(screen.getAllByTestId('active-child')).toHaveLength(2);
+    });
   });
 
-  it('should change active child to the child that is clicked on', () => {
+  it('should change active child to the child that is clicked on', async () => {
     const template = createMockTemplate([
       { id: 'id-1', name: 'other-child' },
       { id: 'id-2', name: 'other-child' },
@@ -77,17 +90,27 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'other-child' },
     ]);
 
-    renderWithProviders(
-      <CardGallery story={template} galleryLabel="Test Gallery" />
-    );
+    act(() => {
+      renderWithProviders(
+        <CardGallery story={template} galleryLabel="Test Gallery" />
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('test-child')).toBeInTheDocument();
+    });
 
     // When the child is not active, it should only appear once
     const firstItem = screen.getByTestId('test-child');
 
-    // Simulate clicking on Item 3
-    fireEvent.click(firstItem);
+    act(() => {
+      // Simulate clicking on Item 3
+      fireEvent.click(firstItem);
+    });
 
-    // When active, it should appear twice
-    expect(screen.getAllByTestId('test-child')).toHaveLength(2);
+    await waitFor(() => {
+      // When active, it should appear twice
+      expect(screen.getAllByTestId('test-child')).toHaveLength(2);
+    });
   });
 });
