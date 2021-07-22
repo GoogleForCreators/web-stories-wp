@@ -561,10 +561,28 @@ class Media extends Test_Case {
 	/**
 	 * @covers ::filter_default_value_is_muted
 	 */
+	public function filter_default_value_is_muted_image() {
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		wp_generate_attachment_metadata( $poster_attachment_id, get_attached_file( $poster_attachment_id ) );
+
+		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
+		$this->assertFalse( $meta );
+	}
+
+	/**
+	 * @covers ::filter_default_value_is_muted
+	 */
 	public function filter_default_value_is_muted_no_sound() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => __DIR__ . '/../../data/video-no-sound.mp4',
+				'file'           => WEB_STORIES_TEST_DATA_DIR . '/video-no-sound.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video - no sounds',
