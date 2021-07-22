@@ -32,8 +32,7 @@ import apiFetch from '@wordpress/api-fetch';
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import { flatternFormData } from './utils';
-import removeImagesFromPageTemplates from './removeImagesFromPageTemplates';
+import { flatternFormData, removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
   const {

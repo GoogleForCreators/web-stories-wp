@@ -21,7 +21,7 @@
  * @param {string} key Key to ammended to to form data object
  * @param {string|Object} data Data to be ammended to form, data, this could be either string or object.
  */
-export const flatternFormData = (formData, key, data) => {
+const flatternFormData = (formData, key, data) => {
   if (typeof data === 'object') {
     for (const name in data) {
       if (Object.prototype.hasOwnProperty.call(data, name)) {
@@ -32,3 +32,5 @@ export const flatternFormData = (formData, key, data) => {
     formData.append(key, data);
   }
 };
+
+export default flatternFormData;
