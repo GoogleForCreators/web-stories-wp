@@ -380,16 +380,26 @@ function RightClickMenuProvider({ children }) {
   );
 
   const menuItems = useMemo(() => {
+    if (selectedElement?.isBackground) {
+      return pageItems;
+    }
+
     switch (selectedElement?.type) {
       case ELEMENT_TYPE.IMAGE:
       case ELEMENT_TYPE.VIDEO:
+      case ELEMENT_TYPE.GIF:
         return foregroundMediaItems;
       case ELEMENT_TYPE.SHAPE:
       case ELEMENT_TYPE.TEXT:
       default:
         return pageItems;
     }
-  }, [foregroundMediaItems, pageItems, selectedElement?.type]);
+  }, [
+    foregroundMediaItems,
+    pageItems,
+    selectedElement?.isBackground,
+    selectedElement?.type,
+  ]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
