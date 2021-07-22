@@ -17,7 +17,7 @@
   "dependencies": {
     "@web-stories-wp/glider": "*",
     "@web-stories-wp/tracking": "*",
-    "@wordpress/blocks": "^9.1.4",
+    "@wordpress/blocks": "^10.0.0",
     "@wordpress/api-fetch": "^5.2.0",
     "@wordpress/block-editor": "^6.1.13",
     "@wordpress/components": "^13.0.1",
