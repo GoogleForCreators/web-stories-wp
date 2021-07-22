@@ -86,7 +86,14 @@ class Ad_Manager extends Service_Base {
 
 		$application_json['ad-attributes'] = $ad_attributes;
 		
-		$application_json = apply_filters( 'web_stories_ad_manager_json', $application_json );
+		/**
+		 * Filters Google Ad Manager configuration passed to `<amp-story-auto-ads>`.
+		 *
+		 * @since 1.10.0
+		 *
+		 * @param array $settings Ad Manager configuration.
+		 */
+		$configuration = apply_filters( 'web_stories_ad_manager_configuration', $configuration );
 
 		?>
 		<amp-story-auto-ads>
