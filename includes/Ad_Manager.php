@@ -77,15 +77,21 @@ class Ad_Manager extends Service_Base {
 		if ( ! $enabled || ! $slot ) {
 			return;
 		}
+
+		$application_json = [];
+
+		$ad_attributes = [];
+		$ad_attributes[ 'type' ] = 'doubleclick';
+		$ad_attributes[ 'data-slot' ] = $slot;
+
+		$application_json['ad-attributes'] = $ad_attributes;
+		
+		$application_json = apply_filters( 'web_stories_ad_manager_json', $application_json );
+
 		?>
 		<amp-story-auto-ads>
 			<script type="application/json">
-				{
-					"ad-attributes": {
-						"type": "doubleclick",
-						"data-slot": "<?php echo esc_js( $slot ); ?>"
-					}
-				}
+				<?php echo wp_json_encode( $application_json, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT ); ?>
 			</script>
 		</amp-story-auto-ads>
 		<?php
