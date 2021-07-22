@@ -72,7 +72,6 @@ const StoryHasAmpErrors = () => {
     story: { link, status },
   } = useStory(({ state }) => state);
 
-  // limiting this to link and status will mean it doesn't run on updates.
   // limiting to when isSaving is false so that when the saved story is updated this will check.
   const isRendered = useMemo(
     () => !isSaving && storyHasAmpErrors({ link, status }),
