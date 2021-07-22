@@ -62,7 +62,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "d5ca2488-668b-4e21-a7d8-05c17084742b",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">EXPERIENCE</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Experience</span>",
           "fontSize": 42,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -88,7 +88,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "3c00f665-e2ff-4393-aef4-6ca790f599fd",
-          "content": "<span style=\"font-weight: 700; color: #fff\">THAILAND</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; text-transform: uppercase\">Thailand</span>",
           "fontSize": 99,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -230,7 +230,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "bfd53cf2-f8e8-41f0-8449-48772b5194bb",
-          "content": "<span style=\"color: #fff\">I TRAVEL TO FIND MYSELF IN THE EYES AND HEARTS OF OTHERS”</span>",
+          "content": "<span style=\"color: #fff; text-transform: uppercase\">I travel to find myself in the eyes and hearts of others”</span>",
           "fontSize": 53,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -453,7 +453,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "content": "<span style=\"font-weight: 500; color: #fff\">LEARN</span>\n<span style=\"font-weight: 500; color: #fff\">MORE</span>",
+          "content": "<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">Learn</span>\n<span style=\"font-weight: 500; color: #fff; text-transform: uppercase\">More</span>",
           "fontSize": 20,
           "padding": {
             "hasHiddenPadding": false,
@@ -512,7 +512,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "6258d646-a291-498f-81ab-3095f352bb26",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">STREET\nFOOD</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Street</span>\n<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Food</span>",
           "fontSize": 52,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -630,7 +630,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "1b892512-7510-4c09-a750-7dfd21ece74a",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">FLOATING MARKET</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Floating Market</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -767,7 +767,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "65283dae-40f2-4ace-8b0a-0d9f2066a38a",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">CAPTURE</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Capture</span>",
           "fontSize": 42,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -793,7 +793,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "95c08a42-48cd-4112-b0e2-f24362adc7bc",
-          "content": "<span style=\"color: #fff\">BANGKOK</span>",
+          "content": "<span style=\"color: #fff; text-transform: uppercase\">Bangkok</span>",
           "fontSize": 98,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -914,7 +914,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "c40c8eae-e683-4fa6-a632-e1d652279a37",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">TOP 5\nCHIANG MAI</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Top 5</span>\n<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Chiang Mai</span>",
           "fontSize": 54,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1046,7 +1046,7 @@
           "focalY": 50,
           "basedOn": "6258d646-a291-498f-81ab-3095f352bb26",
           "id": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">TEMPLE\nNAME</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Temple</span>\n<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Name</span>",
           "fontSize": 52,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1148,7 +1148,7 @@
           "focalY": 50,
           "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
           "id": "4f71e74f-fd3f-4840-9ea4-8c0f59363952",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">NO. 3</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">No. 3</span>",
           "fontSize": 21,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -1287,7 +1287,7 @@
           "focalY": 50,
           "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
           "id": "28b135fd-63b8-456c-985d-3dfe542fffd7",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN\nMORE</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Learn</span>\n<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">More</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1314,7 +1314,7 @@
           "focalY": 50,
           "basedOn": "6258d646-a291-498f-81ab-3095f352bb26",
           "id": "30716193-c4ff-4619-b485-8108d250c8b8",
-          "content": "ISLAND\nHOPPING",
+          "content": "<span style=\"text-transform: uppercase\">Island</span>\n<span style=\"text-transform: uppercase\">Hopping</span>",
           "fontSize": 52,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1438,7 +1438,7 @@
           "focalY": 50,
           "basedOn": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
           "id": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">1. PHUKET</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">1. Phuket</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1465,7 +1465,7 @@
           "focalY": 50,
           "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
           "id": "840cd415-bf08-4186-9649-932beb2e6778",
-          "content": "<span style=\"color: #094228\">2. KOH PHI PHI</span>",
+          "content": "<span style=\"color: #094228; text-transform: uppercase\">2. Koh Phi Phi</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1492,7 +1492,7 @@
           "focalY": 50,
           "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
           "id": "bbe6302e-87c0-49d2-b16b-ff787059c187",
-          "content": "<span style=\"color: #094228\">3. KOH LIPE</span>",
+          "content": "<span style=\"color: #094228; text-transform: uppercase\">3. Koh Lipe</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1519,7 +1519,7 @@
           "focalY": 50,
           "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
           "id": "44db08e2-0900-40a6-9e52-3ab2325aeab2",
-          "content": "<span style=\"color: #094228\">4. KO SAMUI</span>",
+          "content": "<span style=\"color: #094228; text-transform: uppercase\">4. Ko Samui</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1987,7 +1987,7 @@
           "focalY": 50,
           "basedOn": "840cd415-bf08-4186-9649-932beb2e6778",
           "id": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">5 SPICIEST\nDISHES</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">5 Spiciest</span>\n<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Dishes</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2014,7 +2014,7 @@
           "focalY": 50,
           "basedOn": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
           "id": "cb201d61-faec-476e-9d72-14caf813197b",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">HIKES OFF THE BEATEN\nTRAIL</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Hikes Off The Beaten\nTrail</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2041,7 +2041,7 @@
           "focalY": 50,
           "basedOn": "cb201d61-faec-476e-9d72-14caf813197b",
           "id": "fcdc8182-cfb1-4010-82cd-91b5f235f0fc",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">CATCH THE SWIMMING MONKEYS</span>",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1); text-transform: uppercase\">Catch The Swimming Monkeys</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2068,7 +2068,7 @@
           "focalY": 50,
           "basedOn": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
           "id": "e5272870-2b37-4bba-abcf-eab0ffc222a4",
-          "content": "<span style=\"color: #094228\">MORE</span>\n<span style=\"color: #094228\">STORIES</span>",
+          "content": "<span style=\"color: #094228; text-transform: uppercase\">More</span>\n<span style=\"color: #094228; text-transform: uppercase\">Stories</span>",
           "fontSize": 52,
           "padding": { "horizontal": 0, "vertical": 0 }
         },

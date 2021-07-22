@@ -624,7 +624,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #f7722f\">TRAVIS</span>\n<span style=\"font-weight: 900; color: #f7722f\">TRAVIS</span>",
+          "content": "<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>\n<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -1048,7 +1048,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #fff\">MOONGAZING</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Moongazing</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -1103,7 +1103,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #f7722f; letter-spacing: 0.1em\">CAN'T WAIT</span>\n<span style=\"color: #f7722f; letter-spacing: 0.1em\">TO LISTEN TO</span>",
+          "content": "<span style=\"color: #f7722f; letter-spacing: 0.1em; text-transform: uppercase\">Can't wait</span>\n<span style=\"color: #f7722f; letter-spacing: 0.1em; text-transform: uppercase\">to listen to</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1430,7 +1430,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #3d3225\">ARIANA</span>\n<span style=\"font-weight: 900; color: #3d3225\">ARIANA</span>",
+          "content": "<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>\n<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -1854,7 +1854,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">5 RINGS</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">5 Rings</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -1909,7 +1909,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em\">CAN'T WAIT</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em\">TO LISTEN TO</span>",
+          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">Can't wait</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">to listen to</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2238,7 +2238,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #f4e6b0\">TEYANA</span>\n<span style=\"font-weight: 900; color: #f4e6b0\">TEYANA</span>",
+          "content": "<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>\n<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -2662,7 +2662,7 @@
           "lineHeight": 0.7,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">GOING</span>\n<span style=\"font-weight: 900; color: #fff\">WEST</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Going</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">West</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -2717,7 +2717,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #f4e6b0; letter-spacing: 0.1em\">Top 10</span>\n<span style=\"color: #f4e6b0; letter-spacing: 0.1em\">Dancers</span>",
+          "content": "<span style=\"color: #f4e6b0; letter-spacing: 0.1em; text-transform: uppercase\">Top 10</span>\n<span style=\"color: #f4e6b0; letter-spacing: 0.1em; text-transform: uppercase\">Dancers</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3006,7 +3006,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fee2c6\">JUSTIN</span>\n<span style=\"font-weight: 900; color: #fee2c6\">BARBER</span>",
+          "content": "<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Justin</span>\n<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Barber</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -3468,7 +3468,7 @@
           "lineHeight": 0.7,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">PINK</span>\n<span style=\"font-weight: 900; color: #fff\">SWEATER</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Pink</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Sweater</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -3523,7 +3523,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em\">THAT's</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em\">FLOW!</span>",
+          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">That's</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">Flow!</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3709,7 +3709,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">WHAT'S</span>\n<span style=\"font-weight: 900; color: #fff\">NEXT?</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">What's</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Next?</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,

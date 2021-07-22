@@ -438,7 +438,7 @@
           "type": "text",
           "basedOn": "31272720-81e0-416c-b7e6-870d7c68bf81",
           "id": "d189d8f5-809a-4775-8043-4f1ff432a932",
-          "content": "<span style=\"color: #3a566e\">VIEW</span>\n<span style=\"color: #3a566e\">MORE</span>",
+          "content": "<span style=\"color: #3a566e; text-transform: uppercase\">View</span>\n<span style=\"color: #3a566e; text-transform: uppercase\">More</span>",
           "fontSize": 12,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1154,7 +1154,7 @@
           "type": "text",
           "basedOn": "962ba57a-da00-4ea0-8ac9-649c7996768d",
           "id": "7979d059-fcdd-4a43-b92c-a9700cab7519",
-          "content": "<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em\">DISCOVER THEM</span>",
+          "content": "<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">Discover them</span>",
           "fontSize": 12,
           "padding": { "horizontal": 0, "vertical": 0 },
           "marginOffset": 0
@@ -1934,7 +1934,7 @@
           "type": "text",
           "basedOn": "d189d8f5-809a-4775-8043-4f1ff432a932",
           "id": "962ba57a-da00-4ea0-8ac9-649c7996768d",
-          "content": "<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em\">LEARN</span>\n<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em\">MORE</span>",
+          "content": "<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">Learn</span>\n<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">More</span>",
           "fontSize": 12,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2017,7 +2017,7 @@
           "focalY": 50,
           "type": "text",
           "id": "33d395dd-462d-4457-97c0-7b82f8c7c5d8",
-          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em\">YIELD</span>",
+          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">Yield</span>",
           "fontSize": 11,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2101,7 +2101,7 @@
           "type": "text",
           "basedOn": "33d395dd-462d-4457-97c0-7b82f8c7c5d8",
           "id": "a5f5f1d9-015f-4f74-8bb7-a92e3ec3ea9a",
-          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em\">TYPE</span>",
+          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">Type</span>",
           "fontSize": 11,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2185,7 +2185,7 @@
           "type": "text",
           "basedOn": "a5f5f1d9-015f-4f74-8bb7-a92e3ec3ea9a",
           "id": "296554e7-af85-41ab-8f40-44b091a1b3a8",
-          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em\">TIME</span>",
+          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">Time</span>",
           "fontSize": 11,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2269,7 +2269,7 @@
           "type": "text",
           "basedOn": "296554e7-af85-41ab-8f40-44b091a1b3a8",
           "id": "36968290-c6c8-4de1-bb7b-b8faf7a5872e",
-          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em\">LEVEL</span>",
+          "content": "<span style=\"color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">Level</span>",
           "fontSize": 11,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2572,7 +2572,7 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em\">VIEW</span>\n<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em\">MORE</span>",
+          "content": "<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">View</span>\n<span style=\"font-weight: 500; color: #3a566e; letter-spacing: 0.25em; text-transform: uppercase\">More</span>",
           "fontSize": 12,
           "padding": { "horizontal": 0, "vertical": 0 },
           "basedOn": "962ba57a-da00-4ea0-8ac9-649c7996768d",

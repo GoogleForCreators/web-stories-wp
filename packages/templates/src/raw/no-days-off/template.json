@@ -65,7 +65,7 @@
           "focalY": 50,
           "type": "text",
           "id": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">NO</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">DAYS</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.03em\">OFF</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em; text-transform: uppercase\">No</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em; text-transform: uppercase\">Days</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.03em; text-transform: uppercase\">Off</span>",
           "fontSize": 178,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -219,7 +219,7 @@
           "focalY": 50,
           "type": "text",
           "id": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
-          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">“TO GET TO GREATNESS, YOU HAVE TO BE WILLING TO GET OUT OF YOUR COMFORT ZONE .”</span>",
+          "content": "<span style=\"color: #fff; letter-spacing: -0.03em; text-transform: uppercase\">“To get to greatness, you have to be willing to get out of your comfort zone.”</span>",
           "fontSize": 46,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -256,7 +256,7 @@
           "type": "text",
           "basedOn": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
           "id": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
-          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">-ANONYMOUS</span>",
+          "content": "<span style=\"color: #fff; letter-spacing: -0.03em; text-transform: uppercase\">-Anonymous</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -350,7 +350,7 @@
           "type": "text",
           "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
           "id": "8e351291-f603-459c-883b-66ba0d036694",
-          "content": "<span style=\"font-weight: 600; color: rgba(207,19,35,0.4); letter-spacing: -0.03em\">RUN</span>",
+          "content": "<span style=\"font-weight: 600; color: rgba(207,19,35,0.4); letter-spacing: -0.03em; text-transform: uppercase\">Run</span>",
           "fontSize": 209,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -387,7 +387,7 @@
           "type": "text",
           "basedOn": "8e351291-f603-459c-883b-66ba0d036694",
           "id": "b4571f66-24f3-4908-8c18-8ac378735fb9",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">LIKE YOU</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">MEAN IT</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Like You</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Mean It</span>",
           "fontSize": 79,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -607,7 +607,7 @@
           "type": "text",
           "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
           "id": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">TOP</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">DISTANCE</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNING</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">SHOES</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Top</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Distance</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Running</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Shoes</span>",
           "fontSize": 74,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -762,7 +762,7 @@
           "type": "text",
           "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
           "id": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">THE WOVEN</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNER</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">The Woven</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em; text-transform: uppercase\">Runner</span>",
           "fontSize": 74,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -890,7 +890,7 @@
           "type": "text",
           "basedOn": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
           "id": "d4bdc028-59aa-4adc-8762-570676202dc3",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BUY NOW</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Buy Now</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -1057,7 +1057,7 @@
           "type": "text",
           "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
           "id": "885a6a97-1fb8-4303-a27c-151395801c5b",
-          "content": "<span style=\"font-weight: 600; color: #cf1323\">THE BEST</span>\n<span style=\"font-weight: 600; color: #1a1a1a\">RUNNING</span>\n<span style=\"font-weight: 600; color: #cf1323\">TECH</span>",
+          "content": "<span style=\"font-weight: 600; color: #cf1323; text-transform: uppercase\">The Best</span>\n<span style=\"font-weight: 600; color: #1a1a1a; text-transform: uppercase\">Running</span>\n<span style=\"font-weight: 600; color: #cf1323; text-transform: uppercase\">Tech</span>",
           "fontSize": 74,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1094,7 +1094,7 @@
           "type": "text",
           "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
           "id": "c432d288-5b66-4c40-8141-060cc29f9ee6",
-          "content": "<span style=\"font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em\">THE PERFECT MATE</span>",
+          "content": "<span style=\"font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em; text-transform: uppercase\">The Perfect Mate</span>",
           "fontSize": 46,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1255,7 +1255,7 @@
           "type": "text",
           "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
           "id": "5d25ecb0-3056-4597-ba08-44e958de6069",
-          "content": "<span style=\"font-weight: 600; color: #fff\">GEAR</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">UP</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Gear</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase\">Up</span>",
           "fontSize": 100,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1593,7 +1593,7 @@
           "type": "text",
           "basedOn": "5d25ecb0-3056-4597-ba08-44e958de6069",
           "id": "7447a2ba-a336-4618-beb2-8423ebc1ddc3",
-          "content": "<span style=\"font-weight: 600; color: #cf1323; letter-spacing: -0.01em\">MORE</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.01em\">STORIES</span>",
+          "content": "<span style=\"font-weight: 600; color: #cf1323; letter-spacing: -0.01em; text-transform: uppercase\">More</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.01em; text-transform: uppercase\">Stories</span>",
           "fontSize": 100,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1630,7 +1630,7 @@
           "type": "text",
           "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
           "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\">EARBUDS</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Sweat</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Resistent</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Earbuds</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1667,7 +1667,7 @@
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600; text-transform: uppercase\">10 Best Coretraining Exercises</span></span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1704,7 +1704,7 @@
           "type": "text",
           "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
           "id": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
-          "content": "<span style=\"font-weight: 600; color: #fff\">TRIATHLON</span>\n<span style=\"font-weight: 600; color: #fff\">TRAININING</span>\n<span style=\"font-weight: 600; color: #fff\">IN THE SUMMER</span>",
+          "content": "<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Triathlon</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">Trainining</span>\n<span style=\"font-weight: 600; color: #fff; text-transform: uppercase\">in The Summer</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
