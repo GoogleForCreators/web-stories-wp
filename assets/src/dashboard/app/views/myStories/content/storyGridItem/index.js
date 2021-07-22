@@ -149,19 +149,19 @@ const StoryGridItem = ({
     >
       <Container>
         <CardWrapper>
-          {story.featuredMediaUrl ? (
-            <Poster
-              alt={sprintf(
-                /* translators: %s: Story title. */
-                __('%s Poster image', 'web-stories'),
-                formattedTitle
-              )}
-              as="img"
-              src={story.featuredMediaUrl}
-            />
-          ) : (
-            <Poster />
-          )}
+          <Poster
+            {...(story.featuredMediaUrl
+              ? {
+                  alt: sprintf(
+                    /* translators: %s: Story title. */
+                    __('%s Poster image', 'web-stories'),
+                    formattedTitle
+                  ),
+                  as: 'img',
+                  src: story.featuredMediaUrl,
+                }
+              : null)}
+          />
           <Gradient />
           <Scrim>
             <StoryDisplayContent
