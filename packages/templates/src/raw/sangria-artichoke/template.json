@@ -400,6 +400,7 @@
             "title": "page02_bg_video",
             "alt": "page02_bg_video",
             "local": false,
+            "isMuted": true,
             "isOptimized": true,
             "baseColor": [181, 178, 179]
           },

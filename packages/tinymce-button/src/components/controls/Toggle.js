@@ -35,8 +35,8 @@ import { updateViewSettings } from '../../utils';
  * @param {Object} props Component props.
  * @return {*} React component.
  */
-const TinyMCEToggle = (props) => {
-  const { fieldObj, field } = props;
+const TinyMceToggle = (props) => {
+  const { fieldObj = {}, field } = props;
   const { show, hidden, label } = fieldObj;
 
   if (hidden) {
@@ -58,7 +58,7 @@ const TinyMCEToggle = (props) => {
   );
 };
 
-TinyMCEToggle.propTypes = {
+TinyMceToggle.propTypes = {
   fieldObj: PropTypes.shape({
     show: PropTypes.bool,
     label: PropTypes.string,
@@ -67,4 +67,4 @@ TinyMCEToggle.propTypes = {
   field: PropTypes.string,
 };
 
-export default TinyMCEToggle;
+export default TinyMceToggle;

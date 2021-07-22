@@ -28,14 +28,6 @@ import { __ } from '@wordpress/i18n';
  */
 import Autocomplete from '../components/autocomplete';
 
-jest.mock('@wordpress/element', () => {
-  const originalModule = jest.requireActual('react');
-  return {
-    ...originalModule,
-    concatChildren: jest.fn(),
-  };
-});
-
 describe('autocomplete', () => {
   it('should trigger onChange callback when typing', () => {
     const label = __('Web Stories Autocomplete', 'web-stories');
