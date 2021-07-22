@@ -1,3 +1,3 @@
-# WordPress Stories Dashboard
+# WordPress Stories Block
 
-Web Stories dashboard for use in WordPress admin.
+Web Stories Block for use in WordPress editor.
