@@ -214,14 +214,11 @@
   },
   "env": {
     "browser": true,
-    "es6": true
+    "es2020": true
   },
   "globals": {
-    "global": true,
     "window": true,
     "document": true,
-    "wp": "readonly",
-    "process": "readonly",
     "__webpack_public_path__": true,
     "WEB_STORIES_CI": "readonly",
     "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
