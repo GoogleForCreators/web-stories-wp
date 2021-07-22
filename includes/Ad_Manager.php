@@ -78,7 +78,12 @@ class Ad_Manager extends Service_Base {
 			return;
 		}
 
-		$application_json = [];
+		$configuration = [
+			'ad-attributes' => [
+				'type'      => 'doubleclick',
+				'data-slot' => $slot,
+			],
+		];
 
 		$ad_attributes = [];
 		$ad_attributes[ 'type' ] = 'doubleclick';
