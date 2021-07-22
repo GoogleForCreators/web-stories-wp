@@ -121,7 +121,7 @@
     "@testing-library/user-event": "^13.2.0",
     "@web-stories-wp/e2e-tests": "*",
     "@wordpress/babel-plugin-import-jsx-pragma": "^3.1.0",
-    "@wordpress/dependency-extraction-webpack-plugin": "^3.1.4",
+    "@wordpress/dependency-extraction-webpack-plugin": "^3.2.0",
     "@wordpress/eslint-plugin": "^9.0.6",
     "axe-core": "^4.3.1",
     "babel-jest": "^27.0.6",
