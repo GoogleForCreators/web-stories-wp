@@ -30,7 +30,7 @@ import {
 /**
  * Internal dependencies
  */
-import { NAVIGATION_HEIGHT } from '../navigator/constants';
+import { NAVIGATION_HEIGHT } from '../../secondaryPopup';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';

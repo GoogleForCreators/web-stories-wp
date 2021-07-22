@@ -13,6 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 export const NAVIGATION_HEIGHT = 48;
 export const NAVIGATION_WIDTH = 308;
 export const CARD_WIDTH = 272;
+export const DISTANCE_FROM_TOP = 60 + 32; // toolbar height + input height
+export const DISTANCE_FROM_BOTTOM = 69;

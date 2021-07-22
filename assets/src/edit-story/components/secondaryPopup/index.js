@@ -22,7 +22,7 @@ import { BEZIER } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { ScheduledTransition } from './scheduledTransition';
+import { ScheduledTransition } from '../transition/scheduledTransition';
 
 const DURATION = 300;
 
@@ -54,13 +54,7 @@ const Controller = styled.div`
   ${({ state }) => transitionStyles[state]}
 `;
 
-export function Popup({
-  isOpen,
-  popupId,
-  children,
-  ariaLabel,
-  shouldKeepMounted,
-}) {
+function Popup({ isOpen, popupId, children, ariaLabel, shouldKeepMounted }) {
   return (
     <ScheduledTransition
       in={isOpen}
@@ -88,3 +82,15 @@ Popup.propTypes = {
   ariaLabel: PropTypes.string,
   shouldKeepMounted: PropTypes.bool,
 };
+
+export default Popup;
+export { default as NavigationWrapper } from './navigationWrapper';
+export {
+  NAVIGATION_HEIGHT,
+  NAVIGATION_WIDTH,
+  CARD_WIDTH,
+  DISTANCE_FROM_TOP,
+  DISTANCE_FROM_BOTTOM,
+} from './constants';
+export { TopNavigation } from './topNavigation';
+export { NavBar, NavButton } from './components';

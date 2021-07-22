@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { FOCUSABLE_POPUP_CHILDREN_SELECTOR } from './constants';
-
-export function forceFocusCompanion() {
-  document.querySelector(FOCUSABLE_POPUP_CHILDREN_SELECTOR)?.focus();
+export function forceFocusCompanionToggle(popupId) {
+  document.querySelector(`[aria-owns=${popupId}]`)?.focus();
 }
