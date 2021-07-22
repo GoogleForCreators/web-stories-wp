@@ -18,12 +18,71 @@
  * External dependencies
  */
 import {
-  useCallback,
+  Children,
+  cloneElement,
+  Component,
+  createContext,
+  createElement,
+  createRef,
+  forwardRef,
+  Fragment,
+  isValidElement,
+  memo,
+  StrictMode,
+  useState,
   useEffect,
   useContext,
+  useReducer,
+  useCallback,
+  useMemo,
+  useRef,
+  useImperativeHandle,
+  useLayoutEffect,
+  useDebugValue,
+  lazy,
+  Suspense,
   Context,
-  createContext,
 } from 'react';
 import { render } from 'react-dom';
 
-export { useCallback, useEffect, useContext, Context, createContext, render };
+const Platform = {
+  OS: 'web',
+};
+
+const concatChildren = jest.fn();
+const createInterpolateElement = jest.fn();
+const RawHTML = jest.fn(({ children, className }) => (
+  <div className={className}>{children}</div>
+));
+
+export {
+  Children,
+  cloneElement,
+  Component,
+  createContext,
+  createElement,
+  createRef,
+  forwardRef,
+  Fragment,
+  isValidElement,
+  memo,
+  StrictMode,
+  useState,
+  useEffect,
+  useContext,
+  useReducer,
+  useCallback,
+  useMemo,
+  useRef,
+  useImperativeHandle,
+  useLayoutEffect,
+  useDebugValue,
+  lazy,
+  Suspense,
+  Context,
+  render,
+  Platform,
+  concatChildren,
+  createInterpolateElement,
+  RawHTML,
+};

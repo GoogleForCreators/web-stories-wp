@@ -24,14 +24,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
  */
 import EmbedPreview from '../embedPreview';
 
-jest.mock('@wordpress/element', () => {
-  const originalModule = jest.requireActual('react');
-  return {
-    ...originalModule,
-    concatChildren: jest.fn(),
-  };
-});
-
 const url =
   'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 const title = 'Stories in AMP';
