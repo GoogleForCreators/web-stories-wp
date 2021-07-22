@@ -55,8 +55,8 @@ class Cross_Origin_Isolation extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 
-		$user_perferences = new \Google\Web_Stories\User\Preferences();
-		$user_perferences->register();
+		$user_preferences = new \Google\Web_Stories\User\Preferences();
+		$user_preferences->register();
 	}
 
 	/**
