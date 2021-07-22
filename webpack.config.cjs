@@ -286,7 +286,7 @@ const webStoriesScripts = {
 
 // Collect all core themes style sheet paths.
 const coreThemesBlockStylesPaths = glob.sync(
-  './assets/src/web-stories-block/css/core-themes/*.css'
+  './packages/stories-block/src/css/core-themes/*.css'
 );
 
 // Build entry object for the Core Themes Styles.
@@ -303,11 +303,11 @@ const webStoriesBlock = {
   ...sharedConfig,
   entry: {
     'web-stories-block': [
-      './assets/src/web-stories-block/index.js',
-      './assets/src/web-stories-block/block/edit.css',
+      './packages/stories-block/src/index.js',
+      './packages/stories-block/src/block/edit.css',
     ],
-    'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
-    'web-stories-embed': './assets/src/web-stories-block/css/embed.css',
+    'web-stories-list-styles': './packages/stories-block/src/css/style.css',
+    'web-stories-embed': './packages/stories-block/src/css/embed.css',
     ...coreThemeBlockStyles,
   },
   plugins: [

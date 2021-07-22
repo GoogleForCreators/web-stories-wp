@@ -464,7 +464,6 @@
     },
     {
       "files": [
-        "assets/src/animation/**/*.js",
         "assets/src/dashboard/**/*.js",
         "assets/src/edit-story/**/*.js",
         "packages/**/*.js"
@@ -472,6 +471,7 @@
       "excludedFiles": [
         "packages/activation-notice/**/*.js",
         "packages/i18n/**/*.js",
+        "packages/stories-block/**/*.js",
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
