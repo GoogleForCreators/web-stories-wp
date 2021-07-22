@@ -70,11 +70,11 @@
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
 | Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **83.33%** *(5 / 6)*     |
 |                                                                   | *[total]*                                        | 🛴 **83.33%** *(5 / 6)*     |
-| User can interact with menu using keyboard                        | Tab to menu                                      | 🛴 **50.00%** *(2 / 4)*     |
-|                                                                   | *[total]*                                        | 🛴 **50.00%** *(2 / 4)*     |
-|                                                                   | enter to open                                    | 🛴 **50.00%** *(2 / 4)*     |
-|                                                                   | esc to close                                     | 🛴 **50.00%** *(2 / 4)*     |
-| User can interact with menu using mouse                           | Click toggle button to open                      | 🛴 **50.00%** *(2 / 4)*     |
-|                                                                   | *[total]*                                        | 🛴 **50.00%** *(2 / 4)*     |
-|                                                                   | click close button to close menu                 | 🛴 **50.00%** *(2 / 4)*     |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **71.29%** *(298 / 418)* |
+| User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | enter to open                                    | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | esc to close                                     | 🏆 **100.00%** *(4 / 4)*    |
+| User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.64%** *(312 / 418)* |
