@@ -249,7 +249,7 @@ function useFFmpeg() {
       try {
         const ffmpeg = await getFFmpegInstance(file);
 
-        const tempFileName = uuidv4() + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
         const outputFileName =
           getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
 
