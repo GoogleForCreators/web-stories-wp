@@ -12,7 +12,7 @@
   "type": "module",
   "dependencies": {
     "@wordpress/element": "^3.1.1",
-    "@wordpress/i18n": "^3.17.0",
+    "@wordpress/i18n": "^4.2.0",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/tracking": "*",
     "flagged": "^2.0.1",
