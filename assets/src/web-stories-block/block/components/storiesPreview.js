@@ -30,13 +30,16 @@ import { useEffect, useRef } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../config';
 import {
   CAROUSEL_VIEW_TYPE,
   CIRCLES_VIEW_TYPE,
   GRID_VIEW_TYPE,
 } from '../constants';
 import StoryCard from './storyCard';
+
+const {
+  config: { archiveURL },
+} = window.webStoriesBlockSettings;
 
 function StoriesPreview(props) {
   const {
@@ -51,8 +54,6 @@ function StoriesPreview(props) {
     viewAllLabel,
     stories,
   } = props;
-
-  const { archiveURL } = useConfig();
 
   const carouselContainer = useRef(null);
   const carouselNext = useRef(null);

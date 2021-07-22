@@ -28,8 +28,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as BlockIcon } from '../images/icon.svg';
-import StoryEmbedEdit from './block-types/story-embed-block/edit';
-import { ConfigProvider } from './config';
+import SingleStoryEmbed from './block-types/single-story/edit';
 import StoriesBlockControls from './components/storiesBlockControls';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';
 import LatestStoriesEdit from './block-types/latest-stories/edit';
@@ -41,9 +40,6 @@ import {
   BLOCK_TYPES,
   VIEW_TYPES,
 } from './constants';
-import { webStoriesBlockSettings } from './globals';
-
-const { config } = webStoriesBlockSettings;
 
 function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   const { blockType, viewType } = attributes;
@@ -53,11 +49,10 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       <BlockConfigurationPanel
         icon={<BlockIcon />}
         setAttributes={setAttributes}
-        instruction={__(
+        instructions={__(
           'Embed a collection of your latest stories, select your own or enter an URL',
           'web-stories'
         )}
-        columnCount={3}
         selectionOptions={BLOCK_TYPES}
         selectionType={'blockType'}
       />
@@ -69,8 +64,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       <BlockConfigurationPanel
         icon={<BlockIcon />}
         setAttributes={setAttributes}
-        instruction={__('Select a layout style', 'web-stories')}
-        columnCount={4}
+        instructions={__('Select a layout style', 'web-stories')}
         selectionOptions={VIEW_TYPES}
         selectionType={'viewType'}
       />
@@ -78,7 +72,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
   }
 
   return (
-    <ConfigProvider config={config}>
+    <>
       <StoriesBlockControls
         blockType={blockType}
         viewType={viewType}
@@ -102,7 +96,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       )}
 
       {blockType === BLOCK_TYPE_URL && (
-        <StoryEmbedEdit
+        <SingleStoryEmbed
           icon={<BlockIcon />}
           attributes={attributes}
           setAttributes={setAttributes}
@@ -110,7 +104,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
           isSelected={isSelected}
         />
       )}
-    </ConfigProvider>
+    </>
   );
 }
 
