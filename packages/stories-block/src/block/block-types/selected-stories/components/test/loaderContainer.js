@@ -28,14 +28,6 @@ import { __ } from '@wordpress/i18n';
  */
 import LoaderContainer from '../loaderContainer';
 
-jest.mock('@wordpress/element', () => {
-  const originalModule = jest.requireActual('react');
-  return {
-    ...originalModule,
-    concatChildren: jest.fn(),
-  };
-});
-
 describe('LoaderContainer', () => {
   it('should render provided children with spinner component', () => {
     render(

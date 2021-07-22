@@ -24,18 +24,6 @@ import { render } from '@testing-library/react';
  */
 import StoryCard from '../storyCard';
 
-jest.mock('@wordpress/element', () => {
-  const originalModule = jest.requireActual('react');
-  return {
-    ...originalModule,
-    concatChildren: jest.fn(),
-    createInterpolateElement: jest.fn(() => null),
-    RawHTML: jest.fn(({ children, className }) => (
-      <div className={className}>{children}</div>
-    )),
-  };
-});
-
 jest.mock('@wordpress/date', () => ({
   /* eslint-disable no-unused-vars */
   format: (format, dateTo) => date,

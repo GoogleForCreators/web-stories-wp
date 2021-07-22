@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -26,19 +28,14 @@ jest.mock('@wordpress/data', () => ({
   select: jest.fn(() => ({
     getCurrentView: () => 'grid',
   })),
+  createReduxStore: jest.fn(),
+  combineReducers: jest.fn(),
+  register: jest.fn(),
 }));
 
 jest.mock('@wordpress/i18n', () => ({
   // eslint-disable-next-line no-unused-vars
   __: (val, domain) => val,
-}));
-
-jest.mock('@wordpress/components', () => ({
-  Modal: 'Modal',
-  RangeControl: 'Range',
-  SelectControl: 'Select',
-  Button: 'Button',
-  TextControl: 'TextControl',
 }));
 
 jest.mock('../../utils/globals', () => ({
@@ -47,40 +44,27 @@ jest.mock('../../utils/globals', () => ({
   },
 }));
 
-jest.mock('../../components/controls/Toggle', () => 'TinyMCEToggle');
-
 jest.mock('../../utils', () => ({
   updateViewSettings: jest.fn((settings) => settings),
 }));
 
-describe('TinyMCE Controls Modal', () => {
-  it('modal is opened and view is non-circle', () => {
+describe('Modal', () => {
+  it('renders modal with toggles', () => {
     const props = {
       modalOpen: true,
       settings: {
         archive_link: {
           show: true,
         },
+        title: {},
+        excerpt: {},
+        author: {},
+        date: {},
       },
       prepareShortCode: jest.fn(),
     };
 
-    const tree = renderer.create(<WebStoriesModal {...props} />).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('modal is opened and view is circle', () => {
-    const props = {
-      modalOpen: true,
-      settings: {
-        archive_link: {
-          show: true,
-        },
-      },
-      prepareShortCode: jest.fn(),
-    };
-
-    const tree = renderer.create(<WebStoriesModal {...props} />).toJSON();
-    expect(tree).toMatchSnapshot();
+    render(<WebStoriesModal {...props} />);
+    expect(screen.queryByText(/Archive Link Label/i)).toBeInTheDocument();
   });
 });
