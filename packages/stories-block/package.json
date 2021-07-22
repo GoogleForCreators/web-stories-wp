@@ -21,7 +21,7 @@
     "@wordpress/api-fetch": "^5.2.0",
     "@wordpress/block-editor": "^6.1.13",
     "@wordpress/components": "^14.2.0",
-    "@wordpress/compose": "^3.25.3",
+    "@wordpress/compose": "^4.2.0",
     "@wordpress/data": "^5.2.0",
     "@wordpress/date": "^4.2.0",
     "@wordpress/element": "^2.19.0",
