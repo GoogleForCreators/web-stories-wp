@@ -27,7 +27,7 @@ use WP_REST_Request;
  *
  * @package Google\Web_Stories\Tests\REST_API
  *
- * @coversDefaultClass  Google\Web_Stories\REST_API\Autosaves_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Autosaves_Controller
  */
 class Autosaves_Controller extends Test_REST_TestCase {
 	protected $server;
