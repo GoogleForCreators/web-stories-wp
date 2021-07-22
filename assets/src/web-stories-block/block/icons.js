@@ -32,7 +32,7 @@ import { ReactComponent as ListViewConfigIcon } from './icons/config-panel/list-
 import { ReactComponent as BoxCarouselConfigIcon } from './icons/config-panel/box-carousel-view-panel-icon.svg';
 
 // Icons for block types.
-export const LATESTS_STORIES_BLOCK_ICON = (
+export const LATEST_STORIES_BLOCK_ICON = (
   <LatestStoriesBlockIcon width={31} height={42} />
 );
 

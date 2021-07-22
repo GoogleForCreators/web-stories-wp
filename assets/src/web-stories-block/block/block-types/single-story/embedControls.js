@@ -22,36 +22,29 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import * as Components from '@wordpress/components';
+import {
+  Button,
+  BaseControl,
+  TextControl,
+  PanelBody,
+  PanelRow,
+  ToolbarGroup,
+  ToolbarButton,
+} from '@wordpress/components';
 import {
   BlockControls,
   InspectorControls,
   MediaUpload,
   MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { withInstanceId } from '@wordpress/compose';
+import { useInstanceId } from '@wordpress/compose';
 import { createRef, useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 
 const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 
-const FallbackComponent = ({ children }) => children;
-
-// Note: ToolbarGroup and ToolbarButton are only available in Gutenberg 7.0 or later,
-// so they do not exist in WP 5.3.
-const {
-  Button,
-  BaseControl,
-  TextControl,
-  PanelBody,
-  PanelRow,
-  ToolbarGroup = FallbackComponent,
-  ToolbarButton,
-} = Components;
-
 const EmbedControls = (props) => {
   const {
-    instanceId,
     switchBackToURLInput,
     width,
     height,
@@ -63,6 +56,8 @@ const EmbedControls = (props) => {
     title,
     setAttributes,
   } = props;
+
+  const instanceId = useInstanceId(EmbedControls, 'web-stories-embed');
 
   const posterDescription = `web-stories-embed-block__poster-image-description-${instanceId}`;
   const posterImageButton = createRef();
@@ -205,12 +200,7 @@ const EmbedControls = (props) => {
   );
 };
 
-FallbackComponent.propTypes = {
-  children: PropTypes.node,
-};
-
 EmbedControls.propTypes = {
-  instanceId: PropTypes.number,
   switchBackToURLInput: PropTypes.func,
   width: PropTypes.number,
   height: PropTypes.number,
@@ -223,4 +213,4 @@ EmbedControls.propTypes = {
   setAttributes: PropTypes.func,
 };
 
-export default withInstanceId(EmbedControls);
+export default EmbedControls;

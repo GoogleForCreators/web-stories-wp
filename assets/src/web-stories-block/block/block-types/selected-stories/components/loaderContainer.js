@@ -13,34 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
 import { Spinner } from '@wordpress/components';
 
-const StyledContainer = styled.div`
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-
-  .components-spinner {
-    margin-top: 0;
-  }
-`;
-
 function LoaderContainer({ children }) {
   return (
-    <StyledContainer>
+    <div className="web-stories-block__loader-container">
       {children}
       <Spinner />
-    </StyledContainer>
+    </div>
   );
 }
 

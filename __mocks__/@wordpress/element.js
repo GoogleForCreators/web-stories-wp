@@ -17,14 +17,13 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@web-stories-wp/design-system';
-/**
- * Internal dependencies
- */
-import Context from './context';
+import {
+  useCallback,
+  useEffect,
+  useContext,
+  Context,
+  createContext,
+} from 'react';
+import { render } from 'react-dom';
 
-function useConfig(selector = identity) {
-  return useContextSelector(Context, selector);
-}
-
-export default useConfig;
+export { useCallback, useEffect, useContext, Context, createContext, render };

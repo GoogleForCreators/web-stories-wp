@@ -18,167 +18,147 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { UnitsProvider } from '@web-stories-wp/units';
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { Draggable } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
+import { useCallback, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { PageSizePropType } from '../../../../dashboard/types';
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import FontProvider from '../../../../dashboard/app/font/fontProvider';
-import reshapeStoryObject from '../../../../dashboard/app/serializers/stories';
-import { StoryGrid, StoryGridItem } from './components/cardGridItem';
-import ItemOverlay from './components/itemOverlay';
+import useThrottle from '../../hooks/useThrottle';
 import StoryPreview from './storyPreview';
 
-function SortStories({
-  selectedStories,
-  setSelectedStories,
-  selectedStoriesObject,
-  setSelectedStoriesObject,
-  pageSize,
-  addItemToSelectedStories,
-  removeItemFromSelectedStories,
-}) {
+function SortStories({ selectedStories, setSelectedStories }) {
   const [droppingToIndex, setDroppingToIndex] = useState();
-  const [draggedElID, setDragedElementID] = useState();
-  const [selectedStoryList, setSelectedStoryList] = useState([]);
+  const [draggedElementId, setDraggedElementId] = useState();
 
-  useEffect(() => {
-    setSelectedStoryList(
-      selectedStoriesObject.map((story) => reshapeStoryObject()(story))
-    );
-  }, [selectedStoriesObject]);
+  const rearrangeStories = useCallback(
+    (oldIndex, newIndex) => {
+      const newList = selectedStories.map((story) => story.id);
+      newList.splice(newIndex, 0, newList.splice(oldIndex, 1).pop());
+      setSelectedStories(
+        newList.map((storyId) => {
+          return selectedStories.find((story) => story.id === storyId);
+        })
+      );
+    },
+    [selectedStories, setSelectedStories]
+  );
 
-  const rearrangeStories = (oldIndex, newIndex) => {
-    const selectedStoryIds = [...selectedStories];
-    selectedStoryIds.splice(
-      newIndex,
-      0,
-      selectedStoryIds.splice(oldIndex, 1).pop()
-    );
-    setSelectedStories(selectedStoryIds);
-    setSelectedStoriesObject(
-      selectedStoryIds.map((storyId) => {
-        return selectedStoriesObject.find((story) => story.id === storyId);
-      })
-    );
-  };
+  const throttledOnDragOver = useThrottle((event, currentTarget) => {
+    event.preventDefault();
+
+    currentTarget.classList.add('web-stories-story-picker-show-drag-inserter');
+
+    const targetElementRect = currentTarget.getBoundingClientRect();
+
+    const isDraggingOnRightSide =
+      Math.abs(event.clientX - targetElementRect.x) >
+      Math.abs(event.clientX - (targetElementRect.x + targetElementRect.width));
+
+    if (isDraggingOnRightSide) {
+      currentTarget.classList.add(
+        'web-stories-story-picker-show-drag-inserter-right'
+      );
+    } else {
+      currentTarget.classList.remove(
+        'web-stories-story-picker-show-drag-inserter-right'
+      );
+    }
+
+    const dropIndex = Number(currentTarget.children[0].dataset.order);
+
+    setDroppingToIndex(dropIndex);
+  });
 
   return (
-    <FontProvider>
-      <TransformProvider>
-        <UnitsProvider
-          pageSize={{
-            width: pageSize.width,
-            height: pageSize.height,
-          }}
-        >
-          <StoryGrid
-            pageSize={pageSize}
-            role="list"
-            ariaLabel={__('Sorting Stories', 'web-stories')}
-            columnWidth={pageSize.width}
-            columnHeight={pageSize.containerHeight}
-          >
-            {selectedStoryList.map((story, index) => {
-              return (
-                <div
-                  key={story.id}
-                  onDragOver={(event) => {
-                    event.preventDefault();
-                    event.target.closest('.droppable').style.borderLeft =
-                      '5px solid #000';
-
-                    setDroppingToIndex(
-                      event.target.parentElement.dataset.order
-                    );
-                  }}
-                  onDragLeave={(event) => {
-                    event.preventDefault();
-                    event.target.closest('.droppable').style.borderLeft = 0;
-                  }}
-                  onDrop={(event) => {
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    // Update the list after drop
-                    if (draggedElID) {
-                      const oldIndex = selectedStoryList.findIndex(
-                        (storyItem) => storyItem.id === draggedElID
-                      );
-                      rearrangeStories(oldIndex, droppingToIndex);
-                    }
-
-                    event.target.closest('.droppable').style.borderLeft = 0;
-                  }}
-                  className="droppable"
-                >
-                  <div
-                    data-order={index}
-                    id={`draggable-example-box-${story.id}`}
-                  >
-                    <Draggable elementId={`draggable-example-box-${story.id}`}>
-                      {({ onDraggableStart, onDraggableEnd }) => {
-                        const handleOnDragStart = (event) => {
-                          setDragedElementID(story.id);
-                          onDraggableStart(event);
-                        };
-                        const handleOnDragEnd = (event) => {
-                          onDraggableEnd(event);
-                        };
-
-                        return (
-                          <StoryGridItem
-                            role="listitem"
-                            data-testid={`story-grid-item-${story.id}`}
-                            onDragStart={handleOnDragStart}
-                            onDragEnd={handleOnDragEnd}
-                            data-order={index}
-                            draggable
-                          >
-                            <StoryPreview pageSize={pageSize} story={story} />
-                            <ItemOverlay
-                              isSelected
-                              pageSize={pageSize}
-                              storyId={story.id}
-                              addItemToSelectedStories={
-                                addItemToSelectedStories
-                              }
-                              removeItemFromSelectedStories={
-                                removeItemFromSelectedStories
-                              }
-                            />
-                          </StoryGridItem>
-                        );
-                      }}
-                    </Draggable>
-                  </div>
-                </div>
+    <div
+      role="list"
+      aria-label={__('Sorting Stories', 'web-stories')}
+      className="web-stories-story-picker-filter__grid"
+    >
+      {selectedStories.map((story, index) => {
+        return (
+          <div
+            key={story.id}
+            onDragOver={(event) => {
+              // `currentTarget` is only available while the event is being
+              // handled, so get it now and pass it to the throttled function.
+              // https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
+              throttledOnDragOver(event, event.currentTarget);
+            }}
+            onDragLeave={(event) => {
+              event.preventDefault();
+              throttledOnDragOver.cancel();
+              const targetElement = event.target.closest('.droppable');
+              targetElement.classList.remove(
+                'web-stories-story-picker-show-drag-inserter',
+                'web-stories-story-picker-show-drag-inserter-right'
               );
-            })}
-          </StoryGrid>
-        </UnitsProvider>
-      </TransformProvider>
-    </FontProvider>
+            }}
+            onDrop={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+
+              throttledOnDragOver.cancel();
+
+              // Update the list after drop
+              if (draggedElementId) {
+                const oldIndex = selectedStories.findIndex(
+                  (storyItem) => storyItem.id === draggedElementId
+                );
+                rearrangeStories(oldIndex, droppingToIndex);
+              }
+
+              const targetElement = event.target.closest('.droppable');
+              targetElement.classList.remove(
+                'web-stories-story-picker-show-drag-inserter',
+                'web-stories-story-picker-show-drag-inserter-right'
+              );
+            }}
+            className="droppable"
+          >
+            <div data-order={index} id={`draggable-story-${story.id}`}>
+              <Draggable elementId={`draggable-story-${story.id}`}>
+                {({ onDraggableStart, onDraggableEnd }) => {
+                  const handleOnDragStart = (event) => {
+                    setDraggedElementId(story.id);
+                    onDraggableStart(event);
+                  };
+                  const handleOnDragEnd = (event) => {
+                    onDraggableEnd(event);
+                  };
+
+                  return (
+                    <div
+                      key={story.id}
+                      role="listitem"
+                      className="web-stories-story-picker-filter__grid_item"
+                      onDragStart={handleOnDragStart}
+                      onDragEnd={handleOnDragEnd}
+                      data-order={index}
+                      draggable
+                    >
+                      <StoryPreview story={story} />
+                    </div>
+                  );
+                }}
+              </Draggable>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
 SortStories.propTypes = {
   selectedStories: PropTypes.array,
   setSelectedStories: PropTypes.func,
-  selectedStoriesObject: PropTypes.array,
-  setSelectedStoriesObject: PropTypes.func,
-  pageSize: PageSizePropType,
-  addItemToSelectedStories: PropTypes.func,
-  removeItemFromSelectedStories: PropTypes.func,
 };
 
 export default SortStories;

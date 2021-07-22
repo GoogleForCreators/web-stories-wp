@@ -36,14 +36,6 @@ jest.mock('@wordpress/element', () => {
   };
 });
 
-jest.mock('../globals', () => ({
-  webStoriesBlockSettings: {
-    config: {
-      api: {},
-    },
-  },
-}));
-
 describe('Block Registration', () => {
   it('should register Web Stories block without errors', () => {
     const block = registerBlockType(name, settings);

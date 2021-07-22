@@ -47,7 +47,7 @@ function BlockTypeSwitcher({ selectedBlockType, setAttributes }) {
             <DropdownMenu
               icon="update"
               toggleProps={toolbarItemHTMLProps}
-              label={__('Block Sub Type', 'web-stories')}
+              label={__('Change Type', 'web-stories')}
               controls={BLOCK_TYPES.filter(
                 (blockType) => blockType.id !== selectedBlockType
               ).map((blockType) => {
@@ -62,7 +62,7 @@ function BlockTypeSwitcher({ selectedBlockType, setAttributes }) {
       ) : (
         <DropdownMenu
           icon="update"
-          label={__('Block Sub Type', 'web-stories')}
+          label={__('Change Type', 'web-stories')}
           controls={BLOCK_TYPES.filter(
             (blockType) => blockType.id !== selectedBlockType
           ).map((blockType) => {
