@@ -43,7 +43,7 @@ import {
   Suspense,
   Context,
 } from 'react';
-import { render } from 'react-dom';
+import { render, createPortal } from 'react-dom';
 
 const Platform = {
   OS: 'web',
@@ -81,6 +81,7 @@ export {
   Suspense,
   Context,
   render,
+  createPortal,
   Platform,
   concatChildren,
   createInterpolateElement,
