@@ -341,7 +341,6 @@ describe('Right Click Menu integration', () => {
       );
 
       // verify the image has been set as the background
-      // verify the correct page was deleted
       const { currentPage } = await fixture.renderHook(() =>
         useStory(({ state }) => ({
           currentPage: state.currentPage,
