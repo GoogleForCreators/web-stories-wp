@@ -19,6 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
@@ -483,8 +484,7 @@ export const PRIORITY_COPY = {
       <TranslateWithMarkup
         mapping={{
           a: (
-            //eslint-disable-next-line jsx-a11y/anchor-has-content
-            <a
+            <Link
               href={__('https://search.google.com/test/amp', 'web-stories')}
               rel="noreferrer"
               target="_blank"
@@ -493,6 +493,7 @@ export const PRIORITY_COPY = {
                 'web-stories'
               )}
               onClick={onAmpErrorClick}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
             />
           ),
         }}

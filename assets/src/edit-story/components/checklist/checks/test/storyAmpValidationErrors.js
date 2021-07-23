@@ -16,15 +16,17 @@
 /**
  * Internal dependencies
  */
-import { storyHasAmpErrors } from '../storyHasAmpErrors';
+import { getStoryAmpValidationErrors } from '../storyAmpValidationErrors';
 
-describe('storyHasAmpErrors', () => {
+describe('getStoryAmpValidationErrors', () => {
   it('should return false if no link or status is draft', () => {
-    expect(storyHasAmpErrors({ link: null, status: 'draft' })).toBe(false);
+    expect(getStoryAmpValidationErrors({ link: null, status: 'draft' })).toBe(
+      false
+    );
   });
   it('should return false if there are no violations', () => {
     expect(
-      storyHasAmpErrors({
+      getStoryAmpValidationErrors({
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
@@ -33,7 +35,7 @@ describe('storyHasAmpErrors', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should return true if there are AMP violations', () => {
     expect(
-      storyHasAmpErrors({
+      getStoryAmpValidationErrors({
         link: 'http://test/web-stories/123',
         status: 'publish',
       })

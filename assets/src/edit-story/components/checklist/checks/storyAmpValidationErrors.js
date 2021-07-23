@@ -16,7 +16,8 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { trackEvent } from '@web-stories-wp/tracking';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -26,7 +27,7 @@ import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
-export async function storyHasAmpErrors({ link, status }) {
+export async function getStoryAmpValidationErrors({ link, status }) {
   // TODO: Enable for drafts as well?
   if (!link || !['publish', 'future'].includes(status)) {
     return false;
@@ -49,14 +50,6 @@ export async function storyHasAmpErrors({ link, status }) {
         if ('MISSING_URL' === code && params[0].startsWith('poster')) {
           return false;
         }
-        // AMP attribute is removed by the plugin if there is no cover image.
-        if (
-          'MANDATORY_ATTR_MISSING' === code &&
-          params[0] === '⚡' &&
-          params[1] === 'html'
-        ) {
-          return false;
-        }
 
         return true;
       });
@@ -66,17 +59,32 @@ export async function storyHasAmpErrors({ link, status }) {
   }
 }
 
-const StoryHasAmpErrors = () => {
+const StoryAmpValidationErrors = () => {
+  const ampValidationErrorsRef = useRef();
   const {
     meta: { isSaving },
     story: { link, status },
   } = useStory(({ state }) => state);
 
   // limiting to when isSaving is false so that when the saved story is updated this will check.
-  const isRendered = useMemo(
-    () => !isSaving && storyHasAmpErrors({ link, status }),
-    [link, status, isSaving]
-  );
+  const [isRendered, setIsRendered] = useState(false);
+
+  useEffect(() => {
+    !isSaving &&
+      getStoryAmpValidationErrors({ link, status }).then((hasErrors) => {
+        setIsRendered(hasErrors);
+        if (hasErrors && !ampValidationErrorsRef?.current) {
+          ampValidationErrorsRef.current = true;
+        }
+        return hasErrors;
+      });
+  }, [link, status, isSaving]);
+
+  useEffect(() => {
+    if (isRendered && ampValidationErrorsRef?.current) {
+      trackEvent('amp_validation_errors_found');
+    }
+  }, [isRendered]);
 
   useRegisterCheck('StoryHasAmpErrors', isRendered);
   const { footer, title } = PRIORITY_COPY.ampValidation;
@@ -91,4 +99,4 @@ const StoryHasAmpErrors = () => {
   );
 };
 
-export default StoryHasAmpErrors;
+export default StoryAmpValidationErrors;
