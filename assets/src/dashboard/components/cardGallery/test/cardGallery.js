@@ -23,11 +23,29 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 jest.mock('../../../../edit-story/components/previewPage/previewPage');
-jest.mock('@web-stories-wp/design-system', () => ({
-  __esModule: true,
-  ...jest.requireActual('@web-stories-wp/design-system'),
-  useResizeEffect: jest.fn((ref, cb) => cb({ width: 100 })),
-}));
+jest.mock('@web-stories-wp/design-system', () => {
+  const { useEffect } = jest.requireActual('react');
+  const useResizeEffect = (ref, cb) =>
+    useEffect(() => {
+      cb({ width: 100 });
+    }, [cb]);
+  return {
+    __esModule: true,
+    ...jest.requireActual('@web-stories-wp/design-system'),
+    useResizeEffect,
+  };
+});
+jest.mock('use-debounce', () => {
+  const { useCallback } = jest.requireActual('react');
+  const useDebouncedCallback = (cb) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return useCallback(cb, []);
+  };
+  return {
+    __esModule: true,
+    useDebouncedCallback,
+  };
+});
 import { PreviewPage } from '../../../../edit-story/components/previewPage';
 import { renderWithProviders } from '../../../testUtils';
 import CardGallery from '..';
