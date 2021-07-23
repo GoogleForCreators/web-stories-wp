@@ -418,7 +418,7 @@ class Media extends Service_Base {
 	 * @return array
 	 */
 	public function get_callback_featured_media_src( $prepared ): array {
-		$id    = $prepared['featured_media'];
+		$id    = $prepared['featured_media'] ?? null;
 		$image = [];
 		if ( $id ) {
 			$image = $this->get_thumbnail_data( $id );
