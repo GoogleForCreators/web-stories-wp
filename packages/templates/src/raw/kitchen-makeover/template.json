@@ -486,6 +486,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [136, 122, 115]
           },
           "tracks": []
@@ -2092,6 +2093,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [200, 187, 169]
           },
           "tracks": []
@@ -2360,6 +2362,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [201, 197, 186]
           },
           "tracks": []

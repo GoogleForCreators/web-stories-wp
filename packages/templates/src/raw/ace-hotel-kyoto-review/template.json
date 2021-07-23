@@ -1328,6 +1328,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [176, 170, 177]
           },
           "controls": false,
@@ -2264,6 +2265,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [60, 53, 52]
           },
@@ -3135,6 +3137,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [60, 53, 52]
           },

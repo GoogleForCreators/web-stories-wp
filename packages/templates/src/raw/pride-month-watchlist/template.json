@@ -2570,6 +2570,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "length": 20,
             "baseColor": [201, 195, 193]
           },
