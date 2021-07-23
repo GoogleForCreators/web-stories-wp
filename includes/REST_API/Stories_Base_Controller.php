@@ -172,4 +172,27 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
+
+	/**
+	 * Prepares links for the request.
+	 *
+	 * Ensures that {@see Stories_Users_Controller} is used for author embeds.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return array Links for the given post.
+	 */
+	protected function prepare_links( $post ): array {
+		$links = parent::prepare_links( $post );
+
+		if ( ! empty( $post->post_author ) && post_type_supports( $post->post_type, 'author' ) ) {
+			$links['author'] = [
+				'href'       => rest_url( 'web-stories/v1/users/' . $post->post_author ),
+				'embeddable' => true,
+			];
+		}
+
+		return $links;
+	}
 }
