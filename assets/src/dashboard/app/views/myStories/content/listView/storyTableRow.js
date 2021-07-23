@@ -23,17 +23,14 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   Headline,
-  Icons,
   Text,
   THEME_CONSTANTS,
   Tooltip,
 } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
-import { titleFormatted } from '../../../../../utils';
-import { STORY_STATUS } from '../../../../../constants';
 import {
   InlineInputForm,
   StoryMenu,
@@ -41,6 +38,14 @@ import {
   TablePreviewCell,
   TableStatusCell,
 } from '../../../../../components';
+import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
+import { STORY_STATUS } from '../../../../../constants';
+import {
+  RenameStoryPropType,
+  StoryMenuPropType,
+  StoryPropType,
+} from '../../../../../types';
+import { titleFormatted } from '../../../../../utils';
 
 import {
   LockIcon,
@@ -129,13 +134,13 @@ const StoryTableRow = ({
       <TablePreviewCell>
         <Tooltip
           title={
-            isLocked &&
-            story?.lockUser.name &&
-            sprintf(
-              /* translators: %s: user name */
-              __('%s is currently editing this story', 'web-stories'),
-              story?.lockUser.name
-            )
+            isLocked && story?.lockUser.name
+              ? sprintf(
+                  /* translators: %s: user name */
+                  __('%s is currently editing this story', 'web-stories'),
+                  story?.lockUser.name
+                )
+              : ''
           }
         >
           <PreviewWrapper>
@@ -172,8 +177,18 @@ const StoryTableRow = ({
                 onBlur={onBlurDeselectAll}
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
                 as="h4"
+                aria-label={
+                  isLocked
+                    ? sprintf(
+                        /* translators: %1$s: story title %2$s: user story is locked by.*/
+                        __('%1$s (locked by %2$s)', 'web-stories'),
+                        formattedTitle,
+                        story?.lockUser.name
+                      )
+                    : formattedTitle
+                }
               >
-                {titleFormatted(story.title)}
+                {formattedTitle}
               </Headline>
               {memoizedStoryMenu}
             </>
@@ -207,10 +222,10 @@ const StoryTableRow = ({
 };
 
 StoryTableRow.propTypes = {
-  story: PropTypes.any,
-  renameStory: PropTypes.any,
-  userId: PropTypes.any,
-  storyMenu: PropTypes.any,
-  storyStatus: PropTypes.any,
+  story: StoryPropType.isRequired,
+  renameStory: RenameStoryPropType,
+  userId: PropTypes.number,
+  storyMenu: StoryMenuPropType.isRequired,
+  storyStatus: PropTypes.string,
 };
 export default StoryTableRow;
