@@ -64,7 +64,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
 
 		$query_params['_web_stories_envelope'] = [

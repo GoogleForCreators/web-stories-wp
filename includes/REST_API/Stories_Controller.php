@@ -65,7 +65,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$schema  = $this->get_item_schema();
 
@@ -195,7 +195,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
@@ -266,7 +266,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Filtered query clauses.
 	 */
-	public function filter_posts_clauses( $clauses, $query ) {
+	public function filter_posts_clauses( $clauses, $query ): array {
 		global $wpdb;
 
 		if ( $this->post_type !== $query->get( 'post_type' ) ) {
@@ -457,7 +457,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Links for the given post.
 	 */
-	protected function prepare_links( $post ) {
+	protected function prepare_links( $post ): array {
 		$links = parent::prepare_links( $post );
 
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
@@ -495,7 +495,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
 
 		$query_params['_web_stories_envelope'] = [
