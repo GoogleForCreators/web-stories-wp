@@ -226,7 +226,10 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
-	 * Override scheme to remove permalink_template and generated_slug.
+	 * Retrieves the attachment's schema, conforming to JSON Schema.
+	 *
+	 * Removes some unneeded fields to improve performance by
+	 * avoiding some expensive database queries.
 	 *
 	 * @since 1.10.0
 	 *
