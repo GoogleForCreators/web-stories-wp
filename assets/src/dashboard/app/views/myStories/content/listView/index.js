@@ -19,14 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useMemo } from 'react';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import {
-  Headline,
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
+import { Icons, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useFeatures } from 'flagged';
 /**
  * Internal dependencies

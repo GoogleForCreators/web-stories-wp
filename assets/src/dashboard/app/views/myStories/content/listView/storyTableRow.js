@@ -37,8 +37,8 @@ import {
   TableCell,
   TablePreviewCell,
   TableStatusCell,
+  generateStoryMenu,
 } from '../../../../../components';
-import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { STORY_STATUS } from '../../../../../constants';
 import {
   RenameStoryPropType,
