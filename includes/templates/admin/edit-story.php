@@ -37,7 +37,10 @@ $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object
 $demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 $templates_post_type_object = get_post_type_object( Page_Template_Post_Type::POST_TYPE_SLUG );
-$templates_rest_base        = $templates_post_type_object instanceof WP_Post_Type && ! empty( $templates_post_type_object->rest_base ) ? $templates_post_type_object->rest_base : $templates_post_type_object->name;
+$templates_rest_base        = Page_Template_Post_Type::POST_TYPE_SLUG;
+if ( $templates_post_type_object instanceof WP_Post_Type ) {
+	$templates_rest_base = ! empty( $templates_post_type_object->rest_base ) ? $templates_post_type_object->rest_base : $templates_post_type_object->name;
+}
 
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
