@@ -17,48 +17,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { Icons, Text, themeHelpers } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import {
-  STORY_PREVIEW_WIDTH,
-  VIEWPORT_BREAKPOINT,
-} from '../../../../../constants';
-import { TableRow, MoreVerticalButton } from '../../../../../components';
+import { Text, themeHelpers } from '@web-stories-wp/design-system';
 
 const { focusableOutlineCSS } = themeHelpers;
 
 export const ListView = styled.div`
   width: 100%;
-`;
-
-export const PreviewImage = styled.div`
-  display: inline-block;
-  background: ${({ theme }) => theme.colors.gradient.placeholder};
-  width: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL]}px;
-  height: ${STORY_PREVIEW_WIDTH[VIEWPORT_BREAKPOINT.THUMBNAIL] / (3 / 4)}px;
-  object-fit: contain;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-`;
-export const PreviewWrapper = styled.div`
-  position: relative;
-`;
-
-export const LockIcon = styled(Icons.LockClosed)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  display: block;
-  margin: auto;
-  background-color: ${({ theme }) => theme.colors.interactiveBg.brandNormal};
-  color: ${({ theme }) => theme.colors.standard.white};
-  border-radius: ${({ theme }) => theme.borders.radius.round};
 `;
 
 export const ArrowIcon = styled.div`
@@ -95,34 +59,13 @@ export const ArrowIconWithTitle = styled(ArrowIcon)`
   }
 `;
 
-export const HeavyTitle = styled(Text)`
-  font-weight: 700;
-`;
-
-export const SelectableTitle = styled(HeavyTitle).attrs({ tabIndex: 0 })`
+export const SelectableTitle = styled(Text).attrs({
+  tabIndex: 0,
+  isBold: true,
+})`
   color: ${({ theme }) => theme.colors.fg.linkNormal};
   cursor: pointer;
 
   ${({ theme }) =>
     focusableOutlineCSS(theme.colors.border.focus, theme.colors.bg.secondary)};
-`;
-
-export const StyledTableRow = styled(TableRow)`
-  &:hover ${MoreVerticalButton}, &:focus-within ${MoreVerticalButton} {
-    opacity: 1;
-  }
-`;
-
-export const TitleTableCellContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  ${MoreVerticalButton} {
-    margin: 10px auto;
-  }
-
-  &:hover ${MoreVerticalButton}, &:active ${MoreVerticalButton} {
-    opacity: 1;
-  }
 `;

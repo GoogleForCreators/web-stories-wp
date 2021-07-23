@@ -298,7 +298,12 @@ describe('My Stories <StoriesView />', function () {
             },
           }}
         />,
-        { features: { enablePostLocking: true } },
+        {
+          features: {
+            enablePostLocking: true,
+            enableInProgressStoryActions: false,
+          },
+        },
         {}
       );
 

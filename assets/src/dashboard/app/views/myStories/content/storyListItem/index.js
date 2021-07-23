@@ -37,8 +37,8 @@ import {
   TableCell,
   TablePreviewCell,
   TableStatusCell,
-  generateStoryMenu,
 } from '../../../../../components';
+import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { STORY_STATUS } from '../../../../../constants';
 import {
   RenameStoryPropType,
@@ -70,7 +70,7 @@ const DISPLAY_STATUS = {
   [STORY_STATUS.PRIVATE]: __('Private', 'web-stories'),
 };
 
-const StoryTableRow = ({
+export const StoryListItem = ({
   story,
   renameStory,
   userId,
@@ -221,11 +221,10 @@ const StoryTableRow = ({
   );
 };
 
-StoryTableRow.propTypes = {
+StoryListItem.propTypes = {
   story: StoryPropType.isRequired,
   renameStory: RenameStoryPropType,
   userId: PropTypes.number,
   storyMenu: StoryMenuPropType.isRequired,
   storyStatus: PropTypes.string,
 };
-export default StoryTableRow;

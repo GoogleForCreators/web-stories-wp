@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import { Icons, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
@@ -48,15 +48,14 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import { useConfig } from '../../../../config';
+import { StoryListItem } from '../storyListItem';
 import {
   ArrowIcon,
   ArrowIconWithTitle,
   EmptyIconSpace,
-  HeavyTitle,
   ListView,
   SelectableTitle,
 } from './components';
-import StoryTableRow from './storyTableRow';
 
 const toggleSortLookup = {
   [SORT_DIRECTION.DESC]: SORT_DIRECTION.ASC,
@@ -102,7 +101,7 @@ export default function StoryListView({
     return (
       !hideStoryList &&
       stories.map((story) => (
-        <StoryTableRow
+        <StoryListItem
           key={`story-${story.id}`}
           story={story}
           userId={enablePostLocking && userId}
@@ -250,12 +249,13 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && (
               <TableStatusHeaderCell>
-                <HeavyTitle
-                  forwardedAs="span"
+                <Text
+                  as="span"
+                  isBold
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 >
                   {__('Publish State', 'web-stories')}
-                </HeavyTitle>
+                </Text>
               </TableStatusHeaderCell>
             )}
           </TableRow>

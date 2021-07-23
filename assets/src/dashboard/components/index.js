@@ -65,4 +65,3 @@ export {
 } from './table';
 export { Tooltip } from './tooltip';
 export { default as ViewStyleBar } from './viewStyleBar';
-export { generateStoryMenu } from './popoverMenu/story-menu-generator';
