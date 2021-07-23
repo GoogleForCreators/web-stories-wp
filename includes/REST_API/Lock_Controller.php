@@ -68,7 +68,7 @@ abstract class Lock_Controller extends REST_Controller {
 
 		$this->parent_controller = $parent_controller;
 		$this->rest_base         = $rest_base;
-		$this->namespace         = $parent_controller ? (string) $parent_controller->namespace : 'web-stories/v1';
+		$this->namespace         = (string) $parent_controller->namespace;
 	}
 
 	/**

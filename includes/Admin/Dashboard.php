@@ -40,6 +40,7 @@ use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
+use WP_Post_Type;
 
 /**
  * Dashboard class.
@@ -240,7 +241,7 @@ class Dashboard extends Service_Base {
 	 */
 	public function load_stories_dashboard() {
 		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$rest_base        = isset( $post_type_object ) && ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+		$rest_base        = $post_type_object instanceof WP_Post_Type && ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 
 		$preload_paths = [
 			'/web-stories/v1/settings/',
