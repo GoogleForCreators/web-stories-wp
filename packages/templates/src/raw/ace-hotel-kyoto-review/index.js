@@ -28,9 +28,9 @@ export default {
   title: _x('Ace Hotel Kyoto Review', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),
-    _x('Review', 'template keyword', 'web-stories'),
+    _x('Reviews', 'template keyword', 'web-stories'),
     _x('Hotel', 'template keyword', 'web-stories'),
-    _x('Minimalist', 'template keyword', 'web-stories'),
+    _x('Minimal', 'template keyword', 'web-stories'),
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [

@@ -29,7 +29,7 @@ export default {
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),
     _x('TV Show', 'template keyword', 'web-stories'),
-    _x('Explaination', 'template keyword', 'web-stories'),
+    _x('Explanation', 'template keyword', 'web-stories'),
     _x('Minimal', 'template keyword', 'web-stories'),
     _x('Black', 'template keyword', 'web-stories'),
   ],

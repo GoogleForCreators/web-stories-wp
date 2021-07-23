@@ -34,7 +34,7 @@ export default {
     _x('White', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Studio White', 'color', 'web-stories'), color: '#F5F4EE' },
+    { label: _x('Studio White', 'color', 'web-stories'), color: '#f5f4ee' },
     {
       label: _x('Cavernous Gray', 'color', 'web-stories'),
       color: '#535353',

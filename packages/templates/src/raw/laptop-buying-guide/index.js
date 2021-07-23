@@ -28,7 +28,7 @@ export default {
   title: _x('Laptop Buying Guide', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),
-    _x('Product', 'template keyword', 'web-stories'),
+    _x('Products', 'template keyword', 'web-stories'),
     _x('Laptop', 'template keyword', 'web-stories'),
     _x('Simple', 'template keyword', 'web-stories'),
     _x('Blue', 'template keyword', 'web-stories'),
