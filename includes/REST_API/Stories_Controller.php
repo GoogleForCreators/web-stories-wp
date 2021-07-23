@@ -65,7 +65,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$schema  = $this->get_item_schema();
 

@@ -120,7 +120,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();

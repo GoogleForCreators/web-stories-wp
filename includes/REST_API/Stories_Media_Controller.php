@@ -206,7 +206,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );
 
 		/**
