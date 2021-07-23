@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useFocusOut from '../../utils/useFocusOut';
 import isNullOrUndefinedOrEmptyString from '../../utils/isNullOrUndefinedOrEmptyString';
 import { useKeyDownEffect } from '../keyboard';
 import {

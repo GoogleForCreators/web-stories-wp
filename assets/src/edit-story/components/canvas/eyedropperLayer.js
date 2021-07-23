@@ -21,14 +21,12 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import {
-  useFocusOut,
-  useGlobalKeyDownEffect,
-} from '@web-stories-wp/design-system';
 import { useCanvas, useLayout } from '../../app';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';

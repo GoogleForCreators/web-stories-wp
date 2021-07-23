@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState, useEffect } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 /**

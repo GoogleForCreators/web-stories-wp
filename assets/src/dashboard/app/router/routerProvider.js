@@ -21,7 +21,7 @@ import { useRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import { createHashHistory } from 'history';
-import { createContext } from '@web-stories-wp/design-system';
+import { createContext } from '@web-stories-wp/react';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 

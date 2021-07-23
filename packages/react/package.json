@@ -1,0 +1,25 @@
+{
+  "name": "@web-stories-wp/react",
+  "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "type": "module",
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-pure-render": "^1.0.2",
+    "use-context-selector": "^1.2.11",
+    "use-debounce": "^7.0.0",
+    "resize-observer-polyfill": "^1.5.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^11.2.3"
+  }
+}

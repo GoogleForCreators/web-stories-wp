@@ -21,17 +21,14 @@ import PropTypes from 'prop-types';
 import { forwardRef, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-
+import { useInputEventHandlers } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
 import { Text } from '../typography';
 import { themeHelpers, THEME_CONSTANTS } from '../../theme';
 import { focusCSS } from '../../theme/helpers';
-import {
-  useInputEventHandlers,
-  labelAccessibilityValidator,
-} from '../../utils';
+import { labelAccessibilityValidator } from '../../utils';
 
 const Container = styled.div`
   position: relative;

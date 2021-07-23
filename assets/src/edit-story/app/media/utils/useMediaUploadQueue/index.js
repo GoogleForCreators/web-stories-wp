@@ -30,12 +30,12 @@ import {
   getImageDimensions,
   isAnimatedGif,
 } from '@web-stories-wp/media';
+import { useReduction } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import { useUploader } from '../../../uploader';
-import useReduction from '../../../../utils/useReduction';
 import { noop } from '../../../../utils/noop';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';

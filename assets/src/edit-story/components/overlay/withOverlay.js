@@ -20,11 +20,11 @@
 import styled from 'styled-components';
 import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { useCombinedRefs } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useCombinedRefs from '../../utils/useCombinedRefs';
 import Context from './context';
 
 const Overlay = styled.div`
