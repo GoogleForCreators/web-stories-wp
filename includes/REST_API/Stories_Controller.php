@@ -457,7 +457,12 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return array Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
+		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
+		// avoiding a currently unneeded database query.
+		// TODO(#85): Remove if proper revisions support is ever needed.
+		remove_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 		$links = parent::prepare_links( $post );
+		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
 		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
