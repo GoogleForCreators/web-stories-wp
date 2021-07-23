@@ -75,4 +75,31 @@ class Page_Template_Controller extends Stories_Base_Controller {
 
 		return $query_params;
 	}
+
+	/**
+	 * Retrieves the attachment's schema, conforming to JSON Schema.
+	 *
+	 * Removes some unneeded fields to improve performance by
+	 * avoiding some expensive database queries.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return array Item schema as an array.
+	 */
+	public function get_item_schema(): array {
+		if ( $this->schema ) {
+			return $this->add_additional_fields_schema( $this->schema );
+		}
+
+		$schema = parent::get_item_schema();
+
+		unset(
+			$schema['properties']['permalink_template'],
+			$schema['properties']['generated_slug']
+		);
+
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
+	}
 }
