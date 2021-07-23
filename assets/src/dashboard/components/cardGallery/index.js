@@ -173,7 +173,11 @@ function CardGallery({ story, isRTL, galleryLabel }) {
       theme={(theme) => ({ ...theme, numRows: isThreeRows ? 3 : 4 })}
     >
       <GalleryContainer ref={containerRef}>
-        <Thumbnails ref={gridRef} aria-label={galleryLabel}>
+        <Thumbnails
+          ref={gridRef}
+          aria-label={galleryLabel}
+          data-testid="mini-cards-container"
+        >
           {GalleryItems}
         </Thumbnails>
         <DisplayPage
