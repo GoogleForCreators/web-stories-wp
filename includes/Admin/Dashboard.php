@@ -230,19 +230,58 @@ class Dashboard extends Service_Base {
 	}
 
 	/**
-	 * Preload api requests in the dashboard.
+	 * Preload API requests in the dashboard.
+	 *
+	 * Important: keep in sync with usage & definition in React app.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function load_stories_dashboard() {
-		// Preload common data.
-		// TODO Preload templates.
+		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
+		$rest_base        = isset( $post_type_object ) && ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/users/me/',
-			sprintf( '/web-stories/v1/web-story/?_embed=%s&context=edit&order=desc&orderby=modified&page=1&per_page=%d&status=%s&_web_stories_envelope=true', urlencode( 'wp:lock,wp:lockuser,author' ), 24, urlencode( 'publish,draft,future,private' ) ),
+			"/web-stories/v1/$rest_base/?" . build_query(
+				[
+					'_embed'                => urlencode( 'wp:lock,wp:lockuser,author' ),
+					'context'               => 'edit',
+					'order'                 => 'desc',
+					'orderby'               => 'modified',
+					'page'                  => 1,
+					'per_page'              => 24,
+					'status'                => urlencode( 'publish,draft,future,private' ),
+					'_web_stories_envelope' => 'true',
+					'_fields'               => urlencode(
+						implode(
+							',',
+							[
+								'id',
+								'title',
+								'status',
+								'date',
+								'date_gmt',
+								'modified',
+								'modified_gmt',
+								'link',
+								'featured_media_url',
+								'preview_link',
+								'edit_link',
+								// TODO: Remove need for story_data as its a lot of data sent over the wire.
+								// It's only needed for duplicating stories.
+								'story_data',
+								// _web_stories_envelope will add these fields, we need them too.
+								'body',
+								'status',
+								'headers',
+							]
+						)
+					),
+				]
+			),
 		];
 
 		/**

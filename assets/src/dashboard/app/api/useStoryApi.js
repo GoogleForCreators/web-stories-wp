@@ -22,6 +22,7 @@ import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -70,6 +71,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         return;
       }
 
+      // Important: Keep in sync with REST API preloading definition.
       const query = {
         _embed: 'wp:lock,wp:lockuser,author',
         context: 'edit',
@@ -80,6 +82,26 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         per_page: perPage,
         order: sortDirection || ORDER_BY_SORT[sortOption],
         status,
+        _fields: [
+          'id',
+          'title',
+          'status',
+          'date',
+          'date_gmt',
+          'modified',
+          'modified_gmt',
+          'link',
+          'featured_media_url',
+          'preview_link',
+          'edit_link',
+          // TODO: Remove need for story_data as its a lot of data sent over the wire.
+          // It's only needed for duplicating stories.
+          'story_data',
+          // _web_stories_envelope will add these fields, we need them too.
+          'body',
+          'status',
+          'headers',
+        ].join(','),
       };
 
       const trackTiming = getTimeTracker('load_stories');
