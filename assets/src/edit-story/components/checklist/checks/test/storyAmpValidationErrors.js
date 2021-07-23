@@ -19,23 +19,28 @@
 import { getStoryAmpValidationErrors } from '../storyAmpValidationErrors';
 
 describe('getStoryAmpValidationErrors', () => {
-  it('should return false if no link or status is draft', () => {
-    expect(getStoryAmpValidationErrors({ link: null, status: 'draft' })).toBe(
-      false
-    );
+  afterEach(() => {
+    global.fetch.mockClear();
   });
-  it('should return false if there are no violations', () => {
+
+  it('should return false if no link or status is draft', async () => {
     expect(
-      getStoryAmpValidationErrors({
+      await getStoryAmpValidationErrors({ link: null, status: 'draft' })
+    ).toBe(false);
+  });
+
+  it('should return false if there are no violations', async () => {
+    expect(
+      await getStoryAmpValidationErrors({
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
     ).toBe(false);
   });
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should return true if there are AMP violations', () => {
+
+  it('should return true if there are AMP violations', async () => {
     expect(
-      getStoryAmpValidationErrors({
+      await getStoryAmpValidationErrors({
         link: 'http://test/web-stories/123',
         status: 'publish',
       })
