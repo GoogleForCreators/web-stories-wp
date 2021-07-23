@@ -240,8 +240,7 @@ class Dashboard extends Service_Base {
 	 * @return void
 	 */
 	public function load_stories_dashboard() {
-		$post_type_object = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-		$rest_base        = $post_type_object instanceof WP_Post_Type && ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 
 		$preload_paths = [
 			'/web-stories/v1/settings/',
