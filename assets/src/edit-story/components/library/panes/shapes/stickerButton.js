@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import STICKERS from '@web-stories-wp/stickers';
@@ -24,18 +25,21 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
+import { useUnits } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
+import LibraryMoveable from '../shared/libraryMoveable';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 
 const StickerButton = styled(Button).attrs({
   size: BUTTON_SIZES.SMALL,
   type: BUTTON_TYPES.SECONDARY,
 })`
-  margin: 0 10px 10px 0;
+  position: relative;
+  margin: 0;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 `;
@@ -45,7 +49,42 @@ function StickerPreview({ stickerType }) {
     insertElement: state.actions.insertElement,
   }));
 
-  const Svg = STICKERS?.[stickerType]?.svg;
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
+  const sticker = STICKERS[stickerType];
+  const aspectRatio = sticker.aspectRatio;
+  const stickerData = useMemo(
+    () => ({
+      width: DEFAULT_ELEMENT_WIDTH * aspectRatio,
+      height: DEFAULT_ELEMENT_WIDTH,
+      sticker: {
+        type: stickerType,
+      },
+    }),
+    [aspectRatio, stickerType]
+  );
+
+  const StickerClone = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: ${({ width }) => `${width}px`};
+    height: ${({ height }) => `${height}px`};
+    svg {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      path {
+        fill: #c4c4c4;
+      }
+    }
+  `;
+
+  const Svg = sticker.svg;
   return (
     <StickerButton
       onClick={() =>
@@ -57,8 +96,31 @@ function StickerPreview({ stickerType }) {
     >
       <Svg
         style={{
-          height: '100%',
-          width: 'auto',
+          height: 'auto',
+          width: '100%',
+        }}
+      />
+      <LibraryMoveable
+        type={'sticker'}
+        elementProps={stickerData}
+        cloneElement={StickerClone}
+        onClick={() =>
+          insertElement('sticker', {
+            width: DEFAULT_ELEMENT_WIDTH,
+            sticker: { type: stickerType },
+          })
+        }
+        cloneProps={{
+          width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * aspectRatio),
+          height: dataToEditorY(DEFAULT_ELEMENT_WIDTH),
+          children: (
+            <Svg
+              style={{
+                height: 'auto',
+                width: '100%',
+              }}
+            />
+          ),
         }}
       />
     </StickerButton>
