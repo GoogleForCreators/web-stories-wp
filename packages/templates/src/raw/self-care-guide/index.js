@@ -40,19 +40,12 @@ export default {
       color: '#535353',
     },
     { label: _x('Gold Ochre', 'color', 'web-stories'), color: '#b17417' },
-    { label: _x('Sea Turtle Brown', 'color', 'web-stories'), color: '#5e564a' },
     { label: _x('Cove Blue', 'color', 'web-stories'), color: '#7a87a8' },
-    { label: _x('River Bed Blue', 'color', 'web-stories'), color: '#464c5a' },
     { label: _x('Velvet Green', 'color', 'web-stories'), color: '#588061' },
-    {
-      label: _x('Forest Fern Green', 'color', 'web-stories'),
-      color: '#424e44',
-    },
     {
       label: _x('Olive Garden Green', 'color', 'web-stories'),
       color: '#878c52',
     },
-    { label: _x('Old Bamboo Green', 'color', 'web-stories'), color: '#63654f' },
     { label: _x('White', 'color', 'web-stories'), color: '#ffffff' },
   ],
   description: __(
