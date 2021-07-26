@@ -34,7 +34,8 @@ export async function getStoryAmpValidationErrors({ link, status }) {
   }
 
   try {
-    const storyMarkup = await (await fetch(link)).text();
+    const response = await fetch(link);
+    const storyMarkup = await response.text();
     const { status: markupStatus, errors } =
       window.amp.validator.validateString(storyMarkup);
 
