@@ -61,15 +61,20 @@ export async function getStoryAmpValidationErrors({ link, status }) {
 }
 
 const StoryAmpValidationErrors = () => {
+  // ampValidationErrorRef is making sure that tracking is only fired once per session.
   const ampValidationErrorsRef = useRef();
   const {
     meta: { isSaving },
     story: { link, status },
   } = useStory(({ state }) => state);
 
-  // limiting to when isSaving is false so that when the saved story is updated this will check.
+  // isRendered is getting set asynchronously based on the returned value of `getStoryAmpValidationErrors`,
+  // setting this statefully allows the value to be a boolean not a promise which is crucial to updating tracking accurately.
   const [isRendered, setIsRendered] = useState(false);
 
+  // using `isSaving` as an indicator of when to check for validation errors so that this check doesn't run on all story updates.
+  // Allows us to just track status and link, puts the story in line with what the outcome would be if the user was testing their
+  // story link in the recommended test/amp site.
   useEffect(() => {
     !isSaving &&
       getStoryAmpValidationErrors({ link, status }).then((hasErrors) => {
