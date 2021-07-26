@@ -301,7 +301,6 @@ describe('My Stories <StoriesView />', function () {
         {
           features: {
             enablePostLocking: true,
-            enableInProgressStoryActions: false,
           },
         },
         {}
@@ -312,7 +311,9 @@ describe('My Stories <StoriesView />', function () {
       );
 
       const lockedStoryTitle = screen.getByText('Story C');
-      expect(lockedStoryTitle).toBe('test test test');
+      expect(lockedStoryTitle).toContainHTML(
+        `${fakeStories[2].title} (locked by ${fakeStories[2].lockUser.name})`
+      );
     });
   });
 });
