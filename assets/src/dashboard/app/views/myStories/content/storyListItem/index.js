@@ -84,17 +84,6 @@ export const StoryListItem = ({
 
   const formattedTitle = titleFormatted(story.title);
 
-  const generatedMenuItems = useMemo(
-    () =>
-      generateStoryMenu({
-        menuItemActions: storyMenu.menuItemActions,
-        menuItems: storyMenu.menuItems,
-        story,
-        isLocked,
-      }),
-    [storyMenu, story, isLocked]
-  );
-
   const memoizedStoryMenu = useMemo(
     () => (
       <StoryMenu
@@ -115,18 +104,16 @@ export const StoryListItem = ({
         onMoreButtonSelected={storyMenu.handleMenuToggle}
         contextMenuId={storyMenu.contextMenuId}
         storyId={story.id}
-        menuItems={generatedMenuItems}
+        menuItems={generateStoryMenu({
+          menuItemActions: storyMenu.menuItemActions,
+          menuItems: storyMenu.menuItems,
+          story,
+          isLocked,
+        })}
         verticalAlign="center"
       />
     ),
-    [
-      isLocked,
-      formattedTitle,
-      storyMenu,
-      story.id,
-      story?.lockUser,
-      generatedMenuItems,
-    ]
+    [isLocked, formattedTitle, storyMenu, story]
   );
 
   return (
