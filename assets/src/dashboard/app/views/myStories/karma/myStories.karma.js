@@ -744,10 +744,10 @@ describe('List view', () => {
       // drop the header row using slice
       const rows = fixture.screen.getAllByRole('row').slice(1);
 
-      const utils = within(rows[0]);
+      const utils = within(rows[1]);
 
-      const titleCell = utils.getByRole('cell', {
-        name: storiesSortedByModified[0].title,
+      const titleCell = utils.getByRole('heading', {
+        name: storiesSortedByModified[1].title,
       });
 
       await fixture.events.hover(titleCell);
@@ -762,7 +762,8 @@ describe('List view', () => {
 
       await fixture.events.click(rename);
 
-      const input = utils.getByRole('textbox');
+      const input = await utils.getByRole('textbox');
+
       const inputLength = input.value.length;
 
       for (let iter = 0; iter < inputLength; iter++) {
