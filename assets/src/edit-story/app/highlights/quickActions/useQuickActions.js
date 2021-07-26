@@ -28,14 +28,14 @@ import { states, useHighlights } from '..';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
-import { getResetProperties } from './utils';
 import {
-  ELEMENT_TYPE,
-  ACTION_TEXT,
-  RESET_PROPERTIES,
-  RESET_DEFAULTS,
-} from './constants';
+  useStory,
+  useStoryTriggersDispatch,
+  STORY_EVENTS,
+  ELEMENT_TYPES,
+} from '../../story';
+import { getResetProperties } from './utils';
+import { ACTION_TEXT, RESET_PROPERTIES, RESET_DEFAULTS } from './constants';
 
 const {
   Bucket,
@@ -123,7 +123,7 @@ const useQuickActions = () => {
         newProperties.borderRadius = null;
       }
 
-      if (elementType === ELEMENT_TYPE.TEXT) {
+      if (elementType === ELEMENT_TYPES.TEXT) {
         newProperties.borderRadius = RESET_DEFAULTS.TEXT_BORDER_RADIUS;
       }
 
@@ -418,7 +418,7 @@ const useQuickActions = () => {
         handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
-          elementType: ELEMENT_TYPE.BACKGROUND,
+          elementType: ELEMENT_TYPES.BACKGROUND,
         }),
       separator: 'top',
       ...actionMenuProps,
@@ -467,13 +467,13 @@ const useQuickActions = () => {
 
   // switch quick actions based on non-background element type
   switch (selectedElements?.[0]?.type) {
-    case ELEMENT_TYPE.IMAGE:
+    case ELEMENT_TYPES.IMAGE:
       return foregroundImageActions;
-    case ELEMENT_TYPE.SHAPE:
+    case ELEMENT_TYPES.SHAPE:
       return shapeActions;
-    case ELEMENT_TYPE.TEXT:
+    case ELEMENT_TYPES.TEXT:
       return textActions;
-    case ELEMENT_TYPE.VIDEO:
+    case ELEMENT_TYPES.VIDEO:
       return videoActions;
     default:
       return [];
