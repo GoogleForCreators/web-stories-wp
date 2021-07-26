@@ -17,6 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import STICKERS from '@web-stories-wp/stickers';
 import {
   Button,
@@ -30,27 +31,29 @@ import {
 import useLibrary from '../../useLibrary';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 
-function StickerButton({ stickerType }) {
+const StickerButton = styled(Button).attrs({
+  size: BUTTON_SIZES.SMALL,
+  type: BUTTON_TYPES.SECONDARY,
+})`
+  margin: 0 10px 10px 0;
+  height: 60px;
+  background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+`;
+
+function StickerPreview({ stickerType }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
 
   const Svg = STICKERS?.[stickerType]?.svg;
   return (
-    <Button
-      size={BUTTON_SIZES.SMALL}
-      type={BUTTON_TYPES.SECONDARY}
+    <StickerButton
       onClick={() =>
         insertElement('sticker', {
           width: DEFAULT_ELEMENT_WIDTH,
           sticker: { type: stickerType },
         })
       }
-      style={{
-        marginBottom: 10,
-        marginRight: 10,
-        height: 60,
-      }}
     >
       <Svg
         style={{
@@ -58,12 +61,12 @@ function StickerButton({ stickerType }) {
           width: 'auto',
         }}
       />
-    </Button>
+    </StickerButton>
   );
 }
 
-StickerButton.propTypes = {
+StickerPreview.propTypes = {
   stickerType: PropTypes.string.isRequired,
 };
 
-export default StickerButton;
+export default StickerPreview;

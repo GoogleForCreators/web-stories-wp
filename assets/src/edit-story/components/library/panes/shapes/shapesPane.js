@@ -31,7 +31,7 @@ import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ShapePreview from './shapePreview';
-import StickerButton from './stickerButton';
+import StickerPreview from './stickerButton';
 import paneId from './paneId';
 
 const SectionContent = styled.div`
@@ -58,6 +58,9 @@ function ShapesPane(props) {
 
   const ref = useRef();
   useRovingTabIndex({ ref });
+
+  const stickersRef = useRef();
+  useRovingTabIndex({ ref: stickersRef });
   return (
     <Pane id={paneId} {...props} isOverflowScrollable={enableStickers}>
       {showTextAndShapesSearchInput && (
@@ -77,9 +80,9 @@ function ShapesPane(props) {
       </Section>
       {enableStickers && (
         <Section title={__('Stickers', 'web-stories')}>
-          <SectionContent>
+          <SectionContent ref={stickersRef}>
             {STICKER_TYPES.map((stickerType) => (
-              <StickerButton key={stickerType} stickerType={stickerType} />
+              <StickerPreview key={stickerType} stickerType={stickerType} />
             ))}
           </SectionContent>
         </Section>
