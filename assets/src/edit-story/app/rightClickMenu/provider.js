@@ -27,8 +27,9 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { duplicatePage } from '../../elements';
+import { ELEMENT_TYPES } from '../story';
+import updateProperties from '../../components/inspector/design/updateProperties';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUT_LABELS,
@@ -62,10 +63,22 @@ function RightClickMenuProvider({ children }) {
     pages,
     replaceCurrentPage,
     selectedElements,
+    selectedElementAnimations,
+    updateElementsById,
   } = useStory(
     ({
-      state: { currentPage, pages, selectedElements },
-      actions: { addPage, deleteCurrentPage, replaceCurrentPage },
+      state: {
+        currentPage,
+        pages,
+        selectedElements,
+        selectedElementAnimations,
+      },
+      actions: {
+        addPage,
+        deleteCurrentPage,
+        replaceCurrentPage,
+        updateElementsById,
+      },
     }) => ({
       addPage,
       currentPage,
@@ -73,16 +86,16 @@ function RightClickMenuProvider({ children }) {
       pages,
       replaceCurrentPage,
       selectedElements,
+      selectedElementAnimations,
+      updateElementsById,
     })
   );
 
   // Ref for attaching the context menu
   const rightClickAreaRef = useRef();
 
-  const [{ copiedPage, isMenuOpen, menuPosition }, dispatch] = useReducer(
-    rightClickMenuReducer,
-    DEFAULT_RIGHT_CLICK_MENU_STATE
-  );
+  const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
+    useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
 
   /**
    * Open the menu at the position from the click event.
@@ -149,6 +162,34 @@ function RightClickMenuProvider({ children }) {
 
   const selectedElement = selectedElements?.[0];
 
+  const handleCopyStyles = useCallback(() => {
+    dispatch({
+      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
+      payload: {
+        element: selectedElement,
+        animations: selectedElementAnimations,
+      },
+    });
+  }, [selectedElement, selectedElementAnimations]);
+
+  const handlePasteStyles = useCallback(() => {
+    const id = selectedElement?.id;
+
+    if (!id || selectedElement?.type !== copiedElement.type) {
+      return;
+    }
+
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          copiedElement.styles,
+          /* commitValues */ true
+        ),
+    });
+  }, [copiedElement, selectedElement, updateElementsById]);
+
   const menuItemProps = useMemo(
     () => ({
       onMouseDown: handleMouseDown,
@@ -208,16 +249,37 @@ function RightClickMenuProvider({ children }) {
         disabled: pages.length === 1,
         ...menuItemProps,
       },
+      {
+        label: 'Copy element styles',
+        onClick: handleCopyStyles,
+        ...menuItemProps,
+      },
+      {
+        label: 'Paste those element styles',
+        onClick: handlePasteStyles,
+        disabled: copiedElement.type !== selectedElement?.type,
+        ...menuItemProps,
+      },
     ],
-    [defaultItems, handleDeletePage, handleDuplicatePage, menuItemProps, pages]
+    [
+      defaultItems,
+      handleDeletePage,
+      handleDuplicatePage,
+      menuItemProps,
+      pages,
+      handleCopyStyles,
+      handlePasteStyles,
+      copiedElement,
+      selectedElement,
+    ]
   );
 
   const menuItems = useMemo(() => {
     switch (selectedElement?.type) {
-      case ELEMENT_TYPE.IMAGE:
-      case ELEMENT_TYPE.SHAPE:
-      case ELEMENT_TYPE.TEXT:
-      case ELEMENT_TYPE.VIDEO:
+      case ELEMENT_TYPES.IMAGE:
+      case ELEMENT_TYPES.SHAPE:
+      case ELEMENT_TYPES.TEXT:
+      case ELEMENT_TYPES.VIDEO:
       default:
         return pageItems;
     }
