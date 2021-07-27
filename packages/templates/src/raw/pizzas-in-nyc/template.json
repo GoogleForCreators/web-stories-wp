@@ -1,5 +1,5 @@
 {
-  "version": 29,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -232,7 +232,8 @@
             "alt": "Friends filming / doing a video chat on barbecue party at beach house",
             "sizes": [],
             "local": false,
-            "isOptimized": true
+            "isOptimized": true,
+            "isMuted": true
           },
           "tracks": [],
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.08 } }

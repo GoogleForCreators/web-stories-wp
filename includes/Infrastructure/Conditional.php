@@ -39,5 +39,5 @@ interface Conditional {
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
-	public static function is_needed();
+	public static function is_needed(): bool;
 }

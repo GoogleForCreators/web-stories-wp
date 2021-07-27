@@ -48,17 +48,17 @@
       "composer-normalize": {
         "path": "vendor/bin/composer-normalize",
         "type": "phar",
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.13.2/composer-normalize.phar"
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.15.0/composer-normalize.phar"
       },
       "php-scoper": {
         "path": "vendor/bin/php-scoper",
         "type": "phar",
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.14.0/php-scoper.phar"
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.15.0/php-scoper.phar"
       },
       "phpstan": {
         "path": "vendor/bin/phpstan",
         "type": "phar",
-        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.77/phpstan.phar"
+        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.93/phpstan.phar"
       }
     },
     "enable-patching": true,

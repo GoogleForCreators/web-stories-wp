@@ -32,7 +32,7 @@ class Story_Sanitizer extends Test_Case {
 	 * @param array $sanitizer_args
 	 * @return string Sanitized HTML.
 	 */
-	protected function sanitize_and_get( $source, $sanitizer_args ) {
+	protected function sanitize_and_get( $source, $sanitizer_args ): string {
 		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
 		$dom->documentElement->setAttribute( 'amp', '' );
 
@@ -85,7 +85,7 @@ class Story_Sanitizer extends Test_Case {
 		$this->assertEquals( $expected, $actual );
 	}
 
-	public function get_poster_image_data() {
+	public function get_poster_image_data(): array {
 		return [
 			'poster_image_exists'  => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
@@ -124,7 +124,7 @@ class Story_Sanitizer extends Test_Case {
 		$this->assertEquals( $expected, $actual );
 	}
 
-	public function get_publisher_data() {
+	public function get_publisher_data(): array {
 		return [
 			'publisher_exists'        => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
@@ -366,5 +366,24 @@ class Story_Sanitizer extends Test_Case {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertNotContains( 'blob:', $actual );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_srcset
+	 */
+	public function test_sanitize_srcset() {
+		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image.jpg 1000w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-225x300.jpg 225w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher'                  => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+			'video_cache'                => false,
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertContains( 'srcset="https://example.com/image.jpg 1000w, https://example.com/image-768x1024.jpg 768w, https://example.com/image-225x300.jpg 225w, https://example.com/image-150x200.jpg 150w"', $actual );
 	}
 }

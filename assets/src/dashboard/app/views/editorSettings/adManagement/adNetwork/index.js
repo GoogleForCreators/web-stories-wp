@@ -33,7 +33,7 @@ export const TEXT = {
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),
 
   HELPER_MESSAGE_ADSENSE: __(
-    'Learn more about <a>how to monetize your Web Stories</a> using AdSense. Once configured, AdSense will determine where and how to insert ads into the story. Consult <a>AdSense Help</a> for any further assistance.',
+    'Learn more about <a>how to monetize your Web Stories</a> using AdSense. Once configured, AdSense will determine where and how to insert ads into the story. Consult <help>AdSense Help</help> for any further assistance.',
     'web-stories'
   ),
   HELPER_MESSAGE_ADMANAGER: __(
@@ -118,29 +118,25 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
         >
           <TranslateWithMarkup
-            mapping={
-              ({
-                a: (
-                  <InlineLink
-                    href={link}
-                    rel="noreferrer"
-                    target="_blank"
-                    onClick={handleMonetizationClick}
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  />
-                ),
-              },
-              {
-                a: (
-                  <InlineLink
-                    href={TEXT.HELPER_LINK_ADSENSE_HELP}
-                    rel="noreferrer"
-                    target="_blank"
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  />
-                ),
-              })
-            }
+            mapping={{
+              a: (
+                <InlineLink
+                  href={link}
+                  rel="noreferrer"
+                  target="_blank"
+                  onClick={handleMonetizationClick}
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                />
+              ),
+              help: (
+                <InlineLink
+                  href={TEXT.HELPER_LINK_ADSENSE_HELP}
+                  rel="noreferrer"
+                  target="_blank"
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                />
+              ),
+            }}
           >
             {message}
           </TranslateWithMarkup>

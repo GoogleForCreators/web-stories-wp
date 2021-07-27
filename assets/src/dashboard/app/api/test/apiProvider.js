@@ -38,6 +38,7 @@ jest.mock('../wpAdapter', () => ({
         {
           id: 123,
           status: 'publish',
+          featured_media_url: 'https://www.featured-media-123',
           author: 1,
           link: 'https://www.story-link.com',
           preview_link: 'https://www.story-link.com/?preview=true',
@@ -60,6 +61,7 @@ jest.mock('../wpAdapter', () => ({
     const id = data.id || 456;
     return Promise.resolve({
       id,
+      featured_media_url: `https://www.featured-media-${data.id || 456}`,
       status: 'publish',
       title: { raw: title, rendered: title },
       content: { raw: content, rendered: content },
@@ -113,12 +115,11 @@ describe('ApiProvider', () => {
       123: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=123',
-        centerTargetAction: '',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
         id: 123,
         modified: '1970-01-01T00:00:00.000',
         modified_gmt: '1970-01-01T00:00:00.000Z',
-
+        featuredMediaUrl: 'https://www.featured-media-123',
         created: '1970-01-01T00:00:00.000',
         created_gmt: '1970-01-01T00:00:00.000Z',
         author: 'admin',
@@ -131,6 +132,7 @@ describe('ApiProvider', () => {
         locked: false,
         originalStoryData: {
           id: 123,
+          featured_media_url: 'https://www.featured-media-123',
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
           preview_link: 'https://www.story-link.com/?preview=true',
@@ -158,12 +160,6 @@ describe('ApiProvider', () => {
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
-        pages: [
-          {
-            elements: [],
-            id: 1,
-          },
-        ],
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'Carlos',
@@ -189,12 +185,6 @@ describe('ApiProvider', () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
         modified: undefined,
-        pages: [
-          {
-            elements: [],
-            id: 1,
-          },
-        ],
         status: 'publish',
         title: { raw: 'New Title' },
         content: { raw: 'Content', rendered: 'Content' },
@@ -211,7 +201,7 @@ describe('ApiProvider', () => {
       123: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=123',
-        centerTargetAction: '',
+        featuredMediaUrl: 'https://www.featured-media-123',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
         id: 123,
         modified: '1970-01-01T00:00:00.000',
@@ -230,6 +220,7 @@ describe('ApiProvider', () => {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
+          featured_media_url: 'https://www.featured-media-123',
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
           date: '1970-01-01T00:00:00.000',
@@ -255,12 +246,6 @@ describe('ApiProvider', () => {
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
-        pages: [
-          {
-            elements: [],
-            id: 1,
-          },
-        ],
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'New Title',
@@ -319,7 +304,7 @@ describe('ApiProvider', () => {
       123: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=123',
-        centerTargetAction: '',
+        featuredMediaUrl: 'https://www.featured-media-123',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
         id: 123,
         modified: '1970-01-01T00:00:00.000',
@@ -338,6 +323,7 @@ describe('ApiProvider', () => {
           id: 123,
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
+          featured_media_url: 'https://www.featured-media-123',
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=123',
           date: '1970-01-01T00:00:00.000',
@@ -363,12 +349,6 @@ describe('ApiProvider', () => {
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
-        pages: [
-          {
-            elements: [],
-            id: 1,
-          },
-        ],
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'Carlos',
@@ -376,7 +356,7 @@ describe('ApiProvider', () => {
       456: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=456',
-        centerTargetAction: '',
+        featuredMediaUrl: 'https://www.featured-media-456',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=456',
         id: 456,
         modified: '1970-01-01T00:00:00.000',
@@ -395,6 +375,7 @@ describe('ApiProvider', () => {
           id: 456,
           modified: '1970-01-01T00:00:00.000',
           modified_gmt: '1970-01-01T00:00:00.000',
+          featured_media_url: 'https://www.featured-media-456',
           preview_link: 'https://www.story-link.com/?preview=true',
           edit_link: 'https://www.story-link.com/wp-admin/post.php?id=456',
           date: '1970-01-01T00:00:00.000',
@@ -420,12 +401,6 @@ describe('ApiProvider', () => {
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
-        pages: [
-          {
-            elements: [],
-            id: 1,
-          },
-        ],
         previewLink: 'https://www.story-link.com/?preview=true',
         status: 'publish',
         title: 'Carlos (Copy)',

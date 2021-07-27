@@ -5,9 +5,9 @@ namespace Google\Web_Stories\Tests\Infrastructure;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\ServiceContainer\SimpleServiceContainer;
-use PHPUnit\Framework\TestCase;
+use Google\Web_Stories\Tests\Test_Case;
 
-final class SimpleServiceContainerTest extends TestCase {
+final class SimpleServiceContainerTest extends Test_Case {
 
 	public function test_it_can_be_initialized() {
 		$container = new SimpleServiceContainer();

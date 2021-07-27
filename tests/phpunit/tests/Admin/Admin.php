@@ -17,12 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Admin;
 
-use Yoast\WPTestUtils\WPIntegration\TestCase;
+use Google\Web_Stories\Tests\Test_Case;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Admin
  */
-class Admin extends TestCase {
+class Admin extends Test_Case {
 
 	/**
 	 * Admin user for test.
