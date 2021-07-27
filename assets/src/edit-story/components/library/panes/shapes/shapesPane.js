@@ -81,8 +81,12 @@ function ShapesPane(props) {
       {enableStickers && (
         <Section title={__('Stickers', 'web-stories')}>
           <SectionContent ref={stickersRef}>
-            {STICKER_TYPES.map((stickerType) => (
-              <StickerPreview key={stickerType} stickerType={stickerType} />
+            {STICKER_TYPES.map((stickerType, i) => (
+              <StickerPreview
+                key={stickerType}
+                index={i}
+                stickerType={stickerType}
+              />
             ))}
           </SectionContent>
         </Section>

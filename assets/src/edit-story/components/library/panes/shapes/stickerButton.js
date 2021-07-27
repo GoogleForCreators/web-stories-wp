@@ -39,12 +39,24 @@ const StickerButton = styled(Button).attrs({
   type: BUTTON_TYPES.SECONDARY,
 })`
   position: relative;
+  padding: 0 0 95.5% 0;
   margin: 0;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 `;
 
-function StickerPreview({ stickerType }) {
+const StickerInner = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+function StickerPreview({ stickerType, index }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -74,14 +86,6 @@ function StickerPreview({ stickerType }) {
     opacity: 0;
     width: ${({ width }) => `${width}px`};
     height: ${({ height }) => `${height}px`};
-    svg {
-      display: inline-block;
-      width: 100%;
-      height: 100%;
-      path {
-        fill: #c4c4c4;
-      }
-    }
   `;
 
   const Svg = sticker.svg;
@@ -93,42 +97,50 @@ function StickerPreview({ stickerType }) {
           sticker: { type: stickerType },
         })
       }
+      tabIndex={index === 0 ? 0 : -1}
     >
-      <Svg
-        style={{
-          height: 'auto',
-          width: '100%',
-        }}
-      />
-      <LibraryMoveable
-        type={'sticker'}
-        elementProps={stickerData}
-        cloneElement={StickerClone}
-        onClick={() =>
-          insertElement('sticker', {
-            width: DEFAULT_ELEMENT_WIDTH,
-            sticker: { type: stickerType },
-          })
-        }
-        cloneProps={{
-          width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * aspectRatio),
-          height: dataToEditorY(DEFAULT_ELEMENT_WIDTH),
-          children: (
-            <Svg
-              style={{
-                height: 'auto',
-                width: '100%',
-              }}
-            />
-          ),
-        }}
-      />
+      <StickerInner>
+        <Svg
+          style={{
+            height: aspectRatio < 0.955 ? '60%' : 'auto',
+            width: aspectRatio < 0.955 ? 'auto' : '60%',
+          }}
+        />
+        <LibraryMoveable
+          type={'sticker'}
+          elementProps={stickerData}
+          cloneElement={StickerClone}
+          onClick={() =>
+            insertElement('sticker', {
+              width: DEFAULT_ELEMENT_WIDTH,
+              sticker: { type: stickerType },
+            })
+          }
+          cloneProps={{
+            width: dataToEditorX(
+              DEFAULT_ELEMENT_WIDTH * (aspectRatio < 1 ? aspectRatio : 1)
+            ),
+            height: dataToEditorY(
+              DEFAULT_ELEMENT_WIDTH / (aspectRatio < 1 ? 1 : aspectRatio)
+            ),
+            children: (
+              <Svg
+                style={{
+                  height: 'auto',
+                  width: '100%',
+                }}
+              />
+            ),
+          }}
+        />
+      </StickerInner>
     </StickerButton>
   );
 }
 
 StickerPreview.propTypes = {
   stickerType: PropTypes.string.isRequired,
+  index: PropTypes.number,
 };
 
 export default StickerPreview;
