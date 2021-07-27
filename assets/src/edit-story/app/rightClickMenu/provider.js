@@ -39,6 +39,7 @@ import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
+import { getDefaultProperties } from './utils';
 
 const isMacOs = isPlatformMacOS();
 
@@ -196,6 +197,24 @@ function RightClickMenuProvider({ children }) {
     });
   }, [copiedElement, selectedElement, updateElementsById]);
 
+  const handleClearElementStyles = useCallback(() => {
+    if (!selectedElement?.id) {
+      return;
+    }
+
+    const resetProperties = getDefaultProperties(selectedElement);
+
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          resetProperties,
+          /* commitValues */ true
+        ),
+    });
+  }, [selectedElement, updateElementsById]);
+
   const menuItemProps = useMemo(
     () => ({
       onMouseDown: handleMouseDown,
@@ -278,15 +297,21 @@ function RightClickMenuProvider({ children }) {
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
+      {
+        label: 'Clear element styles',
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
     ],
     [
       defaultItems,
+      handleClearElementStyles,
+      handleCopyStyles,
       handleDeletePage,
       handleDuplicatePage,
+      handlePasteStyles,
       menuItemProps,
       pages,
-      handleCopyStyles,
-      handlePasteStyles,
       copiedElement,
       selectedElement,
     ]

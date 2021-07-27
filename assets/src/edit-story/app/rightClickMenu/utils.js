@@ -97,3 +97,9 @@ export const getElementStyles = (element) => {
 
   return objectPick(element, properties);
 };
+
+/**
+ *
+ * @param {Object} element the element to update
+ */
+export const getDefaultProperties = (element) => {};
