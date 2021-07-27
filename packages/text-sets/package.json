@@ -13,5 +13,7 @@
   "dependencies": {
     "@web-stories-wp/migration": "*"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "puppeteer": "*"
+  }
 }
