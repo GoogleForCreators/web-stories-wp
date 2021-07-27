@@ -31,7 +31,7 @@ import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ShapePreview from './shapePreview';
-import StickerPreview from './stickerButton';
+import StickerPreview from './stickerPreview';
 import paneId from './paneId';
 
 const SectionContent = styled.div`

@@ -139,7 +139,7 @@ function StickerPreview({ stickerType, index }) {
 }
 
 StickerPreview.propTypes = {
-  stickerType: PropTypes.string.isRequired,
+  stickerType: PropTypes.oneOf(Object.keys(STICKERS)).isRequired,
   index: PropTypes.number,
 };
 
