@@ -17,10 +17,29 @@
 /**
  * Internal dependencies
  */
+import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import objectPick from '../../utils/objectPick';
 import { ELEMENT_TYPES } from '../story';
 
 const elementTypes = Object.values(ELEMENT_TYPES);
+
+const { content, x, y, width, ...DEFAULT_TEXT_PRESETS } = DEFAULT_PRESET;
+
+export const PROPERTY_DEFAULTS = {
+  backgroundColor: { r: 255, g: 255, b: 255 },
+  backgroundTextMode: 'NONE',
+  border: null,
+  borderRadius: null,
+  opacity: 100,
+  overlay: null,
+  padding: {
+    hasHiddenPadding: false,
+    horizontal: 0,
+    locked: true,
+    vertical: 0,
+  },
+  textAlign: 'initial',
+};
 
 export const BACKGROUND_STYLE_PROPERTIES = [
   'backgroundColor',
@@ -49,10 +68,6 @@ export const TEXT_STYLE_PROPERTIES = [
   'backgroundTextMode',
   'border',
   'borderRadius',
-  'font',
-  'fontSize',
-  'fontWeight',
-  'lineHeight',
   'opacity',
   'padding',
   'textAlign',
@@ -101,5 +116,25 @@ export const getElementStyles = (element) => {
 /**
  *
  * @param {Object} element the element to update
+ * @param {Object} element.type the type of the element to update
+ * @return {Object|null} the default properties for the element type.
+ * return `null` if the argument has an incorrect type.
  */
-export const getDefaultProperties = (element) => {};
+export const getDefaultProperties = ({ type }) => {
+  switch (type) {
+    case ELEMENT_TYPES.BACKGROUND:
+      return objectPick(PROPERTY_DEFAULTS, BACKGROUND_STYLE_PROPERTIES);
+    case ELEMENT_TYPES.GIF:
+    case ELEMENT_TYPES.IMAGE:
+    case ELEMENT_TYPES.VIDEO:
+      return objectPick(PROPERTY_DEFAULTS, MEDIA_STYLE_PROPERTIES);
+    case ELEMENT_TYPES.SHAPE:
+      return objectPick(PROPERTY_DEFAULTS, SHAPE_STYLE_PROPERTIES);
+    case ELEMENT_TYPES.TEXT:
+      return DEFAULT_TEXT_PRESETS;
+    default:
+      return null;
+  }
+};
+
+export { DEFAULT_TEXT_PRESETS };

@@ -204,15 +204,17 @@ function RightClickMenuProvider({ children }) {
 
     const resetProperties = getDefaultProperties(selectedElement);
 
-    updateElementsById({
-      elementIds: [selectedElement.id],
-      properties: (currentProperties) =>
-        updateProperties(
-          currentProperties,
-          resetProperties,
-          /* commitValues */ true
-        ),
-    });
+    if (resetProperties) {
+      updateElementsById({
+        elementIds: [selectedElement.id],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            resetProperties,
+            /* commitValues */ true
+          ),
+      });
+    }
   }, [selectedElement, updateElementsById]);
 
   const menuItemProps = useMemo(

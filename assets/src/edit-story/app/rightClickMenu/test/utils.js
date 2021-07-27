@@ -17,12 +17,16 @@
  * Internal dependencies
  */
 import { ELEMENT_TYPES } from '../../story';
+import objectPick from '../../../utils/objectPick';
 import {
-  BACKGROUND_STYLE_PROPERTIES,
   getElementStyles,
+  getDefaultProperties,
+  BACKGROUND_STYLE_PROPERTIES,
   MEDIA_STYLE_PROPERTIES,
   SHAPE_STYLE_PROPERTIES,
   TEXT_STYLE_PROPERTIES,
+  DEFAULT_TEXT_PRESETS,
+  PROPERTY_DEFAULTS,
 } from '../utils';
 
 const ALL_PROPERTIES = {
@@ -80,6 +84,46 @@ describe('getElementStyles', () => {
       for (const property of expectedPropertiesSet) {
         expect(returnedPropertiesSet.has(property)).toBeTrue();
       }
+    }
+  );
+});
+
+describe('getDefaultProperties', () => {
+  const expectedBackgroundDefaults = objectPick(
+    PROPERTY_DEFAULTS,
+    BACKGROUND_STYLE_PROPERTIES
+  );
+  const expectedMediaDefaults = objectPick(
+    PROPERTY_DEFAULTS,
+    MEDIA_STYLE_PROPERTIES
+  );
+  const expectedShapeDefaults = objectPick(
+    PROPERTY_DEFAULTS,
+    SHAPE_STYLE_PROPERTIES
+  );
+
+  it('should return `null` if the element does not have the correct structure', () => {
+    // No element type
+    expect(getDefaultProperties({})).toBeNull();
+
+    // Element type does not exist
+    expect(getDefaultProperties({ type: 'banana' })).toBeNull();
+  });
+
+  it.each`
+    type                        | expectedProperties
+    ${ELEMENT_TYPES.BACKGROUND} | ${expectedBackgroundDefaults}
+    ${ELEMENT_TYPES.IMAGE}      | ${expectedMediaDefaults}
+    ${ELEMENT_TYPES.GIF}        | ${expectedMediaDefaults}
+    ${ELEMENT_TYPES.VIDEO}      | ${expectedMediaDefaults}
+    ${ELEMENT_TYPES.SHAPE}      | ${expectedShapeDefaults}
+    ${ELEMENT_TYPES.TEXT}       | ${DEFAULT_TEXT_PRESETS}
+  `(
+    'should return the default properties for a `$type` element',
+    ({ type, expectedProperties }) => {
+      const result = getDefaultProperties({ type });
+
+      expect(result).toStrictEqual(expectedProperties);
     }
   );
 });
