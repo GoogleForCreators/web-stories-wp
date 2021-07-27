@@ -66,6 +66,7 @@ describe('ChecklistCategoryProvider', () => {
       },
       [ISSUE_TYPES.DESIGN]: {},
       [ISSUE_TYPES.ACCESSIBILITY]: {},
+      [ISSUE_TYPES.DISTRIBUTION]: {},
     });
   });
 });
@@ -99,6 +100,7 @@ describe('useRegisterCheck', () => {
       },
       [ISSUE_TYPES.DESIGN]: {},
       [ISSUE_TYPES.ACCESSIBILITY]: {},
+      [ISSUE_TYPES.DISTRIBUTION]: {},
     });
 
     rerender(false);
@@ -108,6 +110,7 @@ describe('useRegisterCheck', () => {
       },
       [ISSUE_TYPES.DESIGN]: {},
       [ISSUE_TYPES.ACCESSIBILITY]: {},
+      [ISSUE_TYPES.DISTRIBUTION]: {},
     });
   });
 });

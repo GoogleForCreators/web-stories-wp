@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 export { DesignChecks } from './designChecks';
+export { DistributionChecks } from './distributionChecks';
 export { AccessibilityChecks } from './accessibilityChecks';
 export { PriorityChecks } from './priorityChecks';
 export { default as EmptyContentCheck, EmptyContent } from './emptyContent';

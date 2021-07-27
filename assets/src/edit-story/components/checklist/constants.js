@@ -55,12 +55,14 @@ export const CHECKLIST_TITLE = __('Checklist', 'web-stories');
 export const ISSUE_TYPES = {
   ACCESSIBILITY: 'accessibility',
   DESIGN: 'design',
+  DISTRIBUTION: 'distribution',
   PRIORITY: 'priority',
 };
 
 export const CATEGORY_LABELS = {
   [ISSUE_TYPES.ACCESSIBILITY]: __('Accessibility', 'web-stories'),
   [ISSUE_TYPES.DESIGN]: __('Design', 'web-stories'),
+  [ISSUE_TYPES.DISTRIBUTION]: __('Distribution', 'web-stories'),
   [ISSUE_TYPES.PRIORITY]: __('Priority', 'web-stories'),
 };
 
@@ -68,7 +70,7 @@ export const CATEGORY_LABELS = {
 const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');
 
 // Checklist Copy
-export const ACCESSIBILITY_COPY = {
+export const DISTRIBUTION_COPY = {
   ampValidation: {
     title: __('Web Story validation', 'web-stories'),
     footer: (
@@ -80,7 +82,7 @@ export const ACCESSIBILITY_COPY = {
               rel="noreferrer"
               target="_blank"
               aria-label={__(
-                'Learn more by visiting Google AMP Test',
+                'Learn more by visiting Web Stories Test Tool',
                 'web-stories'
               )}
               onClick={onAmpErrorClick}
@@ -90,12 +92,14 @@ export const ACCESSIBILITY_COPY = {
         }}
       >
         {__(
-          'Your story contains errors that can affect eligibility to appear on Google. To learn more, visit <a>Google AMP Test</a>.',
+          'Your story contains errors that can affect eligibility to appear on Google. To learn more, visit the <a>Web Stories Test Tool</a>.',
           'web-stories'
         )}
       </TranslateWithMarkup>
     ),
   },
+};
+export const ACCESSIBILITY_COPY = {
   fontSizeTooSmall: {
     title: sprintf(
       /* translators: %d: minimum font size. */
