@@ -24,25 +24,22 @@ import { useEffect, useRef, useState } from 'react';
  */
 import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
-import { PRIORITY_COPY } from '../constants';
+import { ACCESSIBILITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
-export async function getStoryAmpValidationErrors({ link, status }) {
-  // TODO: Enable for drafts as well?
-  if (!link || !['publish', 'future'].includes(status)) {
+export async function getStoryAmpValidationErrors({ link }) {
+  if (!link) {
     return false;
   }
 
   try {
     const response = await fetch(link);
     const storyMarkup = await response.text();
-    const { status: markupStatus, errors } =
-      window.amp.validator.validateString(storyMarkup);
+    const { status, errors } = window.amp.validator.validateString(storyMarkup);
 
-    if ('FAIL' !== markupStatus) {
+    if ('FAIL' !== status) {
       return false;
     }
-
     const filteredErrors = errors
       .filter(({ severity }) => severity === 'ERROR')
       .filter(({ code, params }) => {
@@ -65,7 +62,7 @@ const StoryAmpValidationErrors = () => {
   const ampValidationErrorsRef = useRef();
   const {
     meta: { isSaving },
-    story: { link, status },
+    story: { link },
   } = useStory(({ state }) => state);
 
   // isRendered is getting set asynchronously based on the returned value of `getStoryAmpValidationErrors`,
@@ -77,14 +74,14 @@ const StoryAmpValidationErrors = () => {
   // story link in the recommended test/amp site.
   useEffect(() => {
     !isSaving &&
-      getStoryAmpValidationErrors({ link, status }).then((hasErrors) => {
+      getStoryAmpValidationErrors({ link }).then((hasErrors) => {
         setIsRendered(hasErrors);
         if (hasErrors && !ampValidationErrorsRef?.current) {
           ampValidationErrorsRef.current = true;
         }
         return hasErrors;
       });
-  }, [link, status, isSaving]);
+  }, [link, isSaving]);
 
   useEffect(() => {
     if (isRendered && ampValidationErrorsRef?.current) {
@@ -93,7 +90,7 @@ const StoryAmpValidationErrors = () => {
   }, [isRendered]);
 
   useRegisterCheck('StoryHasAmpErrors', isRendered);
-  const { footer, title } = PRIORITY_COPY.ampValidation;
+  const { footer, title } = ACCESSIBILITY_COPY.ampValidation;
 
   return (
     isRendered && (

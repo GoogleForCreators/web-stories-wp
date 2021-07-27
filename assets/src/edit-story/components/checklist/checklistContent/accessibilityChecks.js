@@ -28,7 +28,10 @@ import { PageBackgroundTextLowContrast } from '../checks/pageBackgroundLowTextCo
 import TextElementFontSizeTooSmall from '../checks/textElementFontSizeTooSmall';
 import VideoElementMissingCaptions from '../checks/videoElementMissingCaptions';
 import VideoElementMissingDescription from '../checks/videoElementMissingDescription';
-import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
+import {
+  ChecklistCategoryProvider,
+  useCategoryCount,
+} from '../countContext/checkCountContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';

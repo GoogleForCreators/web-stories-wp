@@ -36,10 +36,8 @@ describe('getStoryAmpValidationErrors', () => {
     windowSpy.mockRestore();
   });
 
-  it('should return false if no link or status is draft', async () => {
-    expect(
-      await getStoryAmpValidationErrors({ link: null, status: 'draft' })
-    ).toBe(false);
+  it('should return false if no link', async () => {
+    expect(await getStoryAmpValidationErrors({ link: null })).toBe(false);
   });
 
   it('should return false if there are no violations', async () => {
@@ -73,7 +71,6 @@ describe('getStoryAmpValidationErrors', () => {
 
     const isError = await getStoryAmpValidationErrors({
       link: 'http://test/web-stories/123',
-      status: 'publish',
     });
 
     expect(isError).toBe(true);
@@ -96,7 +93,6 @@ describe('getStoryAmpValidationErrors', () => {
 
     const isError = await getStoryAmpValidationErrors({
       link: 'http://test/web-stories/123',
-      status: 'publish',
     });
 
     expect(isError).toBe(false);
@@ -116,7 +112,6 @@ describe('getStoryAmpValidationErrors', () => {
 
     const isError = await getStoryAmpValidationErrors({
       link: 'http://test/web-stories/123',
-      status: 'publish',
     });
 
     expect(isError).toBe(false);
@@ -142,7 +137,6 @@ describe('getStoryAmpValidationErrors', () => {
 
     const isError = await getStoryAmpValidationErrors({
       link: 'http://test/web-stories/123',
-      status: 'publish',
     });
 
     expect(isError).toBe(false);

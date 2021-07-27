@@ -139,9 +139,9 @@ export const PanelWrapper = styled.div`
       }
 
       * ${TabPanel} {
-        height: 560px;
+        height: 576px;
         padding: 0 0 16px 16px;
-        overflow-y: scroll;
+        margin-bottom: 16px;
         visibility: visible;
       }
     `};

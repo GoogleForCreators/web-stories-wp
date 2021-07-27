@@ -69,6 +69,33 @@ const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');
 
 // Checklist Copy
 export const ACCESSIBILITY_COPY = {
+  ampValidation: {
+    title: __('Web Story validation', 'web-stories'),
+    footer: (
+      <TranslateWithMarkup
+        mapping={{
+          a: (
+            <Link
+              href={__('https://search.google.com/test/amp', 'web-stories')}
+              rel="noreferrer"
+              target="_blank"
+              aria-label={__(
+                'Learn more by visiting Google AMP Test',
+                'web-stories'
+              )}
+              onClick={onAmpErrorClick}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            />
+          ),
+        }}
+      >
+        {__(
+          'Your story contains errors that can affect eligibility to appear on Google. To learn more, visit <a>Google AMP Test</a>.',
+          'web-stories'
+        )}
+      </TranslateWithMarkup>
+    ),
+  },
   fontSizeTooSmall: {
     title: sprintf(
       /* translators: %d: minimum font size. */
