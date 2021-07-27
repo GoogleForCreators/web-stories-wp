@@ -98,7 +98,7 @@ class Ad_Manager extends Service_Base {
 		?>
 		<amp-story-auto-ads>
 			<script type="application/json">
-				<?php echo wp_json_encode( $configuration, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE ); ?>
+				<?php echo wp_json_encode( $configuration, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?>
 			</script>
 		</amp-story-auto-ads>
 		<?php
