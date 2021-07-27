@@ -162,6 +162,9 @@ function RightClickMenuProvider({ children }) {
 
   const selectedElement = selectedElements?.[0];
 
+  /**
+   * Copy the styles of an element and store them in the store.
+   */
   const handleCopyStyles = useCallback(() => {
     dispatch({
       type: ACTION_TYPES.COPY_ELEMENT_STYLES,
@@ -172,6 +175,9 @@ function RightClickMenuProvider({ children }) {
     });
   }, [selectedElement, selectedElementAnimations]);
 
+  /**
+   * Paste the styles of an element that are stored in the store.
+   */
   const handlePasteStyles = useCallback(() => {
     const id = selectedElement?.id;
 
@@ -250,12 +256,24 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       {
-        label: 'Copy element styles',
+        label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        shortcut: {
+          display: isMacOs ? '⌥ ⌘ C' : '⌥ ctrl C',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_C
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_C,
+        },
         onClick: handleCopyStyles,
         ...menuItemProps,
       },
       {
-        label: 'Paste those element styles',
+        label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
+        shortcut: {
+          display: isMacOs ? '⌥ ⌘ V' : '⌥ ctrl V',
+          title: isMacOs
+            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_V
+            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_V,
+        },
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,

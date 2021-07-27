@@ -24,6 +24,9 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   DELETE_PAGE: __('Delete Page', 'web-stories'),
+  COPY_IMAGE_STYLES: __('Copy image styles', 'web-stories'),
+  PASTE_IMAGE_STYLES: __('Paste image styles', 'web-stories'),
+  CLEAR_IMAGE_STYLES: __('Clear image styles', 'web-stories'),
 };
 
 export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
@@ -45,6 +48,26 @@ export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
   CONTROL_V: _x(
     'Control V',
     'The keyboard keys "Control" and "V"',
+    'web-stories'
+  ),
+  OPTION_COMMAND_C: _x(
+    'Option Command C',
+    'The keyboard keys "Option", "Command", and "C"',
+    'web-stories'
+  ),
+  OPTION_CONTROL_C: _x(
+    'Option Control C',
+    'The keyboard keys "Option", "Control", and "C"',
+    'web-stories'
+  ),
+  OPTION_COMMAND_V: _x(
+    'Option Command V',
+    'The keyboard keys "Option", "Command", and "V"',
+    'web-stories'
+  ),
+  OPTION_CONTROL_V: _x(
+    'Option Control V',
+    'The keyboard keys "Option", "Control", and "V"',
     'web-stories'
   ),
   DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),

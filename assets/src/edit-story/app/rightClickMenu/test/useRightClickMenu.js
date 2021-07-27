@@ -31,6 +31,7 @@ jest.mock('flagged', () => ({
 }));
 
 jest.mock('../../story', () => ({
+  ...jest.requireActual('../../story'),
   useStory: jest.fn(),
 }));
 

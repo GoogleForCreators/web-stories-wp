@@ -47,12 +47,20 @@ jest.mock('../../../story', () => ({
   useStoryTriggersDispatch: jest.fn(),
   // Was getting a circular deps error or something
   // trying to requireActual here so just manually
-  // set STORY_EVENTS for now:
+  // set STORY_EVENTS and ELEMENT_TYPES for now:
   // __esModule: true,
   // ...jest.requireActual('../../../story'),
   STORY_EVENTS: {
     onReplaceBackgroundMedia: 'onReplaceBackgroundMedia',
     onReplaceForegroundMedia: 'onReplaceForegroundMedia',
+  },
+  ELEMENT_TYPES: {
+    IMAGE: 'image',
+    SHAPE: 'shape',
+    TEXT: 'text',
+    VIDEO: 'video',
+    GIF: 'gif',
+    BACKGROUND: 'background',
   },
 }));
 

@@ -22,12 +22,40 @@ import { ELEMENT_TYPES } from '../story';
 
 const elementTypes = Object.values(ELEMENT_TYPES);
 
-const MEDIA_STYLE_PROPERTIES = [
+export const BACKGROUND_STYLE_PROPERTIES = [
+  'backgroundColor',
+  'mask',
+  'opacity',
+  'overlay',
+];
+
+export const MEDIA_STYLE_PROPERTIES = [
   'border',
   'borderRadius',
   'mask',
   'opacity',
   'overlay',
+];
+
+export const SHAPE_STYLE_PROPERTIES = [
+  'backgroundColor',
+  'border',
+  'borderRadius',
+  'opacity',
+];
+
+export const TEXT_STYLE_PROPERTIES = [
+  'backgroundColor',
+  'backgroundTextMode',
+  'border',
+  'borderRadius',
+  'font',
+  'fontSize',
+  'fontWeight',
+  'lineHeight',
+  'opacity',
+  'padding',
+  'textAlign',
 ];
 
 /**
@@ -46,7 +74,7 @@ export const getElementStyles = (element) => {
 
   switch (element?.type) {
     case ELEMENT_TYPES.BACKGROUND:
-      properties = ['backgroundColor', 'mask', 'opacity', 'overlay'];
+      properties = BACKGROUND_STYLE_PROPERTIES;
       break;
     case ELEMENT_TYPES.GIF:
       properties = MEDIA_STYLE_PROPERTIES;
@@ -55,22 +83,10 @@ export const getElementStyles = (element) => {
       properties = MEDIA_STYLE_PROPERTIES;
       break;
     case ELEMENT_TYPES.SHAPE:
-      properties = ['backgroundColor', 'border', 'borderRadius', 'opacity'];
+      properties = SHAPE_STYLE_PROPERTIES;
       break;
     case ELEMENT_TYPES.TEXT:
-      properties = [
-        'backgroundColor',
-        'backgroundTextMode',
-        'border',
-        'borderRadius',
-        'font',
-        'fontSize',
-        'fontWeight',
-        'lineHeight',
-        'opacity',
-        'padding',
-        'textAlign',
-      ];
+      properties = TEXT_STYLE_PROPERTIES;
       break;
     case ELEMENT_TYPES.VIDEO:
       properties = MEDIA_STYLE_PROPERTIES;
