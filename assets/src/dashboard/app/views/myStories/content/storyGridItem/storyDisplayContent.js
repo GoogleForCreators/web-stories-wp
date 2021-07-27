@@ -102,6 +102,7 @@ const StoryDisplayContent = ({
           alt={lockUser.name}
           height={24}
           width={24}
+          className="lock-user-avatar"
         />
       </Tooltip>
     </LockedRow>

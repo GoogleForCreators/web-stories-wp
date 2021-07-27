@@ -53,8 +53,9 @@ describe('Post Locking', () => {
   it('should be able to open the dashboard with locked story', async () => {
     await visitDashboard();
 
-    await expect(page).toMatch('test_locker is currently editing');
-
+    await expect(page).toMatch('Test post lock');
+    await page.hover('.lock-user-avatar');
+    await expect(page).toMatch('test_locker is currently editing this story');
     await percySnapshot(page, 'Stories Dashboard with lock', { percyCSS });
   });
 
