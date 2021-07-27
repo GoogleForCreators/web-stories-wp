@@ -211,7 +211,7 @@ export const StoryListItem = ({
 StoryListItem.propTypes = {
   story: StoryPropType.isRequired,
   renameStory: RenameStoryPropType,
-  userId: PropTypes.number,
+  userId: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   storyMenu: StoryMenuPropType.isRequired,
   storyStatus: PropTypes.string,
 };

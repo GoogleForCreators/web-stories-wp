@@ -753,7 +753,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
@@ -810,7 +810,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
@@ -855,7 +855,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
@@ -900,7 +900,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
