@@ -42,12 +42,12 @@ jobs:
         run: |
           git checkout public/stories/a-day-in-the-life-of-dap-the-contract/index.html
 
-      - name: Compress Images
+      - name: Compress images of downloaded stories
         uses: calibreapp/image-actions@1.1.0
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
-          ignorePaths: 'node_modules/**,build'
+          ignorePaths: 'node_modules/**,build/**,public/static/**'
 
       - name: Build XML Sitemap
         run: node ./sitemap-generator/index.js ./public/sitemap.xml
