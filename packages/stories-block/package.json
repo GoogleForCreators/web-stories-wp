@@ -24,7 +24,7 @@
     "@wordpress/compose": "^4.2.0",
     "@wordpress/data": "^5.2.0",
     "@wordpress/date": "^4.2.0",
-    "@wordpress/element": "^2.19.0",
+    "@wordpress/element": "^3.2.0",
     "@wordpress/i18n": "^4.2.0",
     "@wordpress/url": "^3.2.0",
     "@wordpress/viewport": "^3.2.0",
