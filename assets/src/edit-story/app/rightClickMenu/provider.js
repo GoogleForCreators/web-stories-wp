@@ -19,6 +19,7 @@
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { isPlatformMacOS } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
@@ -58,6 +59,7 @@ function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
   const {
+    addAnimations,
     addPage,
     currentPage,
     deleteCurrentPage,
@@ -75,12 +77,14 @@ function RightClickMenuProvider({ children }) {
         selectedElementAnimations,
       },
       actions: {
+        addAnimations,
         addPage,
         deleteCurrentPage,
         replaceCurrentPage,
         updateElementsById,
       },
     }) => ({
+      addAnimations,
       addPage,
       currentPage,
       deleteCurrentPage,
@@ -164,7 +168,7 @@ function RightClickMenuProvider({ children }) {
   const selectedElement = selectedElements?.[0];
 
   /**
-   * Copy the styles of an element and store them in the store.
+   * Copy the styles and animations of the selected element.
    */
   const handleCopyStyles = useCallback(() => {
     dispatch({
@@ -177,7 +181,10 @@ function RightClickMenuProvider({ children }) {
   }, [selectedElement, selectedElementAnimations]);
 
   /**
-   * Paste the styles of an element that are stored in the store.
+   * Update the selected element's styles and animations.
+   *
+   * Pasting is not allowed if the copied element styles are from a
+   * different element type.
    */
   const handlePasteStyles = useCallback(() => {
     const id = selectedElement?.id;
@@ -186,16 +193,39 @@ function RightClickMenuProvider({ children }) {
       return;
     }
 
+    // Delete old animation if one exists
+    const oldAnimationToDelete = selectedElementAnimations.length
+      ? { ...selectedElementAnimations[0], delete: true }
+      : undefined;
+
+    // Create new animations
+    const newAnimations = copiedElement.animations.map((animation) => ({
+      ...animation,
+      id: uuidv4(),
+      targets: [selectedElement.id],
+    }));
+
+    // Add styles and animations to element
     updateElementsById({
       elementIds: [selectedElement.id],
       properties: (currentProperties) =>
         updateProperties(
           currentProperties,
-          copiedElement.styles,
+          {
+            ...copiedElement.styles,
+            animation: oldAnimationToDelete,
+          },
           /* commitValues */ true
         ),
     });
-  }, [copiedElement, selectedElement, updateElementsById]);
+    addAnimations({ animations: newAnimations });
+  }, [
+    addAnimations,
+    copiedElement,
+    selectedElement,
+    selectedElementAnimations,
+    updateElementsById,
+  ]);
 
   /**
    * Revert some element styles to their defaults.
