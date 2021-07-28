@@ -45,7 +45,7 @@ if ( $templates_post_type_object instanceof WP_Post_Type ) {
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
 $preload_paths = [
-	"/web-stories/v1/$stories_rest_base/$post->ID/?" . build_query(
+	"/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
 		[
 			'_embed'           => urlencode( 'wp:featuredmedia,wp:lockuser,author' ),
 			'context'          => 'edit',
