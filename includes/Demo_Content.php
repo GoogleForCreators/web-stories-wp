@@ -92,7 +92,7 @@ class Demo_Content {
 			// Page 2.
 
 			'L10N_PLACEHOLDER_2_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'SET A PAGE BACKGROUND', 'demo content', 'web-stories' ),
+				esc_html_x( 'Set a page background', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_2_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Drag your image or video to the edge of the page to set as page background.', 'demo content', 'web-stories' ),
@@ -100,7 +100,7 @@ class Demo_Content {
 			// Page 3.
 
 			'L10N_PLACEHOLDER_3_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'MEDIA EDIT MODE', 'demo content', 'web-stories' ),
+				esc_html_x( 'Media Edit Mode', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_3_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Double-click the image/video to resize, re-center or crop. Note: media set as page background cannot be cropped.', 'demo content', 'web-stories' ),
@@ -108,7 +108,7 @@ class Demo_Content {
 			// Page 4.
 
 			'L10N_PLACEHOLDER_4_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'BACKGROUND OVERLAY', 'demo content', 'web-stories' ),
+				esc_html_x( 'Background Overlay', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_4_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Once you\'ve set a page bg, add a solid, linear or radial gradient overlay to increase text contrast or add visual styling.', 'demo content', 'web-stories' ),
@@ -116,7 +116,7 @@ class Demo_Content {
 			// Page 5.
 
 			'L10N_PLACEHOLDER_5_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'SAFE ZONE', 'demo content', 'web-stories' ),
+				esc_html_x( 'Safe Zone', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_5_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Add your designs to the page, keeping crucial elements inside the safe zone to ensure they are visible across most devices.', 'demo content', 'web-stories' ),
@@ -124,7 +124,7 @@ class Demo_Content {
 			// Page 6.
 
 			'L10N_PLACEHOLDER_6_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'STORY SYSTEM LAYER', 'demo content', 'web-stories' ),
+				esc_html_x( 'Story System Layer', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_6_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'The system layer is docked at the top. Preview your story to ensure system layer icons are not blocking crucial elements.', 'demo content', 'web-stories' ),
@@ -132,7 +132,7 @@ class Demo_Content {
 			// Page 7.
 
 			'L10N_PLACEHOLDER_7_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'SHAPES AND MASKS', 'demo content', 'web-stories' ),
+				esc_html_x( 'Shapes and Masks', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_7_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Our shapes are quite basic for now but they act as masks. Drag an image or video into the mask.', 'demo content', 'web-stories' ),
@@ -140,7 +140,7 @@ class Demo_Content {
 			// Page 8.
 
 			'L10N_PLACEHOLDER_8_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'EMBED VISUAL STORIES', 'demo content', 'web-stories' ),
+				esc_html_x( 'Embed Visual Stories', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_8_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Embed stories into your blog post. Open the block menu & select the Web Stories block. Insert the story link to embed your story. That\'s it!', 'demo content', 'web-stories' ),
@@ -148,7 +148,7 @@ class Demo_Content {
 			// Page 9.
 
 			'L10N_PLACEHOLDER_9_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'READ ABOUT BEST PRACTICES FOR CREATING SUCCESSFUL WEB STORIES', 'demo content', 'web-stories' ),
+				esc_html_x( 'Read about best practices for creating successful Web Stories', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_9_2' => /* translators: demo content used in the "Get Started" story */
 				esc_url( _x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ) ),
