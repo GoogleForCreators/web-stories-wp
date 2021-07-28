@@ -35,9 +35,12 @@ import { PLACEMENT } from '../popup';
 const ItemText = styled(Text)`
   width: 200px;
   text-align: left;
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
 `;
 const Shortcut = styled(Text)`
-  color: ${({ theme }) => theme.colors.border.disable};
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
 `;
 
 const IconWrapper = styled.span`
@@ -95,11 +98,13 @@ export const MenuItem = ({
         <ItemText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           forwardedAs="span"
+          disabled={disabled}
         >
           {label}
         </ItemText>
         {shortcut?.display && (
           <Shortcut
+            disabled={disabled}
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             forwardedAs="kbd"
           >
@@ -108,7 +113,7 @@ export const MenuItem = ({
         )}
       </>
     );
-  }, [Icon, label, shortcut, tooltipPlacement]);
+  }, [Icon, disabled, label, shortcut?.display, tooltipPlacement]);
 
   if (href) {
     const newTabProps = newTab
