@@ -114,7 +114,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			);
 		}
 
-		if ( ! $this->count_user_posts( $user->ID, Story_Post_Type::POST_TYPE_SLUG ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
+		if ( ! $this->user_posts_count_public( $user->ID, Story_Post_Type::POST_TYPE_SLUG ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
 			return new WP_Error(
 				'rest_user_cannot_view',
 				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
@@ -139,7 +139,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
 	 * @return string Number of posts the user has written in this post type.
 	 */
-	protected function count_user_posts( int $userid, string $post_type = 'post' ): string {
+	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): string {
 		$cache_key   = "count_user_{$post_type}_{$userid}";
 		$cache_group = 'user_posts_count';
 
