@@ -29,9 +29,9 @@ const HOSTNAME = 'https://wp.stories.google';
 const args = process.argv.slice(2);
 const targetFile = args[0] ? resolve(args[0]) : undefined;
 
-const stories = readdirSync(
-  resolve(__dirname, '..', 'public', 'stories')
-).map((slug) => ({ url: `/stories/${slug}/` }));
+const stories = readdirSync(resolve(__dirname, '..', 'public', 'stories')).map(
+  (slug) => ({ url: `/stories/${slug}/` })
+);
 
 const links = [{ url: '/' }, { url: '/docs/' }, ...stories];
 
