@@ -18,8 +18,6 @@ export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 412;
 export const PAGE_HEIGHT = 618;
 
-export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
-
 export const FULLBLEED_RATIO = 9 / 16;
 
 export const FULLBLEED_HEIGHT = PAGE_WIDTH / FULLBLEED_RATIO;
