@@ -265,14 +265,16 @@ describe('TextSets', () => {
     expect(el1).not.toBeNull();
   });
 
-  it('should render the correct elements from the text sets', () => {
+  it('should render the correct images for the text sets', () => {
     const { container } = setup(SET);
-    const el1 = container.querySelector('[data-element-id="1"]');
-    expect(el1).toHaveTextContent('Good design is aesthetic');
-    const el2 = container.querySelector('[data-element-id="2"]');
-    expect(el2).toHaveTextContent(
-      'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.'
+    const el1 = container.querySelector(
+      '[data-element-id="1"] img[src$="1.png"]'
     );
+    expect(el1).toBeTruthy();
+    const el2 = container.querySelector(
+      '[data-element-id="2"] img[src$="2.png"]'
+    );
+    expect(el2).toBeTruthy();
   });
 });
 
