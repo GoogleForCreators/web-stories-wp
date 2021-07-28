@@ -41,22 +41,26 @@ export async function getStoryAmpValidationErrors({ link, status }) {
     if ('FAIL' !== markupStatus) {
       return false;
     }
-
     const filteredErrors = errors
       .filter(({ severity }) => severity === 'ERROR')
       .filter(({ code, params }) => {
         // Filter out errors that are covered in other checks
         // Already covered by metadata checks.
 
-        // Missing story poster or publisher logo
+        // Missing story poster
+        if ('MISSING_URL' === code && params?.[0].startsWith('poster')) {
+          return false;
+        }
+
+        // Missing publisher logo
         if (
-          ('MISSING_URL' === code && params[0].startsWith('poster')) ||
-          params[0].startsWith('publisher-logo')
+          'MISSING_URL' === code &&
+          params?.[0].startsWith('publisher-logo')
         ) {
           return false;
         }
         // Missing video posters
-        if ('INVALID_URL_PROTOCOL' === code && params[0].startsWith('src')) {
+        if ('INVALID_URL_PROTOCOL' === code && params?.[0].startsWith('src')) {
           return false;
         }
 
