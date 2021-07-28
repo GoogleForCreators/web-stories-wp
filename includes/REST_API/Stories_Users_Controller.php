@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
@@ -95,12 +96,11 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @return true|WP_Error True if the request has read access for the item, otherwise WP_Error object.
 	 */
 	public function get_item_permissions_check( $request ) {
+
 		$user = $this->get_user( $request['id'] );
 		if ( is_wp_error( $user ) ) {
 			return $user;
 		}
-
-		$types = get_post_types( [ 'show_in_rest' => true ], 'names' );
 
 		if ( get_current_user_id() === $user->ID ) {
 			return true;
@@ -114,7 +114,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 			);
 		}
 
-		if ( ! $this->count_user_posts( $user->ID, $types ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
+		if ( ! $this->user_posts_count_public( $user->ID, Story_Post_Type::POST_TYPE_SLUG ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
 			return new WP_Error(
 				'rest_user_cannot_view',
 				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
@@ -136,22 +136,17 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 *
 	 * @param int          $userid      User ID.
-	 * @param array|string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
-	 * @param bool         $public_only Optional. Whether to only return counts for public posts. Default false.
+	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
 	 * @return string Number of posts the user has written in this post type.
 	 */
-	protected function count_user_posts( $userid, $post_type = 'post', $public_only = false ): string {
-		$post_type = implode( '|', (array) $post_type );
-		$cache_key = "count_user_{$post_type}_{$userid}";
-		if ( $public_only ) {
-			$cache_group = 'user_posts_count_public';
-		} else {
-			$cache_group = 'user_posts_count';
-		}
+	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): string {
+		$cache_key   = "count_user_{$post_type}_{$userid}";
+		$cache_group = 'user_posts_count';
+
 		$count = wp_cache_get( $cache_key, $cache_group );
 		if ( false === $count ) {
 			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts
-			$count = count_user_posts( $userid, $post_type, $public_only );
+			$count = count_user_posts( $userid, $post_type, true );
 			wp_cache_add( $cache_key, $count, $cache_group );
 		}
 
