@@ -1,12 +1,12 @@
 | **CUJ**                                                           | **Action**                                       | **Completion**              |
 | ----------------------------------------------------------------- | ------------------------------------------------ | --------------------------- |
-| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **25.00%** *(3 / 12)*    |
+| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **33.33%** *(4 / 12)*    |
 |                                                                   | Apply a link to multi-selection                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Edit brand icon                                  | 🚨 **0.00%** *(0 / 2)*      |
 |                                                                   | Edit description                                 | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Link with Page Attachment                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 1)*      |
-|                                                                   | *[total]*                                        | 🚨 **31.58%** *(6 / 19)*    |
+|                                                                   | *[total]*                                        | 🚨 **36.84%** *(7 / 19)*    |
 | Creator Can Add Image/Video to Page                               | Can add media                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Can edit/delete media                            | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*      |
@@ -44,15 +44,12 @@
 |                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
-| Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors from Color Picker                     | 🏆 **100.00%** *(3 / 3)*    |
-|                                                                   | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
+| Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-| Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -68,13 +65,6 @@
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Page Templates                                                    | Creator can Apply a Page Template                | 🏆 **100.00%** *(6 / 6)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(6 / 6)*    |
-| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **83.33%** *(5 / 6)*     |
-|                                                                   | *[total]*                                        | 🛴 **83.33%** *(5 / 6)*     |
-| User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | enter to open                                    | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | esc to close                                     | 🏆 **100.00%** *(4 / 4)*    |
-| User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-|                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.16%** *(310 / 418)* |
+| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🛴 **66.67%** *(4 / 6)*     |
+|                                                                   | *[total]*                                        | 🛴 **66.67%** *(4 / 6)*     |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **71.58%** *(272 / 380)* |
