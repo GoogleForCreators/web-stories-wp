@@ -455,7 +455,7 @@ class Media extends Service_Base {
 	public function get_callback_media_source( $prepared ) {
 		$id = $prepared['id'];
 
-		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
+		$terms = get_the_terms( $id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$term = array_shift( $terms );
 
@@ -626,7 +626,7 @@ class Media extends Service_Base {
 	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
-		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
+		$terms = get_the_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 

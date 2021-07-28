@@ -12,8 +12,8 @@
   "type": "module",
   "dependencies": {
     "@web-stories-wp/i18n": "*",
-    "date-fns": "^2.22.1",
-    "date-fns-tz": "^1.1.4"
+    "date-fns": "^2.23.0",
+    "date-fns-tz": "^1.1.5"
   },
   "devDependencies": {
     "mockdate": "^3.0.5"

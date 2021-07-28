@@ -19,6 +19,7 @@
  */
 import { useCallback, useState, useEffect, useRef } from 'react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -27,6 +28,7 @@ import useApi from '../../api/useApi';
 import { useRouteHistory } from '../../router';
 import { APP_ROUTES } from '../../../constants';
 import localStore from '../../../../edit-story/utils/localStore';
+import { SUCCESS } from '../../textContent';
 
 // The value associated with this key indicates if the user has interacted with
 // the banner previously. If they have, we do not show the banner again.
@@ -39,6 +41,8 @@ function setInitialBannerPreviouslyClosed() {
 }
 
 export default function useTelemetryOptIn() {
+  const { showSnackbar } = useSnackbar();
+
   const [bannerPreviouslyClosed, setBannerPreviouslyClosed] = useState(
     setInitialBannerPreviouslyClosed
   );
@@ -82,7 +86,8 @@ export default function useTelemetryOptIn() {
     toggleWebStoriesTrackingOptIn();
     localStore.setItemByKey(LOCAL_STORAGE_KEY, true);
     setOptInCheckboxClicked(true);
-  }, [toggleWebStoriesTrackingOptIn]);
+    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissable: true });
+  }, [showSnackbar, toggleWebStoriesTrackingOptIn]);
 
   const closeBanner = useCallback(() => {
     setBannerPreviouslyClosed(true);

@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -358,6 +358,7 @@
             "isOptimized": true,
             "provider": "local",
             "isTranscoding": false,
+            "isMuted": true,
             "baseColor": [255, 255, 255]
           },
           "tracks": [
@@ -1097,6 +1098,7 @@
             "alt": "page03_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": []
@@ -2172,6 +2174,7 @@
             "alt": "page04_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": []
@@ -3151,6 +3154,7 @@
             "alt": "page06_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
@@ -3376,6 +3380,7 @@
             "alt": "page07_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
@@ -3601,6 +3606,7 @@
             "alt": "page08_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
@@ -3826,6 +3832,7 @@
             "alt": "page09_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
@@ -4051,6 +4058,7 @@
             "alt": "page10_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
@@ -4276,6 +4284,7 @@
             "alt": "page11_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
@@ -4501,6 +4510,7 @@
             "alt": "page12_bg_video",
             "sizes": [],
             "local": false,
+            "isMuted": false,
             "isOptimized": true
           },
           "tracks": [
