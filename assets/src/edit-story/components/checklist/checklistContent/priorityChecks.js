@@ -36,6 +36,7 @@ import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
+import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
 
 export function PriorityChecks({
   badgeCount = 0,
@@ -70,6 +71,7 @@ export function PriorityChecks({
           {__('Make this Web Story easier to discover.', 'web-stories')}
         </PanelText>
         <StoryMissingTitle />
+        <StoryMissingPublisherName />
         <StoryTitleLength />
         <StoryMissingExcerpt />
         <StoryPosterAttached />
