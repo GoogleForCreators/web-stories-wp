@@ -46,7 +46,6 @@ export const LockIcon = styled(Icons.LockClosed)`
   right: 0;
   bottom: 0;
   left: 0;
-  width: 24px;
   height: 24px;
   display: block;
   margin: auto;
