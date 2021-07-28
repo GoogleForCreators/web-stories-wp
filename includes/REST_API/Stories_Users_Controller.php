@@ -135,7 +135,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 *
-	 * @param int          $userid      User ID.
+	 * @param int    $userid      User ID.
 	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
 	 * @return string Number of posts the user has written in this post type.
 	 */

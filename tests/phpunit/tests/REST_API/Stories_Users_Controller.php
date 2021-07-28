@@ -103,32 +103,44 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		$controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
 		$post_type  = new \Google\Web_Stories\Story_Post_Type();
 		$post_type->register();
-		$result1 = $this->call_private_method( $controller, 'user_posts_count_public', [
-			self::$user_id,
-			\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG
-		] );
+		$result1 = $this->call_private_method(
+			$controller,
+			'user_posts_count_public',
+			[
+				self::$user_id,
+				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			] 
+		);
 		$this->assertEquals( 3, $result1 );
 
 		$post_id = self::factory()->post->create(
 			[
-				'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
 				'post_status' => 'publish',
 				'post_author' => self::$user_id,
 			]
 		);
-		$result2 = $this->call_private_method( $controller, 'user_posts_count_public', [
-			self::$user_id,
-			\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG
-		] );
+		$result2 = $this->call_private_method(
+			$controller,
+			'user_posts_count_public',
+			[
+				self::$user_id,
+				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			] 
+		);
 
 		$this->assertEquals( 4, $result2 );
 
 		wp_delete_post( $post_id, true );
 
-		$result3 = $this->call_private_method( $controller, 'user_posts_count_public', [
-			self::$user_id,
-			\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG
-		] );
+		$result3 = $this->call_private_method(
+			$controller,
+			'user_posts_count_public',
+			[
+				self::$user_id,
+				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			] 
+		);
 
 		$this->assertEquals( 3, $result3 );
 	}
@@ -141,16 +153,24 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		$controller = new \Google\Web_Stories\REST_API\Stories_Users_Controller();
 		$post_type  = new \Google\Web_Stories\Story_Post_Type();
 		$post_type->register();
-		$result1 = $this->call_private_method( $controller, 'user_posts_count_public', [
-			-1,
-			\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG
-		] );
+		$result1 = $this->call_private_method(
+			$controller,
+			'user_posts_count_public',
+			[
+				-1,
+				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+			] 
+		);
 		$this->assertEquals( 0, $result1 );
 
-		$result1 = $this->call_private_method( $controller, 'user_posts_count_public', [
-			self::$user_id,
-			'invalid'
-		] );
+		$result1 = $this->call_private_method(
+			$controller,
+			'user_posts_count_public',
+			[
+				self::$user_id,
+				'invalid',
+			] 
+		);
 		$this->assertEquals( 0, $result1 );
 	}
 }

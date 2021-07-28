@@ -291,7 +291,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param int $post_id   Post ID.
+	 * @param int     $post_id   Post ID.
 	 * @param WP_Post $post  Post object.
 	 *
 	 * @return void
