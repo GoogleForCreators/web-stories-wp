@@ -102,6 +102,10 @@ export class Shapes extends Container {
   shape(name) {
     return this.getByRole('button', { name });
   }
+
+  sticker(title) {
+    return this.getByTestId(`library-sticker-${title}`);
+  }
 }
 
 export class Media extends Container {

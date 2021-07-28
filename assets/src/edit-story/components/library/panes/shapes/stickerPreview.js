@@ -91,6 +91,7 @@ function StickerPreview({ stickerType, index }) {
   const Svg = sticker.svg;
   return (
     <StickerButton
+      data-testid={`library-sticker-${sticker.title}`}
       onClick={() =>
         insertElement('sticker', {
           width: DEFAULT_ELEMENT_WIDTH,
