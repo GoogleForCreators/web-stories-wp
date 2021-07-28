@@ -17,62 +17,11 @@
 /**
  * Internal dependencies
  */
-import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import { getDefinitionForType } from '../../elements';
 import objectPick from '../../utils/objectPick';
 import { ELEMENT_TYPES } from '../story';
 
 const elementTypes = Object.values(ELEMENT_TYPES);
-
-const { content, x, y, width, ...DEFAULT_TEXT_PRESETS } = DEFAULT_PRESET;
-
-export const PROPERTY_DEFAULTS = {
-  backgroundColor: { r: 255, g: 255, b: 255 },
-  backgroundTextMode: 'NONE',
-  border: null,
-  borderRadius: null,
-  opacity: 100,
-  overlay: null,
-  padding: {
-    hasHiddenPadding: false,
-    horizontal: 0,
-    locked: true,
-    vertical: 0,
-  },
-  textAlign: 'initial',
-};
-
-export const BACKGROUND_STYLE_PROPERTIES = [
-  'backgroundColor',
-  'mask',
-  'opacity',
-  'overlay',
-];
-
-export const MEDIA_STYLE_PROPERTIES = [
-  'border',
-  'borderRadius',
-  'mask',
-  'opacity',
-  'overlay',
-];
-
-export const SHAPE_STYLE_PROPERTIES = [
-  'backgroundColor',
-  'border',
-  'borderRadius',
-  'opacity',
-];
-
-export const TEXT_STYLE_PROPERTIES = [
-  'backgroundColor',
-  'backgroundTextMode',
-  'border',
-  'borderRadius',
-  'opacity',
-  'padding',
-  'textAlign',
-];
 
 /**
  * Extracts the styles from an element based off of the element type.
@@ -106,5 +55,3 @@ export const getDefaultPropertiesForType = (type) => {
 
   return clearableAttributes;
 };
-
-export { DEFAULT_TEXT_PRESETS };

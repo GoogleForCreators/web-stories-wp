@@ -355,6 +355,11 @@ function RightClickMenuProvider({ children }) {
   );
 
   const menuItems = useMemo(() => {
+    // Check if background image
+    if (selectedElement?.isBackground) {
+      return pageItems;
+    }
+
     switch (selectedElement?.type) {
       case ELEMENT_TYPES.IMAGE:
       case ELEMENT_TYPES.SHAPE:
@@ -363,7 +368,7 @@ function RightClickMenuProvider({ children }) {
       default:
         return pageItems;
     }
-  }, [pageItems, selectedElement?.type]);
+  }, [pageItems, selectedElement?.isBackground, selectedElement?.type]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set

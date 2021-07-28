@@ -18,15 +18,8 @@
  */
 import { ELEMENT_TYPES } from '../../story';
 import objectPick from '../../../utils/objectPick';
-import {
-  getElementStyles,
-  getDefaultPropertiesForType,
-  MEDIA_STYLE_PROPERTIES,
-  SHAPE_STYLE_PROPERTIES,
-  TEXT_STYLE_PROPERTIES,
-  DEFAULT_TEXT_PRESETS,
-  PROPERTY_DEFAULTS,
-} from '../utils';
+import { getElementStyles, getDefaultPropertiesForType } from '../utils';
+import { getDefinitionForType } from '../../../elements';
 
 const ALL_PROPERTIES = {
   // style properties
@@ -50,6 +43,39 @@ const ALL_PROPERTIES = {
   grapes: 'yes, thank you',
 };
 
+const expectedMediaStyles = objectPick(ALL_PROPERTIES, [
+  'border',
+  'borderRadius',
+  'opacity',
+  'overlay',
+]);
+const expectedShapeStyles = objectPick(ALL_PROPERTIES, [
+  'backgroundColor',
+  'border',
+  'borderRadius',
+  'opacity',
+]);
+const expectedTextStyles = objectPick(ALL_PROPERTIES, [
+  'backgroundColor',
+  'backgroundTextMode',
+  'border',
+  'borderRadius',
+  'opacity',
+  'padding',
+  'textAlign',
+]);
+
+const { clearableAttributes: clearableGifAttributes } =
+  getDefinitionForType('gif');
+const { clearableAttributes: clearableImageAttributes } =
+  getDefinitionForType('image');
+const { clearableAttributes: clearableShapeAttributes } =
+  getDefinitionForType('shape');
+const { clearableAttributes: clearableTextAttributes } =
+  getDefinitionForType('text');
+const { clearableAttributes: clearableVideoAttributes } =
+  getDefinitionForType('video');
+
 describe('getElementStyles', () => {
   it('should return `null` if the element does not have the correct structure', () => {
     // No element
@@ -64,38 +90,22 @@ describe('getElementStyles', () => {
 
   it.each`
     type                   | expectedProperties
-    ${ELEMENT_TYPES.IMAGE} | ${MEDIA_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.GIF}   | ${MEDIA_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.VIDEO} | ${MEDIA_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.SHAPE} | ${SHAPE_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.TEXT}  | ${TEXT_STYLE_PROPERTIES}
+    ${ELEMENT_TYPES.IMAGE} | ${expectedMediaStyles}
+    ${ELEMENT_TYPES.GIF}   | ${expectedMediaStyles}
+    ${ELEMENT_TYPES.VIDEO} | ${expectedMediaStyles}
+    ${ELEMENT_TYPES.SHAPE} | ${expectedShapeStyles}
+    ${ELEMENT_TYPES.TEXT}  | ${expectedTextStyles}
   `(
     'should pick the correct properties for a `$type` element',
     ({ type, expectedProperties }) => {
       const result = getElementStyles({ ...ALL_PROPERTIES, type });
 
-      // Result should only have the expected properties
-      const expectedPropertiesSet = new Set(expectedProperties);
-      const returnedPropertiesSet = new Set(Object.keys(result));
-
-      expect(expectedPropertiesSet.size).toBe(returnedPropertiesSet.size);
-      for (const property of expectedPropertiesSet) {
-        expect(returnedPropertiesSet.has(property)).toBeTrue();
-      }
+      expect(result).toStrictEqual(expectedProperties);
     }
   );
 });
 
 describe('getDefaultPropertiesForType', () => {
-  const expectedMediaDefaults = objectPick(
-    PROPERTY_DEFAULTS,
-    MEDIA_STYLE_PROPERTIES
-  );
-  const expectedShapeDefaults = objectPick(
-    PROPERTY_DEFAULTS,
-    SHAPE_STYLE_PROPERTIES
-  );
-
   it('should return `null` if the element does not have the correct structure', () => {
     // No element type
     expect(getDefaultPropertiesForType({})).toBeNull();
@@ -106,11 +116,11 @@ describe('getDefaultPropertiesForType', () => {
 
   it.each`
     type                   | expectedProperties
-    ${ELEMENT_TYPES.IMAGE} | ${expectedMediaDefaults}
-    ${ELEMENT_TYPES.GIF}   | ${expectedMediaDefaults}
-    ${ELEMENT_TYPES.VIDEO} | ${expectedMediaDefaults}
-    ${ELEMENT_TYPES.SHAPE} | ${expectedShapeDefaults}
-    ${ELEMENT_TYPES.TEXT}  | ${DEFAULT_TEXT_PRESETS}
+    ${ELEMENT_TYPES.IMAGE} | ${clearableImageAttributes}
+    ${ELEMENT_TYPES.GIF}   | ${clearableGifAttributes}
+    ${ELEMENT_TYPES.VIDEO} | ${clearableVideoAttributes}
+    ${ELEMENT_TYPES.SHAPE} | ${clearableShapeAttributes}
+    ${ELEMENT_TYPES.TEXT}  | ${clearableTextAttributes}
   `(
     'should return the default properties for a `$type` element',
     ({ type, expectedProperties }) => {
