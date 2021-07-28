@@ -25,7 +25,14 @@ import PanelTypes from '../../components/panels/design/types';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: createSolidFromString('#ffffff'),
+  backgroundColor: createSolidFromString('#c4c4c4'),
+};
+
+export const clearableAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
+  backgroundColor: createSolidFromString('#c4c4c4'),
+  border: null,
+  borderRadius: null,
 };
 
 export const hasEditMode = false;

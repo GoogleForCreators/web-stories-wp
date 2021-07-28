@@ -37,7 +37,6 @@ import { focusStyle } from '../../../panels/shared';
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
-export const DEFAULT_SHAPE_BACKGROUND_COLOR = createSolidFromString('#c4c4c4');
 
 const Aspect = styled.button`
   background: transparent;
@@ -128,7 +127,7 @@ function ShapePreview({ mask, isPreview, index }) {
   // to insert the correct shape.
   const shapeData = useMemo(
     () => ({
-      backgroundColor: DEFAULT_SHAPE_BACKGROUND_COLOR,
+      backgroundColor: createSolidFromString('#c4c4c4'),
       width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
       height: DEFAULT_ELEMENT_WIDTH,
       mask: {

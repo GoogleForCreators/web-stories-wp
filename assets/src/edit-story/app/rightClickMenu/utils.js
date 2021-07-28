@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { DEFAULT_SHAPE_BACKGROUND_COLOR } from '../../components/library/panes/shapes/shapePreview';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
+import { getDefinitionForType } from '../../elements';
 import objectPick from '../../utils/objectPick';
 import { ELEMENT_TYPES } from '../story';
 
@@ -86,59 +86,25 @@ export const getElementStyles = (element) => {
     return null;
   }
 
-  let properties = [];
+  const { clearableAttributes } = getDefinitionForType(element.type);
 
-  switch (element?.type) {
-    case ELEMENT_TYPES.BACKGROUND:
-      properties = BACKGROUND_STYLE_PROPERTIES;
-      break;
-    case ELEMENT_TYPES.GIF:
-      properties = MEDIA_STYLE_PROPERTIES;
-      break;
-    case ELEMENT_TYPES.IMAGE:
-      properties = MEDIA_STYLE_PROPERTIES;
-      break;
-    case ELEMENT_TYPES.SHAPE:
-      properties = SHAPE_STYLE_PROPERTIES;
-      break;
-    case ELEMENT_TYPES.TEXT:
-      properties = TEXT_STYLE_PROPERTIES;
-      break;
-    case ELEMENT_TYPES.VIDEO:
-      properties = MEDIA_STYLE_PROPERTIES;
-      break;
-    default:
-      break;
-  }
-
-  return objectPick(element, properties);
+  return objectPick(element, Object.keys(clearableAttributes));
 };
 
 /**
  *
- * @param {Object} element the element to update
- * @param {Object} element.type the type of the element to update
+ * @param {string} type the type of the element to update
  * @return {Object|null} the default properties for the element type.
- * return `null` if the argument has an incorrect type.
+ * Return `null` if `type` isn't valid.
  */
-export const getDefaultProperties = ({ type }) => {
-  switch (type) {
-    case ELEMENT_TYPES.BACKGROUND:
-      return objectPick(PROPERTY_DEFAULTS, BACKGROUND_STYLE_PROPERTIES);
-    case ELEMENT_TYPES.GIF:
-    case ELEMENT_TYPES.IMAGE:
-    case ELEMENT_TYPES.VIDEO:
-      return objectPick(PROPERTY_DEFAULTS, MEDIA_STYLE_PROPERTIES);
-    case ELEMENT_TYPES.SHAPE:
-      return {
-        ...objectPick(PROPERTY_DEFAULTS, SHAPE_STYLE_PROPERTIES),
-        backgroundColor: DEFAULT_SHAPE_BACKGROUND_COLOR,
-      };
-    case ELEMENT_TYPES.TEXT:
-      return DEFAULT_TEXT_PRESETS;
-    default:
-      return null;
+export const getDefaultPropertiesForType = (type) => {
+  if (!type || !elementTypes.includes(type)) {
+    return null;
   }
+
+  const { clearableAttributes } = getDefinitionForType(type);
+
+  return clearableAttributes;
 };
 
 export { DEFAULT_TEXT_PRESETS };

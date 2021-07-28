@@ -40,7 +40,7 @@ import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
-import { getDefaultProperties } from './utils';
+import { getDefaultPropertiesForType } from './utils';
 
 const isMacOs = isPlatformMacOS();
 
@@ -237,7 +237,7 @@ function RightClickMenuProvider({ children }) {
       return;
     }
 
-    const resetProperties = getDefaultProperties(selectedElement);
+    const resetProperties = getDefaultPropertiesForType(selectedElement.type);
 
     if (resetProperties) {
       updateElementsById({
