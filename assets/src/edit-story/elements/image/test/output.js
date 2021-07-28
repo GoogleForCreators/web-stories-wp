@@ -30,7 +30,7 @@ describe('Image output', () => {
       id: '123',
       type: 'image',
       mimeType: 'image/png',
-      scale: 1,
+      scale: 200,
       origRatio: 16 / 9,
       x: 50,
       y: 100,
@@ -83,8 +83,9 @@ describe('Image output', () => {
     );
     // Generated sizes attribute should match: "(min-width: <desktop_screen_width>) <desktop_image_width>, <mobile_image_width>".
     // The image size is 412px wide, which is full page width. 45vh is the page width of stories in desktop mode.
+    // The image zoom is 200 (2x) so double both measurements.
     await expect(outputStr).toStrictEqual(
-      expect.stringMatching(/sizes="\(min-width: 1024px\) 45vh, 100vw"/)
+      expect.stringMatching(/sizes="\(min-width: 1024px\) 90vh, 200vw"/)
     );
     // The "disable-inline-width" attribute should accompany the "sizes" attribute.
     await expect(outputStr).toStrictEqual(
