@@ -188,7 +188,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		if ( ! empty( $post->post_author ) && post_type_supports( $post->post_type, 'author' ) ) {
 			$links['author'] = [
-				'href'       => rest_url( 'web-stories/v1/users/' . $post->post_author ),
+				'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $post->post_author ) ),
 				'embeddable' => true,
 			];
 		}
