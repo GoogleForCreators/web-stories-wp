@@ -35,8 +35,6 @@ import { PLACEMENT } from '../popup';
 const ItemText = styled(Text)`
   width: 200px;
   text-align: left;
-  color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
 `;
 const Shortcut = styled(Text)`
   color: ${({ theme, disabled }) =>
