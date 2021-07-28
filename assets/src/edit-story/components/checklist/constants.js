@@ -479,17 +479,17 @@ export const PRIORITY_COPY = {
     title: __('Add Site Title', 'web-stories'),
   },
   ampValidation: {
-    title: __('Web Story validation', 'web-stories'),
+    title: __('Compatibility', 'web-stories'),
     footer: (
       <TranslateWithMarkup
         mapping={{
           a: (
             <Link
-              href={__('https://search.google.com/test/amp', 'web-stories')}
+              href="https://wordpress.org/plugins/web-stories/#what%20do%20i%20do%20about%20an%20amp%20validation%20issue%20in%20search%20console%3F"
               rel="noreferrer"
               target="_blank"
               aria-label={__(
-                'Learn more by visiting Web Stories Test Tool',
+                'Web Stories frequently asked questions',
                 'web-stories'
               )}
               onClick={onAmpErrorClick}
@@ -499,7 +499,7 @@ export const PRIORITY_COPY = {
         }}
       >
         {__(
-          'Your story contains errors that can affect eligibility to appear on Google. To learn more, visit the <a>Web Stories Test Tool</a>.',
+          'Your story contains errors that can affect eligibility to appear on Google. This can be caused by incompatible WordPress plugins, web application firewalls, or other hosting configuration issues. Please see <a>our FAQ</a> for more information and debugging tips.',
           'web-stories'
         )}
       </TranslateWithMarkup>
