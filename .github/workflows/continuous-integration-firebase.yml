@@ -42,7 +42,7 @@ jobs:
         run: |
           git checkout public/stories/a-day-in-the-life-of-dap-the-contract/index.html
 
-      - name: Compress images of downloaded stories
+      - name: Compress images for website and downloaded stories
         uses: calibreapp/image-actions@1.1.0
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
