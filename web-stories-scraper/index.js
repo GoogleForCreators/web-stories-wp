@@ -283,6 +283,8 @@ class WebStoriesScraperPlugin {
               } catch (err) {
                 console.log('Could not extract & modify schema.org metadata.');
               }
+
+              return '';
             }
           )
           // Workaround for https://github.com/website-scraper/node-website-scraper/issues/355.
@@ -345,6 +347,9 @@ const result = await scrape(options);
 
 for (const { url: _url, filename } of result) {
   console.log(
-    `Finished downloading ${_url} to ${relative(__dirname, join(directory, filename))}`
+    `Finished downloading ${_url} to ${relative(
+      __dirname,
+      join(directory, filename)
+    )}`
   );
 }
