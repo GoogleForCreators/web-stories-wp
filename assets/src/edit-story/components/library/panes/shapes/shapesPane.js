@@ -59,7 +59,7 @@ function ShapesPane(props) {
   const ref = useRef();
   useRovingTabIndex({ ref });
 
-  const stickersRef = useRef();
+  const stickersRef = useRef(null);
   useRovingTabIndex({ ref: stickersRef });
   return (
     <Pane id={paneId} {...props} isOverflowScrollable={enableStickers}>
@@ -71,7 +71,10 @@ function ShapesPane(props) {
           disabled
         />
       )}
-      <Section title={__('Shapes', 'web-stories')}>
+      <Section
+        data-testid="shapes-library-pane"
+        title={__('Shapes', 'web-stories')}
+      >
         <SectionContent ref={ref}>
           {MASKS.filter((mask) => mask.showInLibrary).map((mask, i) => (
             <ShapePreview mask={mask} key={mask.type} index={i} isPreview />
@@ -79,7 +82,10 @@ function ShapesPane(props) {
         </SectionContent>
       </Section>
       {enableStickers && (
-        <Section title={__('Stickers', 'web-stories')}>
+        <Section
+          data-testid="stickers-library-pane"
+          title={__('Stickers', 'web-stories')}
+        >
           <SectionContent ref={stickersRef}>
             {STICKER_TYPES.map((stickerType, i) => (
               <StickerPreview

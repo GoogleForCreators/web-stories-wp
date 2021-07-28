@@ -91,7 +91,7 @@ function StickerPreview({ stickerType, index }) {
   const Svg = sticker.svg;
   return (
     <StickerButton
-      data-testid={`library-sticker-${sticker.title}`}
+      data-testid={`library-sticker-${stickerType}`}
       onClick={() =>
         insertElement('sticker', {
           width: DEFAULT_ELEMENT_WIDTH,
@@ -111,12 +111,6 @@ function StickerPreview({ stickerType, index }) {
           type={'sticker'}
           elementProps={stickerData}
           cloneElement={StickerClone}
-          onClick={() =>
-            insertElement('sticker', {
-              width: DEFAULT_ELEMENT_WIDTH,
-              sticker: { type: stickerType },
-            })
-          }
           cloneProps={{
             width: dataToEditorX(
               DEFAULT_ELEMENT_WIDTH * (aspectRatio < 1 ? aspectRatio : 1)

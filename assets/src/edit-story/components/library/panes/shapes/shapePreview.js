@@ -167,7 +167,7 @@ function ShapePreview({ mask, isPreview, index }) {
   // We use rovingTabIndex for navigating so only the first item will have 0 as tabIndex.
   // onClick on Aspect is for the keyboard only.
   return (
-    <Aspect ref={ref} tabIndex={index === 0 ? 0 : -1}>
+    <Aspect ref={ref} onClick={onClick} tabIndex={index === 0 ? 0 : -1}>
       <AspectInner>
         <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />
@@ -177,7 +177,6 @@ function ShapePreview({ mask, isPreview, index }) {
       <LibraryMoveable
         type={'shape'}
         elementProps={shapeData}
-        onClick={onClick}
         cloneElement={ShapeClone}
         cloneProps={{
           width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * mask.ratio),
