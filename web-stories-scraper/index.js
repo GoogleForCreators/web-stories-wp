@@ -175,6 +175,16 @@ class WebStoriesScraperPlugin {
       };
     });
 
+    // Prevent saving 404 pages.
+    registerAction('afterResponse', ({ response }) => {
+      if (response.statusCode === 404) {
+        console.log(`Error 404! Could not download ${response.request.href}.`);
+        return null;
+      }
+
+      return response;
+    });
+
     // Clean up resulting HTML file.
     registerAction('onResourceSaved', ({ resource }) => {
       if (resource.isHtml()) {
@@ -335,6 +345,6 @@ const result = await scrape(options);
 
 for (const { url: _url, filename } of result) {
   console.log(
-    `Downloaded ${_url} to ${relative(__dirname, join(directory, filename))}`
+    `Finished downloading ${_url} to ${relative(__dirname, join(directory, filename))}`
   );
 }
