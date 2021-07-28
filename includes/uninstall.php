@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\User\Preferences;
+use Google\Web_Stories\Media\Media;
 
 /**
  * Deletes options and transients.
@@ -115,8 +116,11 @@ function delete_site_options() {
  * @return void
  */
 function delete_stories_post_meta() {
-	delete_post_meta_by_key( 'web_stories_is_poster' );
-	delete_post_meta_by_key( 'web_stories_poster_id' );
+	delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
+	delete_post_meta_by_key( Media::POSTER_ID_POST_META_KEY );
+	delete_post_meta_by_key( Media::OPTIMIZED_ID_POST_META_KEY );
+	delete_post_meta_by_key( Media::MUTED_ID_POST_META_KEY );
+	delete_post_meta_by_key( Media::IS_MUTED_POST_META_KEY );
 }
 
 /**
@@ -129,6 +133,7 @@ function delete_stories_post_meta() {
 function delete_stories_user_meta() {
 	delete_metadata( 'user', 0, Preferences::OPTIN_META_KEY, '', true );
 	delete_metadata( 'user', 0, Preferences::ONBOARDING_META_KEY, '', true );
+	delete_metadata( 'user', 0, Preferences::MEDIA_OPTIMIZATION_META_KEY, '', true );
 }
 
 /**

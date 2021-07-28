@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -290,7 +290,7 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #9f240f; letter-spacing: 0.04em\">BILLY ROGERS</span>",
+          "content": "<span style=\"font-weight: 500; color: #9f240f; letter-spacing: 0.04em; text-transform: uppercase\">Billy Rogers</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2035,7 +2035,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em\">PREP TIME: </span><span style=\"font-weight: 800; color: #fff; letter-spacing: 0.1em\">20 MIN</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Prep Time: </span><span style=\"font-weight: 800; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">20 Min</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2191,7 +2191,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em\">COOK TIME: </span><span style=\"font-weight: 800; color: #fff; letter-spacing: 0.1em\">20 MIN</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">Cook Time: </span><span style=\"font-weight: 800; color: #fff; letter-spacing: 0.1em; text-transform: uppercase\">20 Min</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2267,7 +2267,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.28em\">INGREDIENTS</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.28em; text-transform: uppercase\">Ingredients</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,

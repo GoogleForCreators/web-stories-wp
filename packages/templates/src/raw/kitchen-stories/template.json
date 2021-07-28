@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -91,7 +91,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.3em\">RECIPE FOR BEGINNERS</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase\">Recipe For Beginners</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -237,7 +237,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.3em\">BY JAMIE LEACH</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase\">By Jamie Leach</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -477,7 +477,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">DISH INFO</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Dish Info</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -573,7 +573,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">INGREDIENTS</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Ingredients</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -719,7 +719,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">CALORIES</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Calories</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -883,7 +883,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">MINUTES</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Minutes</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1207,7 +1207,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">INGREDIENTS</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Ingredients</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1303,7 +1303,7 @@
           "y": 597,
           "id": "e43ec6dc-a72f-4778-ab06-5b58e3b67acd",
           "basedOn": "ebab2ec8-98de-4766-9aa1-79f21f942dbe",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">RED POTATO</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Red Potato</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1662,7 +1662,7 @@
           "lineHeight": 1.32,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">FRESH LEMON</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Fresh Lemon</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1737,7 +1737,7 @@
           "lineHeight": 1.32,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">GREEN BEANS</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Green Beans</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1812,7 +1812,7 @@
           "lineHeight": 1.32,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">CLOVES GARLIC</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Cloves Garlic</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2283,7 +2283,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">INGREDIENTS</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Ingredients</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2376,7 +2376,7 @@
           "lineHeight": 1.32,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">CHICKEN THIGHS (BONE-IN, SKIN-ON)</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Chicken Thighs (Bone-In, Skin-On)</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2664,7 +2664,7 @@
           "lineHeight": 1.32,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">SALT, PEPPER, GOCHUJANG</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Salt, Pepper, Gochujang</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2938,7 +2938,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em\">PRE-PREPARATION</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase\">Pre-Preparation</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3232,7 +3232,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">STEP 1</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Step 1</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3458,7 +3458,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">STEP 2</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Step 2</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3684,7 +3684,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">STEP 3</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Step 3</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3910,7 +3910,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">STEP 4</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Step 4</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -4136,7 +4136,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">STEP 5</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Step 5</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -4362,7 +4362,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em\">STEP 6</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff; letter-spacing: 0.24em; text-transform: uppercase\">Step 6</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -4783,7 +4783,7 @@
           "lineHeight": 1.36,
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 700; color: #215fce; letter-spacing: 0.24em\">MORE INFO</span>",
+          "content": "<span style=\"font-weight: 700; color: #215fce; letter-spacing: 0.24em; text-transform: uppercase\">More Info</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,

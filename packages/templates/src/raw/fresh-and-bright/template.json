@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -77,7 +77,7 @@
           "type": "text",
           "basedOn": "d886c844-5b5c-4b27-a9c3-332df2aed3f3",
           "id": "25b6f99b-3f69-4351-9e18-31b8ef1d1a61",
-          "content": "<span style=\"color: #28292b; letter-spacing: 0.09em\">FRESH</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">&amp;&nbsp;</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">BRIGHT</span>",
+          "content": "<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">Fresh</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">&amp;&nbsp;</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">Bright</span>",
           "fontSize": 55,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -322,7 +322,7 @@
           "type": "text",
           "basedOn": "53004538-6bca-4ac6-810e-18bd81e84276",
           "id": "51e3dfb3-fe95-4132-ade1-cd226982cf68",
-          "content": "<span style=\"color: #28292b; letter-spacing: 0.09em\">I</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">WOKE</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">UP</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">LIKE</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">THIS</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">”</span>",
+          "content": "<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">I</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">woke</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">up</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">like</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">this</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">”</span>",
           "fontSize": 88,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -782,7 +782,7 @@
           "type": "text",
           "basedOn": "25b6f99b-3f69-4351-9e18-31b8ef1d1a61",
           "id": "65b49662-1ad8-4478-8fe9-98a7b60b2ea4",
-          "content": "<span style=\"color: #28292b; letter-spacing: 0.09em\">GIFTS</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">FOR</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em\">UNDER</span>",
+          "content": "<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">Gifts</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">for</span>\n<span style=\"color: #28292b; letter-spacing: 0.09em; text-transform: uppercase\">under</span>",
           "fontSize": 55,
           "padding": {
             "hasHiddenPadding": false,
@@ -1968,7 +1968,7 @@
           "type": "text",
           "basedOn": "20f12482-ebbd-469f-a4da-315da300cbc1",
           "id": "2d2d9987-93c3-4c06-83c4-8e59dff41e48",
-          "content": "<span style=\"color: #28292b\">MORE</span>\n<span style=\"color: #28292b\">STORIES</span>",
+          "content": "<span style=\"color: #28292b; text-transform: uppercase\">More</span>\n<span style=\"color: #28292b; text-transform: uppercase\">Stories</span>",
           "fontSize": 55,
           "padding": { "horizontal": 0, "vertical": 0 }
         },

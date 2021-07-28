@@ -19,65 +19,65 @@
  */
 import { useEffect } from 'react';
 import { useSnackbar } from '@web-stories-wp/design-system';
-
+import { useDebouncedCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
+import { SUCCESS } from '../textContent';
 import useApi from './useApi';
 
 function useApiAlerts() {
-  const { storyError, templateError, settingsError, mediaError } = useApi(
-    ({
-      state: {
-        stories: { error: storyError },
-        templates: { error: templateError },
-        settings: { error: settingsError },
-        media: { error: mediaError },
-      },
-    }) => ({
-      storyError,
-      templateError,
-      settingsError,
-      mediaError,
-    })
-  );
+  const { storyError, templateError, settingsError, mediaError, settingSaved } =
+    useApi(
+      ({
+        state: {
+          stories: { error: storyError },
+          templates: { error: templateError },
+          settings: { error: settingsError, settingSaved },
+          media: { error: mediaError },
+        },
+      }) => ({
+        storyError,
+        templateError,
+        settingsError,
+        mediaError,
+        settingSaved,
+      })
+    );
   const { showSnackbar } = useSnackbar();
 
+  const debouncedShowSnackbar = useDebouncedCallback((message) => {
+    return showSnackbar({ message, dismissable: true });
+  }, 200);
   // if there is an API error, display a snackbar
   useEffect(() => {
     if (storyError?.id) {
-      showSnackbar({
-        message: storyError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(storyError.message);
     }
-  }, [storyError, showSnackbar]);
+  }, [storyError, debouncedShowSnackbar]);
 
   useEffect(() => {
     if (templateError?.id) {
-      showSnackbar({
-        message: templateError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(templateError.message);
     }
-  }, [templateError, showSnackbar]);
+  }, [templateError, debouncedShowSnackbar]);
 
   useEffect(() => {
     if (settingsError?.id) {
-      showSnackbar({
-        message: settingsError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(settingsError.message);
     }
-  }, [settingsError, showSnackbar]);
+  }, [settingsError, debouncedShowSnackbar]);
+
+  useEffect(() => {
+    if (settingSaved) {
+      debouncedShowSnackbar(SUCCESS.SETTINGS.UPDATED);
+    }
+  }, [debouncedShowSnackbar, settingSaved]);
 
   useEffect(() => {
     if (mediaError?.id) {
-      showSnackbar({
-        message: mediaError.message,
-        dismissable: true,
-      });
+      debouncedShowSnackbar(mediaError.message);
     }
-  }, [mediaError, showSnackbar]);
+  }, [mediaError, debouncedShowSnackbar]);
 }
 export default useApiAlerts;
