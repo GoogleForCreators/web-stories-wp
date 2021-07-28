@@ -344,7 +344,7 @@
           "focalY": 50,
           "type": "text",
           "id": "643dd508-0499-4c8e-adab-b48039c98296",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">-\nDALAI LAMA</span>",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1); text-transform: uppercase\">-</span>\n<span style=\"color: rgba(43, 57, 62, 1); text-transform: uppercase\">Dalai Lama</span>",
           "fontSize": 15,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -611,7 +611,7 @@
           "type": "text",
           "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
           "id": "a05c550f-a6fd-453c-a498-7c0840c74e80",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN MORE</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Learn More</span>",
           "fontSize": 13,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1108,7 +1108,7 @@
           "type": "text",
           "basedOn": "a05c550f-a6fd-453c-a498-7c0840c74e80",
           "id": "4a6f10ee-b868-4ec8-80c3-7968bede7d8d",
-          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">LEARN MORE</span>",
+          "content": "<span style=\"color: rgba(31, 42, 46, 1); text-transform: uppercase\">Learn More</span>",
           "fontSize": 13,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1708,7 +1708,7 @@
           "type": "text",
           "basedOn": "a05c550f-a6fd-453c-a498-7c0840c74e80",
           "id": "91d4d005-9a56-49d2-8e72-053ef3fa83c3",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN MORE</span>",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1); text-transform: uppercase\">Learn More</span>",
           "fontSize": 13,
           "padding": { "horizontal": 0, "vertical": 0 }
         },

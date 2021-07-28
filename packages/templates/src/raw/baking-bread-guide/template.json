@@ -116,7 +116,7 @@
           "textAlign": "center",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #bcebee; letter-spacing: 0.4em\">BAK'N WITH EM</span>",
+          "content": "<span style=\"font-weight: 900; color: #bcebee; letter-spacing: 0.4em; text-transform: uppercase\">Bak'n with Em</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
