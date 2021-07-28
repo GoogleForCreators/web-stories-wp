@@ -20,5 +20,4 @@ export const ELEMENT_TYPES = {
   TEXT: 'text',
   VIDEO: 'video',
   GIF: 'gif',
-  BACKGROUND: 'background',
 };

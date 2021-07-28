@@ -418,7 +418,7 @@ const useQuickActions = () => {
         handleElementReset({
           elementId: selectedElement?.id,
           resetProperties,
-          elementType: ELEMENT_TYPES.BACKGROUND,
+          elementType: ELEMENT_TYPES.IMAGE,
         }),
       separator: 'top',
       ...actionMenuProps,

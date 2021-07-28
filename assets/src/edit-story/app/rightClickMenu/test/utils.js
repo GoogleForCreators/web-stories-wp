@@ -20,8 +20,7 @@ import { ELEMENT_TYPES } from '../../story';
 import objectPick from '../../../utils/objectPick';
 import {
   getElementStyles,
-  getDefaultProperties,
-  BACKGROUND_STYLE_PROPERTIES,
+  getDefaultPropertiesForType,
   MEDIA_STYLE_PROPERTIES,
   SHAPE_STYLE_PROPERTIES,
   TEXT_STYLE_PROPERTIES,
@@ -64,13 +63,12 @@ describe('getElementStyles', () => {
   });
 
   it.each`
-    type                        | expectedProperties
-    ${ELEMENT_TYPES.BACKGROUND} | ${BACKGROUND_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.IMAGE}      | ${MEDIA_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.GIF}        | ${MEDIA_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.VIDEO}      | ${MEDIA_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.SHAPE}      | ${SHAPE_STYLE_PROPERTIES}
-    ${ELEMENT_TYPES.TEXT}       | ${TEXT_STYLE_PROPERTIES}
+    type                   | expectedProperties
+    ${ELEMENT_TYPES.IMAGE} | ${MEDIA_STYLE_PROPERTIES}
+    ${ELEMENT_TYPES.GIF}   | ${MEDIA_STYLE_PROPERTIES}
+    ${ELEMENT_TYPES.VIDEO} | ${MEDIA_STYLE_PROPERTIES}
+    ${ELEMENT_TYPES.SHAPE} | ${SHAPE_STYLE_PROPERTIES}
+    ${ELEMENT_TYPES.TEXT}  | ${TEXT_STYLE_PROPERTIES}
   `(
     'should pick the correct properties for a `$type` element',
     ({ type, expectedProperties }) => {
@@ -88,11 +86,7 @@ describe('getElementStyles', () => {
   );
 });
 
-describe('getDefaultProperties', () => {
-  const expectedBackgroundDefaults = objectPick(
-    PROPERTY_DEFAULTS,
-    BACKGROUND_STYLE_PROPERTIES
-  );
+describe('getDefaultPropertiesForType', () => {
   const expectedMediaDefaults = objectPick(
     PROPERTY_DEFAULTS,
     MEDIA_STYLE_PROPERTIES
@@ -104,24 +98,23 @@ describe('getDefaultProperties', () => {
 
   it('should return `null` if the element does not have the correct structure', () => {
     // No element type
-    expect(getDefaultProperties({})).toBeNull();
+    expect(getDefaultPropertiesForType({})).toBeNull();
 
     // Element type does not exist
-    expect(getDefaultProperties({ type: 'banana' })).toBeNull();
+    expect(getDefaultPropertiesForType({ type: 'banana' })).toBeNull();
   });
 
   it.each`
-    type                        | expectedProperties
-    ${ELEMENT_TYPES.BACKGROUND} | ${expectedBackgroundDefaults}
-    ${ELEMENT_TYPES.IMAGE}      | ${expectedMediaDefaults}
-    ${ELEMENT_TYPES.GIF}        | ${expectedMediaDefaults}
-    ${ELEMENT_TYPES.VIDEO}      | ${expectedMediaDefaults}
-    ${ELEMENT_TYPES.SHAPE}      | ${expectedShapeDefaults}
-    ${ELEMENT_TYPES.TEXT}       | ${DEFAULT_TEXT_PRESETS}
+    type                   | expectedProperties
+    ${ELEMENT_TYPES.IMAGE} | ${expectedMediaDefaults}
+    ${ELEMENT_TYPES.GIF}   | ${expectedMediaDefaults}
+    ${ELEMENT_TYPES.VIDEO} | ${expectedMediaDefaults}
+    ${ELEMENT_TYPES.SHAPE} | ${expectedShapeDefaults}
+    ${ELEMENT_TYPES.TEXT}  | ${DEFAULT_TEXT_PRESETS}
   `(
     'should return the default properties for a `$type` element',
     ({ type, expectedProperties }) => {
-      const result = getDefaultProperties({ type });
+      const result = getDefaultPropertiesForType(type);
 
       expect(result).toStrictEqual(expectedProperties);
     }
