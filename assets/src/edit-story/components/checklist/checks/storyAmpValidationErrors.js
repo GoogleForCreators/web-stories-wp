@@ -24,7 +24,7 @@ import { useEffect, useRef, useState } from 'react';
  */
 import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
-import { DISTRIBUTION_COPY } from '../constants';
+import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
 export async function getStoryAmpValidationErrors({ link, status }) {
@@ -91,7 +91,7 @@ const StoryAmpValidationErrors = () => {
   }, [isRendered]);
 
   useRegisterCheck('StoryHasAmpErrors', isRendered);
-  const { footer, title } = DISTRIBUTION_COPY.ampValidation;
+  const { footer, title } = PRIORITY_COPY.ampValidation;
 
   return (
     isRendered && (

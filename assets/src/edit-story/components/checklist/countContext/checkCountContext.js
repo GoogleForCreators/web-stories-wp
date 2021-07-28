@@ -31,7 +31,6 @@ export const CategoryContext = createContext(null);
 const INITIAL_STATE = {
   [ISSUE_TYPES.PRIORITY]: {},
   [ISSUE_TYPES.DESIGN]: {},
-  [ISSUE_TYPES.DISTRIBUTION]: {},
   [ISSUE_TYPES.ACCESSIBILITY]: {},
 };
 function ChecklistCountProvider({ children }) {

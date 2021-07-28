@@ -38,6 +38,7 @@ import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
 import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
+import StoryAmpValidationErrors from '../checks/storyAmpValidationErrors';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
 function PriorityPanel({
@@ -106,6 +107,7 @@ export function PriorityChecks(props) {
         <PublisherLogoSize />
         <VideoElementMissingPoster />
         {isTranscodingEnabled && <VideoOptimization />}
+        <StoryAmpValidationErrors />
       </PriorityPanel>
     </ChecklistCategoryProvider>
   );
