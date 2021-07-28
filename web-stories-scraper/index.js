@@ -182,7 +182,12 @@ class WebStoriesScraperPlugin {
         return null;
       }
 
-      return response;
+      return {
+        body: response.body,
+        metadata: {
+          headers: response.headers,
+        },
+      };
     });
 
     // Clean up resulting HTML file.
