@@ -79,6 +79,7 @@ const FFMPEG_SHARED_CONFIG = [
  * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
  * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
+ * @property {(file: File) => Promise<File>} stripAudioFromVideo Strip audio from given video.
  * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
  * @property {(file: File) => Promise<File>} convertGifToVideo Convert GIF to MP4.
  */
