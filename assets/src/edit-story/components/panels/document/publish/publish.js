@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
@@ -87,11 +87,14 @@ function PublishPanel() {
     state: { users },
   } = useInspector();
 
-  const [posterButton, setPosterButton] = useState(null);
-  const highlightPoster = useFocusHighlight(states.POSTER, posterButton);
+  const posterButtonRef = useRef();
+  const publisherLogoRef = useRef();
 
-  const [publisherLogo, setPublisherLogo] = useState(null);
-  const highlightLogo = useFocusHighlight(states.PUBLISHER_LOGO, publisherLogo);
+  const highlightPoster = useFocusHighlight(states.POSTER, posterButtonRef);
+  const highlightLogo = useFocusHighlight(
+    states.PUBLISHER_LOGO,
+    publisherLogoRef
+  );
 
   const { featuredMedia, publisherLogoUrl, updateStory } = useStory(
     ({
@@ -190,7 +193,7 @@ function PublishPanel() {
           <MediaInputWrapper>
             <MediaWrapper>
               <StyledMedia
-                ref={setPosterButton}
+                ref={posterButtonRef}
                 width={54}
                 height={96}
                 cropParams={{
@@ -220,7 +223,7 @@ function PublishPanel() {
                   width: 96,
                   height: 96,
                 }}
-                ref={setPublisherLogo}
+                ref={publisherLogoRef}
                 value={publisherLogoUrl}
                 onChange={handleChangePublisherLogo}
                 onChangeErrorText={publisherLogoErrorMessage}

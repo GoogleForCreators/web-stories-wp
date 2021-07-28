@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
@@ -56,8 +56,8 @@ function ExcerptPanel() {
     [updateStory]
   );
 
-  const [textArea, setTextArea] = useState(null);
-  const highlight = useFocusHighlight(states.EXCERPT, textArea);
+  const ref = useRef();
+  const highlight = useFocusHighlight(states.EXCERPT, ref);
 
   return (
     <SimplePanel
@@ -69,7 +69,7 @@ function ExcerptPanel() {
     >
       <Row>
         <TextArea
-          ref={setTextArea}
+          ref={ref}
           value={excerpt}
           onChange={handleTextChange}
           placeholder={__('Write a description of the story', 'web-stories')}

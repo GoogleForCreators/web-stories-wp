@@ -64,9 +64,9 @@ function LibraryLayout() {
     tabs: state.data.tabs,
   }));
 
-  useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]?.current);
-  useFocusHighlight(states.MEDIA3P, tabRefs[MEDIA3P.id]?.current);
-  useFocusHighlight(states.TEXT_SET, tabRefs[TEXT.id]?.current);
+  useFocusHighlight(states.MEDIA, tabRefs[MEDIA.id]);
+  useFocusHighlight(states.MEDIA3P, tabRefs[MEDIA3P.id]);
+  useFocusHighlight(states.TEXT_SET, tabRefs[TEXT.id]);
 
   const onTabChange = useCallback(
     (id) => {
