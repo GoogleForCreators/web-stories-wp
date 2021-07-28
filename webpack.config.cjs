@@ -362,11 +362,10 @@ const storiesMCEButton = {
   ].filter(Boolean),
 };
 
-
 const storiesImgareaselect = {
   ...sharedConfig,
   entry: {
-    'imgareaselect': './packages/imgareaselect/src/index.js',
+    imgareaselect: './packages/imgareaselect/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins,
