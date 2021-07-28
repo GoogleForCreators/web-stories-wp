@@ -24,6 +24,7 @@ namespace PHPSTORM_META {
 			'editor'                       => \Google\Web_Stories\Admin\Editor::class,
 			'embed_shortcode'              => \Google\Web_Stories\Shortcode\Embed_Shortcode::class,
 			'experiments'                  => \Google\Web_Stories\Experiments::class,
+			'crop_script'                  => \Google\Web_Stories\Admin\Crop_Script::class,
 			'integrations.amp'             => \Google\Web_Stories\Integrations\AMP::class,
 			'integrations.jetpack'         => \Google\Web_Stories\Integrations\Jetpack::class,
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,

@@ -84,6 +84,7 @@ class Plugin extends ServiceBasedPlugin {
 		'editor'                       => Admin\Editor::class,
 		'embed_shortcode'              => Shortcode\Embed_Shortcode::class,
 		'experiments'                  => Experiments::class,
+		'crop_script'                  => Admin\Crop_Script::class,
 		'integrations.amp'             => Integrations\AMP::class,
 		'integrations.jetpack'         => Integrations\Jetpack::class,
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
