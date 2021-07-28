@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { DEFAULT_SHAPE_BACKGROUND_COLOR } from '../../components/library/panes/shapes/shapePreview';
 import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import objectPick from '../../utils/objectPick';
 import { ELEMENT_TYPES } from '../story';
@@ -129,7 +130,10 @@ export const getDefaultProperties = ({ type }) => {
     case ELEMENT_TYPES.VIDEO:
       return objectPick(PROPERTY_DEFAULTS, MEDIA_STYLE_PROPERTIES);
     case ELEMENT_TYPES.SHAPE:
-      return objectPick(PROPERTY_DEFAULTS, SHAPE_STYLE_PROPERTIES);
+      return {
+        ...objectPick(PROPERTY_DEFAULTS, SHAPE_STYLE_PROPERTIES),
+        backgroundColor: DEFAULT_SHAPE_BACKGROUND_COLOR,
+      };
     case ELEMENT_TYPES.TEXT:
       return DEFAULT_TEXT_PRESETS;
     default:

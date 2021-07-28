@@ -197,6 +197,11 @@ function RightClickMenuProvider({ children }) {
     });
   }, [copiedElement, selectedElement, updateElementsById]);
 
+  /**
+   * Revert some element styles to their defaults.
+   *
+   * Each element type has a different set of defaults.
+   */
   const handleClearElementStyles = useCallback(() => {
     if (!selectedElement?.id) {
       return;
