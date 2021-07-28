@@ -43,6 +43,17 @@ describe('getStoryAmpValidationErrors', () => {
   });
 
   it('should return false if there are no violations', async () => {
+    windowSpy.mockImplementation(() => ({
+      amp: {
+        validator: {
+          validateString: () => ({
+            status: 'PASS',
+            errors: [],
+          }),
+        },
+      },
+    }));
+
     expect(
       await getStoryAmpValidationErrors({
         link: 'http://test/web-stories/123',
@@ -71,12 +82,12 @@ describe('getStoryAmpValidationErrors', () => {
       },
     }));
 
-    const isError = await getStoryAmpValidationErrors({
-      link: 'http://test/web-stories/123',
-      status: 'publish',
-    });
-
-    expect(isError).toBe(true);
+    expect(
+      await getStoryAmpValidationErrors({
+        link: 'http://test/web-stories/123',
+        status: 'publish',
+      })
+    ).toBe(true);
   });
 
   it('should return false if there are no ERROR severity errors', async () => {
@@ -94,32 +105,12 @@ describe('getStoryAmpValidationErrors', () => {
       },
     }));
 
-    const isError = await getStoryAmpValidationErrors({
-      link: 'http://test/web-stories/123',
-      status: 'publish',
-    });
-
-    expect(isError).toBe(false);
-  });
-
-  it('should return false if the story markup status is not FAIL', async () => {
-    windowSpy.mockImplementation(() => ({
-      amp: {
-        validator: {
-          validateString: () => ({
-            status: 'PASS',
-            errors: [],
-          }),
-        },
-      },
-    }));
-
-    const isError = await getStoryAmpValidationErrors({
-      link: 'http://test/web-stories/123',
-      status: 'publish',
-    });
-
-    expect(isError).toBe(false);
+    expect(
+      await getStoryAmpValidationErrors({
+        link: 'http://test/web-stories/123',
+        status: 'publish',
+      })
+    ).toBe(false);
   });
 
   it('should return false if MISSING URL is the only AMP Violation', async () => {
@@ -140,11 +131,11 @@ describe('getStoryAmpValidationErrors', () => {
       },
     }));
 
-    const isError = await getStoryAmpValidationErrors({
-      link: 'http://test/web-stories/123',
-      status: 'publish',
-    });
-
-    expect(isError).toBe(false);
+    expect(
+      await getStoryAmpValidationErrors({
+        link: 'http://test/web-stories/123',
+        status: 'publish',
+      })
+    ).toBe(false);
   });
 });
