@@ -17,18 +17,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import {
-  useKeyDownEffect,
-  Text,
-  THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../../app/config';
 import { focusStyle } from '../../../../panels/shared';
 
 const StyledText = styled(Text)`
@@ -66,57 +60,9 @@ const Tab = styled.button`
     `}
 `;
 
-function ProviderTab({
-  id,
-  index,
-  name,
-  providerType,
-  active,
-  setSelectedProvider,
-}) {
-  const { isRTL } = useConfig();
-  const ref = useRef();
-
-  const onKeyDown = useCallback(
-    ({ key }) => {
-      if (!ref.current) {
-        return;
-      }
-      ref.current.tabIndex = -1;
-      const siblingSelector =
-        (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL)
-          ? 'nextSibling'
-          : 'previousSibling';
-      const sibling = ref.current[siblingSelector];
-      if (sibling) {
-        sibling.tabIndex = 0;
-        sibling.focus();
-        const newProvider = sibling.dataset.providerType;
-        setSelectedProvider({ provider: newProvider });
-      }
-    },
-    [ref, isRTL, setSelectedProvider]
-  );
-
-  useKeyDownEffect(
-    ref,
-    {
-      key: ['left', 'right'],
-    },
-    onKeyDown,
-    [ref, onKeyDown]
-  );
-
+function ProviderTab({ name, isActive, ...rest }) {
   return (
-    <Tab
-      ref={ref}
-      tabIndex={index == 0 ? 0 : -1}
-      data-testid={'providerTab'}
-      onClick={() => setSelectedProvider({ provider: providerType })}
-      data-provider-type={providerType}
-      isActive={active}
-      id={id}
-    >
+    <Tab isActive={isActive} {...rest}>
       <StyledText
         forwardedAs="span"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -128,12 +74,8 @@ function ProviderTab({
 }
 
 ProviderTab.propTypes = {
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  providerType: PropTypes.string.isRequired,
-  active: PropTypes.bool.isRequired,
-  setSelectedProvider: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 export default ProviderTab;
