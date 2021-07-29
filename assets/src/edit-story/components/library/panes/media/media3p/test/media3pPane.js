@@ -116,7 +116,7 @@ const DEFAULT_PROVIDER_STATE = (index) => ({
 
 const DEFAULT_USE_MEDIA_RESULT = {
   searchTerm: '',
-  selectedProvider: undefined,
+  selectedProvider: 'PROVIDER_1',
   setSelectedProvider: jest.fn(),
   setSearchTerm: jest.fn(),
   media3p: {
