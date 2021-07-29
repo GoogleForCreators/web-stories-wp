@@ -80,7 +80,7 @@ function BackgroundAudioPanelContent({
             size={BUTTON_SIZES.SMALL}
             variant={BUTTON_VARIANTS.RECTANGLE}
           >
-            {__('Upload a file', 'web-stories')}
+            {__('Upload an audio file', 'web-stories')}
           </UploadButton>
         </Row>
       )}
