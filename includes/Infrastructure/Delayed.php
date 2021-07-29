@@ -39,7 +39,7 @@ interface Delayed {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action();
+	public static function get_registration_action(): string;
 
 
 	/**
@@ -49,5 +49,5 @@ interface Delayed {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority();
+	public static function get_registration_action_priority(): int;
 }

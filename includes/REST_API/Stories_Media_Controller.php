@@ -29,7 +29,6 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Error;
@@ -73,7 +72,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'rest_api_init';
 	}
 
@@ -84,7 +83,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 100;
 	}
 
@@ -161,7 +160,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
 
 		$query_params['_web_stories_envelope'] = [
@@ -227,21 +226,27 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	}
 
 	/**
-	 * Override scheme to remove permalink_template and generated_slug.
+	 * Retrieves the attachment's schema, conforming to JSON Schema.
+	 *
+	 * Removes some unneeded fields to improve performance by
+	 * avoiding some expensive database queries.
 	 *
 	 * @since 1.10.0
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
 		$schema = parent::get_item_schema();
 
-		unset( $schema['properties']['permalink_template'] );
-		unset( $schema['properties']['generated_slug'] );
+		unset(
+			$schema['properties']['permalink_template'],
+			$schema['properties']['generated_slug'],
+			$schema['properties']['description']
+		);
 
 		$this->schema = $schema;
 
@@ -257,7 +262,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @return array Array of supported media types.
 	 */
-	protected function get_media_types() {
+	protected function get_media_types(): array {
 		return $this->get_allowed_mime_types();
 	}
 }

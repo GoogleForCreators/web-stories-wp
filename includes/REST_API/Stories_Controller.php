@@ -69,7 +69,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$schema  = $this->get_item_schema();
 
-		if ( wp_validate_boolean( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
+		if ( 'auto-draft' === $post->post_status && wp_validate_boolean( $request['web_stories_demo'] ) ) {
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
@@ -100,19 +100,17 @@ class Stories_Controller extends Stories_Base_Controller {
 			// Based on https://github.com/WordPress/wordpress-develop/blob/8153c8ba020c4aec0b9d94243cd39c689a0730f7/src/wp-admin/includes/post.php#L1445-L1457.
 			if ( 'draft' === $post->post_status || empty( $post->post_name ) ) {
 				$view_link = get_preview_post_link( $post );
+			} elseif ( 'publish' === $post->post_status ) {
+				$view_link = get_permalink( $post );
 			} else {
-				if ( 'publish' === $post->post_status ) {
-					$view_link = get_permalink( $post );
-				} else {
-					if ( ! function_exists( 'get_sample_permalink' ) ) {
-						require_once ABSPATH . 'wp-admin/includes/post.php';
-					}
-
-					list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
-
-					// Allow non-published (private, future) to be viewed at a pretty permalink, in case $post->post_name is set.
-					$view_link = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
+				if ( ! function_exists( 'get_sample_permalink' ) ) {
+					require_once ABSPATH . 'wp-admin/includes/post.php';
 				}
+
+				list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
+
+				// Allow non-published (private, future) to be viewed at a pretty permalink, in case $post->post_name is set.
+				$view_link = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
 			}
 
 			$data['preview_link'] = $view_link;
@@ -195,7 +193,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
@@ -445,8 +443,9 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( $request['_web_stories_envelope'] ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$response = rest_get_server()->envelope_response( $response, isset( $request['_embed'] ) ? $request['_embed'] : false );
+			$response = rest_get_server()->envelope_response( $response, $request['_embed'] ?? false );
 		}
+
 		return $response;
 	}
 
@@ -457,8 +456,13 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Links for the given post.
 	 */
-	protected function prepare_links( $post ) {
+	protected function prepare_links( $post ): array {
+		// Workaround so that WP_REST_Posts_Controller::prepare_links() does not call wp_get_post_revisions(),
+		// avoiding a currently unneeded database query.
+		// TODO(#85): Remove if proper revisions support is ever needed.
+		remove_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 		$links = parent::prepare_links( $post );
+		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
 		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
@@ -495,7 +499,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
 
 		$query_params['_web_stories_envelope'] = [

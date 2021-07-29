@@ -67,7 +67,7 @@ abstract class Lock_Controller extends REST_Controller {
 		$parent_controller = $this->get_post_type_parent_controller( $post_type );
 
 		$this->parent_controller = $parent_controller;
-		$this->rest_base         = (string) $rest_base;
+		$this->rest_base         = $rest_base;
 		$this->namespace         = (string) $parent_controller->namespace;
 	}
 
@@ -157,7 +157,7 @@ abstract class Lock_Controller extends REST_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response Response object on success.
 	 */
-	public function delete_item( $request ) {
+	public function delete_item( $request ): WP_REST_Response {
 		$lock     = $this->get_lock( $request['id'] );
 		$previous = $this->prepare_item_for_response( $lock, $request );
 		$result   = delete_post_meta( $request['id'], '_edit_lock' );
@@ -301,7 +301,7 @@ abstract class Lock_Controller extends REST_Controller {
 		 * @since 1.6.0
 		 *
 		 * @param WP_REST_Response $response The response object.
-		 * @param Array            $lock     Lock array.
+		 * @param array            $lock     Lock array.
 		 * @param WP_REST_Request  $request  Request object.
 		 */
 		return apply_filters( "rest_prepare_{$this->post_type}_lock", $response, $lock, $request );
@@ -314,7 +314,7 @@ abstract class Lock_Controller extends REST_Controller {
 	 * @param int         $post_id Post object ID.
 	 * @return array Links for the given term.
 	 */
-	protected function prepare_links( $lock, $post_id ) {
+	protected function prepare_links( $lock, $post_id ): array {
 		$base  = $this->namespace . '/' . $this->rest_base;
 		$links = [
 			'self' => [
@@ -344,7 +344,7 @@ abstract class Lock_Controller extends REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}

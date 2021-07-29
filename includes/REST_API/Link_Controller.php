@@ -282,7 +282,7 @@ class Link_Controller extends REST_Controller {
 	 *
 	 * @return array Item schema data.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
