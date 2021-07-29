@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable no-constant-condition, no-await-in-loop, no-console */
+/* eslint-disable no-await-in-loop, no-console */
 
 /**
  * External dependencies
@@ -63,9 +62,10 @@ import puppeteer from 'puppeteer';
   // Focus on first TextSet
   await page.focus(`[aria-label="Text Set Options"] button:nth-child(1)`);
 
-  let textSetN = 1;
   let lastTextSetId = null;
-  while (true) {
+  let textSetId;
+  while (lastTextSetId !== textSetId) {
+    lastTextSetId = textSetId;
     // Generate PNG with transparent BG
     const textSet = await page.evaluateHandle(() => {
       const el = document.activeElement;
@@ -75,8 +75,8 @@ import puppeteer from 'puppeteer';
       el.parentNode.style.transition = 'none';
       el.parentNode.style.background = 'transparent';
       return el;
-    }, textSetN);
-    const textSetId = (
+    });
+    textSetId = (
       await page.evaluate((obj) => {
         return obj.getAttribute('data-testid');
       }, textSet)
@@ -93,9 +93,6 @@ import puppeteer from 'puppeteer';
     process.stdout.write('.');
     await page.keyboard.press('ArrowRight');
     await page.waitForTimeout(500);
-
-    lastTextSetId = textSetId;
-    textSetN++;
   }
 
   await browser.close();
@@ -103,3 +100,5 @@ import puppeteer from 'puppeteer';
     '\nText sets images generated, please move and commit them to the static-site branch'
   );
 })();
+
+/* eslint-enable */

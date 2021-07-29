@@ -10,6 +10,9 @@
   },
   "main": "./src/index.js",
   "type": "module",
+  "bin": {
+    "render-text-sets": "./src/cli.js"
+  },
   "dependencies": {
     "@web-stories-wp/migration": "*"
   },

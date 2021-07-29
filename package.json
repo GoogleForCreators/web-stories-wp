@@ -267,6 +267,7 @@
     "workflow:version": "commander version",
     "workflow:build-plugin": "commander build-plugin",
     "workflow:fonts": "update-fonts packages/fonts/src/fonts.json",
+    "workflow:render-text-sets": "render-text-sets",
     "preworkflow:migrate": "[ -f packages/migration/src/module.js ] || npx rollup --config packages/migration/src/rollup.config.migrate.js",
     "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
     "workflow:migrate:text-sets": "migration packages/text-sets/src/raw",
