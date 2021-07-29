@@ -137,6 +137,62 @@ describe('Story output', () => {
     );
   });
 
+  it('should add background audio', () => {
+    const props = {
+      id: '123',
+      backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+      story: {
+        title: 'Example',
+        slug: 'example',
+        status: 'publish',
+        author: { id: 1, name: 'John Doe' },
+        date: '123',
+        modified: '123',
+        excerpt: '123',
+        featuredMedia: {
+          id: 123,
+          url: 'https://example.com/poster.png',
+          width: 640,
+          height: 853,
+        },
+        publisherLogoUrl: 'https://example.com/logo.png',
+        password: '123',
+        link: 'https://example.com/story',
+        autoAdvance: false,
+        backgroundAudio: 'https://example.com/audio.mp3',
+      },
+      pages: [
+        {
+          id: '123',
+          animations: [
+            { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            { id: 'anim1', targets: ['124'], type: 'spin', duration: 500 },
+          ],
+          backgroundColor: {
+            type: 'solid',
+            color: { r: 255, g: 255, b: 255 },
+          },
+          page: {
+            id: '123',
+          },
+          elements: [],
+        },
+      ],
+      metadata: {
+        publisher: {
+          name: 'Publisher Name',
+          logo: 'https://example.com/logo.png',
+        },
+      },
+    };
+
+    const content = renderToStaticMarkup(<StoryOutput {...props} />);
+
+    expect(content).toContain(
+      'background-audio="https://example.com/audio.mp3"'
+    );
+  });
+
   describe('AMP validation', () => {
     it('requires at least one page', async () => {
       const props = {
@@ -344,6 +400,57 @@ describe('Story output', () => {
                 },
               },
             ],
+          },
+        ],
+        metadata: {
+          publisher: {
+            name: 'Publisher Name',
+            logo: 'https://example.com/logo.png',
+          },
+        },
+      };
+
+      await expect(<StoryOutput {...props} />).toBeValidAMP();
+    });
+
+    it('should produce valid AMP output when using background audio', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        story: {
+          title: 'Example',
+          slug: 'example',
+          status: 'publish',
+          author: { id: 1, name: 'John Doe' },
+          date: '123',
+          modified: '123',
+          excerpt: '123',
+          featuredMedia: {
+            id: 123,
+            url: 'https://example.com/poster.png',
+            width: 640,
+            height: 853,
+          },
+          publisherLogoUrl: 'https://example.com/logo.png',
+          password: '123',
+          link: 'https://example.com/story',
+          autoAdvance: false,
+          backgroundAudio: 'https://example.com/audio.mp3',
+        },
+        pages: [
+          {
+            id: '123',
+            animations: [
+              { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            ],
+            backgroundColor: {
+              type: 'solid',
+              color: { r: 255, g: 255, b: 255 },
+            },
+            page: {
+              id: '123',
+            },
+            elements: [],
           },
         ],
         metadata: {

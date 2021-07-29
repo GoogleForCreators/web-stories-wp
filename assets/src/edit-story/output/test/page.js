@@ -1102,6 +1102,26 @@ describe('Page output', () => {
     });
   });
 
+  describe('background audio', () => {
+    it('should add background audio', () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: 'https://example.com/audio.mp3',
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain(
+        'background-audio="https://example.com/audio.mp3"'
+      );
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {
@@ -1218,6 +1238,23 @@ describe('Page output', () => {
               },
             },
           ],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    it('should produce valid output with background audio', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          backgroundAudio: 'https://example.com/audio.mp3',
+          animations: [],
+          elements: [],
         },
         autoAdvance: true,
         defaultPageDuration: 11,
