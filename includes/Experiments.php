@@ -227,7 +227,7 @@ class Experiments extends Service_Base {
 			[
 				'name'        => 'enableAmpValidationCheck',
 				'label'       => __( 'Amp Validation Error Check', 'web-stories' ),
-				'description' => __( 'Enable AMP validation error in the checklist', 'web-stories' ),
+				'description' => __( 'Enable AMP validation in the checklist', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
