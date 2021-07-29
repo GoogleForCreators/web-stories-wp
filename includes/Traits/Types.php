@@ -165,12 +165,14 @@ trait Types {
 	 * @return array List of allowed mime types.
 	 */
 	public function get_allowed_audio_mime_types(): array {
-		return [
+		$allowed_mime_types = [
 			'audio/mpeg',
 			'audio/aac',
 			'audio/wav',
 			'audio/ogg',
 		];
+
+		return array_values( array_intersect( $allowed_mime_types, get_allowed_mime_types() ) );
 	}
 
 	/**
