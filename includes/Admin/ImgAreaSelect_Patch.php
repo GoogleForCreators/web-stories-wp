@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Crop_Script.
+ * Class ImgAreaSelect_Patch.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -33,11 +33,11 @@ use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Traits\Screen;
 
 /**
- * Class Crop Script
+ * Class ImgAreaSelect_Patch
  *
  * @package Google\Web_Stories
  */
-class Crop_Script implements Conditional, Service, Registerable {
+class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	use Screen;
 
 	/**
