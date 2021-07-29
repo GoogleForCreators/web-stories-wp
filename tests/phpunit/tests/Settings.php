@@ -44,5 +44,6 @@ class Settings extends Test_Case {
 		$this->assertArrayHasKey( $settings::SETTING_NAME_AD_MANAGER_SLOT_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, $options );
 		$this->assertArrayHasKey( $settings::SETTING_NAME_ADSENSE_SLOT_ID, $options );
+		$this->assertArrayHasKey( $settings::SETTING_NAME_EXPERIMENTS, $options );
 	}
 }

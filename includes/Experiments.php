@@ -493,7 +493,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of all enabled experiments.
 	 */
-	public function get_enabled_experiments() {
+	public function get_enabled_experiments(): array {
 		$experiments = array_filter(
 			wp_list_pluck( $this->get_experiments(), 'name' ),
 			[ $this, 'is_experiment_enabled' ]

@@ -84,11 +84,14 @@ class Experiments extends Test_Case {
 	 * @covers ::initialize_settings
 	 */
 	public function test_initialize_settings() {
+		global $wp_settings_fields, $wp_settings_sections;
+
 		$experiments = new \Google\Web_Stories\Experiments();
 		$experiments->initialize_settings();
 
-		$options = get_registered_settings();
-		$this->assertArrayHasKey( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, $options );
+		$this->assertArrayHasKey( \Google\Web_Stories\Experiments::PAGE_NAME, $wp_settings_fields );
+		$this->assertArrayHasKey( \Google\Web_Stories\Experiments::PAGE_NAME, $wp_settings_sections );
+		$this->assertArrayHasKey( 'web_stories_experiments_section', $wp_settings_sections[ \Google\Web_Stories\Experiments::PAGE_NAME ] );
 	}
 
 	/**
