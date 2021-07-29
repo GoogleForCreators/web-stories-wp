@@ -30,7 +30,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import styled, { css } from 'styled-components';
+import styled  from 'styled-components';
 
 /**
  * Internal dependencies
@@ -38,9 +38,9 @@ import styled, { css } from 'styled-components';
 import { useConfig, useStory } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { focusStyle } from '../../shared';
 import { useMediaPicker } from '../../../mediaPicker';
 import Tooltip from '../../../tooltip';
+import AudioPlayer from '../../../audioPlayer';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -53,18 +53,6 @@ const InputRow = styled.div`
   flex-grow: 1;
   margin-right: 8px;
 `;
-
-const StyledFileInput = styled(Input)(
-  ({ hasMixedValue, theme }) => css`
-    ${focusStyle};
-    ${!hasMixedValue &&
-    css`
-      * > input:disabled {
-        color: ${theme.colors.fg.primary};
-      }
-    `};
-  `
-);
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -132,7 +120,7 @@ function BackgroundAudioPanel() {
           )}
         </HelperText>
       </Row>
-      {!backgroundAudio ? (
+      {!backgroundAudio && (
         <Row expand>
           <UploadButton
             onClick={uploadAudioTrack}
@@ -143,16 +131,15 @@ function BackgroundAudioPanel() {
             {__('Upload a file', 'web-stories')}
           </UploadButton>
         </Row>
-      ) : (
+      )}
+      {backgroundAudio && (
         <Row>
           <InputRow>
-            <StyledFileInput
-              value={backgroundAudio.substring(
+            <AudioPlayer
+              title={backgroundAudio.substring(
                 backgroundAudio.lastIndexOf('/') + 1
               )}
-              aria-label={__('Filename', 'web-stories')}
-              onChange={() => updateBackgroundAudio(null)}
-              disabled
+              src={backgroundAudio}
             />
           </InputRow>
           <Tooltip hasTail title={__('Remove file', 'web-stories')}>
