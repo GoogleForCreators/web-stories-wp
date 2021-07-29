@@ -35,6 +35,7 @@ function getStoryPropsToSave({ story, pages, metadata, flags }) {
     'globalStoryStyles',
     'autoAdvance',
     'defaultPageDuration',
+    'backgroundAudio',
   ]);
 
   const content = getStoryMarkup(story, pages, metadata, flags);

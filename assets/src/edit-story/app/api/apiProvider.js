@@ -22,10 +22,12 @@ import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
 import { addQueryArgs } from '@web-stories-wp/design-system';
+
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
 /**
  * Internal dependencies
  */
@@ -124,6 +126,7 @@ function APIProvider({ children }) {
       autoAdvance,
       defaultPageDuration,
       currentStoryStyles,
+      backgroundAudio,
       content,
       author,
       ...rest
@@ -135,6 +138,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
           currentStoryStyles,
+          backgroundAudio,
         },
         featured_media: featuredMedia.id,
         style_presets: globalStoryStyles,
