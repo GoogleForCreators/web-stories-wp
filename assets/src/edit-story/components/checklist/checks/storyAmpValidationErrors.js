@@ -41,6 +41,7 @@ export async function getStoryAmpValidationErrors({ link, status }) {
     if ('FAIL' !== markupStatus) {
       return false;
     }
+
     const filteredErrors = errors
       .filter(({ severity }) => severity === 'ERROR')
       .filter(({ code, params }) => {
@@ -89,14 +90,20 @@ const StoryAmpValidationErrors = () => {
   // Allows us to just track status and link, puts the story in line with what the outcome would be if the user was testing their
   // story link in the recommended test/amp site.
   useEffect(() => {
-    !isSaving &&
+    let isMounted = true;
+    if (!isSaving) {
       getStoryAmpValidationErrors({ link, status }).then((hasErrors) => {
-        setIsRendered(hasErrors);
-        if (hasErrors && !ampValidationErrorsRef?.current) {
-          ampValidationErrorsRef.current = true;
+        if (isMounted) {
+          setIsRendered(hasErrors);
+          if (hasErrors && !ampValidationErrorsRef?.current) {
+            ampValidationErrorsRef.current = true;
+          }
         }
-        return hasErrors;
       });
+    }
+    return () => {
+      isMounted = false;
+    };
   }, [link, status, isSaving]);
 
   useEffect(() => {
