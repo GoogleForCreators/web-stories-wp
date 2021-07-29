@@ -22,6 +22,7 @@ import { forwardRef, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useInputEventHandlers } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
