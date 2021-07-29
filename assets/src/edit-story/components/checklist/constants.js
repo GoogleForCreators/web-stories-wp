@@ -485,13 +485,9 @@ export const PRIORITY_COPY = {
         mapping={{
           a: (
             <Link
-              href="https://wordpress.org/plugins/web-stories/#what%20do%20i%20do%20about%20an%20amp%20validation%20issue%20in%20search%20console%3F"
+              href={__('https://wp.stories.google/docs/', 'web-stories')}
               rel="noreferrer"
               target="_blank"
-              aria-label={__(
-                'Web Stories frequently asked questions',
-                'web-stories'
-              )}
               onClick={onAmpErrorClick}
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
             />
@@ -499,7 +495,7 @@ export const PRIORITY_COPY = {
         }}
       >
         {__(
-          'Your story contains errors that can affect eligibility to appear on Google. This can be caused by incompatible WordPress plugins, web application firewalls, or other hosting configuration issues. Please see <a>our FAQ</a> for more information and debugging tips.',
+          'Your story contains errors that can affect eligibility to appear on Google. Please see <a>our FAQ</a> for more information.',
           'web-stories'
         )}
       </TranslateWithMarkup>
