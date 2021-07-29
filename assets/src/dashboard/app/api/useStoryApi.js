@@ -277,7 +277,6 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         const path = queryString.stringifyUrl({
           url: storyApi,
           query: {
-            _embed: 'wp:lock,wp:lockuser,author',
             _fields: ['edit_link'].join(','),
           },
         });
