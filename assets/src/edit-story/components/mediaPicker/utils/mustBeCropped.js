@@ -42,6 +42,11 @@ const mustBeCropped = (flexW, flexH, dstW, dstH, imgW, imgH) => {
     return false;
   }
 
+  // Skip cropping of the image's aspect ratio is the same as the required aspect ratio.
+  if (Math.abs(dstW / dstH - imgW / imgH) < 0.00001 /* Number.EPSILON */) {
+    return false;
+  }
+
   return true;
 };
 export default mustBeCropped;
