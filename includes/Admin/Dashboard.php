@@ -40,7 +40,6 @@ use Google\Web_Stories\Assets;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Screen;
 use Google\Web_Stories\Traits\Types;
-use WP_Post_Type;
 
 /**
  * Dashboard class.
@@ -150,11 +149,7 @@ class Dashboard extends Service_Base {
 	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix( $key ) {
-		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
-			return false;
-		}
-
-		return $this->hook_suffix[ $key ];
+		return $this->hook_suffix[ $key ] ?? false;
 	}
 
 	/**
@@ -270,8 +265,9 @@ class Dashboard extends Service_Base {
 								'featured_media_url',
 								'preview_link',
 								'edit_link',
-								// TODO: Remove need for story_data as its a lot of data sent over the wire.
+								// TODO: Remove need for this as it's a lot of data sent over the wire.
 								// It's only needed for duplicating stories.
+								'content',
 								'story_data',
 								// _web_stories_envelope will add these fields, we need them too.
 								'body',

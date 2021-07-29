@@ -94,8 +94,9 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           'featured_media_url',
           'preview_link',
           'edit_link',
-          // TODO: Remove need for story_data as its a lot of data sent over the wire.
+          // TODO: Remove need for this as it's a lot of data sent over the wire.
           // It's only needed for duplicating stories.
+          'content',
           'story_data',
           // _web_stories_envelope will add these fields, we need them too.
           'body',
@@ -348,6 +349,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
               'edit_link',
               // TODO: Remove need for story_data as its a lot of data sent over the wire.
               // It's only needed for duplicating stories.
+              'content',
               'story_data',
               // _web_stories_envelope will add these fields, we need them too.
               'body',
