@@ -264,7 +264,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @return array Filtered query clauses.
 	 */
-	public function filter_posts_clauses( $clauses, $query ): array {
+	public function filter_posts_clauses( $clauses, $query ) {
 		global $wpdb;
 
 		if ( $this->post_type !== $query->get( 'post_type' ) ) {
