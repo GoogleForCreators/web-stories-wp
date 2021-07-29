@@ -13,7 +13,7 @@ use WP_REST_Server;
  *
  * @package Google\Web_Stories\Tests\REST_API
  *
- * @coversDefaultClass  Google\Web_Stories\REST_API\Link_Controller
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Link_Controller
  */
 class Link_Controller extends Test_REST_TestCase {
 	/**

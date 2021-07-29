@@ -35,6 +35,7 @@ import {
   ScrollableContent,
   TabButton,
   TabPanel,
+  TabButtonWrapper,
 } from './styles';
 
 const TablistPanel = ({
@@ -53,38 +54,40 @@ const TablistPanel = ({
 
   return (
     <PanelWrapper className={className} isExpanded={isExpanded}>
-      <TabButton
-        aria-controls={panelId}
-        aria-selected={isExpanded}
-        onClick={onClick}
-        role="tab"
-        status={status}
-      >
-        <ButtonText>
-          <IconContainer>
-            <Icons.ChevronDownSmall />
-          </IconContainer>
-          <PanelText
-            id={`${title}-${panelId}`}
-            aria-label={sprintf(
-              /* translators: 1: number of issues. 2: type of issue, for example "High Priority". */
-              _n(
-                '%1$d %2$s issue',
-                '%1$d %2$s issues',
+      <TabButtonWrapper>
+        <TabButton
+          aria-controls={panelId}
+          aria-selected={isExpanded}
+          onClick={onClick}
+          role="tab"
+          status={status}
+        >
+          <ButtonText>
+            <IconContainer>
+              <Icons.ChevronDownSmall />
+            </IconContainer>
+            <PanelText
+              id={`${title}-${panelId}`}
+              aria-label={sprintf(
+                /* translators: 1: number of issues. 2: type of issue, for example "High Priority". */
+                _n(
+                  '%1$d %2$s issue',
+                  '%1$d %2$s issues',
+                  badgeCount,
+                  'web-stories'
+                ),
                 badgeCount,
-                'web-stories'
-              ),
-              badgeCount,
-              title
-            )}
-          >
-            {title}
-          </PanelText>
-        </ButtonText>
-        <Badge>
-          <PanelText aria-hidden>{badgeCount}</PanelText>
-        </Badge>
-      </TabButton>
+                title
+              )}
+            >
+              {title}
+            </PanelText>
+          </ButtonText>
+          <Badge>
+            <PanelText aria-hidden>{badgeCount}</PanelText>
+          </Badge>
+        </TabButton>
+      </TabButtonWrapper>
       <ScrollableContent maxHeight={maxHeight}>
         <TabPanel
           id={panelId}

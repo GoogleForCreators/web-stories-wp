@@ -18,24 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { HexPropType, PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@web-stories-wp/patterns';
 import { ResourcePropTypes } from '@web-stories-wp/media';
 import { AnimationProps } from '@web-stories-wp/animation';
+
 /**
  * Internal dependencies
  */
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 
-export const BorderPropTypes = PropTypes.shape({
-  color: HexPropType.isRequired,
-  left: PropTypes.number,
-  top: PropTypes.number,
-  right: PropTypes.number,
-  bottom: PropTypes.number,
-  locked: PropTypes.bool.isRequired,
-  position: PropTypes.string.isRequired,
-});
 
 export const StylePresetPropType = PropTypes.shape({
   colors: PropTypes.array,

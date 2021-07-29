@@ -36,15 +36,6 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, animations, elements, backgroundColor, backgroundAudio } = page;
 
   const [backgroundElement, ...regularElements] = elements;
-  const animationDuration = getTotalDuration({ animations }) / 1000;
-  const nonMediaPageDuration = Math.max(
-    animationDuration || 0,
-    defaultPageDuration
-  );
-  const longestMediaElement = getLongestMediaElement(
-    elements,
-    nonMediaPageDuration
-  );
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
@@ -57,6 +48,18 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         ...generatePatternStyles(backgroundColor),
       };
 
+  const animationDuration = getTotalDuration({ animations }) / 1000;
+  // If the page doesn't have media, take either the animations time or the configured default duration time.
+  const nonMediaPageDuration = Math.max(
+    animationDuration || 0,
+    defaultPageDuration
+  );
+  // If we have media, take the media time for advancement time and ignore the default,
+  // but still consider animation time as the minimum, too.
+  const longestMediaElement = getLongestMediaElement(
+    elements,
+    animationDuration || 1
+  );
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`
     : `${nonMediaPageDuration}s`;

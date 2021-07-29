@@ -20,7 +20,6 @@
 import styled, { keyframes } from 'styled-components';
 
 export const GRID_ITEM_HEIGHT = 56;
-export const PANEL_WIDTH = 276;
 
 export const BaseAnimationCell = styled.div`
   display: none;

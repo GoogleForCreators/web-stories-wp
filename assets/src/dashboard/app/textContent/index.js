@@ -19,6 +19,11 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 
+export const SUCCESS = {
+  SETTINGS: {
+    UPDATED: __('Setting saved.', 'web-stories'),
+  },
+};
 export const ERRORS = {
   LOAD_STORIES: {
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),

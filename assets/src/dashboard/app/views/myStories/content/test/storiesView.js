@@ -114,7 +114,12 @@ describe('My Stories <StoriesView />', function () {
           stories={fakeStories}
           view={{
             style: VIEW_STYLE.GRID,
-            pageSize: { width: 210, height: 316, containerHeight: 316 },
+            pageSize: {
+              width: 210,
+              height: 316,
+              containerHeight: 316,
+              posterHeight: 300,
+            },
           }}
         />
       </SnackbarProvider>,
@@ -148,7 +153,12 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 210, height: 316, containerHeight: 316 },
+              pageSize: {
+                width: 210,
+                height: 316,
+                containerHeight: 316,
+                posterHeight: 300,
+              },
             }}
             loading={{
               isLoading: true,
@@ -183,7 +193,12 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 210, height: 316, containerHeight: 316 },
+              pageSize: {
+                width: 210,
+                height: 316,
+                containerHeight: 316,
+                posterHeight: 300,
+              },
             }}
             loading={{
               isLoading: true,
@@ -220,7 +235,12 @@ describe('My Stories <StoriesView />', function () {
             stories={fakeStories}
             view={{
               style: VIEW_STYLE.LIST,
-              pageSize: { width: 210, height: 316, containerHeight: 316 },
+              pageSize: {
+                width: 210,
+                height: 316,
+                containerHeight: 316,
+                posterHeight: 300,
+              },
             }}
             loading={{
               isLoading: true,

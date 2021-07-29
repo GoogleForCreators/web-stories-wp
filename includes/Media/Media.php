@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Traits\Screen;
+use Google\Web_Stories\Traits\Types;
 use WP_Post;
 use WP_Query;
 use WP_REST_Request;
@@ -36,7 +37,7 @@ use WP_REST_Request;
  * Class Media
  */
 class Media extends Service_Base {
-	use Screen;
+	use Screen, Types;
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -101,11 +102,26 @@ class Media extends Service_Base {
 	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
 
 	/**
+	 * The muted video id post meta key.
+	 *
+	 * @var string
+	 */
+	const MUTED_ID_POST_META_KEY = 'web_stories_muted_id';
+
+	/**
 	 * Key for media post type.
 	 *
 	 * @var string
 	 */
 	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
+
+
+	/**
+	 * Is muted.
+	 *
+	 * @var string
+	 */
+	const IS_MUTED_POST_META_KEY = 'web_stories_is_muted';
 
 	/**
 	 * Init.
@@ -115,6 +131,33 @@ class Media extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
+		$this->register_taxonomy();
+		$this->register_meta();
+		$this->add_image_sizes();
+
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
+
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
+
+		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
+
+		// Hide video posters from Media grid view.
+		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
+		// Hide video posters from Media list view.
+		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
+		// Hide video posters from web-stories/v1/media REST API requests.
+		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
+		add_filter( 'default_post_metadata', [ $this, 'filter_default_value_is_muted' ], 15, 4 );
+	}
+
+	/**
+	 * Register taxonomy for attachment post type.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function register_taxonomy() {
 		register_taxonomy(
 			self::STORY_MEDIA_TAXONOMY,
 			'attachment',
@@ -124,6 +167,29 @@ class Media extends Service_Base {
 				'rewrite'      => false,
 				'hierarchical' => false,
 				'show_in_rest' => true,
+			]
+		);
+	}
+
+	/**
+	 * Register meta for attachment post type.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function register_meta() {
+		register_meta(
+			'post',
+			self::IS_MUTED_POST_META_KEY,
+			[
+				'type'              => 'boolean',
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'description'       => __( 'Whether the video is muted', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => false,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
 			]
 		);
 
@@ -155,8 +221,31 @@ class Media extends Service_Base {
 			]
 		);
 
-		// Image sizes as per https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
+		register_meta(
+			'post',
+			self::MUTED_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'ID of muted video.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+	}
 
+	/**
+	 * Add image sizes.
+	 *
+	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function add_image_sizes() {
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
 		add_image_size(
 			self::POSTER_PORTRAIT_IMAGE_SIZE,
@@ -180,19 +269,6 @@ class Media extends Service_Base {
 			self::STORY_THUMBNAIL_IMAGE_DIMENSIONS[1],
 			false
 		);
-
-		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
-
-		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
-
-		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
-
-		// Hide video posters from Media grid view.
-		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
-		// Hide video posters from Media list view.
-		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
-		// Hide video posters from web-stories/v1/media REST API requests.
-		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
 	}
 
 	/**
@@ -379,7 +455,7 @@ class Media extends Service_Base {
 	public function get_callback_media_source( $prepared ) {
 		$id = $prepared['id'];
 
-		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
+		$terms = get_the_terms( $id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$term = array_shift( $terms );
 
@@ -446,6 +522,10 @@ class Media extends Service_Base {
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
+
+			$is_muted = get_post_meta( $attachment->ID, self::IS_MUTED_POST_META_KEY, true );
+
+			$response['meta'][ self::IS_MUTED_POST_META_KEY ] = rest_sanitize_boolean( $is_muted );
 		}
 
 		$response['media_source'] = $this->get_callback_media_source( $response );
@@ -546,7 +626,7 @@ class Media extends Service_Base {
 	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
-		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
+		$terms = get_the_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
@@ -554,5 +634,44 @@ class Media extends Service_Base {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Filter the default value of is muted, to check to see if the video has audio track.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param mixed  $value     The value to return, either a single metadata value or an array
+	 *                          of values depending on the value of `$single`.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key  Metadata key.
+	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
+	 *
+	 * @return bool|bool[]
+	 */
+	public function filter_default_value_is_muted( $value, $object_id, $meta_key, $single ) {
+		if ( self::IS_MUTED_POST_META_KEY !== $meta_key ) {
+			return $value;
+		}
+		$mime_types = $this->get_allowed_mime_types();
+		if ( ! is_array( $mime_types ) || ! isset( $mime_types['video'] ) ) {
+			return $value;
+		}
+
+		$video_mime_types  = $mime_types['video'];
+		$current_mime_type = get_post_mime_type( $object_id );
+
+		if ( ! in_array( $current_mime_type, $video_mime_types, true ) ) {
+			return $value;
+		}
+
+		$meta_data = wp_get_attachment_metadata( $object_id );
+		if ( ! $meta_data ) {
+			return $value;
+		}
+
+		$is_muted = ! isset( $meta_data['audio'] );
+
+		return ( $single ) ? $is_muted : [ $is_muted ];
 	}
 }

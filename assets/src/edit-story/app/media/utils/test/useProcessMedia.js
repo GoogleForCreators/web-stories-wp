@@ -32,6 +32,12 @@ const fetchRemoteFileMock = (url, mimeType) => {
     });
   }
 
+  if (url === 'http://www.google.com/foo.mp4') {
+    return new File(['foo'], 'foo.mp4', {
+      type: mimeType,
+    });
+  }
+
   if (url === 'http://www.google.com/foo.gif') {
     return {
       arrayBuffer: jest.fn(),
@@ -40,9 +46,18 @@ const fetchRemoteFileMock = (url, mimeType) => {
 
   return Promise.reject(new Error('Invalid file'));
 };
+
+const fetchRemoteBlobMock = (url) => {
+  if (url === 'http://www.google.com/foo.gif') {
+    return {};
+  }
+
+  return Promise.reject(new Error('Invalid file'));
+};
 jest.mock('@web-stories-wp/media', () => {
   return {
     fetchRemoteFile: fetchRemoteFileMock,
+    fetchRemoteBlob: fetchRemoteBlobMock,
     isAnimatedGif: () => {
       return true;
     },
@@ -84,6 +99,7 @@ function setup() {
   const uploadVideoPoster = jest.fn();
   const updateMedia = jest.fn();
   const deleteMediaElement = jest.fn();
+  const updateVideoIsMuted = jest.fn();
 
   const { result } = renderHook(
     () =>
@@ -92,14 +108,16 @@ function setup() {
         uploadVideoPoster,
         updateMedia,
         deleteMediaElement,
+        updateVideoIsMuted,
       }),
     { wrapper }
   );
 
-  const { optimizeVideo, optimizeGif } = result.current;
+  const { optimizeVideo, optimizeGif, muteExistingVideo } = result.current;
   return {
     optimizeVideo,
     optimizeGif,
+    muteExistingVideo,
     uploadVideoPoster,
     updateMedia,
     deleteMediaElement,
@@ -107,103 +125,191 @@ function setup() {
 }
 
 describe('useProcessMedia', () => {
-  it('should process video file', async () => {
-    const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
-    act(() => {
-      optimizeVideo({
-        resource: {
-          src: 'http://www.google.com/foo.mov',
-          id: 123,
-          alt: 'alt',
-          title: 'title',
-          mimeType: 'video/quicktime',
-        },
+  describe('optimizeVideo', () => {
+    it('should process video file', async () => {
+      const { optimizeVideo, uploadVideoPoster, updateMedia } = setup();
+      act(() => {
+        optimizeVideo({
+          resource: {
+            src: 'http://www.google.com/foo.mov',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'video/quicktime',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          media_source: 'source-video',
+          meta: {
+            web_stories_optimized_id: 2,
+          },
+        });
       });
     });
-    await waitFor(() => {
-      expect(uploadVideoPoster).toHaveBeenCalledWith(
-        2,
-        'http://www.google.com/foo.gif'
-      );
-      expect(updateMedia).toHaveBeenCalledWith(123, {
-        media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+
+    it('should fail video processing gracefully', async () => {
+      const {
+        optimizeVideo,
+        uploadVideoPoster,
+        updateMedia,
+        deleteMediaElement,
+      } = setup();
+      act(() => {
+        optimizeVideo({
+          resource: {
+            src: 'http://www.google.com/invalid.jpg',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'image/jpg',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateMedia).not.toHaveBeenCalled();
+        expect(deleteMediaElement).not.toHaveBeenCalled();
       });
     });
   });
 
-  it('should process gif file', async () => {
-    const { optimizeGif, uploadVideoPoster, updateMedia } = setup();
-    act(() => {
-      optimizeGif({
-        resource: {
-          src: 'http://www.google.com/foo.gif',
-          id: 123,
-          alt: 'alt',
-          title: 'title',
-          mimeType: 'image/gif',
-        },
+  describe('muteExistingVideo', () => {
+    it('should mute video file', async () => {
+      const { muteExistingVideo, uploadVideoPoster, updateMedia } = setup();
+      act(() => {
+        muteExistingVideo({
+          resource: {
+            src: 'http://www.google.com/foo.mp4',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'video/mp4',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          meta: {
+            web_stories_muted_id: 2,
+          },
+        });
       });
     });
-    await waitFor(() => {
-      expect(uploadVideoPoster).toHaveBeenCalledWith(
-        2,
-        'http://www.google.com/foo.gif'
-      );
-      expect(updateMedia).toHaveBeenCalledWith(123, {
-        media_source: 'source-image',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+
+    it('should mute video file with empty poster', async () => {
+      const { muteExistingVideo, uploadVideoPoster, updateMedia } = setup();
+      act(() => {
+        muteExistingVideo({
+          resource: {
+            src: 'http://www.google.com/foo.mp4',
+            poster: 'http://www.google.com/foo.jpeg',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'video/mp4',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          meta: {
+            web_stories_muted_id: 2,
+          },
+        });
+      });
+    });
+
+    it('should fail video muting gracefully', async () => {
+      const {
+        muteExistingVideo,
+        uploadVideoPoster,
+        updateMedia,
+        deleteMediaElement,
+      } = setup();
+      act(() => {
+        muteExistingVideo({
+          resource: {
+            src: 'http://www.google.com/invalid.jpg',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'image/jpg',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateMedia).not.toHaveBeenCalled();
+        expect(deleteMediaElement).not.toHaveBeenCalled();
       });
     });
   });
 
-  it('should fail video processing gracefully', async () => {
-    const {
-      optimizeVideo,
-      uploadVideoPoster,
-      updateMedia,
-      deleteMediaElement,
-    } = setup();
-    act(() => {
-      optimizeVideo({
-        resource: {
-          src: 'http://www.google.com/invalid.jpg',
-          id: 123,
-          alt: 'alt',
-          title: 'title',
-          mimeType: 'image/jpg',
-        },
+  describe('optimizeGif', () => {
+    it('should process gif file', async () => {
+      const { optimizeGif, uploadVideoPoster, updateMedia } = setup();
+      act(() => {
+        optimizeGif({
+          resource: {
+            src: 'http://www.google.com/foo.gif',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'image/gif',
+          },
+        });
+      });
+      await waitFor(() => {
+        expect(uploadVideoPoster).toHaveBeenCalledWith(
+          2,
+          'http://www.google.com/foo.gif'
+        );
+        expect(updateMedia).toHaveBeenCalledWith(123, {
+          media_source: 'source-image',
+          meta: {
+            web_stories_optimized_id: 2,
+          },
+        });
       });
     });
-    await waitFor(() => {
-      expect(uploadVideoPoster).not.toHaveBeenCalled();
-      expect(updateMedia).not.toHaveBeenCalled();
-      expect(deleteMediaElement).not.toHaveBeenCalled();
-    });
-  });
 
-  it('should fail gif processing gracefully', async () => {
-    const { optimizeGif, uploadVideoPoster, updateMedia, deleteMediaElement } =
-      setup();
-    act(() => {
-      optimizeGif({
-        resource: {
-          src: 'http://www.google.com/invalid.jpg',
-          id: 123,
-          alt: 'alt',
-          title: 'title',
-          mimeType: 'image/jpg',
-        },
+    it('should fail gif processing gracefully', async () => {
+      const {
+        optimizeGif,
+        uploadVideoPoster,
+        updateMedia,
+        deleteMediaElement,
+      } = setup();
+      act(() => {
+        optimizeGif({
+          resource: {
+            src: 'http://www.google.com/invalid.jpg',
+            id: 123,
+            alt: 'alt',
+            title: 'title',
+            mimeType: 'image/jpg',
+          },
+        });
       });
-    });
-    await waitFor(() => {
-      expect(uploadVideoPoster).not.toHaveBeenCalled();
-      expect(updateMedia).not.toHaveBeenCalled();
-      expect(deleteMediaElement).not.toHaveBeenCalled();
+      await waitFor(() => {
+        expect(uploadVideoPoster).not.toHaveBeenCalled();
+        expect(updateMedia).not.toHaveBeenCalled();
+        expect(deleteMediaElement).not.toHaveBeenCalled();
+      });
     });
   });
 });
