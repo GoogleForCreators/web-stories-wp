@@ -23,17 +23,8 @@ import { useCallback } from 'react';
 /**
  * External dependencies
  */
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
-  Icons,
-  Text,
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -41,10 +32,8 @@ import {
 import { useStory } from '../../../../app/story';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import Tooltip from '../../../tooltip';
 import { useConfig } from '../../../../app';
-import { useMediaPicker } from '../../../mediaPicker';
-import AudioPlayer from '../../../audioPlayer';
+import BackgroundAudioPanelContent from '../../shared/backgroundAudioPanelContent';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -52,28 +41,8 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-const InputRow = styled.div`
-  display: flex;
-  flex-grow: 1;
-  margin-right: 8px;
-`;
-
-const StyledButton = styled(Button)`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
-`;
-
-const UploadButton = styled(StyledButton)`
-  padding: 12px 8px;
-`;
-
 function PageAdvancementPanel() {
   const {
-    allowedAudioMimeTypes,
-    allowedAudioFileTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
@@ -93,20 +62,6 @@ function PageAdvancementPanel() {
     [updateStory]
   );
 
-  const onSelectErrorMessage = sprintf(
-    /* translators: %s: list of allowed file types. */
-    __('Please choose only %s to insert into page.', 'web-stories'),
-    translateToExclusiveList(allowedAudioFileTypes)
-  );
-
-  const uploadAudioTrack = useMediaPicker({
-    onSelect: updateBackgroundAudio,
-    onSelectErrorMessage,
-    type: allowedAudioMimeTypes,
-    title: __('Upload an audio file', 'web-stories'),
-    buttonInsertText: __('Select audio file', 'web-stories'),
-  });
-
   if (!hasUploadMediaAction) {
     return null;
   }
@@ -125,41 +80,10 @@ function PageAdvancementPanel() {
           )}
         </HelperText>
       </Row>
-      {!backgroundAudio && (
-        <Row expand>
-          <UploadButton
-            onClick={uploadAudioTrack}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
-          >
-            {__('Upload a file', 'web-stories')}
-          </UploadButton>
-        </Row>
-      )}
-      {backgroundAudio && (
-        <Row>
-          <InputRow>
-            <AudioPlayer
-              title={backgroundAudio.substring(
-                backgroundAudio.lastIndexOf('/') + 1
-              )}
-              src={backgroundAudio}
-            />
-          </InputRow>
-          <Tooltip hasTail title={__('Remove file', 'web-stories')}>
-            <StyledButton
-              aria-label={__('Remove file', 'web-stories')}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
-              onClick={() => updateBackgroundAudio(null)}
-            >
-              <Icons.Trash />
-            </StyledButton>
-          </Tooltip>
-        </Row>
-      )}
+      <BackgroundAudioPanelContent
+        backgroundAudio={backgroundAudio}
+        updateBackgroundAudio={updateBackgroundAudio}
+      />
     </SimplePanel>
   );
 }
