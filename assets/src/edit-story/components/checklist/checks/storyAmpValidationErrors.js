@@ -75,10 +75,11 @@ export async function getStoryAmpValidationErrors({ link, status }) {
 const StoryAmpValidationErrors = () => {
   // ampValidationErrorRef is making sure that tracking is only fired once per session.
   const ampValidationErrorsRef = useRef();
-  const {
-    meta: { isSaving },
-    story: { link, status },
-  } = useStory(({ state }) => state);
+  const { isSaving, link, status } = useStory(({ state }) => ({
+    isSaving: state.meta.isSaving,
+    link: state.story.link,
+    status: state.story.status,
+  }));
 
   // isRendered is getting set asynchronously based on the returned value of `getStoryAmpValidationErrors`,
   // setting this statefully allows the value to be a boolean not a promise which is crucial to updating tracking accurately.
