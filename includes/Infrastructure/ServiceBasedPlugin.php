@@ -19,6 +19,8 @@ namespace Google\Web_Stories\Infrastructure;
 
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\ServiceContainer\LazilyInstantiatedService;
+use function add_action;
+use function apply_filters;
 use function Google\Web_Stories\rewrite_flush;
 
 
@@ -161,7 +163,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 */
 	public function register() {
 		if ( false !== static::REGISTRATION_ACTION ) {
-			\add_action(
+			add_action(
 				static::REGISTRATION_ACTION,
 				[ $this, 'register_services' ]
 			);
@@ -205,38 +207,89 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                classes need to implement the
 			 *                                Service interface.
 			 */
-			$filtered_services = \apply_filters(
+			$filtered_services = apply_filters(
 				static::HOOK_PREFIX . static::SERVICES_FILTER,
 				$services
 			);
 
 			$services = $this->validate_services( $filtered_services, $services );
 		}
-		foreach ( $services as $id => $class ) {
-			$id    = $this->maybe_resolve( $id );
-			$class = $this->maybe_resolve( $class );
-			// Allow the services to delay their registration.
-			if ( is_a( $class, Delayed::class, true ) ) {
-				$registration_action = $class::get_registration_action();
-				if ( did_action( $registration_action ) ) {
-					$this->register_service( $id, $class );
 
-					continue;
-				}
+		while ( null !== key( $services ) ) {
+			$id    = $this->maybe_resolve( key( $services ) );
+			$class = $this->maybe_resolve( current( $services ) );
 
-				\add_action(
-					$class::get_registration_action(),
-					function () use ( $id, $class ) {
-						$this->register_service( $id, $class );
-					},
-					$class::get_registration_action_priority()
-				);
+			// Delay registering the service until all requirements are met.
+			if (
+				is_a( $class, HasRequirements::class, true )
+				&&
+				! $this->requirements_are_met( $class, array_keys( $services ) )
+			) {
+				/*
+				 * Move the service to the end of the array.
+				 *
+				 * Note: Unsetting the key advances the internal array pointer to the next array item, so
+				 * the current array item will have to be temporarily stored so that it can be re-added later.
+				 */
+				$delayed_service = [ key( $services ) => current( $services ) ];
+				unset( $services[ key( $services ) ] );
+				$services[ key( $delayed_service ) ] = current( $delayed_service );
 
 				continue;
 			}
 
+			// Allow the services to delay their registration.
+			if ( is_a( $class, Delayed::class, true ) ) {
+				$registration_action = $class::get_registration_action();
+
+				if ( did_action( $registration_action ) ) {
+					$this->register_service( $id, $class );
+				} else {
+					add_action(
+						$class::get_registration_action(),
+						function () use ( $id, $class ) {
+							$this->register_service( $id, $class );
+						}
+					);
+				}
+
+				next( $services );
+				continue;
+			}
+
 			$this->register_service( $id, $class );
+
+			next( $services );
 		}
+	}
+
+	/**
+	 * Determine if the requirements for a service to be registered are met.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param HasRequirements $class       Service with requirements.
+	 * @param string[]        $service_ids List of service IDs to be registered.
+	 *
+	 * @throws InvalidService If the required service is not recognized.
+	 *
+	 * @return bool Whether the requirements for the service has been met.
+	 */
+	protected function requirements_are_met( $class, $service_ids ): bool {
+		$requirements = $class::get_requirements();
+
+		foreach ( $requirements as $requirement ) {
+			// Bail if it requires a service that is not recognized.
+			if ( ! in_array( $requirement, $service_ids, true ) ) {
+				throw InvalidService::from_service_id( $requirement );
+			}
+
+			if ( ! $this->get_container()->has( $requirement ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -396,7 +449,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param Injector $injector Injector instance to configure.
 	 * @return Injector Configured injector instance.
 	 */
-	protected function configure_injector( Injector $injector ) {
+	protected function configure_injector( Injector $injector ): Injector {
 		$bindings         = $this->get_bindings();
 		$shared_instances = $this->get_shared_instances();
 		$arguments        = $this->get_arguments();
@@ -412,7 +465,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                implementation bindings. Both
 			 *                                should be FQCNs.
 			 */
-			$bindings = (array) \apply_filters(
+			$bindings = (array) apply_filters(
 				static::HOOK_PREFIX . static::BINDINGS_FILTER,
 				$bindings
 			);
@@ -428,7 +481,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                array maps argument names to
 			 *                                values.
 			 */
-			$arguments = (array) \apply_filters(
+			$arguments = (array) apply_filters(
 				static::HOOK_PREFIX . static::ARGUMENTS_FILTER,
 				$arguments
 			);
@@ -442,7 +495,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $shared_instances Array of FQCNs to turn
 			 *                                        into shared objects.
 			 */
-			$shared_instances = (array) \apply_filters(
+			$shared_instances = (array) apply_filters(
 				static::HOOK_PREFIX . static::SHARED_INSTANCES_FILTER,
 				$shared_instances
 			);
@@ -456,7 +509,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $delegations Associative array of class =>
 			 *                                   callable mappings.
 			 */
-			$delegations = (array) \apply_filters(
+			$delegations = (array) apply_filters(
 				static::HOOK_PREFIX . static::DELEGATIONS_FILTER,
 				$delegations
 			);
