@@ -154,7 +154,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
@@ -171,5 +171,48 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$this->schema = $schema;
 
 		return $this->add_additional_fields_schema( $this->schema );
+	}
+
+	/**
+	 * Prepares links for the request.
+	 *
+	 * Ensures that {@see Stories_Users_Controller} is used for author embeds.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return array Links for the given post.
+	 */
+	protected function prepare_links( $post ): array {
+		$links = parent::prepare_links( $post );
+
+		if ( ! empty( $post->post_author ) && post_type_supports( $post->post_type, 'author' ) ) {
+			$links['author'] = [
+				'href'       => rest_url( sprintf( '%s/%s/%s', $this->namespace, 'users', $post->post_author ) ),
+				'embeddable' => true,
+			];
+		}
+
+		// If we have a featured media, add that.
+		$featured_media = get_post_thumbnail_id( $post->ID );
+		if ( $featured_media ) {
+			$image_url = rest_url( sprintf( '%s/%s/%s', $this->namespace, 'media', $featured_media ) );
+
+			$links['https://api.w.org/featuredmedia'] = [
+				'href'       => $image_url,
+				'embeddable' => true,
+			];
+		}
+
+		if ( ! in_array( $post->post_type, [ 'attachment', 'nav_menu_item', 'revision' ], true ) ) {
+			$attachments_url = rest_url( sprintf( '%s/%s', $this->namespace, 'media' ) );
+			$attachments_url = add_query_arg( 'parent', $post->ID, $attachments_url );
+
+			$links['https://api.w.org/attachment'] = [
+				'href' => $attachments_url,
+			];
+		}
+
+		return $links;
 	}
 }

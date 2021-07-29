@@ -56,7 +56,7 @@ abstract class REST_Controller extends WP_REST_Controller implements Service, De
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'rest_api_init';
 	}
 
@@ -67,7 +67,7 @@ abstract class REST_Controller extends WP_REST_Controller implements Service, De
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 100;
 	}
 }
