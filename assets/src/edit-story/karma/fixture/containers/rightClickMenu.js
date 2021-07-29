@@ -60,4 +60,22 @@ export class RightClickMenu extends Container {
       name: 'Delete Page',
     });
   }
+
+  get copyImageStyles() {
+    return this.getByRole('button', {
+      name: `Copy image styles, or use Option ${commandOrControl} C on a keyboard`,
+    });
+  }
+
+  get pasteImageStyles() {
+    return this.getByRole('button', {
+      name: `Paste image styles, or use Option ${commandOrControl} V on a keyboard`,
+    });
+  }
+
+  get clearImageStyles() {
+    return this.getByRole('button', {
+      name: 'Clear image styles',
+    });
+  }
 }

@@ -335,7 +335,7 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       {
-        label: 'Clear element styles',
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
         onClick: handleClearElementStyles,
         ...menuItemProps,
       },
