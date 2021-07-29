@@ -73,7 +73,7 @@
       imgOfs = { left: 0, top: 0 },
 
       /* Image dimensions (as returned by .width() and .height()) */
-      imgWidth, imgHeight,
+      imgWidth, imgHeight, imgInnerWidth, imgInnerHeight,
 
       /*
        * jQuery object representing the parent element that the plugin
