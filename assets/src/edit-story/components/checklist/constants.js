@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, sprintf, _n } from '@web-stories-wp/i18n';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
@@ -472,26 +471,6 @@ export const PRIORITY_COPY = {
   },
   storyMissingPublisherName: {
     title: __('Add Site Title', 'web-stories'),
-    footer: (
-      <TranslateWithMarkup
-        mapping={{
-          a: (
-            <Link
-              href={__('/wp-admin/options-general.php', 'web-stories')}
-              rel="noreferrer"
-              target="_blank"
-              aria-label={__('WordPress Settings', 'web-stories')}
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-            />
-          ),
-        }}
-      >
-        {__(
-          'Your Site Title is used when your Story appears on Google. You can set your Site Title by going to <a>General Settings</a> in your WordPress Dashboard.',
-          'web-stories'
-        )}
-      </TranslateWithMarkup>
-    ),
   },
 };
 

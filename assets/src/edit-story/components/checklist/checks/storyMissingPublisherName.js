@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useConfig } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
 const StoryMissingPublisherName = () => {
-  const hasPublisherName = useConfig(
-    ({ metadata }) => metadata.publisher?.name.length > 0
+  const { generalSettingsLink, publisherName } = useConfig(
+    ({ metadata, generalSettingsLink }) => ({
+      publisherName: metadata.publisher?.name,
+      generalSettingsLink,
+    })
   );
+  const hasPublisherName = publisherName.length > 0;
 
-  const { title, footer } = PRIORITY_COPY.storyMissingPublisherName;
+  const { title } = PRIORITY_COPY.storyMissingPublisherName;
 
   useRegisterCheck('StoryMissingPublisherName', !hasPublisherName);
 
@@ -35,7 +43,27 @@ const StoryMissingPublisherName = () => {
     !hasPublisherName && (
       <ChecklistCard
         title={title}
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        footer={
+          <DefaultFooterText>
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <Link
+                    href={generalSettingsLink}
+                    rel="noreferrer"
+                    target="_blank"
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+                  />
+                ),
+              }}
+            >
+              {__(
+                'Your Site Title is used when your Story appears on Google. You can set your Site Title by going to <a>General Settings</a>.',
+                'web-stories'
+              )}
+            </TranslateWithMarkup>
+          </DefaultFooterText>
+        }
       />
     )
   );
