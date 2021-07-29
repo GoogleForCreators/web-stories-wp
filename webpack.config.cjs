@@ -370,7 +370,7 @@ const storiesImgareaselect = {
   plugins: [
     ...sharedConfig.plugins,
     new WebpackBar({
-      name: 'WP imgareaselect',
+      name: 'WP ImgAreaSelect Patch',
       color: '#7D02F1',
     }),
   ].filter(Boolean),
