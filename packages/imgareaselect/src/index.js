@@ -19,6 +19,7 @@
    */
   var abs = Math.abs,
     max = Math.max,
+    ceil = Math.ceil,
     min = Math.min,
     round = Math.round;
 
@@ -287,11 +288,11 @@
 
       /* Get image dimensions */
       /* Start of patch for core issue. */
-      imgWidth = Math.ceil($img.innerWidth());
-      imgHeight = Math.ceil($img.innerHeight());
+      imgWidth = ceil($img.innerWidth());
+      imgHeight = ceil($img.innerHeight());
 
-      imgInnerWidth = Math.ceil($img.innerWidth());
-      imgInnerHeight = Math.ceil($img.innerHeight());
+      imgInnerWidth = ceil($img.innerWidth());
+      imgInnerHeight = ceil($img.innerHeight());
 
       imgOfs.top += (imgInnerHeight - imgHeight) >> 1;
       imgOfs.left += (imgInnerWidth - imgWidth) >> 1;
