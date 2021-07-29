@@ -96,6 +96,15 @@ async function getTemplates(imageBaseUrl) {
     'diy-home-office',
     'kitchen-makeover',
     'self-care-guide',
+    'rock-music-festival',
+    'celebrity-q-and-a',
+    'los-angeles-city-guide',
+    'hawaii-travel-packing-list',
+    'google-music-studio-tour',
+    'how-contact-tracing-works',
+    'summer-fashion-collection',
+    'buying-art-on-the-internet',
+    'house-hunting',
   ];
 
   const trackTiming = getTimeTracker('load_templates');
