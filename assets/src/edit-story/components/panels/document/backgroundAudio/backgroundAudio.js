@@ -103,7 +103,7 @@ function PageAdvancementPanel() {
     onSelect: updateBackgroundAudio,
     onSelectErrorMessage,
     type: allowedAudioMimeTypes,
-    title: __('Upload a file', 'web-stories'),
+    title: __('Upload an audio file', 'web-stories'),
     buttonInsertText: __('Select audio file', 'web-stories'),
   });
 
