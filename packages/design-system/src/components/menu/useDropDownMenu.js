@@ -22,7 +22,7 @@ import { useFocusOut } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import isNullOrUndefinedOrEmptyString from '../../utils/isNullOrUndefinedOrEmptyString';
+import { isNullOrUndefinedOrEmptyString } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import {
   KEYS,
