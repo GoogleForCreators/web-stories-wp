@@ -42,22 +42,6 @@ export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
   },
 };
 
-/**
- * Finds the animation related to an element or returns undefined.
- *
- * @param {string} id The element's id
- * @param {Array} animations An array of animations
- * @return {Object|null} The animation of the element
- */
-export function getElementAnimations(id, animations) {
-  if (!id || !animations) {
-    return null;
-  }
-
-  // Should only be one animation
-  return animations.find((animation) => animation.targets.includes(id));
-}
-
 // TODO: check if we need to add tracking events when we come back to right click menu.
 function rightClickMenuReducer(state, action) {
   switch (action.type) {

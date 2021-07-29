@@ -149,6 +149,30 @@ describe('useRightClickMenu', () => {
           onMouseDown: expect.any(Function),
           disabled: expect.any(Boolean),
         },
+        {
+          label: 'Copy image styles',
+          onClick: expect.any(Function),
+          onMouseDown: expect.any(Function),
+          shortcut: {
+            display: '⌥ ctrl C',
+            title: 'Option Control C',
+          },
+        },
+        {
+          disabled: true,
+          label: 'Paste image styles',
+          onClick: expect.any(Function),
+          onMouseDown: expect.any(Function),
+          shortcut: {
+            display: '⌥ ctrl V',
+            title: 'Option Control V',
+          },
+        },
+        {
+          label: 'Clear image styles',
+          onClick: expect.any(Function),
+          onMouseDown: expect.any(Function),
+        },
       ]);
     });
 

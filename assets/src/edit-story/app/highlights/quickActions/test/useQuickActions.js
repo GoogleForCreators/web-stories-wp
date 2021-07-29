@@ -60,7 +60,6 @@ jest.mock('../../../story', () => ({
     TEXT: 'text',
     VIDEO: 'video',
     GIF: 'gif',
-    BACKGROUND: 'background',
   },
 }));
 

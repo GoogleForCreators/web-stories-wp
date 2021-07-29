@@ -51,8 +51,6 @@ const expectedMediaStyles = objectPick(ALL_PROPERTIES, [
 ]);
 const expectedShapeStyles = objectPick(ALL_PROPERTIES, [
   'backgroundColor',
-  'border',
-  'borderRadius',
   'opacity',
 ]);
 const expectedTextStyles = objectPick(ALL_PROPERTIES, [
