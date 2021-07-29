@@ -24,8 +24,6 @@
  * limitations under the License.
  */
 
-use Google\Web_Stories\Page_Template_Post_Type;
-
 // don't load directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
@@ -35,12 +33,6 @@ global $post_type, $post_type_object, $post;
 
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 $demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
-$templates_post_type_object = get_post_type_object( Page_Template_Post_Type::POST_TYPE_SLUG );
-$templates_rest_base        = Page_Template_Post_Type::POST_TYPE_SLUG;
-if ( $templates_post_type_object instanceof WP_Post_Type ) {
-	$templates_rest_base = ! empty( $templates_post_type_object->rest_base ) ? $templates_post_type_object->rest_base : $templates_post_type_object->name;
-}
 
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
@@ -88,14 +80,6 @@ $preload_paths = [
 		]
 	),
 	'/web-stories/v1/users/me/',
-	"/web-stories/v1/$templates_rest_base/?" . build_query(
-		[
-			'context'               => 'edit',
-			'per_page'              => 100,
-			'page'                  => 1,
-			'_web_stories_envelope' => 'true',
-		]
-	),
 ];
 
 /**
