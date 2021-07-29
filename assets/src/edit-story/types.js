@@ -28,7 +28,6 @@ import { AnimationProps } from '@web-stories-wp/animation';
 import { OverlayType } from './utils/overlay';
 import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE } from './constants';
 
-
 export const StylePresetPropType = PropTypes.shape({
   colors: PropTypes.array,
   textStyles: PropTypes.array,

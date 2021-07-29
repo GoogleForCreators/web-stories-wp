@@ -25,12 +25,11 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-  Input,
   Text,
   THEME_CONSTANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
