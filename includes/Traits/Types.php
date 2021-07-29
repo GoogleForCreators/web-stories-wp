@@ -160,7 +160,7 @@ trait Types {
 	 *
 	 * Used for the allowlist when adding background audio.
 	 *
-	 * @since 1.10.0
+	 * @since 1.11.0
 	 *
 	 * @return array List of allowed mime types.
 	 */
