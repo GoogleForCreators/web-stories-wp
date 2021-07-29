@@ -193,6 +193,26 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			];
 		}
 
+		// If we have a featured media, add that.
+		$featured_media = get_post_thumbnail_id( $post->ID );
+		if ( $featured_media ) {
+			$image_url = rest_url( sprintf( '%s/%s/%s', $this->namespace, 'media', $featured_media ) );
+
+			$links['https://api.w.org/featuredmedia'] = [
+				'href'       => $image_url,
+				'embeddable' => true,
+			];
+		}
+
+		if ( ! in_array( $post->post_type, [ 'attachment', 'nav_menu_item', 'revision' ], true ) ) {
+			$attachments_url = rest_url( sprintf( '%s/%s', $this->namespace, 'media' ) );
+			$attachments_url = add_query_arg( 'parent', $post->ID, $attachments_url );
+
+			$links['https://api.w.org/attachment'] = [
+				'href' => $attachments_url,
+			];
+		}
+
 		return $links;
 	}
 }
