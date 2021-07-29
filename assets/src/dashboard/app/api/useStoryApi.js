@@ -272,7 +272,16 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           },
           flags,
         });
-        const response = await dataAdapter.post(storyApi, {
+
+        const path = queryString.stringifyUrl({
+          url: storyApi,
+          query: {
+            _embed: 'wp:lock,wp:lockuser,author',
+            _fields: ['edit_link'].join(','),
+          },
+        });
+
+        const response = await dataAdapter.post(path, {
           data: {
             ...storyPropsToSave,
             story_data: {
@@ -325,6 +334,26 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           url: storyApi,
           query: {
             _embed: 'wp:lock,wp:lockuser,author',
+            _fields: [
+              'id',
+              'title',
+              'status',
+              'date',
+              'date_gmt',
+              'modified',
+              'modified_gmt',
+              'link',
+              'featured_media_url',
+              'preview_link',
+              'edit_link',
+              // TODO: Remove need for story_data as its a lot of data sent over the wire.
+              // It's only needed for duplicating stories.
+              'story_data',
+              // _web_stories_envelope will add these fields, we need them too.
+              'body',
+              'status',
+              'headers',
+            ].join(','),
           },
         });
 
