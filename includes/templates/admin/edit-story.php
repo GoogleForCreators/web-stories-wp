@@ -64,6 +64,7 @@ $preload_paths = [
 						'alt_text',
 						'source_url',
 						'media_source',
+						'meta.web_stories_is_muted',
 						// _web_stories_envelope will add these fields, we need them too.
 						'body',
 						'status',
