@@ -10,6 +10,7 @@ namespace PHPSTORM_META {
 			'activation_flag'              => \Google\Web_Stories\Admin\Activation_Flag::class,
 			'activation_notice'            => \Google\Web_Stories\Admin\Activation_Notice::class,
 			'admin.google_fonts'           => \Google\Web_Stories\Admin\Google_Fonts::class,
+			'amp_output_buffer'            => \Google\Web_Stories\AMP\Output_Buffer::class,
 			'amp_story_player_assets'      => \Google\Web_Stories\AMP_Story_Player_Assets::class,
 			'adsense'                      => \Google\Web_Stories\AdSense::class,
 			'ad_manager'                   => \Google\Web_Stories\Ad_Manager::class,

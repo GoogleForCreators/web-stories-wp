@@ -408,6 +408,18 @@ class Experiments extends Service_Base {
 				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
 				'group'       => 'general',
 			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8310
+			 * Creation date: 2021-07-15
+			 */
+			[
+				'name'        => 'enableMuteVideo',
+				'label'       => __( 'Mute Videos', 'web-stories' ),
+				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

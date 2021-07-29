@@ -168,6 +168,7 @@ const sharedConfig = {
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
     }),
+    new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
@@ -231,7 +232,9 @@ const editorAndDashboard = {
     'stories-dashboard': './assets/src/dashboard/index.js',
   },
   plugins: [
-    ...sharedConfig.plugins,
+    ...sharedConfig.plugins.filter(
+      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+    ),
     new DependencyExtractionWebpackPlugin({
       requestToExternal,
     }),
@@ -270,9 +273,6 @@ const webStoriesScripts = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
     new WebpackBar({
       name: 'WP Frontend Scripts',
       color: '#EEE070',
@@ -282,7 +282,7 @@ const webStoriesScripts = {
 
 // Collect all core themes style sheet paths.
 const coreThemesBlockStylesPaths = glob.sync(
-  './assets/src/web-stories-block/css/core-themes/*.css'
+  './packages/stories-block/src/css/core-themes/*.css'
 );
 
 // Build entry object for the Core Themes Styles.
@@ -299,18 +299,16 @@ const webStoriesBlock = {
   ...sharedConfig,
   entry: {
     'web-stories-block': [
-      './assets/src/web-stories-block/index.js',
-      './assets/src/web-stories-block/block/edit.css',
+      './packages/stories-block/src/index.js',
+      './packages/stories-block/src/block/edit.css',
     ],
-    'web-stories-list-styles': './assets/src/web-stories-block/css/style.css',
-    'web-stories-embed': './assets/src/web-stories-block/css/embed.css',
+    'web-stories-list-styles': './packages/stories-block/src/css/style.css',
+    'web-stories-embed': './packages/stories-block/src/css/embed.css',
     ...coreThemeBlockStyles,
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      injectPolyfill: true,
-    }),
+
     new WebpackBar({
       name: 'Web Stories Block',
       color: '#357BB5',
@@ -343,7 +341,6 @@ const widgetScript = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({}),
     new WebpackBar({
       name: 'WP Widget Script',
       color: '#F757A5',
@@ -358,7 +355,6 @@ const storiesMCEButton = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({}),
     new WebpackBar({
       name: 'WP TinyMCE Button',
       color: '#4deaa2',

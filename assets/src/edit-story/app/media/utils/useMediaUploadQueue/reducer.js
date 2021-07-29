@@ -34,6 +34,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Function} action.payload.onUploadSuccess Callback for when upload succeeds.
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
+ * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
  * @return {Object} New state
  */
 export function addItem(
@@ -48,6 +49,7 @@ export function addItem(
       onUploadSuccess,
       additionalData,
       posterFile,
+      muteVideo,
     },
   }
 ) {
@@ -66,6 +68,7 @@ export function addItem(
     onUploadSuccess,
     additionalData,
     posterFile,
+    muteVideo,
   };
 
   return {
@@ -205,6 +208,62 @@ export function finishTranscoding(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isTranscoding: false,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Starts muting a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function startMuting(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: 'MUTING',
+            resource: {
+              ...item.resource,
+              isMuting: true,
+            },
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Finishes muting a file.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @param {File} action.payload.file New file object.
+ * @return {Object} New state
+ */
+export function finishMuting(state, { payload: { id, file } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            file,
+            state: 'MUTED',
+            resource: {
+              ...item.resource,
+              isMuting: false,
             },
           }
         : item

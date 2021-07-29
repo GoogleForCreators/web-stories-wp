@@ -28,10 +28,13 @@ import useUpdateElementDimensions from '../../app/media/utils/useUpdateElementDi
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
-  const { uploadMedia, uploadVideoPoster } = useLocalMedia((state) => ({
-    uploadMedia: state.actions.uploadMedia,
-    uploadVideoPoster: state.actions.uploadVideoPoster,
-  }));
+  const { uploadMedia, uploadVideoPoster, updateVideoIsMuted } = useLocalMedia(
+    (state) => ({
+      uploadMedia: state.actions.uploadMedia,
+      uploadVideoPoster: state.actions.uploadVideoPoster,
+      updateVideoIsMuted: state.actions.updateVideoIsMuted,
+    })
+  );
   const insertElement = useInsertElement();
   const { updateElementDimensions } = useUpdateElementDimensions();
   const { deleteElementsByResourceId } = useStory((state) => ({
@@ -55,7 +58,6 @@ function useUploadWithPreview() {
   const onUploadSuccess = useCallback(
     ({ id, resource }) => {
       updateElementDimensions({ id, resource });
-
       if (
         ['video', 'gif'].includes(resource.type) &&
         !resource.local &&
@@ -63,8 +65,11 @@ function useUploadWithPreview() {
       ) {
         uploadVideoPoster(resource.id, resource.src);
       }
+      if ('video' === resource.type && !resource.local && !resource.isMuted) {
+        updateVideoIsMuted(resource.id, resource.src);
+      }
     },
-    [updateElementDimensions, uploadVideoPoster]
+    [updateElementDimensions, uploadVideoPoster, updateVideoIsMuted]
   );
 
   const onUploadError = useCallback(

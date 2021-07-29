@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -21,8 +22,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import useFocusOut from '../../utils/useFocusOut';
-import isNullOrUndefinedOrEmptyString from '../../utils/isNullOrUndefinedOrEmptyString';
+import { useFocusOut, isNullOrUndefinedOrEmptyString } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import {
   KEYS,

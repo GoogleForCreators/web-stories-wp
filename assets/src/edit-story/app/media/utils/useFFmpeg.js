@@ -79,6 +79,7 @@ const FFMPEG_SHARED_CONFIG = [
  * @property {(file: File) => boolean} canTranscodeFile Whether a given file can be transcoded.
  * @property {(file: File) => boolean} isFileTooLarge Whether a given file is too large.
  * @property {(file: File) => Promise<File>} transcodeVideo Transcode a given video.
+ * @property {(file: File) => Promise<File>} stripAudioFromVideo Strip audio from given video.
  * @property {(file: File) => Promise<File>} getFirstFrameOfVideo Get the first frame of a video.
  * @property {(file: File) => Promise<File>} convertGifToVideo Convert GIF to MP4.
  */
@@ -95,9 +96,9 @@ function useFFmpeg() {
     allowedTranscodableMimeTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const {
-    state: { currentUser },
-  } = useCurrentUser();
+  const { currentUser } = useCurrentUser(({ state }) => ({
+    currentUser: state.currentUser,
+  }));
 
   /**
    * Whether the video optimization feature is enabled.
@@ -236,6 +237,54 @@ function useFFmpeg() {
   );
 
   /**
+   * Strip audio from video using FFmpeg.
+   *
+   * @param {File} file Original video file object.
+   * @return {Promise<File>} Transcoded video file object.
+   */
+  const stripAudioFromVideo = useCallback(
+    async (file) => {
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_mute_video_transcoding');
+
+      try {
+        const ffmpeg = await getFFmpegInstance(file);
+
+        const tempFileName = uuidv4() + '.' + MEDIA_TRANSCODED_FILE_TYPE;
+        const outputFileName =
+          getFileName(file) + '-muted.' + MEDIA_TRANSCODED_FILE_TYPE;
+
+        await ffmpeg.run(
+          // Input filename.
+          '-i',
+          file.name,
+          '-vcodec',
+          'copy',
+          // Mute audio from video.
+          '-an',
+          // Output filename. MUST be different from input filename.
+          tempFileName
+        );
+
+        const data = ffmpeg.FS('readFile', tempFileName);
+        return new File(
+          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
+          outputFileName,
+          {
+            type: MEDIA_TRANSCODED_MIME_TYPE,
+          }
+        );
+      } catch (err) {
+        trackError('mute_video_transcoding', err.message);
+        throw err;
+      } finally {
+        trackTiming();
+      }
+    },
+    [getFFmpegInstance]
+  );
+
+  /**
    * Converts an animated GIF to a video using FFmpeg.
    *
    * @param {File} file Original GIF file object.
@@ -297,7 +346,7 @@ function useFFmpeg() {
    * @type {boolean}
    */
   const isUserSettingEnabled = Boolean(
-    currentUser.meta?.web_stories_media_optimization
+    currentUser?.meta?.web_stories_media_optimization
   );
 
   /**
@@ -318,6 +367,7 @@ function useFFmpeg() {
       canTranscodeFile,
       isFileTooLarge,
       transcodeVideo,
+      stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
     }),
@@ -325,6 +375,7 @@ function useFFmpeg() {
       isTranscodingEnabled,
       canTranscodeFile,
       transcodeVideo,
+      stripAudioFromVideo,
       getFirstFrameOfVideo,
       convertGifToVideo,
     ]

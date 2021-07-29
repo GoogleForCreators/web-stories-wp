@@ -66,7 +66,3 @@ parameters:
 
     # False positive for wp_unslash()
     - '#^Cannot cast array\|string to string.$#'
-
-    # wp_die() is called with [ 'exit' => false ]
-    - message: '#^Unreachable statement - code above always terminates.$#'
-      path: includes/Renderer/Story/HTML.php

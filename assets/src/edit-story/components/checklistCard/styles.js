@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { CARD_WIDTH } from '../helpCenter/navigator/constants';
+import { CARD_WIDTH } from '../secondaryPopup';
 import { OverflowThumbnail } from '../thumbnail';
 import { GRID_TEMPLATE_AREA, GRID_VARIANT } from './constants';
 
@@ -71,7 +71,11 @@ export const Title = styled.div`
     text-align: left;
     cursor: pointer;
     border-radius: ${({ theme }) => theme.borders.radius.small};
-    ${focusableOutlineCSS};
+    ${({ theme }) =>
+      focusableOutlineCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
 `;
 

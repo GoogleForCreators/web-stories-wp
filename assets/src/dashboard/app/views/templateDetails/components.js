@@ -20,32 +20,33 @@
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 
-/**
- * Internal dependencies
- */
-import { MIN_DASHBOARD_WIDTH } from '../../../constants';
+export const Panel = styled.section`
+  padding: 16vh 0 14vh 0;
+`;
 
-export const ColumnContainer = styled.section`
-  display: grid;
-  column-gap: 24px;
-  grid-template-columns: minmax(50%, auto) 1fr;
-  width: calc(100% - 300px);
-  margin: 124px auto 154px;
+export const Container = styled.div`
+  position: relative;
+  width: 76%;
+  max-width: ${0.76 * 1920}px;
+  margin: 0 auto;
+`;
 
-  @media screen and (max-width: ${MIN_DASHBOARD_WIDTH}px) {
-    margin-left: 88px;
-  }
+export const Inner = styled.div`
+  display: flex;
+  align-items: start;
 `;
 
 export const DetailContainer = styled.section.attrs({
   'aria-label': __('Template Details', 'web-stories'),
 })`
-  width: 100%;
-  padding: 40px 20px 0;
+  padding: 0 0 0 60px;
+  margin-right: auto;
 `;
 
-export const Column = styled.div`
+export const TemplateDetails = styled.div`
+  position: relative;
   display: flex;
+  width: 500px;
 `;
 
 export const RowContainer = styled.section.attrs({
