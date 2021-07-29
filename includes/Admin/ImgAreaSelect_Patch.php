@@ -68,18 +68,19 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	/**
 	 * Check whether the conditional object is currently needed.
 	 *
-	 * @since 1.8.0
+	 * @since 1.10.0
 	 *
 	 * @return bool Whether the conditional object is needed.
 	 */
 	public static function is_needed(): bool {
+		// TODO, make this service condtional on WordPress version once core is fixed.
 		return is_admin() && ! wp_doing_ajax();
 	}
 
 	/**
 	 * Runs on instantiation.
 	 *
-	 * @since 1.8.0
+	 * @since 1.10.0
 	 *
 	 * @return void
 	 */
@@ -108,7 +109,6 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 			[ 'ver' => $asset['version'] ],
 			$new_src
 		);
-
 
 		return str_replace( $src, $new_src, $tag );
 	}
