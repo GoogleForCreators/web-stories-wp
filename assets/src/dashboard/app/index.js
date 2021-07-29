@@ -33,6 +33,7 @@ import {
   ModalGlobalStyle,
 } from '@web-stories-wp/design-system';
 import { usePrevious } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
