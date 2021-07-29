@@ -286,6 +286,7 @@
       imgOfs = { left: round($img.offset().left), top: round($img.offset().top) };
 
       /* Get image dimensions */
+      /* Start of patch for core issue. */
       imgWidth = Math.ceil($img.innerWidth());
       imgHeight = Math.ceil($img.innerHeight());
 
@@ -294,6 +295,7 @@
 
       imgOfs.top += (imgInnerHeight - imgHeight) >> 1;
       imgOfs.left += (imgInnerWidth - imgWidth) >> 1;
+      /* End of patch */
 
       /* Set minimum and maximum selection area dimensions */
       minWidth = round(options.minWidth / scaleX) || 0;
@@ -910,8 +912,10 @@
      *            The new options object
      */
     function setOptions(newOptions) {
-      if (newOptions.parent)
-        ($parent = $(newOptions.parent)).append($box.add($outer));
+      if (newOptions.parent) {
+        // Patched XSS vulnerability.
+        ( $parent = $.find( newOptions.parent ) ).append( $box.add( $outer ) );
+      }
 
       /* Merge the new options with the existing ones */
       $.extend(options, newOptions);
