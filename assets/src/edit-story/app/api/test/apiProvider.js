@@ -31,8 +31,8 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../removeImagesFromPageTemplates');
-import removeImagesFromPageTemplates from '../removeImagesFromPageTemplates';
+jest.mock('../utils/removeImagesFromPageTemplates');
+import removeImagesFromPageTemplates from '../utils/removeImagesFromPageTemplates';
 
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 

@@ -21,14 +21,15 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-
-/**
- * Internal dependencies
- */
 import {
   useFocusOut,
   useGlobalKeyDownEffect,
 } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import CircularProgress from '../circularProgress';
 import { useCanvas, useLayout } from '../../app';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
@@ -85,6 +86,24 @@ const Magnifier = styled.div`
   left: 0;
   transform: translateY(-2000px);
   pointer-events: none;
+`;
+
+const Center = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  background: ${({ theme }) => theme.colors.opacity.black64};
+  cursor: not-allowed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CanvasImage = styled.img`
+  width: 100%;
 `;
 
 function EyedropperLayer() {
@@ -145,6 +164,17 @@ function EyedropperLayer() {
 
   useGlobalKeyDownEffect('esc', closeEyedropper);
 
+  if (isEyedropperActive && !img) {
+    return (
+      <>
+        {/* Disable reason: No keyboard navigation for Eyedropper. */}
+        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+        <Center onClick={closeEyedropper}>
+          <CircularProgress />
+        </Center>
+      </>
+    );
+  }
   if (!isEyedropperActive || !img) {
     return null;
   }
@@ -245,7 +275,7 @@ function EyedropperLayer() {
         {/* Disable reason: No pixel-by-pixel keyboard navigation. */}
         {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
         <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
-          <img ref={imgRef} src={img} alt="" />
+          <CanvasImage ref={imgRef} src={img} alt="" />
           <Magnifier ref={magnifierInfo}>
             <Circle>
               <canvas

@@ -34,6 +34,7 @@ jest.mock('@wordpress/data', () => ({
 }));
 
 jest.mock('@wordpress/i18n', () => ({
+  ...jest.requireActual('@wordpress/i18n'),
   // eslint-disable-next-line no-unused-vars
   __: (val, domain) => val,
 }));

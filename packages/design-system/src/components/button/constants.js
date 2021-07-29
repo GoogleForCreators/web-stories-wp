@@ -35,5 +35,4 @@ export const BUTTON_VARIANTS = {
   LINK: 'link',
 };
 
-export const BUTTON_SIZE = 32;
 export const BUTTON_TRANSITION_TIMING = '0.3s ease 0s';

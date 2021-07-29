@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,20 @@
  * limitations under the License.
  */
 
-export const DEFAULT_POPUP_FILL_WIDTH = 240;
+/**
+ * Helper to get remote file using fetch and return blob.
+ *
+ * @param {string} url URL of file.
+ * @return {Promise<Blob>} Blob object.
+ */
+async function fetchRemoteBlob(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`An error has occured: ${response.status}`);
+  }
+  const data = await response.blob();
+
+  return data;
+}
+
+export default fetchRemoteBlob;

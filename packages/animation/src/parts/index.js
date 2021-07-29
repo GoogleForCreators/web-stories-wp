@@ -64,16 +64,7 @@ import { AnimationPulse } from './pulse';
 import { AnimationSpin } from './spin';
 import { AnimationZoom } from './zoom';
 
-import defaultAnimationProps, {
-  basicAnimationProps,
-} from './defaultAnimationProps';
-import blinkOnProps from './blinkOn/animationProps';
-import fadeProps from './fade/animationProps';
-import flipProps from './flip/animationProps';
-import floatOnProps from './floatOn/animationProps';
-import moveProps from './move/animationProps';
-import spinProps from './spin/animationProps';
-import zoomProps from './zoom/animationProps';
+import { basicAnimationProps } from './defaultAnimationProps';
 
 function EmptyAMPTarget({ children, ...rest }) {
   return <div {...rest}>{children}</div>;
@@ -124,37 +115,6 @@ export function AnimationPart(type, args) {
   args.easingPreset = undefined;
 
   return generator(args);
-}
-
-export function getAnimationProps(type) {
-  const customProps = {
-    [ANIMATION_TYPES.BLINK_ON]: blinkOnProps,
-    [ANIMATION_TYPES.FADE]: fadeProps,
-    [ANIMATION_TYPES.FLIP]: flipProps,
-    [ANIMATION_TYPES.FLOAT_ON]: floatOnProps,
-    [ANIMATION_TYPES.MOVE]: moveProps,
-    [ANIMATION_TYPES.SPIN]: spinProps,
-    [ANIMATION_TYPES.ZOOM]: zoomProps,
-    [ANIMATION_EFFECTS.FLY_IN.value]: flyInProps,
-    [ANIMATION_EFFECTS.PAN.value]: panProps,
-    [ANIMATION_EFFECTS.PULSE.value]: pulseProps,
-    [ANIMATION_EFFECTS.ROTATE_IN.value]: rotateInProps,
-    [ANIMATION_EFFECTS.WHOOSH_IN.value]: whooshInProps,
-    [ANIMATION_EFFECTS.ZOOM.value]: zoomProps,
-  };
-
-  const { type: animationType, ...remaining } = defaultAnimationProps;
-
-  return {
-    type,
-    props: {
-      // This order is important.
-      // Type first, then custom props, then defaults.
-      type: animationType,
-      ...(customProps[type] || {}),
-      ...remaining,
-    },
-  };
 }
 
 export function getAnimationEffectProps(type) {

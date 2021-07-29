@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const getCurrentYAxis = () => {
-  const isBrowserWindow = typeof window !== 'undefined';
-  if (!isBrowserWindow) {
-    return 0;
-  }
+/**
+ * Internal dependencies
+ */
+import { default as beautyQuizGreenBlob } from './greenBlob';
+import { default as beautyQuizTiltedGreenBlob } from './tiltedGreenBlob';
+import { default as beautyQuizPinkBlob } from './pinkBlob';
 
-  return window.scrollY;
-};
-
-export default getCurrentYAxis;
+export { beautyQuizGreenBlob, beautyQuizTiltedGreenBlob, beautyQuizPinkBlob };
