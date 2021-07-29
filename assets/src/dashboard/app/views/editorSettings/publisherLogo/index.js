@@ -25,6 +25,7 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import { useFocusOut } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
