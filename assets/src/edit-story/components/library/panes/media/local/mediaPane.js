@@ -107,6 +107,7 @@ function MediaPane(props) {
     setMediaType,
     setSearchTerm,
     uploadVideoPoster,
+    updateVideoIsMuted,
     totalItems,
     optimizeVideo,
     optimizeGif,
@@ -127,6 +128,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        updateVideoIsMuted,
         optimizeVideo,
         optimizeGif,
       },
@@ -144,6 +146,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        updateVideoIsMuted,
         optimizeVideo,
         optimizeGif,
       };
@@ -229,6 +232,14 @@ function MediaPane(props) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
         uploadVideoPoster(resource.id, mediaPickerEl.url);
+      }
+
+      if (
+        !resource.local &&
+        allowedVideoMimeTypes.includes(resource.mimeType) &&
+        !resource.isMuted
+      ) {
+        updateVideoIsMuted(resource.id, resource.src);
       }
     } catch (e) {
       showSnackbar({

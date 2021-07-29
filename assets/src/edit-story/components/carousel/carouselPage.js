@@ -117,7 +117,7 @@ function CarouselPage({ pageId, index }) {
   }
 
   return (
-    <ItemContainer key={page.id} ref={(el) => setPageRef(page, el)}>
+    <ItemContainer ref={(el) => setPageRef(page, el)}>
       {index === 0 && (
         <PageSeparator
           position={0}
