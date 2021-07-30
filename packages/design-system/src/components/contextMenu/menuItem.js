@@ -108,12 +108,12 @@ export const MenuItem = ({
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             forwardedAs="kbd"
           >
-            {shortcut?.display}
+            {shortcut.display}
           </Shortcut>
         )}
       </>
     );
-  }, [Icon, disabled, label, shortcut?.display, tooltipPlacement]);
+  }, [Icon, disabled, label, shortcut, tooltipPlacement]);
 
   if (href) {
     const newTabProps = newTab
