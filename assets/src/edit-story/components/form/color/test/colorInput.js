@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import {
   createSolid,
   getPreviewText as getPreviewTextMock,
@@ -64,7 +64,7 @@ describe('<ColorInput />', () => {
     });
   });
 
-  it('should render correct style and text', () => {
+  it('should render correct style and text', async () => {
     getPreviewTextMock.mockImplementation(() => {
       return 'FF0000';
     });
@@ -76,13 +76,13 @@ describe('<ColorInput />', () => {
       />
     );
 
-    expect(button).toBeDefined();
+    await waitFor(() => expect(button).toBeDefined());
     expect(button).toHaveAttribute('aria-label', 'Color');
 
     expect(input).toHaveValue('FF0000');
   });
 
-  it('should render one big button if gradient', () => {
+  it('should render one big button if gradient', async () => {
     getPreviewTextMock.mockImplementation(() => {
       return 'Radial';
     });
@@ -107,14 +107,14 @@ describe('<ColorInput />', () => {
       />
     );
 
-    expect(button).toBeDefined();
+    await waitFor(() => expect(button).toBeDefined());
     expect(button).toHaveAttribute('aria-label', 'Color');
     expect(button).toHaveTextContent('Radial');
 
     expect(input).toBeNull();
   });
 
-  it('should render multiple if applicable', () => {
+  it('should render multiple if applicable', async () => {
     getPreviewTextMock.mockImplementationOnce(() => {
       return null;
     });
@@ -122,11 +122,11 @@ describe('<ColorInput />', () => {
     const { input } = arrange(
       <ColorInput onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
-    expect(input.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+    await waitFor(() => expect(input.placeholder).toBe(MULTIPLE_DISPLAY_VALUE));
     expect(input).toHaveValue('');
   });
 
-  it('should open the color picker when clicked', () => {
+  it('should open the color picker when clicked', async () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const value = { color: { r: 0, g: 0, b: 0, a: 1 } };
@@ -144,10 +144,10 @@ describe('<ColorInput />', () => {
     fireEvent.click(button);
 
     const previewButton = screen.queryByLabelText(/solid pattern/i);
-    expect(previewButton).toBeInTheDocument();
+    await waitFor(() => expect(previewButton).toBeInTheDocument());
   });
 
-  it('should open the color picker when clicked if multiple', () => {
+  it('should open the color picker when clicked if multiple', async () => {
     const onChange = jest.fn();
     const onClose = jest.fn();
     const { button } = arrange(
@@ -163,10 +163,10 @@ describe('<ColorInput />', () => {
     fireEvent.click(button);
 
     const previewButton = screen.queryByLabelText(/solid pattern/i);
-    expect(previewButton).toBeInTheDocument();
+    await waitFor(() => expect(previewButton).toBeInTheDocument());
   });
 
-  it('should invoke onChange when inputting valid hex', () => {
+  it('should invoke onChange when inputting valid hex', async () => {
     getPreviewTextMock.mockImplementation(() => {
       return 'FF0000';
     });
@@ -180,7 +180,7 @@ describe('<ColorInput />', () => {
     fireEvent.change(input, { target: { value: '0FF00' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     // Since saved value didn't change shouldn't trigger onChange
-    expect(onChange).not.toHaveBeenCalled();
+    await waitFor(() => expect(onChange).not.toHaveBeenCalled());
     // Input should revert to saved value
     expect(input).toHaveValue('FF0000');
 
@@ -230,7 +230,7 @@ describe('<ColorInput />', () => {
     expect(input).toHaveValue('0000FF');
   });
 
-  it('should revert to last known value when blurring invalid input', () => {
+  it('should revert to last known value when blurring invalid input', async () => {
     getPreviewTextMock.mockImplementation(() => {
       return 'FF0000';
     });
@@ -245,7 +245,7 @@ describe('<ColorInput />', () => {
     fireEvent.blur(input);
 
     // Reverting to already saved value, shouldn't trigger onChange
-    expect(onChange).toHaveBeenCalledTimes(0);
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(0));
     expect(input).toHaveValue('FF0000');
   });
 });
