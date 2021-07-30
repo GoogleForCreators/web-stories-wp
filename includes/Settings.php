@@ -103,6 +103,13 @@ class Settings extends Service_Base {
 	const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
 
 	/**
+	 * Video cache setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
+
+	/**
 	 * Initializes the Settings logic.
 	 *
 	 * @since 1.0.0
@@ -120,7 +127,7 @@ class Settings extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 5;
 	}
 
@@ -215,6 +222,17 @@ class Settings extends Service_Base {
 						],
 					],
 				],
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_VIDEO_CACHE,
+			[
+				'description'  => __( 'Video Cache', 'web-stories' ),
+				'type'         => 'boolean',
+				'default'      => false,
+				'show_in_rest' => true,
 			]
 		);
 

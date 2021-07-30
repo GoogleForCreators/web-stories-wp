@@ -23,7 +23,6 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
-import stripHTML from '../../../../../edit-story/utils/stripHTML';
 import Fixture from '../../../../karma/fixture';
 import {
   PRIMARY_PATHS,
@@ -72,12 +71,12 @@ describe('Grid view', () => {
   }
 
   async function getContextMenuItem(contextMenuText, storyIndex = 0) {
-    const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
-    const selectedStory = storyCards[storyIndex];
+    const storyButtons = fixture.screen.getAllByTestId(/story-context-button-/);
+    const selectedStory = storyButtons[storyIndex];
     await focusOnGridByKeyboard();
 
     for (let i = 0; i <= storyIndex; i++) {
-      const expectedStory = storyCards[i];
+      const expectedStory = storyButtons[i];
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('right');
       expect(expectedStory).toEqual(document.activeElement);
@@ -85,19 +84,6 @@ describe('Grid view', () => {
 
     // we should have focused the indicated story in the grid
     expect(selectedStory).toEqual(document.activeElement);
-
-    let limit = 0;
-    const contextMenuKababs = fixture.screen.getAllByLabelText('More Options');
-    const contextMenuKabab = contextMenuKababs[storyIndex];
-
-    // tab to the button which opens the context menu
-    while (!contextMenuKabab.contains(document.activeElement) && limit < 4) {
-      // eslint-disable-next-line no-await-in-loop
-      await fixture.events.keyboard.press('tab');
-      limit++;
-    }
-
-    expect(contextMenuKabab).toEqual(contextMenuKabab);
 
     await fixture.events.keyboard.press('Enter');
 
@@ -109,7 +95,7 @@ describe('Grid view', () => {
     const contextMenuItem =
       within(contextMenuList).getByLabelText(contextMenuText);
 
-    limit = 0;
+    let limit = 0;
     while (
       document.activeElement.getAttribute('aria-label') !== contextMenuText &&
       limit < 8
@@ -152,7 +138,7 @@ describe('Grid view', () => {
     const { getByRole, getByText } = within(firstStory);
 
     const moreOptionsButton = getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -186,7 +172,7 @@ describe('Grid view', () => {
     let utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -217,7 +203,7 @@ describe('Grid view', () => {
     const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -247,7 +233,7 @@ describe('Grid view', () => {
     const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -282,11 +268,9 @@ describe('Grid view', () => {
 
       await fixture.events.click(draftsTabButton);
 
-      const labelTextContent = stripHTML(
-        STORY_VIEWING_LABELS[STORY_STATUS.DRAFT](numDrafts)
-      );
       const viewDraftsText = fixture.screen.getByText(
-        (_, node) => node.textContent === labelTextContent
+        (_, node) =>
+          node.innerHTML === STORY_VIEWING_LABELS[STORY_STATUS.DRAFT](numDrafts)
       );
 
       expect(viewDraftsText).toBeTruthy();
@@ -312,11 +296,10 @@ describe('Grid view', () => {
 
       await fixture.events.click(publishedTabButton);
 
-      const labelTextContent = stripHTML(
-        STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numPublished)
-      );
       const viewPublishedText = fixture.screen.getByText(
-        (_, node) => node.textContent === labelTextContent
+        (_, node) =>
+          node.innerHTML ===
+          STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numPublished)
       );
       expect(viewPublishedText).toBeTruthy();
 
@@ -326,7 +309,7 @@ describe('Grid view', () => {
   });
 
   describe('CUJ: Creator can view their stories in grid view: Sort their stories (last modified / date created / author / title)', () => {
-    it('should should search/filter using the Search Stories search input', async () => {
+    it('should search/filter using the Search Stories search input', async () => {
       const { stories } = await getStoriesState();
 
       const firstStoryTitle = Object.values(stories)[0].title;
@@ -342,7 +325,8 @@ describe('Grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(300);
 
-      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const storyElements =
+        fixture.screen.getAllByTestId(/^story-context-menu-/);
 
       expect(storyElements.length).toEqual(
         Object.values(stories).filter(({ title }) =>
@@ -374,12 +358,12 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.press('down');
 
-      expect(activeListItems[0]).toBe(document.activeElement);
+      expect(activeListItems[0]).toEqual(document.activeElement);
 
       // focus should move to the search input when keydown on 'up' from first list item
       await fixture.events.keyboard.press('up');
 
-      expect(searchInput).toBe(document.activeElement);
+      expect(searchInput).toEqual(document.activeElement);
       await fixture.events.sleep(300);
       // key down to the bottom of the available search options
       // plus once more beyond available search options to make sure focus stays intact
@@ -505,7 +489,7 @@ describe('Grid view', () => {
 
   describe('Dashboard keyboard navigation and focus logic', () => {
     it('should navigate the grid via keyboard', async () => {
-      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const storyCards = fixture.screen.getAllByTestId(/story-context-button-/);
       await focusOnGridByKeyboard();
 
       for (let i = 0; i < storyCards.length; i++) {
@@ -517,7 +501,7 @@ describe('Grid view', () => {
     });
 
     it('should focus on context menu items via keyboard', async () => {
-      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const storyCards = fixture.screen.getAllByTestId(/story-context-button-/);
       const [selectedStory] = storyCards;
       await focusOnGridByKeyboard();
       await fixture.events.keyboard.press('right');
@@ -525,26 +509,15 @@ describe('Grid view', () => {
       // we should have focused the first story in the grid
       expect(selectedStory).toEqual(document.activeElement);
 
-      let limit = 0;
-      const [activeStoryContainer] =
-        fixture.screen.getAllByTestId(/^story-grid-item/);
-      const contextMenuKabab =
-        within(activeStoryContainer).getByLabelText('More Options');
-
-      // tab to the button which opens the context menu
-      while (!contextMenuKabab.contains(document.activeElement) && limit < 4) {
-        // eslint-disable-next-line no-await-in-loop
-        await fixture.events.keyboard.press('tab');
-        limit++;
-      }
-
-      expect(contextMenuKabab).toEqual(document.activeElement);
+      const [activeStoryContextMenu] =
+        fixture.screen.getAllByTestId(/^story-context-menu-/);
 
       await fixture.events.keyboard.press('Enter');
 
       // now the focused item should be the first context menu item
-      const [contextMenuList] =
-        within(activeStoryContainer).getAllByTestId(/context-menu-list/);
+      const [contextMenuList] = within(activeStoryContextMenu).getAllByTestId(
+        /context-menu-list/
+      );
       await expectAsync(contextMenuList).toHaveNoViolations();
       // it is focused on the link within the list
       const [firstContextMenuItem, secondContextMenuItem] =
@@ -566,14 +539,14 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('Backspace');
       await fixture.events.keyboard.type('A New Title');
       await fixture.events.keyboard.press('Enter');
-      const stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      const stories = fixture.screen.getAllByTestId(/^story-grid-item-/);
       const firstStory = stories[0];
       const { getByText } = within(firstStory);
       expect(getByText(/A New Title/)).toBeTruthy();
     });
 
     it('should delete a story via keyboard', async () => {
-      let stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      let stories = fixture.screen.getAllByTestId(/^story-context-menu-/);
       // count the original number of stories
       const initialNumStories = stories.length;
 
@@ -599,7 +572,7 @@ describe('Grid view', () => {
       await fixture.events.keyboard.press('Enter');
 
       // count the new number of stories
-      stories = fixture.screen.getAllByTestId(/^story-grid-item/);
+      stories = fixture.screen.getAllByTestId(/^story-context-menu-/);
       expect(stories.length).toEqual(initialNumStories - 1);
     });
 
@@ -628,7 +601,9 @@ describe('Grid view', () => {
 
     it('should retain focus on menu close', async () => {
       const storyIndex = 1;
-      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const storyCards = fixture.screen.getAllByTestId(
+        /^story-context-button-/
+      );
       const selectedStory = storyCards[storyIndex];
       // focus the delete context menu item of the first story with the keyboard
       // test cancelling deletion of the second story (not the default first story)
@@ -658,7 +633,9 @@ describe('Grid view', () => {
     });
 
     it('should exit the grid and re-focus the first item', async () => {
-      const storyCards = fixture.screen.getAllByTestId(/card-action-container/);
+      const storyCards = fixture.screen.getAllByTestId(
+        /^story-context-button-/
+      );
       const firstStory = storyCards[0];
       const lastStory = storyCards[storyCards.length - 1];
       await focusOnGridByKeyboard();

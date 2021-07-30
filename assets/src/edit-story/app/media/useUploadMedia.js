@@ -159,6 +159,11 @@ function useUploadMedia({
       deleteMediaElement({ id });
       removeItem({ id });
 
+      const thumbnailSrc =
+        resource && ['video', 'gif'].includes(resource.type)
+          ? resource.poster
+          : resource.src;
+
       showSnackbar({
         message:
           error?.message ||
@@ -166,10 +171,8 @@ function useUploadMedia({
             'File could not be uploaded. Please try a different file.',
             'web-stories'
           ),
-        thumbnail: resource && {
-          src: ['video', 'gif'].includes(resource.type)
-            ? resource.poster
-            : resource.src,
+        thumbnail: thumbnailSrc && {
+          src: thumbnailSrc,
           alt: resource?.alt,
         },
         dismissable: true,
@@ -188,6 +191,9 @@ function useUploadMedia({
      * @param {Function} args.onUploadError Callback for when upload fails.
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
+     * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
+     * @param {import('@web-stories-wp/media').Resource} args.resource Resource object.
+     * @param {Blob} args.posterFile Blob object of poster.
      * @return {void}
      */
     async (
@@ -198,6 +204,9 @@ function useUploadMedia({
         onUploadError,
         onUploadSuccess,
         additionalData,
+        muteVideo,
+        resource,
+        posterFile,
       } = {}
     ) => {
       // If there are no files passed, don't try to upload.
@@ -231,7 +240,12 @@ function useUploadMedia({
           // having to update the dimensions later on as the information becomes available.
           // Downside: it takes a tad longer for the file to initially appear.
           // Upside: file is displayed with the right dimensions from the beginning.
-          const { resource, posterFile } = await getResourceFromLocalFile(file);
+          if (!resource || !posterFile) {
+            const { resource: newResource, posterFile: newPosterFile } =
+              await getResourceFromLocalFile(file);
+            posterFile = newPosterFile;
+            resource = newResource;
+          }
           addItem({
             file,
             resource,
@@ -241,6 +255,7 @@ function useUploadMedia({
             onUploadSuccess,
             additionalData,
             posterFile,
+            muteVideo,
           });
         })
       );

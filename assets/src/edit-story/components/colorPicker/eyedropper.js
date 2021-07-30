@@ -65,12 +65,15 @@ export default ({ onChange }) => {
         if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
           return;
         }
+        if (resetZoom) {
+          setIsEyedropperActive(true);
+        }
         const prepareEyedropper = () =>
           new Promise((resolve) => {
             // Wait one tick for the zoom to settle in.
             setTimeout(() => {
               import(
-                /* webpackChunkName: "html-to-image" */ 'html-to-image'
+                /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
               ).then((htmlToImage) => {
                 htmlToImage
                   .toCanvas(fullbleedContainer, {
@@ -105,9 +108,6 @@ export default ({ onChange }) => {
           setEyedropperImg(null);
           setEyedropperPixelData(null);
         });
-        if (resetZoom) {
-          setIsEyedropperActive(true);
-        }
       },
     [
       fullbleedContainer,

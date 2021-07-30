@@ -20,12 +20,17 @@
 import { useState, useCallback } from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import {
+  createBlob,
+  getFileName,
+  createFileReader,
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
 import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
-import { getResourceFromLocalFile } from '../../../../../utils';
+import { ConfigProvider } from '../../../../config';
 import PublisherLogoSettings from '..';
 
 export default {
@@ -42,24 +47,23 @@ export const _default = () => {
     action('onSubmit fired')(newPublisherLogos);
 
     // this is purely for the sake of storybook demoing
-    const resources = await Promise.all(
-      newPublisherLogos.map(async (file) => ({
-        localResource: await getResourceFromLocalFile(file),
-        file,
-      }))
-    );
-
-    setUploadedContent((existingUploads) => {
-      const newUploads = resources.map(({ file, localResource }) => {
+    const newUploads = await Promise.all(
+      newPublisherLogos.map(async (file) => {
+        const reader = await createFileReader(file);
+        const src = createBlob(
+          new window.Blob([reader.result], { type: file.type })
+        );
         return {
-          src: localResource.src,
+          src,
           title: file.name,
-          alt: localResource.alt,
+          alt: getFileName(file.name),
         };
-      });
-
-      return [...existingUploads, ...newUploads];
-    });
+      })
+    );
+    setUploadedContent((existingUploads) => [
+      ...existingUploads,
+      ...newUploads,
+    ]);
   }, []);
 
   const handleRemoveLogo = useCallback((deleteLogo) => {
@@ -74,13 +78,15 @@ export const _default = () => {
   }, []);
 
   return (
-    <PublisherLogoSettings
-      canUploadFiles={boolean('canUploadFile', true)}
-      onAddLogos={handleAddLogos}
-      onRemoveLogo={handleRemoveLogo}
-      isLoading={boolean('isLoading', false)}
-      publisherLogos={uploadedContent}
-      uploadError={text('uploadError', '')}
-    />
+    <ConfigProvider config={{ allowedImageMimeTypes: {} }}>
+      <PublisherLogoSettings
+        canUploadFiles={boolean('canUploadFile', true)}
+        onAddLogos={handleAddLogos}
+        onRemoveLogo={handleRemoveLogo}
+        isLoading={boolean('isLoading', false)}
+        publisherLogos={uploadedContent}
+        uploadError={text('uploadError', '')}
+      />
+    </ConfigProvider>
   );
 };

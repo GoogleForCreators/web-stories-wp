@@ -84,10 +84,6 @@ export const UserPropType = PropTypes.shape({
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
-export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
-export const CategoriesPropType =
-  PropTypes.objectOf(CategoryPropType).isRequired;
-export const UsersPropType = PropTypes.objectOf(UserPropType);
 
 export const StoryActionsPropType = PropTypes.shape({
   createTemplateFromStory: PropTypes.func,

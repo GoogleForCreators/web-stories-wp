@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import getResourceFromMedia3p from '../../utils/getResourceFromMedia3p';
+import { getResourceFromMedia3p } from '../../utils';
 import { PROVIDERS } from '../providerConfiguration';
 import apiFetcher from './apiFetcher';
 import Context from './context';

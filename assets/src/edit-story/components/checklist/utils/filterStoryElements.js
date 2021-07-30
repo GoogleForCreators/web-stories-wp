@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 /**
- * @typedef {import('../../../types').Story} Story
+ * @typedef {import('../../../types').Page} Page
  */
 
 /**
  * Filters through story elements with array.filter
  *
- * @param {Story} story The story to filter
+ * @param {Array<Page>} pages The story pages to filter
  * @param {Function} filter The page being checked for guidelines
  * @return {Array<any>} An array of elements that contain a pageId property
  */
-export function filterStoryElements(story, filter) {
-  return (story?.pages || [])
+export function filterStoryElements(pages, filter) {
+  return (pages || [])
     .flatMap((page) =>
       (page?.elements || []).map((element) => ({ ...element, pageId: page.id }))
     )

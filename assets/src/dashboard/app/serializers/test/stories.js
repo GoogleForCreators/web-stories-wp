@@ -49,9 +49,7 @@ describe('reshapeStoryObject', () => {
       },
     };
 
-    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
-      responseObj
-    );
+    const reshapedObj = reshapeStoryObject(responseObj);
     expect(reshapedObj).toBeNull();
   });
 
@@ -85,9 +83,7 @@ describe('reshapeStoryObject', () => {
       },
     };
 
-    const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
-      responseObj
-    );
+    const reshapedObj = reshapeStoryObject(responseObj);
     expect(reshapedObj).toBeNull();
   });
 });

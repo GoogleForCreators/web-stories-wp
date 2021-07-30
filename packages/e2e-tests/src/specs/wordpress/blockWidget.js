@@ -42,16 +42,10 @@ describe('Web Stories Widget Block', () => {
     await page.type('.block-editor-inserter__search-input', 'Web Stories');
     await expect(page).toClick('button span', { text: 'Web Stories' });
 
-    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await expect(page).toMatchElement(
-      '[data-testid="ws-block-configuration-panel"]'
-    );
+    await page.waitForSelector('.web-stories-block-configuration-panel');
+    await expect(page).toMatchElement('.web-stories-block-configuration-panel');
 
-    await expect(page).toClick('[data-testid="ws-block-configuration-panel"]');
-
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Story URL',
-    });
+    await expect(page).toClick('button', { text: 'Story URL' });
 
     await expect(page).toMatchElement('input[aria-label="Story URL"]');
 

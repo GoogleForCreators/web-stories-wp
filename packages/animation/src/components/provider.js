@@ -31,7 +31,7 @@ import { createContext } from '@web-stories-wp/design-system';
 
 if (!('KeyframeEffect' in window)) {
   import(
-    /* webpackChunkName: "web-animations-js" */ 'web-animations-js/web-animations-next-lite.min.js'
+    /* webpackChunkName: "chunk-web-animations-js" */ 'web-animations-js/web-animations-next-lite.min.js'
   ).catch(() => undefined);
 }
 

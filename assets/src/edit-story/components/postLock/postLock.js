@@ -35,9 +35,9 @@ function PostLock() {
   const {
     actions: { getStoryLockById, setStoryLockById, deleteStoryLockById },
   } = useAPI();
-  const {
-    state: { currentUser },
-  } = useCurrentUser();
+  const { currentUser } = useCurrentUser(({ state }) => ({
+    currentUser: state.currentUser,
+  }));
   const {
     storyId,
     dashboardLink,

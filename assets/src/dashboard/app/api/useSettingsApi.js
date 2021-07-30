@@ -61,6 +61,7 @@ export default function useSettingsApi(
           adNetwork: response.web_stories_ad_network,
           activePublisherLogoId: response.web_stories_active_publisher_logo,
           publisherLogoIds: response.web_stories_publisher_logos,
+          videoCache: response.web_stories_video_cache,
         },
       });
     } catch (err) {
@@ -83,7 +84,9 @@ export default function useSettingsApi(
       publisherLogoIds,
       publisherLogoIdToRemove,
       publisherLogoToMakeDefault,
+      videoCache,
     }) => {
+      dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
         const query = {};
         if (googleAnalyticsId !== undefined) {
@@ -122,6 +125,10 @@ export default function useSettingsApi(
           query.web_stories_active_publisher_logo = publisherLogoToMakeDefault;
         }
 
+        if (videoCache !== undefined) {
+          query.web_stories_video_cache = Boolean(videoCache);
+        }
+
         const response = await dataAdapter.post(
           queryString.stringifyUrl({
             url: globalStoriesSettingsApi,
@@ -139,8 +146,10 @@ export default function useSettingsApi(
             adNetwork: response.web_stories_ad_network,
             activePublisherLogoId: response.web_stories_active_publisher_logo,
             publisherLogoIds: response.web_stories_publisher_logos,
+            videoCache: response.web_stories_video_cache,
           },
         });
+        dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });
       } catch (err) {
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_FAILURE,

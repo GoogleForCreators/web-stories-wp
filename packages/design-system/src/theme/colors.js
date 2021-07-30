@@ -101,7 +101,10 @@ const standard = {
 };
 
 const gradient = {
-  loading: `linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%)`,
+  loading: 'linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%)',
+  placeholder: 'linear-gradient(180deg, #fff0, #000c)',
+  posterOverlay:
+    'linear-gradient(to top, rgba(33, 33, 33, 0.9), rgba(33, 33, 33, 0))',
 };
 
 const opacity = {
@@ -114,6 +117,7 @@ const opacity = {
   black32: rgba(standard.black, 0.32),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
+  black3: rgba(standard.black, 0.03),
   blue24: rgba(brand.blue[30], 0.24),
   violet24: rgba(brand.violet[30], 0.24),
   overlay: rgba('#1E1F1F', 0.5),

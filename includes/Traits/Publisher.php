@@ -54,7 +54,7 @@ trait Publisher {
 	 *
 	 * @return array Publisher name and logo.
 	 */
-	public function get_publisher_data() {
+	public function get_publisher_data() : array {
 		$publisher      = $this->get_publisher_name();
 		$publisher_logo = $this->get_publisher_logo();
 

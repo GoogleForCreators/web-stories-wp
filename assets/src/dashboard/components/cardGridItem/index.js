@@ -34,13 +34,17 @@ const CardGridItem = styled.div.attrs({ role: 'listitem' })`
   ${MoreVerticalButton} {
     margin: 12px 0;
   }
-
   &:hover
     ${MoreVerticalButton},
     &:active
     ${MoreVerticalButton},
     &:focus-within
     ${MoreVerticalButton} {
+    opacity: 1;
+  }
+  &:hover .card_buttons,
+  &:active .card_buttons,
+  &:focus-within .card_buttons {
     opacity: 1;
   }
 `;

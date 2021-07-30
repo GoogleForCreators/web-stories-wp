@@ -31,8 +31,8 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('../removeImagesFromPageTemplates');
-import removeImagesFromPageTemplates from '../removeImagesFromPageTemplates';
+jest.mock('../utils/removeImagesFromPageTemplates');
+import removeImagesFromPageTemplates from '../utils/removeImagesFromPageTemplates';
 
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
@@ -81,9 +81,11 @@ describe('APIProvider', () => {
       });
     });
 
-    expect(apiFetch).toHaveBeenCalledWith({
-      path: '/mediaPath?context=edit&per_page=100&page=1&_web_stories_envelope=true&cache_bust=true',
-    });
+    expect(apiFetch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        path: expect.stringMatching('&cache_bust=true'),
+      })
+    );
   });
 
   it('getPageTemplates gets pageTemplates w/ cdnURL', async () => {

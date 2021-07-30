@@ -111,7 +111,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 
@@ -122,7 +122,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 5;
 	}
 
@@ -137,7 +137,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function run_upgrade_routine( $class, $version, $current_version ) {
+	protected function run_upgrade_routine( string $class, string $version, string $current_version ) {
 		if ( version_compare( $current_version, $version, '<' ) ) {
 			if ( ! method_exists( $this->injector, 'make' ) ) {
 				return;
@@ -156,7 +156,7 @@ class Database_Upgrader extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function finish_up( $previous_version ) {
+	protected function finish_up( string $previous_version ) {
 		update_option( self::PREVIOUS_OPTION, $previous_version );
 		update_option( self::OPTION, WEBSTORIES_DB_VERSION );
 	}

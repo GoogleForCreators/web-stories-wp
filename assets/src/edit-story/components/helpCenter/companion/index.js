@@ -18,6 +18,8 @@
  */
 import { TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
+import { memo } from 'react';
+
 /**
  * Internal dependencies
  */
@@ -27,19 +29,15 @@ import { TIPS, DONE_TIP_ENTRY, ReadTipsType } from '../constants';
 
 const TIP_MAP = { ...TIPS, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
 
-export function Companion({
-  tipKey,
-  onTipSelect,
-  isLeftToRightTransition,
-  readTips,
-}) {
+function Companion({ tipKey, onTipSelect, isLeftToRightTransition, readTips }) {
   const tip = tipKey && TIP_MAP[tipKey];
+
   return (
     <TransitionGroup>
       {tip ? (
         <QuickTip
           key={tipKey}
-          isDone={tipKey == DONE_TIP_ENTRY[0]}
+          isDone={tipKey === DONE_TIP_ENTRY[0]}
           transitionKey={tipKey}
           isLeftToRightTransition={isLeftToRightTransition}
           {...tip}
@@ -50,9 +48,12 @@ export function Companion({
     </TransitionGroup>
   );
 }
+
 Companion.propTypes = {
   readTips: ReadTipsType,
   tipKey: PropTypes.oneOf(Object.keys(TIP_MAP)),
   onTipSelect: PropTypes.func.isRequired,
   isLeftToRightTransition: PropTypes.bool.isRequired,
 };
+
+export default memo(Companion);
