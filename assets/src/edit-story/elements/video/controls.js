@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
 import { rgba } from 'polished';

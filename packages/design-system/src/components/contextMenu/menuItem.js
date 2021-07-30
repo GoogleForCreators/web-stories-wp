@@ -206,7 +206,7 @@ export const MenuItemProps = {
     display: PropTypes.string,
     title: PropTypes.string,
   }),
-  Icon: PropTypes.func,
+  Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
 };
 

@@ -20,6 +20,8 @@
 import { useMemo } from 'react';
 import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { themeHelpers } from '@web-stories-wp/design-system';
+import { useReduction } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
@@ -28,7 +30,6 @@ import {
   PAGE_NAV_WIDTH,
   PAGE_WIDTH_FACTOR,
 } from '../../constants';
-import useReduction from '../../utils/useReduction';
 
 // Beware, that these are slightly magic numbers, that just happens to look good
 const ZOOM_PADDING_LARGE = 72;

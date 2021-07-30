@@ -30,7 +30,6 @@ describe('Inserting Media from Media Library', () => {
   it.skip('should insert an image by clicking on it', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('example-1.jpg', true);
 
     await page.waitForSelector('[data-testid="mediaElement-image"]');

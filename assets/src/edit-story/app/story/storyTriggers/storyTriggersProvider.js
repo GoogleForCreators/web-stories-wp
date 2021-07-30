@@ -18,7 +18,7 @@
  */
 import { useReducer, useEffect, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { createContext } from '@web-stories-wp/design-system';
+import { createContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

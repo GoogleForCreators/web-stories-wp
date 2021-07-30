@@ -26,11 +26,22 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
+  let uploadedFiles = [];
+
+  beforeEach(() => (uploadedFiles = []));
+
+  afterEach(async () => {
+    for (const file of uploadedFiles) {
+      // eslint-disable-next-line no-await-in-loop
+      await deleteMedia(file);
+    }
+  });
+
   it('should insert an video by clicking on media dialog it', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('small-video.webm', false);
+    uploadedFiles.push(filename);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
@@ -39,18 +50,19 @@ describe('Inserting WebM Video', () => {
     // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-
-    await deleteMedia(filename);
   });
 
   it('should insert an video by clicking on media library', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('small-video.webm');
+    uploadedFiles.push(filename);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
+    await expect(page).toClick('[data-testid="mediaElement-video"]');
+    // TODO: figure out why this second click is needed.
+    // The first click does not appear to do anything, it just plays the video in the media library.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
@@ -59,8 +71,6 @@ describe('Inserting WebM Video', () => {
     // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-
-    await deleteMedia(filename);
   });
 
   it('should insert an video by clicking on media library and preview on FE', async () => {
@@ -68,17 +78,20 @@ describe('Inserting WebM Video', () => {
 
     await insertStoryTitle('Publishing with video');
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('small-video.webm');
+    uploadedFiles.push(filename);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
+    await expect(page).toClick('[data-testid="mediaElement-video"]');
+    // TODO: figure out why this second click is needed.
+    // The first click does not appear to do anything, it just plays the video in the media library.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
+    // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
@@ -96,7 +109,5 @@ describe('Inserting WebM Video', () => {
 
     await editorPage.bringToFront();
     await previewPage.close();
-
-    await deleteMedia(filename);
   });
 });

@@ -31,6 +31,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
       color: createSolid(0, 0, 255),
       hasGradient: true,
     });
+    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
 
     // At first it's a button
     const initialButton = getEditableHexElement();
@@ -38,6 +39,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     fireEvent.click(initialButton);
 
     // When clicked, it's an input
+    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
     const input = getEditableHexElement();
     expect(input).toHaveValue('0000FF'); // toHaveValue doesn't support regex
     await waitFor(() => expect(input).toHaveFocus());
@@ -59,6 +61,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
       color: createSolid(0, 0, 255, 0.4),
       hasGradient: true,
     });
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
 
     // At first it's a button
     const initialButton = getEditableAlphaElement();
@@ -66,6 +69,7 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
     fireEvent.click(initialButton);
 
     // When clicked, it's an input
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
     const input = getEditableAlphaElement();
     expect(input).toHaveValue('40');
     await waitFor(() => expect(input).toHaveFocus());
@@ -89,17 +93,19 @@ describe('<ColorPicker /> as the footer is interacted with', () => {
       color: createSolid(0, 0, 255, 0.4),
       hasGradient: true,
     });
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
 
     // At first it's a button
     const initialButton = getEditableAlphaElement();
     fireEvent.click(initialButton);
 
     // When clicked, it's an input
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
     const input = getEditableAlphaElement();
     await waitFor(() => expect(input).toHaveFocus());
     fireEvent.change(input, { target: { value: 'ten' } });
 
-    // focus solid button in order to blur and thus abort editin
+    // focus solid button in order to blur and thus abort editing
     // NB: has to be done with `act` rather than `fireEvent.focus` due to
     // https://github.com/testing-library/react-testing-library/issues/376
     act(() => getSolidButton().focus());

@@ -18,45 +18,51 @@
  * External dependencies
  */
 import { createSolid } from '@web-stories-wp/patterns';
+import { waitFor } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> as it loads', () => {
-  it('should render with initial focus forced to the solid pattern button', () => {
+  it('should render with initial focus forced to the solid pattern button', async () => {
     const { getSolidButton } = arrange();
 
     const solidButton = getSolidButton();
-    expect(solidButton).toBeInTheDocument();
-    expect(solidButton).toHaveFocus();
+    await waitFor(() => expect(solidButton).toBeInTheDocument());
+    await waitFor(() => expect(solidButton).toHaveFocus());
   });
 
-  it('should correctly set color based on given prop', () => {
+  it('should correctly set color based on given prop', async () => {
     const { getEditableHexElement, rerender } = arrange({
       color: createSolid(255, 0, 0),
     });
 
+    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
     expect(getEditableHexElement()).toHaveTextContent(/#ff0000/i);
 
     rerender({ color: createSolid(0, 0, 255) });
 
+    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
     expect(getEditableHexElement()).toHaveTextContent(/#0000ff/i);
   });
 
-  it('should correctly set opacity based on given prop', () => {
+  it('should correctly set opacity based on given prop', async () => {
     const { getEditableAlphaElement, rerender } = arrange({
       color: createSolid(255, 0, 0, 0.7),
     });
 
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
     expect(getEditableAlphaElement()).toHaveTextContent(/70%/i);
 
     rerender({ color: createSolid(0, 0, 255) });
 
+    await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
     expect(getEditableAlphaElement()).toHaveTextContent(/100%/i);
   });
 
-  it('should correctly set color and opacity based on first stop for a gradient', () => {
+  it('should correctly set color and opacity based on first stop for a gradient', async () => {
     const { getEditableHexElement, getEditableAlphaElement } = arrange({
       color: {
         type: 'linear',
@@ -68,32 +74,34 @@ describe('<ColorPicker /> as it loads', () => {
       hasGradient: true,
     });
 
+    await waitFor(() => expect(getEditableHexElement()).toBeInTheDocument());
+
     expect(getEditableHexElement()).toHaveTextContent(/#00ff00/i);
     expect(getEditableAlphaElement()).toHaveTextContent(/40%/i);
   });
 
-  it('should have gradient buttons only if enabled', () => {
+  it('should have gradient buttons only if enabled', async () => {
     const { getSolidButton, getLinearButton, getRadialButton, rerender } =
       arrange();
 
-    expect(getSolidButton()).toBeInTheDocument();
+    await waitFor(() => expect(getSolidButton()).toBeInTheDocument());
     expect(getLinearButton()).not.toBeInTheDocument();
     expect(getRadialButton()).not.toBeInTheDocument();
 
     rerender({ hasGradient: true });
 
-    expect(getSolidButton()).toBeInTheDocument();
+    await waitFor(() => expect(getSolidButton()).toBeInTheDocument());
     expect(getLinearButton()).toBeInTheDocument();
     expect(getRadialButton()).toBeInTheDocument();
   });
 
-  it('should have gradient line only if pattern is non-solid', () => {
+  it('should have gradient line only if pattern is non-solid', async () => {
     const { getGradientLine, rerender } = arrange({
       color: createSolid(0, 0, 0),
       hasGradient: true,
     });
 
-    expect(getGradientLine()).not.toBeInTheDocument();
+    await waitFor(() => expect(getGradientLine()).not.toBeInTheDocument());
 
     rerender({
       color: {
@@ -106,6 +114,6 @@ describe('<ColorPicker /> as it loads', () => {
       hasGradient: true,
     });
 
-    expect(getGradientLine()).toBeInTheDocument();
+    await waitFor(() => expect(getGradientLine()).toBeInTheDocument());
   });
 });

@@ -26,7 +26,7 @@ import {
   useState,
   useRef,
 } from 'react';
-import { useResizeEffect } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
