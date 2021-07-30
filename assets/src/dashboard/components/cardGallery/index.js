@@ -19,7 +19,6 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDebouncedCallback } from 'use-debounce';
 import { ThemeProvider } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
@@ -27,10 +26,8 @@ import {
   PAGE_RATIO,
   UnitsProvider,
 } from '@web-stories-wp/units';
-import {
-  useGridViewKeys,
-  useResizeEffect,
-} from '@web-stories-wp/design-system';
+import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { useResizeEffect, useDebouncedCallback } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**

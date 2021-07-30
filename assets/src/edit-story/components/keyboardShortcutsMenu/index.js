@@ -28,8 +28,8 @@ import {
   Icons,
   TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
-  useFocusOut,
 } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

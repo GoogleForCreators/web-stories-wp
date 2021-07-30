@@ -22,9 +22,9 @@ import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   useGridViewKeys,
-  useFocusOut,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

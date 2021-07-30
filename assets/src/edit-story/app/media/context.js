@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createContext } from '@web-stories-wp/design-system';
+import { createContext } from '@web-stories-wp/react';
 
 /**
  * @typedef {import('./typedefs').MediaContext} MediaContext

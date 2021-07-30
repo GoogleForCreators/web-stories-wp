@@ -20,7 +20,8 @@ import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { memo, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { themeHelpers, useResizeEffect } from '@web-stories-wp/design-system';
+import { themeHelpers } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

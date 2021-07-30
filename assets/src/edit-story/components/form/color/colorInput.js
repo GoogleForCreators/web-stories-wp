@@ -33,11 +33,11 @@ import {
   Swatch,
   PLACEMENT,
 } from '@web-stories-wp/design-system';
+import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useUnmount from '../../../utils/useUnmount';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
