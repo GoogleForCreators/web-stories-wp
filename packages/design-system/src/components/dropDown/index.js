@@ -79,8 +79,7 @@ export const DropDown = forwardRef(
     },
     ref
   ) => {
-    const defaultRef = useRef();
-    const selectRef = ref || defaultRef;
+    const internalRef = useRef();
 
     const { activeOption, isOpen, normalizedOptions } = useDropDown({
       options,
@@ -97,8 +96,8 @@ export const DropDown = forwardRef(
 
     const handleDismissMenu = useCallback(() => {
       isOpen.set(false);
-      selectRef.current.focus();
-    }, [isOpen, selectRef]);
+      internalRef.current.focus();
+    }, [isOpen, internalRef]);
 
     const handleMenuItemClick = useCallback(
       (event, menuItem) => {
@@ -147,14 +146,22 @@ export const DropDown = forwardRef(
           id={selectButtonId}
           isOpen={isOpen.value}
           onSelectClick={handleSelectClick}
-          ref={selectRef}
+          ref={(node) => {
+            // `ref` can either be a callback ref or a normal ref.
+            if (typeof ref == 'function') {
+              ref(node);
+            } else if (ref) {
+              ref.current = node;
+            }
+            internalRef.current = node;
+          }}
           {...rest}
         />
         {!disabled && isInline ? (
           isOpen.value && menu
         ) : (
           <Popup
-            anchor={selectRef}
+            anchor={internalRef}
             isOpen={isOpen.value}
             placement={placement}
             fillWidth={popupFillWidth}
