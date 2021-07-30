@@ -85,7 +85,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const canMuted = useMemo(() => {
+  const shouldDisplayMuteButton = useMemo(() => {
     return (
       (isMuteVideoEnabled &&
         isTranscodingEnabled &&
@@ -107,8 +107,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
 
   const buttonText = useMemo(() => {
     return isMuting
-      ? __('Muting video', 'web-stories')
-      : __('Mute video', 'web-stories');
+      ? __('Removing audio', 'web-stories')
+      : __('Remove audio', 'web-stories');
   }, [isMuting]);
 
   const speak = useLiveRegion();
@@ -138,7 +138,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </Text>
         </Label>
       </Row>
-      {canMuted && (
+      {shouldDisplayMuteButton && (
         <>
           <Row>
             <StyledButton
