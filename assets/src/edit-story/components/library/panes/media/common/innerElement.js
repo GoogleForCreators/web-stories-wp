@@ -32,6 +32,7 @@ import useAverageColor from '../../../../../elements/media/useAverageColor';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
+import { Muted } from '../../../../../icons';
 
 const styledTiles = css`
   width: 100%;
@@ -60,6 +61,16 @@ const DurationWrapper = styled.div`
   border-radius: 100px;
   height: 18px;
   padding: 0 6px;
+`;
+const MuteWrapper = styled.div`
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  height: 24px;
+  width: 24px;
+  background: ${({ theme }) => theme.colors.opacity.black64};
+  border-radius: 100px;
+  padding: 4px;
 `;
 const Duration = styled(Text).attrs({
   forwardedAs: 'span',
@@ -91,6 +102,7 @@ function InnerElement({
   showVideoDetail,
   mediaElement,
   active,
+  isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
   const hiddenPoster = useRef(null);
@@ -202,6 +214,11 @@ function InnerElement({
             <Duration>{lengthFormatted}</Duration>
           </DurationWrapper>
         )}
+        {type === ContentType.VIDEO && showVideoDetail && isMuted && (
+          <MuteWrapper>
+            <Muted />
+          </MuteWrapper>
+        )}
       </>
     );
     cloneProps.src = poster;
@@ -265,6 +282,7 @@ InnerElement.propTypes = {
   alt: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,
+  isMuted: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
   showVideoDetail: PropTypes.bool,
   mediaElement: PropTypes.object,

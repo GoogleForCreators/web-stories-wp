@@ -76,6 +76,7 @@ function Element({
     height: originalHeight,
     local,
     alt,
+    isMuted,
   } = resource;
 
   const oRatio =
@@ -200,6 +201,7 @@ function Element({
           mediaElement={mediaElement}
           resource={resource}
           alt={alt}
+          isMuted={isMuted}
           width={width}
           height={height}
           onClick={onClick}

@@ -22,3 +22,4 @@ export { ReactComponent as Media } from './media.svg';
 export { ReactComponent as More } from './more_horiz.svg';
 export { ReactComponent as TurningLine } from './turning_line.svg';
 export { ReactComponent as Union } from './union.svg';
+export { ReactComponent as Muted } from './volume_off.svg';
