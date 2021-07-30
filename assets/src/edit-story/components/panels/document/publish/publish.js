@@ -87,13 +87,14 @@ function PublishPanel() {
     state: { users },
   } = useInspector();
 
-  const { highlightPoster, highlightLogo, resetHighlight, cancelHighlight } =
-    useHighlights((state) => ({
+  const { highlightPoster, highlightLogo, resetHighlight } = useHighlights(
+    (state) => ({
       highlightPoster: state[states.POSTER],
       highlightLogo: state[states.PUBLISHER_LOGO],
       resetHighlight: state.onFocusOut,
       cancelHighlight: state.cancelEffect,
-    }));
+    })
+  );
 
   const { featuredMedia, publisherLogoUrl, updateStory } = useStory(
     ({
@@ -199,9 +200,6 @@ function PublishPanel() {
                     highlightPoster?.focus &&
                     highlightPoster?.showEffect
                   ) {
-                    node.addEventListener('keydown', cancelHighlight, {
-                      once: true,
-                    });
                     node.focus();
                   }
                 }}
@@ -241,9 +239,6 @@ function PublishPanel() {
                     highlightLogo?.focus &&
                     highlightLogo?.showEffect
                   ) {
-                    node.addEventListener('keydown', cancelHighlight, {
-                      once: true,
-                    });
                     node.focus();
                   }
                 }}

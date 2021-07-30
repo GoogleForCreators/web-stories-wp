@@ -79,13 +79,11 @@ function AnimationPanel({
 }) {
   const playUpdatedAnimation = useRef(false);
 
-  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
-    (state) => ({
-      highlight: state[states.ANIMATION],
-      resetHighlight: state.onFocusOut,
-      cancelHighlight: state.cancelEffect,
-    })
-  );
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.ANIMATION],
+    resetHighlight: state.onFocusOut,
+    cancelHighlight: state.cancelEffect,
+  }));
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
@@ -253,9 +251,6 @@ function AnimationPanel({
           <EffectChooserDropdown
             ref={(node) => {
               if (node && highlight?.focus && highlight?.showEffect) {
-                node.addEventListener('keydown', cancelHighlight, {
-                  once: true,
-                });
                 node.focus();
               }
             }}

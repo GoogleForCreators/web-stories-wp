@@ -68,7 +68,6 @@ function StylePanel(props) {
             dropdownHighlight?.focus &&
             dropdownHighlight?.showEffect
           ) {
-            node.addEventListener('keydown', cancelHighlight, { once: true });
             node.focus();
             setFontsFocused(true);
           }

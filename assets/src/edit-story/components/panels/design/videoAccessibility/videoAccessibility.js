@@ -134,7 +134,6 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
               highlightMediaPicker?.focus &&
               highlightMediaPicker?.showEffect
             ) {
-              node.addEventListener('keydown', cancelHighlight, { once: true });
               node.focus();
             }
           }}

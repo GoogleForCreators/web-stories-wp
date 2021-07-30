@@ -150,13 +150,11 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
-  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
-    (state) => ({
-      highlight: state[states.CAPTIONS],
-      resetHighlight: state.onFocusOut,
-      cancelHighlight: state.cancelEffect,
-    })
-  );
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.CAPTIONS],
+    resetHighlight: state.onFocusOut,
+    cancelHighlight: state.cancelEffect,
+  }));
 
   return (
     <SimplePanel
@@ -211,9 +209,6 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
               onAnimationEnd={() => resetHighlight()}
               ref={(node) => {
                 if (node && highlight?.focus && highlight?.showEffect) {
-                  node.addEventListener('keydown', cancelHighlight, {
-                    once: true,
-                  });
                   node.focus();
                 }
               }}
