@@ -129,7 +129,8 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       {renderImages ? (
         <TextSetImg
           src={`${cdnURL}images/text-sets/${id}.png`}
-          alt={rest['aria-label']}
+          alt=""
+          crossOrigin="anonymous"
         />
       ) : (
         <TextSetElements isForDisplay elements={elements} />

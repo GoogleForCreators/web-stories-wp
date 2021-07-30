@@ -20,7 +20,12 @@
 /**
  * External dependencies
  */
+import fs from 'fs';
 import puppeteer from 'puppeteer';
+
+const screenshotsPath = `build/text-sets/`;
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+fs.mkdirSync(screenshotsPath, { recursive: true });
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -87,7 +92,7 @@ import puppeteer from 'puppeteer';
     }
 
     await textSet.screenshot({
-      path: `${textSetId}.png`,
+      path: `${screenshotsPath}${textSetId}.png`,
       omitBackground: true,
     });
     process.stdout.write('.');
@@ -97,7 +102,7 @@ import puppeteer from 'puppeteer';
 
   await browser.close();
   console.log(
-    '\nText sets images generated, please move and commit them to the static-site branch'
+    `\nText sets images generated in ${screenshotsPath}, please move and commit them to the static-site branch`
   );
 })();
 
