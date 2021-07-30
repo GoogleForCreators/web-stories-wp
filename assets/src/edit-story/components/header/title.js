@@ -28,8 +28,7 @@ import { themeHelpers } from '@web-stories-wp/design-system';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
-import { styles, states, useFocusHighlight } from '../../app/highlights';
-import useHeader from './use';
+import { styles, states, useHighlights } from '../../app/highlights';
 
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.primary} !important`};
@@ -61,10 +60,14 @@ function Title() {
       actions: { updateStory },
     }) => ({ title, slug, updateStory })
   );
-  const { setTitleInput, titleInput } = useHeader();
-  const highlight = useFocusHighlight(states.STORY_TITLE, {
-    current: titleInput,
-  });
+
+  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
+    (state) => ({
+      highlight: state[states.STORY_TITLE],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    })
+  );
 
   const { storyId } = useConfig();
 
@@ -86,7 +89,12 @@ function Title() {
 
   return (
     <Input
-      ref={setTitleInput}
+      ref={(node) => {
+        if (node && highlight?.focus && highlight?.showEffect) {
+          node.addEventListener('keydown', cancelHighlight, { once: true });
+          node.focus();
+        }
+      }}
       value={title}
       type="text"
       onBlur={handleBlur}
@@ -94,6 +102,7 @@ function Title() {
       placeholder={__('Add title', 'web-stories')}
       aria-label={__('Story title', 'web-stories')}
       isHighlighted={highlight?.showEffect}
+      onAnimationEnd={() => resetHighlight()}
     />
   );
 }

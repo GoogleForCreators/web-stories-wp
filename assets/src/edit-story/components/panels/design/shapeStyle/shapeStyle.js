@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -28,7 +28,7 @@ import { Row, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import getColorPickerActions from '../../shared/getColorPickerActions';
-import { states, styles, useFocusHighlight } from '../../../../app/highlights';
+import { states, styles, useHighlights } from '../../../../app/highlights';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
@@ -41,19 +41,30 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
     [pushUpdate]
   );
 
-  const colorInputRef = useRef();
-  const highlight = useFocusHighlight(states.STYLE, colorInputRef);
+  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
+    (state) => ({
+      highlight: state[states.STYLE],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    })
+  );
 
   return (
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
       name="style"
       title={__('Style', 'web-stories')}
       isPersistable={!highlight}
     >
       <Row>
         <Color
-          ref={colorInputRef}
+          ref={(node) => {
+            if (node && highlight?.focus && highlight?.showEffect) {
+              node.addEventListener('keydown', cancelHighlight, { once: true });
+              node.focus();
+            }
+          }}
           hasGradient
           value={backgroundColor}
           isMultiple={backgroundColor === ''}

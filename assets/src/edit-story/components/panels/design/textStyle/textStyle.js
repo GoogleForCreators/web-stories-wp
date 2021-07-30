@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useRef } from 'react';
 /**
  * Internal dependencies
  */
+import { useState } from 'react';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
-import { styles, useFocusHighlight, states } from '../../../../app/highlights';
+import { styles, useHighlights, states } from '../../../../app/highlights';
 import { SimplePanel } from '../../panel';
 import { usePresubmitHandler } from '../../../form';
 import StyleControls from './style';
@@ -31,15 +31,20 @@ import ColorControls from './color';
 import FontControls from './font';
 
 function StylePanel(props) {
-  const fontDropdownRef = useRef(null);
-  const textColorRef = useRef(null);
   // use highlights to update panel styles
   // but don't dynamically adjust the `isPersistable` prop on `SimplePanel`
   // the textStyle panel automatically opens already whenever a text element is selected
   // if we update this to only be when there's a highlight the functionality that is expected
   // will be wrong.
-  const dropdownHighlight = useFocusHighlight(states.FONT, fontDropdownRef);
-  const colorHighlight = useFocusHighlight(states.TEXT_COLOR, textColorRef);
+  const { dropdownHighlight, colorHighlight, resetHighlight, cancelHighlight } =
+    useHighlights((state) => ({
+      dropdownHighlight: state[states.FONT],
+      colorHighlight: state[states.TEXT_COLOR],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    }));
+
+  const [fontsFocused, setFontsFocused] = useState(false);
 
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
@@ -52,17 +57,35 @@ function StylePanel(props) {
         (dropdownHighlight?.showEffect || colorHighlight?.showEffect) &&
         styles.FLASH
       }
+      onAnimationEnd={() => resetHighlight()}
       isPersistable={false}
     >
       <FontControls
         {...props}
-        fontDropdownRef={fontDropdownRef}
-        highlightStylesOverride={
-          dropdownHighlight?.showEffect && styles.OUTLINE
-        }
+        fontDropdownRef={(node) => {
+          if (
+            node &&
+            dropdownHighlight?.focus &&
+            dropdownHighlight?.showEffect
+          ) {
+            node.addEventListener('keydown', cancelHighlight, { once: true });
+            node.focus();
+            setFontsFocused(true);
+          }
+        }}
+        highlightStylesOverride={fontsFocused && styles.OUTLINE}
       />
       <StyleControls {...props} />
-      <ColorControls {...props} textColorRef={textColorRef} />
+      <ColorControls
+        {...props}
+        textColorRef={(node) => {
+          if (node && colorHighlight?.focus && colorHighlight?.showEffect) {
+            node.addEventListener('keydown', cancelHighlight, { once: true });
+            node.focus();
+            setFontsFocused(false);
+          }
+        }}
+      />
     </SimplePanel>
   );
 }

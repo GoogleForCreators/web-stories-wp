@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -28,7 +27,7 @@ import { Row, TextArea } from '../../../form';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { SimplePanel } from '../../panel';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { useFocusHighlight, states, styles } from '../../../../app/highlights';
+import { useHighlights, states, styles } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = { alt: null };
 const MIN_MAX = {
@@ -44,20 +43,31 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
-  const ref = useRef(null);
-  // When the panel needs to be focused from somewhere else (e.g. the prepublish checklist).
-  const highlight = useFocusHighlight(states.ASSISTIVE_TEXT, ref);
+
+  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
+    (state) => ({
+      highlight: state[states.ASSISTIVE_TEXT],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    })
+  );
 
   return (
     <SimplePanel
       css={highlight && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
       name="imageAccessibility"
       title={__('Accessibility', 'web-stories')}
       isPersistable={!highlight}
     >
       <Row>
         <TextArea
-          ref={ref}
+          ref={(node) => {
+            if (node && highlight?.focus && highlight?.showEffect) {
+              node.addEventListener('keydown', cancelHighlight, { once: true });
+              node.focus();
+            }
+          }}
           placeholder={
             alt === MULTIPLE_VALUE
               ? MULTIPLE_DISPLAY_VALUE

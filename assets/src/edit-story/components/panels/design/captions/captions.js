@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
@@ -42,7 +42,7 @@ import { Row, usePresubmitHandler } from '../../../form';
 import { useMediaPicker } from '../../../mediaPicker';
 import { SimplePanel } from '../../panel';
 import { focusStyle, getCommonValue } from '../../shared';
-import { states, styles, useFocusHighlight } from '../../../../app/highlights';
+import { states, styles, useHighlights } from '../../../../app/highlights';
 import Tooltip from '../../../tooltip';
 
 const InputRow = styled.div`
@@ -150,12 +150,18 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
-  const buttonRef = useRef();
-  const highlight = useFocusHighlight(states.CAPTIONS, buttonRef);
+  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
+    (state) => ({
+      highlight: state[states.CAPTIONS],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    })
+  );
 
   return (
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
       name="caption"
       title={__('Caption and Subtitles', 'web-stories')}
       isPersistable={!highlight}
@@ -202,7 +208,15 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
           <Row expand>
             <UploadButton
               css={highlight?.showEffect && styles.OUTLINE}
-              ref={buttonRef}
+              onAnimationEnd={() => resetHighlight()}
+              ref={(node) => {
+                if (node && highlight?.focus && highlight?.showEffect) {
+                  node.addEventListener('keydown', cancelHighlight, {
+                    once: true,
+                  });
+                  node.focus();
+                }
+              }}
               onClick={UploadCaption}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
