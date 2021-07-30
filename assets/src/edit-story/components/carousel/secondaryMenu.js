@@ -23,7 +23,6 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useFeature } from 'flagged';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
 import { useHelpCenter } from '../../app';
@@ -134,20 +133,15 @@ function SecondaryMenu() {
     }
   }, [reviewDialogRequested, onResetReviewDialogRequest, openChecklist]);
 
-  const enableChecklistCompanion = useFeature('enableChecklistCompanion');
   return (
     <Wrapper>
       <MenuItems>
         <HelpCenter />
         <Space />
-        {enableChecklistCompanion && (
-          <>
-            <ChecklistCountProvider>
-              <Checklist />
-            </ChecklistCountProvider>
-            <Space />
-          </>
-        )}
+        <ChecklistCountProvider>
+          <Checklist />
+        </ChecklistCountProvider>
+        <Space />
         <Box>
           <KeyboardShortcutsMenu />
         </Box>
