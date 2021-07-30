@@ -913,8 +913,10 @@
      *            The new options object
      */
     function setOptions(newOptions) {
-      if (newOptions.parent)
-         $parent = $( newOptions.parent ).append( $box.add( $outer ) );
+      if (newOptions.parent) {
+        // Patched XSS vulnerability.
+        $parent = newOptions.parent.append( $box.add( $outer ) );
+      }
 
       /* Merge the new options with the existing ones */
       $.extend(options, newOptions);
