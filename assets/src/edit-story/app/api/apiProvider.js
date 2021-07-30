@@ -22,10 +22,12 @@ import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
 import { addQueryArgs } from '@web-stories-wp/design-system';
+
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
 /**
  * Internal dependencies
  */
@@ -33,6 +35,26 @@ import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
 import { flatternFormData, removeImagesFromPageTemplates } from './utils';
+
+// Important: Keep in sync with REST API preloading definition.
+const STORY_FIELDS = [
+  'id',
+  'title',
+  'status',
+  'slug',
+  'date',
+  'modified',
+  'excerpt',
+  'link',
+  'story_data',
+  'preview_link',
+  'edit_link',
+  'embed_post_link',
+  'publisher_logo_url',
+  'permalink_template',
+  'style_presets',
+  'password',
+].join(',');
 
 function APIProvider({ children }) {
   const {
@@ -57,13 +79,13 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
-  // Important: Keep in sync with REST API preloading definition.
   const getStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
         _embed: 'wp:featuredmedia,wp:lockuser,author',
         web_stories_demo: false,
+        _fields: STORY_FIELDS,
       });
 
       return apiFetch({ path });
@@ -103,13 +125,13 @@ function APIProvider({ children }) {
     [storyLocking]
   );
 
-  // Important: Keep in sync with REST API preloading definition.
   const getDemoStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
         _embed: 'wp:featuredmedia,author',
         web_stories_demo: true,
+        _fields: STORY_FIELDS,
       });
 
       return apiFetch({ path });
@@ -158,8 +180,23 @@ function APIProvider({ children }) {
      */
     (story) => {
       const { storyId } = story;
+
+      // Only require these fields in the response as used by useSaveStory()
+      // to reduce response size.
+      const path = addQueryArgs(`${stories}${storyId}/`, {
+        _fields: [
+          'status',
+          'slug',
+          'link',
+          'featured_media_url',
+          'preview_link',
+          'edit_link',
+          'embed_post_link',
+        ].join(','),
+      });
+
       return apiFetch({
-        path: `${stories}${storyId}/`,
+        path,
         data: getStorySaveData(story),
         method: 'POST',
       });

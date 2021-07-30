@@ -74,19 +74,21 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
         ...getStoryPropsToSave({ story, pages, metadata, flags }),
         ...props,
       })
-        .then((post) => {
+        .then((data) => {
           const properties = {
-            ...objectPick(post, ['status', 'slug', 'link']),
-            featuredMediaUrl: post.featured_media_url,
-            previewLink: post.preview_link,
-            editLink: post.edit_link,
-            embedPostLink: post.embed_post_link,
+            status: data.status,
+            slug: data.slug,
+            link: data.link,
+            featuredMediaUrl: data.featured_media_url,
+            previewLink: data.preview_link,
+            editLink: data.edit_link,
+            embedPostLink: data.embed_post_link,
           };
           updateStory({ properties });
 
           refreshPostEditURL();
 
-          const isStoryPublished = ['publish', 'future'].includes(post.status);
+          const isStoryPublished = ['publish', 'future'].includes(data.status);
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch(() => {
