@@ -268,8 +268,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param HasRequirements $class       Service with requirements.
-	 * @param string[]        $service_ids List of service IDs to be registered.
+	 * @param class-string|HasRequirements $class       Service with requirements.
+	 * @param string[]                     $service_ids List of service IDs to be registered.
 	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
