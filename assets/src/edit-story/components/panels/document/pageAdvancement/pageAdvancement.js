@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 
 /**
  * External dependencies

@@ -20,7 +20,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Input, useFocusOut } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
+import { Input } from '@web-stories-wp/design-system';
 
 const StyledInput = styled(Input)`
   div {

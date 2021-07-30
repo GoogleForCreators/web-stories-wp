@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { useMemo, useRef, useState } from 'react';
-import { useResizeEffect } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

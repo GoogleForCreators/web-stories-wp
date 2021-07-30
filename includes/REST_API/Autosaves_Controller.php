@@ -103,7 +103,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'rest_api_init';
 	}
 
@@ -114,7 +114,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 100;
 	}
 
@@ -172,7 +172,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
@@ -211,7 +211,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}

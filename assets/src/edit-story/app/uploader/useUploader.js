@@ -82,41 +82,41 @@ function useUploader() {
         throw createError('PermissionError', file.name, message);
       }
 
-      // The file is too large for the site anyway, abort.
-      if (!isFileSizeWithinLimits(file)) {
-        const message = sprintf(
-          /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
-          __(
-            'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
-            'web-stories'
-          ),
-          bytesToMB(file.size),
-          bytesToMB(maxUpload)
-        );
-        throw createError('SizeError', file.name, message);
-      }
-
-      // TODO: Move this check to useUploadMedia?
-      if (!isValidType(file) && !canTranscodeFile) {
-        let message = __(
-          'No file types are currently supported.',
-          'web-stories'
-        );
-
-        if (allowedFileTypes.length) {
-          /* translators: %s is a list of allowed file extensions. */
-          message = sprintf(
-            /* translators: %s: list of allowed file types. */
-            __('Please choose only %s to upload.', 'web-stories'),
-            translateToExclusiveList(allowedFileTypes)
+      if (!canTranscodeFile) {
+        // The file is too large for the site anyway, abort.
+        if (!isFileSizeWithinLimits(file)) {
+          const message = sprintf(
+            /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
+            __(
+              'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
+              'web-stories'
+            ),
+            bytesToMB(file.size),
+            bytesToMB(maxUpload)
           );
+          throw createError('SizeError', file.name, message);
         }
 
-        throw createError('ValidError', file.name, message);
-      }
+        // TODO: Move this check to useUploadMedia?
+        if (!isValidType(file)) {
+          let message = __(
+            'No file types are currently supported.',
+            'web-stories'
+          );
 
-      // TODO: Move this check to useUploadMedia?
-      if (isFileTooLarge) {
+          if (allowedFileTypes.length) {
+            /* translators: %s is a list of allowed file extensions. */
+            message = sprintf(
+              /* translators: %s: list of allowed file types. */
+              __('Please choose only %s to upload.', 'web-stories'),
+              translateToExclusiveList(allowedFileTypes)
+            );
+          }
+
+          throw createError('ValidError', file.name, message);
+        }
+        // TODO: Move this check to useUploadMedia?
+      } else if (isFileTooLarge) {
         const message = sprintf(
           /* translators: 1: File size in MB. 2: Maximum allowed file size in MB. */
           __(

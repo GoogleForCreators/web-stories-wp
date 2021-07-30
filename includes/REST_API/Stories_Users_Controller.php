@@ -26,9 +26,12 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
+use WP_Error;
+use WP_REST_Request;
 use WP_REST_Users_Controller;
 
 /**
@@ -65,7 +68,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'rest_api_init';
 	}
 
@@ -76,7 +79,77 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 100;
+	}
+
+	/**
+	 * Checks if a given request has access to read a user.
+	 *
+	 * Same as the parent function but with using a cached version of {@see count_user_posts()}.
+	 *
+	 * @see WP_REST_Users_Controller::get_item_permissions_check()
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access for the item, otherwise WP_Error object.
+	 */
+	public function get_item_permissions_check( $request ) {
+
+		$user = $this->get_user( $request['id'] );
+		if ( is_wp_error( $user ) ) {
+			return $user;
+		}
+
+		if ( get_current_user_id() === $user->ID ) {
+			return true;
+		}
+
+		if ( 'edit' === $request['context'] && ! current_user_can( 'list_users' ) ) {
+			return new WP_Error(
+				'rest_user_cannot_view',
+				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		if ( ! $this->user_posts_count_public( $user->ID, Story_Post_Type::POST_TYPE_SLUG ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
+			return new WP_Error(
+				'rest_user_cannot_view',
+				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Number of posts user has written.
+	 *
+	 * Wraps {@see count_user_posts()} results in a cache.
+	 *
+	 * @since 1.10.0
+	 * @link https://core.trac.wordpress.org/ticket/39242
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @param int    $userid      User ID.
+	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
+	 * @return string Number of posts the user has written in this post type.
+	 */
+	protected function user_posts_count_public( int $userid, string $post_type = 'post' ): string {
+		$cache_key   = "count_user_{$post_type}_{$userid}";
+		$cache_group = 'user_posts_count';
+
+		$count = wp_cache_get( $cache_key, $cache_group );
+		if ( false === $count ) {
+			// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.count_user_posts_count_user_posts
+			$count = count_user_posts( $userid, $post_type, true );
+			wp_cache_add( $cache_key, $count, $cache_group );
+		}
+
+		return $count;
 	}
 }
