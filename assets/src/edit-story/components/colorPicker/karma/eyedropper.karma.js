@@ -52,23 +52,24 @@ describe('Eyedropper', () => {
   it('should get color from the image to page background', async () => {
     // Insert image that will be the color source
     const image = fixture.editor.library.media.item(1);
-    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
-    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 1, 1),
-      down(),
-      moveRel(canvas, 30, 30),
-      up(),
-    ]);
+    await fixture.events.click(image);
+    await fixture.events.click(image);
 
     // Click the background element
-    await fixture.events.click(
-      fixture.editor.canvas.framesLayer.frames[0].node
+    const bgCanvasRect =
+      fixture.editor.canvas.framesLayer.frames[0].node.getBoundingClientRect();
+    await fixture.events.mouse.click(
+      bgCanvasRect.left + 10,
+      bgCanvasRect.bottom - 10
     );
 
     // Use eyedropper to select the color
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    await waitFor(() =>
+      expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
+    );
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
       timeout: 4000,
@@ -77,6 +78,12 @@ describe('Eyedropper', () => {
     const imageOnCanvasRect = (
       await getCanvasElementWrapperById(imageOnCanvas.id)
     ).getBoundingClientRect();
+    // uncomment and view karma run to see how this isn't properly aligned
+    // await fixture.events.mouse.move(
+    //   imageOnCanvasRect.right - 2,
+    //   imageOnCanvasRect.top + 8
+    // );
+    // await fixture.events.sleep(10000);
     await fixture.events.mouse.click(
       imageOnCanvasRect.right - 2,
       imageOnCanvasRect.top + 8
