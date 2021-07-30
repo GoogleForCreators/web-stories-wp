@@ -206,6 +206,20 @@ class Jetpack extends Test_Case {
 	}
 
 	/**
+	 * @covers ::filter_default_value_is_muted
+	 */
+	public function test_filter_default_value_is_muted() {
+		$jetpack = new Jetpack_Integration();
+		$result  = $jetpack->filter_default_value_is_muted( true, 999, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
+		$this->assertTrue( $result );
+		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
+		$result = $jetpack->filter_default_value_is_muted( true, 999, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
+		$this->assertFalse( $result );
+		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
+	}
+
+
+	/**
 	 * @param $value
 	 * @param $object_id
 	 * @param $meta_key

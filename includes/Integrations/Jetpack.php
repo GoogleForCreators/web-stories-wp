@@ -76,6 +76,8 @@ class Jetpack extends Service_Base {
 		add_filter( 'web_stories_rest_prepare_attachment', [ $this, 'filter_api_response' ], 10, 2 );
 		add_filter( 'ajax_query_attachments_args', [ $this, 'filter_ajax_query_attachments_args' ] );
 		add_action( 'added_post_meta', [ $this, 'add_term' ], 10, 3 );
+		// Ensure that this filter fires after filter_default_value_is_muted in Media class.
+		add_filter( 'default_post_metadata', [ $this, 'filter_default_value_is_muted' ], 20, 4 );
 	}
 
 	/**
@@ -288,5 +290,35 @@ class Jetpack extends Service_Base {
 			return (bool) $is_amp_request;
 		}
 		return true;
+	}
+
+	/**
+	 * Filter the default value of is muted, if videopress is enabled, the default to false.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param mixed  $value     The value to return, either a single metadata value or an array
+	 *                          of values depending on the value of `$single`.
+	 * @param int    $object_id ID of the object metadata is for.
+	 * @param string $meta_key  Metadata key.
+	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
+	 *
+	 * @return bool|bool[]
+	 */
+	public function filter_default_value_is_muted( $value, $object_id, $meta_key, $single ) {
+		if ( Media::IS_MUTED_POST_META_KEY !== $meta_key ) {
+			return $value;
+		}
+
+		$meta_data = wp_get_attachment_metadata( $object_id );
+		if ( ! $meta_data || ! is_array( $meta_data ) ) {
+			return $value;
+		}
+
+		if ( ! isset( $meta_data['videopress'] ) ) {
+			return $value;
+		}
+
+		return ( $single ) ? false : [ false ];
 	}
 }
