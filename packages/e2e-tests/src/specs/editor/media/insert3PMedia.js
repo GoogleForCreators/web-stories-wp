@@ -29,7 +29,10 @@ describe('Inserting 3P Media', () => {
       'Your use of stock content is subject to third party terms'
     );
   });
-  it('should insert an Unsplash image', async () => {
+
+  // Skipped for https://github.com/google/web-stories-wp/issues/7481
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should insert an Unsplash image', async () => {
     await createNewStory();
 
     await expect(page).toClick('#library-tab-media3p');
@@ -48,6 +51,7 @@ describe('Inserting 3P Media', () => {
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
+
   // Skipped for https://github.com/google/web-stories-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert an coverr video', async () => {
@@ -69,7 +73,10 @@ describe('Inserting 3P Media', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
-  it('should insert an tenor gif', async () => {
+
+  // Skipped for https://github.com/google/web-stories-wp/issues/7481
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should insert an tenor gif', async () => {
     await createNewStory();
 
     await expect(page).toClick('#library-tab-media3p');
