@@ -57,6 +57,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
+  // Important: Keep in sync with REST API preloading definition.
   const getStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -102,6 +103,7 @@ function APIProvider({ children }) {
     [storyLocking]
   );
 
+  // Important: Keep in sync with REST API preloading definition.
   const getDemoStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -183,6 +185,7 @@ function APIProvider({ children }) {
     [stories, getStorySaveData]
   );
 
+  // Important: Keep in sync with REST API preloading definition.
   const getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
       let apiPath = media;
@@ -192,6 +195,23 @@ function APIProvider({ children }) {
         per_page: perPage,
         page: pagingNum,
         _web_stories_envelope: true,
+        _fields: [
+          'id',
+          'date_gmt',
+          'media_details',
+          'title',
+          'mime_type',
+          'featured_media',
+          'featured_media_src',
+          'alt_text',
+          'source_url',
+          'media_source',
+          'meta.web_stories_is_muted',
+          // _web_stories_envelope will add these fields, we need them too.
+          'body',
+          'status',
+          'headers',
+        ].join(','),
       });
 
       if (mediaType) {

@@ -309,8 +309,7 @@ function getTextStyleColors(element) {
 }
 
 function getTextShapeBackgroundColor({ background }) {
-  const { color } = background.backgroundColor;
-  return color;
+  return background?.backgroundColor?.color;
 }
 
 /**
