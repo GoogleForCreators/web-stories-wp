@@ -27,12 +27,14 @@ import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function storyMissingTitle(title) {
   return typeof title !== 'string' || title?.trim() === '';
 }
 
 const StoryMissingTitle = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const storyTitle = useStory(({ state }) => state?.story?.title);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -48,7 +50,8 @@ const StoryMissingTitle = () => {
 
   const { footer, title } = PRIORITY_COPY.storyMissingTitle;
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         titleProps={{
