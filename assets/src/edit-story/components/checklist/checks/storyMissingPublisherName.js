@@ -58,7 +58,7 @@ const StoryMissingPublisherName = () => {
               }}
             >
               {__(
-                'Your Site Title is used when your Story appears on Google. You can set your Site Title by going to <a>General Settings</a>.',
+                'Your site title is used when your Story appears on Google. You can set your site title by going to <a>General Settings</a>.',
                 'web-stories'
               )}
             </TranslateWithMarkup>
