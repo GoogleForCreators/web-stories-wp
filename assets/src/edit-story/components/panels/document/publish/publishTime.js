@@ -24,8 +24,8 @@ import {
   DropDownSelect,
   PLACEMENT,
   useKeyDownEffect,
-  useFocusOut,
 } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

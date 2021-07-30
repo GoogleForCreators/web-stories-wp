@@ -20,10 +20,11 @@
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { useLayoutEffect, useCallback, useState, useRef } from 'react';
+import { useResizeEffect } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
-import useResizeEffect from '../../utils/useResizeEffect';
 import { themeHelpers } from '../../theme';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';

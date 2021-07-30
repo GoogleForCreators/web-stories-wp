@@ -23,11 +23,8 @@ import { forwardRef, createRef, useRef, useEffect } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import {
-  useResizeEffect,
-  THEME_CONSTANTS,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
