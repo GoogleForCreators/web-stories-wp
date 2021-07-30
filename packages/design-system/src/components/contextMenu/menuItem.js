@@ -40,6 +40,9 @@ const Shortcut = styled(Text)`
   color: ${({ theme, disabled }) =>
     disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
 `;
+Shortcut.propTypes = {
+  disabled: PropTypes.bool,
+};
 
 const IconWrapper = styled.span`
   width: 32px;
@@ -96,7 +99,6 @@ export const MenuItem = ({
         <ItemText
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           forwardedAs="span"
-          disabled={disabled}
         >
           {label}
         </ItemText>
