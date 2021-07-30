@@ -87,20 +87,11 @@ export const StoryListItem = ({
   const memoizedStoryMenu = useMemo(
     () => (
       <StoryMenu
-        menuLabel={
-          isLocked
-            ? sprintf(
-                /* translators: %1$s: story title %2$s: user story is locked by.*/
-                __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
-                formattedTitle,
-                story?.lockUser.name
-              )
-            : sprintf(
-                /* translators: %s: story title.*/
-                __('Context menu for %s', 'web-stories'),
-                formattedTitle
-              )
-        }
+        menuLabel={sprintf(
+          /* translators: %s: story title.*/
+          __('Context menu for %s', 'web-stories'),
+          formattedTitle
+        )}
         onMoreButtonSelected={storyMenu.handleMenuToggle}
         contextMenuId={storyMenu.contextMenuId}
         storyId={story.id}
