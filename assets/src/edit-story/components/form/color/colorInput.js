@@ -121,6 +121,9 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
+const loadReactColor = () =>
+  import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
+
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
@@ -161,6 +164,8 @@ const ColorInput = forwardRef(function ColorInput(
   const buttonProps = {
     onClick: () => setPickerOpen(true),
     'aria-label': label,
+    onPointerEnter: () => loadReactColor(),
+    onFocus: () => loadReactColor(),
   };
 
   // Always hide color picker on unmount - note the double arrows

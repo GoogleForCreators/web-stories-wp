@@ -23,7 +23,7 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/react-hooks": "^3.7.0"
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/react-hooks": "^7.0.1"
   }
 }
