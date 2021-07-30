@@ -52,12 +52,15 @@ describe('Eyedropper', () => {
   it('should get color from the image to page background', async () => {
     // Insert image that will be the color source
     const image = fixture.editor.library.media.item(1);
+    // Only regestering image click by clicking twice for some reason
     await fixture.events.click(image);
     await fixture.events.click(image);
 
     // Click the background element
     const bgCanvasRect =
       fixture.editor.canvas.framesLayer.frames[0].node.getBoundingClientRect();
+    // Make sure to click on part of bg element not covered by media element previously
+    // assed to canvas
     await fixture.events.mouse.click(
       bgCanvasRect.left + 10,
       bgCanvasRect.bottom - 10
@@ -67,6 +70,7 @@ describe('Eyedropper', () => {
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    // Once picker is rendered, takes a moment for its internals to properly render
     await waitFor(() =>
       expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
     );
