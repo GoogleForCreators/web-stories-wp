@@ -57,5 +57,5 @@ export function getContent() {
     },
   };
 
-  return getStoryMarkup(story, pages, metadata, {});
+  return getStoryMarkup(story, pages, metadata);
 }
