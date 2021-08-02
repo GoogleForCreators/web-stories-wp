@@ -111,10 +111,10 @@
  * @property {string} mediaType current media type filter selected
  * @property {string} nextPageToken the page token for the next page
  * @property {string} pageToken page token
- * @property {Array.<number>} audioProcessed ids of videos that have been processed audio
- * @property {Array.<number>} audioProcessing ids of videos that haven't processed audio
- * @property {Array.<number>} posterProcessed ids of videos that have been processed poster
- * @property {Array.<number>} posterProcessing ids of videos that haven't processed poster
+ * @property {Array.<number>} audioProcessed IDs of videos that have been processed for audio track detection.
+ * @property {Array.<number>} audioProcessing IDs of videos that haven't yet been processed for audio track detection.
+ * @property {Array.<number>} posterProcessed IDs of videos that have been processed for poster generation.
+ * @property {Array.<number>} posterProcessing IDs of videos that haven't yet been processed for poster generation.
  * @property {string} searchTerm search term
  * @property {number} totalPages total pages
  */
