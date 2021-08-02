@@ -83,8 +83,10 @@
  * @property {string} mediaType current media type filter selected
  * @property {string} nextPageToken the page token for the next page
  * @property {string} pageToken page token
- * @property {Array.<number>} processed videos that have been processed
- * @property {Array.<number>} processing videos that haven't been processed
+ * @property {Array.<number>} audioProcessing videos that have been had audio processed
+ * @property {Array.<number>} audioProcessed videos that haven't been had their audio processed
+ * @property {Array.<number>} posterProcessing videos that have been had poster processed
+ * @property {Array.<number>} posterProcessed videos that haven't been had their poster processed
  * @property {string} searchTerm search term
  * @property {number} totalPages total pages
  */
@@ -109,9 +111,10 @@
  * @property {string} mediaType current media type filter selected
  * @property {string} nextPageToken the page token for the next page
  * @property {string} pageToken page token
- * @property {Array.<number>} processed ids of videos that have been processed
- * @property {Array.<number>} processing ids of videos that haven't been
- * processed
+ * @property {Array.<number>} audioProcessed ids of videos that have been processed audio
+ * @property {Array.<number>} audioProcessing ids of videos that haven't processed audio
+ * @property {Array.<number>} posterProcessed ids of videos that have been processed poster
+ * @property {Array.<number>} posterProcessing ids of videos that haven't processed poster
  * @property {string} searchTerm search term
  * @property {number} totalPages total pages
  */

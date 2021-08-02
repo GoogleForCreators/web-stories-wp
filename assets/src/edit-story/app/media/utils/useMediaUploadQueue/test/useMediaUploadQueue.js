@@ -56,7 +56,7 @@ const mockAttachment = {
   },
   featured_media_src: {},
   meta: {
-    web_stories_is_muted: false,
+    web_stories_is_muted: 'has-audio',
   },
 };
 
@@ -114,14 +114,14 @@ describe('useMediaUploadQueue', () => {
     await waitForNextUpdate();
 
     expect(result.current.state.isUploading).toBeTrue();
-    expect(result.current.state.processed).toHaveLength(1);
+    expect(result.current.state.posterProcessed).toHaveLength(1);
 
-    const { id } = result.current.state.processed[0];
+    const { id } = result.current.state.posterProcessed[0];
 
     act(() => result.current.actions.removeItem({ id }));
 
     expect(result.current.state.isUploading).toBeFalse();
-    expect(result.current.state.processed).toHaveLength(0);
+    expect(result.current.state.posterProcessed).toHaveLength(0);
   });
 
   it('allows removing items from the queue', async () => {
@@ -138,11 +138,11 @@ describe('useMediaUploadQueue', () => {
     await waitForNextUpdate();
 
     expect(result.current.state.failures).toHaveLength(0);
-    expect(result.current.state.processed).toHaveLength(1);
+    expect(result.current.state.posterProcessed).toHaveLength(1);
 
     act(() =>
       result.current.actions.removeItem({
-        id: result.current.state.processed[0].id,
+        id: result.current.state.posterProcessed[0].id,
       })
     );
 

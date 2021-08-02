@@ -73,16 +73,40 @@ export const setMediaType =
     });
   };
 
-export const setProcessing =
+export const setAudioProcessing =
   (dispatch) =>
   ({ id }) => {
-    dispatch({ type: types.LOCAL_MEDIA_ADD_PROCESSING, payload: { id } });
+    dispatch({
+      type: types.LOCAL_MEDIA_ADD_AUDIO_PROCESSING,
+      payload: { id },
+    });
   };
 
-export const removeProcessing =
+export const removeAudioProcessing =
   (dispatch) =>
   ({ id }) => {
-    dispatch({ type: types.LOCAL_MEDIA_REMOVE_PROCESSING, payload: { id } });
+    dispatch({
+      type: types.LOCAL_MEDIA_REMOVE_AUDIO_PROCESSING,
+      payload: { id },
+    });
+  };
+
+export const setPosterProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_ADD_POSTER_PROCESSING,
+      payload: { id },
+    });
+  };
+
+export const removePosterProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_REMOVE_POSTER_PROCESSING,
+      payload: { id },
+    });
   };
 
 export const setMedia =

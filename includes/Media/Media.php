@@ -183,13 +183,16 @@ class Media extends Service_Base {
 			'post',
 			self::IS_MUTED_POST_META_KEY,
 			[
-				'type'              => 'boolean',
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'description'       => __( 'Whether the video is muted', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => false,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
+				'type'           => 'string',
+				'description'    => __( 'Whether the video is muted', 'web-stories' ),
+				'show_in_rest'   => [
+					'schema' => [
+						'enum' => [ '', 'muted', 'has-audio' ],
+					],
+				],
+				'default'        => '',
+				'single'         => true,
+				'object_subtype' => 'attachment',
 			]
 		);
 
@@ -647,7 +650,7 @@ class Media extends Service_Base {
 	 * @param string $meta_key  Metadata key.
 	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
 	 *
-	 * @return bool|bool[]
+	 * @return string|string[]
 	 */
 	public function filter_default_value_is_muted( $value, $object_id, $meta_key, $single ) {
 		if ( self::IS_MUTED_POST_META_KEY !== $meta_key ) {
@@ -670,8 +673,11 @@ class Media extends Service_Base {
 			return $value;
 		}
 
-		$is_muted = ! isset( $meta_data['audio'] );
 
-		return ( $single ) ? $is_muted : [ $is_muted ];
+		if ( ! isset( $meta_data['audio'] ) ) {
+			return $value;
+		}
+
+		return ( $single ) ? 'has-audio' : [ 'has-audio' ];
 	}
 }

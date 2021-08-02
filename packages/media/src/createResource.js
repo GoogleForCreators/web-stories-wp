@@ -60,7 +60,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {boolean} local Whether the resource has been already uploaded to
  * the server.
  * @property {boolean} isOptimized Whether the resource has already been optimized.
- * @property {boolean} isMuted Whether the resource has already been muted.
+ * @property {boolean|null} isMuted Whether the resource has already been muted.
  * @property {Object} sizes Object of image sizes.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */

@@ -32,7 +32,7 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 	public function test_migrate() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',

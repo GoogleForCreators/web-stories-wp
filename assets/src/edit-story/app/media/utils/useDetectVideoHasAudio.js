@@ -72,7 +72,7 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
 
         await updateMedia(id, {
           meta: {
-            web_stories_is_muted: !hasAudio,
+            web_stories_is_muted: !hasAudio ? 'muted' : 'has-audio',
           },
         });
       } catch (error) {

@@ -49,7 +49,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 		$factory->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -58,7 +58,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 		$factory->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mov',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mov',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mov',
 				'post_title'     => 'Test Video Move',

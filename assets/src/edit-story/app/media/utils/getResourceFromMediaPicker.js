@@ -18,6 +18,10 @@
  * External dependencies
  */
 import { createResource, getResourceSize } from '@web-stories-wp/media';
+/**
+ * Internal dependencies
+ */
+import getMutedValue from './getMuteValue';
 
 /**
  * Generates a resource object from a WordPress media picker object.
@@ -50,8 +54,10 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       sizes,
     },
     media_source: mediaSource,
-    meta: { web_stories_is_muted: isMuted },
+    meta: { web_stories_is_muted: webStoriesIsMuted },
   } = mediaPickerEl;
+
+  const isMuted = getMutedValue(webStoriesIsMuted);
 
   return createResource({
     mimeType,

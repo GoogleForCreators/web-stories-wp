@@ -240,7 +240,7 @@ function useMediaUploadQueue() {
               finishTranscoding({ id, file: newFile });
               additionalData.media_source = 'gif-conversion';
               additionalData.meta = {
-                web_stories_is_muted: true,
+                web_stories_is_muted: 'muted',
               };
             } catch (error) {
               // Cancel uploading if there were any errors.
@@ -283,7 +283,7 @@ function useMediaUploadQueue() {
                 newFile = await stripAudioFromVideo(file);
                 finishMuting({ id, file: newFile });
                 additionalData.meta = {
-                  web_stories_is_muted: true,
+                  web_stories_is_muted: 'muted',
                 };
               } catch (error) {
                 // Cancel uploading if there were any errors.
@@ -362,7 +362,9 @@ function useMediaUploadQueue() {
           (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
         ),
         pending: state.queue.filter((item) => item.state === 'PENDING'),
-        processed: state.queue.filter((item) => item.state === 'UPLOADED'),
+        posterProcessed: state.queue.filter(
+          (item) => item.state === 'UPLOADED'
+        ),
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
         isUploading: state.queue.length !== 0,
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),

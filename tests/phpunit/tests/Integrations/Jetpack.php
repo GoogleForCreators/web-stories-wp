@@ -74,7 +74,7 @@ class Jetpack extends Test_Case {
 	public function test_filter_api_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => Jetpack_Integration::VIDEOPRESS_MIME_TYPE,
 				'post_title'     => __METHOD__,
@@ -143,7 +143,7 @@ class Jetpack extends Test_Case {
 	public function test_filter_admin_ajax_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => Jetpack_Integration::VIDEOPRESS_MIME_TYPE,
 				'post_title'     => __METHOD__,

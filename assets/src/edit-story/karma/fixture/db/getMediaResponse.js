@@ -61,7 +61,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -110,7 +110,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -159,7 +159,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -208,7 +208,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -257,7 +257,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -292,7 +292,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -327,7 +327,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
   {
@@ -376,7 +376,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
+      web_stories_is_muted: 'has-audio',
     },
   },
 ];
