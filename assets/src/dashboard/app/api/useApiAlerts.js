@@ -19,7 +19,7 @@
  */
 import { useEffect } from 'react';
 import { useSnackbar } from '@web-stories-wp/design-system';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

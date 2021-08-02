@@ -22,13 +22,13 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import {
   BUTTON_TRANSITION_TIMING,
-  useContext,
   Icons,
   THEME_CONSTANTS,
   Headline,
   themeHelpers,
   ThemeGlobals,
 } from '@web-stories-wp/design-system';
+import { useContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

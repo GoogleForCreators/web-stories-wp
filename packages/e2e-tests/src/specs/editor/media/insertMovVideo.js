@@ -43,7 +43,6 @@ describe('Handling .mov files', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert .mov', async () => {
     await createNewStory();
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     await expect(page).toClick('button', { text: 'Upload' });
 
@@ -75,8 +74,6 @@ describe('Handling .mov files', () => {
     // Uses the existence of the element's frame element as an indicator for successful insertion.
     it('should not list the .mov', async () => {
       await createNewStory();
-      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
       await expect(page).toClick('button', { text: 'Upload' });
 
       await page.waitForSelector(MODAL, {

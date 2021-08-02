@@ -27,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as BlockIcon } from '../images/icon.svg';
+import { BlockIcon } from './icons';
 import SingleStoryEmbed from './block-types/single-story/edit';
 import StoriesBlockControls from './components/storiesBlockControls';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';

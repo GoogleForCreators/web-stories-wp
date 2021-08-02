@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useUnits } from '@web-stories-wp/units';
-import { useBatchingCallback } from '@web-stories-wp/design-system';
+import { useBatchingCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

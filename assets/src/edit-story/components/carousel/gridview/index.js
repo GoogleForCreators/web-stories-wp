@@ -29,9 +29,9 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   Icons,
-  useResizeEffect,
   useGridViewKeys,
 } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

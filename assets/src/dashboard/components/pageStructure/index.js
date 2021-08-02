@@ -30,8 +30,8 @@ import {
   LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
-  useFocusOut,
 } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

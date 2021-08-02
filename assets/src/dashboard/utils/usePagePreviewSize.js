@@ -17,9 +17,8 @@
  * External dependencies
  */
 import { useEffect, useMemo, useState, useRef } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback, useResizeEffect } from '@web-stories-wp/react';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
-import { useResizeEffect } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies

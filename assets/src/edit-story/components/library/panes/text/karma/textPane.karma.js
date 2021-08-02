@@ -56,7 +56,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     );
 
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.events.click(fixture.editor.library.text.preset('Title 3'));
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
 

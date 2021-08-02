@@ -21,7 +21,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -33,8 +32,6 @@ import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 const TRANSITION_DURATION = 300;
 
 function Publish() {
-  const isEnabledChecklistCompanion = useFeature('enableChecklistCompanion');
-
   const { isSaving, date, storyId, saveStory, title, editLink } = useStory(
     ({
       state: {
@@ -90,13 +87,13 @@ function Publish() {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title]);
 
   const handlePublish = useCallback(() => {
-    if (isEnabledChecklistCompanion && shouldReviewDialogBeSeen) {
+    if (shouldReviewDialogBeSeen) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [isEnabledChecklistCompanion, shouldReviewDialogBeSeen, publish]);
+  }, [shouldReviewDialogBeSeen, publish]);
 
   const handleReviewChecklist = useCallback(() => {
     setShowDialog(false);

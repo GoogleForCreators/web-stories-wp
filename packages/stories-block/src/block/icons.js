@@ -15,10 +15,15 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { useInstanceId } from '@wordpress/compose';
+
+/**
  * Internal dependencies
  */
-import { ReactComponent as CirclesCarouselViewIcon } from '../images/view-type/circles-carousel-view.svg';
-import { ReactComponent as CirclesCarouselConfigIcon } from '../images/config-panel/circles-carousel-view-panel-icon.svg';
+import { ReactComponent as CirclesCarouselViewIcon } from './images/view-type/circles-carousel-view.svg';
+import { ReactComponent as CirclesCarouselConfigIcon } from './images/config-panel/circles-carousel-view-panel-icon.svg';
 import { ReactComponent as LatestStoriesBlockIcon } from './icons/block-type/latest-stories-block.svg';
 import { ReactComponent as SelectedStoriesBlockIcon } from './icons/block-type/selected-stories-block.svg';
 import { ReactComponent as EmbedStoriesBlockIcon } from './icons/block-type/embed-story-block.svg';
@@ -76,3 +81,58 @@ export const CIRCLE_CAROUSEL_CONFIG_ICON = (
 export const GRID_VIEW_CONFIG_ICON = (
   <GridViewConfigIcon width={20} height={27} />
 );
+
+// Defining the SVG like this ensures that IDs are unique
+// even if there are multiple instances of the component.
+// See https://github.com/google/web-stories-wp/issues/8401
+export const BlockIcon = () => {
+  const id = useInstanceId(BlockIcon);
+
+  return (
+    <svg fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <circle
+        cx="32"
+        cy="32"
+        r="32"
+        transform="rotate(-180 32 32)"
+        fill={`url(#gradient-${id})`}
+      />
+      <g filter={`url(#filter-${id})`} fill="#fff">
+        <path d="M41.6 19.2a3.2 3.2 0 013.2 3.2v19.2a3.2 3.2 0 01-3.2 3.2V19.2zm-24 0a3.2 3.2 0 013.2-3.2h14.4a3.2 3.2 0 013.2 3.2v25.6a3.2 3.2 0 01-3.2 3.2H20.8a3.2 3.2 0 01-3.2-3.2V19.2zM48 22.4a2.4 2.4 0 012.4 2.4v14.4a2.4 2.4 0 01-2.4 2.4V22.4z" />
+      </g>
+      <defs>
+        <linearGradient
+          id={`gradient-${id}`}
+          x1="13.255"
+          y1="6.599"
+          x2="35.289"
+          y2="62.791"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#79B3FF" />
+          <stop offset="1" stopColor="#CBACFF" />
+        </linearGradient>
+        <filter
+          id={`filter-${id}`}
+          x="8.96"
+          y="10.24"
+          width="46.08"
+          height="46.08"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feColorMatrix
+            in="SourceAlpha"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          />
+          <feOffset dy="1.28" />
+          <feGaussianBlur stdDeviation="1.92" />
+          <feColorMatrix values="0 0 0 0 0.423529 0 0 0 0 0.490196 0 0 0 0 0.733333 0 0 0 0.3 0" />
+          <feBlend in2="BackgroundImageFix" result="effect1_dropShadow" />
+          <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+        </filter>
+      </defs>
+    </svg>
+  );
+};
