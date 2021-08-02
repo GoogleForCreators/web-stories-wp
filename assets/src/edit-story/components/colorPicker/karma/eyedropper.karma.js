@@ -57,13 +57,12 @@ describe('Eyedropper', () => {
     await fixture.events.click(image);
 
     // Click the background element
-    const bgCanvasRect =
-      fixture.editor.canvas.framesLayer.frames[0].node.getBoundingClientRect();
     // Make sure to click on part of bg element not covered by media element previously
-    // assed to canvas
-    await fixture.events.mouse.click(
-      bgCanvasRect.left + 10,
-      bgCanvasRect.bottom - 10
+    // added to canvas
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
     );
 
     // Use eyedropper to select the color
