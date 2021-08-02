@@ -4029,7 +4029,8 @@
             "alt": "AERIAL Downtown Los Angeles with Dodger Stadium in the front - stock video",
             "sizes": [],
             "local": false,
-            "isOptimized": false
+            "isOptimized": true,
+            "isMuted": true
           },
           "controls": false,
           "loop": false,

@@ -349,7 +349,8 @@
             "alt": "Man Explaining His Self",
             "sizes": [],
             "local": false,
-            "isOptimized": true
+            "isOptimized": true,
+            "isMuted": true
           },
           "tracks": [],
           "overlay": {
@@ -819,6 +820,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [229, 227, 224]
           },
           "tracks": []
@@ -2745,6 +2747,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [229, 227, 224]
           },
           "tracks": []
@@ -5590,6 +5593,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [229, 227, 224]
           },
           "tracks": [],

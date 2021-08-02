@@ -427,7 +427,8 @@
             "alt": "Aerial view of people watching a concert",
             "sizes": [],
             "local": false,
-            "isOptimized": true
+            "isOptimized": true,
+            "isMuted": true
           },
           "tracks": [],
           "overlay": {
@@ -679,6 +680,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": true,
+            "isMuted": true,
             "baseColor": [28, 17, 29]
           },
           "tracks": [],

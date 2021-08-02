@@ -902,8 +902,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false,
-            "isMuted": false,
+            "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [95, 95, 96]
           },
@@ -2030,7 +2030,8 @@
             "alt": "A Woman Lying On Bed",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [57, 57, 57]
           },
@@ -2709,8 +2710,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false,
-            "isMuted": false,
+            "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [114, 114, 115]
           },

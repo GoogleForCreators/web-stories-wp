@@ -799,7 +799,8 @@
             "alt": "Person Texting on Her Phone",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [50, 46, 48]
           },
@@ -2841,7 +2842,8 @@
             "alt": "A Man Writing On Paper His Observation Of A Subject Under The Microscope",
             "sizes": [],
             "local": false,
-            "isOptimized": false,
+            "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [199, 203, 199]
           },

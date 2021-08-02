@@ -1560,8 +1560,8 @@
             "sizes": [],
             "local": false,
             "isPlaceholder": false,
-            "isOptimized": false,
-            "isMuted": false,
+            "isOptimized": true,
+            "isMuted": true,
             "provider": "local",
             "baseColor": [178, 170, 174]
           },
