@@ -17,6 +17,6 @@
  * Internal dependencies
  */
 import { default as contactTracingRings } from './rings';
-import { default as contactTracingPhone } from './phone-in-hand';
+import { default as contactTracingPhone } from './phoneInHand';
 
 export { contactTracingRings, contactTracingPhone };

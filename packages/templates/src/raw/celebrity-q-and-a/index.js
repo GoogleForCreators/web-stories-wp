@@ -28,7 +28,7 @@ export default {
   title: _x('Celebrity Q & A', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),
-    _x('Story', 'template keyword', 'web-stories'),
+    _x('Interview', 'template keyword', 'web-stories'),
     _x('Questions', 'template keyword', 'web-stories'),
     _x('Modern', 'template keyword', 'web-stories'),
     _x('Black', 'template keyword', 'web-stories'),
