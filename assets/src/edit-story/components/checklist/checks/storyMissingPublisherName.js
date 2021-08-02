@@ -33,7 +33,7 @@ const StoryMissingPublisherName = () => {
       generalSettingsLink,
     })
   );
-  const hasPublisherName = publisherName.length > 0;
+  const hasPublisherName = publisherName?.trim().length > 0;
 
   const { title } = PRIORITY_COPY.storyMissingPublisherName;
 
