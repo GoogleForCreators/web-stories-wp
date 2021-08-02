@@ -49,10 +49,16 @@ const items = [
       display: '⌥ ⌘ [',
       title: 'my aria label for this shortcut!',
     },
-    disabled: true,
     separator: 'bottom',
   },
-  { label: 'Clear text styles' },
+  {
+    label: 'Clear text styles',
+    shortcut: {
+      display: '⌥ ⌘ ]',
+      title: 'my aria label for this shortcut!',
+    },
+    disabled: true,
+  },
   { label: 'Add style to "Saved style"' },
   { label: 'Add color to "Saved colors"' },
 ];
