@@ -99,23 +99,25 @@ function TextSetsPane({ paneRef }) {
 
   const addIdToTextSets = useCallback(
     (textSetsArray = []) =>
-      textSetsArray.map(({ textSetFonts = [], textSetCategory, elements }) => {
-        return {
-          id: `text_set_${uuidv4()}`,
-          title: sprintf(
-            /* translators: 1: text set category. 2: list of fonts. */
-            _n(
-              'Text set %1$s with %2$s font',
-              'Text set %1$s with %2$s fonts',
-              textSetFonts.length,
-              'web-stories'
+      textSetsArray.map(
+        ({ textSetFonts = [], textSetCategory, elements, id }) => {
+          return {
+            id,
+            title: sprintf(
+              /* translators: 1: text set category. 2: list of fonts. */
+              _n(
+                'Text set %1$s with %2$s font',
+                'Text set %1$s with %2$s fonts',
+                textSetFonts.length,
+                'web-stories'
+              ),
+              CATEGORIES[textSetCategory],
+              translateToInclusiveList(textSetFonts)
             ),
-            CATEGORIES[textSetCategory],
-            translateToInclusiveList(textSetFonts)
-          ),
-          elements,
-        };
-      }),
+            elements,
+          };
+        }
+      ),
     []
   );
   const filteredTextSets = useMemo(() => {
