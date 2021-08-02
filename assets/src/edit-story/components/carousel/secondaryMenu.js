@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -63,6 +63,10 @@ const Space = styled.span`
 `;
 
 function SecondaryMenu() {
+  const isHelpCenterOpenRef = useRef(false);
+  const isChecklistOpenRef = useRef(false);
+  const isKeyboardShortcutsMenuOpenRef = useRef(false);
+
   const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
     ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
       close,
@@ -106,28 +110,42 @@ function SecondaryMenu() {
   // Only one popup is open at a time
   // we want to close an open popup if a new one is opened.
   useEffect(() => {
-    if (isChecklistOpen) {
+    if (isChecklistOpen && !isChecklistOpenRef.current) {
       closeHelpCenter();
       closeKeyboardShortcutsMenu();
+
+      isChecklistOpenRef.current = true;
+      isKeyboardShortcutsMenuOpenRef.current = false;
+      isHelpCenterOpenRef.current = false;
     }
   }, [closeHelpCenter, closeKeyboardShortcutsMenu, isChecklistOpen]);
 
   useEffect(() => {
-    if (isHelpCenterOpen) {
+    if (isHelpCenterOpen && !isHelpCenterOpenRef.current) {
       closeChecklist();
       closeKeyboardShortcutsMenu();
+      isHelpCenterOpenRef.current = true;
+      isChecklistOpenRef.current = false;
+      isKeyboardShortcutsMenuOpenRef.current = false;
     }
   }, [closeChecklist, closeKeyboardShortcutsMenu, isHelpCenterOpen]);
 
   useEffect(() => {
-    if (isKeyboardShortcutsMenuOpen) {
+    if (
+      isKeyboardShortcutsMenuOpen &&
+      !isKeyboardShortcutsMenuOpenRef.current
+    ) {
       closeChecklist();
       closeHelpCenter();
+      isKeyboardShortcutsMenuOpenRef.current = true;
+      isHelpCenterOpenRef.current = false;
+      isChecklistOpenRef.current = false;
     }
   }, [closeChecklist, closeHelpCenter, isKeyboardShortcutsMenuOpen]);
 
   useEffect(() => {
     if (reviewDialogRequested) {
+      isChecklistOpenRef.current = false;
       onResetReviewDialogRequest();
       openChecklist();
     }
