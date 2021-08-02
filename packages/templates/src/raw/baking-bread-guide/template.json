@@ -850,7 +850,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">02</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Storage: Dry is nice</span>",
+          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">02</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Storage: dry is nice</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -906,7 +906,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Use the Right Flour</span>",
+          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Use the right flour</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -962,7 +962,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">04</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Temperature and Yeast</span>",
+          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">04</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Temperature and yeast</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -1074,7 +1074,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">06</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Prescribed Rising Times</span>",
+          "content": "<span style=\"color: #fff0d8; letter-spacing: 0.01em\">06</span>\n\n<span style=\"color: #bcebee; letter-spacing: 0.01em\">Prescribed rising times</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -1473,7 +1473,7 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"color: #fff0d8\">To ensure a good lift, a beautiful other crust, you’ll want to start with fresh yeast and baking powder/soda</span>",
+          "content": "<span style=\"color: #fff0d8\">To ensure a good lift and a beautiful outer crust, you’ll want to start with fresh yeast and baking powder/soda</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2486,7 +2486,7 @@
           "y": 518,
           "id": "2d86e11c-8491-4f94-9e09-e90bce600859",
           "basedOn": "2a0e6c2d-2b10-4b9d-9efe-5bf60e3e3d3d",
-          "content": "<span style=\"color: #fff0d8\">Quick breads usually don’t require kneading (think cake mix) while yeast bread require some kneading.</span>",
+          "content": "<span style=\"color: #fff0d8\">Quick breads usually don’t require kneading (think cake mix) while yeast bread requires some kneading.</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2614,7 +2614,7 @@
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"color: #2d2a35\">Prescribed Rising Times</span>",
+          "content": "<span style=\"color: #2d2a35\">Prescribed rising times</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2726,7 +2726,7 @@
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "Follow the prescribed rising time. Use a timer. Too long - you might a sour-tasting loaf or a dry bread with abundance of holes!",
+          "content": "Follow the prescribed rising time. Use a timer. Too long and you might have a sour-tasting loaf or a dry bread with abundance of holes!",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
