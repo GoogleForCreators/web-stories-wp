@@ -138,7 +138,7 @@ describe('Grid view', () => {
     const { getByRole, getByText } = within(firstStory);
 
     const moreOptionsButton = getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -172,7 +172,7 @@ describe('Grid view', () => {
     let utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -203,7 +203,7 @@ describe('Grid view', () => {
     const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -233,7 +233,7 @@ describe('Grid view', () => {
     const utils = within(firstStory);
 
     const moreOptionsButton = utils.getByRole('button', {
-      name: /^More Options/,
+      name: /^Context menu for/,
     });
 
     await fixture.events.click(moreOptionsButton);
@@ -744,16 +744,16 @@ describe('List view', () => {
       // drop the header row using slice
       const rows = fixture.screen.getAllByRole('row').slice(1);
 
-      const utils = within(rows[0]);
+      const utils = within(rows[1]);
 
-      const titleCell = utils.getByRole('cell', {
-        name: storiesSortedByModified[0].title,
+      const titleCell = utils.getByRole('heading', {
+        name: storiesSortedByModified[1].title,
       });
 
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
@@ -762,7 +762,8 @@ describe('List view', () => {
 
       await fixture.events.click(rename);
 
-      const input = utils.getByRole('textbox');
+      const input = await utils.getByRole('textbox');
+
       const inputLength = input.value.length;
 
       for (let iter = 0; iter < inputLength; iter++) {
@@ -809,7 +810,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
@@ -854,7 +855,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);
@@ -899,7 +900,7 @@ describe('List view', () => {
       await fixture.events.hover(titleCell);
 
       const moreOptionsButton = utils.getByRole('button', {
-        name: /^More Options/,
+        name: /^Context menu for/,
       });
 
       await fixture.events.click(moreOptionsButton);

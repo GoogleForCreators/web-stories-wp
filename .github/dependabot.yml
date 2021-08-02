@@ -17,20 +17,23 @@ updates:
       - Dependencies
       - JavaScript
     ignore:
-      # styled components is not yet compatible.
-      - dependency-name: stylis-plugin-rtl
+      # styled-components is not yet compatible.
+      - dependency-name: 'stylis-plugin-rtl'
         versions:
           - '>= 2'
 
       # Package is ESM-only, can't use it just yet.
-      - dependency-name: markdown-table
+      - dependency-name: 'markdown-table'
         versions:
           - '>= 3'
 
       # Needs manual upgrade.
-      - dependency-name: husky
+      - dependency-name: 'husky'
         versions:
           - '>= 6'
+
+      # Best updated manually as they have very frequent updates.
+      - dependency-name: '@storybook/*'
 
   - package-ecosystem: composer
     directory: '/'

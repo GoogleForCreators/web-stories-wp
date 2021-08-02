@@ -32,7 +32,7 @@ import {
 import { useConfig } from '../../../app/config';
 import { TRANSITION_DURATION } from '../constants';
 import { forceFocusCompanion } from '../utils';
-import { NavBar, NavButton } from './components';
+import { NavBar, NavButton } from '../../secondaryPopup';
 
 const secondaryTextStyle = css`
   color: ${({ theme }) => theme.colors.fg.secondary};

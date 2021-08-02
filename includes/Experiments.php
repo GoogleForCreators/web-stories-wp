@@ -220,18 +220,6 @@ class Experiments extends Service_Base {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 7965
-			 * Creation date: 2021-06-18
-			 */
-			[
-				'name'        => 'enableChecklistCompanion',
-				'label'       => __( 'Checklist companion', 'web-stories' ),
-				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @samwhale
 			 * Issue: 6153
 			 * Creation date: 2021-06-07
@@ -396,6 +384,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Eyedropper', 'web-stories' ),
 				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -407,6 +396,18 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Video Cache', 'web-stories' ),
 				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
 				'group'       => 'general',
+			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8310
+			 * Creation date: 2021-07-15
+			 */
+			[
+				'name'        => 'enableMuteVideo',
+				'label'       => __( 'Mute Videos', 'web-stories' ),
+				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

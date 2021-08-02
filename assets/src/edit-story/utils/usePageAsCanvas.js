@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { useCallback, useMemo } from 'react';
-import * as htmlToImage from 'html-to-image';
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
@@ -96,11 +95,15 @@ function usePageAsCanvas() {
         };
         // If we haven't started the generation yet, create a promise.
         if (!pageCanvasPromise) {
-          const promise = htmlToImage.toCanvas(fullbleedContainer, {
-            fontEmbedCss: '',
+          import(
+            /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
+          ).then((htmlToImage) => {
+            const promise = htmlToImage.toCanvas(fullbleedContainer, {
+              fontEmbedCss: '',
+            });
+            setPageCanvasPromise(promise);
+            promise.then(onCompletion).catch(() => onFail());
           });
-          setPageCanvasPromise(promise);
-          promise.then(onCompletion).catch(() => onFail());
         } else if (resetZoom) {
           // If we already have a promise and we're resetting zoom, we're inserting an element.
           // This means that the callback might have changed and we need to handle the promise again.

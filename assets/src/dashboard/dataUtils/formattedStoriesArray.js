@@ -21,6 +21,11 @@ import { toUTCDate } from '@web-stories-wp/date';
 
 const formattedStoriesArray = [
   {
+    locked: true,
+    lockUser: {
+      name: 'batgirl',
+      id: 888877665,
+    },
     id: 167,
     status: 'publish',
     title: 'ORANGE SHAPES',

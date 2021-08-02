@@ -23,9 +23,7 @@ import styled from 'styled-components';
  */
 import { Checklist } from '..';
 import { noop } from '../../../utils/noop';
-import { NavigationWrapper } from '../../helpCenter/navigator';
-import { TopNavigation } from '../../helpCenter/navigator/topNavigation';
-import { Popup } from '../../helpCenter/popup';
+import Popup, { NavigationWrapper, TopNavigation } from '../../secondaryPopup';
 import { EmptyContent } from '../checklistContent';
 
 export default {

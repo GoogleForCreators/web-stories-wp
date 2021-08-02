@@ -19,12 +19,10 @@
  */
 import Mousetrap from 'mousetrap';
 import { useEffect, createRef, useState } from 'react';
-
+import { useContext, useBatchingCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import useBatchingCallback from '../../utils/useBatchingCallback';
-import { useContext } from '../../utils/context';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';

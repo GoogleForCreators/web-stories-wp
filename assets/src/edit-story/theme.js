@@ -18,12 +18,8 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import {
-  identity,
-  useContextSelector,
-  theme,
-  themeHelpers,
-} from '@web-stories-wp/design-system';
+import { theme, themeHelpers } from '@web-stories-wp/design-system';
+import { identity, useContextSelector } from '@web-stories-wp/react';
 
 export const GlobalStyle = createGlobalStyle`
   /* WP admin menu arrow color */

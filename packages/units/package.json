@@ -12,7 +12,7 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/design-system": "*",
+    "@web-stories-wp/react": "*",
     "prop-types": "^15.7.2",
     "react": "^17.0.2"
   },

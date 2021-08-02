@@ -54,4 +54,3 @@ export { default as CardPreviewContainer } from './cardPreview';
 export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
 export { FocusableGridItem } from './focusableGridItem';
-export { default as StoryCardPreview } from './storyCardPreview';
