@@ -14,17 +14,9 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
-/**
  * Internal dependencies
  */
 import { Container } from './container';
-
-const isMacOs = isPlatformMacOS();
-
-const commandOrControl = isMacOs ? 'Command' : 'Control';
 
 export class RightClickMenu extends Container {
   constructor(node, path) {
@@ -34,44 +26,44 @@ export class RightClickMenu extends Container {
   // default actions
   get copy() {
     return this.queryByRole('button', {
-      name: `Copy, or use ${commandOrControl} C on a keyboard`,
+      name: `Copy`,
     });
   }
 
   get paste() {
     return this.queryByRole('button', {
-      name: `Paste, or use ${commandOrControl} V on a keyboard`,
+      name: `Paste`,
     });
   }
 
   get delete() {
     return this.queryByRole('button', {
-      name: 'Delete, or use Delete on a keyboard',
+      name: 'Delete',
     });
   }
 
   // foreground media actions
   get sendBackward() {
     return this.getByRole('button', {
-      name: `Send backward, or use Option ${commandOrControl} Open Bracket on a keyboard`,
+      name: `Send backward`,
     });
   }
 
   get sendToBack() {
     return this.getByRole('button', {
-      name: `Send to back, or use ${commandOrControl} Open Bracket on a keyboard`,
+      name: `Send to back`,
     });
   }
 
   get bringForward() {
     return this.getByRole('button', {
-      name: `Bring forward, or use ${commandOrControl} Close Bracket on a keyboard`,
+      name: `Bring forward`,
     });
   }
 
   get bringToFront() {
     return this.getByRole('button', {
-      name: `Bring to front, or use Option ${commandOrControl} Close Bracket on a keyboard`,
+      name: `Bring to front`,
     });
   }
 
@@ -90,13 +82,13 @@ export class RightClickMenu extends Container {
   // page actions
   get duplicatePage() {
     return this.queryByRole('button', {
-      name: 'Duplicate page',
+      name: 'Duplicate Page',
     });
   }
 
   get deletePage() {
     return this.queryByRole('button', {
-      name: 'Delete page',
+      name: 'Delete Page',
     });
   }
 }
