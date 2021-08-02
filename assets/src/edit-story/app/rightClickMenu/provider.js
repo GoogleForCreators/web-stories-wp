@@ -19,7 +19,6 @@
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
 
@@ -32,15 +31,13 @@ import { duplicatePage } from '../../elements';
 import { useCanvas } from '../canvas';
 import {
   RIGHT_CLICK_MENU_LABELS,
-  RIGHT_CLICK_MENU_SHORTCUT_LABELS,
+  RIGHT_CLICK_MENU_SHORTCUTS,
 } from './constants';
 import Context from './context';
 import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
-
-const isMacOs = isPlatformMacOS();
 
 /**
  * Determines the items displayed in the right click menu
@@ -246,31 +243,20 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: {
-          display: isMacOs ? '⌘ C' : 'ctrl C',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_C
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_C,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY,
         },
         onClick: handleCopyPage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
-        shortcut: {
-          display: isMacOs ? '⌘ V' : 'ctrl V',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_V
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_V,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE },
         onClick: handlePastePage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE,
-        shortcut: {
-          display: 'DEL',
-          title: RIGHT_CLICK_MENU_SHORTCUT_LABELS.DELETE,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.DELETE },
         onClick: handleDeletePage,
         ...menuItemProps,
       },
@@ -285,12 +271,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         separator: 'top',
         // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
-        shortcut: {
-          display: isMacOs ? '⌥ ⌘ [' : '⌥ ctrl [',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_OPEN_BRACKET
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_OPEN_BRACKET,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
         ...menuItemProps,
@@ -298,12 +279,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
         // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
-        shortcut: {
-          display: isMacOs ? '⌘ [' : 'ctrl [',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_OPEN_BRACKET
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_OPEN_BRACKET,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
         disabled: !canElementMoveBackwards,
         onClick: handleSendToBack,
         ...menuItemProps,
@@ -311,12 +287,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
         // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
-        shortcut: {
-          display: isMacOs ? '⌘ ]' : 'ctrl ]',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_CLOSE_BRACKET
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_CLOSE_BRACKET,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
         disabled: !canElementMoveForwards,
         onClick: handleBringForward,
         ...menuItemProps,
@@ -324,12 +295,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
         // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
-        shortcut: {
-          display: isMacOs ? '⌥ ⌘ ]' : '⌥ ctrl ]',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_CLOSE_BRACKET
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_CLOSE_BRACKET,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
         disabled: !canElementMoveForwards,
         onClick: handleBringToFront,
         ...menuItemProps,

@@ -144,7 +144,7 @@ describe('useRightClickMenu', () => {
       });
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete page')
+        result.current.menuItems.find((item) => item.label === 'Delete Page')
           .disabled
       ).toBe(true);
 
@@ -153,7 +153,7 @@ describe('useRightClickMenu', () => {
       rerender();
 
       expect(
-        result.current.menuItems.find((item) => item.label === 'Delete page')
+        result.current.menuItems.find((item) => item.label === 'Delete Page')
           .disabled
       ).toBe(false);
     });
