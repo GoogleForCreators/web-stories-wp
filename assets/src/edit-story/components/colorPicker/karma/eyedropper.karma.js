@@ -54,7 +54,7 @@ describe('Eyedropper', () => {
     const image = fixture.editor.library.media.item(1);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 1, 1),
+      moveRel(image, 1, 1, { steps: 4 }),
       down(),
       moveRel(canvas, 30, 30),
       up(),
@@ -68,6 +68,7 @@ describe('Eyedropper', () => {
     // Use eyedropper to select the color
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
+    await fixture.events.sleep(100);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
