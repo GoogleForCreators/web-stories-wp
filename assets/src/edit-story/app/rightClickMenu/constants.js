@@ -29,17 +29,17 @@ import {
 } from '../../components/keyboardShortcutsMenu/keyboardShortcutList';
 
 export const RIGHT_CLICK_MENU_LABELS = {
-  BRING_FORWARD: __('Bring forward', 'web-stories'),
-  BRING_TO_FRONT: __('Bring to front', 'web-stories'),
+  BRING_FORWARD: __('Bring Forward', 'web-stories'),
+  BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
   DELETE_PAGE: __('Delete Page', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   PASTE: __('Paste', 'web-stories'),
-  SCALE_AND_CROP_IMAGE: __('Scale & crop image', 'web-stories'),
-  SEND_BACKWARD: __('Send backward', 'web-stories'),
-  SEND_TO_BACK: __('Send to back', 'web-stories'),
-  SET_AS_PAGE_BACKGROUND: __('Set as page background', 'web-stories'),
+  SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
+  SEND_BACKWARD: __('Send Backward', 'web-stories'),
+  SEND_TO_BACK: __('Send to Back', 'web-stories'),
+  SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

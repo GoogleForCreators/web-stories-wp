@@ -38,44 +38,44 @@ export class RightClickMenu extends Container {
 
   get delete() {
     return this.queryByRole('button', {
-      name: /Delete/i,
+      name: /^Delete$/i,
     });
   }
 
   // foreground media actions
   get sendBackward() {
     return this.getByRole('button', {
-      name: /Send backward/i,
+      name: /Send Backward/i,
     });
   }
 
   get sendToBack() {
     return this.getByRole('button', {
-      name: /Send to back/i,
+      name: /Send to Back/i,
     });
   }
 
   get bringForward() {
     return this.getByRole('button', {
-      name: /Bring forward/i,
+      name: /Bring Forward/i,
     });
   }
 
   get bringToFront() {
     return this.getByRole('button', {
-      name: /Bring to front/i,
+      name: /Bring to Front/i,
     });
   }
 
   get setAsPageBackground() {
     return this.getByRole('button', {
-      name: /Set as page background/i,
+      name: /Set as page Background/i,
     });
   }
 
   get scaleAndCropImage() {
     return this.getByRole('button', {
-      name: /Scale & crop image/i,
+      name: /Scale & Crop Image/i,
     });
   }
 
