@@ -110,28 +110,6 @@ class Settings extends Service_Base {
 	const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
 
 	/**
-	 * Initializes the Settings logic.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	public function register() {
-		add_action( 'init', [ $this, 'register_settings' ] );
-	}
-
-	/**
-	 * Get the action priority to use for registering the service.
-	 *
-	 * @since 1.6.0
-	 *
-	 * @return int Registration action priority to use.
-	 */
-	public static function get_registration_action_priority(): int {
-		return 5;
-	}
-
-	/**
 	 * Register settings.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -140,7 +118,7 @@ class Settings extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register_settings() {
+	public function register() {
 		register_setting(
 			self::SETTING_GROUP,
 			self::SETTING_NAME_TRACKING_ID,
@@ -250,5 +228,16 @@ class Settings extends Service_Base {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Get the action priority to use for registering the service.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @return int Registration action priority to use.
+	 */
+	public static function get_registration_action_priority(): int {
+		return 5;
 	}
 }
