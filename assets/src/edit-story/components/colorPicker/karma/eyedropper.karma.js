@@ -68,8 +68,10 @@ describe('Eyedropper', () => {
     // Use eyedropper to select the color
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
-    await fixture.events.sleep(100);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    await waitFor(() =>
+      expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
+    );
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
       timeout: 4000,
