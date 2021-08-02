@@ -47,7 +47,7 @@ function AnimationToggle() {
   const label = isPlaying
     ? __('Stop Page Animations', 'web-stories')
     : __('Play Page Animations', 'web-stories');
-  const shortcut = isPlaying ? 'shift+mod+z' : 'mod+z';
+  const shortcut = 'mod+k';
   const Icon = isPlaying ? Icons.StopOutline : Icons.PlayOutline;
 
   const toggleAnimationState = useCallback(() => {

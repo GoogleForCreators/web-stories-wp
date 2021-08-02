@@ -23,6 +23,7 @@ import { useEffect } from 'react';
  * Internal dependencies
  */
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
+import { useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
@@ -36,7 +37,7 @@ import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
-
+import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
 export function PriorityChecks({
   badgeCount = 0,
   maxHeight,
@@ -50,6 +51,10 @@ export function PriorityChecks({
       updateHighPriorityCount,
     })
   );
+  const { canManageSettings } = useConfig(({ capabilities }) => ({
+    canManageSettings: capabilities.canManageSettings,
+  }));
+
   useEffect(() => {
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
@@ -70,6 +75,7 @@ export function PriorityChecks({
           {__('Make this Web Story easier to discover.', 'web-stories')}
         </PanelText>
         <StoryMissingTitle />
+        {canManageSettings && <StoryMissingPublisherName />}
         <StoryTitleLength />
         <StoryMissingExcerpt />
         <StoryPosterAttached />

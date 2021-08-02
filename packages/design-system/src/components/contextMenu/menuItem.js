@@ -37,8 +37,12 @@ const ItemText = styled(Text)`
   text-align: left;
 `;
 const Shortcut = styled(Text)`
-  color: ${({ theme }) => theme.colors.border.disable};
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.fg.disable : theme.colors.fg.secondary};
 `;
+Shortcut.propTypes = {
+  disabled: PropTypes.bool,
+};
 
 const IconWrapper = styled.span`
   width: 32px;
@@ -100,15 +104,16 @@ export const MenuItem = ({
         </ItemText>
         {shortcut?.display && (
           <Shortcut
+            disabled={disabled}
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             forwardedAs="kbd"
           >
-            {shortcut?.display}
+            {shortcut.display}
           </Shortcut>
         )}
       </>
     );
-  }, [Icon, label, shortcut, tooltipPlacement]);
+  }, [Icon, disabled, label, shortcut, tooltipPlacement]);
 
   if (href) {
     const newTabProps = newTab

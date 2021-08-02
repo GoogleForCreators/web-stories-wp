@@ -196,7 +196,7 @@ export const _StoriesViewGrid = () => {
 };
 
 export const _StoriesViewList = () => (
-  <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+  <FlagsProvider features={{ enablePostLocking: true }}>
     <SnackbarProvider>
       <StoriesView
         filterValue={STORY_STATUS.ALL}
