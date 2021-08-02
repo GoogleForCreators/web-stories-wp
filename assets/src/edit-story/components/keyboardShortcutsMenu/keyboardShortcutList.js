@@ -120,6 +120,17 @@ const shortcuts = {
             </kbd>
           ),
         },
+        {
+          label: __('Play / Stop', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd>{'K'}</kbd>
+            </kbd>
+          ),
+        },
       ],
     },
     {
