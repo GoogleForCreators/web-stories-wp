@@ -112,7 +112,7 @@ class Assets extends Test_Case {
 	 */
 	public function test_get_asset_metadata() {
 		$assets  = new \Google\Web_Stories\Assets();
-		$results = $this->call_private_method( $assets, 'get_asset_metadata', [ 'test_script' ] );
+		$results = $assets->get_asset_metadata( 'test_script' );
 		$this->assertIsArray( $results );
 		$this->assertArrayHasKey( 'dependencies', $results );
 		$this->assertArrayHasKey( 'version', $results );

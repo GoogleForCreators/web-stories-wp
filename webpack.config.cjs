@@ -362,6 +362,20 @@ const storiesMCEButton = {
   ].filter(Boolean),
 };
 
+const storiesImgareaselect = {
+  ...sharedConfig,
+  entry: {
+    imgareaselect: './packages/imgareaselect/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'WP ImgAreaSelect Patch',
+      color: '#7D02F1',
+    }),
+  ].filter(Boolean),
+};
+
 module.exports = [
   editorAndDashboard,
   activationNotice,
@@ -369,4 +383,5 @@ module.exports = [
   webStoriesScripts,
   widgetScript,
   storiesMCEButton,
+  storiesImgareaselect,
 ];
