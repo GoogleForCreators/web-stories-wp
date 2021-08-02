@@ -20,14 +20,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
+import {
+  useDebouncedCallback,
+  useBatchingCallback,
+} from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
   Input,
   Text,
   THEME_CONSTANTS,
   MEDIA_VARIANTS,
-  useBatchingCallback,
 } from '@web-stories-wp/design-system';
 
 /**

@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -71,15 +70,15 @@ function Loading() {
 }
 
 function Buttons() {
-  const { status, storyId, link, isFreshlyPublished } = useStory(
+  const { status, embedPostLink, link, isFreshlyPublished } = useStory(
     ({
       state: {
-        story: { status, storyId, link },
+        story: { status, embedPostLink, link },
         meta: { isFreshlyPublished },
       },
     }) => ({
       status,
-      storyId,
+      embedPostLink,
       link,
       isFreshlyPublished,
     })
@@ -91,10 +90,6 @@ function Buttons() {
   );
 
   const isDraft = 'draft' === status;
-
-  const confirmURL = addQueryArgs('post-new.php', {
-    ['from-web-story']: storyId,
-  });
 
   return (
     <>
@@ -115,7 +110,7 @@ function Buttons() {
       <PostPublishDialog
         isOpen={showDialog}
         onClose={() => setShowDialog(false)}
-        confirmURL={confirmURL}
+        confirmURL={embedPostLink}
         storyURL={link}
       />
     </>

@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import ResizeObserver from 'resize-observer-polyfill';
 import { __ } from '@web-stories-wp/i18n';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -57,19 +57,13 @@ function TextPane(props) {
   const { getPosition, insertPreset } = useInsertPreset();
   const { generateCanvasFromPage } = usePageAsCanvas();
 
-  useEffect(() => {
-    const ro = new ResizeObserver(() => {
-      // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
-      // https://stackoverflow.com/a/58701523/13078978
-      window.requestAnimationFrame(() => {
-        forceUpdate(Date.now());
-      });
-    });
-
-    ro.observe(paneRef.current);
-
-    return () => ro.disconnect();
-  }, []);
+  useResizeEffect(
+    paneRef,
+    () => {
+      forceUpdate(Date.now());
+    },
+    []
+  );
 
   return (
     <Pane id={paneId} {...props} ref={paneRef}>

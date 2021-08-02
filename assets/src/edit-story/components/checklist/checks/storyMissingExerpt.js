@@ -27,12 +27,12 @@ import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
 
-export function storyMissingExcerpt(story) {
-  return !story.excerpt?.length;
+export function storyMissingExcerpt(excerpt) {
+  return !excerpt?.length;
 }
 
 const StoryMissingExcerpt = () => {
-  const { story } = useStory(({ state }) => state);
+  const excerpt = useStory(({ state }) => state?.story?.excerpt);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
@@ -44,7 +44,7 @@ const StoryMissingExcerpt = () => {
 
   const { title, footer } = PRIORITY_COPY.storyMissingDescription;
 
-  const isRendered = storyMissingExcerpt(story);
+  const isRendered = storyMissingExcerpt(excerpt);
   useRegisterCheck('StoryMissingExcerpt', isRendered);
   return (
     isRendered && (

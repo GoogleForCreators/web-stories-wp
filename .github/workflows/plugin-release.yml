@@ -199,7 +199,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm
@@ -288,7 +288,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm
@@ -485,7 +485,7 @@ jobs:
     name: Post-release version bump
     needs: [create-release]
     runs-on: ubuntu-latest
-    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') }}
+    if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -498,7 +498,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v2.3.0
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm

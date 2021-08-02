@@ -19,7 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 
@@ -78,7 +78,7 @@ const ScrollToTop = () => {
 
   return (
     <StyledButton
-      aria-hidden={isVisible}
+      aria-hidden={!isVisible}
       aria-label={__('Scroll back to top', 'web-stories')}
       data-testid="scroll-to-top-button"
       isVisible={isVisible}

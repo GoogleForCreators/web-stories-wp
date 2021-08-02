@@ -23,7 +23,7 @@ import {
   createContext,
   useContextSelector,
   identity,
-} from '@web-stories-wp/design-system';
+} from '@web-stories-wp/react';
 
 export const NavContext = createContext({ actions: {}, state: {} });
 

@@ -1,5 +1,5 @@
 {
-  "version": 28,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -375,7 +375,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 600; letter-spacing: 0.05em\">SECTION 2</span>",
+          "content": "<span style=\"font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase\">Section 2</span>",
           "fontWeight": 400,
           "width": 98,
           "height": 23,
@@ -531,7 +531,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">LEARN THE LANGUAGE</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase\">Learn The Language</span>",
           "fontWeight": 400,
           "width": 324,
           "height": 78,
@@ -748,7 +748,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">EMBRACE EMOTIONS</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase\">Embrace Emotions</span>",
           "fontWeight": 400,
           "width": 331,
           "height": 36,
@@ -811,7 +811,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 400; letter-spacing: 0.04em\">II</span>",
+          "content": "<span style=\"font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase\">ii</span>",
           "fontWeight": 400,
           "width": 331,
           "height": 47,
@@ -953,7 +953,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 500\">DIGITIZE EVERYTHING</span>",
+          "content": "<span style=\"font-weight: 500; text-transform: uppercase\">Digitize Everything</span>",
           "fontWeight": 400,
           "width": 331,
           "height": 40,

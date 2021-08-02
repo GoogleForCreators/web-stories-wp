@@ -24,10 +24,12 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { TablistPanel } from '../tablist';
-import { NAVIGATION_HEIGHT } from '../helpCenter/navigator/constants';
+import {
+  DISTANCE_FROM_TOP,
+  DISTANCE_FROM_BOTTOM,
+  NAVIGATION_HEIGHT,
+} from '../secondaryPopup';
 
-export const DISTANCE_FROM_TOP = 60 + 32; // toolbar height + input height
-export const DISTANCE_FROM_BOTTOM = 69;
 const BUTTON_HEIGHT = 60;
 export const getTabPanelMaxHeight = (buttonCount) => {
   if (!buttonCount) {

@@ -1,5 +1,5 @@
 {
-  "version": 28,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -1067,7 +1067,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">PLANT CARE APPS</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase\">Plant Care Apps</span>",
           "fontWeight": 400,
           "x": 41,
           "y": 218,
@@ -1859,7 +1859,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em\">ESSENTIALS</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase\">Essentials</span>",
           "fontWeight": 400,
           "width": 177,
           "height": 31,
@@ -2347,7 +2347,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 300\">THE PRINCIPLES</span>",
+          "content": "<span style=\"font-weight: 300; text-transform: uppercase\">The Principles</span>",
           "fontWeight": 400,
           "width": 331,
           "height": 39,
@@ -9904,7 +9904,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 300; color: #ff8e25; letter-spacing: 0.08em\">QUICK RECIPE</span>",
+          "content": "<span style=\"font-weight: 300; color: #ff8e25; letter-spacing: 0.08em; text-transform: uppercase\">Quick Recipe</span>",
           "fontWeight": 400,
           "width": 332,
           "height": 38,

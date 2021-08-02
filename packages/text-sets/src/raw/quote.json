@@ -1,5 +1,5 @@
 {
-  "version": 28,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -407,7 +407,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "EVERYONE THINKS I'M TALKING TO MYSELF, BUT I PROMISE MY PLANTS ARE LISTENING",
+          "content": "<span style=\"text-transform: uppercase\">Everyone thinks I'm talking to myself, but I promise my plants are listening</span>",
           "fontWeight": 400,
           "marginOffset": -10.5,
           "x": 70,
@@ -722,7 +722,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 500\">MINIMALISM MAXIMIZES WHAT YOU CARE ABOUT.</span>",
+          "content": "<span style=\"font-weight: 500; text-transform: uppercase\">Minimalism maximizes what you care about.</span>",
           "fontWeight": 400,
           "marginOffset": -16.043999999999997,
           "x": 41,
@@ -778,7 +778,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "— CRYSTAL LAMBERT",
+          "content": "<span style=\"text-transform: uppercase\">— Crystal Lambert</span>",
           "marginOffset": 2.306250000000002,
           "x": 124,
           "y": 386,
@@ -1094,7 +1094,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #d2d2d2\">CRYSTAL LAMBERT</span>",
+          "content": "<span style=\"font-weight: 900; color: #d2d2d2; text-transform: uppercase\">Crystal Lambert</span>",
           "marginOffset": 2.306250000000002,
           "basedOn": "9f76b112-152b-4b38-8e43-a898b8ec82ed",
           "x": 74,
@@ -1155,7 +1155,7 @@
           "textAlign": "left",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"font-weight: 900\">CRYSTAL LAMBERT</span>",
+          "content": "<span style=\"font-weight: 900; text-transform: uppercase\">Crystal Lambert</span>",
           "marginOffset": 2.306250000000002,
           "x": 71,
           "y": 386,

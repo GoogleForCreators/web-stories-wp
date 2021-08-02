@@ -24,8 +24,8 @@ import {
   DropDownSelect,
   PLACEMENT,
   useKeyDownEffect,
-  useFocusOut,
 } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -37,6 +37,9 @@ import { focusStyle } from '../../shared';
 
 // date-fns format without timezone.
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';
+
+const loadCalendar = () =>
+  import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar');
 
 function PublishTime() {
   const { date, modified, status, updateStory } = useStory(
@@ -117,6 +120,8 @@ function PublishTime() {
           ref={dateFieldRef}
           activeItemLabel={displayLabel}
           selectButtonStylesOverride={focusStyle}
+          onPointerEnter={() => loadCalendar()}
+          onFocus={() => loadCalendar()}
         />
       </Row>
       <Popup

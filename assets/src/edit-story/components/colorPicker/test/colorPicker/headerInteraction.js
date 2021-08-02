@@ -17,15 +17,16 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import { createSolid } from '@web-stories-wp/patterns';
+
 /**
  * Internal dependencies
  */
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> as the header is interacted with', () => {
-  it('should invoke onchange with new correct pattern when switching to linear', () => {
+  it('should invoke onchange with new correct pattern when switching to linear', async () => {
     const { getLinearButton, onChange } = arrange({
       color: createSolid(0, 0, 255),
       hasGradient: true,
@@ -33,17 +34,19 @@ describe('<ColorPicker /> as the header is interacted with', () => {
 
     fireEvent.click(getLinearButton());
 
-    expect(onChange).toHaveBeenCalledWith({
-      rotation: 0.5,
-      stops: [
-        { color: { r: 0, g: 0, b: 255 }, position: 0 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-      type: 'linear',
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        rotation: 0.5,
+        stops: [
+          { color: { r: 0, g: 0, b: 255 }, position: 0 },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+        type: 'linear',
+      })
+    );
   });
 
-  it('should invoke onchange with new correct pattern when switching to radial', () => {
+  it('should invoke onchange with new correct pattern when switching to radial', async () => {
     const { getRadialButton, onChange } = arrange({
       color: createSolid(0, 0, 255),
       hasGradient: true,
@@ -51,22 +54,24 @@ describe('<ColorPicker /> as the header is interacted with', () => {
 
     fireEvent.click(getRadialButton());
 
-    expect(onChange).toHaveBeenCalledWith({
-      stops: [
-        { color: { r: 0, g: 0, b: 255 }, position: 0 },
-        { color: { r: 0, g: 0, b: 255 }, position: 1 },
-      ],
-      type: 'radial',
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        stops: [
+          { color: { r: 0, g: 0, b: 255 }, position: 0 },
+          { color: { r: 0, g: 0, b: 255 }, position: 1 },
+        ],
+        type: 'radial',
+      })
+    );
   });
 
-  it('should display gradient line only if switching to non-solid pattern', () => {
+  it('should display gradient line only if switching to non-solid pattern', async () => {
     const { getGradientLine, getSolidButton, getLinearButton } = arrange({
       color: createSolid(0, 0, 0),
       hasGradient: true,
     });
 
-    expect(getGradientLine()).not.toBeInTheDocument();
+    await waitFor(() => expect(getGradientLine()).not.toBeInTheDocument());
     fireEvent.click(getLinearButton());
     expect(getGradientLine()).toBeInTheDocument();
     fireEvent.click(getSolidButton());

@@ -39,6 +39,7 @@ use Google\Web_Stories\Traits\Amp;
  * @package Google\Web_Stories\Renderer\Story
  */
 class Embed {
+	use Amp;
 
 	/**
 	 * Script handle for frontend assets.
@@ -46,8 +47,6 @@ class Embed {
 	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-embed';
-
-	use Amp;
 
 	/**
 	 * Current post.
@@ -94,7 +93,7 @@ class Embed {
 	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render( array $args = [] ) {
+	public function render( array $args = [] ): string {
 		$defaults = [
 			'align'  => 'none',
 			'class'  => 'wp-block-web-stories-embed',

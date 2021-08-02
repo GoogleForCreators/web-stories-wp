@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext } from '@web-stories-wp/design-system';
+import { useContext } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

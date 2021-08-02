@@ -26,8 +26,8 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   ThemeGlobals,
-  useFocusOut,
 } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**

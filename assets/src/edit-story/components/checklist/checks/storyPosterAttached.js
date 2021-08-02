@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
@@ -29,15 +29,15 @@ import { PRIORITY_COPY } from '../constants';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
-export function storyHasNoPosterAttached(story) {
+export function storyHasNoPosterAttached(featuredMedia) {
   return (
-    typeof story.featuredMedia?.url !== 'string' || hasNoFeaturedMedia(story)
+    typeof featuredMedia?.url !== 'string' ||
+    hasNoFeaturedMedia({ featuredMedia })
   );
 }
 
 export function StoryPosterAttached() {
-  //@TODO refine this context selector and storyHasNoPosterAttached to run more selectively
-  const { story } = useStory(({ state }) => state);
+  const featuredMedia = useStory(({ state }) => state?.story?.featuredMedia);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     () =>
@@ -47,7 +47,10 @@ export function StoryPosterAttached() {
     [setHighlights]
   );
 
-  const isRendered = storyHasNoPosterAttached(story);
+  const isRendered = useMemo(
+    () => storyHasNoPosterAttached(featuredMedia),
+    [featuredMedia]
+  );
   useRegisterCheck('StoryPosterAttached', isRendered);
 
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;

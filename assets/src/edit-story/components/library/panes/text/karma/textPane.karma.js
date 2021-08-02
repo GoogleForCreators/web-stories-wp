@@ -72,7 +72,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     );
 
     await addPreset('Title 1');
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await addPreset('Title 3');
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
     await addPreset('Paragraph');
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
 

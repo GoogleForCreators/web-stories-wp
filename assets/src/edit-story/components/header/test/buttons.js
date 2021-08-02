@@ -58,8 +58,11 @@ function setupButtons({
         status: 'draft',
         storyId: 123,
         date: null,
+        editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+        embedPostLink:
+          'https://example.com/wp-admin/post-new.php?from-web-story=123',
         previewLink:
-          'https://example.com?preview_id=1679&preview_nonce=b5ea827939&preview=true',
+          'http://localhost?preview_id=1679&preview_nonce=b5ea827939&preview=true',
         ...extraStoryProps,
       },
     },
@@ -92,7 +95,7 @@ function setupButtons({
   renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
-        <FlagsProvider features={{ enableChecklistCompanion: true }}>
+        <FlagsProvider>
           <StoryContext.Provider value={storyContextValue}>
             <StoryTriggersProvider story={storyContextValue}>
               <CheckpointContext.Provider
@@ -354,7 +357,7 @@ describe('buttons', () => {
   it('should open draft preview when clicking on Preview via about:blank', () => {
     const { saveStory } = setupButtons({
       story: {
-        previewLink: 'https://example.com/?preview=true',
+        previewLink: 'http://localhost/?preview=true',
       },
     });
     const previewButton = screen.getByRole('button', { name: 'Preview' });
@@ -378,7 +381,7 @@ describe('buttons', () => {
     expect(saveStory).toHaveBeenCalledWith();
     expect(mockedOpen).toHaveBeenCalledWith('about:blank', 'story-preview');
     expect(previewPopup.location.replace).toHaveBeenCalledWith(
-      'https://example.com/?preview=true#development=1'
+      'http://localhost/?preview=true#development=1'
     );
 
     windowSpy.mockRestore();
@@ -387,7 +390,7 @@ describe('buttons', () => {
   it('should open preview for a published story when clicking on Preview via about:blank', () => {
     const { autoSave } = setupButtons({
       story: {
-        link: 'https://example.com',
+        link: 'http://localhost',
         status: 'publish',
       },
     });
@@ -408,7 +411,7 @@ describe('buttons', () => {
 
     expect(autoSave).toHaveBeenCalledWith();
     expect(previewPopup.location.replace).toHaveBeenCalledWith(
-      'https://example.com/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
+      'http://localhost/?preview_id=1679&preview_nonce=b5ea827939&preview=true#development=1'
     );
 
     windowSpy.mockRestore();

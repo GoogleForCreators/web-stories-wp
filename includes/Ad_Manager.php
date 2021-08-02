@@ -48,7 +48,7 @@ class Ad_Manager extends Service_Base {
 	 *
 	 * @return string Slot ID.
 	 */
-	private function get_slot_id() {
+	private function get_slot_id(): string {
 		return (string) get_option( Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
 	}
 
@@ -59,7 +59,7 @@ class Ad_Manager extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	private function is_enabled() {
+	private function is_enabled(): bool {
 		return ( 'admanager' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
@@ -77,15 +77,28 @@ class Ad_Manager extends Service_Base {
 		if ( ! $enabled || ! $slot ) {
 			return;
 		}
+
+		$configuration = [
+			'ad-attributes' => [
+				'type'      => 'doubleclick',
+				'data-slot' => $slot,
+			],
+		];
+
+		/**
+		 * Filters Google Ad Manager configuration passed to `<amp-story-auto-ads>`.
+		 *
+		 * @since 1.10.0
+		 *
+		 * @param array $settings Ad Manager configuration.
+		 * @param string $slot Google Ad_Manager slot ID.
+		 */
+		$configuration = apply_filters( 'web_stories_ad_manager_configuration', $configuration, $slot );
+
 		?>
 		<amp-story-auto-ads>
 			<script type="application/json">
-				{
-					"ad-attributes": {
-						"type": "doubleclick",
-						"data-slot": "<?php echo esc_js( $slot ); ?>"
-					}
-				}
+				<?php echo wp_json_encode( $configuration, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?>
 			</script>
 		</amp-story-auto-ads>
 		<?php

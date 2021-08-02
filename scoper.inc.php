@@ -84,6 +84,7 @@ return [
 				[
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-allowed-tags-generated.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php',
+					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-dev-mode-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-layout-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-rule-spec.php',
@@ -193,7 +194,6 @@ return [
 			$contents = str_replace( "\\$prefix\\esc_html", '\\esc_html', $contents );
 			$contents = str_replace( "\\$prefix\\esc_attr", '\\esc_attr', $contents );
 			$contents = str_replace( "\\$prefix\\esc_url", '\\esc_url', $contents );
-			$contents = str_replace( "\\$prefix\\do_action", '\\do_action', $contents );
 			$contents = str_replace( "\\$prefix\\site_url", '\\site_url', $contents );
 			$contents = str_replace( "\\$prefix\\wp_guess_url", '\\wp_guess_url', $contents );
 			$contents = str_replace( "\\$prefix\\untrailingslashit", '\\untrailingslashit', $contents );
@@ -213,10 +213,17 @@ return [
 			$contents = str_replace( "\\$prefix\\content_url", '\\content_url', $contents );
 			$contents = str_replace( "\\$prefix\\get_admin_url", '\\get_admin_url', $contents );
 			$contents = str_replace( "\\$prefix\\WP_CONTENT_DIR", '\\WP_CONTENT_DIR', $contents );
+			$contents = str_replace( "\\$prefix\\AMP__FILE__", '\\AMP__FILE__', $contents );
+			$contents = str_replace( "\\$prefix\\AMP__DIR__", '\\AMP__DIR__', $contents );
+			$contents = str_replace( "\\$prefix\\AMP__VERSION", '\\AMP__VERSION', $contents );
 			$contents = str_replace( "\\$prefix\\ABSPATH", '\\ABSPATH', $contents );
 			$contents = str_replace( "\\$prefix\\WPINC", '\\WPINC', $contents );
+			$contents = str_replace( "\\$prefix\\MINUTE_IN_SECONDS", '\\MINUTE_IN_SECONDS', $contents );
+			$contents = str_replace( "\\$prefix\\HOUR_IN_SECONDS", '\\HOUR_IN_SECONDS', $contents );
+			$contents = str_replace( "\\$prefix\\DAY_IN_SECONDS", '\\DAY_IN_SECONDS', $contents );
+			$contents = str_replace( "\\$prefix\\MONTH_IN_SECONDS", '\\MONTH_IN_SECONDS', $contents );
+			$contents = str_replace( "\\$prefix\\WP_DEBUG_DISPLAY", '\\WP_DEBUG_DISPLAY', $contents );
 			$contents = str_replace( "\\$prefix\\home_url", '\\home_url', $contents );
-			$contents = str_replace( "\\$prefix\\__", '\\__', $contents );
 			$contents = str_replace( "\\$prefix\\wp_array_slice_assoc", '\\wp_array_slice_assoc', $contents );
 			$contents = str_replace( "\\$prefix\\wp_json_encode", '\\wp_json_encode', $contents );
 			$contents = str_replace( "\\$prefix\\get_transient", '\\get_transient', $contents );
@@ -229,20 +236,21 @@ return [
 			$contents = str_replace( "\\$prefix\\is_admin_bar_showing", '\\is_admin_bar_showing', $contents );
 			$contents = str_replace( "\\$prefix\\get_bloginfo", '\\get_bloginfo', $contents );
 			$contents = str_replace( "\\$prefix\\add_filter", '\\add_filter', $contents );
+			$contents = str_replace( "\\$prefix\\remove_filter", '\\remove_filter', $contents );
 			$contents = str_replace( "\\$prefix\\apply_filters", '\\apply_filters', $contents );
 			$contents = str_replace( "\\$prefix\\add_query_arg", '\\add_query_arg', $contents );
 			$contents = str_replace( "\\$prefix\\remove_query_arg", '\\remove_query_arg', $contents );
 			$contents = str_replace( "\\$prefix\\get_post", '\\get_post', $contents );
 			$contents = str_replace( "\\$prefix\\wp_scripts", '\\wp_scripts', $contents );
-			$contents = str_replace( "\\$prefix\\wp_styles", '\\wp_styles', $contents );
 			$contents = str_replace( "\\$prefix\\wp_style_is", '\\wp_style_is', $contents );
+			$contents = str_replace( "\\$prefix\\WPMU_PLUGIN_DIR", '\\WPMU_PLUGIN_DIR', $contents );
+			$contents = str_replace( "\\$prefix\\WP_PLUGIN_DIR", '\\WP_PLUGIN_DIR', $contents );
 			$contents = str_replace( "\\$prefix\\WP_PLUGIN_URL", '\\WP_PLUGIN_URL', $contents );
 			$contents = str_replace( "\\$prefix\\WPMU_PLUGIN_URL", '\\WPMU_PLUGIN_URL', $contents );
-			$contents = str_replace( "\\$prefix\\wp_list_pluck", '\\wp_list_pluck', $contents );
 			$contents = str_replace( "\\$prefix\\wp_array_slice_assoc", '\\wp_array_slice_assoc', $contents );
 			$contents = str_replace( "\\$prefix\\wp_json_encode", '\\wp_json_encode', $contents );
-			$contents = str_replace( "\\$prefix\\WP_Http", '\\WP_Http', $contents );
-			$contents = str_replace( "\\$prefix\\WP_Error", '\\WP_Error', $contents );
+			$contents = str_replace( "$prefix\\WP_Http", 'WP_Http', $contents );
+			$contents = str_replace( "$prefix\\WP_Error", 'WP_Error', $contents );
 
 			return $contents;
 		},

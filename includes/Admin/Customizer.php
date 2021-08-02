@@ -42,8 +42,7 @@ use WP_Error;
  * @package Google\Web_Stories
  */
 class Customizer extends Service_Base {
-	use Theme_Support;
-	use Layout;
+	use Theme_Support, Layout;
 
 	/**
 	 * Customizer section slug.
@@ -450,7 +449,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return array An array of view type choices.
 	 */
-	private function get_view_type_choices( array $view_type ) {
+	private function get_view_type_choices( array $view_type ) : array {
 		$view_type_choices = $this->get_layouts();
 
 		if ( empty( $view_type ) ) {
@@ -469,7 +468,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return boolean Returns true if the given option is enabled otherwise false.
 	 */
-	private function is_option_enabled( $option_name ) {
+	private function is_option_enabled( string $option_name ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
 		return ( $setting instanceof WP_Customize_Setting && true === $setting->value() );
 	}
@@ -483,7 +482,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	private function is_view_type( $view_type ) {
+	private function is_view_type( string $view_type ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
 		return ( $setting instanceof WP_Customize_Setting && $view_type === $setting->value() );
 	}
@@ -536,7 +535,7 @@ class Customizer extends Service_Base {
 	 *
 	 * @return string
 	 */
-	public function render_stories() {
+	public function render_stories(): string {
 		$options = get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
@@ -546,7 +545,7 @@ class Customizer extends Service_Base {
 		$theme_support = $this->get_stories_theme_support()['customizer'];
 
 		$story_attributes = [
-			'view_type'          => isset( $options['view_type'] ) ? $options['view_type'] : $theme_support['view_type']['default'],
+			'view_type'          => $options['view_type'] ?? $theme_support['view_type']['default'],
 			'show_title'         => isset( $options['show_title'] ) ? (bool) $options['show_title'] : $theme_support['title']['default'],
 			'show_excerpt'       => isset( $options['show_excerpt'] ) ? (bool) $options['show_excerpt'] : $theme_support['excerpt']['default'],
 			'show_author'        => isset( $options['show_author'] ) ? (bool) $options['show_author'] : $theme_support['author']['default'],

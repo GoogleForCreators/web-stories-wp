@@ -65,7 +65,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 7;
 	}
 
@@ -157,7 +157,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function display_experiment_field( $args ) {
+	public function display_experiment_field( array $args ) {
 		$is_enabled_by_default = ! empty( $args['default'] );
 		$checked               = $is_enabled_by_default || $this->is_experiment_enabled( $args['id'] );
 		$disabled              = $is_enabled_by_default ? 'disabled' : '';
@@ -200,7 +200,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of experiment groups
 	 */
-	public function get_experiment_groups() {
+	public function get_experiment_groups(): array {
 		return [
 			'general'   => __( 'General', 'web-stories' ),
 			'dashboard' => __( 'Dashboard', 'web-stories' ),
@@ -217,32 +217,8 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array List of experiments by group.
 	 */
-	public function get_experiments() {
+	public function get_experiments(): array {
 		return [
-			/**
-			 * Author: @embarks
-			 * Issue: 8113
-			 * Creation date: 2021-06-28
-			 */
-			[
-				'name'        => 'enableBulkVideoOptimization',
-				'label'       => __( 'Bulk video optimization', 'web-stories' ),
-				'description' => __( 'Enable option to optimize multiple videos at once in the new pre-publish checklist', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 7965
-			 * Creation date: 2021-06-18
-			 */
-			[
-				'name'        => 'enableChecklistCompanion',
-				'label'       => __( 'Checklist companion', 'web-stories' ),
-				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
 			/**
 			 * Author: @samwhale
 			 * Issue: 6153
@@ -253,18 +229,6 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Right click menus', 'web-stories' ),
 				'description' => __( 'Enable a contextual shortcut menu when right clicking in the editor', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @brittanyirl
-			 * Issue: 6148
-			 * Creation date: 2021-05-11
-			 */
-			[
-				'name'        => 'enableQuickActionMenus',
-				'label'       => __( 'Quick action menus', 'web-stories' ),
-				'description' => __( 'Enable a contextual shortcut menu to side of canvas in editor', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -420,6 +384,30 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Eyedropper', 'web-stories' ),
 				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #8310
+			 * Creation date: 2021-07-13
+			 */
+			[
+				'name'        => 'videoCache',
+				'label'       => __( 'Video Cache', 'web-stories' ),
+				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
+				'group'       => 'general',
+			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8310
+			 * Creation date: 2021-07-15
+			 */
+			[
+				'name'        => 'enableMuteVideo',
+				'label'       => __( 'Mute Videos', 'web-stories' ),
+				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}
@@ -433,7 +421,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return array Experiment statuses with name as key and status as value.
 	 */
-	public function get_experiment_statuses( $group ) {
+	public function get_experiment_statuses( string $group ): array {
 		$experiments = wp_list_filter( $this->get_experiments(), [ 'group' => $group ] );
 
 		if ( empty( $experiments ) ) {
@@ -457,7 +445,7 @@ class Experiments extends Service_Base {
 	 * @param string $name Experiment name.
 	 * @return array|null Experiment if found, null otherwise.
 	 */
-	protected function get_experiment( $name ) {
+	protected function get_experiment( string $name ) {
 		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
 		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
 	}
@@ -471,7 +459,7 @@ class Experiments extends Service_Base {
 	 *
 	 * @return bool Whether the experiment is enabled.
 	 */
-	public function is_experiment_enabled( $name ) {
+	public function is_experiment_enabled( string $name ): bool {
 		$experiment = $this->get_experiment( $name );
 
 		if ( ! $experiment ) {

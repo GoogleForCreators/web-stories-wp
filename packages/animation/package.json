@@ -11,7 +11,7 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/design-system": "*",
+    "@web-stories-wp/react": "*",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/units": "*",
@@ -23,7 +23,7 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/react-hooks": "^3.7.0"
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/react-hooks": "^7.0.1"
   }
 }

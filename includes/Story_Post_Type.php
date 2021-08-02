@@ -30,6 +30,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post_Type;
 use WP_Rewrite;
 use WP_Query;
+use WP_Post;
 
 /**
  * Class Story_Post_Type.
@@ -137,6 +138,7 @@ class Story_Post_Type extends Service_Base {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
 	}
 
 	/**
@@ -146,7 +148,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return string Base64-encoded SVG icon.
 	 */
-	protected function get_post_type_icon() {
+	protected function get_post_type_icon(): string {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
 	}
 
@@ -160,7 +162,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Array of query params.
 	 */
-	public function filter_rest_collection_params( $query_params, $post_type ) {
+	public function filter_rest_collection_params( $query_params, $post_type ): array {
 		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
 			return $query_params;
 		}
@@ -182,7 +184,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Array of allowed fields.
 	 */
-	public function filter_revision_fields( $fields, $story ) {
+	public function filter_revision_fields( $fields, $story ): array {
 		if ( self::POST_TYPE_SLUG === $story['post_type'] ) {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
@@ -203,7 +205,7 @@ class Story_Post_Type extends Service_Base {
 	 * @param WP_Query $query The WP_Query object.
 	 * @return bool Whether to pass-through or not.
 	 */
-	public function redirect_post_type_archive_urls( $bypass, $query ) {
+	public function redirect_post_type_archive_urls( $bypass, $query ): bool {
 		global $wp_rewrite;
 
 		// If a plugin has already utilized the pre_handle_404 function, return without action to avoid conflicts.
@@ -250,7 +252,7 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array Bulk counts.
 	 */
-	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ) {
+	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ): array {
 		$bulk_messages[ self::POST_TYPE_SLUG ] = [
 			/* translators: %s: Number of stories. */
 			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
@@ -277,10 +279,30 @@ class Story_Post_Type extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function change_default_title( $data ) {
+	public function change_default_title( $data ): array {
 		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Invalid cache.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param int     $post_id   Post ID.
+	 * @param WP_Post $post  Post object.
+	 *
+	 * @return void
+	 */
+	public function clear_user_posts_count( $post_id, $post ) {
+		if ( ! $post instanceof WP_Post || self::POST_TYPE_SLUG !== $post->post_type ) {
+			return;
+		}
+
+		$cache_key   = "count_user_{$post->post_type}_{$post->post_author}";
+		$cache_group = 'user_posts_count';
+		wp_cache_delete( $cache_key, $cache_group );
 	}
 }

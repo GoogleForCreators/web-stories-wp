@@ -19,13 +19,26 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { EditableInput } from 'react-color/lib/components/common';
-import { useCallback, useMemo, useRef, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useLayoutEffect,
+  useState,
+  lazy,
+  Suspense,
+} from 'react';
 import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
+
+const EditableInput = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.EditableInput }))
+);
 
 /**
  * Internal dependencies
@@ -92,11 +105,16 @@ function EditablePreview({ label, value, width, format, onChange }) {
   };
 
   useLayoutEffect(() => {
-    if (isEditing && editableRef.current) {
-      editableRef.current.input.focus();
-      editableRef.current.input.select();
-      editableRef.current.input.setAttribute('aria-label', label);
-    }
+    // Wait one tick to ensure the input has been loaded.
+    const timeout = setTimeout(() => {
+      if (isEditing && editableRef.current) {
+        editableRef.current.input.focus();
+        editableRef.current.input.select();
+        editableRef.current.input.setAttribute('aria-label', label);
+      }
+    });
+
+    return () => clearTimeout(timeout);
   }, [isEditing, label]);
 
   if (!isEditing) {
@@ -115,13 +133,15 @@ function EditablePreview({ label, value, width, format, onChange }) {
 
   return (
     <Wrapper ref={wrapperRef} tabIndex={-1} onBlur={handleOnBlur}>
-      <EditableInput
-        value={value}
-        ref={editableRef}
-        onChange={onChange}
-        onChangeComplete={disableEditing}
-        style={inputStyles}
-      />
+      <Suspense fallback={null}>
+        <EditableInput
+          value={value}
+          ref={editableRef}
+          onChange={onChange}
+          onChangeComplete={disableEditing}
+          style={inputStyles}
+        />
+      </Suspense>
     </Wrapper>
   );
 }

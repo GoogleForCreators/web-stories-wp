@@ -36,7 +36,6 @@ describe('Quick Actions integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableQuickActionMenus: true });
     await fixture.render();
   });
 
@@ -53,7 +52,6 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(await zoomSelector.option('Fill'));
       await fixture.events.sleep(300);
 
-      expect(fixture.screen.queryByRole('dialog')).toBeNull();
       expect(fixture.screen.queryByTestId('quick-actions-menu')).toBeNull();
     });
   });

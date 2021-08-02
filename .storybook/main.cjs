@@ -57,6 +57,7 @@ module.exports = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {
@@ -83,6 +84,7 @@ module.exports = {
             options: {
               titleProp: true,
               svgo: true,
+              memo: true,
               svgoConfig: {
                 plugins: [
                   {

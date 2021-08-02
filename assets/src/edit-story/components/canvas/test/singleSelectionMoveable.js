@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render, act } from '@testing-library/react';
+import { render, act, waitFor } from '@testing-library/react';
 import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
@@ -113,8 +113,12 @@ describe('singleSelectionMoveable', () => {
 
   it.each(rotateCases)(
     'should rotate %p',
-    (_, { rotateTo, expectedRotationAngle }) => {
+    async (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
+      // Wait until the component has loaded.
+      await waitFor(
+        () => MockMoveable.mock.calls[MockMoveable.mock.calls.length - 1][0]
+      );
       act(() => {
         performRotation(rotateTo);
       });
