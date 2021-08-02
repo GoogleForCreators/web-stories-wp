@@ -49,24 +49,21 @@ const StoryMissingTitle = () => {
   useRegisterCheck('StoryMissingTitle', isRendered);
 
   const { footer, title } = PRIORITY_COPY.storyMissingTitle;
-  return (
-    isRendered &&
-    isChecklistMounted && (
-      <ChecklistCard
-        title={title}
-        titleProps={{
-          onClick: handleClick,
-        }}
-        footer={
-          <ChecklistCardStyles.CardListWrapper>
-            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-              {footer}
-            </List>
-          </ChecklistCardStyles.CardListWrapper>
-        }
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      titleProps={{
+        onClick: handleClick,
+      }}
+      footer={
+        <ChecklistCardStyles.CardListWrapper>
+          <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            {footer}
+          </List>
+        </ChecklistCardStyles.CardListWrapper>
+      }
+    />
+  ) : null;
 };
 
 export default StoryMissingTitle;

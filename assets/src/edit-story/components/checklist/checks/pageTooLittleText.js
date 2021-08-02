@@ -67,41 +67,38 @@ const PageTooLittleText = () => {
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooLittleText', isRendered);
 
-  return (
-    isRendered &&
-    isChecklistMounted && (
-      <ChecklistCard
-        title={title}
-        cardType={
-          failingPages.length > 1
-            ? CARD_TYPE.MULTIPLE_ISSUE
-            : CARD_TYPE.SINGLE_ISSUE
-        }
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingPages).map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() => handleClick(page.id)}
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={
-                  <PagePreview
-                    page={page}
-                    width={THUMBNAIL_DIMENSIONS.WIDTH}
-                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
-                    as="div"
-                  />
-                }
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      cardType={
+        failingPages.length > 1
+          ? CARD_TYPE.MULTIPLE_ISSUE
+          : CARD_TYPE.SINGLE_ISSUE
+      }
+      footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+      thumbnailCount={failingPages.length}
+      thumbnail={
+        <>
+          {getVisibleThumbnails(failingPages).map((page) => (
+            <Thumbnail
+              key={page.id}
+              onClick={() => handleClick(page.id)}
+              type={THUMBNAIL_TYPES.PAGE}
+              displayBackground={
+                <PagePreview
+                  page={page}
+                  width={THUMBNAIL_DIMENSIONS.WIDTH}
+                  height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                  as="div"
+                />
+              }
+              aria-label={__('Go to offending page', 'web-stories')}
+            />
+          ))}
+        </>
+      }
+    />
+  ) : null;
 };
 
 export default PageTooLittleText;

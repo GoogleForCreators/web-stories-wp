@@ -56,22 +56,19 @@ export function StoryPosterAttached() {
   useRegisterCheck('StoryPosterAttached', isRendered);
 
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;
-  return (
-    isRendered &&
-    isChecklistMounted && (
-      <ChecklistCard
-        title={title}
-        titleProps={{
-          onClick: handleClick,
-        }}
-        footer={
-          <ChecklistCardStyles.CardListWrapper>
-            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-              {footer}
-            </List>
-          </ChecklistCardStyles.CardListWrapper>
-        }
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      titleProps={{
+        onClick: handleClick,
+      }}
+      footer={
+        <ChecklistCardStyles.CardListWrapper>
+          <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            {footer}
+          </List>
+        </ChecklistCardStyles.CardListWrapper>
+      }
+    />
+  ) : null;
 }

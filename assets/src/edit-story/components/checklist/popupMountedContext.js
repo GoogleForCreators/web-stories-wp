@@ -16,12 +16,11 @@
 /**
  * External dependencies
  */
-import { createContext, useContext } from 'react';
-
-const mountedContext = createContext(false);
+/**
+ * Internal dependencies
+ */
+import { useChecklist } from './checklistContext';
 
 export function useIsChecklistMounted() {
-  return useContext(mountedContext);
+  return useChecklist(({ state }) => state.isChecklistMounted);
 }
-
-export default mountedContext;

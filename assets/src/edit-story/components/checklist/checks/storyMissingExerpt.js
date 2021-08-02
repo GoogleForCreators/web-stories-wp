@@ -48,18 +48,15 @@ const StoryMissingExcerpt = () => {
 
   const isRendered = storyMissingExcerpt(excerpt);
   useRegisterCheck('StoryMissingExcerpt', isRendered);
-  return (
-    isRendered &&
-    isChecklistMounted && (
-      <ChecklistCard
-        title={title}
-        titleProps={{
-          onClick: handleClick,
-        }}
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      titleProps={{
+        onClick: handleClick,
+      }}
+      footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+    />
+  ) : null;
 };
 
 export default StoryMissingExcerpt;

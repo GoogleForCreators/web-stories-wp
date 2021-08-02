@@ -48,7 +48,6 @@ import { useCategoryCount } from './countContext';
 import { useChecklist } from './checklistContext';
 import { useCheckpoint } from './checkpointContext';
 import { getTabPanelMaxHeight } from './styles';
-import mountedContext from './popupMountedContext';
 
 const Wrapper = styled.div`
   /**
@@ -66,40 +65,44 @@ const ThroughputPopup = forwardRef(function ThroughputPopup(
   { isOpen, children, close },
   ref
 ) {
-  const [isMounted, setIsMounted] = useState(false);
+  const { isChecklistMounted, setIsChecklistMounted } = useChecklist(
+    ({
+      state: { isChecklistMounted },
+      actions: { setIsChecklistMounted },
+    }) => ({
+      isChecklistMounted,
+      setIsChecklistMounted,
+    })
+  );
+
   return (
     <Popup
       popupId={POPUP_ID}
       isOpen={isOpen}
       ariaLabel={CHECKLIST_TITLE}
       shouldKeepMounted
-      onEnter={() => setIsMounted(true)}
-      onExited={() => setIsMounted(false)}
+      onEnter={() => setIsChecklistMounted(true)}
+      onExited={() => setIsChecklistMounted(false)}
     >
-      <mountedContext.Provider value={isMounted}>
-        {isMounted ? (
-          <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
-            <TopNavigation
-              onClose={close}
-              label={CHECKLIST_TITLE}
-              popupId={POPUP_ID}
-            />
-            <Tablist
-              id="pre-publish-checklist"
-              data-isexpanded={isOpen}
-              aria-label={__(
-                'Potential Story issues by category',
-                'web-stories'
-              )}
-            >
-              {children}
-            </Tablist>
-            <EmptyContentCheck />
-          </StyledNavigationWrapper>
-        ) : (
-          children
-        )}
-      </mountedContext.Provider>
+      {isChecklistMounted ? (
+        <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
+          <TopNavigation
+            onClose={close}
+            label={CHECKLIST_TITLE}
+            popupId={POPUP_ID}
+          />
+          <Tablist
+            id="pre-publish-checklist"
+            data-isexpanded={isOpen}
+            aria-label={__('Potential Story issues by category', 'web-stories')}
+          >
+            {children}
+          </Tablist>
+          <EmptyContentCheck />
+        </StyledNavigationWrapper>
+      ) : (
+        children
+      )}
     </Popup>
   );
 });
