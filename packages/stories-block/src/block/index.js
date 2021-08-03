@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as BlockIcon } from '../images/icon.svg';
+import { BlockIcon } from './icons';
 import deprecated from './deprecated';
 import save from './save';
 import edit from './edit';

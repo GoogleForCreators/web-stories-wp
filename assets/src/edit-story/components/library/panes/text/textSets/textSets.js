@@ -102,7 +102,8 @@ function TextSets({ paneRef, filteredTextSets }) {
               return (
                 <TextSet
                   key={gridIndex}
-                  data-testid={`${textSet.id}`}
+                  id={textSet.id}
+                  data-testid={`text_set_${textSet.id}`}
                   ref={(el) => (textSetRefs.current[textSet.id] = el)}
                   translateY={virtualRow.start}
                   translateX={virtualColumn.start}

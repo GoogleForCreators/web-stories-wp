@@ -165,6 +165,7 @@ const sharedConfig = {
     }),
     new webpack.EnvironmentPlugin({
       DISABLE_PREVENT: false,
+      DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
     }),
@@ -362,6 +363,20 @@ const storiesMCEButton = {
   ].filter(Boolean),
 };
 
+const storiesImgareaselect = {
+  ...sharedConfig,
+  entry: {
+    imgareaselect: './packages/imgareaselect/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'WP ImgAreaSelect Patch',
+      color: '#7D02F1',
+    }),
+  ].filter(Boolean),
+};
+
 module.exports = [
   editorAndDashboard,
   activationNotice,
@@ -369,4 +384,5 @@ module.exports = [
   webStoriesScripts,
   widgetScript,
   storiesMCEButton,
+  storiesImgareaselect,
 ];

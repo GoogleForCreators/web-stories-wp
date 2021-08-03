@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { SnackbarProvider, noop } from '@web-stories-wp/design-system';
+import { noop } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -30,8 +30,6 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import StoriesView from '../storiesView';
-import { TransformProvider } from '../../../../../../edit-story/components/transform';
-import FontContext from '../../../../../../edit-story/app/font/context';
 
 const fakeStories = [
   {
@@ -44,6 +42,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
+    featuredMediaUrl: 'http://placekitten.com/640/853',
   },
   {
     id: 2,
@@ -55,6 +54,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
+    featuredMediaUrl: 'http://placekitten.com/640/853',
   },
   {
     id: 3,
@@ -66,37 +66,55 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
+    featuredMediaUrl: 'http://placekitten.com/640/853',
+    locked: true,
+    lockUser: {
+      name: 'Batgirl',
+      id: 898978979879,
+    },
   },
 ];
 
-function render(ui, providerValues = {}, renderOptions = {}) {
-  const fontContextValue = {
-    state: {
-      fonts: [],
-    },
-    actions: {
-      maybeEnqueueFontStyle: jest.fn(),
-    },
-  };
-
-  return renderWithProviders(
-    ui,
-    providerValues,
-    renderOptions,
-    ({ children }) => (
-      <TransformProvider>
-        <FontContext.Provider value={fontContextValue}>
-          {children}
-        </FontContext.Provider>
-      </TransformProvider>
-    )
-  );
-}
-
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
-    render(
-      <SnackbarProvider>
+    renderWithProviders(
+      <StoriesView
+        filterValue={STORY_STATUS.ALL}
+        sort={{
+          value: STORY_SORT_OPTIONS.NAME,
+          direction: SORT_DIRECTION.ASC,
+          set: noop,
+          setDirection: noop,
+        }}
+        storyActions={{
+          createTemplateFromStory: jest.fn,
+          duplicateStory: jest.fn,
+          trashStory: jest.fn,
+          updateStory: jest.fn,
+        }}
+        stories={fakeStories}
+        view={{
+          style: VIEW_STYLE.GRID,
+          pageSize: {
+            width: 210,
+            height: 316,
+            containerHeight: 316,
+            posterHeight: 300,
+          },
+        }}
+      />,
+      { features: { enableInProgressStoryActions: false } },
+      {}
+    );
+
+    expect(screen.getAllByTestId(/^story-grid-item/)).toHaveLength(
+      fakeStories.length
+    );
+  });
+
+  describe('Loading stories', () => {
+    it('should be able to hide the grid while the stories are loading', () => {
+      renderWithProviders(
         <StoriesView
           filterValue={STORY_STATUS.ALL}
           sort={{
@@ -121,51 +139,11 @@ describe('My Stories <StoriesView />', function () {
               posterHeight: 300,
             },
           }}
-        />
-      </SnackbarProvider>,
-      { features: { enableInProgressStoryActions: false } },
-      {}
-    );
-
-    expect(screen.getAllByTestId(/^story-grid-item/)).toHaveLength(
-      fakeStories.length
-    );
-  });
-
-  describe('Loading stories', () => {
-    it('should be able to hide the grid while the stories are loading', () => {
-      render(
-        <SnackbarProvider>
-          <StoriesView
-            filterValue={STORY_STATUS.ALL}
-            sort={{
-              value: STORY_SORT_OPTIONS.NAME,
-              direction: SORT_DIRECTION.ASC,
-              set: noop,
-              setDirection: noop,
-            }}
-            storyActions={{
-              createTemplateFromStory: jest.fn,
-              duplicateStory: jest.fn,
-              trashStory: jest.fn,
-              updateStory: jest.fn,
-            }}
-            stories={fakeStories}
-            view={{
-              style: VIEW_STYLE.GRID,
-              pageSize: {
-                width: 210,
-                height: 316,
-                containerHeight: 316,
-                posterHeight: 300,
-              },
-            }}
-            loading={{
-              isLoading: true,
-              showStoriesWhileLoading: { current: false },
-            }}
-          />
-        </SnackbarProvider>,
+          loading={{
+            isLoading: true,
+            showStoriesWhileLoading: { current: false },
+          }}
+        />,
         { features: { enableInProgressStoryActions: false } },
         {}
       );
@@ -174,38 +152,36 @@ describe('My Stories <StoriesView />', function () {
     });
 
     it('should be able to show the grid while stories are loading', () => {
-      render(
-        <SnackbarProvider>
-          <StoriesView
-            filterValue={STORY_STATUS.ALL}
-            sort={{
-              value: STORY_SORT_OPTIONS.NAME,
-              direction: SORT_DIRECTION.ASC,
-              set: noop,
-              setDirection: noop,
-            }}
-            storyActions={{
-              createTemplateFromStory: jest.fn,
-              duplicateStory: jest.fn,
-              trashStory: jest.fn,
-              updateStory: jest.fn,
-            }}
-            stories={fakeStories}
-            view={{
-              style: VIEW_STYLE.GRID,
-              pageSize: {
-                width: 210,
-                height: 316,
-                containerHeight: 316,
-                posterHeight: 300,
-              },
-            }}
-            loading={{
-              isLoading: true,
-              showStoriesWhileLoading: { current: true },
-            }}
-          />
-        </SnackbarProvider>,
+      renderWithProviders(
+        <StoriesView
+          filterValue={STORY_STATUS.ALL}
+          sort={{
+            value: STORY_SORT_OPTIONS.NAME,
+            direction: SORT_DIRECTION.ASC,
+            set: noop,
+            setDirection: noop,
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
+          }}
+          stories={fakeStories}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: {
+              width: 210,
+              height: 316,
+              containerHeight: 316,
+              posterHeight: 300,
+            },
+          }}
+          loading={{
+            isLoading: true,
+            showStoriesWhileLoading: { current: true },
+          }}
+        />,
         { features: { enableInProgressStoryActions: false } },
         {}
       );
@@ -216,38 +192,36 @@ describe('My Stories <StoriesView />', function () {
     });
 
     it('should hide stories in the list view when stories are loading', () => {
-      render(
-        <SnackbarProvider>
-          <StoriesView
-            filterValue={STORY_STATUS.ALL}
-            sort={{
-              value: STORY_SORT_OPTIONS.NAME,
-              direction: SORT_DIRECTION.ASC,
-              set: noop,
-              setDirection: noop,
-            }}
-            storyActions={{
-              createTemplateFromStory: jest.fn,
-              duplicateStory: jest.fn,
-              trashStory: jest.fn,
-              updateStory: jest.fn,
-            }}
-            stories={fakeStories}
-            view={{
-              style: VIEW_STYLE.LIST,
-              pageSize: {
-                width: 210,
-                height: 316,
-                containerHeight: 316,
-                posterHeight: 300,
-              },
-            }}
-            loading={{
-              isLoading: true,
-              showStoriesWhileLoading: { current: false },
-            }}
-          />
-        </SnackbarProvider>,
+      renderWithProviders(
+        <StoriesView
+          filterValue={STORY_STATUS.ALL}
+          sort={{
+            value: STORY_SORT_OPTIONS.NAME,
+            direction: SORT_DIRECTION.ASC,
+            set: noop,
+            setDirection: noop,
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
+          }}
+          stories={fakeStories}
+          view={{
+            style: VIEW_STYLE.LIST,
+            pageSize: {
+              width: 210,
+              height: 316,
+              containerHeight: 316,
+              posterHeight: 300,
+            },
+          }}
+          loading={{
+            isLoading: true,
+            showStoriesWhileLoading: { current: false },
+          }}
+        />,
         { features: { enableInProgressStoryActions: false } },
         {}
       );
@@ -256,39 +230,89 @@ describe('My Stories <StoriesView />', function () {
     });
 
     it('should be able to show the list while stories are loading', () => {
-      render(
-        <SnackbarProvider>
-          <StoriesView
-            filterValue={STORY_STATUS.ALL}
-            sort={{
-              value: STORY_SORT_OPTIONS.NAME,
-              direction: SORT_DIRECTION.ASC,
-              set: noop,
-              setDirection: noop,
-            }}
-            storyActions={{
-              createTemplateFromStory: jest.fn,
-              duplicateStory: jest.fn,
-              trashStory: jest.fn,
-              updateStory: jest.fn,
-            }}
-            stories={fakeStories}
-            view={{
-              style: VIEW_STYLE.LIST,
-              pageSize: { width: 210, height: 316, containerHeight: 316 },
-            }}
-            loading={{
-              isLoading: true,
-              showStoriesWhileLoading: { current: true },
-            }}
-          />
-        </SnackbarProvider>,
+      renderWithProviders(
+        <StoriesView
+          filterValue={STORY_STATUS.ALL}
+          sort={{
+            value: STORY_SORT_OPTIONS.NAME,
+            direction: SORT_DIRECTION.ASC,
+            set: noop,
+            setDirection: noop,
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
+          }}
+          stories={fakeStories}
+          view={{
+            style: VIEW_STYLE.LIST,
+            pageSize: {
+              width: 210,
+              height: 316,
+              containerHeight: 316,
+              posterHeight: 300,
+            },
+          }}
+          loading={{
+            isLoading: true,
+            showStoriesWhileLoading: { current: true },
+          }}
+        />,
         { features: { enableInProgressStoryActions: false } },
         {}
       );
 
       expect(screen.queryAllByTestId(/^story-list-item/)).toHaveLength(
         fakeStories.length
+      );
+    });
+  });
+
+  describe('Locked story', () => {
+    it('should show a lock icon and helpful tooltip and aria text in list view when a story is being edited by another user', function () {
+      renderWithProviders(
+        <StoriesView
+          filterValue={STORY_STATUS.ALL}
+          sort={{
+            value: STORY_SORT_OPTIONS.NAME,
+            direction: SORT_DIRECTION.ASC,
+            set: noop,
+            setDirection: noop,
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
+          }}
+          stories={fakeStories}
+          view={{
+            style: VIEW_STYLE.LIST,
+            pageSize: {
+              width: 210,
+              height: 316,
+              containerHeight: 316,
+              posterHeight: 300,
+            },
+          }}
+        />,
+        {
+          features: {
+            enablePostLocking: true,
+          },
+        },
+        {}
+      );
+
+      expect(screen.getAllByTestId(/^story-list-item/)).toHaveLength(
+        fakeStories.length
+      );
+
+      const lockedStoryTitle = screen.getByText('Story C');
+      expect(lockedStoryTitle).toContainHTML(
+        `${fakeStories[2].title} (locked by ${fakeStories[2].lockUser.name})`
       );
     });
   });

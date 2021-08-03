@@ -50,7 +50,7 @@ export const TEXT = {
 };
 export const SHAPES = {
   icon: ShapesIcon,
-  tooltip: __('Shapes', 'web-stories'),
+  tooltip: __('Shapes & Stickers', 'web-stories'),
   Pane: ShapesPane,
   id: 'shapes',
 };
