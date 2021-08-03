@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  skipSuiteOnFirefox,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting 3P Media', () => {
   it('should dismiss message', async () => {
@@ -30,64 +33,77 @@ describe('Inserting 3P Media', () => {
     );
   });
 
-  it('should insert an Unsplash image', async () => {
-    await createNewStory();
+  describe('Unsplash', () => {
+    it('should insert an Unsplash image', async () => {
+      await createNewStory();
 
-    await expect(page).toClick('#library-tab-media3p');
+      await expect(page).toClick('#library-tab-media3p');
 
-    await expect(page).toMatchElement('button', { text: 'Image' });
-    await expect(page).toClick('button', { text: 'Image' });
+      await expect(page).toMatchElement('button', { text: 'Image' });
+      await expect(page).toClick('button', { text: 'Image' });
 
-    await page.waitForSelector(
-      '#library-pane-media3p [data-testid="mediaElement-image"]'
-    );
-    // Clicking will only act on the first element.
-    await expect(page).toClick(
-      '#library-pane-media3p [data-testid="mediaElement-image"]'
-    );
+      await page.waitForSelector(
+        '#library-pane-media3p [data-testid="mediaElement-image"]'
+      );
+      // Clicking will only act on the first element.
+      await expect(page).toClick(
+        '#library-pane-media3p [data-testid="mediaElement-image"]'
+      );
 
-    await page.waitForSelector('[data-testid="imageElement"]');
-    await expect(page).toMatchElement('[data-testid="imageElement"]');
-  });
-  // Skipped for https://github.com/google/web-stories-wp/issues/7481
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert a Coverr video', async () => {
-    await createNewStory();
-
-    await expect(page).toClick('#library-tab-media3p');
-
-    await expect(page).toMatchElement('button', { text: 'Video' });
-    await expect(page).toClick('button', { text: 'Video' });
-
-    await page.waitForSelector(
-      '#library-pane-media3p [data-testid="mediaElement-video"]'
-    );
-    // Clicking will only act on the first element.
-    await expect(page).toClick(
-      '#library-pane-media3p [data-testid="mediaElement-video"]'
-    );
-
-    await page.waitForSelector('[data-testid="videoElement"]');
-    await expect(page).toMatchElement('[data-testid="videoElement"]');
+      await page.waitForSelector('[data-testid="imageElement"]');
+      await expect(page).toMatchElement('[data-testid="imageElement"]');
+    });
   });
 
-  it('should insert a Tenor GIF', async () => {
-    await createNewStory();
+  describe('Coverr', () => {
+    // Firefox has issues playing media (MP4 videos).
+    skipSuiteOnFirefox();
 
-    await expect(page).toClick('#library-tab-media3p');
+    // Skipped for https://github.com/google/web-stories-wp/issues/7481
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should insert a Coverr video', async () => {
+      await createNewStory();
 
-    await expect(page).toMatchElement('button', { text: 'GIFs' });
-    await expect(page).toClick('button', { text: 'GIFs' });
+      await expect(page).toClick('#library-tab-media3p');
 
-    await page.waitForSelector(
-      '#library-pane-media3p [data-testid="mediaElement-gif"]'
-    );
-    // Clicking will only act on the first element.
-    await expect(page).toClick(
-      '#library-pane-media3p [data-testid="mediaElement-gif"]'
-    );
+      await expect(page).toMatchElement('button', { text: 'Video' });
+      await expect(page).toClick('button', { text: 'Video' });
 
-    await page.waitForSelector('[data-testid="imageElement"]');
-    await expect(page).toMatchElement('[data-testid="imageElement"]');
+      await page.waitForSelector(
+        '#library-pane-media3p [data-testid="mediaElement-video"]'
+      );
+      // Clicking will only act on the first element.
+      await expect(page).toClick(
+        '#library-pane-media3p [data-testid="mediaElement-video"]'
+      );
+
+      await page.waitForSelector('[data-testid="videoElement"]');
+      await expect(page).toMatchElement('[data-testid="videoElement"]');
+    });
+  });
+
+  describe('Tenor', () => {
+    // Firefox has issues playing media (MP4 videos).
+    skipSuiteOnFirefox();
+
+    it('should insert a Tenor GIF', async () => {
+      await createNewStory();
+
+      await expect(page).toClick('#library-tab-media3p');
+
+      await expect(page).toMatchElement('button', { text: 'GIFs' });
+      await expect(page).toClick('button', { text: 'GIFs' });
+
+      await page.waitForSelector(
+        '#library-pane-media3p [data-testid="mediaElement-gif"]'
+      );
+      // Clicking will only act on the first element.
+      await expect(page).toClick(
+        '#library-pane-media3p [data-testid="mediaElement-gif"]'
+      );
+
+      await page.waitForSelector('[data-testid="imageElement"]');
+      await expect(page).toMatchElement('[data-testid="imageElement"]');
+    });
   });
 });
