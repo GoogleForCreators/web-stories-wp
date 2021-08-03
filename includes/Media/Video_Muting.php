@@ -124,6 +124,9 @@ class Video_Muting extends Service_Base {
 					'description' => __( 'Whether the video is muted', 'web-stories' ),
 					'default'     => null,
 					'context'     => [ 'view', 'edit', 'embed' ],
+					'arg_options' => [
+						'sanitize_callback' => 'rest_sanitize_boolean',
+					],
 				],
 				'update_callback' => [ $this, 'update_callback_is_muted' ],
 			]
@@ -179,6 +182,7 @@ class Video_Muting extends Service_Base {
 	 */
 	public function update_callback_is_muted( $value, $object ) {
 		$object_id = $object->ID;
+		$name      = self::IS_MUTED_KEY;
 		$meta_key  = self::IS_MUTED_POST_META_KEY;
 		$meta_type = 'post';
 
@@ -186,9 +190,9 @@ class Video_Muting extends Service_Base {
 			return new WP_Error(
 				'rest_cannot_update',
 				/* translators: %s: Custom field key.**/
-				sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $meta_type ),
+				sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $name ),
 				[
-					'key'    => $meta_type,
+					'key'    => $name,
 					'status' => rest_authorization_required_code(),
 				]
 			);
