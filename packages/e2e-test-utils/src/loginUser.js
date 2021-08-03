@@ -22,6 +22,10 @@ import {
   isCurrentURL,
   pressKeyWithModifier,
 } from '@wordpress/e2e-test-utils';
+/**
+ * Internal dependencies
+ */
+import getLoggedInUser from './getLoggedInUser';
 
 /**
  * Performs log in with specified username and password.
@@ -34,11 +38,11 @@ import {
  * At the same time, there can be an issue where the password is not actually
  * submitted (not part of the form data) when trying to log in.
  *
- * Hence not using only `page.type()` as one would typically use, but instead
- * using two methods just to be safe.
+ * Hence using a combination of `page.type()` with `page.click()` and some
+ * artificial delays.
  *
  * The matchers at the end try to catch any errors where form submission
- * is incomplete for some reason.
+ * is incomplete for some reason, to make debugging easier.
  *
  * @see https://github.com/puppeteer/puppeteer/issues/1648
  * @param {?string} username String to be used as user credential.
@@ -49,13 +53,15 @@ async function loginUser(username, password) {
     await page.goto(createURL('wp-login.php'));
   }
 
-  await page.focus('#user_login');
+  await page.click(`#user_login`, { delay: 100 });
   await pressKeyWithModifier('primary', 'a');
-  await page.type('#user_login', username);
+  await page.keyboard.press('Backspace');
+  await page.type('#user_login', username, { delay: 50 });
 
-  await page.focus('#user_pass');
+  await page.click(`#user_pass`, { delay: 100 });
   await pressKeyWithModifier('primary', 'a');
-  await page.type('#user_pass', password);
+  await page.keyboard.press('Backspace');
+  await page.type('#user_pass', password, { delay: 50 });
 
   await Promise.all([page.waitForNavigation(), page.click('#wp-submit')]);
 
@@ -74,6 +80,9 @@ async function loginUser(username, password) {
   await expect(page).not.toMatchElement('#login_error', {
     text: /Error:/i,
   });
+
+  const currentUser = await getLoggedInUser();
+  expect(currentUser).toMatch(username);
 }
 
 export default loginUser;

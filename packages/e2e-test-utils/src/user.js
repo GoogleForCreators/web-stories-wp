@@ -18,13 +18,19 @@
  * Internal dependencies
  */
 import loginUser from './loginUser';
-import getLoggedInUser from './getLoggedInUser';
 
 const current = {
   username: null,
   password: null,
 };
 
+/**
+ * Sets the current user to the given one if different.
+ *
+ * @param {string} username Username.
+ * @param {string} password Password.
+ * @return {Promise<void>}
+ */
 export async function setCurrentUser(username, password) {
   if (username === null) {
     return;
@@ -35,9 +41,6 @@ export async function setCurrentUser(username, password) {
   }
 
   await loginUser(username, password);
-
-  const currentUser = await getLoggedInUser();
-  expect(currentUser).toMatch(username);
 
   current.username = username;
   current.password = password;
