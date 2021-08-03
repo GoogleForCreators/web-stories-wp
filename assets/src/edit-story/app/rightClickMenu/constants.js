@@ -31,10 +31,13 @@ import {
 export const RIGHT_CLICK_MENU_LABELS = {
   BRING_FORWARD: __('Bring Forward', 'web-stories'),
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
+  CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
+  COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
   DELETE_PAGE: __('Delete Page', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
+  PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE: __('Paste', 'web-stories'),
   SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
   SEND_BACKWARD: __('Send Backward', 'web-stories'),
@@ -92,6 +95,20 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
     <StyledKbd aria-label={SPECIAL_KEYS.DELETE.title}>
       {SPECIAL_KEYS.DELETE.symbol}
     </StyledKbd>
+  ),
+  COPY_IMAGE_STYLES: (
+    <>
+      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'C'}</StyledKbd>
+    </>
+  ),
+  PASTE_IMAGE_STYLES: (
+    <>
+      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'V'}</StyledKbd>
+    </>
   ),
 };
 

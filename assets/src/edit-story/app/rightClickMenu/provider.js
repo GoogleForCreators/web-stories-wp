@@ -19,6 +19,7 @@
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /** @typedef {import('react')} Node */
 
@@ -26,9 +27,10 @@ import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
 import { duplicatePage } from '../../elements';
+import updateProperties from '../../components/inspector/design/updateProperties';
 import { useCanvas } from '../canvas';
+import { ELEMENT_TYPES } from '../story';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -38,6 +40,7 @@ import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
+import { getDefaultPropertiesForType } from './utils';
 
 /**
  * Determines the items displayed in the right click menu
@@ -57,43 +60,54 @@ function RightClickMenuProvider({ children }) {
     setEditingElement: actions.setEditingElement,
   }));
   const {
+    addAnimations,
     addPage,
     arrangeElement,
     currentPage,
     deleteCurrentPage,
     pages,
     replaceCurrentPage,
-    selectedElements,
     setBackgroundElement,
+    selectedElements,
+    selectedElementAnimations,
+    updateElementsById,
   } = useStory(
     ({
-      state: { currentPage, pages, selectedElements },
+      state: {
+        currentPage,
+        pages,
+        selectedElementAnimations,
+        selectedElements,
+      },
       actions: {
+        addAnimations,
         addPage,
         arrangeElement,
         deleteCurrentPage,
         replaceCurrentPage,
         setBackgroundElement,
+        updateElementsById,
       },
     }) => ({
+      addAnimations,
       addPage,
       arrangeElement,
       currentPage,
       deleteCurrentPage,
       pages,
       replaceCurrentPage,
+      selectedElementAnimations,
       selectedElements,
       setBackgroundElement,
+      updateElementsById,
     })
   );
 
   // Ref for attaching the context menu
   const rightClickAreaRef = useRef();
 
-  const [{ copiedPage, isMenuOpen, menuPosition }, dispatch] = useReducer(
-    rightClickMenuReducer,
-    DEFAULT_RIGHT_CLICK_MENU_STATE
-  );
+  const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
+    useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
 
   const selectedElement = selectedElements?.[0];
   const currentPosition = currentPage?.elements.findIndex(
@@ -224,6 +238,91 @@ function RightClickMenuProvider({ children }) {
     [selectedElement?.id, setEditingElement]
   );
 
+  /**
+   * Copy the styles and animations of the selected element.
+   */
+  const handleCopyStyles = useCallback(() => {
+    dispatch({
+      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
+      payload: {
+        element: selectedElement,
+        animations: selectedElementAnimations,
+      },
+    });
+  }, [selectedElement, selectedElementAnimations]);
+
+  /**
+   * Update the selected element's styles and animations.
+   *
+   * Pasting is not allowed if the copied element styles are from a
+   * different element type.
+   */
+  const handlePasteStyles = useCallback(() => {
+    const id = selectedElement?.id;
+
+    if (!id || selectedElement?.type !== copiedElement.type) {
+      return;
+    }
+
+    // Delete old animation if one exists
+    const oldAnimationToDelete = selectedElementAnimations.length
+      ? { ...selectedElementAnimations[0], delete: true }
+      : undefined;
+
+    // Create new animations
+    const newAnimations = copiedElement.animations.map((animation) => ({
+      ...animation,
+      id: uuidv4(),
+      targets: [selectedElement.id],
+    }));
+
+    // Add styles and animations to element
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            ...copiedElement.styles,
+            animation: oldAnimationToDelete,
+          },
+          /* commitValues */ true
+        ),
+    });
+    addAnimations({ animations: newAnimations });
+  }, [
+    addAnimations,
+    copiedElement,
+    selectedElement,
+    selectedElementAnimations,
+    updateElementsById,
+  ]);
+
+  /**
+   * Revert some element styles to their defaults.
+   *
+   * Each element type has a different set of defaults.
+   */
+  const handleClearElementStyles = useCallback(() => {
+    if (!selectedElement?.id) {
+      return;
+    }
+
+    const resetProperties = getDefaultPropertiesForType(selectedElement.type);
+
+    if (resetProperties) {
+      updateElementsById({
+        elementIds: [selectedElement.id],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            resetProperties,
+            /* commitValues */ true
+          ),
+      });
+    }
+  }, [selectedElement, updateElementsById]);
+
   const menuItemProps = useMemo(
     () => ({
       onMouseDown: handleMouseDown,
@@ -311,18 +410,46 @@ function RightClickMenuProvider({ children }) {
         onClick: handleOpenScaleAndCrop,
         ...menuItemProps,
       },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        separator: 'top',
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
+        },
+        onClick: handleCopyStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_IMAGE_STYLES,
+        },
+        onClick: handlePasteStyles,
+        disabled: copiedElement.type !== selectedElement?.type,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
     ],
     [
       canElementMoveBackwards,
       canElementMoveForwards,
+      copiedElement,
       defaultItems,
       handleBringForward,
       handleBringToFront,
+      handleClearElementStyles,
+      handleCopyStyles,
       handleOpenScaleAndCrop,
+      handlePasteStyles,
       handleSendBackward,
       handleSendToBack,
       handleSetPageBackground,
       menuItemProps,
+      selectedElement,
     ]
   );
 
@@ -346,17 +473,18 @@ function RightClickMenuProvider({ children }) {
   );
 
   const menuItems = useMemo(() => {
+    // Check if background image
     if (selectedElement?.isBackground) {
       return pageItems;
     }
 
     switch (selectedElement?.type) {
-      case ELEMENT_TYPE.IMAGE:
-      case ELEMENT_TYPE.VIDEO:
-      case ELEMENT_TYPE.GIF:
+      case ELEMENT_TYPES.IMAGE:
+      case ELEMENT_TYPES.VIDEO:
+      case ELEMENT_TYPES.GIF:
         return foregroundMediaItems;
-      case ELEMENT_TYPE.SHAPE:
-      case ELEMENT_TYPE.TEXT:
+      case ELEMENT_TYPES.SHAPE:
+      case ELEMENT_TYPES.TEXT:
       default:
         return pageItems;
     }
