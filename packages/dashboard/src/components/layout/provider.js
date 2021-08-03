@@ -32,8 +32,8 @@ const Provider = ({ children }) => {
   // tab through the whole WordPress dashboard to get back.
   useEffect(() => {
     firstFocusableContentRef.current = document
-      .getElementById('web-stories-dashboard')
-      .querySelector(['button', 'a']);
+      ?.getElementById('web-stories-dashboard')
+      ?.querySelector(['button', 'a']);
   }, []);
 
   const scrollToTop = useCallback(() => {
