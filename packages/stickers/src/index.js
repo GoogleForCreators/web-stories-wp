@@ -42,6 +42,12 @@ import * as videoCallsSavedTheDayStickers from './how-video-calls-saved-the-day'
 import * as pickTheRightLaptopStickers from './laptop-buying-guide';
 import * as quizForYourBestSkinStickers from './beauty-quiz';
 import * as atHomeOfficeStickers from './diy-home-office';
+import * as rockMusicFestivalStickers from './rock-music-festival';
+import * as losAngelesCityGuideStickers from './los-angeles-city-guide';
+import * as hawaiiTravelPackingListStickers from './hawaii-travel-packing-list';
+import * as howContactTracingWorksStickers from './how-contact-tracing-works';
+import * as summerFashionCollectionStickers from './summer-fashion-collection';
+import * as artOnTheInternetStickers from './buying-art-on-the-internet';
 
 export default {
   ...beautyStickers,
@@ -70,4 +76,10 @@ export default {
   ...pickTheRightLaptopStickers,
   ...quizForYourBestSkinStickers,
   ...atHomeOfficeStickers,
+  ...rockMusicFestivalStickers,
+  ...losAngelesCityGuideStickers,
+  ...hawaiiTravelPackingListStickers,
+  ...howContactTracingWorksStickers,
+  ...summerFashionCollectionStickers,
+  ...artOnTheInternetStickers,
 };
