@@ -55,9 +55,7 @@ const mockAttachment = {
     raw: 'Description',
   },
   featured_media_src: {},
-  meta: {
-    web_stories_is_muted: false,
-  },
+  is_muted: false,
 };
 
 const mockUploadFile = jest

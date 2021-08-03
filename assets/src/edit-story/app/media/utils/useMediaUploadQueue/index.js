@@ -239,9 +239,7 @@ function useMediaUploadQueue() {
               newFile = await convertGifToVideo(file);
               finishTranscoding({ id, file: newFile });
               additionalData.media_source = 'gif-conversion';
-              additionalData.meta = {
-                web_stories_is_muted: true,
-              };
+              additionalData.is_muted = true;
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -282,9 +280,7 @@ function useMediaUploadQueue() {
               try {
                 newFile = await stripAudioFromVideo(file);
                 finishMuting({ id, file: newFile });
-                additionalData.meta = {
-                  web_stories_is_muted: true,
-                };
+                additionalData.is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
