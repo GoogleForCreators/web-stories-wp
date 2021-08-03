@@ -19,7 +19,6 @@
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
-
 /**
  * Internal dependencies
  */

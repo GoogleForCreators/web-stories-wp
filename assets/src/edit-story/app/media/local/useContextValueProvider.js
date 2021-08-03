@@ -29,6 +29,7 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import getResourceFromAttachment from '../utils/getResourceFromAttachment';
+import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -119,6 +120,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateVideoIsMuted } = useDetectVideoHasAudio({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
@@ -159,8 +164,9 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [setProcessing, uploadVideoFrame, removeProcessing]
   );
 
-  const { optimizeVideo, optimizeGif } = useProcessMedia({
+  const { optimizeVideo, optimizeGif, muteExistingVideo } = useProcessMedia({
     uploadVideoPoster,
+    updateVideoIsMuted,
     uploadMedia,
     updateMedia,
     deleteMediaElement,
@@ -204,10 +210,12 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
+      updateVideoIsMuted,
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,
       optimizeGif,
+      muteExistingVideo,
     },
   };
 }

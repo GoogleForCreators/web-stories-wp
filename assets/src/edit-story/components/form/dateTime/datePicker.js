@@ -17,15 +17,31 @@
 /**
  * External dependencies
  */
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useRef, useCallback, useMemo, useEffect } from 'react';
+import { useRef, useCallback, useMemo, useEffect, lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@web-stories-wp/i18n';
 
+/**
+ * Internal dependencies
+ */
+import CircularProgress from '../../circularProgress';
+
+const Calendar = lazy(() =>
+  import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')
+);
+
 const CalendarWrapper = styled.div`
   min-height: 236px;
+`;
+
+const FallbackCalendar = styled.div`
+  height: 256px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 function DatePicker({ currentDate, onChange, onViewChange }) {
@@ -88,38 +104,52 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
   );
 
   useEffect(() => {
-    updateTabIndexes();
+    // Wait one tick for the calendar to be available.
+    const timeout = setTimeout(() => {
+      updateTabIndexes();
+    });
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [updateTabIndexes]);
 
   return (
-    <CalendarWrapper ref={nodeRef}>
-      <Calendar
-        value={value}
-        onChange={handleOnChange}
-        onViewChange={onViewChange}
-        onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
-        nextAriaLabel={_x(
-          'Next',
-          'This label can apply to next month, year and/or decade',
-          'web-stories'
-        )}
-        prevAriaLabel={_x(
-          'Previous',
-          'This label can apply to previous month, year and/or decade',
-          'web-stories'
-        )}
-        next2AriaLabel={_x(
-          'Jump forward',
-          'This label can apply to month, year and/or decade',
-          'web-stories'
-        )}
-        prev2AriaLabel={_x(
-          'Jump backwards',
-          'This label can apply to month, year and/or decade',
-          'web-stories'
-        )}
-      />
-    </CalendarWrapper>
+    <Suspense
+      fallback={
+        <FallbackCalendar>
+          <CircularProgress />
+        </FallbackCalendar>
+      }
+    >
+      <CalendarWrapper ref={nodeRef}>
+        <Calendar
+          value={value}
+          onChange={handleOnChange}
+          onViewChange={onViewChange}
+          onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
+          nextAriaLabel={_x(
+            'Next',
+            'This label can apply to next month, year and/or decade',
+            'web-stories'
+          )}
+          prevAriaLabel={_x(
+            'Previous',
+            'This label can apply to previous month, year and/or decade',
+            'web-stories'
+          )}
+          next2AriaLabel={_x(
+            'Jump forward',
+            'This label can apply to month, year and/or decade',
+            'web-stories'
+          )}
+          prev2AriaLabel={_x(
+            'Jump backwards',
+            'This label can apply to month, year and/or decade',
+            'web-stories'
+          )}
+        />
+      </CalendarWrapper>
+    </Suspense>
   );
 }
 

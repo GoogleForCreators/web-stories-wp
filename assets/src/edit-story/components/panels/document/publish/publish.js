@@ -194,7 +194,7 @@ function PublishPanel() {
             <MediaWrapper>
               <StyledMedia
                 ref={posterButtonRef}
-                width={54}
+                width={72}
                 height={96}
                 cropParams={{
                   width: 640,
@@ -207,6 +207,7 @@ function PublishPanel() {
                 type={allowedImageMimeTypes}
                 ariaLabel={__('Poster image', 'web-stories')}
                 onChangeErrorText={posterErrorMessage}
+                imgProps={featuredMedia}
               />
             </MediaWrapper>
             <LabelWrapper>

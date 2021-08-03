@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from 'react';
 import { trackClick } from '@web-stories-wp/tracking';
 import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
@@ -26,6 +25,7 @@ import { TranslateWithMarkup } from '@web-stories-wp/i18n';
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies

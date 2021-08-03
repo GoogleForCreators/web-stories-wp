@@ -35,8 +35,13 @@ describe('mustBeCropped', () => {
   });
 
   it('larger height and width', () => {
-    const result = mustBeCropped(false, false, 300, 300, 500, 500);
+    const result = mustBeCropped(false, false, 300, 300, 500, 505);
     expect(result).toBeTrue();
+  });
+
+  it('same aspect ratio', () => {
+    const result = mustBeCropped(false, false, 300, 300, 500, 500);
+    expect(result).toBeFalse();
   });
 
   it('smaller values', () => {

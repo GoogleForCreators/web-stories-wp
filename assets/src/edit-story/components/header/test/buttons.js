@@ -95,7 +95,7 @@ function setupButtons({
   renderWithTheme(
     <HistoryContext.Provider value={historyContextValue}>
       <ConfigContext.Provider value={configValue}>
-        <FlagsProvider features={{ enableChecklistCompanion: true }}>
+        <FlagsProvider>
           <StoryContext.Provider value={storyContextValue}>
             <StoryTriggersProvider story={storyContextValue}>
               <CheckpointContext.Provider

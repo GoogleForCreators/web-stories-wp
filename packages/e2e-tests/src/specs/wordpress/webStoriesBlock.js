@@ -82,10 +82,9 @@ describe('Web Stories Block', () => {
     });
     await insertBlock('Web Stories');
 
-    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Story URL',
-    });
+    await page.waitForSelector('.web-stories-block-configuration-panel');
+
+    await expect(page).toClick('button', { text: 'Story URL' });
 
     await page.type(
       'input[aria-label="Story URL"]',
@@ -109,14 +108,14 @@ describe('Web Stories Block', () => {
     });
     await insertBlock('Web Stories');
 
-    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Selected Stories',
-    });
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Box Carousel',
-    });
+    await page.waitForSelector('.web-stories-block-configuration-panel');
+
+    await expect(page).toClick('button', { text: 'Selected Stories' });
+
+    await expect(page).toClick('button', { text: 'Box Carousel' });
+
     await expect(page).toClick('button', { text: 'Select Stories' });
+
     await page.waitForSelector('.components-modal__screen-overlay');
     await expect(page).toMatchElement('.components-modal__screen-overlay');
     await percySnapshot(page, 'Story select modal');

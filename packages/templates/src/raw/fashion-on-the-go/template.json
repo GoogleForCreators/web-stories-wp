@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -72,7 +72,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "a32c17e0-a46b-4821-bbdb-8dc064ac097d",
-          "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em\">FASHION</span>\n<span style=\"color: #ff3000; letter-spacing: -0.01em\">ON THE GO</span>",
+          "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em; text-transform: uppercase\">Fashion</span>\n<span style=\"color: #ff3000; letter-spacing: -0.01em; text-transform: uppercase\">on the go</span>",
           "fontSize": 100,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -195,7 +195,7 @@
           "focalY": 50,
           "basedOn": "d773925c-2f95-44c0-9b0e-0743d45476f2",
           "id": "61d23551-31e3-4aad-ac15-b8fc5e4be2ec",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">— ANONYMOUS</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">— Anonymous</span>",
           "fontSize": 28,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -222,7 +222,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "d773925c-2f95-44c0-9b0e-0743d45476f2",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">“WHEN WE DRESS WELL, WE NATURALLY BOOST OUR CONFIDENCE”</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">“When we dress well, we naturally boost our confidence”</span>",
           "fontSize": 50,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -433,7 +433,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "792955f1-699b-499a-bf65-d88b60d613af",
-          "content": "<span style=\"color: #ffece3\">S/S PREV</span>\n<span style=\"color: #ffece3\">IEW</span>",
+          "content": "<span style=\"color: #ffece3; text-transform: uppercase\">s/s prev</span>\n<span style=\"color: #ffece3; text-transform: uppercase\">iew</span>",
           "fontSize": 178,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -460,7 +460,7 @@
           "focalX": 50,
           "focalY": 50,
           "id": "9bd1600f-5d9d-4beb-bdfb-817b118a8852",
-          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 236, 227, 1)\">PREVIEW THE LATEST LOOKS OF THE SEASON</span></span>",
+          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 236, 227, 1); text-transform: uppercase\">Preview the latest looks of the season</span></span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -584,7 +584,7 @@
           "focalY": 50,
           "type": "text",
           "id": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MJ</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">KEPLER</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">MJ</span>\n<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">Kepler</span>",
           "fontSize": 37,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -621,7 +621,7 @@
           "focalY": 50,
           "type": "text",
           "id": "a2a90d9e-2bce-44d3-95cd-77f33c55e144",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.02em\">A RICH HISTORY</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.02em; text-transform: uppercase\">A Rich History</span>",
           "fontSize": 18,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -664,7 +664,7 @@
           "focalY": 50,
           "type": "text",
           "id": "8c45242f-9941-4fdc-b5de-3339a36585bf",
-          "content": "<span style=\"color: #212121\">MONOGRAM CANVAS</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">Monogram Canvas</span>",
           "fontSize": 26,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -761,7 +761,7 @@
           "focalY": 50,
           "type": "text",
           "id": "2c548d81-abe2-4f74-9292-9910382fb293",
-          "content": "<span style=\"color: #212121\">THE HOBO BAG</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">The Hobo Bag</span>",
           "fontSize": 26,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -833,7 +833,7 @@
           "type": "text",
           "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
           "id": "78ef1efb-0ca7-4067-9a38-a646987fd096",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE KEPLER BAG</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Kepler Bag</span>",
           "fontSize": 26,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -877,7 +877,7 @@
           "type": "text",
           "basedOn": "8c45242f-9941-4fdc-b5de-3339a36585bf",
           "id": "f5593520-3bb3-49d6-bfbd-c9fe2af7ee51",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE STARGAZE BAG</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Stargaze Bag</span>",
           "fontSize": 26,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1092,7 +1092,7 @@
           "focalY": 50,
           "type": "text",
           "id": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">KEPLER</span>",
+          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em; text-transform: uppercase\">Kepler</span>",
           "fontSize": 132,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1120,7 +1120,7 @@
           "type": "text",
           "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
           "id": "875e2b60-1738-425a-8d7d-95f648bb3af6",
-          "content": "<span style=\"color: rgba(255,236,227,0.35); letter-spacing: -0.01em\">THE HANDBAG</span>",
+          "content": "<span style=\"color: rgba(255,236,227,0.35); letter-spacing: -0.01em; text-transform: uppercase\">The Handbag</span>",
           "fontSize": 132,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1147,7 +1147,7 @@
           "focalY": 50,
           "type": "text",
           "id": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
-          "content": "<span style=\"color: #ff3000; letter-spacing: 0.02em\">MJ KEPLER</span>",
+          "content": "<span style=\"color: #ff3000; letter-spacing: 0.02em; text-transform: uppercase\">MJ Kepler</span>",
           "fontSize": 21,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1185,7 +1185,7 @@
           "type": "text",
           "basedOn": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
           "id": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
-          "content": "<span style=\"color: #ffece3; letter-spacing: 0.02em\">THE KEPLER HANDBAG $450</span>",
+          "content": "<span style=\"color: #ffece3; letter-spacing: 0.02em; text-transform: uppercase\">The Kepler Handbag $450</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1223,7 +1223,7 @@
           "type": "text",
           "basedOn": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
           "id": "67777589-1517-4a00-9e95-11e262bf02dd",
-          "content": "<span style=\"color: #ffece3; letter-spacing: 0.01em\">LEARN MORE</span>",
+          "content": "<span style=\"color: #ffece3; letter-spacing: 0.01em; text-transform: uppercase\">Learn More</span>",
           "fontSize": 16,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1444,7 +1444,7 @@
           "focalY": 50,
           "type": "text",
           "id": "735394cc-0da6-479c-951d-14579f0766ef",
-          "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em\">TOP 5</span>\n<span style=\"color: #ff3000; letter-spacing: -0.01em\">COLLECTIONS</span>\n<span style=\"color: #ff3000; letter-spacing: -0.01em\">THIS SEASON</span>",
+          "content": "<span style=\"color: #ff3000; letter-spacing: -0.01em; text-transform: uppercase\">Top 5</span>\n<span style=\"color: #ff3000; letter-spacing: -0.01em; text-transform: uppercase\">Collections</span>\n<span style=\"color: #ff3000; letter-spacing: -0.01em; text-transform: uppercase\">this Season</span>",
           "fontSize": 51,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1488,7 +1488,7 @@
           "type": "text",
           "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
           "id": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
-          "content": "<span style=\"color: #212121\">MJ KEPLER</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">MJ Kepler</span>",
           "fontSize": 48,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1532,7 +1532,7 @@
           "type": "text",
           "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
           "id": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
-          "content": "<span style=\"color: #212121\">JARDIN</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">Jardin</span>",
           "fontSize": 48,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1576,7 +1576,7 @@
           "type": "text",
           "basedOn": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
           "id": "dc565020-6358-44d9-9aac-a8eb90e76415",
-          "content": "<span style=\"color: #212121\">RICK MARKS</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">Rick Marks</span>",
           "fontSize": 48,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1620,7 +1620,7 @@
           "type": "text",
           "basedOn": "dc565020-6358-44d9-9aac-a8eb90e76415",
           "id": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
-          "content": "<span style=\"color: #212121\">PRAG</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">Prag</span>",
           "fontSize": 48,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1664,7 +1664,7 @@
           "type": "text",
           "basedOn": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
           "id": "7726e175-d97f-42ed-bb2e-a581f4135332",
-          "content": "<span style=\"color: #212121\">RAG’N TAG</span>",
+          "content": "<span style=\"color: #212121; text-transform: uppercase\">Rag’n Tag</span>",
           "fontSize": 48,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2112,7 +2112,7 @@
           "type": "text",
           "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
           "id": "9ce78e9e-7568-45de-bef3-1f9438a11568",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">PRAG</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">Prag</span>",
           "fontSize": 51,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2215,7 +2215,7 @@
           "type": "text",
           "basedOn": "67777589-1517-4a00-9e95-11e262bf02dd",
           "id": "46ec18b4-8061-467f-88a0-fb2abd494061",
-          "content": "<span style=\"color: #212121; letter-spacing: 0.01em\">LEARN MORE</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: 0.01em; text-transform: uppercase\">Learn More</span>",
           "fontSize": 16,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2332,7 +2332,7 @@
           "type": "text",
           "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
           "id": "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">GET THE LOOK</span></span>",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1); text-transform: uppercase\">Get The Look</span></span>",
           "fontSize": 110,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2729,7 +2729,7 @@
           "type": "text",
           "basedOn": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
           "id": "421f76ac-4c4d-4a44-ad77-622facf57db5",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MORE</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">STORIES</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">More</span>\n<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">Stories</span>",
           "fontSize": 50,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2773,7 +2773,7 @@
           "type": "text",
           "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
           "id": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">HOW TO PULL OFF THE</span>\n<span style=\"letter-spacing: -0.01em\">ALL DENIM LOOK</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">How to pull off the</span>\n<span style=\"letter-spacing: -0.01em; text-transform: uppercase\">all denim look</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2817,7 +2817,7 @@
           "type": "text",
           "basedOn": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
           "id": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE BEST STREET </span><span style=\"letter-spacing: -0.01em\">STYLES FROM NYFW</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Best Street </span><span style=\"letter-spacing: -0.01em; text-transform: uppercase\">Styles From NYFW</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2861,7 +2861,7 @@
           "type": "text",
           "basedOn": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
           "id": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE LATEST TRENDS </span><span style=\"letter-spacing: -0.01em\">IN SNEAKER LAND</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The Latest Trends </span><span style=\"letter-spacing: -0.01em; text-transform: uppercase\">In Sneaker Land</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -3025,7 +3025,7 @@
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE 90’S BACK!</span>",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em; text-transform: uppercase\">The 90’s Back!</span>",
           "fontSize": 20,
           "padding": { "horizontal": 0, "vertical": 0 },
           "basedOn": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",

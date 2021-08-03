@@ -19,13 +19,17 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import useApi from '../../api/useApi';
+import { SUCCESS } from '../../textContent';
 
 export default function useMediaOptimization() {
+  const { showSnackbar } = useSnackbar();
+
   const { currentUser, toggleWebStoriesMediaOptimization, fetchCurrentUser } =
     useApi(
       ({
@@ -61,7 +65,8 @@ export default function useMediaOptimization() {
     trackEvent('video_optimization_optin', {
       status: mediaOptimization ? 'off' : 'on',
     });
-  }, [mediaOptimization, toggleWebStoriesMediaOptimization]);
+    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissable: true });
+  }, [mediaOptimization, showSnackbar, toggleWebStoriesMediaOptimization]);
 
   return {
     mediaOptimization,

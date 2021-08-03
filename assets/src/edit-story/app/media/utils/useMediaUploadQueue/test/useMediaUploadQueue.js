@@ -32,6 +32,9 @@ jest.mock('../../useFFmpeg', () => ({
     canTranscodeFile: jest.fn(),
     isFileTooLarge: jest.fn(),
     transcodeVideo: jest.fn(),
+    stripAudioFromVideo: jest.fn(),
+    getFirstFrameOfVideo: jest.fn(),
+    convertGifToVideo: jest.fn(),
   })),
 }));
 
@@ -52,6 +55,9 @@ const mockAttachment = {
     raw: 'Description',
   },
   featured_media_src: {},
+  meta: {
+    web_stories_is_muted: false,
+  },
 };
 
 const mockUploadFile = jest
@@ -85,6 +91,7 @@ describe('useMediaUploadQueue', () => {
         progress: [],
         isUploading: false,
         isTranscoding: false,
+        isMuting: false,
       })
     );
   });
@@ -147,6 +154,7 @@ describe('useMediaUploadQueue', () => {
         progress: [],
         isUploading: false,
         isTranscoding: false,
+        isMuting: false,
       })
     );
   });

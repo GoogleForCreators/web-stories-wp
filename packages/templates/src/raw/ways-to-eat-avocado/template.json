@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -108,7 +108,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"letter-spacing: 0.28em\">RECIPE INSPIRATION</span>",
+          "content": "<span style=\"letter-spacing: 0.28em; text-transform: uppercase\">Recipe Inspiration</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -318,7 +318,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #51611c; letter-spacing: 0.2em\">AVOCADO&nbsp;</span>\n<span style=\"font-weight: 900; color: #51611c; letter-spacing: 0.2em\">SHAKE</span>",
+          "content": "<span style=\"font-weight: 900; color: #51611c; letter-spacing: 0.2em; text-transform: uppercase\">Avocado&nbsp;</span>\n<span style=\"font-weight: 900; color: #51611c; letter-spacing: 0.2em; text-transform: uppercase\">Shake</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -626,7 +626,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #a7b27e; letter-spacing: 0.2em\">HEALTH BENEFITS OF AVOCADO</span>",
+          "content": "<span style=\"font-weight: 900; color: #a7b27e; letter-spacing: 0.2em; text-transform: uppercase\">Health Benefits Of Avocado</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1213,7 +1213,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #ffa797; letter-spacing: 0.2em\">AVOCADO SHAKE</span>",
+          "content": "<span style=\"font-weight: 900; color: #ffa797; letter-spacing: 0.2em; text-transform: uppercase\">Avocado Shake</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1419,7 +1419,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em\">PREP TIME: 5 MIN</span>",
+          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em; text-transform: uppercase\">Prep Time: 5 Min</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1497,7 +1497,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em\">COOK TIME: 3 MIN</span>",
+          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em; text-transform: uppercase\">Cook Time: 3 Min</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1589,7 +1589,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em\">INGREDIENTS</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Ingredients</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1977,7 +1977,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em\">STEP 1</span>",
+          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em; text-transform: uppercase\">Step 1</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2221,7 +2221,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em\">STEP 2</span>",
+          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em; text-transform: uppercase\">Step 2</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2505,7 +2505,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #f5b435; letter-spacing: 0.2em\">AVOCADO TOAST</span>",
+          "content": "<span style=\"font-weight: 900; color: #f5b435; letter-spacing: 0.2em; text-transform: uppercase\">Avocado Toast</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2749,7 +2749,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em\">PREP TIME: 2MIN</span>",
+          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em; text-transform: uppercase\">Prep Time: 2min</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2827,7 +2827,7 @@
           "y": 361,
           "id": "8e380a36-fe02-497f-83ab-55a8c6f2cd6f",
           "basedOn": "ef95490a-990d-4d7b-93b0-c271509d0bf4",
-          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em\">COOK TIME: 2MIN</span>",
+          "content": "<span style=\"font-weight: 500; color: #a35445; letter-spacing: 0.1em; text-transform: uppercase\">Cook Time: 2min</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2919,7 +2919,7 @@
           "y": 434,
           "id": "75a5e7da-4094-45ca-83d4-4c14b2fa59f4",
           "basedOn": "ef95490a-990d-4d7b-93b0-c271509d0bf4",
-          "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em\">INGREDIENTS</span>",
+          "content": "<span style=\"font-weight: 500; letter-spacing: 0.28em; text-transform: uppercase\">Ingredients</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3269,7 +3269,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em\">STEP 1</span>",
+          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em; text-transform: uppercase\">Step 1</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3527,7 +3527,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em\">STEP 2</span>",
+          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em; text-transform: uppercase\">Step 2</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3806,7 +3806,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em\">STEP 3</span>",
+          "content": "<span style=\"font-weight: 800; color: #f5b435; letter-spacing: 0.28em; text-transform: uppercase\">Step 3</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,

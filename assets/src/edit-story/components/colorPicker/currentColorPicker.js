@@ -17,13 +17,34 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  lazy,
+  Suspense,
+} from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { CustomPicker } from 'react-color';
-import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
+
+const Saturation = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.Saturation }))
+);
+const Hue = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.Hue }))
+);
+const Alpha = lazy(() =>
+  import(
+    /* webpackChunkName: "chunk-react-color" */ 'react-color/lib/components/common'
+  ).then((module) => ({ default: module.Alpha }))
+);
 
 /**
  * Internal dependencies
@@ -35,6 +56,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
+import CircularProgress from '../circularProgress';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 import useEyedropper from './eyedropper';
@@ -54,6 +76,13 @@ const Container = styled.div`
 
 const Body = styled.div`
   padding-bottom: 0;
+`;
+
+const BodyFallback = styled.div`
+  height: ${BODY_HEIGHT + 3 * CONTROLS_HEIGHT + 4 * CONTAINER_PADDING}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SaturationWrapper = styled.div`
@@ -151,49 +180,51 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   return (
     <Container>
       <Body showOpacity={showOpacity}>
-        <SaturationWrapper>
-          <Saturation
-            radius="8px"
-            pointer={() => (
-              <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
-            )}
-            hsl={hsl}
-            hsv={hsv}
-            onChange={onChange}
-          />
-        </SaturationWrapper>
-        <HueWrapper>
-          <Hue
-            direction="horizontal"
-            height={`${CONTROLS_HEIGHT}px`}
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => (
-              <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
-            )}
-            hsl={hsl}
-            onChange={onChange}
-          />
-        </HueWrapper>
-        {showOpacity && (
-          <AlphaWrapper>
-            <Alpha
+        <Suspense fallback={null}>
+          <SaturationWrapper>
+            <Saturation
+              radius="8px"
+              pointer={() => (
+                <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
+              )}
+              hsl={hsl}
+              hsv={hsv}
+              onChange={onChange}
+            />
+          </SaturationWrapper>
+          <HueWrapper>
+            <Hue
               direction="horizontal"
               height={`${CONTROLS_HEIGHT}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
               pointer={() => (
-                <Pointer
-                  offsetX={-12}
-                  offsetY={1}
-                  currentColor={rgb}
-                  withAlpha
-                />
+                <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
               )}
-              rgb={rgb}
               hsl={hsl}
               onChange={onChange}
             />
-          </AlphaWrapper>
-        )}
+          </HueWrapper>
+          {showOpacity && (
+            <AlphaWrapper>
+              <Alpha
+                direction="horizontal"
+                height={`${CONTROLS_HEIGHT}px`}
+                radius={`${CONTROLS_BORDER_RADIUS}px`}
+                pointer={() => (
+                  <Pointer
+                    offsetX={-12}
+                    offsetY={1}
+                    currentColor={rgb}
+                    withAlpha
+                  />
+                )}
+                rgb={rgb}
+                hsl={hsl}
+                onChange={onChange}
+              />
+            </AlphaWrapper>
+          )}
+        </Suspense>
       </Body>
       <Footer>
         {enableEyedropper && (
@@ -249,4 +280,38 @@ CurrentColorPicker.defaultProps = {
   showOpacity: true,
 };
 
-export default CustomPicker(CurrentColorPicker);
+const DynamicImportWrapper = () => {
+  return (...args) => {
+    function DynamicFetcher(props) {
+      const isMounted = useRef(false);
+      const [Picker, setPicker] = useState(null);
+
+      useEffect(() => {
+        isMounted.current = true;
+        import(/* webpackChunkName: "chunk-react-color" */ 'react-color').then(
+          ({ CustomPicker }) => {
+            if (isMounted.current) {
+              setPicker({ component: CustomPicker(...args) });
+            }
+          }
+        );
+
+        return () => {
+          isMounted.current = false;
+        };
+      }, []);
+
+      return Picker ? (
+        <Picker.component {...props} />
+      ) : (
+        <BodyFallback>
+          <CircularProgress />
+        </BodyFallback>
+      );
+    }
+    return DynamicFetcher;
+  };
+};
+
+const DynamicHOC = DynamicImportWrapper();
+export default DynamicHOC(CurrentColorPicker);

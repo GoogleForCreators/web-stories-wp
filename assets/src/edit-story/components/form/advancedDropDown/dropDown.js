@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback, useRef, forwardRef } from 'react';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { DropDownSelect } from '@web-stories-wp/design-system';

@@ -19,7 +19,9 @@
  */
 import { useCallback, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { trackEvent } from '@web-stories-wp/tracking';
 import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
@@ -49,6 +51,8 @@ function useCanvasKeys(ref) {
     setSelectedElementsById,
     currentPage,
     selectedElementAnimations,
+    animationState,
+    updateAnimationState,
   } = useStory(
     ({
       state: {
@@ -56,6 +60,7 @@ function useCanvasKeys(ref) {
         selectedElements,
         currentPage,
         selectedElementAnimations,
+        animationState,
       },
       actions: {
         arrangeSelection,
@@ -63,6 +68,7 @@ function useCanvasKeys(ref) {
         deleteSelectedElements,
         updateSelectedElements,
         setSelectedElementsById,
+        updateAnimationState,
       },
     }) => {
       return {
@@ -75,6 +81,8 @@ function useCanvasKeys(ref) {
         updateSelectedElements,
         setSelectedElementsById,
         selectedElementAnimations,
+        animationState,
+        updateAnimationState,
       };
     }
   );
@@ -252,6 +260,28 @@ function useCanvasKeys(ref) {
   }, [addPastedElements, selectedElements, selectedElementAnimations]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
+
+  const isPlaying = [
+    STORY_ANIMATION_STATE.PLAYING,
+    STORY_ANIMATION_STATE.PLAYING_SELECTED,
+  ].includes(animationState);
+  useGlobalKeyDownEffect(
+    { key: ['mod+k'] },
+    (evt) => {
+      evt.preventDefault();
+
+      updateAnimationState({
+        animationState: isPlaying
+          ? STORY_ANIMATION_STATE.RESET
+          : STORY_ANIMATION_STATE.PLAYING,
+      });
+
+      trackEvent('canvas_play_animations', {
+        status: isPlaying ? 'stop' : 'play',
+      });
+    },
+    [isPlaying, updateAnimationState]
+  );
 }
 
 function getLayerDirection(key, shift) {

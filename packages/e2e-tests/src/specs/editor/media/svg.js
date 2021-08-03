@@ -33,8 +33,6 @@ describe('SVG', () => {
   it('should insert an existing SVG from media dialog', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
     await expect(page).toClick('button', { text: 'Upload' });
     await expect(page).toMatch('Upload to Story');
     await expect(page).toClick('button', { text: 'Media Library' });
@@ -53,7 +51,6 @@ describe('SVG', () => {
   it('should upload an SVG file via media dialog', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('close.svg', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });
@@ -67,8 +64,6 @@ describe('SVG', () => {
 
   it('not should be to select SVG as publisher logo', async () => {
     await createNewStory();
-
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
     await expect(page).toClick('[aria-label="Publisher Logo"]');

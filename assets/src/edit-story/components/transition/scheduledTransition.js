@@ -32,7 +32,7 @@ const machine = {
     entering: { entered },
     entered: { exiting },
     exiting: { exited },
-    exited: {},
+    exited: { entering },
   },
 };
 

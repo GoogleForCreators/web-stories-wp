@@ -29,7 +29,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useConfig, useCurrentUser } from '../../../app';
-import { CARD_WIDTH } from '../../helpCenter/navigator/constants';
+import { CARD_WIDTH } from '../../secondaryPopup';
 
 const Container = styled.div`
   display: flex;

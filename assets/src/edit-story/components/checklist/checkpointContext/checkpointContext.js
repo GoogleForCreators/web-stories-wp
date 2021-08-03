@@ -22,7 +22,7 @@ import {
   createContext,
   useContextSelector,
   identity,
-} from '@web-stories-wp/design-system';
+} from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

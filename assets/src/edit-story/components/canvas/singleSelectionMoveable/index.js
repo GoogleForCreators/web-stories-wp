@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useRef, useEffect, useState, useMemo } from 'react';
 import classnames from 'classnames';
 import { useUnits } from '@web-stories-wp/units';
-import { useBatchingCallback } from '@web-stories-wp/design-system';
+import { useBatchingCallback, useCombinedRefs } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -30,7 +30,6 @@ import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
-import useCombinedRefs from '../../../utils/useCombinedRefs';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';

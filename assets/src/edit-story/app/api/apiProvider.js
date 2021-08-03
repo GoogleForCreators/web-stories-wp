@@ -21,19 +21,18 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef } from 'react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
-
+import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import base64Encode from '../../utils/base64Encode';
 import { useConfig } from '../config';
 import Context from './context';
-import removeImagesFromPageTemplates from './removeImagesFromPageTemplates';
+import { flatternFormData, removeImagesFromPageTemplates } from './utils';
 
 function APIProvider({ children }) {
   const {
@@ -58,6 +57,7 @@ function APIProvider({ children }) {
     withoutImages: [],
   });
 
+  // Important: Keep in sync with REST API preloading definition.
   const getStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -103,6 +103,7 @@ function APIProvider({ children }) {
     [storyLocking]
   );
 
+  // Important: Keep in sync with REST API preloading definition.
   const getDemoStoryById = useCallback(
     (storyId) => {
       const path = addQueryArgs(`${stories}${storyId}/`, {
@@ -184,6 +185,7 @@ function APIProvider({ children }) {
     [stories, getStorySaveData]
   );
 
+  // Important: Keep in sync with REST API preloading definition.
   const getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
       let apiPath = media;
@@ -193,6 +195,23 @@ function APIProvider({ children }) {
         per_page: perPage,
         page: pagingNum,
         _web_stories_envelope: true,
+        _fields: [
+          'id',
+          'date_gmt',
+          'media_details',
+          'title',
+          'mime_type',
+          'featured_media',
+          'featured_media_src',
+          'alt_text',
+          'source_url',
+          'media_source',
+          'meta.web_stories_is_muted',
+          // _web_stories_envelope will add these fields, we need them too.
+          'body',
+          'status',
+          'headers',
+        ].join(','),
       });
 
       if (mediaType) {
@@ -232,7 +251,7 @@ function APIProvider({ children }) {
       const data = new window.FormData();
       data.append('file', file, file.name || file.type.replace('/', '.'));
       Object.entries(additionalData).forEach(([key, value]) =>
-        data.append(key, value)
+        flatternFormData(data, key, value)
       );
 
       // TODO: Intercept window.fetch here to support progressive upload indicator when uploading
@@ -340,7 +359,9 @@ function APIProvider({ children }) {
         story.author ? ['post_author', story.author.id] : false,
       ].filter(Boolean);
 
-      additionalData.forEach(([key, value]) => formData.append(key, value));
+      Object.entries(additionalData).forEach(([key, value]) =>
+        flatternFormData(formData, key, value)
+      );
 
       return apiFetch({
         url: metaBoxes,

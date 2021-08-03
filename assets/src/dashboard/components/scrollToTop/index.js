@@ -19,7 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 

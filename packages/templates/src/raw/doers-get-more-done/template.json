@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 31,
   "pages": [
     {
       "elements": [
@@ -73,7 +73,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "content": "<span style=\"color: #faf4ea\">DOERS&nbsp;</span>\n<span style=\"color: #faf4ea\">GET </span><span style=\"color: #ff630b\">MORE DONE</span>",
+          "content": "<span style=\"color: #faf4ea; text-transform: uppercase\">Doers&nbsp;</span>\n<span style=\"color: #faf4ea; text-transform: uppercase\">Get </span><span style=\"color: #ff630b; text-transform: uppercase\">More Done</span>",
           "fontSize": 90,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -102,7 +102,7 @@
           "focalY": 50,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "b8f9eb9a-5007-4642-aca3-750cdb7c7463",
-          "content": "<span style=\"color: #fff\">ISSUE NO. 2</span>",
+          "content": "<span style=\"color: #fff; text-transform: uppercase\">Issue No. 2</span>",
           "fontSize": 14,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -220,7 +220,7 @@
           "focalY": 50,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "8e053a88-17a5-4162-8ae0-214e5a84e33c",
-          "content": "<span style=\"color: #fafae4\">EXPAND YOUR</span>\n<span style=\"color: #fafae4\">LIVING SPACE TO</span>",
+          "content": "<span style=\"color: #fafae4; text-transform: uppercase\">Expand Your</span>\n<span style=\"color: #fafae4; text-transform: uppercase\">Living Space To</span>",
           "fontSize": 77,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -249,7 +249,7 @@
           "focalY": 50,
           "basedOn": "8e053a88-17a5-4162-8ae0-214e5a84e33c",
           "id": "9b8df2db-2f35-4aa6-a48c-f7bc71afc6de",
-          "content": "<span style=\"color: #ff630b\">THE OUTDOORS</span>",
+          "content": "<span style=\"color: #ff630b; text-transform: uppercase\">The Outdoors</span>",
           "fontSize": 77,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -350,7 +350,7 @@
           "focalY": 50,
           "basedOn": "b8f9eb9a-5007-4642-aca3-750cdb7c7463",
           "id": "b767306b-6b92-4b2a-935d-00954a502681",
-          "content": "<span style=\"color: #faf4ea\">ANONYMOUS</span>",
+          "content": "<span style=\"color: #faf4ea; text-transform: uppercase\">Anonymous</span>",
           "fontSize": 14,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -560,7 +560,7 @@
           "focalY": 50,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "457c0ed6-69da-43c4-ac59-1d1359d980b9",
-          "content": "<span style=\"color: #faf4ea\">START</span>\n<span style=\"color: #faf4ea\">WITH</span>",
+          "content": "<span style=\"color: #faf4ea; text-transform: uppercase\">Start</span>\n<span style=\"color: #faf4ea; text-transform: uppercase\">With</span>",
           "fontSize": 110,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -589,7 +589,7 @@
           "focalY": 50,
           "basedOn": "457c0ed6-69da-43c4-ac59-1d1359d980b9",
           "id": "b0b134b8-2aae-4da8-83be-a0f5a811f082",
-          "content": "<span style=\"color: #ff630b\">THE</span>\n<span style=\"color: #ff630b\">FOUNDA</span>\n<span style=\"color: #ff630b\">TION</span>",
+          "content": "<span style=\"color: #ff630b; text-transform: uppercase\">The</span>\n<span style=\"color: #ff630b; text-transform: uppercase\">Founda</span>\n<span style=\"color: #ff630b; text-transform: uppercase\">tion</span>",
           "fontSize": 110,
           "padding": { "horizontal": 0, "vertical": 0 }
         }
@@ -707,7 +707,7 @@
           "focalY": 50,
           "basedOn": "7b86d9a0-7674-4172-8abb-ddd27f241376",
           "id": "67f45a53-bf09-4235-95f0-680ad1bc9e66",
-          "content": "<span style=\"color: #211f1e\">GETTING STARTED</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Getting Started</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -763,7 +763,7 @@
           "focalY": 50,
           "basedOn": "67f45a53-bf09-4235-95f0-680ad1bc9e66",
           "id": "88038fd9-5e4e-41f2-a831-a79e990695ce",
-          "content": "<span style=\"color: #f9f3e9; letter-spacing: 0.15em\">LEARN MORE</span>",
+          "content": "<span style=\"color: #f9f3e9; letter-spacing: 0.15em; text-transform: uppercase\">Learn More</span>",
           "fontSize": 14,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -915,7 +915,7 @@
           "focalY": 50,
           "basedOn": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
           "id": "2af301c7-7cdf-4afc-bd9c-86309ec7cc80",
-          "content": "<span style=\"color: #f9f3e9\">HEM-FIR</span>\n<span style=\"color: #f9f3e9\">BROWN</span>\n<span style=\"color: #f9f3e9\">STAIN</span>\n<span style=\"color: #f9f3e9\">GROUND</span>\n<span style=\"color: #f9f3e9\">CONTACT</span>\n<span style=\"color: #f9f3e9\">PRESSURE-T</span>\n<span style=\"color: #f9f3e9\">REATED</span>\n<span style=\"color: #f9f3e9\">LUMBER</span>",
+          "content": "<span style=\"color: #f9f3e9; text-transform: uppercase\">Hem-fir</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">Brown</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">Stain</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">Ground</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">Contact</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">pressure-t</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">reated</span>\n<span style=\"color: #f9f3e9; text-transform: uppercase\">lumber</span>",
           "fontSize": 55,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -944,7 +944,7 @@
           "focalY": 50,
           "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
           "id": "e754bfb7-0132-4515-80c2-5c20b2b1475b",
-          "content": "<span style=\"color: #faf4ea\">NATURAL</span>",
+          "content": "<span style=\"color: #faf4ea; text-transform: uppercase\">Natural</span>",
           "fontSize": 14,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1139,7 +1139,7 @@
           "focalY": 50,
           "basedOn": "67f45a53-bf09-4235-95f0-680ad1bc9e66",
           "id": "9c0db82d-9759-4a90-8c97-3d1eb8f370e3",
-          "content": "<span style=\"color: #211f1e\">TD-1M CIRCULAR SAW</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">TD-1M Circular Saw</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1286,7 +1286,7 @@
           "focalY": 50,
           "basedOn": "2a83d681-85df-4b20-88e4-cc67d02817d4",
           "id": "5fe94c96-3a59-4b24-bb76-1a2a24795c23",
-          "content": "<span style=\"color: #ff630b\">THE BEST TOOLS</span>\n<span style=\"color: #211f1e\">FOR YOUR DIY</span>\n<span style=\"color: #211f1e\">PROJECT.</span>",
+          "content": "<span style=\"color: #ff630b; text-transform: uppercase\">The best tools</span>\n<span style=\"color: #211f1e; text-transform: uppercase\">for your DIY</span>\n<span style=\"color: #211f1e; text-transform: uppercase\">project.</span>",
           "fontSize": 44,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1406,7 +1406,7 @@
           "focalY": 50,
           "basedOn": "5fe94c96-3a59-4b24-bb76-1a2a24795c23",
           "id": "ac28f1fa-0509-49e2-82d2-4607c9e2cc23",
-          "content": "<span style=\"color: #211f1e\">CORDLESS</span>\n<span style=\"color: #211f1e\">POWER DRILL</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Cordless</span>\n<span style=\"color: #211f1e; text-transform: uppercase\">Power Drill</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1435,7 +1435,7 @@
           "focalY": 50,
           "basedOn": "ac28f1fa-0509-49e2-82d2-4607c9e2cc23",
           "id": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
-          "content": "<span style=\"color: #211f1e\">JET SCREWS</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Jet Screws</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1464,7 +1464,7 @@
           "focalY": 50,
           "basedOn": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
           "id": "b29b6af7-1fd0-4f84-a9c5-8e33c4623865",
-          "content": "<span style=\"color: #211f1e\">CLAMP METER</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Clamp Meter</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1580,7 +1580,7 @@
           "focalY": 50,
           "basedOn": "b767306b-6b92-4b2a-935d-00954a502681",
           "id": "1f552208-c803-40aa-8eaf-8c7356196a87",
-          "content": "<span style=\"color: #faf4ea; letter-spacing: 0.15em\">VIEW ALL PRODUCTS</span>",
+          "content": "<span style=\"color: #faf4ea; letter-spacing: 0.15em; text-transform: uppercase\">View All Products</span>",
           "fontSize": 14,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1776,7 +1776,7 @@
           "focalY": 50,
           "basedOn": "2a83d681-85df-4b20-88e4-cc67d02817d4",
           "id": "7b86d9a0-7674-4172-8abb-ddd27f241376",
-          "content": "<span style=\"color: #211f1e\">THE RIGHT TOOLS </span><span style=\"color: #ff630b\">FOR THE JOB.</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">The Right Tools </span><span style=\"color: #ff630b; text-transform: uppercase\">For The Job.</span>",
           "fontSize": 44,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1944,7 +1944,7 @@
           "focalY": 50,
           "basedOn": "7b86d9a0-7674-4172-8abb-ddd27f241376",
           "id": "3d4ecfbb-db87-4575-95f3-ad04b65645c9",
-          "content": "<span style=\"color: #211f1e\">MORE</span>\n<span style=\"color: #ff630b\">STORIES</span><span style=\"color: #ff7224\">.</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">More</span>\n<span style=\"color: #ff630b; text-transform: uppercase\">Stories</span><span style=\"color: #ff7224\">.</span>",
           "fontSize": 44,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -1973,7 +1973,7 @@
           "focalY": 50,
           "basedOn": "bc9330a4-a5c1-4711-842c-9f6c2a577bd0",
           "id": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
-          "content": "<span style=\"color: #211f1e\">KITCHEN REMODELING</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Kitchen Remodeling</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 }
         },
@@ -2027,7 +2027,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "content": "<span style=\"color: #211f1e\">THE RIGHT TOOLS</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">The Right Tools</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 },
           "basedOn": "57cb521c-1572-490b-96aa-daa9ae4b45a9",
@@ -2085,7 +2085,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "content": "<span style=\"color: #211f1e\">CABINETRY</span>",
+          "content": "<span style=\"color: #211f1e; text-transform: uppercase\">Cabinetry</span>",
           "fontSize": 22,
           "padding": { "horizontal": 0, "vertical": 0 },
           "basedOn": "bf4d94b8-f717-4ed1-a09d-f0d4cb4f7801",

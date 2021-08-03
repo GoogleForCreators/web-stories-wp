@@ -58,6 +58,11 @@ export default [
         },
       },
     },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
+    },
   },
   {
     id: 2,
@@ -101,6 +106,11 @@ export default [
           source_url: 'http://localhost:9876/__static__/curiosity.jpg',
         },
       },
+    },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
     },
   },
   {
@@ -146,6 +156,11 @@ export default [
         },
       },
     },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
+    },
   },
   {
     id: 4,
@@ -189,6 +204,11 @@ export default [
           source_url: 'http://localhost:9876/__static__/saturn.jpg',
         },
       },
+    },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
     },
   },
   {
@@ -234,6 +254,11 @@ export default [
         },
       },
     },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
+    },
   },
   {
     id: 6,
@@ -264,6 +289,11 @@ export default [
       height: 480,
       sizes: {},
     },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
+    },
   },
   {
     id: 7,
@@ -293,6 +323,11 @@ export default [
       width: 640,
       height: 360,
       sizes: {},
+    },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
     },
   },
   {
@@ -337,6 +372,11 @@ export default [
           source_url: 'http://localhost:9876/__static__/transparent.png',
         },
       },
+    },
+    meta: {
+      web_stories_is_poster: false,
+      web_stories_poster_id: 0,
+      web_stories_is_muted: false,
     },
   },
 ];

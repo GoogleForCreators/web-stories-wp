@@ -103,7 +103,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'rest_api_init';
 	}
 
@@ -114,7 +114,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return 100;
 	}
 
@@ -122,6 +122,8 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 * Registers the routes for autosaves.
 	 *
 	 * Used to override the create_item() callback.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @see register_rest_route()
 	 *
@@ -170,18 +172,18 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
 		$schema   = $this->get_item_schema();
 
-		if ( in_array( 'story_data', $fields, true ) ) {
+		if ( rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
-		if ( in_array( 'featured_media_url', $fields, true ) ) {
+		if ( rest_is_field_included( 'featured_media_url', $fields ) ) {
 			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
@@ -209,7 +211,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 	 *
 	 * @return array Item schema as an array.
 	 */
-	public function get_item_schema() {
+	public function get_item_schema(): array {
 		if ( $this->schema ) {
 			return $this->add_additional_fields_schema( $this->schema );
 		}

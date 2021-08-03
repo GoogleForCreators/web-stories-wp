@@ -22,7 +22,7 @@ import { BEZIER } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { ScheduledTransition } from '../scheduledTransition';
+import { ScheduledTransition } from '../../transition/scheduledTransition';
 import { TRANSITION_DURATION, Z_INDEX } from '../constants';
 
 const DURATION = 1.2 * TRANSITION_DURATION;

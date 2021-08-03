@@ -100,7 +100,13 @@ export class Shapes extends Container {
   }
 
   shape(name) {
-    return this.getByRole('button', { name });
+    return this.getByRole('button', {
+      name,
+    });
+  }
+
+  sticker(type) {
+    return this.getByTestId(`library-sticker-${type}`);
   }
 }
 

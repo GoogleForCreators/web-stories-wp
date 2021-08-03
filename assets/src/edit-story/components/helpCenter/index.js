@@ -28,11 +28,11 @@ import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
 import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
+import Popup from '../secondaryPopup';
 import Navigator from './navigator';
 import Companion from './companion';
 import { POPUP_ID, KEYS } from './constants';
 import { Toggle } from './toggle';
-import { Popup } from './popup';
 import { forceFocusCompanion } from './utils';
 
 const Wrapper = styled.div`

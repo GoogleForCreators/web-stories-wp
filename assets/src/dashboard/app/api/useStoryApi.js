@@ -22,6 +22,7 @@ import queryString from 'query-string';
 import { useFeatures } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
@@ -39,6 +40,29 @@ import storyReducer, {
 } from '../reducer/stories';
 import { reshapeStoryObject } from '../serializers';
 import { ERRORS } from '../textContent';
+
+// Important: Keep in sync with REST API preloading definition.
+const STORY_FIELDS = [
+  'id',
+  'title',
+  'status',
+  'date',
+  'date_gmt',
+  'modified',
+  'modified_gmt',
+  'link',
+  'featured_media_url',
+  'preview_link',
+  'edit_link',
+  // TODO: Remove need for story_data as its a lot of data sent over the wire.
+  // It's only needed for duplicating stories.
+  'content',
+  'story_data',
+  // _web_stories_envelope will add these fields, we need them too.
+  'body',
+  'status',
+  'headers',
+].join(',');
 
 const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
   const isInitialFetch = useRef(true);
@@ -70,6 +94,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         return;
       }
 
+      // Important: Keep in sync with REST API preloading definition.
       const query = {
         _embed: 'wp:lock,wp:lockuser,author',
         context: 'edit',
@@ -80,6 +105,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         per_page: perPage,
         order: sortDirection || ORDER_BY_SORT[sortOption],
         status,
+        _fields: STORY_FIELDS,
       };
 
       const trackTiming = getTimeTracker('load_stories');
@@ -250,7 +276,15 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           },
           flags,
         });
-        const response = await dataAdapter.post(storyApi, {
+
+        const path = queryString.stringifyUrl({
+          url: storyApi,
+          query: {
+            _fields: 'edit_link',
+          },
+        });
+
+        const response = await dataAdapter.post(path, {
           data: {
             ...storyPropsToSave,
             story_data: {
@@ -303,6 +337,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           url: storyApi,
           query: {
             _embed: 'wp:lock,wp:lockuser,author',
+            _fields: STORY_FIELDS,
           },
         });
 

@@ -31,6 +31,22 @@ jest.mock('../../../../mediaPicker', () => ({
     return () => onSelect(image);
   },
 }));
+jest.mock('../../../../../app/config', () => ({
+  useConfig: jest.fn(() => ({
+    capabilities: { hasUploadMediaAction: true },
+  })),
+}));
+jest.mock('../../../../../app/currentUser', () => ({
+  useCurrentUser: jest.fn(() => ({
+    state: {
+      currentUser: {
+        meta: {
+          web_stories_media_optimization: true,
+        },
+      },
+    },
+  })),
+}));
 
 describe('Panels/VideoOptions', () => {
   const defaultElement = {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useBatchingCallback } from '@web-stories-wp/design-system';
+import { useBatchingCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

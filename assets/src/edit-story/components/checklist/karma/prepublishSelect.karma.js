@@ -34,7 +34,6 @@ describe('Pre-publish checklist select offending elements onClick', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableChecklistCompanion: true });
     await fixture.render();
     insertElement = await fixture.renderHook(() => useInsertElement());
   });

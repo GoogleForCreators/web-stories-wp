@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
@@ -48,8 +47,6 @@ const Button = styled(DefaultButton)`
 `;
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
-  const isEnabledChecklistCompanion = useFeature('enableChecklistCompanion');
-
   const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
     checkpoint,
   }));
@@ -62,7 +59,7 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       {...buttonProps}
     >
       {text}
-      {isEnabledChecklistCompanion && <ChecklistIcon checkpoint={checkpoint} />}
+      <ChecklistIcon checkpoint={checkpoint} />
     </Button>
   );
 
@@ -75,15 +72,13 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       'Review checklist to improve performance before publishing',
       'web-stories'
     ),
-    [PPC_CHECKPOINT_STATE.UNAVAILABLE]: null,
+    [PPC_CHECKPOINT_STATE.UNAVAILABLE]: '',
   };
 
-  return isEnabledChecklistCompanion ? (
+  return (
     <Tooltip title={TOOLTIP_TEXT[checkpoint]} hasTail>
       {button}
     </Tooltip>
-  ) : (
-    button
   );
 }
 

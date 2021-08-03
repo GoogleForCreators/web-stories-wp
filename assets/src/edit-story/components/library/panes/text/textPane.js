@@ -22,7 +22,7 @@ import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useResizeEffect } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

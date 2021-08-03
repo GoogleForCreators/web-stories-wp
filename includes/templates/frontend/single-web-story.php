@@ -35,6 +35,6 @@ $current_post = get_post();
 if ( $current_post instanceof WP_Post ) {
 	$story = new Story();
 	$story->load_from_post( $current_post );
-	$renderer = new HTML( $story, Services::get( 'experiments' ) );
+	$renderer = new HTML( $story );
 	echo $renderer->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

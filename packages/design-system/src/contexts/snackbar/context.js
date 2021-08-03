@@ -15,8 +15,8 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { createContext } from '../../utils/context';
+import { createContext } from '@web-stories-wp/react';
 
 export default createContext({});

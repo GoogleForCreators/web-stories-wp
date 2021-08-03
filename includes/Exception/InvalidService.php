@@ -49,7 +49,7 @@ final class InvalidService
 	 *
 	 * @return self
 	 */
-	public static function from_service( $service ) {
+	public static function from_service( $service ): self {
 		$message = \sprintf(
 			'The service "%s" is not recognized and cannot be registered.',
 			\is_object( $service )
@@ -69,7 +69,7 @@ final class InvalidService
 	 *
 	 * @return self
 	 */
-	public static function from_service_id( $service_id ) {
+	public static function from_service_id( $service_id ): self {
 		$message = \sprintf(
 			'The service ID "%s" is not recognized and cannot be retrieved.',
 			$service_id

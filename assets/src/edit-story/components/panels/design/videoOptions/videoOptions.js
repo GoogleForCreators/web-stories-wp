@@ -26,7 +26,14 @@ import {
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  useLiveRegion,
 } from '@web-stories-wp/design-system';
+import { useFeature } from 'flagged';
+import { useCallback, useMemo, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -34,9 +41,15 @@ import {
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
+import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
+import { useLocalMedia } from '../../../../app';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
+`;
+
+const StyledButton = styled(Button)`
+  padding: 12px 8px;
 `;
 
 const Label = styled.label`
@@ -51,10 +64,63 @@ const StyledCheckbox = styled(Checkbox)`
   `}
 `;
 
+const HelperText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
+  const isMuteVideoEnabled = useFeature('enableMuteVideo');
+  const { isTranscodingEnabled } = useFFmpeg();
+  const { muteExistingVideo } = useLocalMedia((state) => ({
+    muteExistingVideo: state.actions.muteExistingVideo,
+  }));
+  const resource = getCommonValue(selectedElements, 'resource');
+  const { isMuted, isTranscoding, isMuting, local } = resource;
   const loop = getCommonValue(selectedElements, 'loop');
+  const isSingleElement = selectedElements.length === 1;
+
+  const handleHandleMuteVideo = useCallback(() => {
+    muteExistingVideo({ resource });
+  }, [resource, muteExistingVideo]);
+
+  const shouldDisplayMuteButton = useMemo(() => {
+    return (
+      (isMuteVideoEnabled &&
+        isTranscodingEnabled &&
+        !local &&
+        !isMuted &&
+        !isTranscoding &&
+        isSingleElement) ||
+      isMuting
+    );
+  }, [
+    isMuteVideoEnabled,
+    isTranscodingEnabled,
+    local,
+    isMuted,
+    isTranscoding,
+    isSingleElement,
+    isMuting,
+  ]);
+
+  const buttonText = useMemo(() => {
+    return isMuting
+      ? __('Removing audio', 'web-stories')
+      : __('Remove audio', 'web-stories');
+  }, [isMuting]);
+
+  const speak = useLiveRegion();
+
+  useEffect(() => {
+    if (isMuting) {
+      speak(buttonText);
+    }
+  }, [isMuting, buttonText, speak]);
 
   const checkboxId = `cb-${uuidv4()}`;
+
   return (
     <SimplePanel
       name="videoOptions"
@@ -72,6 +138,29 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </Text>
         </Label>
       </Row>
+      {shouldDisplayMuteButton && (
+        <>
+          <Row>
+            <StyledButton
+              disabled={isMuting}
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={handleHandleMuteVideo}
+            >
+              {buttonText}
+            </StyledButton>
+          </Row>
+          <Row>
+            <HelperText>
+              {__(
+                'Removing the audio from this video will upload a new muted version of it to the media library. This might take a couple of seconds.',
+                'web-stories'
+              )}
+            </HelperText>
+          </Row>
+        </>
+      )}
     </SimplePanel>
   );
 }

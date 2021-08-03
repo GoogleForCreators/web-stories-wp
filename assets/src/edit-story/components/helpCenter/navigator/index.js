@@ -19,44 +19,17 @@
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import { memo, useEffect, useRef } from 'react';
-import styled, { css } from 'styled-components';
-import { themeHelpers, useResizeEffect } from '@web-stories-wp/design-system';
+import styled from 'styled-components';
+import { themeHelpers } from '@web-stories-wp/design-system';
+import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import { POPUP_ID } from '../constants';
-import {
-  DISTANCE_FROM_TOP,
-  DISTANCE_FROM_BOTTOM,
-} from '../../checklist/styles';
+import { NavigationWrapper, TopNavigation } from '../../secondaryPopup';
 import { BottomNavigation } from './bottomNavigation';
-import { NAVIGATION_WIDTH } from './constants';
-import { TopNavigation } from './topNavigation';
 import { removeInnerElementFromLayoutFlow } from './utils';
-
-export const NavigationWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  max-height: calc(100vh - ${DISTANCE_FROM_TOP + DISTANCE_FROM_BOTTOM}px);
-  width: ${NAVIGATION_WIDTH + 2}px; /* account for border width */
-  color: ${({ theme }) => theme.colors.fg.primary};
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  border: 1px solid ${({ theme }) => theme.colors.bg.tertiary};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  overflow: hidden;
-
-  ${({ isOpen }) =>
-    !isOpen &&
-    css`
-      &,
-      * {
-        height: 0;
-        visibility: hidden;
-      }
-    `}
-`;
 
 const Layout = styled.div`
   ${themeHelpers.fullSizeRelative}

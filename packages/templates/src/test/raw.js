@@ -166,6 +166,26 @@ describe('raw template files', () => {
   );
 
   it.each(templates)(
+    '%s template should only contain videos have isMuted attribute',
+    async (template) => {
+      const { default: templateData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
+      );
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.type !== 'video' || !element?.resource?.src) {
+            continue;
+          }
+
+          expect(element?.resource?.isMuted).not.toBeUndefined();
+          expect(element?.resource?.isMuted).toBeBoolean();
+        }
+      }
+    }
+  );
+
+  it.each(templates)(
     '%s template should contain only valid stickers',
     async (template) => {
       const { default: templateData } = await import(

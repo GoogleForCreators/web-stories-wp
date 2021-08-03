@@ -15,7 +15,7 @@
  */
 export { default as clamp } from './clamp';
 export { default as titleFormatted } from './titleFormatted';
-export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
+export { default as KeyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export {
   default as usePagePreviewSize,

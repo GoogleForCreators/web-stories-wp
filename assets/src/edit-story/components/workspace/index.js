@@ -19,7 +19,7 @@
  */
 import Inspector from '../inspector';
 import Canvas from '../canvas';
-import RichTextProvider from '../richText/provider';
+import { RichTextProvider } from '../richText';
 import ErrorBoundary from '../errorBoundary';
 import { CanvasArea, InspectorArea } from './layout';
 

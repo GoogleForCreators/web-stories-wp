@@ -54,13 +54,15 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
       clientX: 0.2 * LINE_LENGTH,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.8 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
+          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.8 },
+        ],
+      })
+    );
     onChange.mockReset();
 
     // Move to the 40% mark
@@ -93,7 +95,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('should reorder stops when dragging past an existing stop', () => {
+  it('should reorder stops when dragging past an existing stop', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -122,14 +124,16 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
       clientX: 0.4 * LINE_LENGTH,
     });
 
-    expect(onChange).toHaveBeenCalledWith({
-      type: 'linear',
-      stops: [
-        { color: { r: 255, g: 0, b: 0 }, position: 0 },
-        { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
-        { color: { r: 0, g: 0, b: 255 }, position: 0.6 },
-      ],
-    });
+    await waitFor(() =>
+      expect(onChange).toHaveBeenCalledWith({
+        type: 'linear',
+        stops: [
+          { color: { r: 255, g: 0, b: 0 }, position: 0 },
+          { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
+          { color: { r: 0, g: 0, b: 255 }, position: 0.6 },
+        ],
+      })
+    );
     onChange.mockReset();
   });
 });

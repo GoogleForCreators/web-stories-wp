@@ -33,11 +33,11 @@ import {
   Swatch,
   PLACEMENT,
 } from '@web-stories-wp/design-system';
+import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useUnmount from '../../../utils/useUnmount';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
@@ -121,6 +121,9 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
+const loadReactColor = () =>
+  import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
+
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
@@ -161,6 +164,8 @@ const ColorInput = forwardRef(function ColorInput(
   const buttonProps = {
     onClick: () => setPickerOpen(true),
     'aria-label': label,
+    onPointerEnter: () => loadReactColor(),
+    onFocus: () => loadReactColor(),
   };
 
   // Always hide color picker on unmount - note the double arrows

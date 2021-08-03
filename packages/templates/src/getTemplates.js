@@ -86,6 +86,16 @@ async function getTemplates(imageBaseUrl) {
     'plant-based-dyes',
     'indoor-garden-oasis',
     'belly-fat-workout',
+    'tv-show-recap',
+    'pride-month-watchlist',
+    'honeymooning-in-italy',
+    'ace-hotel-kyoto-review',
+    'how-video-calls-saved-the-day',
+    'laptop-buying-guide',
+    'beauty-quiz',
+    'diy-home-office',
+    'kitchen-makeover',
+    'self-care-guide',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

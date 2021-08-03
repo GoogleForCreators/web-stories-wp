@@ -63,6 +63,12 @@ const fakeStories = [
     previewLink: 'https://example.com',
   },
 ];
+const pageSize = {
+  width: 200,
+  height: 300,
+  containerHeight: 300,
+  posterHeight: 300,
+};
 
 jest.mock(
   '../../../../../../edit-story/components/previewPage/previewPage.js',
@@ -94,7 +100,7 @@ describe('My Stories <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300, containerHeight: 300 },
+              pageSize,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -126,7 +132,7 @@ describe('My Stories <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300, containerHeight: 300 },
+              pageSize,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,
@@ -156,7 +162,7 @@ describe('My Stories <Content />', function () {
             }}
             view={{
               style: VIEW_STYLE.GRID,
-              pageSize: { width: 200, height: 300, containerHeight: 300 },
+              pageSize,
             }}
             storyActions={{
               createTemplateFromStory: jest.fn,

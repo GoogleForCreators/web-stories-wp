@@ -31,7 +31,6 @@ use Google\Web_Stories\Settings;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\AMP\Story_Sanitizer;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
@@ -57,23 +56,14 @@ class HTML {
 	protected $document;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * HTML constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story       $story Story object.
-	 * @param Experiments $experiments Experiments instance.
+	 * @param Story $story Story object.
 	 */
-	public function __construct( Story $story, Experiments $experiments ) {
-		$this->story       = $story;
-		$this->experiments = $experiments;
+	public function __construct( Story $story ) {
+		$this->story = $story;
 	}
 
 	/**
@@ -90,66 +80,7 @@ class HTML {
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
 
-		// If the AMP plugin is installed and available in a version >= than ours,
-		// all sanitization and optimization should be delegated to the AMP plugin.
-		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
-			return $markup;
-		}
-
-		$document = Document::fromHtml( $markup );
-
-		// This  should never actually happen.
-		if ( ! $document ) {
-			ob_start();
-			wp_die(
-				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
-				esc_html__( 'Web Stories', 'web-stories' ),
-				[
-					'response'  => 500,
-					'link_url'  => esc_url( __( 'https://wordpress.org/support/plugin/web-stories/', 'web-stories' ) ),
-					'link_text' => esc_html__( 'Visit Support Forums', 'web-stories' ),
-					'exit'      => false,
-				]
-			);
-
-			return (string) ob_get_clean();
-		}
-
-		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
-
-		/**
-		 * Document instance.
-		 *
-		 * @var Document $document
-		 */
-		$this->document = $document;
-
-		$this->sanitize_markup();
-		$this->optimize_markup();
-
-		return trim( (string) $this->document->saveHTML() );
-	}
-
-	/**
-	 * Filters the Web Stories AMP sanitizers.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
-	 */
-	public function add_web_stories_amp_content_sanitizers( array $sanitizers ): array {
-		$video_cache_enabled = $this->experiments->is_experiment_enabled( 'videoCache' ) && (bool) get_option( Settings::SETTING_NAME_VIDEO_CACHE );
-
-		$sanitizers[ Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => $this->get_poster_images(),
-			'video_cache'                => $video_cache_enabled,
-		];
-
-		return $sanitizers;
+		return $markup;
 	}
 
 	/**
@@ -311,29 +242,5 @@ class HTML {
 
 
 		return str_replace( '</amp-story>', $social_share . '</amp-story>', $content );
-	}
-
-	/**
-	 * Sanitizes markup to be valid AMP.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return void
-	 */
-	protected function sanitize_markup() {
-		$sanitization = new Sanitization();
-		$sanitization->sanitize_document( $this->document );
-	}
-
-	/**
-	 * Optimizes AMP markup.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return void
-	 */
-	protected function optimize_markup() {
-		$optimization = new Optimization();
-		$optimization->optimize_document( $this->document );
 	}
 }
