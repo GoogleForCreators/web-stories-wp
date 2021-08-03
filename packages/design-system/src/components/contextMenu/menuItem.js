@@ -208,7 +208,7 @@ export const MenuItemProps = {
   onDismiss: PropTypes.func,
   onFocus: PropTypes.func,
   shortcut: PropTypes.shape({
-    display: PropTypes.string,
+    display: PropTypes.node,
     title: PropTypes.string,
   }),
   Icon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
