@@ -25,11 +25,11 @@ import visitDashboard from './visitDashboard';
 async function visitSettings() {
   await visitDashboard();
 
-  const dashboardNavigation = await expect(page).toMatchElement(
-    '[aria-label="Main dashboard navigation"]'
+  const adminMenu = await expect(page).toMatchElement(
+    '.wp-has-current-submenu.wp-menu-open .wp-submenu'
   );
 
-  await expect(dashboardNavigation).toClick('a', {
+  await expect(adminMenu).toClick('a', {
     text: 'Settings',
   });
 
