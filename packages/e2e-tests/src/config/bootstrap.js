@@ -136,6 +136,15 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Some bug in Firefox?
   'TypeError: can\'t access property "docShell", target.defaultView is undefined',
+
+  // Firefox emits some warnings about Google Fonts like "Fahkwang".
+  'downloadable font: maxp: Bad maxZones',
+
+  // Sometimes Firefox even fails to download fonts and likes to warn about it.
+  'downloadable font: download failed',
+
+  // Media failing to play in Firefox.
+  'All candidate resources failed to load. Media load paused.',
 ];
 
 export function addAllowedErrorMessage(message) {
