@@ -57,7 +57,7 @@ module.exports = function (config) {
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'karma-puppeteer-client'],
+    frameworks: ['jasmine', '@web-stories-wp/karma-puppeteer-client'],
 
     // list of files / patterns to load in the browser
     files: [

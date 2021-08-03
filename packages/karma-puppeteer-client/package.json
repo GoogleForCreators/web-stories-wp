@@ -1,5 +1,5 @@
 {
-  "name": "karma-puppeteer-client",
+  "name": "@web-stories-wp/karma-puppeteer-client",
   "private": true,
   "engines": {
     "node": ">= 15",
