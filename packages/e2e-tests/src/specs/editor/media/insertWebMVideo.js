@@ -65,9 +65,6 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    // TODO: figure out why this second click is needed.
-    // The first click does not appear to do anything, it just plays the video in the media library.
-    await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
@@ -87,9 +84,6 @@ describe('Inserting WebM Video', () => {
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement-video"]');
-    // TODO: figure out why this second click is needed.
-    // The first click does not appear to do anything, it just plays the video in the media library.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
