@@ -33,6 +33,8 @@ async function visitSettings() {
     text: 'Settings',
   });
 
+  expect(page.url()).toContain('#/editor-settings');
+
   await expect(page).toMatchElement('h2', { text: 'Settings' });
   await expect(page).toMatch('Data Sharing Opt-in');
 }
