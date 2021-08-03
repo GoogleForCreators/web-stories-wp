@@ -210,7 +210,7 @@
           },
           "x": 48,
           "y": 587,
-          "width": 66,
+          "width": 97,
           "height": 16,
           "scale": 100,
           "focalX": 50,
@@ -1082,7 +1082,7 @@
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; color: #f1ff51\">For someone who’s just getting into a daily workout Daily Workouts FitFrame is a solid-and-free-choice.</span>",
+          "content": "<span style=\"font-weight: 700; color: #f1ff51\">For someone who’s just getting into a daily workout, FitFrame is a solid-and-free choice.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -3550,7 +3550,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #0f2c41\">Learn how to do a squat Correctly</span>",
+          "content": "<span style=\"font-weight: 500; color: #0f2c41\">Learn how to do a squat correctly</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
