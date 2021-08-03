@@ -113,11 +113,15 @@ ThroughputPopup.propTypes = {
 };
 
 export function Checklist() {
-  const { close, toggle, isOpen } = useChecklist(
-    ({ actions: { close, toggle }, state: { isOpen } }) => ({
+  const { close, toggle, isOpen, isChecklistMounted } = useChecklist(
+    ({
+      actions: { close, toggle },
+      state: { isOpen, isChecklistMounted },
+    }) => ({
       close,
       toggle,
       isOpen,
+      isChecklistMounted,
     })
   );
 
@@ -141,13 +145,13 @@ export function Checklist() {
   );
   // Set Focus within the popup on open
   useEffect(() => {
-    if (isOpen) {
+    if (isChecklistMounted) {
       const firstFocusableChild = navRef.current?.querySelector(
         FOCUSABLE_SELECTORS.join(', ')
       );
       firstFocusableChild?.focus();
     }
-  }, [isOpen]);
+  }, [isChecklistMounted]);
 
   useEffect(() => {
     if (checkpoint) {
@@ -177,7 +181,7 @@ export function Checklist() {
   return (
     <DirectionAware>
       <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
-        <ThroughputPopup close={close} isOpen={isOpen}>
+        <ThroughputPopup ref={navRef} close={close} isOpen={isOpen}>
           <PriorityChecks
             badgeCount={priorityBadgeCount}
             isOpen={isOpen && openPanel === ISSUE_TYPES.PRIORITY}
