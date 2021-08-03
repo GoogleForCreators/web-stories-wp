@@ -410,38 +410,9 @@ function RightClickMenuProvider({ children }) {
         onClick: handleOpenScaleAndCrop,
         ...menuItemProps,
       },
-    ],
-    [
-      canElementMoveBackwards,
-      canElementMoveForwards,
-      defaultItems,
-      handleBringForward,
-      handleBringToFront,
-      handleOpenScaleAndCrop,
-      handleSendBackward,
-      handleSendToBack,
-      handleSetPageBackground,
-      menuItemProps,
-    ]
-  );
-
-  const pageItems = useMemo(
-    () => [
-      ...defaultItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: handleDuplicatePage,
-        separator: 'top',
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: handleDeletePage,
-        disabled: pages.length === 1,
-        ...menuItemProps,
-      },
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        separator: 'top',
         shortcut: {
           display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
         },
@@ -464,17 +435,41 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
+      canElementMoveBackwards,
+      canElementMoveForwards,
+      copiedElement,
       defaultItems,
+      handleBringForward,
+      handleBringToFront,
       handleClearElementStyles,
       handleCopyStyles,
-      handleDeletePage,
-      handleDuplicatePage,
+      handleOpenScaleAndCrop,
       handlePasteStyles,
+      handleSendBackward,
+      handleSendToBack,
+      handleSetPageBackground,
       menuItemProps,
-      pages,
-      copiedElement,
       selectedElement,
     ]
+  );
+
+  const pageItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        onClick: handleDuplicatePage,
+        separator: 'top',
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+        onClick: handleDeletePage,
+        disabled: pages.length === 1,
+        ...menuItemProps,
+      },
+    ],
+    [defaultItems, handleDeletePage, handleDuplicatePage, menuItemProps, pages]
   );
 
   const menuItems = useMemo(() => {
