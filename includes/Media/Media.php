@@ -184,8 +184,9 @@ class Media extends Service_Base {
 			[
 				'type'              => 'boolean',
 				'description'       => __( 'Whether the video is muted', 'web-stories' ),
-				'single'            => true,
-				'object_subtype'    => 'attachment',
+				'default'        => false,
+				'single'         => true,
+				'object_subtype' => 'attachment',
 			]
 		);
 

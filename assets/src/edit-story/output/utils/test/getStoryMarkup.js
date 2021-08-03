@@ -18,7 +18,6 @@
  * External dependencies
  */
 jest.mock('flagged');
-import { useFeature, FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -26,9 +25,6 @@ import { useFeature, FlagsProvider } from 'flagged';
 import getStoryMarkup from '../getStoryMarkup';
 
 describe('getStoryMarkup', () => {
-  useFeature.mockImplementation(() => true);
-  FlagsProvider.mockImplementation(({ children }) => children);
-
   it('should generate expected story markup', () => {
     const story = {
       storyId: 1,
@@ -94,7 +90,7 @@ describe('getStoryMarkup', () => {
         ],
       },
     ];
-    const markup = getStoryMarkup(story, pages, meta, {});
+    const markup = getStoryMarkup(story, pages, meta);
     expect(markup).toContain('Hello World');
     expect(markup).toContain('transform:rotate(1deg)');
     expect(markup).toContain(

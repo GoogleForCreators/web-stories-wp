@@ -161,8 +161,10 @@ describe('useContextValueProvider', () => {
   let reducerActions;
   beforeEach(() => {
     reducerState = {
-      processing: [],
-      processed: [],
+      audioProcessing: [],
+      audioProcessed: [],
+      posterProcessing: [],
+      posterProcessed: [],
       media: [],
       pageToken: '',
       mediaType: '',
@@ -178,8 +180,10 @@ describe('useContextValueProvider', () => {
       setMediaType: jest.fn(),
       setSearchTerm: jest.fn(),
       setNextPage: jest.fn(),
-      setProcessing: jest.fn(),
-      removeProcessing: jest.fn(),
+      setAudioProcessing: jest.fn(),
+      removeAudioProcessing: jest.fn(),
+      setPosterProcessing: jest.fn(),
+      removePosterProcessing: jest.fn(),
       updateMediaElement: jest.fn(),
       deleteMediaElement: jest.fn(),
     };

@@ -18,6 +18,10 @@
  * External dependencies
  */
 import { createResource, getResourceSize } from '@web-stories-wp/media';
+/**
+ * Internal dependencies
+ */
+import getMutedValue from './getMuteValue';
 
 /**
  * Generates a resource object from a WordPress media picker object.

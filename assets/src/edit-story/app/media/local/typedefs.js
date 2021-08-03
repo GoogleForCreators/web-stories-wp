@@ -83,8 +83,10 @@
  * @property {string} mediaType current media type filter selected
  * @property {string} nextPageToken the page token for the next page
  * @property {string} pageToken page token
- * @property {Array.<number>} processed videos that have been processed
- * @property {Array.<number>} processing videos that haven't been processed
+ * @property {Array.<number>} audioProcessing Videos that have been processed for audio track detection.
+ * @property {Array.<number>} audioProcessed Videos that haven't yet been processed for audio track detection.
+ * @property {Array.<number>} posterProcessing Videos that have been processed for poster generation.
+ * @property {Array.<number>} posterProcessed Videos that haven't yet been processed for poster generation.
  * @property {string} searchTerm search term
  * @property {number} totalPages total pages
  */
@@ -109,9 +111,10 @@
  * @property {string} mediaType current media type filter selected
  * @property {string} nextPageToken the page token for the next page
  * @property {string} pageToken page token
- * @property {Array.<number>} processed ids of videos that have been processed
- * @property {Array.<number>} processing ids of videos that haven't been
- * processed
+ * @property {Array.<number>} audioProcessed IDs of videos that have been processed for audio track detection.
+ * @property {Array.<number>} audioProcessing IDs of videos that haven't yet been processed for audio track detection.
+ * @property {Array.<number>} posterProcessed IDs of videos that have been processed for poster generation.
+ * @property {Array.<number>} posterProcessing IDs of videos that haven't yet been processed for poster generation.
  * @property {string} searchTerm search term
  * @property {number} totalPages total pages
  */
