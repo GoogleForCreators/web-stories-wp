@@ -32,7 +32,6 @@ import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const backgroundColor = getCommonValue(selectedElements, 'backgroundColor');
-  const isBackground = getCommonValue(selectedElements, 'isBackground');
 
   const onChange = useCallback(
     (value) => {
@@ -54,12 +53,11 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
       <Row>
         <Color
           ref={colorInputRef}
-          hasGradient
+          allowsGradient
           value={backgroundColor}
           isMultiple={backgroundColor === ''}
           onChange={onChange}
           label={__('Background color', 'web-stories')}
-          hasOpacity={!isBackground}
           colorPickerActions={getColorPickerActions}
         />
       </Row>

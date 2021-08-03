@@ -52,8 +52,8 @@ const InputWrapper = styled.div`
 const Color = forwardRef(function Color(
   {
     onChange,
-    hasGradient,
-    hasOpacity,
+    allowsGradient,
+    allowsOpacity,
     value,
     label,
     colorPickerActions,
@@ -81,15 +81,15 @@ const Color = forwardRef(function Color(
         <ColorInput
           ref={ref}
           onChange={onChange}
-          hasGradient={hasGradient}
-          hasOpacity={hasOpacity}
+          allowsGradient={allowsGradient}
+          allowsOpacity={allowsOpacity}
           value={value}
           label={label}
           colorPickerActions={colorPickerActions}
           changedStyle={changedStyle}
         />
       </InputWrapper>
-      {hasOpacity && displayOpacity && (
+      {allowsOpacity && displayOpacity && (
         <>
           <Space />
           <InputWrapper>
@@ -103,8 +103,8 @@ const Color = forwardRef(function Color(
 
 Color.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
-  hasGradient: PropTypes.bool,
-  hasOpacity: PropTypes.bool,
+  allowsGradient: PropTypes.bool,
+  allowsOpacity: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   colorPickerActions: PropTypes.func,

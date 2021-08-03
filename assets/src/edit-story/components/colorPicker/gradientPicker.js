@@ -38,9 +38,8 @@ import GradientLine from './gradientLine';
 const Wrapper = styled.div`
   display: flex;
   align-items: flex-end;
-  padding: 16px 14px;
-  height: 74px;
-  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+  padding: 0 16px 16px;
+  height: 60px;
 `;
 
 const SmallButton = styled(Button)`

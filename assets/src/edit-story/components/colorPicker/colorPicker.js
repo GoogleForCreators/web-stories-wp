@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { CSSTransition } from 'react-transition-group';
-import { useEffect, useRef, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback, useFocusOut } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { createSolid, PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@web-stories-wp/patterns';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
@@ -32,10 +32,8 @@ import { useKeyDownEffect } from '@web-stories-wp/design-system';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import { useTransform } from '../transform';
 import useStory from '../../app/story/useStory';
-import CurrentColorPicker from './currentColorPicker';
-import GradientPicker from './gradientPicker';
-import Header from './header';
-import useColor from './useColor';
+import CustomColorPicker from './customColorPicker';
+import BasicColorPicker from './basicColorPicker';
 
 const Container = styled.div`
   border-radius: 8px;
@@ -45,6 +43,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  overflow: hidden;
 
   &.picker-appear {
     opacity: 0.01;
@@ -59,64 +58,45 @@ const Container = styled.div`
   }
 `;
 
-const Body = styled.div``;
-
 function ColorPicker({
-  isEyedropperActive,
-  color,
-  hasGradient,
-  hasOpacity,
   onChange,
-  onClose,
-  renderFooter,
+  isEyedropperActive = false,
+  color = null,
+  allowsGradient = false,
+  allowsOpacity = true,
+  renderFooter = null,
+  onClose = () => {},
   changedStyle = 'background',
 }) {
-  const {
-    state: { type, stops, currentStopIndex, currentColor, generatedColor },
-    actions: {
-      load,
-      updateCurrentColor,
-      reverseStops,
-      selectStop,
-      addStopAt,
-      removeCurrentStop,
-      rotateClockwise,
-      moveCurrentStopBy,
-      setToSolid,
-      setToGradient,
-    },
-  } = useColor();
+  const [isCustomPicker, setCustomPicker] = useState(false);
+  const showCustomPicker = useCallback(() => setCustomPicker(true), []);
+  const hideCustomPicker = useCallback(() => setCustomPicker(false), []);
 
   const {
     actions: { pushTransform },
   } = useTransform();
 
   const { selectedElementIds = [] } = useStory(
-    ({ state: { selectedElementIds } }) => {
-      return {
-        selectedElementIds,
-      };
-    }
+    ({ state: { selectedElementIds } }) => ({ selectedElementIds })
   );
 
   const onDebouncedChange = useDebouncedCallback(onChange, 100, {
     leading: true,
   });
 
-  useEffect(() => {
-    if (generatedColor) {
-      onDebouncedChange(generatedColor);
-    }
-  }, [color, generatedColor, onDebouncedChange]);
-
-  useEffect(() => {
-    if (color) {
-      load(color);
-    } else {
-      // If no color given, load solid black
-      load(createSolid(0, 0, 0));
-    }
-  }, [color, load]);
+  const handleColorChange = useCallback(
+    (newColor) => {
+      onDebouncedChange(newColor);
+      selectedElementIds.forEach((id) => {
+        pushTransform(id, {
+          color: newColor,
+          style: changedStyle,
+          staticTransformation: true,
+        });
+      });
+    },
+    [onDebouncedChange, selectedElementIds, changedStyle, pushTransform]
+  );
 
   const closeIfNotEyedropping = () => {
     if (!isEyedropperActive) {
@@ -147,17 +127,9 @@ function ColorPicker({
   useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
   useFocusTrapping({ ref: containerRef });
 
-  useEffect(() => {
-    if (generatedColor) {
-      selectedElementIds.forEach((id) => {
-        pushTransform(id, {
-          color: generatedColor,
-          style: changedStyle,
-          staticTransformation: true,
-        });
-      });
-    }
-  }, [selectedElementIds, generatedColor, pushTransform, changedStyle]);
+  const ActualColorPicker = isCustomPicker
+    ? CustomColorPicker
+    : BasicColorPicker;
 
   return (
     <CSSTransition in appear classNames="picker" timeout={300}>
@@ -166,33 +138,17 @@ function ColorPicker({
         aria-label={__('Color and gradient picker', 'web-stories')}
         ref={containerRef}
       >
-        <Header
-          hasGradient={hasGradient}
-          type={type}
-          setToGradient={setToGradient}
-          setToSolid={setToSolid}
-          onClose={handleCloseAndRefocus}
+        <ActualColorPicker
+          color={color}
+          allowsGradient={allowsGradient}
+          allowsOpacity={allowsOpacity}
+          handleColorChange={handleColorChange}
+          showCustomPicker={showCustomPicker}
+          hideCustomPicker={hideCustomPicker}
+          handleClose={handleCloseAndRefocus}
+          allowsSavedColors={Boolean(renderFooter)}
+          renderFooter={renderFooter}
         />
-        <Body>
-          {type !== 'solid' && (
-            <GradientPicker
-              stops={stops}
-              currentStopIndex={currentStopIndex}
-              onSelect={selectStop}
-              onReverse={reverseStops}
-              onAdd={addStopAt}
-              onDelete={removeCurrentStop}
-              onRotate={rotateClockwise}
-              onMove={moveCurrentStopBy}
-            />
-          )}
-          <CurrentColorPicker
-            color={currentColor}
-            onChange={updateCurrentColor}
-            showOpacity={hasOpacity}
-          />
-          {renderFooter && renderFooter(color)}
-        </Body>
       </Container>
     </CSSTransition>
   );
@@ -201,21 +157,12 @@ function ColorPicker({
 ColorPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   onClose: PropTypes.func,
-  hasGradient: PropTypes.bool,
-  hasOpacity: PropTypes.bool,
+  allowsGradient: PropTypes.bool,
+  allowsOpacity: PropTypes.bool,
+  renderFooter: PropTypes.func,
   isEyedropperActive: PropTypes.bool,
   color: PatternPropType,
-  renderFooter: PropTypes.func,
   changedStyle: PropTypes.string,
-};
-
-ColorPicker.defaultProps = {
-  color: null,
-  // Ignore reason: Just a default handler
-  onClose: /* istanbul ignore next */ () => {},
-  hasGradient: false,
-  hasOpacity: true,
-  renderFooter: null,
 };
 
 export default ColorPicker;

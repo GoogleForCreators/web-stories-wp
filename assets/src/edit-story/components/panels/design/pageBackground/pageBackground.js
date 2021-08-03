@@ -135,12 +135,12 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         <Row>
           <Color
             ref={inputRef}
-            hasGradient
+            allowsGradient
             value={backgroundColor}
             onChange={updateBackgroundColor}
             label={__('Background color', 'web-stories')}
             colorPickerActions={getColorPickerActions}
-            hasOpacity={false}
+            allowsOpacity={false}
           />
         </Row>
       )}
