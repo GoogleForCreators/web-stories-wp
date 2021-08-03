@@ -469,6 +469,9 @@ export const PRIORITY_COPY = {
       `${MAX_VIDEO_RESOLUTION}p`
     ),
   },
+  storyMissingPublisherName: {
+    title: __('Add Site Title', 'web-stories'),
+  },
 };
 
 export const PPC_CHECKPOINT_STATE = {

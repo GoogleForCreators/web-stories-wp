@@ -30,9 +30,10 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  useLiveRegion,
 } from '@web-stories-wp/design-system';
 import { useFeature } from 'flagged';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -63,6 +64,12 @@ const StyledCheckbox = styled(Checkbox)`
   `}
 `;
 
+const HelperText = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isMuteVideoEnabled = useFeature('enableMuteVideo');
   const { isTranscodingEnabled } = useFFmpeg();
@@ -78,7 +85,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     muteExistingVideo({ resource });
   }, [resource, muteExistingVideo]);
 
-  const canMuted = useMemo(() => {
+  const shouldDisplayMuteButton = useMemo(() => {
     return (
       (isMuteVideoEnabled &&
         isTranscodingEnabled &&
@@ -98,28 +105,27 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     isMuting,
   ]);
 
+  const buttonText = useMemo(() => {
+    return isMuting
+      ? __('Removing audio', 'web-stories')
+      : __('Remove audio', 'web-stories');
+  }, [isMuting]);
+
+  const speak = useLiveRegion();
+
+  useEffect(() => {
+    if (isMuting) {
+      speak(buttonText);
+    }
+  }, [isMuting, buttonText, speak]);
+
   const checkboxId = `cb-${uuidv4()}`;
-  const buttonText = isMuting
-    ? __('Muting video', 'web-stories')
-    : __('Mute video', 'web-stories');
+
   return (
     <SimplePanel
       name="videoOptions"
       title={__('Video Settings', 'web-stories')}
     >
-      {canMuted && (
-        <Row>
-          <StyledButton
-            disabled={isMuting}
-            variant={BUTTON_VARIANTS.RECTANGLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={handleHandleMuteVideo}
-          >
-            {buttonText}
-          </StyledButton>
-        </Row>
-      )}
       <Row spaceBetween={false}>
         <StyledCheckbox
           id={checkboxId}
@@ -132,6 +138,29 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </Text>
         </Label>
       </Row>
+      {shouldDisplayMuteButton && (
+        <>
+          <Row>
+            <StyledButton
+              disabled={isMuting}
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={handleHandleMuteVideo}
+            >
+              {buttonText}
+            </StyledButton>
+          </Row>
+          <Row>
+            <HelperText>
+              {__(
+                'Removing the audio from this video will upload a new muted version of it to the media library. This might take a couple of seconds.',
+                'web-stories'
+              )}
+            </HelperText>
+          </Row>
+        </>
+      )}
     </SimplePanel>
   );
 }

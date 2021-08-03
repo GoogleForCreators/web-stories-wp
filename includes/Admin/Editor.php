@@ -237,6 +237,7 @@ class Editor extends Service_Base {
 		$has_publish_action       = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'publish_posts' );
 		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
+		$general_settings_url     = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -291,6 +292,7 @@ class Editor extends Service_Base {
 				'storyId'                      => $story_id,
 				'dashboardLink'                => $dashboard_url,
 				'dashboardSettingsLink'        => $dashboard_settings_url,
+				'generalSettingsLink'          => $general_settings_url,
 				'assetsURL'                    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'                    => $max_upload_size,
@@ -299,6 +301,7 @@ class Editor extends Service_Base {
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
 					'hasUploadMediaAction'  => $has_upload_media_action,
+					'canManageSettings'     => current_user_can( 'manage_options' ),
 				],
 				'api'                          => [
 					'users'         => '/web-stories/v1/users/',

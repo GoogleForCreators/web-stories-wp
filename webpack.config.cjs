@@ -165,6 +165,7 @@ const sharedConfig = {
     }),
     new webpack.EnvironmentPlugin({
       DISABLE_PREVENT: false,
+      DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
     }),
