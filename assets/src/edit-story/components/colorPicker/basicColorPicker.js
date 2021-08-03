@@ -107,7 +107,7 @@ function BasicColorPicker({
   handleClose,
   renderFooter,
 }) {
-  const hexColor = hasGradient(color) ? null : getHexFromSolid(color);
+  const hexColor = color && !hasGradient(color) ? getHexFromSolid(color) : null;
 
   return (
     <>
