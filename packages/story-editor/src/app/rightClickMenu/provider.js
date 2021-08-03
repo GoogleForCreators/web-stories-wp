@@ -29,6 +29,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useStory } from '..';
 import { createPage, duplicatePage } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
+// import useAddPreset from '../../components/panels/design/preset/useAddPreset';
+// import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
 import { states, useHighlights } from '../highlights';
@@ -378,6 +380,12 @@ function RightClickMenuProvider({ children }) {
     });
     clearBackgroundElement();
   }, [clearBackgroundElement, selectedElement?.id, updateElementsById]);
+  // const { addGlobalPreset: handleAddTextPreset } = useAddPreset({
+  //   presetType: PRESET_TYPES.STYLE,
+  // });
+  // const { addGlobalPreset: handleAddColorPreset } = useAddPreset({
+  //   presetType: PRESET_TYPES.COLOR,
+  // });
 
   /**
    * Focus the media or the media3p panel.
