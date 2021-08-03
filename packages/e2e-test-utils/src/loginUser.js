@@ -17,11 +17,8 @@
 /**
  * WordPress dependencies
  */
-import {
-  createURL,
-  isCurrentURL,
-  pressKeyWithModifier,
-} from '@wordpress/e2e-test-utils';
+import { createURL, isCurrentURL } from '@wordpress/e2e-test-utils';
+
 /**
  * Internal dependencies
  */
@@ -38,8 +35,7 @@ import getLoggedInUser from './getLoggedInUser';
  * At the same time, there can be an issue where the password is not actually
  * submitted (not part of the form data) when trying to log in.
  *
- * Hence using a combination of `page.type()` with `page.click()` and some
- * artificial delays.
+ * Hence not jst using `page.type()` alone but also some workarounds.
  *
  * The matchers at the end try to catch any errors where form submission
  * is incomplete for some reason, to make debugging easier.
@@ -53,15 +49,19 @@ async function loginUser(username, password) {
     await page.goto(createURL('wp-login.php'));
   }
 
-  await page.click(`#user_login`, { delay: 100 });
-  await pressKeyWithModifier('primary', 'a');
-  await page.keyboard.press('Backspace');
-  await page.type('#user_login', username, { delay: 50 });
+  const usernameInput = await page.waitForSelector('#user_login', {
+    visible: true,
+  });
+  await usernameInput.focus();
+  await usernameInput.type(username, { delay: 50 });
+  await usernameInput.evaluate((node, value) => (node.value = value), username);
 
-  await page.click(`#user_pass`, { delay: 100 });
-  await pressKeyWithModifier('primary', 'a');
-  await page.keyboard.press('Backspace');
-  await page.type('#user_pass', password, { delay: 50 });
+  const passwordInput = await page.waitForSelector('#user_login', {
+    visible: true,
+  });
+  await passwordInput.focus();
+  await passwordInput.type(password, { delay: 50 });
+  await passwordInput.evaluate((node, value) => (node.value = value), password);
 
   await Promise.all([page.waitForNavigation(), page.click('#wp-submit')]);
 
