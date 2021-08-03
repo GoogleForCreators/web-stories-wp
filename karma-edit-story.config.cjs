@@ -49,10 +49,10 @@ module.exports = function (config) {
       'karma-webpack',
       'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
-      require('./packages/karma-puppeteer-launcher/src/index.cjs'),
-      require('./packages/karma-puppeteer-client/src/index.cjs'),
-      require('./packages/karma-cuj-reporter/src/index.cjs'),
-      require('./packages/karma-failed-tests-reporter/src/index.cjs'),
+      require('@web-stories-wp/karma-puppeteer-launcher'),
+      require('@web-stories-wp/karma-puppeteer-client'),
+      require('@web-stories-wp/karma-cuj-reporter'),
+      require('@web-stories-wp/karma-failed-tests-reporter'),
     ],
 
     // Frameworks to use.

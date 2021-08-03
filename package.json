@@ -195,7 +195,11 @@
     "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
-    "webpackbar": "^4.0.0"
+    "webpackbar": "^4.0.0",
+    "@web-stories-wp/karma-cuj-reporter": "*",
+    "@web-stories-wp/karma-failed-tests-reporter": "*",
+    "@web-stories-wp/karma-puppeteer-client": "*",
+    "@web-stories-wp/karma-puppeteer-launcher": "*"
   },
   "scripts": {
     "build": "npm-run-all build:*",
