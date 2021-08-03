@@ -20,7 +20,6 @@ import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
 
@@ -29,11 +28,12 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
  */
 import { useStory } from '..';
 import { duplicatePage } from '../../elements';
-import { ELEMENT_TYPES } from '../story';
 import updateProperties from '../../components/inspector/design/updateProperties';
+import { useCanvas } from '../canvas';
+import { ELEMENT_TYPES } from '../story';
 import {
   RIGHT_CLICK_MENU_LABELS,
-  RIGHT_CLICK_MENU_SHORTCUT_LABELS,
+  RIGHT_CLICK_MENU_SHORTCUTS,
 } from './constants';
 import Context from './context';
 import rightClickMenuReducer, {
@@ -41,8 +41,6 @@ import rightClickMenuReducer, {
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { getDefaultPropertiesForType } from './utils';
-
-const isMacOs = isPlatformMacOS();
 
 /**
  * Determines the items displayed in the right click menu
@@ -58,13 +56,18 @@ const isMacOs = isPlatformMacOS();
 function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
+  const { setEditingElement } = useCanvas(({ actions }) => ({
+    setEditingElement: actions.setEditingElement,
+  }));
   const {
     addAnimations,
     addPage,
+    arrangeElement,
     currentPage,
     deleteCurrentPage,
     pages,
     replaceCurrentPage,
+    setBackgroundElement,
     selectedElements,
     selectedElementAnimations,
     updateElementsById,
@@ -73,25 +76,29 @@ function RightClickMenuProvider({ children }) {
       state: {
         currentPage,
         pages,
-        selectedElements,
         selectedElementAnimations,
+        selectedElements,
       },
       actions: {
         addAnimations,
         addPage,
+        arrangeElement,
         deleteCurrentPage,
         replaceCurrentPage,
+        setBackgroundElement,
         updateElementsById,
       },
     }) => ({
       addAnimations,
       addPage,
+      arrangeElement,
       currentPage,
       deleteCurrentPage,
       pages,
       replaceCurrentPage,
-      selectedElements,
       selectedElementAnimations,
+      selectedElements,
+      setBackgroundElement,
       updateElementsById,
     })
   );
@@ -101,6 +108,14 @@ function RightClickMenuProvider({ children }) {
 
   const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
     useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
+
+  const selectedElement = selectedElements?.[0];
+  const currentPosition = currentPage?.elements.findIndex(
+    (element) => element.id === selectedElement?.id
+  );
+  const canElementMoveBackwards = currentPosition > 1;
+  const canElementMoveForwards =
+    currentPosition < currentPage?.elements.length - 1;
 
   /**
    * Open the menu at the position from the click event.
@@ -130,8 +145,8 @@ function RightClickMenuProvider({ children }) {
   /**
    * Prevent right click menu from removing focus from the canvas.
    */
-  const handleMouseDown = useCallback((ev) => {
-    ev.stopPropagation();
+  const handleMouseDown = useCallback((evt) => {
+    evt.stopPropagation();
   }, []);
 
   /**
@@ -165,7 +180,63 @@ function RightClickMenuProvider({ children }) {
     deleteCurrentPage();
   }, [deleteCurrentPage]);
 
-  const selectedElement = selectedElements?.[0];
+  /**
+   * Send element one layer backwards, if possible.
+   */
+  const handleSendBackward = useCallback(() => {
+    const newPosition =
+      currentPosition === 1 ? currentPosition : currentPosition - 1;
+
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
+  }, [arrangeElement, currentPosition, selectedElement?.id]);
+
+  /**
+   * Send element all the way back, if possible.
+   */
+  const handleSendToBack = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: 1,
+    });
+  }, [arrangeElement, selectedElement?.id]);
+
+  /**
+   * Bring element one layer forwards, if possible.
+   */
+  const handleBringForward = useCallback(() => {
+    const newPosition =
+      currentPosition >= currentPage.elements.length - 1
+        ? currentPosition
+        : currentPosition + 1;
+
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
+  }, [arrangeElement, currentPage, currentPosition, selectedElement?.id]);
+
+  /**
+   * Send element all the way to the front, if possible.
+   */
+  const handleBringToFront = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: currentPage.elements.length - 1,
+    });
+  }, [arrangeElement, currentPage, selectedElement?.id]);
+
+  /**
+   * Set element as the element being 'edited'.
+   */
+  const handleOpenScaleAndCrop = useCallback(
+    (evt) => {
+      setEditingElement(selectedElement?.id, evt);
+    },
+    [selectedElement?.id, setEditingElement]
+  );
 
   /**
    * Copy the styles and animations of the selected element.
@@ -259,41 +330,99 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
+  /**
+   * Set currently selected element as the page's background.
+   */
+  const handleSetPageBackground = useCallback(() => {
+    setBackgroundElement({ elementId: selectedElement.id });
+  }, [setBackgroundElement, selectedElement?.id]);
+
   const defaultItems = useMemo(
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: {
-          display: isMacOs ? '⌘ C' : 'ctrl C',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_C
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_C,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY,
         },
         onClick: handleCopyPage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
-        shortcut: {
-          display: isMacOs ? '⌘ V' : 'ctrl V',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_V
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_V,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE },
         onClick: handlePastePage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE,
-        shortcut: {
-          display: 'DEL',
-          title: RIGHT_CLICK_MENU_SHORTCUT_LABELS.DELETE,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.DELETE },
         onClick: handleDeletePage,
         ...menuItemProps,
       },
     ],
     [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
+  );
+
+  const foregroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
+        separator: 'top',
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
+        disabled: !canElementMoveBackwards,
+        onClick: handleSendBackward,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
+        disabled: !canElementMoveBackwards,
+        onClick: handleSendToBack,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
+        disabled: !canElementMoveForwards,
+        onClick: handleBringForward,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
+        disabled: !canElementMoveForwards,
+        onClick: handleBringToFront,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
+        separator: 'top',
+        onClick: handleSetPageBackground,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
+        onClick: handleOpenScaleAndCrop,
+        ...menuItemProps,
+      },
+    ],
+    [
+      canElementMoveBackwards,
+      canElementMoveForwards,
+      defaultItems,
+      handleBringForward,
+      handleBringToFront,
+      handleOpenScaleAndCrop,
+      handleSendBackward,
+      handleSendToBack,
+      handleSetPageBackground,
+      menuItemProps,
+    ]
   );
 
   const pageItems = useMemo(
@@ -314,10 +443,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
         shortcut: {
-          display: isMacOs ? '⌥ ⌘ C' : '⌥ ctrl C',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_C
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_C,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
         },
         onClick: handleCopyStyles,
         ...menuItemProps,
@@ -325,10 +451,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
         shortcut: {
-          display: isMacOs ? '⌥ ⌘ V' : '⌥ ctrl V',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_COMMAND_V
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.OPTION_CONTROL_V,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_IMAGE_STYLES,
         },
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
@@ -362,13 +485,20 @@ function RightClickMenuProvider({ children }) {
 
     switch (selectedElement?.type) {
       case ELEMENT_TYPES.IMAGE:
+      case ELEMENT_TYPES.VIDEO:
+      case ELEMENT_TYPES.GIF:
+        return foregroundMediaItems;
       case ELEMENT_TYPES.SHAPE:
       case ELEMENT_TYPES.TEXT:
-      case ELEMENT_TYPES.VIDEO:
       default:
         return pageItems;
     }
-  }, [pageItems, selectedElement?.isBackground, selectedElement?.type]);
+  }, [
+    foregroundMediaItems,
+    pageItems,
+    selectedElement?.isBackground,
+    selectedElement?.type,
+  ]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set

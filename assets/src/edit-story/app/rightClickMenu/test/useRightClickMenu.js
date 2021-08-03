@@ -23,11 +23,17 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { useRightClickMenu, RightClickMenuProvider } from '..';
+import { useCanvas } from '../../canvas';
 import { useStory } from '../../story';
+import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
 // TODO: #6154 remove when the `enableRightClickMenus` experiment is removed
 jest.mock('flagged', () => ({
   useFeature: () => true,
+}));
+
+jest.mock('../../canvas', () => ({
+  useCanvas: jest.fn(),
 }));
 
 jest.mock('../../story', () => ({
@@ -47,9 +53,17 @@ const mockEvent = {
   offsetY: -1230,
 };
 
+const defaultCanvasContext = {
+  actions: {
+    setEditingElement: jest.fn(),
+  },
+};
+
 const defaultStoryContext = {
   addPage: jest.fn(),
-  currentPage: {},
+  currentPage: {
+    elements: [],
+  },
   deleteCurrentPage: jest.fn(),
   pages: [{}],
   replaceCurrentPage: jest.fn(),
@@ -57,7 +71,14 @@ const defaultStoryContext = {
   selectedElementAnimations: [],
 };
 
+const expectedDefaultActions = [
+  RIGHT_CLICK_MENU_LABELS.COPY,
+  RIGHT_CLICK_MENU_LABELS.PASTE,
+  RIGHT_CLICK_MENU_LABELS.DELETE,
+];
+
 describe('useRightClickMenu', () => {
+  const mockUseCanvas = useCanvas;
   const mockUseStory = useStory;
   const mockIsPlatformMacOS = isPlatformMacOS;
 
@@ -65,6 +86,7 @@ describe('useRightClickMenu', () => {
     jest.clearAllMocks();
 
     mockUseStory.mockReturnValue(defaultStoryContext);
+    mockUseCanvas.mockReturnValue(defaultCanvasContext);
     mockIsPlatformMacOS.mockReturnValue(false);
   });
 
@@ -104,75 +126,19 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Page selected from right click', () => {
-    it('should return menu items', () => {
+    it('should return the correct menu items', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
       });
 
-      expect(result.current.menuItems).toStrictEqual([
-        {
-          label: 'Copy',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          shortcut: {
-            display: 'ctrl C',
-            title: 'Control C',
-          },
-        },
-        {
-          label: 'Paste',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          shortcut: {
-            display: 'ctrl V',
-            title: 'Control V',
-          },
-        },
-        {
-          label: 'Delete',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          shortcut: {
-            display: 'DEL',
-            title: 'Delete',
-          },
-        },
-        {
-          label: 'Duplicate Page',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          separator: 'top',
-        },
-        {
-          label: 'Delete Page',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          disabled: expect.any(Boolean),
-        },
-        {
-          label: 'Copy image styles',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          shortcut: {
-            display: '⌥ ctrl C',
-            title: 'Option Control C',
-          },
-        },
-        {
-          disabled: true,
-          label: 'Paste image styles',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-          shortcut: {
-            display: '⌥ ctrl V',
-            title: 'Option Control V',
-          },
-        },
-        {
-          label: 'Clear image styles',
-          onClick: expect.any(Function),
-          onMouseDown: expect.any(Function),
-        },
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+        RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
       ]);
     });
 
@@ -206,7 +172,34 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Foreground media elements (image, gif, video) right clicked', () => {
-    it.todo('should return the correct menu items');
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'video',
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
+        RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+        RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+        RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
+      ]);
+    });
   });
 
   describe('Shape element right clicked', () => {

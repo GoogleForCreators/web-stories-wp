@@ -16,61 +16,100 @@
 /**
  * External dependencies
  */
-import { _x, __ } from '@web-stories-wp/i18n';
+import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
+import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { SPECIAL_KEYS } from '../../components/keyboardShortcutsMenu/constants';
+import {
+  cmdOrCtrl,
+  optionOrAlt,
+} from '../../components/keyboardShortcutsMenu/keyboardShortcutList';
 
 export const RIGHT_CLICK_MENU_LABELS = {
+  BRING_FORWARD: __('Bring Forward', 'web-stories'),
+  BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
+  CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
+  COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
-  PASTE: __('Paste', 'web-stories'),
+  DELETE_PAGE: __('Delete Page', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
-  DELETE_PAGE: __('Delete Page', 'web-stories'),
-  COPY_IMAGE_STYLES: __('Copy image styles', 'web-stories'),
-  PASTE_IMAGE_STYLES: __('Paste image styles', 'web-stories'),
-  CLEAR_IMAGE_STYLES: __('Clear image styles', 'web-stories'),
+  PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
+  PASTE: __('Paste', 'web-stories'),
+  SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
+  SEND_BACKWARD: __('Send Backward', 'web-stories'),
+  SEND_TO_BACK: __('Send to Back', 'web-stories'),
+  SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
 };
 
-export const RIGHT_CLICK_MENU_SHORTCUT_LABELS = {
-  COMMAND_C: _x(
-    'Command C',
-    'The keyboard keys "Command" and "C"',
-    'web-stories'
+const StyledKbd = styled(Text).attrs({
+  forwardedAs: 'kbd',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  color: inherit;
+`;
+
+export const RIGHT_CLICK_MENU_SHORTCUTS = {
+  COPY: (
+    <>
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'C'}</StyledKbd>
+    </>
   ),
-  CONTROL_C: _x(
-    'Control C',
-    'The keyboard keys "Control" and "C"',
-    'web-stories'
+  PASTE: (
+    <>
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'V'}</StyledKbd>
+    </>
   ),
-  COMMAND_V: _x(
-    'Command V',
-    'The keyboard keys "Command" and "V"',
-    'web-stories'
+  SEND_BACKWARD: (
+    <>
+      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'['}</StyledKbd>
+    </>
   ),
-  CONTROL_V: _x(
-    'Control V',
-    'The keyboard keys "Control" and "V"',
-    'web-stories'
+  SEND_TO_BACK: (
+    <>
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'['}</StyledKbd>
+    </>
   ),
-  OPTION_COMMAND_C: _x(
-    'Option Command C',
-    'The keyboard keys "Option", "Command", and "C"',
-    'web-stories'
+  BRING_FORWARD: (
+    <>
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{']'}</StyledKbd>
+    </>
   ),
-  OPTION_CONTROL_C: _x(
-    'Option Control C',
-    'The keyboard keys "Option", "Control", and "C"',
-    'web-stories'
+  BRING_TO_FRONT: (
+    <>
+      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{']'}</StyledKbd>
+    </>
   ),
-  OPTION_COMMAND_V: _x(
-    'Option Command V',
-    'The keyboard keys "Option", "Command", and "V"',
-    'web-stories'
+  DELETE: (
+    <StyledKbd aria-label={SPECIAL_KEYS.DELETE.title}>
+      {SPECIAL_KEYS.DELETE.symbol}
+    </StyledKbd>
   ),
-  OPTION_CONTROL_V: _x(
-    'Option Control V',
-    'The keyboard keys "Option", "Control", and "V"',
-    'web-stories'
+  COPY_IMAGE_STYLES: (
+    <>
+      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'C'}</StyledKbd>
+    </>
   ),
-  DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
+  PASTE_IMAGE_STYLES: (
+    <>
+      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
+      <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
+      <StyledKbd>{'V'}</StyledKbd>
+    </>
+  ),
 };
 
 export const RIGHT_CLICK_SNACKBAR_TEXT = {

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
 
@@ -30,7 +29,7 @@ import VisibleImage from '../media/visibleImage';
 
 function VideoLayerContent({
   element: {
-    resource: { poster: defaultPoster, alt = __('Video', 'web-stories'), src },
+    resource: { poster: defaultPoster, alt, src },
     poster,
   },
   showVideoPreviewAsBackup,
