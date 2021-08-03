@@ -22,10 +22,6 @@ import {
   getTypeFromMime,
   getResourceSize,
 } from '@web-stories-wp/media';
-/**
- * Internal dependencies
- */
-import getMutedValue from './getMuteValue';
 
 /**
  * MediaDetails object.
@@ -91,13 +87,11 @@ function getVideoResourceFromAttachment(attachment) {
       height: posterHeight,
       generated: posterGenerated,
     },
-    meta: { web_stories_is_muted: webStoriesIsMuted },
+    is_muted: isMuted,
     alt_text: alt,
     source_url: src,
     media_source: mediaSource,
   } = attachment;
-
-  const isMuted = getMutedValue(webStoriesIsMuted);
 
   return createResource({
     mimeType,

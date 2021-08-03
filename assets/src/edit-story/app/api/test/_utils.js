@@ -60,8 +60,8 @@ export const GET_MEDIA_RESPONSE_BODY = [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: 'has-audio',
     },
+    is_muted: false,
     web_story_media_source: [2],
     permalink_template: 'http://wp.local/?attachment_id=274',
     generated_slug: 'IMAGE',

@@ -54,10 +54,8 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       sizes,
     },
     media_source: mediaSource,
-    meta: { web_stories_is_muted: webStoriesIsMuted },
+    is_muted: isMuted,
   } = mediaPickerEl;
-
-  const isMuted = getMutedValue(webStoriesIsMuted);
 
   return createResource({
     mimeType,

@@ -147,7 +147,6 @@ class Media extends Service_Base {
 		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
 		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
-		add_filter( 'default_post_metadata', [ $this, 'filter_default_value_is_muted' ], 15, 4 );
 	}
 
 	/**
@@ -183,14 +182,9 @@ class Media extends Service_Base {
 			'post',
 			self::IS_MUTED_POST_META_KEY,
 			[
-				'type'           => 'string',
-				'description'    => __( 'Whether the video is muted', 'web-stories' ),
-				'show_in_rest'   => [
-					'schema' => [
-						'enum' => [ '', 'muted', 'has-audio' ],
-					],
-				],
-				'default'        => '',
+				'type'              => 'boolean',
+				'description'       => __( 'Whether the video is muted', 'web-stories' ),
+				'default'        => false,
 				'single'         => true,
 				'object_subtype' => 'attachment',
 			]
@@ -393,6 +387,21 @@ class Media extends Service_Base {
 			]
 		);
 
+		register_rest_field(
+			'attachment',
+			'is_muted',
+			[
+				'get_callback'    => [ $this, 'get_callback_is_muted' ],
+				'schema'          => [
+					'type'        => [ 'boolean', 'null' ],
+					'description' => __( 'Whether the video is muted', 'web-stories' ),
+					'default'     => null,
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+				'update_callback' => [ $this, 'update_callback_is_muted' ],
+			]
+		);
+
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
 			'attachment',
@@ -525,12 +534,9 @@ class Media extends Service_Base {
 			}
 			$response['featured_media']     = $thumbnail_id;
 			$response['featured_media_src'] = $image;
-
-			$is_muted = get_post_meta( $attachment->ID, self::IS_MUTED_POST_META_KEY, true );
-
-			$response['meta'][ self::IS_MUTED_POST_META_KEY ] = rest_sanitize_boolean( $is_muted );
 		}
 
+		$response['is_muted']     = $this->get_callback_is_muted( $response );
 		$response['media_source'] = $this->get_callback_media_source( $response );
 
 		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
@@ -640,44 +646,52 @@ class Media extends Service_Base {
 	}
 
 	/**
-	 * Filter the default value of is muted, to check to see if the video has audio track.
+	 * Get the attachment's post meta.
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param mixed  $value     The value to return, either a single metadata value or an array
-	 *                          of values depending on the value of `$single`.
-	 * @param int    $object_id ID of the object metadata is for.
-	 * @param string $meta_key  Metadata key.
-	 * @param bool   $single    Whether to return only the first value of the specified `$meta_key`.
+	 * @param array $prepared Array of data to add to.
 	 *
-	 * @return string|string[]
+	 * @return bool|null
 	 */
-	public function filter_default_value_is_muted( $value, $object_id, $meta_key, $single ) {
-		if ( self::IS_MUTED_POST_META_KEY !== $meta_key ) {
-			return $value;
-		}
-		$mime_types = $this->get_allowed_mime_types();
-		if ( ! is_array( $mime_types ) || ! isset( $mime_types['video'] ) ) {
-			return $value;
-		}
+	public function get_callback_is_muted( $prepared ) {
+		$id = $prepared['id'];
 
-		$video_mime_types  = $mime_types['video'];
-		$current_mime_type = get_post_mime_type( $object_id );
-
-		if ( ! in_array( $current_mime_type, $video_mime_types, true ) ) {
+		$value = get_metadata_raw( 'post', $id, self::IS_MUTED_POST_META_KEY, true );
+		if ( null === $value ) {
 			return $value;
 		}
 
-		$meta_data = wp_get_attachment_metadata( $object_id );
-		if ( ! $meta_data ) {
-			return $value;
+		return rest_sanitize_boolean( $value );
+	}
+
+	/**
+	 * Update the attachment's post meta.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param mixed   $value  Value to updated
+	 * @param WP_Post $object Post object to be updated.
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function update_callback_is_muted( $value, $object ) {
+		$object_id = $object->ID;
+		$meta_key  = self::IS_MUTED_POST_META_KEY;
+		$meta_type = 'post';
+
+		if ( ! current_user_can( "edit_{$meta_type}_meta", $object_id, $meta_key ) ) {
+			return new WP_Error(
+				'rest_cannot_update',
+				/* translators: %s: Custom field key.**/
+				sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $meta_type ),
+				array(
+					'key'    => $meta_type,
+					'status' => rest_authorization_required_code(),
+				)
+			);
 		}
 
-
-		if ( ! isset( $meta_data['audio'] ) ) {
-			return $value;
-		}
-
-		return ( $single ) ? 'has-audio' : [ 'has-audio' ];
+		return (bool) update_metadata( $meta_type, $object_id, wp_slash( $meta_key ), (int) $value );
 	}
 }
