@@ -107,12 +107,13 @@ function CustomColorPicker({
           <Icons.ArrowLeft />
         </Button>
       </Header>
-      <PatternTypePicker
-        allowsGradient={allowsGradient}
-        type={type}
-        setToGradient={setToGradient}
-        setToSolid={setToSolid}
-      />
+      {allowsGradient && (
+        <PatternTypePicker
+          type={type}
+          setToGradient={setToGradient}
+          setToSolid={setToSolid}
+        />
+      )}
       <Body>
         {type !== 'solid' && (
           <GradientPicker

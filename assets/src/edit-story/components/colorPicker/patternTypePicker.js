@@ -44,12 +44,7 @@ const Wrapper = styled.div`
   gap: 8px;
 `;
 
-function PatternTypePicker({
-  type,
-  allowsGradient,
-  setToGradient,
-  setToSolid,
-}) {
+function PatternTypePicker({ type, setToGradient, setToSolid }) {
   const setToLinear = useCallback(
     () => setToGradient('linear'),
     [setToGradient]
@@ -70,35 +65,30 @@ function PatternTypePicker({
       >
         <Icons.PatternSolid />
       </ToggleButton>
-      {allowsGradient && (
-        <>
-          <ToggleButton
-            aria-label={__('Linear gradient pattern type', 'web-stories')}
-            onClick={setToLinear}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.SQUARE}
-            isToggled={type === 'linear'}
-          >
-            <Icons.PatternLinear />
-          </ToggleButton>
-          <ToggleButton
-            aria-label={__('Radial gradient pattern type', 'web-stories')}
-            onClick={setToRadial}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.SQUARE}
-            isToggled={type === 'radial'}
-          >
-            <Icons.PatternRadial />
-          </ToggleButton>
-        </>
-      )}
+      <ToggleButton
+        aria-label={__('Linear gradient pattern type', 'web-stories')}
+        onClick={setToLinear}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.SQUARE}
+        isToggled={type === 'linear'}
+      >
+        <Icons.PatternLinear />
+      </ToggleButton>
+      <ToggleButton
+        aria-label={__('Radial gradient pattern type', 'web-stories')}
+        onClick={setToRadial}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.SQUARE}
+        isToggled={type === 'radial'}
+      >
+        <Icons.PatternRadial />
+      </ToggleButton>
     </Wrapper>
   );
 }
 
 PatternTypePicker.propTypes = {
   type: PropTypes.string.isRequired,
-  allowsGradient: PropTypes.bool.isRequired,
   setToGradient: PropTypes.func.isRequired,
   setToSolid: PropTypes.func.isRequired,
 };
