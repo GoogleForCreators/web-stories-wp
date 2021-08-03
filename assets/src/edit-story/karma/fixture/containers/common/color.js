@@ -89,5 +89,9 @@ class ColorPicker extends Container {
     return this.getByRole('button', { name: 'Select color type' });
   }
 
+  get eyedropper() {
+    return this.getByRole('button', { name: /Pick a color from canvas/i });
+  }
+
   // @todo: add accessors for remaining options
 }

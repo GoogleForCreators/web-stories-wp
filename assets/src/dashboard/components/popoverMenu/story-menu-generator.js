@@ -32,12 +32,14 @@ import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
  * @param {Object.<string, Function>} arguments.menuItemActions An object of actions that could be added as event handlers.
  * @param {Array} arguments.menuItems The menu items to build out
  * @param {Object} arguments.story The story used to generate the menu items
+ * @param {boolean} arguments.isLocked Communicates if the story is locked by another user so we can disable any actions necessary
  * @return {Array} Array of menu items
  */
 export const generateStoryMenu = ({
   menuItemActions = {},
   menuItems,
   story,
+  isLocked,
 }) => {
   const defaultFn = menuItemActions.default
     ? () => menuItemActions.default(story)
@@ -58,6 +60,9 @@ export const generateStoryMenu = ({
       case STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK:
         extraProperties.href = story.previewLink;
         extraProperties.newTab = true;
+        break;
+      case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+        extraProperties.disabled = isLocked;
         break;
       default:
         break;

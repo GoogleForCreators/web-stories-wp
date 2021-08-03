@@ -24,9 +24,7 @@ import styled from 'styled-components';
  */
 import { FOCUSABLE_SELECTORS } from '../../constants';
 import DirectionAware from '../directionAware';
-import { Popup } from '../helpCenter/popup';
-import { NavigationWrapper } from '../helpCenter/navigator';
-import { TopNavigation } from '../helpCenter/navigator/topNavigation';
+import Popup, { NavigationWrapper, TopNavigation } from '../secondaryPopup';
 import { Z_INDEX } from '../canvas/layout';
 import { Tablist } from '../tablist';
 import { Toggle } from './toggle';

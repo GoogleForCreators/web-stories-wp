@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -56,6 +61,7 @@ describe('TextEdit integration', () => {
 
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       frame = fixture.editor.canvas.framesLayer.frames[1].node;
     });
 
@@ -147,6 +153,7 @@ describe('TextEdit integration', () => {
     describe('edit mode', () => {
       it('should not change height when entering and exiting edit mode', async () => {
         await fixture.events.click(fixture.editor.library.textAdd);
+        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
         frame = fixture.editor.canvas.framesLayer.frames[1].node;
         const { width } = frame.getBoundingClientRect();
 

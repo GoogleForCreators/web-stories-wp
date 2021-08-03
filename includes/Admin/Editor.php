@@ -46,10 +46,7 @@ use WP_Post;
  * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base {
-	use Publisher;
-	use Types;
-	use Screen;
-	use Post_Type;
+	use Publisher, Types, Screen, Post_Type;
 
 	/**
 	 * Web Stories editor script handle.
@@ -146,7 +143,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return bool Whether the editor has been replaced.
 	 */
-	public function replace_editor( $replace, $post ) {
+	public function replace_editor( $replace, $post ): bool {
 		if ( Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
@@ -175,7 +172,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return bool Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ): bool {
 		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
 			return false;
 		}
@@ -233,13 +230,14 @@ class Editor extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_editor_settings() {
+	public function get_editor_settings(): array {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$has_publish_action       = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'publish_posts' );
 		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
+		$general_settings_url     = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -294,6 +292,7 @@ class Editor extends Service_Base {
 				'storyId'                      => $story_id,
 				'dashboardLink'                => $dashboard_url,
 				'dashboardSettingsLink'        => $dashboard_settings_url,
+				'generalSettingsLink'          => $general_settings_url,
 				'assetsURL'                    => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'maxUpload'                    => $max_upload_size,
@@ -302,6 +301,7 @@ class Editor extends Service_Base {
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
 					'hasUploadMediaAction'  => $has_upload_media_action,
+					'canManageSettings'     => current_user_can( 'manage_options' ),
 				],
 				'api'                          => [
 					'users'         => '/web-stories/v1/users/',
@@ -331,7 +331,7 @@ class Editor extends Service_Base {
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
 			),
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 
 		/**
@@ -353,7 +353,7 @@ class Editor extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function setup_lock( $story_id ) {
+	protected function setup_lock( int $story_id ) {
 		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
 			return;
 		}

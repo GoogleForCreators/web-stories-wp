@@ -33,17 +33,18 @@ import {
   Swatch,
   PLACEMENT,
 } from '@web-stories-wp/design-system';
+import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useUnmount from '../../../utils/useUnmount';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
+import { useCanvas } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -120,6 +121,9 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
+const loadReactColor = () =>
+  import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
+
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
@@ -143,6 +147,12 @@ const ColorInput = forwardRef(function ColorInput(
   const [pickerOpen, setPickerOpen] = useState(false);
   const previewRef = useRef(null);
 
+  const { isEyedropperActive } = useCanvas(
+    ({ state: { isEyedropperActive } }) => ({
+      isEyedropperActive,
+    })
+  );
+
   const {
     refs: { inspector },
   } = useInspector();
@@ -154,6 +164,8 @@ const ColorInput = forwardRef(function ColorInput(
   const buttonProps = {
     onClick: () => setPickerOpen(true),
     'aria-label': label,
+    onPointerEnter: () => loadReactColor(),
+    onFocus: () => loadReactColor(),
   };
 
   // Always hide color picker on unmount - note the double arrows
@@ -211,9 +223,11 @@ const ColorInput = forwardRef(function ColorInput(
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
+        invisible={isEyedropperActive}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
+            isEyedropperActive={isEyedropperActive}
             onChange={onChange}
             hasGradient={hasGradient}
             hasOpacity={hasOpacity}

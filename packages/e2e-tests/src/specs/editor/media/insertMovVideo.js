@@ -56,7 +56,6 @@ describe('Handling .mov files', () => {
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip('should insert .mov video from media dialog', async () => {
       await createNewStory();
-      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
       await expect(page).toClick('button', { text: 'Upload' });
 
@@ -81,7 +80,6 @@ describe('Handling .mov files', () => {
   describe('Disabled', () => {
     it('should not list the .mov video in the media dialog', async () => {
       await createNewStory();
-      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
       await expect(page).toClick('button', { text: 'Upload' });
 

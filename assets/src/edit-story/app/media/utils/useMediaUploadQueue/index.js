@@ -30,12 +30,12 @@ import {
   getImageDimensions,
   isAnimatedGif,
 } from '@web-stories-wp/media';
+import { useReduction } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import { useUploader } from '../../../uploader';
-import useReduction from '../../../../utils/useReduction';
 import { noop } from '../../../../utils/noop';
 import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
@@ -55,6 +55,7 @@ function useMediaUploadQueue() {
     isTranscodingEnabled,
     canTranscodeFile,
     transcodeVideo,
+    stripAudioFromVideo,
     getFirstFrameOfVideo,
     convertGifToVideo,
   } = useFFmpeg();
@@ -70,7 +71,9 @@ function useMediaUploadQueue() {
     finishUploading,
     cancelUploading,
     startTranscoding,
+    startMuting,
     finishTranscoding,
+    finishMuting,
     replacePlaceholderResource,
   } = actions;
 
@@ -211,6 +214,7 @@ function useMediaUploadQueue() {
             resource,
             additionalData = {},
             posterFile,
+            muteVideo,
           } = item;
           if ('PENDING' !== itemState) {
             return;
@@ -235,6 +239,9 @@ function useMediaUploadQueue() {
               newFile = await convertGifToVideo(file);
               finishTranscoding({ id, file: newFile });
               additionalData.media_source = 'gif-conversion';
+              additionalData.meta = {
+                web_stories_is_muted: true,
+              };
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -255,19 +262,37 @@ function useMediaUploadQueue() {
           // TODO: Only transcode & optimize video if needed (criteria TBD).
           // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
           if (isTranscodingEnabled && canTranscodeFile(file)) {
-            startTranscoding({ id });
+            if (!muteVideo) {
+              startTranscoding({ id });
 
-            try {
-              newFile = await transcodeVideo(file);
-              finishTranscoding({ id, file: newFile });
-              additionalData.media_source = 'video-optimization';
-            } catch (error) {
-              // Cancel uploading if there were any errors.
-              cancelUploading({ id, error });
+              try {
+                newFile = await transcodeVideo(file);
+                finishTranscoding({ id, file: newFile });
+                additionalData.media_source = 'video-optimization';
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
 
-              trackError('upload_media', error?.message);
+                trackError('upload_media', error?.message);
 
-              return;
+                return;
+              }
+            } else {
+              startMuting({ id });
+              try {
+                newFile = await stripAudioFromVideo(file);
+                finishMuting({ id, file: newFile });
+                additionalData.meta = {
+                  web_stories_is_muted: true,
+                };
+              } catch (error) {
+                // Cancel uploading if there were any errors.
+                cancelUploading({ id, error });
+
+                trackError('upload_media', error?.message);
+
+                return;
+              }
             }
           }
 
@@ -297,7 +322,7 @@ function useMediaUploadQueue() {
             trackTiming();
           }
 
-          if (newResource.id) {
+          if (newResource?.id) {
             await processPoster({
               newResource,
               posterFileName,
@@ -323,8 +348,11 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     canTranscodeFile,
     transcodeVideo,
+    stripAudioFromVideo,
     convertGifToVideo,
     isGifOptimizationEnabled,
+    startMuting,
+    finishMuting,
   ]);
 
   return useMemo(
@@ -338,6 +366,7 @@ function useMediaUploadQueue() {
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
         isUploading: state.queue.length !== 0,
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
+        isMuting: state.queue.some((item) => item.state === 'MUTING'),
       },
       actions: {
         addItem: actions.addItem,

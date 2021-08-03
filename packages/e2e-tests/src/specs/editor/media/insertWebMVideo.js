@@ -44,7 +44,6 @@ describe('Inserting WebM Video', () => {
   it('should insert a video via media modal', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const fileName = await uploadMedia('small-video.webm', false);
     uploadedFiles.push(fileName);
 
@@ -60,12 +59,14 @@ describe('Inserting WebM Video', () => {
   it('should insert a video via media library', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
+    await expect(page).toClick('[data-testid="mediaElement-video"]');
+    // TODO: figure out why this second click is needed.
+    // The first click does not appear to do anything, it just plays the video in the media library.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
@@ -81,18 +82,20 @@ describe('Inserting WebM Video', () => {
 
     await insertStoryTitle('Publishing with video');
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
+    // TODO: figure out why this second click is needed.
+    // The first click does not appear to do anything, it just plays the video in the media library.
+    await expect(page).toClick('[data-testid="mediaElement-video"]');
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
+    // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 

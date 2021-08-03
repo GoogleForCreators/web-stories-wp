@@ -40,7 +40,7 @@ import { updateViewSettings } from '../utils';
 import { webStoriesData } from '../utils/globals';
 import name from '../store/name';
 
-import TinyMCEToggle from './controls/Toggle';
+import TinyMceToggle from './controls/Toggle';
 
 const WebStoriesModal = (props) => {
   const { modalOpen, settings, prepareShortCode } = props;
@@ -137,13 +137,13 @@ const WebStoriesModal = (props) => {
         }}
       />
 
-      <TinyMCEToggle field="title" fieldObj={title} />
+      <TinyMceToggle field="title" fieldObj={title} />
 
-      <TinyMCEToggle field="excerpt" fieldObj={excerpt} />
+      <TinyMceToggle field="excerpt" fieldObj={excerpt} />
 
-      <TinyMCEToggle field="author" fieldObj={author} />
+      <TinyMceToggle field="author" fieldObj={author} />
 
-      <TinyMCEToggle field="date" fieldObj={date} />
+      <TinyMceToggle field="date" fieldObj={date} />
 
       {displayField('image_alignment') && (
         <div style={{ margin: '0 0 10px 0' }}>
@@ -170,9 +170,9 @@ const WebStoriesModal = (props) => {
         </div>
       )}
 
-      <TinyMCEToggle field="sharp_corners" fieldObj={sharp_corners} />
+      <TinyMceToggle field="sharp_corners" fieldObj={sharp_corners} />
 
-      <TinyMCEToggle field="archive_link" fieldObj={archive_link} />
+      <TinyMceToggle field="archive_link" fieldObj={archive_link} />
 
       {archive_link?.show && (
         <TextControl

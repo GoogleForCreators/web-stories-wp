@@ -83,7 +83,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @return array
 	 */
-	protected function get_carousel_settings() {
+	protected function get_carousel_settings(): array {
 		return [
 			'config' => [
 				'isRTL' => is_rtl(),
@@ -102,7 +102,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @return string Rendered stories output.
 	 */
-	public function render( array $args = [] ) {
+	public function render( array $args = [] ) : string {
 		if ( ! $this->valid() ) {
 			return '';
 		}

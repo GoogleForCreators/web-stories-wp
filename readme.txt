@@ -1,7 +1,7 @@
 === Web Stories ===
 
 Contributors:      google
-Tested up to:      5.7
+Tested up to:      5.8
 Requires at least: 5.5
 Stable tag:        V.V.V
 License:           Apache License 2.0
@@ -108,6 +108,18 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 == Changelog ==
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
+
+= 1.9.0 =
+
+**Release Date:** July 13, 2021.
+
+* New feature: freshly redesigned checklist (now located next to the help center).
+* New feature: optimize existing videos in the WordPress media library.
+* New feature: crop publisher logo and poster images directly in the editor.
+* New feature: animated GIFs are now automatically optimized as videos.
+* New feature: 9 new templates for creators to choose from.
+* Minimum requirements are now PHP 7.0+ and WordPress 5.5+.
+* Compatibility with WordPress 5.8.
 
 = 1.8.1 =
 
@@ -224,6 +236,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.9.0 =
+
+New templates, redesigned checklist, logo & poster image cropping, broader media optimization, bug fixes and performance improvements.
 
 = 1.8.1 =
 

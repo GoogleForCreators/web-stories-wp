@@ -24,9 +24,6 @@ import styled from 'styled-components';
  */
 import { elementWithBorderRadius } from '../shared';
 
-export { default as EditPanMoveable } from './editPanMoveable';
-export { default as ScalePanel } from './scalePanel';
-
 export const CropBox = styled.div`
   width: 100%;
   height: 100%;

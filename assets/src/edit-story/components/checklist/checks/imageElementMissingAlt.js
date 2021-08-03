@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -44,8 +44,11 @@ export function imageElementMissingAlt(element) {
 }
 
 const ImageElementMissingAlt = () => {
-  const story = useStory(({ state }) => state);
-  const elements = filterStoryElements(story, imageElementMissingAlt);
+  const pages = useStory(({ state }) => state?.pages);
+  const elements = useMemo(
+    () => filterStoryElements(pages, imageElementMissingAlt),
+    [pages]
+  );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     (elementId, pageId) =>

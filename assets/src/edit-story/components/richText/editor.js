@@ -20,11 +20,11 @@
 import { Editor } from 'draft-js';
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
+import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import useUnmount from '../../utils/useUnmount';
 import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
 

@@ -24,9 +24,11 @@ import { revokeBlob } from '@web-stories-wp/media';
 import {
   addItem,
   cancelUploading,
+  finishMuting,
   finishTranscoding,
   finishUploading,
   replacePlaceholderResource,
+  startMuting,
   startTranscoding,
   startUploading,
 } from '../reducer';
@@ -213,6 +215,88 @@ describe('useMediaUploadQueue', () => {
             file: {},
             resource: {},
             state: 'CANCELLED',
+          },
+        ],
+      });
+    });
+  });
+
+  describe('startMuting', () => {
+    it('changes state of uploaded item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              foo: 'bar',
+            },
+            state: 'PENDING',
+          },
+        ],
+      };
+
+      const result = startMuting(initialState, {
+        payload: {
+          id: 123,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              foo: 'bar',
+              isMuting: true,
+            },
+            state: 'MUTING',
+          },
+        ],
+      });
+    });
+  });
+
+  describe('finishMuting', () => {
+    it('changes state of uploaded item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {
+              bar: 'baz',
+            },
+            resource: {
+              foo: 'bar',
+              isMuting: true,
+            },
+            state: 'MUTING',
+          },
+        ],
+      };
+
+      const result = finishMuting(initialState, {
+        payload: {
+          id: 123,
+          file: {
+            bar: 'foobar',
+          },
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {
+              bar: 'foobar',
+            },
+            resource: {
+              foo: 'bar',
+              isMuting: false,
+            },
+            state: 'MUTED',
           },
         ],
       });

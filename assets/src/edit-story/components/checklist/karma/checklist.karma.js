@@ -28,7 +28,6 @@ describe('Checklist integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableChecklistCompanion: true });
     await fixture.render();
   });
 

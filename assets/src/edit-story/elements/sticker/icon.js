@@ -18,7 +18,6 @@
  * External dependencies
  */
 import stickers from '@web-stories-wp/stickers';
-import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -31,9 +30,11 @@ const style = {
   width: 'auto',
 };
 
+const Noop = () => null;
+
 function StickerLayerContent({ element }) {
   const { sticker } = element;
-  const Sticker = stickers[sticker.type]?.svg || noop;
+  const Sticker = stickers[sticker.type]?.svg || Noop;
 
   return <Sticker style={style} />;
 }

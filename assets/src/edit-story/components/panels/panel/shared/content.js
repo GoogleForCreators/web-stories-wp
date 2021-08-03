@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useContext } from '@web-stories-wp/design-system';
+import { useContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

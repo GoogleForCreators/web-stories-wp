@@ -28,6 +28,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -44,7 +45,8 @@ import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
 } from '../../../../../constants';
-import { StoryGridView, StoryListView } from '../../../shared';
+import ListView from '../listView';
+import StoryGridView from '../storyGridView';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -163,7 +165,7 @@ function StoriesView({
         message: sprintf(
           /* translators: %s: story title. */
           __('%s has been copied to your clipboard.', 'web-stories'),
-          story.title.length > 0 ? story.title : __('(no title)', 'web-stories')
+          titleFormatted(story.title)
         ),
         dismissable: true,
       });
@@ -222,7 +224,7 @@ function StoriesView({
       // StoryListView needs to show the table header when loading stories
       // when filtering.
       return (
-        <StoryListView
+        <ListView
           handleSortChange={sort.set}
           handleSortDirectionChange={sort.setDirection}
           hideStoryList={

@@ -22,7 +22,7 @@ import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { Navigator as HelpCenterNavigator } from '..';
+import HelpCenterNavigator from '..';
 
 export default {
   title: 'Stories Editor/Components/Help Center/Navigator',

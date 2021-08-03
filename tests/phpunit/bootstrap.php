@@ -45,10 +45,12 @@ require_once $_tests_dir . '/includes/functions.php';
  * Manually load the plugin being tested.
  */
 function _manually_load_plugin() {
-	require dirname( dirname( __DIR__ ) ) . '/web-stories.php';
+	require dirname( __DIR__, 2 ) . '/web-stories.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
 // Start up the WP testing environment.
 require $_tests_dir . '/includes/bootstrap.php';
+
+define( 'WEB_STORIES_TEST_DATA_DIR', __DIR__ . '/data' );

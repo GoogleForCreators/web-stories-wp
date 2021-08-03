@@ -45,22 +45,15 @@ describe('Web Stories Block', () => {
   skipSuiteOnFirefox();
 
   let removeErrorMessage;
-  let removeError404Message;
 
   beforeAll(() => {
-    // Disable reason: Investigation is required why this error is happening.
-    // See https://github.com/google/web-stories-wp/issues/8096
     removeErrorMessage = addAllowedErrorMessage(
-      'A component is changing an uncontrolled input'
-    );
-    removeError404Message = addAllowedErrorMessage(
       'Failed to load resource: the server responded with a status of 404'
     );
   });
 
   afterAll(() => {
     removeErrorMessage();
-    removeError404Message();
   });
 
   it('should insert a new web stories block', async () => {
@@ -69,10 +62,9 @@ describe('Web Stories Block', () => {
     });
     await insertBlock('Web Stories');
 
-    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Story URL',
-    });
+    await page.waitForSelector('.web-stories-block-configuration-panel');
+
+    await expect(page).toClick('button', { text: 'Story URL' });
 
     await page.type(
       'input[aria-label="Story URL"]',
@@ -99,14 +91,14 @@ describe('Web Stories Block', () => {
     });
     await insertBlock('Web Stories');
 
-    await page.waitForSelector('[data-testid="ws-block-configuration-panel"]');
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Selected Stories',
-    });
-    await expect(page).toClick('div.components-card__body', {
-      text: 'Box Carousel',
-    });
+    await page.waitForSelector('.web-stories-block-configuration-panel');
+
+    await expect(page).toClick('button', { text: 'Selected Stories' });
+
+    await expect(page).toClick('button', { text: 'Box Carousel' });
+
     await expect(page).toClick('button', { text: 'Select Stories' });
+
     await page.waitForSelector('.components-modal__screen-overlay');
     await expect(page).toMatchElement('.components-modal__screen-overlay');
     await percySnapshot(page, 'Story select modal');

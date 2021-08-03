@@ -55,7 +55,7 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 *
 	 * @return string
 	 */
-	protected function get_post_meta_key() {
+	protected function get_post_meta_key(): string {
 		return Media::POSTER_POST_META_KEY;
 	}
 }

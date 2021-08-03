@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createContext } from '@web-stories-wp/design-system';
+import { createContext } from '@web-stories-wp/react';
 
 export default createContext({
   isMultiple: false,

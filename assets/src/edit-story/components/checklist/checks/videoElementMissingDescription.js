@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 /**
  * Internal dependencies
@@ -44,8 +44,11 @@ export function videoElementMissingDescription(element) {
 }
 
 const VideoElementMissingDescription = () => {
-  const story = useStory(({ state }) => state);
-  const elements = filterStoryElements(story, videoElementMissingDescription);
+  const pages = useStory(({ state }) => state?.pages);
+  const elements = useMemo(
+    () => filterStoryElements(pages, videoElementMissingDescription),
+    [pages]
+  );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
     (elementId, pageId) =>

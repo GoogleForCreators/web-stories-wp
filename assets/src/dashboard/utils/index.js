@@ -15,8 +15,7 @@
  */
 export { default as clamp } from './clamp';
 export { default as titleFormatted } from './titleFormatted';
-export { default as keyboardOnlyOutline } from './keyboardOnlyOutline';
-export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
+export { default as KeyboardOnlyOutline } from './keyboardOnlyOutline';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export {
   default as usePagePreviewSize,
@@ -29,6 +28,3 @@ export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnal
 export { default as validateAdSensePublisherIdFormat } from './validateAdSensePublisherIdFormat';
 export { default as validateAdSenseSlotIdFormat } from './validateAdSenseSlotIdFormat';
 export { default as validateAdManagerSlotIdFormat } from './validateAdManagerSlotIdFormat';
-
-// TODO use these shared utils to structure image resources mirroring editor
-export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';

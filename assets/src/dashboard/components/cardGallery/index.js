@@ -19,97 +19,64 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { UnitsProvider } from '@web-stories-wp/units';
+import {
+  FULLBLEED_RATIO,
+  PAGE_RATIO,
+  UnitsProvider,
+} from '@web-stories-wp/units';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { useResizeEffect, useDebouncedCallback } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
  * Internal dependencies
  */
 import { StoryPropType } from '../../types';
-import { getPagePreviewHeights } from '../../utils';
 import { PreviewPage } from '../../../edit-story/components/previewPage';
 import {
-  ActiveCard,
   GalleryContainer,
-  MiniCard,
-  MiniCardsContainer,
-  ItemContainer,
   MiniCardButton,
+  Thumbnail,
+  AspectRatio,
+  Thumbnails,
+  DisplayPage,
 } from './components';
 
-const MAX_WIDTH = 680;
-const ACTIVE_CARD_WIDTH = 330;
-const MINI_CARD_WIDTH = 75;
-const CARD_GAP = 15;
-const CARD_WRAPPER_BUFFER = 12;
+function sizesFromWidth(width) {
+  return {
+    width,
+    height: width / PAGE_RATIO,
+    containerHeight: width / FULLBLEED_RATIO,
+  };
+}
+
+function getIsThreeRows() {
+  return window.innerWidth < 1600;
+}
 
 function CardGallery({ story, isRTL, galleryLabel }) {
-  const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [activePageId, setActivePageId] = useState();
   const containerRef = useRef();
   const gridRef = useRef();
   const pageRefs = useRef({});
+
+  const displayPageRef = useRef();
+  const thumbnailRef = useRef();
+  const [displayPageSize, setDisplayPageSize] = useState(null);
+  const [thumbnailSize, setThumbnailSize] = useState(null);
+  const [isThreeRows, setIsThreeRows] = useState(getIsThreeRows());
+
   const { pages = [] } = story;
 
   const isInteractive = pages.length > 1;
-
-  const metrics = useMemo(() => {
-    if (!dimensionMultiplier) {
-      return {};
-    }
-    const activeCardWidth = ACTIVE_CARD_WIDTH * dimensionMultiplier;
-    const miniCardWidth = MINI_CARD_WIDTH * dimensionMultiplier;
-    const activeHeightOptions = getPagePreviewHeights(activeCardWidth);
-    const miniCardHeightOptions = getPagePreviewHeights(miniCardWidth);
-
-    return {
-      activeCardSize: {
-        width: activeCardWidth,
-        height: activeHeightOptions.storyHeight,
-        containerHeight: activeHeightOptions.fullBleedHeight,
-      },
-      miniCardSize: {
-        width: miniCardWidth,
-        height: miniCardHeightOptions.storyHeight,
-        containerHeight: miniCardHeightOptions.fullBleedHeight,
-      },
-      miniWrapperSize: {
-        width: miniCardWidth + CARD_WRAPPER_BUFFER,
-        height: miniCardHeightOptions.fullBleedHeight + CARD_WRAPPER_BUFFER,
-      },
-      gap: CARD_GAP * dimensionMultiplier,
-    };
-  }, [dimensionMultiplier]);
 
   const handleMiniCardClick = useCallback((index, id) => {
     setActivePageIndex(index);
     setActivePageId(id);
   }, []);
-
-  const updateContainerSize = useCallback(() => {
-    const ratio = containerRef.current.offsetWidth / MAX_WIDTH;
-
-    if (ratio > 0.92) {
-      setDimensionMultiplier(1);
-    } else if (ratio > 0.75) {
-      setDimensionMultiplier(0.8);
-    } else if (ratio > 0.6) {
-      setDimensionMultiplier(0.6);
-    } else {
-      setDimensionMultiplier(0.5);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('resize', updateContainerSize);
-    updateContainerSize();
-    return () => {
-      window.removeEventListener('resize', updateContainerSize);
-    };
-  }, [updateContainerSize]);
 
   useEffect(() => {
     // Reset state when the story changes
@@ -126,102 +93,116 @@ function CardGallery({ story, isRTL, galleryLabel }) {
     items: pages,
   });
 
-  const GalleryItems = useMemo(() => {
-    if (!metrics.miniCardSize) {
-      return null;
-    }
+  const debouncedSetDisplayPageSize = useDebouncedCallback(({ width }) => {
+    setDisplayPageSize(sizesFromWidth(width));
+  }, 100);
+  useResizeEffect(displayPageRef, debouncedSetDisplayPageSize, [
+    debouncedSetDisplayPageSize,
+  ]);
+  const debouncedSetThumbnailSize = useDebouncedCallback(({ width }) => {
+    setThumbnailSize(sizesFromWidth(width));
+  }, 100);
+  useResizeEffect(thumbnailRef, debouncedSetThumbnailSize, [
+    debouncedSetThumbnailSize,
+    thumbnailRef.current,
+  ]);
 
-    const { miniCardSize, gap, miniWrapperSize } = metrics;
-    return (
-      <UnitsProvider
-        pageSize={{
-          width: miniCardSize.width,
-          height: miniCardSize.height,
-        }}
-      >
-        <MiniCardsContainer
-          rowHeight={miniWrapperSize.height}
-          gap={gap}
+  const debouncedSetIsThreeRows = useDebouncedCallback(() => {
+    setIsThreeRows(getIsThreeRows());
+  }, 100);
+  useEffect(() => {
+    window.addEventListener('resize', debouncedSetIsThreeRows);
+    return () => {
+      window.removeEventListener('resize', debouncedSetIsThreeRows);
+    };
+  }, [debouncedSetIsThreeRows]);
+
+  const GalleryItems = useMemo(() => {
+    return pages.map((page, index) => {
+      const isCurrentPage = activePageId === page.id;
+      const isActive = isCurrentPage && isInteractive;
+      const refProps = !index ? { ref: thumbnailRef } : {};
+      return (
+        <Thumbnail
+          key={page.id}
+          ref={(el) => {
+            pageRefs.current[page.id] = el;
+          }}
+        >
+          <AspectRatio {...refProps} aspect={1 / FULLBLEED_RATIO}>
+            <MiniCardButton
+              isSelected={isCurrentPage}
+              tabIndex={isActive ? 0 : -1}
+              onClick={() => handleMiniCardClick(index, page.id)}
+              aria-label={
+                isCurrentPage
+                  ? sprintf(
+                      /* translators: %s: page number. */
+                      __('Page %s (current page)', 'web-stories'),
+                      index + 1
+                    )
+                  : sprintf(
+                      /* translators: %s: page number. */
+                      __('Page %s', 'web-stories'),
+                      index + 1
+                    )
+              }
+            >
+              {thumbnailSize && (
+                <UnitsProvider
+                  pageSize={{
+                    height: thumbnailSize.height,
+                    width: thumbnailSize.width,
+                  }}
+                >
+                  <PreviewPage page={page} pageSize={thumbnailSize} />
+                </UnitsProvider>
+              )}
+            </MiniCardButton>
+          </AspectRatio>
+        </Thumbnail>
+      );
+    });
+  }, [activePageId, handleMiniCardClick, isInteractive, pages, thumbnailSize]);
+
+  return (
+    <ThemeProvider
+      theme={(theme) => ({ ...theme, numRows: isThreeRows ? 3 : 4 })}
+    >
+      <GalleryContainer ref={containerRef}>
+        <Thumbnails
           ref={gridRef}
           aria-label={galleryLabel}
           data-testid="mini-cards-container"
         >
-          {pages.map((page, index) => {
-            const isCurrentPage = activePageId === page.id;
-            const isActive = isCurrentPage && isInteractive;
-            return (
-              <ItemContainer
-                key={page.id}
-                ref={(el) => {
-                  pageRefs.current[page.id] = el;
-                }}
-                width={miniWrapperSize.width}
-              >
-                <MiniCardButton
-                  isSelected={isCurrentPage}
-                  tabIndex={isActive ? 0 : -1}
-                  {...miniWrapperSize}
-                  onClick={() => handleMiniCardClick(index, page.id)}
-                  aria-label={
-                    isCurrentPage
-                      ? sprintf(
-                          /* translators: %s: page number. */
-                          __('Page %s (current page)', 'web-stories'),
-                          index + 1
-                        )
-                      : sprintf(
-                          /* translators: %s: page number. */
-                          __('Page %s', 'web-stories'),
-                          index + 1
-                        )
-                  }
-                >
-                  <MiniCard {...miniCardSize}>
-                    <PreviewPage page={page} pageSize={miniCardSize} />
-                  </MiniCard>
-                </MiniCardButton>
-              </ItemContainer>
-            );
-          })}
-        </MiniCardsContainer>
-      </UnitsProvider>
-    );
-  }, [
-    activePageId,
-    galleryLabel,
-    handleMiniCardClick,
-    isInteractive,
-    metrics,
-    pages,
-  ]);
-
-  return (
-    <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      {GalleryItems}
-      {metrics.activeCardSize && pages[activePageIndex] && (
-        <UnitsProvider
-          pageSize={{
-            width: metrics.activeCardSize.width,
-            height: metrics.activeCardSize.height,
-          }}
+          {GalleryItems}
+        </Thumbnails>
+        <DisplayPage
+          aria-label={sprintf(
+            /* translators: %s: active preview page number */
+            __('Active Page Preview - Page %s', 'web-stories'),
+            activePageIndex + 1
+          )}
         >
-          <ActiveCard
-            {...metrics.activeCardSize}
-            aria-label={sprintf(
-              /* translators: %s: active preview page number */
-              __('Active Page Preview - Page %s', 'web-stories'),
-              activePageIndex + 1
+          <AspectRatio ref={displayPageRef} aspect={1 / FULLBLEED_RATIO}>
+            {pages[activePageIndex] && displayPageSize && (
+              <UnitsProvider
+                pageSize={{
+                  height: displayPageSize.height,
+                  width: displayPageSize.width,
+                }}
+              >
+                <PreviewPage
+                  page={pages[activePageIndex]}
+                  pageSize={displayPageSize}
+                  animationState={STORY_ANIMATION_STATE.PLAYING}
+                />
+              </UnitsProvider>
             )}
-          >
-            <PreviewPage
-              page={pages[activePageIndex]}
-              pageSize={metrics.activeCardSize}
-              animationState={STORY_ANIMATION_STATE.PLAYING}
-            />
-          </ActiveCard>
-        </UnitsProvider>
-      )}
-    </GalleryContainer>
+          </AspectRatio>
+        </DisplayPage>
+      </GalleryContainer>
+    </ThemeProvider>
   );
 }
 

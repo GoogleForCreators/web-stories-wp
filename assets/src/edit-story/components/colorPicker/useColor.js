@@ -15,9 +15,13 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useReduction } from '@web-stories-wp/react';
+
+/**
  * Internal dependencies
  */
-import useReduction from '../../utils/useReduction';
 import insertStop from './insertStop';
 import regenerateColor from './regenerateColor';
 import { TYPE_SOLID, TYPE_LINEAR, TYPE_RADIAL } from './constants';

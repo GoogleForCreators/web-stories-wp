@@ -66,6 +66,7 @@ function Element({
   margin,
   onInsert,
   providerType,
+  canEditMedia,
 }) {
   const {
     id: resourceId,
@@ -75,6 +76,7 @@ function Element({
     height: originalHeight,
     local,
     alt,
+    isMuted,
   } = resource;
 
   const oRatio =
@@ -199,6 +201,7 @@ function Element({
           mediaElement={mediaElement}
           resource={resource}
           alt={alt}
+          isMuted={isMuted}
           width={width}
           height={height}
           onClick={onClick}
@@ -209,7 +212,7 @@ function Element({
         {local && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
-        {providerType === 'local' && (
+        {providerType === 'local' && canEditMedia && (
           <DropDownMenu
             resource={resource}
             display={active}
@@ -232,6 +235,7 @@ Element.propTypes = {
   margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
+  canEditMedia: PropTypes.bool,
 };
 
 /**
@@ -269,10 +273,12 @@ MediaElement.propTypes = {
   margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
+  canEditMedia: PropTypes.bool,
 };
 
 MediaElement.defaultProps = {
   providerType: 'local',
+  canEditMedia: false,
 };
 
 export default memo(MediaElement);

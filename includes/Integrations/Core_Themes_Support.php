@@ -118,7 +118,7 @@ class Core_Themes_Support extends Service_Base {
 	 *
 	 * @return array Updated array of classes.
 	 */
-	public function add_core_theme_classes( $classes ) {
+	public function add_core_theme_classes( $classes ): array {
 
 		$classes[] = 'has-web-stories';
 
@@ -157,7 +157,7 @@ class Core_Themes_Support extends Service_Base {
 	 * @since 1.6.0
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'after_setup_theme';
 	}
 }

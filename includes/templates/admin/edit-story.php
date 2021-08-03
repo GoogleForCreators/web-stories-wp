@@ -31,14 +31,55 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post_type, $post_type_object, $post;
 
-$rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-$demo      = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+$demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 // Preload common data.
+// Important: keep in sync with usage & definition in React app.
 $preload_paths = [
-	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s&web_stories_demo=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,wp:lockuser,author' ), $demo ),
-	'/web-stories/v1/media/?context=edit&per_page=100&page=1&_web_stories_envelope=true',
-	'/web-stories/v1/users/?per_page=100&who=authors',
+	"/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
+		[
+			'_embed'           => urlencode( 'wp:featuredmedia,wp:lockuser,author' ),
+			'context'          => 'edit',
+			'web_stories_demo' => $demo,
+		]
+	),
+	'/web-stories/v1/media/?' . build_query(
+		[
+			'context'               => 'edit',
+			'per_page'              => 100,
+			'page'                  => 1,
+			'_web_stories_envelope' => 'true',
+			'_fields'               => urlencode(
+				implode(
+					',',
+					[
+						'id',
+						'date_gmt',
+						'media_details',
+						'title',
+						'mime_type',
+						'featured_media',
+						'featured_media_src',
+						'alt_text',
+						'source_url',
+						'media_source',
+						'meta.web_stories_is_muted',
+						// _web_stories_envelope will add these fields, we need them too.
+						'body',
+						'status',
+						'headers',
+					]
+				)
+			),
+		]
+	),
+	'/web-stories/v1/users/?' . build_query(
+		[
+			'per_page' => 100,
+			'who'      => 'authors',
+		]
+	),
 	'/web-stories/v1/users/me/',
 ];
 

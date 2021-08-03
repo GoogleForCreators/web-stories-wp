@@ -15,17 +15,16 @@
  */
 
 /**
- * @typedef {import('../../../types').Story} Story
  * @typedef {import('../../../types').Page} Page
  */
 
 /**
  * Filters through story pages with array.filter
  *
- * @param {Story} story The story to filter
+ * @param {Array<Page>} pages The story to filter
  * @param {Function} filter The page being checked for guidelines
  * @return {Array<Page>} An array of pages that
  */
-export function filterStoryPages(story, filter) {
-  return (story?.pages || []).filter(filter);
+export function filterStoryPages(pages, filter) {
+  return (pages || []).filter(filter);
 }

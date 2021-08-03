@@ -45,6 +45,7 @@ describe('Border Panel', () => {
   describe('CUJ: Creator can Manipulate Shape: Border', () => {
     it('should allow the user to add border for text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const panel = fixture.editor.inspector.designPanel.border;
 
       await fixture.events.click(panel.width(), { clickCount: 3 });

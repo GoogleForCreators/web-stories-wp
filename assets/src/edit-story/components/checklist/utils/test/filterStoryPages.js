@@ -22,18 +22,16 @@ describe('filterStoryPages', () => {
   it('returns array of passing pages', () => {
     expect(
       filterStoryPages(
-        {
-          pages: [
-            { id: 1, elements: [{ id: 'a' }, { id: 'b' }, { id: 'c' }] },
-            { id: 2, elements: [{ id: 'd' }, { id: 'e' }] },
-          ],
-        },
+        [
+          { id: 1, elements: [{ id: 'a' }, { id: 'b' }, { id: 'c' }] },
+          { id: 2, elements: [{ id: 'd' }, { id: 'e' }] },
+        ],
         (page) => page.id > 1
       )
     ).toStrictEqual([{ id: 2, elements: [{ id: 'd' }, { id: 'e' }] }]);
   });
 
   it('returns an empty array if story has no pages', () => {
-    expect(filterStoryPages({}, () => true)).toStrictEqual([]);
+    expect(filterStoryPages([], () => true)).toStrictEqual([]);
   });
 });

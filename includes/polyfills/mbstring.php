@@ -196,7 +196,7 @@ if ( ! function_exists( 'mb_chr' ) ) {
 }
 if ( ! function_exists( 'mb_scrub' ) ) {
 	function mb_scrub( $s, $enc = null ) {
-		$enc = null === $enc ? mb_internal_encoding() : $enc;
+		$enc = $enc ?? mb_internal_encoding();
 		return mb_convert_encoding( $s, $enc, $enc );
 	}
 }

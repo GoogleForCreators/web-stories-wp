@@ -47,6 +47,21 @@ describe('setCurrentPage', () => {
     // Unknown page 333, do nothing
     const result = setCurrentPage({ pageId: '333' });
 
-    expect(result).toStrictEqual(initialState);
+    expect(result).toBe(initialState);
+  });
+
+  it('should do nothing if page is already selected', () => {
+    const { restore, setCurrentPage } = setupReducer();
+
+    // Set an initial state with multiple pages.
+    const initialState = restore({
+      pages: [{ id: '111' }, { id: '222' }],
+      current: '111',
+    });
+
+    // Unknown page 333, do nothing
+    const result = setCurrentPage({ pageId: '111' });
+
+    expect(result).toBe(initialState);
   });
 });

@@ -299,6 +299,7 @@ function getVideoResourceFromMedia3p(m) {
     local: false,
     isPlaceholder: false,
     isOptimized: true,
+    isMuted: true,
     sizes: videoUrls,
     attribution: getAttributionFromMedia3p(m),
   });

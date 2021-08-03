@@ -38,11 +38,12 @@ import {
 } from '../../../thumbnail';
 import { getVisibleThumbnails } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
+import { useRegisterCheck } from '../../countContext';
 import { pageBackgroundTextLowContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
   const [failingPages, setFailingPages] = useState([]);
-  const story = useStory(({ state }) => state);
+  const storyPages = useStory(({ state }) => state?.pages);
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
@@ -50,7 +51,7 @@ const PageBackgroundTextLowContrast = () => {
 
   const getFailingPages = useCallback(async () => {
     const promises = [];
-    story?.pages.forEach((page) => {
+    (storyPages || []).forEach((page) => {
       const maybeTextContrastResult = pageBackgroundTextLowContrast({
         ...page,
         pageSize,
@@ -65,13 +66,13 @@ const PageBackgroundTextLowContrast = () => {
     });
     const awaitedResult = await Promise.all(promises);
     return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
-  }, [story, pageSize]);
+  }, [storyPages, pageSize]);
 
   useEffect(() => {
     getFailingPages().then((failures) => {
       setFailingPages(failures);
     });
-  }, [getFailingPages, story]);
+  }, [getFailingPages]);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -82,42 +83,42 @@ const PageBackgroundTextLowContrast = () => {
     [setHighlights]
   );
 
-  const { title, footer } = ACCESSIBILITY_COPY.lowContrast;
+  const isRendered = failingPages.length > 0;
+  useRegisterCheck('PageBackgroundTextLowContrast', isRendered);
 
-  return (
-    failingPages.length > 0 && (
-      <ChecklistCard
-        title={title}
-        cardType={
-          failingPages.length > 1
-            ? CARD_TYPE.MULTIPLE_ISSUE
-            : CARD_TYPE.SINGLE_ISSUE
-        }
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingPages).map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() => handleClick(page.id)}
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={
-                  <PagePreview
-                    page={page}
-                    width={THUMBNAIL_DIMENSIONS.WIDTH}
-                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
-                    as="div"
-                  />
-                }
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
-      />
-    )
-  );
+  const { title, footer } = ACCESSIBILITY_COPY.lowContrast;
+  return isRendered ? (
+    <ChecklistCard
+      title={title}
+      cardType={
+        failingPages.length > 1
+          ? CARD_TYPE.MULTIPLE_ISSUE
+          : CARD_TYPE.SINGLE_ISSUE
+      }
+      footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+      thumbnailCount={failingPages.length}
+      thumbnail={
+        <>
+          {getVisibleThumbnails(failingPages).map((page) => (
+            <Thumbnail
+              key={page.id}
+              onClick={() => handleClick(page.id)}
+              type={THUMBNAIL_TYPES.PAGE}
+              displayBackground={
+                <PagePreview
+                  page={page}
+                  width={THUMBNAIL_DIMENSIONS.WIDTH}
+                  height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                  as="div"
+                />
+              }
+              aria-label={__('Go to offending page', 'web-stories')}
+            />
+          ))}
+        </>
+      }
+    />
+  ) : null;
 };
 
 export default PageBackgroundTextLowContrast;

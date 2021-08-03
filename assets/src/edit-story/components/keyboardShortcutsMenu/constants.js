@@ -26,7 +26,6 @@ import styled from 'styled-components';
 import { KeyArrowUp } from '../../icons';
 
 export const TOP_MARGIN = 16;
-export const BOTTOM_MARGIN = 8;
 
 export const TOGGLE_SHORTCUTS_MENU = 'mod+/';
 

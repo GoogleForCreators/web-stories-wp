@@ -16,15 +16,21 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
-import { useHistory } from '../../../../app/history';
+import { useHistory } from '../../../../app';
+import { getHTMLFormatters } from '../../../richText/htmlManipulation';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { applyHiddenPadding } from '../../../panels/design/textBox/utils';
+import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
+import { calculateTextHeight } from '../../../../utils/textMeasurements';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
@@ -37,7 +43,16 @@ function useInsertPreset() {
     state: { versionNumber },
   } = useHistory();
 
+  const enableSmartTextColor = useFeature('enableSmartTextColor');
+
+  const htmlFormatters = getHTMLFormatters();
+  const { setColor } = htmlFormatters;
+
+  const [autoColor, setAutoColor] = useState(null);
+  const [presetAtts, setPresetAtts] = useState(null);
+
   const lastPreset = useRef(null);
+  const { calculateAccessibleTextColors } = usePageAsCanvas();
 
   useEffect(() => {
     // Version number change is happening due to adding a preset.
@@ -82,19 +97,63 @@ function useInsertPreset() {
     };
   }, []);
 
-  const insertPreset = useCallback(
-    (element) => {
-      const atts = getPosition(element);
+  // Once the colors have been detected, we'll insert the element.
+  useEffect(() => {
+    if (autoColor && presetAtts) {
+      // Add all the necessary props in case of color / highlight.
+      const { content } = presetAtts;
+      const { color, backgroundColor } = autoColor;
+      const highlightProps = backgroundColor
+        ? {
+            backgroundColor: { color: backgroundColor },
+            backgroundTextMode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
+            padding: applyHiddenPadding(presetAtts),
+          }
+        : null;
+      const elementProps = {
+        ...presetAtts,
+        content: color ? setColor(content, { color }) : content,
+        ...highlightProps,
+      };
       const addedElement = insertElement(TYPE, {
-        ...element,
-        ...atts,
+        ...elementProps,
+        height: calculateTextHeight(elementProps, elementProps.width),
       });
       lastPreset.current = {
         versionNumber: null,
         element: addedElement,
       };
+      setAutoColor(null);
+      setPresetAtts(null);
+    }
+  }, [autoColor, presetAtts, insertElement, setColor]);
+
+  const insertPreset = useCallback(
+    (element) => {
+      const atts = getPosition(element);
+      if (enableSmartTextColor) {
+        setPresetAtts({
+          ...element,
+          ...atts,
+        });
+        calculateAccessibleTextColors({ ...element, ...atts }, setAutoColor);
+      } else {
+        const addedElement = insertElement(TYPE, {
+          ...element,
+          ...atts,
+        });
+        lastPreset.current = {
+          versionNumber: null,
+          element: addedElement,
+        };
+      }
     },
-    [getPosition, insertElement]
+    [
+      getPosition,
+      calculateAccessibleTextColors,
+      enableSmartTextColor,
+      insertElement,
+    ]
   );
   return insertPreset;
 }

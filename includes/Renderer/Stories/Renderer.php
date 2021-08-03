@@ -179,7 +179,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	public function render( array $args = [] ) {
+	public function render( array $args = [] ): string {
 		++self::$instances;
 		$this->instance_id = self::$instances;
 
@@ -325,7 +325,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
-	protected function is_view_type( $view_type ) {
+	protected function is_view_type( $view_type ): bool {
 
 		return ( ! empty( $this->attributes['view_type'] ) && $view_type === $this->attributes['view_type'] );
 	}
@@ -337,7 +337,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_view_type() {
+	protected function get_view_type(): string {
 
 		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
 	}
@@ -378,7 +378,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_view_classes() {
+	protected function get_view_classes(): string {
 		$view_classes   = [];
 		$view_classes[] = ( ! empty( $this->attributes['view_type'] ) ) ? sprintf( 'is-view-type-%1$s', $this->attributes['view_type'] ) : 'is-view-type-circles';
 
@@ -410,7 +410,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_container_classes() {
+	protected function get_container_classes(): string {
 
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
@@ -435,7 +435,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string
 	 */
-	protected function get_single_story_classes() {
+	protected function get_single_story_classes(): string {
 
 		$single_story_classes   = [];
 		$single_story_classes[] = 'web-stories-list__story';
@@ -464,7 +464,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return string Style string.
 	 */
-	protected function get_container_styles() {
+	protected function get_container_styles(): string {
 		$story_styles  = $this->is_view_type( 'circles' ) ? sprintf( '--ws-circle-size:%1$dpx', $this->attributes['circle_size'] ) : '';
 		$story_styles .= $this->is_view_type( 'carousel' ) ? sprintf( '--ws-story-max-width:%1$dpx', $this->width ) : '';
 
@@ -495,9 +495,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
-
 		// No need to load these styles on admin as editor styles are being loaded by the block.
-		if ( ! is_admin() ) {
+		if ( ! is_admin() || defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
 			// Web Stories Styles for AMP and non-AMP pages.
 			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
@@ -538,7 +537,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 * @var Story $story
 		 */
 		$story = $this->current();
-		
+
 		$poster_url = $story->get_poster_portrait();
 
 		if ( ! $poster_url ) {
@@ -567,7 +566,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"
 					>
 					</amp-img>
-				<?php } else { ?>
+<?php } else { ?>
 					<img
 						src="<?php echo esc_url( $poster_url ); ?>"
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"

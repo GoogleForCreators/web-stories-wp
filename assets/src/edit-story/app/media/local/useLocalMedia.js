@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { identity } from '@web-stories-wp/design-system';
+import { identity } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

@@ -28,6 +28,7 @@ import {
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { useUnits } from '@web-stories-wp/units';
+import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -45,7 +46,6 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import useUnmount from '../../utils/useUnmount';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import useRichText from '../../components/richText/useRichText';

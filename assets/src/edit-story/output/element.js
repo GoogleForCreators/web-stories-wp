@@ -117,14 +117,14 @@ function OutputElement({ element }) {
           >
             <Output element={element} box={box} />
           </WithLink>
+          {overlay && (
+            <div
+              className="element-overlay-area"
+              style={generatePatternStyles(overlay)}
+            />
+          )}
         </WithMask>
       </StoryAnimation.AMPWrapper>
-      {overlay && (
-        <div
-          className="element-overlay-area"
-          style={generatePatternStyles(overlay)}
-        />
-      )}
     </div>
   );
 }

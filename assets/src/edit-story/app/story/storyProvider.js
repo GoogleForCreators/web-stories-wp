@@ -36,6 +36,13 @@ import useAutoSave from './actions/useAutoSave';
 import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
 import { StoryTriggersProvider } from './storyTriggers';
 
+/**
+ * Shared reference to an empty array for cases where it is important to avoid
+ * returning a new array reference on every invocation, as in a connected or
+ * other pure component which performs `shouldComponentUpdate` check on props.
+ */
+const EMPTY_ARRAY = [];
+
 function StoryProvider({ storyId, children }) {
   const { isDemo } = useConfig();
   const [hashPageId, setHashPageId] = useHashState('page', null);
@@ -82,8 +89,9 @@ function StoryProvider({ storyId, children }) {
   } = useMemo(() => {
     if (!currentPage) {
       return {
-        selectedElements: [],
-        selectedElementIds: [],
+        selectedElements: EMPTY_ARRAY,
+        selectedElementIds: EMPTY_ARRAY,
+        selectedElementAnimations: EMPTY_ARRAY,
         hasSelection: false,
       };
     }
@@ -101,9 +109,10 @@ function StoryProvider({ storyId, children }) {
     );
 
     return {
-      selectedElementIds: selection,
-      selectedElements: els,
-      selectedElementAnimations: animations,
+      selectedElementIds: selection.length > 0 ? selection : EMPTY_ARRAY,
+      selectedElements: els.length > 0 ? els : EMPTY_ARRAY,
+      selectedElementAnimations:
+        animations.length > 0 ? animations : EMPTY_ARRAY,
       hasSelection: els.length > 0,
     };
   }, [currentPage, selection]);

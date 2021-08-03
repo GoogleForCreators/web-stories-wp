@@ -107,6 +107,7 @@ function MediaPane(props) {
     setMediaType,
     setSearchTerm,
     uploadVideoPoster,
+    updateVideoIsMuted,
     totalItems,
     optimizeVideo,
     optimizeGif,
@@ -127,6 +128,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        updateVideoIsMuted,
         optimizeVideo,
         optimizeGif,
       },
@@ -144,6 +146,7 @@ function MediaPane(props) {
         setMediaType,
         setSearchTerm,
         uploadVideoPoster,
+        updateVideoIsMuted,
         optimizeVideo,
         optimizeGif,
       };
@@ -160,6 +163,7 @@ function MediaPane(props) {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const { isTranscodingEnabled } = useFFmpeg();
@@ -228,6 +232,14 @@ function MediaPane(props) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
         uploadVideoPoster(resource.id, mediaPickerEl.url);
+      }
+
+      if (
+        !resource.local &&
+        allowedVideoMimeTypes.includes(resource.mimeType) &&
+        !resource.isMuted
+      ) {
+        updateVideoIsMuted(resource.id, resource.src);
       }
     } catch (e) {
       showSnackbar({
@@ -360,6 +372,7 @@ function MediaPane(props) {
         ) : (
           <PaginatedMediaGallery
             providerType="local"
+            canEditMedia={hasUploadMediaAction}
             resources={media}
             isMediaLoading={isMediaLoading}
             isMediaLoaded={isMediaLoaded}

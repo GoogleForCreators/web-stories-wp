@@ -49,10 +49,10 @@ export function pageTooManyLinks(page) {
 }
 
 const PageTooManyLinks = () => {
-  const story = useStory(({ state }) => state);
+  const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
-    () => filterStoryPages(story, pageTooManyLinks),
-    [story]
+    () => filterStoryPages(pages, pageTooManyLinks),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(

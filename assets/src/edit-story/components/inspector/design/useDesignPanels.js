@@ -105,17 +105,28 @@ function useDesignPanels() {
     };
   }, [onSetProperties, registerSubmitHandler]);
 
-  return {
-    panels,
-    createSubmitHandlerForPanel,
-    panelProperties: {
+  return useMemo(
+    () => ({
+      panels,
+      createSubmitHandlerForPanel,
+      panelProperties: {
+        onSetProperties,
+        deleteSelectedElements,
+        selectedElements,
+        selectedElementAnimations,
+        updateAnimationState,
+      },
+    }),
+    [
+      panels,
+      createSubmitHandlerForPanel,
       onSetProperties,
       deleteSelectedElements,
       selectedElements,
       selectedElementAnimations,
       updateAnimationState,
-    },
-  };
+    ]
+  );
 }
 
 export default useDesignPanels;

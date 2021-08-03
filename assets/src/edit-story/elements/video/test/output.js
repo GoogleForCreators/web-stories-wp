@@ -86,6 +86,27 @@ describe('Video output', () => {
     await expect(outputStr).toStrictEqual(expect.stringMatching('alt text'));
   });
 
+  it('should not render noaudio attribute if isMuted is not set', async () => {
+    const output = <VideoOutput {...baseProps} />;
+    await expect(output).toBeValidAMPStoryElement();
+    await expect(output).not.toStrictEqual(expect.stringMatching('noaudio'));
+  });
+
+  it('should render noaudio attribute if isMuted is true', async () => {
+    const props = {
+      ...baseProps,
+      element: {
+        ...baseProps.element,
+        resource: { ...baseProps.element.resource, isMuted: true },
+      },
+    };
+
+    const output = <VideoOutput {...props} />;
+    await expect(output).toBeValidAMPStoryElement();
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).toStrictEqual(expect.stringMatching('noaudio'));
+  });
+
   it('an empty string alt tag in the element should not fall back to the resource', async () => {
     const props = { ...baseProps, element: { ...baseProps.element, alt: '' } };
     const output = <VideoOutput {...props} />;

@@ -25,6 +25,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { Reorderable } from '../reorderable';
 import CarouselPage from './carouselPage';
+import SkeletonPage from './skeletonPage';
 import useCarousel from './useCarousel';
 
 const PageList = styled(Reorderable).attrs({
@@ -64,9 +65,16 @@ function CarouselList() {
     pageIds,
     rearrangePages,
     setListRef,
+    showSkeleton,
   } = useCarousel(
     ({
-      state: { pageThumbWidth, carouselWidth, hasOverflow, pageIds },
+      state: {
+        pageThumbWidth,
+        carouselWidth,
+        hasOverflow,
+        pageIds,
+        showSkeleton,
+      },
       actions: { rearrangePages, setListRef },
     }) => ({
       pageThumbWidth,
@@ -75,8 +83,11 @@ function CarouselList() {
       pageIds,
       rearrangePages,
       setListRef,
+      showSkeleton,
     })
   );
+
+  const Page = showSkeleton ? SkeletonPage : CarouselPage;
 
   return (
     <PageList
@@ -89,7 +100,7 @@ function CarouselList() {
       getItemSize={() => pageThumbWidth}
     >
       {pageIds.map((pageId, index) => (
-        <CarouselPage key={pageId} pageId={pageId} index={index} />
+        <Page key={pageId} pageId={pageId} index={index} />
       ))}
     </PageList>
   );

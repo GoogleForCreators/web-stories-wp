@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContextSelector, identity } from '@web-stories-wp/design-system';
+import { useContextSelector, identity } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

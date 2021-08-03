@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Cast iron pan', 'sticker name', 'web-stories');
+const title = _x('Cast Iron Pan', 'sticker name', 'web-stories');
 
 const CastIron = ({ style }) => (
   <svg

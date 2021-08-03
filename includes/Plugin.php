@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\AMP\Output_Buffer;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\Injector;
 
@@ -69,6 +70,7 @@ class Plugin extends ServiceBasedPlugin {
 		'activation_flag'              => Admin\Activation_Flag::class,
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
+		'amp_output_buffer'            => Output_Buffer::class,
 		'amp_story_player_assets'      => AMP_Story_Player_Assets::class,
 		'adsense'                      => AdSense::class,
 		'ad_manager'                   => Ad_Manager::class,
@@ -87,6 +89,7 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
 		'media'                        => Media\Media::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
@@ -133,7 +136,7 @@ class Plugin extends ServiceBasedPlugin {
 	 * @return array<string> Associative array of identifiers mapped to fully
 	 *                       qualified class names.
 	 */
-	protected function get_service_classes() {
+	protected function get_service_classes(): array {
 		return self::SERVICES;
 	}
 
@@ -153,7 +156,7 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @return array<string> Associative array of fully qualified class names.
 	 */
-	protected function get_bindings() {
+	protected function get_bindings(): array {
 		return [];
 	}
 
@@ -171,7 +174,7 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @return array<string> Array of fully qualified class names.
 	 */
-	protected function get_shared_instances() {
+	protected function get_shared_instances(): array {
 		return [
 			Assets::class,
 			Experiments::class,
@@ -199,7 +202,7 @@ class Plugin extends ServiceBasedPlugin {
 	 *
 	 * @return array<callable> Associative array of callables.
 	 */
-	protected function get_delegations() {
+	protected function get_delegations(): array {
 		return [
 			Injector::class => static function () {
 				return Services::get( 'injector' );

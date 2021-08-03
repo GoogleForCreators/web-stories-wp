@@ -50,7 +50,7 @@ class NextGen_Gallery extends Service_Base {
 	 * @since 1.6.0
 	 * @return int Registration action priority to use.
 	 */
-	public static function get_registration_action_priority() {
+	public static function get_registration_action_priority(): int {
 		return -2;
 	}
 
@@ -67,7 +67,7 @@ class NextGen_Gallery extends Service_Base {
 	 *
 	 * @return bool Whether the output buffer should run.
 	 */
-	public function filter_run_ngg_resource_manager( $valid_request ) {
+	public function filter_run_ngg_resource_manager( $valid_request ): bool {
 		if (
 			// Plain permalinks.
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended

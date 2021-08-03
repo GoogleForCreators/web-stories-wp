@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 
 /**
@@ -53,10 +53,10 @@ export function elementLinkTappableRegionTooSmall(element) {
 }
 
 const ElementLinkTappableRegionTooSmall = () => {
-  const story = useStory(({ state }) => state);
-  const elements = filterStoryElements(
-    story,
-    elementLinkTappableRegionTooSmall
+  const pages = useStory(({ state }) => state?.pages);
+  const elements = useMemo(
+    () => filterStoryElements(pages, elementLinkTappableRegionTooSmall),
+    [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(

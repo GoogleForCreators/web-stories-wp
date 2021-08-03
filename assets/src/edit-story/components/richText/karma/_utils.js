@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { useStory } from '../../../app/story';
@@ -27,9 +32,15 @@ export function initHelpers(data) {
 
   async function addInitialText(addExtra = false) {
     await data.fixture.events.click(data.fixture.editor.library.textAdd);
+    await waitFor(() => data.fixture.editor.canvas.framesLayer.frames[1].node);
 
     if (addExtra) {
+      // Move the first text field 10 steps down to avoid placing these on top of each other.
+      await repeatPress('ArrowDown', 10);
       await data.fixture.events.click(data.fixture.editor.library.textAdd);
+      await waitFor(
+        () => data.fixture.editor.canvas.framesLayer.frames[2].node
+      );
     }
 
     await data.fixture.editor.canvas.framesLayer.waitFocusedWithin();
@@ -46,9 +57,6 @@ export function initHelpers(data) {
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.type('Number #2');
       await data.fixture.events.keyboard.press('Escape');
-
-      // Move second text field 10 steps down
-      await repeatPress('ArrowDown', 10);
     }
   }
 

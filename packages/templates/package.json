@@ -15,5 +15,7 @@
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/i18n": "*"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@web-stories-wp/stickers": "*"
+  }
 }

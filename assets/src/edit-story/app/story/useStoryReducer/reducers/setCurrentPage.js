@@ -31,6 +31,10 @@ function setCurrentPage(state, { pageId }) {
     return state;
   }
 
+  if (state.current === pageId) {
+    return state;
+  }
+
   return {
     ...state,
     current: pageId,

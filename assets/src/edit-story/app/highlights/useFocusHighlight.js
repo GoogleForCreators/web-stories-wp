@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
-import { useContextSelector, useFocusOut } from '@web-stories-wp/design-system';
+import { useContextSelector, useFocusOut } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

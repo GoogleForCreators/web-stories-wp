@@ -18,8 +18,12 @@
  * Internal dependencies
  */
 import visitAdminPage from './visitAdminPage';
+import activatePlugin from './activatePlugin';
+import deactivatePlugin from './deactivatePlugin';
 
 async function deleteWidgets() {
+  await activatePlugin('classic-widgets');
+
   // Remove all widgets
   await visitAdminPage('widgets.php');
   await page.evaluate(() => {
@@ -37,6 +41,8 @@ async function deleteWidgets() {
       widgetDelete.click();
     }
   });
+
+  await deactivatePlugin('classic-widgets');
 }
 
 export default deleteWidgets;

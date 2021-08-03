@@ -27,21 +27,21 @@ import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { useRegisterCheck } from '../countContext';
 import { DESIGN_COPY, MAX_STORY_PAGES, MIN_STORY_PAGES } from '../constants';
 
-export function storyPagesCount(story) {
-  const hasTooFewPages = story.pages.length < MIN_STORY_PAGES;
-  const hasTooManyPages = story.pages.length > MAX_STORY_PAGES;
+export function storyPagesCount(numPages) {
+  const hasTooFewPages = numPages < MIN_STORY_PAGES;
+  const hasTooManyPages = numPages > MAX_STORY_PAGES;
 
   return hasTooFewPages || hasTooManyPages;
 }
 
 const StoryPagesCount = () => {
-  const story = useStory(({ state }) => state);
+  const numPages = useStory(({ state }) => state?.story?.pages?.length);
 
-  const badPageCount = useMemo(() => storyPagesCount(story), [story]);
+  const badPageCount = useMemo(() => storyPagesCount(numPages), [numPages]);
 
   const { storyTooShort, storyTooLong } = DESIGN_COPY;
   const copySource = badPageCount
-    ? story.pages.length < MIN_STORY_PAGES
+    ? numPages < MIN_STORY_PAGES
       ? storyTooShort
       : storyTooLong
     : {};

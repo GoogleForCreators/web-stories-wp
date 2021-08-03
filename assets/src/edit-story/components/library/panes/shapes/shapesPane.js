@@ -31,7 +31,7 @@ import { Section, SearchInput } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ShapePreview from './shapePreview';
-import StickerButton from './stickerButton';
+import StickerPreview from './stickerPreview';
 import paneId from './paneId';
 
 const SectionContent = styled.div`
@@ -58,6 +58,9 @@ function ShapesPane(props) {
 
   const ref = useRef();
   useRovingTabIndex({ ref });
+
+  const stickersRef = useRef(null);
+  useRovingTabIndex({ ref: stickersRef });
   return (
     <Pane id={paneId} {...props} isOverflowScrollable={enableStickers}>
       {showTextAndShapesSearchInput && (
@@ -68,7 +71,10 @@ function ShapesPane(props) {
           disabled
         />
       )}
-      <Section title={__('Shapes', 'web-stories')}>
+      <Section
+        data-testid="shapes-library-pane"
+        title={__('Shapes', 'web-stories')}
+      >
         <SectionContent ref={ref}>
           {MASKS.filter((mask) => mask.showInLibrary).map((mask, i) => (
             <ShapePreview mask={mask} key={mask.type} index={i} isPreview />
@@ -76,10 +82,17 @@ function ShapesPane(props) {
         </SectionContent>
       </Section>
       {enableStickers && (
-        <Section title={__('Stickers', 'web-stories')}>
-          <SectionContent>
-            {STICKER_TYPES.map((stickerType) => (
-              <StickerButton key={stickerType} stickerType={stickerType} />
+        <Section
+          data-testid="stickers-library-pane"
+          title={__('Stickers', 'web-stories')}
+        >
+          <SectionContent ref={stickersRef}>
+            {STICKER_TYPES.map((stickerType, i) => (
+              <StickerPreview
+                key={stickerType}
+                index={i}
+                stickerType={stickerType}
+              />
             ))}
           </SectionContent>
         </Section>

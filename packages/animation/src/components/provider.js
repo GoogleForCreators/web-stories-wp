@@ -27,11 +27,11 @@ import {
   useState,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { createContext } from '@web-stories-wp/design-system';
+import { createContext } from '@web-stories-wp/react';
 
 if (!('KeyframeEffect' in window)) {
   import(
-    /* webpackChunkName: "web-animations-js" */ 'web-animations-js/web-animations-next-lite.min.js'
+    /* webpackChunkName: "chunk-web-animations-js" */ 'web-animations-js/web-animations-next-lite.min.js'
   ).catch(() => undefined);
 }
 

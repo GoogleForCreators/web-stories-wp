@@ -18,6 +18,7 @@
  * External dependencies
  */
 import {
+  getByTestId,
   getByRole,
   getAllByRole,
   queryByRole,
@@ -26,6 +27,7 @@ import {
 
 /** @typedef {import('@testing-library/dom').Matcher} Matcher */
 /** @typedef {import('@testing-library/dom').ByRoleOptions} ByRoleOptions */
+/** @typedef {import('@testing-library/dom').ByTestIdOptions} ByTestIdOptions */
 
 export class Container {
   /**
@@ -70,6 +72,17 @@ export class Container {
         throw new Error(`Focus is not set within the <${this._path}> yet`);
       }
     });
+  }
+
+  /**
+   * See https://testing-library.com/docs/queries/bytestid
+   *
+   * @param {Matcher} text test id.
+   * @param {ByRoleOptions} options Options.
+   * @return {HTMLElement} The found element.
+   */
+  getByTestId(text, options) {
+    return getByTestId(this._node, text, options);
   }
 
   /**

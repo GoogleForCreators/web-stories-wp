@@ -18,26 +18,33 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { sprintf, __ } from '@web-stories-wp/i18n';
 
 /**
  * Update page URL in browser.
  *
  * @param {number} postId Current story id.
+ * @param {string} postEditURL Current story's edit link.
  * @return {Function} Function to refresh the post edit URL.
  */
-function useRefreshPostEditURL(postId) {
+function useRefreshPostEditURL(postId, postEditURL) {
   const refreshPostEditURL = useCallback(() => {
-    const getPostEditURL = addQueryArgs('post.php', {
-      post: postId,
-      action: 'edit',
-    });
-    window.history.replaceState(
-      { id: postId },
-      'Post ' + postId,
-      getPostEditURL + window.location.hash
-    );
-  }, [postId]);
+    try {
+      const newUrl = new URL(postEditURL);
+      newUrl.hash = window.location.hash;
+      window.history.replaceState(
+        { id: postId },
+        sprintf(
+          /* translators: %d: current story id. */
+          __('Post %d', 'web-stories'),
+          postId
+        ),
+        newUrl.toString()
+      );
+    } catch (error) {
+      // Do nothing for now.
+    }
+  }, [postId, postEditURL]);
   return refreshPostEditURL;
 }
 

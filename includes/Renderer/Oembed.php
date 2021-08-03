@@ -61,7 +61,7 @@ class Oembed extends Service_Base {
 	 *
 	 * @return string $template
 	 */
-	public function filter_embed_template( $template ) {
+	public function filter_embed_template( $template ): string {
 		if ( get_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/embed-web-story.php';
 		}
@@ -83,7 +83,7 @@ class Oembed extends Service_Base {
 	 *
 	 * @return string Filtered embed code.
 	 */
-	public function filter_embed_html( $output, $post, $width, $height ) {
+	public function filter_embed_html( $output, $post, $width, $height ): string {
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $output;
 		}
@@ -121,7 +121,7 @@ class Oembed extends Service_Base {
 	 * @param int     $width  The requested width.
 	 * @return array The modified response data.
 	 */
-	public function filter_oembed_response_data( $data, $post, $width ) {
+	public function filter_oembed_response_data( $data, $post, $width ): array {
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $data;
 		}
@@ -144,7 +144,7 @@ class Oembed extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function get_embed_height_width( $old_width ) {
+	protected function get_embed_height_width( $old_width ): array {
 		/** This filter is documented in wp-includes/embed.php */
 		$min_max_width = apply_filters(
 			'oembed_min_max_width',

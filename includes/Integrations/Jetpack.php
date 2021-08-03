@@ -89,7 +89,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Modified list of post types.
 	 */
-	public function add_to_jetpack_sitemap( $post_types ) {
+	public function add_to_jetpack_sitemap( array $post_types ): array {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
@@ -104,7 +104,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function add_videopress( array $mime_types ) {
+	public function add_videopress( array $mime_types ): array {
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
@@ -120,7 +120,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ) {
+	public function filter_ajax_query_attachments_args( array $args ): array {
 		if ( ! isset( $args['post_mime_type'] ) ) {
 			return $args;
 		}
@@ -157,7 +157,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function filter_admin_ajax_response( array $response, WP_Post $attachment ) {
+	public function filter_admin_ajax_response( array $response, WP_Post $attachment ): array {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
 			return $response;
 		}
@@ -208,7 +208,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	protected function add_extra_data( array $data, $videopress_key ) {
+	protected function add_extra_data( array $data, $videopress_key ): array {
 		// Make video as optimized.
 		$data['media_source'] = 'video-optimization';
 
@@ -238,7 +238,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return string
 	 */
-	protected function format_milliseconds( $milliseconds ) {
+	protected function format_milliseconds( $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );
 
 		if ( $seconds >= 1 ) {
@@ -283,9 +283,9 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return bool Whether the current request is an AMP request.
 	 */
-	public function force_amp_request( $is_amp_request ) {
+	public function force_amp_request( $is_amp_request ): bool {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
-			return $is_amp_request;
+			return (bool) $is_amp_request;
 		}
 		return true;
 	}
