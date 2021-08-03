@@ -653,11 +653,11 @@ class Media extends Service_Base {
 	 *
 	 * @return bool|null
 	 */
-	public function get_callback_is_muted( $prepared ){
+	public function get_callback_is_muted( $prepared ) {
 		$id = $prepared['id'];
 
 		$value = get_metadata_raw( 'post', $id, self::IS_MUTED_POST_META_KEY, true );
-		if ( null === $value ){
+		if ( null === $value ) {
 			return $value;
 		}
 
@@ -669,14 +669,14 @@ class Media extends Service_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param mixed $value Value to updated
+	 * @param mixed   $value  Value to updated
 	 * @param WP_Post $object Post object to be updated.
 	 *
 	 * @return bool|WP_Error
 	 */
 	public function update_callback_is_muted( $value, $object ) {
 		$object_id = $object->ID;
-		$meta_key = self::IS_MUTED_POST_META_KEY;
+		$meta_key  = self::IS_MUTED_POST_META_KEY;
 		$meta_type = 'post';
 
 		if ( ! current_user_can( "edit_{$meta_type}_meta", $object_id, $meta_key ) ) {
