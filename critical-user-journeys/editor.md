@@ -39,11 +39,11 @@
 |                                                                   | Select an individual word to edit                | 🏔️ **90.00%** *(9 / 10)*   |
 |                                                                   | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🛴 **88.24%** *(15 / 17)*   |
-| Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🛴 **50.00%** *(1 / 2)*     |
-|                                                                   | Display Panel                                    | 🛴 **50.00%** *(1 / 2)*     |
-|                                                                   | Manage Text Style Presets                        | 🚨 **0.00%** *(0 / 2)*      |
+| Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
+|                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
+|                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🛴 **50.00%** *(4 / 8)*     |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
 | Creator can Apply or Save a Color from/to Their Preset Library    | Add Colors from Color Picker                     | 🏆 **100.00%** *(3 / 3)*    |
 |                                                                   | Add Colors                                       | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
@@ -51,8 +51,8 @@
 | Creator can Manipulate Shape                                      | Border Radius                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Border                                           | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-| Creator can Select an Element                                     | Transforming element                             | 🛴 **50.00%** *(1 / 2)*     |
-|                                                                   | *[total]*                                        | 🛴 **50.00%** *(1 / 2)*     |
+| Creator can Select an Element                                     | Transforming element                             | 🏆 **100.00%** *(2 / 2)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.25%** *(302 / 418)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.64%** *(312 / 418)* |
