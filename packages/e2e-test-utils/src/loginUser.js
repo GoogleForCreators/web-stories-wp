@@ -17,7 +17,11 @@
 /**
  * WordPress dependencies
  */
-import { createURL, isCurrentURL } from '@wordpress/e2e-test-utils';
+import {
+  createURL,
+  isCurrentURL,
+  pressKeyWithModifier,
+} from '@wordpress/e2e-test-utils';
 
 /**
  * Performs log in with specified username and password.
@@ -46,8 +50,11 @@ async function loginUser(username, password) {
   }
 
   await page.focus('#user_login');
+  await pressKeyWithModifier('primary', 'a');
   await page.type('#user_login', username);
+
   await page.focus('#user_pass');
+  await pressKeyWithModifier('primary', 'a');
   await page.type('#user_pass', password);
 
   await Promise.all([page.waitForNavigation(), page.click('#wp-submit')]);
