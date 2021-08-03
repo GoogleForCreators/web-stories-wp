@@ -37,6 +37,7 @@ jest.mock('../../canvas', () => ({
 }));
 
 jest.mock('../../story', () => ({
+  ...jest.requireActual('../../story'),
   useStory: jest.fn(),
 }));
 
@@ -124,7 +125,7 @@ describe('useRightClickMenu', () => {
     });
   });
 
-  describe('Page selected from right click', () => {
+  describe('Page right clicked', () => {
     it('should return the correct menu items', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
@@ -194,6 +195,9 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
+        RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
       ]);
     });
   });

@@ -18,7 +18,9 @@
  */
 import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
+import { clearableAttributes as imageAttributeDefaults } from '../../../elements/image';
 import { Fixture } from '../../../karma';
+import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
@@ -550,6 +552,136 @@ describe('Right Click Menu integration', () => {
       expect(
         fixture.editor.canvas.rightClickMenu.bringToFront.disabled
       ).toBeTrue();
+    });
+
+    describe('right click menu: copying, pasting, and clearing styles', () => {
+      const clearableImageProperties = Object.keys(imageAttributeDefaults);
+
+      it('should copy and paste styles', async () => {
+        const earthImage = await addEarthImage();
+        const rangerImage = await addRangerImage();
+
+        // select earth image
+        await fixture.events.click(
+          fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+        );
+
+        // add border
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.border.width()
+        );
+        await fixture.events.keyboard.type('20');
+
+        // add border radius
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.borderRadius.radius()
+        );
+        await fixture.events.keyboard.type('50');
+
+        // add filter
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.filters.solid
+        );
+
+        // add opacity
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.layerStyle.opacity
+        );
+        await fixture.events.keyboard.type('40');
+
+        // copy earth image styles
+        await rightClickOnTarget(
+          fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+        );
+        await fixture.events.click(
+          fixture.editor.canvas.rightClickMenu.copyImageStyles
+        );
+
+        // paste styles onto ranger image
+        await rightClickOnTarget(
+          fixture.editor.canvas.framesLayer.frame(rangerImage.id).node
+        );
+        await fixture.events.click(
+          fixture.editor.canvas.rightClickMenu.pasteImageStyles
+        );
+
+        // verify that the styles were copied and pasted
+        const { currentPage } = await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            currentPage: state.currentPage,
+          }))
+        );
+
+        const images = currentPage.elements.filter(
+          (element) => !element.isBackground
+        );
+
+        const copiedProperties = objectPick(
+          images[0],
+          clearableImageProperties
+        );
+        const pastedProperties = objectPick(
+          images[0],
+          clearableImageProperties
+        );
+
+        expect(copiedProperties).toEqual(pastedProperties);
+      });
+
+      it('should reset styles to the default', async () => {
+        const earthImage = await addEarthImage();
+
+        // select earth image
+        await fixture.events.click(
+          fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+        );
+
+        // add border
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.border.width()
+        );
+        await fixture.events.keyboard.type('20');
+
+        // add border radius
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.borderRadius.radius()
+        );
+        await fixture.events.keyboard.type('50');
+
+        // add filter
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.filters.solid
+        );
+
+        // add opacity
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.layerStyle.opacity
+        );
+        await fixture.events.keyboard.type('40');
+
+        // clear earth styles
+        await rightClickOnTarget(
+          fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+        );
+        await fixture.events.click(
+          fixture.editor.canvas.rightClickMenu.clearImageStyles
+        );
+
+        // verify styles were reset to defaults
+        const { currentPage } = await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            currentPage: state.currentPage,
+          }))
+        );
+
+        const image = currentPage.elements.find(
+          (element) => !element.isBackground
+        );
+
+        expect(objectPick(image, clearableImageProperties)).toEqual(
+          imageAttributeDefaults
+        );
+      });
     });
   });
 });

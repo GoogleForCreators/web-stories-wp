@@ -26,13 +26,13 @@ export class RightClickMenu extends Container {
   // default actions
   get copy() {
     return this.queryByRole('button', {
-      name: /Copy/i,
+      name: /^Copy/i,
     });
   }
 
   get paste() {
     return this.queryByRole('button', {
-      name: /Paste/i,
+      name: /^Paste/i,
     });
   }
 
@@ -45,37 +45,37 @@ export class RightClickMenu extends Container {
   // foreground media actions
   get sendBackward() {
     return this.getByRole('button', {
-      name: /Send Backward/i,
+      name: /^Send Backward/i,
     });
   }
 
   get sendToBack() {
     return this.getByRole('button', {
-      name: /Send to Back/i,
+      name: /^Send to Back/i,
     });
   }
 
   get bringForward() {
     return this.getByRole('button', {
-      name: /Bring Forward/i,
+      name: /^Bring Forward/i,
     });
   }
 
   get bringToFront() {
     return this.getByRole('button', {
-      name: /Bring to Front/i,
+      name: /^Bring to Front/i,
     });
   }
 
   get setAsPageBackground() {
     return this.getByRole('button', {
-      name: /Set as page Background/i,
+      name: /^Set as page Background/i,
     });
   }
 
   get scaleAndCropImage() {
     return this.getByRole('button', {
-      name: /Scale & Crop Image/i,
+      name: /^Scale & Crop Image/i,
     });
   }
 
@@ -88,7 +88,25 @@ export class RightClickMenu extends Container {
 
   get deletePage() {
     return this.queryByRole('button', {
-      name: /Delete Page/i,
+      name: /^Delete Page/i,
+    });
+  }
+
+  get copyImageStyles() {
+    return this.getByRole('button', {
+      name: /^Copy Image Styles/i,
+    });
+  }
+
+  get pasteImageStyles() {
+    return this.getByRole('button', {
+      name: /^Paste Image Styles/i,
+    });
+  }
+
+  get clearImageStyles() {
+    return this.getByRole('button', {
+      name: /^Clear Image Styles/i,
     });
   }
 }

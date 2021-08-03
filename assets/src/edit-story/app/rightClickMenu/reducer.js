@@ -18,8 +18,10 @@
  * Internal dependencies
  */
 import { duplicatePage } from '../../elements';
+import { getElementStyles } from './utils';
 
 export const ACTION_TYPES = {
+  COPY_ELEMENT_STYLES: 'COPY_ELEMENT_STYLES',
   COPY_PAGE: 'COPY_PAGE',
   OPEN_MENU: 'OPEN_MENU',
   CLOSE_MENU: 'CLOSE_MENU',
@@ -27,6 +29,11 @@ export const ACTION_TYPES = {
 };
 
 export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
+  copiedElement: {
+    animations: null,
+    styles: null,
+    type: null,
+  },
   copiedPage: null,
   isMenuOpen: false,
   menuPosition: {
@@ -48,6 +55,15 @@ function rightClickMenuReducer(state, action) {
       return {
         ...state,
         copiedPage: duplicatePage(action.payload),
+      };
+    case ACTION_TYPES.COPY_ELEMENT_STYLES:
+      return {
+        ...state,
+        copiedElement: {
+          animations: action.payload.animations,
+          styles: getElementStyles(action.payload.element),
+          type: action.payload.element?.type,
+        },
       };
     case ACTION_TYPES.OPEN_MENU:
       return {

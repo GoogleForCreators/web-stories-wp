@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-export { default as StoryProvider } from './storyProvider';
-export { default as useStory } from './useStory';
-export {
-  useStoryTriggers,
-  useStoryTriggerListener,
-  useStoryTriggersDispatch,
-  STORY_EVENTS,
-} from './storyTriggers';
-export { ELEMENT_TYPES } from './constants';
+export const ELEMENT_TYPES = {
+  IMAGE: 'image',
+  SHAPE: 'shape',
+  TEXT: 'text',
+  VIDEO: 'video',
+  GIF: 'gif',
+};
