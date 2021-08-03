@@ -41,7 +41,7 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-function PageAdvancementPanel() {
+function BackgroundAudioPanel() {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -88,4 +88,4 @@ function PageAdvancementPanel() {
   );
 }
 
-export default PageAdvancementPanel;
+export default BackgroundAudioPanel;
