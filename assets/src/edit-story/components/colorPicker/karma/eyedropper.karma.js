@@ -75,7 +75,7 @@ describe('Eyedropper', () => {
     );
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
-      timeout: 4000,
+      timeout: 9000,
     });
     const imageOnCanvas = (await getElements(fixture))[1];
     const imageOnCanvasRect = (
