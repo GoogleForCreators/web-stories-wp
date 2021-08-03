@@ -70,8 +70,6 @@ class Media extends Test_Case {
 		$media = new \Google\Web_Stories\Media\Media();
 		$this->call_private_method( $media, 'register_meta' );
 
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, 'attachment' ) );
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::MUTED_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertFalse( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'attachment' ) );
@@ -167,7 +165,6 @@ class Media extends Test_Case {
 
 		$this->assertEqualSets(
 			[
-				'is_muted'      => null,
 				'type'          => 'image',
 				'media_source'  => '',
 				'id'            => $poster_attachment_id,
@@ -182,7 +179,6 @@ class Media extends Test_Case {
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayHasKey( 'media_source', $video );
-		$this->assertArrayHasKey( 'is_muted', $video );
 	}
 
 	/**

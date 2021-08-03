@@ -37,7 +37,7 @@ use WP_REST_Request;
  * Class Media
  */
 class Media extends Service_Base {
-	use Screen, Types;
+	use Screen;
 	/**
 	 * The image size for the poster-portrait-src.
 	 *
@@ -102,26 +102,11 @@ class Media extends Service_Base {
 	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
 
 	/**
-	 * The muted video id post meta key.
-	 *
-	 * @var string
-	 */
-	const MUTED_ID_POST_META_KEY = 'web_stories_muted_id';
-
-	/**
 	 * Key for media post type.
 	 *
 	 * @var string
 	 */
 	const STORY_MEDIA_TAXONOMY = 'web_story_media_source';
-
-
-	/**
-	 * Is muted.
-	 *
-	 * @var string
-	 */
-	const IS_MUTED_POST_META_KEY = 'web_stories_is_muted';
 
 	/**
 	 * Init.
@@ -178,31 +163,19 @@ class Media extends Service_Base {
 	 * @return void
 	 */
 	protected function register_meta() {
-		register_meta(
-			'post',
-			self::IS_MUTED_POST_META_KEY,
-			[
-				'type'              => 'boolean',
-				'description'       => __( 'Whether the video is muted', 'web-stories' ),
-				'default'        => false,
-				'single'         => true,
-				'object_subtype' => 'attachment',
-			]
-		);
-
-		register_meta(
-			'post',
-			self::POSTER_ID_POST_META_KEY,
-			[
-				'sanitize_callback' => 'absint',
-				'type'              => 'integer',
-				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => 0,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
-			]
-		);
+			register_meta(
+				'post',
+				self::POSTER_ID_POST_META_KEY,
+				[
+					'sanitize_callback' => 'absint',
+					'type'              => 'integer',
+					'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
+					'show_in_rest'      => true,
+					'default'           => 0,
+					'single'            => true,
+					'object_subtype'    => 'attachment',
+				]
+			);
 
 		register_meta(
 			'post',
@@ -211,20 +184,6 @@ class Media extends Service_Base {
 				'sanitize_callback' => 'absint',
 				'type'              => 'integer',
 				'description'       => __( 'ID of optimized video.', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => 0,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
-			]
-		);
-
-		register_meta(
-			'post',
-			self::MUTED_ID_POST_META_KEY,
-			[
-				'sanitize_callback' => 'absint',
-				'type'              => 'integer',
-				'description'       => __( 'ID of muted video.', 'web-stories' ),
 				'show_in_rest'      => true,
 				'default'           => 0,
 				'single'            => true,
@@ -387,21 +346,6 @@ class Media extends Service_Base {
 			]
 		);
 
-		register_rest_field(
-			'attachment',
-			'is_muted',
-			[
-				'get_callback'    => [ $this, 'get_callback_is_muted' ],
-				'schema'          => [
-					'type'        => [ 'boolean', 'null' ],
-					'description' => __( 'Whether the video is muted', 'web-stories' ),
-					'default'     => null,
-					'context'     => [ 'view', 'edit', 'embed' ],
-				],
-				'update_callback' => [ $this, 'update_callback_is_muted' ],
-			]
-		);
-
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
 			'attachment',
@@ -536,7 +480,6 @@ class Media extends Service_Base {
 			$response['featured_media_src'] = $image;
 		}
 
-		$response['is_muted']     = $this->get_callback_is_muted( $response );
 		$response['media_source'] = $this->get_callback_media_source( $response );
 
 		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
@@ -643,55 +586,5 @@ class Media extends Service_Base {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Get the attachment's post meta.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param array $prepared Array of data to add to.
-	 *
-	 * @return bool|null
-	 */
-	public function get_callback_is_muted( $prepared ) {
-		$id = $prepared['id'];
-
-		$value = get_metadata_raw( 'post', $id, self::IS_MUTED_POST_META_KEY, true );
-		if ( null === $value ) {
-			return $value;
-		}
-
-		return rest_sanitize_boolean( $value );
-	}
-
-	/**
-	 * Update the attachment's post meta.
-	 *
-	 * @since 1.10.0
-	 *
-	 * @param mixed   $value  Value to updated
-	 * @param WP_Post $object Post object to be updated.
-	 *
-	 * @return bool|WP_Error
-	 */
-	public function update_callback_is_muted( $value, $object ) {
-		$object_id = $object->ID;
-		$meta_key  = self::IS_MUTED_POST_META_KEY;
-		$meta_type = 'post';
-
-		if ( ! current_user_can( "edit_{$meta_type}_meta", $object_id, $meta_key ) ) {
-			return new WP_Error(
-				'rest_cannot_update',
-				/* translators: %s: Custom field key.**/
-				sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $meta_type ),
-				array(
-					'key'    => $meta_type,
-					'status' => rest_authorization_required_code(),
-				)
-			);
-		}
-
-		return (bool) update_metadata( $meta_type, $object_id, wp_slash( $meta_key ), (int) $value );
 	}
 }
