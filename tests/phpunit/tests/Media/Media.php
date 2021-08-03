@@ -38,7 +38,6 @@ class Media extends Test_Case {
 		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
 		$this->assertSame( 10, has_filter( 'ajax_query_attachments_args', [ $media, 'filter_ajax_query_attachments_args' ] ) );
 		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_generated_media_attachments' ] ) );
-		$this->assertSame( 15, has_filter( 'default_post_metadata', [ $media, 'filter_default_value_is_muted' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -168,11 +167,13 @@ class Media extends Test_Case {
 
 		$this->assertEqualSets(
 			[
+				'is_muted'      => null,
 				'type'          => 'image',
 				'media_source'  => '',
 				'id'            => $poster_attachment_id,
 				'url'           => wp_get_attachment_url( $poster_attachment_id ),
 				'media_details' => [],
+
 			],
 			$image
 		);
@@ -181,8 +182,7 @@ class Media extends Test_Case {
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayHasKey( 'media_source', $video );
-		$this->assertArrayHasKey( 'meta', $video );
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, $video['meta'] );
+		$this->assertArrayHasKey( 'is_muted', $video );
 	}
 
 	/**
@@ -538,103 +538,5 @@ class Media extends Test_Case {
 		);
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::filter_default_value_is_muted
-	 */
-	public function test_filter_default_value_is_muted() {
-		$video_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
-				'post_parent'    => 0,
-				'post_mime_type' => 'video/mp4',
-				'post_title'     => 'Test Video',
-			]
-		);
-		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ], 10, 3 );
-		$meta = get_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
-		$this->assertSame( 'has-audio', $meta );
-		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata' ] );
-	}
-
-	/**
-	 * @covers ::filter_default_value_is_muted
-	 */
-	public function test_filter_default_value_is_muted_image() {
-		$poster_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
-				'post_parent'    => 0,
-				'post_mime_type' => 'image/jpeg',
-				'post_title'     => 'Test Image',
-			]
-		);
-		wp_generate_attachment_metadata( $poster_attachment_id, get_attached_file( $poster_attachment_id ) );
-
-		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
-		$this->assertSame( '', $meta );
-	}
-
-	/**
-	 * @covers ::filter_default_value_is_muted
-	 */
-	public function test_filter_default_value_is_muted_no_sound() {
-		$video_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
-				'post_parent'    => 0,
-				'post_mime_type' => 'video/mp4',
-				'post_title'     => 'Test Video - no sounds',
-			]
-		);
-		add_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata_empty_array' ], 10, 3 );
-
-		$meta = get_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
-		$this->assertSame( '', $meta );
-
-		remove_filter( 'get_post_metadata', [ $this, 'filter_wp_get_attachment_metadata_empty_array' ] );
-	}
-
-	/**
-	 * @param $value
-	 * @param $object_id
-	 * @param $meta_key
-	 *
-	 * @return \array[][]
-	 */
-	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {
-		if ( '_wp_attachment_metadata' !== $meta_key ) {
-			return $value;
-		}
-
-		$original_data = [
-			[
-				'audio'     => [],
-				'mime_type' => 'video/quicktime',
-
-			],
-		];
-
-		return $original_data;
-	}
-
-	/**
-	 * @param $value
-	 * @param $object_id
-	 * @param $meta_key
-	 *
-	 * @return \array[][]
-	 */
-	public function filter_wp_get_attachment_metadata_empty_array( $value, $object_id, $meta_key ) {
-		if ( '_wp_attachment_metadata' !== $meta_key ) {
-			return $value;
-		}
-
-		return [
-			[
-				'mime_type' => 'video/quicktime',
-			],
-		];
 	}
 }
