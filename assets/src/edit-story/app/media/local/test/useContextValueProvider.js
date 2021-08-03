@@ -219,6 +219,7 @@ describe('useContextValueProvider', () => {
       allowedMimeTypes: {
         video: [],
       },
+      capabilities: { hasUploadMediaAction: true },
     };
     const { result } = renderAllProviders({
       reducerState,

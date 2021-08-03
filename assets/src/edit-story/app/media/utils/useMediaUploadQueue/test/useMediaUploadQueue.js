@@ -85,7 +85,7 @@ describe('useMediaUploadQueue', () => {
       expect(result.current.state).toStrictEqual({
         pending: [],
         failures: [],
-        processed: [],
+        posterProcessed: [],
         progress: [],
         isUploading: false,
         isTranscoding: false,
@@ -148,7 +148,7 @@ describe('useMediaUploadQueue', () => {
       expect(result.current.state).toStrictEqual({
         pending: [],
         failures: [],
-        processed: [],
+        posterProcessed: [],
         progress: [],
         isUploading: false,
         isTranscoding: false,
