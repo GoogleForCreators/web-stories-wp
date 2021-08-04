@@ -95,7 +95,6 @@ const TextWrapper = styled.span`
   height: 16px;
   letter-spacing: 0.3px;
   font-weight: 700;
-  letter-spacing: 0.3px;
   max-width: 210px;
   color: ${({ fgColor }) => fgColor};
 `;

@@ -534,6 +534,8 @@ describe('Page output', () => {
           pageAttachment: {
             url: 'https://example.test',
             ctaText: 'Click me!',
+            theme: 'dark',
+            icon: 'https://example.test/example.jpg',
           },
         },
         autoAdvance: false,
@@ -541,15 +543,21 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const pageAttachment = container.querySelector(
-        'amp-story-page-attachment'
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).toHaveTextContent('Click me!');
+      await expect(pageOutlink).toHaveAttribute(
+        'cta-image',
+        'https://example.test/example.jpg'
       );
-      await expect(pageAttachment.dataset.ctaText).toStrictEqual('Click me!');
-      await expect(pageAttachment).toHaveAttribute(
+      await expect(pageOutlink).toHaveAttribute(
+        'theme',
+        'dark'
+      );
+      await expect(pageOutlink.firstChild).toHaveAttribute(
         'href',
         'https://example.test'
       );
-      await expect(pageAttachment).toBeInTheDocument();
+      await expect(pageOutlink).toBeInTheDocument();
     });
 
     it('should not output page attachment if the URL is empty', async () => {
@@ -569,10 +577,8 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const pageAttachment = container.querySelector(
-        'amp-story-page-attachment'
-      );
-      await expect(pageAttachment).not.toBeInTheDocument();
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).not.toBeInTheDocument();
     });
 
     it('should not output a link in page attachment area', () => {
