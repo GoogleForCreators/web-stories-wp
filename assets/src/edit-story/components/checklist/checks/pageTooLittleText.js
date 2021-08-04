@@ -42,12 +42,14 @@ import {
   getVisibleThumbnails,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
 }
 
 const PageTooLittleText = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooLittleText),
@@ -65,40 +67,38 @@ const PageTooLittleText = () => {
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooLittleText', isRendered);
 
-  return (
-    isRendered && (
-      <ChecklistCard
-        title={title}
-        cardType={
-          failingPages.length > 1
-            ? CARD_TYPE.MULTIPLE_ISSUE
-            : CARD_TYPE.SINGLE_ISSUE
-        }
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingPages).map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() => handleClick(page.id)}
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={
-                  <PagePreview
-                    page={page}
-                    width={THUMBNAIL_DIMENSIONS.WIDTH}
-                    height={THUMBNAIL_DIMENSIONS.HEIGHT}
-                    as="div"
-                  />
-                }
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      cardType={
+        failingPages.length > 1
+          ? CARD_TYPE.MULTIPLE_ISSUE
+          : CARD_TYPE.SINGLE_ISSUE
+      }
+      footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+      thumbnailCount={failingPages.length}
+      thumbnail={
+        <>
+          {getVisibleThumbnails(failingPages).map((page) => (
+            <Thumbnail
+              key={page.id}
+              onClick={() => handleClick(page.id)}
+              type={THUMBNAIL_TYPES.PAGE}
+              displayBackground={
+                <PagePreview
+                  page={page}
+                  width={THUMBNAIL_DIMENSIONS.WIDTH}
+                  height={THUMBNAIL_DIMENSIONS.HEIGHT}
+                  as="div"
+                />
+              }
+              aria-label={__('Go to offending page', 'web-stories')}
+            />
+          ))}
+        </>
+      }
+    />
+  ) : null;
 };
 
 export default PageTooLittleText;

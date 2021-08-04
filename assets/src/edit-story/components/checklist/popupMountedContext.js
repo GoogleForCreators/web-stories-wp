@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useContextSelector, identity } from '@web-stories-wp/react';
-
 /**
  * Internal dependencies
  */
-import Context from './context';
+import { useChecklist } from './checklistContext';
 
-export function useChecklist(selector) {
-  const context = useContextSelector(Context, selector ?? identity);
-  return context;
+export function useIsChecklistMounted() {
+  return useChecklist(({ state }) => state.isChecklistMounted);
 }
