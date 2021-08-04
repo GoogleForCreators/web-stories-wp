@@ -28,6 +28,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\User\Preferences;
 use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Video_Muting;
 
 /**
  * Deletes options and transients.
@@ -119,8 +120,8 @@ function delete_stories_post_meta() {
 	delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
 	delete_post_meta_by_key( Media::POSTER_ID_POST_META_KEY );
 	delete_post_meta_by_key( Media::OPTIMIZED_ID_POST_META_KEY );
-	delete_post_meta_by_key( Media::MUTED_ID_POST_META_KEY );
-	delete_post_meta_by_key( Media::IS_MUTED_POST_META_KEY );
+	delete_post_meta_by_key( Video_Muting::MUTED_ID_POST_META_KEY );
+	delete_post_meta_by_key( Video_Muting::IS_MUTED_POST_META_KEY );
 }
 
 /**

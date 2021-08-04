@@ -25,6 +25,7 @@ import { useFeature } from 'flagged';
  */
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
+import { useConfig } from '../../config';
 
 function useDetectVideoHasAudio({ updateMediaElement }) {
   const {
@@ -33,6 +34,9 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
   const setProperties = useCallback(
     (id, properties) => {
       updateElementsByResourceId({ id, properties });
@@ -50,7 +54,7 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
      * @return {Promise<void>}
      */
     async (id, src) => {
-      if (!isMuteVideoEnabled) {
+      if (!isMuteVideoEnabled || !hasUploadMediaAction) {
         return;
       }
       try {
@@ -71,15 +75,19 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         });
 
         await updateMedia(id, {
-          meta: {
-            web_stories_is_muted: !hasAudio,
-          },
+          is_muted: !hasAudio,
         });
       } catch (error) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, isMuteVideoEnabled]
+    [
+      setProperties,
+      updateMedia,
+      updateMediaElement,
+      isMuteVideoEnabled,
+      hasUploadMediaAction,
+    ]
   );
 
   return {

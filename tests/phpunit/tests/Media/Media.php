@@ -38,7 +38,6 @@ class Media extends Test_Case {
 		$this->assertSame( 10, has_action( 'delete_attachment', [ $media, 'delete_video_poster' ] ) );
 		$this->assertSame( 10, has_filter( 'ajax_query_attachments_args', [ $media, 'filter_ajax_query_attachments_args' ] ) );
 		$this->assertSame( 10, has_filter( 'pre_get_posts', [ $media, 'filter_generated_media_attachments' ] ) );
-		$this->assertSame( 15, has_filter( 'default_post_metadata', [ $media, 'filter_default_value_is_muted' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -71,8 +70,6 @@ class Media extends Test_Case {
 		$media = new \Google\Web_Stories\Media\Media();
 		$this->call_private_method( $media, 'register_meta' );
 
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, 'attachment' ) );
-		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::MUTED_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertTrue( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, 'attachment' ) );
 		$this->assertFalse( registered_meta_key_exists( 'post', \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'attachment' ) );
@@ -130,7 +127,7 @@ class Media extends Test_Case {
 	public function test_wp_prepare_attachment_for_js() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -173,6 +170,7 @@ class Media extends Test_Case {
 				'id'            => $poster_attachment_id,
 				'url'           => wp_get_attachment_url( $poster_attachment_id ),
 				'media_details' => [],
+
 			],
 			$image
 		);
@@ -181,8 +179,6 @@ class Media extends Test_Case {
 		$this->assertArrayHasKey( 'featured_media', $video );
 		$this->assertArrayHasKey( 'featured_media_src', $video );
 		$this->assertArrayHasKey( 'media_source', $video );
-		$this->assertArrayHasKey( 'meta', $video );
-		$this->assertArrayHasKey( \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, $video['meta'] );
 	}
 
 	/**
@@ -234,7 +230,7 @@ class Media extends Test_Case {
 	public function test_delete_video_poster() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -265,7 +261,7 @@ class Media extends Test_Case {
 	public function test_delete_video_poster_no_generated_poster() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -293,7 +289,7 @@ class Media extends Test_Case {
 	public function test_delete_video_poster_when_attachment_is_deleted() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -538,60 +534,5 @@ class Media extends Test_Case {
 		);
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::filter_default_value_is_muted
-	 */
-	public function filter_default_value_is_muted() {
-		$video_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
-				'post_parent'    => 0,
-				'post_mime_type' => 'video/mp4',
-				'post_title'     => 'Test Video',
-			]
-		);
-		wp_generate_attachment_metadata( $video_attachment_id, get_attached_file( $video_attachment_id ) );
-
-		$meta = get_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
-		$this->assertFalse( $meta );
-	}
-
-	/**
-	 * @covers ::filter_default_value_is_muted
-	 */
-	public function filter_default_value_is_muted_image() {
-		$poster_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/images/canola.jpg',
-				'post_parent'    => 0,
-				'post_mime_type' => 'image/jpeg',
-				'post_title'     => 'Test Image',
-			]
-		);
-		wp_generate_attachment_metadata( $poster_attachment_id, get_attached_file( $poster_attachment_id ) );
-
-		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
-		$this->assertFalse( $meta );
-	}
-
-	/**
-	 * @covers ::filter_default_value_is_muted
-	 */
-	public function filter_default_value_is_muted_no_sound() {
-		$video_attachment_id = self::factory()->attachment->create_object(
-			[
-				'file'           => WEB_STORIES_TEST_DATA_DIR . '/video-no-sound.mp4',
-				'post_parent'    => 0,
-				'post_mime_type' => 'video/mp4',
-				'post_title'     => 'Test Video - no sounds',
-			]
-		);
-		wp_generate_attachment_metadata( $video_attachment_id, get_attached_file( $video_attachment_id ) );
-
-		$meta = get_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::IS_MUTED_POST_META_KEY, true );
-		$this->assertTrue( $meta );
-
 	}
 }

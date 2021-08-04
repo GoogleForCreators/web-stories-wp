@@ -30,33 +30,54 @@ import ImageElementResolution from '../checks/imageElementResolution';
 import StoryPagesCount from '../checks/storyPagesCount';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
-export function DesignChecks({
+function DesignPanel({
   badgeCount = 0,
   isOpen,
   maxHeight,
   onClick,
   title,
+  children,
 }) {
+  const isChecklistMounted = useIsChecklistMounted();
+  return isChecklistMounted ? (
+    <StyledTablistPanel
+      badgeCount={badgeCount}
+      isExpanded={isOpen}
+      onClick={onClick}
+      maxHeight={maxHeight}
+      title={title}
+    >
+      <PanelText>
+        {__('Follow best practices for Web Stories.', 'web-stories')}
+      </PanelText>
+      {children}
+    </StyledTablistPanel>
+  ) : (
+    children
+  );
+}
+DesignPanel.propTypes = {
+  badgeCount: PropTypes.number,
+  isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.node),
+};
+
+export function DesignChecks(props) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.DESIGN}>
-      <StyledTablistPanel
-        badgeCount={badgeCount}
-        isExpanded={isOpen}
-        onClick={onClick}
-        maxHeight={maxHeight}
-        title={title}
-      >
-        <PanelText>
-          {__('Follow best practices for Web Stories.', 'web-stories')}
-        </PanelText>
+      <DesignPanel {...props}>
         <StoryPagesCount />
         <PageTooMuchText />
         <PageTooLittleText />
         <PageTooManyLinks />
         <VideoElementResolution />
         <ImageElementResolution />
-      </StyledTablistPanel>
+      </DesignPanel>
     </ChecklistCategoryProvider>
   );
 }

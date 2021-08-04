@@ -25,8 +25,10 @@ import { useConfig } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 const StoryMissingPublisherName = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const { generalSettingsLink, publisherName } = useConfig(
     ({ metadata, generalSettingsLink }) => ({
       publisherName: metadata.publisher?.name,
@@ -40,7 +42,8 @@ const StoryMissingPublisherName = () => {
   useRegisterCheck('StoryMissingPublisherName', !hasPublisherName);
 
   return (
-    !hasPublisherName && (
+    !hasPublisherName &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         footer={

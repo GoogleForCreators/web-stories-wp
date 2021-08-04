@@ -34,6 +34,7 @@ import {
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function textElementFontSizeTooSmall(element) {
   return (
@@ -44,6 +45,7 @@ export function textElementFontSizeTooSmall(element) {
 }
 
 const TextElementFontSizeTooSmall = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const elements = useMemo(
     () => filterStoryElements(pages, textElementFontSizeTooSmall),
@@ -63,7 +65,8 @@ const TextElementFontSizeTooSmall = () => {
   const isRendered = elements.length > 0;
   useRegisterCheck('TextElementFontSizeTooSmall', isRendered);
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

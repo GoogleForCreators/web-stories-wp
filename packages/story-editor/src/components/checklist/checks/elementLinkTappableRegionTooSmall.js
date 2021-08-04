@@ -34,6 +34,7 @@ import {
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
@@ -53,6 +54,7 @@ export function elementLinkTappableRegionTooSmall(element) {
 }
 
 const ElementLinkTappableRegionTooSmall = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const elements = useMemo(
     () => filterStoryElements(pages, elementLinkTappableRegionTooSmall),
@@ -73,7 +75,8 @@ const ElementLinkTappableRegionTooSmall = () => {
 
   const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooSmall;
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={
