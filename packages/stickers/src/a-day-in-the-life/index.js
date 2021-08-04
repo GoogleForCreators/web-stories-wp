@@ -16,16 +16,16 @@
 /**
  * Internal dependencies
  */
-import { default as dayInTheLifeBrwonRice } from './brownRice';
+import { default as dayInTheLifeBrownRice } from './brownRice';
 import { default as dayInTheLifeFish } from './fish';
 import { default as dayInTheLifeLeaves } from './yellowLeaves';
 import { default as dayInTheLifeJumpRope } from './jumpRope';
-import { default as dayInTheLifeDumbells } from './dumbells';
+import { default as dayInTheLifeDumbells } from './dumbbells';
 import { default as dayInTheLifeBag } from './whiteBag';
 import { default as dayInTheLifeAlarmClock } from './alarmClock';
 
 export {
-  dayInTheLifeBrwonRice,
+  dayInTheLifeBrownRice,
   dayInTheLifeFish,
   dayInTheLifeLeaves,
   dayInTheLifeJumpRope,

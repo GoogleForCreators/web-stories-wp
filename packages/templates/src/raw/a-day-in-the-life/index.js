@@ -39,7 +39,7 @@ export default {
     { label: _x('Honey Pot Yellow', 'color', 'web-stories'), color: '#ffc864' },
   ],
   description: __(
-    'This simple and minimalist template will let you create long format video stories that are highly engaging. Create day-in-the-life videos, workout routines, make up tutorials and much more.',
+    'This simple and minimalist template will let you create long format video stories that are highly engaging. Create day-in-the-life videos, workout routines, makeup tutorials and much more.',
     'web-stories'
   ),
   ...template,

@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Hand held sign', 'sticker name', 'web-stories');
+const title = _x('Handheld Sign', 'sticker name', 'web-stories');
 
 function HandHeldSign({ style }) {
   return (

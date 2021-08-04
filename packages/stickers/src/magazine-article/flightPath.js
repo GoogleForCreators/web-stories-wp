@@ -19,7 +19,7 @@
 import { _x } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
-const title = _x('Flight path', 'sticker name', 'web-stories');
+const title = _x('Flight Path', 'sticker name', 'web-stories');
 
 function FlightPath({ style }) {
   return (
