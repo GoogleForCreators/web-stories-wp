@@ -79,7 +79,6 @@ export class RightClickMenu extends Container {
     });
   }
 
-  // page actions
   get duplicatePage() {
     return this.queryByRole('button', {
       name: /Duplicate Page/i,
@@ -107,6 +106,24 @@ export class RightClickMenu extends Container {
   get clearImageStyles() {
     return this.getByRole('button', {
       name: /^Clear Image Styles/i,
+    });
+  }
+
+  get detachImageFromBackground() {
+    return this.getByRole('button', {
+      name: /^Detach Image From Background/i,
+    });
+  }
+
+  get addNewPageBefore() {
+    return this.getByRole('button', {
+      name: /^Add New Page Before/i,
+    });
+  }
+
+  get addNewPageAfter() {
+    return this.getByRole('button', {
+      name: /^Add New Page After/i,
     });
   }
 }
