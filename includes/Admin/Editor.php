@@ -234,8 +234,6 @@ class Editor extends Service_Base {
 		$post                     = get_post();
 		$story_id                 = ( $post ) ? $post->ID : null;
 		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
-		$has_publish_action       = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'publish_posts' );
-		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
 		$has_upload_media_action  = current_user_can( 'upload_files' );
 		$general_settings_url     = admin_url( 'options-general.php' );
 
