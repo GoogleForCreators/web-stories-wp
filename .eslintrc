@@ -70,10 +70,10 @@
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",
-        "from": "./assets/src/edit-story",
+        "from": "./packages/story-editor/src",
         "except": [ "./migration/migrations" ]
       }, {
-        "target": "./assets/src/edit-story",
+        "target": "./packages/story-editor/src",
         "from": "./packages/story-editor/src/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
