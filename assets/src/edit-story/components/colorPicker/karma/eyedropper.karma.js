@@ -54,7 +54,7 @@ describe('Eyedropper', () => {
     const image = fixture.editor.library.media.item(1);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
     await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 1, 1, { steps: 4 }),
+      moveRel(image, 1, 1),
       down(),
       moveRel(canvas, 30, 30),
       up(),
