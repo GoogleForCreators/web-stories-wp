@@ -20,7 +20,15 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { Input } from '@web-stories-wp/design-system';
+import {
+  Checkbox,
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
+import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -30,6 +38,32 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
+
+const THEME = {
+  DARK: 'dark',
+  LIGHT: 'light',
+  CUSTOM: 'custom',
+};
+
+const Label = styled.label`
+  margin-left: 12px;
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  ${({ theme }) => `
+    input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
+      box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
+    }
+  `}
+`;
+
+const StyledRow = styled(Row)`
+  justify-content: flex-start;
+`;
+
+const Space = styled.div`
+  width: 20px;
+`;
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
@@ -42,7 +76,7 @@ function PageAttachmentPanel() {
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
-  const { url, ctaText = defaultCTA, icon } = pageAttachment;
+  const { url, ctaText = defaultCTA, icon, theme } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
   const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
@@ -146,6 +180,7 @@ function PageAttachmentPanel() {
     [_ctaText, debouncedUpdate, defaultCTA, updatePageAttachment]
   );
 
+  const checkboxId = `cb-${uuidv4()}`;
   return (
     <SimplePanel
       name="pageAttachment"
@@ -153,10 +188,12 @@ function PageAttachmentPanel() {
     >
       <LinkInput
         onChange={(value) => handleChangeUrl(value?.trim())}
-        onBlur={() =>
-          url?.trim().length &&
-          updatePageAttachment({ url: withProtocol(url.trim()) })
-        }
+        onBlur={() => {
+          debouncedUpdate.cancel();
+          updatePageAttachment({
+            url: url.trim() ? withProtocol(url.trim()) : '',
+          });
+        }}
         onFocus={onFocus}
         value={_url}
         clear
@@ -185,9 +222,36 @@ function PageAttachmentPanel() {
               suffix={isDefault ? __('Default', 'web-stories') : null}
             />
           </Row>
-          <Row>
+          <StyledRow>
+            {/* The default is light theme, only if checked, use dark theme */}
+            <StyledCheckbox
+              id={checkboxId}
+              checked={theme === THEME.DARK}
+              onChange={(evt) =>
+                updatePageAttachment({
+                  theme: evt.target.checked ? THEME.DARK : THEME.LIGHT,
+                })
+              }
+            />
+            <Label htmlFor={checkboxId}>
+              <Text
+                as="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              >
+                {__('Use dark theme', 'web-stories')}
+              </Text>
+            </Label>
+          </StyledRow>
+          <StyledRow>
             <LinkIcon handleChange={handleChangeIcon} icon={icon} />
-          </Row>
+            <Space />
+            <Text
+              as="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {__('Link icon', 'web-stories')}
+            </Text>
+          </StyledRow>
         </>
       )}
     </SimplePanel>

@@ -122,6 +122,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <amp-story-page-outlink
           layout="nodisplay"
           cta-image={page.pageAttachment.icon}
+          theme={page.pageAttachment.theme}
         >
           <a href={page.pageAttachment.url}>
             {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
