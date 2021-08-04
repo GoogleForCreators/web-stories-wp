@@ -30,5 +30,9 @@ export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles
 export { default as localStore } from './utils/localStore';
 export { default as StoryPropTypes } from './types';
 export { default as Modal } from 'react-modal';
+export { GlobalStyle } from './theme';
+export { default as theme } from './theme'; // @todo To be refactored.
+export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
+export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export default App;
