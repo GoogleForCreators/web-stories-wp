@@ -229,7 +229,7 @@ const templateContent = ({ htmlWebpackPlugin }) => {
 const editorAndDashboard = {
   ...sharedConfig,
   entry: {
-    'wp-story-editor': './packages/wp-story-editor/src/index.js',
+    'edit-story': './packages/wp-story-editor/src/index.js', // @todo Change key name to wp-story-editor
     'stories-dashboard': './assets/src/dashboard/index.js',
   },
   plugins: [
@@ -243,11 +243,11 @@ const editorAndDashboard = {
       name: 'Editor & Dashboard',
     }),
     new HtmlWebpackPlugin({
-      filename: 'wp-story-editor.chunks.php',
+      filename: 'edit-story.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
       templateContent,
-      chunks: ['wp-story-editor'],
+      chunks: ['edit-story'],
     }),
     new HtmlWebpackPlugin({
       filename: 'stories-dashboard.chunks.php',
