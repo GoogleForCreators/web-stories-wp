@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import App from '../../../assets/src/edit-story/editorApp';
+/**
+ * External dependencies
+ */
+import App from '@web-stories-wp/story-editor';
 
 export default {
   title: 'Playground/Stories Editor',

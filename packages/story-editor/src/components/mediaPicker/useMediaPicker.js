@@ -82,7 +82,7 @@ export default function useMediaPicker({
       // Handles the video processing logic from WordPress.
       // The Uploader.success callback is invoked when a user uploads a file.
       // Race condition concern: the video content is not guaranteed to be
-      // available in this callback. For the video poster insertion, please check: assets/src/edit-story/components/library/panes/media/local/mediaPane.js
+      // available in this callback. For the video poster insertion, please check: packages/story-editor/src/components/library/panes/media/local/mediaPane.js
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
       };
