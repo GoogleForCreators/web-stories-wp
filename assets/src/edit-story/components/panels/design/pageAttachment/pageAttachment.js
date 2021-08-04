@@ -52,6 +52,7 @@ function PageAttachmentPanel() {
   const defaultCTA = __('Learn more', 'web-stories');
   const { url, ctaText = defaultCTA, icon } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
+  const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
 
   const { getLinksInAttachmentArea } = useElementsWithLinks();
@@ -99,8 +100,8 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
-  const debouncedCTAUpdate = useDebouncedCallback((value) => {
-    updatePageAttachment({ ctaText: value });
+  const debouncedUpdate = useDebouncedCallback((props) => {
+    updatePageAttachment(props);
   }, 300);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
@@ -110,14 +111,22 @@ function PageAttachmentPanel() {
   const isDefault = _ctaText === defaultCTA;
   const hasValidUrl = Boolean(url) && !isInvalidUrl;
 
-  const handleChange = useCallback(
+  const handleChangeUrl = useCallback(
+    (value) => {
+      _setUrl(value);
+      debouncedUpdate({ url: value });
+    },
+    [debouncedUpdate]
+  );
+
+  const handleChangeCta = useCallback(
     ({ target }) => {
       const { value } = target;
       // This allows smooth input value change without any lag.
       _setCtaText(value);
-      debouncedCTAUpdate(value);
+      debouncedUpdate({ ctaText: value });
     },
-    [debouncedCTAUpdate]
+    [debouncedUpdate]
   );
 
   const handleChangeIcon = useCallback(
@@ -136,13 +145,13 @@ function PageAttachmentPanel() {
         updatePageAttachment({ ctaText: defaultCTA });
         _setCtaText(defaultCTA);
       } else {
-        debouncedCTAUpdate.cancel();
+        debouncedUpdate.cancel();
         updatePageAttachment({
           ctaText: _ctaText ? _ctaText : defaultCTA,
         });
       }
     },
-    [_ctaText, debouncedCTAUpdate, defaultCTA, updatePageAttachment]
+    [_ctaText, debouncedUpdate, defaultCTA, updatePageAttachment]
   );
 
   const iconErrorMessage = useMemo(() => {
@@ -168,10 +177,13 @@ function PageAttachmentPanel() {
       title={__('Page Attachment', 'web-stories')}
     >
       <LinkInput
-        onChange={(value) => updatePageAttachment({ url: value })}
-        onBlur={() => updatePageAttachment({ url: url?.trim() })}
+        onChange={(value) => handleChangeUrl(value?.trim())}
+        onBlur={() =>
+          url?.trim().length &&
+          updatePageAttachment({ url: withProtocol(url.trim()) })
+        }
         onFocus={onFocus}
-        value={url}
+        value={_url}
         clear
         aria-label={__(
           'Type an address to add a page attachment link',
@@ -191,7 +203,7 @@ function PageAttachmentPanel() {
         <>
           <Row>
             <Input
-              onChange={handleChange}
+              onChange={handleChangeCta}
               onBlur={handleBlur}
               value={_ctaText}
               aria-label={__('Page Attachment CTA text', 'web-stories')}
