@@ -186,7 +186,7 @@ function PageAttachmentPanel() {
         onBlur={() => {
           debouncedUpdate.cancel();
           updatePageAttachment({
-            url: url.trim() ? withProtocol(url.trim()) : '',
+            url: _url?.trim().length ? withProtocol(_url.trim()) : '',
           });
         }}
         onFocus={onFocus}
