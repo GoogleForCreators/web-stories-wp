@@ -39,6 +39,10 @@ body.web-story_page_stories-dashboard {
   z-index: 4;
 }
 
+#menu-posts-web-story .wp-menu-image::before {
+  box-sizing: content-box;
+}
+
 body.js.web-story_page_stories-dashboard #wpcontent,
 body.js.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;

@@ -43,6 +43,7 @@ import {
   getVisibleThumbnails,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -59,6 +60,7 @@ export function pageTooMuchText(page) {
 }
 
 const PageTooMuchText = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooMuchText),
@@ -79,7 +81,8 @@ const PageTooMuchText = () => {
   useRegisterCheck('PageTooMuchText', isRendered);
 
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

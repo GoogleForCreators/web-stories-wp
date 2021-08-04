@@ -23,7 +23,6 @@ import {
   trackEvent,
   getTimeTracker,
 } from '@web-stories-wp/tracking';
-import { useFeature } from 'flagged';
 import {
   createBlob,
   getFileName,
@@ -59,8 +58,6 @@ function useMediaUploadQueue() {
     getFirstFrameOfVideo,
     convertGifToVideo,
   } = useFFmpeg();
-
-  const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const [state, actions] = useReduction(initialState, reducer);
   const { uploadVideoPoster } = useUploadVideoFrame({
@@ -228,7 +225,6 @@ function useMediaUploadQueue() {
 
           // Convert animated GIFs to videos if possible.
           if (
-            isGifOptimizationEnabled &&
             isTranscodingEnabled &&
             resource.mimeType === 'image/gif' &&
             isAnimatedGif(await file.arrayBuffer())
@@ -239,9 +235,7 @@ function useMediaUploadQueue() {
               newFile = await convertGifToVideo(file);
               finishTranscoding({ id, file: newFile });
               additionalData.media_source = 'gif-conversion';
-              additionalData.meta = {
-                web_stories_is_muted: true,
-              };
+              additionalData.is_muted = true;
             } catch (error) {
               // Cancel uploading if there were any errors.
               cancelUploading({ id, error });
@@ -282,9 +276,7 @@ function useMediaUploadQueue() {
               try {
                 newFile = await stripAudioFromVideo(file);
                 finishMuting({ id, file: newFile });
-                additionalData.meta = {
-                  web_stories_is_muted: true,
-                };
+                additionalData.is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
                 cancelUploading({ id, error });
@@ -350,7 +342,6 @@ function useMediaUploadQueue() {
     transcodeVideo,
     stripAudioFromVideo,
     convertGifToVideo,
-    isGifOptimizationEnabled,
     startMuting,
     finishMuting,
   ]);
@@ -362,7 +353,9 @@ function useMediaUploadQueue() {
           (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
         ),
         pending: state.queue.filter((item) => item.state === 'PENDING'),
-        processed: state.queue.filter((item) => item.state === 'UPLOADED'),
+        posterProcessed: state.queue.filter(
+          (item) => item.state === 'UPLOADED'
+        ),
         failures: state.queue.filter((item) => item.state === 'CANCELLED'),
         isUploading: state.queue.length !== 0,
         isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),

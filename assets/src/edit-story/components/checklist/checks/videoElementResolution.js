@@ -34,6 +34,7 @@ import {
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
@@ -47,6 +48,7 @@ export function videoElementResolution(element) {
 }
 
 const VideoElementResolution = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingElements = useMemo(
     () => filterStoryElements(pages, videoElementResolution),
@@ -67,7 +69,8 @@ const VideoElementResolution = () => {
   useRegisterCheck('VideoElementResolution', isRendered);
 
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

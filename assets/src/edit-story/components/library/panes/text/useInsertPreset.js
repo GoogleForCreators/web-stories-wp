@@ -129,14 +129,27 @@ function useInsertPreset() {
   }, [autoColor, presetAtts, insertElement, setColor]);
 
   const insertPreset = useCallback(
-    (element) => {
-      const atts = getPosition(element);
+    (element, presetProps = {}) => {
+      const { isPositioned, accessibleColors, skipCanvasGeneration } =
+        presetProps;
+      // If it's already positioned, skip calculating that.
+      const atts = isPositioned ? {} : getPosition(element);
       if (enableSmartTextColor) {
         setPresetAtts({
           ...element,
           ...atts,
         });
-        calculateAccessibleTextColors({ ...element, ...atts }, setAutoColor);
+        // If we already have the color, skip calculation.
+        if (accessibleColors) {
+          setAutoColor(accessibleColors);
+          return;
+        }
+        calculateAccessibleTextColors(
+          { ...element, ...atts },
+          setAutoColor,
+          null,
+          skipCanvasGeneration
+        );
       } else {
         const addedElement = insertElement(TYPE, {
           ...element,
@@ -155,7 +168,10 @@ function useInsertPreset() {
       insertElement,
     ]
   );
-  return insertPreset;
+  return {
+    getPosition,
+    insertPreset,
+  };
 }
 
 export default useInsertPreset;

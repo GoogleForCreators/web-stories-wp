@@ -38,13 +38,46 @@ import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
 import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
-export function PriorityChecks({
+import { useIsChecklistMounted } from '../popupMountedContext';
+
+function PriorityPanel({
+  children,
   badgeCount = 0,
-  maxHeight,
   isOpen,
   onClick,
+  maxHeight,
   title,
 }) {
+  const isChecklistMounted = useIsChecklistMounted();
+  return isChecklistMounted ? (
+    <StyledTablistPanel
+      badgeCount={badgeCount}
+      isExpanded={isOpen}
+      onClick={onClick}
+      maxHeight={maxHeight}
+      status={PANEL_STATES.DANGER}
+      title={title}
+    >
+      <PanelText>
+        {__('Make this Web Story easier to discover.', 'web-stories')}
+      </PanelText>
+      {children}
+    </StyledTablistPanel>
+  ) : (
+    children
+  );
+}
+
+PriorityPanel.propTypes = {
+  badgeCount: PropTypes.number,
+  isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.node),
+};
+
+export function PriorityChecks(props) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
   const { updateHighPriorityCount } = useCheckpoint(
     ({ actions: { updateHighPriorityCount } }) => ({
@@ -63,17 +96,7 @@ export function PriorityChecks({
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
-      <StyledTablistPanel
-        badgeCount={badgeCount}
-        isExpanded={isOpen}
-        onClick={onClick}
-        maxHeight={maxHeight}
-        status={PANEL_STATES.DANGER}
-        title={title}
-      >
-        <PanelText>
-          {__('Make this Web Story easier to discover.', 'web-stories')}
-        </PanelText>
+      <PriorityPanel {...props}>
         <StoryMissingTitle />
         {canManageSettings && <StoryMissingPublisherName />}
         <StoryTitleLength />
@@ -83,7 +106,7 @@ export function PriorityChecks({
         <PublisherLogoSize />
         <VideoElementMissingPoster />
         {isTranscodingEnabled && <VideoOptimization />}
-      </StyledTablistPanel>
+      </PriorityPanel>
     </ChecklistCategoryProvider>
   );
 }
