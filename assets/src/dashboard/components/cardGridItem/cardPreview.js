@@ -29,14 +29,14 @@ import {
 } from '@web-stories-wp/design-system';
 import { useFocusOut } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import {
+  PreviewErrorBoundary,
+  PreviewPage,
+} from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import {
-  PreviewErrorBoundary,
-  PreviewPage,
-} from '../../../edit-story/components/previewPage';
 import { resolveRoute } from '../../app/router';
 import { DEFAULT_STORY_PAGE_ADVANCE_DURATION } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';

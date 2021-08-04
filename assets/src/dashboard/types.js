@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../edit-story/types';
+import { StoryPropTypes } from '@web-stories-wp/story-editor';
 import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_STATUS,
