@@ -23,6 +23,7 @@ import { BEZIER } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { ScheduledTransition } from '../transition/scheduledTransition';
+import { noop } from '../../utils/noop';
 
 const DURATION = 300;
 
@@ -54,13 +55,23 @@ const Controller = styled.div`
   ${({ state }) => transitionStyles[state]}
 `;
 
-function Popup({ isOpen, popupId, children, ariaLabel, shouldKeepMounted }) {
+function Popup({
+  isOpen,
+  popupId,
+  children,
+  ariaLabel,
+  shouldKeepMounted,
+  onEnter = noop,
+  onExited = noop,
+}) {
   return (
     <ScheduledTransition
       in={isOpen}
       timeout={DURATION}
       mountOnEnter={!shouldKeepMounted}
       unmountOnExit={!shouldKeepMounted}
+      onEnter={onEnter}
+      onExited={onExited}
     >
       {(state) => (
         <Controller
@@ -81,6 +92,8 @@ Popup.propTypes = {
   popupId: PropTypes.string,
   ariaLabel: PropTypes.string,
   shouldKeepMounted: PropTypes.bool,
+  onEnter: PropTypes.func,
+  onExited: PropTypes.func,
 };
 
 export default Popup;

@@ -31,13 +31,16 @@ import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse
 import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';
+import useInsertPreset from '../../panes/text/useInsertPreset';
 
 jest.mock('../../useLibrary');
 jest.mock('../../../../app/font/useFont');
+jest.mock('../../panes/text/useInsertPreset');
 
 describe('TextPane', () => {
-  const insertElement = jest.fn();
   const maybeEnqueueFontStyle = jest.fn();
+  const insertPreset = jest.fn();
+  const getPosition = jest.fn();
   beforeAll(() => {
     useLibrary.mockImplementation((selector) =>
       selector({
@@ -45,7 +48,7 @@ describe('TextPane', () => {
           textSets: {},
         },
         actions: {
-          insertElement: insertElement,
+          insertElement: jest.fn(),
           setPageCanvasPromise: jest.fn(),
         },
       })
@@ -55,6 +58,11 @@ describe('TextPane', () => {
       actions: {
         maybeEnqueueFontStyle: maybeEnqueueFontStyle,
       },
+    }));
+
+    useInsertPreset.mockImplementation(() => ({
+      insertPreset,
+      getPosition,
     }));
   });
 
@@ -92,12 +100,13 @@ describe('TextPane', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Title 1' }));
     });
 
-    await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(insertPreset).toHaveBeenCalledTimes(1));
     // Height is being assigned in the process of text insertion.
     await waitFor(() =>
-      expect(insertElement).toHaveBeenCalledWith('text', {
-        ...PRESETS[0].element,
-        height: 0,
+      expect(insertPreset).toHaveBeenCalledWith(PRESETS[0].element, {
+        isPositioned: false,
+        accessibleColors: undefined,
+        skipCanvasGeneration: undefined,
       })
     );
   });

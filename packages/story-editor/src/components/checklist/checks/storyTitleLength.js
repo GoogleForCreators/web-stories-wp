@@ -27,12 +27,14 @@ import { useHighlights, states } from '../../../app/highlights';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY, MAX_STORY_TITLE_LENGTH_CHARS } from '../constants';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function storyTitleLength(title) {
   return title?.length > MAX_STORY_TITLE_LENGTH_CHARS;
 }
 
 const StoryTitleLength = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const storyTitle = useStory(({ state }) => state?.story?.title);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -48,7 +50,8 @@ const StoryTitleLength = () => {
 
   const { title, footer } = PRIORITY_COPY.storyTitleTooLong;
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}

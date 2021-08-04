@@ -17,11 +17,10 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
 import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
@@ -55,16 +54,8 @@ function TextPane(props) {
 
   const { showTextAndShapesSearchInput, enableSmartTextColor } = useFeatures();
 
-  const insertPreset = useInsertPreset();
+  const { getPosition, insertPreset } = useInsertPreset();
   const { generateCanvasFromPage } = usePageAsCanvas();
-
-  const onClick = useCallback(
-    (title, element) => {
-      insertPreset(element);
-      trackEvent('insert_text_preset', { name: title });
-    },
-    [insertPreset]
-  );
 
   useResizeEffect(
     paneRef,
@@ -95,7 +86,8 @@ function TextPane(props) {
               key={title}
               title={title}
               element={element}
-              onClick={() => onClick(title, element)}
+              insertPreset={insertPreset}
+              getPosition={getPosition}
             />
           ))}
         </GridContainer>

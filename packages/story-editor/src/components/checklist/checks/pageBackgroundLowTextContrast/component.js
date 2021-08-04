@@ -39,9 +39,11 @@ import {
 import { getVisibleThumbnails } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
+import { useIsChecklistMounted } from '../../popupMountedContext';
 import { pageBackgroundTextLowContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const [failingPages, setFailingPages] = useState([]);
   const storyPages = useStory(({ state }) => state?.pages);
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
@@ -87,7 +89,7 @@ const PageBackgroundTextLowContrast = () => {
   useRegisterCheck('PageBackgroundTextLowContrast', isRendered);
 
   const { title, footer } = ACCESSIBILITY_COPY.lowContrast;
-  return isRendered ? (
+  return isRendered && isChecklistMounted ? (
     <ChecklistCard
       title={title}
       cardType={
