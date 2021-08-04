@@ -15,9 +15,6 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import App from '@web-stories-wp/story-editor';
