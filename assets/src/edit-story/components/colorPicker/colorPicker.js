@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useDebouncedCallback, useFocusOut } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType, hasGradient } from '@web-stories-wp/patterns';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 
 /**
@@ -68,7 +68,10 @@ function ColorPicker({
   onClose = () => {},
   changedStyle = 'background',
 }) {
-  const [isCustomPicker, setCustomPicker] = useState(false);
+  // If initial color is a gradient, start by showing a custom color picker.
+  // Note that no such switch happens if the color later changes to a gradient,
+  // only if it was a gradient at the moment the color picker mounted.
+  const [isCustomPicker, setCustomPicker] = useState(hasGradient(color));
   const showCustomPicker = useCallback(() => setCustomPicker(true), []);
   const hideCustomPicker = useCallback(() => setCustomPicker(false), []);
 
