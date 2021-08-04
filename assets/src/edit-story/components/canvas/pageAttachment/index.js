@@ -64,10 +64,9 @@ const ArrowBar = styled(ArrowIcon)`
   display: block;
   cursor: pointer;
   margin-bottom: 10px;
-  filter: drop-shadow(0px 2px 6px rgba(0,0,0,0.3));
+  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.3));
   width: 20px;
   height: 8px;
-}
 `;
 
 const OutlinkChip = styled.div`
