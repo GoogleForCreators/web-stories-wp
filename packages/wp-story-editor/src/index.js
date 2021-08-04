@@ -31,11 +31,11 @@ import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
+import App from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import App from '@web-stories-wp/story-editor';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
 /**
