@@ -161,6 +161,34 @@ function delete_posts() {
 		wp_delete_post( (int) $post_id, true );
 	}
 }
+
+/**
+ * Deletes all media source terms.
+ *
+ * @since 1.10.0
+ *
+ * @return void
+ */
+function delete_terms() {
+	$taxonomy = Media::STORY_MEDIA_TAXONOMY;
+
+	$term_ids = get_terms(
+		[
+			'taxonomy'   => Media::STORY_MEDIA_TAXONOMY,
+			'hide_empty' => false,
+			'fields'     => 'ids',
+		]
+	);
+	if ( empty( $term_ids ) || ! is_array( $term_ids ) ) {
+		return;
+	}
+
+	foreach ( $term_ids as $term_id ) {
+		// @phpstan-ignore-next-line
+		wp_delete_term( $term_id, $taxonomy );
+	}
+}
+
 /**
  * Remove user capabilities.
  *
@@ -183,6 +211,7 @@ function remove_caps() {
 function delete_site() {
 	delete_options();
 	delete_posts();
+	delete_terms();
 	delete_stories_post_meta();
 	remove_caps();
 }
