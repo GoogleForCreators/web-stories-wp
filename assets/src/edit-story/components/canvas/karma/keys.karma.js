@@ -106,6 +106,9 @@ describe('Canvas keys integration', () => {
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
 
+    await fixture.waitOnScreen(
+      fixture.container.querySelector('[data-testid="colorPicker"]')
+    );
     await fixture.snapshot('color picker open');
 
     await fixture.events.keyboard.press('Del');
