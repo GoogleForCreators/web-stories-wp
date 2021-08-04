@@ -549,10 +549,7 @@ describe('Page output', () => {
         'cta-image',
         'https://example.test/example.jpg'
       );
-      await expect(pageOutlink).toHaveAttribute(
-        'theme',
-        'dark'
-      );
+      await expect(pageOutlink).toHaveAttribute('theme', 'dark');
       await expect(pageOutlink.firstChild).toHaveAttribute(
         'href',
         'https://example.test'
