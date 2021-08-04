@@ -62,7 +62,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       { pattern: 'assets/src/dashboard/karma-tests.cjs', watched: false },
-      { pattern: 'assets/src/karma-fixture/init.js', watched: false },
+      { pattern: 'packages/karma-fixture/src/init.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,
@@ -184,7 +184,7 @@ module.exports = function (config) {
 
     // Custom context file.
     customClientContextFile:
-      'assets/src/karma-fixture/client_with_context.html',
+      'packages/karma-fixture/src/client_with_context.html',
   });
 };
 

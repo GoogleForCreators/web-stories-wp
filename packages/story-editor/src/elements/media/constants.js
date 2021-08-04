@@ -26,6 +26,12 @@ export const MEDIA_DEFAULT_ATTRIBUTES = {
   },
 };
 
+export const MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES = {
+  border: null,
+  borderRadius: null,
+  overlay: null,
+};
+
 export const MEDIA_MASK_OPACITY = 0.4;
 
 export const hasEditMode = true;
