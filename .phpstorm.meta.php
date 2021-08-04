@@ -63,6 +63,7 @@ namespace PHPSTORM_META {
 			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
 			'video_captions'               => \Google\Web_Stories\Media\Video_Captions::class,
+			'video_muting'                 => \Google\Web_Stories\Media\Video_Muting::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )
 	);

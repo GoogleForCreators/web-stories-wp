@@ -123,6 +123,7 @@ class Plugin extends ServiceBasedPlugin {
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 		'video_captions'               => Media\Video_Captions::class,
+		'video_muting'                 => Media\Video_Muting::class,
 	];
 
 	/**
