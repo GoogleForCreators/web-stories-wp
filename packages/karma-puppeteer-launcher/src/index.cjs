@@ -290,5 +290,5 @@ function getContextFrame(page) {
 puppeteerBrowser.$inject = ['baseBrowserDecorator', 'config.puppeteerLauncher'];
 
 module.exports = {
-  'launcher:puppeteer': ['type', puppeteerBrowser],
+  'launcher:@web-stories-wp/karma-puppeteer-launcher': ['type', puppeteerBrowser],
 };
