@@ -20,7 +20,7 @@
 import { videoElementMissingPoster } from '../videoElementMissingPoster';
 
 describe('videoElementMissingPoster', () => {
-  it("should return true if the video element doesn't have a poster image", () => {
+  it("should return true if the video element and resource don't have a poster image", () => {
     const posterlessVideo = {
       id: 303,
       type: 'video',
@@ -34,7 +34,7 @@ describe('videoElementMissingPoster', () => {
     expect(result).toBe(true);
   });
 
-  it('should not return true if the video element has a poster image', () => {
+  it('should not return true if the video resource has a poster image', () => {
     const posterlessVideo = {
       id: 303,
       type: 'video',
@@ -43,6 +43,21 @@ describe('videoElementMissingPoster', () => {
         width: 500,
         poster: 'http://mydomain.com/test/poster',
       },
+    };
+
+    const result = videoElementMissingPoster(posterlessVideo);
+    expect(result).toBe(false);
+  });
+
+  it('should not return true if the video element has a poster image', () => {
+    const posterlessVideo = {
+      id: 303,
+      type: 'video',
+      resource: {
+        height: 800,
+        width: 500,
+      },
+      poster: 'http://mydomain.com/test/poster',
     };
 
     const result = videoElementMissingPoster(posterlessVideo);

@@ -23,9 +23,16 @@ import { createSolidFromString } from '@web-stories-wp/patterns';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import PanelTypes from '../../components/panels/design/types';
 
+const defaultBackgroundColor = createSolidFromString('#c4c4c4');
+
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: createSolidFromString('#ffffff'),
+  backgroundColor: defaultBackgroundColor,
+};
+
+export const clearableAttributes = {
+  ...SHARED_DEFAULT_ATTRIBUTES,
+  backgroundColor: defaultBackgroundColor,
 };
 
 export const hasEditMode = false;

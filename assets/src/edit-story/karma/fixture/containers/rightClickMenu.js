@@ -14,50 +14,99 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
-/**
  * Internal dependencies
  */
 import { Container } from './container';
-
-const isMacOs = isPlatformMacOS();
-
-const commandOrControl = isMacOs ? 'Command' : 'Control';
 
 export class RightClickMenu extends Container {
   constructor(node, path) {
     super(node, path);
   }
 
+  // default actions
   get copy() {
     return this.queryByRole('button', {
-      name: `Copy, or use ${commandOrControl} C on a keyboard`,
+      name: /^Copy/i,
     });
   }
 
   get paste() {
     return this.queryByRole('button', {
-      name: `Paste, or use ${commandOrControl} V on a keyboard`,
+      name: /^Paste/i,
     });
   }
 
   get delete() {
     return this.queryByRole('button', {
-      name: 'Delete, or use Delete on a keyboard',
+      name: /^Delete$/i,
     });
   }
 
+  // foreground media actions
+  get sendBackward() {
+    return this.getByRole('button', {
+      name: /^Send Backward/i,
+    });
+  }
+
+  get sendToBack() {
+    return this.getByRole('button', {
+      name: /^Send to Back/i,
+    });
+  }
+
+  get bringForward() {
+    return this.getByRole('button', {
+      name: /^Bring Forward/i,
+    });
+  }
+
+  get bringToFront() {
+    return this.getByRole('button', {
+      name: /^Bring to Front/i,
+    });
+  }
+
+  get setAsPageBackground() {
+    return this.getByRole('button', {
+      name: /^Set as page Background/i,
+    });
+  }
+
+  get scaleAndCropImage() {
+    return this.getByRole('button', {
+      name: /^Scale & Crop Image/i,
+    });
+  }
+
+  // page actions
   get duplicatePage() {
     return this.queryByRole('button', {
-      name: 'Duplicate Page',
+      name: /Duplicate Page/i,
     });
   }
 
   get deletePage() {
     return this.queryByRole('button', {
-      name: 'Delete Page',
+      name: /^Delete Page/i,
+    });
+  }
+
+  get copyImageStyles() {
+    return this.getByRole('button', {
+      name: /^Copy Image Styles/i,
+    });
+  }
+
+  get pasteImageStyles() {
+    return this.getByRole('button', {
+      name: /^Paste Image Styles/i,
+    });
+  }
+
+  get clearImageStyles() {
+    return this.getByRole('button', {
+      name: /^Clear Image Styles/i,
     });
   }
 }
