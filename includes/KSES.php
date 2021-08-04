@@ -518,6 +518,12 @@ class KSES extends Service_Base {
 				'href'  => true,
 				'theme' => true,
 			],
+			'amp-story-page-outline' => [
+				'cta-image'          => true,
+				'theme'              => true,
+				'cta-accent-color'   => true,
+				'cta-accent-element' => true,
+			],
 			'amp-story-grid-layer'      => [
 				'aspect-ratio' => true,
 				'position'     => true,
