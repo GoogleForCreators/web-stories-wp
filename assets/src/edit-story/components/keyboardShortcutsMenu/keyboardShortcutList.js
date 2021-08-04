@@ -24,9 +24,9 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
  */
 import { SPECIAL_KEYS } from './constants';
 
-const isMacOs = isPlatformMacOS();
-const cmdOrCtrl = isMacOs ? SPECIAL_KEYS.COMMAND : SPECIAL_KEYS.CONTROL;
-const optionOrAlt = isMacOs ? SPECIAL_KEYS.OPTION : SPECIAL_KEYS.ALT;
+export const isMacOs = isPlatformMacOS();
+export const cmdOrCtrl = isMacOs ? SPECIAL_KEYS.COMMAND : SPECIAL_KEYS.CONTROL;
+export const optionOrAlt = isMacOs ? SPECIAL_KEYS.OPTION : SPECIAL_KEYS.ALT;
 
 const LargeKey = (props) => <kbd className="large-key" {...props} />;
 
