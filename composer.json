@@ -20,10 +20,6 @@
     "sabberworm/php-css-parser": "dev-master#bfdd976",
     "symfony/polyfill-mbstring": "^1.18"
   },
-  "provide": {
-    "ampproject/common": "dev-develop",
-    "ampproject/optimizer": "dev-develop"
-  },
   "require-dev": {
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
