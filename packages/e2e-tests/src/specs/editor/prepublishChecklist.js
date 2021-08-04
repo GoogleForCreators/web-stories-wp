@@ -34,9 +34,7 @@ describe('Pre-Publish Checklist', () => {
     );
   });
 
-  // Skipped for https://github.com/google/web-stories-wp/issues/7481
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should show that there is no poster attached to the story', async () => {
+  it('should show that there is no poster attached to the story', async () => {
     await createNewStory();
     await expect(page).toClick('[data-testid^="mediaElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
