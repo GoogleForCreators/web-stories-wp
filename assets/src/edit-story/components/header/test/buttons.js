@@ -40,6 +40,7 @@ import { CheckpointContext } from '../../checklist';
 
 function setupButtons({
   story: extraStoryProps,
+  storyState: extraStoryStateProps,
   meta: extraMetaProps,
   media: extraMediaProps,
   config: extraConfigProps,
@@ -53,6 +54,9 @@ function setupButtons({
 
   const storyContextValue = {
     state: {
+      capabilities: {
+        hasPublishAction: true,
+      },
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
       story: {
         status: 'draft',
@@ -65,13 +69,11 @@ function setupButtons({
           'http://localhost?preview_id=1679&preview_nonce=b5ea827939&preview=true',
         ...extraStoryProps,
       },
+      ...extraStoryStateProps,
     },
     actions: { saveStory, autoSave },
   };
   const configValue = {
-    capabilities: {
-      hasPublishAction: true,
-    },
     ...extraConfigProps,
   };
   const mediaContextValue = {
@@ -349,7 +351,7 @@ describe('buttons', () => {
 
   it('should disable publish button when user lacks permission', () => {
     setupButtons({
-      config: { capabilities: { hasPublishAction: false } },
+      storyState: { capabilities: { hasPublishAction: false } },
     });
     expect(screen.getByRole('button', { name: 'Publish' })).toBeDisabled();
   });

@@ -298,10 +298,8 @@ class Editor extends Service_Base {
 				'maxUpload'                    => $max_upload_size,
 				'isDemo'                       => $is_demo,
 				'capabilities'                 => [
-					'hasPublishAction'      => $has_publish_action,
-					'hasAssignAuthorAction' => $has_assign_author_action,
-					'hasUploadMediaAction'  => $has_upload_media_action,
-					'canManageSettings'     => current_user_can( 'manage_options' ),
+					'hasUploadMediaAction' => $has_upload_media_action,
+					'canManageSettings'    => current_user_can( 'manage_options' ),
 				],
 				'api'                          => [
 					'users'         => '/web-stories/v1/users/',

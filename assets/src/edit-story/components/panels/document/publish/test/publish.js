@@ -36,6 +36,7 @@ function arrange(
   const updateStory = jest.fn();
   const storyContextValue = {
     state: {
+      capabilities,
       meta: { isSaving: false },
       story: {
         author: { id: 1, name: 'John Doe' },
@@ -50,7 +51,6 @@ function arrange(
   };
 
   const config = {
-    capabilities,
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
     allowedImageMimeTypes: [
       'image/png',

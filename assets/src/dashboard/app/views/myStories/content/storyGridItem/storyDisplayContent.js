@@ -34,6 +34,7 @@ import {
   CardDetailsColumn,
   Row,
   Title,
+  StoryTitle,
   DetailCopy,
   LockAvatar,
   LockedRow,
@@ -122,17 +123,21 @@ const StoryDisplayContent = ({
       ) : (
         <Row>
           {isLocked && <LockIcon />}
-          <Title
-            href={titleLink}
-            tabIndex={tabIndex}
-            aria-label={sprintf(
-              /* translators: %s: title*/
-              __('Open %s in editor', 'web-stories'),
-              title
-            )}
-          >
-            {formattedTitle}
-          </Title>
+          {titleLink ? (
+            <Title
+              href={titleLink}
+              tabIndex={tabIndex}
+              aria-label={sprintf(
+                /* translators: %s: title*/
+                __('Open %s in editor', 'web-stories'),
+                title
+              )}
+            >
+              {formattedTitle}
+            </Title>
+          ) : (
+            <StoryTitle>{formattedTitle}</StoryTitle>
+          )}
         </Row>
       )}
       <CardDetailsGrid>

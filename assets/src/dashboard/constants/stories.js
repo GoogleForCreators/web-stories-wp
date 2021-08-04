@@ -36,6 +36,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
+    capability: 'hasEditAction',
   },
   {
     label: __('Open in new tab', 'web-stories'),
@@ -49,6 +50,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
     label: __('Rename', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.RENAME,
     separator: 'top',
+    capability: 'hasEditAction',
   },
   {
     label: __('Duplicate', 'web-stories'),
@@ -63,6 +65,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
     label: __('Delete Story', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
     separator: 'top',
+    capability: 'hasDeleteAction',
   },
 ];
 
