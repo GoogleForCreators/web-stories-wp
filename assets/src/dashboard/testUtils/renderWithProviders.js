@@ -39,6 +39,7 @@ const defaultProviderValues = {
     colors: lightMode,
   },
   config: {
+    userId: 8675301,
     capabilities: { canReadPrivatePosts: true },
     allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   },

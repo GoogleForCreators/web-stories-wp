@@ -19,15 +19,6 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 
-export const ELEMENT_TYPE = {
-  IMAGE: 'image',
-  SHAPE: 'shape',
-  TEXT: 'text',
-  VIDEO: 'video',
-  GIF: 'gif',
-  BACKGROUND: 'background',
-};
-
 export const ACTION_TEXT = {
   ADD_ANIMATION: __('Add animation', 'web-stories'),
   ADD_LINK: __('Add link', 'web-stories'),

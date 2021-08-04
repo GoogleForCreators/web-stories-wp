@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { forwardRef, lazy, Suspense } from 'react';
+import { forwardRef } from 'react';
+import Moveable from 'react-moveable';
 
 /**
  * Internal dependencies
@@ -26,22 +27,13 @@ import InOverlay from '../overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-const Moveable = lazy(() =>
-  import(
-    /* webpackPrefetch: true, webpackChunkName: "chunk-react-moveable" */ 'react-moveable'
-  )
-);
 function MoveableWithRef({ ...moveableProps }, ref) {
   return (
     <InOverlay
       zIndex={DEFAULT_Z_INDEX}
       pointerEvents="initial"
       render={({ container }) => {
-        return (
-          <Suspense fallback={null}>
-            <Moveable ref={ref} container={container} {...moveableProps} />
-          </Suspense>
-        );
+        return <Moveable ref={ref} container={container} {...moveableProps} />;
       }}
     />
   );

@@ -50,7 +50,7 @@ jest.mock('../utils/useMediaUploadQueue', () => ({
       isTranscoding: false,
       pending: [],
       progress: [],
-      processed: [],
+      posterProcessed: [],
       failures: [],
     },
   })),

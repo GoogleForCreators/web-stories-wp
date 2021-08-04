@@ -15,9 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import STICKERS from '@web-stories-wp/stickers';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma/fixture';
+
+const testStickerType = Object.keys(STICKERS)[0];
 
 describe('Shape library integration', () => {
   let fixture;
@@ -76,6 +83,100 @@ describe('Shape library integration', () => {
     const { width: pageWidth } = bgFrame.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(triangle, 10, 10),
+      down(),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(bgFrame, -(pageWidth / 3 + 20), 50, { steps: 20 }),
+      up(),
+    ]);
+
+    // Still only background.
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+  });
+});
+
+describe('Sticker library integration', () => {
+  let fixture;
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+    fixture.setFlags({ enableStickers: true });
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  it('add sticker via clicking on sticker preview', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+    // Switch to shapes tab and click the first sticker
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(
+      fixture.editor.library.shapes.sticker(testStickerType)
+    );
+
+    // Now background + 1 extra element
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+  });
+
+  it('add sticker via keyboard naviation to sticker preview', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+    // Switch to shapes tab and click the first sticker
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    let limit = 0;
+    const stickersTab = fixture.editor.library.shapes.getByTestId(
+      'stickers-library-pane'
+    );
+    while (!stickersTab.contains(document.activeElement) && limit < 10) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+    await fixture.events.keyboard.press('Enter');
+
+    // Now background + 1 extra element
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+  });
+
+  it('add sticker via dragging from sticker preview', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+    // Switch to the shapes tab and drag the first sticker to the canvas
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    const stickerButton =
+      fixture.editor.library.shapes.sticker(testStickerType);
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(stickerButton, 10, 10),
+      down(),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(bgFrame, 50, 50, { steps: 20 }),
+      up(),
+    ]);
+
+    // Now background + 1 extra element
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+  });
+
+  it('should not add sticker dragged out of the page area', async () => {
+    // Only background initially
+    expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+    // Switch to the shapes tab and drag the first sticker to the canvas
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    const stickerButton =
+      fixture.editor.library.shapes.sticker(testStickerType);
+    const bgFrame = fixture.editor.canvas.framesLayer.frames[0].node;
+
+    // Shape is 1/3 of the page's width by default.
+    const { width: pageWidth } = bgFrame.getBoundingClientRect();
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(stickerButton, 10, 10),
       down(),
       /* The steps give time for Moveable to react and display a clone to drag */
       moveRel(bgFrame, -(pageWidth / 3 + 20), 50, { steps: 20 }),

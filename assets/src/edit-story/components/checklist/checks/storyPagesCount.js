@@ -26,6 +26,7 @@ import { useStory } from '../../../app/story';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { useRegisterCheck } from '../countContext';
 import { DESIGN_COPY, MAX_STORY_PAGES, MIN_STORY_PAGES } from '../constants';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function storyPagesCount(numPages) {
   const hasTooFewPages = numPages < MIN_STORY_PAGES;
@@ -35,6 +36,7 @@ export function storyPagesCount(numPages) {
 }
 
 const StoryPagesCount = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const numPages = useStory(({ state }) => state?.story?.pages?.length);
 
   const badPageCount = useMemo(() => storyPagesCount(numPages), [numPages]);
@@ -50,7 +52,8 @@ const StoryPagesCount = () => {
   useRegisterCheck('StoryPagesCount', isRendered);
 
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={copySource.title}
         footer={<DefaultFooterText>{copySource.title}</DefaultFooterText>}

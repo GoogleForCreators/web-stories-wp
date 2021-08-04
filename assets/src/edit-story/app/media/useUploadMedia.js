@@ -60,7 +60,7 @@ function useUploadMedia({
       isTranscoding,
       pending,
       progress,
-      processed,
+      posterProcessed,
       failures,
     },
     actions: { addItem, removeItem },
@@ -134,7 +134,7 @@ function useUploadMedia({
   // Handle *processed* items.
   // Update resources in media library and on canvas.
   useEffect(() => {
-    for (const { id, resource, onUploadSuccess } of processed) {
+    for (const { id, resource, onUploadSuccess } of posterProcessed) {
       if (!resource) {
         continue;
       }
@@ -147,7 +147,7 @@ function useUploadMedia({
 
       removeItem({ id });
     }
-  }, [processed, updateMediaElement, removeItem]);
+  }, [posterProcessed, updateMediaElement, removeItem]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.

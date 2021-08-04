@@ -39,6 +39,7 @@ import {
 } from '../../thumbnail';
 import PagePreview from '../../carousel/pagepreview';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {
@@ -49,6 +50,7 @@ export function pageTooManyLinks(page) {
 }
 
 const PageTooManyLinks = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooManyLinks),
@@ -67,7 +69,8 @@ const PageTooManyLinks = () => {
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooManyLinks', isRendered);
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

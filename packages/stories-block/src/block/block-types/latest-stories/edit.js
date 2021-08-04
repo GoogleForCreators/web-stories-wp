@@ -32,7 +32,7 @@ import { BlockIcon } from '@wordpress/block-editor';
 /**
  * Internal dependencies
  */
-import { ReactComponent as WebStoriesLogo } from '../../../images/icon.svg';
+import { BlockIcon as WebStoriesLogo } from '../../icons';
 import StoriesInspectorControls from '../../components/storiesInspectorControls';
 import StoriesLoading from '../../components/storiesLoading';
 import StoriesPreview from '../../components/storiesPreview';

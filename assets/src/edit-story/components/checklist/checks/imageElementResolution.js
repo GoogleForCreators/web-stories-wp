@@ -35,6 +35,7 @@ import {
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function mediaElementResolution(element) {
   switch (element.type) {
@@ -67,6 +68,7 @@ function gifElementResolution(element) {
 }
 
 const ImageElementResolution = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingElements = useMemo(
     () => filterStoryElements(pages, mediaElementResolution),
@@ -87,7 +89,8 @@ const ImageElementResolution = () => {
   useRegisterCheck('ImageElementResolution', isRendered);
 
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

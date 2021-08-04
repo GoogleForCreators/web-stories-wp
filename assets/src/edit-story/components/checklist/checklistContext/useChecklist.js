@@ -26,8 +26,5 @@ import Context from './context';
 
 export function useChecklist(selector) {
   const context = useContextSelector(Context, selector ?? identity);
-  if (!context) {
-    throw new Error('Must use `useChecklist` within <checklist.Provider />');
-  }
   return context;
 }
