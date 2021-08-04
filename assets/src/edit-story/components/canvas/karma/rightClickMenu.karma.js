@@ -828,10 +828,10 @@ describe('Right Click Menu integration', () => {
       );
 
       // go back to original page
-      await fixture.events.click(
-        fixture.editor.canvas.framesLayer.frame(
-          fixture.editor.carousel.pages[1].id
-        ).node
+      await fixture.events.mouse.clickOn(
+        fixture.editor.carousel.pages[1].node,
+        5,
+        5
       );
 
       // add page after
