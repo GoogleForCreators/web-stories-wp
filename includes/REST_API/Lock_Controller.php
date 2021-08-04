@@ -202,7 +202,12 @@ abstract class Lock_Controller extends REST_Controller {
 	 * @return true|WP_Error True if the request has read access for the item, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
-		return $this->parent_controller->update_item_permissions_check( $request );
+		$check = $this->parent_controller->get_item_permissions_check( $request );
+		if ( is_wp_error( $check ) ) {
+			return $check;
+		}
+
+		return $this->get_post_type_cap( $this->post_type, 'edit_posts' );
 	}
 
 	/**

@@ -30,6 +30,7 @@ use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
 use WP_Error;
@@ -43,7 +44,7 @@ use WP_REST_Response;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
-	use Publisher;
+	use Publisher, Post_Type;
 	/**
 	 * Default style presets to pass if not set.
 	 */
@@ -463,6 +464,11 @@ class Stories_Controller extends Stories_Base_Controller {
 		remove_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 		$links = parent::prepare_links( $post );
 		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
+
+		// Ensure that no data about story locks, leaks publically. 
+		if ( ! $this->get_post_type_cap( $this->post_type, 'edit_posts' ) ) {
+			return $links;
+		}
 
 		$base     = sprintf( '%s/%s', $this->namespace, $this->rest_base );
 		$lock_url = rest_url( trailingslashit( $base ) . $post->ID . '/lock' );
