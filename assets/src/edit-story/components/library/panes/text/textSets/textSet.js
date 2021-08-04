@@ -35,6 +35,7 @@ import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { focusStyle } from '../../../../panels/shared';
+import { useConfig } from '../../../../../app';
 import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.button`
@@ -45,6 +46,8 @@ const TextSetItem = styled.button`
   height: ${TEXT_SET_SIZE}px;
   width: ${TEXT_SET_SIZE}px;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
@@ -69,6 +72,11 @@ const TextSetItem = styled.button`
   }
 `;
 
+const TextSetImg = styled.img`
+  width: ${TEXT_SET_SIZE}px;
+  height: ${TEXT_SET_SIZE}px;
+`;
+
 const DragContainer = styled.div`
   position: absolute;
   opacity: 0;
@@ -77,10 +85,12 @@ const DragContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.opacity.white24};
 `;
 
-function TextSet({ elements, translateY, translateX, ...rest }, ref) {
+function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
   const { insertTextSet } = useLibrary((state) => ({
     insertTextSet: state.actions.insertTextSet,
   }));
+
+  const { cdnURL } = useConfig();
 
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
@@ -103,6 +113,8 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
     [onClick]
   );
 
+  const renderImages = process.env.DISABLE_OPTIMIZED_RENDERING !== 'true';
+
   const { textSetHeight, textSetWidth } = elements[0];
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
@@ -114,7 +126,15 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
       onKeyUp={handleKeyboardPageClick}
       {...rest}
     >
-      <TextSetElements isForDisplay elements={elements} />
+      {renderImages ? (
+        <TextSetImg
+          src={`${cdnURL}images/text-sets/${id}.png`}
+          alt=""
+          crossOrigin="anonymous"
+        />
+      ) : (
+        <TextSetElements isForDisplay elements={elements} />
+      )}
       <LibraryMoveable
         type={'textSet'}
         elements={elements}
@@ -142,6 +162,7 @@ function TextSet({ elements, translateY, translateX, ...rest }, ref) {
 const TextSetWithRef = forwardRef(TextSet);
 
 TextSet.propTypes = {
+  id: PropTypes.string.isRequired,
   elements: PropTypes.array.isRequired,
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,

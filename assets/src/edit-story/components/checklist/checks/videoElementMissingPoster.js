@@ -36,7 +36,9 @@ import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 
 export function videoElementMissingPoster(element) {
-  return element.type === 'video' && !element.resource?.poster;
+  return (
+    element.type === 'video' && !element.resource?.poster && !element.poster
+  );
 }
 
 const VideoElementMissingPoster = () => {

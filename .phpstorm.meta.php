@@ -29,6 +29,7 @@ namespace PHPSTORM_META {
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,
 			'integrations.sitekit'         => \Google\Web_Stories\Integrations\Site_Kit::class,
 			'integrations.themes_support'  => \Google\Web_Stories\Integrations\Core_Themes_Support::class,
+			'imgareaselect_patch'          => \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class,
 			'kses'                         => \Google\Web_Stories\KSES::class,
 			'media'                        => \Google\Web_Stories\Media\Media::class,
 			'page_template_post_type'      => \Google\Web_Stories\Page_Template_Post_Type::class,

@@ -97,7 +97,7 @@ const StoryGridItem = ({
         menuLabel={
           isLocked
             ? sprintf(
-                /* translators: %1$s: story title %2$s: user story is locked by.*/
+                /* translators: 1: story title. 2: user currently editing the story. */
                 __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
                 formattedTitle,
                 story?.lockUser.name

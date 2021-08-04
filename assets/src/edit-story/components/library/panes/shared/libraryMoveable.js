@@ -37,6 +37,7 @@ import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
+import { noop } from '../../../../utils/noop';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -52,7 +53,7 @@ function LibraryMoveable({
   elementProps = {},
   handleDrag,
   handleDragEnd,
-  onClick,
+  onClick = noop,
   cloneElement,
   cloneProps,
   elements = [],
@@ -311,7 +312,7 @@ LibraryMoveable.propTypes = {
   handleDrag: PropTypes.func,
   handleDragEnd: PropTypes.func,
   elementProps: PropTypes.object,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
   active: PropTypes.bool,
