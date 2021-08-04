@@ -240,6 +240,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Stickers', 'web-stories' ),
 				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
