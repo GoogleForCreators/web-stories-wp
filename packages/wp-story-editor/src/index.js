@@ -25,13 +25,12 @@ import './publicPath';
 /**
  * External dependencies
  */
-import Modal from 'react-modal';
+import App, { Modal } from '@web-stories-wp/story-editor';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
-import App from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies

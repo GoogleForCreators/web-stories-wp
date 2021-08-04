@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import App from './editorApp';
+
 export * from './components/transform';
 export * from './app/config';
 export * from './components/previewPage';
@@ -24,9 +29,6 @@ export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as localStore } from './utils/localStore';
 export { default as StoryPropTypes } from './types';
+export { default as Modal } from 'react-modal';
 
-/**
- * Internal dependencies
- */
-import App from './editorApp';
 export default App;
