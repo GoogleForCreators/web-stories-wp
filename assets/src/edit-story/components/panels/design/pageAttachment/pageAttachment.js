@@ -17,26 +17,19 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect, useMemo } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { Input, MEDIA_VARIANTS } from '@web-stories-wp/design-system';
-import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
+import { Input } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas, useConfig } from '../../../../app';
+import { useStory, useCanvas } from '../../../../app';
 import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { LinkInput, Media, Row } from '../../../form';
+import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-
-const ICON_SIZE = 32;
-const StyledMedia = styled(Media)`
-  width: ${ICON_SIZE}px;
-  height: ${ICON_SIZE}px;
-`;
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
@@ -46,7 +39,6 @@ function PageAttachmentPanel() {
   const { setDisplayLinkGuidelines } = useCanvas((state) => ({
     setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
   }));
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
@@ -154,23 +146,6 @@ function PageAttachmentPanel() {
     [_ctaText, debouncedUpdate, defaultCTA, updatePageAttachment]
   );
 
-  const iconErrorMessage = useMemo(() => {
-    let message = __(
-      'No image file types are currently supported.',
-      'web-stories'
-    );
-
-    if (allowedImageFileTypes.length) {
-      message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s as an icon.', 'web-stories'),
-        translateToExclusiveList(allowedImageFileTypes)
-      );
-    }
-
-    return message;
-  }, [allowedImageFileTypes]);
-
   return (
     <SimplePanel
       name="pageAttachment"
@@ -211,21 +186,7 @@ function PageAttachmentPanel() {
             />
           </Row>
           <Row>
-            <StyledMedia
-              value={icon || ''}
-              cropParams={{
-                width: ICON_SIZE,
-                height: ICON_SIZE,
-              }}
-              onChange={handleChangeIcon}
-              onChangeErrorText={iconErrorMessage}
-              title={__('Select as link icon', 'web-stories')}
-              ariaLabel={__('Edit link icon', 'web-stories')}
-              buttonInsertText={__('Select as link icon', 'web-stories')}
-              type={allowedImageMimeTypes}
-              menuOptions={icon ? ['edit', 'remove'] : []}
-              variant={MEDIA_VARIANTS.CIRCLE}
-            />
+            <LinkIcon handleChange={handleChangeIcon} icon={icon} />
           </Row>
         </>
       )}
