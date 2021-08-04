@@ -391,7 +391,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @return ServiceContainer Service container of the plugin.
 	 */
-	public function get_container() {
+	public function get_container(): ServiceContainer {
 		return $this->service_container;
 	}
 
