@@ -123,7 +123,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['@web-stories-wp/karma-puppeteer-launcher'],
+    browsers: ['karma-puppeteer-launcher'], // @web-stories-wp/karma-puppeteer-launcher package
 
     puppeteerLauncher: {
       puppeteer: {
