@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -27,6 +27,9 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCanvas } from '../../../app';
 import Popup from '../../popup';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
+import { OUTLINK_THEME } from '../../../constants';
+import { ReactComponent as DefaultIcon } from './defaultIcon.svg';
+import { ReactComponent as ArrowIcon } from './arrowBar.svg';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -57,49 +60,45 @@ const Guideline = styled.div`
 
 // The CSS here is based on how it's displayed in the front-end, including static
 // font-size, line-height, etc. independent of the viewport size -- it's not responsive.
-const Icon = styled.div`
+const ArrowBar = styled(ArrowIcon)`
+  display: block;
+  cursor: pointer;
+  margin-bottom: 10px;
+  filter: drop-shadow(0px 2px 6px rgba(0,0,0,0.3));
+  width: 20px;
+  height: 8px;
+}
+`;
+
+const OutlinkChip = styled.div`
+  height: 36px;
+  display: flex;
   position: relative;
-  display: block;
-  height: 28px;
-  width: 32px;
-`;
-
-const arrowBarCss = css`
-  position: absolute;
-  display: block;
-  height: 3px;
-  width: 12px;
-  border-radius: 3px;
-  top: 14px;
-  background: ${({ theme }) => theme.colors.standard.white};
-  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.36);
-`;
-
-const LeftBar = styled.div`
-  ${arrowBarCss}
-  left: 6px;
-  transform: rotate(-30deg);
-`;
-
-const RightBar = styled.div`
-  ${arrowBarCss}
-  right: 6px;
-  transform: rotate(30deg);
+  padding: 10px 6px;
+  margin: 0 0 20px;
+  max-width: calc(100% - 64px);
+  border-radius: 30px;
+  place-items: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  background: ${({ bgColor }) => bgColor};
 `;
 
 const TextWrapper = styled.span`
-  font-family: 'Google Sans';
+  font-family: Roboto, sans-serif;
   font-size: 16px;
-  line-height: 16px;
+  line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.36);
   white-space: nowrap;
-  max-width: 90%;
   position: relative;
-  padding: 0 32px;
+  padding-inline-start: 6px;
+  padding-inline-end: 8px;
   height: 16px;
   letter-spacing: 0.3px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  max-width: 210px;
+  color: ${({ fgColor }) => fgColor};
 `;
 
 const Tooltip = styled.div`
@@ -112,7 +111,21 @@ const Tooltip = styled.div`
   text-align: center;
 `;
 
+const LinkImage = styled.div`
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  border-radius: 50%;
+  background-image: url('${({ icon }) => icon}') !important;
+`;
+
 const spacing = { x: 8 };
+
+const LIGHT_COLOR = '#FFFFFF';
+const DARK_COLOR = '#000000';
 
 function PageAttachment({ pageAttachment = {} }) {
   const {
@@ -127,18 +140,30 @@ function PageAttachment({ pageAttachment = {} }) {
 
   const { hasInvalidLinkSelected } = useElementsWithLinks();
 
-  const { ctaText = __('Learn more', 'web-stories'), url } = pageAttachment;
+  const {
+    ctaText = __('Learn more', 'web-stories'),
+    url,
+    icon,
+    theme,
+  } = pageAttachment;
+
+  const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
+  const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   return (
     <>
       {(displayLinkGuidelines || hasInvalidLinkSelected) && <Guideline />}
       <Wrapper role="presentation" ref={setPageAttachmentContainer}>
         {url?.length > 0 && (
           <>
-            <Icon>
-              <LeftBar />
-              <RightBar />
-            </Icon>
-            <TextWrapper>{ctaText}</TextWrapper>
+            <ArrowBar fill={bgColor} />
+            <OutlinkChip bgColor={bgColor}>
+              {icon ? (
+                <LinkImage icon={icon} />
+              ) : (
+                <DefaultIcon fill={fgColor} width={24} height={24} />
+              )}
+              <TextWrapper fgColor={fgColor}>{ctaText}</TextWrapper>
+            </OutlinkChip>
             {pageAttachmentContainer && hasInvalidLinkSelected && (
               <Popup
                 anchor={{ current: pageAttachmentContainer }}

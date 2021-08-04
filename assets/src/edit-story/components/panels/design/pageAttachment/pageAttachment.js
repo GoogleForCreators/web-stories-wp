@@ -38,12 +38,7 @@ import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-
-const THEME = {
-  DARK: 'dark',
-  LIGHT: 'light',
-  CUSTOM: 'custom',
-};
+import { OUTLINK_THEME } from '../../../../constants';
 
 const Label = styled.label`
   margin-left: 12px;
@@ -226,10 +221,12 @@ function PageAttachmentPanel() {
             {/* The default is light theme, only if checked, use dark theme */}
             <StyledCheckbox
               id={checkboxId}
-              checked={theme === THEME.DARK}
+              checked={theme === OUTLINK_THEME.DARK}
               onChange={(evt) =>
                 updatePageAttachment({
-                  theme: evt.target.checked ? THEME.DARK : THEME.LIGHT,
+                  theme: evt.target.checked
+                    ? OUTLINK_THEME.DARK
+                    : OUTLINK_THEME.LIGHT,
                 })
               }
             />
