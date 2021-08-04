@@ -27,8 +27,10 @@ import * as types from './types';
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
-  processing: [],
-  processed: [],
+  audioProcessing: [],
+  audioProcessed: [],
+  posterProcessing: [],
+  posterProcessed: [],
   mediaType: '',
   searchTerm: '',
 };
@@ -67,8 +69,10 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
     case types.LOCAL_MEDIA_RESET_FILTERS: {
       return {
         ...INITIAL_STATE,
-        processing: [...state.processing],
-        processed: [...state.processed],
+        audioProcessing: [...state.audioProcessing],
+        audioProcessed: [...state.audioProcessed],
+        posterProcessing: [...state.posterProcessing],
+        posterProcessed: [...state.posterProcessed],
       };
     }
 
@@ -79,8 +83,10 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       }
       return {
         ...INITIAL_STATE,
-        processing: [...state.processing],
-        processed: [...state.processed],
+        audioProcessing: [...state.audioProcessing],
+        audioProcessed: [...state.audioProcessed],
+        posterProcessing: [...state.posterProcessing],
+        posterProcessed: [...state.posterProcessed],
         mediaType: state.mediaType,
         searchTerm,
       };
@@ -94,8 +100,10 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return {
         ...INITIAL_STATE,
         media: state.media.filter(({ local }) => local), // This filter allows remove temporary file returned on upload
-        processing: [...state.processing],
-        processed: [...state.processed],
+        audioProcessing: [...state.audioProcessing],
+        audioProcessed: [...state.audioProcessed],
+        posterProcessing: [...state.posterProcessing],
+        posterProcessed: [...state.posterProcessed],
         searchTerm: state.searchTerm,
         mediaType,
       };
@@ -119,29 +127,55 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
 
-    case types.LOCAL_MEDIA_ADD_PROCESSING: {
+    case types.LOCAL_MEDIA_ADD_POSTER_PROCESSING: {
       const { id } = payload;
-      if (!id || state.processing.includes(id)) {
+      if (!id || state.posterProcessing.includes(id)) {
         return state;
       }
       return {
         ...state,
-        processing: [...state.processing, id],
+        posterProcessing: [...state.posterProcessing, id],
       };
     }
 
-    case types.LOCAL_MEDIA_REMOVE_PROCESSING: {
+    case types.LOCAL_MEDIA_REMOVE_POSTER_PROCESSING: {
       const { id } = payload;
-      if (!id || !state.processing.includes(id)) {
+      if (!id || !state.posterProcessing.includes(id)) {
         return state;
       }
-      const currentProcessing = [...state.processing];
-      const processing = currentProcessing.filter((e) => e !== id);
+      const currentProcessing = [...state.posterProcessing];
+      const posterProcessing = currentProcessing.filter((e) => e !== id);
 
       return {
         ...state,
-        processing,
-        processed: [...state.processed, id],
+        posterProcessing,
+        posterProcessed: [...state.posterProcessed, id],
+      };
+    }
+
+    case types.LOCAL_MEDIA_ADD_AUDIO_PROCESSING: {
+      const { id } = payload;
+      if (!id || state.audioProcessing.includes(id)) {
+        return state;
+      }
+      return {
+        ...state,
+        audioProcessing: [...state.audioProcessing, id],
+      };
+    }
+
+    case types.LOCAL_MEDIA_REMOVE_AUDIO_PROCESSING: {
+      const { id } = payload;
+      if (!id || !state.audioProcessing.includes(id)) {
+        return state;
+      }
+      const currentProcessing = [...state.audioProcessing];
+      const audioProcessing = currentProcessing.filter((e) => e !== id);
+
+      return {
+        ...state,
+        audioProcessing,
+        audioProcessed: [...state.audioProcessed, id],
       };
     }
 

@@ -43,6 +43,7 @@ import { filterStoryElements } from '../utils/filterStoryElements';
 import { useHighlights } from '../../../app/highlights';
 import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
@@ -100,6 +101,7 @@ function reducer(state, action) {
 }
 
 export const BulkVideoOptimization = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const [state, dispatch] = useReducer(reducer, initialState);
   const pages = useStory(({ state: storyState }) => storyState?.pages);
   const unoptimizedElements = useMemo(
@@ -208,7 +210,8 @@ export const BulkVideoOptimization = () => {
   }
 
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         cta={
           <OptimizeButton

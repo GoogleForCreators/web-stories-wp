@@ -17,11 +17,12 @@
 /**
  * Internal dependencies
  */
-import { RESET_PROPERTIES, ELEMENT_TYPE, RESET_DEFAULTS } from '../constants';
+import { ELEMENT_TYPES } from '../../../story';
+import { RESET_PROPERTIES, RESET_DEFAULTS } from '../constants';
 
 function isBorderRadiusDefault(element) {
   // text element presets have a different default border radius
-  if (element?.type === ELEMENT_TYPE.TEXT && element?.borderRadius) {
+  if (element?.type === ELEMENT_TYPES.TEXT && element?.borderRadius) {
     return (
       element.borderRadius.locked &&
       element.borderRadius.topLeft === RESET_DEFAULTS.TEXT_BORDER_RADIUS.topLeft

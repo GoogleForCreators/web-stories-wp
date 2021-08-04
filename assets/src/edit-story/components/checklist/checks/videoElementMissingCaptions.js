@@ -34,6 +34,7 @@ import {
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function videoElementMissingCaptions(element) {
   return (
@@ -44,6 +45,7 @@ export function videoElementMissingCaptions(element) {
 }
 
 const VideoElementMissingCaptions = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const elements = useMemo(
     () => filterStoryElements(pages, videoElementMissingCaptions),
@@ -64,7 +66,8 @@ const VideoElementMissingCaptions = () => {
   const isRendered = elements.length > 0;
   useRegisterCheck('VideoElementMissingCaptions', isRendered);
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

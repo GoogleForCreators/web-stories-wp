@@ -83,7 +83,7 @@ function PostLock() {
             ? {
                 id: author.id,
                 name: author.name,
-                avatar: author.avatar_urls?.['48'],
+                avatar: author.avatar_urls?.['96'],
               }
             : null;
           if (locked && lockAuthor?.id !== currentUser.id) {

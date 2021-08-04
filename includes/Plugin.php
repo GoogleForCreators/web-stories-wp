@@ -89,6 +89,7 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
 		'media'                        => Media\Media::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
@@ -122,6 +123,7 @@ class Plugin extends ServiceBasedPlugin {
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
 		'video_captions'               => Media\Video_Captions::class,
+		'video_muting'                 => Media\Video_Muting::class,
 	];
 
 	/**

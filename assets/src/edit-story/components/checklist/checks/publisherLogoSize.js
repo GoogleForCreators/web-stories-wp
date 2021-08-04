@@ -27,6 +27,7 @@ import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY, PUBLISHER_LOGO_DIMENSION } from '../constants';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function publisherLogoSize(publisherLogo) {
   return (
@@ -36,6 +37,7 @@ export function publisherLogoSize(publisherLogo) {
 }
 
 const PublisherLogoSize = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const publisherLogo = useStory(({ state }) => state?.story?.publisherLogo);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -51,7 +53,8 @@ const PublisherLogoSize = () => {
 
   const { footer, title } = PRIORITY_COPY.logoTooSmall;
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         titleProps={{

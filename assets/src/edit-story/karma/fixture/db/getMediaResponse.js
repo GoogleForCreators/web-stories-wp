@@ -61,8 +61,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 2,
@@ -110,8 +110,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 3,
@@ -159,8 +159,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 4,
@@ -208,8 +208,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 5,
@@ -257,8 +257,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 6,
@@ -292,8 +292,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 7,
@@ -327,8 +327,8 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
   {
     id: 8,
@@ -376,7 +376,7 @@ export default [
     meta: {
       web_stories_is_poster: false,
       web_stories_poster_id: 0,
-      web_stories_is_muted: false,
     },
+    is_muted: false,
   },
 ];

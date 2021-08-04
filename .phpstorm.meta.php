@@ -29,6 +29,7 @@ namespace PHPSTORM_META {
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,
 			'integrations.sitekit'         => \Google\Web_Stories\Integrations\Site_Kit::class,
 			'integrations.themes_support'  => \Google\Web_Stories\Integrations\Core_Themes_Support::class,
+			'imgareaselect_patch'          => \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class,
 			'kses'                         => \Google\Web_Stories\KSES::class,
 			'media'                        => \Google\Web_Stories\Media\Media::class,
 			'page_template_post_type'      => \Google\Web_Stories\Page_Template_Post_Type::class,
@@ -62,6 +63,7 @@ namespace PHPSTORM_META {
 			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
 			'video_captions'               => \Google\Web_Stories\Media\Video_Captions::class,
+			'video_muting'                 => \Google\Web_Stories\Media\Video_Muting::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )
 	);

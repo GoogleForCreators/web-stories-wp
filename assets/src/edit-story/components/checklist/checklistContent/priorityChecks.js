@@ -23,6 +23,7 @@ import { useEffect } from 'react';
  * Internal dependencies
  */
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
+import { useConfig } from '../../../app';
 import { PANEL_STATES } from '../../tablist';
 import { ISSUE_TYPES } from '../constants';
 import PublisherLogoSize from '../checks/publisherLogoSize';
@@ -36,20 +37,57 @@ import { ChecklistCategoryProvider, useCategoryCount } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import { useCheckpoint } from '../checkpointContext';
 import VideoOptimization from '../checks/videoOptimization';
+import StoryMissingPublisherName from '../checks/storyMissingPublisherName';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
-export function PriorityChecks({
+function PriorityPanel({
+  children,
   badgeCount = 0,
-  maxHeight,
   isOpen,
   onClick,
+  maxHeight,
   title,
 }) {
+  const isChecklistMounted = useIsChecklistMounted();
+  return isChecklistMounted ? (
+    <StyledTablistPanel
+      badgeCount={badgeCount}
+      isExpanded={isOpen}
+      onClick={onClick}
+      maxHeight={maxHeight}
+      status={PANEL_STATES.DANGER}
+      title={title}
+    >
+      <PanelText>
+        {__('Make this Web Story easier to discover.', 'web-stories')}
+      </PanelText>
+      {children}
+    </StyledTablistPanel>
+  ) : (
+    children
+  );
+}
+
+PriorityPanel.propTypes = {
+  badgeCount: PropTypes.number,
+  isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.node),
+};
+
+export function PriorityChecks(props) {
   const count = useCategoryCount(ISSUE_TYPES.PRIORITY);
   const { updateHighPriorityCount } = useCheckpoint(
     ({ actions: { updateHighPriorityCount } }) => ({
       updateHighPriorityCount,
     })
   );
+  const { canManageSettings } = useConfig(({ capabilities }) => ({
+    canManageSettings: capabilities.canManageSettings,
+  }));
+
   useEffect(() => {
     updateHighPriorityCount(count);
   }, [updateHighPriorityCount, count]);
@@ -58,18 +96,9 @@ export function PriorityChecks({
 
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
-      <StyledTablistPanel
-        badgeCount={badgeCount}
-        isExpanded={isOpen}
-        onClick={onClick}
-        maxHeight={maxHeight}
-        status={PANEL_STATES.DANGER}
-        title={title}
-      >
-        <PanelText>
-          {__('Make this Web Story easier to discover.', 'web-stories')}
-        </PanelText>
+      <PriorityPanel {...props}>
         <StoryMissingTitle />
+        {canManageSettings && <StoryMissingPublisherName />}
         <StoryTitleLength />
         <StoryMissingExcerpt />
         <StoryPosterAttached />
@@ -77,7 +106,7 @@ export function PriorityChecks({
         <PublisherLogoSize />
         <VideoElementMissingPoster />
         {isTranscodingEnabled && <VideoOptimization />}
-      </StyledTablistPanel>
+      </PriorityPanel>
     </ChecklistCategoryProvider>
   );
 }

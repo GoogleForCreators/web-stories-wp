@@ -181,7 +181,7 @@ const SET = [
 
 const insertTextSet = jest.fn();
 
-function setup(elements) {
+function setup(elements, id) {
   const libraryValue = {
     actions: {
       insertTextSet,
@@ -239,7 +239,7 @@ function setup(elements) {
                       }}
                       getBox={getBox}
                     >
-                      <TextSet elements={elements} index={0} />
+                      <TextSet id={id} elements={elements} index={0} />
                     </UnitsProvider>
                   </LibraryContext.Provider>
                 </LayoutProvider>
@@ -259,20 +259,12 @@ describe('TextSets', () => {
     insertTextSet.mockReset();
   });
 
-  it('should render', () => {
-    const { container } = setup(SET);
-    const el1 = container.querySelector('[data-element-id="1"]');
-    expect(el1).not.toBeNull();
-  });
+  const SET_ID = '123';
 
-  it('should render the correct elements from the text sets', () => {
-    const { container } = setup(SET);
-    const el1 = container.querySelector('[data-element-id="1"]');
-    expect(el1).toHaveTextContent('Good design is aesthetic');
-    const el2 = container.querySelector('[data-element-id="2"]');
-    expect(el2).toHaveTextContent(
-      'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.'
-    );
+  it('should render the correct images for the text sets x', () => {
+    const { container } = setup(SET, SET_ID);
+    const textSetImg = container.querySelector(`img[src$="${SET_ID}.png"]`);
+    expect(textSetImg).toBeTruthy();
   });
 });
 
