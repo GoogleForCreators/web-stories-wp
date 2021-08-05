@@ -214,6 +214,16 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
+        'wp:action-edit': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+          },
+        ],
+        'wp:action-delete': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+          },
+        ],
         'wp:action-unfiltered-html': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
@@ -442,6 +452,16 @@ const formattedStoriesArray = [
         'wp:action-publish': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
+          },
+        ],
+        'wp:action-edit': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+          },
+        ],
+        'wp:action-delete': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-unfiltered-html': [
@@ -820,6 +840,16 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
+        'wp:action-edit': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+          },
+        ],
+        'wp:action-delete': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+          },
+        ],
         'wp:action-unfiltered-html': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
@@ -1100,6 +1130,16 @@ const formattedStoriesArray = [
         'wp:action-publish': [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
+          },
+        ],
+        'wp:action-edit': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+          },
+        ],
+        'wp:action-delete': [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
           },
         ],
         'wp:action-unfiltered-html': [
