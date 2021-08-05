@@ -52,12 +52,12 @@ const InputWrapper = styled.div`
 const Color = forwardRef(function Color(
   {
     onChange,
-    allowsGradient,
-    allowsOpacity,
-    value,
-    label,
-    colorPickerActions,
-    changedStyle,
+    allowsGradient = false,
+    allowsOpacity = true,
+    value = null,
+    label = null,
+    colorPickerActions = null,
+    changedStyle = null,
   },
   ref
 ) {
@@ -109,13 +109,6 @@ Color.propTypes = {
   label: PropTypes.string.isRequired,
   colorPickerActions: PropTypes.func,
   changedStyle: PropTypes.string,
-};
-
-Color.defaultProps = {
-  value: null,
-  hasGradient: false,
-  hasOpacity: true,
-  opacity: null,
 };
 
 export default Color;
