@@ -47,7 +47,6 @@ import {
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
-import { useConfig } from '../../../config';
 import { getSearchOptions } from '../../utils';
 
 const StyledPill = styled(Pill)`
@@ -72,8 +71,6 @@ function Header({
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
-
-  const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
 
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
@@ -109,9 +106,7 @@ function Header({
         {STORY_STATUSES.map((storyStatus) => {
           const isStoryPrivate = storyStatus.status === STORY_STATUS.PRIVATE;
           const cantReadPrivate =
-            !canReadPrivatePosts ||
-            !totalStoriesByStatus.private ||
-            totalStoriesByStatus.private < 1;
+            !totalStoriesByStatus?.private || totalStoriesByStatus?.private < 1;
 
           if (isStoryPrivate && cantReadPrivate) {
             return null;
@@ -143,7 +138,7 @@ function Header({
         }).filter(Boolean)}
       </>
     );
-  }, [totalStoriesByStatus, canReadPrivatePosts, filter.value, handleClick]);
+  }, [totalStoriesByStatus, filter.value, handleClick]);
 
   const onSortChange = useCallback(
     (newSort) => {

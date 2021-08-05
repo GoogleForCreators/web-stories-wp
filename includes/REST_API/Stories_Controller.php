@@ -30,6 +30,7 @@ use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Media\Media;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 use WP_Query;
 use WP_Error;
@@ -43,7 +44,7 @@ use WP_REST_Response;
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Stories_Controller extends Stories_Base_Controller {
-	use Publisher;
+	use Publisher, Post_Type;
 	/**
 	 * Default style presets to pass if not set.
 	 */
@@ -413,12 +414,16 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Add counts for other statuses.
 		$statuses = [
-			'all'     => [ 'publish', 'draft', 'future', 'private' ],
+			'all'     => [ 'publish', 'draft', 'future' ],
 			'publish' => 'publish',
 			'future'  => 'future',
 			'draft'   => 'draft',
-			'private' => 'private',
 		];
+
+		if ( $this->get_post_type_cap( $this->post_type, 'read_private_posts' ) ) {
+			$statuses['all'][] = 'private';
+			$statuses[]        = 'private';
+		}
 
 		$statuses_count = [];
 

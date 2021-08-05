@@ -238,7 +238,6 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            private: 2,
             [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
           }}
           view={{
@@ -247,12 +246,7 @@ describe('My Stories <Header />', function () {
           }}
           wpListURL="fakeurltoWordPressList.com"
         />
-      </LayoutProvider>,
-      {
-        config: {
-          capabilities: { canReadPrivatePosts: false },
-        },
-      }
+      </LayoutProvider>
     );
     const allStoriesButton = screen.getByRole('button', {
       name: /Filter stories by All Stories/,
