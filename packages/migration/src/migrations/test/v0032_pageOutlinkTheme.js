@@ -51,6 +51,28 @@ describe('pageOutlinkTheme', () => {
     });
   });
 
+  it('should not do anything in case of outlink not being set', () => {
+    expect(
+      pageOutlinkTheme({
+        _test: 'story',
+        pages: [
+          {
+            _test: 'page1',
+            elements: [],
+          },
+        ],
+      })
+    ).toStrictEqual({
+      _test: 'story',
+      pages: [
+        {
+          _test: 'page1',
+          elements: [],
+        },
+      ],
+    });
+  });
+
   it('should not override existing page outlink theme', () => {
     expect(
       pageOutlinkTheme({

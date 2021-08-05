@@ -32,7 +32,7 @@ function reducePage(page) {
     ...page,
     pageAttachment: {
       ...pageAttachment,
-      theme: theme ? theme : 'light',
+      theme: theme ?? 'light',
     },
   };
 }
