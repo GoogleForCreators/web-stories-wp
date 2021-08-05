@@ -112,7 +112,7 @@ function Header({
             __('Filter stories by %s', 'web-stories'),
             label
           );
-          const count = totalStoriesByStatus?.[status];
+          const count = totalStoriesByStatus[status];
           return (
             <StyledPill
               key={value}
