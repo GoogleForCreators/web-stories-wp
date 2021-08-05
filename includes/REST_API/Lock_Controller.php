@@ -199,7 +199,7 @@ abstract class Lock_Controller extends REST_Controller {
 	 * Checks if a given request has access to read a lock.
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 * @return true|WP_Error True if the request has read access for the item, WP_Error object otherwise.
+	 * @return bool|WP_Error True if the request has read access for the item, WP_Error object otherwise.
 	 */
 	public function get_item_permissions_check( $request ) {
 		$check = $this->parent_controller->get_item_permissions_check( $request );
