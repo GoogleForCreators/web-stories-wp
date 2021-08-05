@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -106,8 +111,9 @@ describe('Canvas keys integration', () => {
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
 
-    await fixture.waitOnScreen(
-      fixture.container.querySelector('[data-testid="colorPicker"]')
+    await waitFor(
+      () => fixture.container.querySelector('[data-testid="colorPicker"]'),
+      { timeout: 4000 }
     );
     await fixture.snapshot('color picker open');
 
