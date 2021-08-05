@@ -38,6 +38,7 @@ class Stories_Controller extends Test_REST_TestCase {
 	protected static $user3_id;
 
 	protected static $author_id;
+	protected static $subscriber_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
@@ -64,6 +65,12 @@ class Stories_Controller extends Test_REST_TestCase {
 		self::$author_id = $factory->user->create(
 			[
 				'role' => 'author',
+			]
+		);
+
+		self::$subscriber_id = $factory->user->create(
+			[
+				'role' => 'subscriber',
 			]
 		);
 
@@ -123,6 +130,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$user2_id );
 		self::delete_user( self::$user3_id );
 		self::delete_user( self::$author_id );
+		self::delete_user( self::$subscriber_id );
 	}
 
 	public function setUp() {
@@ -288,7 +296,32 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'https://api.w.org/lock', $links );
 	}
 
+	/**
+	 * @covers ::get_item
+	 * @covers ::prepare_item_for_response
+	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
+	 */
+	public function test_get_item_lock_no_links() {
+		wp_set_current_user( self::$subscriber_id );
+		$future_date = strtotime( '+1 day' );
+		$story       = self::factory()->post->create(
+			[
+				'post_type'   => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_status' => 'future',
+				'post_date'   => strftime( '%Y-%m-%d %H:%M:%S', $future_date ),
+				'post_author' => self::$user_id,
+			]
+		);
+		$new_lock    = ( time() - 100 ) . ':' . self::$user_id;
+		update_post_meta( $story, '_edit_lock', $new_lock );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story );
+		$response = rest_get_server()->dispatch( $request );
+		$links    = $response->get_links();
 
+		$this->assertArrayNotHasKey( 'https://api.w.org/lockuser', $links );
+		$this->assertArrayNotHasKey( 'https://api.w.org/lock', $links );
+	}
+	
 	/**
 	 * @covers ::get_items
 	 */
