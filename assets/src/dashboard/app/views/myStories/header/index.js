@@ -33,7 +33,6 @@ import {
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
-  STORY_STATUS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -108,25 +107,22 @@ function Header({
           if (!(status in totalStoriesByStatus)) {
             return null;
           }
-          const labelCount = totalStoriesByStatus?.[status] ? (
-            <span>{totalStoriesByStatus?.[status]}</span>
-          ) : null;
-
           const ariaLabel = sprintf(
             /* translators: %s is story status */
             __('Filter stories by %s', 'web-stories'),
             label
           );
+          const count = totalStoriesByStatus?.[status];
           return (
             <StyledPill
               key={value}
               onClick={() => handleClick(value)}
               isActive={filter.value === value}
-              disabled={totalStoriesByStatus?.[status] <= 0}
+              disabled={count <= 0}
               aria-label={ariaLabel}
             >
               {label}
-              {labelCount && labelCount}
+              {count && <span>{count}</span>}
             </StyledPill>
           );
         }).filter(Boolean)}
