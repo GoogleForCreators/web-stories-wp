@@ -81,7 +81,7 @@ const StyledSwatch = styled(Swatch)`
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      border: 1px solid ${theme.colors.border.defaultActive};
+      border: 2px solid ${theme.colors.border.defaultActive};
     `}
 `;
 
