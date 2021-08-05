@@ -158,7 +158,7 @@ class Lock_Controller extends Test_REST_TestCase {
 		);
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_edit', $response, 401 );
+		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
 	}
 
 	/**
@@ -176,7 +176,7 @@ class Lock_Controller extends Test_REST_TestCase {
 		);
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story/' . $story . '/lock' );
 		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
+		$this->assertErrorResponse( 'rest_forbidden', $response, 403 );
 	}
 
 	/**
