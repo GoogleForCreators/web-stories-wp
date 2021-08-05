@@ -40,6 +40,13 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     fixture = new Fixture();
     fixture.setFlags({ enableSmartTextColor: true });
     await fixture.render();
+
+    await fixture.editor.library.textTab.click();
+    // Give some time for the things to be available for the tests.
+    await fixture.events.sleep(300);
+    await waitFor(() =>
+      expect(fixture.editor.canvas.framesLayer.frames[0].node).toBeTruthy()
+    );
   });
 
   afterEach(() => {
@@ -59,7 +66,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   }
 
   it('should add text presets below each other if added consecutively', async () => {
-    await fixture.editor.library.textTab.click();
     await fixture.events.mouse.moveRel(
       fixture.editor.library.text.preset('Title 1'),
       10,
@@ -127,8 +133,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       nextY = element.y;
       nextHeight = element.height;
     };
-
-    await fixture.editor.library.textTab.click();
     await fixture.events.mouse.moveRel(
       fixture.editor.library.text.preset('Title 1'),
       10,
