@@ -39,6 +39,10 @@ const formattedStoriesArray = [
     author: 'Jango Fett',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
@@ -278,6 +282,10 @@ const formattedStoriesArray = [
     author: 'Chewbacca',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
@@ -518,6 +526,10 @@ const formattedStoriesArray = [
     author: 'Luke Skywalker',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
@@ -904,6 +916,10 @@ const formattedStoriesArray = [
     author: 'Lando-Calrissian',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
