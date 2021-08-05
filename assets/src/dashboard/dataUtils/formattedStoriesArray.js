@@ -456,12 +456,12 @@ const formattedStoriesArray = [
         ],
         'wp:action-edit': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-delete': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/165',
           },
         ],
         'wp:action-unfiltered-html': [
@@ -842,12 +842,12 @@ const formattedStoriesArray = [
         ],
         'wp:action-edit': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-delete': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
         'wp:action-unfiltered-html': [
@@ -1134,12 +1134,12 @@ const formattedStoriesArray = [
         ],
         'wp:action-edit': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-delete': [
           {
-            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/167',
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/161',
           },
         ],
         'wp:action-unfiltered-html': [
