@@ -104,31 +104,25 @@ function Header({
     return (
       <>
         {STORY_STATUSES.map((storyStatus) => {
-          const isStoryPrivate = storyStatus.status === STORY_STATUS.PRIVATE;
-          const cantReadPrivate =
-            !totalStoriesByStatus?.private || totalStoriesByStatus?.private < 1;
-
-          if (isStoryPrivate && cantReadPrivate) {
+          const { label, status, value } = storyStatus;
+          if (!(status in totalStoriesByStatus)) {
             return null;
           }
-          const label = storyStatus.label;
-          const labelCount = totalStoriesByStatus?.[storyStatus.status] ? (
-            <span>{totalStoriesByStatus?.[storyStatus.status]}</span>
+          const labelCount = totalStoriesByStatus?.[status] ? (
+            <span>{totalStoriesByStatus?.[status]}</span>
           ) : null;
 
           const ariaLabel = sprintf(
             /* translators: %s is story status */
             __('Filter stories by %s', 'web-stories'),
-            storyStatus.label
+            label
           );
           return (
             <StyledPill
-              key={storyStatus.value}
-              onClick={() => {
-                handleClick(storyStatus.value);
-              }}
-              isActive={filter.value === storyStatus.value}
-              disabled={totalStoriesByStatus?.[storyStatus.status] <= 0}
+              key={value}
+              onClick={() => handleClick(value)}
+              isActive={filter.value === value}
+              disabled={totalStoriesByStatus?.[status] <= 0}
               aria-label={ariaLabel}
             >
               {label}
