@@ -414,15 +414,20 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Add counts for other statuses.
 		$statuses = [
-			'all'     => [ 'publish', 'draft', 'future' ],
+			'all'     => [ 'publish' ],
 			'publish' => 'publish',
-			'future'  => 'future',
-			'draft'   => 'draft',
 		];
 
+		if ( $this->get_post_type_cap( $this->post_type, 'edit_posts' ) ) {
+			$statuses['all'][]  = 'draft';
+			$statuses['all'][]  = 'future';
+			$statuses['draft']  = 'draft';
+			$statuses['future'] = 'future';
+		}
+
 		if ( $this->get_post_type_cap( $this->post_type, 'read_private_posts' ) ) {
-			$statuses['all'][] = 'private';
-			$statuses[]        = 'private';
+			$statuses['all'][]   = 'private';
+			$statuses['private'] = 'private';
 		}
 
 		$statuses_count = [];
