@@ -19,7 +19,7 @@
  */
 import { createSolidFromString } from '@web-stories-wp/patterns';
 
-export const LINE_LENGTH = 172;
+export const LINE_LENGTH = 154;
 export const LINE_WIDTH = 16;
 
 export const GRADIENT_STOP_SIZE = 14;
