@@ -231,11 +231,11 @@ class Editor extends Service_Base {
 	 * @return array
 	 */
 	public function get_editor_settings(): array {
-		$post                     = get_post();
-		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
-		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$general_settings_url     = admin_url( 'options-general.php' );
+		$post                    = get_post();
+		$story_id                = ( $post ) ? $post->ID : null;
+		$rest_base               = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+		$has_upload_media_action = current_user_can( 'upload_files' );
+		$general_settings_url    = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );

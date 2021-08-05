@@ -35,6 +35,7 @@ describe('restore', () => {
 
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
+      capabilities: undefined,
       pages,
       selection: [],
       current: '123',
@@ -146,6 +147,7 @@ describe('restore', () => {
 
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
+      capabilities: undefined,
       pages,
       selection: [],
       current: '123',
@@ -169,6 +171,7 @@ describe('restore', () => {
 
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
+      capabilities: undefined,
       ...storyWithNoCurrentPage,
       ...currentPage,
     });
@@ -191,6 +194,7 @@ describe('restore', () => {
     // Should set first story as current
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
+      capabilities: undefined,
       ...storyWithNoCurrentPage,
       current: '111',
     });

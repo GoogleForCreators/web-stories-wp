@@ -31,6 +31,7 @@ import PublishPanel from '../publish';
 function arrange(
   capabilities = {
     hasAssignAuthorAction: true,
+    hasPublishAction: true,
   }
 ) {
   const updateStory = jest.fn();
@@ -51,6 +52,7 @@ function arrange(
   };
 
   const config = {
+    capabilities,
     allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
     allowedImageMimeTypes: [
       'image/png',

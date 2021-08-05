@@ -40,6 +40,10 @@ const TEST_MENU_ITEM_ACTIONS = Object.values(STORY_CONTEXT_MENU_ACTIONS).reduce(
 const TEST_STORY = {
   previewLink: 'preview-link',
   bottomTargetAction: 'bottom-target-action',
+  capabilities: {
+    hasEditAction: true,
+    hasDeleteAction: true,
+  },
 };
 
 describe('generateStoryMenu', () => {
