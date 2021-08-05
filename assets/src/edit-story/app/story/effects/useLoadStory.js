@@ -98,7 +98,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           lockUser = {
             id: embedded['wp:lockuser'][0].id,
             name: embedded['wp:lockuser'][0].name,
-            avatar: embedded['wp:lockuser'][0].avatar_urls?.['48'],
+            avatar: embedded['wp:lockuser'][0].avatar_urls?.['96'],
           };
         }
 
