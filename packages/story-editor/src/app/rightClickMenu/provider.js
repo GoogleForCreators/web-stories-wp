@@ -29,8 +29,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useStory } from '..';
 import { createPage, duplicatePage } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
-// import useAddPreset from '../../components/panels/design/preset/useAddPreset';
-// import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
+import useAddPreset from '../../components/panels/design/preset/useAddPreset';
+import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
 import { states, useHighlights } from '../highlights';
@@ -499,9 +499,8 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const foregroundMediaItems = useMemo(
+  const layerItems = useMemo(
     () => [
-      ...defaultItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         separator: 'top',
@@ -535,6 +534,76 @@ function RightClickMenuProvider({ children }) {
         onClick: handleBringToFront,
         ...menuItemProps,
       },
+    ],
+    [
+      canElementMoveBackwards,
+      handleSendBackward,
+      menuItemProps,
+      handleSendToBack,
+      handleBringForward,
+      canElementMoveForwards,
+      handleBringToFront,
+    ]
+  );
+
+  const { addGlobalPreset: handleAddTextPreset } = useAddPreset({
+    presetType: PRESET_TYPES.STYLE,
+  });
+
+  const { addGlobalPreset: handleAddColorPreset } = useAddPreset({
+    presetType: PRESET_TYPES.COLOR,
+  });
+
+  const textItems = useMemo(
+    () => [
+      ...defaultItems,
+      ...layerItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
+        separator: 'top',
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
+        },
+        onClick: handleCopyStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_IMAGE_STYLES,
+        },
+        onClick: handlePasteStyles,
+        disabled: copiedElement.type !== selectedElement?.type,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
+        onClick: handleAddTextPreset,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
+        onClick: handleAddColorPreset,
+        ...menuItemProps,
+      },
+    ],
+    [
+      defaultItems,
+      layerItems,
+      handleAddTextPreset,
+      menuItemProps,
+      handleAddColorPreset,
+      handleCopyStyles,
+      handlePasteStyles,
+      copiedElement,
+      selectedElement,
+    ]
+  );
+
+  const foregroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         separator: 'top',
@@ -571,21 +640,16 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
-      canElementMoveBackwards,
-      canElementMoveForwards,
       copiedElement,
       defaultItems,
-      handleBringForward,
-      handleBringToFront,
       handleClearElementStyles,
       handleCopyStyles,
       handleOpenScaleAndCrop,
       handlePasteStyles,
-      handleSendBackward,
-      handleSendToBack,
       handleSetPageBackground,
       menuItemProps,
       selectedElement,
+      layerItems,
     ]
   );
 
@@ -622,10 +686,17 @@ function RightClickMenuProvider({ children }) {
           : foregroundMediaItems;
       case ELEMENT_TYPES.SHAPE:
       case ELEMENT_TYPES.TEXT:
+        return textItems;
       default:
         return pageItems;
     }
-  }, [backgroundMediaItems, foregroundMediaItems, pageItems, selectedElement]);
+  }, [
+    backgroundMediaItems,
+    foregroundMediaItems,
+    pageItems,
+    selectedElement,
+    textItems,
+  ]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
