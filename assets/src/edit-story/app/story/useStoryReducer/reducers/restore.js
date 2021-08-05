@@ -39,6 +39,7 @@ function restore(state, { pages, current, selection, story, capabilities }) {
   }
 
   const newStory = typeof story === 'object' ? story : {};
+  const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const oldCurrent = current ?? state.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
     ? oldCurrent
@@ -51,7 +52,7 @@ function restore(state, { pages, current, selection, story, capabilities }) {
     selection: newSelection,
     story: newStory,
     animationState: state.animationState,
-    capabilities,
+    capabilities: newCapabilities,
   };
 }
 
