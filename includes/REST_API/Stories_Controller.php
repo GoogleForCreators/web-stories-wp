@@ -465,7 +465,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$links = parent::prepare_links( $post );
 		add_post_type_support( Story_Post_Type::POST_TYPE_SLUG, 'revisions' );
 
-		// Ensure that no data about story locks, leaks publically. 
+		// Ensure that no data about story locks leaks publicly. 
 		if ( ! $this->get_post_type_cap( $this->post_type, 'edit_posts' ) ) {
 			return $links;
 		}
