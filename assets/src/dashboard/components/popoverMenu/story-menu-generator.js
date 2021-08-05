@@ -45,9 +45,9 @@ export const generateStoryMenu = ({
     ? () => menuItemActions.default(story)
     : noop;
 
-  const menuItemsFiltered = menuItems.filter((item) => {
-    return !item?.capability || story.capabilities[item?.capability];
-  });
+  const menuItemsFiltered = menuItems.filter(
+    (item) => !item?.capability || story?.capabilities?.[item?.capability]
+  );
 
   return menuItemsFiltered.map(({ value, ...menuItem }) => {
     const extraProperties = {
