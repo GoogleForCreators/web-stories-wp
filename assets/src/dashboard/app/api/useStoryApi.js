@@ -261,7 +261,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         const { getStoryPropsToSave } = await import(
           /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
         );
-        const storyPropsToSave = await getStoryPropsToSave.default({
+        const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
             featuredMedia: {
