@@ -26,6 +26,7 @@ import {
   Icons,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
+  BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -59,6 +60,7 @@ function PatternTypePicker({ type, setToGradient, setToSolid }) {
       <ToggleButton
         aria-label={__('Solid pattern type', 'web-stories')}
         onClick={setToSolid}
+        type={BUTTON_TYPES.QUATERNARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.SQUARE}
         isToggled={type === 'solid'}
@@ -68,6 +70,7 @@ function PatternTypePicker({ type, setToGradient, setToSolid }) {
       <ToggleButton
         aria-label={__('Linear gradient pattern type', 'web-stories')}
         onClick={setToLinear}
+        type={BUTTON_TYPES.QUATERNARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.SQUARE}
         isToggled={type === 'linear'}
@@ -77,6 +80,7 @@ function PatternTypePicker({ type, setToGradient, setToSolid }) {
       <ToggleButton
         aria-label={__('Radial gradient pattern type', 'web-stories')}
         onClick={setToRadial}
+        type={BUTTON_TYPES.QUATERNARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.SQUARE}
         isToggled={type === 'radial'}
