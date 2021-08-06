@@ -284,6 +284,7 @@ function MediaPane(props) {
    * Insert element such image, video and audio into the editor.
    *
    * @param {Object} resource Resource object
+   * @param {string} thumbnailURL The thumbnail's url
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(

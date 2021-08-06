@@ -115,6 +115,12 @@ export class RightClickMenu extends Container {
     });
   }
 
+  get replaceBackgroundImage() {
+    return this.getByRole('button', {
+      name: /^Replace Background Image/i,
+    });
+  }
+
   get addNewPageBefore() {
     return this.getByRole('button', {
       name: /^Add New Page Before/i,

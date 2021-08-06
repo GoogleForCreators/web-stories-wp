@@ -31,7 +31,7 @@ import { createPage, duplicatePage } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
-import { noop } from '../../utils/noop';
+import { states, useHighlights } from '../highlights';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -59,6 +59,9 @@ function RightClickMenuProvider({ children }) {
 
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,
+  }));
+  const { setHighlights } = useHighlights(({ setHighlights }) => ({
+    setHighlights,
   }));
   const {
     addAnimations,
@@ -349,13 +352,6 @@ function RightClickMenuProvider({ children }) {
     }
   }, [selectedElement, updateElementsById]);
 
-  const menuItemProps = useMemo(
-    () => ({
-      onMouseDown: handleMouseDown,
-    }),
-    [handleMouseDown]
-  );
-
   /**
    * Set currently selected element as the page's background.
    */
@@ -382,6 +378,30 @@ function RightClickMenuProvider({ children }) {
     });
     clearBackgroundElement();
   }, [clearBackgroundElement, selectedElement?.id, updateElementsById]);
+
+  /**
+   * Focus the media or the media3p panel.
+   */
+  const handleFocusMediaPanel = useCallback(() => {
+    const idOrigin = selectedElement?.resource?.id?.toString().split(':')?.[0];
+    const is3PGif =
+      (!idOrigin || idOrigin?.toLowerCase() === 'media/tenor') &&
+      selectedElement?.resource?.type?.toLowerCase() === 'gif';
+    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
+    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
+
+    const panelToFocus =
+      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
+
+    setHighlights({ highlight: panelToFocus });
+  }, [selectedElement, setHighlights]);
+
+  const menuItemProps = useMemo(
+    () => ({
+      onMouseDown: handleMouseDown,
+    }),
+    [handleMouseDown]
+  );
 
   const defaultItems = useMemo(
     () => [
@@ -420,7 +440,7 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
-        onClick: noop,
+        onClick: handleFocusMediaPanel,
         ...menuItemProps,
       },
       {
@@ -465,6 +485,7 @@ function RightClickMenuProvider({ children }) {
       handleDuplicatePage,
       handleOpenScaleAndCrop,
       handleRemoveMediaFromBackground,
+      handleFocusMediaPanel,
       menuItemProps,
       pages,
     ]
@@ -586,12 +607,11 @@ function RightClickMenuProvider({ children }) {
 
     switch (selectedElement?.type) {
       case ELEMENT_TYPES.IMAGE:
+      case ELEMENT_TYPES.VIDEO:
+      case ELEMENT_TYPES.GIF:
         return selectedElement?.isBackground
           ? backgroundMediaItems
           : foregroundMediaItems;
-      case ELEMENT_TYPES.VIDEO:
-      case ELEMENT_TYPES.GIF:
-        return foregroundMediaItems;
       case ELEMENT_TYPES.SHAPE:
       case ELEMENT_TYPES.TEXT:
       default:
