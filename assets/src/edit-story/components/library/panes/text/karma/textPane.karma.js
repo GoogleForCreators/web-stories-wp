@@ -42,11 +42,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.render();
 
     await fixture.editor.library.textTab.click();
-    // Give some time for the things to be available for the tests.
-    await fixture.events.sleep(300);
-    await waitFor(() =>
-      expect(fixture.editor.canvas.framesLayer.frames[0].node).toBeTruthy()
-    );
+    // Give some time for everything to be ready for the tests.
+    await fixture.events.sleep(800);
+    await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
   });
 
   afterEach(() => {
