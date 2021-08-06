@@ -322,7 +322,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // Verify element is being edited
-      expect(fixture.screen.getByRole('slider')).toBeDefined();
+      expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
 
       // escape edit mode
       await fixture.events.keyboard.press('Esc');
@@ -348,7 +348,7 @@ describe('Right Click Menu integration', () => {
       );
 
       // Verify element is being edited
-      expect(fixture.screen.getByRole('slider')).toBeDefined();
+      expect(fixture.screen.getByTestId('edit-panel-slider')).toBeDefined();
     });
   });
 
