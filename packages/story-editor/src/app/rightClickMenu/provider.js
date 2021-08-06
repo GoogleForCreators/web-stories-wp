@@ -30,10 +30,13 @@ import { useStory } from '..';
 import { createPage, duplicatePage } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../components/panels/design/preset/useAddPreset';
+import useApplyStyle from '../../components/panels/design/preset/stylePreset/useApplyStyle';
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
 import { states, useHighlights } from '../highlights';
+import { getTextPresets } from '../../components/panels/design/preset/utils';
+import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -282,6 +285,31 @@ function RightClickMenuProvider({ children }) {
     });
   }, [selectedElement, selectedElementAnimations]);
 
+  const selectedElementId = selectedElement?.id;
+  const pushUpdate = useCallback(
+    (update, commitValues) => {
+      if (selectedElementId) {
+        updateElementsById({
+          elementIds: [selectedElementId],
+          properties: (element) => {
+            const updates = updateProperties(element, update, commitValues);
+            const sizeUpdates = getUpdatedSizeAndPosition({
+              ...element,
+              ...updates,
+            });
+            return {
+              ...updates,
+              ...sizeUpdates,
+            };
+          },
+        });
+      }
+    },
+    [selectedElementId, updateElementsById]
+  );
+
+  const handleApplyStyle = useApplyStyle({ pushUpdate });
+
   /**
    * Update the selected element's styles and animations.
    *
@@ -307,26 +335,46 @@ function RightClickMenuProvider({ children }) {
       targets: [selectedElement.id],
     }));
 
-    // Add styles and animations to element
-    updateElementsById({
-      elementIds: [selectedElement.id],
-      properties: (currentProperties) =>
-        updateProperties(
-          currentProperties,
-          {
-            ...copiedElement.styles,
-            animation: oldAnimationToDelete,
-          },
-          /* commitValues */ true
-        ),
-    });
     addAnimations({ animations: newAnimations });
+
+    // Text elements need the text styles extracted from content before
+    // applying to the other text
+    if (copiedElement.type === 'text' && copiedElement.styles.content) {
+      const { textStyles } = getTextPresets(
+        [copiedElement],
+        {
+          textStyles: [],
+          colors: [],
+        },
+        PRESET_TYPES.STYLE
+      );
+      handleApplyStyle({
+        ...copiedElement.styles,
+        ...textStyles[0],
+        animation: oldAnimationToDelete,
+      });
+    } else {
+      // Add styles and animations to element
+      updateElementsById({
+        elementIds: [selectedElement.id],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            {
+              ...copiedElement.styles,
+              animation: oldAnimationToDelete,
+            },
+            /* commitValues */ true
+          ),
+      });
+    }
   }, [
     addAnimations,
     copiedElement,
     selectedElement,
     selectedElementAnimations,
     updateElementsById,
+    handleApplyStyle,
   ]);
 
   /**
