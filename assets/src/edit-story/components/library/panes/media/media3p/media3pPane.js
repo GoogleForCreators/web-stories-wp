@@ -43,7 +43,7 @@ import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
-import HotlinkButton from './hotlinkButton';
+import LinkInsertion from './hotlink';
 
 import paneId from './paneId';
 import ProviderTab from './providerTab';
@@ -272,7 +272,7 @@ function Media3pPane(props) {
                 />
               ))}
               <HotlinkWrapper>
-                <HotlinkButton />
+                <LinkInsertion />
               </HotlinkWrapper>
             </ProviderTabSection>
           </PaneHeader>

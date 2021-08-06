@@ -23,37 +23,41 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons,
+  Icons, lightMode, theme,
 } from '@web-stories-wp/design-system';
-import styled from 'styled-components';
+import styled, {ThemeProvider} from 'styled-components';
 import { useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../../panels/shared';
-import Tooltip from '../../../../tooltip';
+import { focusStyle } from '../../../../../panels/shared';
+import Tooltip from '../../../../../tooltip';
+import HotlinkModal from './hotlinkModal';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
 `;
 
-function HotlinkButton() {
+function Hotlink() {
   const [isOpen, setIsOpen] = useState(false);
   const label = __('Insert by link', 'web-stories');
   return (
-    <Tooltip title={label}>
-      <Button
-        variant={BUTTON_VARIANTS.SQUARE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={() => setIsOpen(true)}
-        label={label}
-      >
-        <Icons.Link />
-      </Button>
-    </Tooltip>
+    <>
+      <Tooltip title={label}>
+        <Button
+          variant={BUTTON_VARIANTS.SQUARE}
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={() => setIsOpen(true)}
+          label={label}
+        >
+          <Icons.Link />
+        </Button>
+      </Tooltip>
+      <HotlinkModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+    </>
   );
 }
 
-export default HotlinkButton;
+export default Hotlink;
