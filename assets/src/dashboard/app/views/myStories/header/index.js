@@ -107,12 +107,17 @@ function Header({
           if (!(status in totalStoriesByStatus)) {
             return null;
           }
+
+          const count = totalStoriesByStatus[status];
+          if (count === 0) {
+            return null;
+          }
+
           const ariaLabel = sprintf(
             /* translators: %s is story status */
             __('Filter stories by %s', 'web-stories'),
             label
           );
-          const count = totalStoriesByStatus[status];
           return (
             <StyledPill
               key={value}
@@ -122,7 +127,7 @@ function Header({
               aria-label={ariaLabel}
             >
               {label}
-              {count > 0 && <span>{count}</span>}
+              {count && <span>{count}</span>}
             </StyledPill>
           );
         }).filter(Boolean)}
