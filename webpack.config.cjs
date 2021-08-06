@@ -226,10 +226,41 @@ const templateContent = ({ htmlWebpackPlugin }) => {
     'js' => ${JSON.stringify(js)});`;
 };
 
-const editorAndDashboard = {
+const editor = {
   ...sharedConfig,
   entry: {
     'edit-story': './assets/src/edit-story/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins.filter(
+      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+    ),
+    new DependencyExtractionWebpackPlugin({
+      requestToExternal,
+    }),
+    new WebpackBar({
+      name: 'Editor',
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'edit-story.chunks.php',
+      inject: false, // Don't inject default <script> tags, etc.
+      minify: false, // PHP not HTML so don't attempt to minify.
+      templateContent,
+      chunks: ['edit-story'],
+    }),
+  ],
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      ...sharedConfig.optimization.splitChunks,
+      chunks: 'all',
+    },
+  },
+};
+
+const dashboard = {
+  ...sharedConfig,
+  entry: {
     'stories-dashboard': './assets/src/dashboard/index.js',
   },
   plugins: [
@@ -240,14 +271,7 @@ const editorAndDashboard = {
       requestToExternal,
     }),
     new WebpackBar({
-      name: 'Editor & Dashboard',
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'edit-story.chunks.php',
-      inject: false, // Don't inject default <script> tags, etc.
-      minify: false, // PHP not HTML so don't attempt to minify.
-      templateContent,
-      chunks: ['edit-story'],
+      name: 'Dashboard',
     }),
     new HtmlWebpackPlugin({
       filename: 'stories-dashboard.chunks.php',
@@ -378,7 +402,8 @@ const storiesImgareaselect = {
 };
 
 module.exports = [
-  editorAndDashboard,
+  editor,
+  dashboard,
   activationNotice,
   webStoriesBlock,
   webStoriesScripts,
