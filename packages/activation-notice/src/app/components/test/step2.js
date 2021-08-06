@@ -27,11 +27,6 @@ import { renderWithTheme } from '../../../testUtils';
 import Step2 from '../step2';
 import { ConfigProvider } from '../../config';
 
-jest.mock('@wordpress/element', () => ({
-  ...jest.requireActual('@wordpress/element'),
-  createInterpolateElement: (string) => string,
-}));
-
 function render() {
   const config = {
     dashboardURL: 'foo',

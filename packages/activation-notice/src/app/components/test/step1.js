@@ -27,11 +27,6 @@ import { renderWithTheme } from '../../../testUtils';
 import Step1 from '../step1';
 import { ConfigProvider } from '../../config';
 
-jest.mock('@wordpress/element', () => ({
-  ...jest.requireActual('@wordpress/element'),
-  createInterpolateElement: (string) => string,
-}));
-
 function render() {
   const config = {
     demoStoryURL: 'bar',
