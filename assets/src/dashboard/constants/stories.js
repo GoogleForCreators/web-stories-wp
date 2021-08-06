@@ -164,12 +164,34 @@ export const STORY_VIEWING_LABELS = {
       ),
       n
     ),
-  [STORY_STATUS.PUBLISHED_AND_FUTURE]: (n) =>
+  [STORY_STATUS.PUBLISH]: (n) =>
     sprintf(
       /* translators: %d: number of published stories in view */
       _n(
         'Viewing <strong>%d</strong> published story',
         'Viewing <strong>%d</strong> published stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
+  [STORY_STATUS.FUTURE]: (n) =>
+    sprintf(
+      /* translators: %d: number of published stories in view */
+      _n(
+        'Viewing <strong>%d</strong> scheduled story',
+        'Viewing <strong>%d</strong> scheduled stories',
+        n,
+        'web-stories'
+      ),
+      n
+    ),
+  [STORY_STATUS.PRIVATE]: (n) =>
+    sprintf(
+      /* translators: %d: number of published stories in view */
+      _n(
+        'Viewing <strong>%d</strong> private story',
+        'Viewing <strong>%d</strong> private stories',
         n,
         'web-stories'
       ),
