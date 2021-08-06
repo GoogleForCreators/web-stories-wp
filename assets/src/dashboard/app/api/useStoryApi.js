@@ -153,9 +153,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
             payload: {
               stories: cleanStories,
               totalPages,
-              totalStoriesByStatus: {
-                ...totalStoriesByStatus,
-              },
+              totalStoriesByStatus,
               page,
             },
           });
