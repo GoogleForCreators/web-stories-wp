@@ -69,9 +69,13 @@ describe('Eyedropper', () => {
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    // Contents of the color picker are lazy loaded
+    await waitFor(() =>
+      expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
+    );
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
-      timeout: 4000,
+      timeout: 9000,
     });
     const imageOnCanvas = (await getElements(fixture))[1];
     const imageOnCanvasRect = (
