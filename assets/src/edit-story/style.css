@@ -26,6 +26,10 @@
   display: none;
 }
 
+#menu-posts-web-story .wp-menu-image::before {
+  box-sizing: content-box;
+}
+
 body.js.edit-story #wpcontent,
 body.js.edit-story #wpbody-content {
   padding: 0;

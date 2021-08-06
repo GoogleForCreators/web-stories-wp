@@ -28,6 +28,7 @@ import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function storyHasNoPosterAttached(featuredMedia) {
   return (
@@ -37,6 +38,7 @@ export function storyHasNoPosterAttached(featuredMedia) {
 }
 
 export function StoryPosterAttached() {
+  const isChecklistMounted = useIsChecklistMounted();
   const featuredMedia = useStory(({ state }) => state?.story?.featuredMedia);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -54,21 +56,19 @@ export function StoryPosterAttached() {
   useRegisterCheck('StoryPosterAttached', isRendered);
 
   const { title, footer } = PRIORITY_COPY.storyMissingPoster;
-  return (
-    isRendered && (
-      <ChecklistCard
-        title={title}
-        titleProps={{
-          onClick: handleClick,
-        }}
-        footer={
-          <ChecklistCardStyles.CardListWrapper>
-            <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-              {footer}
-            </List>
-          </ChecklistCardStyles.CardListWrapper>
-        }
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      titleProps={{
+        onClick: handleClick,
+      }}
+      footer={
+        <ChecklistCardStyles.CardListWrapper>
+          <List size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
+            {footer}
+          </List>
+        </ChecklistCardStyles.CardListWrapper>
+      }
+    />
+  ) : null;
 }

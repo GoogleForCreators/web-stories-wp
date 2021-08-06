@@ -129,7 +129,12 @@ function usePageAsCanvas() {
   );
 
   const calculateAccessibleTextColors = useCallback(
-    (atts, callback) => {
+    (atts, callback, isInserting = true, skipCanvasGeneration = false) => {
+      // If we're calculating the color without actually inserting the element and in zoomed mode, skip.
+      // We'll always insert the element in FIT mode, calculating it in other modes would be useless.
+      if (!isInserting && zoomSetting !== ZOOM_SETTING.FIT) {
+        callback(null);
+      }
       const contrastCalculation = (canvas) => {
         try {
           const ctx = canvas.getContext('2d');
@@ -156,17 +161,26 @@ function usePageAsCanvas() {
           callback({ color: null });
         }
       };
+      // If we have data and nothing has changed or we can skip the canvas update, just calculate the contrast.
+      // Skipping is used when preset are placed under each other consecutively, the same image can be used then.
       if (
         pageCanvasData &&
-        !hasPageHashChanged(currentPage, pageCanvasData.currentPage)
+        (!hasPageHashChanged(currentPage, pageCanvasData.currentPage) ||
+          skipCanvasGeneration)
       ) {
         contrastCalculation(pageCanvasData.canvas);
       } else {
-        generateCanvasFromPage(contrastCalculation, true /* reset zoom */);
+        generateCanvasFromPage(contrastCalculation, isInserting);
       }
       return null;
     },
-    [currentPage, generateCanvasFromPage, pageCanvasData, hasPageHashChanged]
+    [
+      currentPage,
+      generateCanvasFromPage,
+      pageCanvasData,
+      hasPageHashChanged,
+      zoomSetting,
+    ]
   );
 
   return {
