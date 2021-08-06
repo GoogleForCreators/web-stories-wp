@@ -165,7 +165,49 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Background image right clicked', () => {
-    it.todo('should return the correct menu items');
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'image',
+            isBackground: true,
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
+        RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
+        RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+      ]);
+    });
+
+    it('"Delete Page" should be disabled if there is only one page', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const deletePageMenuItem = result.current.menuItems.find(
+        (item) => item.label === RIGHT_CLICK_MENU_LABELS.DELETE_PAGE
+      );
+
+      expect(deletePageMenuItem.disabled).toBeTrue();
+    });
   });
 
   describe('Foreground media elements (image, gif, video) right clicked', () => {
