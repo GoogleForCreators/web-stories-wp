@@ -127,7 +127,7 @@ export const CardDetailsColumn = styled.div`
 // This is supported by all major browsers except IE 11.
 // If it fails, max-height will catch so that really long titles
 // don't leave their designated space, just no ellipsis.
-export const StoryTitle = styled(Headline).attrs({
+export const Title = styled(Headline).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
   overflow: hidden;
@@ -142,7 +142,7 @@ export const StoryTitle = styled(Headline).attrs({
   -webkit-box-orient: vertical;
 `;
 
-export const Title = styled(StoryTitle).attrs({
+export const TitleLink = styled(Title).attrs({
   as: 'a',
 })`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};

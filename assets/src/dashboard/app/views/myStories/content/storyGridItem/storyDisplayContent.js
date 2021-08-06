@@ -34,7 +34,7 @@ import {
   CardDetailsColumn,
   Row,
   Title,
-  StoryTitle,
+  TitleLink,
   DetailCopy,
   LockAvatar,
   LockedRow,
@@ -124,7 +124,7 @@ const StoryDisplayContent = ({
         <Row>
           {isLocked && <LockIcon />}
           {titleLink ? (
-            <Title
+            <TitleLink
               href={titleLink}
               tabIndex={tabIndex}
               aria-label={sprintf(
@@ -134,9 +134,9 @@ const StoryDisplayContent = ({
               )}
             >
               {formattedTitle}
-            </Title>
+            </TitleLink>
           ) : (
-            <StoryTitle>{formattedTitle}</StoryTitle>
+            <Title>{formattedTitle}</Title>
           )}
         </Row>
       )}
