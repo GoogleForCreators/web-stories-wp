@@ -156,9 +156,6 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
               totalPages,
               totalStoriesByStatus: {
                 ...totalStoriesByStatus,
-                [STORY_STATUS.PUBLISHED_AND_FUTURE]:
-                  totalStoriesByStatus[STORY_STATUS.PUBLISH] +
-                  totalStoriesByStatus[STORY_STATUS.FUTURE],
               },
               page,
             },
