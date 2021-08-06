@@ -32,7 +32,6 @@ import {
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
-  STORY_STATUS,
 } from '../../constants';
 import storyReducer, {
   defaultStoriesState,
