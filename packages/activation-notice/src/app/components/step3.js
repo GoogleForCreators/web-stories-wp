@@ -59,7 +59,7 @@ function Step3() {
   }, []);
 
   const translatedString = createInterpolateElement(
-    __('Jump into the<a>Editor</a>', 'web-stories'),
+    __('Jump into the <a>Editor</a>', 'web-stories'),
     {
       a: <Link href={newStoryURL} onClick={onClick} />,
     }

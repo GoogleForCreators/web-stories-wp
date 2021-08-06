@@ -60,7 +60,7 @@ function Step2() {
   }, []);
 
   const translatedString = createInterpolateElement(
-    __('Head to the<a>Dashboard</a>', 'web-stories'),
+    __('Head to the <a>Dashboard</a>', 'web-stories'),
     {
       a: <Link href={dashboardURL} onClick={onClick} />,
     }

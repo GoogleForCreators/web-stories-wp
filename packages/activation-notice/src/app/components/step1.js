@@ -65,7 +65,7 @@ function Step1() {
   }, []);
 
   const translatedString = createInterpolateElement(
-    __('Read the<a>Get Started story</a>', 'web-stories'),
+    __('Read the <a>Get Started story</a>', 'web-stories'),
     {
       a: (
         <Link
