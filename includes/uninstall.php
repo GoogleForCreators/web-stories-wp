@@ -172,20 +172,19 @@ function delete_posts() {
  */
 function delete_terms() {
 	$taxonomy = Media::STORY_MEDIA_TAXONOMY;
-
 	$term_ids = get_terms(
 		[
-			'taxonomy'   => Media::STORY_MEDIA_TAXONOMY,
+			'taxonomy'   => $taxonomy,
 			'hide_empty' => false,
 			'fields'     => 'ids',
 		]
 	);
+
 	if ( empty( $term_ids ) || ! is_array( $term_ids ) ) {
 		return;
 	}
 
 	foreach ( $term_ids as $term_id ) {
-		// @phpstan-ignore-next-line
 		wp_delete_term( $term_id, $taxonomy );
 	}
 }
