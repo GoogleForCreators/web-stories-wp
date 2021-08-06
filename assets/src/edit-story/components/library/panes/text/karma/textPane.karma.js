@@ -205,7 +205,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       });
 
       // Title should also have white highlight / black color since it's placed on top of the previous texts.
-      await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
       const [title] = await getSelection();
