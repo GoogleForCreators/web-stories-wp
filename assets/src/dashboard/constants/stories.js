@@ -126,8 +126,13 @@ export const STORY_STATUSES = [
   },
   {
     label: __('Published', 'web-stories'),
-    value: STORY_STATUS.PUBLISHED_AND_FUTURE,
-    status: STORY_STATUS.PUBLISHED_AND_FUTURE,
+    value: STORY_STATUS.PUBLISH,
+    status: STORY_STATUS.PUBLISH,
+  },
+  {
+    label: __('Scheduled', 'web-stories'),
+    value: STORY_STATUS.FUTURE,
+    status: STORY_STATUS.FUTURE,
   },
   {
     label: __('Private', 'web-stories'),

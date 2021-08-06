@@ -372,7 +372,7 @@ function getTotalStoriesByStatus(stories = []) {
     {
       all: stories.length,
       draft: 0,
-      published: 0,
+      publish: 0,
       private: 0,
       future: 0,
     }

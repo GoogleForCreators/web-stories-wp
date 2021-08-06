@@ -279,7 +279,7 @@ describe('Grid view', () => {
       expect(storyElements.length).toEqual(numDrafts);
     });
 
-    it('should switch to the Published Tab', async () => {
+    fit('should switch to the Published Tab', async () => {
       const { stories } = await getStoriesState();
       const numPublished = Object.values(stories).filter(
         ({ status }) =>
@@ -287,6 +287,7 @@ describe('Grid view', () => {
       ).length;
 
       expect(numPublished).toBeGreaterThan(0);
+      await karmaPause();
 
       const publishedTabButton = fixture.screen.getByRole('button', {
         name: new RegExp('^Filter stories by ' + STORY_STATUSES[2].label),

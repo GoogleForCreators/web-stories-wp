@@ -122,7 +122,7 @@ function Header({
               aria-label={ariaLabel}
             >
               {label}
-              {count && <span>{count}</span>}
+              {count > 0 && <span>{count}</span>}
             </StyledPill>
           );
         }).filter(Boolean)}
