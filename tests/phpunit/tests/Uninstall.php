@@ -28,11 +28,11 @@ class Uninstall extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
-		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY ] );
+		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG ] );
 		foreach ( self::$attachment_ids as $attachment_id ) {
 			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
 			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
-			wp_set_object_terms( $attachment_id, $terms_ids, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+			wp_set_object_terms( $attachment_id, $terms_ids, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 		}
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
@@ -58,7 +58,7 @@ class Uninstall extends Test_Case {
 	public function test_delete_terms() {
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
+				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
 				'hide_empty' => false,
 			]
 		);
@@ -66,13 +66,13 @@ class Uninstall extends Test_Case {
 		\Google\Web_Stories\delete_terms();
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
+				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
 				'hide_empty' => false,
 			]
 		);
 		$this->assertEqualSets( [], $terms );
 		foreach ( self::$attachment_ids as $attachment_id ) {
-			$post_terms = get_the_terms( $attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+			$post_terms = get_the_terms( $attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 			$this->assertFalse( $post_terms );
 		}
 	}
