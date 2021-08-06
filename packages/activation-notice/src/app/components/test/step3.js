@@ -27,6 +27,11 @@ import { renderWithTheme } from '../../../testUtils';
 import Step3 from '../step3';
 import { ConfigProvider } from '../../config';
 
+jest.mock('@wordpress/element', () => ({
+  ...jest.requireActual('@wordpress/element'),
+  createInterpolateElement: (string) => string,
+}));
+
 function render() {
   const config = {
     newStoryURL: 'foo',

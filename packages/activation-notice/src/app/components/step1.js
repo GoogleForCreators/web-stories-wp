@@ -64,6 +64,7 @@ function Step1() {
     trackClick(evt, 'open_demo_story');
   }, []);
 
+  // createInterpolateElement doesn't support br tags.
   const translatedString = createInterpolateElement(
     __('Read the <a>Get Started story</a>', 'web-stories'),
     {

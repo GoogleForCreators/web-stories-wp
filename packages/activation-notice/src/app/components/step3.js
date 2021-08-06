@@ -58,6 +58,7 @@ function Step3() {
     trackClick(evt, 'open_story_editor');
   }, []);
 
+  // createInterpolateElement doesn't support br tags.
   const translatedString = createInterpolateElement(
     __('Jump into the <a>Editor</a>', 'web-stories'),
     {
