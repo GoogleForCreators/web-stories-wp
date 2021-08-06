@@ -341,18 +341,30 @@ function RightClickMenuProvider({ children }) {
     // applying to the other text
     if (copiedElement.type === 'text' && copiedElement.styles.content) {
       const { textStyles } = getTextPresets(
-        [copiedElement],
+        [copiedElement.styles],
         {
           textStyles: [],
           colors: [],
         },
         PRESET_TYPES.STYLE
       );
-      handleApplyStyle({
-        ...copiedElement.styles,
+      const { colors } = getTextPresets(
+        [copiedElement.styles],
+        {
+          textStyles: [],
+          colors: [],
+        },
+        PRESET_TYPES.Color
+      );
+      const { content, ...copiedElementStyles } = copiedElement.styles;
+      const updatedElementStyles = {
+        ...copiedElementStyles,
         ...textStyles[0],
+        ...colors[0].color,
         animation: oldAnimationToDelete,
-      });
+        border: copiedElementStyles.border || null,
+      };
+      handleApplyStyle(updatedElementStyles);
     } else {
       // Add styles and animations to element
       updateElementsById({
