@@ -79,6 +79,12 @@ export class RightClickMenu extends Container {
     });
   }
 
+  get scaleAndCropBackgroundImage() {
+    return this.getByRole('button', {
+      name: /^Scale & Crop Background Image/i,
+    });
+  }
+
   get duplicatePage() {
     return this.queryByRole('button', {
       name: /Duplicate Page/i,
@@ -112,6 +118,12 @@ export class RightClickMenu extends Container {
   get detachImageFromBackground() {
     return this.getByRole('button', {
       name: /^Detach Image From Background/i,
+    });
+  }
+
+  get replaceBackgroundImage() {
+    return this.getByRole('button', {
+      name: /^Replace Background Image/i,
     });
   }
 
