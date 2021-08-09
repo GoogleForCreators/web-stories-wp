@@ -20,6 +20,8 @@ import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { getImageDimensions, getVideoDimensions } from '@web-stories-wp/media';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -40,7 +42,7 @@ function HotlinkModal({ isOpen, onClose }) {
     insertElement: state.actions.insertElement,
   }));
 
-  const [hasError, setHasError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   // @todo We're not really uploading anything here, so should we have a fixed list instead?
   let description = __('No file types are currently supported.', 'web-stories');
@@ -56,42 +58,54 @@ function HotlinkModal({ isOpen, onClose }) {
     __('Invalid link. %s', 'web-stories'),
     description
   );
-  const [link, setLink] = useState(
-    'https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2017/11/31120612/French-Bulldog-laying-down-in-the-grass.jpg'
-  );
+  const [link, setLink] = useState('');
 
   const getFileInfo = useCallback(
     (value = link) => {
       const ext = value.split(/[#?]/)[0].split('.').pop().trim();
       if (!allowedFileTypes.includes(ext)) {
-        setHasError(true);
+        setErrorMsg(error);
       } else {
-        setHasError(false);
+        setErrorMsg(null);
       }
       return {
         ext,
         type: ['m4v', 'mp4'].includes(ext) ? 'video' : 'image',
       };
     },
-    [link, allowedFileTypes]
+    [link, allowedFileTypes, error]
   );
 
-  const onInsert = useCallback(() => {
-    /*const img = document.createElement('img');
-    img.crossOrigin = 'anonymous';
-    img.addEventListener('load', function () {
-      console.log(img);
-      console.log(img.naturalHeight, img.naturalWidth);
-    });
-    img.src = link + '?cancel-cache=1';*/
-    if (hasError) {
+  const onInsert = useCallback(async () => {
+    if (errorMsg?.length) {
       return;
     }
-    const { type } = getFileInfo();
-    insertElement(type, {
-      resource: { alt: '', id: 'test', width: 300, height: 300 },
-    });
-  }, [insertElement, link, hasError, getFileInfo]);
+    try {
+      const { type } = getFileInfo();
+      const getMediaDimensions =
+        'video' === type ? getVideoDimensions : getImageDimensions;
+      const { width, height } = await getMediaDimensions(link);
+      insertElement(type, {
+        resource: {
+          alt: link.substring(link.lastIndexOf('/') + 1),
+          width,
+          height,
+          src: link,
+          local: false,
+        },
+      });
+      setErrorMsg(null);
+      setLink('');
+      onClose();
+    } catch (e) {
+      setErrorMsg(
+        __(
+          'Image can not be loaded from that site. Please configure…',
+          'web-stories'
+        )
+      );
+    }
+  }, [insertElement, link, errorMsg, getFileInfo, onClose]);
 
   return (
     <Dialog
@@ -109,12 +123,17 @@ function HotlinkModal({ isOpen, onClose }) {
             getFileInfo(value);
           }}
           value={link}
-          hint={hasError ? error : description}
-          hasError={hasError}
+          hint={errorMsg?.length ? errorMsg : description}
+          hasError={errorMsg?.length}
         />
       </InputWrapper>
     </Dialog>
   );
 }
+
+HotlinkModal.propTypes = {
+  onClose: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+};
 
 export default HotlinkModal;
