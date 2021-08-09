@@ -325,9 +325,6 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      requestToExternal,
-    }),
     new WebpackBar({
       name: 'Activation Notice',
       color: '#fcd8ba',
