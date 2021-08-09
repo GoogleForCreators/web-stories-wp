@@ -37,11 +37,27 @@ const Header = styled(Headline).attrs({
 
 const List = styled.dl`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   row-gap: 12px;
-  column-gap: 5px;
   align-items: center;
   margin: 12px 0 0;
+`;
+
+const ListRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  column-gap: 5px;
+  align-items: center;
+
+  dd {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  dt {
+    grid-column: 2;
+    grid-row: 1;
+  }
 `;
 
 const Label = styled(Text).attrs({
@@ -55,12 +71,14 @@ function ShortcutMenuSection({ title, commands }) {
   return (
     <>
       <Header id={headerId}>{title}</Header>
-      <List role="group" aria-labelledby={headerId}>
+      <List title={title}>
         {commands.map(({ label, shortcut }) => (
-          <Fragment key={label}>
+          <ListRow key={label}>
+            <dt>
+              <Label>{label}</Label>
+            </dt>
             <ShortcutLabel keys={shortcut} alignment={'left'} />
-            <Label role="listitem">{label}</Label>
-          </Fragment>
+          </ListRow>
         ))}
       </List>
     </>

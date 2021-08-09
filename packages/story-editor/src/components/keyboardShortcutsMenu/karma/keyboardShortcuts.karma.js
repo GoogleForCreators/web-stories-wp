@@ -196,4 +196,17 @@ describe('Keyboard Shortcuts Menu', () => {
       });
     });
   });
+
+  describe('Keyboard Shortcuts Menu should have no aXe accessibility violations', () => {
+    it('should pass accessibility tests with an open menu', async () => {
+      const { keyboardShortcutsToggle } = fixture.editor.carousel;
+
+      await fixture.events.click(keyboardShortcutsToggle);
+      await fixture.events.sleep(openDelay);
+
+      await expectAsync(
+        fixture.editor.keyboardShortcuts.keyboardShortcutsMenu
+      ).toHaveNoViolations();
+    });
+  });
 });

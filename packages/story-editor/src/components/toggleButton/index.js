@@ -63,11 +63,17 @@ export const ToggleButton = ({
   notificationCount,
   MainIcon,
   label,
+  shortcut,
   ...rest
 }) => {
   const hasNotifications = notificationCount > 0;
   return (
-    <Tooltip hasTail title={label} placement={TOOLTIP_PLACEMENT.TOP}>
+    <Tooltip
+      hasTail
+      title={label}
+      placement={TOOLTIP_PLACEMENT.TOP}
+      shortcut={shortcut}
+    >
       <Button
         aria-haspopup
         aria-pressed={isOpen}
@@ -95,4 +101,5 @@ ToggleButton.propTypes = {
   label: PropTypes.string.isRequired,
   MainIcon: PropTypes.object.isRequired,
   notificationCount: PropTypes.number,
+  shortcut: PropTypes.string,
 };

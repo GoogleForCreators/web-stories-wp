@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { Fragment } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
@@ -49,14 +48,14 @@ const Label = styled(Text).attrs({
 
 function LandmarkShortcuts() {
   return (
-    <LandmarksWrapper role="group">
+    <LandmarksWrapper>
       {landmarks.map(({ label, shortcut }) => (
-        <Fragment key={label}>
-          <Landmark role="listitem">
+        <Landmark key={label}>
+          <dt>
             <Label>{label}</Label>
-            <ShortcutLabel keys={shortcut} />
-          </Landmark>
-        </Fragment>
+          </dt>
+          <ShortcutLabel keys={shortcut} />
+        </Landmark>
       ))}
     </LandmarksWrapper>
   );
