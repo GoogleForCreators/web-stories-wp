@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -1209,7 +1209,8 @@
       },
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "Download the app"
+        "ctaText": "Download the app",
+        "theme": "light"
       },
       "pageTemplateType": "editorial"
     },
@@ -1832,7 +1833,8 @@
       },
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "Download the app"
+        "ctaText": "Download the app",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },
@@ -2450,7 +2452,8 @@
       },
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "Download the app"
+        "ctaText": "Download the app",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },
@@ -3765,7 +3768,7 @@
       "backgroundColor": { "color": { "r": 241, "g": 255, "b": 81 } },
       "type": "page",
       "id": "cc6675e4-0919-424f-9909-45b5d89451d9",
-      "pageAttachment": { "url": "", "ctaText": "" },
+      "pageAttachment": { "url": "", "ctaText": "", "theme": "light" },
       "animations": [
         {
           "id": "ebc7be78-44cd-4431-acdc-8969e6814cb8",

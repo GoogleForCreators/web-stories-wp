@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -2052,7 +2052,8 @@
       "id": "787df553-c506-4767-b61f-2b944fbabea1",
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "WATCH THE TRAILER"
+        "ctaText": "WATCH THE TRAILER",
+        "theme": "light"
       },
       "animations": [],
       "pageTemplateType": "editorial"

@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -2000,7 +2000,8 @@
       "id": "2a131a9b-cf36-4961-86a9-9ccc8a7a6f64",
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "Learn About Flour"
+        "ctaText": "Learn About Flour",
+        "theme": "light"
       },
       "pageTemplateType": "steps"
     },
