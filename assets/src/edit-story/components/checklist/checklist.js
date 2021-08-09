@@ -17,7 +17,8 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useState, useEffect, useRef, useCallback, forwardRef } from 'react';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -60,12 +61,67 @@ const Wrapper = styled.div`
 // TODO make this responsive so that title bar is never covered by popup.
 const StyledNavigationWrapper = styled(NavigationWrapper)``;
 
+const ThroughputPopup = forwardRef(function ThroughputPopup(
+  { isOpen, children, close },
+  ref
+) {
+  const { isChecklistMounted, setIsChecklistMounted } = useChecklist(
+    ({
+      state: { isChecklistMounted },
+      actions: { setIsChecklistMounted },
+    }) => ({
+      isChecklistMounted,
+      setIsChecklistMounted,
+    })
+  );
+
+  return (
+    <Popup
+      popupId={POPUP_ID}
+      isOpen={isOpen}
+      ariaLabel={CHECKLIST_TITLE}
+      shouldKeepMounted
+      onEnter={() => setIsChecklistMounted(true)}
+      onExited={() => setIsChecklistMounted(false)}
+    >
+      {isChecklistMounted ? (
+        <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
+          <TopNavigation
+            onClose={close}
+            label={CHECKLIST_TITLE}
+            popupId={POPUP_ID}
+          />
+          <Tablist
+            id="pre-publish-checklist"
+            data-isexpanded={isOpen}
+            aria-label={__('Potential Story issues by category', 'web-stories')}
+          >
+            {children}
+          </Tablist>
+          <EmptyContentCheck />
+        </StyledNavigationWrapper>
+      ) : (
+        children
+      )}
+    </Popup>
+  );
+});
+ThroughputPopup.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  close: PropTypes.func.isRequired,
+  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+};
+
 export function Checklist() {
-  const { close, toggle, isOpen } = useChecklist(
-    ({ actions: { close, toggle }, state: { isOpen } }) => ({
+  const { close, toggle, isOpen, isChecklistMounted } = useChecklist(
+    ({
+      actions: { close, toggle },
+      state: { isOpen, isChecklistMounted },
+    }) => ({
       close,
       toggle,
       isOpen,
+      isChecklistMounted,
     })
   );
 
@@ -89,13 +145,13 @@ export function Checklist() {
   );
   // Set Focus within the popup on open
   useEffect(() => {
-    if (isOpen) {
+    if (isChecklistMounted) {
       const firstFocusableChild = navRef.current?.querySelector(
         FOCUSABLE_SELECTORS.join(', ')
       );
       firstFocusableChild?.focus();
     }
-  }, [isOpen]);
+  }, [isChecklistMounted]);
 
   useEffect(() => {
     if (checkpoint) {
@@ -125,51 +181,29 @@ export function Checklist() {
   return (
     <DirectionAware>
       <Wrapper role="region" aria-label={CHECKLIST_TITLE}>
-        <Popup
-          popupId={POPUP_ID}
-          isOpen={isOpen}
-          ariaLabel={CHECKLIST_TITLE}
-          shouldKeepMounted
-        >
-          <StyledNavigationWrapper ref={navRef} isOpen={isOpen}>
-            <TopNavigation
-              onClose={close}
-              label={CHECKLIST_TITLE}
-              popupId={POPUP_ID}
-            />
-            <Tablist
-              id="pre-publish-checklist"
-              data-isexpanded={isOpen}
-              aria-label={__(
-                'Potential Story issues by category',
-                'web-stories'
-              )}
-            >
-              <PriorityChecks
-                badgeCount={priorityBadgeCount}
-                isOpen={isOpen && openPanel === ISSUE_TYPES.PRIORITY}
-                onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
-                maxHeight={maxPanelHeight}
-                title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
-              />
-              <DesignChecks
-                badgeCount={designBadgeCount}
-                isOpen={isOpen && openPanel === ISSUE_TYPES.DESIGN}
-                onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
-                maxHeight={maxPanelHeight}
-                title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
-              />
-              <AccessibilityChecks
-                badgeCount={accessibilityBadgeCount}
-                isOpen={isOpen && openPanel === ISSUE_TYPES.ACCESSIBILITY}
-                onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
-                maxHeight={maxPanelHeight}
-                title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
-              />
-            </Tablist>
-            <EmptyContentCheck />
-          </StyledNavigationWrapper>
-        </Popup>
+        <ThroughputPopup ref={navRef} close={close} isOpen={isOpen}>
+          <PriorityChecks
+            badgeCount={priorityBadgeCount}
+            isOpen={isOpen && openPanel === ISSUE_TYPES.PRIORITY}
+            onClick={handleOpenPanel(ISSUE_TYPES.PRIORITY)}
+            maxHeight={maxPanelHeight}
+            title={CATEGORY_LABELS[ISSUE_TYPES.PRIORITY]}
+          />
+          <DesignChecks
+            badgeCount={designBadgeCount}
+            isOpen={isOpen && openPanel === ISSUE_TYPES.DESIGN}
+            onClick={handleOpenPanel(ISSUE_TYPES.DESIGN)}
+            maxHeight={maxPanelHeight}
+            title={CATEGORY_LABELS[ISSUE_TYPES.DESIGN]}
+          />
+          <AccessibilityChecks
+            badgeCount={accessibilityBadgeCount}
+            isOpen={isOpen && openPanel === ISSUE_TYPES.ACCESSIBILITY}
+            onClick={handleOpenPanel(ISSUE_TYPES.ACCESSIBILITY)}
+            maxHeight={maxPanelHeight}
+            title={CATEGORY_LABELS[ISSUE_TYPES.ACCESSIBILITY]}
+          />
+        </ThroughputPopup>
         <Toggle isOpen={isOpen} onClick={toggle} popupId={POPUP_ID} />
       </Wrapper>
     </DirectionAware>

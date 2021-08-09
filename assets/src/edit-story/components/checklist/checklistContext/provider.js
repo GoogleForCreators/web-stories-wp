@@ -28,6 +28,7 @@ import Context from './context';
 
 const ChecklistProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isChecklistMounted, setIsChecklistMounted] = useState(false);
 
   const toggle = useCallback(() => {
     trackEvent('checklist_toggled', {
@@ -54,14 +55,16 @@ const ChecklistProvider = ({ children }) => {
     () => ({
       state: {
         isOpen,
+        isChecklistMounted,
       },
       actions: {
         toggle,
         close,
         open,
+        setIsChecklistMounted,
       },
     }),
-    [close, isOpen, open, toggle]
+    [close, isOpen, open, toggle, setIsChecklistMounted, isChecklistMounted]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

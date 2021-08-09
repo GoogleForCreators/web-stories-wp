@@ -59,8 +59,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     setMediaType,
     setSearchTerm,
     setNextPage,
-    setProcessing,
-    removeProcessing,
+    setAudioProcessing,
+    removeAudioProcessing,
+    setPosterProcessing,
+    removePosterProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -148,20 +150,38 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const uploadVideoPoster = useCallback(
     (id, src) => {
-      const { processed, processing } = stateRef.current;
+      const { posterProcessed, posterProcessing } = stateRef.current;
 
       const process = async () => {
         // Simple way to prevent double-uploading.
-        if (processed.includes(id) || processing.includes(id)) {
+        if (posterProcessed.includes(id) || posterProcessing.includes(id)) {
           return;
         }
-        setProcessing({ id });
+        setPosterProcessing({ id });
         await uploadVideoFrame(id, src);
-        removeProcessing({ id });
+        removePosterProcessing({ id });
       };
       process();
     },
-    [setProcessing, uploadVideoFrame, removeProcessing]
+    [setPosterProcessing, uploadVideoFrame, removePosterProcessing]
+  );
+
+  const processVideoAudio = useCallback(
+    (id, src) => {
+      const { audioProcessed, audioProcessing } = stateRef.current;
+
+      const process = async () => {
+        // Simple way to prevent double-uploading.
+        if (audioProcessed.includes(id) || audioProcessing.includes(id)) {
+          return;
+        }
+        setAudioProcessing({ id });
+        await updateVideoIsMuted(id, src);
+        removeAudioProcessing({ id });
+      };
+      process();
+    },
+    [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
   const { optimizeVideo, optimizeGif, muteExistingVideo } = useProcessMedia({
@@ -186,14 +206,32 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [allowedVideoMimeTypes, uploadVideoPoster]
   );
 
+  const backfillHasAudio = useCallback(
+    ({ mimeType, isMuted, id, src, local }) => {
+      if (
+        allowedVideoMimeTypes.includes(mimeType) &&
+        !local &&
+        isMuted === null &&
+        id
+      ) {
+        processVideoAudio(id, src);
+      }
+    },
+    [allowedVideoMimeTypes, processVideoAudio]
+  );
+
   // Whenever media items in the library change,
   // generate missing posters if needed.
   useEffect(() => {
     media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
   }, [media, mediaType, searchTerm, generateMissingPosters]);
 
+  useEffect(() => {
+    media?.forEach((mediaElement) => backfillHasAudio(mediaElement));
+  }, [media, mediaType, searchTerm, backfillHasAudio]);
+
   const isGeneratingPosterImages = Boolean(
-    stateRef.current?.processing?.length
+    stateRef.current?.posterProcessing?.length
   );
 
   return {

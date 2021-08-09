@@ -34,6 +34,7 @@ import {
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function imageElementMissingAlt(element) {
   return (
@@ -44,6 +45,7 @@ export function imageElementMissingAlt(element) {
 }
 
 const ImageElementMissingAlt = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const elements = useMemo(
     () => filterStoryElements(pages, imageElementMissingAlt),
@@ -65,7 +67,8 @@ const ImageElementMissingAlt = () => {
   const isRendered = elements.length > 0;
   useRegisterCheck('ImageElementMissingAlt', isRendered);
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         cardType={

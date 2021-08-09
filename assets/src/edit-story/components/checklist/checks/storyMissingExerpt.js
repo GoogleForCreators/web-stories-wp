@@ -26,12 +26,14 @@ import { useStory } from '../../../app';
 import { ChecklistCard, DefaultFooterText } from '../../checklistCard';
 import { PRIORITY_COPY } from '../constants';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function storyMissingExcerpt(excerpt) {
   return !excerpt?.length;
 }
 
 const StoryMissingExcerpt = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const excerpt = useStory(({ state }) => state?.story?.excerpt);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -46,17 +48,15 @@ const StoryMissingExcerpt = () => {
 
   const isRendered = storyMissingExcerpt(excerpt);
   useRegisterCheck('StoryMissingExcerpt', isRendered);
-  return (
-    isRendered && (
-      <ChecklistCard
-        title={title}
-        titleProps={{
-          onClick: handleClick,
-        }}
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      />
-    )
-  );
+  return isRendered && isChecklistMounted ? (
+    <ChecklistCard
+      title={title}
+      titleProps={{
+        onClick: handleClick,
+      }}
+      footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+    />
+  ) : null;
 };
 
 export default StoryMissingExcerpt;

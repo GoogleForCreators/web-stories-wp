@@ -34,6 +34,7 @@ import { states, useHighlights } from '../../../app/highlights';
 import { ChecklistCard, ChecklistCardStyles } from '../../checklistCard';
 import { hasNoFeaturedMedia } from '../utils';
 import { useRegisterCheck } from '../countContext';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
 export function storyPosterSize(featuredMedia) {
   if (hasNoFeaturedMedia({ featuredMedia })) {
@@ -55,6 +56,7 @@ export function storyPosterSize(featuredMedia) {
 }
 
 const StoryPosterSize = () => {
+  const isChecklistMounted = useIsChecklistMounted();
   const featuredMedia = useStory(({ state }) => state?.story?.featuredMedia);
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -72,7 +74,8 @@ const StoryPosterSize = () => {
   );
   useRegisterCheck('StoryPosterSize', isRendered);
   return (
-    isRendered && (
+    isRendered &&
+    isChecklistMounted && (
       <ChecklistCard
         title={title}
         titleProps={{
