@@ -116,5 +116,5 @@ const CUJReporter = function (baseReporterDecorator, config, logger) {
 CUJReporter.$inject = ['baseReporterDecorator', 'config', 'logger', 'helper'];
 
 module.exports = {
-  'reporter:cuj': ['type', CUJReporter],
+  'reporter:@web-stories-wp/karma-cuj-reporter': ['type', CUJReporter],
 };
