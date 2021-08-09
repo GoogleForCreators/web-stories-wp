@@ -22,11 +22,12 @@ const glob = require('glob');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { ESBuildMinifyPlugin } = require('esbuild-loader');
+const browserslist = require('browserslist');
+const { resolveToEsbuildTarget } = require('esbuild-plugin-browserslist');
 
 /**
  * WordPress dependencies
@@ -51,6 +52,10 @@ function requestToExternal(request) {
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
+
+const target = resolveToEsbuildTarget(browserslist(), {
+  printUnknownTargets: false,
+});
 
 const sharedConfig = {
   mode,
@@ -81,12 +86,12 @@ const sharedConfig = {
         use: [
           require.resolve('thread-loader'),
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'esbuild-loader',
             options: {
-              // Babel uses a directory within local node_modules
-              // by default. Use the environment variable option
-              // to enable more persistent caching.
-              cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
+              loader: 'jsx',
+              legalComments: 'inline',
+              // Some features are not supported by webpack v4 and need to be transpiled for it.
+              target: [...target, 'es2015'],
             },
           },
         ],
@@ -170,6 +175,9 @@ const sharedConfig = {
       DISABLE_QUICK_TIPS: false,
     }),
     new DependencyExtractionWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
   ].filter(Boolean),
   optimization: {
     sideEffects: true,
@@ -177,22 +185,11 @@ const sharedConfig = {
       automaticNameDelimiter: '-',
     },
     minimizer: [
-      new TerserPlugin({
-        parallel: true,
-        sourceMap: false,
-        cache: true,
-        terserOptions: {
-          // We preserve function names that start with capital letters as
-          // they're _likely_ component names, and these are useful to have
-          // in tracebacks and error messages.
-          keep_fnames: /__|_x|_n|_nx|sprintf|^[A-Z].+$/,
-          output: {
-            comments: /translators:/i,
-          },
-        },
-        extractComments: false,
+      new ESBuildMinifyPlugin({
+        keepNames: true,
+        css: true,
+        target,
       }),
-      new OptimizeCSSAssetsPlugin({}),
     ],
   },
 };
@@ -205,7 +202,7 @@ const templateContent = ({ htmlWebpackPlugin }) => {
     pathname.substr(pathname.lastIndexOf('/') + 1);
 
   const chunkName = htmlWebpackPlugin.options.chunks[0];
-  const omitPrimaryChunk = (f) => f != chunkName;
+  const omitPrimaryChunk = (f) => f !== chunkName;
 
   const js = htmlWebpackPlugin.files.js
     .map((pathname) => {
