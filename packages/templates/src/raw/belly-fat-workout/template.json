@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -2620,7 +2620,8 @@
       "id": "629e63fc-7bc3-4557-bfbb-f767f3f40e3d",
       "pageAttachment": {
         "url": "google.com",
-        "ctaText": "Watch the full video"
+        "ctaText": "Watch the full video",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },

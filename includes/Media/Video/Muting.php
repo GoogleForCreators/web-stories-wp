@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Video_Muting
+ * Class Muting
  *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
@@ -24,17 +24,17 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Media;
+namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Service_Base;
 use WP_Error;
 
 /**
- * Class Video_Muting
+ * Class Muting
  *
- * @package Google\Web_Stories\Media
+ * @package Google\Web_Stories\Media\Video
  */
-class Video_Muting extends Service_Base {
+class Muting extends Service_Base {
 
 	/**
 	 * Is muted.

@@ -231,7 +231,17 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			$query_args['post_mime_type'] = $media_type_mimes;
 		}
 
-		return $query_args;
+		/**
+		 * Filters WP_Query arguments when querying posts via the REST API.
+		 *
+		 * @since 1.10.0
+		 *
+		 * @link https://developer.wordpress.org/reference/classes/wp_query/
+		 *
+		 * @param array           $args    Array of arguments for WP_Query.
+		 * @param WP_REST_Request $request The REST API request.
+		 */
+		return apply_filters( 'web_stories_rest_attachment_query', $query_args, $request );
 	}
 
 

@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -586,7 +586,8 @@
       ],
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "See the location"
+        "ctaText": "See the location",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },
@@ -829,7 +830,8 @@
       "id": "b2d0baf3-7abb-4faf-9844-05b74c629cfd",
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "See the location"
+        "ctaText": "See the location",
+        "theme": "light"
       },
       "pageTemplateType": "editorial"
     },
@@ -1320,7 +1322,8 @@
       "id": "7ff02613-ccfa-4dcb-adc0-fe90c9a299cd",
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "See the location"
+        "ctaText": "See the location",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },
@@ -1563,7 +1566,8 @@
       "id": "962d65aa-de14-45bf-a9d3-c1a72e9920fb",
       "pageAttachment": {
         "url": "https://www.google.com/",
-        "ctaText": "See the location"
+        "ctaText": "See the location",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },
