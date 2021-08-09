@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { REST_LINKS } from '../../constants';
+
 export default function reshapeStoryObject(originalStoryData) {
   const {
     id,
@@ -40,13 +45,10 @@ export default function reshapeStoryObject(originalStoryData) {
   }
 
   const capabilities = {
-    hasEditAction: Object.prototype.hasOwnProperty.call(
-      links,
-      'wp:action-edit'
-    ),
+    hasEditAction: Object.prototype.hasOwnProperty.call(links, REST_LINKS.EDIT),
     hasDeleteAction: Object.prototype.hasOwnProperty.call(
       links,
-      'wp:action-delete'
+      REST_LINKS.DELETE
     ),
   };
 

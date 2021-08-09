@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import reshapeStoryObject from '../stories';
+import { REST_LINKS } from '../../../constants';
 
 describe('reshapeStoryObject', () => {
   it('should return null if the ID is missing', () => {
@@ -116,12 +117,12 @@ describe('reshapeStoryObject', () => {
         author: [{ id: 1, name: 'admin' }],
       },
       _links: {
-        'wp:action-edit': [
+        [REST_LINKS.EDIT]: [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },
         ],
-        'wp:action-delete': [
+        [REST_LINKS.DELETE]: [
           {
             href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
           },

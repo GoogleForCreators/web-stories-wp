@@ -181,3 +181,8 @@ export const STORY_ANIMATION_STATE = {
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
 };
+
+export const REST_LINKS = {
+  EDIT: 'wp:action-edit',
+  DELETE: 'wp:action-delete',
+};
