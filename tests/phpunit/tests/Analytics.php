@@ -64,7 +64,7 @@ class Analytics extends Test_Case {
 			foreach ( $trigger_config['vars'] as $value ) {
 				// Catch typos like ${foo) instead of ${foo}.
 				if ( false !== strpos( $value, '$' ) ) {
-					$this->assertRegExp( '/^\${[^}]+}$/', $value, 'Invalid variable declaration present' );
+					$this->assertMatchesRegularExpression( '/^\${[^}]+}$/', $value, 'Invalid variable declaration present' );
 				}
 			}
 		}
