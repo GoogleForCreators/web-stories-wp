@@ -32,9 +32,9 @@ import {
 function useAddPreset({ presetType }) {
   const {
     currentPage,
-    currentStoryStyles,
+    currentStoryStyles = { colors: [] },
     selectedElements,
-    globalStoryStyles,
+    globalStoryStyles = { colors: [], textStyles: [] },
     updateStory,
   } = useStory(
     ({
@@ -58,7 +58,8 @@ function useAddPreset({ presetType }) {
   const { colors: localColors } = currentStoryStyles;
 
   const isText = areAllType('text', selectedElements);
-  const isBackground = selectedElements[0].id === currentPage.elements[0].id;
+  const isBackground =
+    selectedElements[0]?.id === currentPage?.elements?.[0]?.id;
 
   const getPresets = useCallback(
     (addedPresets, currentPresets) => {

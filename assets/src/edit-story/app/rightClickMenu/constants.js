@@ -29,13 +29,16 @@ import {
 } from '../../components/keyboardShortcutsMenu/keyboardShortcutList';
 
 export const RIGHT_CLICK_MENU_LABELS = {
+  ADD_TO_COLOR_PRESETS: __('Add Color to “Saved Colors”', 'web-stories'),
   ADD_NEW_PAGE_AFTER: __('Add New Page After', 'web-stories'),
   ADD_NEW_PAGE_BEFORE: __('Add New Page Before', 'web-stories'),
   BRING_FORWARD: __('Bring Forward', 'web-stories'),
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
+  CLEAR_SHAPE_STYLES: __('Clear Shape Styles', 'web-stories'),
   CLEAR_STYLE: __('Clear Style', 'web-stories'),
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
+  COPY_SHAPE_STYLES: __('Copy Shape Styles', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
   DETACH_IMAGE_FROM_BACKGROUND: __(
     'Detach Image From Background',
@@ -45,6 +48,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
+  PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE: __('Paste', 'web-stories'),
   REPLACE_BACKGROUND_IMAGE: __('Replace Background Image', 'web-stories'),
   SCALE_AND_CROP_BACKGROUND: __('Scale & Crop Background Image', 'web-stories'),
@@ -105,14 +109,14 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
       {SPECIAL_KEYS.DELETE.symbol}
     </StyledKbd>
   ),
-  COPY_IMAGE_STYLES: (
+  COPY_STYLES: (
     <>
       <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
       <StyledKbd>{'C'}</StyledKbd>
     </>
   ),
-  PASTE_IMAGE_STYLES: (
+  PASTE_STYLES: (
     <>
       <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
