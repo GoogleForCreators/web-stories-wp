@@ -20,7 +20,12 @@ import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { getImageDimensions, getVideoDimensions } from '@web-stories-wp/media';
+import {
+  createBlob,
+  getFirstFrameOfVideo,
+  getImageDimensions,
+  getVideoDimensions,
+} from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 
 /**
@@ -82,9 +87,18 @@ function HotlinkModal({ isOpen, onClose }) {
     }
     try {
       const { type } = getFileInfo();
-      const getMediaDimensions =
-        'video' === type ? getVideoDimensions : getImageDimensions;
+      const isVideo = type === 'video';
+      const getMediaDimensions = isVideo
+        ? getVideoDimensions
+        : getImageDimensions;
       const { width, height } = await getMediaDimensions(link);
+
+      // Create a poster file in case of videos.
+      let poster;
+      if (isVideo) {
+        const posterFile = await getFirstFrameOfVideo(link);
+        poster = createBlob(posterFile);
+      }
       insertElement(type, {
         resource: {
           alt: link.substring(link.lastIndexOf('/') + 1),
@@ -92,6 +106,7 @@ function HotlinkModal({ isOpen, onClose }) {
           height,
           src: link,
           local: false,
+          poster: isVideo ? poster : null,
         },
       });
       setErrorMsg(null);
