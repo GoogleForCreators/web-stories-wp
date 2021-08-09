@@ -51,7 +51,7 @@ const ScaleSlider = styled(Slider)`
     Math.max(width, MIN_WIDTH) - 2 * HORIZONTAL_PADDING}px;
 `;
 
-function ScalePanel({ setProperties, width, height, x, y, scale }) {
+function ScalePanel({ setProperties, width, height, x, y, scale, ...rest }) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
@@ -70,6 +70,7 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
           handleChange={(value) => setProperties({ scale: value })}
           thumbSize={24}
           suffix={_x('%', 'Percentage', 'web-stories')}
+          {...rest}
         />
       </Container>
     </InOverlay>

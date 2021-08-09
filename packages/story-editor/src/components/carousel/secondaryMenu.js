@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -62,7 +62,15 @@ const Space = styled.span`
   width: 8px;
 `;
 
+const POPUPS = {
+  HELP_CENTER: 'help_center',
+  CHECKLIST: 'checklist',
+  KEYBOARD_SHORTCUTS: 'keyboard_shortcuts',
+};
+
 function SecondaryMenu() {
+  const expandedPopupRef = useRef('');
+
   const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
     ({ actions: { close }, state: { isOpen: isHelpCenterOpen } }) => ({
       close,
@@ -103,35 +111,66 @@ function SecondaryMenu() {
     })
   );
 
+  const setPopupRef = useCallback((newPopup = '') => {
+    expandedPopupRef.current = newPopup;
+  }, []);
+
   // Only one popup is open at a time
   // we want to close an open popup if a new one is opened.
   useEffect(() => {
-    if (isChecklistOpen) {
+    if (isChecklistOpen && expandedPopupRef.current !== POPUPS.CHECKLIST) {
       closeHelpCenter();
       closeKeyboardShortcutsMenu();
+      setPopupRef(POPUPS.CHECKLIST);
     }
-  }, [closeHelpCenter, closeKeyboardShortcutsMenu, isChecklistOpen]);
+  }, [
+    closeHelpCenter,
+    closeKeyboardShortcutsMenu,
+    isChecklistOpen,
+    setPopupRef,
+  ]);
 
   useEffect(() => {
-    if (isHelpCenterOpen) {
+    if (isHelpCenterOpen && expandedPopupRef.current !== POPUPS.HELP_CENTER) {
       closeChecklist();
       closeKeyboardShortcutsMenu();
+      setPopupRef(POPUPS.HELP_CENTER);
     }
-  }, [closeChecklist, closeKeyboardShortcutsMenu, isHelpCenterOpen]);
+  }, [
+    closeChecklist,
+    closeKeyboardShortcutsMenu,
+    isHelpCenterOpen,
+    setPopupRef,
+  ]);
 
   useEffect(() => {
-    if (isKeyboardShortcutsMenuOpen) {
+    if (
+      isKeyboardShortcutsMenuOpen &&
+      expandedPopupRef.current !== POPUPS.KEYBOARD_SHORTCUTS
+    ) {
       closeChecklist();
       closeHelpCenter();
+      setPopupRef(POPUPS.KEYBOARD_SHORTCUTS);
     }
-  }, [closeChecklist, closeHelpCenter, isKeyboardShortcutsMenuOpen]);
+  }, [
+    closeChecklist,
+    closeHelpCenter,
+    isKeyboardShortcutsMenuOpen,
+    setPopupRef,
+  ]);
 
   useEffect(() => {
     if (reviewDialogRequested) {
+      setPopupRef();
       onResetReviewDialogRequest();
       openChecklist();
     }
-  }, [reviewDialogRequested, onResetReviewDialogRequest, openChecklist]);
+  }, [
+    reviewDialogRequested,
+    onResetReviewDialogRequest,
+    openChecklist,
+    setPopupRef,
+  ]);
 
   return (
     <Wrapper>

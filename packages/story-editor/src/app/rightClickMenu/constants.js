@@ -29,16 +29,25 @@ import {
 } from '../../components/keyboardShortcutsMenu/keyboardShortcutList';
 
 export const RIGHT_CLICK_MENU_LABELS = {
+  ADD_NEW_PAGE_AFTER: __('Add New Page After', 'web-stories'),
+  ADD_NEW_PAGE_BEFORE: __('Add New Page Before', 'web-stories'),
   BRING_FORWARD: __('Bring Forward', 'web-stories'),
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
+  CLEAR_STYLE: __('Clear Style', 'web-stories'),
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
+  DETACH_IMAGE_FROM_BACKGROUND: __(
+    'Detach Image From Background',
+    'web-stories'
+  ),
   DELETE_PAGE: __('Delete Page', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE: __('Paste', 'web-stories'),
+  REPLACE_BACKGROUND_IMAGE: __('Replace Background Image', 'web-stories'),
+  SCALE_AND_CROP_BACKGROUND: __('Scale & Crop Background Image', 'web-stories'),
   SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
   SEND_BACKWARD: __('Send Backward', 'web-stories'),
   SEND_TO_BACK: __('Send to Back', 'web-stories'),

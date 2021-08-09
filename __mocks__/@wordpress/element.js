@@ -50,7 +50,7 @@ const Platform = {
 };
 
 const concatChildren = jest.fn();
-const createInterpolateElement = jest.fn();
+const createInterpolateElement = (string) => string;
 const RawHTML = jest.fn(({ children, className }) => (
   <div className={className}>{children}</div>
 ));

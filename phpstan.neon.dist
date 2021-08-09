@@ -8,6 +8,10 @@ services:
     tags:
       - phpstan.broker.dynamicFunctionReturnTypeExtension
   -
+    class: PHPStan\WordPress\GetTermsDynamicFunctionReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicFunctionReturnTypeExtension
+  -
     class: PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
     tags:
       - phpstan.broker.dynamicFunctionReturnTypeExtension
