@@ -24,23 +24,18 @@ import {
   useDebouncedCallback,
   useBatchingCallback,
 } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import {
-  Input,
-  Text,
-  THEME_CONSTANTS,
-  MEDIA_VARIANTS,
-} from '@web-stories-wp/design-system';
+import { __ } from '@web-stories-wp/i18n';
+import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 
-import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
+import { useStory, useAPI, useCanvas } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { Media, Row, LinkInput } from '../../../form';
+import { Row, LinkInput, LinkIcon } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import {
@@ -57,11 +52,6 @@ const IconInfo = styled.div`
 
 const IconText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
-`;
-
-const StyledMedia = styled(Media)`
-  width: 54px;
-  height: 54px;
 `;
 
 const Error = styled.span`
@@ -103,8 +93,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
-
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
@@ -179,23 +167,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     },
     [handleChange]
   );
-
-  const iconErrorMessage = useMemo(() => {
-    let message = __(
-      'No image file types are currently supported.',
-      'web-stories'
-    );
-
-    if (allowedImageFileTypes.length) {
-      message = sprintf(
-        /* translators: %s: list of allowed file types. */
-        __('Please choose only %s as an icon.', 'web-stories'),
-        translateToExclusiveList(allowedImageFileTypes)
-      );
-    }
-
-    return message;
-  }, [allowedImageFileTypes]);
 
   const hasLinkSet = Boolean(link.url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
@@ -280,22 +251,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
             />
           </Row>
           <Row spaceBetween={false}>
-            <StyledMedia
-              value={link.icon || ''}
-              cropParams={{
-                width: 32,
-                height: 32,
-              }}
-              onChange={handleChangeIcon}
-              onChangeErrorText={iconErrorMessage}
-              title={__('Select as link icon', 'web-stories')}
-              ariaLabel={__('Edit link icon', 'web-stories')}
-              buttonInsertText={__('Select as link icon', 'web-stories')}
-              type={allowedImageMimeTypes}
+            <LinkIcon
+              handleChange={handleChangeIcon}
+              icon={link.icon}
               isLoading={fetchingMetadata}
               disabled={fetchingMetadata}
-              variant={MEDIA_VARIANTS.CIRCLE}
-              menuOptions={link.icon ? ['edit', 'remove'] : []}
             />
             <IconInfo>
               <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>

@@ -160,7 +160,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   });
 
   return (
-    <Container>
+    <Container data-testid="colorPicker">
       <Body showOpacity={showOpacity}>
         <Suspense fallback={null}>
           <SaturationWrapper>

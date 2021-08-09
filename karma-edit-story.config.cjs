@@ -49,15 +49,15 @@ module.exports = function (config) {
       'karma-webpack',
       'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
-      require('./packages/karma-puppeteer-launcher/src/index.cjs'),
-      require('./packages/karma-puppeteer-client/src/index.cjs'),
-      require('./packages/karma-cuj-reporter/src/index.cjs'),
-      require('./packages/karma-failed-tests-reporter/src/index.cjs'),
+      require('@web-stories-wp/karma-puppeteer-launcher'),
+      require('@web-stories-wp/karma-puppeteer-client'),
+      require('@web-stories-wp/karma-cuj-reporter'),
+      require('@web-stories-wp/karma-failed-tests-reporter'),
     ],
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'karma-puppeteer-client'],
+    frameworks: ['jasmine', '@web-stories-wp/karma-puppeteer-client'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -103,8 +103,8 @@ module.exports = function (config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
       'spec',
-      'failed-tests',
-      config.coverage && 'cuj',
+      '@web-stories-wp/karma-failed-tests-reporter',
+      config.coverage && '@web-stories-wp/karma-cuj-reporter',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
 
@@ -123,7 +123,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['puppeteer'],
+    browsers: ['karma-puppeteer-launcher'], // @web-stories-wp/karma-puppeteer-launcher package
 
     puppeteerLauncher: {
       puppeteer: {

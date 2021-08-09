@@ -289,6 +289,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
       )}
 
       <ScalePanel
+        data-testid="edit-panel-slider"
         setProperties={updateLocalProperties}
         x={x}
         y={y}

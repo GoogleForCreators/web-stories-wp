@@ -27,7 +27,7 @@ const extractAndSaveSnapshot = require('./snapshot.cjs');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
   baseBrowserDecorator(this);
-  this.name = 'puppeteer';
+  this.name = 'karma-puppeteer-launcher';
 
   let browser = null;
 
@@ -290,5 +290,5 @@ function getContextFrame(page) {
 puppeteerBrowser.$inject = ['baseBrowserDecorator', 'config.puppeteerLauncher'];
 
 module.exports = {
-  'launcher:puppeteer': ['type', puppeteerBrowser],
+  'launcher:karma-puppeteer-launcher': ['type', puppeteerBrowser], // Could not use @web-stories-wp/ because it does not accept symbols in name.
 };

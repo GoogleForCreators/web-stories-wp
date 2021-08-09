@@ -58,117 +58,123 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset(name));
   }
 
-  it('should add text presets below each other if added consecutively', async () => {
-    await fixture.editor.library.textTab.click();
-    await fixture.events.mouse.moveRel(
-      fixture.editor.library.text.preset('Title 1'),
-      10,
-      10
-    );
+  describe('Adding texts consecutively', () => {
+    beforeEach(async () => {
+      await fixture.editor.library.textTab.click();
+      // Give some time for everything to be ready for the tests.
+      await fixture.events.sleep(800);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
+    });
 
-    await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
-      { timeout: TIMEOUT_INTERVAL / 3 }
-    );
-
-    await addPreset('Title 1');
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-    await addPreset('Title 3');
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
-    await addPreset('Paragraph');
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
-
-    await fixture.snapshot('consecutively added different text presets');
-  });
-
-  it('should ensure staggered presets fit on the page', async () => {
-    const POSITION_MARGIN = dataFontEm(1);
-    const PARAGRAPH_TEXT =
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-    let lastY;
-    let lastHeight;
-    let nextY;
-    let nextHeight;
-    let storyContext;
-    let nodeIndex = 1;
-
-    const verifyDefaultPosition = async (name, content) => {
-      await waitFor(
-        () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+    it('should add text presets below each other if added consecutively', async () => {
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.text.preset('Title 1'),
+        10,
+        10
       );
-      nodeIndex++;
-      storyContext = await fixture.renderHook(() => useStory());
-      const element = storyContext.state.selectedElements[0];
-      await waitFor(() => {
-        expect(stripHTML(element.content)).toEqual(content);
-        const preset = PRESETS.find(({ title }) => name === title);
-        expect(element.y).toEqual(dataPixels(preset.element.y));
-      });
-      nextY = element.y;
-      nextHeight = element.height;
-    };
 
-    const verifyStaggeredPosition = async (content) => {
       await waitFor(
-        () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        { timeout: TIMEOUT_INTERVAL / 3 }
       );
-      nodeIndex++;
-      // Store both last and next value to ensure incorrect value isn't used within waitFor.
-      lastY = nextY;
-      lastHeight = nextHeight;
-      storyContext = await fixture.renderHook(() => useStory());
-      const element = storyContext.state.selectedElements[0];
-      await waitFor(() => {
-        expect(stripHTML(element.content)).toEqual(content);
-        expect(element.y).toEqual(
-          dataPixels(lastY + lastHeight + POSITION_MARGIN)
+
+      await addPreset('Title 1');
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await addPreset('Title 3');
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+      await addPreset('Paragraph');
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
+
+      await fixture.snapshot('consecutively added different text presets');
+    });
+
+    it('should ensure staggered presets fit on the page', async () => {
+      const POSITION_MARGIN = dataFontEm(1);
+      const PARAGRAPH_TEXT =
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+      let lastY;
+      let lastHeight;
+      let nextY;
+      let nextHeight;
+      let storyContext;
+      let nodeIndex = 1;
+
+      const verifyDefaultPosition = async (name, content) => {
+        await waitFor(
+          () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
         );
-      });
-      nextY = element.y;
-      nextHeight = element.height;
-    };
+        nodeIndex++;
+        storyContext = await fixture.renderHook(() => useStory());
+        const element = storyContext.state.selectedElements[0];
+        await waitFor(() => {
+          expect(stripHTML(element.content)).toEqual(content);
+          const preset = PRESETS.find(({ title }) => name === title);
+          expect(element.y).toEqual(dataPixels(preset.element.y));
+        });
+        nextY = element.y;
+        nextHeight = element.height;
+      };
 
-    await fixture.editor.library.textTab.click();
-    await fixture.events.mouse.moveRel(
-      fixture.editor.library.text.preset('Title 1'),
-      10,
-      10
-    );
+      const verifyStaggeredPosition = async (content) => {
+        await waitFor(
+          () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+        );
+        nodeIndex++;
+        // Store both last and next value to ensure incorrect value isn't used within waitFor.
+        lastY = nextY;
+        lastHeight = nextHeight;
+        storyContext = await fixture.renderHook(() => useStory());
+        const element = storyContext.state.selectedElements[0];
+        await waitFor(() => {
+          expect(stripHTML(element.content)).toEqual(content);
+          expect(element.y).toEqual(
+            dataPixels(lastY + lastHeight + POSITION_MARGIN)
+          );
+        });
+        nextY = element.y;
+        nextHeight = element.height;
+      };
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.text.preset('Title 1'),
+        10,
+        10
+      );
 
-    await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
-      {
-        timeout: TIMEOUT_INTERVAL / 3,
-      }
-    );
+      await waitFor(
+        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        {
+          timeout: TIMEOUT_INTERVAL / 3,
+        }
+      );
 
-    // Stagger all different text presets.
-    await addPreset('Title 1');
-    await verifyDefaultPosition('Title 1', 'Title 1');
+      // Stagger all different text presets.
+      await addPreset('Title 1');
+      await verifyDefaultPosition('Title 1', 'Title 1');
 
-    await addPreset('Paragraph');
-    await verifyStaggeredPosition(PARAGRAPH_TEXT);
+      await addPreset('Paragraph');
+      await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    await addPreset('Title 2');
-    await verifyStaggeredPosition('Title 2');
+      await addPreset('Title 2');
+      await verifyStaggeredPosition('Title 2');
 
-    await addPreset('Paragraph');
-    await verifyStaggeredPosition(PARAGRAPH_TEXT);
+      await addPreset('Paragraph');
+      await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
-    // Title 3 should be positioned in the default position again.
-    await addPreset('Title 3');
-    await verifyStaggeredPosition('Title 3');
+      // Title 3 should be positioned in the default position again.
+      await addPreset('Title 3');
+      await verifyStaggeredPosition('Title 3');
 
-    await addPreset('Caption');
-    await verifyStaggeredPosition('Caption');
+      await addPreset('Caption');
+      await verifyStaggeredPosition('Caption');
 
-    await addPreset('Paragraph');
-    await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
+      await addPreset('Paragraph');
+      await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
 
-    await addPreset('LABEL');
-    await verifyStaggeredPosition('LABEL');
+      await addPreset('LABEL');
+      await verifyStaggeredPosition('LABEL');
 
-    await fixture.snapshot('staggered all text presets');
+      await fixture.snapshot('staggered all text presets');
+    });
   });
 
   const getSelection = async () => {
@@ -202,8 +208,14 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         color: { r: 255, g: 255, b: 255, a: 0.7 },
       });
 
-      // Title should also have white highlight / black color since it's placed on top of the previous texts.
       await fixture.editor.library.textTab.click();
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.text.preset('Title 1'),
+        10,
+        10
+      );
+      await fixture.events.sleep(800);
+      // Title should also have white highlight / black color since it's placed on top of the previous texts.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[3].node);
       const [title] = await getSelection();
