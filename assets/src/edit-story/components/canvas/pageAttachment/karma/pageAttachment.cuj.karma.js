@@ -106,6 +106,17 @@ describe('Page Attachment', () => {
       expect(ctaText).toBeDefined();
     });
 
+    it('it should allow using dark theme for Page Attachment', async () => {
+      await setPageAttachmentLink('http://example.test');
+      const input = fixture.screen.getByLabelText('Use dark theme');
+      await fixture.events.click(input);
+
+      const storyContext = await fixture.renderHook(() => useStory());
+      expect(storyContext.state.currentPage.pageAttachment.theme).toEqual(
+        'dark'
+      );
+    });
+
     it('it should display warning for a link in the Page Attachment Area', async () => {
       await addElement();
       await moveElementToBottom();

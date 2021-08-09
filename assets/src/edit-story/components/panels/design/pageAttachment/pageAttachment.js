@@ -20,15 +20,45 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { Input } from '@web-stories-wp/design-system';
+import {
+  Checkbox,
+  Input,
+  Text,
+  THEME_CONSTANTS,
+  ThemeGlobals,
+} from '@web-stories-wp/design-system';
+import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../../../../app';
 import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { LinkInput, Row } from '../../../form';
+import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
+import { OUTLINK_THEME } from '../../../../constants';
+
+const Label = styled.label`
+  margin-left: 12px;
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  ${({ theme }) => `
+    input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
+      box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
+    }
+  `}
+`;
+
+const StyledRow = styled(Row)`
+  justify-content: flex-start;
+`;
+
+const Space = styled.div`
+  width: 20px;
+`;
 
 function PageAttachmentPanel() {
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
@@ -38,10 +68,12 @@ function PageAttachmentPanel() {
   const { setDisplayLinkGuidelines } = useCanvas((state) => ({
     setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
   }));
+
   const { pageAttachment = {} } = currentPage;
   const defaultCTA = __('Learn more', 'web-stories');
-  const { url, ctaText = defaultCTA } = pageAttachment;
+  const { url, ctaText = defaultCTA, icon, theme } = pageAttachment;
   const [_ctaText, _setCtaText] = useState(ctaText);
+  const [_url, _setUrl] = useState(url);
   const [displayWarning, setDisplayWarning] = useState(false);
 
   const { getLinksInAttachmentArea } = useElementsWithLinks();
@@ -89,8 +121,8 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
-  const debouncedCTAUpdate = useDebouncedCallback((value) => {
-    updatePageAttachment({ ctaText: value });
+  const debouncedUpdate = useDebouncedCallback((props) => {
+    updatePageAttachment(props);
   }, 300);
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
@@ -98,16 +130,34 @@ function PageAttachmentPanel() {
   );
 
   const isDefault = _ctaText === defaultCTA;
-  const showTextInput = Boolean(url) && !isInvalidUrl;
+  const hasValidUrl = Boolean(url) && !isInvalidUrl;
 
-  const handleChange = useCallback(
+  const handleChangeUrl = useCallback(
+    (value) => {
+      _setUrl(value);
+      debouncedUpdate({ url: value });
+    },
+    [debouncedUpdate]
+  );
+
+  const handleChangeCta = useCallback(
     ({ target }) => {
       const { value } = target;
       // This allows smooth input value change without any lag.
       _setCtaText(value);
-      debouncedCTAUpdate(value);
+      debouncedUpdate({ ctaText: value });
     },
-    [debouncedCTAUpdate]
+    [debouncedUpdate]
+  );
+
+  const handleChangeIcon = useCallback(
+    (image) => {
+      updatePageAttachment(
+        { icon: image?.sizes?.full?.url || image?.url },
+        true
+      );
+    },
+    [updatePageAttachment]
   );
 
   const handleBlur = useCallback(
@@ -116,25 +166,31 @@ function PageAttachmentPanel() {
         updatePageAttachment({ ctaText: defaultCTA });
         _setCtaText(defaultCTA);
       } else {
-        debouncedCTAUpdate.cancel();
+        debouncedUpdate.cancel();
         updatePageAttachment({
           ctaText: _ctaText ? _ctaText : defaultCTA,
         });
       }
     },
-    [_ctaText, debouncedCTAUpdate, defaultCTA, updatePageAttachment]
+    [_ctaText, debouncedUpdate, defaultCTA, updatePageAttachment]
   );
 
+  const checkboxId = `cb-${uuidv4()}`;
   return (
     <SimplePanel
       name="pageAttachment"
       title={__('Page Attachment', 'web-stories')}
     >
       <LinkInput
-        onChange={(value) => updatePageAttachment({ url: value })}
-        onBlur={() => updatePageAttachment({ url: url?.trim() })}
+        onChange={(value) => handleChangeUrl(value?.trim())}
+        onBlur={() => {
+          debouncedUpdate.cancel();
+          updatePageAttachment({
+            url: _url?.trim().length ? withProtocol(_url.trim()) : '',
+          });
+        }}
         onFocus={onFocus}
-        value={url}
+        value={_url}
         clear
         aria-label={__(
           'Type an address to add a page attachment link',
@@ -150,16 +206,50 @@ function PageAttachmentPanel() {
             : undefined
         }
       />
-      {showTextInput && (
-        <Row>
-          <Input
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={_ctaText}
-            aria-label={__('Page Attachment CTA text', 'web-stories')}
-            suffix={isDefault ? __('Default', 'web-stories') : null}
-          />
-        </Row>
+      {hasValidUrl && (
+        <>
+          <Row>
+            <Input
+              onChange={handleChangeCta}
+              onBlur={handleBlur}
+              value={_ctaText}
+              aria-label={__('Page Attachment CTA text', 'web-stories')}
+              suffix={isDefault ? __('Default', 'web-stories') : null}
+            />
+          </Row>
+          <StyledRow>
+            {/* The default is light theme, only if checked, use dark theme */}
+            <StyledCheckbox
+              id={checkboxId}
+              checked={theme === OUTLINK_THEME.DARK}
+              onChange={(evt) =>
+                updatePageAttachment({
+                  theme: evt.target.checked
+                    ? OUTLINK_THEME.DARK
+                    : OUTLINK_THEME.LIGHT,
+                })
+              }
+            />
+            <Label htmlFor={checkboxId}>
+              <Text
+                as="span"
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              >
+                {__('Use dark theme', 'web-stories')}
+              </Text>
+            </Label>
+          </StyledRow>
+          <StyledRow>
+            <LinkIcon handleChange={handleChangeIcon} icon={icon} />
+            <Space />
+            <Text
+              as="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {__('Link icon', 'web-stories')}
+            </Text>
+          </StyledRow>
+        </>
       )}
     </SimplePanel>
   );
