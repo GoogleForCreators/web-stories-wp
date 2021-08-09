@@ -52,13 +52,9 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {number|null} posterId The system poster ID.
  * @property {number|null} id The system ID.
  * @property {number|null} length The length for the "video" type.
- * @property {string|null} lengthFormatted The formatted length for the "video"
- * type.
- * @property {string|null} title The user-readable title for the resource.
- * @property {string|null} alt The user-readable accessibility label for the
- * resource.
- * @property {boolean} local Whether the resource has been already uploaded to
- * the server.
+ * @property {string|null} lengthFormatted The formatted length for the "video" type.
+ * @property {string|null} alt The user-readable accessibility label for the resource.
+ * @property {boolean} local Whether the resource has been already uploaded to the server.
  * @property {boolean} isOptimized Whether the resource has already been optimized.
  * @property {boolean|null} isMuted Whether the resource has already been muted.
  * @property {Object} sizes Object of image sizes.
@@ -78,12 +74,8 @@ import normalizeResourceSizes from './normalizeResourceSizes';
 /**
  * Resource object.
  *
- * TODO: Try to remove posterId (poster should be enough?)
- *
  * @typedef {Resource} Resource
- * @property {string|null} type Resource type. Currently only "image" and
- * "video" values are allowed. If not specified, will be calculated from the
- * mime-type.
+ * @property {string|null} type Resource type. Currently only "image" and "video" values are allowed. If not specified, will be calculated from the mime-type.
  * @property {string} mimeType The MIME type.
  * @property {string|null} creationDate When resource was created.
  * @property {string} src The source URL.
@@ -93,16 +85,11 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @property {number|null} posterId The system poster ID.
  * @property {number|null} id The system ID.
  * @property {number|null} length The length for the "video" type.
- * @property {string|null} lengthFormatted The formatted length for the "video"
- * type.
- * @property {string|null} title The user-readable title for the resource.
- * @property {string|null} alt The user-readable accessibility label for the
- * resource.
- * @property {boolean} local Whether the resource has been already uploaded to
- * the server.
+ * @property {string|null} lengthFormatted The formatted length for the "video" type.
+ * @property {string|null} alt The user-readable accessibility label for the resource.
+ * @property {boolean} local Whether the resource has been already uploaded to the server.
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
- * @property {Attribution|null} attribution An optional attribution for the
- * resource.
+ * @property {Attribution|null} attribution An optional attribution for the resource.
  * @property {?Object} output An optional object of video sizes for rendering gifs as videos
  */
 
@@ -124,7 +111,6 @@ function createResource({
   id,
   length,
   lengthFormatted,
-  title,
   alt,
   sizes,
   attribution,
@@ -146,7 +132,6 @@ function createResource({
     id,
     length,
     lengthFormatted,
-    title,
     alt,
     sizes: normalizeResourceSizes(sizes),
     attribution,
