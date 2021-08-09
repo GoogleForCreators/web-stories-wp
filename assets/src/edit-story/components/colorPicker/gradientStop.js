@@ -104,7 +104,7 @@ function GradientStopWithRef(
       aria-label={
         /* eslint-disable-next-line @wordpress/valid-sprintf -- False positive. */
         sprintf(
-          /* translators: %d: stop percentage */
+          /*! translators: %d: stop percentage */
           __('Gradient stop at %d%%', 'web-stories'),
           Math.round(100 - position * 100)
         )

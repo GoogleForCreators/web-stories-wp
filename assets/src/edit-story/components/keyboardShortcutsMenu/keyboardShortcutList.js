@@ -253,7 +253,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: %s: Shift key. */
+                  /*! translators: %s: Shift key. */
                   __('%s <span>+ click</span>', 'web-stories'),
                   sprintf(
                     '<kbd aria-label="%s"><shift /></kbd>',
@@ -278,7 +278,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: 1: Cmd/Ctrl key. 2: Up key. 3: Down key. */
+                  /*! translators: 1: Cmd/Ctrl key. 2: Up key. 3: Down key. */
                   __('%1$s %2$s <span>or</span> %3$s', 'web-stories'),
                   sprintf(
                     '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
@@ -312,7 +312,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: 1: Cmd/Ctrl key. 2: Shift key. 3: Up key. 4: Down key. */
+                  /*! translators: 1: Cmd/Ctrl key. 2: Shift key. 3: Up key. 4: Down key. */
                   __('%1$s %2$s %3$s <span>or</span> %4$s', 'web-stories'),
                   sprintf(
                     '<lkbd aria-label="%s"><cmdOrCtrlSymbol /></lkbd>',
@@ -346,7 +346,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: %s: Enter key. */
+                  /*! translators: %s: Enter key. */
                   __('%s <span>or double-click</span>', 'web-stories'),
                   sprintf(
                     '<kbd aria-label="%s"><enterSymbol /></kbd>',
@@ -391,7 +391,7 @@ const shortcuts = {
                 }}
               >
                 {sprintf(
-                  /* translators: %s: Cmd/Ctrl key. */
+                  /*! translators: %s: Cmd/Ctrl key. */
                   __('<span>Hold</span> %s', 'web-stories'),
                   sprintf(
                     '<kbd aria-label="%s"><cmdOrCtrlSymbol /></kbd>',

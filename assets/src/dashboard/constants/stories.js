@@ -139,7 +139,7 @@ export const STORY_STATUSES = [
 export const STORY_VIEWING_LABELS = {
   [STORY_STATUS.ALL]: (n) =>
     sprintf(
-      /* translators: %d: number of stories in view */
+      /*! translators: %d: number of stories in view */
       _n(
         'Viewing <strong>%d</strong> story',
         'Viewing all <strong>%d</strong> stories',
@@ -150,7 +150,7 @@ export const STORY_VIEWING_LABELS = {
     ),
   [STORY_STATUS.DRAFT]: (n) =>
     sprintf(
-      /* translators: %d: number of draft stories in view */
+      /*! translators: %d: number of draft stories in view */
       _n(
         'Viewing <strong>%d</strong> draft',
         'Viewing <strong>%d</strong> drafts',
@@ -161,7 +161,7 @@ export const STORY_VIEWING_LABELS = {
     ),
   [STORY_STATUS.PUBLISHED_AND_FUTURE]: (n) =>
     sprintf(
-      /* translators: %d: number of published stories in view */
+      /*! translators: %d: number of published stories in view */
       _n(
         'Viewing <strong>%d</strong> published story',
         'Viewing <strong>%d</strong> published stories',

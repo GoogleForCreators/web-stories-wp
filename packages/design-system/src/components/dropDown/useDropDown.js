@@ -70,7 +70,7 @@ export default function useDropDown({ options = [], selectedValue }) {
     if (isOpen.value) {
       const message = options.length
         ? sprintf(
-            /* translators: %d number of options in dropdown */
+            /*! translators: %d number of options in dropdown */
             _n(
               '%d result found, use left and right or up and down arrow keys to navigate.',
               '%d results found, use left and right or up and down arrow keys to navigate.',

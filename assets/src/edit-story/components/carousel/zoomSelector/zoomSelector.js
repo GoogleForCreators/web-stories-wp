@@ -80,7 +80,7 @@ function ZoomSelector() {
 
     // eslint-disable-next-line @wordpress/valid-sprintf -- False positive.
     return sprintf(
-      /* translators: %d: zoom level percentage value. */
+      /*! translators: %d: zoom level percentage value. */
       _x('%d%%', 'zoom level', 'web-stories'),
       Math.round(zoomLevel * 100)
     );

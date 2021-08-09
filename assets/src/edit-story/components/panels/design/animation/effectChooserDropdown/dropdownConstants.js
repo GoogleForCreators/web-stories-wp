@@ -114,7 +114,7 @@ export const backgroundEffectOptions = {
     label: _x('Pan Left', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Pan Left', 'animation effect', 'web-stories')
       ),
@@ -136,7 +136,7 @@ export const backgroundEffectOptions = {
     label: _x('Pan Right', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Pan Right', 'animation effect', 'web-stories')
       ),
@@ -158,7 +158,7 @@ export const backgroundEffectOptions = {
     label: _x('Pan Up', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Pan Up', 'animation effect', 'web-stories')
       ),
@@ -180,7 +180,7 @@ export const backgroundEffectOptions = {
     label: _x('Pan Down', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Pan Down', 'animation effect', 'web-stories')
       ),
@@ -202,7 +202,7 @@ export const backgroundEffectOptions = {
     label: _x('Zoom In', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Zoom In', 'animation effect', 'web-stories')
       ),
@@ -224,7 +224,7 @@ export const backgroundEffectOptions = {
     label: _x('Zoom Out', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Zoom Out', 'animation effect', 'web-stories')
       ),
@@ -240,7 +240,7 @@ export const backgroundEffectOptions = {
     label: BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         BACKGROUND_ANIMATION_EFFECTS.PAN_AND_ZOOM.name
       ),
@@ -262,7 +262,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.DROP.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         ANIMATION_EFFECTS.DROP.name
       ),
@@ -275,7 +275,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.FADE_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         ANIMATION_EFFECTS.FADE_IN.name
       ),
@@ -294,7 +294,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Fly In from Left', 'animation effect', 'web-stories')
       ),
@@ -316,7 +316,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Fly In from Top', 'animation effect', 'web-stories')
       ),
@@ -338,7 +338,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Fly In from Bottom', 'animation effect', 'web-stories')
       ),
@@ -360,7 +360,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.FLY_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Fly In from Right', 'animation effect', 'web-stories')
       ),
@@ -376,7 +376,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.PULSE.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         ANIMATION_EFFECTS.PULSE.name
       ),
@@ -395,7 +395,7 @@ export const foregroundEffectOptions = {
     label: _x('Rotate', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Rotate In from Left', 'animation effect', 'web-stories')
       ),
@@ -417,7 +417,7 @@ export const foregroundEffectOptions = {
     label: _x('Rotate', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Rotate In from Right', 'animation effect', 'web-stories')
       ),
@@ -433,7 +433,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.TWIRL_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         ANIMATION_EFFECTS.TWIRL_IN.name
       ),
@@ -453,7 +453,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.WHOOSH_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Whoosh In from Left', 'animation effect', 'web-stories')
       ),
@@ -475,7 +475,7 @@ export const foregroundEffectOptions = {
     label: ANIMATION_EFFECTS.WHOOSH_IN.name,
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Whoosh In from Right', 'animation effect', 'web-stories')
       ),
@@ -497,7 +497,7 @@ export const foregroundEffectOptions = {
     label: _x('Scale In', 'animation effect', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Scale In', 'animation effect', 'web-stories')
       ),
@@ -519,7 +519,7 @@ export const foregroundEffectOptions = {
     label: __('Scale Out', 'web-stories'),
     animation: {
       ariaLabel: sprintf(
-        /* translators: %s: animation effect. */
+        /*! translators: %s: animation effect. */
         __('"%s" Effect', 'web-stories'),
         _x('Scale Out', 'animation effect', 'web-stories')
       ),

@@ -42,7 +42,7 @@ const OverflowThumbnail = ({ overflowCount, screenReaderText, ...rest }) => (
     <VisuallyHidden>{screenReaderText}</VisuallyHidden>
     <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
       {sprintf(
-        /* translators: %s: number of thumbnails in overflow */
+        /*! translators: %s: number of thumbnails in overflow */
         __('+ %s', 'web-stories'),
         overflowCount
       )}

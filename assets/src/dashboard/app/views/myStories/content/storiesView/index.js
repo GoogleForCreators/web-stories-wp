@@ -163,7 +163,7 @@ function StoriesView({
 
       showSnackbar({
         message: sprintf(
-          /* translators: %s: story title. */
+          /*! translators: %s: story title. */
           __('%s has been copied to your clipboard.', 'web-stories'),
           titleFormatted(story.title)
         ),
@@ -294,7 +294,7 @@ function StoriesView({
           secondaryText={__('Cancel', 'web-stories')}
           secondaryRest={{
             ['aria-label']: sprintf(
-              /* translators: %s: story title. */
+              /*! translators: %s: story title. */
               __('Cancel deleting story "%s"', 'web-stories'),
               titleFormatted(activeStory.title)
             ),
@@ -303,7 +303,7 @@ function StoriesView({
           onPrimary={handleOnDeleteStory}
           primaryRest={{
             ['aria-label']: sprintf(
-              /* translators: %s: story title. */
+              /*! translators: %s: story title. */
               __('Confirm deleting story "%s"', 'web-stories'),
               titleFormatted(activeStory.title)
             ),
@@ -311,7 +311,7 @@ function StoriesView({
         >
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
-              /* translators: %s: story title. */
+              /*! translators: %s: story title. */
               __('Are you sure you want to delete "%s"?', 'web-stories'),
               titleFormatted(activeStory.title)
             )}

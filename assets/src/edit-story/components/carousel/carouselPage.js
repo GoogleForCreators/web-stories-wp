@@ -137,12 +137,12 @@ function CarouselPage({ pageId, index }) {
           aria-label={
             isCurrentPage
               ? sprintf(
-                  /* translators: %s: page number. */
+                  /*! translators: %s: page number. */
                   __('Page %s (current page)', 'web-stories'),
                   index + 1
                 )
               : sprintf(
-                  /* translators: %s: page number. */
+                  /*! translators: %s: page number. */
                   __('Go to page %s', 'web-stories'),
                   index + 1
                 )

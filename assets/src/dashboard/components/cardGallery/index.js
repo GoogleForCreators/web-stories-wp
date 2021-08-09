@@ -137,12 +137,12 @@ function CardGallery({ story, isRTL, galleryLabel }) {
               aria-label={
                 isCurrentPage
                   ? sprintf(
-                      /* translators: %s: page number. */
+                      /*! translators: %s: page number. */
                       __('Page %s (current page)', 'web-stories'),
                       index + 1
                     )
                   : sprintf(
-                      /* translators: %s: page number. */
+                      /*! translators: %s: page number. */
                       __('Page %s', 'web-stories'),
                       index + 1
                     )
@@ -179,7 +179,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
         </Thumbnails>
         <DisplayPage
           aria-label={sprintf(
-            /* translators: %s: active preview page number */
+            /*! translators: %s: active preview page number */
             __('Active Page Preview - Page %s', 'web-stories'),
             activePageIndex + 1
           )}

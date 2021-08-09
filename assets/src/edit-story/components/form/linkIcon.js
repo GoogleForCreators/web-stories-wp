@@ -44,7 +44,7 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
 
     if (allowedImageFileTypes.length) {
       message = sprintf(
-        /* translators: %s: list of allowed file types. */
+        /*! translators: %s: list of allowed file types. */
         __('Please choose only %s as an icon.', 'web-stories'),
         translateToExclusiveList(allowedImageFileTypes)
       );

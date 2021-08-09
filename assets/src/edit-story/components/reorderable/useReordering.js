@@ -21,7 +21,7 @@ import { sprintf, __ } from '@web-stories-wp/i18n';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useLiveRegion } from '@web-stories-wp/design-system';
 
-/* translators: %d: new position. */
+/*! translators: %d: new position. */
 const REORDER_MESSAGE = __(
   'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
   'web-stories'

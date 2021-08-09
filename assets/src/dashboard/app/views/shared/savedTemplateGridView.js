@@ -131,14 +131,14 @@ const SavedTemplateGridView = ({
                 isSelected={isActive}
                 tabIndex={tabIndex}
                 title={sprintf(
-                  /* translators: %s: story title.*/
+                  /*! translators: %s: story title.*/
                   __('Press Enter to explore details about %s', 'web-stories'),
                   template.title
                 )}
               />
               <CardPreviewContainer
                 ariaLabel={sprintf(
-                  /* translators: %s: story title. */
+                  /*! translators: %s: story title. */
                   __('Preview of %s', 'web-stories'),
                   template.title
                 )}

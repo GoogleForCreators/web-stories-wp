@@ -178,7 +178,7 @@ function MediaEditDialog({ resource, onClose }) {
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
             >
               {sprintf(
-                /* translators: %s: upload date of media item. */
+                /*! translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
                 formatDate(creationDate)
               )}
@@ -193,7 +193,7 @@ function MediaEditDialog({ resource, onClose }) {
           </Text>
           <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
-              /* translators: 1: image width. 2: image height. */
+              /*! translators: 1: image width. 2: image height. */
               __('%1$d x %2$d pixels', 'web-stories'),
               width,
               height

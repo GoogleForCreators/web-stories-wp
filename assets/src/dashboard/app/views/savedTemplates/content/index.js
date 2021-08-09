@@ -148,7 +148,7 @@ function Content({
         <Headline size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL} as="h3">
           {search?.keyword
             ? sprintf(
-                /* translators: %s: search term. */
+                /*! translators: %s: search term. */
                 __(
                   'Sorry, we couldn\'t find any results matching "%s"',
                   'web-stories'

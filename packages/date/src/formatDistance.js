@@ -22,7 +22,7 @@ import { __, _n, sprintf } from '@web-stories-wp/i18n';
 const formatDistanceLocale = {
   lessThanXMinutes(count) {
     return sprintf(
-      /* translators: Time difference between two dates, in minutes (min=minute). %s: Number of minutes. */
+      /*! translators: Time difference between two dates, in minutes (min=minute). %s: Number of minutes. */
       _n('less than %s min', 'less than %s mins', count, 'web-stories'),
       count
     );
@@ -30,7 +30,7 @@ const formatDistanceLocale = {
 
   xMinutes(count) {
     return sprintf(
-      /* translators: Time difference between two dates, in minutes. %s: Number of minutes. */
+      /*! translators: Time difference between two dates, in minutes. %s: Number of minutes. */
       _n('%s minute', '%s minutes', count, 'web-stories'),
       count
     );
@@ -42,7 +42,7 @@ const formatDistanceLocale = {
     }
 
     return sprintf(
-      /* translators: Time difference between two dates, in hours. %s: Number of hours. */
+      /*! translators: Time difference between two dates, in hours. %s: Number of hours. */
       _n('%s hour', '%s hours', count, 'web-stories'),
       count
     );
@@ -50,7 +50,7 @@ const formatDistanceLocale = {
 
   xHours(count) {
     return sprintf(
-      /* translators: Time difference between two dates, in hours. %s: Number of hours. */
+      /*! translators: Time difference between two dates, in hours. %s: Number of hours. */
       _n('%s hour', '%s hours', count, 'web-stories'),
       count
     );
@@ -65,13 +65,13 @@ export default function formatDistance(token, count, options) {
   if (options.addSuffix) {
     if (options.comparison > 0) {
       return sprintf(
-        /* translators: %s: Human-readable time difference. */
+        /*! translators: %s: Human-readable time difference. */
         __('in %s', 'web-stories'),
         result
       );
     } else {
       return sprintf(
-        /* translators: %s: Human-readable time difference. */
+        /*! translators: %s: Human-readable time difference. */
         __('%s ago', 'web-stories'),
         result
       );

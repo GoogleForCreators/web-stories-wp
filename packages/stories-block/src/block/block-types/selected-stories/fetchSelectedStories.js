@@ -66,7 +66,7 @@ function FetchSelectedStories({
     } catch (error) {
       createErrorNotice(
         sprintf(
-          /* translators: %s: error message. */
+          /*! translators: %s: error message. */
           __('Unable to load stories. %s', 'web-stories'),
           error?.message || ''
         ),

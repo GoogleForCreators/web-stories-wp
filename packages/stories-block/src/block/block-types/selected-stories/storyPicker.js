@@ -150,7 +150,7 @@ function StoryPicker({
           {!isSortingStories && !isFetchingForFirstTime && (
             <p>
               {sprintf(
-                /* translators: %1$d: Number of selected stories, %2$d: Maximum allowed stories */
+                /*! translators: %1$d: Number of selected stories, %2$d: Maximum allowed stories */
                 _n(
                   '%1$d of %2$d story selected',
                   '%1$d of %2$d stories selected',

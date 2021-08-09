@@ -93,7 +93,7 @@ export const GridItem = forwardRef(
             setActivePublisherLogoId(publisherLogo.id);
           }}
           aria-label={sprintf(
-            /* translators: %s: logo title.*/
+            /*! translators: %s: logo title.*/
             __('Publisher Logo %s', 'web-stories'),
             publisherLogo.title
           )}

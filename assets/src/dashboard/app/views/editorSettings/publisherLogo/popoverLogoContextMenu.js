@@ -60,7 +60,7 @@ function PopoverLogoContextMenu({
         menuOpen={isPopoverMenuOpen}
         data-testid={`publisher-logo-context-menu-button-${idx}`}
         aria-label={sprintf(
-          /* translators: %s: logo title */
+          /*! translators: %s: logo title */
           __('Publisher logo menu for %s', 'web-stories'),
           publisherLogo.title
         )}

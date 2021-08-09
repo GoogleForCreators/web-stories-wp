@@ -45,7 +45,7 @@ import {
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(
-    /* translators: 1: first example. 2: second example. */
+    /*! translators: 1: first example. 2: second example. */
     __(
       'Example: %1$s or %2$s. <a>Find your AdSense Publisher ID</a>.',
       'web-stories'
@@ -60,7 +60,7 @@ export const TEXT = {
   PUBLISHER_ID_PLACEHOLDER: __('Enter your Publisher ID', 'web-stories'),
   PUBLISHER_ID_LABEL: __('Google AdSense Publisher ID', 'web-stories'),
   SLOT_ID_CONTEXT: sprintf(
-    /* translators: %s: example value. */
+    /*! translators: %s: example value. */
     __(
       'Example: %s. Copy the slot ID from <a>your ad unit’s code</a>. The same ad unit will be used for all of your Web Stories.',
       'web-stories'

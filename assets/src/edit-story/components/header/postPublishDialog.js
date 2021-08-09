@@ -73,7 +73,7 @@ function PostPublishDialog({ isOpen, onClose, confirmURL, storyURL }) {
       {confirmURL && (
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {
-            /* translators: 'it' refers to a web story. */
+            /*! translators: 'it' refers to a web story. */
             __('Would you like to include it on a new post?', 'web-stories')
           }
         </Text>

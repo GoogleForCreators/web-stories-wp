@@ -236,7 +236,7 @@ function ColorPresetActions({ color, pushUpdate, onAction }) {
               }}
             >
               {sprintf(
-                /* translators: %s: "plus" icon. */
+                /*! translators: %s: "plus" icon. */
                 __('Click %s to save a color', 'web-stories'),
                 '<b>+</b>'
               )}

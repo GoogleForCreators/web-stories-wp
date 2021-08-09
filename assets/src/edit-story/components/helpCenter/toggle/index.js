@@ -44,7 +44,7 @@ function Toggle({
       aria-label={
         notificationCount > 0
           ? sprintf(
-              /* translators: %s:  number of unread notifications. */
+              /*! translators: %s:  number of unread notifications. */
               _n(
                 'Help Center: %s unread notification',
                 'Help Center: %s unread notifications',

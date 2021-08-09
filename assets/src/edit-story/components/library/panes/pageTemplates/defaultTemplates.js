@@ -119,7 +119,7 @@ function DefaultTemplates({ pageSize }) {
             {
               ...page,
               title: sprintf(
-                /* translators: 1: template name. 2: page template name. */
+                /*! translators: 1: template name. 2: page template name. */
                 _x('%1$s %2$s', 'page template title', 'web-stories'),
                 template.title,
                 pageTemplateName

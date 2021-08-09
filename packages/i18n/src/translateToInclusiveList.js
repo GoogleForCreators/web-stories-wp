@@ -33,17 +33,17 @@ function translateToInclusiveList(options) {
       return options[0];
     case 2:
       return sprintf(
-        /* translators: %1$s: first item of list. %2$s: second item of list. */
+        /*! translators: %1$s: first item of list. %2$s: second item of list. */
         __('%1$s and %2$s', 'web-stories'),
         options[0],
         options[1]
       );
     default:
       return sprintf(
-        /* translators: %1$s: is a comma separated list. %2$s: last entry in list  */
+        /*! translators: %1$s: is a comma separated list. %2$s: last entry in list  */
         __('%1$s, and %2$s', 'web-stories'),
         options.slice(0, options.length - 1).join(
-          /* translators: delimiter used in a list */
+          /*! translators: delimiter used in a list */
           __(', ', 'web-stories')
         ),
         options[options.length - 1]

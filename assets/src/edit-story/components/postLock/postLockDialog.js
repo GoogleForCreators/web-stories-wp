@@ -45,7 +45,7 @@ import { Img } from './shared';
 function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
   const dialogTile = __('Story is locked', 'web-stories');
   const dialogContent = sprintf(
-    /* translators: %s: user's name */
+    /*! translators: %s: user's name */
     __(
       '%s is already editing this story. Do you want to take over?',
       'web-stories'

@@ -97,13 +97,13 @@ const StoryGridItem = ({
         menuLabel={
           isLocked
             ? sprintf(
-                /* translators: 1: story title. 2: user currently editing the story. */
+                /*! translators: 1: story title. 2: user currently editing the story. */
                 __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
                 formattedTitle,
                 story?.lockUser.name
               )
             : sprintf(
-                /* translators: %s: story title.*/
+                /*! translators: %s: story title.*/
                 __('Context menu for %s', 'web-stories'),
                 formattedTitle
               )
@@ -142,7 +142,7 @@ const StoryGridItem = ({
         itemRefs.current[story.id] = el;
       }}
       title={sprintf(
-        /* translators: %s: story title.*/
+        /*! translators: %s: story title.*/
         __('Details about %s', 'web-stories'),
         formattedTitle
       )}
@@ -153,7 +153,7 @@ const StoryGridItem = ({
             {...(story.featuredMediaUrl
               ? {
                   alt: sprintf(
-                    /* translators: %s: Story title. */
+                    /*! translators: %s: Story title. */
                     __('%s Poster image', 'web-stories'),
                     formattedTitle
                   ),

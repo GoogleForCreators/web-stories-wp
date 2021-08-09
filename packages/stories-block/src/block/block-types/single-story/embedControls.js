@@ -144,7 +144,7 @@ const EmbedControls = (props) => {
                 <p id={posterDescription} hidden>
                   {hasPoster
                     ? sprintf(
-                        /* translators: %s: poster image URL. */
+                        /*! translators: %s: poster image URL. */
                         __('The current poster image url is %s', 'web-stories'),
                         poster
                       )

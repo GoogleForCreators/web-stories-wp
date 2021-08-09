@@ -197,7 +197,7 @@ export const BulkVideoOptimization = () => {
       currentlyUploading.length +
       unoptimizedVideos.filter((video) => video.resource?.isTranscoding).length;
     optimizeButtonCopy = sprintf(
-      /* translators: 1: number of videos currently transcoding. 2: total number of videos in list. */
+      /*! translators: 1: number of videos currently transcoding. 2: total number of videos in list. */
       _n(
         'Optimizing %1$d of %2$d',
         'Optimizing %1$d of %2$d',

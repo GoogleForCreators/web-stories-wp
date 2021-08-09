@@ -58,7 +58,7 @@ function Toggle({ isOpen = false, popupId = '', onClick = noop }) {
       aria-label={
         notificationCount > 0
           ? sprintf(
-              /* translators: %s:  number of unaddressed issues. */
+              /*! translators: %s:  number of unaddressed issues. */
               _n(
                 'Checklist: %s unaddressed issue',
                 'Checklist: %s unaddressed issues',

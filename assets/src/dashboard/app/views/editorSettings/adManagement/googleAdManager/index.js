@@ -40,7 +40,7 @@ import {
 
 export const TEXT = {
   SLOT_ID_CONTEXT: sprintf(
-    /* translators: %s: example value. */
+    /*! translators: %s: example value. */
     __('Example: %s', 'web-stories'),
     '/123456789/a4a/amp_story_dfp_example'
   ),

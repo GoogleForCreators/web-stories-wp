@@ -48,7 +48,7 @@ function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
     'web-stories'
   );
   const dialogContent = sprintf(
-    /* translators: %s: user's name */
+    /*! translators: %s: user's name */
     __('%s now has editing control of this story.', 'web-stories'),
     user?.name
   );

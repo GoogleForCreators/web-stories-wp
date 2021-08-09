@@ -104,7 +104,7 @@ function TextSetsPane({ paneRef }) {
           return {
             id,
             title: sprintf(
-              /* translators: 1: text set category. 2: list of fonts. */
+              /*! translators: 1: text set category. 2: list of fonts. */
               _n(
                 'Text set %1$s with %2$s font',
                 'Text set %1$s with %2$s fonts',
@@ -154,7 +154,7 @@ function TextSetsPane({ paneRef }) {
         selectedCategory === null
           ? __('Show all text sets', 'web-stories')
           : sprintf(
-              /* translators: %s: filter category name */
+              /*! translators: %s: filter category name */
               __('Selected text set filter %s', 'web-stories'),
               CATEGORIES[selectedCategory]
             )

@@ -35,7 +35,7 @@ function useRefreshPostEditURL(postId, postEditURL) {
       window.history.replaceState(
         { id: postId },
         sprintf(
-          /* translators: %d: current story id. */
+          /*! translators: %d: current story id. */
           __('Post %d', 'web-stories'),
           postId
         ),

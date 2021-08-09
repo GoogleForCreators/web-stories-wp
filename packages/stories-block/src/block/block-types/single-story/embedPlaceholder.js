@@ -76,7 +76,7 @@ const EmbedPlaceholder = ({
               <>
                 {' '}
                 {sprintf(
-                  /* translators: %s: error message. */
+                  /*! translators: %s: error message. */
                   __('Reason: %s.', 'web-stories'),
                   errorMessage
                 )}

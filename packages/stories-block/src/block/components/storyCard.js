@@ -71,7 +71,7 @@ function StoryCard({
           {isShowingAuthor && (
             <div className="story-content-overlay__author">
               {sprintf(
-                /* translators: byline. %s: author name. */
+                /*! translators: byline. %s: author name. */
                 __('By %s', 'web-stories'),
                 author
               )}
@@ -83,7 +83,7 @@ function StoryCard({
               className="story-content-overlay__date"
             >
               {sprintf(
-                /* translators: %s: publish date. */
+                /*! translators: %s: publish date. */
                 __('On %s', 'web-stories'),
                 dateI18n(dateFormat, date)
               )}

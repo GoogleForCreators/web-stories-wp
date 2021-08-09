@@ -35,7 +35,7 @@ export default {
   zoomDirection: {
     label: __('Direction', 'web-stories'),
     tooltip: sprintf(
-      /* translators: 1: scaleIn. 2: scaleOut */
+      /*! translators: 1: scaleIn. 2: scaleOut */
       __('Valid values are %1$s or %2$s', 'web-stories'),
       'zoomIn',
       'zoomOut'

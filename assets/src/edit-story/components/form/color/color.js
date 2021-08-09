@@ -67,7 +67,7 @@ const Color = forwardRef(function Color(
   );
 
   const containerLabel = sprintf(
-    /* translators: %s: color input label name. */
+    /*! translators: %s: color input label name. */
     __('Color input: %s', 'web-stories'),
     label
   );

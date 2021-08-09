@@ -254,7 +254,7 @@ function MediaPane(props) {
   );
   if (allowedFileTypes.length) {
     onSelectErrorMessage = sprintf(
-      /* translators: %s: list of allowed file types. */
+      /*! translators: %s: list of allowed file types. */
       __('Please choose only %s to insert into page.', 'web-stories'),
       translateToExclusiveList(allowedFileTypes)
     );
@@ -339,7 +339,7 @@ function MediaPane(props) {
             {isSearching && media.length > 0 && (
               <SearchCount>
                 {sprintf(
-                  /* translators: %d: number of results. */
+                  /*! translators: %d: number of results. */
                   _n(
                     '%s result found.',
                     '%s results found.',

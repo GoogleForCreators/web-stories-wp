@@ -121,20 +121,20 @@ const CardTitle = ({
     switch (status) {
       case STORY_STATUS.PUBLISH:
         return sprintf(
-          /* translators: %s: published date */
+          /*! translators: %s: published date */
           __('Published %s', 'web-stories'),
           displayDate
         );
       case STORY_STATUS.FUTURE:
         return sprintf(
-          /* translators: %s: future publish date */
+          /*! translators: %s: future publish date */
           __('Scheduled %s', 'web-stories'),
           displayDate
         );
 
       default:
         return sprintf(
-          /* translators: %s: last modified date */
+          /*! translators: %s: last modified date */
           __('Modified %s', 'web-stories'),
           displayDate
         );
@@ -159,7 +159,7 @@ const CardTitle = ({
             />
           )}
           {sprintf(
-            /* translators: %s: user name */
+            /*! translators: %s: user name */
             __('%s is currently editing', 'web-stories'),
             lockUser.name
           )}
@@ -178,7 +178,7 @@ const CardTitle = ({
           href={titleLink}
           tabIndex={tabIndex}
           aria-label={sprintf(
-            /* translators: %s: title*/
+            /*! translators: %s: title*/
             __('Open %s in editor', 'web-stories'),
             title
           )}

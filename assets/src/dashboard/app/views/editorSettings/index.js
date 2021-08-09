@@ -194,7 +194,7 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? sprintf(
-                /* translators: %s: max upload size for media */
+                /*! translators: %s: max upload size for media */
                 __(
                   'Sorry, this file is too big. Make sure your logo is under %s.',
                   'web-stories'
@@ -202,7 +202,7 @@ function EditorSettings() {
                 maxUploadFormatted
               )
             : sprintf(
-                /* translators: %s: max upload size for media */
+                /*! translators: %s: max upload size for media */
                 __(
                   'Sorry, one or more of these files are too big. Make sure your logos are all under %s.',
                   'web-stories'
@@ -253,7 +253,7 @@ function EditorSettings() {
         const errorText =
           files.length === 1
             ? sprintf(
-                /* translators: 1 = minimum width, 2 = minimum height */
+                /*! translators: 1 = minimum width, 2 = minimum height */
                 __(
                   'Sorry, this file is too small. Make sure your logo is larger than %s.',
                   'web-stories'
@@ -261,7 +261,7 @@ function EditorSettings() {
                 sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
               )
             : sprintf(
-                /* translators: %s: image dimensions in pixels. */
+                /*! translators: %s: image dimensions in pixels. */
                 __(
                   'Sorry, one or more files are too small. Make sure your logos are all larger than %s.',
                   'web-stories'

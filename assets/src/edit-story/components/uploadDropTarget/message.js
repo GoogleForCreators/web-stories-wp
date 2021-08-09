@@ -68,7 +68,7 @@ function UploadDropTargetMessage({ message, ...rest }) {
 
   if (allowedFileTypes.length) {
     description = sprintf(
-      /* translators: %s is a list of allowed file extensions. */
+      /*! translators: %s is a list of allowed file extensions. */
       __('You can upload %s.', 'web-stories'),
       translateToExclusiveList(allowedFileTypes)
     );

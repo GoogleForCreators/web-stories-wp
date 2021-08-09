@@ -196,7 +196,7 @@ export function LeftRail() {
                   aria-label={
                     path.value === state.currentPath
                       ? sprintf(
-                          /* translators: %s: the current page, for example "My Stories". */
+                          /*! translators: %s: the current page, for example "My Stories". */
                           __('%s (active view)', 'web-stories'),
                           path.label
                         )
@@ -229,7 +229,7 @@ export function LeftRail() {
                 aria-label={
                   path.value === state.currentPath
                     ? sprintf(
-                        /* translators: %s: the current page, for example "My Stories". */
+                        /*! translators: %s: the current page, for example "My Stories". */
                         __('%s (active view)', 'web-stories'),
                         path.label
                       )
@@ -254,7 +254,7 @@ export function LeftRail() {
         </NavList>
         <AppInfo size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
           {sprintf(
-            /* translators: 1: Current Year, 2: App Version */
+            /*! translators: 1: Current Year, 2: App Version */
             __('\u00A9 %1$s Google Version %2$s', 'web-stories'),
             new Date().getFullYear(),
             version

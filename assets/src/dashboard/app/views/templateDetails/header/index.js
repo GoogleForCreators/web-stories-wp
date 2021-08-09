@@ -51,7 +51,7 @@ function Header({ onHandleCtaClick, templateTitle }) {
       <Nav>
         <HiddenHeading>
           {sprintf(
-            /* translators: %s: template title */
+            /*! translators: %s: template title */
             __('Template Details for %s', 'web-stories'),
             templateTitle
           )}
@@ -62,7 +62,7 @@ function Header({ onHandleCtaClick, templateTitle }) {
           size={BUTTON_SIZES.SMALL}
           as="a"
           aria-label={sprintf(
-            /* translators: %s: page title of link */
+            /*! translators: %s: page title of link */
             __('Go to %s', 'web-stories'),
             ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
           )}
@@ -75,7 +75,7 @@ function Header({ onHandleCtaClick, templateTitle }) {
           type={BUTTON_TYPES.PRIMARY}
           size={BUTTON_SIZES.SMALL}
           aria-label={sprintf(
-            /* translators: %s: template title */
+            /*! translators: %s: template title */
             __('Use %s template to create new story', 'web-stories'),
             templateTitle
           )}

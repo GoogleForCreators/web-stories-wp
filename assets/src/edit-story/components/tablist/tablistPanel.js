@@ -69,7 +69,7 @@ const TablistPanel = ({
             <PanelText
               id={`${title}-${panelId}`}
               aria-label={sprintf(
-                /* translators: 1: number of issues. 2: type of issue, for example "High Priority". */
+                /*! translators: 1: number of issues. 2: type of issue, for example "High Priority". */
                 _n(
                   '%1$d %2$s issue',
                   '%1$d %2$s issues',

@@ -120,14 +120,14 @@ const AppContent = () => {
     let dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
     if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL)) {
       dynamicPageTitle = sprintf(
-        /* translators: %s: Template name. */
+        /*! translators: %s: Template name. */
         __('Template: %s', 'web-stories'),
         currentTemplate
       );
     }
 
     document.title = sprintf(
-      /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
+      /*! translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
       __('%1$s \u2039 %2$s \u2212 WordPress', 'web-stories'),
       dynamicPageTitle,
       ADMIN_TITLE

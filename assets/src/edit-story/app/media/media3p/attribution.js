@@ -88,7 +88,7 @@ const MEDIA_PROVIDER = {
 };
 const getAriaLabel = (provider) =>
   sprintf(
-    /* translators: %s: media provider name. */
+    /*! translators: %s: media provider name. */
     __('Powered by %s', 'web-stories'),
     provider
   );

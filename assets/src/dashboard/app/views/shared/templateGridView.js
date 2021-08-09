@@ -114,14 +114,14 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                 isSelected={isActive}
                 tabIndex={tabIndex}
                 title={sprintf(
-                  /* translators: %s: template title.*/
+                  /*! translators: %s: template title.*/
                   __('Press Enter to explore %s template', 'web-stories'),
                   template.title
                 )}
               />
               <CardPreviewContainer
                 ariaLabel={sprintf(
-                  /* translators: %s: template title.*/
+                  /*! translators: %s: template title.*/
                   __('Viewing template: %s', 'web-stories'),
                   template.title
                 )}

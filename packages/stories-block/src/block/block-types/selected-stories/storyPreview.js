@@ -50,21 +50,21 @@ function StoryPreview({
     switch (story.status) {
       case 'publish':
         return sprintf(
-          /* translators: %s: published date */
+          /*! translators: %s: published date */
           __('Published %s', 'web-stories'),
           displayDate
         );
 
       case 'future':
         return sprintf(
-          /* translators: %s: future publish date */
+          /*! translators: %s: future publish date */
           __('Scheduled %s', 'web-stories'),
           displayDate
         );
 
       default:
         return sprintf(
-          /* translators: %s: last modified date */
+          /*! translators: %s: last modified date */
           __('Modified %s', 'web-stories'),
           displayDate
         );

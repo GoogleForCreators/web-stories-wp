@@ -114,7 +114,7 @@ function PageMenu() {
     <Wrapper isWidePage={isWidePage}>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {sprintf(
-          /* translators: %s: page number. */
+          /*! translators: %s: page number. */
           __('Page %s', 'web-stories'),
           currentPageNumber
         )}

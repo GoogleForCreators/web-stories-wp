@@ -88,7 +88,7 @@ export const StoryListItem = ({
     () => (
       <StoryMenu
         menuLabel={sprintf(
-          /* translators: %s: story title.*/
+          /*! translators: %s: story title.*/
           __('Context menu for %s', 'web-stories'),
           formattedTitle
         )}
@@ -114,7 +114,7 @@ export const StoryListItem = ({
           title={
             isLocked && story?.lockUser.name
               ? sprintf(
-                  /* translators: %s: user name */
+                  /*! translators: %s: user name */
                   __('%s is currently editing this story', 'web-stories'),
                   story?.lockUser.name
                 )
@@ -158,7 +158,7 @@ export const StoryListItem = ({
                 aria-label={
                   isLocked
                     ? sprintf(
-                        /* translators: 1: story title. 2: user currently editing the story. */
+                        /*! translators: 1: story title. 2: user currently editing the story. */
                         __('%1$s (locked by %2$s)', 'web-stories'),
                         formattedTitle,
                         story?.lockUser.name

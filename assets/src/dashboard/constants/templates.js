@@ -144,7 +144,7 @@ export const TEMPLATES_GALLERY_STATUS = {
 export const TEMPLATES_GALLERY_VIEWING_LABELS = {
   [TEMPLATES_GALLERY_STATUS.ALL]: (n) =>
     sprintf(
-      /* translators: %d: number of templates in view */
+      /*! translators: %d: number of templates in view */
       _n(
         'Viewing <strong>%d</strong> template',
         'Viewing all <strong>%d</strong> templates',

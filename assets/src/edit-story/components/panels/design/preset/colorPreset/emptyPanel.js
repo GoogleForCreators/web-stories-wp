@@ -60,7 +60,7 @@ function EmptyPanel({ handleAddPreset, handleAddLocalPreset }) {
           }}
         >
           {sprintf(
-            /* translators: %s: "plus" icon. */
+            /*! translators: %s: "plus" icon. */
             __(
               'Click on the %s icon to save a color to the Current story or for All stories.',
               'web-stories'

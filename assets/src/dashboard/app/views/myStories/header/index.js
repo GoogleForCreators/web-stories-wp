@@ -122,7 +122,7 @@ function Header({
           ) : null;
 
           const ariaLabel = sprintf(
-            /* translators: %s is story status */
+            /*! translators: %s is story status */
             __('Filter stories by %s', 'web-stories'),
             storyStatus.label
           );

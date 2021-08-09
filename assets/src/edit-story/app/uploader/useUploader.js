@@ -86,7 +86,7 @@ function useUploader() {
         // The file is too large for the site anyway, abort.
         if (!isFileSizeWithinLimits(file)) {
           const message = sprintf(
-            /* translators: first %s is the file size in MB and second %s is the upload file limit in MB */
+            /*! translators: first %s is the file size in MB and second %s is the upload file limit in MB */
             __(
               'Your file is %1$sMB and the upload limit is %2$sMB. Please resize and try again!',
               'web-stories'
@@ -105,9 +105,9 @@ function useUploader() {
           );
 
           if (allowedFileTypes.length) {
-            /* translators: %s is a list of allowed file extensions. */
+            /*! translators: %s is a list of allowed file extensions. */
             message = sprintf(
-              /* translators: %s: list of allowed file types. */
+              /*! translators: %s: list of allowed file types. */
               __('Please choose only %s to upload.', 'web-stories'),
               translateToExclusiveList(allowedFileTypes)
             );
@@ -118,7 +118,7 @@ function useUploader() {
         // TODO: Move this check to useUploadMedia?
       } else if (isFileTooLarge) {
         const message = sprintf(
-          /* translators: 1: File size in MB. 2: Maximum allowed file size in MB. */
+          /*! translators: 1: File size in MB. 2: Maximum allowed file size in MB. */
           __(
             'Your file is too large (%1$s MB) and cannot be processed. Please try again with a file that is smaller than %2$s MB.',
             'web-stories'

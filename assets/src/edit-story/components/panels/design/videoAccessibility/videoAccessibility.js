@@ -84,7 +84,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
     if (allowedImageFileTypes.length) {
       message = sprintf(
-        /* translators: %s: list of allowed file types. */
+        /*! translators: %s: list of allowed file types. */
         __('Please choose only %s as a poster.', 'web-stories'),
         translateToExclusiveList(allowedImageFileTypes)
       );

@@ -77,7 +77,7 @@ export const MenuItem = ({
 
   const itemLabel = shortcut?.title
     ? sprintf(
-        /* translators: 1: Menu Item Text Label. 2: Keyboard shortcut value. */
+        /*! translators: 1: Menu Item Text Label. 2: Keyboard shortcut value. */
         __('%1$s, or use %2$s on a keyboard', 'web-stories'),
         ariaLabel || label,
         shortcut.title

@@ -65,12 +65,12 @@ export const CATEGORY_LABELS = {
 export const ACCESSIBILITY_COPY = {
   fontSizeTooSmall: {
     title: sprintf(
-      /* translators: %d: minimum font size. */
+      /*! translators: %d: minimum font size. */
       __('Increase font size to %s or above', 'web-stories'),
       MIN_FONT_SIZE
     ),
     footer: sprintf(
-      /* translators: %d: minimum font size. */
+      /*! translators: %d: minimum font size. */
       __(
         'Ensure legibility by selecting text size %d or greater',
         'web-stories'
@@ -83,7 +83,7 @@ export const ACCESSIBILITY_COPY = {
   },
   linkTappableRegionTooSmall: {
     title: sprintf(
-      /* translators: %s: minimum tappable region size width x minimum tappable region size height. */
+      /*! translators: %s: minimum tappable region size width x minimum tappable region size height. */
       __('Increase tap area size to at least %s', 'web-stories'),
       `${MIN_TAP_REGION_WIDTH}x${MIN_TAP_REGION_WIDTH}px`
     ),
@@ -121,7 +121,7 @@ export const ACCESSIBILITY_COPY = {
 export const DESIGN_COPY = {
   storyTooShort: {
     title: sprintf(
-      /* translators: %d: maximum number of pages. */
+      /*! translators: %d: maximum number of pages. */
       _n(
         'Make Web Story at least %d page',
         'Make Web Story at least %d pages',
@@ -131,7 +131,7 @@ export const DESIGN_COPY = {
       MIN_STORY_PAGES
     ),
     footer: sprintf(
-      /* translators: 1: minimum number of pages. 2: maximum number of pages. */
+      /*! translators: 1: minimum number of pages. 2: maximum number of pages. */
       __(
         'It is recommended to have between %1$d and %2$d pages in your story',
         'web-stories'
@@ -142,7 +142,7 @@ export const DESIGN_COPY = {
   },
   storyTooLong: {
     title: sprintf(
-      /* translators: %d: minimum number of pages. */
+      /*! translators: %d: minimum number of pages. */
       _n(
         'Make Web Story fewer than %d page',
         'Make Web Story fewer than %d pages',
@@ -152,7 +152,7 @@ export const DESIGN_COPY = {
       MAX_STORY_PAGES
     ),
     footer: sprintf(
-      /* translators: 1: minimum number of pages. 2: maximum number of pages. */
+      /*! translators: 1: minimum number of pages. 2: maximum number of pages. */
       __(
         'It is recommended to have between %1$d and %2$d pages in your story',
         'web-stories'
@@ -164,7 +164,7 @@ export const DESIGN_COPY = {
   tooLittlePageText: {
     title: __('Add more text to page', 'web-stories'),
     footer: sprintf(
-      /* translators: %d: minimum number of story characters. */
+      /*! translators: %d: minimum number of story characters. */
       _n(
         'Include at least %d character',
         'Include at least %d characters',
@@ -180,7 +180,7 @@ export const DESIGN_COPY = {
       <>
         <li>
           {sprintf(
-            /* translators: %d: maximum number of story characters. */
+            /*! translators: %d: maximum number of story characters. */
             _n(
               'Include no more than %d character',
               'Include no more than %d characters',
@@ -198,7 +198,7 @@ export const DESIGN_COPY = {
         </li>
         <li>
           {sprintf(
-            /* translators: %s: maximum percentage of characters, depending on number of pages. */
+            /*! translators: %s: maximum percentage of characters, depending on number of pages. */
             __(
               'Keep the total number of text-heavy pages under %s of total number of story pages',
               'web-stories'
@@ -211,19 +211,19 @@ export const DESIGN_COPY = {
   },
   tooManyLinksOnPage: {
     title: sprintf(
-      /* translators: %s: maximum number of links per page. */
+      /*! translators: %s: maximum number of links per page. */
       __('Avoid including more than %s links per page', 'web-stories'),
       MAX_LINKS_PER_PAGE
     ),
     footer: sprintf(
-      /* translators: %s: maximum number of links per page. */
+      /*! translators: %s: maximum number of links per page. */
       __('Avoid having more than %s links on one page', 'web-stories'),
       MAX_LINKS_PER_PAGE
     ),
   },
   imageResolutionTooLow: {
     title: sprintf(
-      /* translators: %s: minimum image size width x minimum image size height. */
+      /*! translators: %s: minimum image size width x minimum image size height. */
       __(
         'Upload a higher resolution poster image to at least %s',
         'web-stories'
@@ -234,7 +234,7 @@ export const DESIGN_COPY = {
       <>
         <li>
           {sprintf(
-            /* translators: %s: minimum image size width x minimum image size height. */
+            /*! translators: %s: minimum image size width x minimum image size height. */
             __('Use %s for a full-screen image', 'web-stories'),
             `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
           )}
@@ -250,12 +250,12 @@ export const DESIGN_COPY = {
   },
   videoFrameRateTooLow: {
     title: sprintf(
-      /* translators: %d: minimum number of frames per second for video. */
+      /*! translators: %d: minimum number of frames per second for video. */
       __('Increase video frame rate to at least %d fps', 'web-stories'),
       MIN_VIDEO_FPS
     ),
     footer: sprintf(
-      /* translators: %d: minimum number of frames per second for video. */
+      /*! translators: %d: minimum number of frames per second for video. */
       _n(
         'Ensure your video has a minimum of %d frame per second',
         'Ensure your video has a minimum of %d frames per second',
@@ -267,19 +267,19 @@ export const DESIGN_COPY = {
   },
   videoResolutionTooLow: {
     title: sprintf(
-      /* translators: %s: minimum video resolution. */
+      /*! translators: %s: minimum video resolution. */
       __('Increase video resolution to at least %s', 'web-stories'),
       `${MIN_VIDEO_RESOLUTION}p`
     ),
     footer: sprintf(
-      /* translators: %s: minimum video resolution. */
+      /*! translators: %s: minimum video resolution. */
       __('Ensure your video has a minimum resolution of %s', 'web-stories'),
       `${MIN_VIDEO_RESOLUTION}p`
     ),
   },
   videoTooLong: {
     title: sprintf(
-      /* translators: %d: maximum video length in minutes. */
+      /*! translators: %d: maximum video length in minutes. */
       _n(
         'Split videos into segments of %d minute or less',
         'Split videos into segments of %d minutes or less',
@@ -306,7 +306,7 @@ export const PRIORITY_COPY = {
       <>
         <li>
           {sprintf(
-            /* translators: %d: maximum story title length in words. */
+            /*! translators: %d: maximum story title length in words. */
             _n(
               'Keep under %d word',
               'Keep under %d words',
@@ -318,7 +318,7 @@ export const PRIORITY_COPY = {
         </li>
         <li>
           {sprintf(
-            /* translators: %d: maximum story title length in characters. */
+            /*! translators: %d: maximum story title length in characters. */
             _n(
               "Don't exceed %d character",
               "Don't exceed %d characters",
@@ -339,14 +339,14 @@ export const PRIORITY_COPY = {
         <li>{__('Avoid images with embedded text', 'web-stories')}</li>
         <li>
           {sprintf(
-            /* translators: %s: image dimensions.  */
+            /*! translators: %s: image dimensions.  */
             __("Use an image that's at least %s", 'web-stories'),
             `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
           )}
         </li>
         <li>
           {sprintf(
-            /* translators: %s: aspect ratio.  */
+            /*! translators: %s: aspect ratio.  */
             __('Maintain a %s aspect ratio', 'web-stories'),
             `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
           )}
@@ -363,7 +363,7 @@ export const PRIORITY_COPY = {
   },
   storyTitleTooLong: {
     title: sprintf(
-      /* translators: %d: maximum number of story characters. */
+      /*! translators: %d: maximum number of story characters. */
       _n(
         'Shorten title to fewer than %d character',
         'Shorten title to fewer than %d characters',
@@ -373,7 +373,7 @@ export const PRIORITY_COPY = {
       MAX_STORY_TITLE_LENGTH_CHARS
     ),
     footer: sprintf(
-      /* translators: %d: maximum number of story characters. */
+      /*! translators: %d: maximum number of story characters. */
       _n(
         'Limit story title to %d character or less',
         'Limit story title to %d characters or less',
@@ -385,7 +385,7 @@ export const PRIORITY_COPY = {
   },
   logoTooSmall: {
     title: sprintf(
-      /* translators: %s: image dimensions. */
+      /*! translators: %s: image dimensions. */
       __('Increase size of publisher logo to at least %s', 'web-stories'),
       `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`
     ),
@@ -393,14 +393,14 @@ export const PRIORITY_COPY = {
       <>
         <li>
           {sprintf(
-            /* translators: %s: image dimensions. */
+            /*! translators: %s: image dimensions. */
             __("Use an image that's at least %s", 'web-stories'),
             `${PUBLISHER_LOGO_DIMENSION}x${PUBLISHER_LOGO_DIMENSION}px`
           )}
         </li>
         <li>
           {sprintf(
-            /* translators: %s: aspect ratio.  */
+            /*! translators: %s: aspect ratio.  */
             __('Maintain a %s aspect ratio', 'web-stories'),
             `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
           )}
@@ -410,7 +410,7 @@ export const PRIORITY_COPY = {
   },
   posterTooSmall: {
     title: sprintf(
-      /* translators: %s: image dimensions.  */
+      /*! translators: %s: image dimensions.  */
       __('Increase poster image size to at least %s', 'web-stories'),
       `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
     ),
@@ -418,14 +418,14 @@ export const PRIORITY_COPY = {
       <>
         <li>
           {sprintf(
-            /* translators: %s: image dimensions.  */
+            /*! translators: %s: image dimensions.  */
             __("Use an image that's at least %s", 'web-stories'),
             `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
           )}
         </li>
         <li>
           {sprintf(
-            /* translators: %s: aspect ratio.  */
+            /*! translators: %s: aspect ratio.  */
             __('Maintain a %s aspect ratio', 'web-stories'),
             `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
           )}
@@ -435,7 +435,7 @@ export const PRIORITY_COPY = {
   },
   storyPosterSize: {
     title: sprintf(
-      /* translators: %s: image dimensions.  */
+      /*! translators: %s: image dimensions.  */
       __('Correct poster image aspect ratio to %s', 'web-stories'),
       `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
     ),
@@ -443,14 +443,14 @@ export const PRIORITY_COPY = {
       <>
         <li>
           {sprintf(
-            /* translators: %s: image dimensions.  */
+            /*! translators: %s: image dimensions.  */
             __("Use an image that's at least %s", 'web-stories'),
             `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
           )}
         </li>
         <li>
           {sprintf(
-            /* translators: %s: aspect ratio.  */
+            /*! translators: %s: aspect ratio.  */
             __('Maintain a %s aspect ratio', 'web-stories'),
             `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
           )}
@@ -461,7 +461,7 @@ export const PRIORITY_COPY = {
   videoNotOptimized: {
     title: __('Optimize videos', 'web-stories'),
     footer: sprintf(
-      /* translators: %s: video resolution (720p) */
+      /*! translators: %s: video resolution (720p) */
       __(
         'Videos larger than %s can cause slower loading and higher bandwidth costs.',
         'web-stories'

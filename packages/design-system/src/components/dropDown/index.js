@@ -120,7 +120,7 @@ export const DropDown = forwardRef(
         parentId={selectButtonId}
         listId={listId}
         menuAriaLabel={sprintf(
-          /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
+          /*! translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
           __('%s Option List Selector', 'web-stories'),
           ariaLabel || dropDownLabel
         )}

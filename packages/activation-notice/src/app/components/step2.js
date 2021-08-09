@@ -81,7 +81,7 @@ function Step2() {
       <ParagraphWrapper>
         <Number>
           {
-            /* translators: Number of the step displayed in plugin activation message. */
+            /*! translators: Number of the step displayed in plugin activation message. */
             _x('2', 'Step number', 'web-stories')
           }
         </Number>

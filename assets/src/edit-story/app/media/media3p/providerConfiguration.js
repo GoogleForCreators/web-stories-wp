@@ -62,12 +62,12 @@ export const PROVIDERS = {
     requiresAuthorAttribution: true,
     attributionComponent: UnsplashAttribution,
     fetchMediaErrorMessage: sprintf(
-      /* translators: %s: media provider name. */
+      /*! translators: %s: media provider name. */
       __('Error loading media from %s', 'web-stories'),
       'Unsplash'
     ),
     fetchCategoriesErrorMessage: sprintf(
-      /* translators: %s: media provider name. */
+      /*! translators: %s: media provider name. */
       __('Error loading categories from %s', 'web-stories'),
       'Unsplash'
     ),
@@ -78,7 +78,7 @@ export const PROVIDERS = {
     requiresAuthorAttribution: false,
     attributionComponent: CoverrAttribution,
     fetchMediaErrorMessage: sprintf(
-      /* translators: %s: media provider name. */
+      /*! translators: %s: media provider name. */
       __('Error loading media from %s', 'web-stories'),
       'Coverr'
     ),
@@ -91,7 +91,7 @@ export const PROVIDERS = {
     requiresAuthorAttribution: false,
     attributionComponent: TenorAttribution,
     fetchMediaErrorMessage: sprintf(
-      /* translators: %s: media provider name. */
+      /*! translators: %s: media provider name. */
       __('Error loading media from %s', 'web-stories'),
       'Tenor'
     ),
