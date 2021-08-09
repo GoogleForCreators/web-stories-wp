@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from 'react';
 
 /**
@@ -26,15 +25,10 @@ import { useCallback, useMemo } from 'react';
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MAX_VIDEO_LENGTH_SECONDS } from '../constants';
-import {
-  CARD_TYPE,
-  ChecklistCard,
-  DefaultFooterText,
-} from '../../checklistCard';
-import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementLength(element) {
   return (
@@ -47,7 +41,7 @@ const VideoElementLength = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
 
-  const failingElements = useMemo(
+  const elements = useMemo(
     () => filterStoryElements(pages, videoElementLength),
     [pages]
   );
@@ -60,36 +54,19 @@ const VideoElementLength = () => {
       }),
     [setHighlights]
   );
-  const { footer, title } = DESIGN_COPY.videoResolutionTooHigh;
+  const { footer, title } = DESIGN_COPY.videoTooLong;
 
-  const isRendered = failingElements.length > 0;
+  const isRendered = elements.length > 0;
   useRegisterCheck('VideoElementLength', isRendered);
 
   return (
     isRendered &&
     isChecklistMounted && (
-      <ChecklistCard
+      <VideoChecklistCard
         title={title}
-        cardType={
-          failingElements.length > 1
-            ? CARD_TYPE.MULTIPLE_ISSUE
-            : CARD_TYPE.SINGLE_ISSUE
-        }
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={failingElements.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingElements).map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.VIDEO}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending video', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        elements={elements}
+        footer={footer}
+        handleClick={handleClick}
       />
     )
   );

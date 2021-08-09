@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useMemo } from 'react';
 
 /**
@@ -26,15 +25,10 @@ import { useCallback, useMemo } from 'react';
 import { useStory } from '../../../app';
 import { useHighlights, states } from '../../../app/highlights';
 import { ACCESSIBILITY_COPY } from '../constants';
-import {
-  CARD_TYPE,
-  ChecklistCard,
-  DefaultFooterText,
-} from '../../checklistCard';
-import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementMissingCaptions(element) {
   return (
@@ -68,28 +62,11 @@ const VideoElementMissingCaptions = () => {
   return (
     isRendered &&
     isChecklistMounted && (
-      <ChecklistCard
+      <VideoChecklistCard
         title={title}
-        cardType={
-          elements.length > 1
-            ? CARD_TYPE.MULTIPLE_ISSUE
-            : CARD_TYPE.SINGLE_ISSUE
-        }
-        footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={elements.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(elements).map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.VIDEO}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending video', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        elements={elements}
+        footer={footer}
+        handleClick={handleClick}
       />
     )
   );
