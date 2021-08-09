@@ -24,7 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
-import { formattedTemplatesArray } from '../../../../../../dashboard/storybookUtils';
+import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
 import objectWithout from '../../../../../utils/objectWithout';
 
 const expectPageTemplateEqual = (currentPage, template) => {

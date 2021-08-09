@@ -42,17 +42,17 @@ coverage:
 
       editor:
         paths:
-          - assets/src/edit-story
+          - packages/story-editor/src
 
       editor.unit:
         paths:
-          - assets/src/edit-story
+          - packages/story-editor/src
         flags:
           - unittests
 
       editor.karma:
         paths:
-          - assets/src/edit-story
+          - packages/story-editor/src
         flags:
           - karmatests
 

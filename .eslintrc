@@ -70,11 +70,11 @@
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",
-        "from": "./assets/src/edit-story",
+        "from": "./packages/story-editor/src",
         "except": [ "./migration/migrations" ]
       }, {
-        "target": "./assets/src/edit-story",
-        "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
+        "target": "./packages/story-editor/src",
+        "from": "./packages/story-editor/src/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
     "import/dynamic-import-chunkname": [ "error", {
@@ -405,7 +405,7 @@
         "packages/e2e-tests/src/*.js",
         "packages/e2e-tests/src/config/*.js",
         "assets/src/dashboard/karma-tests.cjs",
-        "assets/src/edit-story/karma-tests.cjs",
+        "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
@@ -464,7 +464,7 @@
     {
       "files": [
         "assets/src/dashboard/**/*.js",
-        "assets/src/edit-story/**/*.js",
+        "packages/story-editor/src/**/*.js",
         "packages/**/*.js"
       ],
       "excludedFiles": [

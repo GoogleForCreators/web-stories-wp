@@ -229,7 +229,7 @@ const templateContent = ({ htmlWebpackPlugin }) => {
 const editorAndDashboard = {
   ...sharedConfig,
   entry: {
-    'edit-story': './assets/src/edit-story/index.js',
+    'edit-story': './packages/wp-story-editor/src/index.js', // @todo Change key name to wp-story-editor
     'stories-dashboard': './assets/src/dashboard/index.js',
   },
   plugins: [
