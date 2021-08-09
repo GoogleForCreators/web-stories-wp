@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests\Media;
+namespace Google\Web_Stories\Tests\Media\Video;
 
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Media\Video_Captions
+ * @coversDefaultClass \Google\Web_Stories\Media\Video\Captions
  */
-class Video_Captions extends Test_Case {
+class Captions extends Test_Case {
 	/**
 	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required
