@@ -344,7 +344,7 @@ describe('Right Click Menu integration', () => {
 
       // background: click 'scale and crop image' button
       await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.scaleAndCropImage
+        fixture.editor.canvas.rightClickMenu.scaleAndCropBackgroundImage
       );
 
       // Verify element is being edited
