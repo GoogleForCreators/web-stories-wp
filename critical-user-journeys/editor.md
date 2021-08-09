@@ -36,9 +36,9 @@
 | Creator can Add and Write Text                                    | Consecutive text presets                         | 🏆 **100.00%** *(3 / 3)*    |
 |                                                                   | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                                   | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | Select an individual word to edit                | 🏔️ **90.00%** *(9 / 10)*   |
+|                                                                   | Select an individual word to edit                | 🛴 **80.00%** *(8 / 10)*    |
 |                                                                   | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                                   | *[total]*                                        | 🛴 **88.24%** *(15 / 17)*   |
+|                                                                   | *[total]*                                        | 🛴 **82.35%** *(14 / 17)*   |
 | Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
@@ -77,4 +77,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.76%** *(314 / 420)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **74.29%** *(312 / 420)* |
