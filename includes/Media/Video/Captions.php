@@ -1,15 +1,15 @@
 <?php
 /**
- * Class Add_Poster_Generation_Media_Source
+ * Class Captions
  *
  * @package   Google\Web_Stories
- * @copyright 2021 Google LLC
+ * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
  */
 
 /**
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,39 +24,40 @@
  * limitations under the License.
  */
 
+namespace Google\Web_Stories\Media\Video;
 
-namespace Google\Web_Stories\Migrations;
-
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Media\Video\Poster;
+use Google\Web_Stories\Service_Base;
 
 /**
- * Class Add_Poster_Generation_Media_Source
+ * Class Captions
  *
- * @package Google\Web_Stories\Migrations
+ * @package Google\Web_Stories\Media\Video
  */
-class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
-
+class Captions extends Service_Base {
 	/**
-	 * Migration media post meta to taxonomy term.
+	 * Initializes the File_Type logic.
 	 *
 	 * @since 1.7.0
 	 *
 	 * @return void
 	 */
-	public function migrate() {
-		wp_insert_term( $this->get_term_name(), Media_Source_Taxonomy::TAXONOMY_SLUG );
-		parent::migrate();
+	public function register() {
+		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
 	}
 
 	/**
-	 * Get name of meta key to be used in migration.
+	 * Add VTT file type to allow file in multisite.
 	 *
-	 * @since 1.7.2
-	 *
-	 * @return string
+	 * @param string $value List of allowed file types.
+	 * @return string List of allowed file types.
 	 */
-	protected function get_post_meta_key(): string {
-		return Poster::POSTER_POST_META_KEY;
+	public function filter_list_of_allowed_filetypes( $value ): string {
+		$filetypes = explode( ' ', $value );
+		if ( ! in_array( 'vtt', $filetypes, true ) ) {
+			$filetypes[] = 'vtt';
+			$value       = implode( ' ', $filetypes );
+		}
+
+		return $value;
 	}
 }
