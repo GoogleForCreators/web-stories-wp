@@ -16,6 +16,7 @@
 
 export { default as Color } from './color';
 export { default as FilterToggle } from './filterToggle';
+export { default as LinkIcon } from './linkIcon';
 export { default as LinkInput } from './link';
 export { default as Media } from './media';
 export { default as Row } from './row';

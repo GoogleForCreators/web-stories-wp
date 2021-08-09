@@ -90,3 +90,9 @@ export const FOCUSABLE_SELECTORS = [
   'textarea',
   '[tabindex]:not([tabindex="-1"])',
 ];
+
+export const OUTLINK_THEME = {
+  DARK: 'dark',
+  LIGHT: 'light',
+  CUSTOM: 'custom',
+};
