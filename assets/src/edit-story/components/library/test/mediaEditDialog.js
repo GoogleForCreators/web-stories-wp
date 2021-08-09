@@ -35,7 +35,6 @@ const showSnackbar = jest.fn();
 const resource = {
   type: 'image',
   mimeType: 'image/png',
-  title: 'My Image :)',
   src: 'image-url',
   width: 910,
   height: 675,
@@ -93,7 +92,6 @@ describe('MediaEditDialog', () => {
     setup();
 
     expect(screen.queryByText('Edit Image')).toBeInTheDocument();
-    expect(screen.queryByText('My Image :)')).toBeInTheDocument();
     expect(screen.queryByText('910 x 675 pixels')).toBeInTheDocument();
     expect(screen.getByLabelText('Assistive text').value).toContain(
       'my image alt text'

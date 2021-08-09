@@ -99,18 +99,8 @@ const videoDialogDescription = __(
  * @return {null|*} The dialog element.
  */
 function MediaEditDialog({ resource, onClose }) {
-  const {
-    id,
-    src,
-    title,
-    creationDate,
-    width,
-    height,
-    type,
-    alt,
-    poster,
-    mimeType,
-  } = resource;
+  const { id, src, creationDate, width, height, type, alt, poster, mimeType } =
+    resource;
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -184,13 +174,6 @@ function MediaEditDialog({ resource, onClose }) {
               )}
             </DateText>
           )}
-          <Text
-            as="span"
-            isBold
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-          >
-            {title}
-          </Text>
           <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {sprintf(
               /* translators: 1: image width. 2: image height. */
