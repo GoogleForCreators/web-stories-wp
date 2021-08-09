@@ -19,7 +19,7 @@
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
+import { v4 as uuidv4 } from 'uuid';
 
 /** @typedef {import('react')} Node */
 
@@ -27,19 +27,21 @@ import { isPlatformMacOS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { ELEMENT_TYPE } from '../highlights/quickActions/constants';
-import { duplicatePage } from '../../elements';
+import { createPage, duplicatePage } from '../../elements';
+import updateProperties from '../../components/inspector/design/updateProperties';
+import { useCanvas } from '../canvas';
+import { ELEMENT_TYPES } from '../story';
+import { noop } from '../../utils/noop';
 import {
   RIGHT_CLICK_MENU_LABELS,
-  RIGHT_CLICK_MENU_SHORTCUT_LABELS,
+  RIGHT_CLICK_MENU_SHORTCUTS,
 } from './constants';
 import Context from './context';
 import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
-
-const isMacOs = isPlatformMacOS();
+import { getDefaultPropertiesForType } from './utils';
 
 /**
  * Determines the items displayed in the right click menu
@@ -55,34 +57,75 @@ const isMacOs = isPlatformMacOS();
 function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
+  const { setEditingElement } = useCanvas(({ actions }) => ({
+    setEditingElement: actions.setEditingElement,
+  }));
   const {
+    addAnimations,
     addPage,
+    addPageAt,
+    arrangeElement,
+    clearBackgroundElement,
     currentPage,
+    currentPageIndex,
     deleteCurrentPage,
     pages,
     replaceCurrentPage,
+    setBackgroundElement,
     selectedElements,
+    selectedElementAnimations,
+    updateElementsById,
   } = useStory(
     ({
-      state: { currentPage, pages, selectedElements },
-      actions: { addPage, deleteCurrentPage, replaceCurrentPage },
+      state: {
+        currentPage,
+        currentPageIndex,
+        pages,
+        selectedElementAnimations,
+        selectedElements,
+      },
+      actions: {
+        addAnimations,
+        addPage,
+        addPageAt,
+        arrangeElement,
+        clearBackgroundElement,
+        deleteCurrentPage,
+        replaceCurrentPage,
+        setBackgroundElement,
+        updateElementsById,
+      },
     }) => ({
+      addAnimations,
       addPage,
+      addPageAt,
+      arrangeElement,
+      clearBackgroundElement,
       currentPage,
+      currentPageIndex,
       deleteCurrentPage,
       pages,
       replaceCurrentPage,
+      selectedElementAnimations,
       selectedElements,
+      setBackgroundElement,
+      updateElementsById,
     })
   );
 
   // Ref for attaching the context menu
   const rightClickAreaRef = useRef();
 
-  const [{ copiedPage, isMenuOpen, menuPosition }, dispatch] = useReducer(
-    rightClickMenuReducer,
-    DEFAULT_RIGHT_CLICK_MENU_STATE
+  const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
+    useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
+
+  const selectedElement = selectedElements?.[0];
+  const currentPosition = currentPage?.elements.findIndex(
+    (element) => element.id === selectedElement?.id
   );
+  const canElementMoveBackwards = currentPosition > 1;
+  const canElementMoveForwards =
+    currentPosition < currentPage?.elements.length - 1;
 
   /**
    * Open the menu at the position from the click event.
@@ -112,8 +155,8 @@ function RightClickMenuProvider({ children }) {
   /**
    * Prevent right click menu from removing focus from the canvas.
    */
-  const handleMouseDown = useCallback((ev) => {
-    ev.stopPropagation();
+  const handleMouseDown = useCallback((evt) => {
+    evt.stopPropagation();
   }, []);
 
   /**
@@ -141,13 +184,170 @@ function RightClickMenuProvider({ children }) {
   }, [addPage, currentPage]);
 
   /**
+   * Adds a new page at the designated index.
+   *
+   * Defaults to adding the new page after all of the existing pages.
+   *
+   * @param {number} index The index
+   */
+  const handleAddPageAtPosition = useCallback(
+    (index) => {
+      const position = Boolean(index) || index === 0 ? index : pages.length - 1;
+
+      addPageAt({ page: createPage(), position });
+    },
+    [addPageAt, pages?.length]
+  );
+
+  /**
    * Delete the current page.
    */
   const handleDeletePage = useCallback(() => {
     deleteCurrentPage();
   }, [deleteCurrentPage]);
 
-  const selectedElement = selectedElements?.[0];
+  /**
+   * Send element one layer backwards, if possible.
+   */
+  const handleSendBackward = useCallback(() => {
+    const newPosition =
+      currentPosition === 1 ? currentPosition : currentPosition - 1;
+
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
+  }, [arrangeElement, currentPosition, selectedElement?.id]);
+
+  /**
+   * Send element all the way back, if possible.
+   */
+  const handleSendToBack = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: 1,
+    });
+  }, [arrangeElement, selectedElement?.id]);
+
+  /**
+   * Bring element one layer forwards, if possible.
+   */
+  const handleBringForward = useCallback(() => {
+    const newPosition =
+      currentPosition >= currentPage.elements.length - 1
+        ? currentPosition
+        : currentPosition + 1;
+
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
+  }, [arrangeElement, currentPage, currentPosition, selectedElement?.id]);
+
+  /**
+   * Send element all the way to the front, if possible.
+   */
+  const handleBringToFront = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: currentPage.elements.length - 1,
+    });
+  }, [arrangeElement, currentPage, selectedElement?.id]);
+
+  /**
+   * Set element as the element being 'edited'.
+   */
+  const handleOpenScaleAndCrop = useCallback(
+    (evt) => {
+      setEditingElement(selectedElement?.id, evt);
+    },
+    [selectedElement?.id, setEditingElement]
+  );
+
+  /**
+   * Copy the styles and animations of the selected element.
+   */
+  const handleCopyStyles = useCallback(() => {
+    dispatch({
+      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
+      payload: {
+        element: selectedElement,
+        animations: selectedElementAnimations,
+      },
+    });
+  }, [selectedElement, selectedElementAnimations]);
+
+  /**
+   * Update the selected element's styles and animations.
+   *
+   * Pasting is not allowed if the copied element styles are from a
+   * different element type.
+   */
+  const handlePasteStyles = useCallback(() => {
+    const id = selectedElement?.id;
+
+    if (!id || selectedElement?.type !== copiedElement.type) {
+      return;
+    }
+
+    // Delete old animation if one exists
+    const oldAnimationToDelete = selectedElementAnimations.length
+      ? { ...selectedElementAnimations[0], delete: true }
+      : undefined;
+
+    // Create new animations
+    const newAnimations = copiedElement.animations.map((animation) => ({
+      ...animation,
+      id: uuidv4(),
+      targets: [selectedElement.id],
+    }));
+
+    // Add styles and animations to element
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            ...copiedElement.styles,
+            animation: oldAnimationToDelete,
+          },
+          /* commitValues */ true
+        ),
+    });
+    addAnimations({ animations: newAnimations });
+  }, [
+    addAnimations,
+    copiedElement,
+    selectedElement,
+    selectedElementAnimations,
+    updateElementsById,
+  ]);
+
+  /**
+   * Revert some element styles to their defaults.
+   *
+   * Each element type has a different set of defaults.
+   */
+  const handleClearElementStyles = useCallback(() => {
+    if (!selectedElement?.id) {
+      return;
+    }
+
+    const resetProperties = getDefaultPropertiesForType(selectedElement.type);
+
+    if (resetProperties) {
+      updateElementsById({
+        elementIds: [selectedElement.id],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            resetProperties,
+            /* commitValues */ true
+          ),
+      });
+    }
+  }, [selectedElement, updateElementsById]);
 
   const menuItemProps = useMemo(
     () => ({
@@ -156,41 +356,208 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
+  /**
+   * Set currently selected element as the page's background.
+   */
+  const handleSetPageBackground = useCallback(() => {
+    setBackgroundElement({ elementId: selectedElement.id });
+  }, [setBackgroundElement, selectedElement?.id]);
+
+  /**
+   * Remove media from background and clear opacity and overlay.
+   */
+  const handleRemoveMediaFromBackground = useCallback(() => {
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            isBackground: false,
+            opacity: 100,
+            overlay: null,
+          },
+          /* commitValues */ true
+        ),
+    });
+    clearBackgroundElement();
+  }, [clearBackgroundElement, selectedElement?.id, updateElementsById]);
+
   const defaultItems = useMemo(
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY,
         shortcut: {
-          display: isMacOs ? '⌘ C' : 'ctrl C',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_C
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_C,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY,
         },
         onClick: handleCopyPage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE,
-        shortcut: {
-          display: isMacOs ? '⌘ V' : 'ctrl V',
-          title: isMacOs
-            ? RIGHT_CLICK_MENU_SHORTCUT_LABELS.COMMAND_V
-            : RIGHT_CLICK_MENU_SHORTCUT_LABELS.CONTROL_V,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE },
         onClick: handlePastePage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE,
-        shortcut: {
-          display: 'DEL',
-          title: RIGHT_CLICK_MENU_SHORTCUT_LABELS.DELETE,
-        },
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.DELETE },
         onClick: handleDeletePage,
         ...menuItemProps,
       },
     ],
     [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
+  );
+
+  const backgroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        separator: 'top',
+        onClick: handleRemoveMediaFromBackground,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
+        onClick: noop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        onClick: handleOpenScaleAndCrop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        separator: 'top',
+        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
+        onClick: () => handleAddPageAtPosition(currentPageIndex),
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        onClick: handleDuplicatePage,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+        onClick: handleDeletePage,
+        disabled: pages.length === 1,
+        ...menuItemProps,
+      },
+    ],
+    [
+      currentPageIndex,
+      defaultItems,
+      handleAddPageAtPosition,
+      handleClearElementStyles,
+      handleDeletePage,
+      handleDuplicatePage,
+      handleOpenScaleAndCrop,
+      handleRemoveMediaFromBackground,
+      menuItemProps,
+      pages,
+    ]
+  );
+
+  const foregroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
+        separator: 'top',
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
+        disabled: !canElementMoveBackwards,
+        onClick: handleSendBackward,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
+        disabled: !canElementMoveBackwards,
+        onClick: handleSendToBack,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
+        disabled: !canElementMoveForwards,
+        onClick: handleBringForward,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
+        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
+        disabled: !canElementMoveForwards,
+        onClick: handleBringToFront,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
+        separator: 'top',
+        onClick: handleSetPageBackground,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
+        onClick: handleOpenScaleAndCrop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
+        separator: 'top',
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
+        },
+        onClick: handleCopyStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_IMAGE_STYLES,
+        },
+        onClick: handlePasteStyles,
+        disabled: copiedElement.type !== selectedElement?.type,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+    ],
+    [
+      canElementMoveBackwards,
+      canElementMoveForwards,
+      copiedElement,
+      defaultItems,
+      handleBringForward,
+      handleBringToFront,
+      handleClearElementStyles,
+      handleCopyStyles,
+      handleOpenScaleAndCrop,
+      handlePasteStyles,
+      handleSendBackward,
+      handleSendToBack,
+      handleSetPageBackground,
+      menuItemProps,
+      selectedElement,
+    ]
   );
 
   const pageItems = useMemo(
@@ -213,15 +580,24 @@ function RightClickMenuProvider({ children }) {
   );
 
   const menuItems = useMemo(() => {
+    if (selectedElement?.isDefaultBackground) {
+      return pageItems;
+    }
+
     switch (selectedElement?.type) {
-      case ELEMENT_TYPE.IMAGE:
-      case ELEMENT_TYPE.SHAPE:
-      case ELEMENT_TYPE.TEXT:
-      case ELEMENT_TYPE.VIDEO:
+      case ELEMENT_TYPES.IMAGE:
+        return selectedElement?.isBackground
+          ? backgroundMediaItems
+          : foregroundMediaItems;
+      case ELEMENT_TYPES.VIDEO:
+      case ELEMENT_TYPES.GIF:
+        return foregroundMediaItems;
+      case ELEMENT_TYPES.SHAPE:
+      case ELEMENT_TYPES.TEXT:
       default:
         return pageItems;
     }
-  }, [pageItems, selectedElement?.type]);
+  }, [backgroundMediaItems, foregroundMediaItems, pageItems, selectedElement]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set

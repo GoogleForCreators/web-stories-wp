@@ -31,26 +31,48 @@ import VideoElementMissingDescription from '../checks/videoElementMissingDescrip
 import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
+import { useIsChecklistMounted } from '../popupMountedContext';
 
-export function AccessibilityChecks({
-  badgeCount = 0,
-  maxHeight,
+function AccessibilityPanel({
+  children,
+  badgeCount,
   isOpen,
   onClick,
+  maxHeight,
   title,
 }) {
+  const isChecklistMounted = useIsChecklistMounted();
+  return isChecklistMounted ? (
+    <StyledTablistPanel
+      badgeCount={badgeCount}
+      isExpanded={isOpen}
+      onClick={onClick}
+      maxHeight={maxHeight}
+      title={title}
+    >
+      <PanelText>
+        {__('Make your Web Story accessible.', 'web-stories')}
+      </PanelText>
+      {children}
+    </StyledTablistPanel>
+  ) : (
+    children
+  );
+}
+
+AccessibilityPanel.propTypes = {
+  badgeCount: PropTypes.number,
+  isOpen: PropTypes.bool,
+  maxHeight: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.arrayOf(PropTypes.node),
+};
+
+export function AccessibilityChecks(props) {
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
-      <StyledTablistPanel
-        badgeCount={badgeCount}
-        isExpanded={isOpen}
-        onClick={onClick}
-        maxHeight={maxHeight}
-        title={title}
-      >
-        <PanelText>
-          {__('Make your Web Story accessible.', 'web-stories')}
-        </PanelText>
+      <AccessibilityPanel {...props}>
         <VideoOptimizationToggle />
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
@@ -58,7 +80,7 @@ export function AccessibilityChecks({
         <VideoElementMissingCaptions />
         <ElementLinkTappableRegionTooSmall />
         <ImageElementMissingAlt />
-      </StyledTablistPanel>
+      </AccessibilityPanel>
     </ChecklistCategoryProvider>
   );
 }

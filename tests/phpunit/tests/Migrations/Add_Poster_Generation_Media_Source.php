@@ -32,7 +32,7 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 	public function test_migrate() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -49,14 +49,14 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'true' );
-		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
 		$object = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source();
 		$slug   = $this->call_private_method( $object, 'get_term_name' );
 		$object->migrate();
 
-		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ $slug ], $slugs );
@@ -69,6 +69,6 @@ class Add_Poster_Generation_Media_Source extends Test_Case {
 	public function test_get_post_meta_key() {
 		$object  = new \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source();
 		$results = $this->call_private_method( $object, 'get_post_meta_key' );
-		$this->assertSame( \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, $results );
+		$this->assertSame( \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, $results );
 	}
 }

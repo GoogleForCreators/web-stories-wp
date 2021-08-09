@@ -221,7 +221,7 @@ export const DESIGN_COPY = {
       MAX_LINKS_PER_PAGE
     ),
   },
-  lowImageResolution: {
+  imageResolutionTooLow: {
     title: sprintf(
       /* translators: %s: minimum image size width x minimum image size height. */
       __(
@@ -277,7 +277,7 @@ export const DESIGN_COPY = {
       `${MIN_VIDEO_RESOLUTION}p`
     ),
   },
-  videoResolutionTooHigh: {
+  videoTooLong: {
     title: sprintf(
       /* translators: %d: maximum video length in minutes. */
       _n(
@@ -468,6 +468,9 @@ export const PRIORITY_COPY = {
       ),
       `${MAX_VIDEO_RESOLUTION}p`
     ),
+  },
+  storyMissingPublisherName: {
+    title: __('Add Site Title', 'web-stories'),
   },
 };
 

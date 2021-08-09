@@ -51,7 +51,7 @@ export default function reshapeStoryObject(originalStoryData) {
     lockUser: {
       id: lockUser[0].id,
       name: lockUser[0].name,
-      avatar: lockUser[0].avatar_urls['24'] || null,
+      avatar: lockUser[0].avatar_urls['96'] || null,
     },
     bottomTargetAction: editStoryLink,
     featuredMediaUrl,

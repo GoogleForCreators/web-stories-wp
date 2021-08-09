@@ -120,13 +120,15 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
       {hasPageAttachment && (
-        <amp-story-page-attachment
+        <amp-story-page-outlink
           layout="nodisplay"
-          href={page.pageAttachment.url}
-          data-cta-text={
-            page.pageAttachment.ctaText || __('Learn more', 'web-stories')
-          }
-        />
+          cta-image={page.pageAttachment.icon}
+          theme={page.pageAttachment.theme}
+        >
+          <a href={page.pageAttachment.url}>
+            {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
+          </a>
+        </amp-story-page-outlink>
       )}
     </amp-story-page>
   );

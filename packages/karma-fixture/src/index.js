@@ -1,6 +1,5 @@
-<?php
-/**
- * Copyright 2020 Google LLC
+/*
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-namespace Google\Web_Stories\Tests\Media;
-
-use Google\Web_Stories\Tests\Test_Case;
-
-/**
- * @coversDefaultClass \Google\Web_Stories\Media\Video_Captions
- */
-class Video_Captions extends Test_Case {
-	/**
-	 * @covers ::filter_list_of_allowed_filetypes
-	 * @group ms-required
-	 */
-	public function test_filter_list_of_allowed_filetypes() {
-		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
-		$this->assertContains( 'vtt', $site_exts );
-	}
-}
+export { default as actPromise } from './actPromise';
+export { default as ComponentStub } from './componentStub';
+export { default as FixtureEvents } from './events';

@@ -76,15 +76,13 @@ function ChecklistCheckpointProvider({ children }) {
       PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED,
     ].includes(checkpointState);
 
-  const story = useStory(({ state: { story, pages } }) => {
-    return { ...story, pages };
-  });
+  const storyStatus = useStory(({ state: { story } }) => story.status);
 
   useEffect(() => {
-    if (story.status === 'publish') {
+    if (storyStatus === 'publish') {
       dispatch(PPC_CHECKPOINT_ACTION.ON_STORY_IS_PUBLISHED);
     }
-  }, [story.status]);
+  }, [storyStatus]);
 
   useStoryTriggerListener(
     STORY_EVENTS.onSecondPageAdded,

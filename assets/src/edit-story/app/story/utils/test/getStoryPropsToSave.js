@@ -52,7 +52,7 @@ describe('getStoryPropsToSave', () => {
     getStoryMarkup.mockImplementation(() => {
       return 'Hello World!';
     });
-    const props = getStoryPropsToSave({ story, pages, metadata, flags: {} });
+    const props = getStoryPropsToSave({ story, pages, metadata });
 
     expect(props).toStrictEqual({
       content: 'Hello World!',

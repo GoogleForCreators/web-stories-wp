@@ -165,6 +165,7 @@ const sharedConfig = {
     }),
     new webpack.EnvironmentPlugin({
       DISABLE_PREVENT: false,
+      DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
     }),
@@ -324,9 +325,6 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      requestToExternal,
-    }),
     new WebpackBar({
       name: 'Activation Notice',
       color: '#fcd8ba',

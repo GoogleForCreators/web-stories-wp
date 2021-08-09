@@ -13,7 +13,6 @@
   "dependencies": {
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.2.1",
-    "@web-stories-wp/i18n": "*",
     "@web-stories-wp/tracking": "*",
     "flagged": "^2.0.1",
     "polished": "^4.1.3",

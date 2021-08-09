@@ -154,7 +154,6 @@ function MediaPane(props) {
   );
 
   const { showSnackbar } = useSnackbar();
-  const isGifOptimizationEnabled = useFeature('enableGifOptimization');
 
   const {
     allowedTranscodableMimeTypes,
@@ -213,7 +212,7 @@ function MediaPane(props) {
           optimizeVideo({ resource });
         }
 
-        if (isGifOptimizationEnabled && resource.mimeType === 'image/gif') {
+        if (resource.mimeType === 'image/gif') {
           optimizeGif({ resource });
         }
       }

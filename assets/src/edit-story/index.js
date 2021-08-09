@@ -38,8 +38,6 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 import App from './editorApp';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
-__webpack_public_path__ = window.webStoriesEditorSettings.publicPath;
-
 /**
  * Initializes the web stories editor.
  *
