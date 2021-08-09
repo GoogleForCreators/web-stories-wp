@@ -43,7 +43,6 @@
             "height": 330,
             "posterId": 0,
             "id": 0,
-            "title": "page1_bg",
             "alt": "page1_bg",
             "local": false,
             "sizes": []
@@ -69,7 +68,7 @@
           "lineHeight": 1,
           "textAlign": "center",
           "id": "4e256c35-5e30-45f5-9095-d8ce0a230b21",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -96,7 +95,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "center",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -189,7 +188,6 @@
             "height": 330,
             "posterId": 0,
             "id": 0,
-            "title": "page2_bg",
             "alt": "page2_bg",
             "local": false,
             "sizes": []
@@ -214,7 +212,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -243,7 +241,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "right",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -319,7 +317,6 @@
             "height": 147,
             "posterId": 0,
             "id": 0,
-            "title": "page3_image1",
             "alt": "page3_image1",
             "local": false,
             "sizes": []
@@ -344,7 +341,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "center",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -373,7 +370,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "center",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -437,7 +434,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.2,
           "textAlign": "center",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -529,7 +526,6 @@
             "height": 275,
             "posterId": 0,
             "id": 0,
-            "title": "page4_page5_bg",
             "alt": "page4_page5_bg",
             "local": false,
             "sizes": []
@@ -554,7 +550,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -583,7 +579,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "right",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -658,7 +654,6 @@
             "height": 275,
             "posterId": 0,
             "id": 0,
-            "title": "page4_page5_bg",
             "alt": "page4_page5_bg",
             "local": false,
             "sizes": []
@@ -701,7 +696,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -757,7 +752,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -859,7 +854,6 @@
             "height": 147,
             "posterId": 0,
             "id": 0,
-            "title": "page6_bg",
             "alt": "page6_bg",
             "local": false,
             "sizes": []
@@ -909,7 +903,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "right",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -938,7 +932,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -967,7 +961,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1091,7 +1085,6 @@
             "width": 330,
             "height": 442,
             "id": 0,
-            "title": "page7_bg",
             "alt": "page7_bg",
             "local": false,
             "sizes": []
@@ -1133,7 +1126,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1162,7 +1155,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1280,7 +1273,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1314,7 +1307,6 @@
             "height": 131,
             "posterId": 0,
             "id": 0,
-            "title": "page8_image1",
             "alt": "page8_image1",
             "local": false,
             "sizes": []
@@ -1343,7 +1335,6 @@
             "height": 147,
             "posterId": 0,
             "id": 0,
-            "title": "page8_image2",
             "alt": "page8_image2",
             "local": false,
             "sizes": []
@@ -1375,7 +1366,6 @@
             "height": 147,
             "posterId": 0,
             "id": 0,
-            "title": "page8_image3",
             "alt": "page8_image3",
             "local": false,
             "sizes": []
@@ -1400,7 +1390,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1429,7 +1419,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1458,7 +1448,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1487,7 +1477,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1516,7 +1506,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1545,7 +1535,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1574,7 +1564,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1719,7 +1709,6 @@
             "height": 442,
             "posterId": 0,
             "id": 0,
-            "title": "page7_bg",
             "alt": "page7_bg",
             "local": false,
             "sizes": []
@@ -1770,7 +1759,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1938,7 +1927,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1967,7 +1956,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1996,7 +1985,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2023,7 +2012,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2052,7 +2041,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2081,7 +2070,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2110,7 +2099,7 @@
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.5,
           "textAlign": "left",
-          "title": "Subheading",
+
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2147,7 +2136,6 @@
             "height": 235,
             "posterId": 0,
             "id": 0,
-            "title": "page10_image1",
             "alt": "page10_image1",
             "local": false,
             "sizes": []
@@ -2179,7 +2167,6 @@
             "height": 498,
             "posterId": 0,
             "id": 0,
-            "title": "page10_image2",
             "alt": "page10_image2",
             "local": false,
             "sizes": []
@@ -2211,7 +2198,6 @@
             "height": 220,
             "posterId": 0,
             "id": 0,
-            "title": "page10_image3",
             "alt": "page10_image3",
             "local": false,
             "sizes": []

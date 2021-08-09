@@ -223,7 +223,6 @@
             "width": 330,
             "height": 369,
             "id": 0,
-            "title": "page01_image1",
             "alt": "page01_image1",
             "local": false
           },
@@ -322,7 +321,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -453,7 +451,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -489,7 +486,6 @@
             "width": 316,
             "height": 316,
             "id": 0,
-            "title": "page03_image1",
             "alt": "page03_image1",
             "local": false
           },
@@ -813,7 +809,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page04_image1",
             "alt": "page04_image1",
             "local": false,
             "baseColor": [26, 50, 67]
@@ -843,7 +838,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false
@@ -988,7 +982,6 @@
             "height": 234,
             "posterId": 0,
             "id": 0,
-            "title": "page05_image1",
             "alt": "page05_image1",
             "local": false,
             "baseColor": [46, 59, 75]
@@ -1261,7 +1254,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -1315,7 +1307,6 @@
             "height": 249,
             "posterId": 0,
             "id": 0,
-            "title": "page06_image1",
             "alt": "page06_image1",
             "local": false,
             "isOptimized": false,
@@ -1621,7 +1612,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page07_image1",
             "alt": "page07_image1",
             "local": false,
             "baseColor": [47, 33, 37]
@@ -1651,7 +1641,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false
@@ -1795,7 +1784,6 @@
             "width": 330,
             "height": 220,
             "id": 0,
-            "title": "page08_image1",
             "alt": "page08_image1",
             "local": false,
             "isOptimized": false,
@@ -2069,7 +2057,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -2123,7 +2110,6 @@
             "height": 220,
             "posterId": 0,
             "id": 0,
-            "title": "page09_image1",
             "alt": "page09_image1",
             "local": false,
             "isOptimized": false,
@@ -2429,7 +2415,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page10_image1",
             "alt": "page10_image1",
             "local": false,
             "baseColor": [142, 137, 129]
@@ -2459,7 +2444,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false
@@ -2603,7 +2587,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page11_image1",
             "alt": "page11_image1",
             "local": false,
             "baseColor": [107, 106, 104]
@@ -2876,7 +2859,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -3184,7 +3166,6 @@
             "height": 494,
             "posterId": 0,
             "id": 0,
-            "title": "page15_image1",
             "alt": "page15_image1",
             "local": false,
             "isOptimized": false,
@@ -3234,7 +3215,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page16_image1",
             "alt": "page16_image1",
             "local": false,
             "baseColor": [115, 112, 125]
@@ -3264,7 +3244,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -3409,7 +3388,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page17_image1",
             "alt": "page17_image1",
             "local": false,
             "baseColor": [106, 54, 78]
@@ -3744,7 +3722,6 @@
             "width": 316,
             "height": 255,
             "id": 0,
-            "title": "page19_image1",
             "alt": "page19_image1",
             "local": false
           },

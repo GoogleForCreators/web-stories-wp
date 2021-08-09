@@ -308,7 +308,6 @@
             "height": 330,
             "posterId": 0,
             "id": 0,
-            "title": "page3_bg",
             "alt": "page3_bg",
             "local": false,
             "sizes": []
@@ -529,7 +528,6 @@
             "height": 288,
             "posterId": 0,
             "id": 0,
-            "title": "page4_bg",
             "alt": "page4_bg",
             "local": false,
             "sizes": []
@@ -980,7 +978,6 @@
             "height": 165,
             "posterId": 0,
             "id": 0,
-            "title": "page6_bg",
             "alt": "page6_bg",
             "local": false,
             "sizes": []
@@ -1006,7 +1003,6 @@
             "height": 330,
             "posterId": 0,
             "id": 0,
-            "title": "page6_watch",
             "alt": "page6_watch",
             "local": false,
             "sizes": []
