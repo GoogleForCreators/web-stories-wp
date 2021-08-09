@@ -138,4 +138,28 @@ export class RightClickMenu extends Container {
       name: /^Add New Page After/i,
     });
   }
+
+  get copyStyles() {
+    return this.getByRole('button', {
+      name: /^Copy Style/i,
+    });
+  }
+
+  get pasteStyles() {
+    return this.getByRole('button', {
+      name: /^Paste Style/i,
+    });
+  }
+
+  get addToSavedStyles() {
+    return this.getByRole('button', {
+      name: /^Add style to/i,
+    });
+  }
+
+  get addToSavedColors() {
+    return this.getByRole('button', {
+      name: /^Add color to/i,
+    });
+  }
 }
