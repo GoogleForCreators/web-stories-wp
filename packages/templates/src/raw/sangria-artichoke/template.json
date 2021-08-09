@@ -488,7 +488,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #f9fcf4\">One of the biggest winter veggie trend this year has been the Sangria artichoke. Let’s see why...</span>",
+          "content": "<span style=\"font-weight: 700; color: #f9fcf4\">One of the biggest winter veggie trends this year has been the Sangria artichoke. Let’s see why...</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -822,7 +822,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff\">Sangria artichokes have deep purple meaty leaves. It has a nutty flavor and are perfect when steamed!</span>",
+          "content": "<span style=\"color: #fff\">Sangria artichokes have deep purple meaty leaves. It has a nutty flavor and is perfect when steamed!</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1562,7 +1562,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #0e662a; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #0e662a; letter-spacing: 0.01em\">Chock full of iron</span>",
+          "content": "<span style=\"font-weight: 700; color: #0e662a; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #0e662a; letter-spacing: 0.01em\">Loaded with B12</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
