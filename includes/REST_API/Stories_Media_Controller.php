@@ -142,13 +142,36 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			'ID'          => $post_id,
 			'post_parent' => $parent_post,
 		];
-		$result = wp_update_post( $args, true );
-		if ( is_wp_error( $result ) ) {
-			return $result;
+
+		$original_id = ! empty( $request['original_id'] ) ? (int) $request['original_id'] : null;
+		if ( $original_id ) {
+			$attachment_post = get_post( $original_id );
+
+			if ( $attachment_post ) {
+				$args['post_content'] = $attachment_post->post_content;
+				$args['post_excerpt'] = $attachment_post->post_excerpt;
+				$args['post_title']   = $attachment_post->post_title;
+
+				// Copy the image alt text from the edited image.
+				$image_alt = get_post_meta( $original_id, '_wp_attachment_image_alt', true );
+
+				if ( ! empty( $image_alt ) ) {
+					// update_post_meta() expects slashed.
+					update_post_meta( $post_id, '_wp_attachment_image_alt', wp_slash( $image_alt ) );
+				}
+			}
 		}
 
-		$data['post'] = $parent_post;
-		$response->set_data( $data );
+		$attachment_id = wp_update_post( $args, true );
+		if ( is_wp_error( $attachment_id ) ) {
+			return $attachment_id;
+		}
+
+		$attachment = get_post( $attachment_id );
+		$response   = $this->prepare_item_for_response( $attachment, $request );
+		$response   = rest_ensure_response( $response );
+		$response->set_status( 201 );
+		$response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $attachment_id ) ) );
 
 		return $response;
 	}
