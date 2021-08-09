@@ -47,13 +47,13 @@ class Cross_Origin_Isolation extends Test_Case {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
+	public static function tear_down_after_class() {
 		self::delete_user( self::$admin_id );
 		self::delete_user( self::$contributor_id );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$user_preferences = new \Google\Web_Stories\User\Preferences();
 		$user_preferences->register();

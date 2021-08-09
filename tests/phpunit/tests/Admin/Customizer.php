@@ -59,8 +59,8 @@ class Customizer extends Test_Case {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		global $wp_customize;
 

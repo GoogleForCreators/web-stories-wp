@@ -41,7 +41,7 @@ class Core_Themes_Support extends Test_Case {
 	/**
 	 * Runs prior to each test and sets up the testee object.
 	 */
-	public function setUp() {
+	public function set_up() {
 		$this->stylesheet = get_stylesheet();
 
 		// Set stylesheet from one of the supported themes.
@@ -54,7 +54,7 @@ class Core_Themes_Support extends Test_Case {
 	/**
 	 * Runs after each test and resets the actions.
 	 */
-	public function tearDown() {
+	public function tear_down() {
 		remove_action( 'wp_body_open', [ $this->stub, 'embed_web_stories' ] );
 
 		if ( get_theme_support( 'web-stories' ) ) {
@@ -66,7 +66,7 @@ class Core_Themes_Support extends Test_Case {
 		unset( $this->stub );
 		unset( $this->stylesheet );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

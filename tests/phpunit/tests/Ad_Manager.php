@@ -22,15 +22,15 @@ namespace Google\Web_Stories\Tests;
  */
 class Ad_Manager extends Test_Case {
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'admanager' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_MANAGER_SLOT_ID, '123' );
 	}
 
-	public function tearDown() {
-		parent::tearDown();
+	public function tear_down() {
+		parent::tear_down();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );

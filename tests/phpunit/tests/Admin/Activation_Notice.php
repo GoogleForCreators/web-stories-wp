@@ -28,8 +28,8 @@ class Activation_Notice extends Test_Case {
 	protected $google_fonts;
 	protected $assets;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->activation_flag = new \Google\Web_Stories\Admin\Activation_Flag();
 		$this->activation_flag->set_activation_flag();
 		$this->assets       = new \Google\Web_Stories\Assets();
@@ -37,10 +37,10 @@ class Activation_Notice extends Test_Case {
 
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->activation_flag->delete_activation_flag();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

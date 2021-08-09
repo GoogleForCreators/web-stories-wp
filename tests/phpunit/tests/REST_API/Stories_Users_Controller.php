@@ -56,12 +56,12 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 
 	}
 
-	public static function wpTearDownAfterClass() {
+	public static function tear_down_after_class() {
 		self::delete_user( self::$user_id );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
@@ -73,7 +73,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -82,7 +82,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 
 		$this->set_permalink_structure( '' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 		$this->assertEquals( 3, $result1 );
 
@@ -126,7 +126,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 
 		$this->assertEquals( 4, $result2 );
@@ -139,7 +139,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 
 		$this->assertEquals( 3, $result3 );
@@ -159,7 +159,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				-1,
 				\Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-			] 
+			]
 		);
 		$this->assertEquals( 0, $result1 );
 
@@ -169,7 +169,7 @@ class Stories_Users_Controller extends Test_REST_TestCase {
 			[
 				self::$user_id,
 				'invalid',
-			] 
+			]
 		);
 		$this->assertEquals( 0, $result1 );
 	}

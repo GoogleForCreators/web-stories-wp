@@ -66,18 +66,18 @@ class Story_Post_Type extends Test_Case {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->set_permalink_structure( '' );
 		$_SERVER['REQUEST_URI'] = '';
 
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

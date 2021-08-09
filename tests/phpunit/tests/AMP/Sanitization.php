@@ -30,7 +30,7 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
  */
 class Sanitization extends Test_Case {
-	public function tearDown() {
+	public function tear_down() {
 		remove_all_filters( 'web_stories_amp_sanitizers' );
 		remove_all_filters( 'web_stories_amp_dev_mode_enabled' );
 		remove_all_filters( 'web_stories_amp_dev_mode_element_xpaths' );
@@ -38,7 +38,7 @@ class Sanitization extends Test_Case {
 
 		unset( $GLOBALS['show_admin_bar'] );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

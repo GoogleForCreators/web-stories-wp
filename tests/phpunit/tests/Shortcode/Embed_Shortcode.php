@@ -23,10 +23,10 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Shortcode\Embed_Shortcode
  */
 class Embed_Shortcode extends Test_Case {
-	public function tearDown() {
+	public function tear_down() {
 		remove_shortcode( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

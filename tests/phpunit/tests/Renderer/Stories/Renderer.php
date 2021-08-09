@@ -81,8 +81,8 @@ class Renderer extends Test_Case {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->story_model = $this->createMock( Story::class );
 		$this->story_model->load_from_post( self::$story_id );

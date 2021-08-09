@@ -26,18 +26,18 @@ use Google\Web_Stories\Tests\Capabilities_Setup;
 class Capabilities extends Test_Case {
 	use Capabilities_Setup;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		$this->add_caps_to_roles();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->set_permalink_structure( '' );
 		$_SERVER['REQUEST_URI'] = '';
 
 		$this->remove_caps_from_roles();
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

@@ -25,10 +25,10 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\Block\Web_Stories_Block
  */
 class Web_Stories_Block extends Test_Case {
-	public function tearDown() {
+	public function tear_down() {
 		unregister_block_type( 'web-stories/embed' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

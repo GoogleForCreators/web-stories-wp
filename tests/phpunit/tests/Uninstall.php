@@ -25,8 +25,8 @@ class Uninstall extends Test_Case {
 
 	protected static $user_id;
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
 		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG ] );
 		foreach ( self::$attachment_ids as $attachment_id ) {

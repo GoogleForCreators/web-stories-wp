@@ -30,8 +30,8 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
  */
 class Output_Buffer extends Test_Case {
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -39,11 +39,11 @@ class Output_Buffer extends Test_Case {
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	protected function prepare_response( $post ): string {

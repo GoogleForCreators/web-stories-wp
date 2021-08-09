@@ -29,8 +29,8 @@ use WP_Post;
  */
 class HTML extends Test_Case {
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -38,11 +38,11 @@ class HTML extends Test_Case {
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

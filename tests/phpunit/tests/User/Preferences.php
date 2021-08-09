@@ -52,22 +52,22 @@ class Preferences extends Test_Case {
 		);
 	}
 
-	public static function wpTearDownAfterClass() {
+	public static function tear_down_after_class() {
 		self::delete_user( self::$admin_id );
 		self::delete_user( self::$author_id );
 	}
 
-	public function setUp() {
+	public function set_up() {
 		$up = new \Google\Web_Stories\User\Preferences();
 		$up->register();
-		parent::setUp();
+		parent::set_up();
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY );
 		unregister_meta_key( 'user', \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**

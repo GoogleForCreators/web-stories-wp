@@ -78,24 +78,24 @@ class Discovery extends Test_Case {
 		add_theme_support( 'automatic-feed-links' );
 	}
 
-	public static function wpTearDownAfterClass() {
+	public static function tear_down_after_class() {
 		self::delete_user( self::$user_id );
 		remove_theme_support( 'automatic-feed-links' );
 	}
 
-	public function setUp() {
-		parent::setUp();
+	public function set_up() {
+		parent::set_up();
 
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 	}
 
-	public function tearDown() {
+	public function tear_down() {
 		$this->set_permalink_structure( '' );
 		// Set by go_to();
 		$_SERVER['REQUEST_URI'] = '';
 
-		parent::tearDown();
+		parent::tear_down();
 	}
 
 	/**
