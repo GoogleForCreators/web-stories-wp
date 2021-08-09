@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
+function pageOutlinkTheme({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
 
-const Link = styled.a`
-  font-family: ${({ theme }) => theme.fonts.body.family};
-  font-size: ${({ theme }) => theme.fonts.body.size};
-  line-height: ${({ theme }) => theme.fonts.body.lineHeight};
-  font-weight: ${({ theme }) => theme.fonts.body.fontWeight};
-  color: ${({ theme }) => theme.colors.link.fg};
-  text-decoration: none;
-  cursor: pointer;
-  display: block;
-  &:focus,
-  &:hover {
-    color: ${({ theme }) => theme.colors.link.hover.fg};
+function reducePage(page) {
+  const { pageAttachment } = page;
+  if (!pageAttachment) {
+    return page;
   }
-`;
 
-export default Link;
+  const { theme } = pageAttachment;
+  return {
+    ...page,
+    pageAttachment: {
+      ...pageAttachment,
+      theme: theme ?? 'light',
+    },
+  };
+}
+
+export default pageOutlinkTheme;

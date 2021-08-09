@@ -27,10 +27,11 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { useStory } from '..';
-import { duplicatePage } from '../../elements';
+import { createPage, duplicatePage } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
+import { noop } from '../../utils/noop';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -62,8 +63,11 @@ function RightClickMenuProvider({ children }) {
   const {
     addAnimations,
     addPage,
+    addPageAt,
     arrangeElement,
+    clearBackgroundElement,
     currentPage,
+    currentPageIndex,
     deleteCurrentPage,
     pages,
     replaceCurrentPage,
@@ -75,6 +79,7 @@ function RightClickMenuProvider({ children }) {
     ({
       state: {
         currentPage,
+        currentPageIndex,
         pages,
         selectedElementAnimations,
         selectedElements,
@@ -82,7 +87,9 @@ function RightClickMenuProvider({ children }) {
       actions: {
         addAnimations,
         addPage,
+        addPageAt,
         arrangeElement,
+        clearBackgroundElement,
         deleteCurrentPage,
         replaceCurrentPage,
         setBackgroundElement,
@@ -91,8 +98,11 @@ function RightClickMenuProvider({ children }) {
     }) => ({
       addAnimations,
       addPage,
+      addPageAt,
       arrangeElement,
+      clearBackgroundElement,
       currentPage,
+      currentPageIndex,
       deleteCurrentPage,
       pages,
       replaceCurrentPage,
@@ -172,6 +182,22 @@ function RightClickMenuProvider({ children }) {
   const handleDuplicatePage = useCallback(() => {
     addPage({ page: duplicatePage(currentPage) });
   }, [addPage, currentPage]);
+
+  /**
+   * Adds a new page at the designated index.
+   *
+   * Defaults to adding the new page after all of the existing pages.
+   *
+   * @param {number} index The index
+   */
+  const handleAddPageAtPosition = useCallback(
+    (index) => {
+      const position = Boolean(index) || index === 0 ? index : pages.length - 1;
+
+      addPageAt({ page: createPage(), position });
+    },
+    [addPageAt, pages?.length]
+  );
 
   /**
    * Delete the current page.
@@ -337,6 +363,26 @@ function RightClickMenuProvider({ children }) {
     setBackgroundElement({ elementId: selectedElement.id });
   }, [setBackgroundElement, selectedElement?.id]);
 
+  /**
+   * Remove media from background and clear opacity and overlay.
+   */
+  const handleRemoveMediaFromBackground = useCallback(() => {
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            isBackground: false,
+            opacity: 100,
+            overlay: null,
+          },
+          /* commitValues */ true
+        ),
+    });
+    clearBackgroundElement();
+  }, [clearBackgroundElement, selectedElement?.id, updateElementsById]);
+
   const defaultItems = useMemo(
     () => [
       {
@@ -361,6 +407,67 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
+  );
+
+  const backgroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        separator: 'top',
+        onClick: handleRemoveMediaFromBackground,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
+        onClick: noop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        onClick: handleOpenScaleAndCrop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        separator: 'top',
+        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
+        onClick: () => handleAddPageAtPosition(currentPageIndex),
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        onClick: handleDuplicatePage,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+        onClick: handleDeletePage,
+        disabled: pages.length === 1,
+        ...menuItemProps,
+      },
+    ],
+    [
+      currentPageIndex,
+      defaultItems,
+      handleAddPageAtPosition,
+      handleClearElementStyles,
+      handleDeletePage,
+      handleDuplicatePage,
+      handleOpenScaleAndCrop,
+      handleRemoveMediaFromBackground,
+      menuItemProps,
+      pages,
+    ]
   );
 
   const foregroundMediaItems = useMemo(
@@ -473,13 +580,15 @@ function RightClickMenuProvider({ children }) {
   );
 
   const menuItems = useMemo(() => {
-    // Check if background image
-    if (selectedElement?.isBackground) {
+    if (selectedElement?.isDefaultBackground) {
       return pageItems;
     }
 
     switch (selectedElement?.type) {
       case ELEMENT_TYPES.IMAGE:
+        return selectedElement?.isBackground
+          ? backgroundMediaItems
+          : foregroundMediaItems;
       case ELEMENT_TYPES.VIDEO:
       case ELEMENT_TYPES.GIF:
         return foregroundMediaItems;
@@ -488,12 +597,7 @@ function RightClickMenuProvider({ children }) {
       default:
         return pageItems;
     }
-  }, [
-    foregroundMediaItems,
-    pageItems,
-    selectedElement?.isBackground,
-    selectedElement?.type,
-  ]);
+  }, [backgroundMediaItems, foregroundMediaItems, pageItems, selectedElement]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
