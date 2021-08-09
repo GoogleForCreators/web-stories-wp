@@ -40,7 +40,7 @@ class Media_Source_Taxonomy extends Test_Case {
 		$this->assertSame(
 			10,
 			has_filter(
-				'rest_attachment_query',
+				'web_stories_rest_attachment_query',
 				[
 					$media,
 					'filter_rest_generated_media_attachments',
@@ -312,18 +312,6 @@ class Media_Source_Taxonomy extends Test_Case {
 	/**
 	 * @covers ::filter_rest_generated_media_attachments
 	 */
-	public function test_filter_rest_generated_media_attachments_wrong_route() {
-		$expected = [];
-
-		$media  = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$actual = $media->filter_rest_generated_media_attachments( [], new WP_REST_Request() );
-
-		$this->assertEqualSetsWithIndex( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::filter_rest_generated_media_attachments
-	 */
 	public function test_filter_rest_generated_media_attachments() {
 		$expected = [
 			'tax_query' => [
@@ -337,10 +325,7 @@ class Media_Source_Taxonomy extends Test_Case {
 		];
 
 		$media  = new \Google\Web_Stories\Media\Media_Source_Taxonomy();
-		$actual = $media->filter_rest_generated_media_attachments(
-			[],
-			new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' )
-		);
+		$actual = $media->filter_rest_generated_media_attachments( [] );
 
 		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}

@@ -65,7 +65,7 @@ class Media_Source_Taxonomy extends Service_Base {
 		// Hide video posters from Media list view.
 		add_filter( 'pre_get_posts', [ $this, 'filter_generated_media_attachments' ] );
 		// Hide video posters from web-stories/v1/media REST API requests.
-		add_filter( 'rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ], 10, 2 );
+		add_filter( 'web_stories_rest_attachment_query', [ $this, 'filter_rest_generated_media_attachments' ] );
 	}
 
 	/**
@@ -263,16 +263,11 @@ class Media_Source_Taxonomy extends Service_Base {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param array           $args Query args.
-	 * @param WP_REST_Request $request The current REST request.
+	 * @param array $args Query args.
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_rest_generated_media_attachments( array $args, WP_REST_Request $request ): array {
-		if ( '/web-stories/v1/media' !== $request->get_route() ) {
-			return $args;
-		}
-
+	public function filter_rest_generated_media_attachments( array $args ): array {
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 
 		return $args;
