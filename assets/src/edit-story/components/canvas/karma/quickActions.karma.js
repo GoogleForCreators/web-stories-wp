@@ -20,10 +20,11 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
+import { useHelpCenter, useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ACTION_TEXT } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
+import { KEYS } from '../../helpCenter/constants';
 import useInsertElement from '../useInsertElement';
 
 describe('Quick Actions integration', () => {
@@ -498,6 +499,11 @@ describe('Quick Actions integration', () => {
     });
 
     it(`clicking the \`${ACTION_TEXT.REPLACE_BACKGROUND_MEDIA}\` button should select select the media tab and focus the media tab`, async () => {
+      // The "Replace background media" quick action also triggers a help center tip which steals focus.
+      // Open the tip now to avoid the focus stealing after the quick menu button is clicked.
+      const { actions } = await fixture.renderHook(() => useHelpCenter());
+      actions.openToUnreadTip(KEYS.ADD_BACKGROUND_MEDIA);
+
       // change tab to make sure tab isn't selected before quick action
       // hide 3p modal before we click the quick action
       await fixture.events.click(fixture.editor.library.mediaTab);
