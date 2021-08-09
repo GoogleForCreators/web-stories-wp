@@ -64,7 +64,7 @@ function ColorPicker({
   color = null,
   allowsGradient = false,
   allowsOpacity = true,
-  renderFooter = null,
+  allowsSavedColors = false,
   onClose = () => {},
   changedStyle = 'background',
 }) {
@@ -149,8 +149,7 @@ function ColorPicker({
           showCustomPicker={showCustomPicker}
           hideCustomPicker={hideCustomPicker}
           handleClose={handleCloseAndRefocus}
-          allowsSavedColors={Boolean(renderFooter)}
-          renderFooter={renderFooter}
+          allowsSavedColors={allowsSavedColors}
         />
       </Container>
     </CSSTransition>
@@ -162,7 +161,7 @@ ColorPicker.propTypes = {
   onClose: PropTypes.func,
   allowsGradient: PropTypes.bool,
   allowsOpacity: PropTypes.bool,
-  renderFooter: PropTypes.func,
+  allowsSavedColors: PropTypes.bool,
   isEyedropperActive: PropTypes.bool,
   color: PatternPropType,
   changedStyle: PropTypes.string,

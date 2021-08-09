@@ -129,9 +129,9 @@ const ColorInput = forwardRef(function ColorInput(
     onChange,
     allowsGradient = false,
     allowsOpacity = true,
+    allowsSavedColors = false,
     value = null,
     label = null,
-    colorPickerActions,
     changedStyle,
   },
   ref
@@ -224,19 +224,15 @@ const ColorInput = forwardRef(function ColorInput(
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
         invisible={isEyedropperActive}
-        renderContents={({ propagateDimensionChange }) => (
+        renderContents={() => (
           <ColorPicker
             color={isMixed ? null : value}
             isEyedropperActive={isEyedropperActive}
             onChange={onChange}
             allowsGradient={allowsGradient}
             allowsOpacity={allowsOpacity}
+            allowsSavedColors={allowsSavedColors}
             onClose={onClose}
-            renderFooter={
-              colorPickerActions &&
-              ((props) =>
-                colorPickerActions(props, null, propagateDimensionChange))
-            }
             changedStyle={changedStyle}
           />
         )}
@@ -249,9 +245,9 @@ ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   allowsGradient: PropTypes.bool,
   allowsOpacity: PropTypes.bool,
+  allowsSavedColors: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
-  colorPickerActions: PropTypes.func,
   changedStyle: PropTypes.string,
 };
 

@@ -54,9 +54,9 @@ const Color = forwardRef(function Color(
     onChange,
     allowsGradient = false,
     allowsOpacity = true,
+    allowsSavedColors = false,
     value = null,
     label = null,
-    colorPickerActions = null,
     changedStyle = null,
   },
   ref
@@ -85,7 +85,7 @@ const Color = forwardRef(function Color(
           allowsOpacity={allowsOpacity}
           value={value}
           label={label}
-          colorPickerActions={colorPickerActions}
+          allowsSavedColors={allowsSavedColors}
           changedStyle={changedStyle}
         />
       </InputWrapper>
@@ -105,9 +105,9 @@ Color.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   allowsGradient: PropTypes.bool,
   allowsOpacity: PropTypes.bool,
+  allowsSavedColors: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
-  colorPickerActions: PropTypes.func,
   changedStyle: PropTypes.string,
 };
 

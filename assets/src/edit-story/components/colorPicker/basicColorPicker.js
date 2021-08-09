@@ -18,16 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { PatternPropType } from '@web-stories-wp/patterns';
 import {
-  PatternPropType,
-  getHexFromSolid,
-  hasOpacity,
-  hasGradient,
-} from '@web-stories-wp/patterns';
-import {
-  Swatch,
-  themeHelpers,
   THEME_CONSTANTS,
   Button,
   Icons,
@@ -41,28 +34,16 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import useStory from '../../app/story/useStory';
 import { BASIC_COLORS } from './constants';
 import Header from './header';
+import BasicColorList from './basicColorList';
 
-const focusStyle = css`
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.border.focus,
-      theme.colors.bg.secondary
-    )};
-`;
 const Body = styled.div`
   display: flex;
   flex-direction: column;
   margin: 8px 16px 16px;
   gap: 16px;
-`;
-
-const SwatchList = styled.div`
-  display: flex;
-  max-width: 100%;
-  flex-wrap: wrap;
-  gap: 6px;
 `;
 
 const Label = styled(Text).attrs({
@@ -74,17 +55,6 @@ const Label = styled(Text).attrs({
 const DefaultText = styled(Label)`
   margin-left: 8px;
 `;
-
-const StyledSwatch = styled(Swatch)`
-  ${focusStyle};
-
-  ${({ isSelected, theme }) =>
-    isSelected &&
-    css`
-      border: 2px solid ${theme.colors.border.defaultActive};
-    `}
-`;
-
 const StyledButton = styled(Button)`
   display: flex;
   justify-content: center;
@@ -102,12 +72,14 @@ function BasicColorPicker({
   color,
   handleColorChange,
   allowsOpacity,
+  allowsGradient,
   allowsSavedColors,
   showCustomPicker,
   handleClose,
-  renderFooter,
 }) {
-  const hexColor = color && !hasGradient(color) ? getHexFromSolid(color) : null;
+  const { savedColors } = useStory((state) => ({
+    savedColors: state.state.story.globalStoryStyles.colors,
+  }));
 
   return (
     <>
@@ -115,21 +87,23 @@ function BasicColorPicker({
         <DefaultText>{__('Default', 'web-stories')}</DefaultText>
       </Header>
       <Body>
-        <SwatchList>
-          {BASIC_COLORS.flat().map(({ hex, pattern }) => (
-            <StyledSwatch
-              key={hex}
-              onClick={() => handleColorChange(pattern)}
-              pattern={pattern}
-              isSelected={hex === hexColor}
-              isDisabled={!allowsOpacity && hasOpacity(pattern)}
-            />
-          ))}
-        </SwatchList>
-        {allowsSavedColors && (
+        <BasicColorList
+          color={color}
+          colors={BASIC_COLORS}
+          handleColorChange={handleColorChange}
+          allowsOpacity={allowsOpacity}
+          allowsGradient={allowsGradient}
+        />
+        {allowsSavedColors && savedColors.length && (
           <>
             <Label>{__('Saved colors', 'web-stories')}</Label>
-            {renderFooter(color)}
+            <BasicColorList
+              color={color}
+              colors={savedColors}
+              handleColorChange={handleColorChange}
+              allowsOpacity={allowsOpacity}
+              allowsGradient={allowsGradient}
+            />
           </>
         )}
         <StyledButton
@@ -151,9 +125,9 @@ BasicColorPicker.propTypes = {
   showCustomPicker: PropTypes.func.isRequired,
   handleClose: PropTypes.func,
   allowsOpacity: PropTypes.bool,
+  allowsGradient: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
   color: PatternPropType,
-  renderFooter: PropTypes.func,
 };
 
 export default BasicColorPicker;
