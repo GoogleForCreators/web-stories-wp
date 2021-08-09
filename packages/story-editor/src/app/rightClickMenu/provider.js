@@ -440,12 +440,6 @@ function RightClickMenuProvider({ children }) {
     });
     clearBackgroundElement();
   }, [clearBackgroundElement, selectedElement?.id, updateElementsById]);
-  // const { addGlobalPreset: handleAddTextPreset } = useAddPreset({
-  //   presetType: PRESET_TYPES.STYLE,
-  // });
-  // const { addGlobalPreset: handleAddColorPreset } = useAddPreset({
-  //   presetType: PRESET_TYPES.COLOR,
-  // });
 
   /**
    * Focus the media or the media3p panel.
