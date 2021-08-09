@@ -27,7 +27,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
 
 /**
  * Class Migration_Meta_To_Term
@@ -57,7 +57,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 
 		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
-				wp_set_object_terms( (int) $post_id, $this->get_term_name(), Media::STORY_MEDIA_TAXONOMY );
+				wp_set_object_terms( (int) $post_id, $this->get_term_name(), Media_Source_Taxonomy::TAXONOMY_SLUG );
 			}
 		}
 	}
