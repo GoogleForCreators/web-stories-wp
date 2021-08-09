@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,23 +25,24 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  title: _x('Fresh & Bright', 'template name', 'web-stories'),
+  title: _x('Art Books Gift Guide', 'template name', 'web-stories'),
   tags: [
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Bold', 'template keyword', 'web-stories'),
-    _x('Joy', 'template keyword', 'web-stories'),
+    _x('Art', 'template keyword', 'web-stories'),
+    _x('Gift', 'template keyword', 'web-stories'),
+    _x('Recommendation', 'template keyword', 'web-stories'),
+    _x('Books', 'template keyword', 'web-stories'),
+    _x('Pink', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Pink', 'color', 'web-stories'), color: '#f3d9e1' },
-    { label: _x('Green', 'color', 'web-stories'), color: '#d8ddcc' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#28292b' },
+    { label: _x('Petal Pink', 'color', 'web-stories'), color: '#da9bb2' },
+    { label: _x('Milano Red', 'color', 'web-stories'), color: '#c01e00' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
+    { label: _x('Voodoo Purple', 'color', 'web-stories'), color: '#412c47' },
   ],
   description: __(
-    'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',
+    'With its serene, comforting colors and beautiful illustrations, this template is great for creating stories about books and literature. Review books, talk about the newest releases in fiction, create reading lists and more.',
     'web-stories'
   ),
   ...template,
-  vertical: _x('Beauty', 'template vertical', 'web-stories'),
+  vertical: _x('Arts & Crafts', 'template vertical', 'web-stories'),
 };

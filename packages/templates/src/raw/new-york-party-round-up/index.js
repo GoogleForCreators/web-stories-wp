@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,23 +25,22 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  title: _x('Fresh & Bright', 'template name', 'web-stories'),
+  title: _x('New York Party Round-up', 'template name', 'web-stories'),
   tags: [
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Bold', 'template keyword', 'web-stories'),
-    _x('Joy', 'template keyword', 'web-stories'),
+    _x('Entertainment', 'template keyword', 'web-stories'),
+    _x('Club', 'template keyword', 'web-stories'),
+    _x('Event', 'template keyword', 'web-stories'),
+    _x('Banner', 'template keyword', 'web-stories'),
+    _x('Black', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Pink', 'color', 'web-stories'), color: '#f3d9e1' },
-    { label: _x('Green', 'color', 'web-stories'), color: '#d8ddcc' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#28292b' },
+    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
   ],
   description: __(
-    'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',
+    'This template’s large black and white banners and full-screen visuals will let you create simple yet attractive stories in the entertainment niche. Create buzzy listicles, announce events and show times, give out info about music festivals and more. Use the social share buttons to reach a wider audience.',
     'web-stories'
   ),
   ...template,
-  vertical: _x('Beauty', 'template vertical', 'web-stories'),
+  vertical: _x('Entertainment', 'template vertical', 'web-stories'),
 };

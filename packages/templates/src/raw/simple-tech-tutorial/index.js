@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,23 +25,24 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  title: _x('Fresh & Bright', 'template name', 'web-stories'),
+  title: _x('Simple Tech Tutorial ', 'template name', 'web-stories'),
   tags: [
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Bold', 'template keyword', 'web-stories'),
-    _x('Joy', 'template keyword', 'web-stories'),
+    _x('Technology', 'template keyword', 'web-stories'),
+    _x('Network', 'template keyword', 'web-stories'),
+    _x('How-To', 'template keyword', 'web-stories'),
+    _x('Minimal', 'template keyword', 'web-stories'),
+    _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Pink', 'color', 'web-stories'), color: '#f3d9e1' },
-    { label: _x('Green', 'color', 'web-stories'), color: '#d8ddcc' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#28292b' },
     { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
+    { label: _x('Boston Blue', 'color', 'web-stories'), color: '#4899bf' },
+    { label: _x('Liquid Blue', 'color', 'web-stories'), color: '#c1ddeb' },
+    { label: _x('Dark Teal', 'color', 'web-stories'), color: '#264156' },
   ],
   description: __(
-    'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',
+    'This clean and simple template will let you create structured and easy to understand tech tutorials and how-to guides. Just add your own screenshots, text, and illustrations.',
     'web-stories'
   ),
   ...template,
-  vertical: _x('Beauty', 'template vertical', 'web-stories'),
+  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };
