@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import { isPlatformMacOS } from '@web-stories-wp/design-system';
+import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -44,6 +44,7 @@ jest.mock('../../story', () => ({
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
   isPlatformMacOS: jest.fn(),
+  useSnackbar: jest.fn(),
 }));
 
 const mockEvent = {
@@ -88,12 +89,15 @@ describe('useRightClickMenu', () => {
   const mockUseCanvas = useCanvas;
   const mockUseStory = useStory;
   const mockIsPlatformMacOS = isPlatformMacOS;
+  const mockUseSnackbar = useSnackbar;
+  const mockShowSnackbar = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
 
     mockUseStory.mockReturnValue(defaultStoryContext);
     mockUseCanvas.mockReturnValue(defaultCanvasContext);
+    mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
   });
 
@@ -256,6 +260,7 @@ describe('useRightClickMenu', () => {
           {
             id: '991199',
             type: 'video',
+            borderRadius: '4px',
           },
         ],
       });
@@ -276,6 +281,57 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
         RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
       ]);
+    });
+
+    describe('copying, pasting, and clearing styles', () => {
+      it('should show a snackbar when copying, pasting, and clearing styles', () => {
+        const { result } = renderHook(() => useRightClickMenu(), {
+          wrapper: RightClickMenuProvider,
+        });
+
+        const copy = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES
+        );
+        const paste = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES
+        );
+        const clear = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES
+        );
+
+        act(() => {
+          copy.onClick();
+        });
+
+        expect(mockShowSnackbar).toHaveBeenCalledWith(
+          expect.objectContaining({
+            actionLabel: 'Undo',
+            message: 'Copied style.',
+          })
+        );
+
+        act(() => {
+          paste.onClick();
+        });
+
+        expect(mockShowSnackbar).toHaveBeenCalledWith(
+          expect.objectContaining({
+            actionLabel: 'Undo',
+            message: 'Pasted style.',
+          })
+        );
+
+        act(() => {
+          clear.onClick();
+        });
+
+        expect(mockShowSnackbar).toHaveBeenCalledWith(
+          expect.objectContaining({
+            actionLabel: 'Undo',
+            message: 'Cleared style.',
+          })
+        );
+      });
     });
   });
 
