@@ -28,6 +28,7 @@ import { loadTextSets } from '@web-stories-wp/text-sets';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
+import { useConfig } from '../../app';
 import Context from './context';
 import { getPaneId, Pane as SharedPane } from './panes/shared';
 import {
@@ -60,6 +61,7 @@ function LibraryProvider({ children }) {
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showElementsTab } = useFeatures();
+  const { show_media3p: showMedia3p } = useConfig();
 
   const renderEmptyPane = useCallback((id) => {
     const EmptyPane = (props) => <SharedPane id={getPaneId(id)} {...props} />;
@@ -101,7 +103,14 @@ function LibraryProvider({ children }) {
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
-      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_TEMPLATES]
+      [
+        MEDIA,
+        showMedia3p && MEDIA3P,
+        TEXT,
+        SHAPES,
+        showElementsTab && ELEMS,
+        PAGE_TEMPLATES,
+      ]
         .filter(Boolean)
         .map(({ Pane, id, ...rest }) => {
           const isLazyTab = LAZY_TABS.includes(id);
@@ -114,7 +123,7 @@ function LibraryProvider({ children }) {
             ...rest,
           };
         }),
-    [tab, showElementsTab, renderEmptyPane]
+    [showMedia3p, showElementsTab, tab, renderEmptyPane]
   );
 
   const state = useMemo(

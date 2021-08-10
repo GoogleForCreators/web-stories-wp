@@ -104,6 +104,7 @@ const DEFAULT_CONFIG = {
   nonce: '123456789',
   version: '1.0.0-alpha.9',
   isRTL: false,
+  show_media3p: true,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',
