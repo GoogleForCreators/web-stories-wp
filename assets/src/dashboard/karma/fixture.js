@@ -26,7 +26,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 import {
   FixtureEvents,
   ComponentStub,
@@ -197,7 +197,7 @@ export default class Fixture {
     const root = document.querySelector('test-root');
 
     // see http://reactcommunity.org/react-modal/accessibility/
-    Modal.setAppElement(root);
+    setAppElement(root);
 
     const { container } = render(
       <FlagsProvider features={this._flags}>

@@ -22,11 +22,11 @@ import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
+import { base64Encode } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import base64Encode from '../../../edit-story/utils/base64Encode';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
@@ -251,10 +251,10 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
 
       try {
         const { createdBy, pages, version } = template;
-        const getStoryPropsToSave = await import(
-          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '../../../edit-story/app/story/utils/getStoryPropsToSave'
+        const { getStoryPropsToSave } = await import(
+          /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
         );
-        const storyPropsToSave = await getStoryPropsToSave.default({
+        const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
             featuredMedia: {
