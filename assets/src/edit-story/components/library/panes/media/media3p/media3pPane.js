@@ -43,7 +43,6 @@ import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
-import LinkInsertion from './hotlink';
 
 import paneId from './paneId';
 import ProviderTab from './providerTab';
@@ -86,12 +85,6 @@ const ProviderMediaCategoriesWrapper = styled.div`
     position: relative;
     visibility: visible;
   }
-`;
-
-const HotlinkWrapper = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
 `;
 
 /**
@@ -271,9 +264,6 @@ function Media3pPane(props) {
                   setSelectedProvider={setSelectedProvider}
                 />
               ))}
-              <HotlinkWrapper>
-                <LinkInsertion />
-              </HotlinkWrapper>
             </ProviderTabSection>
           </PaneHeader>
           <PaneBottom ref={paneBottomRef}>

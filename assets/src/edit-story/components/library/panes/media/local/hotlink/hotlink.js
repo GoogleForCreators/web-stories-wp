@@ -23,9 +23,9 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  Icons, lightMode, theme,
+  Icons,
 } from '@web-stories-wp/design-system';
-import styled, {ThemeProvider} from 'styled-components';
+import styled from 'styled-components';
 import { useState } from 'react';
 
 /**
@@ -37,6 +37,7 @@ import HotlinkModal from './hotlinkModal';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
+  margin: 0 10px;
 `;
 
 function Hotlink() {

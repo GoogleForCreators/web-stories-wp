@@ -36,6 +36,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
+  Icons,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -62,9 +63,11 @@ import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
 import useFFmpeg from '../../../../../app/media/utils/useFFmpeg';
+import Tooltip from '../../../../tooltip';
 import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
+import LinkInsertion from './hotlink';
 
 export const ROOT_MARGIN = 300;
 
@@ -85,6 +88,12 @@ const SearchCount = styled(Text).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
 `;
 
 const FILTER_NONE = LOCAL_MEDIA_TYPE_ALL;
@@ -350,14 +359,20 @@ function MediaPane(props) {
               </SearchCount>
             )}
             {!isSearching && (
-              <Button
-                variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.SECONDARY}
-                size={BUTTON_SIZES.SMALL}
-                onClick={openMediaPicker}
-              >
-                {__('Upload', 'web-stories')}
-              </Button>
+              <ButtonsWrapper>
+                <LinkInsertion />
+                <Tooltip title={__('Upload', 'web-stories')}>
+                  <Button
+                    variant={BUTTON_VARIANTS.SQUARE}
+                    type={BUTTON_TYPES.SECONDARY}
+                    size={BUTTON_SIZES.SMALL}
+                    onClick={openMediaPicker}
+                    aria-label={__('Upload', 'web-stories')}
+                  >
+                    <Icons.ArrowCloud />
+                  </Button>
+                </Tooltip>
+              </ButtonsWrapper>
             )}
           </FilterArea>
         </PaneHeader>
