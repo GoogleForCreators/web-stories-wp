@@ -38,6 +38,7 @@ import {
   useUploadVideoFrame,
   getPosterName,
 } from '../../../../../../app/media/utils';
+import { withProtocol } from '../../../../../../utils/url';
 
 const InputWrapper = styled.div`
   margin: 16px 4px;
@@ -133,7 +134,11 @@ function HotlinkModal({ isOpen, onClose }) {
 
   return (
     <Dialog
-      onClose={onClose}
+      onClose={() => {
+        onClose();
+        setLink('');
+        setErrorMsg(false);
+      }}
       isOpen={isOpen}
       title={__('Insert link', 'web-stories')}
       onPrimary={() => onInsert()}
@@ -148,7 +153,8 @@ function HotlinkModal({ isOpen, onClose }) {
           }}
           value={link}
           hint={errorMsg?.length ? errorMsg : description}
-          hasError={errorMsg?.length}
+          hasError={Boolean(errorMsg?.length)}
+          onBlur={() => setLink(withProtocol(link))}
         />
       </InputWrapper>
     </Dialog>
