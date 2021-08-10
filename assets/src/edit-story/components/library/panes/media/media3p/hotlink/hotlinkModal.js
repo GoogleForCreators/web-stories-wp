@@ -21,7 +21,7 @@ import { Input } from '@web-stories-wp/design-system';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import {
-  createBlob,
+  getFileNameFromUrl,
   getFirstFrameOfVideo,
   getImageDimensions,
   getVideoDimensions,
@@ -34,6 +34,10 @@ import PropTypes from 'prop-types';
 import { useConfig } from '../../../../../../app';
 import Dialog from '../../../../../dialog';
 import useLibrary from '../../../../useLibrary';
+import {
+  useUploadVideoFrame,
+  getPosterName,
+} from '../../../../../../app/media/utils';
 
 const InputWrapper = styled.div`
   margin: 16px 4px;
@@ -46,6 +50,8 @@ function HotlinkModal({ isOpen, onClose }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+
+  const { uploadVideoPoster } = useUploadVideoFrame({});
 
   const [errorMsg, setErrorMsg] = useState(false);
 
@@ -94,10 +100,12 @@ function HotlinkModal({ isOpen, onClose }) {
       const { width, height } = await getMediaDimensions(link);
 
       // Create a poster file in case of videos.
-      let poster;
+      let posterData;
       if (isVideo) {
+        const originalFileName = getFileNameFromUrl(link);
+        const fileName = getPosterName(originalFileName);
         const posterFile = await getFirstFrameOfVideo(link);
-        poster = createBlob(posterFile);
+        posterData = await uploadVideoPoster(0, fileName, posterFile);
       }
       insertElement(type, {
         resource: {
@@ -106,7 +114,8 @@ function HotlinkModal({ isOpen, onClose }) {
           height,
           src: link,
           local: false,
-          poster: isVideo ? poster : null,
+          poster: isVideo ? posterData.poster : null,
+          posterId: isVideo ? posterData.posterId : null,
         },
       });
       setErrorMsg(null);
@@ -115,12 +124,12 @@ function HotlinkModal({ isOpen, onClose }) {
     } catch (e) {
       setErrorMsg(
         __(
-          'Image can not be loaded from that site. Please configure…',
+          'Media can not be loaded from the site. Please configure…',
           'web-stories'
         )
       );
     }
-  }, [insertElement, link, errorMsg, getFileInfo, onClose]);
+  }, [insertElement, link, errorMsg, getFileInfo, onClose, uploadVideoPoster]);
 
   return (
     <Dialog
