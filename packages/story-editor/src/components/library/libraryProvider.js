@@ -61,7 +61,7 @@ function LibraryProvider({ children }) {
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showElementsTab } = useFeatures();
-  const { show_media3p: showMedia3p } = useConfig();
+  const { showMedia3p } = useConfig();
 
   const renderEmptyPane = useCallback((id) => {
     const EmptyPane = (props) => <SharedPane id={getPaneId(id)} {...props} />;

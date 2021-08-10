@@ -31,7 +31,7 @@ import { ConfigProvider } from '../../../app/config';
 describe('useLibrary()', () => {
   it('should return an empty pane for lazy tabs unless active', async () => {
     const configState = {
-      show_media3p: true,
+      showMedia3p: true,
     };
     const { result } = renderHook(() => useLibrary((state) => state), {
       // eslint-disable-next-line react/display-name, react/prop-types
