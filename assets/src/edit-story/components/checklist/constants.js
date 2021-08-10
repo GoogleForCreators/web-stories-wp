@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { trackClick } from '@web-stories-wp/tracking';
+import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
@@ -62,6 +64,10 @@ export const CATEGORY_LABELS = {
   [ISSUE_TYPES.PRIORITY]: __('Priority', 'web-stories'),
 };
 
+// Event Tracking
+const onAmpErrorClick = (evt) => trackClick(evt, 'click_checklist_amp_test');
+
+// Checklist Copy
 export const ACCESSIBILITY_COPY = {
   fontSizeTooSmall: {
     title: sprintf(
@@ -221,7 +227,7 @@ export const DESIGN_COPY = {
       MAX_LINKS_PER_PAGE
     ),
   },
-  lowImageResolution: {
+  imageResolutionTooLow: {
     title: sprintf(
       /* translators: %s: minimum image size width x minimum image size height. */
       __(
@@ -277,7 +283,7 @@ export const DESIGN_COPY = {
       `${MIN_VIDEO_RESOLUTION}p`
     ),
   },
-  videoResolutionTooHigh: {
+  videoTooLong: {
     title: sprintf(
       /* translators: %d: maximum video length in minutes. */
       _n(
@@ -471,6 +477,29 @@ export const PRIORITY_COPY = {
   },
   storyMissingPublisherName: {
     title: __('Add Site Title', 'web-stories'),
+  },
+  ampValidation: {
+    title: __('Compatibility', 'web-stories'),
+    footer: (
+      <TranslateWithMarkup
+        mapping={{
+          a: (
+            <Link
+              href={__('https://wp.stories.google/docs/', 'web-stories')}
+              rel="noreferrer"
+              target="_blank"
+              onClick={onAmpErrorClick}
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
+            />
+          ),
+        }}
+      >
+        {__(
+          'Your story contains errors that can affect eligibility to appear on Google. Please see <a>our FAQ</a> for more information.',
+          'web-stories'
+        )}
+      </TranslateWithMarkup>
+    ),
   },
 };
 

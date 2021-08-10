@@ -84,7 +84,7 @@ const ImageElementResolution = () => {
     [setHighlights]
   );
 
-  const { footer, title } = DESIGN_COPY.lowImageResolution;
+  const { footer, title } = DESIGN_COPY.imageResolutionTooLow;
   const isRendered = failingElements.length > 0;
   useRegisterCheck('ImageElementResolution', isRendered);
 

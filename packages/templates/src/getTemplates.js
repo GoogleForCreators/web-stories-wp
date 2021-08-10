@@ -105,6 +105,16 @@ async function getTemplates(imageBaseUrl) {
     'summer-fashion-collection',
     'buying-art-on-the-internet',
     'house-hunting',
+    'new-york-party-round-up',
+    'a-day-in-the-life',
+    'elegant-travel-itinerary',
+    'modernist-travel-guide',
+    'simple-tech-tutorial',
+    'magazine-article',
+    'fashion-inspiration',
+    'skin-care-at-home',
+    'art-books-gift-guide',
+    'vintage-chairs-buying-guide',
   ];
 
   const trackTiming = getTimeTracker('load_templates');

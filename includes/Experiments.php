@@ -397,6 +397,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Mute Videos', 'web-stories' ),
 				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}

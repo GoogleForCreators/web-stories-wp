@@ -176,7 +176,7 @@ const useQuickActions = () => {
       ?.toString()
       .split(':')?.[0];
     const is3PGif =
-      !idOrigin &&
+      (!idOrigin || idOrigin?.toLowerCase() === 'media/tenor') &&
       selectedElements?.[0]?.resource?.type?.toLowerCase() === 'gif';
     const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
     const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
