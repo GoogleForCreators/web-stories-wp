@@ -100,8 +100,8 @@
       "@prefix-dependencies"
     ],
     "composer-normalize": "composer-normalize",
-    "phpcbf": "phpcbf",
-    "phpcs": "phpcs",
+    "phpcbf": "phpcbf --severity=1",
+    "phpcs": "phpcs --severity=1",
     "phpmd": "phpmd . text phpmd.xml",
     "phpstan": "phpstan analyse --memory-limit=512M",
     "prefix-dependencies": [
