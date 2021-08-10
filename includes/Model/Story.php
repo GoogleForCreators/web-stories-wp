@@ -137,7 +137,7 @@ class Story {
 		$this->thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $this->thumbnail_id ) {
-			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$this->poster_portrait = (string) wp_get_attachment_image_url( $this->thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		}
 
 		return true;
