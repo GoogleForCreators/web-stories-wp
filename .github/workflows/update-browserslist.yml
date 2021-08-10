@@ -5,7 +5,7 @@ on:
     - cron: '0 12 * * 1'
 
 jobs:
-  update-fonts:
+  update-browserslist-db:
     name: Update browserslist db
     runs-on: ubuntu-latest
     timeout-minutes: 60
@@ -34,5 +34,5 @@ jobs:
           commit-message: Update browserslist db
           title: Update browserslist db
           body: Updates `caniuse-lite` to use the latest browser’s versions and statistics.
-          branch: update/google-fonts
+          branch: update/browserslist-db
           labels: Dependencies
