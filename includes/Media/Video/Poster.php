@@ -1,0 +1,243 @@
+<?php
+/**
+ * Class Poster
+ *
+ * @package   Google\Web_Stories
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
+ */
+
+/**
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace Google\Web_Stories\Media\Video;
+
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use WP_Post;
+
+/**
+ * Class Poster
+ *
+ * @package Google\Web_Stories\Media\Video
+ */
+class Poster extends Service_Base {
+	/**
+	 * The poster post meta key.
+	 *
+	 * @var string
+	 */
+	const POSTER_POST_META_KEY = 'web_stories_is_poster';
+
+	/**
+	 * The poster id post meta key.
+	 *
+	 * @var string
+	 */
+	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
+
+	/**
+	 * Init.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	public function register() {
+		$this->register_meta();
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
+		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
+		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
+	}
+
+	/**
+	 * Register meta for attachment post type.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @return void
+	 */
+	protected function register_meta() {
+		register_meta(
+			'post',
+			self::POSTER_ID_POST_META_KEY,
+			[
+				'sanitize_callback' => 'absint',
+				'type'              => 'integer',
+				'description'       => __( 'Attachment id of generated poster image.', 'web-stories' ),
+				'show_in_rest'      => true,
+				'default'           => 0,
+				'single'            => true,
+				'object_subtype'    => 'attachment',
+			]
+		);
+	}
+
+	/**
+	 * Registers additional REST API fields upon API initialization.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	public function rest_api_init() {
+		register_rest_field(
+			'attachment',
+			'featured_media',
+			[
+				'schema' => [
+					'description' => __( 'The ID of the featured media for the object.', 'web-stories' ),
+					'type'        => 'integer',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+			]
+		);
+
+		register_rest_field(
+			'attachment',
+			'featured_media_src',
+			[
+				'get_callback' => [ $this, 'get_callback_featured_media_src' ],
+				'schema'       => [
+					'description' => __( 'URL, width and height.', 'web-stories' ),
+					'type'        => 'object',
+					'properties'  => [
+						'src'       => [
+							'type'   => 'string',
+							'format' => 'uri',
+						],
+						'width'     => [
+							'type' => 'integer',
+						],
+						'height'    => [
+							'type' => 'integer',
+						],
+						'generated' => [
+							'type' => 'boolean',
+						],
+					],
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Get attachment source for featured media.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $prepared Prepared data before response.
+	 *
+	 * @return array
+	 */
+	public function get_callback_featured_media_src( $prepared ): array {
+		$id    = $prepared['featured_media'] ?? null;
+		$image = [];
+		if ( $id ) {
+			$image = $this->get_thumbnail_data( $id );
+		}
+
+		return $image;
+	}
+
+	/**
+	 * Filters the attachment data prepared for JavaScript.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array   $response   Array of prepared attachment data.
+	 * @param WP_Post $attachment Attachment object.
+	 *
+	 * @return array $response;
+	 */
+	public function wp_prepare_attachment_for_js( $response, $attachment ): array {
+		if ( 'video' === $response['type'] ) {
+			$thumbnail_id = (int) get_post_thumbnail_id( $attachment );
+			$image        = '';
+			if ( 0 !== $thumbnail_id ) {
+				$image = $this->get_thumbnail_data( $thumbnail_id );
+			}
+			$response['featured_media']     = $thumbnail_id;
+			$response['featured_media_src'] = $image;
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Get poster image data.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $thumbnail_id Attachment ID.
+	 *
+	 * @return array
+	 */
+	public function get_thumbnail_data( int $thumbnail_id ): array {
+		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
+		list ( $src, $width, $height ) = $img_src;
+		$generated                     = $this->is_poster( $thumbnail_id );
+		return compact( 'src', 'width', 'height', 'generated' );
+	}
+
+	/**
+	 * Deletes associated poster image when a video is deleted.
+	 *
+	 * This prevents the poster image from becoming an orphan because it is not
+	 * displayed anywhere in WordPress or the story editor.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param int $attachment_id ID of the attachment to be deleted.
+	 *
+	 * @return void
+	 */
+	public function delete_video_poster( int $attachment_id ) {
+		$post_id = get_post_meta( $attachment_id, self::POSTER_ID_POST_META_KEY, true );
+
+		if ( empty( $post_id ) ) {
+			return;
+		}
+
+		// Used in favor of slow meta queries.
+		$is_poster = $this->is_poster( $post_id );
+		if ( $is_poster ) {
+			wp_delete_attachment( $post_id, true );
+		}
+	}
+
+	/**
+	 * Helper util to check if attachment is a poster.
+	 *
+	 * @since 1.2.1
+	 *
+	 * @param int $post_id Attachment ID.
+	 *
+	 * @return bool
+	 */
+	protected function is_poster( int $post_id ): bool {
+		$terms = get_the_terms( $post_id, Media_Source_Taxonomy::TAXONOMY_SLUG );
+		if ( is_array( $terms ) && ! empty( $terms ) ) {
+			$slugs = wp_list_pluck( $terms, 'slug' );
+
+			return in_array( 'poster-generation', $slugs, true );
+		}
+
+		return false;
+	}
+}

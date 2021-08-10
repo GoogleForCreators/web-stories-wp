@@ -39,7 +39,7 @@ export default {
     { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
   ],
   description: __(
-    'The modern and bright Beauty template lends itself well as a foundation for stories covering make up, beauty products, shopping guides, instructions & tutorials and more.',
+    'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',
     'web-stories'
   ),
   ...template,

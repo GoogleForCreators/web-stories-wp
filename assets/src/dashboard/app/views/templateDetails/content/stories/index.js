@@ -20,10 +20,10 @@
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
+import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
-import { TransformProvider } from '../../../../../../edit-story/components/transform';
 import { Layout } from '../../../../../components';
 import {
   formattedTemplatesArray,

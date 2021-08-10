@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Integrations;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Types;
@@ -271,7 +271,7 @@ class Jetpack extends Service_Base {
 			return;
 		}
 
-		wp_set_object_terms( (int) $object_id, 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+		wp_set_object_terms( (int) $object_id, 'poster-generation', Media_Source_Taxonomy::TAXONOMY_SLUG );
 	}
 
 	/**

@@ -10,7 +10,7 @@ Since page templates are based on the same source files as templates, some custo
 
 In the page templates pane, pages are labeled and able to be filtered by their page type (Examples: Cover, Section, Quote, ...). These types are defined in the source template's raw JSON.
 
-To set page template type for a template page, set `pageTemplateType` on the template JSON's page objects to one of the types defined at `src/edit-story/components/library/panes/pageTemplates/constants.js`. If `pageTemplateType` is set to `null`, the page will be omitted from the page templates pane.
+To set page template type for a template page, set `pageTemplateType` on the template JSON's page objects to one of the types defined at `packages/story-editor/src/components/library/panes/pageTemplates/constants.js`. If `pageTemplateType` is set to `null`, the page will be omitted from the page templates pane.
 
 Page Templates are named based on their original Template Name + Page Template Type like "Cooking Cover".
 

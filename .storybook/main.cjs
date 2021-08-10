@@ -18,7 +18,7 @@ module.exports = {
   stories: [
     './stories/**/*.js',
     '../assets/src/dashboard/**/stories/*.@(js|mdx)',
-    '../assets/src/edit-story/**/stories/*.@(js|mdx)',
+    '../packages/story-editor/src/**/stories/*.@(js|mdx)',
     '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
     '../packages/design-system/src/**/stories/*.@(js|mdx)',
   ],
