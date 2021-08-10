@@ -29,12 +29,12 @@ import {
 import { useGridViewKeys } from '@web-stories-wp/design-system';
 import { useResizeEffect, useDebouncedCallback } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { PreviewPage } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
 import { StoryPropType } from '../../types';
-import { PreviewPage } from '../../../edit-story/components/previewPage';
 import {
   GalleryContainer,
   MiniCardButton,

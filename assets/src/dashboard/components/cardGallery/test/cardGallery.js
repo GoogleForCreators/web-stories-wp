@@ -22,7 +22,11 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-jest.mock('../../../../edit-story/components/previewPage/previewPage');
+jest.mock('@web-stories-wp/story-editor', () => ({
+  __esModule: true,
+  ...jest.requireActual('@web-stories-wp/story-editor'),
+  PreviewPage: ({ page }) => <div data-testid={page.name} />, // eslint-disable-line react/prop-types,react/display-name
+}));
 jest.mock('@web-stories-wp/react', () => {
   const { useEffect, useCallback } = jest.requireActual('react');
   const useResizeEffect = (ref, cb) =>
@@ -40,7 +44,6 @@ jest.mock('@web-stories-wp/react', () => {
     useDebouncedCallback,
   };
 });
-import { PreviewPage } from '../../../../edit-story/components/previewPage';
 import { renderWithProviders } from '../../../testUtils';
 import CardGallery from '..';
 
@@ -51,8 +54,6 @@ const createMockTemplate = (pages) => ({
 });
 
 describe('CardGallery', () => {
-  PreviewPage.mockImplementation(({ page }) => <div data-testid={page.name} />);
-
   it('should render CardGallery', async () => {
     const template = createMockTemplate([
       { id: 'id-1', name: 'test-child' },

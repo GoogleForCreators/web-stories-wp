@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { TransformProvider, FontContext } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
@@ -26,8 +27,6 @@ import RelatedGrid from '..';
 import { renderWithProviders } from '../../../../../../testUtils';
 import LayoutProvider from '../../../../../../components/layout/provider';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
-import { TransformProvider } from '../../../../../../../edit-story/components/transform';
-import FontContext from '../../../../../../../edit-story/app/font/context';
 
 function render(ui, providerValues = {}, renderOptions = {}) {
   const fontContextValue = {
