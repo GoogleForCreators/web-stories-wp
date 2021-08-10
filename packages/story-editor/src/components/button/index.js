@@ -18,68 +18,23 @@
  * External dependencies
  */
 import { forwardRef } from 'react';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { Button, BUTTON_VARIANTS } from '@web-stories-wp/design-system';
 import { ArrowDown as ArrowDownIcon, More as MoreIcon } from '../../icons';
 
-const Base = styled.button.attrs(({ isDisabled }) => ({
-  disabled: isDisabled,
-}))`
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 2px;
-  background: transparent;
-  display: block;
-  min-width: ${({ isIcon }) => (isIcon ? 'initial' : '63px')};
-  max-height: 30px;
-  padding: 0 10px;
-  cursor: pointer;
-
-  &:active {
-    outline: none;
-  }
-
-  svg {
-    width: 1em;
-  }
-
-  ${({ disabled }) =>
-    disabled &&
-    `
-		pointer-events: none;
-		opacity: .3;
-	`}
-`;
-
-const StyledButton = styled(Base)`
-  border: none;
-  padding: 0;
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  min-width: initial;
-  visibility: ${({ isHidden }) => (isHidden ? 'hidden' : 'visible')};
-  color: ${({ theme }) => theme.colors.standard.white};
-
-  svg {
-    width: ${({ width }) => width}px;
-    height: ${({ height }) => height}px;
-    display: block;
-  }
-`;
-
 export const ArrowDown = (props) => (
-  <StyledButton {...props}>
+  <Button {...props} variant={BUTTON_VARIANTS.ICON}>
     <ArrowDownIcon />
-  </StyledButton>
+  </Button>
 );
 
 export const More = forwardRef(function More(props, ref) {
   return (
-    <StyledButton {...props} ref={ref}>
+    <Button {...props} variant={BUTTON_VARIANTS.ICON} ref={ref}>
       <MoreIcon />
-    </StyledButton>
+    </Button>
   );
 });
