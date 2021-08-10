@@ -32,7 +32,7 @@ import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { useConfig } from "../../../app";
+import { useConfig } from '../../../app';
 
 function AccessibilityPanel({
   children,
