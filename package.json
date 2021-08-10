@@ -35,7 +35,7 @@
   "dependencies": {
     "@web-stories-wp/activation-notice": "*",
     "@web-stories-wp/animation": "*",
-	"@web-stories-wp/dashboard": "*",
+    "@web-stories-wp/dashboard": "*",
     "@web-stories-wp/date": "*",
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/fonts": "*",
@@ -60,7 +60,7 @@
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
     "@web-stories-wp/widget": "*",
-	"@web-stories-wp/wp-dashboard": "*",
+    "@web-stories-wp/wp-dashboard": "*",
     "@web-stories-wp/wp-story-editor": "*",
     "@wordpress/api-fetch": "^5.2.1",
     "react": "^17.0.2",
