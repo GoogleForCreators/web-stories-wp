@@ -253,7 +253,7 @@ M 1.000000 , 0.500000 c 0.000000 , 0.276148 -0.223852 , 0.500000 -0.500000 , 0.5
 
 #### Creating a shape from your normalized path
 
-Copy the outputted path from your terminal and navigate to `assets/src/edit-story/masks/constants.js`. In that file create a new key describing your shape in `MaskTypes`. For the shape shown above an apt description would be something like:
+Copy the outputted path from your terminal and navigate to `packages/story-editor/src/masks/constants.js`. In that file create a new key describing your shape in `MaskTypes`. For the shape shown above an apt description would be something like:
 
 ```javascript
 export const MaskTypes = {

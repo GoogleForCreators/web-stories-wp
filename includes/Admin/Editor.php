@@ -53,7 +53,7 @@ class Editor extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'edit-story';
+	const SCRIPT_HANDLE = 'wp-story-editor';
 
 	/**
 	 * AMP validator script handle.
