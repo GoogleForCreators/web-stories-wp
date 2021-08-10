@@ -161,7 +161,36 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Text element right clicked', () => {
-    it.todo('should return the correct menu items');
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
+        RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+        RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+        RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
+        RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
+        RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
+      ]);
+    });
   });
 
   describe('Background image right clicked', () => {
