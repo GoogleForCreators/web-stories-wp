@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -215,7 +215,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff\">Written by Betty D</span>\n<span style=\"color: #fff\">23 July, 2020</span>",
+          "content": "<span style=\"color: #fff\">Written by Betty D</span>\n<span style=\"color: #fff\">July 23, 2020</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -626,7 +626,7 @@
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #fff\">New York, no stranger to being on the go, makes it minimal this time. New York, no stranger to being on the go.</span>",
+          "content": "<span style=\"color: #fff\">New York, no stranger to being on the go, makes it minimal this time.</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,

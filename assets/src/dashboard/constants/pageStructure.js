@@ -24,10 +24,7 @@ export {
 export const WPBODY_ID = 'wpbody';
 
 export const DASHBOARD_LEFT_NAV_WIDTH = 288;
-export const DASHBOARD_TOP_MARGIN = 45;
-export const DEFAULT_DASHBOARD_TOP_SPACE = 10;
 
-export const DASHBOARD_LEFT_RAIL_VISIBLE_CLASSNAME = 'leftRailVisible';
 export const MIN_DASHBOARD_WIDTH = 1098;
 
 export const VIEWPORT_BREAKPOINT = {

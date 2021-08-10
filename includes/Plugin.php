@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\AMP\Output_Buffer;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\Injector;
 
@@ -69,6 +70,7 @@ class Plugin extends ServiceBasedPlugin {
 		'activation_flag'              => Admin\Activation_Flag::class,
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
+		'amp_output_buffer'            => Output_Buffer::class,
 		'amp_story_player_assets'      => AMP_Story_Player_Assets::class,
 		'adsense'                      => AdSense::class,
 		'ad_manager'                   => Ad_Manager::class,
@@ -87,11 +89,17 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
+		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
-		'media'                        => Media\Media::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
+		'media.image_sizes'            => Media\Image_Sizes::class,
+		'media.media_source'           => Media\Media_Source_Taxonomy::class,
+		'media.video.captions'         => Media\Video\Captions::class,
+		'media.video.muting'           => Media\Video\Muting::class,
+		'media.video.optimization'     => Media\Video\Optimization::class,
+		'media.video.poster'           => Media\Video\Poster::class,
 		'meta_boxes'                   => Admin\Meta_Boxes::class,
 		'settings'                     => Settings::class,
 		'site_health'                  => Admin\Site_Health::class,
@@ -119,7 +127,6 @@ class Plugin extends ServiceBasedPlugin {
 		'rest.template_lock'           => REST_API\Template_Lock_Controller::class,
 		'user_preferences'             => User\Preferences::class,
 		'web_stories_block'            => Block\Web_Stories_Block::class,
-		'video_captions'               => Media\Video_Captions::class,
 	];
 
 	/**

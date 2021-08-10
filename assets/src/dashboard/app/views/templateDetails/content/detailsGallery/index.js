@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 import { sprintf, __ } from '@web-stories-wp/i18n';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
   Button,
   BUTTON_SIZES,
@@ -37,7 +37,13 @@ import {
  */
 import { CardGallery, ColorList } from '../../../../../components';
 import { TemplatePropType } from '../../../../../types';
-import { Column, ColumnContainer, DetailContainer } from '../../components';
+import {
+  Container,
+  Panel,
+  DetailContainer,
+  TemplateDetails,
+  Inner,
+} from '../../components';
 
 const ByLineText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
@@ -48,14 +54,23 @@ const DescriptionText = styled(Text)`
 `;
 
 const PaginationContainer = styled.div`
-  display: flex;
-  align-items: center;
-  ${({ rightPadding }) =>
-    rightPadding ? 'padding-right: 52px;' : 'padding-left: 52px;'}
+  position: absolute;
+  top: ${470 / 2}px;
+  ${({ alignLeft }) =>
+    alignLeft
+      ? css`
+          left: 0;
+          transform: translate(-187.5%, -50%);
+        `
+      : css`
+          right: 0;
+          transform: translate(187.5%, -50%);
+        `}
 `;
 
 const TemplateTag = styled(Chip)`
   margin-right: 12px;
+  margin-bottom: 12px;
   > span {
     color: ${({ theme }) => theme.colors.fg.primary} !important;
   }
@@ -64,6 +79,7 @@ const TemplateTag = styled(Chip)`
 const MetadataContainer = styled.div`
   margin-bottom: 24px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 `;
 
@@ -137,47 +153,49 @@ function DetailsGallery({
     : null;
 
   return (
-    <ColumnContainer>
-      <Column>
-        <PaginationContainer rightPadding>{PrevButton}</PaginationContainer>
-        <CardGallery
-          story={template}
-          isRTL={isRTL}
-          galleryLabel={__('Template details by page', 'web-stories')}
-        />
-      </Column>
-      <Column>
-        <DetailContainer>
-          <Display
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-            as="h3"
-            data-testid="template-details-title"
-          >
-            {template.title}
-          </Display>
-          <ByLineText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
-            {byLine}
-          </ByLineText>
-          <DescriptionText
-            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
-          >
-            {template.description}
-          </DescriptionText>
+    <Panel>
+      <Container>
+        <PaginationContainer alignLeft>{PrevButton}</PaginationContainer>
+        <Inner>
+          <CardGallery
+            story={template}
+            isRTL={isRTL}
+            galleryLabel={__('Template details by page', 'web-stories')}
+          />
+          <TemplateDetails>
+            <DetailContainer>
+              <Display
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+                as="h3"
+                data-testid="template-details-title"
+              >
+                {template.title}
+              </Display>
+              <ByLineText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
+                {byLine}
+              </ByLineText>
+              <DescriptionText
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+              >
+                {template.description}
+              </DescriptionText>
 
-          <MetadataContainer>
-            {template.tags.map((tag) => (
-              <TemplateTag key={tag} disabled>
-                {tag}
-              </TemplateTag>
-            ))}
-          </MetadataContainer>
-          <MetadataContainer>
-            <ColorList colors={template.colors} size={32} />
-          </MetadataContainer>
-        </DetailContainer>
+              <MetadataContainer>
+                {template.tags.map((tag) => (
+                  <TemplateTag key={tag} disabled>
+                    {tag}
+                  </TemplateTag>
+                ))}
+              </MetadataContainer>
+              <MetadataContainer>
+                <ColorList colors={template.colors} size={32} />
+              </MetadataContainer>
+            </DetailContainer>
+          </TemplateDetails>
+        </Inner>
         <PaginationContainer>{NextButton}</PaginationContainer>
-      </Column>
-    </ColumnContainer>
+      </Container>
+    </Panel>
   );
 }
 

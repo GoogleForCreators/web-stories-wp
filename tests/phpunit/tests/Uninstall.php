@@ -28,9 +28,11 @@ class Uninstall extends Test_Case {
 	public function setUp() {
 		parent::setUp();
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
+		$terms_ids            = self::factory()->term->create_many( 5, [ 'taxonomy' => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG ] );
 		foreach ( self::$attachment_ids as $attachment_id ) {
 			add_post_meta( $attachment_id, 'web_stories_is_poster', '1' );
 			add_post_meta( $attachment_id, 'web_stories_poster_id', '999' );
+			wp_set_object_terms( $attachment_id, $terms_ids, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 		}
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ] );
 		self::factory()->post->create_many( 5, [ 'post_type' => \Google\Web_Stories\Template_Post_Type::POST_TYPE_SLUG ] );
@@ -50,6 +52,29 @@ class Uninstall extends Test_Case {
 		$this->assertFalse( get_option( \Google\Web_Stories\Database_Upgrader::OPTION ) );
 		$this->assertFalse( get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION ) );
 		$this->assertFalse( get_transient( 'web_stories_link_data_fdsf' ) );
+	}
+
+
+	public function test_delete_terms() {
+		$terms = get_terms(
+			[
+				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+				'hide_empty' => false,
+			]
+		);
+		$this->assertCount( 5, $terms );
+		\Google\Web_Stories\delete_terms();
+		$terms = get_terms(
+			[
+				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
+				'hide_empty' => false,
+			]
+		);
+		$this->assertEqualSets( [], $terms );
+		foreach ( self::$attachment_ids as $attachment_id ) {
+			$post_terms = get_the_terms( $attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
+			$this->assertFalse( $post_terms );
+		}
 	}
 
 	public function test_delete_posts() {

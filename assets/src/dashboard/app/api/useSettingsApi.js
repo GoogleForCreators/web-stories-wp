@@ -86,6 +86,7 @@ export default function useSettingsApi(
       publisherLogoToMakeDefault,
       videoCache,
     }) => {
+      dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED });
       try {
         const query = {};
         if (googleAnalyticsId !== undefined) {
@@ -148,6 +149,7 @@ export default function useSettingsApi(
             videoCache: response.web_stories_video_cache,
           },
         });
+        dispatch({ type: SETTINGS_ACTION_TYPES.SETTING_SAVED, payload: true });
       } catch (err) {
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_FAILURE,

@@ -13,27 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import renderer from 'react-test-renderer';
+import { render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import TinyMCEToggle from '../Toggle';
+import TinyMceToggle from '../Toggle';
 
-jest.mock('@wordpress/element', () => {
-  const originalModule = jest.requireActual('react');
-  return {
-    ...originalModule,
-    concatChildren: jest.fn(),
-    createInterpolateElement: jest.fn(() => null),
-  };
-});
-
-describe('compare TinyMCEToggle snapshots', () => {
-  it('tinyMCEToggle control with hidden attrs true', () => {
+describe('Toggle', () => {
+  it('should render nothing if hidden', () => {
     const props = {
       fieldObj: {
         show: true,
@@ -43,11 +35,12 @@ describe('compare TinyMCEToggle snapshots', () => {
       field: '',
     };
 
-    const tree = renderer.create(<TinyMCEToggle {...props} />).toJSON();
-    expect(tree).toMatchSnapshot();
+    render(<TinyMceToggle {...props} />);
+
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
   });
 
-  it('tinyMCEToggle control with hidden attr false', () => {
+  it('should render toggle control', () => {
     const props = {
       fieldObj: {
         show: true,
@@ -57,7 +50,8 @@ describe('compare TinyMCEToggle snapshots', () => {
       field: '',
     };
 
-    const tree = renderer.create(<TinyMCEToggle {...props} />).toJSON();
-    expect(tree).toMatchSnapshot();
+    render(<TinyMceToggle {...props} />);
+
+    expect(screen.getByRole('checkbox')).toBeInTheDocument();
   });
 });

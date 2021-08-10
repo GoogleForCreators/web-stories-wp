@@ -55,5 +55,6 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 		$this->deduplicate_inline_styles( $this->dom );
 		$this->add_video_cache( $this->dom, $this->args['video_cache'] );
 		$this->remove_blob_urls( $this->dom );
+		$this->sanitize_srcset( $this->dom );
 	}
 }

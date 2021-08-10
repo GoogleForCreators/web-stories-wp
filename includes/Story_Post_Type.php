@@ -30,6 +30,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post_Type;
 use WP_Rewrite;
 use WP_Query;
+use WP_Post;
 
 /**
  * Class Story_Post_Type.
@@ -137,6 +138,7 @@ class Story_Post_Type extends Service_Base {
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
 	}
 
 	/**
@@ -282,5 +284,25 @@ class Story_Post_Type extends Service_Base {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Invalid cache.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param int     $post_id   Post ID.
+	 * @param WP_Post $post  Post object.
+	 *
+	 * @return void
+	 */
+	public function clear_user_posts_count( $post_id, $post ) {
+		if ( ! $post instanceof WP_Post || self::POST_TYPE_SLUG !== $post->post_type ) {
+			return;
+		}
+
+		$cache_key   = "count_user_{$post->post_type}_{$post->post_author}";
+		$cache_group = 'user_posts_count';
+		wp_cache_delete( $cache_key, $cache_group );
 	}
 }

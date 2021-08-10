@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -78,6 +78,18 @@ describe('Settings View', () => {
     return settings;
   }
 
+  async function snackbarConfirmation() {
+    await waitFor(
+      () => {
+        const alert = fixture.screen.getByRole('alert');
+        expect(alert).toHaveTextContent('Setting saved.');
+      },
+      {
+        timeout: 300,
+      }
+    );
+  }
+
   it('should render', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
@@ -86,7 +98,7 @@ describe('Settings View', () => {
     expect(PageHeading).toBeTruthy();
   });
 
-  it('should update the tracking id when pressing Enter', async () => {
+  it('should update the tracking id when pressing Enter and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const input = within(settingsView).getByRole('textbox');
@@ -109,9 +121,11 @@ describe('Settings View', () => {
     const { googleAnalyticsId } = await getSettingsState();
 
     expect(input.value).toBe(googleAnalyticsId);
+
+    await snackbarConfirmation();
   });
 
-  it('should update the tracking id by clicking the save button', async () => {
+  it('should update the tracking id by clicking the save button and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const { getByRole } = within(settingsView);
@@ -137,9 +151,11 @@ describe('Settings View', () => {
     const { googleAnalyticsId } = await getSettingsState();
 
     expect(input.value).toBe(googleAnalyticsId);
+
+    await snackbarConfirmation();
   });
 
-  it('should allow the analytics id to saved as an empty string', async () => {
+  it('should allow the analytics id to saved as an empty string and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
     const { googleAnalyticsId: initialId } = await getSettingsState();
 
@@ -167,6 +183,8 @@ describe('Settings View', () => {
     const { googleAnalyticsId: analyticsId } = await getSettingsState();
 
     expect(analyticsId).toEqual('');
+
+    await snackbarConfirmation();
   });
 
   it('should not allow an invalid analytics id to saved', async () => {
@@ -223,7 +241,7 @@ describe('Settings View', () => {
     expect(errorMessage).toBeTruthy();
   });
 
-  it('should update the default a publisher logo on click', async () => {
+  it('should update the default a publisher logo on click and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const publisherLogosContainer = within(settingsView).getByTestId(
@@ -279,9 +297,11 @@ describe('Settings View', () => {
 
     const confirmDefault = within(NewLogoToMakeDefault).getByText(/^Default/);
     expect(confirmDefault).toBeTruthy();
+
+    await snackbarConfirmation();
   });
 
-  it('should remove a publisher logo on click', async () => {
+  it('should remove a publisher logo on click and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const PublisherLogos = within(settingsView).queryAllByTestId(
@@ -318,9 +338,11 @@ describe('Settings View', () => {
     ).queryAllByTestId(/^uploaded-publisher-logo-/);
 
     expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
+
+    await snackbarConfirmation();
   });
 
-  it('should remove a publisher logo on keydown enter', async () => {
+  it('should remove a publisher logo on keydown enter and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId(
       'publisher-logos-container'
     );
@@ -365,9 +387,11 @@ describe('Settings View', () => {
     ).queryAllByTestId(/^uploaded-publisher-logo-/);
 
     expect(updatedLogos.length).toBeLessThan(initialPublisherLogosLength);
+
+    await snackbarConfirmation();
   });
 
-  it('should update the default logo on click', async () => {
+  it('should update the default logo on click and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const PublisherLogos =
@@ -407,9 +431,11 @@ describe('Settings View', () => {
       UpdatedPublisherLogos[1].children
     ).find((node) => node.textContent === 'Default');
     expect(secondPublisherLogoIsDefault).toBeTruthy();
+
+    await snackbarConfirmation();
   });
 
-  it('should update the default logo on keydown enter', async () => {
+  it('should update the default logo on keydown enter and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId(
       'publisher-logos-container'
     );
@@ -455,6 +481,8 @@ describe('Settings View', () => {
     ).find((node) => node.textContent === 'Default');
 
     expect(secondPublisherLogoIsDefault).toBeTruthy();
+
+    await snackbarConfirmation();
   });
 
   it('should render the telemetry settings checkbox', async () => {
@@ -467,7 +495,7 @@ describe('Settings View', () => {
     expect(TelemetrySettingsCheckbox).toBeTruthy();
   });
 
-  it('should toggle the value and call the API provider when the tracking opt in box is clicked', async () => {
+  it('should toggle the value and call the API provider when the tracking opt in box is clicked and display snackbar confirmation', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const TelemetrySettingsCheckbox = within(settingsView).queryAllByTestId(
@@ -479,5 +507,7 @@ describe('Settings View', () => {
     await fixture.events.click(TelemetrySettingsCheckbox[0]);
 
     expect(TelemetrySettingsCheckbox[0].checked).toBeFalse();
+
+    await snackbarConfirmation();
   });
 });

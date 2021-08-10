@@ -27,7 +27,6 @@ import { SAVED_TEMPLATES_VIEWING_LABELS } from './savedTemplates';
 import { TEMPLATES_GALLERY_VIEWING_LABELS } from './templates';
 
 export const KEYBOARD_USER_CLASS = `useskeyboard`;
-export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
   LAYOUT_SQUISHABLE: 3,
@@ -112,13 +111,6 @@ export const VIEW_STYLE_LABELS = {
   [VIEW_STYLE.LIST]: __('Switch to Grid View', 'web-stories'),
 };
 
-export const ICON_METRICS = {
-  VIEW_STYLE: { width: 17, height: 14 },
-  LEFT_RIGHT_ARROW: { width: 16, height: 16 },
-  LOCK: { width: 16, height: 16 },
-  TELEMETRY_BANNER_EXIT: { width: 10, height: 10 },
-};
-
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
   SAVED_TEMPLATES: 'SAVED_TEMPLATES',
@@ -139,7 +131,6 @@ export const MIN_IMG_HEIGHT = 96;
 export const MIN_IMG_WIDTH = 96;
 
 export * from './components';
-export * from './direction';
 export * from './pageStructure';
 export * from './savedTemplates';
 export * from './settings';

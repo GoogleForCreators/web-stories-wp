@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -150,69 +150,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Darker Grotesque",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 1060,
-              "des": -296,
-              "tAsc": 1060,
-              "tDes": -296,
-              "tLGap": 0,
-              "wAsc": 1060,
-              "wDes": 296,
-              "xH": 406,
-              "capH": 563,
-              "yMin": -296,
-              "yMax": 1060,
-              "hAsc": 1060,
-              "hDes": -296,
-              "lGap": 0
-            }
-          },
-          "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 0.8,
-          "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
-          "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #fee2c6\">American record producer</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "x": 48,
-          "y": 225,
-          "width": 332,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "de7a5031-3d75-44a3-91ff-0dcd178474a1"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -266,14 +203,6 @@
           "id": "63599ff7-c69e-4134-8fb2-1fb033da2b90",
           "type": "effect-fly-in",
           "targets": ["2813cfb7-ec17-411f-963e-bd038b45d9c7"],
-          "flyInDir": "rightToLeft",
-          "duration": 1600,
-          "delay": 200
-        },
-        {
-          "id": "84655c34-4d68-470b-818c-ea8e1dc9ea26",
-          "type": "effect-fly-in",
-          "targets": ["de7a5031-3d75-44a3-91ff-0dcd178474a1"],
           "flyInDir": "rightToLeft",
           "duration": 1600,
           "delay": 200
@@ -624,7 +553,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #f7722f\">TRAVIS</span>\n<span style=\"font-weight: 900; color: #f7722f\">TRAVIS</span>",
+          "content": "<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>\n<span style=\"font-weight: 900; color: #f7722f; text-transform: uppercase\">Travis</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -909,7 +838,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #f7722f\">Travis Travis' full length junior album will be released this November. Mixing hip-hop with lo-fi and ambient genres, this album is set to satisfy his original fanbase.</span>",
+          "content": "<span style=\"font-weight: 700; color: #f7722f\">Travis Travis' full length album will be released this November. Mixing hip-hop with lo-fi and ambient genres, this album is set to satisfy his original fanbase.</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1048,7 +977,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: #fff\">MOONGAZING</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Moongazing</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -1103,7 +1032,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #f7722f; letter-spacing: 0.1em\">CAN'T WAIT</span>\n<span style=\"color: #f7722f; letter-spacing: 0.1em\">TO LISTEN TO</span>",
+          "content": "<span style=\"color: #f7722f; letter-spacing: 0.1em; text-transform: uppercase\">Can't wait</span>\n<span style=\"color: #f7722f; letter-spacing: 0.1em; text-transform: uppercase\">to listen to</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1430,7 +1359,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #3d3225\">ARIANA</span>\n<span style=\"font-weight: 900; color: #3d3225\">ARIANA</span>",
+          "content": "<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>\n<span style=\"font-weight: 900; color: #3d3225; text-transform: uppercase\">Ariana</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -1854,7 +1783,7 @@
           "lineHeight": 1.2,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">5 RINGS</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">5 Rings</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -1909,7 +1838,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em\">CAN'T WAIT</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em\">TO LISTEN TO</span>",
+          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">Can't wait</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">to listen to</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2238,7 +2167,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #f4e6b0\">TEYANA</span>\n<span style=\"font-weight: 900; color: #f4e6b0\">TEYANA</span>",
+          "content": "<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>\n<span style=\"font-weight: 900; color: #f4e6b0; text-transform: uppercase\">Teyana</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -2662,7 +2591,7 @@
           "lineHeight": 0.7,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">GOING</span>\n<span style=\"font-weight: 900; color: #fff\">WEST</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Going</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">West</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -2717,7 +2646,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #f4e6b0; letter-spacing: 0.1em\">Top 10</span>\n<span style=\"color: #f4e6b0; letter-spacing: 0.1em\">Dancers</span>",
+          "content": "<span style=\"color: #f4e6b0; letter-spacing: 0.1em; text-transform: uppercase\">Top 10</span>\n<span style=\"color: #f4e6b0; letter-spacing: 0.1em; text-transform: uppercase\">Dancers</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3006,7 +2935,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fee2c6\">JUSTIN</span>\n<span style=\"font-weight: 900; color: #fee2c6\">BARBER</span>",
+          "content": "<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Justin</span>\n<span style=\"font-weight: 900; color: #fee2c6; text-transform: uppercase\">Barber</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -3468,7 +3397,7 @@
           "lineHeight": 0.7,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">PINK</span>\n<span style=\"font-weight: 900; color: #fff\">SWEATER</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Pink</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Sweater</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,
@@ -3523,7 +3452,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em\">THAT's</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em\">FLOW!</span>",
+          "content": "<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">That's</span>\n<span style=\"color: #fee2c6; letter-spacing: 0.1em; text-transform: uppercase\">Flow!</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -3709,7 +3638,7 @@
           "lineHeight": 0.7,
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 900; color: #fff\">WHAT'S</span>\n<span style=\"font-weight: 900; color: #fff\">NEXT?</span>",
+          "content": "<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">What's</span>\n<span style=\"font-weight: 900; color: #fff; text-transform: uppercase\">Next?</span>",
           "fontWeight": 500,
           "borderRadius": {
             "locked": true,

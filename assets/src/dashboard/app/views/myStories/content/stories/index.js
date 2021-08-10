@@ -176,22 +176,27 @@ export const AllDataFetchedAsList = () => {
   );
 };
 
-export const _StoriesViewGrid = () => (
-  <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <SnackbarProvider>
-      <StoriesView
-        filterValue={STORY_STATUS.ALL}
-        sort={sort}
-        storyActions={storyActions}
-        stories={formattedStoriesArray}
-        view={view}
-      />
-    </SnackbarProvider>
-  </FlagsProvider>
-);
+export const _StoriesViewGrid = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
+  return (
+    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+      <SnackbarProvider>
+        <StoriesView
+          filterValue={STORY_STATUS.ALL}
+          sort={sort}
+          storyActions={storyActions}
+          stories={formattedStoriesArray}
+          view={{ ...view, pageSize }}
+        />
+      </SnackbarProvider>
+    </FlagsProvider>
+  );
+};
 
 export const _StoriesViewList = () => (
-  <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+  <FlagsProvider features={{ enablePostLocking: true }}>
     <SnackbarProvider>
       <StoriesView
         filterValue={STORY_STATUS.ALL}

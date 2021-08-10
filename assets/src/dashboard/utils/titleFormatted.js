@@ -20,7 +20,7 @@
 import { __ } from '@web-stories-wp/i18n';
 
 const titleFormatted = (rawTitle) => {
-  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+  return rawTitle === '' ? __('Untitled', 'web-stories') : rawTitle;
 };
 
 export default titleFormatted;

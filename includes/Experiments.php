@@ -220,18 +220,6 @@ class Experiments extends Service_Base {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 7965
-			 * Creation date: 2021-06-18
-			 */
-			[
-				'name'        => 'enableChecklistCompanion',
-				'label'       => __( 'Checklist companion', 'web-stories' ),
-				'description' => __( 'Enable the new version of the pre-publish checklist as a popup in the editor', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @samwhale
 			 * Issue: 6153
 			 * Creation date: 2021-06-07
@@ -252,6 +240,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Stickers', 'web-stories' ),
 				'description' => __( 'Append sticker buttons to the bottom of the shapes panel in library', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @littlemilkstudio
@@ -354,18 +343,6 @@ class Experiments extends Service_Base {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #7232
-			 * Creation date: 2021-07-14
-			 */
-			[
-				'name'        => 'enableGifOptimization',
-				'label'       => __( 'GIF optimization', 'web-stories' ),
-				'description' => __( 'Enable the conversion of animated GIFs to videos', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
 			 * Issue: #3126
 			 * Creation date: 2021-02-02
 			 */
@@ -396,6 +373,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Eyedropper', 'web-stories' ),
 				'description' => __( 'Enable choosing color using an eyedropper', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
@@ -407,6 +385,20 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Video Cache', 'web-stories' ),
 				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
+			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8310
+			 * Creation date: 2021-07-15
+			 */
+			[
+				'name'        => 'enableMuteVideo',
+				'label'       => __( 'Mute Videos', 'web-stories' ),
+				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}

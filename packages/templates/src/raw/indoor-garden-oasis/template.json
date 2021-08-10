@@ -1,5 +1,5 @@
 {
-  "version": 30,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -124,7 +124,7 @@
           "lineHeight": 1.4,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 700; color: #235524\">Home gardening guide.</span>\n<span style=\"color: #235524\">Maria Contelo</span>",
+          "content": "<span style=\"font-weight: 700; color: #235524\">Home gardening guide</span>\n<span style=\"color: #235524\">Maria Contelo</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,

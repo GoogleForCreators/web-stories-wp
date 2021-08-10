@@ -27,7 +27,7 @@ const Link = styled.a`
   color: ${({ theme }) => theme.colors.link.fg};
   text-decoration: none;
   cursor: pointer;
-
+  display: block;
   &:focus,
   &:hover {
     color: ${({ theme }) => theme.colors.link.hover.fg};

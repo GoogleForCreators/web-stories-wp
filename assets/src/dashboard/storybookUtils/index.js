@@ -25,4 +25,5 @@ export const STORYBOOK_PAGE_SIZE = {
   width: 212,
   height: 318,
   containerHeight: 376.89,
+  posterHeight: 300,
 };

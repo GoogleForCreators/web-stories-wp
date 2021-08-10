@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
-import { createContext } from '@web-stories-wp/design-system';
+import { createContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
