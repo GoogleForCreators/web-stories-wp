@@ -20,3 +20,7 @@
 import App from './app';
 
 export default App;
+export { GlobalStyle as DashboardGlobalStyle } from './theme';
+export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
+export { ConfigProvider as DashboardConfigProvider } from './app/config';
+export { default as ApiProvider } from './app/api/apiProvider';
