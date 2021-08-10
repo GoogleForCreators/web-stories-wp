@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import queryString from 'query-string';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -39,12 +39,9 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
 
       try {
         const response = await dataAdapter.get(
-          queryString.stringifyUrl({
-            url: globalMediaApi,
-            query: {
-              include: mediaIds.join(','),
-              per_page: 100,
-            },
+          addQueryArgs(globalMediaApi, {
+            include: mediaIds.join(','),
+            per_page: 100,
           })
         );
 
