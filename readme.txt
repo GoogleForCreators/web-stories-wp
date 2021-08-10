@@ -111,7 +111,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.10.0 =
 
-**Release Date:** July 13, 2021.
+**Release Date:** August 10, 2021.
 
 * New feature: 29 new templates for creators to choose from.
 * New feature: color eyedropper.
