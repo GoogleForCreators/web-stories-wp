@@ -163,6 +163,7 @@ function MediaPane(props) {
   );
 
   const { showSnackbar } = useSnackbar();
+  const enableHotlinking = useFeature('enableHotlinking');
 
   const {
     allowedTranscodableMimeTypes,
@@ -358,7 +359,7 @@ function MediaPane(props) {
                 )}
               </SearchCount>
             )}
-            {!isSearching && (
+            {!isSearching && enableHotlinking && (
               <ButtonsWrapper>
                 <LinkInsertion />
                 <Tooltip title={__('Upload', 'web-stories')}>
@@ -373,6 +374,16 @@ function MediaPane(props) {
                   </Button>
                 </Tooltip>
               </ButtonsWrapper>
+            )}
+            {!isSearching && !enableHotlinking && (
+              <Button
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={openMediaPicker}
+              >
+                {__('Upload', 'web-stories')}
+              </Button>
             )}
           </FilterArea>
         </PaneHeader>

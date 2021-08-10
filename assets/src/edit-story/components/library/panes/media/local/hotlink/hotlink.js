@@ -27,6 +27,7 @@ import {
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -42,6 +43,10 @@ const Button = styled(DefaultButton)`
 
 function Hotlink() {
   const [isOpen, setIsOpen] = useState(false);
+  const enableHotlinking = useFeature('enableHotlinking');
+  if (!enableHotlinking) {
+    return null;
+  }
   const label = __('Insert by link', 'web-stories');
   return (
     <>
