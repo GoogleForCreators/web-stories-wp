@@ -358,12 +358,12 @@ describe('Checklist integration - Card visibility', () => {
   // issues that show if there is a poster image
   const posterIssuesRequiringMediaUploadPermissions = [
     PRIORITY_COPY.posterTooSmall.title,
-    PRIORITY_COPY.storyPosterWrongRatio.title,
+    PRIORITY_COPY.storyPosterSize.title,
   ];
 
   const designIssuesRequiringMediaUploadPermissions = [
     DESIGN_COPY.videoResolutionTooLow.title,
-    DESIGN_COPY.lowImageResolution.title,
+    DESIGN_COPY.imageResolutionTooLow.title,
   ];
 
   const accessibilityIssuesRequiringMediaUploadPermissions = [
