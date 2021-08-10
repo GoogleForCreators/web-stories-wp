@@ -220,18 +220,6 @@ class Experiments extends Service_Base {
 	public function get_experiments(): array {
 		return [
 			/**
-			 * Author: @brittanyirl
-			 * Issue: 8443
-			 * Creation date: 2021-07-28
-			 */
-			[
-				'name'        => 'enableAmpValidationCheck',
-				'label'       => __( 'Amp Validation Error Check', 'web-stories' ),
-				'description' => __( 'Enable AMP validation in the checklist', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
 			 * Author: @samwhale
 			 * Issue: 6153
 			 * Creation date: 2021-06-07
