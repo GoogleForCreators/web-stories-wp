@@ -230,7 +230,7 @@ const editorAndDashboard = {
   ...sharedConfig,
   entry: {
     'wp-story-editor': './packages/wp-story-editor/src/index.js',
-    'stories-dashboard': './assets/src/dashboard/index.js',
+    'stories-dashboard': './packages/wp-dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins.filter(
