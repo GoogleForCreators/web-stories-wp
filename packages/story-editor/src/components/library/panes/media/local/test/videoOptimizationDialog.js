@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -57,7 +57,7 @@ function setup() {
   );
 
   const { container } = view;
-  Modal.setAppElement(container);
+  setAppElement(container);
 
   return view;
 }
