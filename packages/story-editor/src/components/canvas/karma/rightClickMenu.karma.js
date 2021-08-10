@@ -344,7 +344,7 @@ describe('Right Click Menu integration', () => {
 
       // background: click 'scale and crop image' button
       await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.scaleAndCropImage
+        fixture.editor.canvas.rightClickMenu.scaleAndCropBackgroundImage
       );
 
       // Verify element is being edited
@@ -858,6 +858,28 @@ describe('Right Click Menu integration', () => {
       expect(pages[0].elements[0].isDefaultBackground).toBeTrue();
       // third page should have the default background
       expect(pages[2].elements[0].isDefaultBackground).toBeTrue();
+    });
+
+    it('should highlight the media panel', async () => {
+      // add image as background
+      const earthImage = await addEarthImage();
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.setAsPageBackground
+      );
+
+      // select replace background image
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.replaceBackgroundImage
+      );
+
+      // verify focus
+      expect(document.activeElement).toBe(fixture.editor.library.mediaTab);
     });
   });
 });

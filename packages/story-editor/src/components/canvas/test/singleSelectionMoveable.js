@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { render, act, waitFor } from '@testing-library/react';
+// eslint-disable-next-line import/named
 import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
