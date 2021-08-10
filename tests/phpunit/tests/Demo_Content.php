@@ -50,7 +50,7 @@ class Demo_Content extends Test_Case {
 		$title = $demo->get_title();
 
 		$this->assertNotEmpty( $title );
-		$this->assertInternalType( 'string', $title );
+		$this->assertIsString( $title );
 	}
 
 	/**

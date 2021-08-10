@@ -229,8 +229,8 @@ class Experiments extends Test_Case {
 		$this->assertNotEmpty( $experiments->get_experiment_statuses( 'editor' ) );
 
 		foreach ( $experiments->get_experiment_statuses( 'editor' ) as $key => $status ) {
-			$this->assertInternalType( 'string', $key );
-			$this->assertInternalType( 'bool', $status );
+			$this->assertIsString( $key );
+			$this->assertIsBool( $status );
 		}
 	}
 
