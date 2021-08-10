@@ -19,7 +19,7 @@
  */
 import { useCallback, useState, useEffect, useRef } from 'react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
-import { useSnackbar } from '@web-stories-wp/design-system';
+import { useSnackbar, localStore } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -27,7 +27,6 @@ import { useSnackbar } from '@web-stories-wp/design-system';
 import useApi from '../../api/useApi';
 import { useRouteHistory } from '../../router';
 import { APP_ROUTES } from '../../../constants';
-import localStore from '../../../../edit-story/utils/localStore';
 import { SUCCESS } from '../../textContent';
 
 // The value associated with this key indicates if the user has interacted with

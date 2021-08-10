@@ -176,7 +176,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "Written by Betty Doe\n23 July, 2020",
+          "content": "Written by Betty Doe\nJuly 23, 2020",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,

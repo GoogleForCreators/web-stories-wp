@@ -712,7 +712,7 @@
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
           "type": "text",
-          "content": "<span style=\"color: #fff\">Avocados are incredibly nutritious. They contain more potassium than bananas, are loaded with heart-healthy monounsaturated fatty acids, are loaded with fiber.</span>",
+          "content": "<span style=\"color: #fff\">Avocados are incredibly nutritious. They contain more potassium than bananas, are loaded with heart-healthy monounsaturated fatty acids and fiber.</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1896,7 +1896,7 @@
           "lineHeight": 1.3,
           "textAlign": "left",
           "padding": { "vertical": 0, "horizontal": 0, "locked": true },
-          "content": "<span style=\"font-weight: 400; color: #fff\">Add ice cubes, avocado cubes, milk and condense milk to the blender. Blend till creamy. Approximately 3 min.</span>",
+          "content": "<span style=\"font-weight: 400; color: #fff\">Add ice cubes, avocado cubes, milk and condensed milk to the blender. Blend till creamy. Approximately 3 min.</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
