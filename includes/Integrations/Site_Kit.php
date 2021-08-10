@@ -216,7 +216,7 @@ class Site_Kit extends Service_Base {
 			$analytics_link = admin_url(
 				add_query_arg(
 					[
-						's'   => urlencode( __( 'Site Kit by Google', 'web-stories' ) ),
+						's'   => rawurlencode( __( 'Site Kit by Google', 'web-stories' ) ),
 						'tab' => 'search',
 					],
 					'plugin-install.php'
