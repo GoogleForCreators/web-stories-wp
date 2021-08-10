@@ -143,7 +143,7 @@ class Story_Post_Type extends Test_Case {
 	public function test_get_post_type_icon() {
 		$story_post_type = $this->get_story_object();
 		$valid           = $this->call_private_method( $story_post_type, 'get_post_type_icon' );
-		$this->assertContains( 'data:image/svg+xml;base64', $valid );
+		$this->assertStringContainsString( 'data:image/svg+xml;base64', $valid );
 	}
 
 	/**

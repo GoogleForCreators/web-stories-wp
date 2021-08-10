@@ -128,9 +128,9 @@ class Carousel_Renderer extends Test_Case {
 
 		$output = $renderer->render();
 
-		$this->assertContains( 'web-stories-list alignnone is-view-type-carousel', $output );
-		$this->assertContains( 'web-stories-list__story', $output );
-		$this->assertContains( 'web-stories-list__story-poster', $output );
+		$this->assertStringContainsString( 'web-stories-list alignnone is-view-type-carousel', $output );
+		$this->assertStringContainsString( 'web-stories-list__story', $output );
+		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 
 	}
 

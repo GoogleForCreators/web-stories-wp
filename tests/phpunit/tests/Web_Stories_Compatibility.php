@@ -34,7 +34,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'missing_extension', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( 'fake_extension', $error_message );
+		$this->assertStringContainsString( 'fake_extension', $error_message );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'missing_class', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( 'FAKE_CLASS', $error_message );
+		$this->assertStringContainsString( 'FAKE_CLASS', $error_message );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'missing_function', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( 'fake_function', $error_message );
+		$this->assertStringContainsString( 'fake_function', $error_message );
 	}
 
 	/**
@@ -77,7 +77,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'failed_check_wp_version', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( $compatibility->get_wp_version(), $error_message );
+		$this->assertStringContainsString( $compatibility->get_wp_version(), $error_message );
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'failed_check_php_version', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( $compatibility->get_php_version(), $error_message );
+		$this->assertStringContainsString( $compatibility->get_php_version(), $error_message );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'failed_check_required_files', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
+		$this->assertStringContainsString( 'You appear to be running an incomplete version of the plugin.', $error_message );
 	}
 
 	/**
@@ -125,7 +125,7 @@ class Web_Stories_Compatibility extends Test_Case {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'failed_check_required_files', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
+		$this->assertStringContainsString( 'You appear to be running an incomplete version of the plugin.', $error_message );
 		$messages = $error->get_error_messages( 'failed_check_required_files' );
 		$this->assertCount( 1, $messages );
 	}

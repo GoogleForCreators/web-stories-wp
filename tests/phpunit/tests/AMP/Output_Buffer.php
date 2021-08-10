@@ -67,8 +67,8 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'transformed="self;v=1"', $actual );
-		$this->assertNotContains( 'AMP optimization could not be completed', $actual );
+		$this->assertStringContainsString( 'transformed="self;v=1"', $actual );
+		$this->assertStringNotContainsString( 'AMP optimization could not be completed', $actual );
 	}
 
 	/**
@@ -91,8 +91,8 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher=', $actual );
-		$this->assertContains( $name, $actual );
+		$this->assertStringContainsString( 'publisher=', $actual );
+		$this->assertStringContainsString( $name, $actual );
 	}
 
 	/**
@@ -121,14 +121,14 @@ class Output_Buffer extends Test_Case {
 
 		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
-		$this->assertContains( 'publisher-logo-src="http', $actual );
-		$this->assertContains( $name, $actual );
-		$this->assertContains( $logo, $actual );
+		$this->assertStringContainsString( 'publisher-logo-src="http', $actual );
+		$this->assertStringContainsString( $name, $actual );
+		$this->assertStringContainsString( $logo, $actual );
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher-logo-src=""', $actual );
-		$this->assertContains( 'amp=', $actual );
+		$this->assertStringContainsString( 'publisher-logo-src=""', $actual );
+		$this->assertStringContainsString( 'amp=', $actual );
 	}
 
 	/**
@@ -149,8 +149,8 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'publisher-logo-src=""', $actual );
-		$this->assertContains( 'amp=', $actual );
+		$this->assertStringContainsString( 'publisher-logo-src=""', $actual );
+		$this->assertStringContainsString( 'amp=', $actual );
 	}
 
 	/**
@@ -172,7 +172,7 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'poster-portrait-src=', $actual );
+		$this->assertStringContainsString( 'poster-portrait-src=', $actual );
 	}
 
 	/**
@@ -194,10 +194,10 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertNotContains( 'https://example.com/poster.jpg', $actual );
-		$this->assertContains( 'poster-portrait-src=', $actual );
-		$this->assertContains( wp_get_attachment_url( $attachment_id ), $actual );
-		$this->assertNotContains( 'poster-portrait-src=""', $actual );
+		$this->assertStringNotContainsString( 'https://example.com/poster.jpg', $actual );
+		$this->assertStringContainsString( 'poster-portrait-src=', $actual );
+		$this->assertStringContainsString( wp_get_attachment_url( $attachment_id ), $actual );
+		$this->assertStringNotContainsString( 'poster-portrait-src=""', $actual );
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'poster-portrait-src=""', $actual );
+		$this->assertStringContainsString( 'poster-portrait-src=""', $actual );
 	}
 
 	/**
@@ -233,6 +233,6 @@ class Output_Buffer extends Test_Case {
 
 		$actual = $this->prepare_response( $post );
 
-		$this->assertContains( 'amp=', $actual );
+		$this->assertStringContainsString( 'amp=', $actual );
 	}
 }

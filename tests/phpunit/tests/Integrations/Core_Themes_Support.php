@@ -150,6 +150,6 @@ class Core_Themes_Support extends Test_Case {
 		$actual = ob_get_clean();
 
 		$this->assertTrue( wp_script_is( 'web-stories-theme-style-twentytwentyone' ) );
-		$this->assertContains( 'web-stories-theme-header-section', $actual );
+		$this->assertStringContainsString( 'web-stories-theme-header-section', $actual );
 	}
 }

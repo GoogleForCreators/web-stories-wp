@@ -80,9 +80,9 @@ class Feed extends Test_Case {
 		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$feed = $this->do_rss2();
 
-		$this->assertContains( '<img', $feed );
-		$this->assertContains( 'images/canola.jpg', $feed );
-		$this->assertContains( 'wp-block-web-stories-embed', $feed );
+		$this->assertStringContainsString( '<img', $feed );
+		$this->assertStringContainsString( 'images/canola.jpg', $feed );
+		$this->assertStringContainsString( 'wp-block-web-stories-embed', $feed );
 	}
 
 	/**

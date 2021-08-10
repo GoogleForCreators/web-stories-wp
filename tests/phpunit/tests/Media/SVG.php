@@ -127,7 +127,7 @@ class SVG extends Test_Case {
 		$svg->register();
 		$setting = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 
-		$this->assertContains( 'svg', $setting );
+		$this->assertStringContainsString( 'svg', $setting );
 	}
 
 	/**

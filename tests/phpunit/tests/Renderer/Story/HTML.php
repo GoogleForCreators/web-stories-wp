@@ -79,13 +79,13 @@ class HTML extends Test_Case {
 
 		$actual = $this->setup_renderer( $post );
 
-		$this->assertContains( 'FOO', $actual );
-		$this->assertContains( 'BAZ', $actual );
-		$this->assertNotContains( 'BAR', $actual );
-		$this->assertNotContains( $start_tag, $actual );
-		$this->assertNotContains( $end_tag, $actual );
-		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
-		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
+		$this->assertStringContainsString( 'FOO', $actual );
+		$this->assertStringContainsString( 'BAZ', $actual );
+		$this->assertStringNotContainsString( 'BAR', $actual );
+		$this->assertStringNotContainsString( $start_tag, $actual );
+		$this->assertStringNotContainsString( $end_tag, $actual );
+		$this->assertStringContainsString( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertStringContainsString( '<meta name="amp-story-generator-version" content="', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 
@@ -106,13 +106,13 @@ class HTML extends Test_Case {
 
 		$actual = $this->setup_renderer( $post );
 
-		$this->assertContains( 'FOO', $actual );
-		$this->assertContains( 'BAZ', $actual );
-		$this->assertNotContains( 'BAR', $actual );
-		$this->assertNotContains( $start_tag, $actual );
-		$this->assertNotContains( $end_tag, $actual );
-		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
-		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
+		$this->assertStringContainsString( 'FOO', $actual );
+		$this->assertStringContainsString( 'BAZ', $actual );
+		$this->assertStringNotContainsString( 'BAR', $actual );
+		$this->assertStringNotContainsString( $start_tag, $actual );
+		$this->assertStringNotContainsString( $end_tag, $actual );
+		$this->assertStringContainsString( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertStringContainsString( '<meta name="amp-story-generator-version" content="', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 
@@ -174,7 +174,7 @@ class HTML extends Test_Case {
 
 		remove_all_actions( 'web_stories_print_analytics' );
 
-		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertStringContainsString( '<amp-analytics type="gtag" data-credentials="include"', $actual );
 		$this->assertSame( $expected, $actual );
 	}
 
@@ -189,7 +189,7 @@ class HTML extends Test_Case {
 
 		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
 
-		$this->assertNotContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertStringNotContainsString( '<amp-analytics type="gtag" data-credentials="include"', $actual );
 		$this->assertSame( $source, $actual );
 	}
 
@@ -205,7 +205,7 @@ class HTML extends Test_Case {
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
-		$this->assertContains( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertStringContainsString( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $expected, $actual );
 	}
 
@@ -222,7 +222,7 @@ class HTML extends Test_Case {
 
 		$actual = $this->call_private_method( $renderer, 'print_social_share', [ $source ] );
 
-		$this->assertNotContains( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
+		$this->assertStringNotContainsString( '<amp-story-social-share layout="nodisplay"><script type="application/json">', $actual );
 		$this->assertSame( $source, $actual );
 
 		remove_filter( 'web_stories_share_providers', '__return_empty_array' );

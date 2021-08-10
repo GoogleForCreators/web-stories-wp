@@ -135,7 +135,7 @@ class Oembed extends Test_Case {
 		);
 
 		$actual = $renderer->filter_embed_html( $output, $current_post, 2000, 10000 );
-		$this->assertContains( 'width="360"', $actual );
-		$this->assertContains( 'height="600"', $actual );
+		$this->assertStringContainsString( 'width="360"', $actual );
+		$this->assertStringContainsString( 'height="600"', $actual );
 	}
 }

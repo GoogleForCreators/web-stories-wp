@@ -166,7 +166,7 @@ class Renderer extends Test_Case {
 		$this->call_private_method( $renderer, 'render_story_with_poster' );
 		$output = ob_get_clean();
 
-		$this->assertContains( 'web-stories-list__story-poster', $output );
+		$this->assertStringContainsString( 'web-stories-list__story-poster', $output );
 	}
 
 	/**
@@ -191,7 +191,7 @@ class Renderer extends Test_Case {
 		$this->call_private_method( $renderer, 'get_content_overlay' );
 		$output = ob_get_clean();
 
-		$this->assertContains( 'story-content-overlay__title', $output );
+		$this->assertStringContainsString( 'story-content-overlay__title', $output );
 	}
 
 	/**
@@ -256,9 +256,9 @@ class Renderer extends Test_Case {
 		$this->call_private_method( $renderer, 'maybe_render_archive_link' );
 		$expected = ob_get_clean();
 
-		$this->assertContains( 'web-stories-list__archive-link', $expected );
-		$this->assertContains( $archive_link, $expected );
-		$this->assertContains( 'View all stories', $expected );
+		$this->assertStringContainsString( 'web-stories-list__archive-link', $expected );
+		$this->assertStringContainsString( $archive_link, $expected );
+		$this->assertStringContainsString( 'View all stories', $expected );
 
 	}
 

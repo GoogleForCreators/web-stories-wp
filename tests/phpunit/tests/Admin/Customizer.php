@@ -461,7 +461,7 @@ class Customizer extends Test_Case {
 
 		$this->assertNotEmpty( $output );
 
-		$this->assertContains( 'web-stories-list--customizer', $output );
+		$this->assertStringContainsString( 'web-stories-list--customizer', $output );
 
 	}
 

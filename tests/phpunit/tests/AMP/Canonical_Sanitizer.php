@@ -50,7 +50,7 @@ class Canonical_Sanitizer extends Test_Case {
 		$sanitizer->sanitize();
 
 		$actual = $dom->saveHTML( $dom->documentElement );
-		$this->assertContains( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="https://example.com/canonical.html">', $actual );
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Canonical_Sanitizer extends Test_Case {
 
 		wp_delete_post( $post_id );
 
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 
 	/**
@@ -96,9 +96,9 @@ class Canonical_Sanitizer extends Test_Case {
 
 		wp_delete_post( $post_id );
 
-		$this->assertContains( '<link rel="canonical" href="', $actual );
-		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="', $actual );
+		$this->assertStringNotContainsString( '<link rel="canonical" href="">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 
 	/**
@@ -129,9 +129,9 @@ class Canonical_Sanitizer extends Test_Case {
 
 		wp_delete_post( $post_id );
 
-		$this->assertContains( '<link rel="canonical" href="', $actual );
-		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="', $actual );
+		$this->assertStringNotContainsString( '<link rel="canonical" href="">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 
 	/**
@@ -154,6 +154,6 @@ class Canonical_Sanitizer extends Test_Case {
 
 		wp_delete_post( $post_id );
 
-		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+		$this->assertStringContainsString( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 }

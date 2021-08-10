@@ -65,7 +65,7 @@ class Activation_Notice extends Test_Case {
 		$flag_before       = $this->activation_flag->get_activation_flag();
 		$output            = get_echo( [ $activation_notice, 'render_notice' ] );
 		$flag_after        = $this->activation_flag->get_activation_flag();
-		$this->assertContains( 'web-stories-plugin-activation-notice', $output );
+		$this->assertStringContainsString( 'web-stories-plugin-activation-notice', $output );
 		$this->assertTrue( $flag_before );
 		$this->assertFalse( $flag_after );
 	}

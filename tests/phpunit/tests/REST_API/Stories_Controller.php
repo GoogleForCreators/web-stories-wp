@@ -212,7 +212,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$edit_link = get_edit_post_link( $story, 'rest-api' );
 		$this->assertSame( $edit_link, $data['edit_link'] );
 		$this->assertArrayHasKey( 'embed_post_link', $data );
-		$this->assertContains( (string) $story, $data['embed_post_link'] );
+		$this->assertStringContainsString( (string) $story, $data['embed_post_link'] );
 	}
 
 	/**
@@ -259,7 +259,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'preview_link', $data );
 		$story_object = get_post( $story );
 		$slug         = $story_object->post_name;
-		$this->assertContains( $slug, $data['preview_link'] );
+		$this->assertStringContainsString( $slug, $data['preview_link'] );
 	}
 
 	/**
@@ -408,7 +408,7 @@ class Stories_Controller extends Test_REST_TestCase {
 	}
 
 	/**
-	 *
+	 * @covers ::create_item
 	 */
 	public function test_create_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );

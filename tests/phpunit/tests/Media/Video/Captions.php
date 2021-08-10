@@ -29,6 +29,6 @@ class Captions extends Test_Case {
 	 */
 	public function test_filter_list_of_allowed_filetypes() {
 		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
-		$this->assertContains( 'vtt', $site_exts );
+		$this->assertStringContainsString( 'vtt', $site_exts );
 	}
 }

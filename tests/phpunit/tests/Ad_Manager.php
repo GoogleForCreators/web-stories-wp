@@ -71,6 +71,6 @@ class Ad_Manager extends Test_Case {
 		$adsense = new \Google\Web_Stories\Ad_Manager();
 
 		$output = get_echo( [ $adsense, 'print_ad_manager_tag' ] );
-		$this->assertContains( '<amp-story-auto-ads>', $output );
+		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );
 	}
 }

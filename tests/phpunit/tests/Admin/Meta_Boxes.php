@@ -68,9 +68,9 @@ class Meta_Boxes extends Test_Case {
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$url        = $meta_boxes->get_meta_box_url( self::$story_id );
 
-		$this->assertContains( 'wp-admin/post.php', $url );
-		$this->assertContains( 'meta-box-loader=1', $url );
-		$this->assertContains( 'meta-box-loader-nonce=', $url );
+		$this->assertStringContainsString( 'wp-admin/post.php', $url );
+		$this->assertStringContainsString( 'meta-box-loader=1', $url );
+		$this->assertStringContainsString( 'meta-box-loader-nonce=', $url );
 	}
 
 	/**

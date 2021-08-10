@@ -118,7 +118,7 @@ class Discovery extends Test_Case {
 	public function test_print_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_metadata' ] );
-		$this->assertContains( '<title>', $output );
+		$this->assertStringContainsString( '<title>', $output );
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Discovery extends Test_Case {
 	public function test_print_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_schemaorg_metadata' ] );
-		$this->assertContains( 'application/ld+json', $output );
+		$this->assertStringContainsString( 'application/ld+json', $output );
 	}
 
 	/**
@@ -150,12 +150,12 @@ class Discovery extends Test_Case {
 	public function test_print_open_graph_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_open_graph_metadata' ] );
-		$this->assertContains( 'og:locale', $output );
-		$this->assertContains( 'og:type', $output );
-		$this->assertContains( 'og:description', $output );
-		$this->assertContains( 'article:published_time', $output );
-		$this->assertContains( 'article:modified_time', $output );
-		$this->assertContains( 'og:image', $output );
+		$this->assertStringContainsString( 'og:locale', $output );
+		$this->assertStringContainsString( 'og:type', $output );
+		$this->assertStringContainsString( 'og:description', $output );
+		$this->assertStringContainsString( 'article:published_time', $output );
+		$this->assertStringContainsString( 'article:modified_time', $output );
+		$this->assertStringContainsString( 'og:image', $output );
 	}
 
 	/**
@@ -178,8 +178,8 @@ class Discovery extends Test_Case {
 	public function test_print_feed_link() {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_feed_link' ] );
-		$this->assertContains( '<link rel="alternate"', $output );
-		$this->assertContains( get_bloginfo( 'name' ), $output );
+		$this->assertStringContainsString( '<link rel="alternate"', $output );
+		$this->assertStringContainsString( get_bloginfo( 'name' ), $output );
 	}
 
 	/**
@@ -188,10 +188,10 @@ class Discovery extends Test_Case {
 	public function test_print_twitter_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
-		$this->assertContains( 'twitter:card', $output );
-		$this->assertContains( 'twitter:image', $output );
-		$this->assertContains( 'twitter:image:alt', $output );
-		$this->assertContains( 'Discovery Test Story', $output );
+		$this->assertStringContainsString( 'twitter:card', $output );
+		$this->assertStringContainsString( 'twitter:image', $output );
+		$this->assertStringContainsString( 'twitter:image:alt', $output );
+		$this->assertStringContainsString( 'Discovery Test Story', $output );
 	}
 
 	/**

@@ -82,6 +82,6 @@ class Analytics extends Test_Case {
 		$actual_after = get_echo( [ $analytics, 'print_analytics_tag' ] );
 
 		$this->assertEmpty( $actual_before );
-		$this->assertContains( '<amp-analytics', $actual_after );
+		$this->assertStringContainsString( '<amp-analytics', $actual_after );
 	}
 }

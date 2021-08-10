@@ -120,7 +120,7 @@ class Experiments extends Test_Case {
 			]
 		);
 
-		$this->assertNotContains( "checked='checked'", $output );
+		$this->assertStringNotContainsString( "checked='checked'", $output );
 	}
 
 	/**
@@ -153,7 +153,7 @@ class Experiments extends Test_Case {
 				],
 			]
 		);
-		$this->assertContains( "checked='checked'", $output );
+		$this->assertStringContainsString( "checked='checked'", $output );
 	}
 
 	/**
@@ -186,8 +186,8 @@ class Experiments extends Test_Case {
 			]
 		);
 
-		$this->assertContains( "checked='checked'", $output );
-		$this->assertContains( 'disabled', $output );
+		$this->assertStringContainsString( "checked='checked'", $output );
+		$this->assertStringContainsString( 'disabled', $output );
 	}
 
 	/**

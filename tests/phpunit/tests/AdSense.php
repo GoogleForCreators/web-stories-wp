@@ -82,6 +82,6 @@ class AdSense extends Test_Case {
 		$adsense = new \Google\Web_Stories\AdSense();
 
 		$output = get_echo( [ $adsense, 'print_adsense_tag' ] );
-		$this->assertContains( '<amp-story-auto-ads>', $output );
+		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );
 	}
 }

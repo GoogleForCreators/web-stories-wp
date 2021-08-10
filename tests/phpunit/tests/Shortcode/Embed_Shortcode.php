@@ -58,7 +58,7 @@ class Embed_Shortcode extends Test_Case {
 			''
 		);
 
-		$this->assertContains( '<amp-story-player', $actual );
+		$this->assertStringContainsString( '<amp-story-player', $actual );
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Embed_Shortcode extends Test_Case {
 			''
 		);
 
-		$this->assertContains( __( 'Web Story', 'web-stories' ), $actual );
+		$this->assertStringContainsString( __( 'Web Story', 'web-stories' ), $actual );
 	}
 
 	/**
@@ -132,8 +132,8 @@ class Embed_Shortcode extends Test_Case {
 			''
 		);
 
-		$this->assertNotContains( '<amp-story-player', $actual );
-		$this->assertNotContains( '<img', $actual );
+		$this->assertStringNotContainsString( '<amp-story-player', $actual );
+		$this->assertStringNotContainsString( '<img', $actual );
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Embed_Shortcode extends Test_Case {
 			''
 		);
 
-		$this->assertNotContains( '<amp-story-player', $actual );
-		$this->assertContains( '<img', $actual );
+		$this->assertStringNotContainsString( '<amp-story-player', $actual );
+		$this->assertStringContainsString( '<img', $actual );
 	}
 }
