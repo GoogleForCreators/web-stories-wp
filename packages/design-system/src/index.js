@@ -15,9 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import Modal from 'react-modal';
+
+/**
  * Internal dependencies
  */
 import * as Icons from './icons';
+
+const { setAppElement } = Modal;
 
 export { Icons };
 export * from './components';
@@ -25,3 +32,4 @@ export * from './contexts';
 export * from './images';
 export * from './theme';
 export * from './utils';
+export { setAppElement };

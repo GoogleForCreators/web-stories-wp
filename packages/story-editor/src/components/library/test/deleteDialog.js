@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
-import Modal from 'react-modal';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { setAppElement, SnackbarContext } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -67,7 +66,7 @@ function setup() {
 describe('DeleteDialog', () => {
   it('should render', () => {
     const { container } = setup();
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     expect(screen.queryByText('Delete Image?')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
@@ -76,7 +75,7 @@ describe('DeleteDialog', () => {
 
   it('should update server and internal state on delete', async () => {
     const { container } = setup();
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     // Mock out `deleteMedia`.
     let serverDeleted = false;
@@ -101,7 +100,7 @@ describe('DeleteDialog', () => {
 
   it('should show snackbar if error on delete from server', async () => {
     const { container } = setup();
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     // Mock out `deleteMedia`.
     deleteMedia.mockImplementation(() => {
@@ -117,7 +116,7 @@ describe('DeleteDialog', () => {
 
   it('should show snackbar if error on delete from state', async () => {
     const { container } = setup();
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     // Mock out `deleteMediaElement`.
     deleteMediaElement.mockImplementation(() => {

@@ -25,7 +25,8 @@ import './publicPath';
 /**
  * External dependencies
  */
-import App, { Modal } from '@web-stories-wp/story-editor';
+import App from '@web-stories-wp/story-editor';
+import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
@@ -48,7 +49,7 @@ const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
-  Modal.setAppElement(appElement);
+  setAppElement(appElement);
 
   updateSettings(config.locale);
 

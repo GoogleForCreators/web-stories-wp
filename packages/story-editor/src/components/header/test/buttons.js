@@ -22,7 +22,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 import MockDate from 'mockdate';
 import { FlagsProvider } from 'flagged';
 
@@ -126,7 +126,7 @@ describe('buttons', () => {
   beforeAll(() => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
-    Modal.setAppElement(modalWrapper);
+    setAppElement(modalWrapper);
     MockDate.set('2020-07-15T12:00:00+00:00');
   });
 
