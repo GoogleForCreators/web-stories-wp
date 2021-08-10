@@ -18,6 +18,10 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -25,9 +29,6 @@ import { waitFor } from '@testing-library/react';
 import apiFetcher from '../../../../../../app/media/media3p/api/apiFetcher';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../../local/mediaPane';
-import localStore, {
-  LOCAL_STORAGE_PREFIX,
-} from '../../../../../../utils/localStore';
 
 const RESOURCE_BUILDERS = {
   unsplash: (name) => ({

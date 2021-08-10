@@ -31,10 +31,12 @@ import {
 } from '@web-stories-wp/i18n';
 import {
   THEME_CONSTANTS,
+  LOCAL_STORAGE_PREFIX,
   Text,
   Toggle,
   Headline,
   useLiveRegion,
+  localStore,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -42,9 +44,6 @@ import {
  */
 import { FullWidthWrapper } from '../../common/styles';
 import { ChipGroup } from '../../shared';
-import localStore, {
-  LOCAL_STORAGE_PREFIX,
-} from '../../../../../utils/localStore';
 import useLibrary from '../../../useLibrary';
 import useStory from '../../../../../app/story/useStory';
 import {

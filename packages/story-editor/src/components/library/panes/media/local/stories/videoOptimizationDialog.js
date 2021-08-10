@@ -17,6 +17,10 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -24,9 +28,6 @@ import { action } from '@storybook/addon-actions';
 import VideoOptimizationDialog from '../videoOptimizationDialog';
 import MediaContext from '../../../../../../app/media/context';
 import CurrentUserContext from '../../../../../../app/currentUser/context';
-import localStore, {
-  LOCAL_STORAGE_PREFIX,
-} from '../../../../../../utils/localStore';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Video Optimization',

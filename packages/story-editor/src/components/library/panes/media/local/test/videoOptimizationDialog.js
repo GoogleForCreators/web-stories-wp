@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
-import { setAppElement } from '@web-stories-wp/design-system';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+  setAppElement,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -27,9 +31,6 @@ import CurrentUserContext from '../../../../../../app/currentUser/context';
 import MediaContext from '../../../../../../app/media/context';
 import VideoOptimizationDialog from '../videoOptimizationDialog';
 import { renderWithTheme } from '../../../../../../testUtils';
-import localStore, {
-  LOCAL_STORAGE_PREFIX,
-} from '../../../../../../utils/localStore';
 
 const updateCurrentUser = jest.fn();
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;

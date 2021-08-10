@@ -32,6 +32,10 @@
  * External dependencies
  */
 import { waitFor, fireEvent, act, screen } from '@testing-library/react';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -39,15 +43,14 @@ import { waitFor, fireEvent, act, screen } from '@testing-library/react';
 import TermsDialog from '../panes/media/media3p/termsDialog';
 import { renderWithTheme } from '../../../testUtils';
 
-jest.mock('../../../utils/localStore', () => {
-  const actual = jest.requireActual('../../../utils/localStore');
-  return {
-    ...actual,
+jest.mock('@web-stories-wp/design-system', () => ({
+  __esModule: true,
+  ...jest.requireActual('@web-stories-wp/design-system'),
+  localStore: {
     setItemByKey: jest.fn(),
     getItemByKey: jest.fn(() => false),
-  };
-});
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
+  },
+}));
 
 describe('TermsDialog', () => {
   it('should render', () => {

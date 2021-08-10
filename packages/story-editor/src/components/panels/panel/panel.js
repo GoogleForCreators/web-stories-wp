@@ -22,11 +22,14 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 import { useStory } from '../../../app/story';
 import panelContext from './context';
 
