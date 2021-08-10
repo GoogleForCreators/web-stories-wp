@@ -23,13 +23,13 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { KeyArrowUp } from '../../icons';
+import { Icons } from '../../../../design-system';
 
 export const TOP_MARGIN = 16;
 
 export const TOGGLE_SHORTCUTS_MENU = 'mod+/';
 
-const Up = styled(KeyArrowUp)`
+const Up = styled(Icons.ArrowUp)`
   width: 12px;
   transform-origin: 50% 50%;
 `;

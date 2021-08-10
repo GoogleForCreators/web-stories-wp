@@ -26,8 +26,7 @@ import { themeHelpers } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
-import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
+import { Icons } from '../../../../../design-system';
 import { noop } from '../../../utils/noop';
 
 const SearchContainer = styled.div`
@@ -143,11 +142,11 @@ const SearchInput = forwardRef(function SearchInput(
         {...rest}
       />
       <SearchIconContainer>
-        <SearchIcon />
+        <Icons.Magnifier />
       </SearchIconContainer>
       {value.trim().length > 0 && (
         <ClearButton onClick={() => onChange({ target: { value: '' } })}>
-          <CloseIcon />
+          <Icons.Cross />
         </ClearButton>
       )}
     </SearchContainer>

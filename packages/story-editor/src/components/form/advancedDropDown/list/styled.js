@@ -26,7 +26,7 @@ import {
 /**
  * Internal dependencies
  */
-import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
+import { Icons } from '../../../../../../design-system';
 
 export const List = styled.div`
   width: 100%;
@@ -82,7 +82,7 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   }
 `;
 
-export const Selected = styled(Checkmark)`
+export const Selected = styled(Icons.Checkmark)`
   display: inline-block;
   width: 8px;
   height: auto;

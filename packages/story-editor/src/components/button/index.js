@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { ArrowDown as ArrowDownIcon, More as MoreIcon } from '../../icons';
+import { Icons } from '../../../../design-system';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,
@@ -72,14 +72,14 @@ const StyledButton = styled(Base)`
 
 export const ArrowDown = (props) => (
   <StyledButton {...props}>
-    <ArrowDownIcon />
+    <Icons.ArrowDown />
   </StyledButton>
 );
 
 export const More = forwardRef(function More(props, ref) {
   return (
     <StyledButton {...props} ref={ref}>
-      <MoreIcon />
+      <Icons.Dots />
     </StyledButton>
   );
 });

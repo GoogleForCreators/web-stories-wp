@@ -17,15 +17,17 @@
 /**
  * External dependencies
  */
+import React from 'react';
 import { __ } from '@web-stories-wp/i18n';
+
 /**
  * Internal dependencies
  */
-import { Media } from '../../icons';
+import { Icons } from '../../../../design-system';
 
 function StickerIcon() {
   const alt = __('Sticker element', 'web-stories');
-  return <Media aria-label={alt} />;
+  return <Icons.Media aria-label={alt} />;
 }
 
 export default StickerIcon;
