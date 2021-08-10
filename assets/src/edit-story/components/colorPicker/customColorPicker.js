@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { createSolid, PatternPropType } from '@web-stories-wp/patterns';
@@ -38,15 +38,11 @@ import GradientPicker from './gradientPicker';
 import Header from './header';
 import PatternTypePicker from './patternTypePicker';
 import useColor from './useColor';
+import AddCustomColor from './addCustomColor';
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const StyledButton = styled(Button)`
-  flex-basis: 100%;
-  margin: 0 16px 16px;
 `;
 
 function CustomColorPicker({
@@ -89,11 +85,6 @@ function CustomColorPicker({
     }
   }, [color, load]);
 
-  const handleAddSavedColor = useCallback(() => {
-    // TODO: save current color as global color
-    hideCustomPicker();
-  }, [hideCustomPicker]);
-
   return (
     <>
       <Header handleClose={handleClose}>
@@ -133,14 +124,10 @@ function CustomColorPicker({
           showOpacity={allowsOpacity}
         />
         {allowsSavedColors && (
-          <StyledButton
-            onClick={handleAddSavedColor}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
-          >
-            {__('Add', 'web-stories')}
-          </StyledButton>
+          <AddCustomColor
+            color={generatedColor || color}
+            onSave={hideCustomPicker}
+          />
         )}
       </Body>
     </>
