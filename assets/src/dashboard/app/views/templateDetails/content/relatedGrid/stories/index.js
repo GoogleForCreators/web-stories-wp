@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import { TransformProvider } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
  */
-import { TransformProvider } from '../../../../../../../edit-story/components/transform';
 import {
   formattedTemplatesArray,
   STORYBOOK_PAGE_SIZE,

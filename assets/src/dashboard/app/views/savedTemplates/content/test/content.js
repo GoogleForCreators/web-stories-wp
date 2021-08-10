@@ -29,10 +29,11 @@ import { VIEW_STYLE, SAVED_TEMPLATES_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Content from '..';
 
-jest.mock(
-  '../../../../../../edit-story/components/previewPage/previewPage.js',
-  () => () => null
-);
+jest.mock('@web-stories-wp/story-editor', () => ({
+  __esModule: true,
+  ...jest.requireActual('@web-stories-wp/story-editor'),
+  PreviewPage: ({ page }) => <div data-testid={page.name} />, // eslint-disable-line react/prop-types,react/display-name
+}));
 jest.mock(
   '../../../../../app/font/fontProvider.js',
   () =>

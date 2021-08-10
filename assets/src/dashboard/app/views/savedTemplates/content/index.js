@@ -28,10 +28,10 @@ import {
   LoadingSpinner,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
-import { TransformProvider } from '../../../../../edit-story/components/transform';
 import {
   Layout,
   LoadingContainer,
