@@ -234,10 +234,7 @@ export const DESIGN_COPY = {
   imageResolutionTooLow: {
     title: sprintf(
       /* translators: %s: minimum image size width x minimum image size height. */
-      __(
-        'Upload a higher resolution image to at least %s',
-        'web-stories'
-      ),
+      __('Upload a higher resolution image to at least %s', 'web-stories'),
       `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
     ),
     footer: (
