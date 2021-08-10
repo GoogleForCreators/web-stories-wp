@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, within, screen } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -125,7 +125,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: {},
       })
     );
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     const googleAnalyticsHeading = screen.getByText(GA_TEXT.SECTION_HEADING);
     expect(googleAnalyticsHeading).toBeInTheDocument();
@@ -159,7 +159,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: rawPublisherLogos,
       })
     );
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     expect(screen.queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
@@ -217,7 +217,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: {},
       })
     );
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     expect(screen.queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
@@ -238,7 +238,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos: {},
       })
     );
-    Modal.setAppElement(container);
+    setAppElement(container);
 
     const helperLink = screen.getByText('how to monetize your Web Stories', {
       selector: 'a',

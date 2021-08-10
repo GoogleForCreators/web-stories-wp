@@ -19,12 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-
-/**
- * Internal dependencies
- */
-import Context from '../../../edit-story/app/font/context';
-import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFiles';
+import {
+  FontContext as Context,
+  useLoadFontFiles,
+} from '@web-stories-wp/story-editor';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
