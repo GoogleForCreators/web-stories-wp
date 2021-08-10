@@ -21,12 +21,15 @@ import PropTypes from 'prop-types';
 import { useReducer, useEffect, useState, useMemo, useRef } from 'react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '@web-stories-wp/animation';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useCurrentUser } from '../currentUser';
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../utils/localStore';
 import { BASE_NAVIGATION_FLOW } from '../../components/helpCenter/constants';
 import Context from './context';
 import {
