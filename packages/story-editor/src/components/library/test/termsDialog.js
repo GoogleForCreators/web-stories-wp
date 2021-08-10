@@ -43,14 +43,14 @@ import {
 import TermsDialog from '../panes/media/media3p/termsDialog';
 import { renderWithTheme } from '../../../testUtils';
 
-jest.mock('../../../utils/localStore', () => {
-  const actual = jest.requireActual('../../../utils/localStore');
-  return {
-    ...actual,
+jest.mock('@web-stories-wp/design-system', () => ({
+  __esModule: true,
+  ...jest.requireActual('@web-stories-wp/design-system'),
+  localStore: {
     setItemByKey: jest.fn(),
     getItemByKey: jest.fn(() => false),
-  };
-});
+  },
+}));
 
 describe('TermsDialog', () => {
   it('should render', () => {
