@@ -61,7 +61,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'assets/src/dashboard/karma-tests.cjs', watched: false },
+      { pattern: 'packages/dashboard/src/karma-tests.cjs', watched: false },
       { pattern: 'packages/karma-fixture/src/init.js', watched: false },
       {
         pattern: '__static__/**/*',
@@ -79,7 +79,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'assets/src/dashboard/karma-tests.cjs': ['webpack', 'sourcemap'],
+      'packages/dashboard/src/karma-tests.cjs': ['webpack', 'sourcemap'],
     },
 
     proxies: {
