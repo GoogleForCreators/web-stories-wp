@@ -86,7 +86,7 @@ module.exports = function (config) {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: getWebpackConfig('edit-story', config),
+    webpack: getWebpackConfig('wp-story-editor', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
