@@ -21,12 +21,12 @@ import {
   themeHelpers,
   THEME_CONSTANTS,
   Text,
+  Icons,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../../design-system';
 
 export const List = styled.div`
   width: 100%;

@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { __ } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
 
 function StickerIcon() {
   const alt = __('Sticker element', 'web-stories');

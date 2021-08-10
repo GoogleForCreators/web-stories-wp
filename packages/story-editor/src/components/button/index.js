@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
 
 const Base = styled.button.attrs(({ isDisabled }) => ({
   disabled: isDisabled,

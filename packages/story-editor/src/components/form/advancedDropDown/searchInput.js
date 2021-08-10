@@ -21,12 +21,11 @@ import { forwardRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers, Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../../design-system';
 import { noop } from '../../../utils/noop';
 
 const SearchContainer = styled.div`

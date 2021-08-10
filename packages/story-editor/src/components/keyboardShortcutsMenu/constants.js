@@ -19,11 +19,11 @@
  */
 import { _x } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Icons } from '../../../../design-system';
 
 export const TOP_MARGIN = 16;
 
