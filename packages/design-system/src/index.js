@@ -17,9 +17,11 @@
 /**
  * Internal dependencies
  */
+import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
 import * as Icons from './icons';
 
 export { Icons };
+export { localStore, LOCAL_STORAGE_PREFIX };
 export * from './components';
 export * from './contexts';
 export * from './images';
