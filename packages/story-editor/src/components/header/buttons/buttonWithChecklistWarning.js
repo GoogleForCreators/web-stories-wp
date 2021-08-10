@@ -47,9 +47,12 @@ const Button = styled(DefaultButton)`
 `;
 
 function ButtonWithChecklistWarning({ text, ...buttonProps }) {
-  const { checkpoint } = useCheckpoint(({ state: { checkpoint } }) => ({
-    checkpoint,
-  }));
+  const { checkpoint, shouldReviewDialogBeSeen } = useCheckpoint(
+    ({ state: { checkpoint, shouldReviewDialogBeSeen } }) => ({
+      checkpoint,
+      shouldReviewDialogBeSeen,
+    })
+  );
 
   const button = (
     <Button
@@ -59,15 +62,17 @@ function ButtonWithChecklistWarning({ text, ...buttonProps }) {
       {...buttonProps}
     >
       {text}
-      <ChecklistIcon checkpoint={checkpoint} />
+      {shouldReviewDialogBeSeen && <ChecklistIcon checkpoint={checkpoint} />}
     </Button>
   );
 
   const TOOLTIP_TEXT = {
-    [PPC_CHECKPOINT_STATE.ALL]: __(
-      'Make updates before publishing to improve discoverability and performance on search engines',
-      'web-stories'
-    ),
+    [PPC_CHECKPOINT_STATE.ALL]: shouldReviewDialogBeSeen
+      ? __(
+          'Make updates before publishing to improve discoverability and performance on search engines',
+          'web-stories'
+        )
+      : '',
     [PPC_CHECKPOINT_STATE.ONLY_RECOMMENDED]: __(
       'Review checklist to improve performance before publishing',
       'web-stories'

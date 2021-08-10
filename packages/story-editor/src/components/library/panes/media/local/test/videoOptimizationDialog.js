@@ -18,10 +18,10 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
-import Modal from 'react-modal';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
+  setAppElement,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -58,7 +58,7 @@ function setup() {
   );
 
   const { container } = view;
-  Modal.setAppElement(container);
+  setAppElement(container);
 
   return view;
 }

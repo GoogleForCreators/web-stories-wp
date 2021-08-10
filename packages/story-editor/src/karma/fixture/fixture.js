@@ -28,7 +28,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
 
@@ -317,7 +317,7 @@ export class Fixture {
     root.setAttribute('dir', this._config.isRTL ? 'rtl' : 'ltr');
 
     // see http://reactcommunity.org/react-modal/accessibility/
-    Modal.setAppElement(root);
+    setAppElement(root);
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>

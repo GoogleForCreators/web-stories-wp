@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
-import Modal from 'react-modal';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { SnackbarContext, setAppElement } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
@@ -82,7 +81,7 @@ describe('MediaEditDialog', () => {
   beforeAll(() => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
-    Modal.setAppElement(modalWrapper);
+    setAppElement(modalWrapper);
   });
 
   afterAll(() => {

@@ -28,7 +28,6 @@ export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsT
 export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as StoryPropTypes } from './types';
-export { default as Modal } from 'react-modal';
 export { GlobalStyle } from './theme';
 export { default as theme } from './theme'; // @todo To be refactored.
 export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';

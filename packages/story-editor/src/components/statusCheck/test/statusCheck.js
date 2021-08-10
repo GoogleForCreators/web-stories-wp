@@ -21,7 +21,7 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -52,7 +52,7 @@ describe('statusCheck', () => {
   beforeAll(() => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
-    Modal.setAppElement(modalWrapper);
+    setAppElement(modalWrapper);
   });
 
   afterAll(() => {
