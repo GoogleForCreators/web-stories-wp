@@ -19,13 +19,16 @@
  */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
 import { Panel, PanelContent } from '../../panel';
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../../utils/localStore';
 import { areAllType, getPanelInitialHeight } from './utils';
 import PresetsHeader from './header';
 import Resize from './resize';

@@ -18,12 +18,15 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 
 describe('LibraryTabs integration', () => {
   let fixture;

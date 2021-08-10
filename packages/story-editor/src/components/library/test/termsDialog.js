@@ -32,6 +32,10 @@
  * External dependencies
  */
 import { waitFor, fireEvent, act, screen } from '@testing-library/react';
+import {
+  localStore,
+  LOCAL_STORAGE_PREFIX,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -47,7 +51,6 @@ jest.mock('../../../utils/localStore', () => {
     getItemByKey: jest.fn(() => false),
   };
 });
-import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 
 describe('TermsDialog', () => {
   it('should render', () => {
