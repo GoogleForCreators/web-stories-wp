@@ -230,7 +230,7 @@ const editorAndDashboard = {
   ...sharedConfig,
   entry: {
     'wp-story-editor': './packages/wp-story-editor/src/index.js',
-    'stories-dashboard': './packages/wp-dashboard/src/index.js',
+    'wp-dashboard': './packages/wp-dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins.filter(
@@ -250,11 +250,11 @@ const editorAndDashboard = {
       chunks: ['wp-story-editor'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'stories-dashboard.chunks.php',
+      filename: 'wp-dashboard.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
       templateContent,
-      chunks: ['stories-dashboard'],
+      chunks: ['wp-dashboard'],
     }),
   ],
   optimization: {

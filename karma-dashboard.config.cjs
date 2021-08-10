@@ -86,7 +86,7 @@ module.exports = function (config) {
       '/__static__/': '/base/__static__/',
     },
 
-    webpack: getWebpackConfig('stories-dashboard', config),
+    webpack: getWebpackConfig('wp-dashboard', config),
 
     webpackMiddleware: {
       // webpack-dev-middleware configuration
