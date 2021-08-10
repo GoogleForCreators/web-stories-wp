@@ -21,6 +21,7 @@ import { Input } from '@web-stories-wp/design-system';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import {
+  createResource,
   getFileNameFromUrl,
   getFirstFrameOfVideo,
   getImageDimensions,
@@ -109,7 +110,7 @@ function HotlinkModal({ isOpen, onClose }) {
         posterData = await uploadVideoPoster(0, fileName, posterFile);
       }
       insertElement(type, {
-        resource: {
+        resource: createResource({
           alt: link.substring(link.lastIndexOf('/') + 1),
           width,
           height,
@@ -117,7 +118,7 @@ function HotlinkModal({ isOpen, onClose }) {
           local: false,
           poster: isVideo ? posterData.poster : null,
           posterId: isVideo ? posterData.posterId : null,
-        },
+        }),
       });
       setErrorMsg(null);
       setLink('');
@@ -125,7 +126,7 @@ function HotlinkModal({ isOpen, onClose }) {
     } catch (e) {
       setErrorMsg(
         __(
-          'Media can not be loaded from the site. Please configure…',
+          'Media failed to load. Please ensure the link is valid and the site allows linking from external sites',
           'web-stories'
         )
       );
@@ -140,7 +141,7 @@ function HotlinkModal({ isOpen, onClose }) {
         setErrorMsg(false);
       }}
       isOpen={isOpen}
-      title={__('Insert link', 'web-stories')}
+      title={__('Insert external image or video', 'web-stories')}
       onPrimary={() => onInsert()}
       primaryText={__('Insert', 'web-stories')}
       secondaryText={__('Cancel', 'web-stories')}
@@ -155,6 +156,7 @@ function HotlinkModal({ isOpen, onClose }) {
           hint={errorMsg?.length ? errorMsg : description}
           hasError={Boolean(errorMsg?.length)}
           onBlur={() => setLink(withProtocol(link))}
+          label={__('URL', 'web-stories')}
         />
       </InputWrapper>
     </Dialog>
