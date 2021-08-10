@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Returns file basename without extension.
  *
@@ -20,6 +21,7 @@
  * @param {string} file.name File name.
  * @return {string} File name without extension.
  */
-const getFileName = ({ name }) => name.split('.').slice(0, -1).join('.');
+const getFileName = ({ name = '' }) =>
+  name.includes('.') ? name.split('.').slice(0, -1).join('.') : name;
 
 export default getFileName;

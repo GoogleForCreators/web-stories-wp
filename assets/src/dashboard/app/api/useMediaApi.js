@@ -19,7 +19,6 @@
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
-
 /**
  * Internal dependencies
  */
@@ -49,12 +48,21 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
           })
         );
 
-        dispatch({
-          type: MEDIA_ACTION_TYPES.FETCH_MEDIA_SUCCESS,
-          payload: {
-            media: response,
-          },
-        });
+        if (!Array.isArray(response)) {
+          dispatch({
+            type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,
+            payload: {
+              message: ERRORS.LOAD_MEDIA.MESSAGE,
+            },
+          });
+        } else {
+          dispatch({
+            type: MEDIA_ACTION_TYPES.FETCH_MEDIA_SUCCESS,
+            payload: {
+              media: response,
+            },
+          });
+        }
       } catch (err) {
         dispatch({
           type: MEDIA_ACTION_TYPES.FETCH_MEDIA_FAILURE,

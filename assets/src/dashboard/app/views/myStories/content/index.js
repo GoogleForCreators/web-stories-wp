@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { UnitsProvider } from '@web-stories-wp/units';
 import {
   Button,
   BUTTON_SIZES,
@@ -31,7 +30,6 @@ import {
 /**
  * Internal dependencies
  */
-import { TransformProvider } from '../../../../../edit-story/components/transform';
 import { resolveRoute } from '../../../router';
 import { APP_ROUTES } from '../../../../constants';
 import {
@@ -47,7 +45,6 @@ import {
   SortPropTypes,
   ShowStoriesWhileLoadingPropType,
 } from '../../../../utils/useStoryView';
-import FontProvider from '../../../font/fontProvider';
 import { EmptyContentMessage } from '../../shared';
 import StoriesView from './storiesView';
 
@@ -65,69 +62,58 @@ function Content({
 }) {
   return (
     <Layout.Scrollable>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width: view.pageSize.width,
-              height: view.pageSize.height,
-            }}
-          >
-            <StandardViewContentGutter>
-              {stories.length > 0 ? (
-                <>
-                  <StoriesView
-                    filterValue={filter.value}
-                    isLoading={isLoading}
-                    sort={sort}
-                    storyActions={storyActions}
-                    stories={stories}
-                    view={view}
-                    loading={{
-                      isLoading,
-                      showStoriesWhileLoading,
-                    }}
-                  />
-                  <InfiniteScroller
-                    canLoadMore={!allPagesFetched}
-                    isLoading={isLoading}
-                    allDataLoadedMessage={__('No more stories', 'web-stories')}
-                    onLoadMore={page.requestNextPage}
-                  />
-                </>
-              ) : (
-                <EmptyContentMessage>
-                  <Headline
-                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                    as="h3"
-                  >
-                    {search?.keyword
-                      ? sprintf(
-                          /* translators: %s: search term. */
-                          __(
-                            'Sorry, we couldn\'t find any results matching "%s"',
-                            'web-stories'
-                          ),
-                          search.keyword
-                        )
-                      : __('Start telling Stories.', 'web-stories')}
-                  </Headline>
-                  {!search?.keyword && (
-                    <Button
-                      type={BUTTON_TYPES.PRIMARY}
-                      size={BUTTON_SIZES.MEDIUM}
-                      as="a"
-                      href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
-                    >
-                      {__('Explore templates', 'web-stories')}
-                    </Button>
-                  )}
-                </EmptyContentMessage>
-              )}
-            </StandardViewContentGutter>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
+      <StandardViewContentGutter>
+        {stories.length > 0 ? (
+          <>
+            <StoriesView
+              filterValue={filter.value}
+              isLoading={isLoading}
+              sort={sort}
+              storyActions={storyActions}
+              stories={stories}
+              view={view}
+              loading={{
+                isLoading,
+                showStoriesWhileLoading,
+              }}
+            />
+            <InfiniteScroller
+              canLoadMore={!allPagesFetched}
+              isLoading={isLoading}
+              allDataLoadedMessage={__('No more stories', 'web-stories')}
+              onLoadMore={page.requestNextPage}
+            />
+          </>
+        ) : (
+          <EmptyContentMessage>
+            <Headline
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+              as="h3"
+            >
+              {search?.keyword
+                ? sprintf(
+                    /* translators: %s: search term. */
+                    __(
+                      'Sorry, we couldn\'t find any results matching "%s"',
+                      'web-stories'
+                    ),
+                    search.keyword
+                  )
+                : __('Start telling Stories.', 'web-stories')}
+            </Headline>
+            {!search?.keyword && (
+              <Button
+                type={BUTTON_TYPES.PRIMARY}
+                size={BUTTON_SIZES.MEDIUM}
+                as="a"
+                href={resolveRoute(APP_ROUTES.TEMPLATES_GALLERY)}
+              >
+                {__('Explore Templates', 'web-stories')}
+              </Button>
+            )}
+          </EmptyContentMessage>
+        )}
+      </StandardViewContentGutter>
     </Layout.Scrollable>
   );
 }

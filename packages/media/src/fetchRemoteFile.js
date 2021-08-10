@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import getFileNameFromUrl from './getFileNameFromUrl';
+import fetchRemoteBlob from './fetchRemoteBlob';
 
 function generateFileName(url) {
   const currentFileName = getFileNameFromUrl(url);
@@ -41,11 +42,7 @@ function generateFileName(url) {
  * @return {Promise<File>} File object.
  */
 async function fetchRemoteFile(url, mimeType) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`An error has occured: ${response.status}`);
-  }
-  const data = await response.blob();
+  const data = await fetchRemoteBlob(url);
   const name = generateFileName(url);
   return new File([data], name, {
     type: mimeType,

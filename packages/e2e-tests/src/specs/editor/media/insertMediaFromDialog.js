@@ -31,7 +31,6 @@ describe('Inserting Media from Dialog', () => {
   it.skip('should insert an image by clicking on it', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     const filename = await uploadMedia('example-1.jpg', false);
 
     await expect(page).toClick('button', { text: 'Insert into page' });

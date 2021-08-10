@@ -15,9 +15,17 @@
  */
 
 /**
+ * Internal dependencies
+ */
+// The __webpack_public_path__ assignment will be done after the imports.
+// That's why the public path assignment is in its own dedicated module and imported here at the very top.
+// See https://webpack.js.org/guides/public-path/#on-the-fly
+import './publicPath';
+
+/**
  * External dependencies
  */
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
@@ -30,8 +38,6 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
-__webpack_public_path__ = global.webStoriesDashboardSettings.publicPath;
-
 /**
  * Initializes the Web Stories dashboard screen.
  *
@@ -43,7 +49,7 @@ const initialize = async (id, config, flags) => {
   const appElement = document.getElementById(id);
 
   // see http://reactcommunity.org/react-modal/accessibility/
-  Modal.setAppElement(appElement);
+  setAppElement(appElement);
 
   updateSettings(config.locale);
 

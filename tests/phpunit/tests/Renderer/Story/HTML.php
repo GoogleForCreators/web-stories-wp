@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Renderer\Story;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -113,147 +114,6 @@ class HTML extends Test_Case {
 		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
 		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
-	}
-
-	/**
-	 * Tests that publisher logo is correctly replaced.
-	 *
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_name
-	 */
-	public function test_add_publisher_logo() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../../data/attachment.jpg', 0 );
-		add_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
-
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$story = new Story();
-		$story->load_from_post( $post );
-		$renderer    = new \Google\Web_Stories\Renderer\Story\HTML( $story );
-		$placeholder = $renderer->get_publisher_logo_placeholder();
-		$logo        = $renderer->get_publisher_logo();
-		$name        = $renderer->get_publisher_name();
-
-		wp_update_post(
-			[
-				'ID'           => $post->ID,
-				'post_content' => '<html><head></head><body><amp-story publisher-logo-src="' . $placeholder . '"></amp-story></body></html>',
-			]
-		);
-
-		$rendered = $renderer->render();
-
-		$this->assertContains( 'publisher-logo-src="http', $rendered );
-		$this->assertContains( $name, $rendered );
-		$this->assertContains( $logo, $rendered );
-		$this->assertNotContains( $placeholder, $rendered );
-
-		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-		$rendered = $renderer->render();
-
-		$this->assertContains( 'publisher-logo-src=""', $rendered );
-		$this->assertNotContains( $placeholder, $rendered );
-		$this->assertNotContains( 'amp=', $rendered );
-	}
-
-	/**
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 * @covers ::get_poster_images
-	 */
-	public function test_add_poster_images() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../../data/attachment.jpg', 0 );
-
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-			]
-		);
-
-		set_post_thumbnail( $post->ID, $attachment_id );
-
-		$rendered = $this->setup_renderer( $post );
-
-		$this->assertContains( 'poster-portrait-src=', $rendered );
-	}
-
-	/**
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 * @covers ::get_poster_images
-	 */
-	public function test_add_poster_images_overrides_existing_poster() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../../data/attachment.jpg', 0 );
-
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.jpg"></amp-story></body></html>',
-			]
-		);
-
-		set_post_thumbnail( $post->ID, $attachment_id );
-
-		$rendered = $this->setup_renderer( $post );
-
-		$this->assertNotContains( 'https://example.com/poster.jpg', $rendered );
-		$this->assertContains( 'poster-portrait-src=', $rendered );
-	}
-
-	/**
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 * @covers ::get_poster_images
-	 */
-	public function test_add_poster_images_no_fallback_image_added() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-			]
-		);
-
-		$rendered = $this->setup_renderer( $post );
-
-		$this->assertContains( 'poster-portrait-src=""', $rendered );
-	}
-
-	/**
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 */
-	public function test_add_poster_images_no_poster_no_amp() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$rendered = $this->setup_renderer( $post );
-
-		$this->assertNotContains( 'amp=', $rendered );
-	}
-
-	/**
-	 * @covers ::sanitize_markup
-	 * @covers ::optimize_markup
-	 */
-	public function test_sanitizes_and_optimizes_markup() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-			]
-		);
-
-		$actual = $this->setup_renderer( $post );
-
-		$this->assertContains( 'transformed="self;v=1"', $actual );
-		$this->assertNotContains( 'AMP optimization could not be completed', $actual );
 	}
 
 	/**
@@ -375,7 +235,7 @@ class HTML extends Test_Case {
 	 *
 	 * @return string
 	 */
-	protected function setup_renderer( $post ) {
+	protected function setup_renderer( $post ): string {
 		$story = new Story();
 		$story->load_from_post( $post );
 		$renderer = new \Google\Web_Stories\Renderer\Story\HTML( $story );

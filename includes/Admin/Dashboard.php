@@ -45,9 +45,7 @@ use Google\Web_Stories\Traits\Types;
  * Dashboard class.
  */
 class Dashboard extends Service_Base {
-	use Types;
-	use Screen;
-	use Post_Type;
+	use Types, Screen, Post_Type;
 
 	/**
 	 * Script handle.
@@ -151,11 +149,7 @@ class Dashboard extends Service_Base {
 	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix( $key ) {
-		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
-			return false;
-		}
-
-		return $this->hook_suffix[ $key ];
+		return $this->hook_suffix[ $key ] ?? false;
 	}
 
 	/**
@@ -232,19 +226,58 @@ class Dashboard extends Service_Base {
 	}
 
 	/**
-	 * Preload api requests in the dashboard.
+	 * Preload API requests in the dashboard.
+	 *
+	 * Important: keep in sync with usage & definition in React app.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
 	public function load_stories_dashboard() {
-		// Preload common data.
-		// TODO Preload templates.
+		$rest_base = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+
 		$preload_paths = [
 			'/web-stories/v1/settings/',
 			'/web-stories/v1/users/me/',
-			sprintf( '/web-stories/v1/web-story/?_embed=%s&context=edit&order=desc&orderby=modified&page=1&per_page=%d&status=%s&_web_stories_envelope=true', urlencode( 'wp:lock,wp:lockuser,author' ), 24, urlencode( 'publish,draft,future,private' ) ),
+			"/web-stories/v1/$rest_base/?" . build_query(
+				[
+					'_embed'                => urlencode( 'wp:lock,wp:lockuser,author' ),
+					'context'               => 'edit',
+					'order'                 => 'desc',
+					'orderby'               => 'modified',
+					'page'                  => 1,
+					'per_page'              => 24,
+					'status'                => urlencode( 'publish,draft,future,private' ),
+					'_web_stories_envelope' => 'true',
+					'_fields'               => urlencode(
+						implode(
+							',',
+							[
+								'id',
+								'title',
+								'status',
+								'date',
+								'date_gmt',
+								'modified',
+								'modified_gmt',
+								'link',
+								'featured_media_url',
+								'preview_link',
+								'edit_link',
+								// TODO: Remove need for this as it's a lot of data sent over the wire.
+								// It's only needed for duplicating stories.
+								'content',
+								'story_data',
+								// _web_stories_envelope will add these fields, we need them too.
+								'body',
+								'status',
+								'headers',
+							]
+						)
+					),
+				]
+			),
 		];
 
 		/**
@@ -318,7 +351,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function get_dashboard_settings() {
+	public function get_dashboard_settings(): array {
 		$rest_base     = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
 		$new_story_url = admin_url(
 			add_query_arg(
@@ -326,15 +359,6 @@ class Dashboard extends Service_Base {
 					'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 				],
 				'post-new.php'
-			)
-		);
-
-		$edit_story_url = admin_url(
-			add_query_arg(
-				[
-					'action' => 'edit',
-				],
-				'post.php'
 			)
 		);
 
@@ -363,7 +387,6 @@ class Dashboard extends Service_Base {
 				'userId'                => get_current_user_id(),
 				'locale'                => $this->locale->get_locale_settings(),
 				'newStoryURL'           => $new_story_url,
-				'editStoryURL'          => $edit_story_url,
 				'wpListURL'             => $classic_wp_list_url,
 				'assetsURL'             => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
@@ -391,7 +414,7 @@ class Dashboard extends Service_Base {
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
 		];
 
 		/**

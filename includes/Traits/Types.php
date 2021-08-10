@@ -39,7 +39,7 @@ trait Types {
 	 *
 	 * @return array List of allowed file types.
 	 */
-	public function get_allowed_file_types() {
+	public function get_allowed_file_types() : array {
 		$allowed_mime_types = $this->get_allowed_mime_types();
 		$mime_types         = [];
 
@@ -62,7 +62,7 @@ trait Types {
 	 *
 	 * @return array
 	 */
-	public function get_file_type_exts( array $mime_types = [] ) {
+	public function get_file_type_exts( array $mime_types = [] ) : array {
 		$allowed_file_types = [];
 		$all_mime_types     = get_allowed_mime_types();
 
@@ -83,7 +83,7 @@ trait Types {
 	 *
 	 * @return array List of allowed mime types.
 	 */
-	public function get_allowed_mime_types() {
+	public function get_allowed_mime_types() : array {
 		$default_allowed_mime_types = [
 			'image' => [
 				'image/webp',
@@ -130,7 +130,7 @@ trait Types {
 	 *
 	 * @return array List of allowed mime types.
 	 */
-	public function get_allowed_image_mime_types() {
+	public function get_allowed_image_mime_types() : array {
 		$mime_type         = $this->get_allowed_mime_types();
 		$allowed_mime_type = $mime_type['image'];
 		$image_mime_type   = [
@@ -151,7 +151,7 @@ trait Types {
 		 */
 		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
 
-		return array_intersect( $allowed_mime_type, $image_mime_type );
+		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
 	}
 
 	/**
@@ -161,7 +161,7 @@ trait Types {
 	 *
 	 * @return array List of allowed transcodable mime types.
 	 */
-	public function get_allowed_transcodable_mime_types() {
+	public function get_allowed_transcodable_mime_types() : array {
 		return [
 			'video/3gpp',
 			'video/3gpp2',

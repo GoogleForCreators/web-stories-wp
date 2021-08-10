@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+import { __, _x, sprintf, _n } from '@web-stories-wp/i18n';
 
 export const TEMPLATE_CATEGORIES = {
   DIY_CRAFTS: 'diy_crafts',
@@ -32,35 +32,35 @@ export const TEMPLATE_CATEGORIES = {
 
 export const TEMPLATE_CATEGORY_ITEMS = [
   {
-    label: __('DIY & Crafts', 'web-stories'),
+    label: _x('DIY & Crafts', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.DIY_CRAFTS,
   },
   {
-    label: __('Movies & TV', 'web-stories'),
+    label: _x('Movies & TV', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.MOVIES_TV,
   },
   {
-    label: __('Beauty & Style', 'web-stories'),
+    label: _x('Beauty & Style', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.BEAUTY_STYLE,
   },
   {
-    label: __('Fitness & Wellbeing', 'web-stories'),
+    label: _x('Fitness & Wellbeing', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.FITNESS_WELLBEING,
   },
   {
-    label: __('Food', 'web-stories'),
+    label: _x('Food', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.FOOD,
   },
   {
-    label: __('Travel', 'web-stories'),
+    label: _x('Travel', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.TRAVEL,
   },
   {
-    label: __('Music', 'web-stories'),
+    label: _x('Music', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.MUSIC,
   },
   {
-    label: __('Sports', 'web-stories'),
+    label: _x('Sports', 'template vertical', 'web-stories'),
     value: TEMPLATE_CATEGORIES.SPORTS,
   },
 ];
@@ -81,57 +81,57 @@ export const TEMPLATE_COLORS = {
 
 export const TEMPLATE_COLOR_ITEMS = [
   {
-    label: __('White', 'web-stories'),
+    label: _x('White', 'color', 'web-stories'),
     hex: '#FFFFFF',
     value: TEMPLATE_COLORS.WHITE,
   },
   {
-    label: __('Black', 'web-stories'),
+    label: _x('Black', 'color', 'web-stories'),
     hex: '#1A1D1F',
     value: TEMPLATE_COLORS.BLACK,
   },
   {
-    label: __('Gray', 'web-stories'),
+    label: _x('Gray', 'color', 'web-stories'),
     hex: '#9AA1A9',
     value: TEMPLATE_COLORS.GRAY,
   },
   {
-    label: __('Brown', 'web-stories'),
+    label: _x('Brown', 'color', 'web-stories'),
     hex: '#974A04',
     value: TEMPLATE_COLORS.BROWN,
   },
   {
-    label: __('Red', 'web-stories'),
+    label: _x('Red', 'color', 'web-stories'),
     hex: '#EB5757',
     value: TEMPLATE_COLORS.RED,
   },
   {
-    label: __('Orange', 'web-stories'),
+    label: _x('Orange', 'color', 'web-stories'),
     hex: '#FA902E',
     value: TEMPLATE_COLORS.ORANGE,
   },
   {
-    label: __('Yellow', 'web-stories'),
+    label: _x('Yellow', 'color', 'web-stories'),
     hex: '#FAE84C',
     value: TEMPLATE_COLORS.YELLOW,
   },
   {
-    label: __('Green', 'web-stories'),
+    label: _x('Green', 'color', 'web-stories'),
     hex: '#6AE86F',
     value: TEMPLATE_COLORS.GREEN,
   },
   {
-    label: __('Blue', 'web-stories'),
+    label: _x('Blue', 'color', 'web-stories'),
     hex: '#1374FA',
     value: TEMPLATE_COLORS.BLUE,
   },
   {
-    label: __('Pink', 'web-stories'),
+    label: _x('Pink', 'color', 'web-stories'),
     hex: '#F078F2',
     value: TEMPLATE_COLORS.PINK,
   },
   {
-    label: __('Purple', 'web-stories'),
+    label: _x('Purple', 'color', 'web-stories'),
     hex: '#AA6FE1',
     value: TEMPLATE_COLORS.PURPLE,
   },

@@ -31,14 +31,14 @@ import {
   SnackbarProvider,
   Snackbar,
   ModalGlobalStyle,
-  usePrevious,
 } from '@web-stories-wp/design-system';
+import { usePrevious } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
 import { GlobalStyle } from '../theme';
-import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
+import { KeyboardOnlyOutline } from '../utils';
 import {
   APP_ROUTES,
   NESTED_APP_ROUTES,

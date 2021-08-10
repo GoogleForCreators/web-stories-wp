@@ -21,8 +21,9 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplate;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
 use Google\Web_Stories\Tests\Test_Case;
 
 /**
@@ -97,8 +98,9 @@ class Optimization extends Test_Case {
 
 		$transformers = [
 			AmpBoilerplate::class,
+			AmpRuntimePreloads::class,
 			AmpBoilerplateErrorHandler::class,
-			OptimizeAmpBind::class,
+			GoogleFontsPreconnect::class,
 			ReorderHead::class,
 		];
 

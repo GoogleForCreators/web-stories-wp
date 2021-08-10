@@ -55,6 +55,7 @@ class Lightbox {
       // Rewind the story and pause there upon closing the lightbox.
       this.player.rewind();
       this.player.pause();
+      this.player.mute();
       this.lightboxElement.classList.toggle('show');
       document.body.classList.toggle('web-stories-lightbox-open');
     });

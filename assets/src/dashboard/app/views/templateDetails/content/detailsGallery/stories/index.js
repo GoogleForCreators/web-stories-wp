@@ -19,10 +19,10 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
+import { TransformProvider } from '@web-stories-wp/story-editor';
 /**
  * Internal dependencies
  */
-import { TransformProvider } from '../../../../../../../edit-story/components/transform';
 import { formattedTemplatesArray } from '../../../../../../storybookUtils';
 import FontProvider from '../../../../../font/fontProvider';
 import DetailsGallery from '..';

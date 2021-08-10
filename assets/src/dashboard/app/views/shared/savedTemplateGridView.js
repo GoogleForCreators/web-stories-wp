@@ -22,7 +22,8 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useGridViewKeys, useFocusOut } from '@web-stories-wp/design-system';
+import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -138,7 +139,7 @@ const SavedTemplateGridView = ({
               <CardPreviewContainer
                 ariaLabel={sprintf(
                   /* translators: %s: story title. */
-                  __('preview of %s', 'web-stories'),
+                  __('Preview of %s', 'web-stories'),
                   template.title
                 )}
                 tabIndex={tabIndex}

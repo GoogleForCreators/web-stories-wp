@@ -26,16 +26,18 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import Modal from 'react-modal';
+import { setAppElement } from '@web-stories-wp/design-system';
+import {
+  FixtureEvents,
+  ComponentStub,
+  actPromise,
+} from '@web-stories-wp/karma-fixture';
 
 /**
  * Internal dependencies
  */
 import App from '../app';
 import ApiProvider from '../app/api/apiProvider';
-import FixtureEvents from '../../karma-fixture/events';
-import ComponentStub from '../../karma-fixture/componentStub';
-import actPromise from '../../karma-fixture/actPromise';
 import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
@@ -76,7 +78,6 @@ const defaultConfig = {
   },
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
-  editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
   assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories/assets',
   cdnURL: 'https://cdn.example.com/',
@@ -196,7 +197,7 @@ export default class Fixture {
     const root = document.querySelector('test-root');
 
     // see http://reactcommunity.org/react-modal/accessibility/
-    Modal.setAppElement(root);
+    setAppElement(root);
 
     const { container } = render(
       <FlagsProvider features={this._flags}>

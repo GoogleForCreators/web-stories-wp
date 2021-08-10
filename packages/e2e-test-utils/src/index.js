@@ -38,7 +38,6 @@ export { default as uploadPublisherLogo } from './uploadPublisherLogo';
 export { default as toggleVideoOptimization } from './toggleVideoOptimization';
 export { default as deleteMedia } from './deleteMedia';
 export { default as deleteWidgets } from './deleteWidgets';
-export { default as insertBlock } from './insertBlock';
 export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
 export { default as visitAdminPage } from './visitAdminPage';
@@ -46,9 +45,14 @@ export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
 export { default as createNewPost } from './createNewPost';
+export { default as minWPVersionRequired } from './minWPVersionRequired';
+export { default as visitBlockWidgetScreen } from './visitBlockWidgetScreen';
+export { default as insertWidget } from './insertWidget';
+export { default as triggerHighPriorityChecklistSection } from './triggerHighPriorityChecklistSection';
 export {
   getEditedPostContent,
   setPostContent,
   enablePageDialogAccept,
   setBrowserViewport,
+  insertBlock,
 } from '@wordpress/e2e-test-utils';

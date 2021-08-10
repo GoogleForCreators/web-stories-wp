@@ -32,7 +32,7 @@ class Add_VideoPress_Poster_Generation_Media_Source extends Test_Case {
 	public function test_migrate() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -55,7 +55,7 @@ class Add_VideoPress_Poster_Generation_Media_Source extends Test_Case {
 		$slug   = $this->call_private_method( $object, 'get_term_name' );
 		$object->migrate();
 
-		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ $slug ], $slugs );

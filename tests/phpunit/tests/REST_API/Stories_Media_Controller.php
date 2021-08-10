@@ -49,7 +49,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 		$factory->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -58,7 +58,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 		$factory->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-videeo.mov',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mov',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mov',
 				'post_title'     => 'Test Video Move',
@@ -207,5 +207,20 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
+	}
+
+	/**
+	 * @covers ::get_item_schema
+	 */
+	public function test_get_item_schema() {
+		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/media' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertNotEmpty( $data );
+
+		$properties = $data['schema']['properties'];
+		$this->assertArrayNotHasKey( 'permalink_template', $properties );
+		$this->assertArrayNotHasKey( 'generated_slug', $properties );
 	}
 }

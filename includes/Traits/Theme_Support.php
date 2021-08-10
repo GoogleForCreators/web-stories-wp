@@ -45,7 +45,7 @@ trait Theme_Support {
 	 * @param array $defaults Optional. Array that serves as the defaults. Default empty array.
 	 * @return array Merged user defined values with defaults.
 	 */
-	private function parse_args( array $args, array $defaults = [] ) {
+	private function parse_args( array $args, array $defaults = [] ) : array {
 		$parsed_args = $defaults;
 
 		foreach ( $args as $key => $value ) {
@@ -66,7 +66,7 @@ trait Theme_Support {
 	 *
 	 * @return array
 	 */
-	public function get_stories_theme_support() {
+	public function get_stories_theme_support() : array {
 		$support = get_theme_support( 'web-stories' );
 		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
 

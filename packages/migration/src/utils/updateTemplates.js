@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, lstatSync } from 'fs';
+import { join } from 'path';
 
 /**
  * Internal dependencies
@@ -27,14 +28,20 @@ import { migrate, DATA_VERSION } from '../module.js';
 
 function updateTemplates(templatesDir) {
   const fileNamePattern = /^.*\.json$/;
-  const templateFiles = readdirSync(templatesDir).filter((file) =>
-    fileNamePattern.test(file)
-  );
+
+  const getFiles = (dir) =>
+    readdirSync(dir).map((fileOrDir) =>
+      lstatSync(join(dir, fileOrDir)).isDirectory()
+        ? getFiles(join(dir, fileOrDir))
+        : join(dir, fileOrDir)
+    );
+
+  const templateFiles = getFiles(templatesDir)
+    .flat()
+    .filter((file) => fileNamePattern.test(file));
 
   for (const file of templateFiles) {
-    const template = JSON.parse(
-      readFileSync(`${templatesDir}/${file}`, 'utf8')
-    );
+    const template = JSON.parse(readFileSync(file, 'utf8'));
 
     if (Number(template.version) === Number(DATA_VERSION)) {
       continue;
@@ -49,7 +56,7 @@ function updateTemplates(templatesDir) {
 
     const templateFileContent = JSON.stringify(updatedTemplate);
 
-    writeFileSync(`${templatesDir}/${file}`, templateFileContent);
+    writeFileSync(file, templateFileContent);
   }
 }
 

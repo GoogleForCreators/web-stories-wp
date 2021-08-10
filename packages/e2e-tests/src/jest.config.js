@@ -38,7 +38,6 @@ export default {
     '<rootDir>/.git',
     '<rootDir>/node_modules',
     '<rootDir>/build',
-    '<rootDir>/packages/e2e-tests/src/specs/edit-story',
   ],
   transformIgnorePatterns: ['node_modules'],
   setupFilesAfterEnv: [

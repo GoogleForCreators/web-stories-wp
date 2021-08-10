@@ -53,7 +53,7 @@ class PluginRowMeta extends Service_Base {
 	 *
 	 * @return string Registration action to use.
 	 */
-	public static function get_registration_action() {
+	public static function get_registration_action(): string {
 		return 'admin_init';
 	}
 
@@ -68,7 +68,7 @@ class PluginRowMeta extends Service_Base {
 	 *
 	 * @return string[] Plugin row meta.
 	 */
-	public function get_plugin_row_meta( $meta, $plugin_file ) {
+	public function get_plugin_row_meta( $meta, $plugin_file ): array {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {
 			return $meta;
 		}

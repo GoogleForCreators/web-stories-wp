@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { createGlobalStyle, css } from 'styled-components';
-import 'focus-visible';
+
+import(/* webpackChunkName: "chunk-focus-visible" */ 'focus-visible').catch(
+  () => undefined
+);
 
 /**
  * Relies on https://github.com/WICG/focus-visible for polyfill

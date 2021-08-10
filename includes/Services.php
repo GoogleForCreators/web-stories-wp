@@ -63,7 +63,7 @@ final class Services {
 	 * @param string $service Service ID to retrieve.
 	 * @return bool
 	 */
-	public static function has( $service ) {
+	public static function has( $service ): bool {
 		return self::get_container()->has( $service );
 	}
 

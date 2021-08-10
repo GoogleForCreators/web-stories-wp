@@ -48,7 +48,7 @@ class AdSense extends Service_Base {
 	 *
 	 * @return string Publisher ID.
 	 */
-	private function get_publisher_id() {
+	private function get_publisher_id(): string {
 		return (string) get_option( Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 	}
 
@@ -59,7 +59,7 @@ class AdSense extends Service_Base {
 	 *
 	 * @return string Slot ID.
 	 */
-	private function get_slot_id() {
+	private function get_slot_id(): string {
 		return (string) get_option( Settings::SETTING_NAME_ADSENSE_SLOT_ID );
 	}
 
@@ -70,7 +70,7 @@ class AdSense extends Service_Base {
 	 *
 	 * @return bool
 	 */
-	private function is_enabled() {
+	private function is_enabled(): bool {
 		return ( 'adsense' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 

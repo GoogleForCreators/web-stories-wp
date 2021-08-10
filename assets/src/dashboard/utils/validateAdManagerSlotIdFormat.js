@@ -15,7 +15,7 @@
  */
 
 // /123456789/a4a/amp_story_dfp_example
-const adManagerSlotIdFormatRegex = /^\/\d+(\/[\w_-]+)*$/;
+const adManagerSlotIdFormatRegex = /^\/\d+(,\d+)?(\/[\w_-]+)*$/;
 
 export default function validateAdManagerSlotIdFormat(value = '') {
   return Boolean(value.toLowerCase().match(adManagerSlotIdFormatRegex));

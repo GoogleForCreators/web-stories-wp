@@ -18,16 +18,12 @@
  * Internal dependencies
  */
 import { ERRORS } from '../../textContent';
-import settingsReducer, { ACTION_TYPES } from '../settings';
+import settingsReducer, {
+  ACTION_TYPES,
+  defaultSettingsState as initialState,
+} from '../settings';
 
 describe('settingsReducer', () => {
-  const initialState = {
-    activePublisherLogoId: null,
-    error: {},
-    googleAnalyticsId: null,
-    publisherLogoIds: [],
-  };
-
   const MOCK_ERROR_ID = Date.now();
 
   beforeAll(() => {
@@ -60,7 +56,7 @@ describe('settingsReducer', () => {
       },
     });
     expect(result).toMatchObject({
-      googleAnalyticsId: null,
+      googleAnalyticsId: '',
       error: {
         message: ERRORS.LOAD_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
@@ -78,7 +74,7 @@ describe('settingsReducer', () => {
       },
     });
     expect(result).toMatchObject({
-      googleAnalyticsId: null,
+      googleAnalyticsId: '',
       error: {
         message: ERRORS.UPDATE_EDITOR_SETTINGS.MESSAGE,
         id: MOCK_ERROR_ID,
@@ -89,7 +85,7 @@ describe('settingsReducer', () => {
 
   it(`should update settings state when ${ACTION_TYPES.UPDATE_SETTINGS_SUCCESS} is called`, () => {
     const result = settingsReducer(initialState, {
-      type: ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
+      type: ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
       payload: {
         googleAnalyticsId: 'fakeId12345NEW',
         activePublisherLogoId: 5,
@@ -101,6 +97,16 @@ describe('settingsReducer', () => {
       googleAnalyticsId: 'fakeId12345NEW',
       activePublisherLogoId: 5,
       publisherLogoIds: [5, 6, 7, 8],
+    });
+  });
+
+  it(`should update settingSaved boolean when ${ACTION_TYPES.SETTING_SAVED} is called`, () => {
+    const result = settingsReducer(initialState, {
+      type: ACTION_TYPES.SETTING_SAVED,
+      payload: true,
+    });
+    expect(result).toMatchObject({
+      settingSaved: true,
     });
   });
 });

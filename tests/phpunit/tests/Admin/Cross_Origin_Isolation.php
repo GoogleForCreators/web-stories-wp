@@ -30,21 +30,33 @@ class Cross_Origin_Isolation extends Test_Case {
 	 */
 	protected static $admin_id;
 
+	/**
+	 * Contributor user for test.
+	 *
+	 * @var int
+	 */
+	protected static $contributor_id;
+
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
+		);
+
+		self::$contributor_id = $factory->user->create(
+			[ 'role' => 'contributor' ]
 		);
 	}
 
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$admin_id );
+		self::delete_user( self::$contributor_id );
 	}
 
 	public function setUp() {
 		parent::setUp();
 
-		$user_perferences = new \Google\Web_Stories\User\Preferences();
-		$user_perferences->register();
+		$user_preferences = new \Google\Web_Stories\User\Preferences();
+		$user_preferences->register();
 	}
 
 	/**
@@ -60,8 +72,6 @@ class Cross_Origin_Isolation extends Test_Case {
 
 		$coi->register();
 
-		$this->assertSame( 10, has_action( 'admin_footer-post.php', [ $coi, 'admin_footer' ] ) );
-		$this->assertSame( 10, has_action( 'admin_footer-post-new.php', [ $coi, 'admin_footer' ] ) );
 		$this->assertSame( 10, has_action( 'load-post.php', [ $coi, 'admin_header' ] ) );
 		$this->assertSame( 10, has_action( 'load-post-new.php', [ $coi, 'admin_header' ] ) );
 
@@ -87,6 +97,17 @@ class Cross_Origin_Isolation extends Test_Case {
 	/**
 	 * @covers ::is_needed
 	 */
+	public function test_is_needed_default_user_meta_value() {
+		wp_set_current_user( self::$admin_id );
+		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
+		$object = $this->get_coi_object();
+		$result = $this->call_private_method( $object, 'is_needed' );
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 */
 	public function test_is_needed_no_user() {
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
@@ -99,6 +120,17 @@ class Cross_Origin_Isolation extends Test_Case {
 	public function test_is_needed_opt_out() {
 		wp_set_current_user( self::$admin_id );
 		update_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, false );
+		$object = $this->get_coi_object();
+		$result = $this->call_private_method( $object, 'is_needed' );
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::is_needed
+	 */
+	public function test_is_needed_no_upload_caps() {
+		wp_set_current_user( self::$contributor_id );
+		update_user_meta( self::$contributor_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY, true );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'is_needed' );
 		$this->assertFalse( $result );
@@ -193,18 +225,33 @@ class Cross_Origin_Isolation extends Test_Case {
 	 * @covers ::replace_in_dom
 	 */
 	public function test_replace_in_dom() {
-		$html   = file_get_contents( __DIR__ . '/../../data/cross_origin_content.html' );
-		$html   = str_replace( '--SITE_URL--', site_url(), $html );
+		$site_url = site_url();
+
+		$html   = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/cross_origin_content.html' );
+		$html   = str_replace( '--SITE_URL--', $site_url, $html );
 		$object = $this->get_coi_object();
 		$result = $this->call_private_method( $object, 'replace_in_dom', [ $html ] );
+
 		$this->assertContains( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0.js"></script>', $result );
 		$this->assertContains( '<script async="" crossorigin="anonymous" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>', $result );
 		$this->assertContains( '<link crossorigin="anonymous" href="https://fonts.googleapis.com/css2?display=swap&#038;family=Roboto" rel="stylesheet" />', $result );
 		$this->assertContains( '<img alt="test" crossorigin="anonymous" src="http://www.example.com/test1.jpg" loading="eager" />', $result );
 		$this->assertContains( "<img crossorigin='anonymous' src='http://www.example.com/test2.jpg' alt='test' />", $result );
-		$this->assertContains( '<iframe crossorigin="anonymous" src="http://www.example.com"></iframe>', $result );
+		$this->assertContains( '<iframe src="http://www.example.com"></iframe>', $result );
 		$this->assertContains( 'crossorigin="use-credentials"', $result );
 		$this->assertContains( '<a href="http://www.example.com/test1.jpg">Test</a>', $result );
+		$this->assertContains( '<video crossorigin="anonymous"><source src="http://www.example.com/video1.mp4"></video>', $result );
+		$this->assertContains( '<video crossorigin="anonymous" src="http://www.example.com/video3.mp4"></video>', $result );
+		$this->assertContains( '<audio crossorigin="anonymous"><source src="http://www.example.com/audio1.mp3"></audio>', $result );
+		$this->assertContains( '<audio crossorigin="anonymous" src="http://www.example.com/audio3.mp3"></audio>', $result );
+		$this->assertContains( "<img src='$site_url/test3.jpg' alt=\"test\" />", $result );
+		$this->assertContains( "<iframe src=\"$site_url\"></iframe>", $result );
+		$this->assertContains( "<video><source src=\"$site_url/video2.mp4\"></video>", $result );
+		$this->assertContains( "<video src=\"$site_url/video4.mp4\"></video>", $result );
+		$this->assertContains( "<audio><source src=\"$site_url/audio2.mp3\"></audio>", $result );
+		$this->assertContains( "<audio src=\"$site_url/audio4.mp3\"></audio>", $result );
+		$this->assertContains( "<script async=\"\" src=\"$site_url\"></script>", $result );
+		$this->assertContains( "<link href=\"$site_url/site.css\" rel=\"stylesheet\" />", $result );
 	}
 
 	/**

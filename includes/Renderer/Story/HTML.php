@@ -26,10 +26,11 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Settings;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\AMP\Story_Sanitizer;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
@@ -72,89 +73,14 @@ class HTML {
 	 *
 	 * @return string The complete HTML markup for the story.
 	 */
-	public function render() {
+	public function render(): string {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
 
-		// If the AMP plugin is installed and available in a version >= than ours,
-		// all sanitization and optimization should be delegated to the AMP plugin.
-		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
-			return $markup;
-		}
-
-		$document = Document::fromHtml( $markup );
-
-		// This  should never actually happen.
-		if ( ! $document ) {
-			ob_start();
-			wp_die(
-				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
-				esc_html__( 'Web Stories', 'web-stories' ),
-				[
-					'response'  => 500,
-					'link_url'  => esc_url( __( 'https://wordpress.org/support/plugin/web-stories/', 'web-stories' ) ),
-					'link_text' => esc_html__( 'Visit Support Forums', 'web-stories' ),
-					'exit'      => false,
-				]
-			);
-
-			return (string) ob_get_clean();
-		}
-
-		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
-
-		/**
-		 * Document instance.
-		 *
-		 * @var Document $document
-		 */
-		$this->document = $document;
-
-		$this->sanitize_markup();
-		$this->optimize_markup();
-
-		return trim( (string) $this->document->saveHTML() );
-	}
-
-	/**
-	 * Filters the Web Stories AMP sanitizers.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
-	 */
-	public function add_web_stories_amp_content_sanitizers( $sanitizers ) {
-		$sanitizers[ Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => $this->get_poster_images(),
-		];
-
-		return $sanitizers;
-	}
-
-	/**
-	 * Filters the AMP plugin's sanitizers.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param array $sanitizers Sanitizers.
-	 * @return array Sanitizers.
-	 */
-	public function add_amp_content_sanitizers( $sanitizers ) {
-		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo'             => $this->get_publisher_logo(),
-			'publisher'                  => $this->get_publisher_name(),
-			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
-			'poster_images'              => $this->get_poster_images(),
-		];
-
-		return $sanitizers;
+		return $markup;
 	}
 
 	/**
@@ -164,7 +90,7 @@ class HTML {
 	 *
 	 * @return string[] Images.
 	 */
-	protected function get_poster_images() {
+	protected function get_poster_images(): array {
 		return [
 			'poster-portrait-src' => $this->story->get_poster_portrait(),
 		];
@@ -177,7 +103,7 @@ class HTML {
 	 *
 	 * @return string Filtered content.
 	 */
-	protected function get_html_head_markup() {
+	protected function get_html_head_markup(): string {
 		ob_start();
 		?>
 		<meta name="amp-story-generator-name" content="Web Stories for WordPress" />
@@ -201,7 +127,7 @@ class HTML {
 	 *
 	 * @return string Filtered content.
 	 */
-	protected function replace_html_head( $content ) {
+	protected function replace_html_head( string $content ): string {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
@@ -229,7 +155,7 @@ class HTML {
 	 *
 	 * @return string
 	 */
-	protected function replace_url_scheme( $content ) {
+	protected function replace_url_scheme( string $content ): string {
 		if ( is_ssl() ) {
 			$search  = home_url( '', 'http' );
 			$replace = home_url( '', 'https' );
@@ -249,7 +175,7 @@ class HTML {
 	 *
 	 * @return string
 	 */
-	protected function print_analytics( $content ) {
+	protected function print_analytics( string $content ): string {
 		ob_start();
 
 		/**
@@ -275,7 +201,7 @@ class HTML {
 	 *
 	 * @return string
 	 */
-	protected function print_social_share( $content ) {
+	protected function print_social_share( string $content ): string {
 		$share_providers = [
 			[
 				'provider' => 'twitter',
@@ -316,29 +242,5 @@ class HTML {
 
 
 		return str_replace( '</amp-story>', $social_share . '</amp-story>', $content );
-	}
-
-	/**
-	 * Sanitizes markup to be valid AMP.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return void
-	 */
-	protected function sanitize_markup() {
-		$sanitization = new Sanitization();
-		$sanitization->sanitize_document( $this->document );
-	}
-
-	/**
-	 * Optimizes AMP markup.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @return void
-	 */
-	protected function optimize_markup() {
-		$optimization = new Optimization();
-		$optimization->optimize_document( $this->document );
 	}
 }

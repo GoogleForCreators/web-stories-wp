@@ -24,6 +24,20 @@ use Google\Web_Stories\Tests\Test_Case;
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
  */
 class Canonical_Sanitizer extends Test_Case {
+	protected static $user_id;
+
+	public static function wpSetUpBeforeClass( $factory ) {
+		self::$user_id = $factory->user->create(
+			[
+				'role' => 'administrator',
+			]
+		);
+	}
+
+	public static function wpTearDownAfterClass() {
+		self::delete_user( self::$user_id );
+	}
+
 	/**
 	 * @covers ::sanitize
 	 */
@@ -59,6 +73,64 @@ class Canonical_Sanitizer extends Test_Case {
 
 		wp_delete_post( $post_id );
 
+		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+	}
+
+	/**
+	 * @covers ::sanitize
+	 */
+	public function test_sanitize_canonical_empty_value() {
+		$post_id   = self::factory()->post->create();
+		$canonical = wp_get_canonical_url( $post_id );
+
+		$source = '<html><head><title>Example</title><link rel="canonical" href=""></head><body><p>Hello World</p></body></html>';
+
+		$dom = Document::fromHtml( $source );
+
+		$this->go_to( get_permalink( $post_id ) );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer->sanitize();
+
+		$actual = $dom->saveHTML( $dom->documentElement );
+
+		wp_delete_post( $post_id );
+
+		$this->assertContains( '<link rel="canonical" href="', $actual );
+		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
+		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+	}
+
+	/**
+	 * @covers ::sanitize
+	 */
+	public function test_sanitize_canonical_missing_draft() {
+		// Needed so that the user is allowed to preview drafts.
+		wp_set_current_user( self::$user_id );
+
+		$post_id   = self::factory()->post->create(
+			[
+				'post_status' => 'draft',
+			]
+		);
+		$canonical = get_permalink( $post_id );
+
+		$source = '<html><head><title>Example</title></head><body><p>Hello World</p></body></html>';
+
+		$dom = Document::fromHtml( $source );
+
+		$this->go_to( get_preview_post_link( $post_id ) );
+		$this->assertQueryTrue( 'is_single', 'is_singular', 'is_preview' );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer->sanitize();
+
+		$actual = $dom->saveHTML( $dom->documentElement );
+
+		wp_delete_post( $post_id );
+
+		$this->assertContains( '<link rel="canonical" href="', $actual );
+		$this->assertNotContains( '<link rel="canonical" href="">', $actual );
 		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
 	}
 

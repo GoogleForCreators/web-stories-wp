@@ -39,10 +39,10 @@ describe('Handling .mov files', () => {
     }
   });
 
-  // Uses the existence of the element's frame element as an indicator for successful insertion.
-  it('should insert .mov', async () => {
+  // Flakey test, see https://github.com/google/web-stories-wp/issues/8232.
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should insert .mov', async () => {
     await createNewStory();
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     await expect(page).toClick('button', { text: 'Upload' });
 
@@ -55,13 +55,12 @@ describe('Handling .mov files', () => {
 
     await expect(page).toClick('button', { text: 'Insert into page' });
 
-    await page.waitForSelector('.ReactModal__Content');
-    await expect(page).toClick('button', {
-      text: /Sounds good/,
+    await page.waitForSelector('[data-testid="videoElement"]', {
+      visible: false,
     });
-
-    await page.waitForSelector('[data-testid="videoElement"]');
-    await expect(page).toMatchElement('[data-testid="videoElement"]');
+    await expect(page).toMatchElement('[data-testid="videoElement"]', {
+      visible: false,
+    });
   });
 
   describe('Inserting .mov from dialog', () => {
@@ -75,8 +74,6 @@ describe('Handling .mov files', () => {
     // Uses the existence of the element's frame element as an indicator for successful insertion.
     it('should not list the .mov', async () => {
       await createNewStory();
-      await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
       await expect(page).toClick('button', { text: 'Upload' });
 
       await page.waitForSelector(MODAL, {

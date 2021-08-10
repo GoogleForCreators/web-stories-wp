@@ -18,14 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from 'react';
 import { trackClick } from '@web-stories-wp/tracking';
-import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 
 /**
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
+import { useCallback, createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -59,6 +58,14 @@ function Step3() {
     trackClick(evt, 'open_story_editor');
   }, []);
 
+  // createInterpolateElement doesn't support br tags.
+  const translatedString = createInterpolateElement(
+    __('Jump into the <a>Editor</a>', 'web-stories'),
+    {
+      a: <Link href={newStoryURL} onClick={onClick} />,
+    }
+  );
+
   return (
     <Wrapper>
       <Link href={newStoryURL} onClick={onClick}>
@@ -77,15 +84,7 @@ function Step3() {
             _x('3', 'Step number', 'web-stories')
           }
         </Number>
-        <Paragraph>
-          <TranslateWithMarkup
-            mapping={{
-              a: <Link href={newStoryURL} onClick={onClick} />,
-            }}
-          >
-            {__('Jump into the<br /><a>Editor</a>', 'web-stories')}
-          </TranslateWithMarkup>
-        </Paragraph>
+        <Paragraph>{translatedString}</Paragraph>
       </ParagraphWrapper>
     </Wrapper>
   );

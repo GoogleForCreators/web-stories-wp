@@ -25,6 +25,7 @@ const idsToValidate = [
   ['/123456789/a4a/trailing-slash/', false],
   ['/not/numeric/start', false],
   ['clearly wrong', false],
+  ['/1234567,1234/Travel', true],
 ];
 
 describe('validateAdManagerSlotIdFormat', () => {

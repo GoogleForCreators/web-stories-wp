@@ -6,10 +6,10 @@ use Google\Web_Stories\Exception\FailedToMakeInstance;
 use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
 use Google\Web_Stories\Tests\Fixture;
-use PHPUnit\Framework\TestCase;
+use Google\Web_Stories\Tests\Test_Case;
 use stdClass;
 
-final class SimpleInjectorTest extends TestCase {
+final class SimpleInjectorTest extends Test_Case {
 
 	public function test_it_can_be_initialized() {
 		$injector = new SimpleInjector();

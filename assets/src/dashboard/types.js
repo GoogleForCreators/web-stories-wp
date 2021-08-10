@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../edit-story/types';
+import { StoryPropTypes } from '@web-stories-wp/story-editor';
 import {
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_STATUS,
@@ -84,10 +84,6 @@ export const UserPropType = PropTypes.shape({
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
-export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
-export const CategoriesPropType =
-  PropTypes.objectOf(CategoryPropType).isRequired;
-export const UsersPropType = PropTypes.objectOf(UserPropType);
 
 export const StoryActionsPropType = PropTypes.shape({
   createTemplateFromStory: PropTypes.func,

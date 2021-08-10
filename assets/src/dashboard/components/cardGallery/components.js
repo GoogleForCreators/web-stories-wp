@@ -17,95 +17,114 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { themeHelpers } from '@web-stories-wp/design-system';
 
 export const GalleryContainer = styled.div`
-  ${({ maxWidth }) => `
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: ${maxWidth}px;
-  `}
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
 `;
-GalleryContainer.propTypes = {
-  maxWidth: PropTypes.number.isRequired,
-};
-
-export const MiniCardsContainer = styled.div`
-  ${({ rowHeight, gap }) => `
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    grid-auto-rows: ${rowHeight}px;
-    grid-gap: ${gap}px;
-
-  `}
-`;
-MiniCardsContainer.propTypes = {
-  rowHeight: PropTypes.number.isRequired,
-  gap: PropTypes.number.isRequired,
-};
-
-export const ItemContainer = styled.div`
-  ${({ width }) => `
-    display: flex;
-    justify-content: space-around;
-    width: ${width ? `${width}px` : '100%'};
-
-  `}
-`;
-ItemContainer.propTypes = {
-  width: PropTypes.number.isRequired,
-};
 
 export const MiniCardButton = styled.button(
-  ({ width, height, theme }) => css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: ${width}px;
-    height: ${height}px;
+  ({ theme }) => css`
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
     overflow: hidden;
     cursor: pointer;
     padding: 0;
-    border: 0;
     background-color: transparent;
+    border: 1px solid ${theme.colors.border.defaultNormal};
     border-radius: ${theme.borders.radius.small};
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
   `
 );
 MiniCardButton.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
   isSelected: PropTypes.bool,
 };
 
-export const MiniCard = styled.div(
-  ({ width, theme }) => `
-    position: relative;
-    width: ${width}px;
-    cursor: pointer;
-    border: 1px solid ${theme.colors.border.defaultNormal};
-    border-radius: ${theme.borders.radius.small};
-    overflow: hidden;
+export const DisplayPage = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+  overflow: hidden;
+  ${({ theme }) =>
+    theme.numRows === 3
+      ? css`
+          width: 45.2%;
+          margin-left: 2.4%;
+        `
+      : css`
+          width: 38.6%;
+          margin-left: 2.1%;
+        `}
+`;
 
-  `
-);
-MiniCard.propTypes = {
-  width: PropTypes.number.isRequired,
+const AspectSetter = styled.div`
+  position: relative;
+  height: 0;
+  padding-bottom: ${({ aspect }) => aspect * 100}%;
+`;
+const AspectInner = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
+export const AspectRatio = forwardRef(function AspectRatio(
+  { aspect = 1, children },
+  ref
+) {
+  return (
+    <AspectSetter aspect={aspect}>
+      <AspectInner ref={ref}>{children}</AspectInner>
+    </AspectSetter>
+  );
+});
+
+AspectRatio.propTypes = {
+  aspect: PropTypes.number,
+  children: PropTypes.node,
 };
 
-export const ActiveCard = styled.div(
-  ({ width, containerHeight, theme }) => `
-    position: relative;
-    width: ${width}px;
-    overflow: hidden;
-    height: ${containerHeight}px;
-    border: 1px solid ${theme.colors.border.defaultNormal};
-    border-radius: ${theme.borders.radius.small};
-  `
-);
-ActiveCard.propTypes = {
-  width: PropTypes.number.isRequired,
-};
+export const Thumbnails = styled.div`
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  ${({ theme }) =>
+    theme.numRows === 3
+      ? css`
+          width: 52.3%;
+        `
+      : css`
+          width: 59.3%;
+        `}
+`;
+
+export const Thumbnail = styled.div`
+  position: relative;
+
+  ${({ theme }) =>
+    theme.numRows === 3
+      ? css`
+          width: 26%;
+          margin: 0 7.1% 7.1% 0;
+        `
+      : css`
+          width: 19.74%;
+          margin: 0 5.26% 5.26% 0;
+        `}
+
+  :nth-last-child(-n + ${({ theme }) => theme.numRows}) {
+    margin-bottom: 0;
+  }
+`;

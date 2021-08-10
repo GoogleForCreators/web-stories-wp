@@ -39,7 +39,7 @@ class Locale {
 	 *
 	 * @return array Locale settings.
 	 */
-	public function get_locale_settings() {
+	public function get_locale_settings(): array {
 		global $wp_locale;
 
 		/* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */

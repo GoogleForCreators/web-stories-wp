@@ -27,7 +27,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
 
 /**
  * Class Migration_Meta_To_Term
@@ -57,7 +57,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 
 		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
-				wp_set_object_terms( (int) $post_id, $this->get_term_name(), Media::STORY_MEDIA_TAXONOMY );
+				wp_set_object_terms( (int) $post_id, $this->get_term_name(), Media_Source_Taxonomy::TAXONOMY_SLUG );
 			}
 		}
 	}
@@ -70,9 +70,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	protected function get_post_meta_key() {
-		return '';
-	}
+	abstract protected function get_post_meta_key();
 
 	/**
 	 * Get name of term to be used in migration.
@@ -82,7 +80,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	protected function get_term_name() {
+	protected function get_term_name(): string {
 		return 'poster-generation';
 	}
 }

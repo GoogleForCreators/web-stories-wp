@@ -27,19 +27,22 @@ use Google\Web_Stories\Tests\Test_Case;
 class Add_Media_Source_Video_Optimization extends Test_Case {
 	/**
 	 * @covers ::migrate
+	 * @covers ::get_term
+	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
 	public function test_migrate() {
 		$object = new \Google\Web_Stories\Migrations\Add_Media_Source_Video_Optimization();
 		$object->migrate();
+		$term = $this->call_private_method( $object, 'get_term' );
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
+				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
 				'hide_empty' => false,
 			]
 		);
 
 		$slugs = wp_list_pluck( $terms, 'slug' );
-		$this->assertContains( 'video-optimization', $slugs );
+		$this->assertContains( $term, $slugs );
 	}
 }

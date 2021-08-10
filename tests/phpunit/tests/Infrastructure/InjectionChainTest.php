@@ -3,9 +3,9 @@
 namespace Google\Web_Stories\Tests\Infrastructure;
 
 use Google\Web_Stories\Infrastructure\Injector\InjectionChain;
-use PHPUnit\Framework\TestCase;
+use Google\Web_Stories\Tests\Test_Case;
 
-final class InjectionChainTest extends TestCase {
+final class InjectionChainTest extends Test_Case {
 
 	public function test_it_can_be_initialized() {
 		$chain = new InjectionChain();

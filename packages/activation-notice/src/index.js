@@ -18,9 +18,12 @@
  * External dependencies
  */
 import { FlagsProvider } from 'flagged';
-import { render } from 'react-dom';
-import { StrictMode } from 'react';
 import { initializeTracking } from '@web-stories-wp/tracking';
+
+/**
+ * WordPress dependencies
+ */
+import { StrictMode, render } from '@wordpress/element';
 
 /**
  * Internal dependencies

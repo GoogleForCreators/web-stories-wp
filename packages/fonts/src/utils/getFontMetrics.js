@@ -22,7 +22,7 @@ import Crypto from 'crypto';
 import { tmpdir } from 'os';
 import Path from 'path';
 import got from 'got';
-import opentype from 'opentype.js';
+import { loadSync } from 'opentype.js';
 
 /**
  * @typedef {Object} FontMetrics font metrics.
@@ -66,7 +66,7 @@ async function getFontMetrics(fontFileURL) {
 
   const tempFile = getTmpFileName();
   writeFileSync(tempFile, response.rawBody);
-  const fontInfo = opentype.loadSync(tempFile);
+  const fontInfo = loadSync(tempFile);
   unlinkSync(tempFile);
 
   return {

@@ -41,13 +41,8 @@ export default function useDashboardResultsLabel({
     return isActiveSearch
       ? sprintf(
           /* translators: %s: number of results */
-          _n(
-            '<strong>%s</strong> result',
-            '<strong>%s</strong> results',
-            numResults,
-            'web-stories'
-          ),
-          numResults
+          _n('%s result', '%s results', numResults, 'web-stories'),
+          sprintf('<strong>%s</strong>', numResults)
         )
       : interprettedDefaultLabel;
   }, [isActiveSearch, totalResults, view, currentFilter]);

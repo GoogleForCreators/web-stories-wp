@@ -23,7 +23,6 @@ describe('Inserting 3P Media', () => {
   it('should dismiss message', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     await expect(page).toClick('#library-tab-media3p');
     await expect(page).toClick('button', { text: 'Dismiss' });
     await expect(page).not.toMatch(
@@ -33,7 +32,6 @@ describe('Inserting 3P Media', () => {
   it('should insert an Unsplash image', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     await expect(page).toClick('#library-tab-media3p');
 
     await expect(page).toMatchElement('button', { text: 'Image' });
@@ -55,7 +53,6 @@ describe('Inserting 3P Media', () => {
   it.skip('should insert an coverr video', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     await expect(page).toClick('#library-tab-media3p');
 
     await expect(page).toMatchElement('button', { text: 'Video' });
@@ -75,7 +72,6 @@ describe('Inserting 3P Media', () => {
   it('should insert an tenor gif', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
     await expect(page).toClick('#library-tab-media3p');
 
     await expect(page).toMatchElement('button', { text: 'GIFs' });

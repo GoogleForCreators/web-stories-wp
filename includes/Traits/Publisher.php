@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Traits;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Settings;
 
 /**
@@ -54,7 +54,7 @@ trait Publisher {
 	 *
 	 * @return array Publisher name and logo.
 	 */
-	public function get_publisher_data() {
+	public function get_publisher_data() : array {
 		$publisher      = $this->get_publisher_name();
 		$publisher_logo = $this->get_publisher_logo();
 
@@ -80,7 +80,7 @@ trait Publisher {
 		$active_publisher_logo = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 
 		if ( $active_publisher_logo ) {
-			$logo_image_url = wp_get_attachment_image_url( $active_publisher_logo, Media::PUBLISHER_LOGO_IMAGE_SIZE );
+			$logo_image_url = wp_get_attachment_image_url( $active_publisher_logo, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
 
 			if ( ! $logo_image_url ) {
 				$logo_image_url = null;

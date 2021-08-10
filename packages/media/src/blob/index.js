@@ -58,3 +58,13 @@ export function revokeBlob(url) {
 
   delete blobCache[url];
 }
+
+/**
+ * Check whether a URL is a blob URL.
+ *
+ * @param {string} url The URL.
+ * @return {boolean} Is the url a blob url?
+ */
+export function isBlobURL(url) {
+  return url?.startsWith('blob:');
+}
