@@ -35,8 +35,8 @@ const MIN_VIDEO_WIDTH = 852;
 
 export function videoElementResolution(element) {
   const videoResolutionLow =
-    element.resource?.sizes?.full?.height <= MIN_VIDEO_HEIGHT &&
-    element.resource?.sizes?.full?.width <= MIN_VIDEO_WIDTH;
+    element.resource?.height <= MIN_VIDEO_HEIGHT &&
+    element.resource?.width <= MIN_VIDEO_WIDTH;
 
   return element.type === 'video' && videoResolutionLow;
 }

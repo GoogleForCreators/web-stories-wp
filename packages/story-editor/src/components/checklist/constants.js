@@ -235,7 +235,7 @@ export const DESIGN_COPY = {
     title: sprintf(
       /* translators: %s: minimum image size width x minimum image size height. */
       __(
-        'Upload a higher resolution poster image to at least %s',
+        'Upload a higher resolution image to at least %s',
         'web-stories'
       ),
       `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
