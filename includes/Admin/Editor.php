@@ -56,6 +56,13 @@ class Editor extends Service_Base {
 	const SCRIPT_HANDLE = 'edit-story';
 
 	/**
+	 * AMP validator script handle.
+	 *
+	 * @var string
+	 */
+	const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
+
+	/**
 	 * Experiments instance.
 	 *
 	 * @var Experiments Experiments instance.
@@ -202,10 +209,15 @@ class Editor extends Service_Base {
 
 		// Force media model to load.
 		wp_enqueue_media();
-		$script_dependencies = [
-			Tracking::SCRIPT_HANDLE,
-			'postbox',
-		];
+
+		wp_enqueue_script(
+			self::AMP_VALIDATOR_SCRIPT_HANDLE,
+			'https://cdn.ampproject.org/v0/validator.js',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
 		$font_handle = $this->google_fonts->get_handle();
