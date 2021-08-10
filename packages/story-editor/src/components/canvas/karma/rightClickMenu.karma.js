@@ -19,6 +19,7 @@
 import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { clearableAttributes as imageAttributeDefaults } from '../../../elements/image';
+import { clearableAttributes as textAttributeDefaults } from '../../../elements/text';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
@@ -75,9 +76,10 @@ describe('Right Click Menu integration', () => {
   /**
    * Add text to canvas
    *
+   * @param {Object} textPartial text element partial
    * @return {Object} the element
    */
-  function addText() {
+  function addText(textPartial = {}) {
     return fixture.act(() =>
       insertElement('text', {
         font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -85,6 +87,7 @@ describe('Right Click Menu integration', () => {
         x: 10,
         y: 20,
         width: 400,
+        ...textPartial,
       })
     );
   }
@@ -880,6 +883,174 @@ describe('Right Click Menu integration', () => {
 
       // verify focus
       expect(document.activeElement).toBe(fixture.editor.library.mediaTab);
+    });
+  });
+
+  describe('right click menu: text', () => {
+    const { content: _, ...textAttributeDefaultsWithoutContent } =
+      textAttributeDefaults;
+    const clearableTextProperties = Object.keys(
+      textAttributeDefaultsWithoutContent
+    );
+
+    it('should not copy and paste content directly with styles', async () => {
+      const textA = await addText({
+        fontSize: 60,
+        content: '<span style="color: #ff0110">Some Text Element</span>',
+        backgroundColor: { r: 10, g: 0, b: 200 },
+        lineHeight: 1.4,
+        textAlign: 'center',
+        border: {
+          left: 1,
+          right: 1,
+          top: 1,
+          bottom: 1,
+          lockedWidth: true,
+          color: {
+            color: {
+              r: 0,
+              g: 0,
+              b: 0,
+            },
+          },
+        },
+        padding: {
+          vertical: 0,
+          horizontal: 20,
+          locked: true,
+        },
+      });
+      const textB = await addText({
+        y: 300,
+        fontSize: 40,
+        content: '<span style="color: #10ff01">Another Text Element</span>',
+      });
+
+      // copy text element A styles
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(textA.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.copyStyles
+      );
+
+      // paste text element A styles onto text element B
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(textB.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.pasteStyles
+      );
+
+      // verify that the styles were copied and pasted
+      const { currentPage } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          currentPage: state.currentPage,
+        }))
+      );
+
+      const textElements = currentPage.elements.filter(
+        (element) => !element.isBackground
+      );
+
+      const copiedProperties = objectPick(
+        textElements[0],
+        clearableTextProperties
+      );
+      const { content, ...pastedProperties } = objectPick(textElements[1], [
+        ...clearableTextProperties,
+        'content',
+      ]);
+      expect(content).toBe(
+        '<span style="color: #ff0110">Another Text Element</span>'
+      );
+      expect(copiedProperties).toEqual(pastedProperties);
+      // should update bounding box size when updating fontSize
+      expect(textB.height).not.toBe(textElements[1].height);
+    });
+
+    it('should add color to "Saved Colors"', async () => {
+      const text = await addText({
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(text.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.addToSavedColors
+      );
+
+      // verify that the global color was added
+      const { colors } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          colors: state.story.globalStoryStyles.colors,
+        }))
+      );
+      expect(colors.map(({ color }) => color)).toContain({
+        r: 0,
+        g: 255,
+        b: 0,
+      });
+    });
+
+    it('should add style to "Saved Styles"', async () => {
+      const text = await addText({
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(text.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.addToSavedStyles
+      );
+
+      // verify that the global color was added
+      const { textStyles } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          textStyles: state.story.globalStoryStyles.textStyles,
+        }))
+      );
+      expect(textStyles).toContain({
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+        backgroundTextMode: 'NONE',
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        fontSize: 60,
+        lineHeight: 1.3,
+        padding: {
+          vertical: 0,
+          horizontal: 0,
+          locked: true,
+        },
+        textAlign: 'initial',
+        color: {
+          color: {
+            r: 0,
+            g: 255,
+            b: 0,
+          },
+        },
+        fontWeight: 400,
+        isItalic: false,
+        isUnderline: false,
+        letterSpacing: 0,
+      });
     });
   });
 });
