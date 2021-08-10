@@ -103,13 +103,10 @@ describe('Keyboard Shortcuts Menu', () => {
         const { keyboardShortcutsMenu } = fixture.editor.keyboardShortcuts;
         expect(keyboardShortcutsMenu).toBeTruthy();
 
-        // Click inside menu
-        await fixture.events.mouse.clickOn(keyboardShortcutsMenu, 10, 10);
-
         const menu = within(keyboardShortcutsMenu);
-        const menuItem = await menu.queryAllByRole('listitem')[0];
-        // Click on element inside menu
-        await fixture.events.click(menuItem);
+        const scrollableMenuArea = await menu.queryByRole('presentation');
+        // Click inside menu
+        await fixture.events.click(scrollableMenuArea);
         // Give time for menu to process clicks
         await fixture.events.sleep(closeDelay);
 
