@@ -385,6 +385,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Video Cache', 'web-stories' ),
 				'description' => __( 'Reduce hosting costs and improve user experience by serving videos from the Google cache.', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 
 			/**
@@ -397,6 +398,7 @@ class Experiments extends Service_Base {
 				'label'       => __( 'Mute Videos', 'web-stories' ),
 				'description' => __( 'Allow videos to be muted in the editor.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}
