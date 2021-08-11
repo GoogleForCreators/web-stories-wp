@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import reshapeStoryObject from '../stories';
+import { REST_LINKS } from '../../../constants';
 
 describe('reshapeStoryObject', () => {
   it('should return null if the ID is missing', () => {
@@ -85,5 +86,52 @@ describe('reshapeStoryObject', () => {
 
     const reshapedObj = reshapeStoryObject(responseObj);
     expect(reshapedObj).toBeNull();
+  });
+
+  it('should return capabilities', () => {
+    const responseObj = {
+      id: 27,
+      date: '2020-03-26T20:57:24',
+      guid: {
+        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
+      },
+      modified: '2020-03-26T21:42:14',
+      slug: '',
+      status: 'draft',
+      type: 'web-story',
+      link: 'http://localhost:8899/?post_type=web-story&p=27',
+      title: { raw: 'Carlos Draft' },
+      content: {
+        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
+        protected: false,
+      },
+      excerpt: { rendered: '', protected: false },
+      author: 1,
+      featured_media: 0,
+      template: '',
+      categories: [],
+      tags: [],
+      story_data: { pages: [{ id: 0, elements: [] }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 1, name: 'admin' }],
+      },
+      _links: {
+        [REST_LINKS.EDIT]: [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
+          },
+        ],
+        [REST_LINKS.DELETE]: [
+          {
+            href: 'http://localhost:8899/wp-json/web-stories/v1/web-story/163',
+          },
+        ],
+      },
+    };
+
+    const reshapedObj = reshapeStoryObject(responseObj);
+    expect(reshapedObj.capabilities.hasDeleteAction).toBeTrue();
+    expect(reshapedObj.capabilities.hasEditAction).toBeTrue();
   });
 });

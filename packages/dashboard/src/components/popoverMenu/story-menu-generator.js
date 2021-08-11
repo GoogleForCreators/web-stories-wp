@@ -45,7 +45,11 @@ export const generateStoryMenu = ({
     ? () => menuItemActions.default(story)
     : noop;
 
-  return menuItems.map(({ value, ...menuItem }) => {
+  const menuItemsFiltered = menuItems.filter(
+    (item) => !item?.capability || story?.capabilities?.[item?.capability]
+  );
+
+  return menuItemsFiltered.map(({ value, ...menuItem }) => {
     const extraProperties = {
       onClick: menuItemActions[value]
         ? () => menuItemActions[value](story)
