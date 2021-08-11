@@ -48,7 +48,10 @@ const InputWrapper = styled.div`
 `;
 
 function HotlinkModal({ isOpen, onClose }) {
-  const { allowedFileTypes } = useConfig();
+  const {
+    allowedFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -103,7 +106,7 @@ function HotlinkModal({ isOpen, onClose }) {
 
       // Create a poster file in case of videos.
       let posterData;
-      if (isVideo) {
+      if (isVideo && hasUploadMediaAction) {
         const originalFileName = getFileNameFromUrl(link);
         const fileName = getPosterName(originalFileName);
         const posterFile = await getFirstFrameOfVideo(link);
