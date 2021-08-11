@@ -16,4 +16,5 @@
 /**
  * External dependencies
  */
-export { createPortal, render, renderToStaticMarkup } from 'react-dom';
+export { createPortal, render } from 'react-dom';
+export { renderToStaticMarkup } from 'react-dom/server';
