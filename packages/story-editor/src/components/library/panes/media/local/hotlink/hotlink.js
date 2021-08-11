@@ -56,7 +56,7 @@ function Hotlink() {
           type={BUTTON_TYPES.SECONDARY}
           size={BUTTON_SIZES.SMALL}
           onClick={() => setIsOpen(true)}
-          label={label}
+          aria-label={label}
         >
           <Icons.Link />
         </Button>
