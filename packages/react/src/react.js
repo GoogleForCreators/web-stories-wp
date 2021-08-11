@@ -33,3 +33,5 @@ export {
   createElement,
   useImperativeHandle,
 } from 'react';
+
+export { shallowEqual } from 'react-pure-render';
