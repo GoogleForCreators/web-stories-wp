@@ -57,9 +57,9 @@ This feature does not support selecting multiple elements, so the menu will be h
 
 Quick actions hook into the highlight api. To add a new quick action, the following steps must be completed. If you are not highlighting, skip the first two steps:
 
-1. If it doesn't already exist, add a key to `assets/src/edit-story/app/highlights/states.js` that will reference the panel/pane/element that you are trying to highlight.
+1. If it doesn't already exist, add a key to `packages/story-editor/src/app/highlights/states.js` that will reference the panel/pane/element that you are trying to highlight.
 2. Attach the new highlight state to the panel/pane/element that will be focused by using the `useFocusHighlight` hook. Pass a reference to an element that should be focused if that applies.
-3. Create the quick action in the `useQuickActions` hook located at `assets/src/edit-story/app/highlights/quickActions/useQuickActions.js`
+3. Create the quick action in the `useQuickActions` hook located at `packages/story-editor/src/app/highlights/quickActions/useQuickActions.js`
 
 ## Technical notes and considerations
 

@@ -29,18 +29,18 @@ import {
   ThemeGlobals,
   ModalGlobalStyle,
 } from '@web-stories-wp/design-system';
-
-/**
- * Internal dependencies
- */
-import theme, { GlobalStyle } from '../assets/src/edit-story/theme';
-import { GlobalStyle as CropMoveableGlobalStyle } from '../assets/src/edit-story/components/moveable/cropStyle';
-
-import { GlobalStyle as DashboardGlobalStyle } from '../assets/src/dashboard/theme';
-import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
-import { ConfigProvider as DashboardConfigProvider } from '../assets/src/dashboard/app/config';
-import { ConfigProvider as EditorConfigProvider } from '../assets/src/edit-story/app/config';
-import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
+import {
+  theme,
+  GlobalStyle,
+  CropMoveableGlobalStyle,
+  EditorConfigProvider,
+} from '@web-stories-wp/story-editor';
+import {
+  DashboardGlobalStyle,
+  DashboardKeyboardOnlyOutline,
+  DashboardConfigProvider,
+  ApiProvider,
+} from '@web-stories-wp/dashboard';
 
 // @todo: Find better way to mock these.
 const wp = {};

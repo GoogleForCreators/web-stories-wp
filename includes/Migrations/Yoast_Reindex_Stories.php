@@ -72,6 +72,7 @@ class Yoast_Reindex_Stories extends Migrate_Base {
 			$builder->build_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, $indexable_before );
 		}
 
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
 		$all_stories = get_posts(
 			[
 				'fields'                 => 'ids',

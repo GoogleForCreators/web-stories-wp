@@ -147,6 +147,7 @@ function delete_stories_user_meta() {
  * @return void
  */
 function delete_posts() {
+	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
 	$cpt_posts = get_posts(
 		[
 			'fields'           => 'ids',
