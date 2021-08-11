@@ -95,7 +95,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   }
 
   function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
+    const arr = window.location.href.split('?');
+    const params = new URLSearchParams(arr.pop());
     return Object.fromEntries(params);
   }
 
