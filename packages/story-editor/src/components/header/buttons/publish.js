@@ -24,7 +24,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia, useConfig } from '../../../app';
+import { useStory, useLocalMedia } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
@@ -32,15 +32,25 @@ import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 const TRANSITION_DURATION = 300;
 
 function Publish() {
-  const { isSaving, date, storyId, saveStory, title, editLink } = useStory(
-    ({
-      state: {
-        meta: { isSaving },
-        story: { date, storyId, title, editLink },
-      },
-      actions: { saveStory },
-    }) => ({ isSaving, date, storyId, saveStory, title, editLink })
-  );
+  const { isSaving, date, storyId, saveStory, title, editLink, capabilities } =
+    useStory(
+      ({
+        state: {
+          capabilities,
+          meta: { isSaving },
+          story: { date, storyId, title, editLink },
+        },
+        actions: { saveStory },
+      }) => ({
+        isSaving,
+        date,
+        storyId,
+        saveStory,
+        title,
+        editLink,
+        capabilities,
+      })
+    );
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
@@ -60,7 +70,6 @@ function Publish() {
   }, [onReviewDialogRequest]);
 
   const [showDialog, setShowDialog] = useState(false);
-  const { capabilities } = useConfig();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
   // Offset the date by one minute to accommodate for network latency.

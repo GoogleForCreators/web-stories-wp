@@ -93,8 +93,6 @@ const DEFAULT_CONFIG = {
   ],
   capabilities: {
     hasUploadMediaAction: true,
-    hasPublishAction: true,
-    hasAssignAuthorAction: true,
   },
   dashboardLink: 'https://www.example.com/dashboard',
   postLock: {
@@ -734,11 +732,25 @@ class APIProviderFixture {
             featured_media: 0,
             featured_media_url: '',
             publisher_logo_url:
-              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
+              'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
             permalink_template: 'http://stories3.local/stories/%pagename%/',
             style_presets: { textStyles: [], colors: [] },
             password: '',
             _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+            _links: {
+              'wp:action-assign-author': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+              'wp:action-delete': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+              'wp:action-publish': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+              'wp:action-unfiltered-html': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+            },
           }),
         []
       );
@@ -769,6 +781,20 @@ class APIProviderFixture {
             style_presets: { textStyles: [], colors: [] },
             password: '',
             _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+            _links: {
+              'wp:action-assign-author': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+              'wp:action-delete': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+              'wp:action-publish': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+              'wp:action-unfiltered-html': {
+                href: 'http://stories.local/wp-json/web-stories/v1/web-story/1',
+              },
+            },
           }),
         []
       );

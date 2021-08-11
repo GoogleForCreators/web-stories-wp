@@ -39,6 +39,10 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
+    capabilities: {
+      hasDeleteAction: false,
+      hasEditAction: false,
+    },
   },
   {
     id: 2,
@@ -50,6 +54,10 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
+    capabilities: {
+      hasDeleteAction: false,
+      hasEditAction: false,
+    },
   },
   {
     id: 3,
@@ -61,6 +69,10 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
+    capabilities: {
+      hasDeleteAction: false,
+      hasEditAction: false,
+    },
   },
 ];
 const pageSize = {
