@@ -20,6 +20,7 @@ import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
 
@@ -809,6 +810,24 @@ function RightClickMenuProvider({ children }) {
       node.removeEventListener('contextmenu', handleOpenMenu);
     };
   }, [enableRightClickMenus, handleOpenMenu]);
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+alt+o'] },
+    (evt) => {
+      evt.preventDefault();
+      handleCopyStyles();
+    },
+    [handleCopyStyles]
+  );
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+alt+p'] },
+    (evt) => {
+      evt.preventDefault();
+      handlePasteStyles();
+    },
+    [handlePasteStyles]
+  );
 
   const value = useMemo(
     () => ({
