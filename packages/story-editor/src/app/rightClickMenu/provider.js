@@ -491,30 +491,8 @@ function RightClickMenuProvider({ children }) {
     [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
   );
 
-  const backgroundMediaItems = useMemo(
+  const pageManipulationItems = useMemo(
     () => [
-      ...defaultItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        separator: 'top',
-        onClick: handleRemoveMediaFromBackground,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
-        onClick: handleFocusMediaPanel,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
-        onClick: handleOpenScaleAndCrop,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         separator: 'top',
@@ -540,16 +518,48 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       currentPageIndex,
-      defaultItems,
       handleAddPageAtPosition,
-      handleClearElementStyles,
       handleDeletePage,
       handleDuplicatePage,
+      menuItemProps,
+      pages,
+    ]
+  );
+
+  const backgroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        separator: 'top',
+        onClick: handleRemoveMediaFromBackground,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
+        onClick: handleFocusMediaPanel,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        onClick: handleOpenScaleAndCrop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+      ...pageManipulationItems,
+    ],
+    [
+      defaultItems,
+      handleClearElementStyles,
       handleOpenScaleAndCrop,
       handleRemoveMediaFromBackground,
       handleFocusMediaPanel,
       menuItemProps,
-      pages,
+      pageManipulationItems,
     ]
   );
 
@@ -708,22 +718,8 @@ function RightClickMenuProvider({ children }) {
   );
 
   const pageItems = useMemo(
-    () => [
-      ...defaultItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: handleDuplicatePage,
-        separator: 'top',
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: handleDeletePage,
-        disabled: pages.length === 1,
-        ...menuItemProps,
-      },
-    ],
-    [defaultItems, handleDeletePage, handleDuplicatePage, menuItemProps, pages]
+    () => [...defaultItems, ...pageManipulationItems],
+    [defaultItems, pageManipulationItems]
   );
 
   const menuItems = useMemo(() => {
