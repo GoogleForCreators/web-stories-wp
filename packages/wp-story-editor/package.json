@@ -11,12 +11,12 @@
 	"main": "./src/index.js",
 	"type": "module",
 	"dependencies": {
-		"@web-stories-wp/react": "*",
-		"flagged": "^2.0.1",
 		"@web-stories-wp/date": "*",
 		"@web-stories-wp/design-system": "*",
-		"@web-stories-wp/tracking": "*",
-		"@web-stories-wp/story-editor": "*"
-	},
+    "@web-stories-wp/react": "*",
+		"@web-stories-wp/story-editor": "*",
+    "@web-stories-wp/tracking": "*",
+    "flagged": "^2.0.1"
+  },
 	"devDependencies": {}
 }

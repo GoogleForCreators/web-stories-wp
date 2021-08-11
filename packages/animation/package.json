@@ -11,9 +11,9 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/react": "*",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/media": "*",
+    "@web-stories-wp/react": "*",
     "@web-stories-wp/units": "*",
     "flagged": "^2.0.1",
     "uuid": "^8.3.2",
