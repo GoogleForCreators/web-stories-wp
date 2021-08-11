@@ -404,7 +404,7 @@
         "tests/js/*.js",
         "packages/e2e-tests/src/*.js",
         "packages/e2e-tests/src/config/*.js",
-        "assets/src/dashboard/karma-tests.cjs",
+        "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
@@ -453,6 +453,7 @@
         }
       },
       "rules": {
+        "import/no-extraneous-dependencies": "off",
         "@wordpress/dependency-group": "off",
         "no-console": "off",
         "no-undef": "off",
@@ -463,7 +464,7 @@
     },
     {
       "files": [
-        "assets/src/dashboard/**/*.js",
+        "packages/dashboard/src/**/*.js",
         "packages/story-editor/src/**/*.js",
         "packages/**/*.js"
       ],

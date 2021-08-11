@@ -32,6 +32,7 @@ import { ChecklistCategoryProvider } from '../countContext/checkCountContext';
 import { PanelText, StyledTablistPanel } from '../styles';
 import VideoOptimizationToggle from '../videoOptimizationCheckbox';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import { useConfig } from '../../../app';
 
 function AccessibilityPanel({
   children,
@@ -70,6 +71,10 @@ AccessibilityPanel.propTypes = {
 };
 
 export function AccessibilityChecks(props) {
+  const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({
+    hasUploadMediaAction: capabilities.hasUploadMediaAction,
+  }));
+
   return (
     <ChecklistCategoryProvider category={ISSUE_TYPES.ACCESSIBILITY}>
       <AccessibilityPanel {...props}>
@@ -77,7 +82,7 @@ export function AccessibilityChecks(props) {
         <PageBackgroundTextLowContrast />
         <TextElementFontSizeTooSmall />
         <VideoElementMissingDescription />
-        <VideoElementMissingCaptions />
+        {hasUploadMediaAction && <VideoElementMissingCaptions />}
         <ElementLinkTappableRegionTooSmall />
         <ImageElementMissingAlt />
       </AccessibilityPanel>
