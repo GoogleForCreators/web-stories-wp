@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext } from '@web-stories-wp/react';
+import { useContextReact as useContext } from '@web-stories-wp/react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeContext } from 'styled-components';
@@ -84,6 +84,7 @@ export function Modal({
   overlayStyles,
   ...rest
 }) {
+  // TODO, refactor to use useContext from use-context-selector.
   const themeContext = useContext(ThemeContext);
 
   return (
