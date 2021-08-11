@@ -147,6 +147,10 @@ function RightClickMenuProvider({ children }) {
   // Ref for attaching the context menu
   const rightClickAreaRef = useRef();
 
+  // Needed to not pass stale refs of `undo` to snackbar
+  const undoRef = useRef(undo);
+  undoRef.current = undo;
+
   const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
     useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
 
@@ -422,7 +426,9 @@ function RightClickMenuProvider({ children }) {
       actionLabel: __('Undo', 'web-stories'),
       dismissable: false,
       message: __('Pasted style.', 'web-stories'),
-      onAction: undo,
+      // don't pass a stale reference for undo
+      // need history updates to run so `undo` works correctly.
+      onAction: () => undoRef.current(),
     });
   }, [
     addAnimations,
@@ -431,7 +437,6 @@ function RightClickMenuProvider({ children }) {
     selectedElement,
     selectedElementAnimations,
     showSnackbar,
-    undo,
     updateElementsById,
   ]);
 
@@ -462,10 +467,12 @@ function RightClickMenuProvider({ children }) {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Cleared style.', 'web-stories'),
-        onAction: undo,
+        // don't pass a stale reference for undo
+        // need history updates to run so `undo` works correctly.
+        onAction: () => undoRef.current(),
       });
     }
-  }, [selectedElement, showSnackbar, undo, updateElementsById]);
+  }, [selectedElement, showSnackbar, updateElementsById]);
 
   /**
    * Set currently selected element as the page's background.
