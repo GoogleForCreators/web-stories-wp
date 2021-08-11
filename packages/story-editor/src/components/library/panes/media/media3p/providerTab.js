@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import {
   useKeyDownEffect,

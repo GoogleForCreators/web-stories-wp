@@ -17,6 +17,7 @@
 export { useDebouncedCallback } from 'use-debounce';
 
 export * from './context';
+export * from './react';
 
 export { default as useBatchingCallback } from './useBatchingCallback';
 export { default as useCombinedRefs } from './useCombinedRefs';

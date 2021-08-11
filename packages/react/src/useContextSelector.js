@@ -18,8 +18,12 @@
  * External dependencies
  */
 import { shallowEqual } from 'react-pure-render';
-import { useRef } from 'react';
 import { useContextSelector as useContextSelectorOrig } from 'use-context-selector';
+
+/**
+ * Internal dependencies
+ */
+import { useRef } from './react';
 
 /**
  * This hook returns a part of the context value by selector.

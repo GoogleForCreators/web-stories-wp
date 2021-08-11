@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from './react';
 
 if (!('ResizeObserver' in window)) {
   import(

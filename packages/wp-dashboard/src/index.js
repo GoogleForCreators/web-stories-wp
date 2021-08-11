@@ -27,7 +27,7 @@ import './publicPath';
  */
 import App from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
-import { StrictMode } from 'react';
+import { StrictMode } from '@web-stories-wp/react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';

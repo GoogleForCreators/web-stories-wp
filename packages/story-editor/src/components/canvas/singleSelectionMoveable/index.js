@@ -18,10 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState, useMemo } from 'react';
+import {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useBatchingCallback,
+  useCombinedRefs,
+} from '@web-stories-wp/react';
 import classnames from 'classnames';
 import { useUnits } from '@web-stories-wp/units';
-import { useBatchingCallback, useCombinedRefs } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

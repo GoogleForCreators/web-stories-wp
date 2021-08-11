@@ -18,12 +18,17 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect, useState, useCallback } from 'react';
+import {
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

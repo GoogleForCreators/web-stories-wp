@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
 /**

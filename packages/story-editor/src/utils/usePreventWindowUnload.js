@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
-import { createContext, useContext } from '@web-stories-wp/react';
+import { useCallback, createContext, useContext } from '@web-stories-wp/react';
 
 const PreventUnloadContext = createContext({ listeners: new Map() });
 

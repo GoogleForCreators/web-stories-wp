@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
 import queryString from 'query-string';
 import { toUTCDate } from '@web-stories-wp/date';
 import getAllTemplates from '@web-stories-wp/templates';

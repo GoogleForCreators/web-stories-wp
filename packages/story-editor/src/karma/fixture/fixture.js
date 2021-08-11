@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+import * as React from '@web-stories-wp/react';
 const { useCallback, useState, useMemo, forwardRef } = React;
 
 import { FlagsProvider } from 'flagged';

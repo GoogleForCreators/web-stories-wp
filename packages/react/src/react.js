@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { useEffect, useState, useCallback } from '@web-stories-wp/react';
-
-function useFocusAndSelect(ref) {
-  const [focused, setFocused] = useState(false);
-
-  const handleFocus = useCallback(() => setFocused(true), []);
-  const handleBlur = useCallback(() => setFocused(false), []);
-
-  useEffect(() => {
-    if (focused && ref.current) {
-      ref.current.select();
-    }
-  }, [focused, ref]);
-
-  return {
-    focused,
-    handleFocus,
-    handleBlur,
-  };
-}
-
-export default useFocusAndSelect;
+export {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  forwardRef,
+  lazy,
+  memo,
+  useLayoutEffect,
+  useReducer,
+  createRef,
+  Fragment,
+  Component,
+  StrictMode,
+  Suspense,
+  cloneElement,
+  createElement,
+  useImperativeHandle,
+} from 'react';

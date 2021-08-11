@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 import { migrate } from '@web-stories-wp/migration';
 
 /**

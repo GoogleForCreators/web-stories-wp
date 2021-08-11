@@ -18,13 +18,19 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   useGridViewKeys,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

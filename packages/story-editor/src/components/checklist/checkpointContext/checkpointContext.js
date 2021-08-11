@@ -16,13 +16,17 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback, useReducer, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import {
+  useEffect,
+  useState,
+  useCallback,
+  useReducer,
+  useMemo,
   createContext,
   useContextSelector,
   identity,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */

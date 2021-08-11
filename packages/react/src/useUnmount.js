@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from './react';
 
 /**
  * @param {Function} callback The identity-stable callback to be executed on unmount

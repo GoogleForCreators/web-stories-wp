@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { forwardRef } from 'react';
+import { forwardRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

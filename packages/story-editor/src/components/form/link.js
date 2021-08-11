@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
+import { forwardRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
 

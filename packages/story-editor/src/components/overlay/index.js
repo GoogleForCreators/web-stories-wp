@@ -19,8 +19,7 @@
  */
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
-import { forwardRef } from 'react';
-import { useContext } from '@web-stories-wp/react';
+import { forwardRef, useContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

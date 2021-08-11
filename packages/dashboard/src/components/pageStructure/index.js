@@ -18,7 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import {
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
@@ -31,7 +37,6 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

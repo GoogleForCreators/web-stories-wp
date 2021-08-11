@@ -25,8 +25,8 @@ import {
   useCallback,
   useState,
   useRef,
-} from 'react';
-import { useResizeEffect } from '@web-stories-wp/react';
+  useResizeEffect,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

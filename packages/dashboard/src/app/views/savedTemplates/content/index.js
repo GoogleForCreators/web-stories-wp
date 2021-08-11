@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';

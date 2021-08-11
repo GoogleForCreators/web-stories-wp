@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
 import queryString from 'query-string';
 
 /**
