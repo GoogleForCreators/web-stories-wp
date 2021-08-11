@@ -23,7 +23,7 @@ Tests without prefixes will be ignored.
 module.exports = function (config) {
   config.set({
     // reporters configuration
-    reporters: ['cuj'],
+    reporters: ['@web-stories-wp/karma-cuj-reporter'],
   });
 };
 ```
@@ -49,7 +49,7 @@ const path = require('path');
 module.exports = function (config) {
   config.set({
     // reporters configuration
-    reporters: ['cuj'],
+    reporters: ['@web-stories-wp/karma-cuj-reporter'],
 
     cujReporter: {
       outputFile: path.resolve(process.cwd(), 'build/cuj-coverage.md'),

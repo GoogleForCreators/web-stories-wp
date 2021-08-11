@@ -18,14 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * WordPress dependencies
  */
 import { __, _x } from '@wordpress/i18n';
-import { useCallback } from '@wordpress/element';
+import { createInterpolateElement, useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -60,6 +59,14 @@ function Step2() {
     trackClick(evt, 'open_dashboard');
   }, []);
 
+  // createInterpolateElement doesn't support br tags.
+  const translatedString = createInterpolateElement(
+    __('Head to the <a>Dashboard</a>', 'web-stories'),
+    {
+      a: <Link href={dashboardURL} onClick={onClick} />,
+    }
+  );
+
   return (
     <Wrapper>
       <Link href={dashboardURL} onClick={onClick}>
@@ -78,15 +85,7 @@ function Step2() {
             _x('2', 'Step number', 'web-stories')
           }
         </Number>
-        <Paragraph $secondary>
-          <TranslateWithMarkup
-            mapping={{
-              a: <Link href={dashboardURL} onClick={onClick} />,
-            }}
-          >
-            {__('Head to the<br/><a>Dashboard</a>', 'web-stories')}
-          </TranslateWithMarkup>
-        </Paragraph>
+        <Paragraph $secondary>{translatedString}</Paragraph>
       </ParagraphWrapper>
     </Wrapper>
   );

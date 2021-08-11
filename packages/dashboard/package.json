@@ -1,0 +1,46 @@
+{
+	"name": "@web-stories-wp/dashboard",
+	"private": true,
+	"engines": {
+		"node": ">= 15",
+		"npm": "~7"
+	},
+	"exports": {
+		"default": "./src/index.js"
+	},
+	"main": "./src/index.js",
+	"type": "module",
+	"dependencies": {
+		"@web-stories-wp/animation": "*",
+		"@web-stories-wp/date": "*",
+		"@web-stories-wp/design-system": "*",
+		"@web-stories-wp/fonts": "*",
+		"@web-stories-wp/i18n": "*",
+		"@web-stories-wp/karma-fixture": "*",
+		"@web-stories-wp/media": "*",
+		"@web-stories-wp/migration": "*",
+		"@web-stories-wp/react": "*",
+		"@web-stories-wp/story-editor": "*",
+		"@web-stories-wp/templates": "*",
+		"@web-stories-wp/tracking": "*",
+		"@web-stories-wp/units": "*",
+		"@wordpress/api-fetch": "^5.2.1",
+		"flagged": "^2.0.1",
+		"history": "^5.0.0",
+		"prop-types": "^15.7.2",
+		"query-string": "^7.0.1",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"styled-components": "^5.3.0",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"@storybook/addon-actions": "^6.3.6",
+		"@storybook/addon-knobs": "^6.3.0",
+		"@testing-library/react": "^12.0.0",
+		"@testing-library/react-hooks": "^7.0.1",
+		"@testing-library/user-event": "^13.2.1",
+		"jest": "^27.0.6",
+		"stylis-plugin-rtl": "^1.0.0"
+	}
+}

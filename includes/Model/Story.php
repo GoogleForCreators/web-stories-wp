@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Model;
 
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Media\Media;
 use WP_Post;
 
 /**
@@ -130,7 +130,7 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$this->poster_portrait = (string) wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 		}
 
 		return true;

@@ -1,11 +1,11 @@
 {
-  "name": "karma-failed-tests-reporter",
+  "name": "@web-stories-wp/karma-failed-tests-reporter",
   "private": true,
   "engines": {
     "node": ">= 15",
     "npm": "~7"
   },
-  "main": "./src/index.js",
+  "main": "./src/index.cjs",
   "dependencies": {
     "karma": "^6.3.4"
   }
