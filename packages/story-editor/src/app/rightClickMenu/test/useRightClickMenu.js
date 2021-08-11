@@ -61,6 +61,7 @@ const defaultCanvasContext = {
 };
 
 const defaultStoryContext = {
+  addAnimations: jest.fn(),
   addPage: jest.fn(),
   currentPage: {
     elements: [],
@@ -70,6 +71,7 @@ const defaultStoryContext = {
   replaceCurrentPage: jest.fn(),
   selectedElements: [],
   selectedElementAnimations: [],
+  updateElementsById: jest.fn(),
 };
 
 const expectedDefaultActions = [
@@ -292,13 +294,6 @@ describe('useRightClickMenu', () => {
         const copy = result.current.menuItems.find(
           (item) => item.label === RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES
         );
-        const paste = result.current.menuItems.find(
-          (item) => item.label === RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES
-        );
-        const clear = result.current.menuItems.find(
-          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES
-        );
-
         act(() => {
           copy.onClick();
         });
@@ -310,6 +305,9 @@ describe('useRightClickMenu', () => {
           })
         );
 
+        const paste = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES
+        );
         act(() => {
           paste.onClick();
         });
@@ -321,6 +319,9 @@ describe('useRightClickMenu', () => {
           })
         );
 
+        const clear = result.current.menuItems.find(
+          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES
+        );
         act(() => {
           clear.onClick();
         });
