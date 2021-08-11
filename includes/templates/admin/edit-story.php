@@ -39,9 +39,37 @@ $demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-s
 $preload_paths = [
 	"/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
 		[
-			'_embed'           => urlencode( 'wp:featuredmedia,wp:lockuser,author' ),
+			'_embed'           => rawurlencode(
+				implode(
+					',',
+					[ 'wp:featuredmedia', 'wp:lockuser', 'author' ]
+				)
+			),
 			'context'          => 'edit',
 			'web_stories_demo' => $demo,
+			'_fields'          => rawurlencode(
+				implode(
+					',',
+					[
+						'id',
+						'title',
+						'status',
+						'slug',
+						'date',
+						'modified',
+						'excerpt',
+						'link',
+						'story_data',
+						'preview_link',
+						'edit_link',
+						'embed_post_link',
+						'publisher_logo_url',
+						'permalink_template',
+						'style_presets',
+						'password',
+					]
+				)
+			),
 		]
 	),
 	'/web-stories/v1/media/?' . build_query(
@@ -50,7 +78,7 @@ $preload_paths = [
 			'per_page'              => 100,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
-			'_fields'               => urlencode(
+			'_fields'               => rawurlencode(
 				implode(
 					',',
 					[
@@ -64,7 +92,7 @@ $preload_paths = [
 						'alt_text',
 						'source_url',
 						'media_source',
-						'meta.web_stories_is_muted',
+						'is_muted',
 						// _web_stories_envelope will add these fields, we need them too.
 						'body',
 						'status',

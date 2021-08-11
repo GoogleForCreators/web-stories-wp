@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -736,7 +736,7 @@
           "focalY": 50,
           "basedOn": "fcdd28f8-c61a-4b5a-85b7-bdc561a453e3",
           "id": "502d7135-c336-4d93-af50-88e37be12ae5",
-          "x": 97,
+          "x": 89,
           "y": 515,
           "type": "text"
         },
@@ -1407,7 +1407,7 @@
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #160236\">A special walk through medieval streets and alleyways of the Gothic, and Barceloneta neighborhoods.</span>",
+          "content": "<span style=\"color: #160236\">A special walk through medieval streets and alleyways of the Gothic and Barceloneta neighborhoods.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -3973,7 +3973,7 @@
           "lineHeight": 1.3,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"color: #160236\">Ready for some bites now right? Grab pre-dinner snacks at this local's bar and restaurant.</span>",
+          "content": "<span style=\"color: #160236\">Ready for some bites now, right? Grab pre-dinner snacks at this local's bar and restaurant.</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,
@@ -4685,7 +4685,7 @@
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
-          "content": "<span style=\"font-weight: 500; color: #fff\">days in</span>\n<span style=\"font-weight: 500; color: #fff\">east Berlin</span>",
+          "content": "<span style=\"font-weight: 500; color: #fff\">days in</span>\n<span style=\"font-weight: 500; color: #fff\">East Berlin</span>",
           "fontWeight": 700,
           "borderRadius": {
             "locked": true,

@@ -20,10 +20,6 @@
     "sabberworm/php-css-parser": "dev-master#bfdd976",
     "symfony/polyfill-mbstring": "^1.18"
   },
-  "provide": {
-    "ampproject/common": "dev-develop",
-    "ampproject/optimizer": "dev-develop"
-  },
   "require-dev": {
     "automattic/vipwpcs": "^2.3",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
@@ -58,7 +54,7 @@
       "phpstan": {
         "path": "vendor/bin/phpstan",
         "type": "phar",
-        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.93/phpstan.phar"
+        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.94/phpstan.phar"
       }
     },
     "enable-patching": true,
@@ -104,8 +100,8 @@
       "@prefix-dependencies"
     ],
     "composer-normalize": "composer-normalize",
-    "phpcbf": "phpcbf",
-    "phpcs": "phpcs",
+    "phpcbf": "phpcbf --severity=1",
+    "phpcs": "phpcs --severity=1",
     "phpmd": "phpmd . text phpmd.xml",
     "phpstan": "phpstan analyse --memory-limit=512M",
     "prefix-dependencies": [
