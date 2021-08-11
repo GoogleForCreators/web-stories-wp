@@ -415,31 +415,6 @@ export const PRIORITY_COPY = {
       </>
     ),
   },
-  posterTooSmall: {
-    title: sprintf(
-      /* translators: %s: image dimensions.  */
-      __('Increase poster image size to at least %s', 'web-stories'),
-      `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-    ),
-    footer: (
-      <>
-        <li>
-          {sprintf(
-            /* translators: %s: image dimensions.  */
-            __("Use an image that's at least %s", 'web-stories'),
-            `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-          )}
-        </li>
-        <li>
-          {sprintf(
-            /* translators: %s: aspect ratio.  */
-            __('Maintain a %s aspect ratio', 'web-stories'),
-            `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
-          )}
-        </li>
-      </>
-    ),
-  },
   storyPosterSize: {
     title: sprintf(
       /* translators: %s: image dimensions.  */
