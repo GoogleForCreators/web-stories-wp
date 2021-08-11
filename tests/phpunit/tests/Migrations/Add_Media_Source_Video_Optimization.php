@@ -37,7 +37,7 @@ class Add_Media_Source_Video_Optimization extends Test_Case {
 
 		$terms = get_terms(
 			[
-				'taxonomy'   => \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY,
+				'taxonomy'   => \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG,
 				'hide_empty' => false,
 			]
 		);

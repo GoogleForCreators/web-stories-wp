@@ -53,6 +53,7 @@ async function loadTextSet(name) {
       ...sets,
       {
         textSetFonts: page.fonts,
+        id: page.id,
         textSetCategory: name,
         elements: textElements.map((e) => ({
           ...e,
