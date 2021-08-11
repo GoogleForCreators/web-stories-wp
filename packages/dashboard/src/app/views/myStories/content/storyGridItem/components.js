@@ -133,7 +133,7 @@ export const Title = styled(Headline).attrs({
 })`
   overflow: hidden;
   text-overflow: ellipsis;
-  color: ${({ theme }) => theme.colors.inverted.fg.tertiary};
+  color: ${({ theme }) => theme.colors.inverted.fg.primary};
   margin: 0;
   max-height: calc(1.2em * 3);
   /* stylelint-disable-next-line */
@@ -146,7 +146,6 @@ export const Title = styled(Headline).attrs({
 export const TitleLink = styled(Title).attrs({
   as: 'a',
 })`
-  color: ${({ theme }) => theme.colors.inverted.fg.primary};
   &:hover {
     color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
