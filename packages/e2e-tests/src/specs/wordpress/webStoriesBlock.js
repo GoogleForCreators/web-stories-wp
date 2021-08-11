@@ -101,6 +101,11 @@ describe('Web Stories Block', () => {
 
     await page.waitForSelector('.components-modal__screen-overlay');
     await expect(page).toMatchElement('.components-modal__screen-overlay');
+
+    await page.waitForFunction(
+      () => !document.querySelector('.components-spinner')
+    );
+
     await percySnapshot(page, 'Story select modal');
   });
 

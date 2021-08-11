@@ -18,13 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 
 /**
  * WordPress dependencies
  */
-import { useCallback } from '@wordpress/element';
+import { createInterpolateElement, useCallback } from '@wordpress/element';
 import { __, _x } from '@wordpress/i18n';
 
 /**
@@ -65,6 +64,21 @@ function Step1() {
     trackClick(evt, 'open_demo_story');
   }, []);
 
+  // createInterpolateElement doesn't support br tags.
+  const translatedString = createInterpolateElement(
+    __('Read the <a>Get Started story</a>', 'web-stories'),
+    {
+      a: (
+        <Link
+          href={demoStoryURL}
+          onClick={onClick}
+          target="_blank"
+          rel="noreferrer"
+        />
+      ),
+    }
+  );
+
   return (
     <Wrapper>
       <Link
@@ -88,22 +102,7 @@ function Step1() {
             _x('1', 'Step number', 'web-stories')
           }
         </Number>
-        <Paragraph $secondary>
-          <TranslateWithMarkup
-            mapping={{
-              a: (
-                <Link
-                  href={demoStoryURL}
-                  onClick={onClick}
-                  target="_blank"
-                  rel="noreferrer"
-                />
-              ),
-            }}
-          >
-            {__('Read the<br/><a>Get Started story</a>', 'web-stories')}
-          </TranslateWithMarkup>
-        </Paragraph>
+        <Paragraph $secondary>{translatedString}</Paragraph>
       </ParagraphWrapper>
     </Wrapper>
   );

@@ -32,7 +32,7 @@ class Remove_Unneeded_Attachment_Meta extends Test_Case {
 	public function test_migrate() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
 				'post_parent'    => 0,
 				'post_mime_type' => 'video/mp4',
 				'post_title'     => 'Test Video',
@@ -49,13 +49,13 @@ class Remove_Unneeded_Attachment_Meta extends Test_Case {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
-		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, 'true' );
-		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
 		$object = new \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta();
 		$object->migrate();
 
-		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Media::POSTER_POST_META_KEY, true );
+		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, true );
 
 		$this->assertSame( '', $meta );
 	}

@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -3573,7 +3573,11 @@
       "backgroundColor": { "color": { "r": 174, "g": 194, "b": 191 } },
       "type": "page",
       "id": "5a6b2c2c-83e5-46e6-8462-c89c7e8a84f6",
-      "pageAttachment": { "url": "google.com", "ctaText": "GET PRODUCT" },
+      "pageAttachment": {
+        "url": "google.com",
+        "ctaText": "GET PRODUCT",
+        "theme": "light"
+      },
       "pageTemplateType": "editorial"
     },
     {
@@ -3796,7 +3800,11 @@
       "backgroundColor": { "color": { "r": 174, "g": 194, "b": 191 } },
       "type": "page",
       "id": "f8fca7e6-ed47-47e7-a9f7-5372278d2cad",
-      "pageAttachment": { "url": "google.com", "ctaText": "GET PRODUCT" },
+      "pageAttachment": {
+        "url": "google.com",
+        "ctaText": "GET PRODUCT",
+        "theme": "light"
+      },
       "pageTemplateType": ""
     },
     {
