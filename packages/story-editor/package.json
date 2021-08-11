@@ -63,6 +63,6 @@
 		"jest-matcher-deep-close-to": "^2.0.1",
 		"mockdate": "^3.0.5",
 		"stylis-plugin-rtl": "^1.0.0",
-    "react-dom": "^17.0.2"
+		"react-dom": "^17.0.2"
   }
 }
