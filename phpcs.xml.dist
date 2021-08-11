@@ -7,8 +7,8 @@
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
 		<exclude name="WordPress.PHP.DisallowShortTernary" />
 		<exclude
-      name="WordPress.NamingConventions.ValidPostTypeSlug.NotStringLiteral"
-    />
+			name="WordPress.NamingConventions.ValidPostTypeSlug.NotStringLiteral"
+		/>
 	</rule>
 
 	<rule ref="WordPress-Docs">
