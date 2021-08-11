@@ -20,14 +20,15 @@ import { storyPagesCount } from '../storyPagesCount';
 
 describe('storyPagesCount', () => {
   it('should return true if story has less than 4 pages or more than 30 pages', () => {
-    const storyTooShort = storyPagesCount(3);
-    const storyTooLong = storyPagesCount(31);
-    const testUndefined = storyPagesCount(20);
+    const { hasTooFewPages } = storyPagesCount(3);
+    const { hasTooManyPages } = storyPagesCount(31);
+    const result = storyPagesCount(20);
 
-    expect(storyTooShort).toBe(true);
+    expect(hasTooFewPages).toBe(true);
 
-    expect(storyTooLong).toBe(true);
+    expect(hasTooManyPages).toBe(true);
 
-    expect(testUndefined).toBe(false);
+    expect(result.hasTooFewPages).toBe(false);
+    expect(result.hasTooManyPages).toBe(false);
   });
 });
