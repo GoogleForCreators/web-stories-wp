@@ -321,7 +321,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$parameter_mappings = [
 			'author'         => 'author__in',
 			'author_exclude' => 'author__not_in',
-			'exclude'        => 'post__not_in', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
+			'exclude'        => 'post__not_in', // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn, WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 			'include'        => 'post__in',
 			'menu_order'     => 'menu_order',
 			'offset'         => 'offset',

@@ -109,13 +109,20 @@ function new_site( $site ) {
 	if ( ! is_multisite() ) {
 		return;
 	}
+
 	$site = get_site( $site );
+
 	if ( ! $site ) {
 		return;
 	}
+
 	$site_id = (int) $site->blog_id;
+
+	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 	switch_to_blog( $site_id );
+
 	setup_new_site();
+
 	restore_current_blog();
 }
 
@@ -135,7 +142,9 @@ function remove_site( $error, $site ) {
 	if ( ! is_multisite() ) {
 		return;
 	}
+
 	$site = get_site( $site );
+
 	if ( ! $site ) {
 		return;
 	}
@@ -148,8 +157,12 @@ function remove_site( $error, $site ) {
 	$capabilities = $injector->make( User\Capabilities::class );
 
 	$site_id = (int) $site->blog_id;
+
+	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 	switch_to_blog( $site_id );
+
 	$capabilities->remove_caps_from_roles();
+
 	restore_current_blog();
 }
 
