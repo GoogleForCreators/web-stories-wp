@@ -177,7 +177,7 @@ export class DesignPanel extends Container {
 
   get pageBackground() {
     return this._get(
-      this.getByRole('region', { name: /Page background/ }),
+      this.getByRole('region', { name: /Page Background/i }),
       'pageBackground',
       PageBackground
     );
