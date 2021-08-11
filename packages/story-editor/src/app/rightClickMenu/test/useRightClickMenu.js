@@ -134,6 +134,8 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
         RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
       ]);

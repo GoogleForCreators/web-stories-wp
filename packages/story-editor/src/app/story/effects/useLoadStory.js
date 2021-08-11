@@ -59,7 +59,19 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           edit_link: editLink,
           embed_post_link: embedPostLink,
           _embedded: embedded = {},
+          _links: links = {},
         } = post;
+
+        const capabilities = {
+          hasPublishAction: Object.prototype.hasOwnProperty.call(
+            links,
+            'wp:action-publish'
+          ),
+          hasAssignAuthorAction: Object.prototype.hasOwnProperty.call(
+            links,
+            'wp:action-assign-author'
+          ),
+        };
 
         let author = {
           id: 0,
@@ -172,6 +184,7 @@ function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
           story,
           selection: [],
           current: null, // will be set to first page by `restore`
+          capabilities,
         });
       });
     }
