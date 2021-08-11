@@ -53,7 +53,14 @@ class Editor extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'edit-story';
+	const SCRIPT_HANDLE = 'wp-story-editor';
+
+	/**
+	 * AMP validator script handle.
+	 *
+	 * @var string
+	 */
+	const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
 
 	/**
 	 * Experiments instance.
@@ -202,10 +209,16 @@ class Editor extends Service_Base {
 
 		// Force media model to load.
 		wp_enqueue_media();
-		$script_dependencies = [
-			Tracking::SCRIPT_HANDLE,
-			'postbox',
-		];
+
+		wp_enqueue_script(
+			self::AMP_VALIDATOR_SCRIPT_HANDLE,
+			'https://cdn.ampproject.org/v0/validator.js',
+			[],
+			WEBSTORIES_VERSION,
+			true
+		);
+
+		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies );
 		$font_handle = $this->google_fonts->get_handle();
@@ -323,6 +336,7 @@ class Editor extends Service_Base {
 				],
 				'version'                      => WEBSTORIES_VERSION,
 				'nonce'                        => $nonce,
+				'showMedia3p'                  => true,
 				'encodeMarkup'                 => $this->decoder->supports_decoding(),
 				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',

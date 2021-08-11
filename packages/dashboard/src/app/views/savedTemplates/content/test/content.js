@@ -1,0 +1,140 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import { screen } from '@testing-library/react';
+import { SnackbarProvider } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { renderWithProviders } from '../../../../../testUtils';
+import { formattedTemplatesArray } from '../../../../../storybookUtils';
+import { VIEW_STYLE, SAVED_TEMPLATES_STATUSES } from '../../../../../constants';
+import LayoutProvider from '../../../../../components/layout/provider';
+import Content from '..';
+
+jest.mock('@web-stories-wp/story-editor', () => ({
+  __esModule: true,
+  ...jest.requireActual('@web-stories-wp/story-editor'),
+  PreviewPage: ({ page }) => <div data-testid={page.name} />, // eslint-disable-line react/prop-types,react/display-name
+}));
+jest.mock(
+  '../../../../../app/font/fontProvider.js',
+  () =>
+    ({ children }) =>
+      children
+);
+
+describe('Saved Templates <Content />', function () {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should render the content grid with the correct saved template count.', function () {
+    renderWithProviders(
+      <SnackbarProvider>
+        <LayoutProvider>
+          <Content
+            filter={SAVED_TEMPLATES_STATUSES[0]}
+            search={{ keyword: '' }}
+            templates={formattedTemplatesArray}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
+            }}
+            actions={{
+              createStoryFromTemplate: jest.fn,
+              previewTemplate: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </SnackbarProvider>,
+      { features: { enableInProgressStoryActions: false } }
+    );
+
+    expect(screen.getAllByTestId(/^story-grid-item/)).toHaveLength(
+      formattedTemplatesArray.length
+    );
+  });
+
+  it('should show "Bookmark a story or template to get started!" if no saved templates are present.', function () {
+    renderWithProviders(
+      <SnackbarProvider>
+        <LayoutProvider>
+          <Content
+            filter={SAVED_TEMPLATES_STATUSES[0]}
+            search={{ keyword: '' }}
+            templates={[]}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
+            }}
+            actions={{
+              createStoryFromTemplate: jest.fn,
+              previewTemplate: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </SnackbarProvider>,
+      { features: { enableInProgressStoryActions: false } }
+    );
+
+    expect(
+      screen.getByText('Bookmark a story or template to get started!')
+    ).toBeInTheDocument();
+  });
+
+  it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no saved templates are found for a search query are present.', function () {
+    renderWithProviders(
+      <SnackbarProvider>
+        <LayoutProvider>
+          <Content
+            filter={SAVED_TEMPLATES_STATUSES[0]}
+            search={{ keyword: 'scooby dooby doo' }}
+            templates={[]}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300, containerHeight: 300 },
+            }}
+            actions={{
+              createStoryFromTemplate: jest.fn,
+              previewTemplate: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </SnackbarProvider>,
+      { features: { enableInProgressStoryActions: false } }
+    );
+
+    expect(
+      screen.getByText(
+        'Sorry, we couldn\'t find any results matching "scooby dooby doo"'
+      )
+    ).toBeInTheDocument();
+  });
+});
