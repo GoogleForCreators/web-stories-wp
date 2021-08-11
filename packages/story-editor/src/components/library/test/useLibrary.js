@@ -26,11 +26,20 @@ import { render } from '@testing-library/react';
 
 import LibraryProvider from '../libraryProvider';
 import useLibrary from '../useLibrary';
+import { ConfigProvider } from '../../../app/config';
 
 describe('useLibrary()', () => {
   it('should return an empty pane for lazy tabs unless active', async () => {
+    const configState = {
+      showMedia3p: true,
+    };
     const { result } = renderHook(() => useLibrary((state) => state), {
-      wrapper: LibraryProvider,
+      // eslint-disable-next-line react/display-name, react/prop-types
+      wrapper: ({ children }) => (
+        <ConfigProvider config={configState}>
+          <LibraryProvider>{children}</LibraryProvider>
+        </ConfigProvider>
+      ),
     });
     const [media3p, text, pageTemplates] = [1, 2, 4];
 

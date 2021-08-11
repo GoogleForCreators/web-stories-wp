@@ -39,7 +39,7 @@ $demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-s
 $preload_paths = [
 	"/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
 		[
-			'_embed'           => urlencode(
+			'_embed'           => rawurlencode(
 				implode(
 					',',
 					[ 'wp:featuredmedia', 'wp:lockuser', 'author' ]
@@ -47,7 +47,7 @@ $preload_paths = [
 			),
 			'context'          => 'edit',
 			'web_stories_demo' => $demo,
-			'_fields'          => urlencode(
+			'_fields'          => rawurlencode(
 				implode(
 					',',
 					[
@@ -78,7 +78,7 @@ $preload_paths = [
 			'per_page'              => 100,
 			'page'                  => 1,
 			'_web_stories_envelope' => 'true',
-			'_fields'               => urlencode(
+			'_fields'               => rawurlencode(
 				implode(
 					',',
 					[
