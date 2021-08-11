@@ -115,6 +115,10 @@ describe('ApiProvider', () => {
       123: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=123',
+        capabilities: {
+          hasDeleteAction: false,
+          hasEditAction: false,
+        },
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
         id: 123,
         modified: '1970-01-01T00:00:00.000',
@@ -201,6 +205,10 @@ describe('ApiProvider', () => {
       123: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=123',
+        capabilities: {
+          hasDeleteAction: false,
+          hasEditAction: false,
+        },
         featuredMediaUrl: 'https://www.featured-media-123',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
         id: 123,
@@ -304,6 +312,10 @@ describe('ApiProvider', () => {
       123: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=123',
+        capabilities: {
+          hasDeleteAction: false,
+          hasEditAction: false,
+        },
         featuredMediaUrl: 'https://www.featured-media-123',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=123',
         id: 123,
@@ -356,6 +368,10 @@ describe('ApiProvider', () => {
       456: {
         bottomTargetAction:
           'https://www.story-link.com/wp-admin/post.php?id=456',
+        capabilities: {
+          hasDeleteAction: false,
+          hasEditAction: false,
+        },
         featuredMediaUrl: 'https://www.featured-media-456',
         editStoryLink: 'https://www.story-link.com/wp-admin/post.php?id=456',
         id: 456,

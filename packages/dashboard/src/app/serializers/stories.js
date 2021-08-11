@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import { REST_LINKS } from '../../constants';
+
 export default function reshapeStoryObject(originalStoryData) {
   const {
     id,
@@ -33,10 +38,19 @@ export default function reshapeStoryObject(originalStoryData) {
       'wp:lock': lock = [{ locked: false }],
       'wp:lockuser': lockUser = [{ id: 0, name: '', avatar_urls: {} }],
     } = {},
+    _links: links = {},
   } = originalStoryData;
   if (!Array.isArray(storyData.pages) || !id || storyData.pages.length === 0) {
     return null;
   }
+
+  const capabilities = {
+    hasEditAction: Object.prototype.hasOwnProperty.call(links, REST_LINKS.EDIT),
+    hasDeleteAction: Object.prototype.hasOwnProperty.call(
+      links,
+      REST_LINKS.DELETE
+    ),
+  };
 
   return {
     id,
@@ -59,5 +73,6 @@ export default function reshapeStoryObject(originalStoryData) {
     previewLink,
     link,
     originalStoryData,
+    capabilities,
   };
 }
