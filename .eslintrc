@@ -493,7 +493,7 @@
         "packages/**/*.js"
       ],
       "excludedFiles": [
-        "packages/react/**/*.js",
+        "packages/react/**/*.js"
       ],
       "rules":{
         "no-restricted-imports": [
@@ -503,24 +503,7 @@
               {
                 "name": "react",
                 "message": "Use @web-stories-wp/react instead."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "files": [
-        "packages/**/*.js"
-      ],
-      "excludedFiles": [
-        "packages/react/**/*.js",
-      ],
-      "rules":{
-        "no-restricted-imports": [
-          "error",
-          {
-            "paths": [
+              },
               {
                 "name": "react-dom",
                 "message": "Use @web-stories-wp/react instead."
