@@ -35,14 +35,12 @@ import {
   CropMoveableGlobalStyle,
   EditorConfigProvider,
 } from '@web-stories-wp/story-editor';
-
-/**
- * Internal dependencies
- */
-import { GlobalStyle as DashboardGlobalStyle } from '../assets/src/dashboard/theme';
-import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
-import { ConfigProvider as DashboardConfigProvider } from '../assets/src/dashboard/app/config';
-import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
+import {
+  DashboardGlobalStyle,
+  DashboardKeyboardOnlyOutline,
+  DashboardConfigProvider,
+  ApiProvider,
+} from '@web-stories-wp/dashboard';
 
 // @todo: Find better way to mock these.
 const wp = {};

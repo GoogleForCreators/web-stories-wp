@@ -26,17 +26,17 @@ coverage:
 
       dashboard:
         paths:
-          - assets/src/dashboard
+          - packages/dashboard/src
 
       dashboard.unit:
         paths:
-          - assets/src/dashboard
+          - packages/dashboard/src
         flags:
           - unittests
 
       dashboard.karma:
         paths:
-          - assets/src/dashboard
+          - packages/dashboard/src
         flags:
           - karmatests
 

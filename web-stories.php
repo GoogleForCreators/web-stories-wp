@@ -115,7 +115,7 @@ function web_stories_get_compat_instance() {
 	$compatibility->set_required_files(
 		array(
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-story-editor.js',
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-dashboard.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-block.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
