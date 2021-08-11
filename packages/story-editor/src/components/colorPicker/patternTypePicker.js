@@ -29,10 +29,6 @@ import {
   BUTTON_TYPES,
 } from '@web-stories-wp/design-system';
 
-/**
- * Internal dependencies
- */
-
 const HEADER_FOOTER_HEIGHT = 52;
 
 const Wrapper = styled.div`
