@@ -48,6 +48,15 @@ import * as hawaiiTravelPackingListStickers from './hawaii-travel-packing-list';
 import * as howContactTracingWorksStickers from './how-contact-tracing-works';
 import * as summerFashionCollectionStickers from './summer-fashion-collection';
 import * as artOnTheInternetStickers from './buying-art-on-the-internet';
+import * as newYorkPartyRoundUpStickers from './new-york-party-round-up';
+import * as aDayInTheLifeStickers from './a-day-in-the-life';
+import * as elegantTravelItineraryStickers from './elegant-travel-itinerary';
+import * as modernistTravelGuideStickers from './modernist-travel-guide';
+import * as magazineArticleStickers from './magazine-article';
+import * as fashionInspirationStickers from './fashion-inspiration';
+import * as skinCareAtHomeStickers from './skin-care-at-home';
+import * as artBooksGiftGuideStickers from './art-books-gift-guide';
+import * as vintageChairsWhatToLookForStickers from './vintage-chairs-what-to-look-for';
 
 export default {
   ...beautyStickers,
@@ -82,4 +91,13 @@ export default {
   ...howContactTracingWorksStickers,
   ...summerFashionCollectionStickers,
   ...artOnTheInternetStickers,
+  ...newYorkPartyRoundUpStickers,
+  ...aDayInTheLifeStickers,
+  ...elegantTravelItineraryStickers,
+  ...modernistTravelGuideStickers,
+  ...magazineArticleStickers,
+  ...fashionInspirationStickers,
+  ...skinCareAtHomeStickers,
+  ...artBooksGiftGuideStickers,
+  ...vintageChairsWhatToLookForStickers,
 };

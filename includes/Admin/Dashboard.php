@@ -52,7 +52,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'stories-dashboard';
+	const SCRIPT_HANDLE = 'wp-dashboard';
 
 	/**
 	 * Admin page hook suffixes.
@@ -242,15 +242,15 @@ class Dashboard extends Service_Base {
 			'/web-stories/v1/users/me/',
 			"/web-stories/v1/$rest_base/?" . build_query(
 				[
-					'_embed'                => urlencode( 'wp:lock,wp:lockuser,author' ),
+					'_embed'                => rawurlencode( 'wp:lock,wp:lockuser,author' ),
 					'context'               => 'edit',
 					'order'                 => 'desc',
 					'orderby'               => 'modified',
 					'page'                  => 1,
 					'per_page'              => 24,
-					'status'                => urlencode( 'publish,draft,future,private' ),
+					'status'                => rawurlencode( 'publish,draft,future,private' ),
 					'_web_stories_envelope' => 'true',
-					'_fields'               => urlencode(
+					'_fields'               => rawurlencode(
 						implode(
 							',',
 							[

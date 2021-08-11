@@ -245,7 +245,9 @@ class Embed_Controller extends REST_Controller {
 			$site  = reset( $sites );
 
 			if ( $site && get_current_blog_id() !== (int) $site->blog_id ) {
+				// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 				switch_to_blog( $site->blog_id );
+
 				$switched_blog = true;
 			}
 		}

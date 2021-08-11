@@ -27,7 +27,8 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Media\Video\Poster;
 
 /**
  * Class Add_Poster_Generation_Media_Source
@@ -44,7 +45,7 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 * @return void
 	 */
 	public function migrate() {
-		wp_insert_term( $this->get_term_name(), Media::STORY_MEDIA_TAXONOMY );
+		wp_insert_term( $this->get_term_name(), Media_Source_Taxonomy::TAXONOMY_SLUG );
 		parent::migrate();
 	}
 
@@ -56,6 +57,6 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 * @return string
 	 */
 	protected function get_post_meta_key(): string {
-		return Media::POSTER_POST_META_KEY;
+		return Poster::POSTER_POST_META_KEY;
 	}
 }

@@ -31,7 +31,12 @@ namespace PHPSTORM_META {
 			'integrations.themes_support'  => \Google\Web_Stories\Integrations\Core_Themes_Support::class,
 			'imgareaselect_patch'          => \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class,
 			'kses'                         => \Google\Web_Stories\KSES::class,
-			'media'                        => \Google\Web_Stories\Media\Media::class,
+			'media.image_sizes'            => \Google\Web_Stories\Media\Image_Sizes::class,
+			'media.media_source'           => \Google\Web_Stories\Media\Media_Source_Taxonomy::class,
+			'media.video.captions'         => \Google\Web_Stories\Media\Video\Captions::class,
+			'media.video.muting'           => \Google\Web_Stories\Media\Video\Muting::class,
+			'media.video.optimization'     => \Google\Web_Stories\Media\Video\Optimization::class,
+			'media.video.poster'           => \Google\Web_Stories\Media\Video\Poster::class,
 			'page_template_post_type'      => \Google\Web_Stories\Page_Template_Post_Type::class,
 			'plugin_row_meta'              => \Google\Web_Stories\Admin\PluginRowMeta::class,
 			'plugin_action_links'          => \Google\Web_Stories\Admin\PluginActionLinks::class,
@@ -62,8 +67,6 @@ namespace PHPSTORM_META {
 			'rest.template_lock'           => \Google\Web_Stories\REST_API\Template_Lock_Controller::class,
 			'user_preferences'             => \Google\Web_Stories\User\Preferences::class,
 			'web_stories_block'            => \Google\Web_Stories\Block\Web_Stories_Block::class,
-			'video_captions'               => \Google\Web_Stories\Media\Video_Captions::class,
-			'video_muting'                 => \Google\Web_Stories\Media\Video_Muting::class,
 			'injector'                     => \Google\Web_Stories\Infrastructure\Injector::class,
 		] )
 	);
