@@ -18,22 +18,7 @@
  * Internal dependencies
  */
 import formatDuration from './formatDuration';
-
-/**
- * Preload video using a promise.
- *
- * @param {string} src Video source.
- * @return {Promise} Video object.
- */
-const preloadVideo = (src) => {
-  return new Promise((resolve, reject) => {
-    const video = document.createElement('video');
-    video.onloadedmetadata = () => resolve(video);
-    video.onerror = reject;
-    video.crossOrigin = 'anonymous';
-    video.src = src;
-  });
-};
+import preloadVideo from './preloadVideo';
 
 /**
  * Get video length from an video.
