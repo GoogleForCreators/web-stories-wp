@@ -1,21 +1,17 @@
 {
   "name": "@web-stories-wp/design-system",
   "private": true,
-  "engines": {
-    "node": ">= 15",
-    "npm": "~7"
-  },
+  "sideEffects": false,
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
-  "sideEffects": false,
   "dependencies": {
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/tracking": "*",
     "@web-stories-wp/react": "*",
+    "@web-stories-wp/tracking": "*",
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",
@@ -32,5 +28,9 @@
     "@storybook/addon-knobs": "^6.3.0",
     "@testing-library/react": "^12.0.0",
     "@testing-library/react-hooks": "^7.0.1"
+  },
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
   }
 }

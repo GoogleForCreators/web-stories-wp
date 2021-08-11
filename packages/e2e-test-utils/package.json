@@ -1,10 +1,6 @@
 {
   "name": "@web-stories-wp/e2e-test-utils",
   "private": true,
-  "engines": {
-    "node": ">= 15",
-    "npm": "~7"
-  },
   "type": "module",
   "exports": {
     "default": "./src/index.js"
@@ -13,5 +9,9 @@
   "dependencies": {
     "@wordpress/e2e-test-utils": "^5.4.1",
     "@wordpress/url": "^3.2.1"
+  },
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
   }
 }

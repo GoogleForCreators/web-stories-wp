@@ -1,15 +1,11 @@
 {
 	"name": "@web-stories-wp/dashboard",
 	"private": true,
-	"engines": {
-		"node": ">= 15",
-		"npm": "~7"
-	},
+	"type": "module",
 	"exports": {
 		"default": "./src/index.js"
 	},
 	"main": "./src/index.js",
-	"type": "module",
 	"dependencies": {
 		"@web-stories-wp/animation": "*",
 		"@web-stories-wp/date": "*",
@@ -40,5 +36,9 @@
 		"@testing-library/user-event": "^13.2.1",
 		"jest": "^27.0.6",
 		"stylis-plugin-rtl": "^1.0.0"
+	},
+	"engines": {
+		"node": ">= 15",
+		"npm": "~7"
 	}
 }
