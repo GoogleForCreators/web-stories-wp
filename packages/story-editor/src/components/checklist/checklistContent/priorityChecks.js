@@ -86,9 +86,12 @@ export function PriorityChecks(props) {
       updateHighPriorityCount,
     })
   );
-  const { canManageSettings } = useConfig(({ capabilities }) => ({
-    canManageSettings: capabilities.canManageSettings,
-  }));
+  const { canManageSettings, hasUploadMediaAction } = useConfig(
+    ({ capabilities }) => ({
+      canManageSettings: capabilities.canManageSettings,
+      hasUploadMediaAction: capabilities.hasUploadMediaAction,
+    })
+  );
 
   useEffect(() => {
     updateHighPriorityCount(count);
@@ -102,10 +105,11 @@ export function PriorityChecks(props) {
         {canManageSettings && <StoryMissingPublisherName />}
         <StoryTitleLength />
         <StoryMissingExcerpt />
-        <StoryPosterAttached />
-        <StoryPosterSize />
-        <PublisherLogoSize />
-        <VideoElementMissingPoster />
+        {hasUploadMediaAction && <StoryPosterAttached />}
+        {hasUploadMediaAction && <StoryPosterSize />}
+        {hasUploadMediaAction && <PublisherLogoSize />}
+        {hasUploadMediaAction && <VideoElementMissingPoster />}
+        {/* `isTranscodingEnabled` already checks for `hasUploadMediaAction` */}
         {isTranscodingEnabled && <VideoOptimization />}
         <StoryAmpValidationErrors />
       </PriorityPanel>

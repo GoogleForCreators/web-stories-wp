@@ -4,7 +4,6 @@ on:
   push:
     # Only run if dashboard-related files changed.
     paths:
-      - 'assets/src/dashboard/**.js'
       - 'babel.config.cjs'
       - 'karma-dashboard.config.cjs'
       - 'webpack.config.cjs'
@@ -19,7 +18,6 @@ on:
   pull_request:
     # Only run if dashboard-related files changed.
     paths:
-      - 'assets/src/dashboard/**.js'
       - 'babel.config.cjs'
       - 'karma-dashboard.config.cjs'
       - 'webpack.config.cjs'
