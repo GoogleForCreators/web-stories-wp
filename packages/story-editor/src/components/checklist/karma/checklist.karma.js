@@ -357,7 +357,6 @@ describe('Checklist integration - Card visibility', () => {
 
   // issues that show if there is a poster image
   const posterIssuesRequiringMediaUploadPermissions = [
-    PRIORITY_COPY.posterTooSmall.title,
     PRIORITY_COPY.storyPosterSize.title,
   ];
 
