@@ -41,7 +41,7 @@ const MenuWrapper = styled.div(
     pointer-events: none;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ isIconMenu }) => (isIconMenu ? '40px' : '200px')};
+    width: ${({ isIconMenu }) => (isIconMenu ? '40px' : '210px')};
   `
 );
 MenuWrapper.propTypes = {

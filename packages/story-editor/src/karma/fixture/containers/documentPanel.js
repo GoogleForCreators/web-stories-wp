@@ -32,5 +32,10 @@ export class DocumentPanel extends Container {
     return this.getByRole('button', { name: /Author/ });
   }
 
+  get posterMenuButton() {
+    return this.getByRole('button', {
+      name: /Poster image/i,
+    });
+  }
   // @TODO: rest of the fields.
 }

@@ -25,6 +25,7 @@ import './publicPath';
 /**
  * External dependencies
  */
+import App from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
@@ -35,7 +36,6 @@ import { initializeTracking } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
 /**

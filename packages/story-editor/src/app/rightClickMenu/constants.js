@@ -36,6 +36,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
   CLEAR_STYLE: __('Clear Style', 'web-stories'),
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
+  COPY_STYLES: __('Copy Style', 'web-stories'),
   COPY: __('Copy', 'web-stories'),
   DETACH_IMAGE_FROM_BACKGROUND: __(
     'Detach Image From Background',
@@ -44,6 +45,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   DELETE_PAGE: __('Delete Page', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
+  PASTE_STYLES: __('Paste Style', 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE: __('Paste', 'web-stories'),
   REPLACE_BACKGROUND_IMAGE: __('Replace Background Image', 'web-stories'),
@@ -52,6 +54,8 @@ export const RIGHT_CLICK_MENU_LABELS = {
   SEND_BACKWARD: __('Send Backward', 'web-stories'),
   SEND_TO_BACK: __('Send to Back', 'web-stories'),
   SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
+  ADD_TO_TEXT_PRESETS: __('Add style to “Saved Styles”', 'web-stories'),
+  ADD_TO_COLOR_PRESETS: __('Add color to “Saved Colors”', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

@@ -28,6 +28,7 @@ import { loadTextSets } from '@web-stories-wp/text-sets';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
+import { useConfig } from '../../app';
 import Context from './context';
 import {
   ELEMS,
@@ -55,6 +56,7 @@ function LibraryProvider({ children }) {
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showElementsTab } = useFeatures();
+  const { showMedia3p } = useConfig();
 
   const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
     highlightedTab,
@@ -94,12 +96,13 @@ function LibraryProvider({ children }) {
       [
         MEDIA,
         MEDIA3P,
+        showMedia3p && MEDIA3P,
         TEXT,
         SHAPES,
         showElementsTab && ELEMS,
         PAGE_TEMPLATES,
       ].filter(Boolean),
-    [showElementsTab]
+    [showMedia3p, showElementsTab]
   );
 
   const state = useMemo(

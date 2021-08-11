@@ -214,7 +214,8 @@ class Editor extends Service_Base {
 			self::AMP_VALIDATOR_SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/v0/validator.js',
 			[],
-			WEBSTORIES_VERSION
+			WEBSTORIES_VERSION,
+			true
 		);
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
@@ -335,6 +336,7 @@ class Editor extends Service_Base {
 				],
 				'version'                      => WEBSTORIES_VERSION,
 				'nonce'                        => $nonce,
+				'showMedia3p'                  => true,
 				'encodeMarkup'                 => $this->decoder->supports_decoding(),
 				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
