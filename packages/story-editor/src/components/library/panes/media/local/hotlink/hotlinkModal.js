@@ -26,6 +26,8 @@ import {
   getFirstFrameOfVideo,
   getImageDimensions,
   getVideoDimensions,
+  hasVideoGotAudio,
+  getVideoLength,
 } from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 
@@ -104,13 +106,24 @@ function HotlinkModal({ isOpen, onClose }) {
         : getImageDimensions;
       const { width, height } = await getMediaDimensions(link);
 
-      // Create a poster file in case of videos.
+      // Add necessary data for video.
       let posterData;
-      if (isVideo && hasUploadMediaAction) {
-        const originalFileName = getFileNameFromUrl(link);
-        const fileName = getPosterName(originalFileName);
-        const posterFile = await getFirstFrameOfVideo(link);
-        posterData = await uploadVideoPoster(0, fileName, posterFile);
+      const videoData = {};
+      if (isVideo) {
+        // Create poster if possible.
+        if (hasUploadMediaAction) {
+          const originalFileName = getFileNameFromUrl(link);
+          const fileName = getPosterName(originalFileName);
+          const posterFile = await getFirstFrameOfVideo(link);
+          posterData = await uploadVideoPoster(0, fileName, posterFile);
+          videoData.poster = posterData.poster;
+          videoData.posterId = posterData.posterId;
+        }
+        const hasAudio = await hasVideoGotAudio(link);
+        videoData.isMuted = !hasAudio;
+        const { length, formattedLength } = getVideoLength(link);
+        videoData.length = length;
+        videoData.formattedLength = formattedLength;
       }
       insertElement(type, {
         resource: createResource({
@@ -119,8 +132,7 @@ function HotlinkModal({ isOpen, onClose }) {
           height,
           src: link,
           local: false,
-          poster: isVideo ? posterData.poster : null,
-          posterId: isVideo ? posterData.posterId : null,
+          ...videoData,
         }),
       });
       setErrorMsg(null);
@@ -134,7 +146,15 @@ function HotlinkModal({ isOpen, onClose }) {
         )
       );
     }
-  }, [insertElement, link, errorMsg, getFileInfo, onClose, uploadVideoPoster]);
+  }, [
+    insertElement,
+    link,
+    errorMsg,
+    getFileInfo,
+    onClose,
+    uploadVideoPoster,
+    hasUploadMediaAction,
+  ]);
 
   return (
     <Dialog
