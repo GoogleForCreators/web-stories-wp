@@ -32,22 +32,25 @@ export function storyPagesCount(numPages) {
   const hasTooFewPages = numPages < MIN_STORY_PAGES;
   const hasTooManyPages = numPages > MAX_STORY_PAGES;
 
-  return hasTooFewPages || hasTooManyPages;
+  return { hasTooFewPages, hasTooManyPages };
 }
 
 const StoryPagesCount = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const numPages = useStory(({ state }) => state?.pages?.length);
 
-  const isRendered = useMemo(() => storyPagesCount(numPages), [numPages]);
+  const { hasTooFewPages, hasTooManyPages } = useMemo(
+    () => storyPagesCount(numPages),
+    [numPages]
+  );
 
   const { storyTooShort, storyTooLong } = DESIGN_COPY;
-  const copySource = isRendered
-    ? numPages < MIN_STORY_PAGES
-      ? storyTooShort
-      : storyTooLong
-    : {};
+  const copySource =
+    (hasTooFewPages && storyTooShort) ||
+    (hasTooManyPages && storyTooLong) ||
+    {};
 
+  const isRendered = hasTooFewPages || hasTooManyPages;
   useRegisterCheck('StoryPagesCount', isRendered);
 
   return (

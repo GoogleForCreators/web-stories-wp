@@ -28,6 +28,7 @@ import reducer from './reducer';
 
 const INITIAL_STATE = {
   pages: [],
+  capabilities: {},
   current: null,
   selection: [],
   story: {},

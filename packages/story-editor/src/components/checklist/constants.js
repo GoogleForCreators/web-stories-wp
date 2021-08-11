@@ -86,6 +86,10 @@ export const ACCESSIBILITY_COPY = {
   },
   imagesMissingAltText: {
     title: __('Add assistive text to images', 'web-stories'),
+    footer: __(
+      'Optimize accessibility and indexability with meaningful text to better assist users.',
+      'web-stories'
+    ),
   },
   linkTappableRegionTooSmall: {
     title: sprintf(
@@ -230,10 +234,7 @@ export const DESIGN_COPY = {
   imageResolutionTooLow: {
     title: sprintf(
       /* translators: %s: minimum image size width x minimum image size height. */
-      __(
-        'Upload a higher resolution poster image to at least %s',
-        'web-stories'
-      ),
+      __('Upload a higher resolution image to at least %s', 'web-stories'),
       `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
     ),
     footer: (
@@ -409,31 +410,6 @@ export const PRIORITY_COPY = {
             /* translators: %s: aspect ratio.  */
             __('Maintain a %s aspect ratio', 'web-stories'),
             `${PUBLISHER_LOGO_RATIO}x${PUBLISHER_LOGO_RATIO}px`
-          )}
-        </li>
-      </>
-    ),
-  },
-  posterTooSmall: {
-    title: sprintf(
-      /* translators: %s: image dimensions.  */
-      __('Increase poster image size to at least %s', 'web-stories'),
-      `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-    ),
-    footer: (
-      <>
-        <li>
-          {sprintf(
-            /* translators: %s: image dimensions.  */
-            __("Use an image that's at least %s", 'web-stories'),
-            `${FEATURED_MEDIA_RESOURCE_MIN_WIDTH}x${FEATURED_MEDIA_RESOURCE_MIN_HEIGHT}px`
-          )}
-        </li>
-        <li>
-          {sprintf(
-            /* translators: %s: aspect ratio.  */
-            __('Maintain a %s aspect ratio', 'web-stories'),
-            `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
           )}
         </li>
       </>

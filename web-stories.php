@@ -12,7 +12,7 @@
  * Plugin URI: https://wp.stories.google/
  * Author: Google
  * Author URI: https://opensource.google.com/
- * Version: 1.10.0-alpha.0
+ * Version: 1.11.0-alpha.0
  * Requires at least: 5.5
  * Requires PHP: 7.0
  * Text Domain: web-stories
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.10.0-alpha.0' );
+define( 'WEBSTORIES_VERSION', '1.11.0-alpha.0' );
 define( 'WEBSTORIES_DB_VERSION', '3.0.11' );
 define( 'WEBSTORIES_AMP_VERSION', '2.1.3' ); // Version of the AMP library included in the plugin.
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
@@ -115,7 +115,7 @@ function web_stories_get_compat_instance() {
 	$compatibility->set_required_files(
 		array(
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-story-editor.js',
-			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/wp-dashboard.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-block.js',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',

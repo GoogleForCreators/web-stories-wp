@@ -37,41 +37,20 @@ import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
-export function mediaElementResolution(element) {
-  switch (element.type) {
-    case 'image':
-      return imageElementResolution(element);
-    case 'gif':
-      return gifElementResolution(element);
-    default:
-      return false;
-  }
-}
+// TODO: This does not seem to accommodate for scaling.
+export function imageElementResolution(element) {
+  const imageResolutionLow =
+    element.resource?.height < 2 * element.height ||
+    element.resource?.width < 2 * element.width;
 
-function imageElementResolution(element) {
-  const heightResTooLow =
-    element.resource?.sizes?.full?.height < 2 * element.height;
-  const widthResTooLow =
-    element.resource?.sizes?.full?.width < 2 * element.width;
-
-  return heightResTooLow || widthResTooLow;
-}
-
-function gifElementResolution(element) {
-  // gif/output uses the MP4 video provided by the 3P Media API for displaying gifs
-  const heightResTooLow =
-    element.resource?.output?.sizes?.mp4?.full?.height < 2 * element.height;
-  const widthResTooLow =
-    element.resource?.output?.sizes?.mp4?.full?.width < 2 * element.width;
-
-  return heightResTooLow || widthResTooLow;
+  return ['image', 'gif'].includes(element.type) && imageResolutionLow;
 }
 
 const ImageElementResolution = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
   const failingElements = useMemo(
-    () => filterStoryElements(pages, mediaElementResolution),
+    () => filterStoryElements(pages, imageElementResolution),
     [pages]
   );
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);

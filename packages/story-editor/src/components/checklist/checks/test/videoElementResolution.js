@@ -24,12 +24,8 @@ describe('videoElementResolution', () => {
       id: 789,
       type: 'video',
       resource: {
-        sizes: {
-          full: {
-            height: 480,
-            width: 852,
-          },
-        },
+        height: 480,
+        width: 852,
       },
     };
 
