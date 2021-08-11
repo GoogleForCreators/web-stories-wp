@@ -85,8 +85,6 @@ function BasicColorList({
             pattern={pattern}
             isSelected={isSelected}
             isDisabled={isDisabled}
-            data-pattern-as-background={patternAsBackground}
-            data-color-as-background={colorAsBackground}
           />
         );
       })}
