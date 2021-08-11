@@ -5,5 +5,4 @@
 **/packages/migration/src/module.js
 bin/build/*
 build/*
-docs/*
 !.storybook

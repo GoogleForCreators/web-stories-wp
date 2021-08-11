@@ -149,7 +149,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
     /**
      * External dependencies
      */
-    import { __, _x } from '@web-stories-wp/i18n';
+    import { __, _x } from '@web-stories-wp/i18n'; // eslint-disable-line import/no-extraneous-dependencies
 
     /**
      * Internal dependencies
