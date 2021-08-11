@@ -14,10 +14,9 @@
 		"@web-stories-wp/date": "*",
 		"@web-stories-wp/dashboard": "*",
 		"@web-stories-wp/design-system": "*",
+    "@web-stories-wp/react": "*",
 		"@web-stories-wp/tracking": "*",
-		"flagged": "^2.0.1",
-		"@web-stories-wp/react": "*",
-		"react-dom": "^17.0.2"
+		"flagged": "^2.0.1"
 	},
 	"devDependencies": {}
 }
