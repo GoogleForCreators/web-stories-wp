@@ -78,7 +78,7 @@ function BasicColorPicker({
   handleClose,
 }) {
   const { savedColors } = useStory((state) => ({
-    savedColors: state.state.story.globalStoryStyles.colors,
+    savedColors: state.state.story?.globalStoryStyles?.colors || [],
   }));
 
   return (

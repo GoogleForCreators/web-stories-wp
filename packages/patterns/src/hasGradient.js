@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-function hasGradient({ type }) {
+function hasGradient({ type } = {}) {
   return Boolean(type) && 'solid' !== type;
 }
 
