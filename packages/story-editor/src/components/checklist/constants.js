@@ -86,6 +86,10 @@ export const ACCESSIBILITY_COPY = {
   },
   imagesMissingAltText: {
     title: __('Add assistive text to images', 'web-stories'),
+    footer: __(
+      'Optimize accessibility and indexability with meaningful text to better assist users.',
+      'web-stories'
+    ),
   },
   linkTappableRegionTooSmall: {
     title: sprintf(
@@ -230,10 +234,7 @@ export const DESIGN_COPY = {
   imageResolutionTooLow: {
     title: sprintf(
       /* translators: %s: minimum image size width x minimum image size height. */
-      __(
-        'Upload a higher resolution poster image to at least %s',
-        'web-stories'
-      ),
+      __('Upload a higher resolution image to at least %s', 'web-stories'),
       `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
     ),
     footer: (

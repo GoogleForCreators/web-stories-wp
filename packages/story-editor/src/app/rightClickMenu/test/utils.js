@@ -61,6 +61,9 @@ const expectedTextStyles = objectPick(ALL_PROPERTIES, [
   'opacity',
   'padding',
   'textAlign',
+  'font',
+  'fontSize',
+  'lineHeight',
 ]);
 
 const { clearableAttributes: clearableGifAttributes } =

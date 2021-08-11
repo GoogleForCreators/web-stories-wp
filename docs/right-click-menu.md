@@ -19,7 +19,9 @@ Right click menu will give the user a right click menu that is intuitive to use 
 
 Different actions will be rendered depending on the Element that is right clicked. The actions will do the following:
 
-#### Page element
+<details>
+
+<summary>Page element actions</summary>
 
 |Action text|Action description|
 |--|--|
@@ -31,7 +33,11 @@ Different actions will be rendered depending on the Element that is right clicke
 |Duplicate page|Creates a new page that is identical to the current page. All animations, styles, and elements should be the same.|
 |Delete page|Deletes the current page (if the page can be deleted).|
 
-#### Text element
+</details>
+
+<details>
+
+<summary>Text element actions</summary>
 
 |Action text|Action description|
 |--|--|
@@ -47,7 +53,11 @@ Different actions will be rendered depending on the Element that is right clicke
 |Add style to "Saved styles"|The style of the currently selected textbox is saved to the "Saved styles" panel in the inspector. This action opens the design tab, opens the "Saved styles" panel, and collapses all other panels in the inspector. The "Saved styles" panel should be highlighted when opened.|
 |Add color to "Saved colors"|The color(s) of the currently selected textbox is saved to the "Saved colors" panel in the inspector. This action opens the design tab, opens the "Saved colors" panel, and collapses all other panels in the inspector. The "Saved colors" panel should be highlighted when opened. A snackbar is displayed on completion.|
 
-#### Background Media (images, gifs, videos) element
+</details>
+
+<details>
+
+<summary>Background media actions</summary>
 
 |Action text|Action description|
 |--|--|
@@ -59,7 +69,11 @@ Different actions will be rendered depending on the Element that is right clicke
 |Scale & crop background image|Show the scale and crop UI so that the user may scale or crop the image to the desired size.|
 |Clear style|Remove all styles currently applied to the background media. A snackbar is displayed on completion.|
 
-#### Foreground Media (images, gifs, videos) element
+</details>
+
+<details>
+
+<summary>Foreground media actions</summary>
 
 |Action text|Action description|
 |--|--|
@@ -74,7 +88,11 @@ Different actions will be rendered depending on the Element that is right clicke
 |Paste image styles|Add all styles in the clipboard to the selected media. A snackbar is displayed on completion.|
 |Clear image styles|Remove all styles from the currently selected media. A snackbar is displayed on completion.|
 
-#### Shape element
+</details>
+
+<details>
+
+<summary>Shape element actions</summary>
 
 |Action text|Action description|
 |--|--|
@@ -89,13 +107,35 @@ Different actions will be rendered depending on the Element that is right clicke
 |Paste shape styles|Add styles from the clipboard to the selected shape. A snackbar is displayed on completion.|
 |Add color to "Saved colors"|The color(s) of the currently selected shape is saved to the "Saved colors" panel in the inspector. This action opens the design tab, opens the "Saved colors" panel, and collapses all other panels in the inspector. The "Saved colors" panel should be highlighted when opened. A snackbar is displayed on completion.|
 
+</details>
+
 ## Technical notes and considerations
 
-### Clipboard API
+### Copying, pasting, and clearing styles
 
-The right click menu leverages the new [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API). This api requires user permission to be set when pasting data from the clipboard since it can be dangerous to let applications paste data that they have set themselves.
+When a user right clicks elements, they may be given the option to copy an element's styles and paste them to another element of the same type.
 
-A user may copy anything they want from the canvas using the right click menu. However, the user may not paste until this permission is granted to the application.
+They may also be given the option to 'clear' styles from the element. This resets some properties to the default values.
+
+**Note**: This does not override all styles of the element. Only styles that are in the table below are able to be copied, pasted, and cleared:
+
+|Element type|Properties that are copy/paste-able and clear-able|
+|--|--|
+|Text|- `backgroundColor`<br/>- `backgroundTextMode`<br/>- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `font`<br/>- `fontSize`<br/>- `lineHeight`<br/>- `lockAspectRatio`<br/>- `opacity`<br/>- `padding`<br/>- `rotationAngle`<br/>- `textAlign`|
+|Foreground Media|- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `lockAspectRatio`<br/>- `opacity`<br/>- `overlay`<br/>- `rotationAngle`|
+|Shape|- `backgroundColor`<br/>- `flip`<br/>- `lockAspectRatio`<br/>- `opacity`<br/>- `rotationAngle`|
+
+#### Copying and pasting styles
+
+A user may copy styles from any text, foreground media, and shape element. A user may not copy background media element styles.
+
+Once styles are copied, a user may select an element of the same type and 'paste' those onto the selected element. The selected element's properties will be overridden by the 'copied' styles.
+
+#### Clearing styles
+
+A user may clear styles from text, foreground media, shape, and background media elements. This action resets properties to their defaults.
+
+**Note:** Text presets are all different styled versions of the same _text_ element. Any clearing of text styles will make all text presets look exactly the same.
 
 ### Testing 
 

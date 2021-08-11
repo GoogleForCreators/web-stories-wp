@@ -214,7 +214,8 @@ class Editor extends Service_Base {
 			self::AMP_VALIDATOR_SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/v0/validator.js',
 			[],
-			WEBSTORIES_VERSION
+			WEBSTORIES_VERSION,
+			true
 		);
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];

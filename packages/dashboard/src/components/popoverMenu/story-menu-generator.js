@@ -26,7 +26,7 @@ import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 /**
  * Generate story enu.
  *
- * For menuItemActions, The `key` is any property in `STORY_CONTEXT_MENU_ACTIONS` found in {@module assets/src/dashboard/types.js}.
+ * For menuItemActions, The `key` is any property in `STORY_CONTEXT_MENU_ACTIONS` found in {@module packages/dashboard/src/types.js}.
  *
  * @param {Object} arguments The arguments
  * @param {Object.<string, Function>} arguments.menuItemActions An object of actions that could be added as event handlers.

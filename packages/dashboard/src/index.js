@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,23 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { videoElementResolution } from '../videoElementResolution';
+import App from './app';
 
-describe('videoElementResolution', () => {
-  it('should return a message if a video element is less than 480p', () => {
-    const tooLowResolutionVideoElement = {
-      id: 789,
-      type: 'video',
-      resource: {
-        height: 480,
-        width: 852,
-      },
-    };
-
-    const result = videoElementResolution(tooLowResolutionVideoElement);
-    expect(result).toBe(true);
-  });
-});
+export default App;
+export { GlobalStyle as DashboardGlobalStyle } from './theme';
+export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
+export { ConfigProvider as DashboardConfigProvider } from './app/config';
+export { default as ApiProvider } from './app/api/apiProvider';

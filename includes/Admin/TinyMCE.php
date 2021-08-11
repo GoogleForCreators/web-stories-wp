@@ -160,6 +160,7 @@ class TinyMCE extends Service_Base {
 	public function script_loader_tag( $tag, $handle, $src ): string {
 		if ( self::SCRIPT_HANDLE === $handle ) {
 			$tag = str_replace( $src, '', $tag );
+			// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- False positive.
 			$tag = (string) preg_replace( '#<script src=\'\'(.*?)>(.*?)</script>#is', '', $tag );
 		}
 

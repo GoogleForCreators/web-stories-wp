@@ -42,17 +42,10 @@ export const defaultAttributes = {
 };
 
 export const clearableAttributes = {
-  ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: createSolid(196, 196, 196),
-  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+  ...defaultAttributes,
+  content: '',
   border: null,
   borderRadius: null,
-  padding: {
-    vertical: 0,
-    horizontal: 0,
-    locked: true,
-  },
-  textAlign: 'initial',
 };
 
 export const hasEditMode = true;

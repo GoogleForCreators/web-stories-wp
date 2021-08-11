@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { mediaElementResolution } from '../imageElementResolution';
+import { imageElementResolution } from '../imageElementResolution';
 
 describe('imageElementResolution', () => {
   it("should return true if an image element's resolution is too low (<2x pixel density)", () => {
@@ -27,16 +27,12 @@ describe('imageElementResolution', () => {
       height: 1000,
       width: 1000,
       resource: {
-        sizes: {
-          full: {
-            height: 1000,
-            width: 1000,
-          },
-        },
+        height: 1000,
+        width: 1000,
       },
     };
 
-    const result = mediaElementResolution(tooLowResolutionImageElement);
+    const result = imageElementResolution(tooLowResolutionImageElement);
     expect(result).toBe(true);
   });
 
@@ -47,20 +43,12 @@ describe('imageElementResolution', () => {
       height: 1000,
       width: 1000,
       resource: {
-        output: {
-          sizes: {
-            mp4: {
-              full: {
-                height: 1000,
-                width: 1000,
-              },
-            },
-          },
-        },
+        height: 1000,
+        width: 1000,
       },
     };
 
-    const result = mediaElementResolution(tooLowResolutionImageElement);
+    const result = imageElementResolution(tooLowResolutionImageElement);
     expect(result).toBe(true);
   });
 });
