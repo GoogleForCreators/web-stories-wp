@@ -50,7 +50,6 @@ export const RIGHT_CLICK_MENU_LABELS = {
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_STYLES: __('Paste Style', 'web-stories'),
-  REPLACE_BACKGROUND_IMAGE: __('Replace Background Image', 'web-stories'),
   SCALE_AND_CROP_BACKGROUND: __('Scale & Crop Background Image', 'web-stories'),
   SCALE_AND_CROP_IMAGE: __('Scale & Crop Image', 'web-stories'),
   SEND_BACKWARD: __('Send Backward', 'web-stories'),

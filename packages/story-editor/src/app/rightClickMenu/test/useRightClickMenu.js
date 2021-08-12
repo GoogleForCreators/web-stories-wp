@@ -224,7 +224,6 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,

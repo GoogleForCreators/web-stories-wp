@@ -46,7 +46,6 @@ import useApplyStyle from '../../components/panels/design/preset/stylePreset/use
 import { PRESET_TYPES } from '../../components/panels/design/preset/constants';
 import { useCanvas } from '../canvas';
 import { ELEMENT_TYPES } from '../story';
-import { states, useHighlights } from '../highlights';
 import { getTextPresets } from '../../components/panels/design/preset/utils';
 import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import { useHistory } from '../history';
@@ -93,9 +92,6 @@ function RightClickMenuProvider({ children }) {
   });
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,
-  }));
-  const { setHighlights } = useHighlights(({ setHighlights }) => ({
-    setHighlights,
   }));
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
@@ -632,23 +628,6 @@ function RightClickMenuProvider({ children }) {
   ]);
 
   /**
-   * Focus the media or the media3p panel.
-   */
-  const handleFocusMediaPanel = useCallback(() => {
-    const idOrigin = selectedElement?.resource?.id?.toString().split(':')?.[0];
-    const is3PGif =
-      (!idOrigin || idOrigin?.toLowerCase() === 'media/tenor') &&
-      selectedElement?.resource?.type?.toLowerCase() === 'gif';
-    const is3PVideo = idOrigin?.toLowerCase() === 'media/coverr';
-    const is3PImage = idOrigin?.toLowerCase() === 'media/unsplash';
-
-    const panelToFocus =
-      is3PImage || is3PVideo || is3PGif ? states.MEDIA3P : states.MEDIA;
-
-    setHighlights({ highlight: panelToFocus });
-  }, [selectedElement, setHighlights]);
-
-  /**
    * Add text styles to global presets.
    *
    * @param {Event} evt The triggering event
@@ -811,11 +790,6 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       {
-        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
-        onClick: handleFocusMediaPanel,
-        ...menuItemProps,
-      },
-      {
         label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
         onClick: handleOpenScaleAndCrop,
         ...menuItemProps,
@@ -832,7 +806,6 @@ function RightClickMenuProvider({ children }) {
       handleClearElementStyles,
       handleOpenScaleAndCrop,
       handleRemoveMediaFromBackground,
-      handleFocusMediaPanel,
       menuItemProps,
       pageManipulationItems,
     ]
