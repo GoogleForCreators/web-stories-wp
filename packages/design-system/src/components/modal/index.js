@@ -84,7 +84,6 @@ export function Modal({
   overlayStyles,
   ...rest
 }) {
-  // TODO, refactor to use useContext from use-context-selector.
   const themeContext = useContext(ThemeContext);
 
   return (
