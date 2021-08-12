@@ -232,6 +232,30 @@ const shortcuts = {
           ),
         },
         {
+          label: __('Copy Styles', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+              <kbd>{'O'}</kbd>
+            </kbd>
+          ),
+        },
+        {
+          label: __('Paste Styles', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <kbd aria-label={cmdOrCtrl.title} className="large-key">
+                {cmdOrCtrl.symbol}
+              </kbd>
+              <kbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</kbd>
+              <kbd>{'P'}</kbd>
+            </kbd>
+          ),
+        },
+        {
           label: __('Select all', 'web-stories'),
           shortcut: (
             <kbd>

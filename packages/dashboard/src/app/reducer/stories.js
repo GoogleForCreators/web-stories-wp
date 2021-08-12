@@ -86,7 +86,7 @@ function storyReducer(state, action) {
       const storyGroupStatus =
         action.payload.storyStatus === STORY_STATUS.DRAFT
           ? STORY_STATUS.DRAFT
-          : STORY_STATUS.PUBLISHED_AND_FUTURE;
+          : STORY_STATUS.PUBLISH;
 
       return {
         ...state,
