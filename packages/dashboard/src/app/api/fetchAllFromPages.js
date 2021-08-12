@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import queryString from 'query-string';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * This function takes a response from the WordPress fetch and will query
@@ -41,12 +41,7 @@ export default async function fetchAllFromTotalPages(
   if (totalPages > 1) {
     for (let i = 2; i <= totalPages; i++) {
       additionalRequests.push(
-        dataAdapter.get(
-          queryString.stringifyUrl({
-            url: apiString,
-            query: { page: i },
-          })
-        )
+        dataAdapter.get(addQueryArgs(apiString, { page: i }))
       );
     }
   }
