@@ -226,23 +226,7 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
-        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
-        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
-        RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
       ]);
-    });
-
-    it('"Delete Page" should be disabled if there is only one page', () => {
-      const { result } = renderHook(() => useRightClickMenu(), {
-        wrapper: RightClickMenuProvider,
-      });
-
-      const deletePageMenuItem = result.current.menuItems.find(
-        (item) => item.label === RIGHT_CLICK_MENU_LABELS.DELETE_PAGE
-      );
-
-      expect(deletePageMenuItem.disabled).toBeTrue();
     });
   });
 
