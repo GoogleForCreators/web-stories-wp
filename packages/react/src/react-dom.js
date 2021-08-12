@@ -14,8 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
 export { createPortal, render } from 'react-dom';
 export { renderToStaticMarkup } from 'react-dom/server';
