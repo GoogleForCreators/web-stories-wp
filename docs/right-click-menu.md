@@ -121,9 +121,9 @@ They may also be given the option to 'clear' styles from the element. This reset
 
 |Element type|Properties that are copy/paste-able and clear-able|
 |--|--|
-|Text|- `backgroundColor`<br/>- `backgroundTextMode`<br/>- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `font`<br/>- `fontSize`<br/>- `lineHeight`<br/>- `lockAspectRatio`<br/>- `opacity`<br/>- `padding`<br/>- `rotationAngle`<br/>- `textAlign`|
-|Foreground Media|- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `lockAspectRatio`<br/>- `opacity`<br/>- `overlay`<br/>- `rotationAngle`|
-|Shape|- `backgroundColor`<br/>- `flip`<br/>- `lockAspectRatio`<br/>- `opacity`<br/>- `rotationAngle`|
+|Text|- `backgroundColor`<br/>- `backgroundTextMode`<br/>- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `font`<br/>- `fontSize`<br/>- `lineHeight`<br/>- `opacity`<br/>- `padding`<br/>- `rotationAngle`<br/>- `textAlign`|
+|Foreground Media|- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `opacity`<br/>- `overlay`<br/>- `rotationAngle`|
+|Shape|- `backgroundColor`<br/>- `flip`<br/>- `opacity`<br/>- `rotationAngle`|
 
 #### Copying and pasting styles
 

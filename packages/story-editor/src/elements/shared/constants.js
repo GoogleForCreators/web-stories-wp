@@ -20,5 +20,4 @@ export const SHARED_DEFAULT_ATTRIBUTES = {
     horizontal: false,
   },
   rotationAngle: 0,
-  lockAspectRatio: true,
 };
