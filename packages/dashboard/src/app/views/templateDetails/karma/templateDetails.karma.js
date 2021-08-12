@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import qs from 'query-string';
 
 /**
  * Internal dependencies
@@ -96,12 +95,8 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   }
 
   function getQueryParams() {
-    return qs.parse(
-      qs.extract(
-        qs.parseUrl(window.location.href, { parseFragmentIdentifier: true })
-          .fragmentIdentifier ?? ''
-      )
-    );
+    const url = new URL(window.location.hash.substr(1), window.location.origin);
+    return Object.fromEntries(url.searchParams);
   }
 
   describe('Action: See pre-built template details page', () => {

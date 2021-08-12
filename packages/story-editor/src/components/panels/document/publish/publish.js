@@ -96,26 +96,28 @@ function PublishPanel() {
     publisherLogoRef
   );
 
-  const { featuredMedia, publisherLogoUrl, updateStory } = useStory(
-    ({
-      state: {
-        story: {
-          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
-          publisherLogoUrl = '',
+  const { featuredMedia, publisherLogoUrl, updateStory, capabilities } =
+    useStory(
+      ({
+        state: {
+          story: {
+            featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+            publisherLogoUrl = '',
+          },
+          capabilities,
         },
-      },
-      actions: { updateStory },
-    }) => {
-      return {
-        featuredMedia,
-        publisherLogoUrl,
-        updateStory,
-      };
-    }
-  );
+        actions: { updateStory },
+      }) => {
+        return {
+          featuredMedia,
+          publisherLogoUrl,
+          updateStory,
+          capabilities,
+        };
+      }
+    );
 
-  const { capabilities, allowedImageMimeTypes, allowedImageFileTypes } =
-    useConfig();
+  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) =>
@@ -182,9 +184,7 @@ function PublishPanel() {
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent>
         <PublishTime />
-        {capabilities && capabilities.hasAssignAuthorAction && users && (
-          <Author />
-        )}
+        {capabilities?.hasAssignAuthorAction && users && <Author />}
         <HighlightRow
           isHighlighted={
             highlightPoster?.showEffect || highlightLogo?.showEffect
