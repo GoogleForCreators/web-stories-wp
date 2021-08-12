@@ -93,7 +93,9 @@ describe('Clone element integration', () => {
     expect(await getNumElements()).toBe(3);
   });
 
-  it('should correctly clone 1 element', async () => {
+  // Disable reason: Flaky test, to be fixed in #8677
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should correctly clone 1 element', async () => {
     // Select img2
     await clickElement(img2.id);
 
