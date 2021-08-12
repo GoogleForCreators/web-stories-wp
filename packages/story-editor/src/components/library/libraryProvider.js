@@ -95,7 +95,6 @@ function LibraryProvider({ children }) {
     () =>
       [
         MEDIA,
-        MEDIA3P,
         showMedia3p && MEDIA3P,
         TEXT,
         SHAPES,
