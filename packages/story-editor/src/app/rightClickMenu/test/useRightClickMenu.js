@@ -77,6 +77,13 @@ const expectedDefaultActions = [
   RIGHT_CLICK_MENU_LABELS.DELETE,
 ];
 
+const expectedLayerActions = [
+  RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
+  RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
+  RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
+  RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+];
+
 describe('useRightClickMenu', () => {
   const mockUseCanvas = useCanvas;
   const mockUseStory = useStory;
@@ -134,6 +141,8 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         ...expectedDefaultActions,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
         RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
       ]);
@@ -260,10 +269,7 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         ...expectedDefaultActions,
-        RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
-        RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
-        RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
-        RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
+        ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
         RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
@@ -274,6 +280,32 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Shape element right clicked', () => {
-    it.todo('should return the correct menu items');
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '991199',
+            type: 'shape',
+          },
+        ],
+      });
+    });
+
+    it('should return the correct menu items', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const labels = result.current.menuItems.map((item) => item.label);
+      expect(labels).toStrictEqual([
+        ...expectedDefaultActions,
+        ...expectedLayerActions,
+        RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
+      ]);
+    });
   });
 });

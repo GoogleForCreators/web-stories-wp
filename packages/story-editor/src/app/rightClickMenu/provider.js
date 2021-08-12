@@ -62,6 +62,13 @@ import { getDefaultPropertiesForType } from './utils';
 function RightClickMenuProvider({ children }) {
   const enableRightClickMenus = useFeature('enableRightClickMenus');
 
+  const { addGlobalPreset: handleAddTextPreset } = useAddPreset({
+    presetType: PRESET_TYPES.STYLE,
+  });
+
+  const { addGlobalPreset: handleAddColorPreset } = useAddPreset({
+    presetType: PRESET_TYPES.COLOR,
+  });
   const { setEditingElement } = useCanvas(({ actions }) => ({
     setEditingElement: actions.setEditingElement,
   }));
@@ -491,68 +498,6 @@ function RightClickMenuProvider({ children }) {
     [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
   );
 
-  const backgroundMediaItems = useMemo(
-    () => [
-      ...defaultItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        separator: 'top',
-        onClick: handleRemoveMediaFromBackground,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
-        onClick: handleFocusMediaPanel,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
-        onClick: handleOpenScaleAndCrop,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
-        separator: 'top',
-        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
-        onClick: () => handleAddPageAtPosition(currentPageIndex),
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: handleDuplicatePage,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: handleDeletePage,
-        disabled: pages.length === 1,
-        ...menuItemProps,
-      },
-    ],
-    [
-      currentPageIndex,
-      defaultItems,
-      handleAddPageAtPosition,
-      handleClearElementStyles,
-      handleDeletePage,
-      handleDuplicatePage,
-      handleOpenScaleAndCrop,
-      handleRemoveMediaFromBackground,
-      handleFocusMediaPanel,
-      menuItemProps,
-      pages,
-    ]
-  );
-
   const layerItems = useMemo(
     () => [
       {
@@ -600,13 +545,77 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const { addGlobalPreset: handleAddTextPreset } = useAddPreset({
-    presetType: PRESET_TYPES.STYLE,
-  });
+  const pageManipulationItems = useMemo(
+    () => [
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
+        separator: 'top',
+        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
+        onClick: () => handleAddPageAtPosition(currentPageIndex),
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
+        onClick: handleDuplicatePage,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
+        onClick: handleDeletePage,
+        disabled: pages.length === 1,
+        ...menuItemProps,
+      },
+    ],
+    [
+      currentPageIndex,
+      handleAddPageAtPosition,
+      handleDeletePage,
+      handleDuplicatePage,
+      menuItemProps,
+      pages,
+    ]
+  );
 
-  const { addGlobalPreset: handleAddColorPreset } = useAddPreset({
-    presetType: PRESET_TYPES.COLOR,
-  });
+  const backgroundMediaItems = useMemo(
+    () => [
+      ...defaultItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
+        separator: 'top',
+        onClick: handleRemoveMediaFromBackground,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
+        onClick: handleFocusMediaPanel,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
+        onClick: handleOpenScaleAndCrop,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+      ...pageManipulationItems,
+    ],
+    [
+      defaultItems,
+      handleClearElementStyles,
+      handleOpenScaleAndCrop,
+      handleRemoveMediaFromBackground,
+      handleFocusMediaPanel,
+      menuItemProps,
+      pageManipulationItems,
+    ]
+  );
 
   const textItems = useMemo(
     () => [
@@ -673,7 +682,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
         separator: 'top',
         shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_IMAGE_STYLES,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
         },
         onClick: handleCopyStyles,
         ...menuItemProps,
@@ -681,7 +690,7 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
         shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_IMAGE_STYLES,
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         },
         onClick: handlePasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
@@ -701,29 +710,61 @@ function RightClickMenuProvider({ children }) {
       handleOpenScaleAndCrop,
       handlePasteStyles,
       handleSetPageBackground,
+      layerItems,
       menuItemProps,
       selectedElement,
+    ]
+  );
+
+  const shapeItems = useMemo(
+    () => [
+      ...defaultItems,
+      ...layerItems,
+      {
+        label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
+        separator: 'top',
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
+        },
+        onClick: handleCopyStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
+        shortcut: {
+          display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
+        },
+        onClick: handlePasteStyles,
+        disabled: copiedElement.type !== selectedElement?.type,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+      {
+        label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
+        onClick: handleAddColorPreset,
+        ...menuItemProps,
+      },
+    ],
+    [
+      copiedElement?.type,
+      defaultItems,
+      handleAddColorPreset,
+      handleClearElementStyles,
+      handleCopyStyles,
+      handlePasteStyles,
       layerItems,
+      menuItemProps,
+      selectedElement?.type,
     ]
   );
 
   const pageItems = useMemo(
-    () => [
-      ...defaultItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: handleDuplicatePage,
-        separator: 'top',
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: handleDeletePage,
-        disabled: pages.length === 1,
-        ...menuItemProps,
-      },
-    ],
-    [defaultItems, handleDeletePage, handleDuplicatePage, menuItemProps, pages]
+    () => [...defaultItems, ...pageManipulationItems],
+    [defaultItems, pageManipulationItems]
   );
 
   const menuItems = useMemo(() => {
@@ -739,6 +780,7 @@ function RightClickMenuProvider({ children }) {
           ? backgroundMediaItems
           : foregroundMediaItems;
       case ELEMENT_TYPES.SHAPE:
+        return shapeItems;
       case ELEMENT_TYPES.TEXT:
         return textItems;
       default:
@@ -749,6 +791,7 @@ function RightClickMenuProvider({ children }) {
     foregroundMediaItems,
     pageItems,
     selectedElement,
+    shapeItems,
     textItems,
   ]);
 
