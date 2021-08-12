@@ -20,10 +20,10 @@
 import preloadVideo from './preloadVideo';
 
 /**
- * Get video dimensions from an video.
+ * Get video dimensions from a video.
  *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
+ * @param {string} src Video source.
+ * @return {Promise} Video dimensions object.
  */
 const getVideoDimensions = (src) => {
   return preloadVideo(src).then((video) => ({

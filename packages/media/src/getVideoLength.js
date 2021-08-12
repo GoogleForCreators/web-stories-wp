@@ -21,10 +21,10 @@ import formatDuration from './formatDuration';
 import preloadVideo from './preloadVideo';
 
 /**
- * Get video length from an video.
+ * Get video length from a video.
  *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
+ * @param {string} src Video source.
+ * @return {Promise} Video length object.
  */
 const getVideoLength = (src) => {
   return preloadVideo(src).then((video) => {
