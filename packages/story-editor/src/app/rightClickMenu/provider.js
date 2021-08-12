@@ -504,7 +504,6 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         separator: 'top',
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
@@ -512,7 +511,6 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
         disabled: !canElementMoveBackwards,
         onClick: handleSendToBack,
@@ -520,7 +518,6 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
         disabled: !canElementMoveForwards,
         onClick: handleBringForward,
@@ -528,7 +525,6 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
         disabled: !canElementMoveForwards,
         onClick: handleBringToFront,
