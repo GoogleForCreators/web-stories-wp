@@ -36,7 +36,7 @@ export default function reshapeStoryObject(originalStoryData) {
     _embedded: {
       author = [{ name: '' }],
       'wp:lock': lock = [{ locked: false }],
-      'wp:lockuser': lockUser = [{ id: 0, name: '', avatar_urls: {} }],
+      'wp:lockuser': lockUser = [{ id: 0, name: '' }],
     } = {},
     _links: links = {},
   } = originalStoryData;
@@ -65,7 +65,7 @@ export default function reshapeStoryObject(originalStoryData) {
     lockUser: {
       id: lockUser[0].id,
       name: lockUser[0].name,
-      avatar: lockUser[0].avatar_urls['96'] || null,
+      avatar: lockUser[0]?.avatar_urls?.['96'] || null,
     },
     bottomTargetAction: editStoryLink,
     featuredMediaUrl,
