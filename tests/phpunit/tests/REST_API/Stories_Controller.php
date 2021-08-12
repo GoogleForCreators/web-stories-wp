@@ -38,6 +38,7 @@ class Stories_Controller extends Test_REST_TestCase {
 	protected static $user3_id;
 
 	protected static $author_id;
+	protected static $contributor_id;
 
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
@@ -64,6 +65,12 @@ class Stories_Controller extends Test_REST_TestCase {
 		self::$author_id = $factory->user->create(
 			[
 				'role' => 'author',
+			]
+		);
+
+		self::$contributor_id = $factory->user->create(
+			[
+				'role' => 'contributor',
 			]
 		);
 
@@ -123,6 +130,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		self::delete_user( self::$user2_id );
 		self::delete_user( self::$user3_id );
 		self::delete_user( self::$author_id );
+		self::delete_user( self::$contributor_id );
 	}
 
 	public function setUp() {
@@ -179,13 +187,57 @@ class Stories_Controller extends Test_REST_TestCase {
 		$this->assertArrayHasKey( 'all', $statuses );
 		$this->assertArrayHasKey( 'publish', $statuses );
 		$this->assertArrayHasKey( 'draft', $statuses );
+		$this->assertArrayHasKey( 'future', $statuses );
+		$this->assertArrayHasKey( 'private', $statuses );
+
+		$this->assertEquals( 13, $statuses['all'] );
+		$this->assertEquals( 7, $statuses['publish'] );
+		$this->assertEquals( 3, $statuses['future'] );
+		$this->assertEquals( 3, $statuses['draft'] );
+		$this->assertEquals( 0, $statuses['private'] );
+
+		$this->assertEquals( 3, $headers['X-WP-Total'] );
+	}
+
+	/**
+	 * @covers ::get_items
+	 */
+	public function test_get_items_no_perm() {
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
+		$response = rest_get_server()->dispatch( $request );
+		$headers  = $response->get_headers();
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertArrayNotHasKey( 'X-WP-TotalByStatus', $headers );
+	}
+
+	/**
+	 * @covers ::get_items
+	 */
+	public function test_get_items_contributor() {
+		wp_set_current_user( self::$contributor_id );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
+		$request->set_param( 'context', 'edit' );
+		$response = rest_get_server()->dispatch( $request );
+		$headers  = $response->get_headers();
+
+		$this->assertFalse( $response->is_error() );
+		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
+
+		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
+
+		$this->assertArrayHasKey( 'all', $statuses );
+		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'draft', $statuses );
+		$this->assertArrayHasKey( 'future', $statuses );
+		$this->assertArrayNotHasKey( 'private', $statuses );
 
 		$this->assertEquals( 13, $statuses['all'] );
 		$this->assertEquals( 7, $statuses['publish'] );
 		$this->assertEquals( 3, $statuses['future'] );
 		$this->assertEquals( 3, $statuses['draft'] );
 
-		$this->assertEquals( 3, $headers['X-WP-Total'] );
+		$this->assertEquals( 7, $headers['X-WP-Total'] );
 	}
 
 	/**

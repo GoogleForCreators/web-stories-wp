@@ -33,7 +33,6 @@ import {
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
   TEXT_INPUT_DEBOUNCE,
-  STORY_STATUS,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -47,7 +46,6 @@ import {
 } from '../../../../utils/useStoryView';
 import { useDashboardResultsLabel } from '../../../../utils';
 import { BodyViewOptions, PageHeading } from '../../shared';
-import { useConfig } from '../../../config';
 import { getSearchOptions } from '../../utils';
 
 const StyledPill = styled(Pill)`
@@ -72,8 +70,6 @@ function Header({
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
-
-  const { capabilities: { canReadPrivatePosts } = {} } = useConfig();
 
   const searchOptions = useMemo(() => getSearchOptions(stories), [stories]);
 
@@ -107,43 +103,37 @@ function Header({
     return (
       <>
         {STORY_STATUSES.map((storyStatus) => {
-          const isStoryPrivate = storyStatus.status === STORY_STATUS.PRIVATE;
-          const cantReadPrivate =
-            !canReadPrivatePosts ||
-            !totalStoriesByStatus.private ||
-            totalStoriesByStatus.private < 1;
-
-          if (isStoryPrivate && cantReadPrivate) {
+          const { label, status, value } = storyStatus;
+          if (!(status in totalStoriesByStatus)) {
             return null;
           }
-          const label = storyStatus.label;
-          const labelCount = totalStoriesByStatus?.[storyStatus.status] ? (
-            <span>{totalStoriesByStatus?.[storyStatus.status]}</span>
-          ) : null;
+
+          const count = totalStoriesByStatus[status];
+          if (count === 0) {
+            return null;
+          }
 
           const ariaLabel = sprintf(
             /* translators: %s is story status */
             __('Filter stories by %s', 'web-stories'),
-            storyStatus.label
+            label
           );
           return (
             <StyledPill
-              key={storyStatus.value}
-              onClick={() => {
-                handleClick(storyStatus.value);
-              }}
-              isActive={filter.value === storyStatus.value}
-              disabled={totalStoriesByStatus?.[storyStatus.status] <= 0}
+              key={value}
+              onClick={() => handleClick(value)}
+              isActive={filter.value === value}
+              disabled={count <= 0}
               aria-label={ariaLabel}
             >
               {label}
-              {labelCount && labelCount}
+              {count && <span>{count}</span>}
             </StyledPill>
           );
         }).filter(Boolean)}
       </>
     );
-  }, [totalStoriesByStatus, canReadPrivatePosts, filter.value, handleClick]);
+  }, [totalStoriesByStatus, filter.value, handleClick]);
 
   const onSortChange = useCallback(
     (newSort) => {
