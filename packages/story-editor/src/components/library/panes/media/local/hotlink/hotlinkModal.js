@@ -41,7 +41,7 @@ import {
   useUploadVideoFrame,
   getPosterName,
 } from '../../../../../../app/media/utils';
-import { withProtocol } from '../../../../../../utils/url';
+import { isValidUrl, withProtocol } from '../../../../../../utils/url';
 
 const InputWrapper = styled.div`
   margin: 16px 4px;
@@ -98,6 +98,14 @@ function HotlinkModal({ isOpen, onClose }) {
     if (errorMsg?.length) {
       return;
     }
+    const insertionError = __(
+      'Media failed to load. Please ensure the link is valid and the site allows linking from external sites',
+      'web-stories'
+    );
+    if (!isValidUrl(link)) {
+      setErrorMsg(insertionError);
+      return;
+    }
     try {
       const { type } = getFileInfo();
       const isVideo = type === 'video';
@@ -139,12 +147,7 @@ function HotlinkModal({ isOpen, onClose }) {
       setLink('');
       onClose();
     } catch (e) {
-      setErrorMsg(
-        __(
-          'Media failed to load. Please ensure the link is valid and the site allows linking from external sites',
-          'web-stories'
-        )
-      );
+      setErrorMsg(insertionError);
     }
   }, [
     insertElement,
