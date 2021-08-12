@@ -797,17 +797,14 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         onClick: handleClearElementStyles,
-        separator: 'bottom',
         ...menuItemProps,
       },
-      ...pageManipulationItems,
     ],
     [
       handleClearElementStyles,
       handleOpenScaleAndCrop,
       handleRemoveMediaFromBackground,
       menuItemProps,
-      pageManipulationItems,
     ]
   );
 
