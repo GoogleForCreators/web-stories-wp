@@ -22,6 +22,7 @@ import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
 
@@ -590,7 +591,6 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         separator: 'top',
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
@@ -598,7 +598,6 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK },
         disabled: !canElementMoveBackwards,
         onClick: handleSendToBack,
@@ -606,7 +605,6 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD },
         disabled: !canElementMoveForwards,
         onClick: handleBringForward,
@@ -614,7 +612,6 @@ function RightClickMenuProvider({ children }) {
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
-        // TODO #8440: this shortcut does not exist yet. Add shortcut to editor.
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT },
         disabled: !canElementMoveForwards,
         onClick: handleBringToFront,
@@ -896,6 +893,24 @@ function RightClickMenuProvider({ children }) {
       node.removeEventListener('contextmenu', handleOpenMenu);
     };
   }, [enableRightClickMenus, handleOpenMenu]);
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+alt+o'] },
+    (evt) => {
+      evt.preventDefault();
+      handleCopyStyles();
+    },
+    [handleCopyStyles]
+  );
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+alt+p'] },
+    (evt) => {
+      evt.preventDefault();
+      handlePasteStyles();
+    },
+    [handlePasteStyles]
+  );
 
   const value = useMemo(
     () => ({
