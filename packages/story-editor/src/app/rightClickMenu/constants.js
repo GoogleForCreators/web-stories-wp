@@ -83,28 +83,40 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
   ),
   SEND_BACKWARD: (
     <>
-      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'['}</StyledKbd>
+      <StyledKbd aria-label={SPECIAL_KEYS.DOWN.title}>
+        {SPECIAL_KEYS.DOWN.symbol}
+      </StyledKbd>
     </>
   ),
   SEND_TO_BACK: (
     <>
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'['}</StyledKbd>
+      <StyledKbd aria-label={SPECIAL_KEYS.SHIFT.title}>
+        {SPECIAL_KEYS.SHIFT.symbol}
+      </StyledKbd>{' '}
+      <StyledKbd aria-label={SPECIAL_KEYS.DOWN.title}>
+        {SPECIAL_KEYS.DOWN.symbol}
+      </StyledKbd>
     </>
   ),
   BRING_FORWARD: (
     <>
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{']'}</StyledKbd>
+      <StyledKbd aria-label={SPECIAL_KEYS.UP.title}>
+        {SPECIAL_KEYS.UP.symbol}
+      </StyledKbd>
     </>
   ),
   BRING_TO_FRONT: (
     <>
-      <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{']'}</StyledKbd>
+      <StyledKbd aria-label={SPECIAL_KEYS.SHIFT.title}>
+        {SPECIAL_KEYS.SHIFT.symbol}
+      </StyledKbd>{' '}
+      <StyledKbd aria-label={SPECIAL_KEYS.UP.title}>
+        {SPECIAL_KEYS.UP.symbol}
+      </StyledKbd>
     </>
   ),
   DELETE: (
@@ -116,14 +128,14 @@ export const RIGHT_CLICK_MENU_SHORTCUTS = {
     <>
       <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'C'}</StyledKbd>
+      <StyledKbd>{'O'}</StyledKbd>
     </>
   ),
   PASTE_STYLES: (
     <>
       <StyledKbd aria-label={optionOrAlt.title}>{optionOrAlt.symbol}</StyledKbd>{' '}
       <StyledKbd aria-label={cmdOrCtrl.title}>{cmdOrCtrl.symbol}</StyledKbd>{' '}
-      <StyledKbd>{'V'}</StyledKbd>
+      <StyledKbd>{'P'}</StyledKbd>
     </>
   ),
 };
