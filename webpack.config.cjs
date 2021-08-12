@@ -78,18 +78,15 @@ const sharedConfig = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          require.resolve('thread-loader'),
-          {
-            loader: require.resolve('babel-loader'),
-            options: {
-              // Babel uses a directory within local node_modules
-              // by default. Use the environment variable option
-              // to enable more persistent caching.
-              cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
-            },
+        use: {
+          loader: require.resolve('swc-loader'),
+          options: {
+            // Babel uses a directory within local node_modules
+            // by default. Use the environment variable option
+            // to enable more persistent caching.
+            cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
           },
-        ],
+        },
       },
       // These should be sync'd with the config in `.storybook/main.cjs`.
       {

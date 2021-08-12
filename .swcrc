@@ -1,0 +1,23 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true,
+      "dynamicImport": true,
+      "importMeta": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic",
+        "development": false
+      },
+      "optimizer": {
+        "globals": {
+          "vars": {
+            "__DEBUG__": "true"
+          }
+        }
+      }
+    }
+  }
+}
