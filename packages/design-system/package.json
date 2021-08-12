@@ -14,8 +14,8 @@
   "dependencies": {
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/tracking": "*",
     "@web-stories-wp/react": "*",
+    "@web-stories-wp/tracking": "*",
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",

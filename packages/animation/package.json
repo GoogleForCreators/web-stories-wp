@@ -16,9 +16,9 @@
     "@web-stories-wp/react": "*",
     "@web-stories-wp/units": "*",
     "flagged": "^2.0.1",
-    "uuid": "^8.3.2",
-    "styled-components": "^5.2.1",
     "prop-types": "^15.7.2",
+    "styled-components": "^5.2.1",
+    "uuid": "^8.3.2",
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {

@@ -12,11 +12,10 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/units": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/tracking": "*",
+    "@web-stories-wp/units": "*",
     "prop-types": "^15.7.2"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
