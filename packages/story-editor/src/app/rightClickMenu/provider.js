@@ -17,8 +17,8 @@
  * External dependencies
  */
 import {
-  useSnackbar,
   useGlobalKeyDownEffect,
+  useSnackbar,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
@@ -111,7 +111,6 @@ function RightClickMenuProvider({ children }) {
     currentPageIndex,
     deleteCurrentPage,
     pages,
-    replaceCurrentPage,
     setBackgroundElement,
     selectedElements,
     selectedElementAnimations,
@@ -132,7 +131,6 @@ function RightClickMenuProvider({ children }) {
         arrangeElement,
         clearBackgroundElement,
         deleteCurrentPage,
-        replaceCurrentPage,
         setBackgroundElement,
         updateElementsById,
       },
@@ -146,7 +144,6 @@ function RightClickMenuProvider({ children }) {
       currentPageIndex,
       deleteCurrentPage,
       pages,
-      replaceCurrentPage,
       selectedElementAnimations,
       selectedElements,
       setBackgroundElement,
@@ -161,8 +158,10 @@ function RightClickMenuProvider({ children }) {
   const undoRef = useRef(undo);
   undoRef.current = undo;
 
-  const [{ copiedElement, copiedPage, isMenuOpen, menuPosition }, dispatch] =
-    useReducer(rightClickMenuReducer, DEFAULT_RIGHT_CLICK_MENU_STATE);
+  const [{ copiedElement, isMenuOpen, menuPosition }, dispatch] = useReducer(
+    rightClickMenuReducer,
+    DEFAULT_RIGHT_CLICK_MENU_STATE
+  );
 
   const selectedElement = selectedElements?.[0];
   const selectedElementType = selectedElement?.type;
@@ -212,23 +211,6 @@ function RightClickMenuProvider({ children }) {
   const handleMouseDown = useCallback((evt) => {
     evt.stopPropagation();
   }, []);
-
-  /**
-   * Copy the page to state.
-   */
-  const handleCopyPage = useCallback(() => {
-    dispatch({ type: ACTION_TYPES.COPY_PAGE, payload: currentPage });
-  }, [currentPage]);
-
-  /**
-   * Paste the copied page from state if one exists.
-   */
-  const handlePastePage = useCallback(() => {
-    if (copiedPage) {
-      replaceCurrentPage({ page: copiedPage });
-      dispatch({ type: ACTION_TYPES.RESET });
-    }
-  }, [replaceCurrentPage, copiedPage]);
 
   /**
    * Duplicate the current page.
@@ -745,37 +727,10 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
-  const defaultItems = useMemo(
-    () => [
-      {
-        label: RIGHT_CLICK_MENU_LABELS.COPY,
-        shortcut: {
-          display: RIGHT_CLICK_MENU_SHORTCUTS.COPY,
-        },
-        onClick: handleCopyPage,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.PASTE,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.PASTE },
-        onClick: handlePastePage,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE,
-        shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.DELETE },
-        onClick: handleDeletePage,
-        ...menuItemProps,
-      },
-    ],
-    [handleCopyPage, menuItemProps, handleDeletePage, handlePastePage]
-  );
-
   const layerItems = useMemo(
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
-        separator: 'top',
         shortcut: { display: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD },
         disabled: !canElementMoveBackwards,
         onClick: handleSendBackward,
@@ -818,7 +773,6 @@ function RightClickMenuProvider({ children }) {
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
-        separator: 'top',
         onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
         ...menuItemProps,
       },
@@ -851,10 +805,8 @@ function RightClickMenuProvider({ children }) {
 
   const backgroundMediaItems = useMemo(
     () => [
-      ...defaultItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
-        separator: 'top',
         onClick: handleRemoveMediaFromBackground,
         ...menuItemProps,
       },
@@ -871,12 +823,12 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         onClick: handleClearElementStyles,
+        separator: 'bottom',
         ...menuItemProps,
       },
       ...pageManipulationItems,
     ],
     [
-      defaultItems,
       handleClearElementStyles,
       handleOpenScaleAndCrop,
       handleRemoveMediaFromBackground,
@@ -888,7 +840,6 @@ function RightClickMenuProvider({ children }) {
 
   const textItems = useMemo(
     () => [
-      ...defaultItems,
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
@@ -920,7 +871,6 @@ function RightClickMenuProvider({ children }) {
       },
     ],
     [
-      defaultItems,
       layerItems,
       handleAddTextPreset,
       menuItemProps,
@@ -934,7 +884,6 @@ function RightClickMenuProvider({ children }) {
 
   const foregroundMediaItems = useMemo(
     () => [
-      ...defaultItems,
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
@@ -973,7 +922,6 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement,
-      defaultItems,
       handleClearElementStyles,
       handleCopyStyles,
       handleOpenScaleAndCrop,
@@ -987,7 +935,6 @@ function RightClickMenuProvider({ children }) {
 
   const shapeItems = useMemo(
     () => [
-      ...defaultItems,
       ...layerItems,
       {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
@@ -1020,7 +967,6 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       copiedElement?.type,
-      defaultItems,
       handleAddColorPreset,
       handleClearElementStyles,
       handleCopyStyles,
@@ -1032,8 +978,8 @@ function RightClickMenuProvider({ children }) {
   );
 
   const pageItems = useMemo(
-    () => [...defaultItems, ...pageManipulationItems],
-    [defaultItems, pageManipulationItems]
+    () => [...pageManipulationItems],
+    [pageManipulationItems]
   );
 
   const menuItems = useMemo(() => {

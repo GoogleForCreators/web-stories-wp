@@ -26,7 +26,6 @@ import useInsertElement from '../useInsertElement';
 
 describe('Right Click Menu integration', () => {
   let fixture;
-  let newPageCarouselButton;
   let duplicatePageCarouselButton;
   let insertElement;
 
@@ -37,9 +36,6 @@ describe('Right Click Menu integration', () => {
 
     insertElement = await fixture.renderHook(() => useInsertElement());
 
-    newPageCarouselButton = fixture.screen.getByRole('button', {
-      name: /New Page/,
-    });
     duplicatePageCarouselButton = fixture.screen.getByRole('button', {
       name: /Duplicate Page/,
     });
@@ -216,76 +212,6 @@ describe('Right Click Menu integration', () => {
           'right-click-context-menu[aria-expanded="true"]'
         )
       ).toBeNull();
-    });
-  });
-
-  describe('default actions', () => {
-    it('should be able to copy a page and paste it to a new page', async () => {
-      // insert element
-      await addEarthImage();
-
-      // apply a background to the page
-      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
-
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
-      );
-      await fixture.events.keyboard.type('ab12dd');
-
-      // copy the page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(fixture.editor.canvas.rightClickMenu.copy);
-
-      // add new blank page
-      await fixture.events.click(newPageCarouselButton);
-
-      // paste page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(fixture.editor.canvas.rightClickMenu.paste);
-
-      // confirm the paste worked.
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      verifyPageDuplicated(pages);
-    });
-
-    it('should delete the current page when clicking the "Delete" button', async () => {
-      // duplicate page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(
-        fixture.editor.canvas.rightClickMenu.duplicatePage
-      );
-
-      // insert elements on new page
-      await addEarthImage();
-      await addText();
-
-      // delete page
-      await fixture.events.click(fixture.editor.canvas.framesLayer.container, {
-        button: 'right',
-      });
-      await fixture.events.click(fixture.editor.canvas.rightClickMenu.delete);
-
-      // verify the correct page was deleted
-      const { pages } = await fixture.renderHook(() =>
-        useStory(({ state }) => ({
-          pages: state.pages,
-        }))
-      );
-
-      expect(pages.length).toBe(1);
-      expect(pages[0].elements.length).toBe(1);
-      expect(pages[0].elements[0].isBackground).toBe(true);
     });
   });
 

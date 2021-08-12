@@ -76,12 +76,6 @@ const defaultStoryContext = {
   updateElementsById: jest.fn(),
 };
 
-const expectedDefaultActions = [
-  RIGHT_CLICK_MENU_LABELS.COPY,
-  RIGHT_CLICK_MENU_LABELS.PASTE,
-  RIGHT_CLICK_MENU_LABELS.DELETE,
-];
-
 const expectedLayerActions = [
   RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
   RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
@@ -148,7 +142,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -197,7 +190,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
         RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
@@ -231,7 +223,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.REPLACE_BACKGROUND_IMAGE,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
@@ -277,7 +268,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
@@ -358,7 +348,6 @@ describe('useRightClickMenu', () => {
 
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
-        ...expectedDefaultActions,
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
