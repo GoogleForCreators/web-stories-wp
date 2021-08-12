@@ -206,10 +206,13 @@ const SnackbarMessage = ({
     return () => clearTimeout(dismissTimeout);
   }, []);
 
-  const handleAction = useCallback(() => {
-    onAction();
-    !isPreventActionDismiss && onDismiss();
-  }, [onAction, onDismiss, isPreventActionDismiss]);
+  const handleAction = useCallback(
+    (evt) => {
+      onAction(evt);
+      !isPreventActionDismiss && onDismiss();
+    },
+    [onAction, onDismiss, isPreventActionDismiss]
+  );
 
   const hasAction = Boolean(actionLabel);
   const hasThumbnail = Boolean(actionLabel);
