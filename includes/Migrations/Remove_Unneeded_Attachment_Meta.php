@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media;
+use Google\Web_Stories\Media\Video\Poster;
 
 /**
  * Class Remove_Unneeded_Attachment_Meta
@@ -44,6 +44,6 @@ class Remove_Unneeded_Attachment_Meta extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
+		delete_post_meta_by_key( Poster::POSTER_POST_META_KEY );
 	}
 }

@@ -130,7 +130,7 @@ class Jetpack extends Test_Case {
 
 		add_post_meta( $poster_attachment_id, Jetpack_Integration::VIDEOPRESS_POSTER_META_KEY, 'hello world' );
 
-		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
