@@ -214,7 +214,8 @@ class Editor extends Service_Base {
 			self::AMP_VALIDATOR_SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/v0/validator.js',
 			[],
-			WEBSTORIES_VERSION
+			WEBSTORIES_VERSION,
+			true
 		);
 
 		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
@@ -243,13 +244,10 @@ class Editor extends Service_Base {
 	 * @return array
 	 */
 	public function get_editor_settings(): array {
-		$post                     = get_post();
-		$story_id                 = ( $post ) ? $post->ID : null;
-		$rest_base                = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
-		$has_publish_action       = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'publish_posts' );
-		$has_assign_author_action = $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_others_posts' );
-		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$general_settings_url     = admin_url( 'options-general.php' );
+		$post                 = get_post();
+		$story_id             = ( $post ) ? $post->ID : null;
+		$rest_base            = $this->get_post_type_rest_base( Story_Post_Type::POST_TYPE_SLUG );
+		$general_settings_url = admin_url( 'options-general.php' );
 
 		if ( $story_id ) {
 			$this->setup_lock( $story_id );
@@ -310,10 +308,8 @@ class Editor extends Service_Base {
 				'maxUpload'                    => $max_upload_size,
 				'isDemo'                       => $is_demo,
 				'capabilities'                 => [
-					'hasPublishAction'      => $has_publish_action,
-					'hasAssignAuthorAction' => $has_assign_author_action,
-					'hasUploadMediaAction'  => $has_upload_media_action,
-					'canManageSettings'     => current_user_can( 'manage_options' ),
+					'hasUploadMediaAction' => current_user_can( 'upload_files' ),
+					'canManageSettings'    => current_user_can( 'manage_options' ),
 				],
 				'api'                          => [
 					'users'         => '/web-stories/v1/users/',
@@ -335,6 +331,7 @@ class Editor extends Service_Base {
 				],
 				'version'                      => WEBSTORIES_VERSION,
 				'nonce'                        => $nonce,
+				'showMedia3p'                  => true,
 				'encodeMarkup'                 => $this->decoder->supports_decoding(),
 				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
 				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
