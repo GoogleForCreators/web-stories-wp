@@ -23,7 +23,6 @@ import { fireEvent, screen } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import ConfigContext from '../../../../../app/config/context';
 import { renderWithTheme } from '../../../../../testUtils';
 import StatusPanel from '../status';
 
@@ -34,19 +33,17 @@ function arrange(
 ) {
   const updateStory = jest.fn();
 
-  const config = { capabilities };
   const storyContextValue = {
     state: {
       story: { status: 'draft', password: '' },
+      capabilities,
     },
     actions: { updateStory },
   };
   const view = renderWithTheme(
-    <ConfigContext.Provider value={config}>
-      <StoryContext.Provider value={storyContextValue}>
-        <StatusPanel />
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
+    <StoryContext.Provider value={storyContextValue}>
+      <StatusPanel />
+    </StoryContext.Provider>
   );
   return {
     ...view,
