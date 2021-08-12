@@ -100,6 +100,7 @@ function usePageAsCanvas() {
           ).then((htmlToImage) => {
             const promise = htmlToImage.toCanvas(fullbleedContainer, {
               fontEmbedCss: '',
+              pixelRatio: 1,
             });
             setPageCanvasPromise(promise);
             promise.then(onCompletion).catch(() => onFail());

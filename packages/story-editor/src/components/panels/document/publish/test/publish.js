@@ -31,11 +31,13 @@ import PublishPanel from '../publish';
 function arrange(
   capabilities = {
     hasAssignAuthorAction: true,
+    hasPublishAction: true,
   }
 ) {
   const updateStory = jest.fn();
   const storyContextValue = {
     state: {
+      capabilities,
       meta: { isSaving: false },
       story: {
         author: { id: 1, name: 'John Doe' },
