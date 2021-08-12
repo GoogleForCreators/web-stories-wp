@@ -66,5 +66,3 @@ export const PAGE_TEMPLATES = {
   Pane: PageTemplatesPane,
   id: 'pageTemplates',
 };
-
-export const LAZY_TABS = [MEDIA3P.id, TEXT.id, PAGE_TEMPLATES.id];
