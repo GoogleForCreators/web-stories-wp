@@ -25,9 +25,6 @@ Different actions will be rendered depending on the Element that is right clicke
 
 |Action text|Action description|
 |--|--|
-|Copy|Copies the page styles from the current page to the clipboard. This does not create a new page.|
-|Paste|Pastes the page styles from the clipboard to the current page.|
-|Delete|Deletes the current page (if the page can be deleted).|
 |Add new page after|Adds a page after the current page.|
 |Add new page before|Adds a page before the current page.|
 |Duplicate page|Creates a new page that is identical to the current page. All animations, styles, and elements should be the same.|
@@ -41,9 +38,6 @@ Different actions will be rendered depending on the Element that is right clicke
 
 |Action text|Action description|
 |--|--|
-|Copy|Copies the text and the text styles to the clipboard.|
-|Paste|Pastes the text and the text styles from the clipboard. This creates a new text element.|
-|Delete|Deletes the currently selected text element.|
 |Send to back|Set the text element behind all other elements on the page.|
 |Send backward|Bring the text element backward one layer.|
 |Bring forward|Bring the text element forward one layer.|
@@ -61,11 +55,7 @@ Different actions will be rendered depending on the Element that is right clicke
 
 |Action text|Action description|
 |--|--|
-|Copy|Copies the media and styles that are set to be the background to the clipboard.|
-|Paste|Pastes the media and styles from the clipboard to be the page background. This does not create a new element.|
-|Delete|Deletes the background media and styles.|
 |Detach image from background|Removes the media from the background of the page and sets it in the foreground.|
-|Replace background image|TBD (should the button only highlight the library, or prompt the user to replace it, how would this work, etc.)|
 |Scale & crop background image|Show the scale and crop UI so that the user may scale or crop the image to the desired size.|
 |Clear style|Remove all styles currently applied to the background media. A snackbar is displayed on completion.|
 
@@ -77,9 +67,6 @@ Different actions will be rendered depending on the Element that is right clicke
 
 |Action text|Action description|
 |--|--|
-|Copy|Copies the media and styles to the clipboard.|
-|Paste|Pastes the media and styles to be the page. This creates a new element.|
-|Delete|Deletes the media.|
 |Send to back|Place media behind all other elements. Disabled if the layer is all the way back.|
 |Send backward|Bring media one layer backwards. Disabled if the layer is all the way back.|
 |Bring forward|Bring media one layer forwards. Disabled if the layer is all the way forward.|
@@ -96,9 +83,6 @@ Different actions will be rendered depending on the Element that is right clicke
 
 |Action text|Action description|
 |--|--|
-|Copy|Copy the shape and styles to the clipboard.|
-|Paste|Paste the shape and styles to the page. This creates a new element.|
-|Delete|Remove the shape and styles from the page.|
 |Send to back|Place shape behind all other elements. Disabled if the layer is all the way back.|
 |Send backward|Bring shape one layer backwards. Disabled if the layer is all the way back.|
 |Bring forward|Bring shape one layer forwards. Disabled if the layer is all the way forward.|
