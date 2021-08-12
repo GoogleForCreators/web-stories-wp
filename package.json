@@ -1,7 +1,11 @@
 {
   "name": "web-stories-wp",
+  "title": "Web Stories",
   "private": true,
   "description": "Visual storytelling for WordPress.",
+  "author": "Google",
+  "license": "Apache-2.0",
+  "type": "module",
   "keywords": [
     "amp",
     "stories",
@@ -9,16 +13,17 @@
     "wordpress"
   ],
   "homepage": "https://github.com/google/web-stories-wp",
-  "bugs": {
-    "url": "https://github.com/google/web-stories-wp/issues"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/google/web-stories-wp.git"
   },
-  "license": "Apache-2.0",
-  "author": "Google",
-  "type": "module",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 15",
+    "npm": ">= 7.3"
+  },
   "bin": {
     "commander": "bin/commander.js"
   },
@@ -26,106 +31,6 @@
     "packages": [
       "packages/*"
     ]
-  },
-  "scripts": {
-    "build": "npm-run-all build:*",
-    "prebuild:js": "rm -rf assets/css/* assets/js/*",
-    "build:js": "NODE_ENV=production webpack --config webpack.config.cjs",
-    "postbuild:js": "rm -rf assets/js/web-stories-list-styles* assets/js/web-stories-theme-style*",
-    "predev": "rm -rf assets/css/* assets/js/*",
-    "dev": "webpack --config webpack.config.cjs --watch",
-    "postdev": "rm -rf assets/js/web-stories-list-styles* assets/js/web-stories-theme-style*",
-    "env:start": "./bin/local-env/start.sh",
-    "env:stop": "./bin/local-env/stop.sh",
-    "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
-    "format": "npm-run-all --parallel format:*",
-    "format:css": "npm run lint:css:fix",
-    "format:js": "npm run lint:js:fix",
-    "format:md": "prettier --write '**/*.md'",
-    "format:php": "npm run lint:php:fix",
-    "format:xml": "prettier --write '**/*.{xml,xml.dist}'",
-    "format:yml": "prettier --write '**/*.yml'",
-    "lint": "npm-run-all --parallel lint:*",
-    "lint:css": "npm-run-all --parallel --continue-on-error lint:css:*",
-    "lint:css:js": "stylelint \"**/*.js\" --syntax \"css-in-js\"",
-    "lint:css:js:fix": "stylelint \"**/*.js\" --syntax \"css-in-js\" --fix",
-    "lint:css:css": "stylelint \"**/*.css\" --syntax \"css\"",
-    "lint:css:css:fix": "stylelint \"**/*.css\" --syntax \"css\" --fix",
-    "lint:js": "eslint .",
-    "lint:js:fix": "eslint --fix .",
-    "lint:js:report": "eslint --output-file build/lint-js-report.json --format json .",
-    "lint:php": "composer phpcs",
-    "lint:php:fix": "composer phpcbf",
-    "lint:phpstan": "composer phpstan",
-    "lint:phpmd": "composer phpmd",
-    "lint:md": "markdownlint .",
-    "postinstall": "patch-package",
-    "storybook": "start-storybook --quiet",
-    "storybook:build": "build-storybook -c .storybook -o build/storybook --quiet",
-    "test": "npm-run-all --parallel test:*",
-    "test:js": "jest --config=tests/js/jest.config.js",
-    "test:js:coverage": "npm run test:js -- --collectCoverage; open build/logs/lcov-report/index.html",
-    "test:js:debug": "node --inspect-brk node_modules/.bin/jest --config=tests/js/jest.config.js",
-    "test:js:help": "npm run test:js -- --help",
-    "test:js:watch": "npm run test:js -- --watch",
-    "test:karma": "npm-run-all --parallel test:karma:*",
-    "pretest:karma:edit-story": "rm -rf build/karma-edit-story-failed-tests.txt",
-    "test:karma:edit-story": "karma start karma-edit-story.config.cjs --single-run",
-    "test:karma:edit-story:retry-failed": "karma start karma-edit-story.config.cjs --single-run --retry-failed",
-    "test:karma:edit-story:watch": "karma start karma-edit-story.config.cjs",
-    "pretest:karma:dashboard": "rm -rf build/karma-dashboard-failed-tests.txt",
-    "test:karma:dashboard": "karma start karma-dashboard.config.cjs --single-run",
-    "test:karma:dashboard:retry-failed": "karma start karma-dashboard.config.cjs --single-run --retry-failed",
-    "test:karma:dashboard:watch": "karma start karma-dashboard.config.cjs --debug",
-    "test:php": "vendor/bin/phpunit",
-    "test:php:multisite": "vendor/bin/phpunit -c phpunit-multisite.xml.dist",
-    "test:php:help": "npm run test:php -- --help",
-    "test:e2e": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
-    "test:e2e:help": "npm run test:e2e -- --help",
-    "test:e2e:percy": "percy exec --config=percy.config.yml -- npm run test:e2e",
-    "test:e2e:watch": "npm run test:e2e -- --watch",
-    "test:e2e:interactive": "PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e",
-    "test:e2e:debug": "PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs node --inspect-brk node_modules/.bin/jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
-    "test:e2e:firefox": "PUPPETEER_PRODUCT=firefox npm run test:e2e",
-    "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox npm run test:e2e:interactive",
-    "test:e2e:firefox:debug": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true node --inspect-brk node_modules/.bin/jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
-    "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
-    "workflow:changelog": "lerna-changelog",
-    "workflow:assets-version": "commander assets-version",
-    "workflow:version": "commander version",
-    "workflow:build-plugin": "commander build-plugin",
-    "workflow:fonts": "update-fonts packages/fonts/src/fonts.json",
-    "workflow:render-text-sets": "render-text-sets",
-    "preworkflow:migrate": "[ -f packages/migration/src/module.js ] || npx rollup --config packages/migration/src/rollup.config.migrate.js",
-    "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
-    "workflow:migrate:text-sets": "migration packages/text-sets/src/raw",
-    "postworkflow:migrate:text-sets": "npx prettier --write packages/text-sets/src/raw",
-    "workflow:migrate:templates": "migration packages/templates/src/raw",
-    "postworkflow:migrate:templates": "npx prettier --write packages/templates/src/raw",
-    "workflow:migrate:ftue-story": "migration includes/data/stories",
-    "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged --relative"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
-    ],
-    "*.json": [
-      "prettier --write"
-    ],
-    "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
-    "*.md": [
-      "eslint --fix",
-      "markdownlint -f"
-    ],
-    "*.php": "npm run lint:php:fix",
-    "*.(xml|xml.dist)": "prettier --write",
-    "*.yml": "prettier --write"
   },
   "dependencies": {},
   "devDependencies": {
@@ -249,9 +154,105 @@
     "webpack-cli": "^4.7.0",
     "webpackbar": "^4.0.0"
   },
-  "engines": {
-    "node": ">= 15",
-    "npm": ">= 7.3"
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "prebuild:js": "rm -rf assets/css/* assets/js/*",
+    "build:js": "NODE_ENV=production webpack --config webpack.config.cjs",
+    "postbuild:js": "rm -rf assets/js/web-stories-list-styles* assets/js/web-stories-theme-style*",
+    "predev": "rm -rf assets/css/* assets/js/*",
+    "dev": "webpack --config webpack.config.cjs --watch",
+    "postdev": "rm -rf assets/js/web-stories-list-styles* assets/js/web-stories-theme-style*",
+    "env:start": "./bin/local-env/start.sh",
+    "env:stop": "./bin/local-env/stop.sh",
+    "env:reset-site": "./bin/local-env/install-wordpress.sh --reset-site",
+    "format": "npm-run-all --parallel format:*",
+    "format:css": "npm run lint:css:fix",
+    "format:js": "npm run lint:js:fix",
+    "format:md": "prettier --write '**/*.md'",
+    "format:php": "npm run lint:php:fix",
+    "format:xml": "prettier --write '**/*.{xml,xml.dist}'",
+    "format:yml": "prettier --write '**/*.yml'",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:css": "npm-run-all --parallel --continue-on-error lint:css:*",
+    "lint:css:js": "stylelint \"**/*.js\" --syntax \"css-in-js\"",
+    "lint:css:js:fix": "stylelint \"**/*.js\" --syntax \"css-in-js\" --fix",
+    "lint:css:css": "stylelint \"**/*.css\" --syntax \"css\"",
+    "lint:css:css:fix": "stylelint \"**/*.css\" --syntax \"css\" --fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint --fix .",
+    "lint:js:report": "eslint --output-file build/lint-js-report.json --format json .",
+    "lint:php": "composer phpcs",
+    "lint:php:fix": "composer phpcbf",
+    "lint:phpstan": "composer phpstan",
+    "lint:phpmd": "composer phpmd",
+    "lint:md": "markdownlint .",
+    "postinstall": "patch-package",
+    "storybook": "start-storybook --quiet",
+    "storybook:build": "build-storybook -c .storybook -o build/storybook --quiet",
+    "test": "npm-run-all --parallel test:*",
+    "test:js": "jest --config=tests/js/jest.config.js",
+    "test:js:coverage": "npm run test:js -- --collectCoverage; open build/logs/lcov-report/index.html",
+    "test:js:debug": "node --inspect-brk node_modules/.bin/jest --config=tests/js/jest.config.js",
+    "test:js:help": "npm run test:js -- --help",
+    "test:js:watch": "npm run test:js -- --watch",
+    "test:karma": "npm-run-all --parallel test:karma:*",
+    "pretest:karma:edit-story": "rm -rf build/karma-edit-story-failed-tests.txt",
+    "test:karma:edit-story": "karma start karma-edit-story.config.cjs --single-run",
+    "test:karma:edit-story:retry-failed": "karma start karma-edit-story.config.cjs --single-run --retry-failed",
+    "test:karma:edit-story:watch": "karma start karma-edit-story.config.cjs",
+    "pretest:karma:dashboard": "rm -rf build/karma-dashboard-failed-tests.txt",
+    "test:karma:dashboard": "karma start karma-dashboard.config.cjs --single-run",
+    "test:karma:dashboard:retry-failed": "karma start karma-dashboard.config.cjs --single-run --retry-failed",
+    "test:karma:dashboard:watch": "karma start karma-dashboard.config.cjs --debug",
+    "test:php": "vendor/bin/phpunit",
+    "test:php:multisite": "vendor/bin/phpunit -c phpunit-multisite.xml.dist",
+    "test:php:help": "npm run test:php -- --help",
+    "test:e2e": "JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
+    "test:e2e:help": "npm run test:e2e -- --help",
+    "test:e2e:percy": "percy exec --config=percy.config.yml -- npm run test:e2e",
+    "test:e2e:watch": "npm run test:e2e -- --watch",
+    "test:e2e:interactive": "PUPPETEER_HEADLESS=false PUPPETEER_SLOWMO=80 npm run test:e2e",
+    "test:e2e:debug": "PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true JEST_PUPPETEER_CONFIG=jest-puppeteer.config.cjs node --inspect-brk node_modules/.bin/jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
+    "test:e2e:firefox": "PUPPETEER_PRODUCT=firefox npm run test:e2e",
+    "test:e2e:firefox:interactive": "PUPPETEER_PRODUCT=firefox npm run test:e2e:interactive",
+    "test:e2e:firefox:debug": "PUPPETEER_PRODUCT=firefox PUPPETEER_HEADLESS=false PUPPETEER_DEVTOOLS=true node --inspect-brk node_modules/.bin/jest --runInBand --config=packages/e2e-tests/src/jest.config.js",
+    "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
+    "workflow:changelog": "lerna-changelog",
+    "workflow:assets-version": "commander assets-version",
+    "workflow:version": "commander version",
+    "workflow:build-plugin": "commander build-plugin",
+    "workflow:fonts": "update-fonts packages/fonts/src/fonts.json",
+    "workflow:render-text-sets": "render-text-sets",
+    "preworkflow:migrate": "[ -f packages/migration/src/module.js ] || npx rollup --config packages/migration/src/rollup.config.migrate.js",
+    "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
+    "workflow:migrate:text-sets": "migration packages/text-sets/src/raw",
+    "postworkflow:migrate:text-sets": "npx prettier --write packages/text-sets/src/raw",
+    "workflow:migrate:templates": "migration packages/templates/src/raw",
+    "postworkflow:migrate:templates": "npx prettier --write packages/templates/src/raw",
+    "workflow:migrate:ftue-story": "migration includes/data/stories",
+    "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --relative"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "stylelint --fix --allow-empty-input --syntax \"css-in-js\""
+    ],
+    "*.json": [
+      "prettier --write"
+    ],
+    "*.css": "stylelint --fix --allow-empty-input --syntax \"css\"",
+    "*.md": [
+      "eslint --fix",
+      "markdownlint -f"
+    ],
+    "*.php": "npm run lint:php:fix",
+    "*.(xml|xml.dist)": "prettier --write",
+    "*.yml": "prettier --write"
   },
   "changelog": {
     "labels": {
@@ -265,6 +266,5 @@
       "github-actions",
       "imgbot"
     ]
-  },
-  "title": "Web Stories"
+  }
 }

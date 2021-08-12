@@ -1,6 +1,10 @@
 {
   "name": "@web-stories-wp/migration",
   "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
   "type": "module",
   "exports": {
     "default": "./src/index.js"
@@ -10,15 +14,11 @@
     "migration": "./src/cli.js"
   },
   "dependencies": {
-    "polished": "^4.1.3",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "polished": "^4.1.3"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^13.0.4",
-    "rollup": "^2.56.1"
-  },
-  "engines": {
-    "node": ">= 15",
-    "npm": "~7"
+    "rollup": "^2.56.1",
+    "@rollup/plugin-node-resolve": "^13.0.4"
   }
 }

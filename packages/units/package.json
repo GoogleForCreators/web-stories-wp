@@ -1,19 +1,19 @@
 {
   "name": "@web-stories-wp/units",
   "private": true,
-  "sideEffects": false,
-  "type": "module",
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
   "dependencies": {
     "@web-stories-wp/react": "*",
     "prop-types": "^15.7.2"
   },
-  "devDependencies": {},
-  "engines": {
-    "node": ">= 15",
-    "npm": "~7"
-  }
+  "devDependencies": {}
 }

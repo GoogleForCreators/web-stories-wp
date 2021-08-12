@@ -1,21 +1,22 @@
 {
   "name": "@web-stories-wp/media",
   "private": true,
-  "sideEffects": false,
-  "type": "module",
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
+  "type": "module",
+  "sideEffects": false,
   "dependencies": {
+    "@web-stories-wp/units": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/tracking": "*",
-    "@web-stories-wp/units": "*",
     "prop-types": "^15.7.2"
   },
-  "devDependencies": {},
-  "engines": {
-    "node": ">= 15",
-    "npm": "~7"
+  "devDependencies": {
   }
 }

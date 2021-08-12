@@ -1,6 +1,10 @@
 {
   "name": "@web-stories-wp/e2e-tests",
   "private": true,
+  "engines": {
+    "node": ">= 15",
+    "npm": "~7"
+  },
   "type": "module",
   "devDependencies": {
     "@percy/cli": "^1.0.0-beta.62",
@@ -14,9 +18,5 @@
     "jest-extended": "^0.11.5",
     "jest-puppeteer": "^5.0.4",
     "puppeteer": "^10.1.0"
-  },
-  "engines": {
-    "node": ">= 15",
-    "npm": "~7"
   }
 }
