@@ -19,7 +19,7 @@
  */
 import { useEffect } from './react';
 
-if (!('ResizeObserver' in window)) {
+if (window && !('ResizeObserver' in window)) {
   import(
     /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
   )
