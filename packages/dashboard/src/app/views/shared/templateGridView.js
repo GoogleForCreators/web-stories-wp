@@ -107,6 +107,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
             <CardGridItem
               key={template.id}
               role="listitem"
+              id={`template-grid-item-${template.id}`}
+              className="templateGridItem"
               data-testid={`template-grid-item-${template.id}`}
               ref={(el) => {
                 itemRefs.current[template.id] = el;
@@ -125,11 +127,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                 )}
               />
               <CardPreviewContainer
-                ariaLabel={sprintf(
-                  /* translators: %s: template title.*/
-                  __('Viewing template: %s', 'web-stories'),
-                  template.title
-                )}
+                ariaLabel={template.title}
                 tabIndex={tabIndex}
                 pageSize={pageSize}
                 story={template}
@@ -142,6 +140,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                   ariaLabel: __('Go to template details', 'web-stories'),
                 }}
                 bottomAction={{
+                  dataTestId: 'use_template_button',
+                  templateId: template.id,
                   targetAction: targetAction(template),
                   label: __('Use template', 'web-stories'),
                   ariaLabel: __('Use this template', 'web-stories'),
