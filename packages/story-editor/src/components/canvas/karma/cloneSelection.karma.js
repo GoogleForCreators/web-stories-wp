@@ -94,12 +94,11 @@ describe('Clone element integration', () => {
   });
 
   it('should correctly clone 1 element', async () => {
-    // Select img1
-    await clickElement(img1.id);
+    // Select img2
+    await clickElement(img2.id);
 
     // Press clone shortcut
     await fixture.events.keyboard.shortcut('mod+d');
-
     // Expect a new image to have been added
     expect(await getNumElements()).toBe(4);
 
@@ -108,10 +107,10 @@ describe('Clone element integration', () => {
     expect(clonedImg).toEqual(
       jasmine.objectContaining({
         resource: jasmine.objectContaining({
-          src: img1.resource.src,
+          src: img2.resource.src,
         }),
-        x: img1.x + 30,
-        y: img1.y + 30,
+        x: img2.x + 30,
+        y: img2.y + 30,
       })
     );
   });

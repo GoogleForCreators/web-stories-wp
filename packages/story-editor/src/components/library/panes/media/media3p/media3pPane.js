@@ -19,17 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useMemo } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
 import {
   PaneHeader,
@@ -38,53 +35,19 @@ import {
   StyledPane,
 } from '../common/styles';
 import { SearchInput } from '../../../common';
-import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
-import { ChipGroup } from '../../shared';
 import TermsDialog from './termsDialog';
 
 import paneId from './paneId';
-import ProviderTab from './providerTab';
-
-const ProviderTabSection = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 16px;
-  margin-bottom: 16px;
-  padding: 0 1em;
-`;
-
-const MediaSubheading = styled(Headline).attrs(() => ({
-  as: 'h2',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL,
-}))`
-  margin-top: 24px;
-  padding: 0 24px;
-  ${(props) => props.shouldDisplay || 'display: none;'}
-`;
+import ProviderTabList from './providerTabList';
+import ProviderPanel from './providerPanel';
 
 const PaneBottom = styled.div`
   position: relative;
   height: 100%;
   flex: 1 1 auto;
   min-height: 0;
-`;
-
-const ProviderMediaCategoriesWrapper = styled.div`
-  position: absolute;
-  visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 100px;
-  max-width: 100%;
-  top: 0;
-  left: 0;
-  &.provider-selected {
-    position: relative;
-    visibility: visible;
-  }
 `;
 
 /**
@@ -95,27 +58,6 @@ const ProviderMediaCategoriesWrapper = styled.div`
  */
 function Media3pPane(props) {
   const { isActive } = props;
-
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} resource Resource object
-   * @return {null|*} Return onInsert or null.
-   */
-  const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      insertElement(resource.type, { resource });
-    },
-    [insertElement]
-  );
 
   const {
     searchTerm,
@@ -173,63 +115,13 @@ function Media3pPane(props) {
   const paneBottomRef = useRef();
 
   const features = useFeatures();
-  const enabledProviders = Object.keys(PROVIDERS).filter(
-    (p) => !PROVIDERS[p].featureName || features[PROVIDERS[p].featureName]
+  const providers = useMemo(
+    () =>
+      Object.keys(PROVIDERS).filter(
+        (p) => !PROVIDERS[p].featureName || features[PROVIDERS[p].featureName]
+      ),
+    [features]
   );
-
-  function getProviderMediaAndCategories(providerType) {
-    const wrapperProps =
-      providerType === selectedProvider
-        ? { className: 'provider-selected' }
-        : { 'aria-hidden': 'true' };
-    const state = media3p[providerType].state;
-    const actions = media3p[providerType].actions;
-    const displayName = state.categories.selectedCategoryId
-      ? state.categories.categories.find(
-          (e) => e.id === state.categories.selectedCategoryId
-        ).label
-      : __('Trending', 'web-stories');
-
-    // We display the media name if there's media to display or a category has
-    // been selected.
-    const shouldDisplayMediaSubheading = Boolean(
-      state.media?.length || state.categories.selectedCategoryId
-    );
-    return (
-      <ProviderMediaCategoriesWrapper
-        dataProvider={providerType}
-        {...wrapperProps}
-        key={`provider-bottom-wrapper-${providerType}`}
-        id={`provider-bottom-wrapper-${providerType}`}
-      >
-        {PROVIDERS[providerType].supportsCategories && (
-          <ChipGroup
-            items={state.categories.categories}
-            selectedItemId={state.categories.selectedCategoryId}
-            selectItem={actions.selectCategory}
-            deselectItem={actions.deselectCategory}
-          />
-        )}
-        <MediaSubheading
-          data-testid={'media-subheading'}
-          shouldDisplay={shouldDisplayMediaSubheading}
-        >
-          {displayName}
-        </MediaSubheading>
-        <PaginatedMediaGallery
-          providerType={providerType}
-          resources={state.media}
-          isMediaLoading={state.isMediaLoading}
-          isMediaLoaded={state.isMediaLoaded}
-          hasMore={state.hasMore}
-          setNextPage={actions.setNextPage}
-          onInsert={insertMediaElement}
-          searchTerm={searchTerm}
-          selectedCategoryId={state.categories.selectedCategoryId}
-        />
-      </ProviderMediaCategoriesWrapper>
-    );
-  }
 
   // TODO(#2368): handle pagination / infinite scrolling
   return (
@@ -252,24 +144,20 @@ function Media3pPane(props) {
                 )}
               />
             </SearchInputContainer>
-            <ProviderTabSection>
-              {enabledProviders.map((providerType, index) => (
-                <ProviderTab
-                  key={`provider-tab-${providerType}`}
-                  index={index}
-                  id={`provider-tab-${providerType}`}
-                  name={PROVIDERS[providerType].displayName}
-                  active={selectedProvider === providerType}
-                  providerType={providerType}
-                  setSelectedProvider={setSelectedProvider}
-                />
-              ))}
-            </ProviderTabSection>
+            <ProviderTabList providers={providers} />
           </PaneHeader>
           <PaneBottom ref={paneBottomRef}>
-            {enabledProviders.map((providerType) =>
-              getProviderMediaAndCategories(providerType)
-            )}
+            {providers.map((providerType) => (
+              <ProviderPanel
+                key={providerType}
+                providerType={providerType}
+                isActive={providerType === selectedProvider}
+                searchTerm={searchTerm}
+                role="tabpanel"
+                aria-labelledby={`provider-tab-${providerType}`}
+                id={`provider-tabpanel-${providerType}`}
+              />
+            ))}
           </PaneBottom>
         </PaneInner>
       </StyledPane>

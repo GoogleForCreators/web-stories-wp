@@ -909,7 +909,7 @@ const formattedStoriesArray = [
   },
   {
     id: 161,
-    status: 'draft',
+    status: 'private',
     title: 'BLUE SHAPES',
     modified: toUTCDate('2020-05-21T23:24:06.000Z'),
     modified_gmt: '2020-05-21T23:24:06.000Z',

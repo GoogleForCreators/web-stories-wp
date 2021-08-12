@@ -77,15 +77,13 @@ describe('useGenericResultsLabel()', function () {
     const { result } = renderHook(
       () =>
         useDashboardResultsLabel({
-          currentFilter: STORY_STATUS.PUBLISHED_AND_FUTURE,
+          currentFilter: STORY_STATUS.PUBLISH,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
     );
     expect(result.current).toBe(
-      RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][
-        STORY_STATUS.PUBLISHED_AND_FUTURE
-      ](0)
+      RESULT_LABELS[DASHBOARD_VIEWS.MY_STORIES][STORY_STATUS.PUBLISH](0)
     );
   });
 
@@ -95,7 +93,7 @@ describe('useGenericResultsLabel()', function () {
         useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 4,
-          currentFilter: STORY_STATUS.PUBLISHED_AND_FUTURE,
+          currentFilter: STORY_STATUS.PUBLISH,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
@@ -109,7 +107,7 @@ describe('useGenericResultsLabel()', function () {
         useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 1,
-          currentFilter: STORY_STATUS.PUBLISHED_AND_FUTURE,
+          currentFilter: STORY_STATUS.PUBLISH,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
@@ -123,7 +121,7 @@ describe('useGenericResultsLabel()', function () {
         useDashboardResultsLabel({
           isActiveSearch: true,
           totalResults: 0,
-          currentFilter: STORY_STATUS.PUBLISHED_AND_FUTURE,
+          currentFilter: STORY_STATUS.PUBLISH,
           view: DASHBOARD_VIEWS.MY_STORIES,
         }),
       {}
