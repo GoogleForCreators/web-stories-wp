@@ -493,7 +493,12 @@
         "packages/**/*.js"
       ],
       "excludedFiles": [
-        "packages/react/**/*.js"
+        ".storybook/preview.js",
+        "__mocks__/**/*.js",
+        "packages/react/**/*.js",
+        "packages/dashboard/src/karma/fixture.js",
+        "packages/story-editor/src/components/canvas/test/useCanvasKeys.js",
+        "packages/story-editor/src/karma/fixture/fixture.js"
       ],
       "rules":{
         "no-restricted-imports": [

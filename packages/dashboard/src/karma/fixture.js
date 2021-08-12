@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import * as React from '@web-stories-wp/react';
+import * as React from 'react';
 import { FlagsProvider } from 'flagged';
 import {
   act,

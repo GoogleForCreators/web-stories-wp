@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, fireEvent } from '@testing-library/react';
-import * as React from '@web-stories-wp/react';
+import React, { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -29,7 +29,7 @@ import CanvasContext from '../../../app/canvas/context.js';
 import TransformContext from '../../transform/context';
 
 const Canvas = () => {
-  const ref = React.useRef(null);
+  const ref = useRef(null);
   useCanvasKeys(ref);
   return <div ref={ref} />;
 };

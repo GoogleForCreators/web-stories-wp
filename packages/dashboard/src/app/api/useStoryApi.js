@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer, useRef } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useReducer,
+  useRef,
+} from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
