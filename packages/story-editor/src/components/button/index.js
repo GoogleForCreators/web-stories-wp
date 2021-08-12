@@ -17,24 +17,15 @@
 /**
  * External dependencies
  */
-import { forwardRef } from 'react';
+import { Button, BUTTON_VARIANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Button, BUTTON_VARIANTS } from '@web-stories-wp/design-system';
-import { ArrowDown as ArrowDownIcon, More as MoreIcon } from '../../icons';
+import { ArrowDown as ArrowDownIcon } from '../../icons';
 
 export const ArrowDown = (props) => (
   <Button {...props} variant={BUTTON_VARIANTS.ICON}>
     <ArrowDownIcon />
   </Button>
 );
-
-export const More = forwardRef(function More(props, ref) {
-  return (
-    <Button {...props} variant={BUTTON_VARIANTS.ICON} ref={ref}>
-      <MoreIcon />
-    </Button>
-  );
-});
