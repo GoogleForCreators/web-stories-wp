@@ -85,26 +85,30 @@ const StoryDisplayContent = ({
     }
   }, [status, displayDate]);
 
+  const { name, avatar } = lockUser;
+
   const storyLockedTitle = isLocked && (
     <LockedRow>
       <Tooltip
         position={TOOLTIP_PLACEMENT.BOTTOM_START}
         title={
-          lockUser.name &&
+          name &&
           sprintf(
             /* translators: %s: user name */
             __('%s is currently editing this story', 'web-stories'),
-            lockUser.name
+            name
           )
         }
       >
-        <LockAvatar
-          src={lockUser.avatar}
-          alt={lockUser.name}
-          height={24}
-          width={24}
-          className="lock-user-avatar"
-        />
+        {avatar && (
+          <LockAvatar
+            src={avatar}
+            alt={name}
+            height={24}
+            width={24}
+            className="lock-user-avatar"
+          />
+        )}
       </Tooltip>
     </LockedRow>
   );

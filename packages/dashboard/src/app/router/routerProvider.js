@@ -25,7 +25,6 @@ import {
   createContext,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { parse } from 'query-string';
 import { createHashHistory } from 'history';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
@@ -35,6 +34,12 @@ function RouterProvider({ children, ...props }) {
   const [currentPath, setCurrentPath] = useState(
     history.current.location.pathname
   );
+
+  const parse = (search) => {
+    const params = new URLSearchParams(search);
+    return Object.fromEntries(params);
+  };
+
   const [queryParams, setQueryParams] = useState(
     parse(history.current.location.search)
   );

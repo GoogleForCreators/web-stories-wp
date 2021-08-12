@@ -17,17 +17,12 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import queryString from 'query-string';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
@@ -36,13 +31,8 @@ export default function useTagsApi(dataAdapter, { tagsApi }) {
   const fetchTags = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
-        queryString.stringifyUrl({
-          url: tagsApi,
-          query: { per_page: 100 },
-        }),
-        {
-          parse: false,
-        }
+        addQueryArgs(tagsApi, { per_page: 100 }),
+        { parse: false }
       );
 
       const tagsJson = await fetchAllFromTotalPages(
