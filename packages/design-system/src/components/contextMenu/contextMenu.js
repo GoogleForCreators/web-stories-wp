@@ -17,14 +17,15 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from 'react';
+
 /**
  * Internal dependencies
  */
 import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
-import AnimationContainer from './animationContainer';
 import Mask from './mask';
+import AnimationContainer from './animationContainer';
 
 const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
   const Wrapper = useMemo(
@@ -34,6 +35,7 @@ const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
 
   return (
     <>
+      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
       <Wrapper
         role={isAlwaysVisible ? '' : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
@@ -41,7 +43,6 @@ const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
         <Menu aria-expanded={props.isOpen} items={items} {...props} />
         <Shadow />
       </Wrapper>
-      {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
     </>
   );
 };
