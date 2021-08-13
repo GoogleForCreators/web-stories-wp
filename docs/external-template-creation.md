@@ -142,7 +142,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
       NOTE: Check all resource URLs and properties are set properly before commiting the template.
 
 
-2. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, etc.
+2. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, `creationDate`, etc.
 
    ```js
     //...
@@ -158,6 +158,8 @@ Once you have the story JSON, several code changes are needed to add it to the l
     import { default as template } from './template';
 
     export default {
+      // day this template was added to the codebase
+      creationDate: new Date(2021, 0, 1),
       title: _x('Your Template Title', 'template name', 'web-stories'),
       tags: [
         _x('Tags', 'template keyword', 'web-stories'),
