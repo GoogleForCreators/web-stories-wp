@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { AnimatedContextMenu } from '@web-stories-wp/design-system';
+import { ContextMenu } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -50,7 +50,8 @@ const RightClickMenu = () => {
     <DirectionAware>
       <GridContainer>
         <RightClickMenuContainer position={menuPosition}>
-          <AnimatedContextMenu
+          <ContextMenu
+            animate
             data-testid="right-click-context-menu"
             isOpen={isMenuOpen}
             onDismiss={onCloseMenu}

@@ -27,7 +27,6 @@ import { _x, __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import ContextMenu from '../contextMenu';
-import AnimatedContextMenu from '../animatedContextMenu';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import {
   Bucket,
@@ -187,7 +186,8 @@ export const Animated = () => {
   return (
     <ViewportContainer>
       <AnimatedContainerWrapper>
-        <AnimatedContextMenu
+        <ContextMenu
+          animate
           items={itemsWithEventHandlers}
           isOpen={boolean('isOpen', true)}
         />
@@ -508,7 +508,8 @@ export const RightClickMenu = () => {
         onKeyDown={() => {}}
       />
       <RightClickContextMenuContainer position={menuPosition}>
-        <AnimatedContextMenu
+        <ContextMenu
+          animate
           isOpen={isOpen}
           onDismiss={() => setIsOpen(false)}
           items={generateMenuItemsWithEventHandler(pageElement)}

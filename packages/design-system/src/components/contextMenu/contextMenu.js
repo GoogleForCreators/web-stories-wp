@@ -17,29 +17,38 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo } from 'react';
+
 /**
  * Internal dependencies
  */
 import { Popover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import Mask from './mask';
+import AnimationContainer from './animationContainer';
 
-const ContextMenu = ({ isAlwaysVisible, items, ...props }) => {
+const ContextMenu = ({ animate, isAlwaysVisible, items, ...props }) => {
+  const Wrapper = useMemo(
+    () => (animate ? AnimationContainer : Popover),
+    [animate]
+  );
+
   return (
     <>
       {!isAlwaysVisible && props.isOpen && <Mask onDismiss={props.onDismiss} />}
-      <Popover
+      <Wrapper
         role={isAlwaysVisible ? '' : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
       >
-        <Menu items={items} {...props} />
+        <Menu aria-expanded={props.isOpen} items={items} {...props} />
         <Shadow />
-      </Popover>
+      </Wrapper>
     </>
   );
 };
 ContextMenu.propTypes = {
   ...MenuPropTypes,
+  animate: PropTypes.bool,
   isOpen: PropTypes.bool,
   isAlwaysVisible: PropTypes.bool,
 };

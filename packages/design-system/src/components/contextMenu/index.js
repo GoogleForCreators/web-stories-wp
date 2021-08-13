@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as AnimatedContextMenu } from './animatedContextMenu';
 export { default as ContextMenu } from './contextMenu';
 export { MenuPropTypes } from './menu';
 export { MenuItemProps } from './menuItem';
