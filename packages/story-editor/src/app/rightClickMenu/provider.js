@@ -16,13 +16,15 @@
 /**
  * External dependencies
  */
-import { useSnackbar } from '@web-stories-wp/design-system';
+import {
+  useSnackbar,
+  useGlobalKeyDownEffect,
+} from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 
 /** @typedef {import('react')} Node */
 
