@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'new-york-party-round-up',
+  creationDate: new Date(2021, 7, 1),
   title: _x('New York Party Round-up', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'rock-music-festival',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Rock Music Festival', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

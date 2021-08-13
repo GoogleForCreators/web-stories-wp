@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'belly-fat-workout',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Belly Fat Workout', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),

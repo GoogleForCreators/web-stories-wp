@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'street-style-on-the-go',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Street Style On The Go', 'template name', 'web-stories'),
   tags: [
     _x('Fashion', 'template keyword', 'web-stories'),

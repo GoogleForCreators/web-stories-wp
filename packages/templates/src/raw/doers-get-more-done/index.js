@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'doers-get-more-done',
+  creationDate: new Date(2021, 6, 1),
   title: _x('Doers Get More Done', 'template name', 'web-stories'),
   tags: [
     _x('Doers', 'template keyword', 'web-stories'),

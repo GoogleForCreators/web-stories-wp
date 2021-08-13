@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'google-music-studio-tour',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Google Music Studio Tour', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),

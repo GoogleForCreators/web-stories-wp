@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'tv-show-recap',
+  creationDate: new Date(2021, 7, 1),
   title: _x('TV Show Recap', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

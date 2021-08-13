@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'sangria-artichoke',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Trendy Winter Veggie', 'template name', 'web-stories'),
   tags: [
     _x('Food', 'template keyword', 'web-stories'),

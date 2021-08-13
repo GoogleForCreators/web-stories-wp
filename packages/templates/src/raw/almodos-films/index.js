@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'almodos-films',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Almodo’s Films', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

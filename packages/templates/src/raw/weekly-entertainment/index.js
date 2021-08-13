@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'weekly-entertainment',
+  creationDate: new Date(2021, 6, 1),
   title: _x('Weekly Entertainment', 'template name', 'web-stories'),
   tags: [
     _x('Funny', 'template keyword', 'web-stories'),

@@ -127,7 +127,7 @@ async function getTemplates(imageBaseUrl) {
 
   trackTiming();
 
-  return templates;
+  return templates.sort((a, b) => b.creationDate - a.creationDate);
 }
 
 export default getTemplates;

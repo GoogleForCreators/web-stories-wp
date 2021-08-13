@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'beauty-quiz',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Beauty Quiz', 'template name', 'web-stories'),
   tags: [
     _x('Fashion & Beauty', 'template keyword', 'web-stories'),

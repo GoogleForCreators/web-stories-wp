@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'ultimate-comparison',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Ultimate Comparison', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),

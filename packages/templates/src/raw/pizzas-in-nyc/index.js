@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'pizzas-in-nyc',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Pizzas in NYC', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

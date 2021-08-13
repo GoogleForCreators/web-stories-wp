@@ -26,6 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'hawaii-travel-packing-list',
+  creationDate: new Date(2021, 7, 1),
   title: _x('Hawaii Travel Packing List', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),
