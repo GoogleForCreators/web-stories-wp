@@ -63,17 +63,19 @@ function PageMenu() {
   const {
     currentPageNumber,
     currentPage,
+    pages,
     deleteCurrentPage,
     addPage,
     hasAnimations,
   } = useStory(
     ({
-      state: { currentPageNumber, currentPage },
+      state: { currentPageNumber, currentPage, pages },
       actions: { deleteCurrentPage, addPage },
     }) => {
       return {
         currentPageNumber,
         currentPage,
+        pages,
         deleteCurrentPage,
         addPage,
         hasAnimations: currentPage?.animations?.length > 0,
@@ -101,6 +103,7 @@ function PageMenu() {
   );
 
   const isWidePage = pageWidth > 280;
+  const disableDeleteButton = pages && pages.length === 1;
 
   const handleUndo = useCallback(() => undo(), [undo]);
 
@@ -122,6 +125,7 @@ function PageMenu() {
       <CountSpace />
       <PageMenuButton
         title={__('Delete Page', 'web-stories')}
+        disabled={disableDeleteButton}
         onClick={handleDeletePage}
         aria-label={__('Delete Page', 'web-stories')}
       >
