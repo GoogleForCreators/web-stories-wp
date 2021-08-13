@@ -140,8 +140,6 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                   ariaLabel: __('Go to template details', 'web-stories'),
                 }}
                 bottomAction={{
-                  dataTestId: 'use_template_button',
-                  templateId: template.id,
                   targetAction: targetAction(template),
                   label: __('Use template', 'web-stories'),
                   ariaLabel: __('Use this template', 'web-stories'),

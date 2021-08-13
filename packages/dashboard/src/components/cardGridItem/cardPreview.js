@@ -241,8 +241,6 @@ const CardPreviewContainer = ({
               isDisabled={!bottomAction.targetAction}
               type={BUTTON_TYPES.PRIMARY}
               size={BUTTON_SIZES.SMALL}
-              data-test-id={bottomAction?.dataTestId}
-              id={bottomAction.templateId}
             >
               {bottomAction.label}
             </Button>
@@ -260,8 +258,6 @@ const ActionButtonPropType = PropTypes.shape({
     .isRequired,
   label: ActionLabel,
   ariaLabel: PropTypes.string,
-  dataTestId: PropTypes.string,
-  templateId: PropTypes.string,
 });
 
 CardPreviewContainer.propTypes = {
