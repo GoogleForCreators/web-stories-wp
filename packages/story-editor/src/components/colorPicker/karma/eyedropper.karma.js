@@ -49,7 +49,9 @@ describe('Eyedropper', () => {
     );
   }
 
-  it('should get color from the image to page background', async () => {
+  // Disable reason: To be fixed in 8655
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should get color from the image to page background', async () => {
     // Insert image that will be the color source
     const image = fixture.editor.library.media.item(1);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
