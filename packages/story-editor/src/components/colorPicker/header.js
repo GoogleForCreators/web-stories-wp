@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
@@ -44,6 +45,10 @@ const CloseButton = styled(Button)`
 `;
 
 function Header({ children, handleClose }) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
   return (
     <Wrapper>
       {children}
@@ -53,6 +58,7 @@ function Header({ children, handleClose }) {
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
         variant={BUTTON_VARIANTS.SQUARE}
+        ref={ref}
       >
         <Icons.Cross />
       </CloseButton>
