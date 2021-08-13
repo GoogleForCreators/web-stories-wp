@@ -153,13 +153,13 @@ export class RightClickMenu extends Container {
 
   get addToSavedStyles() {
     return this.getByRole('button', {
-      name: /^Add style to/i,
+      name: /^Add Style to/i,
     });
   }
 
   get addToSavedColors() {
     return this.getByRole('button', {
-      name: /^Add color to/i,
+      name: /^Add Color to/i,
     });
   }
 }

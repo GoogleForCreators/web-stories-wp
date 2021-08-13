@@ -32,7 +32,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   ADD_NEW_PAGE_AFTER: __('Add New Page After', 'web-stories'),
   ADD_NEW_PAGE_BEFORE: __('Add New Page Before', 'web-stories'),
   ADD_TO_COLOR_PRESETS: __('Add Color to “Saved Colors”', 'web-stories'),
-  ADD_TO_TEXT_PRESETS: __('Add style to “Saved Styles”', 'web-stories'),
+  ADD_TO_TEXT_PRESETS: __('Add Style to “Saved Styles”', 'web-stories'),
   BRING_FORWARD: __('Bring Forward', 'web-stories'),
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
