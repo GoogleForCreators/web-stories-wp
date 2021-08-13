@@ -60,6 +60,8 @@ const separatorCSS = css`
   width: 100%;
   height: 1px;
   background-color: ${({ theme }) => theme.colors.divider.primary};
+  margin: 8px 0;
+
   ${({ isIconMenu, theme }) =>
     isIconMenu &&
     css`
@@ -92,7 +94,7 @@ const MenuList = styled.ul`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 16px;
+      padding: 2px 16px;
       border: 0;
       transition: background-color ${BUTTON_TRANSITION_TIMING};
     }
