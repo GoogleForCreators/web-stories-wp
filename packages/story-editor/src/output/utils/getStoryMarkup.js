@@ -33,11 +33,22 @@ import OutputStory from '../story';
  * @return {string} Story markup.
  */
 export default function getStoryMarkup(story, pages, metadata) {
-  // Note that react-dom/server will warn about useLayoutEffect usage here.
-  // Not because of any wrongdoing in our code, but mostly because
-  // of its own profiler.
-  // See https://github.com/facebook/react/issues/14927
-  return renderToStaticMarkup(
+  /* eslint-disable no-console */
+  const originalConsoleError = console.error;
+  console.error = function (error, ...args) {
+    if (
+      error &&
+      !error.startsWith('Warning: useLayoutEffect does nothing on the server')
+    ) {
+      originalConsoleError(error, ...args);
+    }
+  };
+  const markup = renderToStaticMarkup(
     <OutputStory story={story} pages={pages} metadata={metadata} />
   );
+
+  console.error = originalConsoleError;
+  /* eslint-enable no-console */
+
+  return markup;
 }
