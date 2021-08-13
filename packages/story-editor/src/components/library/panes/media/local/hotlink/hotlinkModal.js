@@ -117,10 +117,10 @@ function HotlinkModal({ isOpen, onClose }) {
       // Add necessary data for video.
       let posterData;
       const videoData = {};
+      const originalFileName = getFileNameFromUrl(link);
       if (isVideo) {
         // Create poster if possible.
         if (hasUploadMediaAction) {
-          const originalFileName = getFileNameFromUrl(link);
           const fileName = getPosterName(originalFileName);
           const posterFile = await getFirstFrameOfVideo(link);
           posterData = await uploadVideoPoster(0, fileName, posterFile);
@@ -133,9 +133,11 @@ function HotlinkModal({ isOpen, onClose }) {
         videoData.length = length;
         videoData.formattedLength = formattedLength;
       }
+      // @todo Create getResourceFromUrl util instead.
       insertElement(type, {
         resource: createResource({
-          alt: link.substring(link.lastIndexOf('/') + 1),
+          alt: originalFileName,
+          type,
           width,
           height,
           src: link,
