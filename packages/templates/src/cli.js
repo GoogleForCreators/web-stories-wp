@@ -64,7 +64,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     currentTemplate <= templateCount;
     currentTemplate++
   ) {
-    // Use the template, this will open up the editor
+    // Get the template name and remove spaces to use as part of file name.
     const templateName = await page.evaluate((gridItemId) => {
       return document
         .querySelector(
@@ -76,6 +76,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
 
     console.log(`getting screenshots for ${templateName}`);
 
+    // Use the template, this will open up the editor
     await page.click(
       `div#template-grid-item-${currentTemplate} button[aria-label="Use this template"]`
     );
@@ -97,6 +98,14 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
       height: 800,
       deviceScaleFactor: 2,
     });
+    // set prefers-reduced-motion to get story without animations so screenshots are complete page views
+    await pagePreview.emulateMediaFeatures([
+      { name: 'prefers-reduced-motion', value: 'reduce' },
+    ]);
+    await pagePreview.evaluate(
+      () => matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
+
     await pagePreview.goto(previewUrl);
 
     const totalPages = await pagePreview.evaluate(() => {
@@ -116,8 +125,10 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
       }
     }
 
+    // Close the preview
     await pagePreview.close();
 
+    // Use the original browser page to go back to the template gallery for the next template.
     await page.goto(
       'http://localhost:8899/wp-admin/edit.php?post_type=web-story&page=stories-dashboard#/templates-gallery'
     );
