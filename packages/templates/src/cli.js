@@ -107,6 +107,8 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     );
 
     await pagePreview.goto(previewUrl);
+    // Ensure that the page's ready before looping
+    await pagePreview.waitForSelector('aria/Next page');
 
     const totalPages = await pagePreview.evaluate(() => {
       return document.querySelectorAll('amp-story-page').length;
@@ -122,6 +124,8 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
 
       if (currentPage !== totalPages - 1) {
         await pagePreview.click('aria/Next page');
+        // Wait 2 seconds, prevents screenshots not capturing the full page. Without this some pages won't load in time.
+        await pagePreview.waitForTimeout(2000);
       }
     }
 
