@@ -490,6 +490,26 @@
     },
     {
       "files": [
+        "packages/activation-notice/**/*.js",
+        "packages/stories-block/**/*.js",
+        "packages/tinymce-button/**/*.js"
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "react",
+                "message": "Please use React API through `@wordpress/element` instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "packages/tinymce-button/src/**/*.js"
       ],
       "globals": {
