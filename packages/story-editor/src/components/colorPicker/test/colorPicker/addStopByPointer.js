@@ -22,9 +22,11 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
+import { LINE_LENGTH } from '../../constants';
 import { arrange, firePointerEvent } from './_utils';
 
-const OFFSET20 = 34.5;
+// There's a slight offset, so +1
+const OFFSET20 = LINE_LENGTH * 0.2 + 1;
 
 describe('<ColorPicker /> when adding a stop with a pointer device', () => {
   it('should show temp stop when hovering and add a stop when clicking', async () => {

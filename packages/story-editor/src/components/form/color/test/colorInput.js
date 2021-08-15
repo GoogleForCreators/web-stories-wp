@@ -143,8 +143,8 @@ describe('<ColorInput />', () => {
 
     fireEvent.click(button);
 
-    const previewButton = screen.queryByLabelText(/solid pattern/i);
-    await waitFor(() => expect(previewButton).toBeInTheDocument());
+    const pickerDialog = screen.getByLabelText(/color and gradient picker/i);
+    await waitFor(() => expect(pickerDialog).toBeInTheDocument());
   });
 
   it('should open the color picker when clicked if multiple', async () => {
@@ -162,8 +162,8 @@ describe('<ColorInput />', () => {
 
     fireEvent.click(button);
 
-    const previewButton = screen.queryByLabelText(/solid pattern/i);
-    await waitFor(() => expect(previewButton).toBeInTheDocument());
+    const pickerDialog = screen.getByLabelText(/color and gradient picker/i);
+    await waitFor(() => expect(pickerDialog).toBeInTheDocument());
   });
 
   it('should invoke onChange when inputting valid hex', async () => {
