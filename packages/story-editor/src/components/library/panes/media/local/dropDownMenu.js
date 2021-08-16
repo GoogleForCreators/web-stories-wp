@@ -22,21 +22,31 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState, useMemo } from 'react';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
-import { Menu, PLACEMENT, Popup } from '@web-stories-wp/design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Menu,
+  PLACEMENT,
+  Popup,
+} from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import { More } from '../../../../button';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
-const MoreButton = styled(More)`
+const MoreButton = styled(Button).attrs({
+  variant: BUTTON_VARIANTS.CIRCLE,
+  size: BUTTON_SIZES.SMALL,
+  type: BUTTON_TYPES.SECONDARY,
+})`
   position: absolute;
   top: 8px;
   right: 8px;
-  background: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.colors.fg.primary};
-  border-radius: 100%;
 `;
 
 const DropDownContainer = styled.div`
@@ -134,7 +144,9 @@ function DropDownMenu({
               aria-expanded={isMenuOpen}
               aria-owns={isMenuOpen ? listId : null}
               id={buttonId}
-            />
+            >
+              <Icons.Dots />
+            </MoreButton>
             <Popup
               anchor={moreButtonRef}
               placement={PLACEMENT.BOTTOM_START}
