@@ -22,7 +22,6 @@ import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
-import useLibrary from '../components/library/useLibrary';
 import { useCanvas, useLayout, useStory } from '../app';
 import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
@@ -34,13 +33,12 @@ function usePageAsCanvas() {
     setPageCanvasData,
     pageCanvasPromise,
     setPageCanvasPromise,
-  } = useLibrary((state) => ({
+    fullbleedContainer,
+  } = useCanvas((state) => ({
     pageCanvasData: state.state.pageCanvasData,
     pageCanvasPromise: state.state.pageCanvasPromise,
     setPageCanvasData: state.actions.setPageCanvasData,
     setPageCanvasPromise: state.actions.setPageCanvasPromise,
-  }));
-  const { fullbleedContainer } = useCanvas((state) => ({
     fullbleedContainer: state.state.fullbleedContainer,
   }));
   const { currentPage } = useStory(({ state }) => {
@@ -103,7 +101,7 @@ function usePageAsCanvas() {
               pixelRatio: 1,
             });
             setPageCanvasPromise(promise);
-            promise.then(onCompletion).catch(() => onFail());
+            promise.then(onCompletion).catch(onFail);
           });
         } else if (resetZoom) {
           // If we already have a promise and we're resetting zoom, we're inserting an element.
@@ -130,50 +128,51 @@ function usePageAsCanvas() {
   );
 
   const calculateAccessibleTextColors = useCallback(
-    (atts, callback, isInserting = true, skipCanvasGeneration = false) => {
-      // If we're calculating the color without actually inserting the element and in zoomed mode, skip.
-      // We'll always insert the element in FIT mode, calculating it in other modes would be useless.
-      if (!isInserting && zoomSetting !== ZOOM_SETTING.FIT) {
-        callback(null);
-      }
-      const contrastCalculation = (canvas) => {
-        try {
-          const ctx = canvas.getContext('2d');
-          // The canvas does not consider danger zone as y = 0, so we need to adjust that.
-          const safeZoneDiff =
-            (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;
-          const box = getBox(
-            {
-              ...atts,
-              height: atts.height
-                ? atts.height
-                : calculateTextHeight(atts, atts.width),
-            },
-            canvas.width,
-            canvas.height - 2 * safeZoneDiff
-          );
-          const { x, y: origY, width, height } = box;
-          const y = origY + safeZoneDiff;
-          const pixelData = ctx.getImageData(x, y, width, height).data;
-          const { fontSize } = atts;
-          callback(getAccessibleTextColorsFromPixels(pixelData, fontSize));
-        } catch (e) {
-          // Fall back to default color if failing to get image data.
-          callback({ color: null });
+    (atts, isInserting = true, skipCanvasGeneration = false) => {
+      return new Promise((resolve) => {
+        // If we're calculating the color without actually inserting the element and in zoomed mode, skip.
+        // We'll always insert the element in FIT mode, calculating it in other modes would be useless.
+        if (!isInserting && zoomSetting !== ZOOM_SETTING.FIT) {
+          resolve(null);
         }
-      };
-      // If we have data and nothing has changed or we can skip the canvas update, just calculate the contrast.
-      // Skipping is used when preset are placed under each other consecutively, the same image can be used then.
-      if (
-        pageCanvasData &&
-        (!hasPageHashChanged(currentPage, pageCanvasData.currentPage) ||
-          skipCanvasGeneration)
-      ) {
-        contrastCalculation(pageCanvasData.canvas);
-      } else {
-        generateCanvasFromPage(contrastCalculation, isInserting);
-      }
-      return null;
+        const contrastCalculation = (canvas) => {
+          try {
+            const ctx = canvas.getContext('2d');
+            // The canvas does not consider danger zone as y = 0, so we need to adjust that.
+            const safeZoneDiff =
+              (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;
+            const box = getBox(
+              {
+                ...atts,
+                height: atts.height
+                  ? atts.height
+                  : calculateTextHeight(atts, atts.width),
+              },
+              canvas.width,
+              canvas.height - 2 * safeZoneDiff
+            );
+            const { x, y: origY, width, height } = box;
+            const y = origY + safeZoneDiff;
+            const pixelData = ctx.getImageData(x, y, width, height).data;
+            const { fontSize } = atts;
+            resolve(getAccessibleTextColorsFromPixels(pixelData, fontSize));
+          } catch (e) {
+            // Fall back to default color if failing to get image data.
+            resolve({ color: null });
+          }
+        };
+        // If we have data and nothing has changed or we can skip the canvas update, just calculate the contrast.
+        // Skipping is used when preset are placed under each other consecutively, the same image can be used then.
+        if (
+          pageCanvasData &&
+          (!hasPageHashChanged(currentPage, pageCanvasData.currentPage) ||
+            skipCanvasGeneration)
+        ) {
+          contrastCalculation(pageCanvasData.canvas);
+        } else {
+          generateCanvasFromPage(contrastCalculation, isInserting);
+        }
+      });
     },
     [
       currentPage,

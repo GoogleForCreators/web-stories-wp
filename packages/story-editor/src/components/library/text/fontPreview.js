@@ -93,32 +93,33 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
 
   // Gets the position and the color already once the canvas information is available, to use it directly when inserting.
   useLayoutEffect(() => {
-    if (!pageCanvasData || !enableSmartTextColor) {
-      return;
-    }
-    // If nothing changed meanwhile and we already have color data, don't make new calculations.
-    if (
-      presetDataRef.current.versionNumber === versionNumber &&
-      presetDataRef.current.autoColor
-    ) {
-      return;
-    }
-    presetDataRef.current.versionNumber = versionNumber;
-    const atts = getPosition(element);
-    presetDataRef.current.positionAtts = atts;
+    async function getPositionAndColor() {
+      if (!pageCanvasData || !enableSmartTextColor) {
+        return;
+      }
+      // If nothing changed meanwhile and we already have color data, don't make new calculations.
+      if (
+        presetDataRef.current.versionNumber === versionNumber &&
+        presetDataRef.current.autoColor
+      ) {
+        return;
+      }
+      presetDataRef.current.versionNumber = versionNumber;
+      const atts = getPosition(element);
+      presetDataRef.current.positionAtts = atts;
 
-    // If the element is positioned under the previous element (not default position),
-    // no new image generation needed.
-    if (atts.y !== element.y) {
-      presetDataRef.current.skipCanvasGeneration = true;
+      // If the element is positioned under the previous element (not default position),
+      // no new image generation needed.
+      if (atts.y !== element.y) {
+        presetDataRef.current.skipCanvasGeneration = true;
+      }
+
+      presetDataRef.current.autoColor = await calculateAccessibleTextColors(
+        { ...element, ...atts },
+        false /* isInserting */
+      );
     }
-    calculateAccessibleTextColors(
-      { ...element, ...atts },
-      (autoColor) => {
-        presetDataRef.current.autoColor = autoColor;
-      },
-      false /* isInserting */
-    );
+    getPositionAndColor();
   }, [
     calculateAccessibleTextColors,
     element,
