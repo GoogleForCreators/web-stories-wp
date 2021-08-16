@@ -32,7 +32,6 @@ export default function reshapeStoryObject(originalStoryData) {
     featured_media_url: featuredMediaUrl,
     preview_link: previewLink,
     edit_link: editStoryLink,
-    story_data: storyData,
     _embedded: {
       author = [{ name: '' }],
       'wp:lock': lock = [{ locked: false }],
@@ -40,9 +39,6 @@ export default function reshapeStoryObject(originalStoryData) {
     } = {},
     _links: links = {},
   } = originalStoryData;
-  if (!Array.isArray(storyData.pages) || !id || storyData.pages.length === 0) {
-    return null;
-  }
 
   const capabilities = {
     hasEditAction: Object.prototype.hasOwnProperty.call(links, REST_LINKS.EDIT),

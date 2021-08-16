@@ -34,10 +34,6 @@ describe('reshapeStoryObject', () => {
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
       title: { raw: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
@@ -47,7 +43,6 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      story_data: { pages: [{ id: 0, elements: [] }] },
       _embedded: {
         'wp:featuredmedia': [
           {
@@ -105,11 +100,6 @@ describe('reshapeStoryObject', () => {
         },
         author: 1,
         categories: [],
-        content: {
-          protected: false,
-          rendered:
-            '<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>',
-        },
         date: '2020-03-26T20:57:24',
         excerpt: { protected: false, rendered: '' },
         featured_media: 0,
@@ -121,7 +111,6 @@ describe('reshapeStoryObject', () => {
         modified: '2020-03-26T21:42:14',
         slug: '',
         status: 'draft',
-        story_data: { pages: [{ elements: [], id: 0 }] },
         tags: [],
         template: '',
         title: { raw: 'Carlos Draft' },
@@ -146,10 +135,6 @@ describe('reshapeStoryObject', () => {
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
       title: { raw: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
@@ -159,7 +144,6 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      story_data: { pages: [{ id: 0, elements: [] }] },
       _embedded: {
         'wp:featuredmedia': [
           {
@@ -211,11 +195,6 @@ describe('reshapeStoryObject', () => {
         },
         author: 1,
         categories: [],
-        content: {
-          protected: false,
-          rendered:
-            '<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>',
-        },
         date: '2020-03-26T20:57:24',
         excerpt: { protected: false, rendered: '' },
         featured_media: 0,
@@ -227,7 +206,6 @@ describe('reshapeStoryObject', () => {
         modified: '2020-03-26T21:42:14',
         slug: '',
         status: 'draft',
-        story_data: { pages: [{ elements: [], id: 0 }] },
         tags: [],
         template: '',
         title: { raw: 'Carlos Draft' },
@@ -251,17 +229,12 @@ describe('reshapeStoryObject', () => {
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
       title: { raw: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
       template: '',
       categories: [],
       tags: [],
-      story_data: { pages: [{ id: 0, elements: [] }] },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, url: '' }],
         author: [{ id: 1, name: 'admin' }],
@@ -285,17 +258,12 @@ describe('reshapeStoryObject', () => {
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
       title: { raw: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
       template: '',
       categories: [],
       tags: [],
-      story_data: { pages: [] },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, url: '' }],
         author: [{ id: 1, name: 'admin' }],
@@ -319,17 +287,12 @@ describe('reshapeStoryObject', () => {
       type: 'web-story',
       link: 'http://localhost:8899/?post_type=web-story&p=27',
       title: { raw: 'Carlos Draft' },
-      content: {
-        rendered: `<p><html amp="" lang="en"><head><meta charSet="utf…></amp-story-page></amp-story></body></html></p>`,
-        protected: false,
-      },
       excerpt: { rendered: '', protected: false },
       author: 1,
       featured_media: 0,
       template: '',
       categories: [],
       tags: [],
-      story_data: { pages: [{ id: 0, elements: [] }] },
       _embedded: {
         'wp:featuredmedia': [{ id: 0, url: '' }],
         author: [{ id: 1, name: 'admin' }],

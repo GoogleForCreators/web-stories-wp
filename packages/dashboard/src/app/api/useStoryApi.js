@@ -20,9 +20,7 @@
 import { useCallback, useMemo, useReducer, useRef } from 'react';
 import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
-import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
-import { base64Encode } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
@@ -53,17 +51,13 @@ const STORY_FIELDS = [
   'featured_media_url',
   'preview_link',
   'edit_link',
-  // TODO: Remove need for story_data as its a lot of data sent over the wire.
-  // It's only needed for duplicating stories.
-  'content',
-  'story_data',
   // _web_stories_envelope will add these fields, we need them too.
   'body',
   'status',
   'headers',
 ].join(',');
 
-const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
+const useStoryApi = (dataAdapter, { storyApi }) => {
   const isInitialFetch = useRef(true);
   const initialFetchListeners = useMemo(() => new Map(), []);
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
@@ -127,11 +121,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         }
         isInitialFetch.current = false;
 
-        // Hardening in case data returned by the server is malformed.
-        // For example, story_data could be missing/empty.
-        const cleanStories = response.body.filter((story) =>
-          Array.isArray(story?.story_data?.pages)
-        );
+        const cleanStories = response.body;
 
         if (
           cleanStories.length === 0 &&
@@ -309,37 +299,17 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
 
       try {
         const {
-          content,
-          story_data,
-          style_presets,
-          publisher_logo,
-          featured_media,
-          title,
-        } = story.originalStoryData;
+          originalStoryData: { id },
+        } = story;
 
         const path = addQueryArgs(storyApi, {
           _embed: 'wp:lock,wp:lockuser,author',
           _fields: STORY_FIELDS,
         });
 
-        const storyContent = encodeMarkup
-          ? base64Encode(content?.raw)
-          : content?.raw;
-
         const response = await dataAdapter.post(path, {
           data: {
-            content: content?.raw ? storyContent : undefined,
-            story_data,
-            featured_media,
-            style_presets,
-            publisher_logo,
-            title: {
-              raw: sprintf(
-                /* translators: %s: story title. */
-                __('%s (Copy)', 'web-stories'),
-                title.raw
-              ),
-            },
+            original_id: id,
             status: 'draft',
           },
         });
@@ -359,7 +329,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
         trackTiming();
       }
     },
-    [storyApi, dataAdapter, encodeMarkup]
+    [storyApi, dataAdapter]
   );
 
   const addInitialFetchListener = useCallback(
