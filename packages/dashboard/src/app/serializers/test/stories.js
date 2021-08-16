@@ -245,35 +245,6 @@ describe('reshapeStoryObject', () => {
     expect(reshapedObj).toBeNull();
   });
 
-  it('should return null if the story has no pages', () => {
-    const responseObj = {
-      id: 27,
-      date: '2020-03-26T20:57:24',
-      guid: {
-        rendered: 'http://localhost:8899/?post_type=web-story&#038;p=27',
-      },
-      modified: '2020-03-26T21:42:14',
-      slug: '',
-      status: 'draft',
-      type: 'web-story',
-      link: 'http://localhost:8899/?post_type=web-story&p=27',
-      title: { raw: 'Carlos Draft' },
-      excerpt: { rendered: '', protected: false },
-      author: 1,
-      featured_media: 0,
-      template: '',
-      categories: [],
-      tags: [],
-      _embedded: {
-        'wp:featuredmedia': [{ id: 0, url: '' }],
-        author: [{ id: 1, name: 'admin' }],
-      },
-    };
-
-    const reshapedObj = reshapeStoryObject(responseObj);
-    expect(reshapedObj).toBeNull();
-  });
-
   it('should return capabilities', () => {
     const responseObj = {
       id: 27,

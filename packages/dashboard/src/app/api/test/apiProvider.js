@@ -53,8 +53,14 @@ jest.mock('../wpAdapter', () => ({
       ],
     }),
   post: (path, { data }) => {
-    const title = typeof data.title === 'string' ? data.title : data.title.raw;
-    const id = data.id || 456;
+    let title = '';
+    let id = data.id || 456;
+    if (data.original_id) {
+      id = 456;
+      title = 'Carlos (Copy)';
+    } else {
+      title = typeof data.title === 'string' ? data.title : data.title.raw;
+    }
     return Promise.resolve({
       id,
       featured_media_url: `https://www.featured-media-${data.id || 456}`,
@@ -244,22 +250,7 @@ describe('ApiProvider', () => {
 
     await act(async () => {
       await result.current.actions.storyApi.duplicateStory({
-        pages: [
-          {
-            elements: [],
-            id: 1,
-          },
-        ],
-        status: 'publish',
-        title: 'Carlos',
-        author: 1,
-        link: 'https://www.story-link.com',
-        originalStoryData: {
-          link: 'https://www.story-link.com',
-          title: {
-            raw: 'Carlos',
-          },
-        },
+        originalStoryData: { id: 123 },
       });
     });
 

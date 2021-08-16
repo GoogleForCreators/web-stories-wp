@@ -39,6 +39,9 @@ export default function reshapeStoryObject(originalStoryData) {
     } = {},
     _links: links = {},
   } = originalStoryData;
+  if (!id) {
+    return null;
+  }
 
   const capabilities = {
     hasEditAction: Object.prototype.hasOwnProperty.call(links, REST_LINKS.EDIT),
