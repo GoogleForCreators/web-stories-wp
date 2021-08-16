@@ -40,10 +40,12 @@ const Landmark = styled.div`
 
 const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+  forwardedAs: 'span',
 })`
   text-align: center;
   margin-top: 8px;
   white-space: nowrap;
+  display: inline-block;
 `;
 
 function LandmarkShortcuts() {

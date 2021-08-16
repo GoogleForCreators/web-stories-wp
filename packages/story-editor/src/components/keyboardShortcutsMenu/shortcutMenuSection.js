@@ -62,7 +62,9 @@ const ListRow = styled.div`
 
 const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+  forwardedAs: 'span',
 })`
+  display: inline-block;
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
