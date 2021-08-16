@@ -121,29 +121,17 @@ const useStoryApi = (dataAdapter, { storyApi }) => {
         }
         isInitialFetch.current = false;
 
-        const cleanStories = response.body;
+        const stories = response.body;
 
-        if (
-          cleanStories.length === 0 &&
-          cleanStories.length !== response.body.length
-        ) {
-          dispatch({
-            type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
-            payload: {
-              message: ERRORS.LOAD_STORIES.INCOMPLETE_DATA_MESSAGE,
-            },
-          });
-        } else {
-          dispatch({
-            type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
-            payload: {
-              stories: cleanStories,
-              totalPages,
-              totalStoriesByStatus,
-              page,
-            },
-          });
-        }
+        dispatch({
+          type: STORY_ACTION_TYPES.FETCH_STORIES_SUCCESS,
+          payload: {
+            stories,
+            totalPages,
+            totalStoriesByStatus,
+            page,
+          },
+        });
       } catch (err) {
         dispatch({
           type: STORY_ACTION_TYPES.FETCH_STORIES_FAILURE,
