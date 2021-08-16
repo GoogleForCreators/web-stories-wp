@@ -18,17 +18,8 @@
  */
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
-import {
-  createResource,
-  getFileNameFromUrl,
-  getFirstFrameOfVideo,
-  getImageDimensions,
-  getVideoDimensions,
-  hasVideoGotAudio,
-  getVideoLength,
-} from '@web-stories-wp/media';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,12 +27,8 @@ import PropTypes from 'prop-types';
  */
 import { useConfig } from '../../../../../../app';
 import Dialog from '../../../../../dialog';
-import useLibrary from '../../../../useLibrary';
-import {
-  useUploadVideoFrame,
-  getPosterName,
-} from '../../../../../../app/media/utils';
-import { isValidUrl, withProtocol } from '../../../../../../utils/url';
+import { withProtocol } from '../../../../../../utils/url';
+import useInsert from './useInsert';
 
 const InputWrapper = styled.div`
   margin: 16px 4px;
@@ -50,17 +37,19 @@ const InputWrapper = styled.div`
 `;
 
 function HotlinkModal({ isOpen, onClose }) {
-  const {
-    allowedFileTypes,
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
-  const { uploadVideoPoster } = useUploadVideoFrame({});
-
+  const { allowedFileTypes } = useConfig();
   const [errorMsg, setErrorMsg] = useState(false);
+  const inputRef = useRef(null);
+
+  useLayoutEffect(() => {
+    // Wait one tick to ensure the input has been loaded.
+    const timeout = setTimeout(() => {
+      if (isOpen && inputRef.current) {
+        inputRef.current.focus();
+      }
+    });
+    return () => clearTimeout(timeout);
+  }, [isOpen, inputRef]);
 
   // @todo We're not really uploading anything here, so should we have a fixed list instead?
   let description = __('No file types are currently supported.', 'web-stories');
@@ -96,72 +85,14 @@ function HotlinkModal({ isOpen, onClose }) {
     [link, allowedFileTypes, error]
   );
 
-  const onInsert = useCallback(async () => {
-    if (errorMsg?.length) {
-      return;
-    }
-    const insertionError = __(
-      'Media failed to load. Please ensure the link is valid and the site allows linking from external sites',
-      'web-stories'
-    );
-    if (!isValidUrl(link)) {
-      setErrorMsg(insertionError);
-      return;
-    }
-    try {
-      const { type } = getFileInfo();
-      const isVideo = type === 'video';
-      const getMediaDimensions = isVideo
-        ? getVideoDimensions
-        : getImageDimensions;
-      const { width, height } = await getMediaDimensions(link);
-
-      // Add necessary data for video.
-      let posterData;
-      const videoData = {};
-      const originalFileName = getFileNameFromUrl(link);
-      if (isVideo) {
-        // Create poster if possible.
-        if (hasUploadMediaAction) {
-          const fileName = getPosterName(originalFileName);
-          const posterFile = await getFirstFrameOfVideo(link);
-          posterData = await uploadVideoPoster(0, fileName, posterFile);
-          videoData.poster = posterData.poster;
-          videoData.posterId = posterData.posterId;
-        }
-        const hasAudio = await hasVideoGotAudio(link);
-        videoData.isMuted = !hasAudio;
-        const { length, formattedLength } = getVideoLength(link);
-        videoData.length = length;
-        videoData.formattedLength = formattedLength;
-      }
-      // @todo Create getResourceFromUrl util instead.
-      insertElement(type, {
-        resource: createResource({
-          alt: originalFileName,
-          type,
-          width,
-          height,
-          src: link,
-          local: false,
-          ...videoData,
-        }),
-      });
-      setErrorMsg(null);
-      setLink('');
-      onClose();
-    } catch (e) {
-      setErrorMsg(insertionError);
-    }
-  }, [
-    insertElement,
+  const onInsert = useInsert({
     link,
+    setLink,
     errorMsg,
+    setErrorMsg,
     getFileInfo,
     onClose,
-    uploadVideoPoster,
-    hasUploadMediaAction,
-  ]);
+  });
 
   return (
     <Dialog
@@ -178,6 +109,7 @@ function HotlinkModal({ isOpen, onClose }) {
     >
       <InputWrapper>
         <Input
+          ref={inputRef}
           onChange={({ target: { value } }) => {
             setLink(value);
             getFileInfo(value);
@@ -187,6 +119,8 @@ function HotlinkModal({ isOpen, onClose }) {
           hasError={Boolean(errorMsg?.length)}
           onBlur={() => setLink(withProtocol(link))}
           label={__('URL', 'web-stories')}
+          type="url"
+          required
         />
       </InputWrapper>
     </Dialog>
