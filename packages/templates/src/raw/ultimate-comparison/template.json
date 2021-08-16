@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -5401,7 +5401,7 @@
           "y": 549,
           "id": "e94ac728-94a4-43f1-abe8-ca34eeab6e6a",
           "basedOn": "dab89972-4f2d-415b-93ea-f7ff4fa71519",
-          "content": "<span style=\"color: #fff8f2\">Fffective noise cancelling</span>",
+          "content": "<span style=\"color: #fff8f2\">Effective noise cancelling</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,

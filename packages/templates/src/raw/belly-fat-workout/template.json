@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -177,7 +177,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "Written by Betty Doe\n23 July, 2020",
+          "content": "Written by Betty Doe\nJuly 23, 2020",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -2622,7 +2622,8 @@
       "id": "629e63fc-7bc3-4557-bfbb-f767f3f40e3d",
       "pageAttachment": {
         "url": "google.com",
-        "ctaText": "Watch the full video"
+        "ctaText": "Watch the full video",
+        "theme": "light"
       },
       "pageTemplateType": ""
     },

@@ -4,7 +4,6 @@ on:
   push:
     # Only run if dashboard-related files changed.
     paths:
-      - 'assets/src/dashboard/**.js'
       - 'babel.config.cjs'
       - 'karma-dashboard.config.cjs'
       - 'webpack.config.cjs'
@@ -19,7 +18,6 @@ on:
   pull_request:
     # Only run if dashboard-related files changed.
     paths:
-      - 'assets/src/dashboard/**.js'
       - 'babel.config.cjs'
       - 'karma-dashboard.config.cjs'
       - 'webpack.config.cjs'
@@ -50,7 +48,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.3.0
+        uses: actions/setup-node@v2.4.0
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
           cache: npm

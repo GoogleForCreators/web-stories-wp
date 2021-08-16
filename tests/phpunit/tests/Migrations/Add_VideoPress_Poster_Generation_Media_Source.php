@@ -55,7 +55,7 @@ class Add_VideoPress_Poster_Generation_Media_Source extends Test_Case {
 		$slug   = $this->call_private_method( $object, 'get_term_name' );
 		$object->migrate();
 
-		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media::STORY_MEDIA_TAXONOMY );
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media\Media_Source_Taxonomy::TAXONOMY_SLUG );
 		$slugs = wp_list_pluck( $terms, 'slug' );
 		$this->assertCount( 1, $terms );
 		$this->assertEqualSets( [ $slug ], $slugs );

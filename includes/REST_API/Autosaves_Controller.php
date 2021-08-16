@@ -29,8 +29,8 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Traits\Post_Type;
-use Google\Web_Stories\Media\Media;
 use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
@@ -184,7 +184,7 @@ abstract class Autosaves_Controller extends WP_REST_Autosaves_Controller impleme
 		}
 
 		if ( rest_is_field_included( 'featured_media_url', $fields ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$image                      = get_the_post_thumbnail_url( $post, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
