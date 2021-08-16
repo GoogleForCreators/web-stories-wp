@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "@web-stories-wp/stickers": "*",
-    "puppeteer": "*"
+    "puppeteer": "^10.1.0"
   }
 }
