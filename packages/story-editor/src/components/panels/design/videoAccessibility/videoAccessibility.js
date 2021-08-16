@@ -66,7 +66,11 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
-  const { allowedImageMimeTypes, allowedImageFileTypes } = useConfig();
+  const {
+    allowedImageMimeTypes,
+    allowedImageFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -115,6 +119,30 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     };
   }
 
+  const altTextarea = (
+    <TextArea
+      ref={inputRef}
+      placeholder={
+        alt === MULTIPLE_VALUE
+          ? MULTIPLE_DISPLAY_VALUE
+          : __('Add assistive text for visually impaired users', 'web-stories')
+      }
+      value={alt || ''}
+      onChange={(evt) =>
+        pushUpdate(
+          {
+            alt: evt?.target?.value?.trim() || null,
+          },
+          true
+        )
+      }
+      aria-label={__('Assistive text', 'web-stories')}
+      maxLength={MIN_MAX.ALT_TEXT.MAX}
+      rows={2}
+      isIndeterminate={alt === MULTIPLE_VALUE}
+    />
+  );
+
   return (
     <SimplePanel
       css={(highlightInput || highlightMediaPicker) && styles.FLASH}
@@ -123,46 +151,27 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       isPersistable={!highlightInput && !highlightMediaPicker}
     >
       <Row>
-        <StyledMedia
-          ref={mediaRef}
-          value={poster}
-          cropParams={cropParams}
-          onChange={handleChangePoster}
-          onChangeErrorText={posterErrorMessage}
-          title={__('Select as video poster', 'web-stories')}
-          buttonInsertText={__('Set as video poster', 'web-stories')}
-          alt={__('Preview poster image', 'web-stories')}
-          type={allowedImageMimeTypes}
-          ariaLabel={__('Video poster', 'web-stories')}
-          menuOptions={['edit', 'reset']}
-          imgProps={cropParams}
-        />
-        <InputsWrapper>
-          <TextArea
-            ref={inputRef}
-            placeholder={
-              alt === MULTIPLE_VALUE
-                ? MULTIPLE_DISPLAY_VALUE
-                : __(
-                    'Add assistive text for visually impaired users',
-                    'web-stories'
-                  )
-            }
-            value={alt || ''}
-            onChange={(evt) =>
-              pushUpdate(
-                {
-                  alt: evt?.target?.value?.trim() || null,
-                },
-                true
-              )
-            }
-            aria-label={__('Assistive text', 'web-stories')}
-            maxLength={MIN_MAX.ALT_TEXT.MAX}
-            rows={2}
-            isIndeterminate={alt === MULTIPLE_VALUE}
-          />
-        </InputsWrapper>
+        {hasUploadMediaAction ? (
+          <>
+            <StyledMedia
+              ref={mediaRef}
+              value={poster}
+              cropParams={cropParams}
+              onChange={handleChangePoster}
+              onChangeErrorText={posterErrorMessage}
+              title={__('Select as video poster', 'web-stories')}
+              buttonInsertText={__('Set as video poster', 'web-stories')}
+              alt={__('Preview poster image', 'web-stories')}
+              type={allowedImageMimeTypes}
+              ariaLabel={__('Video poster', 'web-stories')}
+              menuOptions={['edit', 'reset']}
+              imgProps={cropParams}
+            />
+            <InputsWrapper>{altTextarea}</InputsWrapper>
+          </>
+        ) : (
+          altTextarea
+        )}
       </Row>
     </SimplePanel>
   );

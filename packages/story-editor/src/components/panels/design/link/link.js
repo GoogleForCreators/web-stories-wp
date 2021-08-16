@@ -31,7 +31,7 @@ import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 
-import { useStory, useAPI, useCanvas } from '../../../../app';
+import { useStory, useAPI, useCanvas, useConfig } from '../../../../app';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
@@ -67,6 +67,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
       displayLinkGuidelines: state.state.displayLinkGuidelines,
     }));
+
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const { currentPage } = useStory((state) => ({
     currentPage: state.state.currentPage,
@@ -250,19 +254,21 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               containerStyleOverride={inputContainerStyleOverride}
             />
           </Row>
-          <Row spaceBetween={false}>
-            <LinkIcon
-              handleChange={handleChangeIcon}
-              icon={link.icon}
-              isLoading={fetchingMetadata}
-              disabled={fetchingMetadata}
-            />
-            <IconInfo>
-              <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-                {__('Optional brand icon', 'web-stories')}
-              </IconText>
-            </IconInfo>
-          </Row>
+          {hasUploadMediaAction && (
+            <Row spaceBetween={false}>
+              <LinkIcon
+                handleChange={handleChangeIcon}
+                icon={link.icon}
+                isLoading={fetchingMetadata}
+                disabled={fetchingMetadata}
+              />
+              <IconInfo>
+                <IconText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                  {__('Optional brand icon', 'web-stories')}
+                </IconText>
+              </IconInfo>
+            </Row>
+          )}
         </>
       )}
     </SimplePanel>

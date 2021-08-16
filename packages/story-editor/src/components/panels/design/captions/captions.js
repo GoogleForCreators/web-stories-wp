@@ -44,6 +44,7 @@ import { SimplePanel } from '../../panel';
 import { focusStyle, getCommonValue } from '../../shared';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 import Tooltip from '../../../tooltip';
+import { useConfig } from '../../../../app';
 
 const InputRow = styled.div`
   display: flex;
@@ -92,10 +93,13 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
   const isMixedValue = tracks === MULTIPLE_VALUE;
   const captionText = __('Upload a file', 'web-stories');
-  const clearFileText = __('Remove file', 'web-stories');
   /* @TODO: Implement error handling after removing modal and
   using native browser upload. */
   const uploadError = false;
+
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   usePresubmitHandler(
     ({ resource: newResource }) => ({
@@ -152,6 +156,12 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   const buttonRef = useRef();
   const highlight = useFocusHighlight(states.CAPTIONS, buttonRef);
+
+  if (!hasUploadMediaAction) {
+    return null;
+  }
+
+  const clearFileText = __('Remove file', 'web-stories');
 
   return (
     <SimplePanel
