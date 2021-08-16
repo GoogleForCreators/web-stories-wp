@@ -63,7 +63,7 @@ jest.mock('../wpAdapter', () => ({
     }
     return Promise.resolve({
       id,
-      featured_media_url: `https://www.featured-media-${data.id || 456}`,
+      featured_media_url: `https://www.featured-media-${id}`,
       status: 'publish',
       title: { raw: title, rendered: title },
       author: 1,
