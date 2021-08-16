@@ -83,7 +83,7 @@ function FilterPanel({ selectedElements, pushUpdate }) {
             label={__('Color', 'web-stories')}
             value={overlay}
             onChange={updateOverlay}
-            hasGradient
+            allowsGradient
           />
         </Row>
       )}

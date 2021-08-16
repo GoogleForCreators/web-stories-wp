@@ -173,7 +173,7 @@ export const DarkTheme = () => {
 export const LightTheme = () => <ButtonCombosToDisplay />;
 
 const TOGGLE_VARIANTS = [BUTTON_VARIANTS.CIRCLE, BUTTON_VARIANTS.SQUARE];
-const ToggleButtonContainer = ({ isToggled, swapToggled }) => (
+const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
   <Container>
     {Object.values(BUTTON_SIZES).map((buttonSize) => (
       <Row key={`${buttonSize}_row_storybook`}>
@@ -185,13 +185,20 @@ const ToggleButtonContainer = ({ isToggled, swapToggled }) => (
               size={buttonSize}
               isToggled={isToggled}
               onClick={swapToggled}
+              type={type}
             >
               <ButtonContent variant={buttonVariant} />
             </ToggleButton>
             <Text>
               {`variant: ${buttonVariant}`} <br />
               {`size: ${buttonSize}`} <br />
-              {`is on: ${isToggled}`}
+              {`is toggled: ${isToggled}`}
+              {type && (
+                <>
+                  <br />
+                  {`type: ${type}`}
+                </>
+              )}
             </Text>
           </div>
         ))}
@@ -203,6 +210,7 @@ const ToggleButtonContainer = ({ isToggled, swapToggled }) => (
 ToggleButtonContainer.propTypes = {
   isToggled: PropTypes.bool.isRequired,
   swapToggled: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 
 export const ToggleButtons = () => {
@@ -215,6 +223,18 @@ export const ToggleButtons = () => {
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
+        />
+      </DarkThemeProvider>
+      <ToggleButtonContainer
+        isToggled={isToggled}
+        swapToggled={swapToggled}
+        type={BUTTON_TYPES.QUATERNARY}
+      />
+      <DarkThemeProvider>
+        <ToggleButtonContainer
+          isToggled={isToggled}
+          swapToggled={swapToggled}
+          type={BUTTON_TYPES.QUATERNARY}
         />
       </DarkThemeProvider>
     </>

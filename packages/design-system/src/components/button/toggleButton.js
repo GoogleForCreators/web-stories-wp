@@ -26,18 +26,27 @@ import { LockOpen, LockClosed } from '../../icons';
 import { BUTTON_TYPES, BUTTON_SIZES, BUTTON_VARIANTS } from './constants';
 import { Button } from './button';
 
-function ToggleButton({ isToggled = false, ...rest }) {
+function ToggleButton({ isToggled = false, type = null, ...rest }) {
+  // if type is set to quaternary, used that, otherwise use secondary or tertiary based on state
+  const actualType =
+    type === BUTTON_TYPES.QUATERNARY
+      ? type
+      : isToggled
+      ? BUTTON_TYPES.SECONDARY
+      : BUTTON_TYPES.TERTIARY;
   return (
     <Button
       {...rest}
-      type={isToggled ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.TERTIARY}
+      type={actualType}
       aria-pressed={isToggled}
+      isToggled={isToggled}
     />
   );
 }
 
 ToggleButton.propTypes = {
   isToggled: PropTypes.bool,
+  type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 
 function LockToggle({ isLocked = false, ...rest }) {

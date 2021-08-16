@@ -94,7 +94,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <Row>
           <Color
             data-testid="text.backgroundColor"
-            hasGradient
+            allowsGradient
             value={backgroundColor}
             onChange={(value) =>
               pushUpdate(

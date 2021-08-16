@@ -149,6 +149,12 @@ const quaternaryColors = ({ theme }) => css`
 
   ${themeHelpers.focusableOutlineCSS};
 
+  ${({ isToggled }) =>
+    isToggled &&
+    css`
+      border-color: ${theme.colors.border.defaultPress};
+    `}
+
   &:disabled {
     border-color: ${theme.colors.border.disable};
     background-color: ${theme.colors.interactiveBg.quaternaryNormal};
@@ -163,7 +169,7 @@ const buttonColors = {
 };
 
 const ButtonRectangle = styled(Base)`
-  ${({ type }) => type && buttonColors?.[type]};
+  ${({ type }) => type && buttonColors[type]};
   min-width: 1px;
   min-height: 1em;
   border-radius: ${({ theme }) => theme.borders.radius.small};
@@ -173,7 +179,7 @@ const ButtonRectangle = styled(Base)`
 `;
 
 const ButtonSquare = styled(Base)`
-  ${({ type }) => type && buttonColors?.[type]};
+  ${({ type }) => type && buttonColors[type]};
   border-radius: ${({ theme }) => theme.borders.radius.small};
 
   ${({ size }) => css`
@@ -196,7 +202,7 @@ const ButtonCircle = styled(ButtonSquare)`
 `;
 
 const ButtonIcon = styled(Base)`
-  ${({ type }) => type && buttonColors?.[type]};
+  ${({ type }) => type && buttonColors[type]};
   width: ${THEME_CONSTANTS.ICON_SIZE}px;
   height: ${THEME_CONSTANTS.ICON_SIZE}px;
   svg {
@@ -265,6 +271,7 @@ Button.propTypes = {
   variant: PropTypes.oneOf(Object.values(BUTTON_VARIANTS)),
   children: PropTypes.node.isRequired,
   activeLabelText: PropTypes.string,
+  isToggled: PropTypes.bool,
 };
 
 export { Button };
