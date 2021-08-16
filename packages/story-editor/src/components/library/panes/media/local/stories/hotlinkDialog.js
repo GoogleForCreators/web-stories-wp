@@ -39,9 +39,15 @@ export const _default = () => {
   };
   const configContext = {
     allowedMimeTypes: {
-      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
       audio: [],
-      video: ['video/mp4'],
+      video: ['video/mp4', 'video/webm'],
     },
     allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
     capabilities: { hasUploadMediaAction: true },

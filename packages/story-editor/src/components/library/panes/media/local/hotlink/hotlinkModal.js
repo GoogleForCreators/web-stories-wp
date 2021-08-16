@@ -81,14 +81,16 @@ function HotlinkModal({ isOpen, onClose }) {
   const getFileInfo = useCallback(
     (value = link) => {
       const ext = value.split(/[#?]/)[0].split('.').pop().trim();
+      let type = null;
       if (!allowedFileTypes.includes(ext)) {
         setErrorMsg(error);
       } else {
         setErrorMsg(null);
+        type = ['m4v', 'mp4', 'webm'].includes(ext) ? 'video' : 'image';
       }
       return {
         ext,
-        type: ['m4v', 'mp4'].includes(ext) ? 'video' : 'image',
+        type,
       };
     },
     [link, allowedFileTypes, error]
