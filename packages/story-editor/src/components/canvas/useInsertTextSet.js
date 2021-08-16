@@ -34,6 +34,8 @@ import { getHTMLFormatters } from '../richText/htmlManipulation';
 import usePageAsCanvas from '../../utils/usePageAsCanvas';
 import useInsertElement from './useInsertElement';
 
+const SCRIM_PADDING = 24;
+
 function useInsertTextSet() {
   const insertElement = useInsertElement();
   const { calculateAccessibleTextColors } = usePageAsCanvas();
@@ -118,7 +120,7 @@ function useInsertTextSet() {
 
         if (useScrim) {
           const { textSetHeight, textSetWidth } = toAdd[0];
-          const textSetBoundingBox = toAdd.reduce(
+          const textSetXY = toAdd.reduce(
             (bb, e) => {
               if (e.x < bb.x || !bb.x) {
                 bb.x = e.x;
@@ -129,14 +131,14 @@ function useInsertTextSet() {
 
               return bb;
             },
-            { x: null, y: null, width: null, height: null }
+            { x: null, y: null }
           );
-          const { x, y } = textSetBoundingBox;
+          const { x, y } = textSetXY;
           const scrim = {
-            x: x - 24,
-            y: y - 24,
-            width: textSetWidth + 24 * 2,
-            height: textSetHeight + 24 * 2,
+            x: x - SCRIM_PADDING,
+            y: y - SCRIM_PADDING,
+            width: textSetWidth + SCRIM_PADDING * 2,
+            height: textSetHeight + SCRIM_PADDING * 2,
             backgroundColor: {
               color: preferredScrimColor,
             },
