@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'how-contact-tracing-works',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 3),
   title: _x('How Contact Tracing Works', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),

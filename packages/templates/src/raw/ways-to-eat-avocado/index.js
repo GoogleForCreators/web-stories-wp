@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'ways-to-eat-avocado',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 5, 28),
   title: _x('Ways to Eat Avocado', 'template name', 'web-stories'),
   tags: [
     _x('Nutrition', 'template keyword', 'web-stories'),

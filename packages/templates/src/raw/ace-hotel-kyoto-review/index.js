@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'ace-hotel-kyoto-review',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 6, 29),
   title: _x('Ace Hotel Kyoto Review', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'album-releases',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 5, 28),
   title: _x('Album Releases', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

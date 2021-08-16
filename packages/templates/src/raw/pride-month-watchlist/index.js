@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'pride-month-watchlist',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 6, 29),
   title: _x('Pride Month Watchlist', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

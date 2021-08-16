@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'buying-art-on-the-internet',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 3),
   title: _x('Buying Art on the Internet', 'template name', 'web-stories'),
   tags: [
     _x('Arts & Craft', 'template keyword', 'web-stories'),

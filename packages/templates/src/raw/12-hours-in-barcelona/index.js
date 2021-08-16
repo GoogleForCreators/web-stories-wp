@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: '12-hours-in-barcelona',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 6, 12),
   title: _x('12 Hours in Barcelona', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

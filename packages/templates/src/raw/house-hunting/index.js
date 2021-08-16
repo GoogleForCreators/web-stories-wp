@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'house-hunting',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 3),
   title: _x('House Hunting', 'template name', 'web-stories'),
   tags: [
     _x('Home', 'template keyword', 'web-stories'),

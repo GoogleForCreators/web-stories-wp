@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'celebrity-q-a',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 3),
   title: _x('Celebrity Q & A', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

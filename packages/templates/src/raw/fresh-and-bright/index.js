@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'fresh-bright',
-  creationDate: new Date(2021, 6, 1),
+  creationDate: new Date(2021, 4, 29),
   title: _x('Fresh & Bright', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),

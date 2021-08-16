@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'los-angeles-city-guide',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 3),
   title: _x('Los Angeles City Guide', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

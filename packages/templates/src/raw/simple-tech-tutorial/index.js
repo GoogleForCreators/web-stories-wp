@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'simple-tech-tutorial',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 9),
   title: _x('Simple Tech Tutorial ', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),

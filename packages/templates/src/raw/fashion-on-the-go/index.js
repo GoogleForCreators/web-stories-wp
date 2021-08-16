@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'fashion-on-the-go',
-  creationDate: new Date(2021, 6, 1),
+  creationDate: new Date(2021, 4, 29),
   title: _x('Fashion On The Go', 'template name', 'web-stories'),
   tags: [
     _x('Clothing', 'template keyword', 'web-stories'),

@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'baking-bread-guide',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 6, 13),
   title: _x('Baking Bread Guide ', 'template name', 'web-stories'),
   tags: [
     _x('Food', 'template keyword', 'web-stories'),

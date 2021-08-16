@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'skin-care-at-home',
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 9),
   title: _x('Skin Care at Home', 'template name', 'web-stories'),
   tags: [
     _x('Beauty', 'template keyword', 'web-stories'),

@@ -26,7 +26,7 @@ import { default as template } from './template';
 
 export default {
   slug: 'sleep',
-  creationDate: new Date(2021, 6, 1),
+  creationDate: new Date(2021, 4, 29),
   title: _x('Sleep', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),
