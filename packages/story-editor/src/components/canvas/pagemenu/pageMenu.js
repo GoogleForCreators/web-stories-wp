@@ -63,7 +63,7 @@ function PageMenu() {
   const {
     currentPageNumber,
     currentPage,
-    pages,
+    numberOfPages,
     deleteCurrentPage,
     addPage,
     hasAnimations,
@@ -75,7 +75,7 @@ function PageMenu() {
       return {
         currentPageNumber,
         currentPage,
-        pages,
+        numberOfPages: pages.length,
         deleteCurrentPage,
         addPage,
         hasAnimations: currentPage?.animations?.length > 0,
@@ -103,7 +103,7 @@ function PageMenu() {
   );
 
   const isWidePage = pageWidth > 280;
-  const disableDeleteButton = pages && pages.length === 1;
+  const disableDeleteButton = numberOfPages <= 1;
 
   const handleUndo = useCallback(() => undo(), [undo]);
 
