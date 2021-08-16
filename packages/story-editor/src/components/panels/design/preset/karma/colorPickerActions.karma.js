@@ -27,7 +27,9 @@ import { useStory } from '../../../../../app/story';
 
 const ALL_STORIES = 'All stories';
 
-describe('Saved Styles: Color Picker', () => {
+// Disable reason: temp skipped for now
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('Saved Styles: Color Picker', () => {
   let fixture;
 
   beforeEach(async () => {
