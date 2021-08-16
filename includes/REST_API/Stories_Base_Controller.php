@@ -168,9 +168,9 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return $original_post;
 		}
 
-		if ( ! $this->check_update_permission( $original_post ) ) {
+		if ( ! $this->check_read_permission( $original_post ) ) {
 			return new WP_Error(
-				'rest_cannot_edit',
+				'rest_cannot_view',
 				__( 'Sorry, you are not allowed to duplicate this story.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
 			);

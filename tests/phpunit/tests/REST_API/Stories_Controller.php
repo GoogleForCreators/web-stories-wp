@@ -594,6 +594,7 @@ class Stories_Controller extends Test_REST_TestCase {
 				'post_title'            => 'Example title',
 				'post_excerpt'          => 'Example excerpt',
 				'post_author'           => self::$user_id,
+				'post_status'           => 'private',
 				'post_content_filtered' => $unsanitized_story_data,
 			]
 		);
@@ -612,7 +613,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
+		$this->assertErrorResponse( 'rest_cannot_view', $response, 403 );
 
 		$this->kses_remove_filters();
 	}
