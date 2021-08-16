@@ -53,10 +53,14 @@ if ( is_multisite() ) {
 			'update_site_meta_cache' => false,
 		]
 	);
+
 	foreach ( $site_ids as $site_id ) {
+		// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.switch_to_blog_switch_to_blog
 		switch_to_blog( $site_id );
+
 		\Google\Web_Stories\delete_site();
 	}
+
 	restore_current_blog();
 } else {
 	\Google\Web_Stories\delete_site();
