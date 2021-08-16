@@ -25,7 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  creationDate: new Date(2021, 6, 1),
+  creationDate: new Date(2021, 4, 29),
   title: _x('Sleep', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),

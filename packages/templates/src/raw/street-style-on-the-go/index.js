@@ -25,7 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 6, 12),
   title: _x('Street Style On The Go', 'template name', 'web-stories'),
   tags: [
     _x('Fashion', 'template keyword', 'web-stories'),

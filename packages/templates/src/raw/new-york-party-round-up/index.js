@@ -25,7 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
-  creationDate: new Date(2021, 7, 1),
+  creationDate: new Date(2021, 7, 9),
   title: _x('New York Party Round-up', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),
