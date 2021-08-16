@@ -19,26 +19,14 @@
  */
 import { useCallback } from 'react';
 import { __ } from '@web-stories-wp/i18n';
-import {
-  createResource,
-  getFileNameFromUrl,
-  getFirstFrameOfVideo,
-  getImageDimensions,
-  getVideoDimensions,
-  getVideoLength,
-  hasVideoGotAudio,
-} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import {
-  getPosterName,
-  useUploadVideoFrame,
-} from '../../../../../../app/media/utils';
+
 import { isValidUrl } from '../../../../../../utils/url';
 import useLibrary from '../../../../useLibrary';
-import { useConfig } from '../../../../../../app';
+import useGetResourceFromUrl from '../../../../../../app/media/utils/useGetResourceFromUrl';
 
 function useInsert({
   link,
@@ -48,13 +36,10 @@ function useInsert({
   getFileInfo,
   onClose,
 }) {
-  const { uploadVideoPoster } = useUploadVideoFrame({});
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+  const getResourceFromUrl = useGetResourceFromUrl();
   const onInsert = useCallback(async () => {
     if (errorMsg?.length) {
       return;
@@ -69,42 +54,10 @@ function useInsert({
     }
     try {
       const { type } = getFileInfo();
-      const isVideo = type === 'video';
-      const getMediaDimensions = isVideo
-        ? getVideoDimensions
-        : getImageDimensions;
-      const { width, height } = await getMediaDimensions(link);
-
-      // Add necessary data for video.
-      let posterData;
-      const videoData = {};
-      const originalFileName = getFileNameFromUrl(link);
-      if (isVideo) {
-        // Create poster if possible.
-        if (hasUploadMediaAction) {
-          const fileName = getPosterName(originalFileName);
-          const posterFile = await getFirstFrameOfVideo(link);
-          posterData = await uploadVideoPoster(0, fileName, posterFile);
-          videoData.poster = posterData.poster;
-          videoData.posterId = posterData.posterId;
-        }
-        const hasAudio = await hasVideoGotAudio(link);
-        videoData.isMuted = !hasAudio;
-        const { length, formattedLength } = getVideoLength(link);
-        videoData.length = length;
-        videoData.formattedLength = formattedLength;
-      }
+      const resource = await getResourceFromUrl(link);
       // @todo Create getResourceFromUrl util instead.
       insertElement(type, {
-        resource: createResource({
-          alt: originalFileName,
-          type,
-          width,
-          height,
-          src: link,
-          local: false,
-          ...videoData,
-        }),
+        resource,
       });
       setErrorMsg(null);
       setLink('');
@@ -113,13 +66,12 @@ function useInsert({
       setErrorMsg(insertionError);
     }
   }, [
+    getResourceFromUrl,
     insertElement,
     link,
     errorMsg,
     getFileInfo,
     onClose,
-    uploadVideoPoster,
-    hasUploadMediaAction,
     setErrorMsg,
     setLink,
   ]);

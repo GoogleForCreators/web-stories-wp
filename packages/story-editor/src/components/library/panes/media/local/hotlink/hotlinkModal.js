@@ -21,6 +21,7 @@ import { Input } from '@web-stories-wp/design-system';
 import { useState, useCallback, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { getFileExtFromUrl } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -69,7 +70,7 @@ function HotlinkModal({ isOpen, onClose }) {
 
   const getFileInfo = useCallback(
     (value = link) => {
-      const ext = value.split(/[#?]/)[0].split('.').pop().trim();
+      const ext = getFileExtFromUrl(value);
       let type = null;
       if (!allowedFileTypes.includes(ext)) {
         setErrorMsg(error);
