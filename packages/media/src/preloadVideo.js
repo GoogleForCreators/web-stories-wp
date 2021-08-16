@@ -27,6 +27,7 @@ const preloadVideo = (src) => {
     video.onerror = reject;
     video.crossOrigin = 'anonymous';
     video.src = src;
+    video.muted = true;
   });
 };
 
