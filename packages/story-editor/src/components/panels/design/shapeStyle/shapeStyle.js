@@ -27,7 +27,6 @@ import { __ } from '@web-stories-wp/i18n';
 import { Row, Color } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import getColorPickerActions from '../../shared/getColorPickerActions';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 
 function ShapeStylePanel({ selectedElements, pushUpdate }) {
