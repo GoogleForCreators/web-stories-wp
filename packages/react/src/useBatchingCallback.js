@@ -17,8 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
 import { unstable_batchedUpdates as batchedUpdates } from 'react-dom';
+
+/**
+ * Internal dependencies
+ */
+import { useCallback } from './react';
 
 /**
  * The same as `useCallback` except that it ensures the updates

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Fragment } from 'react';
+import { Fragment } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';

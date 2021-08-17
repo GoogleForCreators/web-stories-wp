@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { createSolid, PatternPropType } from '@web-stories-wp/patterns';

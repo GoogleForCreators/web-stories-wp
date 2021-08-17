@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 

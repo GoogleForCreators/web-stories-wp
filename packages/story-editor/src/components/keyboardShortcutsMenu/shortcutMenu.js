@@ -24,7 +24,7 @@ import {
   useRef,
   useLayoutEffect,
   useState,
-} from 'react';
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';

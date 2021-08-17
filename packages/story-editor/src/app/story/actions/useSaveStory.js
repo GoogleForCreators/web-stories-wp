@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
 

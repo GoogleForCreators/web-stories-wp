@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';

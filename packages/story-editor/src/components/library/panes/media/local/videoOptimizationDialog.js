@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Text,
