@@ -357,7 +357,6 @@ describe('Checklist integration - Card visibility', () => {
 
   // issues that show if there is a poster image
   const posterIssuesRequiringMediaUploadPermissions = [
-    PRIORITY_COPY.posterTooSmall.title,
     PRIORITY_COPY.storyPosterSize.title,
   ];
 
@@ -473,12 +472,8 @@ describe('Checklist integration - Card visibility', () => {
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
-          sizes: {
-            full: {
-              width: 300,
-              height: 400,
-            },
-          },
+          width: 300,
+          height: 400,
         },
       })
     );
@@ -501,8 +496,9 @@ describe('Checklist integration - Card visibility', () => {
           mimeType: 'video/webm',
           creationDate: '2021-05-21T00:09:18',
           src: 'http://localhost:8899/wp-content/uploads/2021/05/small-video-10.webm',
-          width: 560,
-          height: 320,
+          // resolution too low
+          height: 220,
+          width: 320,
           // no poster image
           poster: null,
           posterId: null,
@@ -511,13 +507,6 @@ describe('Checklist integration - Card visibility', () => {
           lengthFormatted: '0:06',
           title: 'small-video',
           alt: 'small-video',
-          sizes: {
-            full: {
-              // resolution too low
-              height: 220,
-              width: 320,
-            },
-          },
           local: false,
           isOptimized: false,
           baseColor: [115, 71, 39],

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from '@web-stories-wp/react';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 
 /**

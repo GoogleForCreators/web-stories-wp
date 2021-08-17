@@ -20,7 +20,7 @@
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import {
   AnimatedContextMenu,
   MenuItemProps,

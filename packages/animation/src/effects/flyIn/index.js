@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
 import { DIRECTION } from '../../constants';
 import { AnimationMove } from '../../parts/move';
+import { AnimationFade } from '../../parts/fade';
 import { getOffPageOffset } from '../../utils';
 
 export function EffectFlyIn({
@@ -28,6 +33,7 @@ export function EffectFlyIn({
   easing = 'cubic-bezier(0.2, 0.6, 0.0, 1)',
   element,
 }) {
+  const id = uuidv4();
   const { offsetTop, offsetLeft, offsetRight, offsetBottom } =
     getOffPageOffset(element);
 
@@ -46,11 +52,63 @@ export function EffectFlyIn({
     },
   };
 
-  return new AnimationMove({
+  const {
+    WAAPIAnimation: FadeWAAPIAnimation,
+    AMPTarget: FadeAMPTarget,
+    AMPAnimation: FadeAMPAnimation,
+    generatedKeyframes: fadeKeyframes,
+  } = AnimationFade({
+    fadeFrom: 0,
+    fadeTo: 1,
+    duration: duration,
+    delay,
+    easing,
+  });
+
+  const {
+    WAAPIAnimation: MoveWAAPIAnimation,
+    AMPTarget: MoveAMPTarget,
+    AMPAnimation: MoveAMPAnimation,
+    generatedKeyframes: moveKeyframes,
+  } = new AnimationMove({
     ...offsetLookup[flyInDir],
     duration,
     delay,
     easing,
     element,
   });
+
+  return {
+    id,
+    // eslint-disable-next-line react/prop-types
+    WAAPIAnimation: function WAAPIAnimation({ children, hoistAnimation }) {
+      return (
+        <FadeWAAPIAnimation hoistAnimation={hoistAnimation}>
+          <MoveWAAPIAnimation hoistAnimation={hoistAnimation}>
+            {children}
+          </MoveWAAPIAnimation>
+        </FadeWAAPIAnimation>
+      );
+    },
+    // eslint-disable-next-line react/prop-types
+    AMPTarget: function AMPTarget({ children, style }) {
+      return (
+        <FadeAMPTarget style={style}>
+          <MoveAMPTarget style={style}>{children}</MoveAMPTarget>
+        </FadeAMPTarget>
+      );
+    },
+    AMPAnimation: function AMPAnimation() {
+      return (
+        <>
+          <FadeAMPAnimation />
+          <MoveAMPAnimation />
+        </>
+      );
+    },
+    generatedKeyframes: {
+      ...fadeKeyframes,
+      ...moveKeyframes,
+    },
+  };
 }

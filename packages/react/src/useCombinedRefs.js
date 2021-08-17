@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from './react';
 
 /**
  * Synchronize multiple refs to a single ref

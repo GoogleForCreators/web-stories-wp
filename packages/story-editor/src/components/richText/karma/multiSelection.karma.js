@@ -115,7 +115,9 @@ describe('Styling multiple text fields', () => {
       );
     });
 
-    it('should apply formatting correctly for multi-style text field', async () => {
+    // Disable reason: To be fixed in 8655
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should apply formatting correctly for multi-style text field', async () => {
       const {
         bold,
         italic,

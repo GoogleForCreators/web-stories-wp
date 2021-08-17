@@ -19,7 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState, useCallback, useRef, useLayoutEffect } from 'react';
+import {
+  useState,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Text,

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
@@ -100,6 +100,7 @@ function usePageAsCanvas() {
           ).then((htmlToImage) => {
             const promise = htmlToImage.toCanvas(fullbleedContainer, {
               fontEmbedCss: '',
+              pixelRatio: 1,
             });
             setPageCanvasPromise(promise);
             promise.then(onCompletion).catch(() => onFail());

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import queryString from 'query-string';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * WordPress dependencies
@@ -40,12 +40,7 @@ const post = (path, options = {}) =>
 // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
 const deleteRequest = (path, options = {}) =>
   apiFetch({
-    path: queryString.stringifyUrl({
-      url: path,
-      query: {
-        _method: 'DELETE',
-      },
-    }),
+    path: addQueryArgs(path, { _method: 'DELETE' }),
     ...options,
     method: 'POST',
   });

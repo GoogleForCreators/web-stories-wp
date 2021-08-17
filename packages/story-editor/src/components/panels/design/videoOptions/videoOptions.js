@@ -33,7 +33,7 @@ import {
   useLiveRegion,
 } from '@web-stories-wp/design-system';
 import { useFeature } from 'flagged';
-import { useCallback, useMemo, useEffect } from 'react';
+import { useCallback, useMemo, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

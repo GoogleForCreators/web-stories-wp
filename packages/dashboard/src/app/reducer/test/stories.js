@@ -51,7 +51,7 @@ describe('storyReducer', () => {
         totalStoriesByStatus: {
           all: 44,
           [STORY_STATUS.DRAFT]: 40,
-          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+          [STORY_STATUS.PUBLISH]: 4,
         },
         totalPages: 4,
       },
@@ -76,7 +76,7 @@ describe('storyReducer', () => {
       totalStoriesByStatus: {
         all: 43,
         [STORY_STATUS.DRAFT]: 40,
-        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 3,
+        [STORY_STATUS.PUBLISH]: 3,
       },
       totalPages: 4,
     });
@@ -118,7 +118,7 @@ describe('storyReducer', () => {
         totalStoriesByStatus: {
           all: 44,
           [STORY_STATUS.DRAFT]: 40,
-          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+          [STORY_STATUS.PUBLISH]: 4,
         },
         totalPages: 4,
       },
@@ -142,7 +142,7 @@ describe('storyReducer', () => {
       totalStoriesByStatus: {
         all: 45,
         [STORY_STATUS.DRAFT]: 41,
-        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+        [STORY_STATUS.PUBLISH]: 4,
       },
       totalPages: 4,
     });
@@ -216,7 +216,7 @@ describe('storyReducer', () => {
         totalStoriesByStatus: {
           all: 44,
           [STORY_STATUS.DRAFT]: 40,
-          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+          [STORY_STATUS.PUBLISH]: 4,
         },
         totalPages: 4,
       },
@@ -235,7 +235,7 @@ describe('storyReducer', () => {
       totalStoriesByStatus: {
         all: 44,
         [STORY_STATUS.DRAFT]: 40,
-        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+        [STORY_STATUS.PUBLISH]: 4,
       },
       totalPages: 4,
       allPagesFetched: false,
@@ -290,7 +290,7 @@ describe('storyReducer', () => {
           totalStoriesByStatus: {
             all: 18,
             [STORY_STATUS.DRAFT]: 14,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+            [STORY_STATUS.PUBLISH]: 4,
           },
           totalPages: 2,
         },
@@ -309,7 +309,7 @@ describe('storyReducer', () => {
       totalStoriesByStatus: {
         all: 18,
         [STORY_STATUS.DRAFT]: 14,
-        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
+        [STORY_STATUS.PUBLISH]: 4,
       },
       totalPages: 2,
       allPagesFetched: true,

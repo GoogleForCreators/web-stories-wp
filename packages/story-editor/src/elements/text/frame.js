@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from '@web-stories-wp/react';
 import { useUnits } from '@web-stories-wp/units';
 
 /**

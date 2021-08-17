@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useLayoutEffect } from 'react';
+import { useCallback, useState, useLayoutEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

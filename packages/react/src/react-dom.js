@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import ColorPresetActions from '../design/preset/colorPreset/colorPresetActions';
-
-function getColorPickerActions(color, pushUpdate, onAction) {
-  return (
-    <ColorPresetActions
-      color={color}
-      pushUpdate={pushUpdate}
-      onAction={onAction}
-    />
-  );
-}
-
-export default getColorPickerActions;
+export { createPortal, render } from 'react-dom';
+export { renderToStaticMarkup } from 'react-dom/server';

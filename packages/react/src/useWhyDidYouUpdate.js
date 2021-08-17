@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from './react';
 
 /**
  * Hook to see which prop changes are causing a component to re-render.

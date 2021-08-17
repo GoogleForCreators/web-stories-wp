@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 

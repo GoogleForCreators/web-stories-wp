@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { render, fireEvent } from '@testing-library/react';
+import React, { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import React, { useRef } from 'react';
 import useCanvasKeys from '../../../app/canvas/useCanvasKeys';
 import StoryContext from '../../../app/story/context.js';
 import CanvasContext from '../../../app/canvas/context.js';
