@@ -29,7 +29,7 @@ import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 import { useLayoutContext } from '../layout';
 
 const StyledButton = styled(Button)(
-  ({ isVisible, theme }) => css`
+  ({ $isVisible, theme }) => css`
     position: fixed;
     right: 40px;
     bottom: 40px;
@@ -42,14 +42,10 @@ const StyledButton = styled(Button)(
     contain: content;
     padding: 8px;
     background-color: ${theme.colors.opacity.white64};
-    pointer-events: ${isVisible ? 'auto' : 'none'};
+    pointer-events: ${$isVisible ? 'auto' : 'none'};
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-    opacity: ${Number(isVisible)};
+    opacity: ${Number($isVisible)};
     transition: opacity 300ms ease-in-out;
-    &:focus {
-      opacity: 1;
-      pointer-events: 'auto';
-    }
   `
 );
 
@@ -78,10 +74,10 @@ const ScrollToTop = () => {
 
   return (
     <StyledButton
-      aria-hidden={!isVisible}
+      disabled={!isVisible}
       aria-label={__('Scroll back to top', 'web-stories')}
       data-testid="scroll-to-top-button"
-      isVisible={isVisible}
+      $isVisible={isVisible}
       onClick={scrollToTop}
       variant={BUTTON_VARIANTS.CIRCLE}
     >
