@@ -47,9 +47,7 @@ describe('Inserting Media from Dialog', () => {
       await createNewStory();
       await expect(page).toMatch('Howdy, contributor');
 
-      await expect(page).toClick('button', { text: 'Upload' });
-      await page.waitForSelector('.ReactModal__Content');
-      await expect(page).toMatch('Access Restrictions');
+      await expect(page).not.toMatchElement('button', { text: 'Upload' });
     });
   });
 });
