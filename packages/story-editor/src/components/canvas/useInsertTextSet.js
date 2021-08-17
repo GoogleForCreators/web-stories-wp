@@ -24,6 +24,7 @@ import {
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
 import { useBatchingCallback } from '@web-stories-wp/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -39,6 +40,7 @@ const SCRIM_PADDING = 24;
 function useInsertTextSet() {
   const insertElement = useInsertElement();
   const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const enableSmartTextSetsColor = useFeature('enableSmartTextSetsColor');
 
   const { setSelectedElementsById } = useStory(
     ({ actions: { setSelectedElementsById } }) => {
@@ -61,7 +63,6 @@ function useInsertTextSet() {
       let textElementsContrasts = [];
       let firstValidColor = null;
 
-      const enableSmartTextColor = true;
       const white = {
         r: 255,
         g: 255,
@@ -83,7 +84,7 @@ function useInsertTextSet() {
       let preferredScrimColor, scrimsCount, useScrim;
 
       // Insert scrim as a first element if needed.
-      if (enableSmartTextColor && !hasPredefinedColor) {
+      if (enableSmartTextSetsColor && !hasPredefinedColor) {
         textElementsContrasts = await Promise.all(
           toAdd.map((element) =>
             element.type === 'text'
@@ -157,7 +158,7 @@ function useInsertTextSet() {
           'textSetWidth',
           'textSetHeight',
         ]);
-        if (enableSmartTextColor && !hasPredefinedColor) {
+        if (enableSmartTextSetsColor && !hasPredefinedColor) {
           // If scrim is used - adjust the colors, otherwise use defaults.
           const scrimContrastingTextColor =
             preferredScrimColor.r === 0 ? white : black;
@@ -184,7 +185,12 @@ function useInsertTextSet() {
         elementIds: addedElements.map(({ id }) => id),
       });
     },
-    [calculateAccessibleTextColors, insertElement, setSelectedElementsById]
+    [
+      calculateAccessibleTextColors,
+      enableSmartTextSetsColor,
+      insertElement,
+      setSelectedElementsById,
+    ]
   );
 
   const insertTextSetByOffset = useCallback(
