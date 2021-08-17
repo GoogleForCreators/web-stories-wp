@@ -107,7 +107,9 @@ describe('Styling single text field', () => {
       expect(actual).toBe(expected);
     });
 
-    it('should apply inline formatting correctly for multi-style text field', async () => {
+    // Disable reason: To be fixed in 8655
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should apply inline formatting correctly for multi-style text field', async () => {
       const {
         bold,
         italic,

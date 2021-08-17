@@ -38,7 +38,6 @@ import { Color, Row as DefaultRow } from '../../../form';
 import { useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
-import getColorPickerActions from '../../shared/getColorPickerActions';
 import { getDefinitionForType } from '../../../../elements';
 import { states, styles, useFocusHighlight } from '../../../../app/highlights';
 
@@ -135,12 +134,12 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         <Row>
           <Color
             ref={inputRef}
-            hasGradient
+            allowsGradient
             value={backgroundColor}
             onChange={updateBackgroundColor}
             label={__('Background color', 'web-stories')}
-            colorPickerActions={getColorPickerActions}
-            hasOpacity={false}
+            allowsSavedColors
+            allowsOpacity={false}
           />
         </Row>
       )}

@@ -49,9 +49,9 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
       clientX: 0,
     });
 
-    // Move to the 20% mark
+    // Move to the 30% mark
     firePointerEvent.pointerMove(stop, {
-      clientX: 0.2 * LINE_LENGTH,
+      clientX: 0.3 * LINE_LENGTH,
     });
 
     await waitFor(() =>
@@ -59,7 +59,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
         type: 'linear',
         stops: [
           { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.8 },
+          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.7 },
         ],
       })
     );

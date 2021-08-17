@@ -66,8 +66,8 @@ const HEADER_FOOTER_HEIGHT = 36;
 const BODY_HEIGHT = 156;
 const CONTROLS_HEIGHT = 28;
 const CONTROLS_BORDER_RADIUS = 50;
-const OPACITY_WIDTH = 64;
-const HEX_WIDTH = 80;
+const OPACITY_WIDTH = 52;
+const HEX_WIDTH = 74;
 
 const Container = styled.div`
   user-select: none;
@@ -122,34 +122,16 @@ const Footer = styled.div`
   line-height: 19px;
   position: relative;
   margin-top: 7px;
-  display: grid;
-  grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / 64px 1fr ${OPACITY_WIDTH}px;
-  grid-gap: 10px;
+  display: flex;
+  gap: 10px;
   margin-bottom: 16px;
 `;
 
-const EyedropperButton = styled(Button)`
-  border: none;
-`;
-
-const Eyedropper = styled.div`
-  grid-area: eyedropper;
-  display: flex;
-`;
-
 const HexValue = styled.div`
-  grid-area: hex;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: ${HEX_WIDTH}px;
 `;
 
 const Opacity = styled.div`
-  grid-area: opacity;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: ${OPACITY_WIDTH}px;
 `;
 
@@ -228,18 +210,16 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       </Body>
       <Footer>
         {enableEyedropper && (
-          <Eyedropper>
-            <EyedropperButton
-              variant={BUTTON_VARIANTS.SQUARE}
-              type={BUTTON_TYPES.QUATERNARY}
-              size={BUTTON_SIZES.SMALL}
-              aria-label={__('Pick a color from canvas', 'web-stories')}
-              onClick={initEyedropper()}
-              onPointerEnter={initEyedropper(false)}
-            >
-              <Icons.Pipette />
-            </EyedropperButton>
-          </Eyedropper>
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={__('Pick a color from canvas', 'web-stories')}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
+          >
+            <Icons.Pipette />
+          </Button>
         )}
         <HexValue>
           <EditablePreview
