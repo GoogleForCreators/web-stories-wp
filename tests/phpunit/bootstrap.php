@@ -38,7 +38,7 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	exit( 1 );
 }
 
-define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( __DIR__, 2 ) . '/vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php' );
+define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( __DIR__, 2 ) . '/vendor/yoast/phpunit-polyfills' );
 
 // Give access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
