@@ -132,6 +132,7 @@ describe('useMedia3pApi', () => {
     expect(listMediaResult).toStrictEqual({
       media: [
         {
+          baseColor: undefined,
           alt: 'media/unsplash:1234',
           attribution: {
             author: {

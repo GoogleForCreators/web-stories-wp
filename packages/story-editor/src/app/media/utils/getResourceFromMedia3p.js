@@ -263,6 +263,7 @@ function getImageResourceFromMedia3p(m) {
   const imageUrls = getImageUrls(m);
   return createResource({
     id: m.name,
+    baseColor: m.baseColor,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
@@ -282,6 +283,7 @@ function getVideoResourceFromMedia3p(m) {
   const length = parseInt(m.videoMetadata.duration.trimEnd('s'));
   return createResource({
     id: m.name,
+    baseColor: m.baseColor,
     posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: videoUrls.full.mime_type,
@@ -306,6 +308,7 @@ function getGifResourceFromMedia3p(m) {
   const { imageUrls, videoUrls, previewUrl } = getGifUrls(m);
   return createResource({
     id: m.name,
+    baseColor: m.baseColor,
     posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
