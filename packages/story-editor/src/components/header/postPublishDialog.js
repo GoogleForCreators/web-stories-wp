@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';

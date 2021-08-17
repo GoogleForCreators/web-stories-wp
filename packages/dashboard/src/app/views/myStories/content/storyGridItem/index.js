@@ -20,7 +20,7 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -141,7 +141,7 @@ const StoryGridItem = ({
       ref={(el) => {
         itemRefs.current[story.id] = el;
       }}
-      title={sprintf(
+      aria-label={sprintf(
         /* translators: %s: story title.*/
         __('Details about %s', 'web-stories'),
         formattedTitle

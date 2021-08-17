@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from '@web-stories-wp/react';
 import { render } from '@testing-library/react';
 jest.mock('flagged');
 import { useFeature } from 'flagged';

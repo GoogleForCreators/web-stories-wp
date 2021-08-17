@@ -17,7 +17,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
+import {
+  useLayoutEffect,
+  useRef,
+  forwardRef,
+  useEffect,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import {

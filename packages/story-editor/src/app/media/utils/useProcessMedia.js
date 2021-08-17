@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import {
   fetchRemoteBlob,
   fetchRemoteFile,
@@ -41,7 +41,7 @@ function useProcessMedia({
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
-      const { id, alt, title } = oldResource;
+      const { id, alt } = oldResource;
       updateElementsByResourceId({
         id,
         properties: () => {
@@ -50,7 +50,6 @@ function useProcessMedia({
             resource: {
               ...resource,
               alt,
-              title,
             },
           };
         },
@@ -152,8 +151,7 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            alt: oldResource.alt,
-            title: oldResource.title,
+            original_id: oldResource.id,
           },
         });
       };
@@ -232,8 +230,7 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            alt: oldResource.alt,
-            title: oldResource.title,
+            original_id: oldResource.id,
             media_source: oldResource?.isOptimized
               ? 'video-optimization'
               : 'editor',
@@ -299,7 +296,9 @@ function useProcessMedia({
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadProgress,
-          additionalData: { alt: oldResource.alt, title: oldResource.title },
+          additionalData: {
+            original_id: oldResource.id,
+          },
         });
       };
       return process();

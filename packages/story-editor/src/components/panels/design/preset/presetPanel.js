@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import {
   localStore,

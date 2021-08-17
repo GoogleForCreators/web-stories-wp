@@ -25,7 +25,9 @@ import { waitFor } from '@testing-library/react';
  */
 import { arrange } from './_utils';
 
-describe('<ColorPicker /> as it loads', () => {
+// Disable reason: To be fixed in 8655
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('<ColorPicker /> as it loads', () => {
   it('should render with initial focus forced to the solid pattern button', async () => {
     const { getSolidButton } = arrange();
 

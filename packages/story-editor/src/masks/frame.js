@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

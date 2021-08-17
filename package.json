@@ -32,7 +32,6 @@
       "packages/*"
     ]
   },
-  "dependencies": {},
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.3",
     "@axe-core/puppeteer": "^4.2.2",
@@ -93,7 +92,7 @@
     "eslint-plugin-jasmine": "^4.1.1",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-jest-dom": "^3.9.0",
-    "eslint-plugin-jsdoc": "^36.0.6",
+    "eslint-plugin-jsdoc": "^36.0.7",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-markdown": "^2.2.0",
     "eslint-plugin-node": "^11.1.0",
@@ -102,7 +101,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-styled-components-a11y": "^0.0.34",
-    "eslint-plugin-testing-library": "^4.10.1",
+    "eslint-plugin-testing-library": "^4.11.0",
     "glob": "^7.1.7",
     "html-webpack-plugin": "^4.5.2",
     "husky": "^4.3.7",
@@ -151,7 +150,7 @@
     "thread-loader": "^3.0.4",
     "webpack": "^4.46.0",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-cli": "^4.7.0",
+    "webpack-cli": "^4.8.0",
     "webpackbar": "^4.0.0"
   },
   "scripts": {

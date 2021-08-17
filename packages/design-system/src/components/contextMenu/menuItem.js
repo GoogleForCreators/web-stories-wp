@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { sprintf, __ } from '@web-stories-wp/i18n';
 

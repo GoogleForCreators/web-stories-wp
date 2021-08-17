@@ -18,9 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useCombinedRefs } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { useCombinedRefs } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

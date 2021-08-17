@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { differenceInSeconds } from '@web-stories-wp/date';
 
@@ -372,7 +372,9 @@ function getTotalStoriesByStatus(stories = []) {
     {
       all: stories.length,
       draft: 0,
-      published: 0,
+      publish: 0,
+      private: 0,
+      future: 0,
     }
   );
 }

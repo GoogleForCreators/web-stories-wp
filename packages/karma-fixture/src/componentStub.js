@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, forwardRef } from 'react';
+import { useState, useMemo, forwardRef } from '@web-stories-wp/react';
 import { act } from '@testing-library/react';
 
 export default class ComponentStub {
