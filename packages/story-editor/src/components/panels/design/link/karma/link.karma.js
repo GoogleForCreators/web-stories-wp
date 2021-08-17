@@ -225,11 +225,10 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 100);
 
       linkPanel = fixture.editor.inspector.designPanel.link;
+      linkPanel.address.scrollTo(50, 50);
       await fixture.events.click(linkPanel.address);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
-
-      linkPanel.address.scrollTo(0, 0);
 
       await fixture.events.sleep(1000);
 
