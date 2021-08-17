@@ -47,9 +47,9 @@ import { focusStyle } from '../panels/shared';
 
 const Preview = styled.button`
   margin: 0;
-  padding: 7px;
+  padding: 5px 7px;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  border-radius: 2px;
+  border-radius: 4px;
   background: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
   width: 100%;
@@ -75,10 +75,10 @@ function EditablePreview({ label, value, width, format, onChange }) {
         textAlign: 'center',
         textTransform: 'lowercase',
         width: '100%',
-        padding: '8px 12px',
+        padding: '6px 12px',
         border: '1px solid #5E6668',
         color: '#E4E5E6',
-        borderRadius: '2px',
+        borderRadius: '4px',
         background: 'transparent',
         lineHeight: '18px',
       },

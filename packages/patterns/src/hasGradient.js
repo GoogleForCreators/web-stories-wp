@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-function hasGradient({ type }) {
-  return Boolean(type) && 'solid' !== type;
+function hasGradient(pattern) {
+  return Boolean(pattern?.type) && 'solid' !== pattern.type;
 }
 
 export default hasGradient;
