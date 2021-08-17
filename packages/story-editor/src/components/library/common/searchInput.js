@@ -18,8 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import {
+  useState,
+  useCallback,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { SearchInput } from '@web-stories-wp/design-system';

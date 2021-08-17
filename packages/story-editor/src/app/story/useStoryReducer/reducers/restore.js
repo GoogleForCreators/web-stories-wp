@@ -30,14 +30,16 @@
  * @param {string} payload.current Current page ID.
  * @param {Array} payload.selection Selection.
  * @param {Object} payload.story Story object.
+ * @param {Object} payload.capabilities Capabilities object.
  * @return {Object} New state
  */
-function restore(state, { pages, current, selection, story }) {
+function restore(state, { pages, current, selection, story, capabilities }) {
   if (!Array.isArray(pages) || pages.length === 0) {
     return state;
   }
 
   const newStory = typeof story === 'object' ? story : {};
+  const newCapabilities = typeof capabilities === 'object' ? capabilities : {};
   const oldCurrent = current ?? state.current;
   const newCurrent = pages.some(({ id }) => id === oldCurrent)
     ? oldCurrent
@@ -50,6 +52,7 @@ function restore(state, { pages, current, selection, story }) {
     selection: newSelection,
     story: newStory,
     animationState: state.animationState,
+    capabilities: newCapabilities,
   };
 }
 

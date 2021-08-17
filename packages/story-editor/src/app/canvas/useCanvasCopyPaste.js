@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
-import { useBatchingCallback } from '@web-stories-wp/react';
+import { useCallback, useBatchingCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

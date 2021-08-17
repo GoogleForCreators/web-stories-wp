@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useState } from '@web-stories-wp/react';
 import classnames from 'classnames';
 import { useUnits } from '@web-stories-wp/units';
 

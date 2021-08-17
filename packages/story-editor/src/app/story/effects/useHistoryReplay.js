@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -32,12 +32,13 @@ function useHistoryReplay({ restore }) {
     if (!requestedState) {
       return;
     }
-    const { current, pages, selection, story } = requestedState;
+    const { current, pages, selection, story, capabilities } = requestedState;
     restore({
       pages,
       current,
       story,
       selection,
+      capabilities,
     });
   }, [restore, requestedState]);
 }

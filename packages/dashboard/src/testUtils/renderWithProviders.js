@@ -40,7 +40,6 @@ const defaultProviderValues = {
   },
   config: {
     userId: 8675301,
-    capabilities: { canReadPrivatePosts: true },
     allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   },
   api: {},

@@ -589,20 +589,28 @@ jobs:
           STABLE_TAG: ${{ steps.get_previous_stable_tag.outputs.stable_tag }}
 
       # Note: Creating the tag trigger an email confirmation that needs to be confirmed by someone with commit access.
-      # Making changes to trunk and creating the tag is done in the same commit.
-      # See https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/#create-tags-from-trunk
-      - name: Commit changes  and create tag
+      - name: Commit changes to trunk
         run: |
           svn st | grep '^?' | awk '{print $2}' | xargs -r svn add
           svn st | grep '^!' | awk '{print $2}' | xargs -r svn rm
-          svn cp trunk "tags/$PLUGIN_VERSION"
           svn commit -m "Committing version $PLUGIN_VERSION" \
+           --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+        working-directory: ./svn
+
+      # Copy trunk to the new tag directly on the server.
+      # Not done in the same commit as the changes to trunk in order to reduce number of file operations
+      # and to prevent potential timeouts.
+      # See https://developer.wordpress.org/plugins/wordpress-org/how-to-use-subversion/#create-tags-from-trunk
+      - name: Create the SVN tag
+        run: |
+          svn cp "$PLUGIN_REPO_URL/trunk" "$PLUGIN_REPO_URL/tags/$PLUGIN_VERSION"
+          svn commit -m "Tagging version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
         working-directory: ./svn
 
       # It's recommended to run this only after the tag was successfully created.
       # Otherwise, if there were any errors, we risk changing this to a tag that doesn't exist.
-      # TODO: Move to separate workflow that can be manually triggered after email confirmation?
+      # The actual release still needs to be confirmed via email.
       - name: Update stable tag
         working-directory: ./svn
         run: |

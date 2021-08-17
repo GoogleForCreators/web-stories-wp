@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -43,10 +43,10 @@ function useDeletePreset({ presetType, setIsEditMode }) {
   const isColor = PRESET_TYPES.COLOR === presetType;
   const isStyle = PRESET_TYPES.STYLE === presetType;
 
-  const { colors, textStyles } = globalStoryStyles;
+  const { colors, textStyles } = globalStoryStyles || {};
   const globalStyles = isColor ? colors : textStyles;
-  const { colors: localColors } = currentStoryStyles;
-  const hasLocalPresets = localColors.length > 0;
+  const { colors: localColors } = currentStoryStyles || {};
+  const hasLocalPresets = localColors?.length > 0;
 
   const deleteGlobalPreset = useCallback(
     (toDelete) => {
@@ -93,7 +93,7 @@ function useDeletePreset({ presetType, setIsEditMode }) {
         setIsEditMode(false);
       }
     },
-    [globalStyles.length, localColors, updateStory, setIsEditMode]
+    [globalStyles?.length, localColors, updateStory, setIsEditMode]
   );
 
   return {

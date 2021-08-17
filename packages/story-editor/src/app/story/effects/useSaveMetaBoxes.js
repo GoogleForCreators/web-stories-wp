@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
-import { usePrevious } from '@web-stories-wp/react';
+import { useEffect, useState, usePrevious } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

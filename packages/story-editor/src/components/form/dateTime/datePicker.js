@@ -18,7 +18,14 @@
  * External dependencies
  */
 import 'react-calendar/dist/Calendar.css';
-import { useRef, useCallback, useMemo, useEffect, lazy, Suspense } from 'react';
+import {
+  useRef,
+  useCallback,
+  useMemo,
+  useEffect,
+  lazy,
+  Suspense,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@web-stories-wp/i18n';

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import { convertToCSS, generatePatternStyles } from '@web-stories-wp/patterns';
 
 /**

@@ -111,10 +111,9 @@ describe('Canvas keys integration', () => {
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
 
-    await waitFor(
-      () => fixture.container.querySelector('[data-testid="colorPicker"]'),
-      { timeout: 4000 }
-    );
+    await waitFor(() => fixture.container.querySelector('[role="dialog"]'), {
+      timeout: 4000,
+    });
     await fixture.snapshot('color picker open');
 
     await fixture.events.keyboard.press('Del');

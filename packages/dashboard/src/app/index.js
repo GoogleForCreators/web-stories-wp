@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  usePrevious,
+} from '@web-stories-wp/react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
@@ -33,7 +39,6 @@ import {
   Snackbar,
   ModalGlobalStyle,
 } from '@web-stories-wp/design-system';
-import { usePrevious } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
 import {
   Button,
   BUTTON_SIZES,

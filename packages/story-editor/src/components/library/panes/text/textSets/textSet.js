@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useCallback, forwardRef } from 'react';
+import { useCallback, forwardRef } from '@web-stories-wp/react';
 import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
 import {
   BUTTON_TRANSITION_TIMING,

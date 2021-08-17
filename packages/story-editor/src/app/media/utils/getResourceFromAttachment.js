@@ -52,7 +52,6 @@ function getImageResourceFromAttachment(attachment) {
     id,
     date_gmt,
     media_details: { width, height, sizes },
-    title: { raw: title },
     mime_type: mimeType,
     alt_text: alt,
     source_url: src,
@@ -65,9 +64,7 @@ function getImageResourceFromAttachment(attachment) {
     width,
     height,
     id,
-    // TODO(#8286): Remove or move to server.
-    alt: alt || title,
-    title,
+    alt,
     sizes,
     local: false,
   });
@@ -78,7 +75,6 @@ function getVideoResourceFromAttachment(attachment) {
     id,
     date_gmt,
     media_details: { width, height, length, length_formatted: lengthFormatted },
-    title: { raw: title },
     mime_type: mimeType,
     featured_media: posterId,
     featured_media_src: {
@@ -109,9 +105,7 @@ function getVideoResourceFromAttachment(attachment) {
     id,
     length,
     lengthFormatted,
-    // TODO(#8286): Remove or move to server.
-    alt: alt || title,
-    title,
+    alt,
     local: false,
     isOptimized: 'video-optimization' === mediaSource,
     isMuted,
@@ -123,7 +117,6 @@ function getGifResourceFromAttachment(attachment) {
     id,
     date_gmt,
     media_details: { width, height },
-    title: { raw: title },
     mime_type: mimeType,
     featured_media: posterId,
     featured_media_src: {
@@ -151,9 +144,7 @@ function getGifResourceFromAttachment(attachment) {
     posterId,
     poster,
     id,
-    // TODO(#8286): Remove or move to server.
-    alt: alt || title,
-    title,
+    alt,
     local: false,
     isOptimized: true,
     output: {

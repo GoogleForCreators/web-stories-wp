@@ -18,8 +18,13 @@
  * External dependencies
  */
 import Mousetrap from 'mousetrap';
-import { useEffect, createRef, useState } from 'react';
-import { useContext, useBatchingCallback } from '@web-stories-wp/react';
+import {
+  useEffect,
+  createRef,
+  useState,
+  useContext,
+  useBatchingCallback,
+} from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

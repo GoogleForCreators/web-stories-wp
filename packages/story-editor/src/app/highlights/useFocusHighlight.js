@@ -16,8 +16,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
-import { useContextSelector, useFocusOut } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useContextSelector,
+  useFocusOut,
+} from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

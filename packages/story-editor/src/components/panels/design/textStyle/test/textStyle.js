@@ -39,7 +39,7 @@ let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
 jest.mock('../../../../form/advancedDropDown', () => {
   // eslint-disable-next-line no-undef
-  const React = require('react');
+  const React = require('@web-stories-wp/react');
   // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
@@ -56,7 +56,7 @@ jest.mock('../../../../form/advancedDropDown', () => {
 });
 jest.mock('../../../../form/color/color', () => {
   // eslint-disable-next-line no-undef
-  const React = require('react');
+  const React = require('@web-stories-wp/react');
   // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {

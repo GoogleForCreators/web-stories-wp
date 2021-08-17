@@ -80,7 +80,7 @@ describe('wpAdapter', () => {
 
     expect(window.fetch).toHaveBeenCalledTimes(1);
     expect(window.fetch).toHaveBeenCalledWith(
-      'https://stories.google.com?_method=DELETE&_locale=user',
+      'https://stories.google.com/?_method=DELETE&_locale=user',
       {
         body: undefined,
         credentials: 'include',

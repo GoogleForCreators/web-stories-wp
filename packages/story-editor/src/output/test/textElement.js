@@ -19,7 +19,7 @@
  */
 jest.mock('flagged');
 import { useFeature } from 'flagged';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { StoryAnimation } from '@web-stories-wp/animation';
 /**

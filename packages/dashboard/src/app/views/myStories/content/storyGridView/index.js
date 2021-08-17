@@ -22,9 +22,15 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import {
+  useRef,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

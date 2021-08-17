@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -126,7 +126,11 @@ function useAddPreset({ presetType }) {
         } else {
           updateGlobalPresets(addedPresets, currentPresets);
         }
+
+        return addedPresets;
       }
+
+      return undefined;
     },
     [
       getPresets,
@@ -138,7 +142,7 @@ function useAddPreset({ presetType }) {
   );
   const addGlobalPreset = (evt) => {
     evt.stopPropagation();
-    handleAddPreset({
+    return handleAddPreset({
       textStyles: [],
       colors: [],
     });
@@ -146,7 +150,7 @@ function useAddPreset({ presetType }) {
 
   const addLocalPreset = (evt) => {
     evt.stopPropagation();
-    handleAddPreset(
+    return handleAddPreset(
       {
         colors: [],
       },
