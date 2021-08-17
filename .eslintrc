@@ -500,7 +500,15 @@
           {
             "paths": [
               {
+                "name": "@web-stories-wp/i18n",
+                "message": "Use @wordpress/i18n instead."
+              },
+              {
                 "name": "react",
+                "message": "Please use React API through `@wordpress/element` instead."
+              },
+              {
+                "name": "react-dom",
                 "message": "Please use React API through `@wordpress/element` instead."
               }
             ]
