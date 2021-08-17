@@ -34,10 +34,6 @@ class Canonical_Sanitizer extends Test_Case {
 		);
 	}
 
-	public static function tear_down_after_class() {
-		self::delete_user( self::$user_id );
-	}
-
 	/**
 	 * @covers ::sanitize
 	 */

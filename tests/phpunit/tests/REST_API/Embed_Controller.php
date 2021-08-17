@@ -85,12 +85,6 @@ class Embed_Controller extends Test_REST_TestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public static function tear_down_after_class() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-		self::delete_user( self::$admin );
-	}
-
 	public function set_up() {
 		parent::set_up();
 

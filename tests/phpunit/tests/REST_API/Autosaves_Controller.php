@@ -42,10 +42,6 @@ class Autosaves_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function tear_down_after_class() {
-		self::delete_user( self::$author_id );
-	}
-
 	public function set_up() {
 		parent::set_up();
 

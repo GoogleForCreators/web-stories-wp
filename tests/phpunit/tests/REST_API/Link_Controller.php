@@ -53,11 +53,6 @@ class Link_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function tear_down_after_class() {
-		self::delete_user( self::$subscriber );
-		self::delete_user( self::$editor );
-	}
-
 	public function set_up() {
 		parent::set_up();
 

@@ -52,11 +52,6 @@ class Preferences extends Test_Case {
 		);
 	}
 
-	public static function tear_down_after_class() {
-		self::delete_user( self::$admin_id );
-		self::delete_user( self::$author_id );
-	}
-
 	public function set_up() {
 		$up = new \Google\Web_Stories\User\Preferences();
 		$up->register();

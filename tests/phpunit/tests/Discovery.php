@@ -79,8 +79,9 @@ class Discovery extends Test_Case {
 	}
 
 	public static function tear_down_after_class() {
-		self::delete_user( self::$user_id );
 		remove_theme_support( 'automatic-feed-links' );
+
+		parent::tear_down_after_class();
 	}
 
 	public function set_up() {

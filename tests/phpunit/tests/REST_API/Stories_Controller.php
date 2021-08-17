@@ -125,14 +125,6 @@ class Stories_Controller extends Test_REST_TestCase {
 		);
 	}
 
-	public static function tear_down_after_class() {
-		self::delete_user( self::$user_id );
-		self::delete_user( self::$user2_id );
-		self::delete_user( self::$user3_id );
-		self::delete_user( self::$author_id );
-		self::delete_user( self::$contributor_id );
-	}
-
 	public function set_up() {
 		parent::set_up();
 
