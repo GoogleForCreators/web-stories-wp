@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { useState } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
 import { SimplePanel } from '../../panel';
