@@ -22,7 +22,7 @@ import { trackEvent } from '@web-stories-wp/tracking';
 /**
  * Internal dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { useStory } from '../../../../app/story';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import { duplicatePage } from '../../../../elements';

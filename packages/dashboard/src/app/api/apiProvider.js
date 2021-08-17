@@ -18,8 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
-import { createContext } from '@web-stories-wp/react';
+import { useMemo, createContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

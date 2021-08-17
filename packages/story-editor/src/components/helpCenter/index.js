@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { ThemeGlobals } from '@web-stories-wp/design-system';
 

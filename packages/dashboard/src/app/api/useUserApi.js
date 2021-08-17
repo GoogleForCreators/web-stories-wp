@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 
 export default function useUserApi(dataAdapter, { currentUserApi }) {
   const [currentUser, setCurrentUser] = useState({});

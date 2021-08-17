@@ -16,8 +16,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import { sprintf, _n, __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies

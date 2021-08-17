@@ -20,7 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {
   localStore,

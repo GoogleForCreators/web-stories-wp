@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from 'react-dom';
+import { render } from '@web-stories-wp/react';
 
 export function getDOMElement(jsx) {
   const el = document.createElement('div');

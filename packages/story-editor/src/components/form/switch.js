@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import {
   Switch as BaseSwitch,

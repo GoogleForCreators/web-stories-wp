@@ -17,7 +17,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 

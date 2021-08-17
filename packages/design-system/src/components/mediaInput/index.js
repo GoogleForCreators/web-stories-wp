@@ -19,7 +19,7 @@
  */
 import styled, { css, keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState, forwardRef, useMemo, useRef } from 'react';
+import { useState, forwardRef, useMemo, useRef } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@web-stories-wp/i18n';
 

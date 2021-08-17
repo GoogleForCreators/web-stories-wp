@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo, useCallback } from 'react';
+import { memo, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { ContextMenu } from '@web-stories-wp/design-system';
 

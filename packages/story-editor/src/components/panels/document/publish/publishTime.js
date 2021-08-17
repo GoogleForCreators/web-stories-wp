@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from 'react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import { format, formatTime, is12Hour } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import {
@@ -25,7 +30,6 @@ import {
   PLACEMENT,
   useKeyDownEffect,
 } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

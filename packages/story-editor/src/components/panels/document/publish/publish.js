@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useMemo } from 'react';
+import { useCallback, useRef, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
