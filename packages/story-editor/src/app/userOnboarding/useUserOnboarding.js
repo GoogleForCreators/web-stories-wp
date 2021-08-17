@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import { useCallback, useDebouncedCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

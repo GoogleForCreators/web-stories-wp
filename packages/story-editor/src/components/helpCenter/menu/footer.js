@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import { trackClick } from '@web-stories-wp/tracking';
 import {
   themeHelpers,

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from '@web-stories-wp/react';
 
 function useExpandAnimation({
   sectionRef,

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from '@web-stories-wp/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import {

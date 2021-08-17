@@ -24,11 +24,17 @@ import userEvent from '@testing-library/user-event';
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
-import { useContextSelector, useFocusOut } from '@web-stories-wp/react';
+import { useRef, useContextSelector, useFocusOut } from '@web-stories-wp/react';
 import useFocusHighlight from '../useFocusHighlight';
 
-jest.mock('@web-stories-wp/react');
+jest.mock('@web-stories-wp/react', () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual('@web-stories-wp/react'),
+    useContextSelector: jest.fn(),
+    useFocusOut: jest.fn(),
+  };
+});
 
 describe('useFocusHighlight()', () => {
   jest.useFakeTimers();

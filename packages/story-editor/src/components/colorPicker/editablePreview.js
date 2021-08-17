@@ -27,7 +27,7 @@ import {
   useState,
   lazy,
   Suspense,
-} from 'react';
+} from '@web-stories-wp/react';
 import {
   Text,
   THEME_CONSTANTS,
