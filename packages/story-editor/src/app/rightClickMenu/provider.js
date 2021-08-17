@@ -21,7 +21,7 @@ import {
   useGlobalKeyDownEffect,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
+import { trackEvent } from '@web-stories-wp/tracking';
 import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
@@ -176,7 +176,7 @@ function RightClickMenuProvider({ children }) {
   /**
    * Open the menu at the position from the click event.
    *
-   * @param {Object} evt The triggering event
+   * @param {Event} evt The triggering event
    */
   const handleOpenMenu = useCallback((evt) => {
     evt.preventDefault();
@@ -190,7 +190,9 @@ function RightClickMenuProvider({ children }) {
       },
     });
 
-    trackClick(evt, 'context_menu_opened');
+    trackEvent('context_menu_action', {
+      name: 'context_menu_opened',
+    });
   }, []);
 
   /**
@@ -205,7 +207,7 @@ function RightClickMenuProvider({ children }) {
   /**
    * Prevent right click menu from removing focus from the canvas.
    *
-   * @param {Object} evt The triggering event
+   * @param {Event} evt The triggering event
    */
   const handleMouseDown = useCallback((evt) => {
     evt.stopPropagation();
@@ -240,16 +242,17 @@ function RightClickMenuProvider({ children }) {
    *
    * Defaults to adding the new page after all of the existing pages.
    *
-   * @param {Object} evt The triggering event
    * @param {number} index The index
    */
   const handleAddPageAtPosition = useCallback(
-    (evt, index) => {
+    (index) => {
       const position = Boolean(index) || index === 0 ? index : pages.length - 1;
 
       addPageAt({ page: createPage(), position });
 
-      trackClick(evt, 'context_menu_page_added');
+      trackEvent('context_menu_action', {
+        name: 'page_added',
+      });
     },
     [addPageAt, pages?.length]
   );
@@ -259,152 +262,151 @@ function RightClickMenuProvider({ children }) {
    */
   const handleDeletePage = useCallback(() => {
     deleteCurrentPage();
+
+    trackEvent('context_menu_action', {
+      name: 'page_deleted',
+    });
   }, [deleteCurrentPage]);
 
   /**
    * Send element one layer backwards, if possible.
-   *
-   * @param {Object} evt The triggering event
    */
-  const handleSendBackward = useCallback(
-    (evt) => {
-      const newPosition =
-        currentPosition === 1 ? currentPosition : currentPosition - 1;
+  const handleSendBackward = useCallback(() => {
+    const newPosition =
+      currentPosition === 1 ? currentPosition : currentPosition - 1;
 
-      arrangeElement({
-        elementId: selectedElement.id,
-        position: newPosition,
-      });
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
 
-      trackClick(evt, `context_menu_${selectedElementType}_send_backward`);
-    },
-    [arrangeElement, currentPosition, selectedElement?.id, selectedElementType]
-  );
+    trackEvent('context_menu_action', {
+      name: 'send_backward',
+      element: selectedElementType,
+    });
+  }, [
+    arrangeElement,
+    currentPosition,
+    selectedElement?.id,
+    selectedElementType,
+  ]);
 
   /**
    * Send element all the way back, if possible.
-   *
-   * @param {Object} evt The triggering event
    */
-  const handleSendToBack = useCallback(
-    (evt) => {
-      arrangeElement({
-        elementId: selectedElement.id,
-        position: 1,
-      });
+  const handleSendToBack = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: 1,
+    });
 
-      trackClick(evt, `context_menu_${selectedElementType}_sent_to_back`);
-    },
-    [arrangeElement, selectedElement?.id, selectedElementType]
-  );
+    trackEvent('context_menu_action', {
+      name: 'send_to_back',
+      element: selectedElementType,
+    });
+  }, [arrangeElement, selectedElement?.id, selectedElementType]);
 
   /**
    * Bring element one layer forwards, if possible.
-   *
-   * @param {Object} evt The triggering event
    */
-  const handleBringForward = useCallback(
-    (evt) => {
-      const newPosition =
-        currentPosition >= currentPage.elements.length - 1
-          ? currentPosition
-          : currentPosition + 1;
+  const handleBringForward = useCallback(() => {
+    const newPosition =
+      currentPosition >= currentPage.elements.length - 1
+        ? currentPosition
+        : currentPosition + 1;
 
-      arrangeElement({
-        elementId: selectedElement.id,
-        position: newPosition,
-      });
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: newPosition,
+    });
 
-      trackClick(evt, `context_menu_${selectedElementType}_bring_forward`);
-    },
-    [
-      arrangeElement,
-      currentPage,
-      currentPosition,
-      selectedElement?.id,
-      selectedElementType,
-    ]
-  );
+    trackEvent('context_menu_action', {
+      name: 'bring_forward',
+      element: selectedElementType,
+    });
+  }, [
+    arrangeElement,
+    currentPage,
+    currentPosition,
+    selectedElement?.id,
+    selectedElementType,
+  ]);
 
   /**
    * Send element all the way to the front, if possible.
-   *
-   * @param {Object} evt The triggering event
    */
-  const handleBringToFront = useCallback(
-    (evt) => {
-      arrangeElement({
-        elementId: selectedElement.id,
-        position: currentPage.elements.length - 1,
-      });
+  const handleBringToFront = useCallback(() => {
+    arrangeElement({
+      elementId: selectedElement.id,
+      position: currentPage.elements.length - 1,
+    });
 
-      trackClick(evt, `context_menu_${selectedElementType}_bring_to_front`);
-    },
-    [arrangeElement, currentPage, selectedElement?.id, selectedElementType]
-  );
+    trackEvent('context_menu_action', {
+      name: 'bring_to_front',
+      element: selectedElementType,
+    });
+  }, [arrangeElement, currentPage, selectedElement?.id, selectedElementType]);
 
   /**
    * Set element as the element being 'edited'.
    *
-   * @param {Object} evt The triggering event
+   * @param {Event} evt The triggering event
    */
   const handleOpenScaleAndCrop = useCallback(
     (evt) => {
       setEditingElement(selectedElement?.id, evt);
 
-      trackClick(
-        evt,
-        `context_menu_${selectedElementType}_open_scale_and_crop`
-      );
+      trackEvent('context_menu_action', {
+        name: 'open_scale_and_crop',
+        element: selectedElementType,
+      });
     },
     [selectedElement?.id, selectedElementType, setEditingElement]
   );
 
   /**
    * Copy the styles and animations of the selected element.
-   *
-   * @param {Object} evt The triggering event
    */
-  const handleCopyStyles = useCallback(
-    (evt) => {
-      const oldStyles = { ...copiedElement };
+  const handleCopyStyles = useCallback(() => {
+    const oldStyles = { ...copiedElement };
 
-      dispatch({
-        type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-        payload: {
-          animations: selectedElementAnimations,
-          styles: getElementStyles(selectedElement),
-          type: selectedElementType,
-        },
-      });
+    dispatch({
+      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
+      payload: {
+        animations: selectedElementAnimations,
+        styles: getElementStyles(selectedElement),
+        type: selectedElementType,
+      },
+    });
 
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
-        message: __('Copied style.', 'web-stories'),
-        onAction: (undoEvt) => {
-          dispatch({
-            type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-            payload: oldStyles,
-          });
+    showSnackbar({
+      actionLabel: __('Undo', 'web-stories'),
+      dismissable: false,
+      message: __('Copied style.', 'web-stories'),
+      onAction: () => {
+        dispatch({
+          type: ACTION_TYPES.COPY_ELEMENT_STYLES,
+          payload: oldStyles,
+        });
 
-          trackClick(
-            undoEvt,
-            `context_menu_undo_${selectedElementType}_copy_styles`
-          );
-        },
-      });
+        trackEvent('context_menu_action', {
+          name: 'undo_copy_styles',
+          element: selectedElementType,
+        });
+      },
+    });
 
-      trackClick(evt, `context_menu_${selectedElementType}_copy_styles`);
-    },
-    [
-      copiedElement,
-      selectedElement,
-      selectedElementAnimations,
-      selectedElementType,
-      showSnackbar,
-    ]
-  );
+    trackEvent('context_menu_action', {
+      name: 'copy_styles',
+      element: selectedElementType,
+    });
+  }, [
+    copiedElement,
+    selectedElement,
+    selectedElementAnimations,
+    selectedElementType,
+    showSnackbar,
+  ]);
 
   const selectedElementId = selectedElement?.id;
   const pushUpdate = useCallback(
@@ -436,202 +438,191 @@ function RightClickMenuProvider({ children }) {
    *
    * Pasting is not allowed if the copied element styles are from a
    * different element type.
-   *
-   * @param {Object} evt The triggering event
    */
-  const handlePasteStyles = useCallback(
-    (evt) => {
-      const id = selectedElement?.id;
+  const handlePasteStyles = useCallback(() => {
+    const id = selectedElement?.id;
 
-      if (!id || selectedElement?.type !== copiedElement.type) {
-        return;
-      }
+    if (!id || selectedElement?.type !== copiedElement.type) {
+      return;
+    }
 
-      // Delete old animation if one exists
-      const oldAnimationToDelete = selectedElementAnimations.length
-        ? { ...selectedElementAnimations[0], delete: true }
-        : undefined;
+    // Delete old animation if one exists
+    const oldAnimationToDelete = selectedElementAnimations.length
+      ? { ...selectedElementAnimations[0], delete: true }
+      : undefined;
 
-      // Create new animations
-      const newAnimations = copiedElement.animations.map((animation) => ({
-        ...animation,
-        id: uuidv4(),
-        targets: [selectedElement.id],
-      }));
+    // Create new animations
+    const newAnimations = copiedElement.animations.map((animation) => ({
+      ...animation,
+      id: uuidv4(),
+      targets: [selectedElement.id],
+    }));
 
-      addAnimations({ animations: newAnimations });
+    addAnimations({ animations: newAnimations });
 
-      // Text elements need the text styles extracted from content before
-      // applying to the other text
-      if (copiedElement.type === 'text' && copiedElement.styles.content) {
-        const { textStyles } = getTextPresets(
-          [copiedElement.styles],
-          {
-            textStyles: [],
-            colors: [],
-          },
-          PRESET_TYPES.STYLE
-        );
-        const { colors } = getTextPresets(
-          [copiedElement.styles],
-          {
-            textStyles: [],
-            colors: [],
-          },
-          PRESET_TYPES.Color
-        );
-        const { content, ...copiedElementStyles } = copiedElement.styles;
-        const updatedElementStyles = {
-          ...copiedElementStyles,
-          ...textStyles[0],
-          ...colors[0].color,
-          animation: oldAnimationToDelete,
-          border: copiedElementStyles.border || null,
-        };
-        handleApplyStyle(updatedElementStyles);
-      } else {
-        // Add styles and animations to element
-        updateElementsById({
-          elementIds: [selectedElement.id],
-          properties: (currentProperties) =>
-            updateProperties(
-              currentProperties,
-              {
-                ...copiedElement.styles,
-                animation: oldAnimationToDelete,
-              },
-              /* commitValues */ true
-            ),
-        });
-      }
-
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissable: false,
-        message: __('Pasted style.', 'web-stories'),
-        // don't pass a stale reference for undo
-        // need history updates to run so `undo` works correctly.
-        onAction: (undoEvt) => {
-          undoRef.current();
-
-          trackClick(
-            undoEvt,
-            `context_menu_undo_${selectedElementType}_paste_styles`
-          );
+    // Text elements need the text styles extracted from content before
+    // applying to the other text
+    if (copiedElement.type === 'text' && copiedElement.styles.content) {
+      const { textStyles } = getTextPresets(
+        [copiedElement.styles],
+        {
+          textStyles: [],
+          colors: [],
         },
-      });
-
-      trackClick(evt, `context_menu_${selectedElementType}_paste_styles`);
-    },
-    [
-      addAnimations,
-      copiedElement,
-      handleApplyStyle,
-      selectedElement,
-      selectedElementAnimations,
-      selectedElementType,
-      showSnackbar,
-      updateElementsById,
-    ]
-  );
-
-  /**
-   * Revert some element styles to their defaults.
-   *
-   * Each element type has a different set of defaults.
-   *
-   * @param {Object} evt The triggering event
-   */
-  const handleClearElementStyles = useCallback(
-    (evt) => {
-      if (!selectedElement?.id) {
-        return;
-      }
-
-      const resetProperties = getDefaultPropertiesForType(selectedElement.type);
-
-      if (resetProperties) {
-        updateElementsById({
-          elementIds: [selectedElement.id],
-          properties: (currentProperties) =>
-            updateProperties(
-              currentProperties,
-              resetProperties,
-              /* commitValues */ true
-            ),
-        });
-
-        showSnackbar({
-          actionLabel: __('Undo', 'web-stories'),
-          dismissable: false,
-          message: __('Cleared style.', 'web-stories'),
-          // don't pass a stale reference for undo
-          // need history updates to run so `undo` works correctly.
-          onAction: (undoEvt) => {
-            undoRef.current();
-
-            trackClick(
-              undoEvt,
-              `context_menu_undo_${selectedElementType}_clear_styles`
-            );
-          },
-        });
-
-        trackClick(evt, `context_menu_${selectedElementType}_clear_styles`);
-      }
-    },
-    [selectedElement, selectedElementType, showSnackbar, updateElementsById]
-  );
-
-  /**
-   * Set currently selected element as the page's background.
-   *
-   * @param {Object} evt The triggering event
-   */
-  const handleSetPageBackground = useCallback(
-    (evt) => {
-      setBackgroundElement({ elementId: selectedElement.id });
-
-      trackClick(
-        evt,
-        `context_menu_${selectedElementType}_set_page_background`
+        PRESET_TYPES.STYLE
       );
-    },
-    [setBackgroundElement, selectedElement?.id, selectedElementType]
-  );
-
-  /**
-   * Remove media from background and clear opacity and overlay.
-   *
-   * @param {Object} evt The triggering event
-   */
-  const handleRemoveMediaFromBackground = useCallback(
-    (evt) => {
+      const { colors } = getTextPresets(
+        [copiedElement.styles],
+        {
+          textStyles: [],
+          colors: [],
+        },
+        PRESET_TYPES.Color
+      );
+      const { content, ...copiedElementStyles } = copiedElement.styles;
+      const updatedElementStyles = {
+        ...copiedElementStyles,
+        ...textStyles[0],
+        ...colors[0].color,
+        animation: oldAnimationToDelete,
+        border: copiedElementStyles.border || null,
+      };
+      handleApplyStyle(updatedElementStyles);
+    } else {
+      // Add styles and animations to element
       updateElementsById({
         elementIds: [selectedElement.id],
         properties: (currentProperties) =>
           updateProperties(
             currentProperties,
             {
-              isBackground: false,
-              opacity: 100,
-              overlay: null,
+              ...copiedElement.styles,
+              animation: oldAnimationToDelete,
             },
             /* commitValues */ true
           ),
       });
+    }
 
-      clearBackgroundElement();
+    showSnackbar({
+      actionLabel: __('Undo', 'web-stories'),
+      dismissable: false,
+      message: __('Pasted style.', 'web-stories'),
+      // don't pass a stale reference for undo
+      // need history updates to run so `undo` works correctly.
+      onAction: () => {
+        undoRef.current();
 
-      trackClick(evt, `context_menu_${selectedElementType}_remove_background`);
-    },
-    [
-      clearBackgroundElement,
-      selectedElement?.id,
-      selectedElementType,
-      updateElementsById,
-    ]
-  );
+        trackEvent('context_menu_action', {
+          name: 'undo_paste_styles',
+          element: selectedElementType,
+        });
+      },
+    });
+
+    trackEvent('context_menu_action', {
+      name: 'paste_styles',
+      element: selectedElementType,
+    });
+  }, [
+    addAnimations,
+    copiedElement,
+    handleApplyStyle,
+    selectedElement,
+    selectedElementAnimations,
+    selectedElementType,
+    showSnackbar,
+    updateElementsById,
+  ]);
+
+  /**
+   * Revert some element styles to their defaults.
+   *
+   * Each element type has a different set of defaults.
+   */
+  const handleClearElementStyles = useCallback(() => {
+    if (!selectedElement?.id) {
+      return;
+    }
+
+    const resetProperties = getDefaultPropertiesForType(selectedElement.type);
+
+    if (resetProperties) {
+      updateElementsById({
+        elementIds: [selectedElement.id],
+        properties: (currentProperties) =>
+          updateProperties(
+            currentProperties,
+            resetProperties,
+            /* commitValues */ true
+          ),
+      });
+
+      showSnackbar({
+        actionLabel: __('Undo', 'web-stories'),
+        dismissable: false,
+        message: __('Cleared style.', 'web-stories'),
+        // don't pass a stale reference for undo
+        // need history updates to run so `undo` works correctly.
+        onAction: () => {
+          undoRef.current();
+
+          trackEvent('context_menu_action', {
+            name: 'undo_clear_styles',
+            element: selectedElementType,
+          });
+        },
+      });
+
+      trackEvent('context_menu_action', {
+        name: 'clear_styles',
+        element: selectedElementType,
+      });
+    }
+  }, [selectedElement, selectedElementType, showSnackbar, updateElementsById]);
+
+  /**
+   * Set currently selected element as the page's background.
+   */
+  const handleSetPageBackground = useCallback(() => {
+    setBackgroundElement({ elementId: selectedElement.id });
+
+    trackEvent('context_menu_action', {
+      name: 'set_as_page_background',
+      element: selectedElementType,
+    });
+  }, [setBackgroundElement, selectedElement?.id, selectedElementType]);
+
+  /**
+   * Remove media from background and clear opacity and overlay.
+   */
+  const handleRemoveMediaFromBackground = useCallback(() => {
+    updateElementsById({
+      elementIds: [selectedElement.id],
+      properties: (currentProperties) =>
+        updateProperties(
+          currentProperties,
+          {
+            isBackground: false,
+            opacity: 100,
+            overlay: null,
+          },
+          /* commitValues */ true
+        ),
+    });
+
+    clearBackgroundElement();
+
+    trackEvent('context_menu_action', {
+      name: 'remove_media_from_background',
+      element: selectedElementType,
+    });
+  }, [
+    clearBackgroundElement,
+    selectedElement?.id,
+    selectedElementType,
+    updateElementsById,
+  ]);
 
   /**
    * Focus the media or the media3p panel.
@@ -653,7 +644,7 @@ function RightClickMenuProvider({ children }) {
   /**
    * Add text styles to global presets.
    *
-   * @param {Object} evt The triggering event
+   * @param {Event} evt The triggering event
    */
   const handleAddTextPreset = useCallback(
     (evt) => {
@@ -663,22 +654,33 @@ function RightClickMenuProvider({ children }) {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Saved style to "Saved Styles".', 'web-stories'),
-        onAction: (undoEvt) => {
+        onAction: () => {
           deleteGlobalTextPreset(preset);
 
-          trackClick(undoEvt, 'context_menu_remove_text_preset');
+          trackEvent('context_menu_action', {
+            name: 'remove_text_preset',
+            element: selectedElementType,
+          });
         },
       });
 
-      trackClick(evt, 'context_menu_add_text_preset');
+      trackEvent('context_menu_action', {
+        name: 'add_text_preset',
+        element: selectedElementType,
+      });
     },
-    [addGlobalTextPreset, deleteGlobalTextPreset, showSnackbar]
+    [
+      addGlobalTextPreset,
+      deleteGlobalTextPreset,
+      selectedElementType,
+      showSnackbar,
+    ]
   );
 
   /**
    * Add color to global presets.
    *
-   * @param {Object} evt The triggering event
+   * @param {Event} evt The triggering event
    */
   const handleAddColorPreset = useCallback(
     (evt) => {
@@ -688,16 +690,27 @@ function RightClickMenuProvider({ children }) {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Added color to "Saved Colors".', 'web-stories'),
-        onAction: (undoEvt) => {
+        onAction: () => {
           deleteGlobalColorPreset(preset);
 
-          trackClick(undoEvt, 'context_menu_remove_color_preset');
+          trackEvent('context_menu_action', {
+            name: 'remove_color_preset',
+            element: selectedElementType,
+          });
         },
       });
 
-      trackClick(evt, 'context_menu_add_color_preset');
+      trackEvent('context_menu_action', {
+        name: 'add_color_preset',
+        element: selectedElementType,
+      });
     },
-    [addGlobalColorPreset, deleteGlobalColorPreset, showSnackbar]
+    [
+      addGlobalColorPreset,
+      deleteGlobalColorPreset,
+      selectedElementType,
+      showSnackbar,
+    ]
   );
 
   const menuItemProps = useMemo(
@@ -781,12 +794,12 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         separator: 'top',
-        onClick: (evt) => handleAddPageAtPosition(evt, currentPageIndex + 1),
+        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
-        onClick: (evt) => handleAddPageAtPosition(evt, currentPageIndex),
+        onClick: () => handleAddPageAtPosition(currentPageIndex),
         ...menuItemProps,
       },
       {
