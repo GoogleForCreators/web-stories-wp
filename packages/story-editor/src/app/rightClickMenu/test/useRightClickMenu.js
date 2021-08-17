@@ -135,6 +135,19 @@ describe('useRightClickMenu', () => {
   });
 
   describe('Page right clicked', () => {
+    beforeEach(() => {
+      mockUseStory.mockReturnValue({
+        ...defaultStoryContext,
+        selectedElements: [
+          {
+            id: '1',
+            type: 'text',
+            isDefaultBackground: true,
+          },
+        ],
+      });
+    });
+
     it('should return the correct menu items', () => {
       const { result } = renderHook(() => useRightClickMenu(), {
         wrapper: RightClickMenuProvider,
@@ -150,6 +163,17 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
         RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
       ]);
+    });
+
+    it('background media actions should be disabled', () => {
+      const { result } = renderHook(() => useRightClickMenu(), {
+        wrapper: RightClickMenuProvider,
+      });
+
+      const backgroundImageItems = result.current.menuItems.slice(0, 3);
+      backgroundImageItems.map((item) => {
+        expect(item.disabled).toBeTrue();
+      });
     });
 
     it('"delete page" button should be enabled if there is more than one page', () => {
