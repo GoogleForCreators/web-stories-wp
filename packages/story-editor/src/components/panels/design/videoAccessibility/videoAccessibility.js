@@ -119,7 +119,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     };
   }
 
-  const altTextarea = (
+  const TextAreaContent = () => (
     <TextArea
       ref={inputRef}
       placeholder={
@@ -167,10 +167,12 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
               menuOptions={['edit', 'reset']}
               imgProps={cropParams}
             />
-            <InputsWrapper>{altTextarea}</InputsWrapper>
+            <InputsWrapper>
+              <TextAreaContent />
+            </InputsWrapper>
           </>
         ) : (
-          altTextarea
+          <TextAreaContent />
         )}
       </Row>
     </SimplePanel>
