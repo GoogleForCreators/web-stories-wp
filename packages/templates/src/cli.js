@@ -50,7 +50,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
   await page.waitForSelector('aria/Explore Templates');
   await page.click('aria/Explore Templates');
 
-  // wait for templates to be rendered
+  // Wait for templates to be rendered
   await page.waitForSelector('div.templateGridItem');
 
   // total templates to generate screenshots from
@@ -64,7 +64,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     currentTemplate <= templateCount;
     currentTemplate++
   ) {
-    // Get the template name to use as build directory.
+    // Get the template name to use as build directory
     const templateName = await page.evaluate((gridItemId) => {
       return document
         .querySelector(
