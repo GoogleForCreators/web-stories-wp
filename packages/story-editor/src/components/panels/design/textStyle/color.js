@@ -24,7 +24,6 @@ import { __ } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { Color, Row } from '../../../form';
-import getColorPickerActions from '../../shared/getColorPickerActions';
 import useRichTextFormatting from './useRichTextFormatting';
 function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
   const {
@@ -38,9 +37,7 @@ function ColorControls({ selectedElements, pushUpdate, textColorRef }) {
         data-testid="text.color"
         value={color}
         onChange={handleSetColor}
-        colorPickerActions={(selColor) =>
-          getColorPickerActions(selColor, pushUpdate)
-        }
+        allowsSavedColors
         label={__('Text color', 'web-stories')}
         labelId="text-color-label"
         changedStyle="color"

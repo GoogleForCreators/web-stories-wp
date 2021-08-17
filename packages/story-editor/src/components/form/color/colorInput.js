@@ -127,11 +127,11 @@ const loadReactColor = () =>
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
-    hasGradient,
-    hasOpacity,
-    value,
-    label,
-    colorPickerActions,
+    allowsGradient = false,
+    allowsOpacity = true,
+    allowsSavedColors = false,
+    value = null,
+    label = null,
     changedStyle,
   },
   ref
@@ -224,17 +224,15 @@ const ColorInput = forwardRef(function ColorInput(
         placement={PLACEMENT.LEFT_START}
         spacing={spacing}
         invisible={isEyedropperActive}
-        renderContents={({ propagateDimensionChange }) => (
+        renderContents={() => (
           <ColorPicker
             color={isMixed ? null : value}
             isEyedropperActive={isEyedropperActive}
             onChange={onChange}
-            hasGradient={hasGradient}
-            hasOpacity={hasOpacity}
+            allowsGradient={allowsGradient}
+            allowsOpacity={allowsOpacity}
+            allowsSavedColors={allowsSavedColors}
             onClose={onClose}
-            renderFooter={(props) =>
-              colorPickerActions?.(props, null, propagateDimensionChange)
-            }
             changedStyle={changedStyle}
           />
         )}
@@ -245,19 +243,12 @@ const ColorInput = forwardRef(function ColorInput(
 
 ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
-  hasGradient: PropTypes.bool,
-  hasOpacity: PropTypes.bool,
+  allowsGradient: PropTypes.bool,
+  allowsOpacity: PropTypes.bool,
+  allowsSavedColors: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
-  colorPickerActions: PropTypes.func,
   changedStyle: PropTypes.string,
-};
-
-ColorInput.defaultProps = {
-  hasGradient: false,
-  hasOpacity: true,
-  label: null,
-  value: null,
 };
 
 export default ColorInput;

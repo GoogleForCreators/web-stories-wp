@@ -37,10 +37,15 @@ import GradientLine from './gradientLine';
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: flex-end;
-  padding: 16px 14px;
-  height: 74px;
-  border-top: 1px solid ${({ theme }) => theme.colors.divider.primary};
+  padding: 0 16px 16px;
+  height: 60px;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  gap: 8px;
 `;
 
 const SmallButton = styled(Button)`
@@ -52,10 +57,6 @@ const SmallButton = styled(Button)`
     width: 24px;
     height: 24px;
   }
-`;
-
-const Space = styled.div`
-  width: 6px;
 `;
 
 function GradientPicker({
@@ -82,29 +83,30 @@ function GradientPicker({
         onDelete={onDelete}
         onMove={onMove}
       />
-      <Space />
-      <Tooltip hasTail title={reverseLabel}>
-        <SmallButton
-          aria-label={reverseLabel}
-          onClick={onReverse}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
-        >
-          <Icons.ArrowsLeftright />
-        </SmallButton>
-      </Tooltip>
-      <Tooltip hasTail title={rotateLabel}>
-        <SmallButton
-          onClick={onRotate}
-          aria-label={rotateLabel}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          variant={BUTTON_VARIANTS.SQUARE}
-        >
-          <Icons.ArrowRightCurved id="gradient-rotator" />
-        </SmallButton>
-      </Tooltip>
+      <Buttons>
+        <Tooltip hasTail title={reverseLabel}>
+          <SmallButton
+            aria-label={reverseLabel}
+            onClick={onReverse}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            variant={BUTTON_VARIANTS.SQUARE}
+          >
+            <Icons.ArrowsLeftright />
+          </SmallButton>
+        </Tooltip>
+        <Tooltip hasTail title={rotateLabel}>
+          <SmallButton
+            onClick={onRotate}
+            aria-label={rotateLabel}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            variant={BUTTON_VARIANTS.SQUARE}
+          >
+            <Icons.ArrowRightCurved id="gradient-rotator" />
+          </SmallButton>
+        </Tooltip>
+      </Buttons>
     </Wrapper>
   );
 }
