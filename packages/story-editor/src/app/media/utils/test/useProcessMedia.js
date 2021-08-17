@@ -133,8 +133,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/foo.mov',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'video/quicktime',
           },
         });
@@ -165,8 +163,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/invalid.jpg',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'image/jpg',
           },
         });
@@ -187,8 +183,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/foo.mp4',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'video/mp4',
           },
         });
@@ -214,8 +208,6 @@ describe('useProcessMedia', () => {
             src: 'http://www.google.com/foo.mp4',
             poster: 'http://www.google.com/foo.jpeg',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'video/mp4',
           },
         });
@@ -245,8 +237,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/invalid.jpg',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'image/jpg',
           },
         });
@@ -267,8 +257,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/foo.gif',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'image/gif',
           },
         });
@@ -299,8 +287,6 @@ describe('useProcessMedia', () => {
           resource: {
             src: 'http://www.google.com/invalid.jpg',
             id: 123,
-            alt: 'alt',
-            title: 'title',
             mimeType: 'image/jpg',
           },
         });

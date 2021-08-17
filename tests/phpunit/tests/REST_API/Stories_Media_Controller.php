@@ -151,6 +151,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::create_item
+	 * @covers ::process_post
 	 */
 	public function test_create_item() {
 		$poster_attachment_id = self::factory()->attachment->create_object(
@@ -186,6 +187,7 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 
 	/**
 	 * @covers ::create_item
+	 * @covers ::process_post
 	 */
 	public function test_create_item_with_revision() {
 		$revision_id = self::factory()->post->create_object(
@@ -209,6 +211,71 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
 	}
 
+
+	/**
+	 * @covers ::create_item
+	 * @covers ::process_post
+	 */
+	public function test_create_item_migrate_data() {
+		$original_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+				'post_content'   => 'Test content',
+				'post_excerpt'   => 'Test excerpt',
+			]
+		);
+
+		update_post_meta( $original_attachment_id, '_wp_attachment_image_alt', 'Test alt' );
+
+		wp_set_current_user( self::$user_id );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
+		$request->set_header( 'Content-Type', 'image/jpeg' );
+		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
+		$request->set_param( 'original_id', $original_attachment_id );
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertEquals( 201, $response->get_status() );
+		$this->assertEquals( 'image', $data['media_type'] );
+
+		$attachment = get_post( $data['id'] );
+
+		$this->assertSame( 'Test Video', $data['title']['raw'] );
+		$this->assertSame( 'Test Video', $attachment->post_title );
+		$this->assertSame( 'Test excerpt', $data['caption']['raw'] );
+		$this->assertSame( 'Test excerpt', $attachment->post_excerpt );
+		$this->assertSame( 'Test content', $attachment->post_content );
+		$this->assertSame( 'Test alt', $data['alt_text'] );
+		$this->assertSame( 'Test alt', get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) );
+	}
+
+	/**
+	 * @covers ::create_item
+	 * @covers ::process_post
+	 */
+	public function test_create_item_migrate_data_invalid() {
+		wp_set_current_user( self::$user_id );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
+		$request->set_header( 'Content-Type', 'image/jpeg' );
+		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
+		$request->set_param( 'title', 'My title is very cool' );
+		$request->set_param( 'caption', 'This is a better caption.' );
+		$request->set_param( 'description', 'Without a description, my attachment is descriptionless.' );
+		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
+		$request->set_param( 'original_id', 999 );
+
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/canola.jpg' ) );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
+	}
+
 	/**
 	 * @covers ::get_item_schema
 	 */
@@ -222,5 +289,6 @@ class Stories_Media_Controller extends Test_REST_TestCase {
 		$properties = $data['schema']['properties'];
 		$this->assertArrayNotHasKey( 'permalink_template', $properties );
 		$this->assertArrayNotHasKey( 'generated_slug', $properties );
+		$this->assertArrayHasKey( 'original_id', $properties );
 	}
 }

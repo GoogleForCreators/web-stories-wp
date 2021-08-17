@@ -36,7 +36,7 @@ jest.mock('../../../../mediaPicker', () => ({
 describe('Panels/ImageAccessibility', () => {
   const defaultElement = {
     type: 'image',
-    resource: { title: '', alt: '', src: '1' },
+    resource: { alt: '', src: '1' },
   };
   function arrange(...args) {
     return renderPanel(ImageAccessibility, ...args);
@@ -64,7 +64,7 @@ describe('Panels/ImageAccessibility', () => {
       defaultElement,
       {
         type: 'image',
-        resource: { title: '', alt: 'Hello!', src: '2' },
+        resource: { alt: 'Hello!', src: '2' },
       },
     ]);
     const input = screen.getByRole('textbox', { name: 'Assistive text' });
