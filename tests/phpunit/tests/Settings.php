@@ -24,7 +24,7 @@ class Settings extends Test_Case {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register_settings() {
+	public function test_register() {
 		$settings = new \Google\Web_Stories\Settings();
 		$settings->register();
 
