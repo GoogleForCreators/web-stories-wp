@@ -20,7 +20,12 @@
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { useState, useRef } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from '@web-stories-wp/react';
 import { _x, __ } from '@web-stories-wp/i18n';
 
 /**
@@ -487,7 +492,7 @@ export const RightClickMenu = () => {
         setIsOpen(false);
       },
     }));
-  const handleMenu = (e) => {
+  const handleMenu = useCallback((e) => {
     e.preventDefault();
     const layoutRect = layoutRef?.current?.getBoundingClientRect();
 
@@ -496,14 +501,28 @@ export const RightClickMenu = () => {
       x: e.clientX - layoutRect?.left,
       y: e.clientY - layoutRect?.top,
     });
-  };
+  }, []);
+
+  // Override the browser's context menu
+  useEffect(() => {
+    const node = layoutRef.current;
+    if (!node) {
+      return undefined;
+    }
+
+    node.addEventListener('contextmenu', handleMenu);
+
+    return () => {
+      node.removeEventListener('contextmenu', handleMenu);
+    };
+  }, [handleMenu]);
+
   return (
     <ViewportContainer>
       {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions*/}
       <SampleLayout
         ref={layoutRef}
-        onClick={handleMenu}
-        // TODO: confirm we don't need this menu to  show up for keyboards since they have a separate menu
+        // TODO: confirm we don't need this menu to show up for keyboards since they have a separate menu
         role="region"
         onKeyDown={() => {}}
       />
@@ -518,6 +537,7 @@ export const RightClickMenu = () => {
     </ViewportContainer>
   );
 };
+
 export const RightClickMenuStaticValues = () => {
   const generateMenuItemsWithEventHandler = (i) =>
     i.map((item) => ({
