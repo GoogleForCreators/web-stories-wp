@@ -782,31 +782,39 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const backgroundMediaItems = useMemo(
-    () => [
+  const pageItems = useMemo(() => {
+    const disableBackgroundMediaActions = selectedElement?.isDefaultBackground;
+
+    return [
       {
         label: RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         onClick: handleRemoveMediaFromBackground,
+        disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND,
         onClick: handleOpenScaleAndCrop,
+        disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         onClick: handleClearElementStyles,
+        disabled: disableBackgroundMediaActions,
+        separator: 'bottom',
         ...menuItemProps,
       },
-    ],
-    [
-      handleClearElementStyles,
-      handleOpenScaleAndCrop,
-      handleRemoveMediaFromBackground,
-      menuItemProps,
-    ]
-  );
+      ...pageManipulationItems,
+    ];
+  }, [
+    handleClearElementStyles,
+    handleOpenScaleAndCrop,
+    handleRemoveMediaFromBackground,
+    menuItemProps,
+    pageManipulationItems,
+    selectedElement?.isDefaultBackground,
+  ]);
 
   const textItems = useMemo(
     () => [
@@ -947,11 +955,6 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
-  const pageItems = useMemo(
-    () => [...pageManipulationItems],
-    [pageManipulationItems]
-  );
-
   const menuItems = useMemo(() => {
     if (selectedElement?.isDefaultBackground) {
       return pageItems;
@@ -961,9 +964,7 @@ function RightClickMenuProvider({ children }) {
       case ELEMENT_TYPES.IMAGE:
       case ELEMENT_TYPES.VIDEO:
       case ELEMENT_TYPES.GIF:
-        return selectedElement?.isBackground
-          ? backgroundMediaItems
-          : foregroundMediaItems;
+        return selectedElement?.isBackground ? pageItems : foregroundMediaItems;
       case ELEMENT_TYPES.SHAPE:
         return shapeItems;
       case ELEMENT_TYPES.TEXT:
@@ -971,14 +972,7 @@ function RightClickMenuProvider({ children }) {
       default:
         return pageItems;
     }
-  }, [
-    backgroundMediaItems,
-    foregroundMediaItems,
-    pageItems,
-    selectedElement,
-    shapeItems,
-    textItems,
-  ]);
+  }, [foregroundMediaItems, pageItems, selectedElement, shapeItems, textItems]);
 
   // Override the browser's context menu if the
   // rightClickAreaRef is set
