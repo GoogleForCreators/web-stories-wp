@@ -229,6 +229,8 @@ describe('Link Panel', () => {
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
+      linkPanel.address.scrollTo(0, 0);
+
       await fixture.events.sleep(1000);
 
       await fixture.snapshot('Testing');
