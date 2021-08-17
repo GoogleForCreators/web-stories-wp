@@ -252,9 +252,16 @@ function RightClickMenuProvider({ children }) {
 
       trackEvent('context_menu_action', {
         name: 'page_added',
+        element: selectedElementType,
+        isBackground: selectedElement?.isBackground,
       });
     },
-    [addPageAt, pages?.length]
+    [
+      addPageAt,
+      pages?.length,
+      selectedElement?.isBackground,
+      selectedElementType,
+    ]
   );
 
   /**
@@ -265,8 +272,10 @@ function RightClickMenuProvider({ children }) {
 
     trackEvent('context_menu_action', {
       name: 'page_deleted',
+      element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
     });
-  }, [deleteCurrentPage]);
+  }, [deleteCurrentPage, selectedElement?.isBackground, selectedElementType]);
 
   /**
    * Send element one layer backwards, if possible.
@@ -283,11 +292,13 @@ function RightClickMenuProvider({ children }) {
     trackEvent('context_menu_action', {
       name: 'send_backward',
       element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
     });
   }, [
     arrangeElement,
     currentPosition,
     selectedElement?.id,
+    selectedElement?.isBackground,
     selectedElementType,
   ]);
 
@@ -359,9 +370,15 @@ function RightClickMenuProvider({ children }) {
       trackEvent('context_menu_action', {
         name: 'open_scale_and_crop',
         element: selectedElementType,
+        isBackground: selectedElement?.isBackground,
       });
     },
-    [selectedElement?.id, selectedElementType, setEditingElement]
+    [
+      selectedElement?.id,
+      selectedElement?.isBackground,
+      selectedElementType,
+      setEditingElement,
+    ]
   );
 
   /**
@@ -392,6 +409,7 @@ function RightClickMenuProvider({ children }) {
         trackEvent('context_menu_action', {
           name: 'undo_copy_styles',
           element: selectedElementType,
+          isBackground: selectedElement?.isBackground,
         });
       },
     });
@@ -399,6 +417,7 @@ function RightClickMenuProvider({ children }) {
     trackEvent('context_menu_action', {
       name: 'copy_styles',
       element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
     });
   }, [
     copiedElement,
@@ -516,6 +535,7 @@ function RightClickMenuProvider({ children }) {
         trackEvent('context_menu_action', {
           name: 'undo_paste_styles',
           element: selectedElementType,
+          isBackground: selectedElement?.isBackground,
         });
       },
     });
@@ -523,6 +543,7 @@ function RightClickMenuProvider({ children }) {
     trackEvent('context_menu_action', {
       name: 'paste_styles',
       element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
     });
   }, [
     addAnimations,
@@ -570,6 +591,7 @@ function RightClickMenuProvider({ children }) {
           trackEvent('context_menu_action', {
             name: 'undo_clear_styles',
             element: selectedElementType,
+            isBackground: selectedElement?.isBackground,
           });
         },
       });
@@ -577,6 +599,7 @@ function RightClickMenuProvider({ children }) {
       trackEvent('context_menu_action', {
         name: 'clear_styles',
         element: selectedElementType,
+        isBackground: selectedElement?.isBackground,
       });
     }
   }, [selectedElement, selectedElementType, showSnackbar, updateElementsById]);
@@ -616,10 +639,12 @@ function RightClickMenuProvider({ children }) {
     trackEvent('context_menu_action', {
       name: 'remove_media_from_background',
       element: selectedElementType,
+      isBackground: selectedElement?.isBackground,
     });
   }, [
     clearBackgroundElement,
     selectedElement?.id,
+    selectedElement?.isBackground,
     selectedElementType,
     updateElementsById,
   ]);
