@@ -23,7 +23,6 @@ import {
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
-import { useBatchingCallback } from '@web-stories-wp/react';
 import { useFeature } from 'flagged';
 
 /**
