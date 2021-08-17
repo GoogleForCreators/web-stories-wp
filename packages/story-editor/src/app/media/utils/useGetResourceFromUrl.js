@@ -34,6 +34,7 @@ import {
 import { useConfig } from '../../config';
 import { getPosterName, useUploadVideoFrame } from '.';
 
+// @todo Get the mime type from server-side validation instead.
 const EXT_MIME_TYPES = {
   jpg: 'image/jpeg',
   gif: 'image/gif',
@@ -61,7 +62,7 @@ function useGetResourceFromUrl() {
     } else if (video.includes(EXT_MIME_TYPES[ext])) {
       type = 'video';
     } else {
-      return null;
+      throw new Error('Invalid media type.');
     }
     const isVideo = type === 'video';
     const getMediaDimensions = isVideo
