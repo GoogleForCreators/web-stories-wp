@@ -24,8 +24,8 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';

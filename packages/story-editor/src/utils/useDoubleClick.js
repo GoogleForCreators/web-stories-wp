@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 
 /**
  * This hook creates a handler to use for double click listening

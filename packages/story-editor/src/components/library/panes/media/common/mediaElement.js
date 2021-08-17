@@ -19,7 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useCallback, memo, useState, useRef } from 'react';
+import {
+  useEffect,
+  useCallback,
+  memo,
+  useState,
+  useRef,
+} from '@web-stories-wp/react';
 import { rgba } from 'polished';
 import { __ } from '@web-stories-wp/i18n';
 import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';

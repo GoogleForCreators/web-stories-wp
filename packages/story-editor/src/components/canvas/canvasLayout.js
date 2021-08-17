@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { memo, useRef, useCallback } from 'react';
+import { memo, useRef, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeature } from 'flagged';
 

@@ -24,7 +24,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { useRef } from 'react';
+import { useRef } from '@web-stories-wp/react';
 import { useUnits } from '@web-stories-wp/units';
 import StoryPropTypes from '../../types';
 import {

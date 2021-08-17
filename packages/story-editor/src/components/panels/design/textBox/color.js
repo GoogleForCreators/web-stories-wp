@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { PillGroup } from '@web-stories-wp/design-system';
 /**
@@ -94,7 +94,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
         <Row>
           <Color
             data-testid="text.backgroundColor"
-            hasGradient
+            allowsGradient
             value={backgroundColor}
             onChange={(value) =>
               pushUpdate(

@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from './react';
 
 function useInputEventHandlers({ inputRef, forwardedRef, onFocus, onBlur }) {
   const [isFocused, setIsFocused] = useState(false);

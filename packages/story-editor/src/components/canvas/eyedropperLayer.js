@@ -17,12 +17,11 @@
 /**
  * External dependencies
  */
-import { useRef } from 'react';
+import { useRef, useFocusOut } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

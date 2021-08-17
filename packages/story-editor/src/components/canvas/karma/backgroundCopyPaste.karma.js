@@ -224,7 +224,7 @@ describe('Background Copy Paste integration', () => {
 
   // High-level helpers
   async function addNewPage() {
-    const addPage = getButtonByAriaLabel(/Add new page/i);
+    const addPage = getButtonByAriaLabel(/^Add New Page$/i);
     await fixture.events.click(addPage);
   }
   async function gotoPage(index /* 1-indexed */) {

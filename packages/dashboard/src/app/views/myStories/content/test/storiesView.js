@@ -43,6 +43,10 @@ const fakeStories = [
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
     featuredMediaUrl: 'http://placekitten.com/640/853',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
   },
   {
     id: 2,
@@ -55,6 +59,10 @@ const fakeStories = [
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
     featuredMediaUrl: 'http://placekitten.com/640/853',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
   },
   {
     id: 3,
@@ -71,6 +79,10 @@ const fakeStories = [
     lockUser: {
       name: 'Batgirl',
       id: 898978979879,
+    },
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
     },
   },
 ];

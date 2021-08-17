@@ -18,7 +18,13 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-import { useState, useEffect, useRef, useCallback, forwardRef } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  forwardRef,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 /**
  * Internal dependencies

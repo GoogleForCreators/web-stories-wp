@@ -18,10 +18,14 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-import { memo, useEffect, useRef } from 'react';
+import {
+  memo,
+  useEffect,
+  useRef,
+  useResizeEffect,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { themeHelpers } from '@web-stories-wp/design-system';
-import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

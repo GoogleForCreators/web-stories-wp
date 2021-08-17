@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer } from 'react';
-import queryString from 'query-string';
+import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -46,9 +46,7 @@ export default function useSettingsApi(
     }
     try {
       const response = await dataAdapter.get(
-        queryString.stringifyUrl({
-          url: globalStoriesSettingsApi,
-        })
+        addQueryArgs(globalStoriesSettingsApi)
       );
 
       dispatch({
@@ -130,10 +128,7 @@ export default function useSettingsApi(
         }
 
         const response = await dataAdapter.post(
-          queryString.stringifyUrl({
-            url: globalStoriesSettingsApi,
-            query,
-          })
+          addQueryArgs(globalStoriesSettingsApi, query)
         );
 
         dispatch({

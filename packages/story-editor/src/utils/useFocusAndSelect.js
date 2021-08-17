@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from '@web-stories-wp/react';
 
 function useFocusAndSelect(ref) {
   const [focused, setFocused] = useState(false);

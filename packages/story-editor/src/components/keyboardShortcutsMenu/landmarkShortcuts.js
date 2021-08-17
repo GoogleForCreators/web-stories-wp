@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Fragment } from 'react';
+import { Fragment } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
