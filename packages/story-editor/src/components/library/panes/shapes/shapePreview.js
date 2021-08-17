@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createRef, useCallback, useMemo, useRef } from 'react';
+import { createRef, useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { createSolidFromString } from '@web-stories-wp/patterns';

@@ -18,10 +18,15 @@
  * External dependencies
  */
 import { CSSTransition } from 'react-transition-group';
-import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useDebouncedCallback, useFocusOut } from '@web-stories-wp/react';
+import {
+  useDebouncedCallback,
+  useFocusOut,
+  useRef,
+  useState,
+  useCallback,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { PatternPropType, hasGradient } from '@web-stories-wp/patterns';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';

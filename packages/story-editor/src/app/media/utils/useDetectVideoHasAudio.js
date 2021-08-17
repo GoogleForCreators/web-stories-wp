@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import { hasVideoGotAudio } from '@web-stories-wp/media';
 import { useFeature } from 'flagged';
 /**

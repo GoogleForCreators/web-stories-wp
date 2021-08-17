@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
+import { useState } from '@web-stories-wp/react';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { THUMBNAIL_BG } from '../../thumbnail/stories/demoThumbnails';
 import { CARD_TYPE } from '../../checklistCard/constants';

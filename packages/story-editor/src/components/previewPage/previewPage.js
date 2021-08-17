@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 import styled, { StyleSheetManager } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import {

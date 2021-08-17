@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**

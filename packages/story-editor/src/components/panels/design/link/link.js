@@ -17,13 +17,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
   useDebouncedCallback,
   useBatchingCallback,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 

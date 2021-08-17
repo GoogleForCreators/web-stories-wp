@@ -17,11 +17,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useEffect, useRef } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useDebouncedCallback,
+  shallowEqual,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { shallowEqual } from 'react-pure-render';
-import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';

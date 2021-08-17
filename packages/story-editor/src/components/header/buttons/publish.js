@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';

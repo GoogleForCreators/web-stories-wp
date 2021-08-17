@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';

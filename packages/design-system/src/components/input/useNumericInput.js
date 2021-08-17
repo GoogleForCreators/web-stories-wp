@@ -17,7 +17,13 @@
  * External dependencies
  */
 import Big from 'big.js';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

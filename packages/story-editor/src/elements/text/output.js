@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
 import {
   dataToEditorX,

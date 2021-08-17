@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { forwardRef, useCallback, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**

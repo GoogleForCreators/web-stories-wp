@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useContext } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { useContext } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

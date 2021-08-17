@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, forwardRef } from 'react';
+import { useCallback, useMemo, forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 /**
