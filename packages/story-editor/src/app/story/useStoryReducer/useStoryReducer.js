@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useMemo } from 'react';
+import { useReducer, useMemo } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 
 /**
@@ -28,6 +28,7 @@ import reducer from './reducer';
 
 const INITIAL_STATE = {
   pages: [],
+  capabilities: {},
   current: null,
   selection: [],
   story: {},

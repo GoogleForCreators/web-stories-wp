@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
@@ -25,7 +25,6 @@ import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
-import { useConfig } from '../../../../app/config';
 import { Row, RadioGroup } from '../../../form';
 import { SimplePanel } from '../../panel';
 
@@ -44,13 +43,15 @@ function StatusPanel() {
     status = '',
     password: savedPassword,
     updateStory,
+    capabilities,
   } = useStory(
     ({
       state: {
         story: { status, password },
+        capabilities,
       },
       actions: { updateStory },
-    }) => ({ status, password, updateStory })
+    }) => ({ status, password, updateStory, capabilities })
   );
   const [password, setPassword] = useState(savedPassword);
 
@@ -58,8 +59,6 @@ function StatusPanel() {
     // updated displayed password when stored password is updated
     setPassword(savedPassword);
   }, [savedPassword]);
-
-  const { capabilities } = useConfig();
 
   const visibilityOptions = [
     {

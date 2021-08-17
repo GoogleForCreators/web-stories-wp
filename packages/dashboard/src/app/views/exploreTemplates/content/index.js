@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { UnitsProvider } from '@web-stories-wp/units';
 import {

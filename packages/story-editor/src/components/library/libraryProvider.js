@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
+import { useEffect, useRef, useMemo, useState } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
@@ -28,11 +28,10 @@ import { loadTextSets } from '@web-stories-wp/text-sets';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
+import { useConfig } from '../../app';
 import Context from './context';
-import { getPaneId, Pane as SharedPane } from './panes/shared';
 import {
   ELEMS,
-  LAZY_TABS,
   MEDIA,
   MEDIA3P,
   PAGE_TEMPLATES,
@@ -41,9 +40,7 @@ import {
 } from './constants';
 
 const LIBRARY_TAB_IDS = new Set(
-  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT]
-    .map((tab) => tab.id)
-    .concat(LAZY_TABS)
+  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT].map((tab) => tab.id)
 );
 
 function LibraryProvider({ children }) {
@@ -55,16 +52,11 @@ function LibraryProvider({ children }) {
   const [pageCanvasData, setPageCanvasData] = useState(null);
   const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
-  const renderedTabs = useRef({});
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showElementsTab } = useFeatures();
-
-  const renderEmptyPane = useCallback((id) => {
-    const EmptyPane = (props) => <SharedPane id={getPaneId(id)} {...props} />;
-    return EmptyPane;
-  }, []);
+  const { showMedia3p } = useConfig();
 
   const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
     highlightedTab,
@@ -101,20 +93,15 @@ function LibraryProvider({ children }) {
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
-      [MEDIA, MEDIA3P, TEXT, SHAPES, showElementsTab && ELEMS, PAGE_TEMPLATES]
-        .filter(Boolean)
-        .map(({ Pane, id, ...rest }) => {
-          const isLazyTab = LAZY_TABS.includes(id);
-          const isActiveTab = tab === id;
-          const hasBeenRendered = renderedTabs.current[id];
-          const shouldRenderPane = !isLazyTab || isActiveTab || hasBeenRendered;
-          return {
-            id,
-            Pane: shouldRenderPane ? Pane : renderEmptyPane(id),
-            ...rest,
-          };
-        }),
-    [tab, showElementsTab, renderEmptyPane]
+      [
+        MEDIA,
+        showMedia3p && MEDIA3P,
+        TEXT,
+        SHAPES,
+        showElementsTab && ELEMS,
+        PAGE_TEMPLATES,
+      ].filter(Boolean),
+    [showMedia3p, showElementsTab]
   );
 
   const state = useMemo(
@@ -158,22 +145,17 @@ function LibraryProvider({ children }) {
       setPageCanvasPromise,
     ]
   );
-  const getTextSets = useCallback(async () => {
-    const trackTiming = getTimeTracker('load_text_sets');
-    setTextSets(await loadTextSets());
-    trackTiming();
-  }, []);
-
   useEffect(() => {
-    // track the rendered tabs
-    const previouslyRenderedTabs = { ...renderedTabs.current };
-    renderedTabs.current = { ...previouslyRenderedTabs, [tab]: true };
-
-    // if text pane hasn't been rendered until now fetch dynamically imported text sets
-    if (tab === TEXT.id && !previouslyRenderedTabs[tab]) {
+    async function getTextSets() {
+      const trackTiming = getTimeTracker('load_text_sets');
+      setTextSets(await loadTextSets());
+      trackTiming();
+    }
+    // if text sets have not been loaded but are needed fetch dynamically imported text sets
+    if (tab === TEXT.id && !Object.keys(textSets).length) {
       getTextSets();
     }
-  }, [tab, getTextSets]);
+  }, [tab, textSets]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

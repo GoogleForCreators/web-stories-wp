@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { getFileName } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -151,6 +152,7 @@ function useUploader() {
 
       const _additionalData = {
         post: storyId,
+        alt_text: getFileName(file),
         media_source: 'editor',
         ...additionalData,
       };

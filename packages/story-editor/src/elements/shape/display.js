@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { useUnits } from '@web-stories-wp/units';
 

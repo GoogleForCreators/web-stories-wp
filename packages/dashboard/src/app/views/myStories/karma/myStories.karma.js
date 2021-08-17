@@ -282,8 +282,7 @@ describe('Grid view', () => {
     it('should switch to the Published Tab', async () => {
       const { stories } = await getStoriesState();
       const numPublished = Object.values(stories).filter(
-        ({ status }) =>
-          status === STORY_STATUS.PUBLISH || status === STORY_STATUS.FUTURE
+        ({ status }) => status === STORY_STATUS.PUBLISH
       ).length;
 
       expect(numPublished).toBeGreaterThan(0);
@@ -299,7 +298,7 @@ describe('Grid view', () => {
       const viewPublishedText = fixture.screen.getByText(
         (_, node) =>
           node.innerHTML ===
-          STORY_VIEWING_LABELS[STORY_STATUS.PUBLISHED_AND_FUTURE](numPublished)
+          STORY_VIEWING_LABELS[STORY_STATUS.PUBLISH](numPublished)
       );
       expect(viewPublishedText).toBeTruthy();
 

@@ -74,7 +74,7 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.PUBLISH]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -131,7 +131,7 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.PUBLISH]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -154,8 +154,9 @@ describe('My Stories <Header />', function () {
           sort={{ value: STORY_SORT_OPTIONS.NAME, set: jest.fn() }}
           totalStoriesByStatus={{
             all: 19,
-            draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.DRAFT]: 9,
+            [STORY_STATUS.PUBLISH]: 10,
+            [STORY_STATUS.FUTURE]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -177,9 +178,14 @@ describe('My Stories <Header />', function () {
       name: /Filter stories by Published/,
     });
 
+    const scheduledButton = screen.getByRole('button', {
+      name: /Filter stories by Scheduled/,
+    });
+
     expect(allStoriesButton).toHaveTextContent('All Stories19');
     expect(draftsButton).toHaveTextContent('Drafts9');
     expect(publishedButton).toHaveTextContent('Published10');
+    expect(scheduledButton).toHaveTextContent('Scheduled10');
 
     expect(screen.queryByText('Private')).not.toBeInTheDocument();
   });
@@ -196,7 +202,7 @@ describe('My Stories <Header />', function () {
             all: 19,
             draft: 9,
             private: 2,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.PUBLISH]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -238,8 +244,7 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            private: 2,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.PUBLISH]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -247,12 +252,7 @@ describe('My Stories <Header />', function () {
           }}
           wpListURL="fakeurltoWordPressList.com"
         />
-      </LayoutProvider>,
-      {
-        config: {
-          capabilities: { canReadPrivatePosts: false },
-        },
-      }
+      </LayoutProvider>
     );
     const allStoriesButton = screen.getByRole('button', {
       name: /Filter stories by All Stories/,
@@ -285,7 +285,7 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.PUBLISH]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,
@@ -318,7 +318,7 @@ describe('My Stories <Header />', function () {
           totalStoriesByStatus={{
             all: 19,
             draft: 9,
-            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 10,
+            [STORY_STATUS.PUBLISH]: 10,
           }}
           view={{
             style: VIEW_STYLE.GRID,

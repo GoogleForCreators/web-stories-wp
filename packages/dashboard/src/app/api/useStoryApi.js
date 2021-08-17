@@ -17,9 +17,14 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer, useRef } from 'react';
-import queryString from 'query-string';
+import {
+  useCallback,
+  useMemo,
+  useReducer,
+  useRef,
+} from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
+import { addQueryArgs } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { base64Encode } from '@web-stories-wp/story-editor';
@@ -32,7 +37,6 @@ import {
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
-  STORY_STATUS,
 } from '../../constants';
 import storyReducer, {
   defaultStoriesState,
@@ -111,11 +115,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
       const trackTiming = getTimeTracker('load_stories');
 
       try {
-        const path = queryString.stringifyUrl({
-          url: storyApi,
-          query,
-        });
-
+        const path = addQueryArgs(storyApi, query);
         const response = await dataAdapter.get(path);
 
         const totalPages =
@@ -154,12 +154,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
             payload: {
               stories: cleanStories,
               totalPages,
-              totalStoriesByStatus: {
-                ...totalStoriesByStatus,
-                [STORY_STATUS.PUBLISHED_AND_FUTURE]:
-                  totalStoriesByStatus[STORY_STATUS.PUBLISH] +
-                  totalStoriesByStatus[STORY_STATUS.FUTURE],
-              },
+              totalStoriesByStatus,
               page,
             },
           });
@@ -188,11 +183,8 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
       const trackTiming = getTimeTracker('load_update_story');
 
       try {
-        const path = queryString.stringifyUrl({
-          url: `${storyApi}${story.id}/`,
-          query: {
-            _embed: 'wp:lock,wp:lockuser,author',
-          },
+        const path = addQueryArgs(`${storyApi}${story.id}/`, {
+          _embed: 'wp:lock,wp:lockuser,author',
         });
 
         const data = {
@@ -277,11 +269,8 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           flags,
         });
 
-        const path = queryString.stringifyUrl({
-          url: storyApi,
-          query: {
-            _fields: 'edit_link',
-          },
+        const path = addQueryArgs(storyApi, {
+          _fields: 'edit_link',
         });
 
         const response = await dataAdapter.post(path, {
@@ -333,12 +322,9 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
           title,
         } = story.originalStoryData;
 
-        const path = queryString.stringifyUrl({
-          url: storyApi,
-          query: {
-            _embed: 'wp:lock,wp:lockuser,author',
-            _fields: STORY_FIELDS,
-          },
+        const path = addQueryArgs(storyApi, {
+          _embed: 'wp:lock,wp:lockuser,author',
+          _fields: STORY_FIELDS,
         });
 
         const storyContent = encodeMarkup

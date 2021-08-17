@@ -20,7 +20,7 @@
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { memo } from 'react';
+import { memo } from '@web-stories-wp/react';
 import {
   Icons,
   Text as DefaultText,

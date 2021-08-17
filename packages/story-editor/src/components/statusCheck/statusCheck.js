@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState } from '@web-stories-wp/react';
 import { trackError } from '@web-stories-wp/tracking';
 
 /**

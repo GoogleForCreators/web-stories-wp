@@ -498,6 +498,39 @@
     },
     {
       "files": [
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        ".storybook/preview.js",
+        "__mocks__/**/*.js",
+        "packages/activation-notice/**/*.js",
+        "packages/react/**/*.js",
+        "packages/dashboard/src/karma/fixture.js",
+        "packages/story-editor/src/components/canvas/test/useCanvasKeys.js",
+        "packages/story-editor/src/karma/fixture/fixture.js",
+        "packages/story-block/**/*.js",
+        "packages/tinymce-button/**/*.js"
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "react",
+                "message": "Use @web-stories-wp/react instead."
+              },
+              {
+                "name": "react-dom",
+                "message": "Use @web-stories-wp/react instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
         "packages/tinymce-button/src/**/*.js"
       ],
       "globals": {

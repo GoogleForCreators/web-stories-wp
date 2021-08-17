@@ -17,8 +17,12 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
-import { useBatchingCallback } from '@web-stories-wp/react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useBatchingCallback,
+} from '@web-stories-wp/react';
 
 const SCROLL_PERCENT = 0.2;
 const MAX_SCROLL_STEP = 10;

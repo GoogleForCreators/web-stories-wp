@@ -20,13 +20,17 @@
 import {
   createNewStory,
   skipSuiteOnFirefox,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
+
+const media3pSelector = '#library-tab-media3p';
 
 describe('Inserting 3P Media', () => {
   it('should dismiss message', async () => {
     await createNewStory();
 
-    await expect(page).toClick('#library-tab-media3p');
+    await expect(page).toMatchElement(media3pSelector);
+    await expect(page).toClick(media3pSelector);
     await expect(page).toClick('button', { text: 'Dismiss' });
     await expect(page).not.toMatch(
       'Your use of stock content is subject to third party terms'
@@ -37,7 +41,7 @@ describe('Inserting 3P Media', () => {
     it('should insert an Unsplash image', async () => {
       await createNewStory();
 
-      await expect(page).toClick('#library-tab-media3p');
+      await expect(page).toClick(media3pSelector);
 
       await expect(page).toMatchElement('button', { text: 'Image' });
       await expect(page).toClick('button', { text: 'Image' });
@@ -64,7 +68,7 @@ describe('Inserting 3P Media', () => {
     it.skip('should insert a Coverr video', async () => {
       await createNewStory();
 
-      await expect(page).toClick('#library-tab-media3p');
+      await expect(page).toClick(media3pSelector);
 
       await expect(page).toMatchElement('button', { text: 'Video' });
       await expect(page).toClick('button', { text: 'Video' });
@@ -82,6 +86,10 @@ describe('Inserting 3P Media', () => {
     });
   });
 
+  // Skipped for https://github.com/google/web-stories-wp/issues/7481
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should insert an tenor gif', async () => {
+
   describe('Tenor', () => {
     // Firefox has issues playing media (MP4 videos).
     skipSuiteOnFirefox();
@@ -89,7 +97,7 @@ describe('Inserting 3P Media', () => {
     it('should insert a Tenor GIF', async () => {
       await createNewStory();
 
-      await expect(page).toClick('#library-tab-media3p');
+      await expect(page).toClick(media3pSelector);
 
       await expect(page).toMatchElement('button', { text: 'GIFs' });
       await expect(page).toClick('button', { text: 'GIFs' });
@@ -104,6 +112,15 @@ describe('Inserting 3P Media', () => {
 
       await page.waitForSelector('[data-testid="imageElement"]');
       await expect(page).toMatchElement('[data-testid="imageElement"]');
+  });
+
+  describe('Disabled', () => {
+    withPlugin('e2e-tests-disable-3p-media');
+
+    it('should not render 3p media tab', async () => {
+      await createNewStory();
+
+      await expect(page).not.toMatchElement(media3pSelector);
     });
   });
 });

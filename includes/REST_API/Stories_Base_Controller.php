@@ -215,4 +215,27 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 		return $links;
 	}
+
+	/**
+	 * Get the link relations available for the post and current user.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param WP_Post         $post    Post object.
+	 * @param WP_REST_Request $request Request object.
+	 * @return array List of link relations.
+	 */
+	protected function get_available_actions( $post, $request ) {
+		$rels = parent::get_available_actions( $post, $request );
+
+		if ( $this->check_delete_permission( $post ) ) {
+			$rels[] = 'https://api.w.org/action-delete';
+		}
+
+		if ( $this->check_update_permission( $post ) ) {
+			$rels[] = 'https://api.w.org/action-edit';
+		}
+
+		return $rels;
+	}
 }

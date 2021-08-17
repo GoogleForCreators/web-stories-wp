@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';

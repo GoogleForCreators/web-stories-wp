@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect } from './react';
 
 function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {

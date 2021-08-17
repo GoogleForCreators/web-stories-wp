@@ -77,7 +77,7 @@ describe('Right Click Menu integration', () => {
    * Add text to canvas
    *
    * @param {Object} textPartial text element partial
-   * @return {Object} the element
+   * @return {Object} the text element
    */
   function addText(textPartial = {}) {
     return fixture.act(() =>
@@ -95,7 +95,7 @@ describe('Right Click Menu integration', () => {
   /**
    * Add earth image to canvas
    *
-   * @return {Object} the element
+   * @return {Object} the image element
    */
   function addEarthImage() {
     return fixture.act(() =>
@@ -117,7 +117,7 @@ describe('Right Click Menu integration', () => {
   /**
    * Add ranger image to canvas
    *
-   * @return {Object} the element
+   * @return {Object} the image element
    */
   function addRangerImage() {
     return fixture.act(() =>
@@ -139,7 +139,7 @@ describe('Right Click Menu integration', () => {
   /**
    * Add video to canvas
    *
-   * @return {Object} the element
+   * @return {Object} the video element
    */
   function addVideo() {
     return fixture.act(() =>
@@ -154,6 +154,32 @@ describe('Right Click Menu integration', () => {
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/beach.mp4',
         },
+      })
+    );
+  }
+
+  /**
+   * Add shape to canvas
+   *
+   * @param {Object} shapePartial Object with shape properties to override defaults.
+   * @return {Object} the shape element
+   */
+  function addShape(shapePartial = {}) {
+    return fixture.act(() =>
+      insertElement('shape', {
+        type: 'shape',
+        x: 48,
+        y: 0,
+        width: 148,
+        height: 137,
+        scale: 100,
+        focalX: 50,
+        focalY: 50,
+        mask: {
+          type: 'heart',
+        },
+        link: null,
+        ...shapePartial,
       })
     );
   }
@@ -1050,6 +1076,42 @@ describe('Right Click Menu integration', () => {
         isItalic: false,
         isUnderline: false,
         letterSpacing: 0,
+      });
+    });
+  });
+
+  describe('right click menu: shapes', () => {
+    it('should add style to "Saved Colors"', async () => {
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 203,
+            g: 103,
+            b: 103,
+          },
+        },
+      });
+
+      // Save color to saved colors
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(shape.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.canvas.rightClickMenu.addToSavedColors
+      );
+
+      // verify that the global color was added
+      const { colors } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          colors: state.story.globalStoryStyles.colors,
+        }))
+      );
+      expect(colors).toContain({
+        color: {
+          r: 203,
+          g: 103,
+          b: 103,
+        },
       });
     });
   });

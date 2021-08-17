@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import {

@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { parseToRgb } from 'polished';
 import { getHexFromValue, getPreviewText } from '@web-stories-wp/patterns';

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { forwardRef } from 'react';
+import { forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -103,7 +103,6 @@ describe('<Menu />', () => {
   });
 
   it('should override list items when renderMenu is present', () => {
-    // eslint-disable-next-line react/display-name
     const OverrideRenderItem = forwardRef(({ isSelected, ...rest }, ref) => {
       return (
         <li {...rest} ref={ref}>

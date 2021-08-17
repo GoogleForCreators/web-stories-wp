@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { Tooltip, TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
@@ -34,6 +34,7 @@ import {
   CardDetailsColumn,
   Row,
   Title,
+  TitleLink,
   DetailCopy,
   LockAvatar,
   LockedRow,
@@ -84,26 +85,30 @@ const StoryDisplayContent = ({
     }
   }, [status, displayDate]);
 
+  const { name, avatar } = lockUser;
+
   const storyLockedTitle = isLocked && (
     <LockedRow>
       <Tooltip
         position={TOOLTIP_PLACEMENT.BOTTOM_START}
         title={
-          lockUser.name &&
+          name &&
           sprintf(
             /* translators: %s: user name */
             __('%s is currently editing this story', 'web-stories'),
-            lockUser.name
+            name
           )
         }
       >
-        <LockAvatar
-          src={lockUser.avatar}
-          alt={lockUser.name}
-          height={24}
-          width={24}
-          className="lock-user-avatar"
-        />
+        {avatar && (
+          <LockAvatar
+            src={avatar}
+            alt={name}
+            height={24}
+            width={24}
+            className="lock-user-avatar"
+          />
+        )}
       </Tooltip>
     </LockedRow>
   );
@@ -122,17 +127,21 @@ const StoryDisplayContent = ({
       ) : (
         <Row>
           {isLocked && <LockIcon />}
-          <Title
-            href={titleLink}
-            tabIndex={tabIndex}
-            aria-label={sprintf(
-              /* translators: %s: title*/
-              __('Open %s in editor', 'web-stories'),
-              title
-            )}
-          >
-            {formattedTitle}
-          </Title>
+          {titleLink ? (
+            <TitleLink
+              href={titleLink}
+              tabIndex={tabIndex}
+              aria-label={sprintf(
+                /* translators: %s: title*/
+                __('Open %s in editor', 'web-stories'),
+                title
+              )}
+            >
+              {formattedTitle}
+            </TitleLink>
+          ) : (
+            <Title>{formattedTitle}</Title>
+          )}
         </Row>
       )}
       <CardDetailsGrid>
