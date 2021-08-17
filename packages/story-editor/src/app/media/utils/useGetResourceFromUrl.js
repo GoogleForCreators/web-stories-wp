@@ -34,6 +34,18 @@ import {
 import { useConfig } from '../../config';
 import { getPosterName, useUploadVideoFrame } from '.';
 
+const EXT_MIME_TYPES = {
+  jpg: 'image/jpeg',
+  gif: 'image/gif',
+  jpe: 'image/jpe',
+  jpeg: 'image/jpg',
+  m4v: 'video/mp4',
+  mp4: 'video/mp4',
+  png: 'image/png',
+  webm: 'video/webm',
+  webp: 'image/webp',
+};
+
 function useGetResourceFromUrl() {
   const {
     allowedMimeTypes: { video, image },
@@ -44,9 +56,9 @@ function useGetResourceFromUrl() {
   const getResourceFromUrl = async (value) => {
     const ext = getFileExtFromUrl(value);
     let type = null;
-    if (image.includes(`image/${ext}`)) {
+    if (image.includes(EXT_MIME_TYPES[ext])) {
       type = 'image';
-    } else if (video.includes(`video/${ext}`)) {
+    } else if (video.includes(EXT_MIME_TYPES[ext])) {
       type = 'video';
     } else {
       return null;
@@ -85,7 +97,7 @@ function useGetResourceFromUrl() {
       height,
       src: value,
       local: false,
-      mimeType: `${type}/${ext}`,
+      mimeType: EXT_MIME_TYPES[ext],
       ...videoData,
     });
   };
