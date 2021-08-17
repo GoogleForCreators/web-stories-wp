@@ -18,10 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo, useRef } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useInputEventHandlers } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -155,14 +154,9 @@ export const Input = forwardRef(
     ref
   ) => {
     const inputId = useMemo(() => id || uuidv4(), [id]);
-    const inputRef = useRef(null);
 
-    const { handleBlur, handleFocus, isFocused } = useInputEventHandlers({
-      forwardedRef: ref,
-      inputRef,
-      onBlur,
-      onFocus,
-    });
+    const [isFocused, setIsFocused] = useState(false);
+    const [hasBeenSelected, setHasBeenSelected] = useState(false);
 
     let displayedValue = value;
     if (unit && value.length) {
@@ -189,9 +183,27 @@ export const Input = forwardRef(
           <StyledInput
             id={inputId}
             disabled={disabled}
-            ref={ref || inputRef}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
+            ref={(input) => {
+              // `ref` can either be a callback ref or a normal ref.
+              if (typeof ref == 'function') {
+                ref(input);
+              } else if (ref) {
+                ref.current = input;
+              }
+              if (input && isFocused && !hasBeenSelected) {
+                input.select();
+                setHasBeenSelected(true);
+              }
+            }}
+            onFocus={(e) => {
+              onFocus?.(e);
+              setIsFocused(true);
+              setHasBeenSelected(false);
+            }}
+            onBlur={(e) => {
+              onBlur?.(e);
+              setIsFocused(false);
+            }}
             value={displayedValue}
             hasSuffix={hasSuffix}
             {...props}
@@ -201,7 +213,7 @@ export const Input = forwardRef(
               hasLabel={Boolean(label)}
               forwardedAs="span"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              onClick={handleFocus}
+              onClick={() => setIsFocused(true)}
             >
               {suffix}
             </Suffix>
