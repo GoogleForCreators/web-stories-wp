@@ -613,7 +613,7 @@ class Stories_Controller extends Test_REST_TestCase {
 		);
 
 		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_view', $response, 403 );
+		$this->assertErrorResponse( 'rest_cannot_create', $response, 403 );
 
 		$this->kses_remove_filters();
 	}
