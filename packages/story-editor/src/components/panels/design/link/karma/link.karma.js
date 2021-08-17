@@ -229,7 +229,7 @@ describe('Link Panel', () => {
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
-      await fixture.sleep(1000);
+      await fixture.events.sleep(1000);
 
       await fixture.snapshot('Testing');
 
