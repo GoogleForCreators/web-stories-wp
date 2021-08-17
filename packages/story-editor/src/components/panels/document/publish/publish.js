@@ -189,67 +189,64 @@ function PublishPanel() {
       <PanelContent>
         <PublishTime />
         {capabilities?.hasAssignAuthorAction && users && <Author />}
-        {hasUploadMediaAction && (
-          <HighlightRow
-            isHighlighted={
-              highlightPoster?.showEffect || highlightLogo?.showEffect
-            }
-          >
-            <MediaInputWrapper>
-              <MediaWrapper>
-                <StyledMedia
-                  ref={posterButtonRef}
-                  width={72}
-                  height={96}
-                  cropParams={{
-                    width: 640,
-                    height: 853,
-                  }}
-                  value={featuredMedia?.url}
-                  onChange={handleChangePoster}
-                  title={__('Select as poster image', 'web-stories')}
-                  buttonInsertText={__('Select as poster image', 'web-stories')}
-                  type={allowedImageMimeTypes}
-                  ariaLabel={__('Poster image', 'web-stories')}
-                  onChangeErrorText={posterErrorMessage}
-                  imgProps={featuredMedia}
-                />
-              </MediaWrapper>
-              <LabelWrapper>
-                <Label>{__('Poster image', 'web-stories')}</Label>
-                <Required />
-              </LabelWrapper>
-            </MediaInputWrapper>
-            <MediaInputWrapper>
-              <MediaWrapper>
-                <StyledMedia
-                  width={72}
-                  height={72}
-                  cropParams={{
-                    width: 96,
-                    height: 96,
-                  }}
-                  ref={publisherLogoRef}
-                  value={publisherLogoUrl}
-                  onChange={handleChangePublisherLogo}
-                  onChangeErrorText={publisherLogoErrorMessage}
-                  title={__('Select as publisher logo', 'web-stories')}
-                  buttonInsertText={__(
-                    'Select as publisher logo',
-                    'web-stories'
-                  )}
-                  type={allowedImageMimeTypes}
-                  ariaLabel={__('Publisher Logo', 'web-stories')}
-                  variant={MEDIA_VARIANTS.CIRCLE}
-                />
-              </MediaWrapper>
-              <LabelWrapper>
-                <Label>{__('Publisher Logo', 'web-stories')}</Label>
-                <Required />
-              </LabelWrapper>
-            </MediaInputWrapper>
-          </HighlightRow>
-        )}
+        <HighlightRow
+          isHighlighted={
+            highlightPoster?.showEffect || highlightLogo?.showEffect
+          }
+        >
+          <MediaInputWrapper>
+            <MediaWrapper>
+              <StyledMedia
+                ref={posterButtonRef}
+                width={72}
+                height={96}
+                cropParams={{
+                  width: 640,
+                  height: 853,
+                }}
+                value={featuredMedia?.url}
+                onChange={handleChangePoster}
+                title={__('Select as poster image', 'web-stories')}
+                buttonInsertText={__('Select as poster image', 'web-stories')}
+                type={allowedImageMimeTypes}
+                ariaLabel={__('Poster image', 'web-stories')}
+                onChangeErrorText={posterErrorMessage}
+                imgProps={featuredMedia}
+                canUpload={hasUploadMediaAction}
+              />
+            </MediaWrapper>
+            <LabelWrapper>
+              <Label>{__('Poster image', 'web-stories')}</Label>
+              <Required />
+            </LabelWrapper>
+          </MediaInputWrapper>
+          <MediaInputWrapper>
+            <MediaWrapper>
+              <StyledMedia
+                width={72}
+                height={72}
+                cropParams={{
+                  width: 96,
+                  height: 96,
+                }}
+                ref={publisherLogoRef}
+                value={publisherLogoUrl}
+                onChange={handleChangePublisherLogo}
+                onChangeErrorText={publisherLogoErrorMessage}
+                title={__('Select as publisher logo', 'web-stories')}
+                buttonInsertText={__('Select as publisher logo', 'web-stories')}
+                type={allowedImageMimeTypes}
+                ariaLabel={__('Publisher Logo', 'web-stories')}
+                variant={MEDIA_VARIANTS.CIRCLE}
+                canUpload={hasUploadMediaAction}
+              />
+            </MediaWrapper>
+            <LabelWrapper>
+              <Label>{__('Publisher Logo', 'web-stories')}</Label>
+              <Required />
+            </LabelWrapper>
+          </MediaInputWrapper>
+        </HighlightRow>
       </PanelContent>
     </Panel>
   );

@@ -163,6 +163,7 @@ export const MediaInput = forwardRef(function Media(
     menuOptions = [],
     onMenuOption,
     openMediaPicker,
+    canUpload = true,
     menuProps = {},
     imgProps = {},
     ...rest
@@ -199,23 +200,27 @@ export const MediaInput = forwardRef(function Media(
         )}
         {isLoading && <LoadingDots />}
       </ImageWrapper>
-      <Tooltip title={hasMenu ? null : __('Open media picker', 'web-stories')}>
-        <Button
-          ref={buttonRef}
-          id={buttonId}
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={ariaLabel}
-          onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
-          aria-owns={hasMenu ? listId : null}
-          aria-pressed={isMenuOpen}
-          aria-expanded={isMenuOpen}
-          {...rest}
+      {canUpload && (
+        <Tooltip
+          title={hasMenu ? null : __('Open media picker', 'web-stories')}
         >
-          <Pencil />
-        </Button>
-      </Tooltip>
+          <Button
+            ref={buttonRef}
+            id={buttonId}
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.TERTIARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={ariaLabel}
+            onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
+            aria-owns={hasMenu ? listId : null}
+            aria-pressed={isMenuOpen}
+            aria-expanded={isMenuOpen}
+            {...rest}
+          >
+            <Pencil />
+          </Button>
+        </Tooltip>
+      )}
       <Popup
         placement={PLACEMENT.BOTTOM_END}
         anchor={buttonRef}
@@ -246,6 +251,7 @@ MediaInput.propTypes = {
   ariaLabel: PropTypes.string,
   alt: PropTypes.string,
   isLoading: PropTypes.bool,
+  canUpload: PropTypes.bool,
   variant: PropTypes.string,
   menuOptions: PropTypes.array,
   onMenuOption: PropTypes.func,

@@ -33,7 +33,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas, useConfig } from '../../../../app';
+import { useStory, useCanvas } from '../../../../app';
 import { isValidUrl, withProtocol } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
@@ -61,9 +61,6 @@ const Space = styled.div`
 `;
 
 function PageAttachmentPanel() {
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
   const { currentPage, updateCurrentPageProperties } = useStory((state) => ({
     updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
     currentPage: state.state.currentPage,
@@ -242,18 +239,16 @@ function PageAttachmentPanel() {
               </Text>
             </Label>
           </StyledRow>
-          {hasUploadMediaAction && (
-            <StyledRow>
-              <LinkIcon handleChange={handleChangeIcon} icon={icon} />
-              <Space />
-              <Text
-                as="span"
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-              >
-                {__('Link icon', 'web-stories')}
-              </Text>
-            </StyledRow>
-          )}
+          <StyledRow>
+            <LinkIcon handleChange={handleChangeIcon} icon={icon} />
+            <Space />
+            <Text
+              as="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {__('Link icon', 'web-stories')}
+            </Text>
+          </StyledRow>
         </>
       )}
     </SimplePanel>

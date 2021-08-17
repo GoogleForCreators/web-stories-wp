@@ -157,7 +157,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   const buttonRef = useRef();
   const highlight = useFocusHighlight(states.CAPTIONS, buttonRef);
 
-  if (!hasUploadMediaAction) {
+  if (!hasUploadMediaAction && !tracks.length) {
     return null;
   }
 
