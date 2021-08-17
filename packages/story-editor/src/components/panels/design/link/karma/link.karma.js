@@ -40,13 +40,13 @@ describe('Link Panel', () => {
     fixture.restore();
   });
 
-  const moveElementToBottom = async (frame) => {
+  const moveElementToBottom = async (frame, frameY = 0) => {
     const safezoneHeight = safezone.getBoundingClientRect().height;
     const frameHeight = frame.getBoundingClientRect().height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
-      moveBy(0, safezoneHeight - frameHeight - 45, { steps: 10 }),
+      moveBy(0, safezoneHeight - frameHeight - frameY - 50, { steps: 10 }),
       up(),
     ]);
   };
@@ -215,14 +215,14 @@ describe('Link Panel', () => {
         insertElement('shape', {
           backgroundColor: createSolidFromString('#ff00ff'),
           mask: { type: 'rectangle' },
-          x: 50,
-          y: 50,
+          x: 100,
+          y: 100,
           width: 50,
           height: 50,
         })
       );
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-      await moveElementToBottom(frame);
+      await moveElementToBottom(frame, 100);
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
