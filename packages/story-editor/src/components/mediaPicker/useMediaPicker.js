@@ -36,9 +36,6 @@ const defaultCropParams = {
   flex_height: false,
 };
 
-const getAltText = (attachment) =>
-  attachment?.alt ? attachment.alt : attachment.title;
-
 /**
  * Custom hook to open the WordPress media modal.
  *
@@ -89,7 +86,7 @@ export default function useMediaPicker({
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, {
           media_source: 'editor',
-          alt_text: getAltText(attributes),
+          alt_text: attributes.alt || attributes.title,
         });
       };
     } catch (e) {
@@ -136,7 +133,7 @@ export default function useMediaPicker({
 
           return;
         }
-        mediaPickerEl.alt = getAltText(mediaPickerEl);
+        mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
         onSelect(mediaPickerEl);
       });
 
@@ -219,7 +216,7 @@ export default function useMediaPicker({
 
       fileFrame.once('cropped', (attachment) => {
         if (attachment?.id) {
-          const alt_text = getAltText(attachment);
+          const alt_text = attachment.alt || attachment.title;
           updateMedia(attachment.id, { media_source: 'editor', alt_text });
           attachment.alt = alt_text;
         }
@@ -232,7 +229,7 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
-        mediaPickerEl.alt = getAltText(mediaPickerEl);
+        mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
         onSelect(mediaPickerEl);
       });
 
@@ -257,7 +254,7 @@ export default function useMediaPicker({
           !control.params.flex_width &&
           !control.params.flex_height
         ) {
-          mediaPickerEl.alt = getAltText(mediaPickerEl);
+          mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
           onSelect(mediaPickerEl);
           fileFrame.close();
         } else {
