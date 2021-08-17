@@ -17,6 +17,7 @@
  * External dependencies
  */
 import {
+  useEffect,
   useMemo,
   useRef,
   useCallback,
@@ -28,16 +29,25 @@ import PropTypes from 'prop-types';
 export const LayoutContext = createContext(null);
 
 const Provider = ({ children }) => {
+  const firstFocusableContentRef = useRef();
   const scrollFrameRef = useRef(null);
   const [telemetryBannerOpen, setTelemetryBannerOpen] = useState(false);
 
+  // Get the first focusable content in the dashboard
+  // so we can send focus there without having to
+  // tab through the whole WordPress dashboard to get back.
+  useEffect(() => {
+    firstFocusableContentRef.current = document
+      ?.getElementById('web-stories-dashboard')
+      ?.querySelector(['button', 'a']);
+  }, []);
+
   const scrollToTop = useCallback(() => {
-    const scrollFrameEl = scrollFrameRef.current;
     document.documentElement?.scrollTo?.({
       top: 0,
       behavior: 'smooth',
     });
-    scrollFrameEl?.children[0]?.focus();
+    firstFocusableContentRef.current?.focus();
   }, []);
 
   const value = useMemo(

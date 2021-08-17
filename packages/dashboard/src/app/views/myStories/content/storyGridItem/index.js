@@ -141,7 +141,7 @@ const StoryGridItem = ({
       ref={(el) => {
         itemRefs.current[story.id] = el;
       }}
-      title={sprintf(
+      aria-label={sprintf(
         /* translators: %s: story title.*/
         __('Details about %s', 'web-stories'),
         formattedTitle

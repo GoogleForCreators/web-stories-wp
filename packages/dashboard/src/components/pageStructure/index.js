@@ -169,7 +169,6 @@ export function LeftRail() {
       onClickCapture={onContainerClickCapture}
       ref={leftRailRef}
       isOpen={sideBarVisible}
-      tabIndex={-1}
       role="navigation"
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
