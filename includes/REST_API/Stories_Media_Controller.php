@@ -144,7 +144,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	/**
 	 * Process post to update attribute.
 	 *
-	 * @since 1.10.0
+	 * @since 1.11.0
 	 *
 	 * @param int      $post_id Post id.
 	 * @param int|null $parent_post New post parent. Default null.
