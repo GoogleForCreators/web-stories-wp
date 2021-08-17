@@ -121,20 +121,13 @@ function useInsertTextSet() {
 
         if (useScrim) {
           const { textSetHeight, textSetWidth } = toAdd[0];
-          const textSetXY = toAdd.reduce(
-            (bb, e) => {
-              if (e.x < bb.x || !bb.x) {
-                bb.x = e.x;
-              }
-              if (e.y < bb.y || !bb.y) {
-                bb.y = e.y;
-              }
-
-              return bb;
-            },
-            { x: null, y: null }
-          );
-          const { x, y } = textSetXY;
+          const getMinDim = (dim) =>
+            Math.min.apply(
+              null,
+              toAdd.map((e) => e[dim])
+            );
+          const x = getMinDim('x');
+          const y = getMinDim('y');
           const scrim = {
             x: x - SCRIM_PADDING,
             y: y - SCRIM_PADDING,
