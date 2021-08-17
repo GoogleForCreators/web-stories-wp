@@ -64,17 +64,18 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     currentTemplate <= templateCount;
     currentTemplate++
   ) {
-    // Get the template name and remove spaces to use as part of file name.
+    // Get the template name to use as build directory.
     const templateName = await page.evaluate((gridItemId) => {
       return document
         .querySelector(
           `div#template-grid-item-${gridItemId} div[data-testid="card-action-container"]`
         )
-        .getAttribute('aria-label')
-        .replace(/\s/g, '');
+        .getAttribute('data-template-slug');
     }, currentTemplate);
+    // Prep a directory for the template screenshots
+    fs.mkdirSync(`${screenshotsPath}${templateName}`, { recursive: true });
 
-    console.log(`getting screenshots for ${templateName}`);
+    console.log(`Getting screenshots for ${templateName}`);
 
     // Use the template, this will open up the editor
     await page.click(
@@ -118,14 +119,17 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
       const templatePageSafeArea = await pagePreview.$(
         `amp-story-page:nth-child(${currentPage}) .page-safe-area`
       );
+      // Speed up animations, this in tandem with emulating reduced motion will account for fade in content
+      await pagePreview._client.send('Animation.setPlaybackRate', {
+        playbackRate: 2,
+      });
+
       await templatePageSafeArea.screenshot({
-        path: `${screenshotsPath}/${templateName}-${currentPage}.png`,
+        path: `${screenshotsPath}${templateName}/${currentPage}.png`,
       });
 
       if (currentPage !== totalPages - 1) {
         await pagePreview.click('aria/Next page');
-        // Wait 2 seconds, prevents screenshots not capturing the full page. Without this some pages won't load in time.
-        await pagePreview.waitForTimeout(2000);
       }
     }
 

@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'self-care-guide',
   title: _x('Self-care Guide', 'template name', 'web-stories'),
   tags: [
     _x('Health & Wellness', 'template keyword', 'web-stories'),

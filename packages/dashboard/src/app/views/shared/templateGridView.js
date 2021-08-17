@@ -127,10 +127,15 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                 )}
               />
               <CardPreviewContainer
-                ariaLabel={template.title}
+                ariaLabel={sprintf(
+                  /* translators: %s: template title.*/
+                  __('Viewing template: %s', 'web-stories'),
+                  template.title
+                )}
                 tabIndex={tabIndex}
                 pageSize={pageSize}
                 story={template}
+                slug={template.slug}
                 centerAction={{
                   targetAction: template.centerTargetAction,
                   label:

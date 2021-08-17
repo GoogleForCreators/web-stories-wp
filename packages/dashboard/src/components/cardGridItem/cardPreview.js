@@ -130,6 +130,7 @@ const CardPreviewContainer = ({
   centerAction,
   bottomAction,
   topAction,
+  slug = '',
   story,
   pageSize,
   ariaLabel,
@@ -194,6 +195,7 @@ const CardPreviewContainer = ({
       <EditControls
         aria-label={ariaLabel}
         data-testid="card-action-container"
+        data-template-slug={slug}
         ref={containElem}
         cardSize={pageSize}
         isActive={CARD_STATE.ACTIVE === cardState}
@@ -268,6 +270,7 @@ CardPreviewContainer.propTypes = {
   topAction: ActionButtonPropType,
   containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
+  slug: PropTypes.string,
   story: StoryPropType,
   tabIndex: PropTypes.number,
 };

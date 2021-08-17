@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'trendy-winter-veggie',
   title: _x('Trendy Winter Veggie', 'template name', 'web-stories'),
   tags: [
     _x('Food', 'template keyword', 'web-stories'),
