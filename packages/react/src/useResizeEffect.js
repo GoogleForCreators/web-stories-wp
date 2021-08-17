@@ -15,11 +15,11 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from './react';
 
-if (!('ResizeObserver' in window)) {
+if (typeof window !== 'undefined' && window && !('ResizeObserver' in window)) {
   import(
     /* webpackChunkName: "chunk-resize-observer-polyfill" */ 'resize-observer-polyfill'
   )

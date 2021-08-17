@@ -22,6 +22,7 @@ import getResourceFromMedia3p from '../getResourceFromMedia3p';
 describe('getResourceFromMedia3p', () => {
   it('should return video resource', () => {
     const media3pResource = {
+      baseColor: [0, 55, 155],
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -62,6 +63,7 @@ describe('getResourceFromMedia3p', () => {
       },
     };
     const expectedStoryEditorResource = {
+      baseColor: [0, 55, 155],
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -74,7 +76,6 @@ describe('getResourceFromMedia3p', () => {
       id: 'media/coverr:g9re0sRUYA',
       length: 121,
       lengthFormatted: '2:01',
-      title: 'NYC Postcard',
       alt: 'media/coverr:g9re0sRUYA',
       local: false,
       isPlaceholder: false,
@@ -108,6 +109,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return video resource with calculated size', () => {
     const media3pResource = {
+      baseColor: [0, 55, 155],
       name: 'media/coverr:g9re0sRUYA',
       provider: 'COVERR',
       type: 'VIDEO',
@@ -144,6 +146,7 @@ describe('getResourceFromMedia3p', () => {
       },
     };
     const expectedStoryEditorResource = {
+      baseColor: [0, 55, 155],
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -156,7 +159,6 @@ describe('getResourceFromMedia3p', () => {
       id: 'media/coverr:g9re0sRUYA',
       length: 121,
       lengthFormatted: '2:01',
-      title: 'NYC Postcard',
       alt: 'media/coverr:g9re0sRUYA',
       local: false,
       isPlaceholder: false,
@@ -245,6 +247,7 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return image and video resources for tenor gifs', () => {
     const media3pResource = {
+      baseColor: [0, 55, 155],
       name: 'media/tenor:3468838096637910112',
       provider: 'TENOR',
       type: 'GIF',
@@ -332,6 +335,7 @@ describe('getResourceFromMedia3p', () => {
     };
 
     const expectedStoryEditorResource = {
+      baseColor: [0, 55, 155],
       id: 'media/tenor:3468838096637910112',
       length: undefined,
       lengthFormatted: undefined,
@@ -341,7 +345,6 @@ describe('getResourceFromMedia3p', () => {
       src: 'https://c.tenor.com/MCPJ3sVx3GAAAAAC/happy-national-cat-day-peace.gif',
       width: 498,
       height: 498,
-      title: undefined,
       alt: 'media/tenor:3468838096637910112',
       local: false,
       isPlaceholder: false,

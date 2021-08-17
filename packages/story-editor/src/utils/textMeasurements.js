@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from '@web-stories-wp/react';
 import { dataPixels, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from '@web-stories-wp/react';
 import { useSnackbar } from '@web-stories-wp/design-system';
 
 /**

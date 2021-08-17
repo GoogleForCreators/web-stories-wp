@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
+import { useContextReact as useContext } from '@web-stories-wp/react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeContext } from 'styled-components';

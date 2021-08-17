@@ -490,8 +490,17 @@
     },
     {
       "files": [
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        ".storybook/preview.js",
+        "__mocks__/**/*.js",
         "packages/activation-notice/**/*.js",
-        "packages/stories-block/**/*.js",
+        "packages/react/**/*.js",
+        "packages/dashboard/src/karma/fixture.js",
+        "packages/story-editor/src/components/canvas/test/useCanvasKeys.js",
+        "packages/story-editor/src/karma/fixture/fixture.js",
+        "packages/story-block/**/*.js",
         "packages/tinymce-button/**/*.js"
       ],
       "rules":{
@@ -500,16 +509,12 @@
           {
             "paths": [
               {
-                "name": "@web-stories-wp/i18n",
-                "message": "Use @wordpress/i18n instead."
-              },
-              {
                 "name": "react",
-                "message": "Please use React API through `@wordpress/element` instead."
+                "message": "Use @web-stories-wp/react instead."
               },
               {
                 "name": "react-dom",
-                "message": "Please use React API through `@wordpress/element` instead."
+                "message": "Use @web-stories-wp/react instead."
               }
             ]
           }

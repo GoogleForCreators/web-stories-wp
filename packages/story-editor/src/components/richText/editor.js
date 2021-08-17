@@ -19,8 +19,13 @@
  */
 import { Editor } from 'draft-js';
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
-import { useUnmount } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+  useUnmount,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import { ThemeProvider } from 'styled-components';
 import {
   Dialog as StyledDialog,

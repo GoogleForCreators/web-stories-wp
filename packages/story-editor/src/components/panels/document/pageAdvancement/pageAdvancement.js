@@ -18,8 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 
 /**
  * External dependencies

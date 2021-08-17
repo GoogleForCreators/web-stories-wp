@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 
 function useHandlers() {
   const handlersRef = useRef([]);

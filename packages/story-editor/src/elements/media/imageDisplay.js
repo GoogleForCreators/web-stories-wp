@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import {
   preloadImage,

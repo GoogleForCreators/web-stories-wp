@@ -56,7 +56,6 @@ describe('paginatedMediaGallery', () => {
         },
       },
       src: 'http://lala.com',
-      title: 'A cat',
       type: 'image',
       width: 530,
     },

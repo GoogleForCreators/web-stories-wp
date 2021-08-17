@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from '@web-stories-wp/react';
 import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**

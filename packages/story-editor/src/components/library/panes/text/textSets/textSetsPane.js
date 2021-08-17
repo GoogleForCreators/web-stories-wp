@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import {
+  useState,
+  useMemo,
+  useCallback,
+  useEffect,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';

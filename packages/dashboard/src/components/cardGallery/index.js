@@ -17,7 +17,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useResizeEffect,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -27,7 +35,6 @@ import {
   UnitsProvider,
 } from '@web-stories-wp/units';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
-import { useResizeEffect, useDebouncedCallback } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import { PreviewPage } from '@web-stories-wp/story-editor';
 

@@ -17,9 +17,13 @@
 /**
  * External dependencies
  */
-import { useMemo, memo, useCallback } from 'react';
+import {
+  useMemo,
+  memo,
+  useCallback,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
