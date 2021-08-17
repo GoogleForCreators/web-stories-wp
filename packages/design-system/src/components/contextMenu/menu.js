@@ -206,6 +206,22 @@ const Menu = ({
   }, []);
 
   /**
+   * Blur event handler. Calls `onDismiss` when the menu is blurred.
+   *
+   * @param {Event} evt The triggering event.
+   */
+  const handleBlur = useCallback(
+    (evt) => {
+      const node = wrapperRef.current;
+
+      if (isOpen && !node.contains(evt.relatedTarget)) {
+        onDismiss?.(evt);
+      }
+    },
+    [isOpen, onDismiss]
+  );
+
+  /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
    *
    * @param {Event} event The synthetic event
@@ -290,7 +306,13 @@ const Menu = ({
   ]);
 
   return (
-    <MenuWrapper ref={wrapperRef} isIconMenu={isIconMenu} role="menu">
+    <MenuWrapper
+      ref={wrapperRef}
+      isIconMenu={isIconMenu}
+      role="menu"
+      onBlur={handleBlur}
+      tabIndex={0}
+    >
       <MenuList
         data-testid="context-menu-list"
         ref={listRef}
