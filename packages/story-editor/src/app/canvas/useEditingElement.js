@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useReducer, useRef, useCallback, useMemo, useState } from 'react';
+import {
+  useReducer,
+  useRef,
+  useCallback,
+  useMemo,
+  useState,
+} from '@web-stories-wp/react';
 
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo, useState } from 'react';
+import { useEffect, useRef, useMemo, useState } from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useFocusOut } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import {
@@ -29,7 +29,6 @@ import {
   TOOLTIP_PLACEMENT,
   useGlobalKeyDownEffect,
 } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from '@web-stories-wp/react';
 import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies

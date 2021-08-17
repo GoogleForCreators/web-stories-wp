@@ -19,8 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useState, useCallback } from 'react';
-import { useContext } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

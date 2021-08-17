@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useMemo, useRef, useEffect } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@web-stories-wp/i18n';

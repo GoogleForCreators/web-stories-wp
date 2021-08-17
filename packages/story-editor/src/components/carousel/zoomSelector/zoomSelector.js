@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { __, _x, sprintf } from '@web-stories-wp/i18n';
 import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';

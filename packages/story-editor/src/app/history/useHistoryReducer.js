@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useCallback } from 'react';
+import { useReducer, useCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

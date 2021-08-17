@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
+import { useState } from '@web-stories-wp/react';
 import { fireEvent, screen } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 

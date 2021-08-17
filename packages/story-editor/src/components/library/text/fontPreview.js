@@ -19,7 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useLayoutEffect, useCallback, useRef } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useCallback,
+  useRef,
+} from '@web-stories-wp/react';
 import { Text } from '@web-stories-wp/design-system';
 import { useFeature } from 'flagged';
 import { trackEvent } from '@web-stories-wp/tracking';

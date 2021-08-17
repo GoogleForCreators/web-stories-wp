@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import {
   useLayoutEffect,
@@ -25,8 +24,9 @@ import {
   useCallback,
   useState,
   useRef,
-} from 'react';
-import { useResizeEffect } from '@web-stories-wp/react';
+  useResizeEffect,
+  createPortal,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

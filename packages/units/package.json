@@ -13,8 +13,7 @@
   "sideEffects": false,
   "dependencies": {
     "@web-stories-wp/react": "*",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.2"
+    "prop-types": "^15.7.2"
   },
   "devDependencies": {}
 }

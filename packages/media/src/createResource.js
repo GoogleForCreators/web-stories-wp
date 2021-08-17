@@ -81,6 +81,8 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * TODO: Try to remove posterId (poster should be enough?)
  *
  * @typedef {Resource} Resource
+ * @property {?Array.<number>} baseColor An optional attribution to detect the
+ * base color of a resource (an image or video). Value looks like [115, 71, 39].
  * @property {string|null} type Resource type. Currently only "image" and
  * "video" values are allowed. If not specified, will be calculated from the
  * mime-type.
@@ -113,6 +115,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  * @return {Resource} Resource object.
  */
 function createResource({
+  baseColor,
   type,
   mimeType,
   creationDate,
@@ -135,6 +138,7 @@ function createResource({
   isMuted = false,
 }) {
   return {
+    baseColor,
     type: type || getTypeFromMime(mimeType),
     mimeType,
     creationDate,

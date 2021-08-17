@@ -16,7 +16,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
 import { useFeature } from 'flagged';
 

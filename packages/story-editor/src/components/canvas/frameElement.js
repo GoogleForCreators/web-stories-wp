@@ -18,7 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 import { useUnits } from '@web-stories-wp/units';
 
 /**

@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 /**

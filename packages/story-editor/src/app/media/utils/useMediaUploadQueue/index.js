@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useMemo } from 'react';
+import {
+  useEffect,
+  useCallback,
+  useMemo,
+  useReduction,
+} from '@web-stories-wp/react';
 import {
   trackError,
   trackEvent,
@@ -29,7 +34,6 @@ import {
   getImageDimensions,
   isAnimatedGif,
 } from '@web-stories-wp/media';
-import { useReduction } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

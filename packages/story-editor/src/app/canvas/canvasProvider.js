@@ -18,7 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 import SAT from 'sat';
 import { UnitsProvider } from '@web-stories-wp/units';
 

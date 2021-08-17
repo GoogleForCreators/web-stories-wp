@@ -18,7 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useReducer, useEffect, useState, useMemo, useRef } from 'react';
+import {
+  useReducer,
+  useEffect,
+  useState,
+  useMemo,
+  useRef,
+} from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { clamp } from '@web-stories-wp/animation';
 import {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { select } from '@storybook/addon-knobs';
 import PropTypes from 'prop-types';

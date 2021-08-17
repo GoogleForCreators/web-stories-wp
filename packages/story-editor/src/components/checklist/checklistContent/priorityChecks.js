@@ -18,7 +18,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

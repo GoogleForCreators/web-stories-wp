@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect, useRef } from 'react';
+import {
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+} from '@web-stories-wp/react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 import { useSnackbar, localStore } from '@web-stories-wp/design-system';
 

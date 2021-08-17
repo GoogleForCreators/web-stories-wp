@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
