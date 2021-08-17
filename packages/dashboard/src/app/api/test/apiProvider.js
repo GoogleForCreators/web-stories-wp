@@ -55,7 +55,7 @@ jest.mock('../wpAdapter', () => ({
   post: (path, { data }) => {
     let title = '';
     let id = data.id || 456;
-    if (data.original_id) {
+    if (data?.original_id) {
       id = 456;
       title = 'Carlos (Copy)';
     } else {
