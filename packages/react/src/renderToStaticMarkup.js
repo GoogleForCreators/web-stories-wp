@@ -53,5 +53,5 @@ function renderToStaticMarkup(element) {
 
   return markup;
 }
-/* eslint-enable no-console, jsdoc/require-returns-type */
+/* eslint-enable no-console */
 export default renderToStaticMarkup;
