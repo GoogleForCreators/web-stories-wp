@@ -147,6 +147,8 @@ function PageAttachment({ pageAttachment = {} }) {
 
   const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
+  console.log('hasInvalidLinkSelected', hasInvalidLinkSelected);
+  console.log('pageAttachmentContainer', pageAttachmentContainer);
   return (
     <>
       {(displayLinkGuidelines || hasInvalidLinkSelected) && <Guideline />}
