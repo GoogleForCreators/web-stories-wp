@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __, _x } from '@web-stories-wp/i18n';
 import stickers from '@web-stories-wp/stickers';
 import {

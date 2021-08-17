@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from '@web-stories-wp/react';
 import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import { THEME_CONSTANTS } from '@web-stories-wp/design-system';

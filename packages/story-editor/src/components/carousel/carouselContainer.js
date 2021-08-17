@@ -18,8 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useMemo, useRef, useState } from 'react';
-import { useResizeEffect } from '@web-stories-wp/react';
+import {
+  useMemo,
+  useRef,
+  useState,
+  useResizeEffect,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

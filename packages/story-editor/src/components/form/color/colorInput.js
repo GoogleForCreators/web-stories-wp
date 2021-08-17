@@ -19,7 +19,14 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef, useCallback, useState, useRef, useMemo } from 'react';
+import {
+  forwardRef,
+  useCallback,
+  useState,
+  useRef,
+  useMemo,
+  useUnmount,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   getPreviewText,
@@ -33,7 +40,6 @@ import {
   Swatch,
   PLACEMENT,
 } from '@web-stories-wp/design-system';
-import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

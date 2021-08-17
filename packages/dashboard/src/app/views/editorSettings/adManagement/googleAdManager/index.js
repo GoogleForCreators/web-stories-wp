@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState } from 'react';
+import { useReducer, useEffect, useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

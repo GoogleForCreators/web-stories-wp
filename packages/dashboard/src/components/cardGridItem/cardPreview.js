@@ -18,7 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import {
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import {
   themeHelpers,
@@ -27,7 +33,6 @@ import {
   BUTTON_SIZES,
   ThemeGlobals,
 } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 import {
   PreviewErrorBoundary,

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { createRef } from 'react';
+import { createRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

@@ -27,8 +27,7 @@ import './publicPath';
  */
 import App from '@web-stories-wp/dashboard';
 import { setAppElement } from '@web-stories-wp/design-system';
-import { StrictMode } from 'react';
-import { render } from 'react-dom';
+import { StrictMode, render } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
 import { updateSettings } from '@web-stories-wp/date';
 import { initializeTracking } from '@web-stories-wp/tracking';

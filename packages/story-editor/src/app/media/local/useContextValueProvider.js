@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**

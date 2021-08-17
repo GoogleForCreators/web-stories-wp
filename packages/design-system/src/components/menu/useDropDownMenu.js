@@ -16,8 +16,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useFocusOut } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useFocusOut,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

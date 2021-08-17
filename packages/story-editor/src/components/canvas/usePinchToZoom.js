@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import { useLayoutEffect, useDebouncedCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

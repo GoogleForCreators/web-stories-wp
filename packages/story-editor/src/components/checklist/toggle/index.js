@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';

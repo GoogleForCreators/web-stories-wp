@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import {
   fetchRemoteBlob,
   fetchRemoteFile,

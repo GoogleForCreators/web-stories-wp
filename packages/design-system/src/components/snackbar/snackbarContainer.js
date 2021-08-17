@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -48,7 +48,7 @@ function getSnackbarXPos({ placement }) {
   switch (placement) {
     case 'top':
     case 'bottom':
-      return `    
+      return `
       left: calc(50% + 4rem);
       transform: translateX(-50%);
       width: auto;

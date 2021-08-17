@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { shallowEqual } from 'react-pure-render';
+import { shallowEqual } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

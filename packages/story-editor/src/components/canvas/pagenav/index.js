@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
