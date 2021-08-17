@@ -46,7 +46,6 @@ const PROPS_LOCAL = {
     height: 1080,
     posterId: 0,
     id: 211,
-    title: 'local_image',
     alt: 'local_image',
     local: false,
     sizes: {
@@ -74,7 +73,6 @@ const PROPS_M3P_WITH_ATTRIBUTION = {
     src: 'https://images.url.com/photo-fake-url',
     width: 2400,
     height: 3620,
-    title: 'Pictures of dogs',
     alt: null,
     local: false,
     sizes: {

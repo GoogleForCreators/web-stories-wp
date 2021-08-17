@@ -84,7 +84,10 @@ export default function useMediaPicker({
       // Race condition concern: the video content is not guaranteed to be
       // available in this callback. For the video poster insertion, please check: packages/story-editor/src/components/library/panes/media/local/mediaPane.js
       wp.Uploader.prototype.success = ({ attributes }) => {
-        updateMedia(attributes.id, { media_source: 'editor' });
+        updateMedia(attributes.id, {
+          media_source: 'editor',
+          alt_text: attributes.alt || attributes.title,
+        });
       };
     } catch (e) {
       // Silence.
@@ -130,6 +133,7 @@ export default function useMediaPicker({
 
           return;
         }
+        mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
         onSelect(mediaPickerEl);
       });
 
@@ -212,7 +216,9 @@ export default function useMediaPicker({
 
       fileFrame.once('cropped', (attachment) => {
         if (attachment?.id) {
-          updateMedia(attachment.id, { media_source: 'editor' });
+          const alt_text = attachment.alt || attachment.title;
+          updateMedia(attachment.id, { media_source: 'editor', alt_text });
+          attachment.alt = alt_text;
         }
         onSelect(attachment);
       });
@@ -223,6 +229,7 @@ export default function useMediaPicker({
           .get('selection')
           .first()
           .toJSON();
+        mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
         onSelect(mediaPickerEl);
       });
 
@@ -247,6 +254,7 @@ export default function useMediaPicker({
           !control.params.flex_width &&
           !control.params.flex_height
         ) {
+          mediaPickerEl.alt = mediaPickerEl.alt || mediaPickerEl.title;
           onSelect(mediaPickerEl);
           fileFrame.close();
         } else {

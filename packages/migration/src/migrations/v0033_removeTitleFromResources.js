@@ -14,4 +14,26 @@
  * limitations under the License.
  */
 
-export { createPortal, render } from 'react-dom';
+function removeTitleFromResources({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
+}
+
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (element.resource?.title) {
+    delete element.resource?.title;
+  }
+
+  return element;
+}
+
+export default removeTitleFromResources;

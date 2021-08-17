@@ -50,7 +50,6 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     id: 274,
     length: undefined,
     lengthFormatted: undefined,
-    title: 'IMAGE',
     alt: 'IMAGE',
     local: false,
     isPlaceholder: false,
