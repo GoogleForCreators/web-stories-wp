@@ -21,7 +21,7 @@ import { renderToStaticMarkup as _renderToStaticMarkup } from 'react-dom/server'
 
 /** @typedef {import('react').ReactElement} ReactElement */
 
-/* eslint-disable no-console, jsdoc/require-returns-type */
+/* eslint-disable no-console */
 
 /**
  * Render a React element to static markup.
@@ -34,7 +34,7 @@ import { renderToStaticMarkup as _renderToStaticMarkup } from 'react-dom/server'
  * attributes can save lots of bytes.
  *
  * @param {ReactElement} element React element.
- * @return string Markup.
+ * @return {string} Markup.
  */
 function renderToStaticMarkup(element) {
   const originalConsoleError = console.error;
