@@ -36,7 +36,7 @@
         "draft-js-import-html": "^1.4.1",
         "draftjs-filters": "^2.5.0",
         "flagged": "^2.0.1",
-        "history": "^5.0.0",
+        "history": "^5.0.1",
         "html-to-image": "^1.7.0",
         "polished": "^4.1.3",
         "prop-types": "^15.7.2",
