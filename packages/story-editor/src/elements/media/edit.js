@@ -18,7 +18,13 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useCallback, useState, useRef, useEffect } from 'react';
+import {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+  useUnmount,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import {
@@ -26,7 +32,6 @@ import {
   calculateSrcSet,
 } from '@web-stories-wp/media';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
-import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

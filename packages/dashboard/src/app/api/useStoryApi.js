@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useReducer, useRef } from 'react';
+import {
+  useCallback,
+  useMemo,
+  useReducer,
+  useRef,
+} from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -32,7 +37,6 @@ import {
   STORY_SORT_OPTIONS,
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
-  STORY_STATUS,
 } from '../../constants';
 import storyReducer, {
   defaultStoriesState,
@@ -150,12 +154,7 @@ const useStoryApi = (dataAdapter, { storyApi, encodeMarkup }) => {
             payload: {
               stories: cleanStories,
               totalPages,
-              totalStoriesByStatus: {
-                ...totalStoriesByStatus,
-                [STORY_STATUS.PUBLISHED_AND_FUTURE]:
-                  totalStoriesByStatus[STORY_STATUS.PUBLISH] +
-                  totalStoriesByStatus[STORY_STATUS.FUTURE],
-              },
+              totalStoriesByStatus,
               page,
             },
           });

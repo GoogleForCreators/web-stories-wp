@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Simulate } from 'react-dom/test-utils';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -87,7 +87,7 @@ describe('MediaElement', () => {
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('image :)');
-    Simulate.focus(element);
+    fireEvent.focus(element);
 
     expect(getByAriaLabel('More')).toBeInTheDocument();
   });
@@ -111,7 +111,7 @@ describe('MediaElement', () => {
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('video :)');
-    Simulate.focus(element);
+    fireEvent.focus(element);
 
     expect(getByAriaLabel('More')).toBeInTheDocument();
   });
@@ -136,7 +136,7 @@ describe('MediaElement', () => {
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('video :)');
-    Simulate.focus(element);
+    fireEvent.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
   });
@@ -160,7 +160,7 @@ describe('MediaElement', () => {
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('image :)');
-    Simulate.focus(element);
+    fireEvent.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
   });
@@ -184,7 +184,7 @@ describe('MediaElement', () => {
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
 
     const element = getByAriaLabel('video :)');
-    Simulate.focus(element);
+    fireEvent.focus(element);
 
     expect(queryByAriaLabel('More')).not.toBeInTheDocument();
   });

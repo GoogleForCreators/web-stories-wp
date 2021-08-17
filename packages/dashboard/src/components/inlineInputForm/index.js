@@ -17,10 +17,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useFocusOut } from '@web-stories-wp/react';
 import { Input } from '@web-stories-wp/design-system';
 
 const StyledInput = styled(Input)`

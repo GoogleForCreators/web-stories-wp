@@ -19,7 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useState, useRef, useCallback } from 'react';
+import {
+  useState,
+  useRef,
+  useCallback,
+  useResizeEffect,
+} from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { PAGE_RATIO } from '@web-stories-wp/units';
 import {
@@ -31,7 +36,6 @@ import {
   Icons,
   useGridViewKeys,
 } from '@web-stories-wp/design-system';
-import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

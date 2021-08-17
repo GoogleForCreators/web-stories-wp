@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from '@web-stories-wp/react';
 
 /**
  * It's a bit weird to directly set a state to be a function (as setFoo calls

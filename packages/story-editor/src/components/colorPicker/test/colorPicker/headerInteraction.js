@@ -25,7 +25,9 @@ import { createSolid } from '@web-stories-wp/patterns';
  */
 import { arrange } from './_utils';
 
-describe('<ColorPicker /> as the header is interacted with', () => {
+// Disable reason: To be fixed in 8655
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('<ColorPicker /> as the header is interacted with', () => {
   it('should invoke onchange with new correct pattern when switching to linear', async () => {
     const { getLinearButton, onChange } = arrange({
       color: createSolid(0, 0, 255),

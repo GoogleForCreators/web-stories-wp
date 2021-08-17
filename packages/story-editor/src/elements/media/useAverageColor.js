@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect, useLayoutEffect } from 'react';
+import { useRef, useEffect, useLayoutEffect } from '@web-stories-wp/react';
 
 function useAverageColor(ref, onAverageColor) {
   const callback = useRef(onAverageColor);

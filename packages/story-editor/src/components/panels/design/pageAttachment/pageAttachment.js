@@ -17,8 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect } from 'react';
-import { useDebouncedCallback } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useState,
+  useEffect,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Checkbox,

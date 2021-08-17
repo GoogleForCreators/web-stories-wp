@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

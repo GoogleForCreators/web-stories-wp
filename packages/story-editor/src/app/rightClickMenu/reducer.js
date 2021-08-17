@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { duplicatePage } from '../../elements';
-import { getElementStyles } from './utils';
 
 export const ACTION_TYPES = {
   COPY_ELEMENT_STYLES: 'COPY_ELEMENT_STYLES',
@@ -61,8 +60,8 @@ function rightClickMenuReducer(state, action) {
         ...state,
         copiedElement: {
           animations: action.payload.animations,
-          styles: getElementStyles(action.payload.element),
-          type: action.payload.element?.type,
+          styles: action.payload.styles,
+          type: action.payload.type,
         },
       };
     case ACTION_TYPES.OPEN_MENU:

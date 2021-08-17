@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Component } from 'react';
+import { Component } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 export default class PreviewErrorBoundary extends Component {

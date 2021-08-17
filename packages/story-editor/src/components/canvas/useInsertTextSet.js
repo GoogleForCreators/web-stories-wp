@@ -17,13 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useBatchingCallback } from '@web-stories-wp/react';
 import {
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
-import { useBatchingCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

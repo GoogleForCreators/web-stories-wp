@@ -17,11 +17,10 @@
 /**
  * External dependencies
  */
-import { useRef, useState } from 'react';
+import { useRef, useState, useResizeEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
-import { useResizeEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

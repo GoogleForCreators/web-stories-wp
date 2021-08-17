@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from '@web-stories-wp/react';
 import { _x } from '@web-stories-wp/i18n';
 import { useKeyDownEffect } from '@web-stories-wp/design-system';
 

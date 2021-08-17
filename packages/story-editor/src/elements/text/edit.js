@@ -24,11 +24,11 @@ import {
   useRef,
   useCallback,
   useMemo,
-} from 'react';
+  useUnmount,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { useUnits } from '@web-stories-wp/units';
-import { useUnmount } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
