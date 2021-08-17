@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import preloadVideoMeta from './preloadVideoMeta';
+
 function hasAudio(video) {
   return (
     video.mozHasAudio ||
@@ -22,10 +27,7 @@ function hasAudio(video) {
   );
 }
 function hasVideoGotAudio(src) {
-  const video = document.createElement('video');
-  video.muted = true;
-  video.crossOrigin = 'anonymous';
-  video.preload = 'auto';
+  const video = preloadVideoMeta();
 
   return new Promise((resolve, reject) => {
     video.addEventListener('error', reject);

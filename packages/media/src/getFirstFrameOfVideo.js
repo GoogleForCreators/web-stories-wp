@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import preloadVideoMeta from './preloadVideoMeta';
+
+/**
  * Returns an image of the first frame of a given video.
  *
  * @see https://github.com/ampproject/amp-wp/blob/c5fba13dd17d4f713c9889d26898aec6091e421b/assets/src/stories-editor/helpers/uploadVideoFrame.js#L10-L39
@@ -22,13 +27,7 @@
  * @return {Promise<string>} The extracted image in base64-encoded format.
  */
 function getFirstFrameOfVideo(src) {
-  const video = document.createElement('video');
-  video.muted = true;
-  video.crossOrigin = 'anonymous';
-  // Since  we want to get the actual frames, we need to make sure to preload the whole video
-  // and not just metadata.
-  // See https://github.com/google/web-stories-wp/issues/2922.
-  video.preload = 'auto';
+  const video = preloadVideoMeta();
 
   return new Promise((resolve, reject) => {
     video.addEventListener('error', reject);
