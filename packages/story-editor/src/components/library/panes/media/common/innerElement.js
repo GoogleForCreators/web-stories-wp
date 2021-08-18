@@ -201,7 +201,7 @@ function InnerElement({
             />
           )}
         </Video>
-        {!newVideoPosterRef.current && poster && (
+        {displayPoster && (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
           <HiddenPosterImage
             ref={hiddenPoster}
