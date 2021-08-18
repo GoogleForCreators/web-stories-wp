@@ -62,13 +62,13 @@ class PluginRowMeta extends Service_Base {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string[] $meta        An array of the plugin's metadata, including the version, author, author URI,
+	 * @param string[]|mixed $meta        An array of the plugin's metadata, including the version, author, author URI,
 	 *                              and plugin URI.
-	 * @param string   $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param string         $plugin_file Path to the plugin file relative to the plugins directory.
 	 *
-	 * @return string[] Plugin row meta.
+	 * @return string[]|mixed Plugin row meta.
 	 */
-	public function get_plugin_row_meta( $meta, $plugin_file ): array {
+	public function get_plugin_row_meta( $meta, $plugin_file ) {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {
 			return $meta;
 		}

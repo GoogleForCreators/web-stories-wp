@@ -85,11 +85,12 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.2.0
 	 *
-	 * @param array $post_types Array of post types.
+	 * @param array|mixed $post_types Array of post types.
 	 *
 	 * @return array Modified list of post types.
 	 */
-	public function add_to_jetpack_sitemap( array $post_types ): array {
+	public function add_to_jetpack_sitemap( $post_types ) {
+		$post_types   = (array) $post_types;
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
@@ -104,7 +105,8 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return array
 	 */
-	public function add_videopress( array $mime_types ): array {
+	public function add_videopress( $mime_types ) {
+		$mime_types            = (array) $mime_types;
 		$mime_types['video'][] = self::VIDEOPRESS_MIME_TYPE;
 
 		return $mime_types;
@@ -116,11 +118,12 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @param array $args Query args.
+	 * @param array|mixed $args Query args.
 	 *
 	 * @return array Filtered query args.
 	 */
-	public function filter_ajax_query_attachments_args( array $args ): array {
+	public function filter_ajax_query_attachments_args( $args ) {
+		$args = (array) $args;
 		if ( ! isset( $args['post_mime_type'] ) ) {
 			return $args;
 		}
@@ -152,16 +155,17 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 *
-	 * @param array   $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
-	 * @param WP_Post $attachment Attachment object.
+	 * @param array|mixed $response   Array of prepared attachment data. @see wp_prepare_attachment_for_js().
+	 * @param WP_Post     $attachment Attachment object.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function filter_admin_ajax_response( array $response, WP_Post $attachment ): array {
+	public function filter_admin_ajax_response( $response, $attachment ) {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $attachment->post_mime_type ) {
 			return $response;
 		}
 
+		$response = (array) $response;
 		// Reset mime type back to mp4, as this is the correct value.
 		$response['mime']    = 'video/mp4';
 		$response['subtype'] = 'mp4';

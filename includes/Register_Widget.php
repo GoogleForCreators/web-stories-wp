@@ -81,11 +81,12 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param array $widget_types An array of excluded widget-type IDs.
+	 * @param array|mixed $widget_types An array of excluded widget-type IDs.
 	 *
 	 * @return array
 	 */
-	public function hide_widget( array $widget_types ) {
+	public function hide_widget( $widget_types ) {
+		$widget_types   = (array) $widget_types;
 		$widget_types[] = $this->stories->id_base;
 
 		return $widget_types;
@@ -96,12 +97,13 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @since 1.9.0
 	 *
-	 * @param string[] $classes An array of body class names.
+	 * @param string[]|mixed $classes An array of body class names.
 	 *
-	 * @return array
+	 * @return array|mixed
 	 */
-	public function body_class( array $classes ) {
+	public function body_class( $classes ) {
 		if ( is_admin() && defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+			$classes   = (array) $classes;
 			$classes[] = 'ws-legacy-widget-preview';
 		}
 

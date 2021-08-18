@@ -57,11 +57,11 @@ class Oembed extends Service_Base {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param string $template  Path to the template. See locate_template().
+	 * @param string|mixed $template  Path to the template. See locate_template().
 	 *
-	 * @return string $template
+	 * @return string|mixed $template
 	 */
-	public function filter_embed_template( $template ): string {
+	public function filter_embed_template( $template ) {
 		if ( get_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/embed-web-story.php';
 		}
@@ -76,14 +76,14 @@ class Oembed extends Service_Base {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param string  $output Embed code.
-	 * @param WP_Post $post Post object.
-	 * @param int     $width  The width for the response.
-	 * @param int     $height The height for the response.
+	 * @param string|mixed $output Embed code.
+	 * @param WP_Post      $post Post object.
+	 * @param int          $width  The width for the response.
+	 * @param int          $height The height for the response.
 	 *
-	 * @return string Filtered embed code.
+	 * @return string|mixed Filtered embed code.
 	 */
-	public function filter_embed_html( $output, $post, $width, $height ): string {
+	public function filter_embed_html( $output, $post, $width, $height ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $output;
 		}
@@ -116,12 +116,12 @@ class Oembed extends Service_Base {
 	 *
 	 * @since 1.7.0
 	 *
-	 * @param array   $data   The response data.
-	 * @param WP_Post $post   The post object.
-	 * @param int     $width  The requested width.
-	 * @return array The modified response data.
+	 * @param array|mixed $data   The response data.
+	 * @param WP_Post     $post   The post object.
+	 * @param int         $width  The requested width.
+	 * @return array|mixed The modified response data.
 	 */
-	public function filter_oembed_response_data( $data, $post, $width ): array {
+	public function filter_oembed_response_data( $data, $post, $width ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return $data;
 		}

@@ -103,11 +103,12 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $buttons Array of TinyMCE buttons.
+	 * @param array|mixed $buttons Array of TinyMCE buttons.
 	 *
 	 * @return array
 	 */
-	public function tinymce_web_stories_button( array $buttons ): array {
+	public function tinymce_web_stories_button( $buttons ) {
+		$buttons   = (array) $buttons;
 		$buttons[] = 'web_stories';
 
 		return $buttons;
@@ -118,11 +119,12 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array $plugins Array of TinyMCE plugin scripts.
+	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
 	 *
 	 * @return array
 	 */
-	public function web_stories_mce_plugin( array $plugins ): array {
+	public function web_stories_mce_plugin( $plugins ) {
+		$plugins                = (array) $plugins;
 		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
 
 		return $plugins;

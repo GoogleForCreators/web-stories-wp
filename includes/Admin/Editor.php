@@ -145,12 +145,12 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool    $replace Bool if to replace editor or not.
-	 * @param WP_Post $post    Current post object.
+	 * @param bool|mixed $replace Bool if to replace editor or not.
+	 * @param WP_Post    $post    Current post object.
 	 *
-	 * @return bool Whether the editor has been replaced.
+	 * @return bool|mixed Whether the editor has been replaced.
 	 */
-	public function replace_editor( $replace, $post ): bool {
+	public function replace_editor( $replace, $post ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG === get_post_type( $post ) ) {
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
@@ -174,12 +174,12 @@ class Editor extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
-	 * @param string $post_type         The post type being checked.
+	 * @param bool|mixed $use_block_editor  Whether the post type can be edited or not. Default true.
+	 * @param string     $post_type         The post type being checked.
 	 *
-	 * @return bool Whether to use the block editor.
+	 * @return bool|mixed Whether to use the block editor.
 	 */
-	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ): bool {
+	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
 			return false;
 		}

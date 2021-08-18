@@ -54,11 +54,11 @@ class Single extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $template Template.
+	 * @param string|mixed $template Template.
 	 *
-	 * @return string Template.
+	 * @return string|mixed Template.
 	 */
-	public function filter_template_include( $template ): string {
+	public function filter_template_include( $template ) {
 		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) && ! is_embed() ) {
 			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
 		}
@@ -71,11 +71,11 @@ class Single extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param boolean $show Current value of filter.
+	 * @param boolean|mixed $show Current value of filter.
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
-	public function show_admin_bar( $show ): bool {
+	public function show_admin_bar( $show ) {
 		if ( is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
 			$show = false;
 		}
