@@ -90,6 +90,10 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     const previewUrl = `http://localhost:8899/?post_type=web-story&p=${storyId}&preview=true`;
 
     // Need to click preview for the story to save and be loadable in a second window.
+    // This is because the "Save" button is disabled at this point.
+    // Also not using the tab opened by the preview button and instead assembling `pagePreview`
+    // ourselves so that we can emulate `prefers-reduced-motion` and don't have to deal with
+    // the story dev tools.
     await page.waitForSelector('aria/Preview');
     await page.click('aria/Preview');
 
