@@ -224,19 +224,17 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 100);
 
-      fixture.editor.inspector.designPanel.border.width().scrollTo(300, 300);
-      await fixture.events.sleep(1000);
+      const btn = fixture.screen.getByRole('button', {
+        name: 'Size & Position',
+      });
+      await fixture.events.click(btn);
       await fixture.snapshot('Testing 1');
-      linkPanel = fixture.editor.inspector.designPanel.link;
-      await linkPanel.address.scrollTo(50, 50);
+
       await fixture.events.sleep(1000);
+      linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
-
-      await fixture.events.sleep(1000);
-
-      await fixture.snapshot('Testing 2');
 
       /*const warning = fixture.screen.getByText(
         'Link can not reside below the dashed line when a page attachment is present'
