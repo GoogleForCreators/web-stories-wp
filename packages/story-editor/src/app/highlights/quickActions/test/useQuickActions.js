@@ -74,6 +74,8 @@ jest.mock('@web-stories-wp/design-system', () => ({
   useSnackbar: () => ({ showSnackbar: jest.fn() }),
 }));
 
+jest.mock('@web-stories-wp/tracking');
+
 const mockClickEvent = {
   preventDefault: jest.fn(),
 };
