@@ -175,7 +175,7 @@ function InnerElement({
     muted: true,
     preload: 'metadata',
     poster: displayPoster,
-    showWithoutDelay: Boolean(newVideoPosterRef.current),
+    showWithoutDelay: !poster || Boolean(newVideoPosterRef.current),
   };
 
   if (type === ContentType.IMAGE) {
