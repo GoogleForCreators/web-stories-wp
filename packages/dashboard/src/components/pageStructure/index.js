@@ -245,6 +245,15 @@ export function LeftRail() {
             {enabledPrimaryPaths.map(({ Icon, ...path }) => {
               const isNotificationBubbleEnabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY;
+              const appendNewBadgeToLable = (label) =>
+                isNotificationBubbleEnabled
+                  ? sprintf(
+                      /* translators: 1: current page. 2: number of new items. */
+                      __('%1$s (%2$s new)', 'web-stories'),
+                      label,
+                      numNewTemplates
+                    )
+                  : label;
               return (
                 <NavListItem key={path.value}>
                   <NavLink
@@ -252,7 +261,7 @@ export function LeftRail() {
                     href={resolveRoute(path.value)}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                     isBold
-                    aria-label={
+                    aria-label={appendNewBadgeToLable(
                       path.value === state.currentPath
                         ? sprintf(
                             /* translators: %s: the current page, for example "My Stories". */
@@ -260,7 +269,7 @@ export function LeftRail() {
                             path.label
                           )
                         : path.label
-                    }
+                    )}
                     {...(path.isExternal && {
                       rel: 'noreferrer',
                       target: '_blank',

@@ -141,7 +141,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
 
       NOTE: Check all resource URLs and properties are set properly before commiting the template.
       
-2. Create a new file `creationDate.js` in your newly created `<template_name>` directory and make a date sting the default export. 
+2. Create a new file `creationDate.js` in your newly created `<template_name>` directory and make a date string the default export. 
 
     ```javascript
       // day this template was added to the codebase
