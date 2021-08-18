@@ -41,7 +41,7 @@ async function getResourceFromUrl(value, type) {
   if (isVideo) {
     const hasAudio = await hasVideoGotAudio(value);
     videoData.isMuted = !hasAudio;
-    const { length, formattedLength } = getVideoLength(value);
+    const { length, formattedLength } = await getVideoLength(value);
     videoData.length = length;
     videoData.formattedLength = formattedLength;
     videoData.isOptimized = true;

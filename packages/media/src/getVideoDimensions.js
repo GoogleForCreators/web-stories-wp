@@ -25,11 +25,12 @@ import preloadVideoMetadata from './preloadVideoMetadata';
  * @param {string} src Video source.
  * @return {Promise} Video dimensions object.
  */
-const getVideoDimensions = (src) => {
-  return preloadVideoMetadata(src).then((video) => ({
+const getVideoDimensions = async (src) => {
+  const video = await preloadVideoMetadata(src);
+  return {
     width: video.videoWidth,
     height: video.videoHeight,
-  }));
+  };
 };
 
 export default getVideoDimensions;
