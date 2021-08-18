@@ -200,30 +200,19 @@ export const MediaInput = forwardRef(function Media(
         {isLoading && <LoadingDots />}
       </ImageWrapper>
       {canUpload && (
-      <Tooltip title={hasMenu ? null : __('Open media picker', 'web-stories')}>
-        <Button
-          ref={(node) => {
-            // `ref` can either be a callback ref or a normal ref.
-            if (typeof ref == 'function') {
-              ref(node);
-            } else if (ref) {
-              ref.current = node;
-            }
-            internalRef.current = node;
-          }}
-          id={buttonId}
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.TERTIARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={ariaLabel}
-          onClick={hasMenu ? () => setIsMenuOpen(true) : openMediaPicker}
-          aria-owns={hasMenu ? listId : null}
-          aria-pressed={isMenuOpen}
-          aria-expanded={isMenuOpen}
-          {...rest}
+        <Tooltip
+          title={hasMenu ? null : __('Open media picker', 'web-stories')}
         >
           <Button
-            ref={buttonRef}
+            ref={(node) => {
+              // `ref` can either be a callback ref or a normal ref.
+              if (typeof ref == 'function') {
+                ref(node);
+              } else if (ref) {
+                ref.current = node;
+              }
+              internalRef.current = node;
+            }}
             id={buttonId}
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.TERTIARY}
