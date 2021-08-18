@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import formatDuration from './formatDuration';
-import preloadVideo from './preloadVideo';
+import preloadVideoMetadata from './preloadVideoMetadata';
 
 /**
  * Get video length from a video.
@@ -27,7 +27,7 @@ import preloadVideo from './preloadVideo';
  * @return {Promise} Video length object.
  */
 const getVideoLength = (src) => {
-  return preloadVideo(src).then((video) => {
+  return preloadVideoMetadata(src).then((video) => {
     const length = Math.round(video.duration);
     let lengthFormatted;
     const seconds = formatDuration(length % 60);

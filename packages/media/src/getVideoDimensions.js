@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import preloadVideo from './preloadVideo';
+import preloadVideoMetadata from './preloadVideoMetadata';
 
 /**
  * Get video dimensions from a video.
@@ -26,7 +26,7 @@ import preloadVideo from './preloadVideo';
  * @return {Promise} Video dimensions object.
  */
 const getVideoDimensions = (src) => {
-  return preloadVideo(src).then((video) => ({
+  return preloadVideoMetadata(src).then((video) => ({
     width: video.videoWidth,
     height: video.videoHeight,
   }));

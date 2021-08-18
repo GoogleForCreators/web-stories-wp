@@ -20,7 +20,7 @@
  * @param {string} src Video source.
  * @return {Promise} Video object.
  */
-const preloadVideo = (src) => {
+const preloadVideoMetadata = (src) => {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
     video.onloadedmetadata = () => resolve(video);
@@ -31,4 +31,4 @@ const preloadVideo = (src) => {
   });
 };
 
-export default preloadVideo;
+export default preloadVideoMetadata;
