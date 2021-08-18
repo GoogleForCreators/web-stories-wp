@@ -26,7 +26,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState } from '@web-stories-wp/react';
 import { useFeature } from 'flagged';
 
 /**

@@ -18,7 +18,12 @@
  */
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { Input } from '@web-stories-wp/design-system';
-import { useState, useCallback, useRef, useLayoutEffect } from 'react';
+import {
+  useState,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { getFileExtFromUrl } from '@web-stories-wp/media';
@@ -70,6 +75,7 @@ function HotlinkModal({ isOpen, onClose }) {
 
   const getFileInfo = useCallback(
     (value = link) => {
+      // @todo Remove this util and get the type from server-side validation instead.
       const ext = getFileExtFromUrl(value);
       let type = null;
       if (!allowedFileTypes.includes(ext)) {
