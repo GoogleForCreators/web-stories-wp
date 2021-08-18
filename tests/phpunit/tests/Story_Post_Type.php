@@ -92,50 +92,6 @@ class Story_Post_Type extends Test_Case {
 		$this->assertSame( 10, has_filter( 'bulk_post_updated_messages', [ $story_post_type, 'bulk_post_updated_messages' ] ) );
 	}
 
-
-	/**
-	 * @covers ::filter_rest_collection_params
-	 */
-	public function test_filter_rest_collection_params() {
-		$query_params = [
-			'foo',
-			'orderby' => [
-				'enum' => [],
-			],
-		];
-
-		$post_type       = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
-		$story_post_type = $this->get_story_object();
-		$filtered_params = $story_post_type->filter_rest_collection_params( $query_params, $post_type );
-		$this->assertEquals(
-			$filtered_params,
-			[
-				'foo',
-				'orderby' => [
-					'enum' => [ 'story_author' ],
-				],
-			]
-		);
-	}
-
-	/**
-	 * @covers ::filter_rest_collection_params
-	 */
-	public function test_filter_rest_collection_params_incorrect_post_type() {
-		$query_params = [
-			'foo',
-			'orderby' => [
-				'enum' => [],
-			],
-		];
-
-		$post_type       = new \stdClass();
-		$post_type->name = 'post';
-		$story_post_type = $this->get_story_object();
-		$filtered_params = $story_post_type->filter_rest_collection_params( $query_params, $post_type );
-		$this->assertEquals( $filtered_params, $query_params );
-	}
-
 	/**
 	 * @covers ::get_post_type_icon
 	 */

@@ -132,8 +132,6 @@ class Story_Post_Type extends Service_Base {
 			]
 		);
 
-		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
-
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
@@ -149,28 +147,6 @@ class Story_Post_Type extends Service_Base {
 	 */
 	protected function get_post_type_icon(): string {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
-	}
-
-	/**
-	 * Add story_author as allowed orderby value for REST API.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array        $query_params Array of allowed query params.
-	 * @param WP_Post_Type $post_type Post type.
-	 *
-	 * @return array Array of query params.
-	 */
-	public function filter_rest_collection_params( $query_params, $post_type ): array {
-		if ( self::POST_TYPE_SLUG !== $post_type->name ) {
-			return $query_params;
-		}
-
-		if ( empty( $query_params['orderby'] ) ) {
-			return $query_params;
-		}
-		$query_params['orderby']['enum'][] = 'story_author';
-		return $query_params;
 	}
 
 	/**
