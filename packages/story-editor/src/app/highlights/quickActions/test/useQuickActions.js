@@ -369,13 +369,13 @@ describe('useQuickActions', () => {
 
       result.current[1].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: undefined,
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.MEDIA,
       });
 
       result.current[2].onClick(mockClickEvent);
       expect(highlight).toStrictEqual({
-        elementId: undefined,
+        elementId: BACKGROUND_ELEMENT.id,
         highlight: states.TEXT_SET,
       });
     });

@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { useSnackbar, PLACEMENT, Icons } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -87,6 +88,14 @@ const useQuickActions = () => {
     setHighlights,
   }));
 
+  const undoRef = useRef(undo);
+  undoRef.current = undo;
+
+  const backgroundElement = currentPage?.elements.find(
+    (element) => element.isBackground
+  );
+  const selectedElement = selectedElements?.[0];
+
   /**
    * Prevent quick actions menu from removing focus from the canvas.
    */
@@ -136,6 +145,11 @@ const useQuickActions = () => {
             /* commitValues */ true
           ),
       });
+
+      trackEvent('quick_action', {
+        name: 'reset_properties',
+        element: elementType,
+      });
     },
     [selectedElementAnimations, updateElementsById]
   );
@@ -157,18 +171,43 @@ const useQuickActions = () => {
         actionLabel: __('Undo', 'web-stories'),
         dismissable: false,
         message: __('Element properties have been reset', 'web-stories'),
-        onAction: undo,
+        // Don't pass a stale version of `undo`
+        onAction: () => undoRef.current(),
       });
     },
-    [handleResetProperties, showSnackbar, undo]
+    [handleResetProperties, showSnackbar]
   );
 
+  /**
+   * Highlights a panel in the editor. Triggers a tracking event
+   * using the selected element's type.
+   *
+   * The selected element and selected element type may be overridden
+   * using the `elementParams` arguments.
+   *
+   * @param {string} highlight The panel to highlight
+   * @param {Object} elementParams
+   * @param {string} elementParams.elementId The element id that is or will be selected in the canvas.
+   * @param {string} elementParams.elementType The type of the element that is or will be selected in the canvas.
+   * @param {Event} ev The triggering event.
+   */
   const handleFocusPanel = useCallback(
-    (highlight) => (elementId) => (ev) => {
-      ev.preventDefault();
-      setHighlights({ elementId, highlight });
-    },
-    [setHighlights]
+    (highlight) =>
+      ({ elementId, elementType } = {}) =>
+      (ev) => {
+        ev.preventDefault();
+        setHighlights({
+          elementId: elementId || selectedElement?.id,
+          highlight,
+        });
+
+        trackEvent('quick_action', {
+          name: 'focus_panel',
+          element: elementType || selectedElement?.type,
+          panel: highlight,
+        });
+      },
+    [setHighlights, selectedElement]
   );
 
   const handleFocusMediaPanel = useMemo(() => {
@@ -210,11 +249,6 @@ const useQuickActions = () => {
     [handleFocusPanel]
   );
 
-  const backgroundElement = currentPage?.elements.find(
-    (element) => element.isBackground
-  );
-  const selectedElement = selectedElements?.[0];
-
   const actionMenuProps = useMemo(
     () => ({
       tooltipPlacement: isRTL ? PLACEMENT.LEFT : PLACEMENT.RIGHT,
@@ -223,12 +257,15 @@ const useQuickActions = () => {
     [handleMouseDown, isRTL]
   );
 
-  const defaultActions = useMemo(() => {
+  const noElementSelectedActions = useMemo(() => {
     return [
       {
         Icon: Bucket,
         label: ACTION_TEXT.CHANGE_BACKGROUND_COLOR,
-        onClick: handleFocusPageBackground(backgroundElement?.id),
+        onClick: handleFocusPageBackground({
+          elementId: backgroundElement?.id,
+          elementType: backgroundElement?.type,
+        }),
         ...actionMenuProps,
       },
       {
@@ -247,7 +284,7 @@ const useQuickActions = () => {
     ];
   }, [
     actionMenuProps,
-    backgroundElement?.id,
+    backgroundElement,
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
@@ -265,13 +302,13 @@ const useQuickActions = () => {
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
-        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        onClick: handleFocusAnimationPanel(),
         ...actionMenuProps,
       },
       {
         Icon: Link,
         label: ACTION_TEXT.ADD_LINK,
-        onClick: handleFocusLinkPanel(selectedElement?.id),
+        onClick: handleFocusLinkPanel(),
         ...actionMenuProps,
       },
     ];
@@ -308,7 +345,7 @@ const useQuickActions = () => {
         label: ACTION_TEXT.REPLACE_MEDIA,
         onClick: (ev) => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-          handleFocusMediaPanel(selectedElement?.id)(ev);
+          handleFocusMediaPanel()(ev);
         },
         ...actionMenuProps,
       },
@@ -318,7 +355,6 @@ const useQuickActions = () => {
       actionMenuProps,
       handleFocusMediaPanel,
       foregroundCommonActions,
-      selectedElement?.id,
       dispatchStoryEvent,
     ]
   );
@@ -328,17 +364,12 @@ const useQuickActions = () => {
       {
         Icon: Bucket,
         label: ACTION_TEXT.CHANGE_COLOR,
-        onClick: handleFocusStylePanel(selectedElement?.id),
+        onClick: handleFocusStylePanel(),
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
     ],
-    [
-      handleFocusStylePanel,
-      foregroundCommonActions,
-      actionMenuProps,
-      selectedElement?.id,
-    ]
+    [handleFocusStylePanel, foregroundCommonActions, actionMenuProps]
   );
 
   const textActions = useMemo(
@@ -346,13 +377,13 @@ const useQuickActions = () => {
       {
         Icon: Bucket,
         label: ACTION_TEXT.CHANGE_COLOR,
-        onClick: handleFocusTextColor(selectedElement?.id),
+        onClick: handleFocusTextColor(),
         ...actionMenuProps,
       },
       {
         Icon: LetterTLargeLetterTSmall,
         label: ACTION_TEXT.CHANGE_FONT,
-        onClick: handleFocusFontPicker(selectedElement?.id),
+        onClick: handleFocusFontPicker(),
         ...actionMenuProps,
       },
       ...foregroundCommonActions,
@@ -360,7 +391,6 @@ const useQuickActions = () => {
     [
       foregroundCommonActions,
       actionMenuProps,
-      selectedElement?.id,
       handleFocusTextColor,
       handleFocusFontPicker,
     ]
@@ -379,7 +409,7 @@ const useQuickActions = () => {
       {
         Icon: Captions,
         label: ACTION_TEXT.ADD_CAPTIONS,
-        onClick: handleFocusCaptionsPanel(selectedElement?.id),
+        onClick: handleFocusCaptionsPanel(),
         ...actionMenuProps,
       },
       ...clearActions,
@@ -388,7 +418,6 @@ const useQuickActions = () => {
     showClearAction,
     foregroundImageActions,
     handleFocusCaptionsPanel,
-    selectedElement?.id,
     actionMenuProps,
   ]);
 
@@ -399,14 +428,14 @@ const useQuickActions = () => {
         label: ACTION_TEXT.REPLACE_BACKGROUND_MEDIA,
         onClick: (ev) => {
           dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
-          handleFocusMediaPanel(selectedElement?.id)(ev);
+          handleFocusMediaPanel()(ev);
         },
         ...actionMenuProps,
       },
       {
         Icon: CircleSpeed,
         label: ACTION_TEXT.ADD_ANIMATION,
-        onClick: handleFocusAnimationPanel(selectedElement?.id),
+        onClick: handleFocusAnimationPanel(),
         ...actionMenuProps,
       },
     ];
@@ -455,7 +484,7 @@ const useQuickActions = () => {
     noElementsSelected ||
     (isBackgroundSelected && !isBackgroundElementMedia)
   ) {
-    return defaultActions;
+    return noElementSelectedActions;
   }
 
   // return background media actions if:
