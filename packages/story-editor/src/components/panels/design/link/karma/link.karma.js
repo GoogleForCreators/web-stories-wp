@@ -71,6 +71,11 @@ describe('Link Panel', () => {
     }
   }
 
+  async function closePanel(name) {
+    const btn = fixture.screen.getByRole('button', { name });
+    await fixture.events.click(btn);
+  }
+
   describe('CUJ: Creator Can Add A Link: Apply a link to any element', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
@@ -224,17 +229,13 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 100);
 
-      const btn = fixture.screen.getByRole('button', {
-        name: 'Size & Position',
-      });
-      await fixture.events.click(btn);
-      const btn2 = fixture.screen.getByRole('button', {
-        name: 'Saved Colors',
-      });
-      await fixture.events.click(btn2);
+      await closePanel('Size & Position');
+      await closePanel('Saved Colors');
+      await closePanel('Layer');
+
       await fixture.snapshot('Testing 1');
 
-      await fixture.events.sleep(1000);
+      await fixture.events.sleep(2000);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
