@@ -214,7 +214,7 @@ describe('Link Panel', () => {
       await setPageAttachmentLink('http://pageattachment.com');
     });
 
-    fit('should not allow adding link in Page Attachment area', async () => {
+    it('should not allow adding link in Page Attachment area', async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       const element = await fixture.act(() =>
         insertElement('shape', {
