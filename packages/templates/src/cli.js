@@ -73,6 +73,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
         .getAttribute('data-template-slug');
     }, currentTemplate);
     // Prep a directory for the template screenshots
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     fs.mkdirSync(`${screenshotsPath}${templateName}`, { recursive: true });
 
     console.log(`Getting screenshots for ${templateName}`);
