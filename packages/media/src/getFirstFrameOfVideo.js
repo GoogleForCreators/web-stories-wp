@@ -19,16 +19,7 @@
  */
 import preloadVideoMetadata from './preloadVideoMetadata';
 
-/**
- * Returns an image of the first frame of a given video.
- *
- * @see https://github.com/ampproject/amp-wp/blob/c5fba13dd17d4f713c9889d26898aec6091e421b/assets/src/stories-editor/helpers/uploadVideoFrame.js#L10-L39
- * @param {string} src Video src URL.
- * @return {Promise<string>} The extracted image in base64-encoded format.
- */
-async function getFirstFrameOfVideo(src) {
-  const video = await preloadVideoMetadata(src);
-
+function getImageFromVideo(video) {
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
@@ -44,6 +35,19 @@ async function getFirstFrameOfVideo(src) {
 
     canvas.toBlob(resolve, 'image/jpeg');
   });
+}
+
+/**
+ * Returns an image of the first frame of a given video.
+ *
+ * @see https://github.com/ampproject/amp-wp/blob/c5fba13dd17d4f713c9889d26898aec6091e421b/assets/src/stories-editor/helpers/uploadVideoFrame.js#L10-L39
+ * @param {string} src Video src URL.
+ * @return {Promise<string>} The extracted image in base64-encoded format.
+ */
+async function getFirstFrameOfVideo(src) {
+  const video = await preloadVideoMetadata(src);
+  const image = await getImageFromVideo(video);
+  return image;
 }
 
 export default getFirstFrameOfVideo;
