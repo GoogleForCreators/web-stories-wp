@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'hawaii-travel-packing-list',
-  creationDate: new Date(2021, 7, 3),
+  creationDate,
   title: _x('Hawaii Travel Packing List', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

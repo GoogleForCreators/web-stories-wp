@@ -20,6 +20,70 @@
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
+const TEMPLATE_NAMES = [
+  'fresh-and-bright',
+  'food-and-stuff',
+  'doers-get-more-done',
+  'weekly-entertainment',
+  'fashion-on-the-go',
+  'no-days-off',
+  'experience-thailand',
+  'sleep',
+  'baking-bread-guide',
+  'sangria-artichoke',
+  'ways-to-eat-avocado',
+  'kitchen-stories',
+  'album-releases',
+  'almodos-films',
+  'pizzas-in-nyc',
+  '12-hours-in-barcelona',
+  'ultimate-comparison',
+  'fitness-apps-ranked',
+  'street-style-on-the-go',
+  'plant-based-dyes',
+  'indoor-garden-oasis',
+  'belly-fat-workout',
+  'tv-show-recap',
+  'pride-month-watchlist',
+  'honeymooning-in-italy',
+  'ace-hotel-kyoto-review',
+  'how-video-calls-saved-the-day',
+  'laptop-buying-guide',
+  'beauty-quiz',
+  'diy-home-office',
+  'kitchen-makeover',
+  'self-care-guide',
+  'rock-music-festival',
+  'celebrity-q-and-a',
+  'los-angeles-city-guide',
+  'hawaii-travel-packing-list',
+  'google-music-studio-tour',
+  'how-contact-tracing-works',
+  'summer-fashion-collection',
+  'buying-art-on-the-internet',
+  'house-hunting',
+  'new-york-party-round-up',
+  'a-day-in-the-life',
+  'elegant-travel-itinerary',
+  'modernist-travel-guide',
+  'simple-tech-tutorial',
+  'magazine-article',
+  'fashion-inspiration',
+  'skin-care-at-home',
+  'art-books-gift-guide',
+  'vintage-chairs-buying-guide',
+];
+
+export function getTemplateCreationDates() {
+  return Promise.all(
+    TEMPLATE_NAMES.map((title) =>
+      import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]-creationDate" */ `./raw/${title}/creationDate`
+      ).then((data) => [title, data.default])
+    )
+  );
+}
+
 async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
     /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}`
@@ -63,71 +127,17 @@ async function loadTemplate(title, imageBaseUrl) {
 }
 
 async function getTemplates(imageBaseUrl) {
-  const templateNames = [
-    'fresh-and-bright',
-    'food-and-stuff',
-    'doers-get-more-done',
-    'weekly-entertainment',
-    'fashion-on-the-go',
-    'no-days-off',
-    'experience-thailand',
-    'sleep',
-    'baking-bread-guide',
-    'sangria-artichoke',
-    'ways-to-eat-avocado',
-    'kitchen-stories',
-    'album-releases',
-    'almodos-films',
-    'pizzas-in-nyc',
-    '12-hours-in-barcelona',
-    'ultimate-comparison',
-    'fitness-apps-ranked',
-    'street-style-on-the-go',
-    'plant-based-dyes',
-    'indoor-garden-oasis',
-    'belly-fat-workout',
-    'tv-show-recap',
-    'pride-month-watchlist',
-    'honeymooning-in-italy',
-    'ace-hotel-kyoto-review',
-    'how-video-calls-saved-the-day',
-    'laptop-buying-guide',
-    'beauty-quiz',
-    'diy-home-office',
-    'kitchen-makeover',
-    'self-care-guide',
-    'rock-music-festival',
-    'celebrity-q-and-a',
-    'los-angeles-city-guide',
-    'hawaii-travel-packing-list',
-    'google-music-studio-tour',
-    'how-contact-tracing-works',
-    'summer-fashion-collection',
-    'buying-art-on-the-internet',
-    'house-hunting',
-    'new-york-party-round-up',
-    'a-day-in-the-life',
-    'elegant-travel-itinerary',
-    'modernist-travel-guide',
-    'simple-tech-tutorial',
-    'magazine-article',
-    'fashion-inspiration',
-    'skin-care-at-home',
-    'art-books-gift-guide',
-    'vintage-chairs-buying-guide',
-  ];
-
   const trackTiming = getTimeTracker('load_templates');
 
   const templates = await Promise.all(
-    templateNames.map((title) => {
+    TEMPLATE_NAMES.map((title) => {
       return loadTemplate(title, imageBaseUrl);
     })
   );
 
   trackTiming();
 
-  return templates.sort((a, b) => b.creationDate - a.creationDate);
+  return templates;
 }
 
 export default getTemplates;

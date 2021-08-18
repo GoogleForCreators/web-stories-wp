@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: '12-hours-in-barcelona',
-  creationDate: new Date(2021, 6, 12),
+  creationDate,
   title: _x('12 Hours in Barcelona', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

@@ -38,3 +38,5 @@ export default async function ({ cdnURL }) {
     };
   });
 }
+
+export { getTemplateCreationDates } from './getTemplates';

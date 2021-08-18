@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'baking-bread-guide',
-  creationDate: new Date(2021, 6, 13),
+  creationDate,
   title: _x('Baking Bread Guide ', 'template name', 'web-stories'),
   tags: [
     _x('Food', 'template keyword', 'web-stories'),

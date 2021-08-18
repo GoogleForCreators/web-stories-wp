@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'skin-care-at-home',
-  creationDate: new Date(2021, 7, 9),
+  creationDate,
   title: _x('Skin Care at Home', 'template name', 'web-stories'),
   tags: [
     _x('Beauty', 'template keyword', 'web-stories'),

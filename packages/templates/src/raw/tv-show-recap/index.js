@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'tv-show-recap',
-  creationDate: new Date(2021, 6, 29),
+  creationDate,
   title: _x('TV Show Recap', 'template name', 'web-stories'),
   tags: [
     _x('Entertainment', 'template keyword', 'web-stories'),

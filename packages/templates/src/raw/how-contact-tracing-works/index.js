@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'how-contact-tracing-works',
-  creationDate: new Date(2021, 7, 3),
+  creationDate,
   title: _x('How Contact Tracing Works', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),

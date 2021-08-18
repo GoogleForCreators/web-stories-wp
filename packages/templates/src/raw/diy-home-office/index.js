@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'diy-home-office',
-  creationDate: new Date(2021, 6, 29),
+  creationDate,
   title: _x('DIY Home Office', 'template name', 'web-stories'),
   tags: [
     _x('Arts & Craft', 'template keyword', 'web-stories'),

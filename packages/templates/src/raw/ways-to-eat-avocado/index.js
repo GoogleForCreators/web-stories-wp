@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'ways-to-eat-avocado',
-  creationDate: new Date(2021, 5, 28),
+  creationDate,
   title: _x('Ways to Eat Avocado', 'template name', 'web-stories'),
   tags: [
     _x('Nutrition', 'template keyword', 'web-stories'),

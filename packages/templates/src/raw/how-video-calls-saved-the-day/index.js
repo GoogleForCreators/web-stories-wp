@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'how-video-calls-saved-the-day',
-  creationDate: new Date(2021, 6, 29),
+  creationDate,
   title: _x('How Video Calls Saved the Day', 'template name', 'web-stories'),
   tags: [
     _x('Technology', 'template keyword', 'web-stories'),

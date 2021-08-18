@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'fashion-on-the-go',
-  creationDate: new Date(2021, 4, 29),
+  creationDate,
   title: _x('Fashion On The Go', 'template name', 'web-stories'),
   tags: [
     _x('Clothing', 'template keyword', 'web-stories'),

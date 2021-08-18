@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'beauty-quiz',
-  creationDate: new Date(2021, 5, 28),
+  creationDate,
   title: _x('Beauty Quiz', 'template name', 'web-stories'),
   tags: [
     _x('Fashion & Beauty', 'template keyword', 'web-stories'),

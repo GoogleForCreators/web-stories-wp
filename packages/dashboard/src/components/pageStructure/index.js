@@ -24,6 +24,8 @@ import {
   useMemo,
   useRef,
   useFocusOut,
+  useEffect,
+  useState,
 } from '@web-stories-wp/react';
 import { useFeature } from 'flagged';
 import { __, sprintf } from '@web-stories-wp/i18n';
@@ -36,14 +38,22 @@ import {
   LogoWithTypeCircleColor,
   Text,
   THEME_CONSTANTS,
+  NotificationBubble,
 } from '@web-stories-wp/design-system';
+import { getTemplateCreationDates } from '@web-stories-wp/templates';
+import { toDate, differenceInSeconds, getOptions } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { PRIMARY_PATHS, SECONDARY_PATHS, Z_INDEX } from '../../constants';
+import {
+  PRIMARY_PATHS,
+  SECONDARY_PATHS,
+  Z_INDEX,
+  APP_ROUTES,
+} from '../../constants';
 import {
   DASHBOARD_LEFT_NAV_WIDTH,
   MIN_DASHBOARD_WIDTH,
@@ -58,6 +68,8 @@ import {
   NavListItem,
   PathName,
 } from './navigationComponents';
+
+const SIXTY_DAYS_IN_SECONDS = 60 * 24 * 60 * 60;
 
 export const AppFrame = styled.div`
   width: 100%;
@@ -78,6 +90,23 @@ export const PageContent = styled.div`
     left: 0;
     width: 100%;
   }
+`;
+
+const StyledNotificationBubble = styled(NotificationBubble)`
+  position: absolute;
+  top: 0;
+  left: 11px;
+  transform: translateY(-50%);
+
+  /* prevent active color from applying to bubble inner text */
+  && > span,
+  &&:hover > span {
+    color: ${({ theme }) => theme.colors.bg.primary};
+  }
+`;
+
+const IconWrap = styled.div`
+  position: relative;
 `;
 
 export const LeftRailContainer = styled.nav.attrs({
@@ -110,6 +139,7 @@ export const LoadingContainer = styled.div`
 `;
 
 export function LeftRail() {
+  const [numNewTemplates, setNumNewTemplates] = useState(0);
   const { state } = useRouteHistory();
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
@@ -164,6 +194,28 @@ export function LeftRail() {
     trackClick(evt, path.trackingEvent);
   }, []);
 
+  // See how many templates are new based on the current date
+  useEffect(() => {
+    let mounted = true;
+    getTemplateCreationDates().then((templateEntries) => {
+      if (mounted) {
+        const currentDate = toDate(new Date(), getOptions());
+        setNumNewTemplates(
+          templateEntries
+            .map(([, creationDate]) => toDate(creationDate, getOptions()))
+            .map((creationDate) =>
+              differenceInSeconds(currentDate, creationDate)
+            )
+            .filter((deltaSeconds) => deltaSeconds < SIXTY_DAYS_IN_SECONDS)
+            .length
+        );
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
@@ -190,35 +242,48 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavList>
-            {enabledPrimaryPaths.map(({ Icon, ...path }) => (
-              <NavListItem key={path.value}>
-                <NavLink
-                  active={path.value === state.currentPath}
-                  href={resolveRoute(path.value)}
-                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                  isBold
-                  aria-label={
-                    path.value === state.currentPath
-                      ? sprintf(
-                          /* translators: %s: the current page, for example "My Stories". */
-                          __('%s (active view)', 'web-stories'),
-                          path.label
-                        )
-                      : path.label
-                  }
-                  {...(path.isExternal && {
-                    rel: 'noreferrer',
-                    target: '_blank',
-                    onClick: (evt) => onExternalLinkClick(evt, path),
-                  })}
-                >
-                  {Icon && <Icon width="22px" />}
-                  <PathName as="span" isBold>
-                    {path.label}
-                  </PathName>
-                </NavLink>
-              </NavListItem>
-            ))}
+            {enabledPrimaryPaths.map(({ Icon, ...path }) => {
+              const isNotificationBubbleEnabled =
+                path.value === APP_ROUTES.TEMPLATES_GALLERY;
+              return (
+                <NavListItem key={path.value}>
+                  <NavLink
+                    active={path.value === state.currentPath}
+                    href={resolveRoute(path.value)}
+                    size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                    isBold
+                    aria-label={
+                      path.value === state.currentPath
+                        ? sprintf(
+                            /* translators: %s: the current page, for example "My Stories". */
+                            __('%s (active view)', 'web-stories'),
+                            path.label
+                          )
+                        : path.label
+                    }
+                    {...(path.isExternal && {
+                      rel: 'noreferrer',
+                      target: '_blank',
+                      onClick: (evt) => onExternalLinkClick(evt, path),
+                    })}
+                  >
+                    <IconWrap>
+                      {Icon && <Icon width="22px" />}
+                      {isNotificationBubbleEnabled && numNewTemplates > 0 && (
+                        <StyledNotificationBubble
+                          notificationCount={numNewTemplates}
+                          isSmall
+                        />
+                      )}
+                    </IconWrap>
+
+                    <PathName as="span" isBold>
+                      {path.label}
+                    </PathName>
+                  </NavLink>
+                </NavListItem>
+              );
+            })}
           </NavList>
         </Content>
       </div>

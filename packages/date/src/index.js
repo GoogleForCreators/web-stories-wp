@@ -23,7 +23,14 @@
  * @param {*} dateSettings
  */
 
-export { subMinutes, isValid, differenceInSeconds, isAfter } from 'date-fns';
+export {
+  subMinutes,
+  isValid,
+  differenceInSeconds,
+  isAfter,
+  compareDesc,
+  compareAsc,
+} from 'date-fns';
 export { toDate } from 'date-fns-tz';
 
 export { getSettings, updateSettings } from './settings';

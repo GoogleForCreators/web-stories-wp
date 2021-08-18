@@ -23,10 +23,11 @@ import { __, _x } from '@web-stories-wp/i18n';
  * Internal dependencies
  */
 import { default as template } from './template';
+import { default as creationDate } from './creationDate';
 
 export default {
   slug: 'indoor-garden-oasis-diy',
-  creationDate: new Date(2021, 6, 12),
+  creationDate,
   title: _x('Indoor Garden Oasis DIY', 'template name', 'web-stories'),
   tags: [
     _x('Home', 'template keyword', 'web-stories'),
