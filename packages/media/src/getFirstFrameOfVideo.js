@@ -46,8 +46,7 @@ function getImageFromVideo(video) {
  */
 async function getFirstFrameOfVideo(src) {
   const video = await preloadVideo(src);
-  const image = await getImageFromVideo(video);
-  return image;
+  return getImageFromVideo(video);
 }
 
 export default getFirstFrameOfVideo;
