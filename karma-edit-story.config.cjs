@@ -174,7 +174,7 @@ module.exports = function (config) {
 
     // Prevent duplicate logging to console
     browserConsoleLogOptions: {
-      terminal: true,
+      terminal: false,
     },
 
     // When a browser crashes,try to relaunch more than just 2 times (which is the default)
