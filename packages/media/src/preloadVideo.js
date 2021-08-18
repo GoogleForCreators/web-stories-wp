@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function preloadVideoMetadata(src) {
+function preloadVideo(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
@@ -34,4 +34,4 @@ function preloadVideoMetadata(src) {
   });
 }
 
-export default preloadVideoMetadata;
+export default preloadVideo;

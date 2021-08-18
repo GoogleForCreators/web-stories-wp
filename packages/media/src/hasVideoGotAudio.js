@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMetadata from './preloadVideoMetadata';
+import preloadVideo from './preloadVideo';
 
 function hasAudio(video) {
   return (
@@ -28,7 +28,7 @@ function hasAudio(video) {
 }
 
 async function hasVideoGotAudio(src) {
-  const video = await preloadVideoMetadata(src);
+  const video = await preloadVideo(src);
   return hasAudio(video);
 }
 

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMetadata from './preloadVideoMetadata';
+import preloadVideo from './preloadVideo';
 
 function getImageFromVideo(video) {
   return new Promise((resolve, reject) => {
@@ -45,7 +45,7 @@ function getImageFromVideo(video) {
  * @return {Promise<string>} The extracted image in base64-encoded format.
  */
 async function getFirstFrameOfVideo(src) {
-  const video = await preloadVideoMetadata(src);
+  const video = await preloadVideo(src);
   const image = await getImageFromVideo(video);
   return image;
 }
