@@ -140,46 +140,53 @@ Once you have the story JSON, several code changes are needed to add it to the l
        - Resets all `id` and `posterId` to 0 for image and video type resources.
 
       NOTE: Check all resource URLs and properties are set properly before commiting the template.
+      
+2. Create a new file `creationDate.js` in your newly created `<template_name>` directory and make a date sting the default export. 
 
-
-2. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, `creationDate`, etc.
-
-   ```js
-    //...
-    /**
-     * External dependencies
-     */
-    import { __, _x } from '@web-stories-wp/i18n';
-
-    /**
-     * Internal dependencies
-     */
-    /* eslint-disable-next-line import/no-unresolved */
-    import { default as template } from './template';
-
-    export default {
+    ```javascript
       // day this template was added to the codebase
-      creationDate: new Date(2021, 0, 1),
-      title: _x('Your Template Title', 'template name', 'web-stories'),
-      tags: [
-        _x('Tags', 'template keyword', 'web-stories'),
-      ],
-      // Array of color objects with name and hex values.
-      colors: [
-        { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
-      ],
-      description: __(
-        'A short text describing your story template.',
-       'web-stories'
-      ),
-      ...template,
-      vertical: _x('Vertical name', 'template vertical', 'web-stories'),
-    };
-   ```
+      export default '2021-07-12T00:00:00.000Z';
+    ```
 
-3. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function.
-4. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
-5. Create a single pull request with all of the changes in steps 1-3.
+3. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file and `creationDate.js`. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, `creationDate`, etc. 
+
+    ```javascript
+      //...
+      /**
+       * External dependencies
+       */
+      import { __, _x } from '@web-stories-wp/i18n';
+
+      /**
+       * Internal dependencies
+       */
+      /* eslint-disable-next-line import/no-unresolved */
+      import { default as template } from './template';
+      /* eslint-disable-next-line import/no-unresolved */
+      import { default as creationDate } from './creationDate';
+
+      export default {
+        creationDate,
+        title: _x('Your Template Title', 'template name', 'web-stories'),
+        tags: [
+          _x('Tags', 'template keyword', 'web-stories'),
+        ],
+        // Array of color objects with name and hex values.
+        colors: [
+          { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
+        ],
+        description: __(
+          'A short text describing your story template.',
+        'web-stories'
+        ),
+        ...template,
+        vertical: _x('Vertical name', 'template vertical', 'web-stories'),
+      };
+    ```
+
+4. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function.
+5. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
+6. Create a single pull request with all of the changes in steps 1-3.
 
 ### Adding SVGs to the codebase as shapes
 
