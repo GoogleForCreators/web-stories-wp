@@ -19,14 +19,36 @@
  */
 import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
+import {
+  getFileExtFromUrl,
+  getFileNameFromUrl,
+  getFirstFrameOfVideo,
+} from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-
 import { isValidUrl } from '../../../../../../utils/url';
 import useLibrary from '../../../../useLibrary';
-import useGetResourceFromUrl from '../../../../../../app/media/utils/useGetResourceFromUrl';
+import getResourceFromUrl from '../../../../../../app/media/utils/getResourceFromUrl';
+import {
+  getPosterName,
+  useUploadVideoFrame,
+} from '../../../../../../app/media/utils';
+import { useConfig } from '../../../../../../app/config';
+
+// @todo Get the mime type from server-side validation instead.
+const EXT_MIME_TYPES = {
+  jpg: 'image/jpeg',
+  gif: 'image/gif',
+  jpe: 'image/jpe',
+  jpeg: 'image/jpg',
+  m4v: 'video/mp4',
+  mp4: 'video/mp4',
+  png: 'image/png',
+  webm: 'video/webm',
+  webp: 'image/webp',
+};
 
 function useInsert({
   link,
@@ -39,7 +61,10 @@ function useInsert({
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
-  const getResourceFromUrl = useGetResourceFromUrl();
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const { uploadVideoPoster } = useUploadVideoFrame({});
   const onInsert = useCallback(async () => {
     if (errorMsg?.length) {
       return;
@@ -54,8 +79,20 @@ function useInsert({
     }
     try {
       const { type } = getFileInfo();
-      const resource = await getResourceFromUrl(link);
-      // @todo Create getResourceFromUrl util instead.
+      const resource = await getResourceFromUrl(link, type);
+
+      // @todo Get the mime type from server-side validation instead.
+      const ext = getFileExtFromUrl(link);
+      resource.mimeType = EXT_MIME_TYPES[ext];
+
+      if ('video' === type && hasUploadMediaAction) {
+        const originalFileName = getFileNameFromUrl(link);
+        const fileName = getPosterName(originalFileName);
+        const posterFile = await getFirstFrameOfVideo(link);
+        const posterData = await uploadVideoPoster(0, fileName, posterFile);
+        resource.poster = posterData.poster;
+        resource.posterId = posterData.posterId;
+      }
       insertElement(type, {
         resource,
       });
@@ -66,7 +103,6 @@ function useInsert({
       setErrorMsg(insertionError);
     }
   }, [
-    getResourceFromUrl,
     insertElement,
     link,
     errorMsg,
@@ -74,6 +110,8 @@ function useInsert({
     onClose,
     setErrorMsg,
     setLink,
+    hasUploadMediaAction,
+    uploadVideoPoster,
   ]);
   return onInsert;
 }
