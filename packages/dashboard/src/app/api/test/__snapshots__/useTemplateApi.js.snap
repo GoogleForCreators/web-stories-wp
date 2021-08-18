@@ -18,6 +18,7 @@ Object {
     },
   ],
   "createdBy": "Google",
+  "creationDate": Date { NaN },
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   "id": 1,
   "isLocal": true,

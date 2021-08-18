@@ -20,10 +20,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
 import stickers from '@web-stories-wp/stickers';
-
-function isValidDate(date) {
-  return date instanceof Date && !isNaN(date);
-}
+import { isValid } from '@web-stories-wp/date';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -226,11 +223,15 @@ describe('raw template files', () => {
   it.each(templates)(
     '%s template should contain a valid createdDate',
     async (template) => {
+      const { default: creationDate } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]-creationDate" */ `../raw/${template}/creationDate`
+      );
+      expect(isValid(new Date(creationDate))).toBe(true);
+
       const { default: templateData } = await import(
         /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
       );
-
-      expect(isValidDate(templateData.creationDate)).toBe(true);
+      expect(isValid(new Date(templateData.creationDate))).toBe(true);
     }
   );
 });
