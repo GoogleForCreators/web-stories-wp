@@ -25,6 +25,7 @@ import puppeteer from 'puppeteer';
 
 const screenshotsPath = `build/template-posters/`;
 
+// eslint-disable-next-line security/detect-non-literal-fs-filename
 fs.mkdirSync(screenshotsPath, { recursive: true });
 
 (async () => {
