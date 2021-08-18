@@ -228,6 +228,10 @@ describe('Link Panel', () => {
         name: 'Size & Position',
       });
       await fixture.events.click(btn);
+      const btn2 = fixture.screen.getByRole('button', {
+        name: 'Saved Colors',
+      });
+      await fixture.events.click(btn2);
       await fixture.snapshot('Testing 1');
 
       await fixture.events.sleep(1000);
