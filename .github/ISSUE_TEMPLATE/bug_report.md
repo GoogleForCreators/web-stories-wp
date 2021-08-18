@@ -7,7 +7,10 @@ assignees: ''
 
 ---
 
-<!-- NOTE: For help requests, support questions, or general feedback, please use the WordPress.org forums instead: https://wordpress.org/support/plugin/web-stories/ -->
+<!--
+NOTE: For help requests, support questions, or general feedback,
+please use the WordPress.org forums instead: https://wordpress.org/support/plugin/web-stories/
+-->
 
 ## Bug Description
 
@@ -23,7 +26,10 @@ assignees: ''
 
 ## Screenshots
 
-<!-- If applicable, please add screenshots to help explain your problem. Bonus points for videos! -->
+<!--
+If applicable, please add screenshots to help explain your problem.
+Bonus points for videos!
+-->
 
 ## Additional Context
 
@@ -33,15 +39,3 @@ assignees: ''
 - WordPress Version:
 - Operating System:
 - Browser:
-
----
-
-_Do not alter or remove anything below. The following sections will be managed by moderators only._
-
-## Acceptance Criteria
-
-<!-- One or more bullet points for acceptance criteria. -->
-
-## Implementation Brief
-
-<!-- One or more bullet points for how to technically implement the feature. -->
