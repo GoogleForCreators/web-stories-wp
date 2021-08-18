@@ -18,7 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, forwardRef } from 'react';
+import {
+  useState,
+  useCallback,
+  forwardRef,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import {
@@ -29,7 +34,6 @@ import {
   themeHelpers,
   Icons,
 } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
 /**
  * Internal dependencies

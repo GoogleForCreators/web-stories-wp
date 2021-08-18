@@ -72,7 +72,7 @@ export const GET_MEDIA_RESPONSE_BODY = [
       rendered: '<p class="attachment">link</p>\n',
     },
     caption: { raw: '', rendered: '' },
-    alt_text: '',
+    alt_text: 'IMAGE',
     media_type: 'image',
     mime_type: 'image/jpeg',
     media_details: {

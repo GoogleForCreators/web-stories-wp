@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
+import {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+} from '@web-stories-wp/react';
 import { _x, sprintf, __ } from '@web-stories-wp/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';

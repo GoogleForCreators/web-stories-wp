@@ -16,8 +16,14 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useRef, useCallback, useState } from 'react';
-import { createContext } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+  createContext,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 export const LayoutContext = createContext(null);

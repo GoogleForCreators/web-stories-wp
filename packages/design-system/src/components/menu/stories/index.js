@@ -20,7 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -226,7 +226,6 @@ export const SubMenus = () => {
   );
 };
 
-// eslint-disable-next-line react/display-name
 const RenderItemOverride = forwardRef(
   ({ option, isSelected, ...rest }, ref) => (
     <StyledEffectListItem

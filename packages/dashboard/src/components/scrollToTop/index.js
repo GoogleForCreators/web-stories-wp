@@ -17,9 +17,12 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import {
+  useEffect,
+  useState,
+  useDebouncedCallback,
+} from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
-import { useDebouncedCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
 

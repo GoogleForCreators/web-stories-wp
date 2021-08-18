@@ -19,7 +19,7 @@
  */
 import { boolean, text, select } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

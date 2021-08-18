@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
-import { identity, useContextSelector } from '@web-stories-wp/react';
+import { useEffect, identity, useContextSelector } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

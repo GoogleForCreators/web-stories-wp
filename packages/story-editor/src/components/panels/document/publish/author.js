@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

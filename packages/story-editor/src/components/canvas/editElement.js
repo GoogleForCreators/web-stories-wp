@@ -24,7 +24,7 @@ import { useUnits } from '@web-stories-wp/units';
 /**
  * Internal dependencies
  */
-import { useState, useRef } from 'react';
+import { useState, useRef } from '@web-stories-wp/react';
 import { getDefinitionForType } from '../../elements';
 import {
   elementWithPosition,

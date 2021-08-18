@@ -16,8 +16,14 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState, useRef } from 'react';
-import { useDebouncedCallback, useResizeEffect } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  useDebouncedCallback,
+  useResizeEffect,
+} from '@web-stories-wp/react';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**

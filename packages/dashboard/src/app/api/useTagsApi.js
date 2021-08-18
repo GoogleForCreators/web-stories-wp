@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from '@web-stories-wp/react';
 import { addQueryArgs } from '@web-stories-wp/design-system';
 
 /**

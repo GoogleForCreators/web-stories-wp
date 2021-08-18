@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
