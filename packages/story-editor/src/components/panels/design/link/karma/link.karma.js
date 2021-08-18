@@ -224,10 +224,7 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 100);
 
-      fixture.editor.inspector.designPanel.animation.effectChooser.scrollTo(
-        300,
-        300
-      );
+      fixture.editor.inspector.designPanel.border.width().scrollTo(300, 300);
       await fixture.events.sleep(1000);
       await fixture.snapshot('Testing 1');
       linkPanel = fixture.editor.inspector.designPanel.link;
