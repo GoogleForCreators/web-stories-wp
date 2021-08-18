@@ -120,37 +120,75 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
 		// Hence we are working around this here.
 		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
+		$original_id = ! empty( $request['original_id'] ) ? (int) $request['original_id'] : null;
 		unset( $request['post'] );
 
-		if ( ! $parent_post ) {
-			return parent::create_item( $request );
-		}
-
 		$response = parent::create_item( $request );
-		if ( is_wp_error( $response ) ) {
+		if ( is_wp_error( $response ) || ( ! $parent_post && ! $original_id ) ) {
 			return $response;
 		}
 
-		$data              = $response->get_data();
-		$post_id           = $data['id'];
-		$attachment_before = $this->get_post( $post_id );
-		if ( is_wp_error( $attachment_before ) ) {
-			return $attachment_before;
+		$data       = $response->get_data();
+		$attachment = $this->process_post( $data['id'], $parent_post, $original_id );
+		if ( is_wp_error( $attachment ) ) {
+			return $attachment;
 		}
 
-		$args   = [
-			'ID'          => $post_id,
-			'post_parent' => $parent_post,
-		];
-		$result = wp_update_post( $args, true );
-		if ( is_wp_error( $result ) ) {
-			return $result;
-		}
-
-		$data['post'] = $parent_post;
+		$new_response = $this->prepare_item_for_response( $attachment, $request );
+		$data         = $new_response->get_data();
 		$response->set_data( $data );
 
 		return $response;
+	}
+
+	/**
+	 * Process post to update attribute.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param int      $post_id Post id.
+	 * @param int|null $parent_post New post parent. Default null.
+	 * @param int|null $original_id Original id to copy data from. Default null.
+	 *
+	 * @return WP_Post|WP_Error
+	 */
+	protected function process_post( $post_id, $parent_post, $original_id ) {
+		$args = [ 'ID' => $post_id ];
+
+		if ( $parent_post ) {
+			$args['post_parent'] = $parent_post;
+		}
+
+		if ( $original_id ) {
+			$attachment_post = $this->get_post( (int) $original_id );
+			if ( is_wp_error( $attachment_post ) ) {
+				return $attachment_post;
+			}
+			$args['post_content'] = $attachment_post->post_content;
+			$args['post_excerpt'] = $attachment_post->post_excerpt;
+			$args['post_title']   = $attachment_post->post_title;
+
+			// Copy the image alt text from the edited image.
+			$image_alt = (string) get_post_meta( $original_id, '_wp_attachment_image_alt', true );
+
+			if ( ! empty( $image_alt ) ) {
+				// update_post_meta() expects slashed.
+				update_post_meta( $post_id, '_wp_attachment_image_alt', wp_slash( $image_alt ) );
+			}
+		}
+
+		$attachment_id = wp_update_post( $args, true );
+		if ( is_wp_error( $attachment_id ) ) {
+			if ( 'db_update_error' === $attachment_id->get_error_code() ) {
+				$attachment_id->add_data( [ 'status' => 500 ] );
+			} else {
+				$attachment_id->add_data( [ 'status' => 400 ] );
+			}
+
+			return $attachment_id;
+		}
+
+		return $this->get_post( $attachment_id );
 	}
 
 	/**
@@ -257,6 +295,12 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 			$schema['properties']['generated_slug'],
 			$schema['properties']['description']
 		);
+
+		$schema['properties']['original_id'] = [
+			'description' => __( 'Unique identifier for original attachment id.', 'web-stories' ),
+			'type'        => 'integer',
+			'context'     => [ 'view', 'edit', 'embed' ],
+		];
 
 		$this->schema = $schema;
 

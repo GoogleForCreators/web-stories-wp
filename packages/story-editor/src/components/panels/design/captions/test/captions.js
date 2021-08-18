@@ -30,7 +30,7 @@ import Captions from '../captions';
 describe('Panels/Captions', () => {
   const defaultElement = {
     type: 'video',
-    resource: { posterId: 0, title: '', poster: '', alt: '' },
+    resource: { posterId: 0, poster: '', alt: '' },
     tracks: [],
   };
   function arrange(...args) {
