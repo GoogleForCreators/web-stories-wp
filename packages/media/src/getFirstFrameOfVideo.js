@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMeta from './preloadVideoMeta';
+import preloadVideoMetadata from './preloadVideoMetadata';
 
 /**
  * Returns an image of the first frame of a given video.
@@ -26,47 +26,23 @@ import preloadVideoMeta from './preloadVideoMeta';
  * @param {string} src Video src URL.
  * @return {Promise<string>} The extracted image in base64-encoded format.
  */
-function getFirstFrameOfVideo(src) {
-  const video = preloadVideoMeta();
+async function getFirstFrameOfVideo(src) {
+  const video = await preloadVideoMetadata(src);
 
   return new Promise((resolve, reject) => {
-    video.addEventListener('error', reject);
+    const canvas = document.createElement('canvas');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
-    video.addEventListener(
-      'canplay',
-      () => {
-        // Need to seek forward to ensure we get a proper frame.
-        // Doing it inside the event listener to prevent the event
-        // from being fired twice.
-        // See https://github.com/google/web-stories-wp/issues/2923
-        // Translates to real-world 0.28
-        // See "Reduced time precision" https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime
-        video.currentTime = 0.99;
-      },
-      { once: true } // Important because 'canplay' can be fired hundreds of times.
-    );
+    const ctx = canvas.getContext('2d');
+    try {
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    } catch (err) {
+      // Browser probably doesn't support the video codec.
+      reject(err);
+    }
 
-    video.addEventListener(
-      'seeked',
-      () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const ctx = canvas.getContext('2d');
-        try {
-          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        } catch (err) {
-          // Browser probably doesn't support the video codec.
-          reject(err);
-        }
-
-        canvas.toBlob(resolve, 'image/jpeg');
-      },
-      { once: true }
-    );
-
-    video.src = src;
+    canvas.toBlob(resolve, 'image/jpeg');
   });
 }
 

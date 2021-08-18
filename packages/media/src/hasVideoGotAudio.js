@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import preloadVideoMeta from './preloadVideoMeta';
+import preloadVideoMetadata from './preloadVideoMetadata';
 
 function hasAudio(video) {
   return (
@@ -26,26 +26,10 @@ function hasAudio(video) {
     Boolean(video.audioTracks?.length)
   );
 }
-function hasVideoGotAudio(src) {
-  const video = preloadVideoMeta();
 
-  return new Promise((resolve, reject) => {
-    video.addEventListener('error', reject);
-
-    video.addEventListener(
-      'canplay',
-      () => {
-        video.currentTime = 0.99;
-      },
-      { once: true } // Important because 'canplay' can be fired hundreds of times.
-    );
-
-    video.addEventListener('seeked', () => resolve(hasAudio(video)), {
-      once: true,
-    });
-
-    video.src = src;
-  });
+async function hasVideoGotAudio(src) {
+  const video = await preloadVideoMetadata(src);
+  return hasAudio(video);
 }
 
 export default hasVideoGotAudio;

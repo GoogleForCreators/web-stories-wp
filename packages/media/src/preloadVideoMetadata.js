@@ -13,13 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const preloadVideoMeta = () => {
+function preloadVideoMetadata(src) {
   const video = document.createElement('video');
   video.muted = true;
   video.crossOrigin = 'anonymous';
   video.preload = 'auto';
 
-  return video;
-};
+  return new Promise((resolve, reject) => {
+    video.addEventListener('error', reject);
+    video.addEventListener(
+      'canplay',
+      () => {
+        video.currentTime = 0.99;
+      },
+      { once: true } // Important because 'canplay' can be fired hundreds of times.
+    );
 
-export default preloadVideoMeta;
+    video.addEventListener('seeked', () => resolve(video), { once: true });
+    video.src = src;
+  });
+}
+
+export default preloadVideoMetadata;
