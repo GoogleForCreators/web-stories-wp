@@ -148,8 +148,6 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
     );
   }
 
-  process.stdout.write('.');
-
   await browser.close();
   console.log(
     `\nTemplate images generated in ${screenshotsPath}, please move and commit them to the static-site branch`
