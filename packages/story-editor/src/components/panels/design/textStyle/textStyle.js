@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useRef } from 'react';
+import { useRef } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

@@ -17,7 +17,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies

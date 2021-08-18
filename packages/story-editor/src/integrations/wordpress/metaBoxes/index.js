@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

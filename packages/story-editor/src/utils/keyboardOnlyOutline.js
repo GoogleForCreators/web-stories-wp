@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from '@web-stories-wp/react';
 import { createGlobalStyle } from 'styled-components';
 
 const KEYBOARD_USER_CLASS = `useskeyboard`;

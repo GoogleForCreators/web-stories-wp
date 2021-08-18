@@ -20,7 +20,7 @@ import { getRelativeDisplayDate } from '@web-stories-wp/date';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo } from '@web-stories-wp/react';
 import { css } from 'styled-components';
 /**
  * Internal dependencies

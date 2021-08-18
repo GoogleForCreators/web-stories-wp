@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

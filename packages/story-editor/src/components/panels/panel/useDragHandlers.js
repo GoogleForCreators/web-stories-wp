@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useCallback, useLayoutEffect } from 'react';
+import {
+  useRef,
+  useState,
+  useCallback,
+  useLayoutEffect,
+} from '@web-stories-wp/react';
 
 function useDragHandlers(handle, onDrag, onDragEnd) {
   const lastPosition = useRef();

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useEffect } from '@web-stories-wp/react';
 
 function useUpdateSelectionRectangle(moveableRef, dependencies = []) {
   // If deps ever update, update rect now AND in a frame's time

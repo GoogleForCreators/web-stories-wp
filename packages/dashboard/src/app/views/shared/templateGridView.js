@@ -18,11 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useFocusOut,
+} from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
-import { useFocusOut } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies

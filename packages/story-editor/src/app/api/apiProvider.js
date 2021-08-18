@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from '@web-stories-wp/react';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 import getAllTemplates from '@web-stories-wp/templates';
 import { addQueryArgs } from '@web-stories-wp/design-system';
@@ -236,7 +236,6 @@ function APIProvider({ children }) {
           'id',
           'date_gmt',
           'media_details',
-          'title',
           'mime_type',
           'featured_media',
           'featured_media_src',

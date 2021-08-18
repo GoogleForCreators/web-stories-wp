@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback } from '@web-stories-wp/react';
 import STICKERS from '@web-stories-wp/stickers';
 import { dataPixels } from '@web-stories-wp/units';
 
