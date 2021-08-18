@@ -368,20 +368,22 @@ function MediaPane(props) {
             {!isSearching && enableHotlinking && (
               <ButtonsWrapper>
                 <LinkInsertion />
-                <Tooltip title={__('Upload', 'web-stories')}>
-                  <Button
-                    variant={BUTTON_VARIANTS.SQUARE}
-                    type={BUTTON_TYPES.SECONDARY}
-                    size={BUTTON_SIZES.SMALL}
-                    onClick={openMediaPicker}
-                    aria-label={__('Upload', 'web-stories')}
-                  >
-                    <Icons.ArrowCloud />
-                  </Button>
-                </Tooltip>
+                {hasUploadMediaAction && (
+                  <Tooltip title={__('Upload', 'web-stories')}>
+                    <Button
+                      variant={BUTTON_VARIANTS.SQUARE}
+                      type={BUTTON_TYPES.SECONDARY}
+                      size={BUTTON_SIZES.SMALL}
+                      onClick={openMediaPicker}
+                      aria-label={__('Upload', 'web-stories')}
+                    >
+                      <Icons.ArrowCloud />
+                    </Button>
+                  </Tooltip>
+                )}
               </ButtonsWrapper>
             )}
-            {!isSearching && !enableHotlinking && (
+            {!isSearching && !enableHotlinking && hasUploadMediaAction && (
               <Button
                 variant={BUTTON_VARIANTS.RECTANGLE}
                 type={BUTTON_TYPES.SECONDARY}
