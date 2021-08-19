@@ -121,7 +121,8 @@ describe('Link Panel', () => {
     });
 
     // TODO(#8738): Fix flaky test.
-    it.skip('should display the link tooltip correctly', async () => {
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
       await waitFor(() => linkPanel.address);
