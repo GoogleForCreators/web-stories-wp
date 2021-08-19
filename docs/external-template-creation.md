@@ -141,32 +141,18 @@ Once you have the story JSON, several code changes are needed to add it to the l
 
       NOTE: Check all resource URLs and properties are set properly before commiting the template.
       
-2. Create a new file `creationDate.js` in your newly created `<template_name>` directory and make a date string the default export. 
+2. Create a new file `metaData.js` in your newly created `<template_name>` directory. Your `<template_name>/metaData.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, `creationDate`, etc. 
 
     ```javascript
-      // day this template was added to the codebase
-      export default '2021-07-12T00:00:00.000Z';
-    ```
-
-3. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file and `creationDate.js`. Your `<template_name>/index.js` file would then look something like this with object corresponding to the new template and properties `id`, `title`, `tags`, `colors`, `creationDate`, etc. 
-
-    ```javascript
-      //...
+       //...
       /**
        * External dependencies
        */
       import { __, _x } from '@web-stories-wp/i18n';
 
-      /**
-       * Internal dependencies
-       */
-      /* eslint-disable-next-line import/no-unresolved */
-      import { default as template } from './template';
-      /* eslint-disable-next-line import/no-unresolved */
-      import { default as creationDate } from './creationDate';
-
       export default {
-        creationDate,
+        slug: 'template-name',
+        creationDate: '2021-07-12T00:00:00.000Z',
         title: _x('Your Template Title', 'template name', 'web-stories'),
         tags: [
           _x('Tags', 'template keyword', 'web-stories'),
@@ -179,8 +165,25 @@ Once you have the story JSON, several code changes are needed to add it to the l
           'A short text describing your story template.',
         'web-stories'
         ),
-        ...template,
         vertical: _x('Vertical name', 'template vertical', 'web-stories'),
+      };
+    ```
+
+3. Create a new file `index.js` in your newly created `<template_name>` directory and import the `template.json` file and `metaData.js` file. Your `<template_name>/index.js` file would then look something like this:
+
+    ```javascript
+      //...
+      /**
+       * Internal dependencies
+       */
+      /* eslint-disable-next-line import/no-unresolved */
+      import { default as template } from './template';
+      /* eslint-disable-next-line import/no-unresolved */
+      import { default as metaData } from './metaData';
+
+      export default {
+        ...metaData,
+        ...template,
       };
     ```
 
