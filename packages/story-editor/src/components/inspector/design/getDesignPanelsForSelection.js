@@ -53,26 +53,17 @@ function getDesignPanelsForSelection(elements) {
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
-  const isBackgroundMedia = !elements[0].isDefaultBackground;
 
   // Only display background panel in case of background element.
   if (isBackground) {
     const panels = [];
 
-    if (!isBackgroundMedia) {
-      panels.push({
-        type: PanelTypes.COLOR_PRESETS,
-        Panel: ColorPresetPanel,
-      });
-    }
-
-    // The Page Background panel is shown for all types of backgrounds.
-    panels.push({
-      type: PanelTypes.PAGE_BACKGROUND,
-      Panel: PageBackgroundPanel,
-    });
-
+    const isBackgroundMedia = !elements[0].isDefaultBackground;
     if (isBackgroundMedia) {
+      panels.push({
+        type: PanelTypes.PAGE_BACKGROUND,
+        Panel: PageBackgroundPanel,
+      });
       panels.push({
         type: PanelTypes.FILTER,
         Panel: FilterPanel,
@@ -95,6 +86,12 @@ function getDesignPanelsForSelection(elements) {
       panels.push({
         type: PanelTypes.IMAGE_ACCESSIBILITY,
         Panel: ImageAccessibilityPanel,
+      });
+      // In case of default background without media:
+    } else {
+      panels.unshift({
+        type: PanelTypes.PAGE_BACKGROUND,
+        Panel: PageBackgroundPanel,
       });
     }
 
