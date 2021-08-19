@@ -177,7 +177,7 @@ class Editor extends Service_Base {
 	 * @param bool|mixed $use_block_editor  Whether the post type can be edited or not. Default true.
 	 * @param string     $post_type         The post type being checked.
 	 *
-	 * @return bool|mixed Whether to use the block editor.
+	 * @return false|mixed Whether to use the block editor.
 	 */
 	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
 		if ( Story_Post_Type::POST_TYPE_SLUG === $post_type ) {
