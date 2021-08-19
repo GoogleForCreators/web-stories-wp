@@ -237,7 +237,7 @@ class URL_Controller extends REST_Controller {
 	 */
 	public function parse_url_permissions_check() {
 		if ( ! $this->get_post_type_cap( Story_Post_Type::POST_TYPE_SLUG, 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to insert external media.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
 		return true;
