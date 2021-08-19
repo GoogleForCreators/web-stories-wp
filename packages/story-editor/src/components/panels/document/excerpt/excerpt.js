@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from '@web-stories-wp/react';
+import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
@@ -27,7 +27,7 @@ import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { useFocusHighlight, states, styles } from '../../../../app/highlights';
+import { useHighlights, states, styles } from '../../../../app/highlights';
 
 // Margin -4px is making up for extra margin added by rows.
 const StyledText = styled(Text)`
@@ -56,12 +56,18 @@ function ExcerptPanel() {
     [updateStory]
   );
 
-  const ref = useRef();
-  const highlight = useFocusHighlight(states.EXCERPT, ref);
+  const { highlight, resetHighlight, cancelHighlight } = useHighlights(
+    (state) => ({
+      highlight: state[states.EXCERPT],
+      resetHighlight: state.onFocusOut,
+      cancelHighlight: state.cancelEffect,
+    })
+  );
 
   return (
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={() => resetHighlight()}
       name="excerpt"
       title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
@@ -69,7 +75,12 @@ function ExcerptPanel() {
     >
       <Row>
         <TextArea
-          ref={ref}
+          ref={(node) => {
+            if (node && highlight?.focus && highlight?.showEffect) {
+              node.addEventListener('keydown', cancelHighlight, { once: true });
+              node.focus();
+            }
+          }}
           value={excerpt}
           onChange={handleTextChange}
           placeholder={__('Write a description of the story', 'web-stories')}
