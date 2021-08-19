@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'ace-hotel-kyoto-review',
   title: _x('Ace Hotel Kyoto Review', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),
