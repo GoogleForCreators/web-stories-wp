@@ -116,18 +116,14 @@ class Media_Hotlinking_Controller extends REST_Controller {
 
 		$headers = wp_remote_retrieve_headers( $response );
 
-		$mime_type          = $headers['content-type'];
-		$allowed_mime_types = $this->get_allowed_mime_types();
-		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
-
-		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
-			return new WP_Error( 'rest_invalid_file_type', __( 'Invalid file type', 'web-stories' ), [ 'status' => 404 ] );
-		}
+		$mime_type = $headers['content-type'];
 
 		$path = wp_parse_url( $url, PHP_URL_PATH );
 		$exts = $this->get_file_type_exts( [ $mime_type ] );
-		$ext  = end( $exts );
-
+		$ext  = '';
+		if ( $exts ) {
+			$ext = end( $exts );
+		}
 		$file_size = (int) $headers['content-length'];
 
 		$file_name = basename( $path );
@@ -138,9 +134,9 @@ class Media_Hotlinking_Controller extends REST_Controller {
 			'mime_type' => $mime_type,
 		];
 
-		$response = $this->prepare_item_for_response( $data, $request );
-
 		set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+
+		$response = $this->prepare_item_for_response( $data, $request );
 
 		return rest_ensure_response( $response );
 	}
@@ -162,11 +158,20 @@ class Media_Hotlinking_Controller extends REST_Controller {
 
 		$data = [];
 
-		$check_fields = array_keys( $link );
-		foreach ( $check_fields as $check_field ) {
-			if ( rest_is_field_included( $check_field, $fields ) ) {
-				$data[ $check_field ] = rest_sanitize_value_from_schema( $link[ $check_field ], $schema['properties'][ $check_field ] );
+		$error = new WP_Error();
+		foreach ( $schema['properties'] as $field => $args ) {
+			if ( rest_is_field_included( $field, $fields ) ) {
+				$check = rest_validate_value_from_schema( $link[ $field ], $args, $field );
+				if ( is_wp_error( $check ) ) {
+					$error->add( 'rest_invalid_' . $field, $check->get_error_message(), [ 'status' => 400 ] );
+				}
+
+				$data[ $field ] = rest_sanitize_value_from_schema( $link[ $field ], $args, $field );
 			}
+		}
+
+		if ( $error->get_error_codes() ) {
+			return $error;
 		}
 
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
@@ -191,6 +196,10 @@ class Media_Hotlinking_Controller extends REST_Controller {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
+		$allowed_mime_types = $this->get_allowed_mime_types();
+		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
+		$exts               = $this->get_file_type_exts( $allowed_mime_types );
+
 		$schema = [
 			'$schema'    => 'http://json-schema.org/draft-04/schema#',
 			'title'      => 'link',
@@ -200,6 +209,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 					'description' => __( 'File extension', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
+					'enum'        => $exts,
 				],
 				'file_name' => [
 					'description' => __( 'File name', 'web-stories' ),
@@ -215,6 +225,7 @@ class Media_Hotlinking_Controller extends REST_Controller {
 					'description' => __( 'Mime Type', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
+					'enum'        => $allowed_mime_types,
 				],
 			],
 		];
