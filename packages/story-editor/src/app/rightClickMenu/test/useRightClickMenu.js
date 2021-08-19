@@ -47,6 +47,8 @@ jest.mock('@web-stories-wp/design-system', () => ({
   useSnackbar: jest.fn(),
 }));
 
+jest.mock('@web-stories-wp/tracking');
+
 const mockEvent = {
   preventDefault: jest.fn(),
   stopPropagation: jest.fn(),

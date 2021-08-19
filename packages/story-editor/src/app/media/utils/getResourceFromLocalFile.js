@@ -27,6 +27,7 @@ import {
   getImageDimensions,
   createFileReader,
   getVideoLength,
+  hasVideoGotAudio,
 } from '@web-stories-wp/media';
 
 /**
@@ -89,6 +90,7 @@ const getVideoResource = async (file) => {
     lengthFormatted = videoLength.lengthFormatted;
   }
   const posterFile = await getFirstFrameOfVideo(src);
+  const hasAudio = await hasVideoGotAudio(src);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
@@ -98,6 +100,7 @@ const getVideoResource = async (file) => {
     src: canPlayVideo ? src : '',
     ...getResourceSize({ width, height }),
     poster,
+    isMuted: !hasAudio,
     length,
     lengthFormatted,
     alt,
