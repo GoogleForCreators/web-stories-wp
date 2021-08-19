@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'laptop-buying-guide',
-  creationDate,
-  title: _x('Laptop Buying Guide', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Products', 'template keyword', 'web-stories'),
-    _x('Laptop', 'template keyword', 'web-stories'),
-    _x('Simple', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Brilliant Blue', 'color', 'web-stories'), color: '#0057ff' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Gentle Gray', 'color', 'web-stories'), color: '#c4c4c4' },
-    { label: _x('Mineshaft Black', 'color', 'web-stories'), color: '#3d3d3d' },
-  ],
-  description: __(
-    'This template’s clean design and structure will let you create uncomplicated long-form product reviews, comparisons and more. Adapt it to your style by changing the colors.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

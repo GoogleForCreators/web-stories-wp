@@ -15,39 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'google-music-studio-tour',
-  creationDate,
-  title: _x('Google Music Studio Tour', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Interior', 'template keyword', 'web-stories'),
-    _x('Office', 'template keyword', 'web-stories'),
-    _x('Informational', 'template keyword', 'web-stories'),
-    _x('Black', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black Timber', 'color', 'web-stories'), color: '#2f2f37' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    {
-      label: _x('Whole Wheat Brown', 'color', 'web-stories'),
-      color: '#ddc69e',
-    },
-  ],
-  description: __(
-    'This template’s formal yet friendly appearance will let you create stories that are informational but also fun to watch. Present office and studio tours, showcase desk setups, inspire your audience with interior ideas, or do something else entirely. The possiblities are endless.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

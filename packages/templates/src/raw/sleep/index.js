@@ -15,38 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'sleep',
-  creationDate,
-  title: _x('Sleep', 'template name', 'web-stories'),
-  tags: [
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Happiness', 'template keyword', 'web-stories'),
-    _x('Joy', 'template keyword', 'web-stories'),
-    _x('Mindfulness', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Blue', 'color', 'web-stories'), color: '#1f2a2e' },
-    { label: _x('Green', 'color', 'web-stories'), color: '#4b5c54' },
-    { label: _x('Yellow', 'color', 'web-stories'), color: '#FDF5DC' },
-    { label: _x('Gray', 'color', 'web-stories'), color: '#858280' },
-    { label: _x('Light Grey', 'color', 'web-stories'), color: '#d8d8d8' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'With a warm color palette and soothing shapes, the Wellbeing template works best for web stories covering mindfulness, lifestyle health and related exercise and activities like Yoga, Spa treatments and the like.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Wellbeing', 'template vertical', 'web-stories'),
 };

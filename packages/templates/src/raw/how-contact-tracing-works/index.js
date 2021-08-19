@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'how-contact-tracing-works',
-  creationDate,
-  title: _x('How Contact Tracing Works', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Network', 'template keyword', 'web-stories'),
-    _x('Insights', 'template keyword', 'web-stories'),
-    _x('Steps', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Blazing Red', 'color', 'web-stories'), color: '#fe0002' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Tropical Blue', 'color', 'web-stories'), color: '#94e1de' },
-    { label: _x('Gunmetal Blue', 'color', 'web-stories'), color: '#252a3a' },
-  ],
-  description: __(
-    'With its readability-focused design, this template is great for breaking down concepts and easily explaining technical topics with the help of photos, videos, and text.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

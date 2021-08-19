@@ -15,39 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'honeymooning-in-italy',
-  creationDate,
-  title: _x('Honeymooning in Italy', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('Outdoor', 'template keyword', 'web-stories'),
-    _x('Floral', 'template keyword', 'web-stories'),
-    _x('Collage', 'template keyword', 'web-stories'),
-    _x('Brown', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Night Green', 'color', 'web-stories'), color: '#232c27' },
-    {
-      label: _x('Light Brownish Pink', 'color', 'web-stories'),
-      color: '#f2e5d6',
-    },
-    { label: _x('Parchment White', 'color', 'web-stories'), color: '#fef6df' },
-  ],
-  description: __(
-    'With its elegant typography, charming colors and exquisite floral design pattern, this template will let you create lush travel guides, itineraries, bucket lists, travelogues and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

@@ -15,45 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'skin-care-at-home',
-  creationDate,
-  title: _x('Skin Care at Home', 'template name', 'web-stories'),
-  tags: [
-    _x('Beauty', 'template keyword', 'web-stories'),
-    _x('Care', 'template keyword', 'web-stories'),
-    _x('Tips', 'template keyword', 'web-stories'),
-    _x('Pastel', 'template keyword', 'web-stories'),
-    _x('Pink', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Playful Purple', 'color', 'web-stories'), color: '#380e63' },
-    { label: _x('Rose Pink', 'color', 'web-stories'), color: '#f3cce5' },
-    {
-      label: _x('Lavender Potpourri', 'color', 'web-stories'),
-      color: '#cdccf3',
-    },
-    { label: _x('Light Blue Denim', 'color', 'web-stories'), color: '#cce0f3' },
-    { label: _x('Light Green Teal', 'color', 'web-stories'), color: '#ccf3df' },
-    {
-      label: _x('Cream Fizz Yellow', 'color', 'web-stories'),
-      color: '#f3e5cc',
-    },
-  ],
-  description: __(
-    'With its light background colors, pink shades and structured format, this template will let you create beautiful and informative makeup and skincare tutorials.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Fashion & Beauty', 'template vertical', 'web-stories'),
 };

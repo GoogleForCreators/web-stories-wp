@@ -40,8 +40,8 @@ import {
   THEME_CONSTANTS,
   NotificationBubble,
 } from '@web-stories-wp/design-system';
-import { getTemplateCreationDates } from '@web-stories-wp/templates';
-import { toDate, differenceInSeconds, getOptions } from '@web-stories-wp/date';
+import { getTemplateMetaData } from '@web-stories-wp/templates';
+import { toDate, differenceInDays, getOptions } from '@web-stories-wp/date';
 
 /**
  * Internal dependencies
@@ -69,7 +69,22 @@ import {
   PathName,
 } from './navigationComponents';
 
-const SIXTY_DAYS_IN_SECONDS = 60 * 24 * 60 * 60;
+const NEW_TEMPLATE_THRESHOLD_IN_DAYS = 60;
+
+function getNewSlugs(metaDataEntries, days) {
+  const currentDate = toDate(new Date(), getOptions());
+  return metaDataEntries
+    .map(([slug, metaData]) => [
+      slug,
+      toDate(metaData.creationDate, getOptions()),
+    ])
+    .map(([slug, creationDate]) => [
+      slug,
+      differenceInDays(currentDate, creationDate),
+    ])
+    .filter(([, deltaDays]) => deltaDays < days)
+    .map(([slug]) => slug);
+}
 
 export const AppFrame = styled.div`
   width: 100%;
@@ -197,20 +212,13 @@ export function LeftRail() {
   // See how many templates are new based on the current date
   useEffect(() => {
     let mounted = true;
-    getTemplateCreationDates().then((templateEntries) => {
+    (async () => {
+      const metaData = await getTemplateMetaData();
       if (mounted) {
-        const currentDate = toDate(new Date(), getOptions());
-        setNumNewTemplates(
-          templateEntries
-            .map(([, creationDate]) => toDate(creationDate, getOptions()))
-            .map((creationDate) =>
-              differenceInSeconds(currentDate, creationDate)
-            )
-            .filter((deltaSeconds) => deltaSeconds < SIXTY_DAYS_IN_SECONDS)
-            .length
-        );
+        const slugs = getNewSlugs(metaData, NEW_TEMPLATE_THRESHOLD_IN_DAYS);
+        setNumNewTemplates(slugs.length);
       }
-    });
+    })();
     return () => {
       mounted = false;
     };
@@ -244,11 +252,12 @@ export function LeftRail() {
           <NavList>
             {enabledPrimaryPaths.map(({ Icon, ...path }) => {
               const isNotificationBubbleEnabled =
-                path.value === APP_ROUTES.TEMPLATES_GALLERY;
+                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
+                state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
               const appendNewBadgeToLable = (label) =>
                 isNotificationBubbleEnabled
                   ? sprintf(
-                      /* translators: 1: current page. 2: number of new items. */
+                      /* translators: 1: current page. 2: number of new templates. */
                       __('%1$s (%2$s new)', 'web-stories'),
                       label,
                       numNewTemplates

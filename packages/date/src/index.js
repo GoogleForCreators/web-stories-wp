@@ -27,6 +27,7 @@ export {
   subMinutes,
   isValid,
   differenceInSeconds,
+  differenceInDays,
   isAfter,
   compareDesc,
   compareAsc,

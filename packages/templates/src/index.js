@@ -39,4 +39,4 @@ export default async function ({ cdnURL }) {
   });
 }
 
-export { getTemplateCreationDates } from './getTemplates';
+export { getTemplateMetaData } from './getMetaData';

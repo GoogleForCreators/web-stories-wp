@@ -15,37 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'simple-tech-tutorial',
-  creationDate,
-  title: _x('Simple Tech Tutorial ', 'template name', 'web-stories'),
-  tags: [
-    _x('Technology', 'template keyword', 'web-stories'),
-    _x('Network', 'template keyword', 'web-stories'),
-    _x('How-To', 'template keyword', 'web-stories'),
-    _x('Minimal', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Boston Blue', 'color', 'web-stories'), color: '#4899bf' },
-    { label: _x('Liquid Blue', 'color', 'web-stories'), color: '#c1ddeb' },
-    { label: _x('Dark Teal', 'color', 'web-stories'), color: '#264156' },
-  ],
-  description: __(
-    'This clean and simple template will let you create structured and easy to understand tech tutorials and how-to guides. Just add your own screenshots, text, and illustrations.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Technology', 'template vertical', 'web-stories'),
 };

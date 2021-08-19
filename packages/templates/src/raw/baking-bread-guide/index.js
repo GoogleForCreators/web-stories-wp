@@ -15,38 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'baking-bread-guide',
-  creationDate,
-  title: _x('Baking Bread Guide ', 'template name', 'web-stories'),
-  tags: [
-    _x('Food', 'template keyword', 'web-stories'),
-    _x('Cooking', 'template keyword', 'web-stories'),
-    _x('Recipe', 'template keyword', 'web-stories'),
-    _x('Bread', 'template keyword', 'web-stories'),
-    _x('White', 'template keyword', 'web-stories'),
-    _x('Violet', 'template keyword', 'web-stories'),
-    _x('Guide', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Hawaii Blue', 'color', 'web-stories'), color: '#bcebee' },
-    { label: _x('Earth Violet', 'color', 'web-stories'), color: '#2d2a35' },
-    { label: _x('Papaya Orange', 'color', 'web-stories'), color: '#fff0d8' },
-  ],
-  description: __(
-    'With its earthy tones and vintage elegance, this template is perfect for creating instructionals that are calm and soothing. Use it for recipes, woodworking tutorials, meditation guides, or anything that could use some rustic charm.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Cooking', 'template vertical', 'web-stories'),
 };

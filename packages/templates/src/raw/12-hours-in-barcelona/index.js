@@ -15,40 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: '12-hours-in-barcelona',
-  creationDate,
-  title: _x('12 Hours in Barcelona', 'template name', 'web-stories'),
-  tags: [
-    _x('Travel', 'template keyword', 'web-stories'),
-    _x('Magazine', 'template keyword', 'web-stories'),
-    _x('Destination', 'template keyword', 'web-stories'),
-    _x('Outdoor', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Winter Blue', 'color', 'web-stories'), color: '#a4deff' },
-    {
-      label: _x('Blackcurrant Blue', 'color', 'web-stories'),
-      color: '#160236',
-    },
-    { label: _x('Sunset Yellow', 'color', 'web-stories'), color: '#ffc700' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    '12 Hours in Barcelona’s classic magazine aesthetic will let you create engaging travel itineraries, bucket lists, and visual articles that will enthuse and motivate your audience.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Travel', 'template vertical', 'web-stories'),
 };

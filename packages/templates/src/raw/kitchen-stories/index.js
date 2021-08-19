@@ -15,35 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'kitchen-stories',
-  creationDate,
-  title: _x('Kitchen Stories', 'template name', 'web-stories'),
-  tags: [
-    _x('Cooking', 'template keyword', 'web-stories'),
-    _x('DIY', 'template keyword', 'web-stories'),
-    _x('Protein', 'template keyword', 'web-stories'),
-    _x('Homemade', 'template keyword', 'web-stories'),
-    _x('Blue', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Mariner Blue', 'color', 'web-stories'), color: '#d4e3fc' },
-    { label: _x('Hawkes Blue', 'color', 'web-stories'), color: '#215fce' },
-  ],
-  description: __(
-    'The Kitchen Stories template puts the spotlight on you by keeping the text minimal and letting you tell your story through video. Increase your audience by linking your social profile and website at the end.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Cooking', 'template vertical', 'web-stories'),
 };

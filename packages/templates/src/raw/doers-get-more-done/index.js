@@ -15,36 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'doers-get-more-done',
-  creationDate,
-  title: _x('Doers Get More Done', 'template name', 'web-stories'),
-  tags: [
-    _x('Doers', 'template keyword', 'web-stories'),
-    _x('Expand', 'template keyword', 'web-stories'),
-    _x('Start', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Black', 'color', 'web-stories'), color: '#211f1e' },
-    { label: _x('Orange', 'color', 'web-stories'), color: '#ff630b' },
-    { label: _x('Cream', 'color', 'web-stories'), color: '#faf4ea' },
-    { label: _x('Light Grey', 'color', 'web-stories'), color: '#858280' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-  ],
-  description: __(
-    'Motivate your audience to get out there and make something with the bold DIY template. Use it for DIY, crafting, 3D printing, woodworking or any other content targeting makers.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('DIY', 'template vertical', 'web-stories'),
 };

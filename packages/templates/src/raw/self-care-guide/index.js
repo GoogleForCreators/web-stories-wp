@@ -15,46 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { __, _x } from '@web-stories-wp/i18n';
-
-/**
  * Internal dependencies
  */
 import { default as template } from './template';
-import { default as creationDate } from './creationDate';
+import { default as metaData } from './metaData';
 
 export default {
-  slug: 'self-care-guide',
-  creationDate,
-  title: _x('Self-care Guide', 'template name', 'web-stories'),
-  tags: [
-    _x('Health & Wellness', 'template keyword', 'web-stories'),
-    _x('Health', 'template keyword', 'web-stories'),
-    _x('Self Care', 'template keyword', 'web-stories'),
-    _x('Informative', 'template keyword', 'web-stories'),
-    _x('White', 'template keyword', 'web-stories'),
-  ],
-  colors: [
-    { label: _x('Studio White', 'color', 'web-stories'), color: '#f5f4ee' },
-    {
-      label: _x('Cavernous Gray', 'color', 'web-stories'),
-      color: '#535353',
-    },
-    { label: _x('Gold Ochre', 'color', 'web-stories'), color: '#b17417' },
-    { label: _x('Cove Blue', 'color', 'web-stories'), color: '#7a87a8' },
-    { label: _x('Velvet Green', 'color', 'web-stories'), color: '#588061' },
-    {
-      label: _x('Olive Garden Green', 'color', 'web-stories'),
-      color: '#878c52',
-    },
-    { label: _x('White', 'color', 'web-stories'), color: '#ffffff' },
-  ],
-  description: __(
-    'With its natural color palette, this template will let you create uplifting and informative stories about self-care, health and nutrition, meditation, and more.',
-    'web-stories'
-  ),
+  ...metaData,
   ...template,
-  vertical: _x('Health & Wellness', 'template vertical', 'web-stories'),
 };
