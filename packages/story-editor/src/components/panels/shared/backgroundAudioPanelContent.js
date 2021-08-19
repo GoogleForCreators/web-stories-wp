@@ -54,7 +54,11 @@ function BackgroundAudioPanelContent({
   backgroundAudio,
   updateBackgroundAudio,
 }) {
-  const { allowedAudioMimeTypes, allowedAudioFileTypes } = useConfig();
+  const {
+    allowedAudioMimeTypes,
+    allowedAudioFileTypes,
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const onSelectErrorMessage = sprintf(
     /* translators: %s: list of allowed file types. */
@@ -72,7 +76,7 @@ function BackgroundAudioPanelContent({
 
   return (
     <>
-      {!backgroundAudio && (
+      {!backgroundAudio && hasUploadMediaAction && (
         <Row expand>
           <UploadButton
             onClick={uploadAudioTrack}

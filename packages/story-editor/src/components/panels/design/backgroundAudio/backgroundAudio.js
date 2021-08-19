@@ -57,7 +57,7 @@ function BackgroundAudioPanel() {
     [updateCurrentPageProperties]
   );
 
-  if (!hasUploadMediaAction) {
+  if (!backgroundAudio && !hasUploadMediaAction) {
     return null;
   }
 

@@ -58,7 +58,7 @@ function BackgroundAudioPanel() {
     [updateStory]
   );
 
-  if (!hasUploadMediaAction) {
+  if (!backgroundAudio && !hasUploadMediaAction) {
     return null;
   }
 
