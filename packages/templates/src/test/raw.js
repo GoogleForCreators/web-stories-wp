@@ -223,10 +223,10 @@ describe('raw template files', () => {
   it.each(templates)(
     '%s template should contain a valid createdDate',
     async (template) => {
-      const { default: creationDate } = await import(
-        /* webpackChunkName: "chunk-web-stories-template-[index]-creationDate" */ `../raw/${template}/creationDate`
+      const { default: metaData } = await import(
+        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `../raw/${template}/metaData`
       );
-      expect(isValid(new Date(creationDate))).toBe(true);
+      expect(isValid(new Date(metaData.creationDate))).toBe(true);
 
       const { default: templateData } = await import(
         /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
