@@ -48,8 +48,8 @@ const inputIconStyles = css`
   border: none;
 
   > svg {
-    height: 100%;
-    width: auto;
+    height: auto;
+    width: 100%;
     color: ${({ theme }) => theme.colors.fg.primary};
     fill: ${({ theme }) => theme.colors.fg.primary};
   }
@@ -68,7 +68,7 @@ const ClearButton = styled.button`
   cursor: pointer;
 
   > svg {
-    height: 10px;
+    width: 20px;
   }
 `;
 

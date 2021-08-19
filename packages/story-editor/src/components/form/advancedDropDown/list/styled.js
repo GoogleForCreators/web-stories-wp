@@ -82,11 +82,12 @@ export const Option = styled.li.attrs(({ fontFamily }) => ({
   }
 `;
 
-export const Selected = styled(Icons.Checkmark)`
+export const Selected = styled(Icons.CheckmarkSmall)`
   display: inline-block;
-  width: 8px;
+  width: 32px;
   height: auto;
-  margin-right: 8px;
+  margin-left: -8px;
+  margin-bottom: -10px;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
