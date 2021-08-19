@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'art-books-gift-guide',
   title: _x('Art Books Gift Guide', 'template name', 'web-stories'),
   tags: [
     _x('Art', 'template keyword', 'web-stories'),

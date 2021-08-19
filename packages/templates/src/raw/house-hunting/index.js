@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'house-hunting',
   title: _x('House Hunting', 'template name', 'web-stories'),
   tags: [
     _x('Home', 'template keyword', 'web-stories'),
