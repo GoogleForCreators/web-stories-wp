@@ -68,14 +68,7 @@ class URL_Controller extends REST_Controller {
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'parse_url' ],
 					'permission_callback' => [ $this, 'parse_url_permissions_check' ],
-					'args'                => [
-						'url' => [
-							'description' => __( 'The URL to process.', 'web-stories' ),
-							'required'    => true,
-							'type'        => 'string',
-							'format'      => 'uri',
-						],
-					],
+					'args'                => $this->get_collection_params(),
 				],
 			]
 		);
@@ -92,10 +85,6 @@ class URL_Controller extends REST_Controller {
 	 */
 	public function parse_url( $request ) {
 		$url = untrailingslashit( $request['url'] );
-
-		if ( empty( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
-		}
 
 		/**
 		 * Filters the link data TTL value.
@@ -241,5 +230,54 @@ class URL_Controller extends REST_Controller {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Callback to validate urls.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param mixed $value Value to be validated.
+	 *
+	 * @return true|WP_Error
+	 */
+	public function validate_url( $value ) {
+		$url = untrailingslashit( $value );
+
+		if ( empty( $url ) ) {
+			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		$parts = wp_parse_url( $url );
+
+		if ( ! isset( $parts['host'] ) ) {
+			return new WP_Error( 'rest_invalid_url_host', __( 'Invalid URL Host', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		if ( ! isset( $parts['path'] ) || empty( $parts['path'] ) ) {
+			return new WP_Error( 'rest_invalid_url_path', __( 'Invalid URL Path', 'web-stories' ), [ 'status' => 400 ] );
+		}
+
+		return true;
+	}
+
+	/**
+	 * Retrieves the query params for the posts collection.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @return array Collection parameters.
+	 */
+	public function get_collection_params() {
+		return [
+			'context' => $this->get_context_param(),
+			'url'     => [
+				'description'       => __( 'The URL to process.', 'web-stories' ),
+				'required'          => true,
+				'type'              => 'string',
+				'format'            => 'uri',
+				'validate_callback' => [ $this, 'validate_url' ],
+			],
+		];
 	}
 }
