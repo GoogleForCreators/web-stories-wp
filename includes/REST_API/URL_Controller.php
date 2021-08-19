@@ -216,7 +216,7 @@ class URL_Controller extends REST_Controller {
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'ext'       => [
-					'description' => __( 'ext', 'web-stories' ),
+					'description' => __( 'File extension', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
