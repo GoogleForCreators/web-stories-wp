@@ -133,7 +133,7 @@ class URL_Controller extends REST_Controller {
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 
 		if ( ! in_array( $mime_type, $allowed_mime_types, true ) ) {
-			return new WP_Error( 'rest_invalid_file_type', __( 'File type', 'web-stories' ), [ 'status' => 404 ] );
+			return new WP_Error( 'rest_invalid_file_type', __( 'Invalid file type', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$path = wp_parse_url( $url, PHP_URL_PATH );
