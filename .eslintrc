@@ -382,6 +382,7 @@
         "packages/commander/**/*.js",
         "packages/fonts/src/cli.js",
         "packages/migration/src/cli.js",
+        "packages/templates/src/cli.js",
         "packages/text-sets/src/cli.js"
       ],
       "rules": {
@@ -409,6 +410,7 @@
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
+        "packages/templates/src/cli.js",
         "packages/text-sets/src/cli.js"
       ],
       "extends": [

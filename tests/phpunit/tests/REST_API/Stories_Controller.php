@@ -484,7 +484,21 @@ class Stories_Controller extends Test_REST_TestCase {
 	}
 
 	/**
-	 *
+	 * @covers ::get_collection_params
+	 */
+	public function test_get_collection_params() {
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$collection_params = $controller->get_collection_params();
+		$this->assertArrayHasKey( '_web_stories_envelope', $collection_params );
+		$this->assertArrayHasKey( 'web_stories_demo', $collection_params );
+		$this->assertArrayHasKey( 'orderby', $collection_params );
+		$this->assertArrayHasKey( 'enum', $collection_params['orderby'] );
+		$this->assertContains( 'story_author', $collection_params['orderby']['enum'] );
+	}
+
+	/**
+	 * @covers ::create_item
 	 */
 	public function test_create_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
@@ -506,6 +520,114 @@ class Stories_Controller extends Test_REST_TestCase {
 		$new_data = $response->get_data();
 		$this->assertEquals( $unsanitized_content, $new_data['content']['raw'] );
 		$this->assertEquals( $unsanitized_story_data, $new_data['story_data'] );
+
+		$this->kses_remove_filters();
+	}
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item_duplicate_id() {
+
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
+		$original_id            = self::factory()->post->create(
+			[
+				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content'          => $unsanitized_content,
+				'post_title'            => 'Example title',
+				'post_excerpt'          => 'Example excerpt',
+				'post_author'           => self::$user_id,
+				'post_content_filtered' => $unsanitized_story_data,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		set_post_thumbnail( $original_id, $attachment_id );
+
+		wp_set_current_user( self::$user_id );
+		$this->kses_int();
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
+		$request->set_body_params(
+			[
+				'original_id' => $original_id,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$new_data = $response->get_data();
+		$this->assertArrayHasKey( 'content', $new_data );
+		$this->assertArrayHasKey( 'raw', $new_data['content'] );
+		$this->assertArrayHasKey( 'title', $new_data );
+		$this->assertArrayHasKey( 'raw', $new_data['title'] );
+		$this->assertArrayHasKey( 'excerpt', $new_data );
+		$this->assertArrayHasKey( 'raw', $new_data['excerpt'] );
+		$this->assertArrayHasKey( 'story_data', $new_data );
+		$this->assertArrayHasKey( 'featured_media', $new_data );
+
+		$this->assertEquals( 'Example title (Copy)', $new_data['title']['raw'] );
+		$this->assertEquals( 'Example excerpt', $new_data['excerpt']['raw'] );
+		$this->assertEquals( $attachment_id, $new_data['featured_media'] );
+		$this->assertEqualSets( [ 'pages' => [] ], $new_data['story_data'] );
+
+		$this->kses_remove_filters();
+	}
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item_duplicate_id_invalid_id() {
+		wp_set_current_user( self::$user_id );
+		$this->kses_int();
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
+		$request->set_body_params(
+			[
+				'original_id' => 9999,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_post_invalid_id', $response, 404 );
+
+		$this->kses_remove_filters();
+	}
+
+	/**
+	 * @covers ::create_item
+	 */
+	public function test_create_item_duplicate_id_permission() {
+
+		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
+		$unsanitized_story_data = wp_json_encode( [ 'pages' => [] ] );
+		$original_id            = self::factory()->post->create(
+			[
+				'post_type'             => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content'          => $unsanitized_content,
+				'post_title'            => 'Example title',
+				'post_excerpt'          => 'Example excerpt',
+				'post_author'           => self::$user_id,
+				'post_status'           => 'private',
+				'post_content_filtered' => $unsanitized_story_data,
+			]
+		);
+
+		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
+		set_post_thumbnail( $original_id, $attachment_id );
+
+		wp_set_current_user( self::$contributor_id );
+		$this->kses_int();
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/web-story' );
+		$request->set_body_params(
+			[
+				'original_id' => $original_id,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_cannot_create', $response, 403 );
 
 		$this->kses_remove_filters();
 	}

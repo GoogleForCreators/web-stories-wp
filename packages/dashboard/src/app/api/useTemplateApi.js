@@ -35,6 +35,7 @@ import { ERRORS } from '../textContent';
 export function reshapeTemplateObject(isLocal) {
   return ({
     id,
+    slug,
     title,
     modified,
     tags,
@@ -49,6 +50,7 @@ export function reshapeTemplateObject(isLocal) {
     title,
     createdBy,
     description,
+    slug,
     status: 'template',
     modified: toUTCDate(modified),
     tags,

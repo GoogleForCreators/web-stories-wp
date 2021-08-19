@@ -13,23 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function preloadVideo(src) {
+  const video = document.createElement('video');
+  video.muted = true;
+  video.crossOrigin = 'anonymous';
+  video.preload = 'auto';
 
-/**
- * Internal dependencies
- */
-import preloadVideo from './preloadVideo';
+  return new Promise((resolve, reject) => {
+    video.addEventListener('error', reject);
+    video.addEventListener(
+      'canplay',
+      () => {
+        video.currentTime = 0.99;
+      },
+      { once: true } // Important because 'canplay' can be fired hundreds of times.
+    );
 
-function hasAudio(video) {
-  return (
-    video.mozHasAudio ||
-    Boolean(video.webkitAudioDecodedByteCount) ||
-    Boolean(video.audioTracks?.length)
-  );
+    video.addEventListener('seeked', () => resolve(video), { once: true });
+    video.src = src;
+  });
 }
 
-async function hasVideoGotAudio(src) {
-  const video = await preloadVideo(src);
-  return hasAudio(video);
-}
-
-export default hasVideoGotAudio;
+export default preloadVideo;
