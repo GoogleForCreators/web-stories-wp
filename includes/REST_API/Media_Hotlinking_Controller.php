@@ -1,6 +1,6 @@
 <?php
 /**
- * Class URL_Controller
+ * Class Media_Hotlinking_Controller
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -29,6 +29,7 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Types;
+use phpDocumentor\Reflection\Types\Integer;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
@@ -36,11 +37,11 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * API endpoint to allow parsing of metadata from a URL
+ * API endpoint to allow pinging url media assets.
  *
- * Class URL_Controller
+ * Class Media_Hotlinking_Controller
  */
-class URL_Controller extends REST_Controller {
+class Media_Hotlinking_Controller extends REST_Controller {
 	use Post_Type, Types;
 	/**
 	 * Constructor.
@@ -104,14 +105,12 @@ class URL_Controller extends REST_Controller {
 			return rest_ensure_response( $response );
 		}
 
-		$response = wp_safe_remote_get( $url );
-
+		$response = wp_safe_remote_head( $url );
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
-		$code = wp_remote_retrieve_response_code( $response );
-		if ( ! in_array( $code, [ WP_Http::OK, WP_Http::MOVED_PERMANENTLY, WP_Http::FOUND ], true ) ) {
+		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
@@ -129,10 +128,13 @@ class URL_Controller extends REST_Controller {
 		$exts = $this->get_file_type_exts( [ $mime_type ] );
 		$ext  = end( $exts );
 
+		$file_size = (int) $headers['content-length'];
+
 		$file_name = basename( $path );
 		$data      = [
 			'ext'       => $ext,
 			'file_name' => $file_name,
+			'file_size' => $file_size,
 			'mime_type' => $mime_type,
 		];
 
@@ -145,11 +147,11 @@ class URL_Controller extends REST_Controller {
 
 
 	/**
-	 * Prepares a single lock output for response.
+	 * Prepares response asset response.
 	 *
-	 * @since 1.10.0
+	 * @since 1.11.0
 	 *
-	 * @param array           $link Link value, default to false is not set.
+	 * @param array           $link URL data value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object.
@@ -180,7 +182,7 @@ class URL_Controller extends REST_Controller {
 	/**
 	 * Retrieves the link's schema, conforming to JSON Schema.
 	 *
-	 * @since 1.10.0
+	 * @since 1.11.0
 	 *
 	 * @return array Item schema data.
 	 */
@@ -194,18 +196,23 @@ class URL_Controller extends REST_Controller {
 			'title'      => 'link',
 			'type'       => 'object',
 			'properties' => [
+				'ext'       => [
+					'description' => __( 'File extension', 'web-stories' ),
+					'type'        => 'string',
+					'context'     => [ 'view', 'edit', 'embed' ],
+				],
 				'file_name' => [
 					'description' => __( 'File name', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'mime_type' => [
-					'description' => __( 'Mime Type', 'web-stories' ),
-					'type'        => 'string',
+				'file_size' => [
+					'description' => __( 'File size', 'web-stories' ),
+					'type'        => 'integer',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
-				'ext'       => [
-					'description' => __( 'File extension', 'web-stories' ),
+				'mime_type' => [
+					'description' => __( 'Mime Type', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
