@@ -27,10 +27,6 @@ export const SUCCESS = {
 export const ERRORS = {
   LOAD_STORIES: {
     DEFAULT_MESSAGE: __('Cannot connect to data source', 'web-stories'),
-    INCOMPLETE_DATA_MESSAGE: __(
-      'Unable to load all stories because of incomplete data',
-      'web-stories'
-    ),
     MESSAGE: __('Unable to load stories', 'web-stories'),
   },
   UPDATE_STORY: {
