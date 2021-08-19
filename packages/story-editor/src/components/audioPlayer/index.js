@@ -19,12 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from '@web-stories-wp/react';
+import { useState, useCallback, useRef } from '@web-stories-wp/react';
 import {
   THEME_CONSTANTS,
   themeHelpers,
@@ -76,10 +71,7 @@ function AudioPlayer({ title, src }) {
 
   const playerRef = useRef();
 
-  const startPlayer = useCallback(() => setIsPlaying(true), [setIsPlaying]);
-  const stopPlayer = useCallback(() => setIsPlaying(false), [setIsPlaying]);
-
-  useEffect(() => {
+  const handlePlayPause = useCallback(() => {
     const player = playerRef.current;
 
     if (!player) {
@@ -87,11 +79,15 @@ function AudioPlayer({ title, src }) {
     }
 
     if (isPlaying) {
-      player.play();
-    } else {
       player.pause();
+      setIsPlaying(false);
+    } else {
+      player
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
     }
-  }, [isPlaying]);
+  }, [isPlaying, setIsPlaying]);
 
   return (
     <Wrapper>
@@ -108,7 +104,7 @@ function AudioPlayer({ title, src }) {
               size={BUTTON_SIZES.SMALL}
               variant={BUTTON_VARIANTS.SQUARE}
               aria-label={__('Pause', 'web-stories')}
-              onClick={stopPlayer}
+              onClick={handlePlayPause}
             >
               <Icons.StopFilled />
             </StyledButton>
@@ -120,7 +116,7 @@ function AudioPlayer({ title, src }) {
               size={BUTTON_SIZES.SMALL}
               variant={BUTTON_VARIANTS.SQUARE}
               aria-label={__('Play', 'web-stories')}
-              onClick={startPlayer}
+              onClick={handlePlayPause}
             >
               <Icons.PlayFilled />
             </StyledButton>
