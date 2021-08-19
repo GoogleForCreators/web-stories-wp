@@ -14,22 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import preloadVideo from './preloadVideo';
-
-function hasAudio(video) {
-  return (
-    video.mozHasAudio ||
-    Boolean(video.webkitAudioDecodedByteCount) ||
-    Boolean(video.audioTracks?.length)
-  );
+function removeTitleFromResources({ pages, ...rest }) {
+  return {
+    pages: pages.map(reducePage),
+    ...rest,
+  };
 }
 
-async function hasVideoGotAudio(src) {
-  const video = await preloadVideo(src);
-  return hasAudio(video);
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
 }
 
-export default hasVideoGotAudio;
+function updateElement(element) {
+  if (element.resource?.title) {
+    delete element.resource?.title;
+  }
+
+  return element;
+}
+
+export default removeTitleFromResources;

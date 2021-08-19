@@ -484,6 +484,20 @@ class Stories_Controller extends Test_REST_TestCase {
 	}
 
 	/**
+	 * @covers ::get_collection_params
+	 */
+	public function test_get_collection_params() {
+		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
+
+		$collection_params = $controller->get_collection_params();
+		$this->assertArrayHasKey( '_web_stories_envelope', $collection_params );
+		$this->assertArrayHasKey( 'web_stories_demo', $collection_params );
+		$this->assertArrayHasKey( 'orderby', $collection_params );
+		$this->assertArrayHasKey( 'enum', $collection_params['orderby'] );
+		$this->assertContains( 'story_author', $collection_params['orderby']['enum'] );
+	}
+
+	/**
 	 * @covers ::create_item
 	 */
 	public function test_create_item_as_author_should_not_strip_markup() {

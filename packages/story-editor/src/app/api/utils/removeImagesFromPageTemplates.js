@@ -52,7 +52,6 @@ const replacePageImagesWithPlaceholders = (page, { assetsURL }) => {
           height: PLACEHOLDER_HEIGHT,
           posterId: 0,
           id: 0,
-          title: alt,
           alt,
           local: false,
           sizes: [],

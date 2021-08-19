@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'beauty-quiz',
   title: _x('Beauty Quiz', 'template name', 'web-stories'),
   tags: [
     _x('Fashion & Beauty', 'template keyword', 'web-stories'),

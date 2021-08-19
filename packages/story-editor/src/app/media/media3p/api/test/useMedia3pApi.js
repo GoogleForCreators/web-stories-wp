@@ -205,7 +205,6 @@ describe('useMedia3pApi', () => {
             },
           },
           src: 'https://images.unsplash.com/photo-1515516089376-88db1e26e9c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEzNzE5M30&fm=jpg&w=5304&h=3536&fit=max',
-          title: 'A cat',
           type: 'image',
           width: 5304,
         },
