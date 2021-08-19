@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'fresh-bright',
   title: _x('Fresh & Bright', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),
@@ -39,7 +40,7 @@ export default {
     { label: _x('Brown', 'color', 'web-stories'), color: '#eadfd6' },
   ],
   description: __(
-    'The modern and bright Beauty template lends itself well as a foundation for stories covering make up, beauty products, shopping guides, instructions & tutorials and more.',
+    'The modern and bright Beauty template lends itself well as a foundation for stories covering makeup, beauty products, shopping guides, instructions & tutorials and more.',
     'web-stories'
   ),
   ...template,

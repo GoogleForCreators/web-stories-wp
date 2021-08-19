@@ -28,9 +28,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Traits\Post_Type;
 use Google\Web_Stories\Traits\Publisher;
-use Google\Web_Stories\Media\Media;
 
 use WP_Post;
 
@@ -321,7 +321,7 @@ class Discovery extends Service_Base {
 		$post = get_queried_object();
 
 		if ( $post instanceof WP_Post ) {
-			$poster = $this->get_poster( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster = $this->get_poster( $post, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 			if ( $poster ) {
 				$metadata['twitter:image']     = esc_url( $poster['src'] );
 				$metadata['twitter:image:alt'] = get_the_title( $post );

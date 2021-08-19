@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -24,7 +24,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page1_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -125,7 +124,6 @@
             "height": 10,
             "posterId": 0,
             "id": 0,
-            "title": "icon_logo",
             "alt": "icon_logo",
             "local": false,
             "sizes": [],
@@ -310,7 +308,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page2_image1",
             "alt": "",
             "local": false,
             "sizes": []
@@ -407,7 +404,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page3_image1",
             "alt": "",
             "local": false,
             "sizes": []
@@ -577,7 +573,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page4_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -730,7 +725,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page5_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -877,7 +871,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page6_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1101,7 +1094,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page7_image1",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1213,7 +1205,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page8_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1705,7 +1696,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page9_image1",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1737,7 +1727,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page9_image2",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1769,7 +1758,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page9_image4",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1801,7 +1789,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page9_image5",
             "alt": "",
             "local": false,
             "sizes": []
@@ -2096,7 +2083,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page10_image1",
             "alt": "",
             "local": false,
             "sizes": []
@@ -2126,7 +2112,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page10_image2",
             "alt": "",
             "local": false,
             "sizes": []
@@ -2158,7 +2143,6 @@
             "poster": "",
             "posterId": 0,
             "id": 0,
-            "title": "page10_image3",
             "alt": "",
             "local": false,
             "sizes": []

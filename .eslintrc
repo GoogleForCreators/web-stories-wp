@@ -70,11 +70,11 @@
     "import/no-restricted-paths": [ "error", {
       "zones": [ {
         "target": "./packages/migration/src/migrations",
-        "from": "./assets/src/edit-story",
+        "from": "./packages/story-editor/src",
         "except": [ "./migration/migrations" ]
       }, {
-        "target": "./assets/src/edit-story",
-        "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
+        "target": "./packages/story-editor/src",
+        "from": "./packages/story-editor/src/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
     "import/dynamic-import-chunkname": [ "error", {
@@ -381,7 +381,9 @@
       "files": [
         "packages/commander/**/*.js",
         "packages/fonts/src/cli.js",
-        "packages/migration/src/cli.js"
+        "packages/migration/src/cli.js",
+        "packages/templates/src/cli.js",
+        "packages/text-sets/src/cli.js"
       ],
       "rules": {
         "import/no-useless-path-segments": ["error", {
@@ -403,11 +405,13 @@
         "tests/js/*.js",
         "packages/e2e-tests/src/*.js",
         "packages/e2e-tests/src/config/*.js",
-        "assets/src/dashboard/karma-tests.cjs",
-        "assets/src/edit-story/karma-tests.cjs",
+        "packages/dashboard/src/karma-tests.cjs",
+        "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
-        "packages/commander/**/*.js"
+        "packages/commander/**/*.js",
+        "packages/templates/src/cli.js",
+        "packages/text-sets/src/cli.js"
       ],
       "extends": [
         "plugin:node/recommended",
@@ -451,6 +455,7 @@
         }
       },
       "rules": {
+        "import/no-extraneous-dependencies": "off",
         "@wordpress/dependency-group": "off",
         "no-console": "off",
         "no-undef": "off",
@@ -461,8 +466,8 @@
     },
     {
       "files": [
-        "assets/src/dashboard/**/*.js",
-        "assets/src/edit-story/**/*.js",
+        "packages/dashboard/src/**/*.js",
+        "packages/story-editor/src/**/*.js",
         "packages/**/*.js"
       ],
       "excludedFiles": [
@@ -479,6 +484,39 @@
               {
                 "name": "@wordpress/i18n",
                 "message": "Use @web-stories-wp/i18n instead."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "packages/**/*.js"
+      ],
+      "excludedFiles": [
+        ".storybook/preview.js",
+        "__mocks__/**/*.js",
+        "packages/activation-notice/**/*.js",
+        "packages/react/**/*.js",
+        "packages/dashboard/src/karma/fixture.js",
+        "packages/story-editor/src/components/canvas/test/useCanvasKeys.js",
+        "packages/story-editor/src/karma/fixture/fixture.js",
+        "packages/story-block/**/*.js",
+        "packages/tinymce-button/**/*.js"
+      ],
+      "rules":{
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "react",
+                "message": "Use @web-stories-wp/react instead."
+              },
+              {
+                "name": "react-dom",
+                "message": "Use @web-stories-wp/react instead."
               }
             ]
           }

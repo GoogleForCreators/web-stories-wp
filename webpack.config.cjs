@@ -165,6 +165,7 @@ const sharedConfig = {
     }),
     new webpack.EnvironmentPlugin({
       DISABLE_PREVENT: false,
+      DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
     }),
@@ -228,8 +229,8 @@ const templateContent = ({ htmlWebpackPlugin }) => {
 const editorAndDashboard = {
   ...sharedConfig,
   entry: {
-    'edit-story': './assets/src/edit-story/index.js',
-    'stories-dashboard': './assets/src/dashboard/index.js',
+    'wp-story-editor': './packages/wp-story-editor/src/index.js',
+    'wp-dashboard': './packages/wp-dashboard/src/index.js',
   },
   plugins: [
     ...sharedConfig.plugins.filter(
@@ -242,18 +243,18 @@ const editorAndDashboard = {
       name: 'Editor & Dashboard',
     }),
     new HtmlWebpackPlugin({
-      filename: 'edit-story.chunks.php',
+      filename: 'wp-story-editor.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
       templateContent,
-      chunks: ['edit-story'],
+      chunks: ['wp-story-editor'],
     }),
     new HtmlWebpackPlugin({
-      filename: 'stories-dashboard.chunks.php',
+      filename: 'wp-dashboard.chunks.php',
       inject: false, // Don't inject default <script> tags, etc.
       minify: false, // PHP not HTML so don't attempt to minify.
       templateContent,
-      chunks: ['stories-dashboard'],
+      chunks: ['wp-dashboard'],
     }),
   ],
   optimization: {
@@ -324,9 +325,6 @@ const activationNotice = {
   },
   plugins: [
     ...sharedConfig.plugins,
-    new DependencyExtractionWebpackPlugin({
-      requestToExternal,
-    }),
     new WebpackBar({
       name: 'Activation Notice',
       color: '#fcd8ba',
@@ -362,6 +360,20 @@ const storiesMCEButton = {
   ].filter(Boolean),
 };
 
+const storiesImgareaselect = {
+  ...sharedConfig,
+  entry: {
+    imgareaselect: './packages/imgareaselect/src/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackBar({
+      name: 'WP ImgAreaSelect Patch',
+      color: '#7D02F1',
+    }),
+  ].filter(Boolean),
+};
+
 module.exports = [
   editorAndDashboard,
   activationNotice,
@@ -369,4 +381,5 @@ module.exports = [
   webStoriesScripts,
   widgetScript,
   storiesMCEButton,
+  storiesImgareaselect,
 ];

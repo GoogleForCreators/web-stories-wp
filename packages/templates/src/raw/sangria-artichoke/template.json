@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -61,7 +61,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page01_bg",
             "alt": "page01_bg",
             "local": false,
             "isOptimized": false
@@ -397,7 +396,6 @@
             "id": 0,
             "length": 21,
             "lengthFormatted": "0:21",
-            "title": "page02_bg_video",
             "alt": "page02_bg_video",
             "local": false,
             "isMuted": true,
@@ -488,7 +486,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #f9fcf4\">One of the biggest winter veggie trend this year has been the Sangria artichoke. Let’s see why...</span>",
+          "content": "<span style=\"font-weight: 700; color: #f9fcf4\">One of the biggest winter veggie trends this year has been the Sangria artichoke. Let’s see why...</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -635,7 +633,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page03_bg",
             "alt": "page03_bg",
             "local": false,
             "isOptimized": false,
@@ -822,7 +819,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"color: #fff\">Sangria artichokes have deep purple meaty leaves. It has a nutty flavor and are perfect when steamed!</span>",
+          "content": "<span style=\"color: #fff\">Sangria artichokes have deep purple meaty leaves. It has a nutty flavor and is perfect when steamed!</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -904,7 +901,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page04_bg",
             "alt": "page04_bg",
             "local": false,
             "isOptimized": false
@@ -1562,7 +1558,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #0e662a; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #0e662a; letter-spacing: 0.01em\">Chock full of iron</span>",
+          "content": "<span style=\"font-weight: 700; color: #0e662a; letter-spacing: 0.01em\">03</span>\n\n<span style=\"color: #0e662a; letter-spacing: 0.01em\">Loaded with B12</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -1650,7 +1646,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page06_07_bg",
             "alt": "page06_07_bg",
             "local": false,
             "isOptimized": false,
@@ -1930,7 +1925,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page06_07_bg",
             "alt": "page06_07_bg",
             "local": false,
             "isOptimized": false,
@@ -2376,7 +2370,6 @@
             "height": 220,
             "posterId": 0,
             "id": 0,
-            "title": "page08_image01",
             "alt": "page08_image01",
             "local": false,
             "isOptimized": false,
@@ -2779,7 +2772,6 @@
             "height": 220,
             "posterId": 0,
             "id": 0,
-            "title": "page09_image01",
             "alt": "page09_image01",
             "local": false,
             "isOptimized": false,
@@ -3028,7 +3020,6 @@
             "width": 330,
             "height": 220,
             "id": 0,
-            "title": "page10_image01",
             "alt": "page10_image01",
             "local": false,
             "isOptimized": false
@@ -3278,7 +3269,6 @@
             "height": 220,
             "posterId": 0,
             "id": 0,
-            "title": "apage11_image01",
             "alt": "apage11_image01",
             "local": false,
             "isOptimized": false,
@@ -3713,7 +3703,6 @@
             "height": 173,
             "posterId": 0,
             "id": 0,
-            "title": "page12_image01",
             "alt": "page12_image01",
             "local": false,
             "isOptimized": false,
@@ -3753,7 +3742,6 @@
             "height": 173,
             "posterId": 0,
             "id": 0,
-            "title": "page12_image02",
             "alt": "page12_image02",
             "local": false,
             "isOptimized": false,
@@ -3793,7 +3781,6 @@
             "height": 173,
             "posterId": 0,
             "id": 0,
-            "title": "page12_image03",
             "alt": "page12_image03",
             "local": false,
             "isOptimized": false,

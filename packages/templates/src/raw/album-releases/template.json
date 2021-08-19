@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -150,69 +150,6 @@
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Darker Grotesque",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 1060,
-              "des": -296,
-              "tAsc": 1060,
-              "tDes": -296,
-              "tLGap": 0,
-              "wAsc": 1060,
-              "wDes": 296,
-              "xH": 406,
-              "capH": 563,
-              "yMin": -296,
-              "yMax": 1060,
-              "hAsc": 1060,
-              "hDes": -296,
-              "lGap": 0
-            }
-          },
-          "fontSize": 18,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "lineHeight": 0.8,
-          "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
-          "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #fee2c6\">American record producer</span>",
-          "fontWeight": 400,
-          "borderRadius": {
-            "locked": true,
-            "topLeft": 2,
-            "topRight": 2,
-            "bottomRight": 2,
-            "bottomLeft": 2
-          },
-          "x": 48,
-          "y": 225,
-          "width": 332,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "de7a5031-3d75-44a3-91ff-0dcd178474a1"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -223,7 +160,6 @@
             "width": 330,
             "height": 369,
             "id": 0,
-            "title": "page01_image1",
             "alt": "page01_image1",
             "local": false
           },
@@ -266,14 +202,6 @@
           "id": "63599ff7-c69e-4134-8fb2-1fb033da2b90",
           "type": "effect-fly-in",
           "targets": ["2813cfb7-ec17-411f-963e-bd038b45d9c7"],
-          "flyInDir": "rightToLeft",
-          "duration": 1600,
-          "delay": 200
-        },
-        {
-          "id": "84655c34-4d68-470b-818c-ea8e1dc9ea26",
-          "type": "effect-fly-in",
-          "targets": ["de7a5031-3d75-44a3-91ff-0dcd178474a1"],
           "flyInDir": "rightToLeft",
           "duration": 1600,
           "delay": 200
@@ -322,7 +250,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -453,7 +380,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -489,7 +415,6 @@
             "width": 316,
             "height": 316,
             "id": 0,
-            "title": "page03_image1",
             "alt": "page03_image1",
             "local": false
           },
@@ -813,7 +738,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page04_image1",
             "alt": "page04_image1",
             "local": false,
             "baseColor": [26, 50, 67]
@@ -843,7 +767,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false
@@ -909,7 +832,7 @@
           "textAlign": "initial",
           "padding": { "locked": true, "hasHiddenPadding": false },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #f7722f\">Travis Travis' full length junior album will be released this November. Mixing hip-hop with lo-fi and ambient genres, this album is set to satisfy his original fanbase.</span>",
+          "content": "<span style=\"font-weight: 700; color: #f7722f\">Travis Travis' full length album will be released this November. Mixing hip-hop with lo-fi and ambient genres, this album is set to satisfy his original fanbase.</span>",
           "fontWeight": 400,
           "borderRadius": {
             "locked": true,
@@ -988,7 +911,6 @@
             "height": 234,
             "posterId": 0,
             "id": 0,
-            "title": "page05_image1",
             "alt": "page05_image1",
             "local": false,
             "baseColor": [46, 59, 75]
@@ -1261,7 +1183,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -1315,7 +1236,6 @@
             "height": 249,
             "posterId": 0,
             "id": 0,
-            "title": "page06_image1",
             "alt": "page06_image1",
             "local": false,
             "isOptimized": false,
@@ -1621,7 +1541,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page07_image1",
             "alt": "page07_image1",
             "local": false,
             "baseColor": [47, 33, 37]
@@ -1651,7 +1570,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false
@@ -1795,7 +1713,6 @@
             "width": 330,
             "height": 220,
             "id": 0,
-            "title": "page08_image1",
             "alt": "page08_image1",
             "local": false,
             "isOptimized": false,
@@ -2069,7 +1986,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -2123,7 +2039,6 @@
             "height": 220,
             "posterId": 0,
             "id": 0,
-            "title": "page09_image1",
             "alt": "page09_image1",
             "local": false,
             "isOptimized": false,
@@ -2429,7 +2344,6 @@
             "height": 586,
             "posterId": 0,
             "id": 0,
-            "title": "page10_image1",
             "alt": "page10_image1",
             "local": false,
             "baseColor": [142, 137, 129]
@@ -2459,7 +2373,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false
@@ -2603,7 +2516,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page11_image1",
             "alt": "page11_image1",
             "local": false,
             "baseColor": [107, 106, 104]
@@ -2876,7 +2788,6 @@
             "height": 314,
             "posterId": 0,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -3184,7 +3095,6 @@
             "height": 494,
             "posterId": 0,
             "id": 0,
-            "title": "page15_image1",
             "alt": "page15_image1",
             "local": false,
             "isOptimized": false,
@@ -3234,7 +3144,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page16_image1",
             "alt": "page16_image1",
             "local": false,
             "baseColor": [115, 112, 125]
@@ -3264,7 +3173,6 @@
             "width": 330,
             "height": 314,
             "id": 0,
-            "title": "sticker_sound",
             "alt": "sticker_sound",
             "local": false,
             "isOptimized": false,
@@ -3409,7 +3317,6 @@
             "width": 330,
             "height": 586,
             "id": 0,
-            "title": "page17_image1",
             "alt": "page17_image1",
             "local": false,
             "baseColor": [106, 54, 78]
@@ -3744,7 +3651,6 @@
             "width": 316,
             "height": 255,
             "id": 0,
-            "title": "page19_image1",
             "alt": "page19_image1",
             "local": false
           },

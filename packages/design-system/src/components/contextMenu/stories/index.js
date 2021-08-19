@@ -20,7 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
+import { useState, useRef } from '@web-stories-wp/react';
 import { _x, __ } from '@web-stories-wp/i18n';
 
 /**
@@ -49,10 +49,16 @@ const items = [
       display: '⌥ ⌘ [',
       title: 'my aria label for this shortcut!',
     },
-    disabled: true,
     separator: 'bottom',
   },
-  { label: 'Clear text styles' },
+  {
+    label: 'Clear text styles',
+    shortcut: {
+      display: '⌥ ⌘ ]',
+      title: 'my aria label for this shortcut!',
+    },
+    disabled: true,
+  },
   { label: 'Add style to "Saved style"' },
   { label: 'Add color to "Saved colors"' },
 ];

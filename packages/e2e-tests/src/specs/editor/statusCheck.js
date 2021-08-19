@@ -27,31 +27,38 @@ import {
  */
 import { addAllowedErrorMessage } from '../../config/bootstrap';
 
-async function interceptStatusCheck(status, body) {
-  await page.setRequestInterception(true);
-  return addRequestInterception((request) => {
-    if (request.url().includes('/web-stories/v1/status-check/')) {
-      request.respond({
-        status,
-        body,
-      });
-      return;
-    }
-
-    request.continue();
-  });
-}
-
 describe('Status Check', () => {
   let removeErrorMessage;
-  beforeAll(() => {
+  let stopRequestInterception;
+  let mockResponse;
+
+  beforeAll(async () => {
     removeErrorMessage = addAllowedErrorMessage(
       'the server responded with a status of'
     );
+
+    await page.setRequestInterception(true);
+    stopRequestInterception = addRequestInterception((request) => {
+      if (
+        request.url().includes('/web-stories/v1/status-check/') &&
+        mockResponse
+      ) {
+        request.respond(mockResponse);
+        return;
+      }
+
+      request.continue();
+    });
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     removeErrorMessage();
+    await page.setRequestInterception(false);
+    stopRequestInterception();
+  });
+
+  afterEach(() => {
+    mockResponse = undefined;
   });
 
   describe('200 OK', () => {
@@ -63,57 +70,36 @@ describe('Status Check', () => {
   });
 
   describe('Invalid JSON response', () => {
-    let stopRequestInterception;
-
-    beforeAll(async () => {
-      stopRequestInterception = await interceptStatusCheck(
-        200,
-        'This is some unexpected content before the actual response.{"success":true}'
-      );
-    });
-
-    afterAll(async () => {
-      await page.setRequestInterception(false);
-      stopRequestInterception();
-    });
-
     it('should display error dialog', async () => {
+      mockResponse = {
+        status: 200,
+        body: 'This is some unexpected content before the actual response.{"success":true}',
+      };
+
       await createNewStory();
       await expect(page).toMatch('Unable to save your story');
     });
   });
 
   describe('403 Forbidden (WAF)', () => {
-    let stopRequestInterception;
-
-    beforeAll(async () => {
-      stopRequestInterception = await interceptStatusCheck(403, 'Forbidden');
-    });
-
-    afterAll(async () => {
-      await page.setRequestInterception(false);
-      stopRequestInterception();
-    });
-
     it('should display error dialog', async () => {
+      mockResponse = {
+        status: 403,
+        body: 'Forbidden',
+      };
+
       await createNewStory();
       await expect(page).toMatch('Unable to save your story');
     });
   });
 
   describe('500 Internal Server Error', () => {
-    let stopRequestInterception;
-
-    beforeAll(async () => {
-      stopRequestInterception = await interceptStatusCheck(500, 'Forbidden');
-    });
-
-    afterAll(async () => {
-      await page.setRequestInterception(false);
-      stopRequestInterception();
-    });
-
     it('should display error dialog', async () => {
+      mockResponse = {
+        status: 500,
+        body: 'Forbidden',
+      };
+
       await createNewStory();
       await expect(page).toMatch('Unable to save your story');
     });

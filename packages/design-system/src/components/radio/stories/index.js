@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */

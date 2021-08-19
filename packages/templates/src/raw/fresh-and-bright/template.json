@@ -1,5 +1,5 @@
 {
-  "version": 31,
+  "version": 32,
   "pages": [
     {
       "elements": [
@@ -428,7 +428,6 @@
             "height": 258,
             "posterId": 0,
             "id": 0,
-            "title": "page3_figure",
             "alt": "page3_figure",
             "local": false,
             "sizes": []
@@ -583,7 +582,6 @@
             "height": 391,
             "posterId": 0,
             "id": 0,
-            "title": "page4_bg",
             "alt": "page4_bg",
             "local": false,
             "sizes": []
@@ -749,7 +747,6 @@
             "height": 330,
             "posterId": 0,
             "id": 0,
-            "title": "page5_figure",
             "alt": "page5_figure",
             "local": false,
             "sizes": []
@@ -1039,7 +1036,6 @@
             "height": 174,
             "posterId": 0,
             "id": 0,
-            "title": "page6_figure",
             "alt": "page6_figure",
             "local": false,
             "sizes": []
@@ -1274,7 +1270,6 @@
             "height": 275,
             "posterId": 0,
             "id": 0,
-            "title": "page7_product1",
             "alt": "page7_product1",
             "local": false,
             "sizes": []
@@ -1304,7 +1299,6 @@
             "height": 184,
             "posterId": 0,
             "id": 0,
-            "title": "page7_product2",
             "alt": "page7_product2",
             "local": false,
             "sizes": []
@@ -1796,7 +1790,6 @@
             "width": 370,
             "height": 492,
             "id": 0,
-            "title": "page8_figure",
             "alt": "page8_figure",
             "local": true
           }
@@ -2049,7 +2042,6 @@
             "height": 124,
             "posterId": 0,
             "id": 0,
-            "title": "page9_story1",
             "alt": "page9_story1",
             "local": false,
             "sizes": []
@@ -2079,7 +2071,6 @@
             "width": 352,
             "height": 528,
             "id": 0,
-            "title": "page9_story2",
             "alt": "page9_story2",
             "local": false,
             "sizes": []
@@ -2110,7 +2101,6 @@
             "height": 330,
             "posterId": 0,
             "id": 0,
-            "title": "page9_story3",
             "alt": "page9_story3",
             "local": false,
             "sizes": []

@@ -49,6 +49,8 @@ import mark3pVideoAsOptimized from './migrations/v0028_mark3pVideoAsOptimized';
 import unifyGifResources from './migrations/v0029_unifyGifResources';
 import mark3pVideoAsMuted from './migrations/v0030_mark3pVideoAsMuted';
 import normalizeResourceSizes from './migrations/v0031_normalizeResourceSizes';
+import pageOutlinkTheme from './migrations/v0032_pageOutlinkTheme';
+import removeTitleFromResources from './migrations/v0033_removeTitleFromResources';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -82,6 +84,8 @@ const MIGRATIONS = {
   29: [unifyGifResources],
   30: [mark3pVideoAsMuted],
   31: [normalizeResourceSizes],
+  32: [pageOutlinkTheme],
+  33: [removeTitleFromResources],
 };
 
 export const DATA_VERSION = Math.max.apply(

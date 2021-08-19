@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'sleep',
   title: _x('Sleep', 'template name', 'web-stories'),
   tags: [
     _x('Health', 'template keyword', 'web-stories'),

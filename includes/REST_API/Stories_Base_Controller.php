@@ -148,6 +148,58 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
+	 * Creates a single story.
+	 *
+	 * Override the existing method so we can set parent id.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
+	 */
+	public function create_item( $request ) {
+		$original_id = ! empty( $request['original_id'] ) ? (int) $request['original_id'] : null;
+		if ( ! $original_id ) {
+			return parent::create_item( $request );
+		}
+
+		$original_post = $this->get_post( (int) $original_id );
+		if ( is_wp_error( $original_post ) ) {
+			return $original_post;
+		}
+
+		if ( ! $this->check_read_permission( $original_post ) ) {
+			return new WP_Error(
+				'rest_cannot_create',
+				__( 'Sorry, you are not allowed to duplicate this story.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		$request->set_param( 'content', $original_post->post_content );
+		$request->set_param( 'excerpt', $original_post->post_excerpt );
+
+		$title = sprintf(
+			/* translators: %s: story title. */
+			__( '%s (Copy)', 'web-stories' ),
+			$original_post->post_title
+		);
+		$request->set_param( 'title', $title );
+
+		$story_data = json_decode( $original_post->post_content_filtered, true );
+		if ( $story_data ) {
+			$request->set_param( 'story_data', $story_data );
+		}
+
+		$thumbnail_id = get_post_thumbnail_id( $original_post );
+		if ( $thumbnail_id ) {
+			$request->set_param( 'featured_media', $thumbnail_id );
+		}
+
+		return parent::create_item( $request );
+	}
+
+	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
 	 *
 	 * @since 1.0.0
@@ -166,6 +218,12 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			'type'        => 'object',
 			'context'     => [ 'view', 'edit' ],
 			'default'     => [],
+		];
+
+		$schema['properties']['original_id'] = [
+			'description' => __( 'Unique identifier for original story id.', 'web-stories' ),
+			'type'        => 'integer',
+			'context'     => [ 'view', 'edit', 'embed' ],
 		];
 
 		$this->schema = $schema;
@@ -214,5 +272,28 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		return $links;
+	}
+
+	/**
+	 * Get the link relations available for the post and current user.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param WP_Post         $post    Post object.
+	 * @param WP_REST_Request $request Request object.
+	 * @return array List of link relations.
+	 */
+	protected function get_available_actions( $post, $request ) {
+		$rels = parent::get_available_actions( $post, $request );
+
+		if ( $this->check_delete_permission( $post ) ) {
+			$rels[] = 'https://api.w.org/action-delete';
+		}
+
+		if ( $this->check_update_permission( $post ) ) {
+			$rels[] = 'https://api.w.org/action-edit';
+		}
+
+		return $rels;
 	}
 }

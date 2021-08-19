@@ -7,7 +7,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@percy/cli": "^1.0.0-beta.60",
+    "@percy/cli": "^1.0.0-beta.65",
     "@percy/puppeteer": "^2.0.0",
     "@web-stories-wp/e2e-test-utils": "*",
     "@web-stories-wp/jest-puppeteer-amp": "*",
@@ -17,6 +17,6 @@
     "expect-puppeteer": "^5.0.4",
     "jest-extended": "^0.11.5",
     "jest-puppeteer": "^5.0.4",
-    "puppeteer": "^10.1.0"
+    "puppeteer": "^10.2.0"
   }
 }
