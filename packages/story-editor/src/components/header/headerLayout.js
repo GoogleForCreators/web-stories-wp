@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { memo } from 'react';
+import { memo } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
