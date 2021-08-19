@@ -67,7 +67,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     });
 
     // TODO(#8740): Fix flaky test.
-    it.skip('should add text presets below each other if added consecutively', async () => {
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should add text presets below each other if added consecutively', async () => {
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
         10,
@@ -91,7 +92,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     });
 
     // TODO(#8740): Fix flaky test.
-    it.skip('should ensure staggered presets fit on the page', async () => {
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
       const PARAGRAPH_TEXT =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
