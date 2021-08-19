@@ -129,7 +129,7 @@ class Oembed extends Service_Base {
 		if ( ! has_post_thumbnail( $post ) ) {
 			return $data;
 		}
-
+		$data     = (array) $data;
 		$new_data = $this->get_embed_height_width( $width );
 
 		return array_merge( $data, $new_data );

@@ -122,6 +122,7 @@ class AMP extends Service_Base {
 	 * @return array Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
+		$post_types = (array) $post_types;
 		if ( $this->get_request_post_type() === Story_Post_Type::POST_TYPE_SLUG ) {
 			$post_types = array_merge( $post_types, [ Story_Post_Type::POST_TYPE_SLUG ] );
 		} else {
