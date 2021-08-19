@@ -26,25 +26,24 @@ import preloadVideoMetadata from './preloadVideoMetadata';
  * @param {string} src Video source.
  * @return {Promise} Video length object.
  */
-const getVideoLength = (src) => {
-  return preloadVideoMetadata(src).then((video) => {
-    const length = Math.round(video.duration);
-    let lengthFormatted;
-    const seconds = formatDuration(length % 60);
-    let minutes = Math.floor(length / 60);
-    const hours = Math.floor(minutes / 60);
+const getVideoLength = async (src) => {
+  const video = await preloadVideoMetadata(src);
+  const length = Math.round(video.duration);
+  let lengthFormatted;
+  const seconds = formatDuration(length % 60);
+  let minutes = Math.floor(length / 60);
+  const hours = Math.floor(minutes / 60);
 
-    if (hours) {
-      minutes = formatDuration(minutes % 60);
-      lengthFormatted = `${hours}:${minutes}:${seconds}`;
-    } else {
-      lengthFormatted = `${minutes}:${seconds}`;
-    }
-    return {
-      length,
-      lengthFormatted,
-    };
-  });
+  if (hours) {
+    minutes = formatDuration(minutes % 60);
+    lengthFormatted = `${hours}:${minutes}:${seconds}`;
+  } else {
+    lengthFormatted = `${minutes}:${seconds}`;
+  }
+  return {
+    length,
+    lengthFormatted,
+  };
 };
 
 export default getVideoLength;
