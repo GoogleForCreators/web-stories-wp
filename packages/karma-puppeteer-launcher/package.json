@@ -8,6 +8,6 @@
   "main": "./src/index.cjs",
   "dependencies": {
     "karma": "^6.3.4",
-    "puppeteer": "^10.1.0"
+    "puppeteer": "^10.2.0"
   }
 }
