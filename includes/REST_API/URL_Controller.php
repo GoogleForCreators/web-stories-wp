@@ -82,7 +82,7 @@ class URL_Controller extends REST_Controller {
 	}
 
 	/**
-	 * Parses a URL to return some metadata for inserting links.
+	 * Parses a URL to return some metadata for inserting external media.
 	 *
 	 * @since 1.11.0
 	 *
