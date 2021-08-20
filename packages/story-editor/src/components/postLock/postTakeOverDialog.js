@@ -66,7 +66,7 @@ function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
           variant={BUTTON_VARIANTS.RECTANGLE}
           href={dashboardLink}
         >
-          {__('My Stories', 'web-stories')}
+          {__('Dashboard', 'web-stories')}
         </Button>
       }
     >

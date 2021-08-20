@@ -270,7 +270,7 @@ export function LeftRail() {
                     aria-label={appendNewBadgeToLable(
                       path.value === state.currentPath
                         ? sprintf(
-                            /* translators: %s: the current page, for example "My Stories". */
+                            /* translators: %s: the current page, for example "Dashboard". */
                             __('%s (active view)', 'web-stories'),
                             path.label
                           )
@@ -313,7 +313,7 @@ export function LeftRail() {
                 aria-label={
                   path.value === state.currentPath
                     ? sprintf(
-                        /* translators: %s: the current page, for example "My Stories". */
+                        /* translators: %s: the current page, for example "Dashboard". */
                         __('%s (active view)', 'web-stories'),
                         path.label
                       )
