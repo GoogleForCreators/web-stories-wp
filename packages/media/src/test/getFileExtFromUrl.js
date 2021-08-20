@@ -17,20 +17,18 @@
 /**
  * Internal dependencies
  */
-import preloadImage from './preloadImage';
+import getFileExtFromUrl from '../getFileExtFromUrl';
 
-/**
- * Get image dimensions from an image.
- *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
- */
-const getImageDimensions = async (src) => {
-  const img = await preloadImage(src);
-  return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
-  };
-};
-
-export default getImageDimensions;
+describe('getFileExtFromUrl', () => {
+  it('should get extension correctly', () => {
+    expect(getFileExtFromUrl('https://example.jpg?foo=bar')).toStrictEqual(
+      'jpg'
+    );
+    expect(getFileExtFromUrl('https://video.mp4')).toStrictEqual('mp4');
+    expect(getFileExtFromUrl('https://example.test/image.png')).toStrictEqual(
+      'png'
+    );
+    expect(getFileExtFromUrl(null)).toStrictEqual('');
+    expect(getFileExtFromUrl(12345)).toStrictEqual('');
+  });
+});

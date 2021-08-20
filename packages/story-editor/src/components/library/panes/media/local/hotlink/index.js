@@ -13,24 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import preloadImage from './preloadImage';
-
-/**
- * Get image dimensions from an image.
- *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
- */
-const getImageDimensions = async (src) => {
-  const img = await preloadImage(src);
-  return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
-  };
-};
-
-export default getImageDimensions;
+export { default } from './hotlink';

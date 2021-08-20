@@ -17,20 +17,20 @@
 /**
  * Internal dependencies
  */
-import preloadImage from './preloadImage';
+import preloadVideoMetadata from './preloadVideoMetadata';
 
 /**
- * Get image dimensions from an image.
+ * Get video dimensions from a video.
  *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
+ * @param {string} src Video source.
+ * @return {Promise} Video dimensions object.
  */
-const getImageDimensions = async (src) => {
-  const img = await preloadImage(src);
+const getVideoDimensions = async (src) => {
+  const video = await preloadVideoMetadata(src);
   return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
+    width: video.videoWidth,
+    height: video.videoHeight,
   };
 };
 
-export default getImageDimensions;
+export default getVideoDimensions;

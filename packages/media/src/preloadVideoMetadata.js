@@ -15,22 +15,20 @@
  */
 
 /**
- * Internal dependencies
- */
-import preloadImage from './preloadImage';
-
-/**
- * Get image dimensions from an image.
+ * Preload video using a promise.
  *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
+ * @param {string} src Video source.
+ * @return {Promise} Video object.
  */
-const getImageDimensions = async (src) => {
-  const img = await preloadImage(src);
-  return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
-  };
+const preloadVideoMetadata = (src) => {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.onloadedmetadata = () => resolve(video);
+    video.onerror = reject;
+    video.crossOrigin = 'anonymous';
+    video.src = src;
+    video.muted = true;
+  });
 };
 
-export default getImageDimensions;
+export default preloadVideoMetadata;
