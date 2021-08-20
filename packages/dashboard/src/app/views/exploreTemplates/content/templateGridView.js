@@ -57,12 +57,12 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
   const [activeGridItemId, setActiveGridItemId] = useState(null);
 
   const handleUseStory = useCallback(
-    ({ id, title }) => {
+    (template) => {
       trackEvent('use_template', {
-        name: title,
-        template_id: id,
+        name: template.title,
+        template_id: template.id,
       });
-      templateActions.createStoryFromTemplate(id);
+      templateActions.createStoryFromTemplate(template.id);
     },
     [templateActions]
   );
@@ -101,7 +101,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
         return (
           <TemplateGridItem
             detailLink={resolveRoute(centerTargetAction)}
-            handleCreateStory={() => handleUseStory({ id, title })}
+            handleCreateStory={() => handleUseStory(id)}
             handleFocus={() => {
               setActiveGridItemId(id);
             }}
