@@ -180,36 +180,24 @@ describe('storyReducer', () => {
             id: 94,
             status: 'draft',
             title: { raw: 'my test story 1' },
-            story_data: {
-              pages: [{}],
-            },
             _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 65,
             status: 'publish',
             title: { raw: 'my test story 2' },
-            story_data: {
-              pages: [{}],
-            },
             _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 78,
             status: 'draft',
             title: { raw: 'my test story 3' },
-            story_data: {
-              pages: [{}],
-            },
             _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 12,
             status: 'draft',
             title: { raw: 'my test story 4' },
-            story_data: {
-              pages: [{}],
-            },
             _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
         ],
@@ -254,36 +242,24 @@ describe('storyReducer', () => {
               id: 94,
               status: 'draft',
               title: { raw: 'my test story 1' },
-              story_data: {
-                pages: [{}],
-              },
               _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 65,
               status: 'publish',
               title: { raw: 'my test story 2' },
-              story_data: {
-                pages: [{}],
-              },
               _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 78,
               status: 'draft',
               title: { raw: 'my test story 3' },
-              story_data: {
-                pages: [{}],
-              },
               _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 12,
               status: 'draft',
               title: { raw: 'my test story 4' },
-              story_data: {
-                pages: [{}],
-              },
               _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
           ],

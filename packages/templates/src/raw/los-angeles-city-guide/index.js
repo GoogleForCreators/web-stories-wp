@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'los-angeles-city-guide',
   title: _x('Los Angeles City Guide', 'template name', 'web-stories'),
   tags: [
     _x('Travel', 'template keyword', 'web-stories'),

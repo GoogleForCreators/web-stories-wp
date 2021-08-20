@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'food-stuff',
   title: _x('Food & Stuff', 'template name', 'web-stories'),
   tags: [
     _x('Delicious', 'template keyword', 'web-stories'),

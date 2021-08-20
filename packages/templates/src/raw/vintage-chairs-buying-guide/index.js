@@ -25,6 +25,7 @@ import { __, _x } from '@web-stories-wp/i18n';
 import { default as template } from './template';
 
 export default {
+  slug: 'vintage-chair-buying-guide',
   title: _x('Vintage Chair Buying Guide', 'template name', 'web-stories'),
   tags: [
     _x('Home', 'template keyword', 'web-stories'),
