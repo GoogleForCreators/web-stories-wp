@@ -20,7 +20,6 @@
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
-import { UnitsProvider } from '@web-stories-wp/units';
 import {
   Button,
   BUTTON_SIZES,
@@ -29,7 +28,6 @@ import {
   LoadingSpinner,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { TransformProvider } from '@web-stories-wp/story-editor';
 
 /**
  * Internal dependencies
@@ -47,7 +45,6 @@ import {
   SearchPropTypes,
 } from '../../../../utils/useTemplateView';
 import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
-import FontProvider from '../../../font/fontProvider';
 import { EmptyContentMessage } from '../../shared';
 import TemplateGridView from './templateGridView';
 
@@ -130,18 +127,7 @@ function Content({
 
   return (
     <Layout.Scrollable>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width: view.pageSize.width,
-              height: view.pageSize.height,
-            }}
-          >
-            <StandardViewContentGutter>{pageContent}</StandardViewContentGutter>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
+      <StandardViewContentGutter>{pageContent}</StandardViewContentGutter>
     </Layout.Scrollable>
   );
 }

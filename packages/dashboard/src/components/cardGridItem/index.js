@@ -50,7 +50,7 @@ const CardGridItem = styled.div.attrs({ role: 'listitem' })`
   }
 `;
 CardGridItem.propTypes = {
-  $posterHeight: PropTypes.number.isRequired,
+  $posterHeight: PropTypes.number,
 };
 
 export default CardGridItem;

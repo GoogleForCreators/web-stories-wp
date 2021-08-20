@@ -36,7 +36,7 @@ export const CustomCardGridItem = styled(CardGridItem)`
   grid-template-rows: ${({ $posterHeight }) => `${$posterHeight}px auto`};
 `;
 CustomCardGridItem.propTypes = {
-  $posterHeight: PropTypes.number.isRequired,
+  $posterHeight: PropTypes.number,
 };
 
 // Allows grid item contents to overlay in a set space

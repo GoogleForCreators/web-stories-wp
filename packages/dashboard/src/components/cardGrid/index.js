@@ -46,8 +46,8 @@ const DashboardGrid = styled.div`
   `};
 `;
 DashboardGrid.propTypes = {
-  columnHeight: PropTypes.number.isRequired,
-  columnWidth: PropTypes.number.isRequired,
+  columnHeight: PropTypes.number,
+  columnWidth: PropTypes.number,
 };
 
 const CardGrid = forwardRef(function CardGrid(
