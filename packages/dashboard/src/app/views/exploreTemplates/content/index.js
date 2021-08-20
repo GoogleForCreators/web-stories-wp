@@ -48,7 +48,8 @@ import {
 } from '../../../../utils/useTemplateView';
 import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
 import FontProvider from '../../../font/fontProvider';
-import { TemplateGridView, EmptyContentMessage } from '../../shared';
+import { EmptyContentMessage } from '../../shared';
+import TemplateGridView from './templateGridView';
 
 function Content({
   allPagesFetched,

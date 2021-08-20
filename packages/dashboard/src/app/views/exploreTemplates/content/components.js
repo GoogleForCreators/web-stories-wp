@@ -18,12 +18,40 @@
  * External dependencies
  */
 import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { Gradient, Scrim } from '../../shared/grid/components';
 
-export const FocusableGridItem = styled.button`
+// Allows grid item contents to overlay in a set space
+export const CardWrapper = styled.div`
   position: absolute;
-  width: 1%;
-  height: 1%;
-  background-color: transparent;
-  border: none;
-  outline: none;
+  height: 100%;
+  width: 100%;
+
+  transition: opacity ease-in-out 300ms;
+
+  &:hover {
+    ${Gradient}, ${Scrim} {
+      opacity: 1;
+    }
+  }
+
+  ${Gradient}, ${Scrim} {
+    opacity: ${({ $isSelected }) => ($isSelected ? 1 : 0)};
+  }
+`;
+
+export const TemplateDisplayContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding-bottom: 16px;
+
+  a,
+  button {
+    margin: auto auto 0;
+  }
 `;

@@ -33,15 +33,7 @@ import { useGridViewKeys } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import {
-  CardGrid,
-  CardGridItem,
-  CardTitle,
-  CardPreviewContainer,
-  // ActionLabel,
-  StoryMenu,
-  FocusableGridItem,
-} from '../../../components';
+import { CardGrid, CardGridItem, StoryMenu } from '../../../components';
 import {
   StoryMenuPropType,
   PageSizePropType,
@@ -129,7 +121,7 @@ const SavedTemplateGridView = ({
                 itemRefs.current[template.id] = el;
               }}
             >
-              <FocusableGridItem
+              <button
                 onFocus={() => {
                   setActiveGridItemId(template.id);
                 }}
@@ -141,7 +133,7 @@ const SavedTemplateGridView = ({
                   template.title
                 )}
               />
-              <CardPreviewContainer
+              <div
                 ariaLabel={sprintf(
                   /* translators: %s: story title. */
                   __('Preview of %s', 'web-stories'),
@@ -161,7 +153,7 @@ const SavedTemplateGridView = ({
                 // }}
               />
               <DetailRow>
-                <CardTitle
+                <div
                   tabIndex={tabIndex}
                   title={template.title}
                   titleLink={template.editStoryLink}

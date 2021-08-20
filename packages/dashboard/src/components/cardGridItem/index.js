@@ -18,18 +18,19 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { MoreVerticalButton } from '../storyMenu';
-import { ActionLabel } from './types';
 
 const CardGridItem = styled.div.attrs({ role: 'listitem' })`
   margin: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: ${({ $posterHeight }) => `${$posterHeight}px auto`};
 
   ${MoreVerticalButton} {
     margin: 12px 0;
@@ -48,9 +49,8 @@ const CardGridItem = styled.div.attrs({ role: 'listitem' })`
     opacity: 1;
   }
 `;
+CardGridItem.propTypes = {
+  $posterHeight: PropTypes.number.isRequired,
+};
 
 export default CardGridItem;
-export { default as CardPreviewContainer } from './cardPreview';
-export { ActionLabel };
-export { default as CardTitle } from './cardTitle';
-export { FocusableGridItem } from './focusableGridItem';

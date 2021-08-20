@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useEffect } from '@web-stories-wp/react';
+import { useMemo, useEffect, useCallback } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -81,6 +81,14 @@ function ExploreTemplates() {
     });
   }, [templatesOrderById, templates]);
 
+  const handleCreateStoryFromTemplate = useCallback(
+    (templateId) => {
+      const template = templates[templateId];
+      createStoryFromTemplate(template);
+    },
+    [createStoryFromTemplate, templates]
+  );
+
   return (
     <Layout.Provider>
       <Header
@@ -100,7 +108,9 @@ function ExploreTemplates() {
         totalTemplates={totalTemplates}
         search={search}
         view={view}
-        templateActions={{ createStoryFromTemplate }}
+        templateActions={{
+          createStoryFromTemplate: handleCreateStoryFromTemplate,
+        }}
       />
       <Layout.Fixed>
         <ScrollToTop />

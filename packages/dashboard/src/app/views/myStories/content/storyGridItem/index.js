@@ -25,7 +25,7 @@ import { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { StoryMenu } from '../../../../../components';
+import { CardGridItem, StoryMenu } from '../../../../../components';
 import { generateStoryMenu } from '../../../../../components/popoverMenu/story-menu-generator';
 import { STORY_STATUS } from '../../../../../constants';
 import {
@@ -37,13 +37,12 @@ import {
 import { titleFormatted } from '../../../../../utils';
 import { useConfig } from '../../../../config';
 import {
-  CardWrapper,
   Container,
-  CustomCardGridItem,
-  Gradient,
   Poster,
+  Gradient,
   Scrim,
-} from './components';
+} from '../../../shared/grid/components';
+import { CardWrapper } from './components';
 import StoryDisplayContent from './storyDisplayContent';
 
 const StoryGridItem = ({
@@ -134,7 +133,7 @@ const StoryGridItem = ({
   );
 
   return (
-    <CustomCardGridItem
+    <CardGridItem
       data-testid={`story-grid-item-${story.id}`}
       onFocus={handleFocus}
       $posterHeight={pageSize.posterHeight}
@@ -181,7 +180,7 @@ const StoryGridItem = ({
           </Scrim>
         </CardWrapper>
       </Container>
-    </CustomCardGridItem>
+    </CardGridItem>
   );
 };
 

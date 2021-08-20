@@ -23,9 +23,8 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
-import { CardGrid, CardGridItem, CardPreviewContainer, CardTitle } from '../..';
+import { CardGrid, CardGridItem } from '../..';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
@@ -44,65 +43,9 @@ export const _default = () => {
   return (
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
-        <CardPreviewContainer
-          ariaLabel="Preview aria label"
-          bottomAction={{
-            targetAction: 'https://www.google.com',
-            label: 'Open in Editor',
-          }}
-          centerAction={{
-            targetAction: '',
-            label: 'Preview',
-          }}
-          pageSize={STORYBOOK_PAGE_SIZE}
-          story={{}}
-        >
-          <Card>{text('Sample Story Content', 'Sample Story')}</Card>
-        </CardPreviewContainer>
-        <CardTitle
-          title="How to be a leader in the apocalpyse"
-          author="Rick Grimes"
-          displayDate="2020-01-30"
-          status={STORY_STATUS.DRAFT}
-          onEditCancel={() => {}}
-          onEditComplete={() => {}}
-          tabIndex={0}
-          id="8787"
-        />
-      </CardGridItem>
-    </CardGrid>
-  );
-};
-
-export const _publishedStory = () => {
-  return (
-    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
-      <CardGridItem>
-        <CardPreviewContainer
-          ariaLabel="Preview aria label"
-          bottomAction={{
-            targetAction: 'https://www.google.com',
-            label: 'Open in Editor',
-          }}
-          centerAction={{
-            targetAction: '',
-            label: 'Preview',
-          }}
-          pageSize={STORYBOOK_PAGE_SIZE}
-          story={{}}
-        >
-          <Card>{text('Sample Story Content', 'Sample Story')}</Card>
-        </CardPreviewContainer>
-        <CardTitle
-          title="The 6 fingered man"
-          author="Inigo Moñtoya"
-          displayDate="2020-01-30"
-          status={STORY_STATUS.PUBLISH}
-          onEditCancel={() => {}}
-          onEditComplete={() => {}}
-          tabIndex={0}
-          id="99999"
-        />
+        <Card>
+          {text('Sample grid item - anything can go here', 'Sample Story')}
+        </Card>
       </CardGridItem>
     </CardGrid>
   );
