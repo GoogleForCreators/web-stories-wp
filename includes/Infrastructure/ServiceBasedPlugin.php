@@ -410,8 +410,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.11.0
 	 *
-	 * @param string $id ID of the service to register.
-	 * @param string $class Class of the service to register.
+	 * @param string                       $id ID of the service to register.
+	 * @param HasRequirements|class-string $class Class of the service to register.
 	 */
 	protected function schedule_potential_service_registration( $id, $class ) {
 		if ( is_a( $class, Delayed::class, true ) ) {
